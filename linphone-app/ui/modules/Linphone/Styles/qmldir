@@ -42,3 +42,4 @@ singleton TelKeypadStyle                       1.0 TelKeypad/TelKeypadStyle.qml
 singleton TimelineStyle                        1.0 Timeline/TimelineStyle.qml
 
 singleton SipAddressesViewStyle                1.0 View/SipAddressesViewStyle.qml
+singleton ParticipantsViewStyle                1.0 View/ParticipantsViewStyle.qml

@@ -44,9 +44,16 @@
 #include "providers/ExternalImageProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
+
+#include "components/timeline/TimelineModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
+#include "components/timeline/TimelineProxyModel.hpp"
+
+#include "components/participant/ParticipantModel.hpp"
+#include "components/participant/ParticipantListModel.hpp"
+#include "components/participant/ParticipantProxyModel.hpp"
 
 // =============================================================================
 
@@ -208,11 +215,13 @@ bool App::setFetchConfig (QCommandLineParser *parser) {
 }
 // -----------------------------------------------------------------------------
 
+
+
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 
   connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
 
-  setWindowIcon(QIcon(LinphoneUtils::WindowIconPath));
+  setWindowIcon(QIcon(Utils::WindowIconPath));
 
   createParser();
   mParser->process(*this);
@@ -350,12 +359,13 @@ void App::initContentApp () {
     #ifndef Q_OS_MACOS
       mustBeIconified = mParser->isSet("iconified");
     #endif // ifndef Q_OS_MACOS
-
-    mColors = new Colors(this);
+    mColorListModel = new ColorListModel();
+    mImageListModel = new ImageListModel();
   }
 
   // Change colors if necessary.
-  mColors->useConfig(config);
+  mColorListModel->useConfig(config);
+  mImageListModel->useConfig(config);
 
   // Init core.
   CoreManager::init(this, Utils::coreStringToAppString(configPath));
@@ -386,6 +396,8 @@ void App::initContentApp () {
   mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 
   mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
+  mEngine->rootContext()->setContextProperty("Colors", mColorListModel->getQmlData());
+  mEngine->rootContext()->setContextProperty("Images", mImageListModel->getQmlData());
 
   registerTypes();
   registerSharedTypes();
@@ -578,16 +590,25 @@ void App::registerTypes () {
   qInfo() << QStringLiteral("Registering types...");
 
   qRegisterMetaType<shared_ptr<linphone::ProxyConfig>>();
-  qRegisterMetaType<ChatModel::EntryType>();
+  qRegisterMetaType<ChatRoomModel::EntryType>();
   qRegisterMetaType<shared_ptr<linphone::SearchResult>>();
   qRegisterMetaType<std::list<std::shared_ptr<linphone::SearchResult> > >();
-
+  qRegisterMetaType<std::shared_ptr<ChatMessageModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatRoomModel>>();
+  qRegisterMetaType<std::shared_ptr<ParticipantListModel>>();
+  qRegisterMetaType<std::shared_ptr<ParticipantDeviceModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatMessageModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatNoticeModel>>();
+  qRegisterMetaType<std::shared_ptr<ChatCallModel>>();
+  //qRegisterMetaType<std::shared_ptr<ChatEvent>>();
+  LinphoneEnums::registerMetaTypes();
+  
   registerType<AssistantModel>("AssistantModel");
   registerType<AuthenticationNotifier>("AuthenticationNotifier");
   registerType<CallsListProxyModel>("CallsListProxyModel");
   registerType<Camera>("Camera");
   registerType<CameraPreview>("CameraPreview");
-  registerType<ChatProxyModel>("ChatProxyModel");
+  registerType<ChatRoomProxyModel>("ChatRoomProxyModel");
   registerType<ConferenceHelperModel>("ConferenceHelperModel");
   registerType<ConferenceModel>("ConferenceModel");
   registerType<ContactsListProxyModel>("ContactsListProxyModel");
@@ -596,28 +617,54 @@ void App::registerTypes () {
   registerType<FileExtractor>("FileExtractor");
   registerType<HistoryProxyModel>("HistoryProxyModel");
   registerType<LdapProxyModel>("LdapProxyModel");
+  registerType<ParticipantImdnStateProxyModel>("ParticipantImdnStateProxyModel");
   registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
   registerType<SearchSipAddressesModel>("SearchSipAddressesModel");
+  registerType<SearchSipAddressesProxyModel>("SearchSipAddressesProxyModel");
   
+  
+  registerType<ColorProxyModel>("ColorProxyModel");
+  registerType<ImageProxyModel>("ImageProxyModel");
+  registerType<TimelineProxyModel>("TimelineProxyModel");
+  registerType<ParticipantProxyModel>("ParticipantProxyModel");
   registerType<SoundPlayer>("SoundPlayer");
   registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
 
   registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
   registerSingletonType<OwnPresenceModel>("OwnPresenceModel");
   registerSingletonType<Presence>("Presence");
-  registerSingletonType<TimelineModel>("TimelineModel");
+  //registerSingletonType<TimelineModel>("TimelineModel");
   registerSingletonType<UrlHandlers>("UrlHandlers");
   registerSingletonType<VideoCodecsModel>("VideoCodecsModel");
 
   registerUncreatableType<CallModel>("CallModel");
-  registerUncreatableType<ChatModel>("ChatModel");
+  registerUncreatableType<ChatCallModel>("ChatCallModel");
+  registerUncreatableType<ChatMessageModel>("ChatMessageModel");
+  registerUncreatableType<ChatNoticeModel>("ChatNoticeModel");
+  registerUncreatableType<ChatRoomModel>("ChatRoomModel");
+  registerUncreatableType<ColorModel>("ColorModel");
+  registerUncreatableType<ImageModel>("ImageModel");
   registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
   registerUncreatableType<ContactModel>("ContactModel");
   registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
+  registerUncreatableType<ContentModel>("ContentModel");
   registerUncreatableType<HistoryModel>("HistoryModel");
   registerUncreatableType<LdapModel>("LdapModel");
+  registerUncreatableType<SearchResultModel>("SearchResultModel");
   registerUncreatableType<SipAddressObserver>("SipAddressObserver");
   registerUncreatableType<VcardModel>("VcardModel");
+  registerUncreatableType<TimelineModel>("TimelineModel");
+  registerUncreatableType<ParticipantModel>("ParticipantModel");
+  registerUncreatableType<ParticipantListModel>("ParticipantListModel");
+  registerUncreatableType<ParticipantDeviceModel>("ParticipantDeviceModel");
+  registerUncreatableType<ParticipantDeviceListModel>("ParticipantDeviceListModel");
+  registerUncreatableType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
+  registerUncreatableType<ParticipantImdnStateModel>("ParticipantImdnStateModel");
+  registerUncreatableType<ParticipantImdnStateListModel>("ParticipantImdnStateListModel");
+  
+  
+  
+  qmlRegisterUncreatableMetaObject(LinphoneEnums::staticMetaObject, "LinphoneEnums", 1, 0, "LinphoneEnums", "Only enums");
 }
 
 void App::registerSharedTypes () {
@@ -627,11 +674,13 @@ void App::registerSharedTypes () {
   registerSharedSingletonType<CoreManager, &CoreManager::getInstance>("CoreManager");
   registerSharedSingletonType<SettingsModel, &CoreManager::getSettingsModel>("SettingsModel");
   registerSharedSingletonType<AccountSettingsModel, &CoreManager::getAccountSettingsModel>("AccountSettingsModel");
-  registerSharedSingletonType<SipAddressesModel, &CoreManager::getSipAddressesModel>("SipAddressesModel");
+  registerSharedSingletonType<SipAddressesModel, &CoreManager::getSipAddressesModel>("SipAddressesModel");  
   registerSharedSingletonType<CallsListModel, &CoreManager::getCallsListModel>("CallsListModel");
   registerSharedSingletonType<ContactsListModel, &CoreManager::getContactsListModel>("ContactsListModel");
   registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>("ContactsImporterListModel");
   registerSharedSingletonType<LdapListModel, &CoreManager::getLdapListModel>("LdapListModel");
+  registerSharedSingletonType<TimelineListModel, &CoreManager::getTimelineListModel>("TimelineListModel");
+//  registerSharedSingletonType<ColorListModel, &App::getColorListModel>("ColorCpp");
 }
 
 void App::registerToolTypes () {
@@ -642,12 +691,15 @@ void App::registerToolTypes () {
   registerToolType<TextToSpeech>("TextToSpeech");
   registerToolType<Units>("Units");
   registerToolType<ContactsImporterPluginsManager>("ContactsImporterPluginsManager");
+  registerToolType<Utils>("UtilsCpp");
+  //registerToolType<Colors>("ColorsCpp");
 }
 
 void App::registerSharedToolTypes () {
   qInfo() << QStringLiteral("Registering shared tool types...");
 
-  registerSharedToolType<Colors, App, &App::getColors>("Colors");
+  //registerSharedToolType<Colors, App, &App::getColors>("Colors");
+  //registerSharedToolType<ColorListModel,App,  &App::getColorListModel>("ColorsCpp");
 }
 
 // -----------------------------------------------------------------------------
@@ -703,7 +755,7 @@ void App::setTrayIcon () {
 
 
   systemTrayIcon->setContextMenu(menu);
-  systemTrayIcon->setIcon(QIcon(LinphoneUtils::WindowIconPath));
+  systemTrayIcon->setIcon(QIcon(Utils::WindowIconPath));
   systemTrayIcon->setToolTip(APPLICATION_NAME);
   systemTrayIcon->show();
   mSystemTrayIcon = systemTrayIcon;
@@ -898,7 +950,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
   #endif // ifndef __APPLE__
 
   // Display Assistant if it does not exist proxy config.
-  if (coreManager->getCore()->getProxyConfigList().empty())
+  if (coreManager->getCore()->getAccountList().empty())
     QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, AssistantViewName), Q_ARG(QVariant, QString("")));
 
   #ifdef ENABLE_UPDATE_CHECK

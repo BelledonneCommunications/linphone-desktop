@@ -23,32 +23,97 @@
 
 #include <QSortFilterProxyModel>
 // =============================================================================
+#include <QObject>
+#include <QDateTime>
 
-class TimelineModel : public QSortFilterProxyModel {
-  Q_OBJECT;
+#include <linphone++/chat_room.hh>
 
-  Q_PROPERTY(QString localAddress READ getLocalAddress NOTIFY localAddressChanged);
+#include "../contact/ContactModel.hpp"
+
+class ChatRoomModel;
+
+class TimelineModel : public QObject, public linphone::ChatRoomListener {
+  Q_OBJECT
 
 public:
-  TimelineModel (QObject *parent = Q_NULLPTR);
+	static std::shared_ptr<TimelineModel> create(std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
+	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
+	virtual ~TimelineModel();
+	
+	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
+	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress NOTIFY fullLocalAddressChanged)
+	Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel CONSTANT)
+	
+// Contact
+	//Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
+	//Q_PROPERTY(QString username READ getUsername NOTIFY usernameChanged)
+	//Q_PROPERTY(QString avatar READ getAvatar NOTIFY avatarChanged)
+	//Q_PROPERTY(int presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)
+	Q_PROPERTY(bool selected MEMBER mSelected WRITE setSelected NOTIFY selectedChanged)
+	
+	
+	QString getFullPeerAddress() const;
+	QString getFullLocalAddress() const;
+	
+	QString getUsername() const;
+	QString getAvatar() const;
+	int getPresenceStatus() const;
+	
+	void setSelected(const bool& selected);
+	
+	
+	//Q_INVOKABLE std::shared_ptr<ChatRoomModel> getChatRoomModel() const;
+	Q_INVOKABLE ChatRoomModel* getChatRoomModel() const;
 
-  QHash<int, QByteArray> roleNames () const override;
-
+	bool mSelected;
+	//QDateTime mTimestamp;
+	std::shared_ptr<ChatRoomModel> mChatRoomModel;
+	//std::shared_ptr<linphone::ChatRoom> mChatRoom;
+	
+	virtual void onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing) override;
+	virtual void onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message) override;
+	virtual void onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onParticipantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState) override;
+	virtual void onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onUndecryptableMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message) override;
+	virtual void onParticipantDeviceAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onParticipantDeviceRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onEphemeralEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) override;
+	virtual void onConferenceAddressGeneration(const std::shared_ptr<linphone::ChatRoom> & chatRoom) override;
+	virtual void onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress) override;
+	virtual void onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress) override;
+	virtual void onChatMessageShouldBeStored(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message) override;
+	virtual void onChatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state) override;
+	
+public slots:
+	void updateUnreadCount();
+	void onDefaultProxyChanged();
+	//void chatRoomDeleted();
+	
 signals:
-  void localAddressChanged (const QString &localAddress);
-
-protected:
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
-
-  QString getLocalAddress () const;
-  QString getCleanedLocalAddress () const;
-  void handleLocalAddressChanged (const QString &localAddress);
-
+	void fullPeerAddressChanged();
+	void fullLocalAddressChanged();
+	void usernameChanged();
+	void avatarChanged();
+	void presenceStatusChanged();
+	void selectedChanged(bool selected);
+	void conferenceLeft();
+	
 private:
-  QString mLocalAddress;
+
+	std::weak_ptr<TimelineModel> mSelf;
+  
 };
 
 #endif // TIMELINE_MODEL_H_

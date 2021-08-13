@@ -21,82 +21,139 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
 #include "utils/Utils.hpp"
+#include "app/App.hpp"
 
 #include "TimelineModel.hpp"
+#include "TimelineListModel.hpp"
 
 #include <QDebug>
+#include <qqmlapplicationengine.h>
+#include <QTimer>
 
 
 // =============================================================================
-
-TimelineModel::TimelineModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  CoreManager *coreManager = CoreManager::getInstance();
-  AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
-
-  QObject::connect(accountSettingsModel, &AccountSettingsModel::accountSettingsUpdated, this, [this]() {
-    handleLocalAddressChanged(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddressAsStringUriOnly());
-  });
-  QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
-    invalidate();// Invalidate and reload GUI if the model has been reset
-  });
-  mLocalAddress = accountSettingsModel->getUsedSipAddressAsStringUriOnly();
-
-  setSourceModel(coreManager->getSipAddressesModel());
-  sort(0);
+std::shared_ptr<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent){
+	if(!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) {
+		std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom, parent);
+		if(model && model->getChatRoomModel()){
+			model->mSelf = model;
+			chatRoom->addListener(model);
+			return model;
+		}
+	}
+	return nullptr;
 }
 
-QHash<int, QByteArray> TimelineModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$timelineEntry";
-  return roles;
+TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent) : QObject(parent) {
+	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
+	mChatRoomModel = ChatRoomModel::create(chatRoom);
+//	mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom);
+	if( mChatRoomModel ){
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::unreadMessagesCountChanged, this, &TimelineModel::updateUnreadCount);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::missedCallsCountChanged, this, &TimelineModel::updateUnreadCount);
+		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultProxyChanged, this, &TimelineModel::onDefaultProxyChanged);
+	}
+	
+	//QObject::connect(mChatRoomModel.get(), &ChatRoomModel::conferenceLeft, this, &TimelineModel::onConferenceLeft);
+	//mTimestamp = QDateTime::fromMSecsSinceEpoch(mChatRoomModel->getChatRoom()->getLastUpdateTime());
+	mSelected = false;
 }
 
-// -----------------------------------------------------------------------------
-
-static inline const QHash<QString, SipAddressesModel::ConferenceEntry> *getLocalToConferenceEntry (const QVariantMap &map) {
-  return map.value("__localToConferenceEntry").value<decltype(getLocalToConferenceEntry({}))>();
+TimelineModel::~TimelineModel(){
+	//mChatRoomModel->getChatRoom()->removeListener(mChatRoomModel);
 }
 
-QVariant TimelineModel::data (const QModelIndex &index, int role) const {
-  QVariantMap map(QSortFilterProxyModel::data(index, role).toMap());
-
-  auto localToConferenceEntry = getLocalToConferenceEntry(map);
-  auto it = localToConferenceEntry->find(getCleanedLocalAddress());
-  if (it != localToConferenceEntry->end()) {
-    map["timestamp"] = it->timestamp;
-    map["isComposing"] = it->isComposing;
-    map["unreadMessageCount"] = it->unreadMessageCount;
-    map["missedCallCount"] = it->missedCallCount;
-  }
-
-  return map;
+QString TimelineModel::getFullPeerAddress() const{
+	return mChatRoomModel->getFullPeerAddress();
+}
+QString TimelineModel::getFullLocalAddress() const{
+	return mChatRoomModel->getLocalAddress();
 }
 
-bool TimelineModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-	return getLocalToConferenceEntry(index.data().toMap())->contains(getCleanedLocalAddress());
+
+QString TimelineModel::getUsername() const{
+	return mChatRoomModel->getUsername();
 }
 
-bool TimelineModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-QString localAddress = getCleanedLocalAddress();
-  const QDateTime &a(getLocalToConferenceEntry(sourceModel()->data(left).toMap())->find(localAddress)->timestamp);
-  const QDateTime &b(getLocalToConferenceEntry(sourceModel()->data(right).toMap())->find(localAddress)->timestamp);
-  return a > b;
+QString TimelineModel::getAvatar() const{
+	return "";
 }
 
-// -----------------------------------------------------------------------------
-QString TimelineModel::getLocalAddress () const
+int TimelineModel::getPresenceStatus() const{
+	return 0;
+}
+
+ChatRoomModel *TimelineModel::getChatRoomModel() const{
+	return mChatRoomModel.get();
+}
+
+void TimelineModel::setSelected(const bool& selected){
+	if(selected != mSelected){
+		mSelected = selected;
+		if(mSelected){
+			qInfo() << "Chat room selected : Subject :" << mChatRoomModel->getSubject()
+				<< ", Username:" << mChatRoomModel->getUsername()
+				<< ", GroupEnabled:"<< mChatRoomModel->isGroupEnabled()
+				<< ", Encrypted:"<< mChatRoomModel->haveEncryption()
+				<< ", ephemeralEnabled:" << mChatRoomModel->haveEncryption()
+				<< ", isAdmin:"<< mChatRoomModel->isMeAdmin()
+				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
+				<< ", hasBeenLeft:" << mChatRoomModel->hasBeenLeft();
+			mChatRoomModel->initEntries();
+		}
+		emit selectedChanged(mSelected);
+	}
+}
+
+void TimelineModel::updateUnreadCount(){
+	if(mSelected){
+		mChatRoomModel->resetMessageCount();
+	}
+}
+void TimelineModel::onDefaultProxyChanged(){
+	if( mSelected && !mChatRoomModel->isCurrentProxy())
+		setSelected(false);
+}
+//----------------------------------------------------------
+//------				CHAT ROOM HANDLERS
+//----------------------------------------------------------
+
+void TimelineModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing){
+}
+void TimelineModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){}
+void TimelineModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
+	if(newState == linphone::ChatRoom::State::Created)
+		QTimer::singleShot(200, [=](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
+				setSelected(true);
+			});
+}
+void TimelineModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog)
 {
-    return mLocalAddress;
+	emit usernameChanged();
 }
-QString TimelineModel::getCleanedLocalAddress () const
-{
-    return Utils::cleanSipAddress(mLocalAddress);
+void TimelineModel::onUndecryptableMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){}
+void TimelineModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onParticipantDeviceRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 }
-void TimelineModel::handleLocalAddressChanged (const QString &localAddress) {
-  if (mLocalAddress != localAddress) {
-    mLocalAddress = localAddress;
-    invalidate();
-  }
+void TimelineModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	
 }
+void TimelineModel::onEphemeralEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onConferenceAddressGeneration(const std::shared_ptr<linphone::ChatRoom> & chatRoom){}
+void TimelineModel::onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){}
+void TimelineModel::onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){}
+void TimelineModel::onChatMessageShouldBeStored(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){}
+void TimelineModel::onChatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){}

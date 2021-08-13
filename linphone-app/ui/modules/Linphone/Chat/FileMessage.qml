@@ -5,16 +5,20 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
+import LinphoneEnums 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
 // =============================================================================
 
 Row {
+	id:mainRow
   // ---------------------------------------------------------------------------
   // Avatar if it's an incoming message.
   // ---------------------------------------------------------------------------
-
+  
+  property bool isOutgoing : $chatEntry.isOutgoing  || $chatEntry.state == LinphoneEnums.ChatMessageStateIdle;
+	
   Item {
     height: ChatStyle.entry.lineHeight
     width: ChatStyle.entry.metaWidth
@@ -26,14 +30,20 @@ Row {
         height: ChatStyle.entry.message.incoming.avatarSize
         width: ChatStyle.entry.message.incoming.avatarSize
 
-        image: chat.sipAddressObserver.contact ? chat.sipAddressObserver.contact.vcard.avatar : ''
-        username: LinphoneUtils.getContactUsername(chat.sipAddressObserver)
+        image: $chatEntry.contactModel? $chatEntry.contactModel.vcard.avatar : '' //chat.sipAddressObserver.contact ? chat.sipAddressObserver.contact.vcard.avatar : ''
+        username: isOutgoing? $chatEntry.toDisplayName : $chatEntry.fromDisplayName
+        
+		TooltipArea{
+			delay:0
+			text:parent.username+'\n'+ (isOutgoing ? $chatEntry.toSipAddress : $chatEntry.fromSipAddress)
+			tooltipParent:mainRow
+		}
       }
     }
 
     Loader {
       anchors.centerIn: parent
-      sourceComponent: !$chatEntry.isOutgoing ? avatar : undefined
+      sourceComponent: !isOutgoing? avatar : undefined
     }
   }
 
@@ -48,14 +58,18 @@ Row {
       id: rectangle
 
       readonly property bool isError: Utils.includes([
-        ChatModel.MessageStatusFileTransferError,
-        ChatModel.MessageStatusNotDelivered,
-       ], $chatEntry.status)
-      readonly property bool isUploaded: $chatEntry.status === ChatModel.MessageStatusDelivered
-      readonly property bool isDelivered: $chatEntry.status === ChatModel.MessageStatusDeliveredToUser
-      readonly property bool isRead: $chatEntry.status === ChatModel.MessageStatusDisplayed
-
-      color: $chatEntry.isOutgoing
+        LinphoneEnums.ChatMessageStateFileTransferError,
+        LinphoneEnums.ChatMessageStateNotDelivered,
+       ], $chatEntry.state)
+      readonly property bool isUploaded: $chatEntry.state == LinphoneEnums.ChatMessageStateDelivered
+      readonly property bool isDelivered: $chatEntry.state == LinphoneEnums.ChatMessageStateDeliveredToUser
+      readonly property bool isRead: $chatEntry.state == LinphoneEnums.ChatMessageStateDisplayed
+      
+      
+        //property ContentModel contentModel : ($chatEntry.getContent(0) ? $chatEntry.getContent(0) : null)
+        property ContentModel contentModel : $chatEntry.fileContentModel
+      property string thumbnail :  contentModel.thumbnail
+      color: isOutgoing
         ? ChatStyle.entry.message.outgoing.backgroundColor
         : ChatStyle.entry.message.incoming.backgroundColor
 
@@ -71,17 +85,18 @@ Row {
         }
 
         spacing: ChatStyle.entry.message.file.spacing
+        
 
         // ---------------------------------------------------------------------
         // Thumbnail or extension.
         // ---------------------------------------------------------------------
 
         Component {
-          id: thumbnail
+          id: thumbnailImage
 
           Image {
             mipmap: Qt.platform.os === 'osx'
-            source: $chatEntry.thumbnail
+            source: rectangle.contentModel.thumbnail
           }
         }
 
@@ -97,7 +112,7 @@ Row {
               color: ChatStyle.entry.message.file.extension.text.color
               font.bold: true
               elide: Text.ElideRight
-              text: Utils.getExtension($chatEntry.fileName).toUpperCase()
+              text: (rectangle.contentModel?Utils.getExtension(rectangle.contentModel.name).toUpperCase():'')
 
               horizontalAlignment: Text.AlignHCenter
               verticalAlignment: Text.AlignVCenter
@@ -111,7 +126,7 @@ Row {
           Layout.fillHeight: true
           Layout.preferredWidth: parent.height
 
-          sourceComponent: $chatEntry.thumbnail ? thumbnail : extension
+          sourceComponent: (rectangle.contentModel ? (rectangle.contentModel.thumbnail ? thumbnailImage : extension ): undefined)
 
           ScaleAnimator {
             id: thumbnailProviderAnimator
@@ -176,19 +191,19 @@ Row {
           Text {
             id: fileName
 
-            color: $chatEntry.isOutgoing
+            color: isOutgoing
               ? ChatStyle.entry.message.outgoing.text.color
               : ChatStyle.entry.message.incoming.text.color
             elide: Text.ElideRight
 
             font {
               bold: true
-              pointSize: $chatEntry.isOutgoing
+              pointSize: isOutgoing
                 ? ChatStyle.entry.message.outgoing.text.pointSize
                 : ChatStyle.entry.message.incoming.text.pointSize
             }
 
-            text: $chatEntry.fileName
+            text: (rectangle.contentModel ? rectangle.contentModel.name : '')
             width: parent.width
           }
 
@@ -198,10 +213,9 @@ Row {
             height: ChatStyle.entry.message.file.status.bar.height
             width: parent.width
 
-            to: $chatEntry.fileSize
-            value: $chatEntry.fileOffset || 0
-            visible: $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
-
+            to: (rectangle.contentModel ? rectangle.contentModel.fileSize : 0)
+            value: rectangle.contentModel ? rectangle.contentModel.fileOffset || 0 : 0
+            visible: $chatEntry.state == LinphoneEnums.ChatMessageStateInProgress || $chatEntry.state == LinphoneEnums.ChatMessageStateFileTransferInProgress
             background: Rectangle {
               color: ChatStyle.entry.message.file.status.bar.background.color
               radius: ChatStyle.entry.message.file.status.bar.radius
@@ -223,10 +237,13 @@ Row {
             elide: Text.ElideRight
             font.pointSize: fileName.font.pointSize
             text: {
-              var fileSize = Utils.formatSize($chatEntry.fileSize)
-              return progressBar.visible
-                ? Utils.formatSize($chatEntry.fileOffset) + '/' + fileSize
-                : fileSize
+				if(rectangle.contentModel){
+					var fileSize = Utils.formatSize(rectangle.contentModel.fileSize)
+						return progressBar.visible
+							? Utils.formatSize(rectangle.contentModel.fileOffset) + '/' + fileSize
+							: fileSize
+							}else
+							return ''
             }
           }
         }
@@ -242,7 +259,7 @@ Row {
 
         icon: 'download'
         iconSize: ChatStyle.entry.message.file.iconSize
-        visible: !$chatEntry.isOutgoing && !$chatEntry.wasDownloaded
+        visible: (rectangle.contentModel?!isOutgoing&& !rectangle.contentModel.wasDownloaded : false)
       }
 
       MouseArea {
@@ -253,15 +270,15 @@ Row {
         }
 
         anchors.fill: parent
-        visible: ((rectangle.isUploaded || rectangle.isRead) && !$chatEntry.isOutgoing) || $chatEntry.isOutgoing
+        visible: ((rectangle.isUploaded || rectangle.isRead) && !isOutgoing) || isOutgoing
 
         onClicked: {
           if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
-            proxyModel.openFile(index)
-          } else if ($chatEntry.wasDownloaded) {
-            proxyModel.openFileDirectory(index)
+            rectangle.contentModel.openFile()
+          } else if (rectangle.contentModel && rectangle.contentModel.wasDownloaded) {
+            rectangle.contentModel.openFile(true)// Show directory
           } else  {
-            proxyModel.downloadFile(index)
+            rectangle.contentModel.downloadFile()
           }
         }
 
@@ -292,7 +309,7 @@ Row {
 
           MouseArea {
             anchors.fill: parent
-            visible: (rectangle.isError || $chatEntry.status === ChatModel.MessageStatusIdle) && $chatEntry.isOutgoing
+            visible: (rectangle.isError || $chatEntry.state == LinphoneEnums.ChatMessageStateIdle) && isOutgoing
             onClicked: proxyModel.resendMessage(index)
           }
         }
@@ -317,9 +334,9 @@ Row {
         height: ChatStyle.entry.lineHeight
         width: ChatStyle.entry.message.outgoing.areaSize
 
-        sourceComponent: $chatEntry.isOutgoing
+        sourceComponent: isOutgoing
           ? (
-            $chatEntry.status === ChatModel.MessageStatusInProgress || $chatEntry.status === ChatModel.MessageStatusFileTransferInProgress
+            $chatEntry.state == LinphoneEnums.ChatMessageStateInProgress || $chatEntry.state == LinphoneEnums.ChatMessageStateFileTransferInProgress
               ? indicator
               : icon
           ) : undefined

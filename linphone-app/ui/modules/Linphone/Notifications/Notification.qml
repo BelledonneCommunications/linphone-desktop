@@ -9,7 +9,9 @@ DesktopPopup {
   id: notification
 
   property alias icon: iconSign.icon
-  property var notificationData: ({})
+  property var notificationData: ({
+		timelineModel : null
+  })
   property int overrodeHeight
   default property alias _content: content.data
 
