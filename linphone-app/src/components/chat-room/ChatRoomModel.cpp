@@ -637,33 +637,108 @@ void ChatRoomModel::resetMessageCount () {
 		emit messageCountReset();
 	}
 }
+//-------------------------------------------------
+// Entries Loading managment
+//-------------------------------------------------
+//	For each type of events, a part of entries are loaded with a minimal count (=mLastEntriesStep). Like that, we have from 0 to 3*mLastEntriesStep events.
+//	We store them in a list that will be sorted from oldest to newest.
+//	From the oldest, we loop till having at least one type of event or if we hit the minimum limit.
+//		As it was a request for each events, we ensure to get all available events after it.
+//	Notations : M0 is the first Message event; N0, the first EventLog; C0, the first Call event. After '|', there are mLastEntriesStep events.
+// Available cases examples :
+//	'M0...N0....|...C0....' =>  '|...C0....'
+//	'M0C0N0|...' == 'C0N0|...' == '|N0....C0....' == '|N0....C0....' == '|.......'  We suppose that we got all available events for the current scope.
+//	'N0...M0....C0...|...' => '|C0...'
+//
+//	-------------------
+//
+//	When requesting more entries, we count the number of events we got. Each numbers represent the index from what we can retrieve next events from linphone database.
+//	Like that, we avoid to load all database. A bad point is about loading call events : There are no range to retrieve and we don't want to load the entire database. So for this case, this is not fully optimized (optimization is only about GUI and connections)
+//
+//	Request more entries are coming from GUI. Like that, we don't have to manage if events are filtered or not (only messages, call, events).
 
-void ChatRoomModel::initEntries(){
-	if(!mIsInitialized){
-		QList<std::shared_ptr<ChatEvent> > entries;
-// Get chat messages
-		for (auto &message : mChatRoom->getHistory(mLastEntriesCount))
-			entries << ChatMessageModel::create(message, this);
-// Get events
-		for(auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesCount)){
-			 auto entry = ChatNoticeModel::create(eventLog, this);
-			 if(entry)
-				entries << entry;
-		}
-// Get calls.
-		if(!isSecure() )
-			for (auto &callLog : CoreManager::getInstance()->getCore()->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress())){
-				auto entry = ChatCallModel::create(callLog, true, this);
-				if(entry) {
-					entries << entry;
-					if (callLog->getStatus() == linphone::Call::Status::Success) {
-						entry = ChatCallModel::create(callLog, false, this);
-						if(entry)
-							entries << entry;
-					}
+class EntrySorterHelper{
+public:
+	EntrySorterHelper(time_t pTime, ChatRoomModel::EntryType pType,std::shared_ptr<linphone::Object> obj) : mTime(pTime), mType(pType), mObject(obj) {}
+	time_t mTime;
+	ChatRoomModel::EntryType mType;
+	std::shared_ptr<linphone::Object> mObject;
+	
+	static void getLimitedSelection(QList<std::shared_ptr<ChatEvent> > *resultEntries, QList<EntrySorterHelper>& entries, const int& minEntries, ChatRoomModel * chatRoomModel) {// Sort and return a selection with at least 'minEntries'
+	// Sort list
+		std::sort(entries.begin(), entries.end(), [](const EntrySorterHelper& a, const EntrySorterHelper& b) {
+			return a.mTime < b.mTime;
+		});
+	// Keep max( minEntries, last(messages, events, calls) )
+		QList<EntrySorterHelper>::iterator itEntries = entries.begin();
+		int spotted = 0;
+		auto lastEntry = itEntries;
+		while(itEntries != entries.end() && (spotted != 7 || (entries.end()-itEntries > minEntries)) ) {
+			if( itEntries->mType == ChatRoomModel::EntryType::MessageEntry) {
+				if( (spotted & 1) == 0) {
+					lastEntry = itEntries;
+					spotted |= 1;
+				}
+			}else if( itEntries->mType == ChatRoomModel::EntryType::CallEntry){
+				if( (spotted & 2) == 0){
+					lastEntry = itEntries;
+					spotted |= 2;
+				}
+			}else {
+				if( (spotted & 4) == 0){
+					lastEntry = itEntries;
+					spotted |= 4;
 				}
 			}
-		mIsInitialized = true;
+			++itEntries;
+		}
+		itEntries = lastEntry;
+		if(itEntries - entries.begin() < 3)
+			itEntries = entries.begin();
+		for(; itEntries !=  entries.end() ; ++itEntries){
+			if( (*itEntries).mType== ChatRoomModel::EntryType::MessageEntry)
+				*resultEntries << ChatMessageModel::create(std::dynamic_pointer_cast<linphone::ChatMessage>(itEntries->mObject), chatRoomModel);
+			else if( (*itEntries).mType == ChatRoomModel::EntryType::CallEntry) {
+				auto entry = ChatCallModel::create(std::dynamic_pointer_cast<linphone::CallLog>(itEntries->mObject), true, chatRoomModel);
+				if(entry) {
+					*resultEntries << entry;
+					if (entry->mStatus == LinphoneEnums::CallStatusSuccess) {
+						entry = ChatCallModel::create(entry->getCallLog(), false, chatRoomModel);
+						if(entry)
+							*resultEntries << entry;
+					}
+				}
+			}else{
+			auto entry = ChatNoticeModel::create(std::dynamic_pointer_cast<linphone::EventLog>(itEntries->mObject), chatRoomModel);
+				if(entry)
+					*resultEntries << entry;
+			}	
+		}
+	}
+};
+void ChatRoomModel::initEntries(){
+// On call : reinitialize all entries. This allow to free up memory
+	QList<std::shared_ptr<ChatEvent> > entries;
+	QList<EntrySorterHelper> prepareEntries;
+// Get chat messages
+	for (auto &message : mChatRoom->getHistory(mLastEntriesStep))
+		prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
+// Get events
+	for(auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesStep))
+		prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
+// Get calls.
+	if(!isSecure() ) {
+		auto callHistory = CoreManager::getInstance()->getCore()->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress());
+		// callhistory is sorted from newest to oldest
+		int count = 0;
+		for (auto callLog = callHistory.begin() ; count < mLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
+			prepareEntries << EntrySorterHelper((*callLog)->getStartDate(), CallEntry, *callLog);
+		}
+	}
+	EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
+	
+	mIsInitialized = true;
+	if(entries.size() >0){
 		beginInsertRows(QModelIndex(), 0, entries.size()-1);
 		mEntries = entries;
 		endInsertRows();
@@ -671,10 +746,23 @@ void ChatRoomModel::initEntries(){
 }
 
 void ChatRoomModel::loadMoreEntries(){
-	mLastEntriesCount += mLastEntriesStep;
+	QList<std::shared_ptr<ChatEvent> > entries;
+	QList<EntrySorterHelper> prepareEntries;
+// Get current event count for each type
+	QVector<int> entriesCounts;
+	entriesCounts.resize(3);
+	for(auto itEntries = mEntries.begin() ; itEntries != mEntries.end() ; ++itEntries){
+		if( (*itEntries)->mType == MessageEntry)
+			++entriesCounts[0];
+		else if( (*itEntries)->mType == CallEntry){
+			if(dynamic_cast<ChatCallModel*>((*itEntries).get())->mIsStart)
+				++entriesCounts[1];
+		} else
+			++entriesCounts[2];
+	}
+	
 // Messages
-	QList<std::shared_ptr<linphone::ChatMessage>> messagesToAdd;
-	for (auto &message : mChatRoom->getHistory(mLastEntriesCount)){
+	for (auto &message : mChatRoom->getHistoryRange(entriesCounts[0], entriesCounts[0]+mLastEntriesStep)){
 		auto itEntries = mEntries.begin();
 		bool haveEntry = false;
 		while(!haveEntry && itEntries != mEntries.end()){
@@ -683,12 +771,26 @@ void ChatRoomModel::loadMoreEntries(){
 			++itEntries;
 		}
 		if(!haveEntry)
-			messagesToAdd << message;
+			prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
 	}
-	
+
+// Calls
+	if(!isSecure() ) {
+		auto callHistory = CoreManager::getInstance()->getCore()->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress());
+		int count = 0;
+		auto itCallHistory = callHistory.begin();
+		while(count < entriesCounts[1] && itCallHistory != callHistory.end()){
+			++itCallHistory;
+			++count;
+		}
+		count = 0;
+		while( count < mLastEntriesStep && itCallHistory != callHistory.end()){
+			prepareEntries << EntrySorterHelper((*itCallHistory)->getStartDate(), CallEntry, *itCallHistory);
+			++itCallHistory;
+		}
+	}
 // Notices
-	QList<std::shared_ptr<linphone::EventLog>> noticesToAdd;
-	for (auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesCount)){
+	for (auto &eventLog : mChatRoom->getHistoryRangeEvents(entriesCounts[2], entriesCounts[2]+mLastEntriesStep)){
 		auto itEntries = mEntries.begin();
 		bool haveEntry = false;
 		while(!haveEntry && itEntries != mEntries.end()){
@@ -697,25 +799,27 @@ void ChatRoomModel::loadMoreEntries(){
 			++itEntries;
 		}
 		if(!haveEntry)
-			noticesToAdd << eventLog;
+			prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
+	}	
+	EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
+	if(entries.size() >0){
+		beginInsertRows(QModelIndex(), 0, entries.size()-1);
+		for(auto entry : entries)
+			mEntries.prepend(entry);
+		endInsertRows();
 	}
-	if(messagesToAdd.size() > 0)
-		insertMessages(messagesToAdd);
-	if(noticesToAdd.size() > 0)
-		insertNotices(noticesToAdd);
-	if( messagesToAdd.size() == 0 && noticesToAdd.size() == 0)
-		mLastEntriesCount = mEntries.size();	// We reset last antries count to current events size to avoid overflow count
 }
 
+//-------------------------------------------------
+//-------------------------------------------------
 
 // -----------------------------------------------------------------------------
 
-void ChatRoomModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
+void ChatRoomModel::insertCall (const std::shared_ptr<linphone::CallLog> &callLog) {
 	if(mIsInitialized){
 		std::shared_ptr<ChatCallModel> model = ChatCallModel::create(callLog, true, this);
 		if(model){
 			int row = mEntries.count();
-			
 			beginInsertRows(QModelIndex(), row, row);
 			mEntries << model;
 			endInsertRows();
@@ -732,7 +836,31 @@ void ChatRoomModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
 	}
 }
 
-void ChatRoomModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> &message) {
+void ChatRoomModel::insertCalls (const QList<std::shared_ptr<linphone::CallLog> > &calls) {
+	if(mIsInitialized){
+		QList<std::shared_ptr<ChatEvent> > entries;
+		for(auto callLog : calls) {
+			std::shared_ptr<ChatCallModel> model = ChatCallModel::create(callLog, true, this);
+			if(model){
+				entries << model;
+				if (callLog->getStatus() == linphone::Call::Status::Success) {
+					model = ChatCallModel::create(callLog, false, this);
+					if(model){
+						entries << model;
+					}
+				}
+			}
+		}
+		if(entries.size() > 0){
+			beginInsertRows(QModelIndex(), 0, entries.size()-1);
+			entries << mEntries;
+			mEntries = entries;
+			endInsertRows();
+		}
+	}
+}
+
+void ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message) {
 	if(mIsInitialized){
 		std::shared_ptr<ChatMessageModel> model = ChatMessageModel::create(message, this);
 		if(model){
@@ -745,7 +873,7 @@ void ChatRoomModel::insertMessageAtEnd (const shared_ptr<linphone::ChatMessage> 
 	}
 }
 
-void ChatRoomModel::insertMessages (const QList<shared_ptr<linphone::ChatMessage> > &messages) {
+void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages) {
 	if(mIsInitialized){
 		QList<std::shared_ptr<ChatEvent> > entries;
 		for(auto message : messages) {
@@ -795,7 +923,7 @@ void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLo
 }
 // -----------------------------------------------------------------------------
 
-void ChatRoomModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
+void ChatRoomModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) {
 	if (state == linphone::Call::State::End || state == linphone::Call::State::Error){
 		shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 		std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();

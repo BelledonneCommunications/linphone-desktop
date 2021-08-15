@@ -220,8 +220,7 @@ public:
 	bool mIsInitialized = false;
 	
 	bool mDeleteChatRoom = false;	// Use as workaround because of core->deleteChatRoom() that call destructor without takking account of count ref : call it in ChatRoomModel destructor	
-	int mLastEntriesCount = 50;		// Retrieve a part of the history to avoid too much processing
-	int mLastEntriesStep = 50;		// Message loading Step
+	int mLastEntriesStep = 50;		// Retrieve a part of the history to avoid too much processing
 	
 	
 	//--------------------		CHAT ROOM HANDLER
@@ -304,6 +303,7 @@ signals:
 	
 private:
 	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
+	void insertCalls (const QList<std::shared_ptr<linphone::CallLog> > &calls);
 	void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
 	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
 	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
