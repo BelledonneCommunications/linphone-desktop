@@ -28,6 +28,7 @@
 
 #include "ConferenceAddModel.hpp"
 #include "ConferenceHelperModel.hpp"
+#include "components/contact/ContactModel.hpp"
 
 // =============================================================================
 
@@ -66,8 +67,9 @@ void ConferenceHelperModel::setFilter (const QString &pattern) {
 bool ConferenceHelperModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
   const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
   const QVariantMap data = index.data().toMap();
+  const ContactModel * contactModel = data["contactModel"].value<ContactModel*>();
 
-  return !mConferenceAddModel->contains(data["sipAddress"].toString());
+  return contactModel != nullptr && !mConferenceAddModel->contains(data["sipAddress"].toString());
 }
 
 // -----------------------------------------------------------------------------

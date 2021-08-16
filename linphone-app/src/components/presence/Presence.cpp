@@ -23,12 +23,15 @@
 // =============================================================================
 
 Presence::PresenceLevel Presence::getPresenceLevel (const PresenceStatus &status) {
+	return getPresenceLevel(static_cast<linphone::ConsolidatedPresence>(status));
+}
+Presence::PresenceLevel Presence::getPresenceLevel (const linphone::ConsolidatedPresence &status) {
   switch (status) {
-    case Online:
+    case linphone::ConsolidatedPresence::Online:
       return Green;
-    case Busy:
+    case linphone::ConsolidatedPresence::Busy:
       return Orange;
-    case DoNotDisturb:
+    case linphone::ConsolidatedPresence::DoNotDisturb:
       return Red;
     default:
       break;
@@ -38,18 +41,36 @@ Presence::PresenceLevel Presence::getPresenceLevel (const PresenceStatus &status
 }
 
 QString Presence::getPresenceStatusAsString (const PresenceStatus &status) {
+	return getPresenceStatusAsString(static_cast<linphone::ConsolidatedPresence>(status));
+}
+QString Presence::getPresenceStatusAsString (const linphone::ConsolidatedPresence &status) {
   switch (status) {
-    case Online:
+    case linphone::ConsolidatedPresence::Online:
       return tr("presenceOnline");
-    case Busy:
+    case linphone::ConsolidatedPresence::Busy:
       return tr("presenceBusy");
-    case DoNotDisturb:
+    case linphone::ConsolidatedPresence::DoNotDisturb:
       return tr("presenceDoNotDisturb");
     default:
       break;
   }
 
   return tr("presenceOffline");
+}
+
+QString Presence::getBetterPresenceLevelIconName (const PresenceLevel &level) {
+  switch (level) {
+    case Green:
+      return QStringLiteral("current_account_status_online");
+    case Orange:
+      return QStringLiteral("current_account_status_busy");
+    case Red:
+      return QStringLiteral("current_account_status_dnd");
+    case White:
+      return QStringLiteral("current_account_status_offline");
+  }
+
+  return QString("");
 }
 
 QString Presence::getPresenceLevelIconName (const PresenceLevel &level) {

@@ -11,13 +11,15 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  property alias presenceLevel: presenceLevel.level
+  property alias presenceLevel: presenceLevelIcon.level
   property color backgroundColor: AvatarStyle.backgroundColor
   property color foregroundColor: 'transparent'
   property string username
   property var image
 
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
+  
+  //onPresenceLevelChanged: console.log(Presence.getPresenceLevelIconName(presenceLevel)+' => '+username)
 
   // ---------------------------------------------------------------------------
 
@@ -68,7 +70,8 @@ Item {
   }
 
   PresenceLevel {
-    id: presenceLevel
+    id: presenceLevelIcon
+    visible: level >= 0
 
     anchors {
       bottom: parent.bottom

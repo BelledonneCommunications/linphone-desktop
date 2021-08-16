@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
@@ -15,12 +14,12 @@ QtObject {
     property int spacing: 10
 
     property QtObject license: QtObject {
-      property color color: Colors.d
+      property color color: Colors.d.color
       property int pointSize: Units.dp * 10
     }
 
     property QtObject url: QtObject {
-      property color color: Colors.i
+      property color color: Colors.i.color
       property int pointSize: Units.dp * 10
     }
   }
@@ -30,12 +29,12 @@ QtObject {
     property int spacing: 10
 
     property QtObject appVersion: QtObject {
-      property color color: Colors.d
+      property color color: Colors.d.color
       property int pointSize: Units.dp * 10
     }
 
     property QtObject coreVersion: QtObject {
-      property color color: Colors.d
+      property color color: Colors.d.color
       property int pointSize: Units.dp * 10
     }
   }
