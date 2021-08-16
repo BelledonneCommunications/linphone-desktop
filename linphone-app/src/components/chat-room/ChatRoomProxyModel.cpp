@@ -56,7 +56,6 @@ protected:
 			return true;
 		
 		QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
-		const QVariantMap data = index.data().toMap();
 		
 		auto eventModel = sourceModel()->data(index);
 		
@@ -228,21 +227,6 @@ void ChatRoomProxyModel::setFullLocalAddress (const QString &localAddress) {
 	emit fullLocalAddressChanged(mFullLocalAddress);
 	//reload();
 }
-/*
-bool ChatRoomProxyModel::isSecure () const {
-  return mChatRoomModel ? mChatRoomModel->isSecure() : false;
-}
-
-void ChatRoomProxyModel::setIsSecure (const int &secure) {
-  mIsSecure = secure;
-  emit isSecureChanged(mIsSecure);
-}
-*/
-
-/*
-bool ChatRoomProxyModel::getIsRemoteComposing () const {
-  return mChatRoomModel ? mChatRoomModel->getIsRemoteComposing() : false;
-}*/
 
 QList<QString> ChatRoomProxyModel::getComposers() const{
 	return (mChatRoomModel?mChatRoomModel->getComposers():QList<QString>());
@@ -250,6 +234,11 @@ QList<QString> ChatRoomProxyModel::getComposers() const{
 
 QString ChatRoomProxyModel::getDisplayNameComposers()const{
 	return getComposers().join(", ");
+}
+
+QVariant ChatRoomProxyModel::getAt(int row){
+	QModelIndex sourceIndex = mapToSource(this->index(row, 0));
+	return sourceModel()->data(sourceIndex);
 }
 
 QString ChatRoomProxyModel::getCachedText() const{

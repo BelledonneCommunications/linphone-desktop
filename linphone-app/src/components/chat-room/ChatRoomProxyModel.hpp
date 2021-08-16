@@ -50,6 +50,7 @@ public:
   ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
   
   Q_INVOKABLE QString getDisplayNameComposers()const;
+  Q_INVOKABLE QVariant getAt(int row);
 
   Q_INVOKABLE void loadMoreEntries ();
   Q_INVOKABLE void setEntryTypeFilter (int type);

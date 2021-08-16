@@ -121,6 +121,8 @@ Rectangle {
       delegate: Rectangle {
         id: entry
 		property bool isNotice : $chatEntry.type === ChatRoomModel.NoticeEntry
+		property bool isCall : $chatEntry.type === ChatRoomModel.CallEntry
+		property bool isMessage : $chatEntry.type === ChatRoomModel.MessageEntry
 
         function isHoverEntry () {
           return mouseArea.containsMouse
@@ -155,41 +157,67 @@ Rectangle {
           implicitHeight: layout.height
           width: parent.width + parent.anchors.rightMargin
           acceptedButtons: Qt.NoButton
-
-          RowLayout {
-            id: layout
-
-            spacing: 0
-            width: entry.width
-
-            // Display time.
-            Text {
-              Layout.alignment: Qt.AlignTop
-              Layout.preferredHeight: ChatStyle.entry.lineHeight
-              Layout.preferredWidth: ChatStyle.entry.time.width
-
-              color: '#B1B1B1'
-              font.pointSize: ChatStyle.entry.time.pointSize
-
-              text: $chatEntry.timestamp.toLocaleString(
-                Qt.locale(App.locale),
-                'hh:mm'
-              )
-
-              verticalAlignment: Text.AlignVCenter
-
-              TooltipArea {
-                text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
-              }
-			  visible:!isNotice
-            }
-
-            // Display content.
-            Loader {
-              Layout.fillWidth: true
-              source: Logic.getComponentFromEntry($chatEntry)
-            }
-          }
+          ColumnLayout{
+				id: layout
+			spacing: 0
+	        width: entry.width
+			Text{
+					id:authorName
+					Layout.leftMargin: timeDisplay.width + 10
+					Layout.fillWidth: true
+					text : $chatEntry.fromDisplayName ? $chatEntry.fromDisplayName : ''
+					property var previousItem : {
+						if(index >0)
+							return proxyModel.getAt(index-1)
+						else 
+							return null
+					}
+					
+					color: '#B1B1B1'
+					font.pointSize: ChatStyle.entry.time.pointSize
+					visible: isMessage 
+							&& $chatEntry != undefined
+							&& !$chatEntry.isOutgoing
+							&& (!previousItem 
+								|| previousItem.fromSipAddress != $chatEntry.fromSipAddress
+								|| (new Date(previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0)
+								)
+				}
+			  RowLayout {
+	
+				spacing: 0
+				width: entry.width
+	
+				// Display time.
+				Text {
+					id:timeDisplay
+				  Layout.alignment: Qt.AlignTop
+				  Layout.preferredHeight: ChatStyle.entry.lineHeight
+				  Layout.preferredWidth: ChatStyle.entry.time.width
+	
+				  color: '#B1B1B1'
+				  font.pointSize: ChatStyle.entry.time.pointSize
+	
+				  text: $chatEntry.timestamp.toLocaleString(
+					Qt.locale(App.locale),
+					'hh:mm'
+				  )
+	
+				  verticalAlignment: Text.AlignVCenter
+	
+				  TooltipArea {
+					text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
+				  }
+				  visible:!isNotice
+				}
+	
+				// Display content.
+				Loader {
+				  Layout.fillWidth: true
+				  source: Logic.getComponentFromEntry($chatEntry)
+				}
+			  }
+			 }
         }
       }
 

@@ -463,7 +463,9 @@ void Utils::copyDir(QString from, QString to) {
 QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& address){
 	QString displayName;
 	if(address){
-		QString qtAddress = Utils::coreStringToAppString(address->asString());
+		std::shared_ptr<linphone::Address> cleanAddress = address->clone();
+		cleanAddress->clean();
+		QString qtAddress = Utils::coreStringToAppString(cleanAddress->asStringUriOnly());
 		ContactModel * model = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(qtAddress);
 		if(model && model->getVcardModel())
 			displayName = model->getVcardModel()->getUsername();

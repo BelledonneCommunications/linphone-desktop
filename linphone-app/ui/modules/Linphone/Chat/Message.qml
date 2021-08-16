@@ -34,6 +34,7 @@ Item {
 						+ (ephemeralTimerRow.visible? message.padding * 4 : message.padding * 2) 
 						+ (deliveryLayout.visible? deliveryLayout.height : 0)
 	
+	
 	Rectangle {
 		id: rectangle
 		
@@ -72,6 +73,8 @@ Item {
 			}
 		}
 	}
+	
+	
 	
 	// ---------------------------------------------------------------------------
 	// Message.
