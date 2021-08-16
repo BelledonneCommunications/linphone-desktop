@@ -24,7 +24,7 @@ Item {
 	property int deliveryCount : 0
 	
 	signal deliveryStatusClecked()
-	signal removeEntry()
+	signal removeEntryRequested()
 	
 	
 	Menu {
@@ -70,7 +70,7 @@ Item {
 			iconSizeMenu: 17
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.auxRed
-			onTriggered: removeEntry()
+			onTriggered: container.removeEntryRequested()
 		}
 	}
 	

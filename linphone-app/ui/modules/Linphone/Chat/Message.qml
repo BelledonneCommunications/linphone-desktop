@@ -117,6 +117,7 @@ Item {
 			content: $chatEntry.content
 			deliveryCount: deliveryLayout.model.count
 			onDeliveryStatusClecked: deliveryLayout.visible = !deliveryLayout.visible
+			onRemoveEntryRequested: removeEntry()
 		}
 	}
 	

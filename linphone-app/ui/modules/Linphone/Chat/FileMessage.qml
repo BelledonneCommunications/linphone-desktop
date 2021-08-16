@@ -295,6 +295,7 @@ Row {
 					
 					deliveryCount: deliveryLayout.model.count
 					onDeliveryStatusClecked: deliveryLayout.visible = !deliveryLayout.visible
+					onRemoveEntryRequested: removeEntry()
 				}
 			}
 			
