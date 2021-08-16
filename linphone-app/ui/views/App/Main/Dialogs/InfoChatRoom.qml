@@ -93,7 +93,8 @@ DialogPlus {
 				}]
 			
 			onEntryClicked: {
-				selectedParticipants.append({$sipAddress:entry})
+				selectedParticipants.add(entry)
+				smartSearchBar.addAddressToIgnore(entry);
 			}
 		}
 		
