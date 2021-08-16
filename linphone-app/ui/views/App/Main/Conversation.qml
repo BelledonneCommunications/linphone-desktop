@@ -321,6 +321,7 @@ ColumnLayout  {
 						//: "Conversation's devices" : Item menu to get all participant devices of the chat room
 						text: qsTr('conversationMenuDevices')
 						iconMenu: (hovered ? 'menu_devices_selected' : 'menu_devices' )
+						visible: conversation.securityLevel != 1
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
