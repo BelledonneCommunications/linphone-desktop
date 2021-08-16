@@ -15,10 +15,12 @@ RowLayout{
 		var status = $chatEntry.eventLogType
 		
 		if (status == LinphoneEnums.EventLogTypeConferenceCreated) {
-			return 'You have joined the group';
+			//: 'You have joined the group' : Little message to show on the event when the user join the chat group.
+			return qsTr('conferenceCreatedEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceTerminated) {
-			return 'You have left the group';
+			//: 'You have left the group' : Little message to show on the event when the user leave the chat group.
+			return qsTr('conferenceCreatedTerminated');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceCallStart) {
 			return 'EventLogTypeConferenceCallStart';
@@ -30,16 +32,20 @@ RowLayout{
 			return 'EventLogTypeConferenceChatMessage';
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantAdded) {
-			return '%1 has joined';
+			//: '%1 has joined' : Little message to show on the event when someone join the chat group.
+			return qsTr('conferenceParticipantAddedEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantRemoved) {
-			return '%1 has left';
+			//: '%1 has left' : Little message to show on the event when someone leave the chat group
+			return qsTr('conferenceParticipantRemovedEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantSetAdmin) {
-			return '%1 is now an admin';
+			//: '%1 is now an admin' : Little message to show on the event when someone get the admin status. %1 is somebody
+			return qsTr('conferenceParticipantSetAdminEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantUnsetAdmin) {
-			return '%1 is no more an admin';
+			//: '%1 is no more an admin' : Little message to show on the event when somebody lost its admin status. %1 is somebody
+			return qsTr('conferencePArticipantUnsetAdminEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantDeviceAdded) {
 			return 'EventLogTypeConferenceParticipantDeviceAdded';
@@ -54,19 +60,23 @@ RowLayout{
 			return 'EventLogTypeConferenceAvailableMediaChanged';
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceSecurityEvent) {
-			return 'Security level degraded by %1';
+			//: 'Security level degraded by %1': Little message to show on the event when a security level has been lost.
+			return qsTr('conferenceSecurityEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageLifetimeChanged) {
 			return 'EventLogTypeConferenceEphemeralMessageLifetimeChanged';
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageEnabled) {
-			return 'You enabled ephemeral messages: %1';
+			//: 'Ephemeral messages have been enabled: %1' : Little message to show on the event when ephemeral has been activated. %1 is a date time
+			return qsTr('conferenceEphemeralMessageEnabledEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageDisabled) {
-			return 'You disabled ephemeral messages';
+			//: 'Ephemeral messages have been disabled': Little message to show on the event when ephemeral has been deactivated.
+			return qsTr('conferenceEphemeralMessageDisabledEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceSubjectChanged) {
-			return 'New subject : %1';
+			//: 'New subject : %1' : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.
+			return qsTr('conferenceSubjectChangedEvent');
 		}
 		
 		return 'unknown_notice'
