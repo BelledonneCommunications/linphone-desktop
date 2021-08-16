@@ -130,7 +130,7 @@ ColumnLayout  {
 							Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 							contactDescriptionStyle: ConversationStyle.bar.contactDescription
 							username: avatar.username
-							usernameDoubleClickable: chatRoomModel.isMeAdmin
+							usernameClickable: chatRoomModel.isMeAdmin
 							sipAddress: {
 								if(chatRoomModel) {
 									if(chatRoomModel.groupEnabled) {
@@ -145,7 +145,7 @@ ColumnLayout  {
 								}
 								
 							}
-							onUsernameDoubleClicked: {
+							onUsernameClicked: {
 														usernameEdit.visible = !usernameEdit.visible
 														usernameEdit.forceActiveFocus()
 													}

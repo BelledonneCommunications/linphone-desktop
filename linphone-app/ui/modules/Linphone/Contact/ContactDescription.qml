@@ -24,9 +24,9 @@ Column {
 	
 	readonly property int statusWidth : (status.visible ? status.width + 5 : 0)
 	
-	property bool usernameDoubleClickable: false
+	property bool usernameClickable: false
 	
-	signal usernameDoubleClicked()
+	signal usernameClicked()
 
 	
 	
@@ -59,8 +59,8 @@ Column {
 		}
 		MouseArea{
 			anchors.fill:parent
-			visible: usernameDoubleClickable
-			onDoubleClicked: usernameDoubleClicked()
+			visible: usernameClickable
+			onClicked: usernameClicked()
 		}
 	}
 	
