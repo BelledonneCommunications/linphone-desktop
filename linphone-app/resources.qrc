@@ -390,6 +390,8 @@
 		<file>ui/modules/Linphone/Calls/ConferenceControls.qml</file>
 		<file>ui/modules/Linphone/Chat/Chat.js</file>
 		<file>ui/modules/Linphone/Chat/Chat.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatDeliveries.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatMenu.qml</file>
 		<file>ui/modules/Linphone/Chat/Event.qml</file>
 		<file>ui/modules/Linphone/Chat/FileMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>

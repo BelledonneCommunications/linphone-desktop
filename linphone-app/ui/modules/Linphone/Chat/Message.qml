@@ -109,65 +109,14 @@ Item {
 			deselect()
 		}
 		
-		
-		Menu {
-			id: messageMenu
-			menuStyle : MenuStyle.aux
-			MenuItem {
-				//: 'Copy all' : Text menu to copy all message text into clipboard
-				text: (message.lastTextSelected == '' ? qsTr('menuCopyAll')
-				//: 'Copy' : Text menu to copy selected text in message into clipboard
-				:  qsTr('menuCopy'))
-				iconMenu: 'menu_copy_text'
-				iconSizeMenu: 17
-				iconLayoutDirection: Qt.RightToLeft
-				menuItemStyle : MenuItemStyle.aux
-				onTriggered: Clipboard.text = (message.lastTextSelected == '' ? $chatEntry.content : message.lastTextSelected)
-			}
-			
-			MenuItem {
-				enabled: TextToSpeech.available
-				text: qsTr('menuPlayMe')
-				iconMenu: 'speaker'
-				iconSizeMenu: 17
-				iconLayoutDirection: Qt.RightToLeft
-				menuItemStyle : MenuItemStyle.aux
-				onTriggered: TextToSpeech.say($chatEntry.content)
-			}
-			MenuItem {
-				//: 'Delivery status' : Item menu that lead to IMDN of a message
-				text: qsTr('menuDeliveryStatus')
-				iconMenu: 'menu_imdn_info'
-				iconSizeMenu: 17
-				iconLayoutDirection: Qt.RightToLeft
-				menuItemStyle : MenuItemStyle.aux
-				visible: deliveryLayout.model.count > 0
-				onTriggered: deliveryLayout.visible = !deliveryLayout.visible
-			}
-			MenuItem {
-				//: 'Delete' : Item menu to delete a message
-				text: qsTr('menuDelete')
-				iconMenu: 'menu_delete'
-				iconSizeMenu: 17
-				iconLayoutDirection: Qt.RightToLeft
-				menuItemStyle : MenuItemStyle.auxRed
-				onTriggered: removeEntry()
-			}
-		}
-
-		
-		
-		// Handle hovered link.
-		MouseArea {
+		ChatMenu{
 			height: parent.height
 			width: rectangle.width
 			
-			acceptedButtons: Qt.RightButton
-			cursorShape: parent.hoveredLink
-						 ? Qt.PointingHandCursor
-						 : Qt.IBeamCursor
-			
-			onClicked: mouse.button === Qt.RightButton && messageMenu.open()
+			lastTextSelected: message.lastTextSelected 
+			content: $chatEntry.content
+			deliveryCount: deliveryLayout.model.count
+			onDeliveryStatusClecked: deliveryLayout.visible = !deliveryLayout.visible
 		}
 	}
 	
@@ -183,46 +132,13 @@ Item {
 			leftMargin: ChatStyle.entry.message.extraContent.leftMargin
 		}
 	}
-	GridView{
+	ChatDeliveries{
 		id: deliveryLayout
 		anchors.top:rectangle.bottom
 		anchors.left:parent.left
 		anchors.right:parent.right
 		anchors.rightMargin: 50
-		//height: visible ? ChatStyle.composingText.height*container.proxyModel.composers.length : 0
-		height: visible ? (ChatStyle.composingText.height-5)*deliveryLayout.model.count : 0
-		cellWidth: parent.width; cellHeight: ChatStyle.composingText.height-5
-		visible:false
-		model: ParticipantImdnStateProxyModel{
-			id: imdnStatesModel
-			chatMessageModel: $chatEntry
-		}
-		function getText(state, displayName, stateChangeTime){
-			if(state == LinphoneEnums.ChatMessageStateDelivered)
-				//: 'Send to %1 - %2' Little message to indicate the state of a message
-				//~ Context %1 is someone, %2 is a date/time. The state is that the message has been sent but not received.
-				return qsTr('deliveryDelivered').arg(displayName).arg(stateChangeTime)
-			else if(state == LinphoneEnums.ChatMessageStateDeliveredToUser)
-				//: 'Retrieved by %1 - %2' Little message to indicate the state of a message
-				//~ Context %1 is someone, %2 is a date/time. The state is that the message has been retrieved
-				return qsTr('deliveryDeliveredToUser').arg(displayName).arg(stateChangeTime)
-			else if(state == LinphoneEnums.ChatMessageStateDisplayed)
-				//: 'Read by %1 - %2' Little message to indicate the state of a message
-				//~ Context %1 is someone, %2 is a date/time. The state that the message has been read.
-				return qsTr('deliveryDisplayed').arg(displayName).arg(stateChangeTime)
-			else if(state == LinphoneEnums.ChatMessageStateNotDelivered)
-				//: "%1 have nothing received" Little message to indicate the state of a message
-				//~ Context %1 is someone. The state is that the message hasn't been delivered.
-				return qsTr('deliveryNotDelivered').arg(displayName)
-			else return ''
-		}
-		delegate:Text{
-			height: ChatStyle.composingText.height-5
-			width: GridView.width
-			text: deliveryLayout.getText(modelData.state, modelData.displayName, UtilsCpp.toDateTimeString(modelData.stateChangeTime))
-			color: "#B1B1B1"
-			font.pointSize: Units.dp * 8
-			elide: Text.ElideMiddle
-		}
+		
+		chatMessageModel: $chatEntry
 	}
 }

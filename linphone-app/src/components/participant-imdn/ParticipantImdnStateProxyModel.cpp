@@ -61,12 +61,14 @@ ChatMessageModel * ParticipantImdnStateProxyModel::getChatMessageModel(){
 }
 
 void ParticipantImdnStateProxyModel::setChatMessageModel(ChatMessageModel * message){
-	ParticipantImdnStateListModel *model = static_cast<ParticipantImdnStateListModel*>(sourceModel());
-	ParticipantImdnStateListModel *messageModel = message->getParticipantImdnStates().get();
-	if( model != messageModel){
-		setSourceModel(messageModel);
-		connect(messageModel, &ParticipantImdnStateListModel::countChanged, this, &ParticipantImdnStateProxyModel::countChanged);
-		sort(0);
-		emit chatMessageModelChanged();
+	if(message){
+		ParticipantImdnStateListModel *model = static_cast<ParticipantImdnStateListModel*>(sourceModel());
+		ParticipantImdnStateListModel *messageModel = message->getParticipantImdnStates().get();
+		if( model != messageModel){
+			setSourceModel(messageModel);
+			connect(messageModel, &ParticipantImdnStateListModel::countChanged, this, &ParticipantImdnStateProxyModel::countChanged);
+			sort(0);
+			emit chatMessageModelChanged();
+		}
 	}
 }
