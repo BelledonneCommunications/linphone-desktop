@@ -30,7 +30,6 @@ Rectangle {
 			: DialogStyle.buttons.rightMargin
 
   default property alias _content: content.data
-  property bool _disableExitStatus
 
   readonly property bool contentIsEmpty: {
     return _content == null || !_content.length
@@ -43,10 +42,7 @@ Rectangle {
   // ---------------------------------------------------------------------------
 
   function exit (status) {
-    if (!_disableExitStatus) {
-      _disableExitStatus = true
       exitStatus(status)
-    }
   }
 
   // ---------------------------------------------------------------------------

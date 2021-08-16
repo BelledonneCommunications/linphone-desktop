@@ -36,6 +36,7 @@ ColumnLayout  {
 	
 	readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
 	property bool haveMoreThanOneParticipants: chatRoomModel ? chatRoomModel.participants.count > 2 : false
+	property bool haveLessThanMinParticipantsForCall: chatRoomModel ? chatRoomModel.participants.count <= 5 : false
 	
 	// ---------------------------------------------------------------------------
 	
@@ -244,10 +245,14 @@ ColumnLayout  {
 					
 					ActionButton {
 						icon: 'group_chat'
-						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants
+						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall
 						
 						//onClicked: CallsListModel.launchAudioCall(conversation.chatRoomModel)
-						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel})
+						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
+						TooltipArea {
+							//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room
+							text: qsTr("groupChatCallButton")
+						}
 					}
 				}
 				

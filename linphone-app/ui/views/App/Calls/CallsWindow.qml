@@ -45,6 +45,7 @@ Window {
 
   
   function conferenceManagerResult(exitValue){
+	window.detachVirtualWindow();
 	if(exitValue == 0 && calls.count == 0)
 		close();
   }
