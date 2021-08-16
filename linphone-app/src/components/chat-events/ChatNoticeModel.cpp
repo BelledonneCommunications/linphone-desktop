@@ -110,6 +110,22 @@ bool ChatNoticeModel::update(){
 			break;
 		}
 		
+		case linphone::EventLog::Type::ConferenceSubjectChanged : {
+			setName(Utils::coreStringToAppString(mEventLog->getSubject()));
+			setStatus(NoticeType::NoticeMessage);
+			break;
+		}
+		
+		case linphone::EventLog::Type::ConferenceParticipantSetAdmin :
+		case linphone::EventLog::Type::ConferenceParticipantUnsetAdmin :
+		 {
+			setName(Utils::getDisplayName(participantAddress));
+			setStatus(NoticeType::NoticeMessage);
+			break;
+		}
+		
+		
+		
 		default:{
 			handledEvent = false;
 		}

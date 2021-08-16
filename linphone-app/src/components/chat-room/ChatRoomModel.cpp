@@ -1044,6 +1044,10 @@ void ChatRoomModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoo
 }
 
 void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	auto events = chatRoom->getHistoryEvents(0);
+	auto e = std::find(events.begin(), events.end(), eventLog);
+	if( e != events.end() )
+		insertNotice(*e);
 	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit participantAdminStatusChanged(chatRoom, eventLog);
 	emit isMeAdminChanged();	// It is not the case all the time but calling getters is not a heavy request
@@ -1063,6 +1067,10 @@ void ChatRoomModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & 
 	emit securityLevelChanged((int)chatRoom->getSecurityLevel());
 }
 void ChatRoomModel::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
+	auto events = chatRoom->getHistoryEvents(0);
+	auto e = std::find(events.begin(), events.end(), eventLog);
+	if( e != events.end() )
+		insertNotice(*e);
 	setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()));
 	emit subjectChanged(getSubject());
 	emit usernameChanged();

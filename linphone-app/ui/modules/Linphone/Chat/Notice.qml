@@ -36,10 +36,10 @@ RowLayout{
 			return '%1 has left';
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantSetAdmin) {
-			return 'EventLogTypeConferenceParticipantSetAdmin';
+			return '%1 is now an admin';
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantUnsetAdmin) {
-			return 'EventLogTypeConferenceParticipantUnsetAdmin';
+			return '%1 is no more an admin';
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantDeviceAdded) {
 			return 'EventLogTypeConferenceParticipantDeviceAdded';
@@ -65,6 +65,10 @@ RowLayout{
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageDisabled) {
 			return 'You disabled ephemeral messages';
 		}
+		if (status == LinphoneEnums.EventLogTypeConferenceSubjectChanged) {
+			return 'New subject : %1';
+		}
+		
 		return 'unknown_notice'
 	}
 	
