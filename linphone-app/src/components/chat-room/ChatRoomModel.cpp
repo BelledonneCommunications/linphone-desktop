@@ -739,9 +739,9 @@ void ChatRoomModel::initEntries(){
 	
 	mIsInitialized = true;
 	if(entries.size() >0){
-		beginInsertRows(QModelIndex(), 0, entries.size()-1);
+		beginResetModel();
 		mEntries = entries;
-		endInsertRows();
+		endResetModel();
 	}
 }
 

@@ -181,7 +181,10 @@ bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
 		b = r.value<ChatNoticeModel*>();
 	if(!b)
 		b = r.value<ChatCallModel*>();
-	
+	if(!b)
+		return true;
+	if(!a)
+		return false;
 	return a->mTimestamp < b->mTimestamp;
 }
 // -----------------------------------------------------------------------------
