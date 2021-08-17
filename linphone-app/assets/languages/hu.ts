@@ -3414,5 +3414,60 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
         <translation>Törlés</translation>
     </message>
+    <message>
+        <source>conferenceCreatedEvent</source>
+        <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
+        <translation>Csatlakozott a csoporthoz</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantSetAdminEvent</source>
+        <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
+        <translation>%1 most rendszergazdai jogosultság kapott</translation>
+    </message>
+    <message>
+        <source>groupChatCallButton</source>
+        <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
+        <translation>Az összes résztvevő hívása a szobában</translation>
+    </message>
+    <message>
+        <source>conferenceCreatedTerminated</source>
+        <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
+        <translation>Kilépett a csoportból</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantAddedEvent</source>
+        <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
+        <translation>%1 csatlakozott</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantRemovedEvent</source>
+        <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
+        <translation>%1 kilépett</translation>
+    </message>
+    <message>
+        <source>conferencePArticipantUnsetAdminEvent</source>
+        <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+        <translation>%1 most rendszergazdai jogosultság eltávolított</translation>
+    </message>
+    <message>
+        <source>conferenceSecurityEvent</source>
+        <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
+        <translation>Csökkent biztonsági szint a következő szerint: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageEnabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
+        <translation>Elmúló üzenetek engedélyezve: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageDisabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
+        <translation>Elmúló üzenetek letiltva: %1</translation>
+    </message>
+    <message>
+        <source>conferenceSubjectChangedEvent</source>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
+        <translation>Új tárgy: %1</translation>
+    </message>
 </context>
 </TS>
