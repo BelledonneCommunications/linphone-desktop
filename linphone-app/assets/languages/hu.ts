@@ -3394,5 +3394,20 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>menuPlayMe</source>
         <translation>Lejátszás!</translation>
     </message>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation>Az összes másolása</translation>
+    </message>
+    <message>
+        <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <source>menuDeliveryStatus</source>
+        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation>Kézbesítés állapota</translation>
+    </message>
 </context>
 </TS>
