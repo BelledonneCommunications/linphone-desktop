@@ -3409,5 +3409,10 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
         <translation>Kézbesítés állapota</translation>
     </message>
+    <message>
+        <source>menuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
+        <translation>Törlés</translation>
+    </message>
 </context>
 </TS>
