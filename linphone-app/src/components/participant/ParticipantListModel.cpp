@@ -218,6 +218,7 @@ void ParticipantListModel::updateParticipants () {
 				changed = true;
 			}else if(!(*itParticipant)->getParticipant()){
 				(*itParticipant)->setParticipant(dbParticipant);
+				changed = true;
 			}
 		}
 		if( changed){
@@ -229,10 +230,12 @@ void ParticipantListModel::updateParticipants () {
 
 void ParticipantListModel::add (std::shared_ptr<ParticipantModel> participant){
 	int row = mParticipants.count();
+	connect(this, &ParticipantListModel::deviceSecurityLevelChanged, participant.get(), &ParticipantModel::onDeviceSecurityLevelChanged);
+	connect(this, &ParticipantListModel::securityLevelChanged, participant.get(), &ParticipantModel::onSecurityLevelChanged);
+	connect(participant.get(),&ParticipantModel::updateAdminStatus, this, &ParticipantListModel::setAdminStatus);
 	beginInsertRows(QModelIndex(), row, row);
 	mParticipants << participant;
 	endInsertRows();
-	resetInternalData();
 	emit participantsChanged();
 	emit countChanged();
 }

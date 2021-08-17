@@ -10,6 +10,8 @@ Column {
 	id:mainItem
 	property alias username: username.text
 	property string sipAddress
+	property string participants
+	
 	property alias statusText : status.text
 	
 	property var contactDescriptionStyle : ContactDescriptionStyle
@@ -67,7 +69,7 @@ Column {
 	Text {
 		id:address
 		anchors.horizontalCenter: (horizontalTextAlignment == Text.AlignHCenter ? parent.horizontalCenter : undefined)
-		text: SipAddressesModel.cleanSipAddress(sipAddress)
+		text: sipAddress?SipAddressesModel.cleanSipAddress(sipAddress):participants
 		color: sipAddressColor
 		elide: Text.ElideRight
 		font.weight: contactDescriptionStyle.sipAddress.weight

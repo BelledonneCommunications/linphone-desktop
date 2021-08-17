@@ -88,13 +88,11 @@ DialogPlus {
 					secure:0,
 					handler: function (entry) {
 						selectedParticipants.add(entry.sipAddress)
-						smartSearchBar.addAddressToIgnore(entry.sipAddress);
 					},
 				}]
 			
 			onEntryClicked: {
 				selectedParticipants.add(entry)
-				smartSearchBar.addAddressToIgnore(entry);
 			}
 		}
 		
@@ -153,7 +151,6 @@ DialogPlus {
 															 icon: 'remove_participant',
 															 tooltipText: 'Remove this participant from the selection',
 															 handler: function (entry) {
-																 smartSearchBar.removeAddressToIgnore(entry.sipAddress)
 																 selectedParticipants.remove(entry)
 																 //							++lastContacts.reloadCount
 															 }
@@ -165,6 +162,8 @@ DialogPlus {
 					model: ParticipantProxyModel {
 						id:selectedParticipants
 						chatRoomModel:dialog.chatRoomModel
+						onAddressAdded: smartSearchBar.addAddressToIgnore(sipAddress)
+						onAddressRemoved: smartSearchBar.removeAddressToIgnore(sipAddress)
 						
 					}
 					

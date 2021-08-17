@@ -109,9 +109,10 @@ Rectangle {
 						 ? (entry.groupEnabled != undefined && entry.groupEnabled 
 							? ''
 							: (entry.haveEncryption != undefined && entry.haveEncryption
-							   ? entry.participants.addressesToString()
+							   ? ''
 							   : entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''))
 						 : '')
+			participants: entry && showContactAddress && entry.groupEnabled != undefined && !entry.groupEnabled && entry.haveEncryption != undefined && entry.haveEncryption ? entry.participants.addressesToString : ''
 			/*
 			  
 	  sipAddress: (entry && showContactAddress?

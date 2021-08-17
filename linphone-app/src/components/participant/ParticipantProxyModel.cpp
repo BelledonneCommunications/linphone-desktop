@@ -49,7 +49,7 @@ QStringList ParticipantProxyModel::getSipAddresses() const{
 	QStringList participants;
 	ParticipantListModel * list = dynamic_cast<ParticipantListModel*>(sourceModel());
 	for(int i = 0 ; i < list->rowCount() ; ++i)
-			participants << list->getAt(i)->getSipAddress();
+		participants << list->getAt(i)->getSipAddress();
 	return participants;
 }
 
@@ -57,7 +57,7 @@ QVariantList ParticipantProxyModel::getParticipants() const{
 	QVariantList participants;
 	ParticipantListModel * list = dynamic_cast<ParticipantListModel*>(sourceModel());
 	for(int i = 0 ; i < list->rowCount() ; ++i)
-			participants << QVariant::fromValue(list->getAt(i));
+		participants << QVariant::fromValue(list->getAt(i));
 	return participants;
 }
 
@@ -70,9 +70,12 @@ int ParticipantProxyModel::getCount() const{
 void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 	if(!mChatRoomModel || mChatRoomModel != chatRoomModel){
 		mChatRoomModel = chatRoomModel;
-		if(mChatRoomModel)
-			setSourceModel(mChatRoomModel->getParticipants());
-		else {
+		if(mChatRoomModel) {
+			auto participants = mChatRoomModel->getParticipants();
+			setSourceModel(participants);
+			for(int i = 0 ; i < participants->getCount() ; ++i)
+				emit addressAdded(participants->getAt(i)->getSipAddress());
+		}else {
 			setSourceModel(new ParticipantListModel(nullptr, this));
 		}
 		sort(0);
@@ -83,12 +86,13 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 void ParticipantProxyModel::add(const QString& address){
 	ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
 	if(!participantsModel->contains(address)){
-	std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
+		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
 		participant->setSipAddress(address);
 		participantsModel->add(participant);
 		if(mChatRoomModel && mChatRoomModel->getChatRoom())// Invite and wait for its creation
 			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
 		emit countChanged();
+		emit addressAdded(address);
 	}
 }
 
@@ -101,19 +105,20 @@ void ParticipantProxyModel::remove(ParticipantModel * participant){
 			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());			
 		//dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
 		emit countChanged();
+		emit addressRemoved(participant->getSipAddress());
 	}
 }
 
 // -----------------------------------------------------------------------------
 
 bool ParticipantProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  //const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  return true;
+	//const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	return true;
 }
 
 bool ParticipantProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-    const ParticipantModel* a = sourceModel()->data(left).value<ParticipantModel*>();
-    const ParticipantModel* b = sourceModel()->data(right).value<ParticipantModel*>();
-  
-    return a->getCreationTime() >= b->getCreationTime();
+	const ParticipantModel* a = sourceModel()->data(left).value<ParticipantModel*>();
+	const ParticipantModel* b = sourceModel()->data(right).value<ParticipantModel*>();
+	
+	return a->getCreationTime() >= b->getCreationTime();
 }

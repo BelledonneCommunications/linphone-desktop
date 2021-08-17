@@ -177,10 +177,11 @@ Rectangle {
 					font.pointSize: ChatStyle.entry.time.pointSize
 					visible: isMessage 
 							&& $chatEntry != undefined
-							&& !$chatEntry.isOutgoing
-							&& (!previousItem 
-								|| previousItem.fromSipAddress != $chatEntry.fromSipAddress
-								|| (new Date(previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0)
+							&& !$chatEntry.isOutgoing // Only outgoing
+							&& (!previousItem  //No previous entry
+								|| previousItem.type != ChatRoomModel.MessageEntry // Previous entry is a message
+								|| previousItem.fromSipAddress != $chatEntry.fromSipAddress // Different user
+								|| (new Date(previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0) // Same day == section
 								)
 				}
 			  RowLayout {

@@ -35,6 +35,9 @@ public:
 	
 	Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel CONSTANT)
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+	Q_PROPERTY(QString addressesToString READ addressesToString NOTIFY participantsChanged)
+	Q_PROPERTY(QString displayNamesToString READ displayNamesToString NOTIFY participantsChanged)
+	Q_PROPERTY(QString usernamesToString READ usernamesToString NOTIFY participantsChanged)
     
     void reset();
 	void update();

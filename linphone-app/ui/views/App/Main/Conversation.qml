@@ -132,12 +132,21 @@ ColumnLayout  {
 							contactDescriptionStyle: ConversationStyle.bar.contactDescription
 							username: avatar.username
 							usernameClickable: chatRoomModel.isMeAdmin
+							participants: if(chatRoomModel) {
+											if(chatRoomModel.groupEnabled) {
+												return chatRoomModel.participants.displayNamesToString;
+											}else if(chatRoomModel.isSecure()) {
+												return chatRoomModel.participants.addressesToString;
+											}else
+												return ''
+										}else
+											return ''
 							sipAddress: {
 								if(chatRoomModel) {
 									if(chatRoomModel.groupEnabled) {
-										return chatRoomModel.participants.displayNamesToString();
+										return '';
 									}else if(chatRoomModel.isSecure()) {
-										return chatRoomModel.participants.addressesToString();
+										return '';
 									}else {
 										return chatRoomModel.sipAddress;
 									}

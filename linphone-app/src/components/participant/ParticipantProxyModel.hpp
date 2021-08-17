@@ -60,6 +60,8 @@ public:
 signals:
   void chatRoomModelChanged();
   void countChanged();
+  void addressAdded(QString sipAddress);
+  void addressRemoved(QString sipAddress);
   
 private:
   /*

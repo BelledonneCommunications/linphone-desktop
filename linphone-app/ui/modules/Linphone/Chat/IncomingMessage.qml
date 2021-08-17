@@ -32,18 +32,13 @@ RowLayout {
 				if (index <= 0) {
 					return true // 1. First message, so visible.
 				}
-				
-				var previousEntry = proxyModel.data(proxyModel.index(index - 1, 0))
-				if (!previousEntry) {
-					return true
-				}
-				
-				// 2. Previous entry is a call event. => Visible.
-				// 3. I have sent a message before my contact. => Visible.
-				// 4. One hour between two incoming messages. => Visible.
-				return previousEntry.type !== ChatRoomModel.MessageEntry ||
-						previousEntry.isOutgoing ||
-						$chatEntry.timestamp.getTime() - previousEntry.timestamp.getTime() > 3600
+				var previousEntry = proxyModel.getAt(index - 1)
+				return !$chatEntry.isOutgoing && (// Only outgoing
+							!previousEntry	//No previous entry
+							|| previousEntry.type != ChatRoomModel.MessageEntry	// Previous entry is a message
+							|| previousEntry.fromSipAddress != $chatEntry.fromSipAddress	// Different user
+							|| (new Date(previousEntry.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0)	// Same day == section
+								)
 			}
 			TooltipArea{
 				delay:0

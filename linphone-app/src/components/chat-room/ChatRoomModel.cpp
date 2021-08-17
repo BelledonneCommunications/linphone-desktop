@@ -347,10 +347,7 @@ void ChatRoomModel::removeEntry(ChatEvent* entry){
 //--------------------------------------------------------------------------------------------
 
 QString ChatRoomModel::getPeerAddress () const {
-	if(haveEncryption() || isGroupEnabled()){
-		return getParticipants()->addressesToString();
-	}else
-		return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asStringUriOnly()) : "";
+	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asStringUriOnly()) : "";
 }
 
 QString ChatRoomModel::getLocalAddress () const {
@@ -367,10 +364,7 @@ QString ChatRoomModel::getLocalAddress () const {
 }
 
 QString ChatRoomModel::getFullPeerAddress () const {
-	if(haveEncryption() || isGroupEnabled()){
-		return getParticipants()->addressesToString();
-	}else
-		return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString()) : "";
+	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString()) : "";
 }
 
 QString ChatRoomModel::getFullLocalAddress () const {
@@ -674,7 +668,7 @@ public:
 		QList<EntrySorterHelper>::iterator itEntries = entries.begin();
 		int spotted = 0;
 		auto lastEntry = itEntries;
-		while(itEntries != entries.end() && (spotted != 7 || (entries.end()-itEntries > minEntries)) ) {
+		while(itEntries != entries.end() && (spotted != 7 && (entries.end()-itEntries > minEntries)) ) {
 			if( itEntries->mType == ChatRoomModel::EntryType::MessageEntry) {
 				if( (spotted & 1) == 0) {
 					lastEntry = itEntries;
