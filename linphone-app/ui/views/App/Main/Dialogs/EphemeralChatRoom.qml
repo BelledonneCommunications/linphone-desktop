@@ -27,6 +27,7 @@ DialogPlus {
 		TextButtonB {
 			//: 'start' : button text to start ephemeral mode
 			text: qsTr('startButton')
+			visible: chatRoomModel.canBeEphemeral
 			
 			onClicked: {
 				if(dialog.timer=== 0)					
