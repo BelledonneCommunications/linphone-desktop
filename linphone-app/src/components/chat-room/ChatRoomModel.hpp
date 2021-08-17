@@ -127,6 +127,8 @@ public:
 	
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(bool groupEnabled READ isGroupEnabled NOTIFY groupEnabledChanged)
+	Q_PROPERTY(bool isConference READ isConference CONSTANT)
+	Q_PROPERTY(bool isOneToOne READ isOneToOne CONSTANT)
 	Q_PROPERTY(bool haveEncryption READ haveEncryption CONSTANT)
 	Q_PROPERTY(bool isMeAdmin READ isMeAdmin NOTIFY isMeAdminChanged)
 	Q_PROPERTY(bool canHandleParticipants READ canHandleParticipants CONSTANT)
@@ -185,6 +187,8 @@ public:
 	Q_INVOKABLE bool isSecure() const;
 	int getSecurityLevel() const;
 	bool isGroupEnabled() const;
+	bool isConference() const;
+	bool isOneToOne() const;
 	bool isMeAdmin() const;
 	bool isCurrentProxy() const;						// Return true if this chat room is Me() is the current proxy
 	bool canHandleParticipants() const;

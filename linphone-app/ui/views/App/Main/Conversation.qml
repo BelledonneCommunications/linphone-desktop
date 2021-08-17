@@ -151,7 +151,7 @@ ColumnLayout  {
 										return chatRoomModel.sipAddress;
 									}
 								}else {
-									return conversation.sipAddress || conversation.fullPeerAddress || conversation.peerAddress || '';
+									return conversation.fullPeerAddress || conversation.peerAddress || '';
 								}
 								
 							}
@@ -236,13 +236,13 @@ ColumnLayout  {
 						icon: 'chat'
 						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel != 1
 						
-						onClicked: CallsListModel.launchChat(conversation.peerAddress, 0)
+						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 0)
 					}
 					ActionButton {
 						icon: 'chat'
 						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
 						
-						onClicked: CallsListModel.launchChat(conversation.peerAddress, 1)
+						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 1)
 						Icon{
 								icon:'secure_level_1'
 								iconSize:15

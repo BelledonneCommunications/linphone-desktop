@@ -388,7 +388,7 @@ QString ChatRoomModel::getUsername () const {
 	QString username;
 	if( !mChatRoom)
 		return "";
-	if( isGroupEnabled())
+	if( !isOneToOne())
 		username = Utils::coreStringToAppString(mChatRoom->getSubject());
 	
 	if(username != "")
@@ -449,7 +449,7 @@ long ChatRoomModel::getEphemeralLifetime() const{
 }
 
 bool ChatRoomModel::canBeEphemeral(){
-	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Conference);
+	return isConference();
 }
 
 bool ChatRoomModel::haveEncryption() const{
@@ -468,6 +468,15 @@ int ChatRoomModel::getSecurityLevel() const{
 bool ChatRoomModel::isGroupEnabled() const{
 	return mChatRoom && mChatRoom->getCurrentParams()->groupEnabled(); 
 }
+
+bool ChatRoomModel::isConference() const{
+	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Conference);
+}
+
+bool ChatRoomModel::isOneToOne() const{
+	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::OneToOne);
+}
+
 bool ChatRoomModel::isMeAdmin() const{
 	return mChatRoom->getMe()->isAdmin();
 }

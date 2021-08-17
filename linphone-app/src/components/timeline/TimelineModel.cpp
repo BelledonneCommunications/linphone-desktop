@@ -98,6 +98,8 @@ void TimelineModel::setSelected(const bool& selected){
 			qInfo() << "Chat room selected : Subject :" << mChatRoomModel->getSubject()
 				<< ", Username:" << mChatRoomModel->getUsername()
 				<< ", GroupEnabled:"<< mChatRoomModel->isGroupEnabled()
+				<< ", isConference:"<< mChatRoomModel->isConference()
+				<< ", isOneToOne:"<< mChatRoomModel->isOneToOne()
 				<< ", Encrypted:"<< mChatRoomModel->haveEncryption()
 				<< ", ephemeralEnabled:" << mChatRoomModel->haveEncryption()
 				<< ", isAdmin:"<< mChatRoomModel->isMeAdmin()

@@ -83,7 +83,7 @@ Rectangle {
 			
 			icon:'chat_room'
 			iconSize: ContactStyle.contentHeight
-			visible: entry!=undefined && entry.groupEnabled != undefined && entry.groupEnabled && entry.participants.count > 2
+			visible: entry!=undefined && !entry.isOneToOne && entry.participants.count > 2
 			
 			Icon{
 				anchors.right: parent.right
@@ -102,29 +102,11 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.leftMargin: ContactStyle.spacing
 			
-			//sipAddress: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
-			//sipAddress: (entry && showContactAddress? entry.sipAddress : '')
-			
-			sipAddress: (entry && showContactAddress
-						 ? (entry.groupEnabled != undefined && entry.groupEnabled 
-							? ''
-							: (entry.haveEncryption != undefined && entry.haveEncryption
-							   ? ''
-							   : entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''))
-						 : '')
-			participants: entry && showContactAddress && entry.groupEnabled != undefined && !entry.groupEnabled && entry.haveEncryption != undefined && entry.haveEncryption ? entry.participants.addressesToString : ''
-			/*
-			  
-	  sipAddress: (entry && showContactAddress?
-					  (entry.contactModel != undefined  ?
-						   entry.contactModel.vcard.address 
-							: (entry.groupEnabled != undefined && entry.groupEnabled ? 'no group':
-								(entry.haveEncryption != undefined && entry.haveEncryption?
-									entry.participants.addressesToString()
-									: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || '')
-							   )
-					   ):'No show')
-		*/
+			sipAddress: (entry && item.showContactAddress
+							&& entry.isOneToOne && (entry.haveEncryption == undefined || !entry.haveEncryption)
+							? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+							: '')
+			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne ? entry.participants.addressesToString : ''
 			username: avatar.username
 		}
 		
