@@ -455,7 +455,7 @@ long ChatRoomModel::getEphemeralLifetime() const{
 }
 
 bool ChatRoomModel::canBeEphemeral(){
-	return mChatRoom && isGroupEnabled();
+	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Conference);
 }
 
 bool ChatRoomModel::haveEncryption() const{
