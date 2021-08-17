@@ -3364,4 +3364,35 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
     </message>
 </context>
+<context>
+    <name></name>
+    <message>
+        <source>deliveryDelivered</source>
+        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Küldés: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDeliveredToUser</source>
+        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Letöltve: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDisplayed</source>
+        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Olvassa el: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryNotDelivered</source>
+        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
+        <translation>%1 semmit sem kapott</translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+    <message>
+        <source>menuPlayMe</source>
+        <translation>Lejátszás!</translation>
+    </message>
+</context>
 </TS>
