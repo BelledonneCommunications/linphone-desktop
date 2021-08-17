@@ -142,6 +142,7 @@ public:
 	
 	Q_PROPERTY(bool isEphemeral READ isEphemeral NOTIFY isEphemeralChanged)
 	Q_PROPERTY(qint64 ephemeralExpireTime READ getEphemeralExpireTime NOTIFY ephemeralExpireTimeChanged)
+	Q_PROPERTY(long ephemeralLifetime READ getEphemeralLifetime CONSTANT)	
 	Q_PROPERTY(LinphoneEnums::ChatMessageState state READ getState NOTIFY stateChanged)
 	Q_PROPERTY(bool isOutgoing READ isOutgoing NOTIFY isOutgoingChanged)
 	
@@ -167,6 +168,7 @@ public:
 	ContactModel * getContactModel() const;
 	bool isEphemeral() const;
 	Q_INVOKABLE qint64 getEphemeralExpireTime() const;
+	Q_INVOKABLE long getEphemeralLifetime() const;
 	LinphoneEnums::ChatMessageState getState() const;
 	bool isOutgoing() const;
 	ContentModel * getFileContentModel() const;

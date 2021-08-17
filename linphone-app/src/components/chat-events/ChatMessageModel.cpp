@@ -415,6 +415,10 @@ qint64 ChatMessageModel::getEphemeralExpireTime() const{
 	//return QDateTime::fromMSecsSinceEpoch(mChatMessage->getEphemeralExpireTime() * 1000)
 }
 
+long ChatMessageModel::getEphemeralLifetime() const{
+	return mChatMessage->getEphemeralLifetime();
+}
+
 LinphoneEnums::ChatMessageState ChatMessageModel::getState() const{
 	return LinphoneEnums::fromLinphone(mChatMessage->getState());
 }

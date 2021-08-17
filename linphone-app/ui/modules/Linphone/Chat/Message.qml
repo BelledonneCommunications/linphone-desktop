@@ -56,15 +56,14 @@ Item {
 			visible:$chatEntry.isEphemeral
 			spacing:5
 			Text{
-				visible : $chatEntry.ephemeralExpireTime > 0
-				text: Utils.formatElapsedTime($chatEntry.ephemeralExpireTime)
+				text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
 				color:"#FF5E00"
 				font.pointSize: Units.dp * 8
 				Timer{
 					running:parent.visible
 					interval: 1000
 					repeat:true
-					onTriggered: parent.text = Utils.formatElapsedTime($chatEntry.getEphemeralExpireTime())// Use the function
+					onTriggered: if($chatEntry.getEphemeralExpireTime() > 0 ) parent.text = Utils.formatElapsedTime($chatEntry.getEphemeralExpireTime())// Use the function
 				}
 			}
 			Icon{
