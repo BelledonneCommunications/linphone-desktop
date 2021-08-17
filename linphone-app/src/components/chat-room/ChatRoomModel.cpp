@@ -220,6 +220,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactAdded, this, &ChatRoomModel::fullPeerAddressChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactRemoved, this, &ChatRoomModel::usernameChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactRemoved, this, &ChatRoomModel::fullPeerAddressChanged);
+	
 
 	//QObject::connect(this, &ChatRoomModel::messageCountReset, coreManager, &CoreManager::eventCountChanged  );
 	if(mChatRoom){
@@ -633,8 +634,8 @@ void ChatRoomModel::resetMessageCount () {
 		}
 		setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 		setMissedCallsCount(0);
-		CoreManager::getInstance()->updateUnreadMessageCount();
 		emit messageCountReset();
+		CoreManager::getInstance()->updateUnreadMessageCount();
 	}
 }
 //-------------------------------------------------

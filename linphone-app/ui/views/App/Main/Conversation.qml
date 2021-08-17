@@ -402,7 +402,6 @@ ColumnLayout  {
 				if (!SettingsModel.chatEnabled) {
 					setEntryTypeFilter(ChatRoomModel.CallEntry)
 				}
-				resetMessageCount()
 			}
 			chatRoomModel: conversation.chatRoomModel
 			peerAddress: conversation.peerAddress

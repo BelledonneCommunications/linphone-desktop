@@ -51,8 +51,10 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	mChatRoomModel = ChatRoomModel::create(chatRoom);
 //	mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom);
 	if( mChatRoomModel ){
+		CoreManager::getInstance()->handleChatRoomCreated(mChatRoomModel);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::unreadMessagesCountChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::missedCallsCountChanged, this, &TimelineModel::updateUnreadCount);
+		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultProxyChanged, this, &TimelineModel::onDefaultProxyChanged);
 	}
 	

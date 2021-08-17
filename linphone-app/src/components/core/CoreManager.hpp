@@ -168,6 +168,7 @@ public slots:
     void stopIterate();
     void setLastRemoteProvisioningState(const linphone::ConfiguringState& state);
     void createLinphoneCore (const QString &configPath);// In order to delay creation
+    void handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel);
 
 signals:
   void coreManagerInitialized ();

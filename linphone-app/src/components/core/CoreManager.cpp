@@ -275,6 +275,10 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   mCore->enableFriendListSubscription(true);
 }
 
+void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel){
+	emit chatRoomModelCreated(chatRoomModel);
+}
+
 void CoreManager::migrate () {
   shared_ptr<linphone::Config> config = mCore->getConfig();
   int rcVersion = config->getInt(SettingsModel::UiSection, RcVersionName, 0);
