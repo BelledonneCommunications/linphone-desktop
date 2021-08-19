@@ -196,7 +196,7 @@ void VcardModel::setUsername (const QString &username) {
   if (username.length() == 0 || username == getUsername())
     return;
 
-  mVcard->setFullName(encode(username).toStdString());
+  mVcard->setFullName(Utils::appStringToCoreString(encode(username)));
   emit vcardUpdated();
 }
 

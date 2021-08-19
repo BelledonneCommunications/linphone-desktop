@@ -33,7 +33,8 @@ class QTimer;
 
 class AccountSettingsModel;
 class CallsListModel;
-class ChatModel;
+class ChatRoomModel;
+class ChatRoomListModel;
 class ContactsListModel;
 class ContactsImporterListModel;
 class CoreHandlers;
@@ -43,6 +44,7 @@ class LdapListModel;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
+class TimelineListModel;
 
 
 class CoreManager : public QObject {
@@ -66,8 +68,11 @@ public:
     return mHandlers;
   }
 
-  std::shared_ptr<ChatModel> getChatModel (const QString &peerAddress, const QString &localAddress);
-  bool chatModelExists (const QString &sipAddress, const QString &localAddress);
+  //std::shared_ptr<ChatRoomModel> getChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool &isSecure);
+  //std::shared_ptr<ChatRoomModel> getChatRoomModel (ChatRoomModel * data);// Get the shared pointer. This can be done becuase of unicity of ChatRoomModel
+  //std::shared_ptr<ChatRoomModel> getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create = true);
+  //bool chatRoomModelExists (const QString &sipAddress, const QString &localAddress, const bool &isSecure);
+  //bool chatRoomModelExists (std::shared_ptr<linphone::ChatRoom> chatRoom);
   
   HistoryModel* getHistoryModel();
 
@@ -91,6 +96,12 @@ public:
     Q_CHECK_PTR(mCallsListModel);
     return mCallsListModel;
   }
+  /* Timelines
+  ChatRoomListModel *getChatRoomListModel () const {
+    Q_CHECK_PTR(mChatRoomListModel);
+    return mChatRoomListModel;
+  }*/
+  
 
   ContactsListModel *getContactsListModel () const {
     Q_CHECK_PTR(mContactsListModel);
@@ -101,8 +112,10 @@ public:
     Q_CHECK_PTR(mContactsImporterListModel);
     return mContactsImporterListModel;
   }
-  
-  
+
+  TimelineListModel *getTimelineListModel () const {
+	  return mTimelineListModel;
+  }
 
   SipAddressesModel *getSipAddressesModel () const {
     Q_CHECK_PTR(mSipAddressesModel);
@@ -137,6 +150,7 @@ public:
   Q_INVOKABLE VcardModel *createDetachedVcardModel () const;
 
   Q_INVOKABLE void forceRefreshRegisters ();
+  void updateUnreadMessageCount();
 
   Q_INVOKABLE void sendLogs () const;
   Q_INVOKABLE void cleanLogs () const;
@@ -154,16 +168,17 @@ public slots:
     void stopIterate();
     void setLastRemoteProvisioningState(const linphone::ConfiguringState& state);
     void createLinphoneCore (const QString &configPath);// In order to delay creation
+    void handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel);
 
 signals:
   void coreManagerInitialized ();
 
-  void chatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
+  void chatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
   void historyModelCreated (HistoryModel *historyModel);
 
   void logsUploaded (const QString &url);
 
-  void eventCountChanged (int count);
+  void eventCountChanged ();
 
 private:
   CoreManager (QObject *parent, const QString &configPath);
@@ -194,6 +209,8 @@ private:
   CallsListModel *mCallsListModel = nullptr;
   ContactsListModel *mContactsListModel = nullptr;
   ContactsImporterListModel *mContactsImporterListModel = nullptr;
+  TimelineListModel *mTimelineListModel = nullptr;
+  ChatRoomListModel *mChatRoomListModel = nullptr;
   
   SipAddressesModel *mSipAddressesModel = nullptr;
   SettingsModel *mSettingsModel = nullptr;
@@ -201,7 +218,9 @@ private:
 
   EventCountNotifier *mEventCountNotifier = nullptr;
 
-  QHash<QPair<QString, QString>, std::weak_ptr<ChatModel>> mChatModels;
+  //QHash<QPair<bool, QPair<QString, QString> >, std::weak_ptr<ChatRoomModel>> mChatRoomModels;
+  //QHash<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>> mChatRoomModels;
+  //QList<QPair<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>>> mChatRoomModels;
   HistoryModel * mHistoryModel = nullptr;
   LdapListModel *mLdapListModel = nullptr;
 

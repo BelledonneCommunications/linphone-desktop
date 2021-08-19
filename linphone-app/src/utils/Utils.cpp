@@ -26,13 +26,32 @@
 
 #include "Utils.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/contacts/ContactsListModel.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contact/VcardModel.hpp"
 
 // =============================================================================
 
 namespace {
   constexpr int SafeFilePathLimit = 100;
+  
 }
 
+constexpr char Utils::WindowIconPath[];
+linphone::TransportType Utils::stringToTransportType (const QString &transport) {
+  if (transport == QLatin1String("TCP"))
+    return linphone::TransportType::Tcp;
+  if (transport == QLatin1String("UDP"))
+    return linphone::TransportType::Udp;
+  if (transport == QLatin1String("TLS"))
+    return linphone::TransportType::Tls;
+
+  return linphone::TransportType::Dtls;
+}
+
+std::shared_ptr<linphone::Address> Utils::interpretUrl(const QString& address){
+	return CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address));
+}
 char *Utils::rstrstr (const char *a, const char *b) {
   size_t a_len = strlen(a);
   size_t b_len = strlen(b);
@@ -49,6 +68,30 @@ char *Utils::rstrstr (const char *a, const char *b) {
 }
 
 // -----------------------------------------------------------------------------
+
+bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability){
+	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(address);
+	if(contact)
+		return contact->hasCapability(capability);
+	else
+		return false;
+}
+
+QString Utils::toDateTimeString(QDateTime date){
+	if(date.date() == QDate::currentDate())
+		return toTimeString(date);
+	else
+		return date.toString("yyyy/MM/dd hh:mm:ss");
+}
+
+QString Utils::toTimeString(QDateTime date){
+	return date.toString("hh:mm:ss");
+}
+
+QString Utils::toDateString(QDateTime date){
+	return date.toString("yyyy/MM/dd");
+}
+
 QImage Utils::getImage(const QString &pUri) {
 	QImage image(pUri);
 	if(image.isNull()){// Try to determine format from headers instead of using suffix
@@ -415,4 +458,22 @@ void Utils::copyDir(QString from, QString to) {
 		QDir().mkpath(toDir);// no need to check if dir exists
 		copyDir(from + nextDir, toDir);//Go up
 	}
+}
+
+QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& address){
+	QString displayName;
+	if(address){
+		std::shared_ptr<linphone::Address> cleanAddress = address->clone();
+		cleanAddress->clean();
+		QString qtAddress = Utils::coreStringToAppString(cleanAddress->asStringUriOnly());
+		ContactModel * model = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(qtAddress);
+		if(model && model->getVcardModel())
+			displayName = model->getVcardModel()->getUsername();
+		else{
+			displayName = Utils::coreStringToAppString(address->getDisplayName());
+			if(displayName == "")
+				displayName = Utils::coreStringToAppString(address->getUsername());
+		}
+	}
+	return displayName;
 }

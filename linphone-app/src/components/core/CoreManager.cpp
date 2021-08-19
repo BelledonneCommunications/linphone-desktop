@@ -29,7 +29,8 @@
 
 #include "app/paths/Paths.hpp"
 #include "components/calls/CallsListModel.hpp"
-#include "components/chat/ChatModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
+#include "components/chat-room/ChatRoomListModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contacts/ContactsImporterListModel.hpp"
@@ -38,6 +39,7 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 
 #include "utils/Utils.hpp"
 
@@ -99,6 +101,7 @@ CoreManager::~CoreManager(){
 
 void CoreManager::initCoreManager(){
 	mCallsListModel = new CallsListModel(this);
+	mChatRoomListModel = new ChatRoomListModel(this);
 	mContactsListModel = new ContactsListModel(this);
 	mContactsImporterListModel = new ContactsImporterListModel(this);
 	mAccountSettingsModel = new AccountSettingsModel(this);
@@ -106,6 +109,7 @@ void CoreManager::initCoreManager(){
 	mSettingsModel = new SettingsModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
+	mTimelineListModel = new TimelineListModel(this);
 	mEventCountNotifier->updateUnreadMessageCount();
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
@@ -118,45 +122,6 @@ CoreManager *CoreManager::getInstance (){
    return mInstance;
  }
 
-shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {
-  if (peerAddress.isEmpty() || localAddress.isEmpty())
-    return nullptr;
-
-  // Create a new chat model.
-  QPair<QString, QString> chatModelId{ peerAddress, localAddress };
-  if (!mChatModels.contains(chatModelId)) {
-    if (
-      !mCore->createAddress(peerAddress.toStdString()) ||
-      !mCore->createAddress(localAddress.toStdString())
-    ) {
-      qWarning() << QStringLiteral("Unable to get chat model from invalid chat model id: (%1, %2).")
-        .arg(peerAddress).arg(localAddress);
-      return nullptr;
-    }
-
-    auto deleter = [this, chatModelId](ChatModel *chatModel) {
-      bool removed = mChatModels.remove(chatModelId);
-      Q_ASSERT(removed);
-      delete chatModel;
-    };
-
-    shared_ptr<ChatModel> chatModel(new ChatModel(peerAddress, localAddress), deleter);
-    mChatModels[chatModelId] = chatModel;
-
-    emit chatModelCreated(chatModel);
-
-    return chatModel;
-  }
-
-  // Returns an existing chat model.
-  shared_ptr<ChatModel> chatModel = mChatModels[chatModelId].lock();
-  Q_CHECK_PTR(chatModel);
-  return chatModel;
-}
-
-bool CoreManager::chatModelExists (const QString &peerAddress, const QString &localAddress) {
-  return mChatModels.contains({ peerAddress, localAddress });
-}
 
 HistoryModel* CoreManager::getHistoryModel(){
   if(!mHistoryModel){
@@ -206,7 +171,9 @@ void CoreManager::forceRefreshRegisters () {
   qInfo() << QStringLiteral("Refresh registers.");
   mCore->refreshRegisters();
 }
-
+void CoreManager::updateUnreadMessageCount(){
+	mEventCountNotifier->updateUnreadMessageCount();
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::sendLogs () const {
@@ -275,6 +242,12 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     Paths::getFactoryConfigFilePath(),
     nullptr
   );
+  // You only need to give your LIME server URL
+  mCore->setLimeX3DhServerUrl("https://lime.linphone.org/lime-server/lime-server.php");
+	// and enable LIME on your core to use encryption.
+  mCore->enableLimeX3Dh(true);
+					  // Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
+  
   mCore->addListener(mHandlers);
   mCore->setVideoDisplayFilter("MSQOGL");
   mCore->usePreviewWindow(true);
@@ -302,6 +275,10 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   mCore->enableFriendListSubscription(true);
 }
 
+void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel){
+	emit chatRoomModelCreated(chatRoomModel);
+}
+
 void CoreManager::migrate () {
   shared_ptr<linphone::Config> config = mCore->getConfig();
   int rcVersion = config->getInt(SettingsModel::UiSection, RcVersionName, 0);
@@ -317,13 +294,24 @@ void CoreManager::migrate () {
     .arg(rcVersion).arg(RcVersionCurrent);
 
   // Add message_expires param on old proxy configs.
+  /*
   for (const auto &proxyConfig : mCore->getProxyConfigList()) {
     if (proxyConfig->getDomain() == LinphoneDomain) {
       proxyConfig->setContactParameters(DefaultContactParameters);
       proxyConfig->setExpires(DefaultExpires);
       proxyConfig->done();
     }
+  }*/
+  for(const auto &account : mCore->getAccountList()){
+	auto params = account->getParams();
+	if( params->getDomain() == LinphoneDomain) {
+		auto newParams = params->clone();
+		newParams->setContactParameters(DefaultContactParameters);
+		newParams->setExpires(DefaultExpires);
+		account->setParams(newParams);
+	}
   }
+  
   config->setInt(SettingsModel::UiSection, RcVersionName, RcVersionCurrent);
 }
 

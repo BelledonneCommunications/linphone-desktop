@@ -45,6 +45,7 @@ signals:
   void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
   void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
   void callCreated(const std::shared_ptr<linphone::Call> & call);
+  void chatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
   void coreStarting();
   void coreStarted ();
   void coreStopped ();
@@ -52,6 +53,7 @@ signals:
   void logsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
   void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
+  void presenceStatusReceived(std::shared_ptr<linphone::Friend> contact);
   void registrationStateChanged (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state);
   void ecCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
   void setLastRemoteProvisioningState(const linphone::ConfiguringState &state);
@@ -93,6 +95,12 @@ private:
     const std::shared_ptr<linphone::Call> & call
   ) override;
 
+  void onChatRoomStateChanged(
+	const std::shared_ptr<linphone::Core> & core, 
+	const std::shared_ptr<linphone::ChatRoom> & chatRoom,
+	linphone::ChatRoom::State state
+  ) override;
+  
   void onConfiguringStatus(
     const std::shared_ptr<linphone::Core> & core,
     linphone::ConfiguringState status,

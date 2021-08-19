@@ -23,15 +23,19 @@
 
 #include <linphone++/linphone.hh>
 
+#include "LinphoneEnums.hpp"
+
 // =============================================================================
 
 class QString;
 
 namespace LinphoneUtils {
-
   linphone::TransportType stringToTransportType (const QString &transport);
-
+  
+  std::shared_ptr<linphone::Address> interpretUrl(const QString& address);
+  
   static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
 }
+
 
 #endif // ifndef LINPHONE_UTILS_H_

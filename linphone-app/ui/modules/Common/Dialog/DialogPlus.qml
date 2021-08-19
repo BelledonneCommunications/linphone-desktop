@@ -12,11 +12,24 @@ Rectangle {
   id: dialog
 
   property alias buttons: buttons.data // Optionnal.
+  property alias title : titleBar.text	//Optionnal. Show a title bar with a close button.
   property alias descriptionText: description.text // Optionnal.
-  property bool centeredButtons: false
+  property int buttonsAlignment : Qt.AlignLeft
+  property bool flat : false	// Remove margins
+  property alias showCloseCross : titleBar.showCloseCross
+  
+  property int buttonsLeftMargin :(buttonsAlignment & Qt.AlignLeft )== Qt.AlignLeft
+        ? DialogStyle.buttons.leftMargin
+        : (buttonsAlignment & Qt.AlignRight) == Qt.AlignRight
+			? DialogStyle.buttons.rightMargin
+			: DialogStyle.buttons.leftMargin
+  property int buttonsRightMargin : (buttonsAlignment & Qt.AlignRight )== Qt.AlignRight
+        ? DialogStyle.buttons.rightMargin
+        : (buttonsAlignment & Qt.AlignLeft) == Qt.AlignLeft
+			? DialogStyle.buttons.leftMargin
+			: DialogStyle.buttons.rightMargin
 
   default property alias _content: content.data
-  property bool _disableExitStatus
 
   readonly property bool contentIsEmpty: {
     return _content == null || !_content.length
@@ -29,10 +42,7 @@ Rectangle {
   // ---------------------------------------------------------------------------
 
   function exit (status) {
-    if (!_disableExitStatus) {
-      _disableExitStatus = true
       exitStatus(status)
-    }
   }
 
   // ---------------------------------------------------------------------------
@@ -56,35 +66,42 @@ Rectangle {
   ColumnLayout {
     anchors.fill: parent
     spacing: 0
-
+	
+	DialogTitle{
+		id:titleBar
+		//Layout.fillHeight: dialog.contentIsEmpty
+		showCloseCross:dialog.showCloseCross
+		Layout.fillWidth: true
+		onClose: exitStatus(0)
+		
+	}
     DialogDescription {
       id: description
 
       Layout.fillHeight: dialog.contentIsEmpty
       Layout.fillWidth: true
+	  visible: text!=''
     }
 
     Item {
       id: content
 
-      Layout.fillHeight: !dialog.contentIsEmpty
+	  Layout.fillHeight: (flat ? true : !dialog.contentIsEmpty)
       Layout.fillWidth: true
-      Layout.leftMargin: DialogStyle.content.leftMargin
-      Layout.rightMargin: DialogStyle.content.rightMargin
+	  Layout.leftMargin: (flat ? 0 : DialogStyle.content.leftMargin)
+	  Layout.rightMargin: (flat ? 0 : DialogStyle.content.rightMargin)
     }
 
-    Row {
+    RowLayout {
       id: buttons
 
-      Layout.alignment: centeredButtons
-        ? Qt.AlignHCenter
-        : Qt.AlignLeft
+      Layout.alignment: buttonsAlignment
       Layout.bottomMargin: DialogStyle.buttons.bottomMargin
-      Layout.leftMargin: !centeredButtons
-        ? DialogStyle.buttons.leftMargin
-        : undefined
+      Layout.leftMargin: buttonsLeftMargin
+	  Layout.rightMargin: buttonsRightMargin
       Layout.topMargin: DialogStyle.buttons.topMargin
       spacing: DialogStyle.buttons.spacing
+	  visible: children.length>0
     }
   }
 }

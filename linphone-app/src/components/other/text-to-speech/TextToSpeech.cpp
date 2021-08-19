@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -19,33 +19,47 @@
  */
 
 #ifdef TEXTTOSPEECH_ENABLED
-  #include <QTextToSpeech>
+#include <QTextToSpeech>
+#include <QVoice>
 #endif // ifdef TEXTTOSPEECH_ENABLED
 
 #include "TextToSpeech.hpp"
 
+#include <QDebug>
+
 // =============================================================================
 
 #ifdef TEXTTOSPEECH_ENABLED
-  TextToSpeech::TextToSpeech (QObject *parent) : QObject(parent) {
-    mQtTextToSpeech = new QTextToSpeech(this);
-  }
+TextToSpeech::TextToSpeech (QObject *parent) : QObject(parent) {
+	mQtTextToSpeech = new QTextToSpeech(this);
+	connect(mQtTextToSpeech, &QTextToSpeech::stateChanged, this, &TextToSpeech::onStateChanged);
+}
 
-  void TextToSpeech::say (const QString &text) {
-    mQtTextToSpeech->say(text);
-  }
+void TextToSpeech::say (const QString &text) {
+	if(mQtTextToSpeech->volume() == 0.0)
+		mQtTextToSpeech->setVolume(1.0);
+	QStringList names;
+	for(auto i : mQtTextToSpeech->availableVoices())
+		names << i.name();
+	qInfo() << "Speech request : Volume " << mQtTextToSpeech->volume() << "; voices: " << names.join(",") << "; Engines: " << QTextToSpeech::availableEngines();
+	mQtTextToSpeech->say(text);
+}
 
-  bool TextToSpeech::available () const {
-    return true;
-  }
+bool TextToSpeech::available () const {
+	return true;
+}
 
+
+void TextToSpeech::onStateChanged(QTextToSpeech::State state){
+	qInfo() << "Speech Status : " << (int)state;
+}
 #else
-  TextToSpeech::TextToSpeech (QObject *parent) : QObject(parent) {}
+TextToSpeech::TextToSpeech (QObject *parent) : QObject(parent) {}
 
-  void TextToSpeech::say (const QString &) {}
+void TextToSpeech::say (const QString &) {}
 
-  bool TextToSpeech::available () const {
-    return false;
-  }
+bool TextToSpeech::available () const {
+	return false;
+}
 
 #endif // ifdef TEXTTOSPEECH_ENABLED

@@ -14,6 +14,7 @@
     <entry name="nat_policy_ref" overwrite="true">nat_policy_default_values</entry>
     <entry name="realm" overwrite="true">sip.linphone.org</entry>
     <entry name="contact_parameters" overwrite="true">message-expires=604800</entry>
+    <entry name="conference_factory_uri" overwrite="true">sip:conference-factory@sip.linphone.org</entry>
   </section>
   <section name="nat_policy_default_values">
     <entry name="stun_server" overwrite="true">stun.linphone.org</entry>

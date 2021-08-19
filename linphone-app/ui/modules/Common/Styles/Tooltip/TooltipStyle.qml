@@ -1,14 +1,13 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.g
-  property color color: Colors.q
+  property color backgroundColor: Colors.g.color
+  property color color: Colors.q.color
   property int arrowSize: 8
   property int delay: 1000
   property int pointSize: Units.dp * 9
