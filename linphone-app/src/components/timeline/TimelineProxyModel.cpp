@@ -44,9 +44,7 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 	connect(model, &TimelineListModel::updated, this, &TimelineProxyModel::invalidate);
 	connect(model, &TimelineListModel::selectedChanged, this, &TimelineProxyModel::selectedChanged);
 	connect(model, &TimelineListModel::countChanged, this, &TimelineProxyModel::countChanged);
-	
-	setSourceModel(model);
-	
+
 	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultProxyChanged, this, [this]() {
 		dynamic_cast<TimelineListModel*>(sourceModel())->update();
 		invalidate();
@@ -57,6 +55,8 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 		invalidate();// Invalidate and reload GUI if the model has been reset
 		//updateCurrentSelection();
 	});
+
+	setSourceModel(model);
 	sort(0);
 }
 

@@ -61,10 +61,10 @@ Rectangle {
 			//username: UtilsCpp.getDisplayName(entry.sipAddress || entry.peerAddress )
 			
 			username : entry != undefined ?(entry.contactModel != undefined ? entry.contactModel.vcard.username
-																		   :entry.username != undefined ?entry.username:
-																										  LinphoneUtils.getContactUsername(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
-										   ):''
-						
+																			:entry.username != undefined ?entry.username:
+																										   LinphoneUtils.getContactUsername(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+											):''
+
 			visible:!groupChat.visible
 			Icon{
 				anchors.right: parent.right
@@ -83,7 +83,7 @@ Rectangle {
 			
 			icon:'chat_room'
 			iconSize: ContactStyle.contentHeight
-			visible: entry!=undefined && !entry.isOneToOne && entry.participants.count > 2
+			visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne && entry.participants.count > 2
 			
 			Icon{
 				anchors.right: parent.right
@@ -103,9 +103,9 @@ Rectangle {
 			Layout.leftMargin: ContactStyle.spacing
 			
 			sipAddress: (entry && item.showContactAddress
-							&& entry.isOneToOne && (entry.haveEncryption == undefined || !entry.haveEncryption)
-							? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
-							: '')
+						 && (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
+						 ? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+						 : '')
 			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne ? entry.participants.addressesToString : ''
 			username: avatar.username
 		}

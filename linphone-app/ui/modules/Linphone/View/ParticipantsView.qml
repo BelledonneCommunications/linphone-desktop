@@ -102,8 +102,9 @@ ScrollableListView {
 							
 							entry: ({
 										sipAddress: sipAddressesView.interpretableSipAddress,
-										groupEnabled:false,
-										haveEncryption:false
+										isOneToOne:true,
+										haveEncryption:false,
+										securityLevel:1
 									})
 						}
 						
@@ -229,8 +230,8 @@ ScrollableListView {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					showContactAddress: sipAddressesView.showContactAddress
-					//: '(Admin)' : One word for Admin(istrator) 
-					//~ Context Little Header in one word for a column in participant 
+					//: '(Admin)' : One word for Admin(istrator)
+					//~ Context Little Header in one word for a column in participant
 					statusText : showAdminStatus && modelData.adminStatus ? qsTr('participantsAdminHeader') : ''
 					
 					entry:  modelData
@@ -261,7 +262,7 @@ ScrollableListView {
 					Switch{
 						anchors.verticalCenter: parent.verticalCenter
 						width:50
-						//Layout.preferredWidth: 50							  
+						//Layout.preferredWidth: 50
 						indicatorStyle: SwitchStyle.aux
 						
 						visible: sipAddressesView.showSwitch
@@ -270,7 +271,7 @@ ScrollableListView {
 						checked: modelData.adminStatus
 						onClicked: {
 							modelData.adminStatus = !checked
-						}  
+						}
 					}
 					
 					Repeater {
@@ -282,7 +283,7 @@ ScrollableListView {
 							visible: {
 								var visible = sipAddressesView.actions[index].visible
 								return visible === undefined || visible
-							}							
+							}
 							
 							onClicked: {
 								sipAddressesView.actions[index].handler(contactView.entry)
