@@ -60,14 +60,5 @@ RowLayout {
 		backgroundColor: ChatStyle.entry.message.incoming.backgroundColor
 		color: ChatStyle.entry.message.incoming.text.color
 		pointSize: ChatStyle.entry.message.incoming.text.pointSize
-		
-		ActionButton {
-			height: ChatStyle.entry.lineHeight
-			icon: 'delete'
-			iconSize: ChatStyle.entry.deleteIconSize
-			visible: isHoverEntry()
-			
-			onClicked: removeEntry()
-		}
 	}
 }

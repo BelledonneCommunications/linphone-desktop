@@ -88,15 +88,6 @@ Item {
           ? indicator
           : iconComponent
       }
-
-      ActionButton {
-        height: ChatStyle.entry.lineHeight
-        icon: 'delete'
-        iconSize: ChatStyle.entry.deleteIconSize
-        visible: isHoverEntry()
-
-        onClicked: removeEntry()
-      }
     }
   }
 }

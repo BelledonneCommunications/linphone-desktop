@@ -223,14 +223,14 @@ ColumnLayout  {
 						icon: 'video_call'
 						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.haveMoreThanOneParticipants
 						
-						onClicked: CallsListModel.launchVideoCall(conversation.peerAddress)
+						onClicked: CallsListModel.launchVideoCall(chatRoomModel.participants.addressesToString)
 					}
 					
 					ActionButton {
 						icon: 'call'
 						visible: SettingsModel.outgoingCallsEnabled && !conversation.haveMoreThanOneParticipants
 						
-						onClicked: CallsListModel.launchAudioCall(conversation.peerAddress)
+						onClicked: CallsListModel.launchAudioCall(chatRoomModel.participants.addressesToString)
 					}
 					ActionButton {
 						icon: 'chat'

@@ -70,7 +70,7 @@ Item {
 				icon:'timer'
 				iconSize: 15
 			}
-		}
+		}		
 	}
 	
 	
@@ -112,13 +112,14 @@ Item {
 		}
 		
 		ChatMenu{
+			id:chatMenu
 			height: parent.height
 			width: rectangle.width
 			
 			lastTextSelected: message.lastTextSelected 
 			content: $chatEntry.content
 			deliveryCount: deliveryLayout.model.count
-			onDeliveryStatusClecked: deliveryLayout.visible = !deliveryLayout.visible
+			onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 			onRemoveEntryRequested: removeEntry()
 		}
 	}
@@ -143,5 +144,19 @@ Item {
 		anchors.rightMargin: 50
 		
 		chatMessageModel: $chatEntry
+	}
+
+	ActionButton {
+	  height: ChatStyle.entry.lineHeight
+	  anchors.left:rectangle.right
+	  anchors.leftMargin: -10
+	  anchors.top:rectangle.top
+	  anchors.topMargin: 5
+
+	  icon: 'chat_menu'
+	  iconSize: ChatStyle.entry.deleteIconSize
+	  visible: isHoverEntry()
+
+	  onClicked: chatMenu.open()
 	}
 }

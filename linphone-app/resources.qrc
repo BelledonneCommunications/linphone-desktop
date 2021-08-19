@@ -66,6 +66,9 @@
 		<file>assets/images/chat_delivered.svg</file>		
 		<file>assets/images/chat_error.svg</file>
 		<file>assets/images/chat_hovered.svg</file>
+		<file>assets/images/chat_menu_hovered.svg</file>
+		<file>assets/images/chat_menu_normal.svg</file>
+		<file>assets/images/chat_menu_pressed.svg</file>
 		<file>assets/images/chat_is_composing_0.svg</file>
 		<file>assets/images/chat_is_composing_1.svg</file>
 		<file>assets/images/chat_is_composing_2.svg</file>

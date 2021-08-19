@@ -23,8 +23,12 @@ Item {
 	property string content
 	property int deliveryCount : 0
 	
-	signal deliveryStatusClecked()
+	signal deliveryStatusClicked()
 	signal removeEntryRequested()
+
+	function open(){
+		messageMenu.open()
+	}
 	
 	
 	Menu {
@@ -61,7 +65,7 @@ Item {
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			visible: container.deliveryCount > 0
-			onTriggered: container.deliveryStatusClecked()
+			onTriggered: container.deliveryStatusClicked()
 		}
 		MenuItem {
 			//: 'Delete' : Item menu to delete a message
@@ -83,6 +87,7 @@ Item {
 		//			width: rectangle.width
 		
 		acceptedButtons: Qt.RightButton
+		propagateComposedEvents:true
 		cursorShape: parent.hoveredLink
 					 ? Qt.PointingHandCursor
 					 : Qt.IBeamCursor

@@ -106,7 +106,7 @@ Rectangle {
 						 && (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
 						 ? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
 						 : '')
-			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne ? entry.participants.addressesToString : ''
+			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne && entry.participants ? entry.participants.addressesToString : ''
 			username: avatar.username
 		}
 		

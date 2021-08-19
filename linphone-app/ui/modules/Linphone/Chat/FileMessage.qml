@@ -8,6 +8,7 @@ import LinphoneUtils 1.0
 import LinphoneEnums 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
+import Units 1.0
 
 // =============================================================================
 
@@ -253,6 +254,7 @@ Row {
 				}
 				
 				Icon {
+					id:downloadButton
 					anchors {
 						bottom: parent.bottom
 						bottomMargin: ChatStyle.entry.message.file.margins
@@ -262,7 +264,7 @@ Row {
 					
 					icon: 'download'
 					iconSize: ChatStyle.entry.message.file.iconSize
-					visible: (rectangle.contentModel?!isOutgoing&& !rectangle.contentModel.wasDownloaded : false)
+					visible: (rectangle.contentModel?!isOutgoing && !rectangle.contentModel.wasDownloaded : false)
 				}
 				
 				MouseArea {
@@ -273,7 +275,7 @@ Row {
 					}
 					
 					anchors.fill: parent
-					visible: ((rectangle.isUploaded || rectangle.isRead) && !isOutgoing) || isOutgoing
+					visible: downloadButton.visible || ((rectangle.isUploaded || rectangle.isRead) && !isOutgoing) || isOutgoing
 					
 					onClicked: {
 						if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
@@ -294,9 +296,34 @@ Row {
 					width: rectangle.width
 					
 					deliveryCount: deliveryLayout.model.count
-					onDeliveryStatusClecked: deliveryLayout.visible = !deliveryLayout.visible
+					onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 					onRemoveEntryRequested: removeEntry()
 				}
+				
+				Row{
+					id:ephemeralTimerRow
+					anchors.right:downloadButton.visible?downloadButton.left:parent.right
+					anchors.bottom:parent.bottom	
+					anchors.bottomMargin: 5
+					anchors.rightMargin : 5
+					visible:$chatEntry.isEphemeral
+					spacing:5
+					Text{
+						text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
+						color:"#FF5E00"
+						font.pointSize: Units.dp * 8
+						Timer{
+							running:parent.visible
+							interval: 1000
+							repeat:true
+							onTriggered: if($chatEntry.getEphemeralExpireTime() > 0 ) parent.text = Utils.formatElapsedTime($chatEntry.getEphemeralExpireTime())// Use the function
+						}
+					}
+					Icon{
+						icon:'timer'
+						iconSize: 15
+					}
+				}		
 			}
 			
 			ChatDeliveries{
@@ -307,6 +334,20 @@ Row {
 				anchors.rightMargin: 50
 				
 				chatMessageModel: $chatEntry
+			}
+			
+			ActionButton {
+				height: ChatStyle.entry.lineHeight
+				anchors.left:rectangle.right
+				anchors.leftMargin: -10
+				anchors.top:rectangle.top
+				anchors.topMargin: 5
+				
+				icon: 'chat_menu'
+				iconSize: ChatStyle.entry.deleteIconSize
+				visible: isHoverEntry()
+				
+				onClicked: chatMenu.open()
 			}
 		}
 		
@@ -362,15 +403,6 @@ Row {
 									   ? indicator
 									   : icon
 									   ) : undefined
-			}
-			
-			ActionButton {
-				height: ChatStyle.entry.lineHeight
-				icon: 'delete'
-				iconSize: ChatStyle.entry.deleteIconSize
-				visible: isHoverEntry()
-				
-				onClicked: removeEntry()
 			}
 		}
 	}
