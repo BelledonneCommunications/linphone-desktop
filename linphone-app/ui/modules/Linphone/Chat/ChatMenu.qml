@@ -25,6 +25,10 @@ Item {
 	
 	signal deliveryStatusClecked()
 	signal removeEntryRequested()
+
+	function open(){
+		messageMenu.open()
+	}
 	
 	
 	Menu {

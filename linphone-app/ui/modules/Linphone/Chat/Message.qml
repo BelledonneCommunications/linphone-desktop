@@ -70,7 +70,7 @@ Item {
 				icon:'timer'
 				iconSize: 15
 			}
-		}
+		}		
 	}
 	
 	
@@ -112,6 +112,7 @@ Item {
 		}
 		
 		ChatMenu{
+			id:chatMenu
 			height: parent.height
 			width: rectangle.width
 			
@@ -143,5 +144,19 @@ Item {
 		anchors.rightMargin: 50
 		
 		chatMessageModel: $chatEntry
+	}
+
+	ActionButton {
+	  height: ChatStyle.entry.lineHeight
+	  anchors.left:rectangle.right
+	  anchors.leftMargin: -10
+	  anchors.top:rectangle.top
+	  anchors.topMargin: 5
+
+	  icon: 'chat_menu'
+	  iconSize: ChatStyle.entry.deleteIconSize
+	  visible: isHoverEntry()
+
+	  onClicked: chatMenu.open()
 	}
 }
