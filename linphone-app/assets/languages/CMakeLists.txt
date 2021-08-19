@@ -77,10 +77,11 @@ add_custom_target(update_translations
 
 # Remove `*.qm` when `clean` is called.
 set_directory_properties(PROPERTIES ADDITIONAL_MAKE_CLEAN_FILES "${QM_FILES}")
-
+if (WIN32)
 # Workaround: Create empty files for some cmake versions. Otherwise, the qm rules can't be used.
-# foreach (qm ${QM_FILES})
-#   if (NOT EXISTS "${qm}")
-#     file(GENERATE OUTPUT "${qm}" CONTENT "")
-#   endif()
-# endforeach()
+ foreach (qm ${QM_FILES})
+   if (NOT EXISTS "${qm}")
+     file(GENERATE OUTPUT "${qm}" CONTENT "")
+   endif()
+ endforeach()
+endif()

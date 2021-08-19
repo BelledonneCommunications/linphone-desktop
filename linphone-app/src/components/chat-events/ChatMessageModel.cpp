@@ -332,7 +332,7 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 	QString txt;
 	for(auto content : contents){
 		if(content->isText())
-			txt += Utils::coreStringToAppString(content->getUtf8Text());
+			txt += content->getUtf8Text().c_str();
 	}
 	mContent = txt;
 	//mIsOutgoing = chatMessage->isOutgoing() || chatMessage->getState() == linphone::ChatMessage::State::Idle;
