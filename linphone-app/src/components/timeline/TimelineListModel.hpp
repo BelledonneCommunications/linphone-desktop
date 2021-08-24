@@ -56,12 +56,16 @@ public:
 	void remove(std::shared_ptr<TimelineModel> model);
 	int mSelectedCount;
 	
+	bool mAutoSelectAfterCreation = false;// Request to select the next chat room after creation
+	
 	void setSelectedCount(int selectedCount);
 public slots:
 	void update();
 	void removeChatRoomModel(std::shared_ptr<ChatRoomModel> model);
 	void onSelectedHasChanged(bool selected);
 	void onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
+	void onCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) ;
+	void onCallCreated(const std::shared_ptr<linphone::Call> &call);
 	//void onConferenceLeft();
 	
 	

@@ -200,9 +200,11 @@ public:
 //---- Setters
 	void setSubject(QString& subject);
 	void setLastUpdateTime(const QDateTime& lastUpdateDate);
+	void updateLastUpdateTime();
 	
-	void setUnreadMessagesCount(const int& count);
+	void setUnreadMessagesCount(const int& count);	
 	void setMissedCallsCount(const int& count);
+	void addMissedCallsCount(std::shared_ptr<linphone::Call> call);
 	void setEphemeralEnabled(bool enabled);
 	void setEphemeralLifetime(long lifetime);
 
@@ -217,6 +219,7 @@ public:
 	void resetMessageCount ();
 	Q_INVOKABLE void initEntries();
 	Q_INVOKABLE void loadMoreEntries();
+	void callEnded(std::shared_ptr<linphone::Call> call);
 	
 	QDateTime mLastUpdateTime;
 	int mUnreadMessagesCount = 0;
@@ -225,6 +228,14 @@ public:
 	
 	bool mDeleteChatRoom = false;	// Use as workaround because of core->deleteChatRoom() that call destructor without takking account of count ref : call it in ChatRoomModel destructor	
 	int mLastEntriesStep = 50;		// Retrieve a part of the history to avoid too much processing
+	
+	
+	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
+	void insertCalls (const QList<std::shared_ptr<linphone::CallLog> > &calls);
+	void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
+	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
+	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
+	void insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs);
 	
 	
 	//--------------------		CHAT ROOM HANDLER
@@ -306,12 +317,6 @@ signals:
 	void conferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
 	
 private:
-	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
-	void insertCalls (const QList<std::shared_ptr<linphone::CallLog> > &calls);
-	void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
-	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
-	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
-	void insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs);
 	
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 	void handleCallCreated(const std::shared_ptr<linphone::Call> &call);// Count an event call

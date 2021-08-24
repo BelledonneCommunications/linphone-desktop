@@ -59,8 +59,9 @@ function unlockView () {
 }
 
 function setView (view, props) {
-  function apply (view, props) {
-    Linphone.App.smartShowWindow(window)
+  function apply (view, props, showWindow) {
+	if(showWindow)
+		Linphone.App.smartShowWindow(window)
 
     var item = mainLoader.item
 
@@ -71,7 +72,7 @@ function setView (view, props) {
 
   var lockedInfo = window._lockedInfo
   if (!lockedInfo) {
-    apply(view, props)
+    apply(view, props, false)
     return
   }
 
@@ -80,7 +81,7 @@ function setView (view, props) {
   }, function (status) {
     if (status) {
       unlockView()
-      apply(view, props)
+      apply(view, props, true)
     } else {
       updateSelectedEntry(window._currentView, props)
     }

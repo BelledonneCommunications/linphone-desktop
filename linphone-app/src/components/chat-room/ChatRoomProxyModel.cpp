@@ -29,6 +29,7 @@
 #include "components/chat-events/ChatNoticeModel.hpp"
 #include "components/chat-events/ChatCallModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
+#include "components/timeline/TimelineModel.hpp"
 
 // =============================================================================
 
@@ -301,8 +302,11 @@ static inline QWindow *getParentWindow (QObject *object) {
 
 void ChatRoomProxyModel::handleIsActiveChanged (QWindow *window) {
 	if (mChatRoomModel && window->isActive() && getParentWindow(this) == window) {
-		mChatRoomModel->resetMessageCount();
-		mChatRoomModel->focused();
+		auto timeline = CoreManager::getInstance()->getTimelineListModel()->getTimeline(mChatRoomModel->getChatRoom(), false);
+		if(timeline && timeline->mSelected){
+			mChatRoomModel->resetMessageCount();
+			mChatRoomModel->focused();
+		}
 	}
 }
 

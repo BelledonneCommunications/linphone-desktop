@@ -161,6 +161,7 @@ public:
 public slots:
 // Set remote display name when a search has been done
   void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
+  void callEnded();
 
 signals:
   void callErrorChanged (const QString &callError);

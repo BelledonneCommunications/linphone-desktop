@@ -53,10 +53,11 @@ AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObje
     coreManager->getSettingsModel(), &SettingsModel::chatEnabledChanged,
     this, &AbstractEventCountNotifier::internalnotifyEventCount
   );
+  /*
   QObject::connect(
     coreManager->getCallsListModel(), &CallsListModel::callMissed,
     this, &AbstractEventCountNotifier::handleCallMissed
-  );
+  );*/
 }
 
 // -----------------------------------------------------------------------------
@@ -129,7 +130,13 @@ void AbstractEventCountNotifier::handleResetMissedCalls (ChatRoomModel *chatRoom
     internalnotifyEventCount();
   }
 }
+
 void AbstractEventCountNotifier::handleCallMissed (CallModel *callModel) {
   ++mMissedCalls[{ Utils::cleanSipAddress(callModel->getPeerAddress()), Utils::cleanSipAddress(callModel->getLocalAddress()) }];
+  internalnotifyEventCount();
+}
+
+void AbstractEventCountNotifier::handleCallMissed (const QString& localAddress, const QString& peerAddress) {
+  ++mMissedCalls[{ peerAddress, localAddress }];
   internalnotifyEventCount();
 }

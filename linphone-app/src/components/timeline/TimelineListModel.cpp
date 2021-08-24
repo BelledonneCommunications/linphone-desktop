@@ -22,6 +22,7 @@
 
 #include "components/core/CoreManager.hpp"
 #include "components/core/CoreHandlers.hpp"
+#include "components/calls/CallsListModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
@@ -43,6 +44,9 @@ TimelineListModel::TimelineListModel (QObject *parent) : QAbstractListModel(pare
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
 	connect(coreHandlers, &CoreHandlers::messageReceived, this, &TimelineListModel::update);
 	connect(coreHandlers, &CoreHandlers::messageReceived, this, &TimelineListModel::updated);
+	
+	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &TimelineListModel::onCallStateChanged);
+	QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &TimelineListModel::onCallCreated);
 	
 	connect(CoreManager::getInstance()->getSettingsModel(), &SettingsModel::hideEmptyChatRoomsChanged, this, &TimelineListModel::update);
 	connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultRegistrationChanged, this, &TimelineListModel::update);
@@ -323,6 +327,39 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 	}else if(state == linphone::ChatRoom::State::Deleted){
 	}
 }
+
+void TimelineListModel::onCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) {
+}
+
+void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &call){
+		std::shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+		std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+		std::list<std::shared_ptr<linphone::Address>> participants;
+		
+// Find all chat rooms with local address. If not, create one.
+		bool isOutgoing = (call->getDir() == linphone::Call::Dir::Outgoing) ;
+		bool found = false;
+		auto callLog = call->getCallLog();
+		auto callLocalAddress = callLog->getLocalAddress();
+		auto chatRoom = core->searchChatRoom(params, callLocalAddress
+											 , callLog->getRemoteAddress()
+											 , participants);
+		if(chatRoom){
+			for(auto timeline : mTimelines){
+				if( chatRoom == timeline->mChatRoomModel->getChatRoom()){
+					found = true;
+					if(isOutgoing)// If outgoing, we switch to this chat room
+						timeline->setSelected(true);
+				}
+			}
+		}
+		if(!found){// Create a default chat room
+			QVariantList participants;
+			participants << Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
+			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", 0,  participants, isOutgoing);
+		}
+}
+
 /*
 void TimelineListModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> &chatRoom, , const std::shared_ptr<const linphone::EventLog> & eventLog){
 	remove(getTimeline(chatRoom, false).get());

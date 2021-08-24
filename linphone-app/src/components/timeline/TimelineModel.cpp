@@ -49,15 +49,11 @@ std::shared_ptr<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::C
 TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mChatRoomModel = ChatRoomModel::create(chatRoom);
-//	mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom);
 	if( mChatRoomModel ){
 		CoreManager::getInstance()->handleChatRoomCreated(mChatRoomModel);
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultProxyChanged, this, &TimelineModel::onDefaultProxyChanged);
 	}
-	
-	//QObject::connect(mChatRoomModel.get(), &ChatRoomModel::conferenceLeft, this, &TimelineModel::onConferenceLeft);
-	//mTimestamp = QDateTime::fromMSecsSinceEpoch(mChatRoomModel->getChatRoom()->getLastUpdateTime());
 	mSelected = false;
 }
 
@@ -133,10 +129,12 @@ void TimelineModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom>
 void TimelineModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
-	if(newState == linphone::ChatRoom::State::Created)
+	if(newState == linphone::ChatRoom::State::Created && CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation) {
+		CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 		QTimer::singleShot(200, [=](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
 				setSelected(true);
 			});
+	}
 }
 void TimelineModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog)

@@ -61,14 +61,10 @@ public:
 	
 	void setSelected(const bool& selected);
 	
-	
-	//Q_INVOKABLE std::shared_ptr<ChatRoomModel> getChatRoomModel() const;
 	Q_INVOKABLE ChatRoomModel* getChatRoomModel() const;
 
 	bool mSelected;
-	//QDateTime mTimestamp;
 	std::shared_ptr<ChatRoomModel> mChatRoomModel;
-	//std::shared_ptr<linphone::ChatRoom> mChatRoom;
 	
 	virtual void onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing) override;
 	virtual void onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message) override;

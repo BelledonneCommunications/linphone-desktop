@@ -54,7 +54,7 @@ public:
   Q_INVOKABLE ChatRoomModel* createChat (const CallModel * ) const;
   Q_INVOKABLE bool createSecureChat (const QString& subject, const QString &participantAddress) const;
   
-  Q_INVOKABLE QVariantMap createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants) const;
+  Q_INVOKABLE QVariantMap createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const;
 
   Q_INVOKABLE int getRunningCallsNumber () const;
 

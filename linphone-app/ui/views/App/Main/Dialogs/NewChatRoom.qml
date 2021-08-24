@@ -35,7 +35,7 @@ DialogPlus {
 			capitalization: Font.AllUppercase
 			
 			onClicked: {
-				if(CallsListModel.createChatRoom(subject.text, secureSwitch.checked, selectedParticipants.getParticipants() ))
+				if(CallsListModel.createChatRoom(subject.text, secureSwitch.checked, selectedParticipants.getParticipants(), true ))
 					exit(1)
 			}
 			TooltipArea{

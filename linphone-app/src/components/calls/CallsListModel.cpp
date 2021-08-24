@@ -102,6 +102,7 @@ void CallsListModel::askForTransfer (CallModel *callModel) {
 // -----------------------------------------------------------------------------
 
 void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers) const {
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
 	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
@@ -138,6 +139,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
 }
 
 void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers) const {
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
 	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
@@ -175,6 +177,7 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 }
 
 void CallsListModel::launchVideoCall (const QString &sipAddress) const {
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	if (!core->videoSupported()) {
 		qWarning() << QStringLiteral("Unable to launch video call. (Video not supported.) Launching audio call...");
@@ -194,6 +197,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
 }
 
 ChatRoomModel* CallsListModel::launchSecureChat (const QString &sipAddress) const {
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
 	if (!address)
@@ -227,10 +231,11 @@ ChatRoomModel* CallsListModel::launchSecureChat (const QString &sipAddress) cons
 QVariantMap CallsListModel::launchChat(const QString &sipAddress, const int& securityLevel) const{
 	QVariantList participants;
 	participants << sipAddress;
-	return createChatRoom("", securityLevel, participants);
+	return createChatRoom("", securityLevel, participants, true);
 }
 
 ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) const{
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(participantAddress));
 	if (!address)
@@ -262,6 +267,7 @@ ChatRoomModel* CallsListModel::createChat (const CallModel * model) const{
 }
 
 bool CallsListModel::createSecureChat (const QString& subject, const QString &participantAddress) const{
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(participantAddress));
 	if (!address)
@@ -283,11 +289,14 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	return chatRoom != nullptr;
 }
 // Created, timeline that can be used
-QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants) const{
+QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const{
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = selectAfterCreation;
 	QVariantMap result;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	std::shared_ptr<linphone::ChatRoom> chatRoom;
 	QList< std::shared_ptr<linphone::Address>> admins;
+	std::shared_ptr<TimelineModel> timeline;
+	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 	qWarning() << "ChatRoom creation of " << subject << " at " << securityLevel << " security and with " << participants;
 	
 	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
@@ -335,16 +344,21 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			chatRoom = core->createChatRoom(params, localAddress, chatRoomParticipants);
 			if(chatRoom != nullptr && admins.size() > 0)
 				ChatRoomInitializer::setAdminsAsync(params->getSubject(), params->getBackend(), params->groupEnabled(), admins );
+				timeline = timelineList->getTimeline(chatRoom, false);
 		}else{
 			if(admins.size() > 0){
 				ChatRoomInitializer::setAdminsSync(chatRoom, admins);
 			}
-			auto timelineList = CoreManager::getInstance()->getTimelineListModel();
-			auto timeline = timelineList->getTimeline(chatRoom, true);
-			QTimer::singleShot(200, [timeline](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
-				timeline->setSelected(true);
-			});
+			timeline = timelineList->getTimeline(chatRoom, true);
+		}
+		if(timeline){
+			CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 			result["chatRoomModel"] = QVariant::fromValue(timeline->getChatRoomModel());
+			if(selectAfterCreation) {// The timeline here will not receive the first creation event. Set Selected if needed
+				QTimer::singleShot(200, [timeline](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
+					timeline->setSelected(true);
+				});
+			}
 		}
 	}
 	result["created"] = (chatRoom != nullptr);
@@ -420,12 +434,11 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 			break;
 			
 		case linphone::Call::State::End:
-		case linphone::Call::State::Error:
-			if (call->getCallLog()->getStatus() == linphone::Call::Status::Missed)
-				emit callMissed(&call->getData<CallModel>("call-model"));
+		case linphone::Call::State::Error:{
+			CallModel * model = &call->getData<CallModel>("call-model");
+			model->callEnded();
 			removeCall(call);
-			break;
-			
+		} break;
 		case linphone::Call::State::StreamsRunning: {
 			int index = findCallIndex(mList, call);
 			emit callRunning(index, &call->getData<CallModel>("call-model"));

@@ -118,6 +118,11 @@ void CoreManager::initCoreManager(){
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
 }
+
+AbstractEventCountNotifier * CoreManager::getEventCountNotifier(){
+	return mEventCountNotifier;
+}
+
 CoreManager *CoreManager::getInstance (){
    return mInstance;
  }
