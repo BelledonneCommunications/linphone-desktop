@@ -267,6 +267,9 @@ ApplicationWindow {
 								timeline.model.unselectAll() 
 								setView('Contacts')
 							}
+							onClicked:{
+								setView('Contacts')
+							}
 							Icon{
 								anchors.right:parent.right
 								anchors.verticalCenter: parent.verticalCenter
