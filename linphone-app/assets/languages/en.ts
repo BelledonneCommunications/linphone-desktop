@@ -2475,6 +2475,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>quitWarning</source>
         <translation>Your account has been created but has not been validated yet. Are you sure you want to quit this view?</translation>
     </message>
+    <message>
+        <source>passwordRecovery</source>
+        <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
+        <translation>Forgotten password?</translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccountWithPhoneNumber</name>
