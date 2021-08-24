@@ -207,6 +207,7 @@ ColumnLayout  {
           Layout.leftMargin: ContactEditStyle.values.leftMargin
           Layout.rightMargin: ContactEditStyle.values.rightMargin
           Layout.topMargin: ContactEditStyle.values.topMargin
+          Layout.fillWidth: true
 
           minValues: _contact ? 1 : 0
           placeholder: qsTr('sipAccountsPlaceholder')
