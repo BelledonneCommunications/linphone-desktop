@@ -325,8 +325,10 @@ ColumnLayout  {
 						height:1
 						width:parent.width
 						color:Colors.u.color
+						visible: devicesMenuItem.visible
 					}
 					MenuItem{
+						id: devicesMenuItem
 						//: "Conversation's devices" : Item menu to get all participant devices of the chat room
 						text: qsTr('conversationMenuDevices')
 						iconMenu: (hovered ? 'menu_devices_selected' : 'menu_devices' )
@@ -343,13 +345,16 @@ ColumnLayout  {
 						height:1
 						width:parent.width
 						color:Colors.u.color
+						visible: ephemeralMenuItem.visible
 					}
 					MenuItem{
+						id: ephemeralMenuItem
 						//: 'Ephemeral messages' : Item menu to enable ephemeral mode
 						text: qsTr('conversationMenuEphemeral')
 						iconMenu: (hovered ? 'menu_ephemeral_selected' : 'menu_ephemeral')
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2
+						visible: conversation.securityLevel != 1 && chatRoomModel.isMeAdmin
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/EphemeralChatRoom.qml')
