@@ -54,13 +54,15 @@ public:
 	static constexpr char DefaultContactParameters[] = "message-expires=604800";
 	static constexpr int DefaultExpires = 3600;
 	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
-	
+	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login";
+	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
 	
 	static constexpr char LinphoneBZip2_exe[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
 	static constexpr char LinphoneBZip2_dll[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
+	
 	
 	// Max image size in bytes. (100Kb)
 	static constexpr qint64 MaxImageSize = 102400;// In Bytes.

@@ -96,6 +96,7 @@ constexpr char Constants::LinphoneDomain[];
 constexpr char Constants::DefaultContactParameters[];
 constexpr int Constants::DefaultExpires;
 constexpr char Constants::DownloadUrl[];
+constexpr char Constants::PasswordRecoveryUrl[];
 
 
 constexpr char Constants::LinphoneBZip2_exe[];

@@ -673,6 +673,7 @@ void App::registerToolTypes () {
   registerToolType<Units>("Units");
   registerToolType<ContactsImporterPluginsManager>("ContactsImporterPluginsManager");
   registerToolType<Utils>("UtilsCpp");
+  registerToolType<Constants>("ConstantsCpp");
   //registerToolType<Colors>("ColorsCpp");
 }
 
