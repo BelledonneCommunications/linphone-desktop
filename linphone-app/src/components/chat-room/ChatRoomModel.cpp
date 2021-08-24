@@ -393,7 +393,7 @@ QString ChatRoomModel::getConferenceAddress () const {
 }
 
 QString ChatRoomModel::getSubject () const {
-	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getSubject()) : "";
+	return mChatRoom ? QString::fromStdString(mChatRoom->getSubject()) : "";	// in UTF8
 }
 
 QString ChatRoomModel::getUsername () const {
@@ -401,7 +401,7 @@ QString ChatRoomModel::getUsername () const {
 	if( !mChatRoom)
 		return "";
 	if( !isOneToOne())
-		username = Utils::coreStringToAppString(mChatRoom->getSubject());
+		username = QString::fromStdString(mChatRoom->getSubject());
 	
 	if(username != "")
 		return username;
@@ -518,7 +518,7 @@ QList<QString> ChatRoomModel::getComposers(){
 
 void ChatRoomModel::setSubject(QString& subject){
 	if(mChatRoom && getSubject() != subject){
-		mChatRoom->setSubject(Utils::appStringToCoreString(subject));
+		mChatRoom->setSubject(subject.toStdString());	// in UTF8
 		emit subjectChanged(subject);
 	}
 }

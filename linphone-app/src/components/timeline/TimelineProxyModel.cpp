@@ -116,6 +116,6 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 bool TimelineProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	const TimelineModel* a = sourceModel()->data(left).value<TimelineModel*>();
 	const TimelineModel* b = sourceModel()->data(right).value<TimelineModel*>();
-	
-	return a->getChatRoomModel()->mLastUpdateTime >= b->getChatRoomModel()->mLastUpdateTime ;
+
+	return a->getChatRoomModel()->mLastUpdateTime > b->getChatRoomModel()->mLastUpdateTime;
 }

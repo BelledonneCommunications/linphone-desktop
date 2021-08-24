@@ -163,18 +163,6 @@ if (WIN32)
 		set(MSYS2_MINGW "mingw32")
 	endif()
 
-	find_file (LDAP_SSL_DLL NAMES "libssl-1_1.dll" "libssl.dll" HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin" NO_DEFAULT_PATH)
-	find_file (LDAP_CRYPTO_DLL NAMES "libcrypto-1_1.dll" "libcrypto.dll"  HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin" NO_DEFAULT_PATH)
-	find_file (LDAP_GCC_DLL NAMES "libgcc_s_dw2-1.dll" "libgcc.dll"  HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin" NO_DEFAULT_PATH)
-	find_file (LDAP_WINTHREAD_DLL NAMES "libwinpthread-1.dll" "libwinpthread.dll" HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin" NO_DEFAULT_PATH)
-#Try in default path if didn't find	
-	find_file (LDAP_SSL_DLL NAMES "libssl-1_1.dll" "libssl.dll" HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin")
-	find_file (LDAP_CRYPTO_DLL NAMES "libcrypto-1_1.dll" "libcrypto.dll"  HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin")
-	find_file (LDAP_GCC_DLL NAMES "libgcc_s_dw2-1.dll" "libgcc.dll"  HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin")
-	find_file (LDAP_WINTHREAD_DLL NAMES "libwinpthread-1.dll" "libwinpthread.dll" HINTS "${MSYS2_PATH}/${MSYS2_MINGW}/bin")
-
-	install(FILES ${LDAP_SSL_DLL} ${LDAP_CRYPTO_DLL} ${LDAP_GCC_DLL} ${LDAP_WINTHREAD_DLL} DESTINATION "${CMAKE_INSTALL_BINDIR}/" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
-
 #  list(REMOVE_ITEM SHARE_CONTENT "${CMAKE_INSTALL_DATAROOTDIR}/belr" "${CMAKE_INSTALL_DATAROOTDIR}/Belr" "${CMAKE_INSTALL_DATAROOTDIR}/images" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/sounds")
 #  foreach (ITEM IN LISTS SHARE_CONTENT)
 #    list(APPEND SHARE_CONTENT_EXCLUDE PATTERN "${ITEM}" EXCLUDE)
