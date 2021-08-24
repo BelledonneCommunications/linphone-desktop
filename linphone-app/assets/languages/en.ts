@@ -786,6 +786,11 @@ Server URL not configured.</translation>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
         <translation>Call all chat room&apos;s participants</translation>
     </message>
+    <message>
+        <source>searchMessagesPlaceholder</source>
+        <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
+        <translation>Search in messages</translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
