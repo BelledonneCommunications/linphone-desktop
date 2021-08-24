@@ -75,7 +75,10 @@ TabContainer {
             TextButtonB {
                 text: qsTr('cleanLogs')
                 
-                onClicked: Logic.cleanLogs()
+                onClicked: {
+						Logic.cleanLogs()
+						sendLogsBlock.setText('')
+					}
             }
             
             TextButtonB {
