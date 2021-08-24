@@ -1385,6 +1385,16 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
         <translation>You need to set the conference URI in your account settings to create a conference based chat room.</translation>
     </message>
+    <message>
+        <source>subjectPlaceholder</source>
+        <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
+        <translation>Give a subject</translation>
+    </message>
+    <message>
+        <source>LastContactsTitle</source>
+        <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
+        <translation>Last contacts</translation>
+    </message>
 </context>
 <context>
     <name>Notice</name>
