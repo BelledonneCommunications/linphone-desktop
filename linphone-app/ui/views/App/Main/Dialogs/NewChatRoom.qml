@@ -41,6 +41,7 @@ DialogPlus {
 			TooltipArea{
 				visible: AccountSettingsModel.conferenceURI == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
 				maxWidth: participantView.width
+				delay:0
 				text: {
 						var txt = '\n';
 						if( subject.text == '')
