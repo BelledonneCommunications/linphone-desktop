@@ -24,6 +24,7 @@
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 
 #include "AssistantModel.hpp"
 
@@ -32,10 +33,6 @@
 // =============================================================================
 
 using namespace std;
-
-namespace {
-  constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
-}
 
 class AssistantModel::Handlers : public linphone::AccountCreatorListener {
 public:
@@ -151,7 +148,7 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
   mAccountCreator = core->createAccountCreator(
-    core->getConfig()->getString("assistant", "xmlrpc_url", DefaultXmlrpcUri)
+    core->getConfig()->getString("assistant", "xmlrpc_url", Constants::DefaultXmlrpcUri)
   );
   mAccountCreator->addListener(mHandlers);
 }

@@ -33,14 +33,11 @@
 #include "components/other/images/ImageListModel.hpp"
 #include "components/other/images/ImageModel.hpp"
 
+#include "utils/Constants.hpp"
+
 // =============================================================================
 
 using namespace std;
-
-namespace {
-// Max image size in bytes. (100Kb)
-constexpr qint64 MaxImageSize = 102400;
-}
 
 static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QString &name) {
 	auto it = find_if(readerAttributes.cbegin(), readerAttributes.cend(), [&name](const QXmlStreamAttribute &attribute) {
@@ -267,7 +264,7 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
 		return QImage();
 	}
 	
-	if (Q_UNLIKELY(QFileInfo(file).size() > MaxImageSize)) {
+	if (Q_UNLIKELY(QFileInfo(file).size() > Constants::MaxImageSize)) {
 		qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
 		return QImage();
 	}

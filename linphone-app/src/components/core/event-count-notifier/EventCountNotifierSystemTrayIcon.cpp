@@ -44,7 +44,7 @@ namespace {
 }
 
 EventCountNotifier::EventCountNotifier (QObject *parent) : AbstractEventCountNotifier(parent) {
-  QSvgRenderer renderer((QString(Utils::WindowIconPath)));
+  QSvgRenderer renderer((QString(Constants::WindowIconPath)));
   if (!renderer.isValid())
     qFatal("Invalid SVG Image.");
 

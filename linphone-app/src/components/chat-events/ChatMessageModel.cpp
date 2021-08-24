@@ -46,33 +46,9 @@
 #include "components/settings/SettingsModel.hpp"
 #include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 
 // =============================================================================
-namespace {
-constexpr int ThumbnailImageFileWidth = 100;
-constexpr int ThumbnailImageFileHeight = 100;
-
-// In Bytes.
-constexpr qint64 FileSizeLimit = 524288000;
-}
-/*
-std::shared_ptr<ChatMessageModel::ChatMessageListener::ChatMessageListener> ChatMessageModel::ChatMessageListener::create(ChatMessageModel * model, std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent){// Call it instead constructor
-	auto listener = std::shared_ptr<ChatMessageModel::ChatMessageListener::ChatMessageListener>(new ChatMessageModel::ChatMessageListener::ChatMessageListener(model,chatMessage, parent), [model](ChatMessageModel::ChatMessageListener::ChatMessageListener * listener){
-		chatMessage->removeListener(model->getHandler());
-	});
-	chatMessage->addListener(listener);
-	return model;
-}
-
-ChatMessageModel::ChatMessageListener::ChatMessageListener(ChatMessageModel * model, std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent){
-	connect(this, &ChatMessageModel::ChatMessageListener::onFileTransferSend, model, ChatMessageModel::onFileTransferSend);
-	connect(this, &ChatMessageModel::ChatMessageListener::onFileTransferProgressIndication, model, ChatMessageModel::onFileTransferProgressIndication);
-	connect(this, &ChatMessageModel::ChatMessageListener::onMsgStateChanged, model, ChatMessageModel::onMsgStateChanged);
-}
-ChatMessageModel::ChatMessageListener::~ChatMessageListener(){
-
-}
-*/
 
 // Warning : isFileTransfer/isFile/getpath cannot be used for Content that comes from linphone::ChatMessage::getContents(). That lead to a crash.
 // in SDK there is this note : return c->isFile(); // TODO FIXME this doesn't work when Content is from linphone_chat_message_get_contents() list
@@ -169,7 +145,7 @@ void ContentModel::createThumbnail () {
 				if (exifImageHeader.loadFromJpeg(path))
 					rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
 				QImage thumbnail = image.scaled(
-							ThumbnailImageFileWidth, ThumbnailImageFileHeight,
+							Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
 							Qt::KeepAspectRatio, Qt::SmoothTransformation
 							);
 				
