@@ -27,6 +27,7 @@
 #include "FileDownloader.hpp"
 #include "app/paths/Paths.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 
 // =============================================================================
 
