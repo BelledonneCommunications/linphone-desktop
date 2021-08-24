@@ -56,9 +56,7 @@ public:
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
 	Q_INVOKABLE static QString toTimeString(QDateTime date);
 	Q_INVOKABLE static QString toDateString(QDateTime date);
-//----------------------------------------------------------------------------------	
-	
-	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
+//----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {
 		return QString::fromLocal8Bit(str.c_str(), int(str.size()));

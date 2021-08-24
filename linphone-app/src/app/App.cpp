@@ -45,6 +45,7 @@
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
 
 #include "components/timeline/TimelineModel.hpp"
@@ -60,26 +61,6 @@
 using namespace std;
 
 namespace {
-  constexpr char DefaultLocale[] = "en";
-
-  constexpr char LanguagePath[] = ":/languages/";
-
-  // The main windows of Linphone desktop.
-  constexpr char QmlViewMainWindow[] = "qrc:/ui/views/App/Main/MainWindow.qml";
-  constexpr char QmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
-  constexpr char QmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
-
-  #ifdef ENABLE_UPDATE_CHECK
-    constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
-  #endif // ifdef ENABLE_UPDATE_CHECK
-
-  constexpr char MainQmlUri[] = "Linphone";
-
-  constexpr char AttachVirtualWindowMethodName[] = "attachVirtualWindow";
-  constexpr char AboutPath[] = "qrc:/ui/views/App/Main/Dialogs/About.qml";
-
-  constexpr char AssistantViewName[] = "Assistant";
-
   #ifdef Q_OS_LINUX
     const QString AutoStartDirectory(QDir::homePath().append(QStringLiteral("/.config/autostart/")));
   #elif defined(Q_OS_MACOS)
@@ -160,7 +141,7 @@ namespace {
 // -----------------------------------------------------------------------------
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
-  return translator.load(locale, LanguagePath) && app.installTranslator(&translator);
+  return translator.load(locale, Constants::LanguagePath) && app.installTranslator(&translator);
 }
 
 static inline string getConfigPathIfExists (const QCommandLineParser &parser) {
@@ -221,7 +202,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
   connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
 
-  setWindowIcon(QIcon(Utils::WindowIconPath));
+  setWindowIcon(QIcon(Constants::WindowIconPath));
 
   createParser();
   mParser->process(*this);
@@ -233,7 +214,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
     Logger::getInstance()->setVerbose(true);
 
   // List available locales.
-  for (const auto &locale : QDir(LanguagePath).entryList())
+  for (const auto &locale : QDir(Constants::LanguagePath).entryList())
     mAvailableLocales << QLocale(locale);
 
   // Init locale.
@@ -409,7 +390,7 @@ void App::initContentApp () {
 
   // Load main view.
   qInfo() << QStringLiteral("Loading main view...");
-  mEngine->load(QUrl(QmlViewMainWindow));
+  mEngine->load(QUrl(Constants::QmlViewMainWindow));
   if (mEngine->rootObjects().isEmpty())
     qFatal("Unable to open main window.");
 
@@ -535,7 +516,7 @@ static QObject *makeSharedSingleton (QQmlEngine *, QJSEngine *) {
 
 template<typename T, T *(*function)(void)>
 static inline void registerSharedSingletonType (const char *name) {
-  qmlRegisterSingletonType<T>(MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
+  qmlRegisterSingletonType<T>(Constants::MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
 }
 
 template<typename T, T *(CoreManager::*function)() const>
@@ -547,24 +528,24 @@ static QObject *makeSharedSingleton (QQmlEngine *, QJSEngine *) {
 
 template<typename T, T *(CoreManager::*function)() const>
 static inline void registerSharedSingletonType (const char *name) {
-  qmlRegisterSingletonType<T>(MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
+  qmlRegisterSingletonType<T>(Constants::MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
 }
 
 template<typename T>
 static inline void registerUncreatableType (const char *name) {
-  qmlRegisterUncreatableType<T>(MainQmlUri, 1, 0, name, QLatin1String("Uncreatable"));
+  qmlRegisterUncreatableType<T>(Constants::MainQmlUri, 1, 0, name, QLatin1String("Uncreatable"));
 }
 
 template<typename T>
 static inline void registerSingletonType (const char *name) {
-  qmlRegisterSingletonType<T>(MainQmlUri, 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
+  qmlRegisterSingletonType<T>(Constants::MainQmlUri, 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
     return new T(engine);
   });
 }
 
 template<typename T>
 static inline void registerType (const char *name) {
-  qmlRegisterType<T>(MainQmlUri, 1, 0, name);
+  qmlRegisterType<T>(Constants::MainQmlUri, 1, 0, name);
 }
 
 template<typename T>
@@ -718,8 +699,8 @@ void App::setTrayIcon () {
   root->connect(aboutAction, &QAction::triggered, root, [root] {
     App::smartShowWindow(root);
     QMetaObject::invokeMethod(
-      root, AttachVirtualWindowMethodName, Qt::DirectConnection,
-      Q_ARG(QVariant, QUrl(AboutPath)), Q_ARG(QVariant, QVariant()), Q_ARG(QVariant, QVariant())
+      root, Constants::AttachVirtualWindowMethodName, Qt::DirectConnection,
+      Q_ARG(QVariant, QUrl(Constants::AboutPath)), Q_ARG(QVariant, QVariant()), Q_ARG(QVariant, QVariant())
     );
   });
 
@@ -755,7 +736,7 @@ void App::setTrayIcon () {
 
 
   systemTrayIcon->setContextMenu(menu);
-  systemTrayIcon->setIcon(QIcon(Utils::WindowIconPath));
+  systemTrayIcon->setIcon(QIcon(Constants::WindowIconPath));
   systemTrayIcon->setToolTip(APPLICATION_NAME);
   systemTrayIcon->show();
   mSystemTrayIcon = systemTrayIcon;
@@ -770,7 +751,7 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
   QString locale;
 
   // Use english. This default translator is used if there are no found translations in others loads
-  mLocale = DefaultLocale;
+  mLocale = Constants::DefaultLocale;
   if (!installLocale(*this, *mDefaultTranslator, QLocale(mLocale)))
     qFatal("Unable to install default translator.");
 
@@ -929,8 +910,8 @@ void App::openAppAfterInit (bool mustBeIconified) {
   qInfo() << QStringLiteral("Open " APPLICATION_NAME " app.");
   auto coreManager = CoreManager::getInstance();
   // Create other windows.
-  mCallsWindow = createSubWindow(mEngine, QmlViewCallsWindow);
-  mSettingsWindow = createSubWindow(mEngine, QmlViewSettingsWindow);
+  mCallsWindow = createSubWindow(mEngine, Constants::QmlViewCallsWindow);
+  mSettingsWindow = createSubWindow(mEngine, Constants::QmlViewSettingsWindow);
   QObject::connect(mSettingsWindow, &QWindow::visibilityChanged, this, [coreManager](QWindow::Visibility visibility) {
     if (visibility == QWindow::Hidden) {
       qInfo() << QStringLiteral("Update nat policy.");
@@ -951,11 +932,11 @@ void App::openAppAfterInit (bool mustBeIconified) {
 
   // Display Assistant if it does not exist proxy config.
   if (coreManager->getCore()->getAccountList().empty())
-    QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, AssistantViewName), Q_ARG(QVariant, QString("")));
+    QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, Constants::AssistantViewName), Q_ARG(QVariant, QString("")));
 
   #ifdef ENABLE_UPDATE_CHECK
     QTimer *timer = new QTimer(mEngine);
-    timer->setInterval(VersionUpdateCheckInterval);
+    timer->setInterval(Constants::VersionUpdateCheckInterval);
 
     QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
     timer->start();

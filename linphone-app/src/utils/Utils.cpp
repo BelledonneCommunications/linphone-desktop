@@ -37,7 +37,6 @@ namespace {
   
 }
 
-constexpr char Utils::WindowIconPath[];
 linphone::TransportType Utils::stringToTransportType (const QString &transport) {
   if (transport == QLatin1String("TCP"))
     return linphone::TransportType::Tcp;

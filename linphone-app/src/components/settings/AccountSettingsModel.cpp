@@ -26,6 +26,7 @@
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 
 #include "AccountSettingsModel.hpp"
 #include "SettingsModel.hpp"
@@ -138,6 +139,8 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
 	else
 		map["route"] = "";
 	map["conferenceUri"] = Utils::coreStringToAppString(proxyConfig->getConferenceFactoryUri());
+	if(map["conferenceUri"] == "")
+		map["conferenceUri"] = Constants::DefaultConferenceURI;
 	map["contactParams"] = Utils::coreStringToAppString(proxyConfig->getContactParameters());
 	map["avpfInterval"] = proxyConfig->getAvpfRrInterval();
 	map["registerEnabled"] = proxyConfig->registerEnabled();
@@ -172,7 +175,8 @@ QVariantMap AccountSettingsModel::getProxyConfigDescription (const shared_ptr<li
 QString AccountSettingsModel::getConferenceURI() const{
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
-	return proxyConfig ? Utils::coreStringToAppString(proxyConfig->getConferenceFactoryUri()) : "";
+	QString conferenceURI = proxyConfig ? Utils::coreStringToAppString(proxyConfig->getConferenceFactoryUri()) : Constants::DefaultConferenceURI;
+	return conferenceURI == "" ? Constants::DefaultConferenceURI : conferenceURI;
 }
 
 void AccountSettingsModel::setDefaultProxyConfig (const shared_ptr<linphone::ProxyConfig> &proxyConfig) {

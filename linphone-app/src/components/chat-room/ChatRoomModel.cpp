@@ -57,6 +57,7 @@
 #include "components/core/event-count-notifier/AbstractEventCountNotifier.hpp"
 #include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 #include "utils/LinphoneEnums.hpp"
 
 
@@ -64,14 +65,6 @@
 // =============================================================================
 
 using namespace std;
-
-namespace {
-constexpr int ThumbnailImageFileWidth = 100;
-constexpr int ThumbnailImageFileHeight = 100;
-
-// In Bytes.
-constexpr qint64 FileSizeLimit = 524288000;
-}
 
 // -----------------------------------------------------------------------------
 
@@ -629,8 +622,8 @@ void ChatRoomModel::sendFileMessage (const QString &path) {
 		return;
 	
 	qint64 fileSize = file.size();
-	if (fileSize > FileSizeLimit) {
-		qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(FileSizeLimit);
+	if (fileSize > Constants::FileSizeLimit) {
+		qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(Constants::FileSizeLimit);
 		return;
 	}
 	

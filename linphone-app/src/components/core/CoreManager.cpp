@@ -42,6 +42,7 @@
 #include "components/timeline/TimelineListModel.hpp"
 
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 
 #if defined(Q_OS_MACOS)
   #include "event-count-notifier/EventCountNotifierMacOs.hpp"
@@ -58,19 +59,6 @@
 // =============================================================================
 
 using namespace std;
-
-namespace {
-  constexpr int CbsCallInterval = 20;
-
-  constexpr char RcVersionName[] = "rc_version";
-  constexpr int RcVersionCurrent = 1;
-
-  // TODO: Remove hardcoded values. Use config directly.
-  constexpr char LinphoneDomain[] = "sip.linphone.org";
-  constexpr char DefaultContactParameters[] = "message-expires=604800";
-  constexpr int DefaultExpires = 3600;
-  constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
-}
 
 // -----------------------------------------------------------------------------
 
@@ -286,38 +274,38 @@ void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &ch
 
 void CoreManager::migrate () {
   shared_ptr<linphone::Config> config = mCore->getConfig();
-  int rcVersion = config->getInt(SettingsModel::UiSection, RcVersionName, 0);
-  if (rcVersion == RcVersionCurrent)
+  int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
+  if (rcVersion == Constants::RcVersionCurrent)
     return;
-  if (rcVersion > RcVersionCurrent) {
+  if (rcVersion > Constants::RcVersionCurrent) {
     qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
-      .arg(rcVersion).arg(RcVersionCurrent);
+      .arg(rcVersion).arg(Constants::RcVersionCurrent);
     return;
   }
 
   qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
-    .arg(rcVersion).arg(RcVersionCurrent);
+    .arg(rcVersion).arg(Constants::RcVersionCurrent);
 
   // Add message_expires param on old proxy configs.
   /*
   for (const auto &proxyConfig : mCore->getProxyConfigList()) {
-    if (proxyConfig->getDomain() == LinphoneDomain) {
-      proxyConfig->setContactParameters(DefaultContactParameters);
-      proxyConfig->setExpires(DefaultExpires);
+    if (proxyConfig->getDomain() == Constants::LinphoneDomain) {
+      proxyConfig->setContactParameters(Constants::DefaultContactParameters);
+      proxyConfig->setExpires(Constants::DefaultExpires);
       proxyConfig->done();
     }
   }*/
   for(const auto &account : mCore->getAccountList()){
 	auto params = account->getParams();
-	if( params->getDomain() == LinphoneDomain) {
+	if( params->getDomain() == Constants::LinphoneDomain) {
 		auto newParams = params->clone();
-		newParams->setContactParameters(DefaultContactParameters);
-		newParams->setExpires(DefaultExpires);
+		newParams->setContactParameters(Constants::DefaultContactParameters);
+		newParams->setExpires(Constants::DefaultExpires);
 		account->setParams(newParams);
 	}
   }
   
-  config->setInt(SettingsModel::UiSection, RcVersionName, RcVersionCurrent);
+  config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
 // -----------------------------------------------------------------------------
@@ -342,7 +330,7 @@ int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
 
 void CoreManager::startIterate(){
     mCbsTimer = new QTimer(this);
-    mCbsTimer->setInterval(CbsCallInterval);
+    mCbsTimer->setInterval(Constants::CbsCallInterval);
     QObject::connect(mCbsTimer, &QTimer::timeout, this, &CoreManager::iterate);
     qInfo() << QStringLiteral("Start iterate");
     mCbsTimer->start();
@@ -379,7 +367,7 @@ void CoreManager::handleLogsUploadStateChanged (linphone::Core::LogCollectionUpl
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getDownloadUrl () {
-  return DownloadUrl;
+  return Constants::DownloadUrl;
 }
 
 void CoreManager::setLastRemoteProvisioningState(const linphone::ConfiguringState& state){
