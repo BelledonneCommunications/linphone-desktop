@@ -155,7 +155,7 @@ DialogPlus {
 						Layout.fillWidth: true
 						Layout.rightMargin: 15
 						//: 'Give a subject' : Placeholder in a form about setting a subject
-						placeholderText :'Give a subject'
+						placeholderText : qsTr('subjectPlaceholder')
 						text:(chatRoomModel?chatRoomModel.getSubject():'')
 						Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						TooltipArea{
@@ -175,7 +175,7 @@ DialogPlus {
 					spacing:20
 					Text{
 						//: 'Last contacts' : Header for showing last contacts
-						text :'Last contacts'
+						text : qsTr('LastContactsTitle')
 						color: Colors.g.color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold

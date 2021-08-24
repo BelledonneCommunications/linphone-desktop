@@ -190,15 +190,16 @@ set(SOURCES
     src/components/timeline/TimelineListModel.cpp
     src/components/timeline/TimelineProxyModel.cpp
     src/components/url-handlers/UrlHandlers.cpp
-	src/utils/LinphoneEnums.cpp
+    src/utils/Constants.cpp
+    src/utils/LinphoneEnums.cpp
     src/utils/MediastreamerUtils.cpp
     src/utils/QExifImageHeader.cpp
     src/utils/Utils.cpp
-	src/utils/hacks/ChatRoomInitializer.cpp
-	src/utils/plugins/PluginsManager.cpp
+    src/utils/hacks/ChatRoomInitializer.cpp
+    src/utils/plugins/PluginsManager.cpp
     )
 set(PLUGIN_SOURCES src/utils/plugins/PluginDataAPI.cpp
-	src/utils/plugins/PluginNetworkHelper.cpp
+    src/utils/plugins/PluginNetworkHelper.cpp
     src/utils/plugins/LinphonePlugin.cpp
 	)
 
@@ -283,7 +284,7 @@ set(HEADERS
     src/components/settings/SettingsModel.hpp
     src/components/sip-addresses/SipAddressesModel.hpp
     src/components/sip-addresses/SipAddressesProxyModel.hpp
-	src/components/sip-addresses/SipAddressesSorter.hpp
+    src/components/sip-addresses/SipAddressesSorter.hpp
     src/components/sip-addresses/SipAddressObserver.hpp
     src/components/sound-player/SoundPlayer.hpp
     src/components/telephone-numbers/TelephoneNumbersModel.hpp
@@ -291,17 +292,18 @@ set(HEADERS
     src/components/timeline/TimelineListModel.hpp
     src/components/timeline/TimelineProxyModel.hpp
     src/components/url-handlers/UrlHandlers.hpp
-	src/utils/LinphoneEnums.hpp
+    src/utils/Constants.hpp
+    src/utils/LinphoneEnums.hpp
     src/utils/MediastreamerUtils.hpp
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
-	src/utils/hacks/ChatRoomInitializer.hpp
+    src/utils/hacks/ChatRoomInitializer.hpp
     src/utils/plugins/PluginsManager.hpp
     )
 set(PLUGIN_HEADERS 
-	include/LinphoneApp/PluginDataAPI.hpp
+    include/LinphoneApp/PluginDataAPI.hpp
     include/LinphoneApp/PluginNetworkHelper.hpp
-	include/LinphoneApp/LinphonePlugin.hpp)
+    include/LinphoneApp/LinphonePlugin.hpp)
 list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 set(MAIN_FILE src/app/main.cpp)
 
