@@ -103,7 +103,7 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 	if( !show && ( (mFilterFlags & TimelineFilter::EphemeralChatRoom) == TimelineFilter::EphemeralChatRoom))
 		show = timeline->getChatRoomModel()->isEphemeralEnabled();
 	if(show && mFilterText != ""){
-		QRegularExpression search(mFilterText, QRegularExpression::CaseInsensitiveOption);
+		QRegularExpression search(QRegularExpression::escape(mFilterText), QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
 		show = timeline->getChatRoomModel()->getSubject().contains(search) 
 			|| timeline->getChatRoomModel()->getUsername().contains(search);
 			//|| timeline->getChatRoomModel()->getFullPeerAddress().contains(search); not enough significant?

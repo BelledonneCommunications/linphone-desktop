@@ -57,7 +57,6 @@ protected:
 			return true;
 		
 		QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
-		
 		auto eventModel = sourceModel()->data(index);
 		
 		if( mEntryTypeFilter == ChatRoomModel::EntryType::CallEntry && eventModel.value<ChatCallModel*>() != nullptr)
@@ -164,8 +163,20 @@ void ChatRoomProxyModel::setEntryTypeFilter (int type) {
 
 // -----------------------------------------------------------------------------
 
-bool ChatRoomProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) const {
-	return true;
+bool ChatRoomProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+	bool show = false;
+	if(mFilterText != ""){
+		QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+		auto eventModel = sourceModel()->data(index);
+		ChatMessageModel * chatModel = eventModel.value<ChatMessageModel*>();
+		if( chatModel){
+			QRegularExpression search(QRegularExpression::escape(mFilterText), QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
+			show = chatModel->mContent.contains(search);
+		}
+	}else
+		show = true;
+
+	return show;
 }
 bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	auto l = sourceModel()->data(left);
@@ -275,6 +286,14 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 void ChatRoomProxyModel::resetMessageCount(){
 	if( mChatRoomModel){
 		mChatRoomModel->resetMessageCount();
+	}
+}
+
+void ChatRoomProxyModel::setFilterText(const QString& text){
+	if( mFilterText != text){
+		mFilterText = text;
+		invalidate();
+		emit filterTextChanged();
 	}
 }
 

@@ -18,6 +18,8 @@ Controls.TextField {
   property var tools
   property QtObject textFieldStyle : TextFieldStyle.normal
   onTextFieldStyleChanged: if( !textFieldStyle) textFieldStyle = TextFieldStyle.normal
+  
+  signal iconClicked()
 
   // ---------------------------------------------------------------------------
 
@@ -83,6 +85,10 @@ Controls.TextField {
 
     iconSize: parent.contentHeight
     visible: !parent.text
+    MouseArea{
+		anchors.fill:	parent
+		onClicked: textField.iconClicked()
+    }
   }
   bottomPadding: (statusItem.visible?statusItem.height:2)
   TextEdit{

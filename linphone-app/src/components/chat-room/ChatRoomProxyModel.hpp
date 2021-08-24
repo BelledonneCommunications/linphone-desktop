@@ -30,105 +30,109 @@
 class QWindow;
 
 class ChatRoomProxyModel : public QSortFilterProxyModel {
-  class ChatRoomModelFilter;
-
-  Q_OBJECT
-
-  Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged)
-  Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged)
-  Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged)
-  Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged)
-  //Q_PROPERTY(int isSecure READ isSecure WRITE setIsSecure NOTIFY isSecureChanged)
-  Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
-  //Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged)
-  //Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
-  Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
-  //Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged)
-  Q_PROPERTY(QString cachedText READ getCachedText)
-
+	class ChatRoomModelFilter;
+	
+	Q_OBJECT
+	
+	Q_PROPERTY(QString peerAddress READ getPeerAddress WRITE setPeerAddress NOTIFY peerAddressChanged)
+	Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged)
+	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged)
+	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged)
+	//Q_PROPERTY(int isSecure READ isSecure WRITE setIsSecure NOTIFY isSecureChanged)
+	Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
+	//Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged)
+	//Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
+	Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
+	//Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged)
+	Q_PROPERTY(QString cachedText READ getCachedText)
+	
+	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
+	
 public:
-  ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
-  
-  Q_INVOKABLE QString getDisplayNameComposers()const;
-  Q_INVOKABLE QVariant getAt(int row);
-
-  Q_INVOKABLE void loadMoreEntries ();
-  Q_INVOKABLE void setEntryTypeFilter (int type);
-
-  Q_INVOKABLE void removeAllEntries ();
-  Q_INVOKABLE void removeRow (int index);
-
-  Q_INVOKABLE void sendMessage (const QString &message);
-
-  Q_INVOKABLE void sendFileMessage (const QString &path);
-
-  Q_INVOKABLE void compose (const QString& text);
-
-  Q_INVOKABLE void resetMessageCount();
-  
+	ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
+	
+	Q_INVOKABLE QString getDisplayNameComposers()const;
+	Q_INVOKABLE QVariant getAt(int row);
+	
+	Q_INVOKABLE void loadMoreEntries ();
+	Q_INVOKABLE void setEntryTypeFilter (int type);
+	
+	Q_INVOKABLE void removeAllEntries ();
+	Q_INVOKABLE void removeRow (int index);
+	
+	Q_INVOKABLE void sendMessage (const QString &message);
+	
+	Q_INVOKABLE void sendFileMessage (const QString &path);
+	
+	Q_INVOKABLE void compose (const QString& text);
+	
+	Q_INVOKABLE void resetMessageCount();
+	
+	Q_INVOKABLE void setFilterText(const QString& text);
+	
 signals:
-  void peerAddressChanged (const QString &peerAddress);
-  void localAddressChanged (const QString &localAddress);
-  void fullPeerAddressChanged (const QString &fullPeerAddress);
-  void fullLocalAddressChanged (const QString &fullLocalAddress);
-  bool isRemoteComposingChanged ();
-  //bool isSecureChanged(bool secure);
-  
-  void chatRoomModelChanged();
-
-  void moreEntriesLoaded (int n);
-
-  void entryTypeFilterChanged (int type);
-
+	void peerAddressChanged (const QString &peerAddress);
+	void localAddressChanged (const QString &localAddress);
+	void fullPeerAddressChanged (const QString &fullPeerAddress);
+	void fullLocalAddressChanged (const QString &fullLocalAddress);
+	bool isRemoteComposingChanged ();
+	//bool isSecureChanged(bool secure);
+	
+	void chatRoomModelChanged();
+	
+	void moreEntriesLoaded (int n);
+	
+	void entryTypeFilterChanged (int type);
+	void filterTextChanged();
+	
 protected:
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
-
+	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	
 private:
-  QString getPeerAddress () const;
-  void setPeerAddress (const QString &peerAddress);
-
-  QString getLocalAddress () const;
-  void setLocalAddress (const QString &localAddress);
-  
-  QString getFullPeerAddress () const;
-  void setFullPeerAddress (const QString &peerAddress);
-
-  QString getFullLocalAddress () const;
-  void setFullLocalAddress (const QString &localAddress);
-  
-  //bool isSecure () const;
-  //void setIsSecure (const int &secure);
-  
-  ChatRoomModel *getChatRoomModel() const;
-  void setChatRoomModel (ChatRoomModel *chatRoomModel);
-
-  QList<QString> getComposers () const;
-  
-  QString getCachedText() const;
-
-  void reload (ChatRoomModel *chatRoomModel);
-
-  void handleIsActiveChanged (QWindow *window);
-
-  void handleIsRemoteComposingChanged ();
-  void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
-  void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
-
-  int mMaxDisplayedEntries = EntriesChunkSize;
-
-  QString mPeerAddress;
-  QString mLocalAddress;
-  QString mFullPeerAddress;
-  QString mFullLocalAddress;
-  //int mIsSecure;
-  static QString gCachedText;
-  //std::shared_ptr<linphone::ChatRoom> mChatRoom;
-  
-
-  std::shared_ptr<ChatRoomModel> mChatRoomModel;
-
-  static constexpr int EntriesChunkSize = 50;
+	QString getPeerAddress () const;
+	void setPeerAddress (const QString &peerAddress);
+	
+	QString getLocalAddress () const;
+	void setLocalAddress (const QString &localAddress);
+	
+	QString getFullPeerAddress () const;
+	void setFullPeerAddress (const QString &peerAddress);
+	
+	QString getFullLocalAddress () const;
+	void setFullLocalAddress (const QString &localAddress);
+	
+	//bool isSecure () const;
+	//void setIsSecure (const int &secure);
+	
+	ChatRoomModel *getChatRoomModel() const;
+	void setChatRoomModel (ChatRoomModel *chatRoomModel);
+	
+	QList<QString> getComposers () const;
+	
+	QString getCachedText() const;
+	
+	void reload (ChatRoomModel *chatRoomModel);
+	
+	void handleIsActiveChanged (QWindow *window);
+	
+	void handleIsRemoteComposingChanged ();
+	void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+	void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
+	
+	int mMaxDisplayedEntries = EntriesChunkSize;
+	
+	QString mPeerAddress;
+	QString mLocalAddress;
+	QString mFullPeerAddress;
+	QString mFullLocalAddress;
+	static QString gCachedText;
+	
+	QString mFilterText;
+	
+	std::shared_ptr<ChatRoomModel> mChatRoomModel;
+	
+	static constexpr int EntriesChunkSize = 50;
 };
 
 #endif // CHAT_ROOM_PROXY_MODEL_H_

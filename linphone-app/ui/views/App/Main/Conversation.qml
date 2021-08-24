@@ -379,6 +379,7 @@ ColumnLayout  {
 		visible: SettingsModel.chatEnabled
 		
 		ExclusiveButtons {
+			id: filterButtons
 			anchors {
 				left: parent.left
 				leftMargin: ConversationStyle.filters.leftMargin
@@ -393,6 +394,52 @@ ColumnLayout  {
 			
 			onClicked: Logic.updateChatFilter(button)
 		}
+		// -------------------------------------------------------------------------
+		// Search.
+		// -------------------------------------------------------------------------
+		Icon {
+					id:searchButton
+					anchors.right: parent.right
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					anchors.rightMargin: 20
+					icon: 'timeline_search'
+					iconSize: searchBar.contentHeight
+					visible: !searchView.visible
+					MouseArea{
+						anchors.fill:parent
+						onClicked:{
+							searchView.visible = !searchView.visible
+						}
+					}
+				}
+		Rectangle{
+			id:searchView
+			anchors.right: parent.right
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.left : filterButtons.right
+			anchors.rightMargin: 10
+			anchors.leftMargin: 10
+			visible:false
+			
+			TextField {
+				id:searchBar
+				anchors {
+					fill: parent
+					margins: 7
+				}
+				Layout.fillWidth: true
+				icon: 'search'
+				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
+				placeholderText: qsTr('searchMessagesPlaceholder')
+				
+				onTextChanged: chatRoomProxyModel.filterText = text
+				onIconClicked: searchView.visible = false
+			}
+			
+		}
+		
 	}
 	
 	// ---------------------------------------------------------------------------
