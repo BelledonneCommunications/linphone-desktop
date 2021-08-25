@@ -78,11 +78,7 @@ Notification {
       AccountSettingsModel.setDefaultProxyConfigFromSipAddress(notification.localAddress)
       notification.timelineModel.selected = true
       notification.notificationData.window.setView('Conversation', {
-		chatRoomModel:notification.timelineModel.getChatRoomModel()/*,
-        peerAddress: notification.peerAddress,
-        localAddress: notification.localAddress,
-        fullPeerAddress: notification.fullPeerAddress,
-        fullLocalAddress: notification.fullLocalAddress*/
+		chatRoomModel:notification.timelineModel.getChatRoomModel()
       })
     })
   }

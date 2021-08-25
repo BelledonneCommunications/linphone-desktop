@@ -95,7 +95,7 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", isConference:"<< mChatRoomModel->isConference()
 				<< ", isOneToOne:"<< mChatRoomModel->isOneToOne()
 				<< ", Encrypted:"<< mChatRoomModel->haveEncryption()
-				<< ", ephemeralEnabled:" << mChatRoomModel->haveEncryption()
+				<< ", ephemeralEnabled:" << mChatRoomModel->isEphemeralEnabled()
 				<< ", isAdmin:"<< mChatRoomModel->isMeAdmin()
 				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
 				<< ", hasBeenLeft:" << mChatRoomModel->hasBeenLeft();

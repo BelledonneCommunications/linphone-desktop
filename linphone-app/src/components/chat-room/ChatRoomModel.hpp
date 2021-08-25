@@ -183,7 +183,7 @@ public:
 	bool isEphemeralEnabled() const;
 	long getEphemeralLifetime() const;
 	bool canBeEphemeral();
-	Q_INVOKABLE bool haveEncryption() const;
+	bool haveEncryption() const;
 	Q_INVOKABLE bool isSecure() const;
 	int getSecurityLevel() const;
 	bool isGroupEnabled() const;
