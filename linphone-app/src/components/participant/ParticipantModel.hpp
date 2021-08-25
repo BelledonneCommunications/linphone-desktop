@@ -55,7 +55,7 @@ public:
     bool getAdminStatus() const;
     bool isFocus() const;
 	int getSecurityLevel() const;
-	int getDeviceCount() const;
+	int getDeviceCount();
 	bool getInviting() const;
 	
 	void setSipAddress(const QString& address);

@@ -42,6 +42,23 @@ int ParticipantDeviceListModel::rowCount (const QModelIndex &index) const{
 	return mList.count();
 }
 
+int ParticipantDeviceListModel::count(){
+	return mList.count();
+}
+
+void ParticipantDeviceListModel::updateDevices(std::shared_ptr<linphone::Participant> participant){
+	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = participant->getDevices() ;
+	beginResetModel();
+	mList.clear();
+	for(auto device : devices){
+		auto deviceModel = std::make_shared<ParticipantDeviceModel>(device);
+		connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
+		mList << deviceModel;
+	}
+	endResetModel();
+	emit layoutChanged();
+}
+
 QHash<int, QByteArray> ParticipantDeviceListModel::roleNames () const {
 	QHash<int, QByteArray> roles;
 	roles[Qt::DisplayRole] = "$participantDevice";

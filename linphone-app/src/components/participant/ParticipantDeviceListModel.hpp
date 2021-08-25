@@ -38,6 +38,9 @@ public:
 	ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent = nullptr);
 	
 	int rowCount (const QModelIndex &index = QModelIndex()) const override;
+	int count();
+	
+	void updateDevices(std::shared_ptr<linphone::Participant> participant);
 	
 	virtual QHash<int, QByteArray> roleNames () const override;
 	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;

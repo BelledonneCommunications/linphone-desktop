@@ -52,8 +52,12 @@ int ParticipantModel::getSecurityLevel() const{
 	return (mParticipant ? (int)mParticipant->getSecurityLevel() : 0);
 }
 
-int ParticipantModel::getDeviceCount() const{
-	return (mParticipant ? mParticipant->getDevices().size() : 0);
+int ParticipantModel::getDeviceCount(){
+	int count = (mParticipant ? mParticipant->getDevices().size() : 0);
+	if(mParticipant && count != mParticipantDevices->count()){
+		mParticipantDevices->updateDevices(mParticipant);
+	}
+	return count;
 }
 
 bool ParticipantModel::getInviting() const{

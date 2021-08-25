@@ -170,7 +170,6 @@ bool ParticipantListModel::removeRows (int row, int count, const QModelIndex &pa
 void ParticipantListModel::updateParticipants () {
 	if( mChatRoomModel) {
 		bool changed = false;
-		CoreManager *coreManager = CoreManager::getInstance();
 		auto dbParticipants = mChatRoomModel->getChatRoom()->getParticipants();
 		auto me = mChatRoomModel->getChatRoom()->getMe();
 		dbParticipants.push_front(me);
