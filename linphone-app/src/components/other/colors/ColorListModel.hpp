@@ -55,8 +55,8 @@ class ColorListModel : public QAbstractListModel {
 		ADD_COLOR("c", "#CBCBCB", "Button pressed, separatos, fields.")
 		ADD_COLOR("d", "#5A585B", "")
 		ADD_COLOR("e", "#F3F3F3", "")
-		ADD_COLOR("f", "#E8E8E8", "")
-		ADD_COLOR("g", "#6B7A86", "SIP Address, Contact Text.")
+		ADD_COLOR("f", "#E8E8E8", "Border color")
+		ADD_COLOR("g", "#6B7A86", "SIP Address, Contact Text, Selected button.")
 		ADD_COLOR("h", "#687680", "")
 		
 		// Primary color.
@@ -72,7 +72,7 @@ class ColorListModel : public QAbstractListModel {
 		// Primary color for clicked items.
 		ADD_COLOR("m", "#FF8600", "Primary color for clicked items.")
 		
-		ADD_COLOR("n", "#A1A1A1", "")
+		ADD_COLOR("n", "#A1A1A1", "Pressed button")
 		ADD_COLOR("o", "#D0D8DE", "Disabled button")
 		
 		ADD_COLOR("p", "#17A81A", "Progress bar.")
@@ -87,6 +87,8 @@ class ColorListModel : public QAbstractListModel {
 		ADD_COLOR("u", "#D2D2D2", "Menu border (message)")
 		ADD_COLOR("v", "#E7E7E7", "Menu pressed (message)")
 		ADD_COLOR("w", "#EDEDED", "Menu background (conversation)")
+		
+		ADD_COLOR("x", "#D0D8DE", "Background unselected round button")
 		
 		// Field error.
 		ADD_COLOR("error", "#FF0000", "Error Generic button.")

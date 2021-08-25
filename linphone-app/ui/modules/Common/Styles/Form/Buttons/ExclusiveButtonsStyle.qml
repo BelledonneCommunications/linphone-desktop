@@ -10,7 +10,7 @@ QtObject {
   property QtObject button: QtObject {
     property QtObject color: QtObject {
       property color hovered: Colors.n.color
-      property color normal: Colors.c.color
+      property color normal: Colors.x.color
       property color pressed: Colors.i.color
       property color selected: Colors.g.color
     }
