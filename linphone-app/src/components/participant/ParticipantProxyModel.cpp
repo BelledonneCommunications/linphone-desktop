@@ -98,6 +98,7 @@ void ParticipantProxyModel::add(const QString& address){
 
 void ParticipantProxyModel::remove(ParticipantModel * participant){
 	if(participant) {
+		QString sipAddress =  participant->getSipAddress();
 		if( !mChatRoomModel){
 			ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
 			participantsModel->remove(participant);
@@ -105,7 +106,7 @@ void ParticipantProxyModel::remove(ParticipantModel * participant){
 			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());			
 		//dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
 		emit countChanged();
-		emit addressRemoved(participant->getSipAddress());
+		emit addressRemoved(sipAddress);
 	}
 }
 
