@@ -26,7 +26,8 @@ DialogPlus {
 				chatRoomModel.leaveChatRoom();
 				exit(0)
 			}
-			enabled:!chatRoomModel.hasBeenLeft
+			enabled: !chatRoomModel.hasBeenLeft
+			visible: !chatRoomModel.isOneToOne
 		},Item{
 			Layout.fillWidth: true
 		},
@@ -46,7 +47,7 @@ DialogPlus {
 	showCloseCross: true
 	//: "Group information" : Popup title.
 	//~ This popup display data about the current chat room
-	title: "Group information"
+	title: qsTr("chatRoomDetailsTitle")
 	
 	property ChatRoomModel chatRoomModel
 	buttonsAlignment: Qt.AlignBottom

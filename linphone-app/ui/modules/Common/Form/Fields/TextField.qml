@@ -90,7 +90,7 @@ Controls.TextField {
 		onClicked: textField.iconClicked()
     }
   }
-  bottomPadding: (statusItem.visible?statusItem.height:2)
+  bottomPadding: (statusItem.visible?statusItem.implicitHeight:2)
   TextEdit{
 	  id:statusItem
 	  selectByMouse: true
@@ -103,6 +103,7 @@ Controls.TextField {
 	  anchors.rightMargin:10 + toolsContainer.width
 	  horizontalAlignment:Text.AlignRight
 	  verticalAlignment: Text.AlignVCenter
+	  wrapMode: TextEdit.WordWrap
 	  font {
 		  italic: true
 		  pointSize: textFieldStyle.text.pointSize
