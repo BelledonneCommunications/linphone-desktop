@@ -11,7 +11,7 @@ QtObject {
 
   property QtObject background: QtObject {
     property int height: 22
-    property int radius: 10
+    property int radius: 20
 
     property QtObject color: QtObject {
       property color hovered: Colors.c.color

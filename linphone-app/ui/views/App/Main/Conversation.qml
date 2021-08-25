@@ -410,12 +410,14 @@ ColumnLayout  {
 			anchors.left : filterButtons.right
 			anchors.rightMargin: 10
 			anchors.leftMargin: 80
+			anchors.topMargin: 10
+			anchors.bottomMargin: 10
 			
 			TextField {
 				id:searchBar
 				anchors {
 					fill: parent
-					margins: 7
+					margins: 1
 				}
 				width: parent.width-14
 				icon: 'search'

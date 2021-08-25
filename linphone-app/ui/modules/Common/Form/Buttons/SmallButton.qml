@@ -10,6 +10,7 @@ Button {
   id: button
 
   property alias backgroundColor: background.color
+  property alias radius: background.radius
 
   background: Rectangle {
     id: background
