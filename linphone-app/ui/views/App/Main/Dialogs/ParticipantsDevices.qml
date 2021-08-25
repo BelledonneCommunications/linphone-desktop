@@ -164,7 +164,6 @@ DialogPlus {
 								MouseArea{
 									anchors.fill:parent
 									onClicked: {
-										//mainRectangle.window.detachVirtualWindow()
 										mainRectangle.window.attachVirtualWindow(Qt.resolvedUrl('InfoEncryption.qml')
 																   ,{securityLevel : mainRectangle.securityLevel
 																   , addressToCall : mainRectangle.addressToCall}
