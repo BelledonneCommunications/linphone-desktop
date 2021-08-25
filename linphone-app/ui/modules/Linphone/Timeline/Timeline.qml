@@ -202,7 +202,7 @@ Rectangle {
 					fill: parent
 					margins: 7
 				}
-				Layout.fillWidth: true
+				width: parent.width - 14
 				icon: 'search'
 				//: 'Search in the list' : ths is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('timelineSearchPlaceholderText')

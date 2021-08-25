@@ -402,22 +402,6 @@ ColumnLayout  {
 		// -------------------------------------------------------------------------
 		// Search.
 		// -------------------------------------------------------------------------
-		Icon {
-					id:searchButton
-					anchors.right: parent.right
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.rightMargin: 20
-					icon: 'timeline_search'
-					iconSize: searchBar.contentHeight
-					visible: !searchView.visible
-					MouseArea{
-						anchors.fill:parent
-						onClicked:{
-							searchView.visible = !searchView.visible
-						}
-					}
-				}
 		Rectangle{
 			id:searchView
 			anchors.right: parent.right
@@ -425,8 +409,7 @@ ColumnLayout  {
 			anchors.bottom: parent.bottom
 			anchors.left : filterButtons.right
 			anchors.rightMargin: 10
-			anchors.leftMargin: 10
-			visible:false
+			anchors.leftMargin: 80
 			
 			TextField {
 				id:searchBar
@@ -434,13 +417,12 @@ ColumnLayout  {
 					fill: parent
 					margins: 7
 				}
-				Layout.fillWidth: true
+				width: parent.width-14
 				icon: 'search'
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')
 				
 				onTextChanged: chatRoomProxyModel.filterText = text
-				onIconClicked: searchView.visible = false
 			}
 			
 		}
