@@ -3,268 +3,323 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import LinphoneEnums 1.0
+import UtilsCpp 1.0
+
 import Linphone.Styles 1.0
+import Common.Styles 1.0
 
 // =============================================================================
 
 ScrollableListView {
-  id: sipAddressesView
+	id: sipAddressesView
 
-  // ---------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------
 
-  // Contains a list of: {
-  //   icon: 'string',
-  //   handler: function () { ... }
-  // }
-  property var actions: []
+	// Contains a list of: {
+	//   icon: 'string',
+	//   handler: function () { ... }
+	// }
+	property var actions: []
 
-  property string genSipAddress
+	property string genSipAddress
 
-  // Optional parameters.
-  property string headerButtonDescription
-  property string headerButtonIcon
-  property var headerButtonAction
+	// Optional parameters.
+	property string headerButtonDescription
+	property string headerButtonIcon
+	property var headerButtonAction
+	property bool showHeader : true
+	property bool showContactAddress : true
+	property bool showSwitch : false
+	property bool showSeparator : true
+	property bool isSelectable : true
 
-  readonly property string interpretableSipAddress: SipAddressesModel.interpretSipAddress(
-    genSipAddress, false
-  )
+	property var switchHandler : function(checked, index){
+	}
 
-  // ---------------------------------------------------------------------------
 
-  signal entryClicked (var entry)
+	readonly property string interpretableSipAddress: SipAddressesModel.interpretSipAddress(
+														  genSipAddress, false
+														  )
 
-  // ---------------------------------------------------------------------------
-  // Header.
-  // ---------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------
 
-  header: MouseArea {
-    height: {
-      var height = headerButton.visible ? SipAddressesViewStyle.header.button.height : 0
-      if (defaultContact.visible) {
-        height += SipAddressesViewStyle.entry.height
-      }
-      return height
-    }
-    width: parent.width
+	signal entryClicked (var entry, var index)
 
-    // Workaround to handle mouse.
-    // Without it, the mouse can be given to items list when mouse is hover header.
-    hoverEnabled: true
-    cursorShape: Qt.ArrowCursor
+	// ---------------------------------------------------------------------------
+	// Header.
+	// ---------------------------------------------------------------------------
 
-    Column {
-      anchors.fill: parent
+	header: MouseArea {
+		height: {
+			var height = headerButton.visible ? SipAddressesViewStyle.header.button.height : 0
+			if (defaultContact.visible) {
+				height += SipAddressesViewStyle.entry.height
+			}
+			return height
+		}
+		width: parent.width
 
-      spacing: 0
+		// Workaround to handle mouse.
+		// Without it, the mouse can be given to items list when mouse is hover header.
+		hoverEnabled: true
+		cursorShape: Qt.ArrowCursor
 
-      // -----------------------------------------------------------------------
-      // Default contact.
-      // -----------------------------------------------------------------------
+		Column {
+			anchors.fill: parent
 
-      Loader {
-        id: defaultContact
+			spacing: 0
 
-        height: SipAddressesViewStyle.entry.height
-        width: parent.width
+			// -----------------------------------------------------------------------
+			// Default contact.
+			// -----------------------------------------------------------------------
 
-        visible: sipAddressesView.interpretableSipAddress.length > 0
+			Loader {
+				id: defaultContact
 
-        sourceComponent: Rectangle {
-          anchors.fill: parent
-          color: SipAddressesViewStyle.entry.color.normal
+				height: SipAddressesViewStyle.entry.height
+				width: parent.width
 
-          RowLayout {
-            anchors {
-              fill: parent
-              rightMargin: SipAddressesViewStyle.entry.rightMargin
-            }
-            spacing: 0
+				visible: sipAddressesView.interpretableSipAddress.length > 0
 
-            Contact {
-              id: contact
+				sourceComponent: Rectangle {
+					anchors.fill: parent
+					color: SipAddressesViewStyle.entry.color.normal
 
-              Layout.fillHeight: true
-              Layout.fillWidth: true
+					RowLayout {
+						anchors {
+							fill: parent
+							rightMargin: SipAddressesViewStyle.entry.rightMargin
+						}
+						spacing: 0
 
-              entry: ({
-                sipAddress: sipAddressesView.interpretableSipAddress
-              })
-            }
+						Contact {
+							id: contact
 
-            ActionBar {
-              id: defaultContactActionBar
+							Layout.fillHeight: true
+							Layout.fillWidth: true
 
-              iconSize: SipAddressesViewStyle.entry.iconSize
+							entry: ({
+										sipAddress: sipAddressesView.interpretableSipAddress,
+										isOneToOne:true,
+										haveEncryption:false,
+										securityLevel:1
+									})
+						}
 
-              Repeater {
-                model: sipAddressesView.actions
+						ActionBar {
+							id: defaultContactActionBar
 
-                ActionButton {
-                  icon: modelData.icon
-                  visible: {
-                    var visible = sipAddressesView.actions[index].visible
-                    return visible === undefined || visible
-                  }
+							iconSize: SipAddressesViewStyle.entry.iconSize
 
-                  onClicked: sipAddressesView.actions[index].handler({
-                    sipAddress: sipAddressesView.interpretableSipAddress
-                  })
-                }
-              }
-            }
-          }
-        }
-      }
+							Repeater {
+								model: sipAddressesView.actions
 
-      // -----------------------------------------------------------------------
-      // Header button.
-      // -----------------------------------------------------------------------
+								ActionButton {
+									icon: modelData.icon
+									visible: {
+										var visible = sipAddressesView.actions[index].visible
+										return (visible === undefined || visible) && (modelData.secure==0 || UtilsCpp.hasCapability(sipAddressesView.interpretableSipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh))
+									}
 
-      MouseArea {
-        id: headerButton
+									onClicked: sipAddressesView.actions[index].handler({
+																						   sipAddress: sipAddressesView.interpretableSipAddress
+																					   })
+									Icon{
+										visible: modelData.secure>0
+										icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+										iconSize:15
+										anchors.right:parent.right
+										anchors.top:parent.top
+										anchors.topMargin: -3
+									}
+								}
+							}
+						}
+					}
+				}
+			}
 
-        height: SipAddressesViewStyle.header.button.height
-        width: parent.width
+			// -----------------------------------------------------------------------
+			// Header button.
+			// -----------------------------------------------------------------------
 
-        visible: !!sipAddressesView.headerButtonAction
+			MouseArea {
+				id: headerButton
 
-        onClicked: sipAddressesView.headerButtonAction(sipAddressesView.interpretableSipAddress)
+				height: SipAddressesViewStyle.header.button.height
+				width: parent.width
 
-        Rectangle {
-          anchors.fill: parent
-          color: parent.pressed
-            ? SipAddressesViewStyle.header.color.pressed
-            : SipAddressesViewStyle.header.color.normal
+				visible: sipAddressesView.showHeader && !!sipAddressesView.headerButtonAction
 
-          Text {
-            anchors {
-              left: parent.left
-              leftMargin: SipAddressesViewStyle.header.leftMargin
-              verticalCenter: parent.verticalCenter
-            }
+				onClicked: sipAddressesView.headerButtonAction(sipAddressesView.interpretableSipAddress)
 
-            font {
-              bold: true
-              pointSize: SipAddressesViewStyle.header.text.pointSize
-            }
+				Rectangle {
+					anchors.fill: parent
+					color: parent.pressed
+						   ? SipAddressesViewStyle.header.color.pressed
+						   : SipAddressesViewStyle.header.color.normal
 
-            color: headerButton.pressed
-              ? SipAddressesViewStyle.header.text.color.pressed
-              : SipAddressesViewStyle.header.text.color.normal
-            text: sipAddressesView.headerButtonDescription
-          }
+					Text {
+						anchors {
+							left: parent.left
+							leftMargin: SipAddressesViewStyle.header.leftMargin
+							verticalCenter: parent.verticalCenter
+						}
 
-          Icon {
-            anchors {
-              right: parent.right
-              rightMargin: SipAddressesViewStyle.header.rightMargin
-              verticalCenter: parent.verticalCenter
-            }
+						font {
+							bold: true
+							pointSize: SipAddressesViewStyle.header.text.pointSize
+						}
 
-            icon: sipAddressesView.headerButtonIcon
-            iconSize: SipAddressesViewStyle.header.iconSize
+						color: headerButton.pressed
+							   ? SipAddressesViewStyle.header.text.color.pressed
+							   : SipAddressesViewStyle.header.text.color.normal
+						text: sipAddressesView.headerButtonDescription
+					}
 
-            visible: icon.length > 0
-          }
-        }
-      }
-    }
-  }
+					Icon {
+						anchors {
+							right: parent.right
+							rightMargin: SipAddressesViewStyle.header.rightMargin
+							verticalCenter: parent.verticalCenter
+						}
 
-  // ---------------------------------------------------------------------------
-  // Entries.
-  // ---------------------------------------------------------------------------
+						icon: sipAddressesView.headerButtonIcon
+						iconSize: SipAddressesViewStyle.header.iconSize
 
-  delegate: Rectangle {
-    id: sipAddressEntry
+						visible: icon.length > 0
+					}
+				}
+			}
+		}
+	}
 
-    color: SipAddressesViewStyle.entry.color.normal
-    height: SipAddressesViewStyle.entry.height
-    width: parent ? parent.width : 0
+	// ---------------------------------------------------------------------------
+	// Entries.
+	// ---------------------------------------------------------------------------
 
-    Rectangle {
-      id: indicator
+	delegate: Rectangle {
+		id: sipAddressEntry
 
-      anchors.left: parent.left
-      color: 'transparent'
-      height: parent.height
-      width: SipAddressesViewStyle.entry.indicator.width
-    }
+		color: SipAddressesViewStyle.entry.color.normal
+		height: SipAddressesViewStyle.entry.height
+		width: parent ? parent.width : 0
 
-    MouseArea {
-      id: mouseArea
+		Rectangle {
+			id: indicator
 
-      anchors.fill: parent
-      cursorShape: Qt.ArrowCursor
+			anchors.left: parent.left
+			color: 'transparent'
+			height: parent.height
+			width: SipAddressesViewStyle.entry.indicator.width
+		}
 
-      RowLayout {
-        anchors {
-          fill: parent
-          rightMargin: SipAddressesViewStyle.entry.rightMargin
-        }
-        spacing: 0
+		MouseArea {
+			id: mouseArea
 
-        // ---------------------------------------------------------------------
-        // Contact or address info.
-        // ---------------------------------------------------------------------
+			anchors.fill: parent
+			cursorShape: Qt.ArrowCursor
 
-        Contact {
-          Layout.fillHeight: true
-          Layout.fillWidth: true
+			RowLayout {
+				anchors {
+					fill: parent
+					rightMargin: SipAddressesViewStyle.entry.rightMargin
+				}
+				spacing: 0
 
-          entry: $sipAddress
+				// ---------------------------------------------------------------------
+				// Contact or address info.
+				// ---------------------------------------------------------------------
 
-          MouseArea {
-            anchors.fill: parent
-            onClicked: sipAddressesView.entryClicked($sipAddress)
-          }
-        }
+				Contact {
+					Layout.fillHeight: true
+					Layout.fillWidth: true
+					showContactAddress: sipAddressesView.showContactAddress
 
-        // ---------------------------------------------------------------------
-        // Actions
-        // ---------------------------------------------------------------------
+					entry:  $sipAddress
 
-        ActionBar {
-          iconSize: SipAddressesViewStyle.entry.iconSize
+					MouseArea {
+						anchors.fill: parent
+						onClicked: sipAddressesView.entryClicked($sipAddress.sipAddress, index)
+					}
+				}
 
-          Repeater {
-            model: sipAddressesView.actions
 
-            ActionButton {
-              icon: modelData.icon
-              visible: {
-                var visible = sipAddressesView.actions[index].visible
-                return visible === undefined || visible
-              }
+				// ---------------------------------------------------------------------
+				// Actions
+				// ---------------------------------------------------------------------
 
-              onClicked: sipAddressesView.actions[index].handler($sipAddress)
-            }
-          }
-        }
-      }
-    }
+				ActionBar {
+					iconSize: SipAddressesViewStyle.entry.iconSize
 
-    // Separator.
-    Rectangle {
-      color: SipAddressesViewStyle.entry.separator.color
-      height: SipAddressesViewStyle.entry.separator.height
-      width: parent.width
-    }
+					Switch{
+						anchors.verticalCenter: parent.verticalCenter
+						width:50
+						//Layout.preferredWidth: 50
+						indicatorStyle: SwitchStyle.aux
 
-    // -------------------------------------------------------------------------
+						visible: sipAddressesView.showSwitch
 
-    states: State {
-      when: mouseArea.containsMouse
+						enabled:true
+						checked: false
+						onClicked: {
+							//checked = !checked
+							switchHandler(!checked, index)
+						}
 
-      PropertyChanges {
-        color: SipAddressesViewStyle.entry.color.hovered
-        target: sipAddressEntry
-      }
+					}
 
-      PropertyChanges {
-        color: SipAddressesViewStyle.entry.indicator.color
-        target: indicator
-      }
-    }
-  }
+					Repeater {
+						model: sipAddressesView.actions
+
+						ActionButton {
+							icon: modelData.icon
+							tooltipText:modelData.tooltipText?modelData.tooltipText:''
+							visible: {
+								var visible = sipAddressesView.actions[index].visible
+								return (visible === undefined || visible) && (modelData.secure==0 || !$sipAddress.contactModel || $sipAddress.contactModel.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh))
+							}
+
+							onClicked: {
+								sipAddressesView.actions[index].handler($sipAddress)
+							}
+							Icon{
+								visible: modelData.secure>0
+								icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+								iconSize:15
+								anchors.right:parent.right
+								anchors.top:parent.top
+								anchors.topMargin: -3
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// Separator.
+		Rectangle {
+			color: SipAddressesViewStyle.entry.separator.color
+			height: SipAddressesViewStyle.entry.separator.height
+			width: parent.width
+			visible: sipAddressesView.showSeparator
+		}
+
+		// -------------------------------------------------------------------------
+
+		states: State {
+			when: mouseArea.containsMouse && sipAddressesView.isSelectable
+
+			PropertyChanges {
+				color: SipAddressesViewStyle.entry.color.hovered
+				target: sipAddressEntry
+			}
+
+			PropertyChanges {
+				color: SipAddressesViewStyle.entry.indicator.color
+				target: indicator
+			}
+		}
+	}
 }

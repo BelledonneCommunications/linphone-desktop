@@ -1,12 +1,10 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
-
 // =============================================================================
 
 QtObject {
-  property color color: Colors.k
+  property color color: Colors.k.color
   property int bottomMargin: 30
   property int leftMargin: 30
   property int rightMargin: 40
@@ -14,6 +12,6 @@ QtObject {
 
   property QtObject separator: QtObject {
     property int height: 2
-    property color color: Colors.f
+    property color color: Colors.f.color
   }
 }

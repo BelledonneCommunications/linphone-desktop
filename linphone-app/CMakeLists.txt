@@ -122,8 +122,13 @@ set(SOURCES
     src/components/calls/CallsListProxyModel.cpp
     src/components/camera/Camera.cpp
     src/components/camera/CameraPreview.cpp
-    src/components/chat/ChatModel.cpp
-    src/components/chat/ChatProxyModel.cpp
+	src/components/chat-events/ChatCallModel.cpp
+	src/components/chat-events/ChatEvent.cpp
+	src/components/chat-events/ChatMessageModel.cpp
+	src/components/chat-events/ChatNoticeModel.cpp
+    src/components/chat-room/ChatRoomModel.cpp
+    src/components/chat-room/ChatRoomListModel.cpp
+    src/components/chat-room/ChatRoomProxyModel.cpp
     src/components/codecs/AbstractCodecsModel.cpp
     src/components/codecs/AudioCodecsModel.cpp
     src/components/codecs/VideoCodecsModel.cpp
@@ -150,30 +155,51 @@ set(SOURCES
     src/components/ldap/LdapProxyModel.cpp
     src/components/notifier/Notifier.cpp
     src/components/other/clipboard/Clipboard.cpp
-    src/components/other/colors/Colors.cpp
+    src/components/other/colors/ColorModel.cpp
+    src/components/other/colors/ColorListModel.cpp
+    src/components/other/colors/ColorProxyModel.cpp
+    src/components/other/images/ImageModel.cpp
+    src/components/other/images/ImageListModel.cpp
+    src/components/other/images/ImageProxyModel.cpp
     src/components/other/text-to-speech/TextToSpeech.cpp
     src/components/other/units/Units.cpp
+    src/components/participant/ParticipantModel.cpp
+	src/components/participant/ParticipantListModel.cpp
+	src/components/participant/ParticipantProxyModel.cpp
+	src/components/participant/ParticipantDeviceModel.cpp
+	src/components/participant/ParticipantDeviceListModel.cpp
+	src/components/participant/ParticipantDeviceProxyModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateListModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateProxyModel.cpp
     src/components/presence/OwnPresenceModel.cpp
     src/components/presence/Presence.cpp
     src/components/search/SearchHandler.cpp
+    src/components/search/SearchResultModel.cpp
+    src/components/search/SearchSipAddressesModel.cpp
+	src/components/search/SearchSipAddressesProxyModel.cpp
     src/components/settings/AccountSettingsModel.cpp
     src/components/settings/SettingsModel.cpp
     src/components/sip-addresses/SipAddressesModel.cpp
     src/components/sip-addresses/SipAddressesProxyModel.cpp
+	src/components/sip-addresses/SipAddressesSorter.cpp
     src/components/sip-addresses/SipAddressObserver.cpp
-    src/components/sip-addresses/SearchSipAddressesModel.cpp
     src/components/sound-player/SoundPlayer.cpp
     src/components/telephone-numbers/TelephoneNumbersModel.cpp
     src/components/timeline/TimelineModel.cpp
+    src/components/timeline/TimelineListModel.cpp
+    src/components/timeline/TimelineProxyModel.cpp
     src/components/url-handlers/UrlHandlers.cpp
-    src/utils/LinphoneUtils.cpp
+    src/utils/Constants.cpp
+    src/utils/LinphoneEnums.cpp
     src/utils/MediastreamerUtils.cpp
     src/utils/QExifImageHeader.cpp
     src/utils/Utils.cpp
-	src/utils/plugins/PluginsManager.cpp
+    src/utils/hacks/ChatRoomInitializer.cpp
+    src/utils/plugins/PluginsManager.cpp
     )
 set(PLUGIN_SOURCES src/utils/plugins/PluginDataAPI.cpp
-	src/utils/plugins/PluginNetworkHelper.cpp
+    src/utils/plugins/PluginNetworkHelper.cpp
     src/utils/plugins/LinphonePlugin.cpp
 	)
 
@@ -196,8 +222,13 @@ set(HEADERS
     src/components/calls/CallsListProxyModel.hpp
     src/components/camera/Camera.hpp
     src/components/camera/CameraPreview.hpp
-    src/components/chat/ChatModel.hpp
-    src/components/chat/ChatProxyModel.hpp
+	src/components/chat-events/ChatCallModel.hpp
+	src/components/chat-events/ChatEvent.hpp
+	src/components/chat-events/ChatMessageModel.hpp
+	src/components/chat-events/ChatNoticeModel.hpp
+    src/components/chat-room/ChatRoomModel.hpp
+    src/components/chat-room/ChatRoomListModel.hpp
+    src/components/chat-room/ChatRoomProxyModel.hpp
     src/components/codecs/AbstractCodecsModel.hpp
     src/components/codecs/AudioCodecsModel.hpp
     src/components/codecs/VideoCodecsModel.hpp
@@ -225,33 +256,54 @@ set(HEADERS
     src/components/ldap/LdapProxyModel.hpp
     src/components/notifier/Notifier.hpp
     src/components/other/clipboard/Clipboard.hpp
-    src/components/other/colors/Colors.hpp
+    src/components/other/colors/ColorModel.hpp
+    src/components/other/colors/ColorListModel.hpp
+    src/components/other/colors/ColorProxyModel.hpp
+    src/components/other/images/ImageModel.hpp
+    src/components/other/images/ImageListModel.hpp
+    src/components/other/images/ImageProxyModel.hpp
     src/components/other/desktop-tools/DesktopTools.hpp
     src/components/other/text-to-speech/TextToSpeech.hpp
     src/components/other/units/Units.hpp
+    src/components/participant/ParticipantModel.hpp
+	src/components/participant/ParticipantListModel.hpp
+	src/components/participant/ParticipantProxyModel.hpp
+	src/components/participant/ParticipantDeviceModel.hpp
+	src/components/participant/ParticipantDeviceListModel.hpp
+	src/components/participant/ParticipantDeviceProxyModel.hpp
+	src/components/participant-imdn/ParticipantImdnStateModel.hpp
+	src/components/participant-imdn/ParticipantImdnStateListModel.cpp
+	src/components/participant-imdn/ParticipantImdnStateProxyModel.cpp
     src/components/presence/OwnPresenceModel.hpp
     src/components/presence/Presence.hpp
     src/components/search/SearchHandler.hpp
+    src/components/search/SearchResultModel.hpp
+    src/components/search/SearchSipAddressesModel.hpp
+	src/components/search/SearchSipAddressesProxyModel.hpp
     src/components/settings/AccountSettingsModel.hpp
     src/components/settings/SettingsModel.hpp
     src/components/sip-addresses/SipAddressesModel.hpp
     src/components/sip-addresses/SipAddressesProxyModel.hpp
+    src/components/sip-addresses/SipAddressesSorter.hpp
     src/components/sip-addresses/SipAddressObserver.hpp
-    src/components/sip-addresses/SearchSipAddressesModel.hpp
     src/components/sound-player/SoundPlayer.hpp
     src/components/telephone-numbers/TelephoneNumbersModel.hpp
     src/components/timeline/TimelineModel.hpp
+    src/components/timeline/TimelineListModel.hpp
+    src/components/timeline/TimelineProxyModel.hpp
     src/components/url-handlers/UrlHandlers.hpp
-    src/utils/LinphoneUtils.hpp
+    src/utils/Constants.hpp
+    src/utils/LinphoneEnums.hpp
     src/utils/MediastreamerUtils.hpp
     src/utils/QExifImageHeader.hpp
     src/utils/Utils.hpp
+    src/utils/hacks/ChatRoomInitializer.hpp
     src/utils/plugins/PluginsManager.hpp
     )
 set(PLUGIN_HEADERS 
-	include/LinphoneApp/PluginDataAPI.hpp
+    include/LinphoneApp/PluginDataAPI.hpp
     include/LinphoneApp/PluginNetworkHelper.hpp
-	include/LinphoneApp/LinphonePlugin.hpp)
+    include/LinphoneApp/LinphonePlugin.hpp)
 list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 set(MAIN_FILE src/app/main.cpp)
 

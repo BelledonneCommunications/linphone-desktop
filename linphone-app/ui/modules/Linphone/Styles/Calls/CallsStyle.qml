@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 
 // =============================================================================
 
@@ -13,24 +12,24 @@ QtObject {
     property int width: 200
 
     property QtObject color: QtObject {
-      property color normal: Colors.e
-      property color selected: Colors.j
+      property color normal: Colors.e.color
+      property color selected: Colors.j.color
     }
 
     property QtObject endCallAnimation: QtObject {
-      property color blinkColor: Colors.i
+      property color blinkColor: Colors.i.color
       property int duration: 300
       property int loops: 3
     }
 
     property QtObject sipAddressColor: QtObject {
-      property color normal: Colors.n
-      property color selected: Colors.q
+      property color normal: Colors.n.color
+      property color selected: Colors.q.color
     }
 
     property QtObject usernameColor: QtObject {
-      property color normal: Colors.j
-      property color selected: Colors.q
+      property color normal: Colors.j.color
+      property color selected: Colors.q.color
     }
   }
 }

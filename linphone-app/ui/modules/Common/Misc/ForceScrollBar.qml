@@ -12,7 +12,8 @@ ScrollBar {
 
   background: Rectangle {
     anchors.fill: parent
-    color: ForceScrollBarStyle.backgroundColor
+    color: ForceScrollBarStyle.background.color
+	radius: ForceScrollBarStyle.background.radius
   }
   contentItem: Rectangle {
     color: scrollBar.pressed

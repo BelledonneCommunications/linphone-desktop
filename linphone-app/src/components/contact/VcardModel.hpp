@@ -39,6 +39,7 @@ class VcardModel : public QObject {
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY vcardUpdated);
   Q_PROPERTY(QString avatar READ getAvatar WRITE setAvatar NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantMap address READ getAddress NOTIFY vcardUpdated);
+  //Q_PROPERTY(QString sipAddress 
   Q_PROPERTY(QVariantList sipAddresses READ getSipAddresses NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList companies READ getCompanies NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList emails READ getEmails NOTIFY vcardUpdated);

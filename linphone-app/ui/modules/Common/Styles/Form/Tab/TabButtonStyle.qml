@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
@@ -10,11 +9,11 @@ QtObject {
   property int spacing: 8
 
   property QtObject backgroundColor: QtObject {
-    property color disabled: Colors.i30
-    property color hovered: Colors.b
-    property color normal: Colors.i
-    property color pressed: Colors.m
-    property color selected: Colors.k
+    property color disabled: Colors.i30.color
+    property color hovered: Colors.b.color
+    property color normal: Colors.i.color
+    property color pressed: Colors.m.color
+    property color selected: Colors.k.color
   }
 
   property QtObject icon: QtObject {
@@ -28,11 +27,11 @@ QtObject {
     property int rightPadding: 10
 
     property QtObject color: QtObject {
-      property color disabled: Colors.q
-      property color hovered: Colors.q
-      property color normal: Colors.q
-      property color pressed: Colors.q
-      property color selected: Colors.i
+      property color disabled: Colors.q.color
+      property color hovered: Colors.q.color
+      property color normal: Colors.q.color
+      property color pressed: Colors.q.color
+      property color selected: Colors.i.color
     }
   }
 }

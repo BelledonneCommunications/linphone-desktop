@@ -26,10 +26,12 @@ Window {
     localAddress: '',
     type: false,
     updating: true,
-    videoEnabled: false
+    videoEnabled: false, 
+    chatRoomModel:null
   });
 
   readonly property bool chatIsOpened: !rightPaned.isClosed()
+  
 
   // ---------------------------------------------------------------------------
 
@@ -41,8 +43,15 @@ Window {
     rightPaned.close()
   }
 
-  function openConferenceManager () {
-    Logic.openConferenceManager()
+  
+  function conferenceManagerResult(exitValue){
+	window.detachVirtualWindow();
+	if(exitValue == 0 && calls.count == 0)
+		close();
+  }
+  
+  function openConferenceManager (params) {
+    Logic.openConferenceManager(params, conferenceManagerResult)
   }
 
   function setHeight (height) {
@@ -120,7 +129,9 @@ Window {
               icon: 'new_conference'
               visible: SettingsModel.conferenceEnabled
 
-              onClicked: Logic.openConferenceManager()
+              onClicked: {
+				Logic.openConferenceManager()
+              }
             }
           }
         }
@@ -189,23 +200,24 @@ Window {
         id: chat
 
         Chat {
-          proxyModel: ChatProxyModel {
+          proxyModel: ChatRoomProxyModel {
             Component.onCompleted: {
               if (!SettingsModel.chatEnabled) {
-                setEntryTypeFilter(ChatModel.CallEntry)
+                setEntryTypeFilter(ChatRoomModel.CallEntry | ChatRoomModel.NoticeEntry)
               }
             }
-
-            peerAddress: (call?call.peerAddress:'')
-            localAddress: (call?call.localAddress:'')
-            fullPeerAddress: (call?call.fullPeerAddress:peerAddress)
-            fullLocalAddress: (call?call.fullLocalAddress:localAddress)
-
+			chatRoomModel: window.call.chatRoomModel
+            peerAddress: window.call.peerAddress
+            fullPeerAddress: window.call.fullPeerAddress
+            fullLocalAddress: window.call.fullLocalAddress
+            localAddress: window.call.localAddress
+            
+            onChatRoomModelChanged: if(chatRoomModel) chatRoomModel.initEntries()
           }
 
           Connections {
             target: SettingsModel
-            onChatEnabledChanged: proxyModel.setEntryTypeFilter(status ? ChatModel.GenericEntry : ChatModel.CallEntry)
+            onChatEnabledChanged: proxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
           }
         }
       }

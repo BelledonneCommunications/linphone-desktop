@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
+import QtQml 2.12
 
 import Common 1.0
 import Linphone 1.0
@@ -13,6 +14,9 @@ DialogPlus {
 
   readonly property int maxParticipants: 20
   readonly property int minParticipants: 1
+  
+  property ChatRoomModel chatRoomModel	// Used to initialize participants
+  property bool autoCall : false
 
   buttons: [
     TextButtonA {
@@ -31,12 +35,26 @@ DialogPlus {
     }
   ]
 
-  centeredButtons: true
+  buttonsAlignment: Qt.AlignCenter
   descriptionText: qsTr('conferenceManagerDescription')
 
-  height: ConferenceManagerStyle.height
+  height: ConferenceManagerStyle.height + 30
   width: ConferenceManagerStyle.width
+  
+  Timer{
+	id:delayedExit
+	onTriggered : exit(1)
+	interval:1
+  }
 
+	Component.onCompleted: if(chatRoomModel){
+		conferenceHelperModel.toAdd.addParticipants(chatRoomModel)
+		if(autoCall) {
+			conferenceHelperModel.toAdd.update()
+			visible = false
+			delayedExit.start()
+		}
+	}
   // ---------------------------------------------------------------------------
 
   RowLayout {

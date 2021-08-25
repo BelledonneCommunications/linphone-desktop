@@ -31,17 +31,13 @@
 #include "components/core/CoreManager.hpp"
 #include "include/LinphoneApp/PluginNetworkHelper.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "SettingsModel.hpp"
 
 // =============================================================================
 
 using namespace std;
-
-namespace {
-	constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
-	constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
-}
 
 const string SettingsModel::UiSection("ui");
 const string SettingsModel::ContactsSection("contacts_import");
@@ -614,6 +610,28 @@ void SettingsModel::setChatEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getHideEmptyChatRooms() const{
+	return !!mConfig->getInt("misc", "hide_empty_chat_rooms", 1);
+}
+
+void SettingsModel::setHideEmptyChatRooms(const bool& status){
+	mConfig->setInt("misc", "hide_empty_chat_rooms", status);
+	emit hideEmptyChatRoomsChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
+bool SettingsModel::getWaitRegistrationForCall() const{
+	return !!mConfig->getInt(UiSection, "call_wait_registration", 0);
+}
+
+void SettingsModel::setWaitRegistrationForCall(const bool& status){
+	mConfig->setInt(UiSection, "call_wait_registration", status);
+	emit waitRegistrationForCallChanged(status);
+}
+	
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getConferenceEnabled () const {
 	return !!mConfig->getInt(UiSection, "conference_enabled", 1);
 }
@@ -1062,7 +1080,7 @@ bool SettingsModel::getRlsUriEnabled () const {
 
 void SettingsModel::setRlsUriEnabled (bool status) {
 	mConfig->setInt(UiSection, "rls_uri_enabled", status);
-	mConfig->setString("sip", "rls_uri", status ? DefaultRlsUri : "");
+	mConfig->setString("sip", "rls_uri", status ? Constants::DefaultRlsUri : "");
 	emit rlsUriEnabledChanged(status);
 }
 
@@ -1071,7 +1089,7 @@ static string getRlsUriDomain () {
 	if (!domain.empty())
 		return domain;
 
-	shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(DefaultRlsUri);
+	shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(Constants::DefaultRlsUri);
 	Q_CHECK_PTR(linphoneAddress);
 	domain = linphoneAddress->getDomain();
 	return domain;
@@ -1088,7 +1106,7 @@ void SettingsModel::configureRlsUri () {
 	const string domain = getRlsUriDomain();
 	for (const auto &proxyConfig : CoreManager::getInstance()->getCore()->getProxyConfigList())
 		if (proxyConfig->getDomain() == domain) {
-			mConfig->setString("sip", "rls_uri", DefaultRlsUri);
+			mConfig->setString("sip", "rls_uri", Constants::DefaultRlsUri);
 			return;
 		}
 
@@ -1103,7 +1121,7 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 
 	const string domain = getRlsUriDomain();
 	if (proxyConfig->getDomain() == domain) {
-		mConfig->setString("sip", "rls_uri", DefaultRlsUri);
+		mConfig->setString("sip", "rls_uri", Constants::DefaultRlsUri);
 		return;
 	}
 
@@ -1266,7 +1284,7 @@ void SettingsModel::setLogsEnabled (bool status) {
 
 QString SettingsModel::getLogsEmail () const {
 	return Utils::coreStringToAppString(
-					    mConfig->getString(UiSection, "logs_email", DefaultLogsEmail)
+					    mConfig->getString(UiSection, "logs_email", Constants::DefaultLogsEmail)
 					    );
 }
 
