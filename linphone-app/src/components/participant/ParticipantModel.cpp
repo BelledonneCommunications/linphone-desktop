@@ -87,7 +87,7 @@ void ParticipantModel::setSipAddress(const QString& address){
 }
 
 void ParticipantModel::setAdminStatus(const bool& status){	
-	if(status != mAdminStatus){
+	if(status != mAdminStatus || mParticipant && status != mParticipant->isAdmin()){
 		mAdminStatus = status;
 		if(mParticipant)
 			emit updateAdminStatus(mParticipant, mAdminStatus);
