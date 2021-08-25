@@ -27,7 +27,7 @@
 // =============================================================================
 
 
-class ChatNoticeModel : public QObject, public ChatEvent {
+class ChatNoticeModel : public ChatEvent {
 	Q_OBJECT
 	
 public:

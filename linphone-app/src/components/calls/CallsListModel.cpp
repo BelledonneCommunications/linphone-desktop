@@ -498,6 +498,7 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 	beginInsertRows(QModelIndex(), row, row);
 	mList << callModel;
 	endInsertRows();
+	emit layoutChanged();
 }
 
 void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {

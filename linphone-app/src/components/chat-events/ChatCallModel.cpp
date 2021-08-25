@@ -27,7 +27,7 @@
 
 // =============================================================================
 
-ChatCallModel::ChatCallModel ( std::shared_ptr<linphone::CallLog> callLog, const bool& isStart, QObject * parent) : QObject(parent), ChatEvent(ChatRoomModel::EntryType::CallEntry) {
+ChatCallModel::ChatCallModel ( std::shared_ptr<linphone::CallLog> callLog, const bool& isStart, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::CallEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mCallLog = callLog;
 	if(isStart){

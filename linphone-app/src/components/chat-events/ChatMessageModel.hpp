@@ -118,7 +118,7 @@ signals:
 	void ephemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message);
 };
 
-class ChatMessageModel : public QObject, public ChatEvent {
+class ChatMessageModel : public ChatEvent {
 	Q_OBJECT
 public:
 	static std::shared_ptr<ChatMessageModel> create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);// Call it instead constructor
@@ -220,7 +220,7 @@ private:
 	std::shared_ptr<ParticipantImdnStateListModel> mParticipantImdnStateListModel;
 	std::shared_ptr<ChatMessageListener> mChatMessageListener;
 };
-
+Q_DECLARE_METATYPE(ChatMessageModel*)
 Q_DECLARE_METATYPE(std::shared_ptr<ChatMessageModel>)
 Q_DECLARE_METATYPE(ChatMessageListener*)
 #endif

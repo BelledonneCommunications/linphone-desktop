@@ -27,7 +27,7 @@
 // =============================================================================
 
 
-class ChatCallModel : public QObject, public ChatEvent  {
+class ChatCallModel : public ChatEvent  {
 	Q_OBJECT
 	
 public:
@@ -64,7 +64,6 @@ private:
 	std::shared_ptr<linphone::CallLog> mCallLog;
 	std::weak_ptr<ChatCallModel> mSelf;	// Used to pass to functions that need a shared_ptr
 };
-
 Q_DECLARE_METATYPE(std::shared_ptr<ChatCallModel>)
 Q_DECLARE_METATYPE(ChatCallModel*)
 #endif

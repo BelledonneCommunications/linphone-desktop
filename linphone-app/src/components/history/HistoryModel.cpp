@@ -225,6 +225,7 @@ void HistoryModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
 		beginInsertRows(QModelIndex(), row, row);
 		it = mEntries.insert(it, entry);
 		endInsertRows();
+		emit layoutChanged();
 		
 		return it;
 	};

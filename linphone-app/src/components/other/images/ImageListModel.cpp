@@ -84,7 +84,7 @@ void ImageListModel::add(std::shared_ptr<ImageModel> image){
 	mList << image;
 	
 	endInsertRows();
-	resetInternalData();
+	emit layoutChanged();
 }
 
 bool ImageListModel::removeRow (int row, const QModelIndex &parent){

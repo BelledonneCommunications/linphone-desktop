@@ -82,6 +82,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const shared_pt
   beginInsertRows(QModelIndex(), row, row);
   addToConferencePrivate(linphoneAddress->clone());
   endInsertRows();
+  emit layoutChanged();
 
   mConferenceHelperModel->invalidate();
 
@@ -105,6 +106,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
   addToConferencePrivate(address);
 
   endInsertRows();
+  emit layoutChanged();
 
   mConferenceHelperModel->invalidate();
 

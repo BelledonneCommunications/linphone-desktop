@@ -162,6 +162,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
   beginInsertRows(QModelIndex(), row, row);
   addContact(contact);
   endInsertRows();
+  emit layoutChanged();
 
   emit contactAdded(contact);
 

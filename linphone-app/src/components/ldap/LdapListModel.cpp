@@ -126,7 +126,7 @@ void LdapListModel::add(){
 	ldap->init();
 	mServers << ldap;
 	endInsertRows();
-	resetInternalData();
+	emit layoutChanged();
 }
 
 void LdapListModel::remove (LdapModel *ldap) {

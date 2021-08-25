@@ -26,7 +26,7 @@
 
 // =============================================================================
 
-ChatEvent::ChatEvent (ChatRoomModel::EntryType type){
+ChatEvent::ChatEvent (ChatRoomModel::EntryType type, QObject * parent) : QObject(parent){
 	mType = type;
 }
 ChatEvent::~ChatEvent(){

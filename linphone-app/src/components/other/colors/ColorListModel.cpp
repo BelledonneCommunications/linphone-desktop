@@ -76,7 +76,7 @@ void ColorListModel::add(std::shared_ptr<ColorModel> color){
 	mList << color;
 	
 	endInsertRows();
-	resetInternalData();
+	emit layoutChanged();
 }
 
 bool ColorListModel::removeRow (int row, const QModelIndex &parent){

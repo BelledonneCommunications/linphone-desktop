@@ -294,7 +294,7 @@ QString ChatMessageModel::AppDataManager::toString(){
 	}
 	return pairs.join(';');
 }
-ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent) : QObject(parent), ChatEvent(ChatRoomModel::EntryType::MessageEntry) {
+ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::MessageEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it
 	mParticipantImdnStateListModel = std::make_shared<ParticipantImdnStateListModel>(chatMessage);
 	mChatMessageListener = std::make_shared<ChatMessageListener>(this, parent);

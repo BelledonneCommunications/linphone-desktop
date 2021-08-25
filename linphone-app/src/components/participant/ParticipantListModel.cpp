@@ -222,6 +222,7 @@ void ParticipantListModel::updateParticipants () {
 			}
 		}
 		if( changed){
+			emit layoutChanged();
 			emit participantsChanged();
 			emit countChanged();
 		}
@@ -236,6 +237,7 @@ void ParticipantListModel::add (std::shared_ptr<ParticipantModel> participant){
 	beginInsertRows(QModelIndex(), row, row);
 	mParticipants << participant;
 	endInsertRows();
+	emit layoutChanged();
 	emit participantsChanged();
 	emit countChanged();
 }

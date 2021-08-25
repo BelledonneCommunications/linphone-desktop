@@ -26,9 +26,10 @@
 // =============================================================================
 
 
-class ChatEvent{	
+class ChatEvent : public QObject{	
+Q_OBJECT
 public:
-	ChatEvent (ChatRoomModel::EntryType type);
+	ChatEvent (ChatRoomModel::EntryType type, QObject * parent = nullptr);
 	virtual ~ChatEvent();
 	ChatRoomModel::EntryType mType;
 	QDateTime mTimestamp;

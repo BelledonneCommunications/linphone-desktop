@@ -529,6 +529,7 @@ void SipAddressesModel::addOrUpdateSipAddress (const QString &sipAddress, T data
   mRefs << &mPeerAddressToSipAddressEntry[sipAddress];
 
   endInsertRows();
+  emit layoutChanged();
 }
 
 // -----------------------------------------------------------------------------

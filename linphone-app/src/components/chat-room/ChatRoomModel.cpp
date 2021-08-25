@@ -835,6 +835,7 @@ void ChatRoomModel::loadMoreEntries(){
 		for(auto entry : entries)
 			mEntries.prepend(entry);
 		endInsertRows();
+		emit layoutChanged();
 		updateLastUpdateTime();
 	}
 }
@@ -869,6 +870,7 @@ void ChatRoomModel::insertCall (const std::shared_ptr<linphone::CallLog> &callLo
 					endInsertRows();
 				}
 			}
+			emit layoutChanged();
 			updateLastUpdateTime();
 		}
 	}
@@ -894,6 +896,7 @@ void ChatRoomModel::insertCalls (const QList<std::shared_ptr<linphone::CallLog> 
 			entries << mEntries;
 			mEntries = entries;
 			endInsertRows();
+			emit layoutChanged();
 		}
 	}
 }
@@ -907,6 +910,7 @@ void ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<linphone::ChatMess
 			beginInsertRows(QModelIndex(), row, row);
 			mEntries << model;
 			endInsertRows();
+			emit layoutChanged();
 		}
 	}
 }
@@ -925,6 +929,7 @@ void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMe
 			entries << mEntries;
 			mEntries = entries;
 			endInsertRows();
+			emit layoutChanged();
 		}
 	}
 }
@@ -937,6 +942,7 @@ void ChatRoomModel::insertNotice (const std::shared_ptr<linphone::EventLog> &eve
 			beginInsertRows(QModelIndex(), row, row);
 			mEntries << model;
 			endInsertRows();
+			emit layoutChanged();
 		}
 	}
 }
@@ -956,6 +962,7 @@ void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLo
 			entries << mEntries;
 			mEntries = entries;
 			endInsertRows();
+			emit layoutChanged();
 		}
 	}
 }

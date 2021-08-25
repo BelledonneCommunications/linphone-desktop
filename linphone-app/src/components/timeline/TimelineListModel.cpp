@@ -288,7 +288,7 @@ void TimelineListModel::add (std::shared_ptr<TimelineModel> timeline){
 	beginInsertRows(QModelIndex(), row, row);
 	mTimelines << timeline;
 	endInsertRows();
-	resetInternalData();
+	emit layoutChanged();
 	emit countChanged();
 }
 
