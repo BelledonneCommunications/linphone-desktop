@@ -1158,6 +1158,12 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <translation>Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
+    <message>
+        <source>chatRoomDetailsTitle</source>
+        <extracomment>&quot;Group information&quot; : Popup title.</extracomment>
+        <translation>Group information</translation>
+        <extra-This>popup display data about the current chat room</extra-This>
+    </message>
 </context>
 <context>
     <name>InfoEncryption</name>
