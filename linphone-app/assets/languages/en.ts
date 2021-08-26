@@ -784,12 +784,12 @@ Server URL not configured.</translation>
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation>Call all chat room&apos;s participants</translation>
+        <translation>Call all participants in the chat room</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
-        <translation>Search in messages</translation>
+        <translation>Search messages</translation>
     </message>
 </context>
 <context>
@@ -1404,7 +1404,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>LastContactsTitle</source>
         <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
-        <translation>Last contacts</translation>
+        <translation>Recent contacts</translation>
     </message>
 </context>
 <context>
@@ -1457,7 +1457,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
-        <translation>New subject : %1</translation>
+        <translation>New subject: %1</translation>
     </message>
 </context>
 <context>
