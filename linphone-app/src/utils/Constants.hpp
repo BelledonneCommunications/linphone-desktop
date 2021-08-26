@@ -113,7 +113,7 @@ public:
 	static constexpr char VcardScheme[] = "linphone-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
-	static constexpr int RcVersionCurrent = 1;
+	static constexpr int RcVersionCurrent = 2;// 2 = Conference URI
 	
 //--------------------------------------------------------------------------------	
 //								CISCO

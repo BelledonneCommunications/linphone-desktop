@@ -107,7 +107,7 @@ function handleRouteChanged (route) {
   dialog._routeOk = route.length === 0 || Linphone.SipAddressesModel.addressIsValid(route)
 }
 function handleConferenceUriChanged (uri) {
-  dialog._conferenceUriOk = route.length === 0 || Linphone.SipAddressesModel.addressIsValid(uri)	
+  dialog._conferenceUriOk = Linphone.SipAddressesModel.addressIsValid(uri)	
 }
 
 function handleServerAddressChanged (address) {

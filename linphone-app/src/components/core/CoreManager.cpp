@@ -45,9 +45,9 @@
 #include "utils/Constants.hpp"
 
 #if defined(Q_OS_MACOS)
-  #include "event-count-notifier/EventCountNotifierMacOs.hpp"
+#include "event-count-notifier/EventCountNotifierMacOs.hpp"
 #else
-  #include "event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
+#include "event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
 #endif // if defined(Q_OS_MACOS)
 
 #include "CoreHandlers.hpp"
@@ -102,7 +102,7 @@ void CoreManager::initCoreManager(){
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
 	mStarted = true;
-
+	
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
 }
@@ -112,57 +112,57 @@ AbstractEventCountNotifier * CoreManager::getEventCountNotifier(){
 }
 
 CoreManager *CoreManager::getInstance (){
-   return mInstance;
- }
+	return mInstance;
+}
 
 
 HistoryModel* CoreManager::getHistoryModel(){
-  if(!mHistoryModel){
-    mHistoryModel = new HistoryModel(this);
-    emit historyModelCreated(mHistoryModel);
-  }
-  return mHistoryModel;
+	if(!mHistoryModel){
+		mHistoryModel = new HistoryModel(this);
+		emit historyModelCreated(mHistoryModel);
+	}
+	return mHistoryModel;
 }
 // -----------------------------------------------------------------------------
 
 void CoreManager::init (QObject *parent, const QString &configPath) {
-  if (mInstance)
-    return;
-  mInstance = new CoreManager(parent, configPath);
+	if (mInstance)
+		return;
+	mInstance = new CoreManager(parent, configPath);
 }
 
 void CoreManager::uninit () {
-  if (mInstance) {
-    connect(mInstance, &QObject::destroyed, []()mutable{
-        mInstance = nullptr;
-        qInfo() << "Core is correctly destroyed";
-    });
-    QObject::connect(mInstance->getHandlers().get(), &CoreHandlers::coreStopped, mInstance, &QObject::deleteLater); // Delete data only when the core is Off
-
-    mInstance->lockVideoRender();// Stop do iterations. We have to protect GUI.
-    mInstance->mCore->stop();
-    mInstance->unlockVideoRender();
-    QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
-    if( mInstance){
-        qWarning() << "Core couldn't destroy in time. It may lead to have multiple session of Core";
-        mInstance = nullptr;
-    }
-  }
+	if (mInstance) {
+		connect(mInstance, &QObject::destroyed, []()mutable{
+			mInstance = nullptr;
+			qInfo() << "Core is correctly destroyed";
+		});
+		QObject::connect(mInstance->getHandlers().get(), &CoreHandlers::coreStopped, mInstance, &QObject::deleteLater); // Delete data only when the core is Off
+		
+		mInstance->lockVideoRender();// Stop do iterations. We have to protect GUI.
+		mInstance->mCore->stop();
+		mInstance->unlockVideoRender();
+		QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
+		if( mInstance){
+			qWarning() << "Core couldn't destroy in time. It may lead to have multiple session of Core";
+			mInstance = nullptr;
+		}
+	}
 }
 
 // -----------------------------------------------------------------------------
 
 VcardModel *CoreManager::createDetachedVcardModel () const {
-  VcardModel *vcardModel = new VcardModel(linphone::Factory::get()->createVcard(), false);
-  qInfo() << QStringLiteral("Create detached vcard:") << vcardModel;
-  return vcardModel;
+	VcardModel *vcardModel = new VcardModel(linphone::Factory::get()->createVcard(), false);
+	qInfo() << QStringLiteral("Create detached vcard:") << vcardModel;
+	return vcardModel;
 }
 
 void CoreManager::forceRefreshRegisters () {
-  Q_CHECK_PTR(mCore);
-
-  qInfo() << QStringLiteral("Refresh registers.");
-  mCore->refreshRegisters();
+	Q_CHECK_PTR(mCore);
+	
+	qInfo() << QStringLiteral("Refresh registers.");
+	mCore->refreshRegisters();
 }
 void CoreManager::updateUnreadMessageCount(){
 	mEventCountNotifier->updateUnreadMessageCount();
@@ -170,37 +170,37 @@ void CoreManager::updateUnreadMessageCount(){
 // -----------------------------------------------------------------------------
 
 void CoreManager::sendLogs () const {
-  Q_CHECK_PTR(mCore);
-
-  qInfo() << QStringLiteral("Send logs to: `%1` from `%2`.")
-    .arg(Utils::coreStringToAppString(mCore->getLogCollectionUploadServerUrl()))
-    .arg(Utils::coreStringToAppString(mCore->getLogCollectionPath()));
-  mCore->uploadLogCollection();
+	Q_CHECK_PTR(mCore);
+	
+	qInfo() << QStringLiteral("Send logs to: `%1` from `%2`.")
+			   .arg(Utils::coreStringToAppString(mCore->getLogCollectionUploadServerUrl()))
+			   .arg(Utils::coreStringToAppString(mCore->getLogCollectionPath()));
+	mCore->uploadLogCollection();
 }
 
 void CoreManager::cleanLogs () const {
-  Q_CHECK_PTR(mCore);
-
-  mCore->resetLogCollection();
+	Q_CHECK_PTR(mCore);
+	
+	mCore->resetLogCollection();
 }
 
 // -----------------------------------------------------------------------------
 
 #define SET_DATABASE_PATH(DATABASE, PATH) \
-  do { \
-    qInfo() << QStringLiteral("Set `%1` path: `%2`") \
-      .arg( # DATABASE) \
-      .arg(Utils::coreStringToAppString(PATH)); \
-    mCore->set ## DATABASE ## DatabasePath(PATH); \
-  } while (0);
+	do { \
+	qInfo() << QStringLiteral("Set `%1` path: `%2`") \
+	.arg( # DATABASE) \
+	.arg(Utils::coreStringToAppString(PATH)); \
+	mCore->set ## DATABASE ## DatabasePath(PATH); \
+	} while (0);
 
 void CoreManager::setDatabasesPaths () {
-  SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
-  SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
-  if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
-	linphone_core_set_chat_database_path(mCore->cPtr(), Paths::getMessageHistoryFilePath().c_str());// Setting the message database let SDK to migrate data
-	QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
-  }
+	SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
+	SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
+	if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
+		linphone_core_set_chat_database_path(mCore->cPtr(), Paths::getMessageHistoryFilePath().c_str());// Setting the message database let SDK to migrate data
+		QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
+	}
 }
 
 #undef SET_DATABASE_PATH
@@ -208,64 +208,64 @@ void CoreManager::setDatabasesPaths () {
 // -----------------------------------------------------------------------------
 
 void CoreManager::setOtherPaths () {
-  if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile()))
-    mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
-  if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath()))
-    mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
-  if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa()))
-    mCore->setRootCa(Paths::getRootCaFilePath());
+	if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile()))
+		mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
+	if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath()))
+		mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
+	if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa()))
+		mCore->setRootCa(Paths::getRootCaFilePath());
 }
 
 void CoreManager::setResourcesPaths () {
-  shared_ptr<linphone::Factory> factory = linphone::Factory::get();
-  factory->setMspluginsDir(Paths::getPackageMsPluginsDirPath());
-  factory->setTopResourcesDir(Paths::getPackageDataDirPath());
+	shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+	factory->setMspluginsDir(Paths::getPackageMsPluginsDirPath());
+	factory->setTopResourcesDir(Paths::getPackageDataDirPath());
 }
 
 // -----------------------------------------------------------------------------
 
 void CoreManager::createLinphoneCore (const QString &configPath) {
-  qInfo() << QStringLiteral("Launch async core creation.");
-
-  // Migration of configuration and database files from GTK version of Linphone.
-  Paths::migrate();
-  setResourcesPaths();
-  mCore = linphone::Factory::get()->createCore(
-    Paths::getConfigFilePath(configPath),
-    Paths::getFactoryConfigFilePath(),
-    nullptr
-  );
-  // You only need to give your LIME server URL
-  mCore->setLimeX3DhServerUrl("https://lime.linphone.org/lime-server/lime-server.php");
+	qInfo() << QStringLiteral("Launch async core creation.");
+	
+	// Migration of configuration and database files from GTK version of Linphone.
+	Paths::migrate();
+	setResourcesPaths();
+	mCore = linphone::Factory::get()->createCore(
+				Paths::getConfigFilePath(configPath),
+				Paths::getFactoryConfigFilePath(),
+				nullptr
+				);
+	// You only need to give your LIME server URL
+	mCore->setLimeX3DhServerUrl("https://lime.linphone.org/lime-server/lime-server.php");
 	// and enable LIME on your core to use encryption.
-  mCore->enableLimeX3Dh(true);
-					  // Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
-  
-  mCore->addListener(mHandlers);
-  mCore->setVideoDisplayFilter("MSQOGL");
-  mCore->usePreviewWindow(true);
-  mCore->enableVideoPreview(false);
-  mCore->setUserAgent(
-    Utils::appStringToCoreString(
-      QStringLiteral(APPLICATION_NAME" Desktop/%1 (%2, Qt %3) LinphoneCore")
-        .arg(QCoreApplication::applicationVersion())
-        .arg(QSysInfo::prettyProductName())
-        .arg(qVersion())
-    ),
-    mCore->getVersion()
-  );
-  // Force capture/display.
-  // Useful if the app was built without video support.
-  // (The capture/display attributes are reset by the core in this case.)
-  if (mCore->videoSupported()) {
-    shared_ptr<linphone::Config> config = mCore->getConfig();
-    config->setInt("video", "capture", 1);
-    config->setInt("video", "display", 1);
-  }
-  mCore->start();
-  setDatabasesPaths();
-  setOtherPaths();
-  mCore->enableFriendListSubscription(true);
+	mCore->enableLimeX3Dh(true);
+	// Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
+	
+	mCore->addListener(mHandlers);
+	mCore->setVideoDisplayFilter("MSQOGL");
+	mCore->usePreviewWindow(true);
+	mCore->enableVideoPreview(false);
+	mCore->setUserAgent(
+				Utils::appStringToCoreString(
+					QStringLiteral(APPLICATION_NAME" Desktop/%1 (%2, Qt %3) LinphoneCore")
+					.arg(QCoreApplication::applicationVersion())
+					.arg(QSysInfo::prettyProductName())
+					.arg(qVersion())
+					),
+				mCore->getVersion()
+				);
+	// Force capture/display.
+	// Useful if the app was built without video support.
+	// (The capture/display attributes are reset by the core in this case.)
+	if (mCore->videoSupported()) {
+		shared_ptr<linphone::Config> config = mCore->getConfig();
+		config->setInt("video", "capture", 1);
+		config->setInt("video", "display", 1);
+	}
+	mCore->start();
+	setDatabasesPaths();
+	setOtherPaths();
+	mCore->enableFriendListSubscription(true);
 }
 
 void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel){
@@ -273,51 +273,56 @@ void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &ch
 }
 
 void CoreManager::migrate () {
-  shared_ptr<linphone::Config> config = mCore->getConfig();
-  int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
-  if (rcVersion == Constants::RcVersionCurrent)
-    return;
-  if (rcVersion > Constants::RcVersionCurrent) {
-    qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
-      .arg(rcVersion).arg(Constants::RcVersionCurrent);
-    return;
-  }
-
-  qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
-    .arg(rcVersion).arg(Constants::RcVersionCurrent);
-
-  // Add message_expires param on old proxy configs.
-  /*
-  for (const auto &proxyConfig : mCore->getProxyConfigList()) {
-    if (proxyConfig->getDomain() == Constants::LinphoneDomain) {
-      proxyConfig->setContactParameters(Constants::DefaultContactParameters);
-      proxyConfig->setExpires(Constants::DefaultExpires);
-      proxyConfig->done();
-    }
-  }*/
-  for(const auto &account : mCore->getAccountList()){
-	auto params = account->getParams();
-	if( params->getDomain() == Constants::LinphoneDomain) {
-		auto newParams = params->clone();
-		newParams->setContactParameters(Constants::DefaultContactParameters);
-		newParams->setExpires(Constants::DefaultExpires);
-		account->setParams(newParams);
+	shared_ptr<linphone::Config> config = mCore->getConfig();
+	int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
+	if (rcVersion == Constants::RcVersionCurrent)
+		return;
+	if (rcVersion > Constants::RcVersionCurrent) {
+		qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
+					  .arg(rcVersion).arg(Constants::RcVersionCurrent);
+		return;
 	}
-  }
-  
-  config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
+	
+	qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
+			   .arg(rcVersion).arg(Constants::RcVersionCurrent);
+	
+	// Add message_expires param on old proxy configs.
+	/*
+  for (const auto &proxyConfig : mCore->getProxyConfigList()) {
+	if (proxyConfig->getDomain() == Constants::LinphoneDomain) {
+	  proxyConfig->setContactParameters(Constants::DefaultContactParameters);
+	  proxyConfig->setExpires(Constants::DefaultExpires);
+	  proxyConfig->done();
+	}
+  }*/
+	for(const auto &account : mCore->getAccountList()){
+		auto params = account->getParams();
+		if( params->getDomain() == Constants::LinphoneDomain) {
+			auto newParams = params->clone();
+			if( rcVersion < 1) {
+				newParams->setContactParameters(Constants::DefaultContactParameters);
+				newParams->setExpires(Constants::DefaultExpires);
+			}
+			if( rcVersion < 2) {
+				newParams->setConferenceFactoryUri(Constants::DefaultConferenceURI);
+			}
+			account->setParams(newParams);
+		}
+	}
+	
+	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getVersion () const {
-  return Utils::coreStringToAppString(mCore->getVersion());
+	return Utils::coreStringToAppString(mCore->getVersion());
 }
 
 // -----------------------------------------------------------------------------
 
 int CoreManager::getEventCount () const {
-  return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
+	return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
 }
 int CoreManager::getMissedCallCount(const QString &peerAddress, const QString &localAddress)const{
 	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCount(peerAddress, localAddress) : 0;
@@ -329,45 +334,45 @@ int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
 // -----------------------------------------------------------------------------
 
 void CoreManager::startIterate(){
-    mCbsTimer = new QTimer(this);
-    mCbsTimer->setInterval(Constants::CbsCallInterval);
-    QObject::connect(mCbsTimer, &QTimer::timeout, this, &CoreManager::iterate);
-    qInfo() << QStringLiteral("Start iterate");
-    mCbsTimer->start();
+	mCbsTimer = new QTimer(this);
+	mCbsTimer->setInterval(Constants::CbsCallInterval);
+	QObject::connect(mCbsTimer, &QTimer::timeout, this, &CoreManager::iterate);
+	qInfo() << QStringLiteral("Start iterate");
+	mCbsTimer->start();
 }
 
 void CoreManager::stopIterate(){
-    qInfo() << QStringLiteral("Stop iterate");
-    mCbsTimer->stop();
-    mCbsTimer->deleteLater();// allow the timer to continue its stuff
-    mCbsTimer = nullptr;
+	qInfo() << QStringLiteral("Stop iterate");
+	mCbsTimer->stop();
+	mCbsTimer->deleteLater();// allow the timer to continue its stuff
+	mCbsTimer = nullptr;
 }
 
 void CoreManager::iterate () {
-    lockVideoRender();
-    if(mCore)
-        mCore->iterate();
-    unlockVideoRender();
+	lockVideoRender();
+	if(mCore)
+		mCore->iterate();
+	unlockVideoRender();
 }
 
 // -----------------------------------------------------------------------------
 
 void CoreManager::handleLogsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const string &info) {
-  switch (state) {
-    case linphone::Core::LogCollectionUploadState::InProgress:
-      break;
-
-    case linphone::Core::LogCollectionUploadState::Delivered:
-    case linphone::Core::LogCollectionUploadState::NotDelivered:
-      emit logsUploaded(Utils::coreStringToAppString(info));
-      break;
-  }
+	switch (state) {
+		case linphone::Core::LogCollectionUploadState::InProgress:
+			break;
+			
+		case linphone::Core::LogCollectionUploadState::Delivered:
+		case linphone::Core::LogCollectionUploadState::NotDelivered:
+			emit logsUploaded(Utils::coreStringToAppString(info));
+			break;
+	}
 }
 
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getDownloadUrl () {
-  return Constants::DownloadUrl;
+	return Constants::DownloadUrl;
 }
 
 void CoreManager::setLastRemoteProvisioningState(const linphone::ConfiguringState& state){

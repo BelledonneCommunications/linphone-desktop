@@ -2251,6 +2251,16 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>mainSipAccountSettingsTitle</source>
         <translation>Main SIP account settings</translation>
     </message>
+    <message>
+        <source>conferenceURI</source>
+        <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalidConferenceURI</source>
+        <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>
