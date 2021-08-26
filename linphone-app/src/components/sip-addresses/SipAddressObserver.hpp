@@ -28,64 +28,71 @@
 class ContactModel;
 
 class SipAddressObserver : public QObject {
-  friend class SipAddressesModel;
+	friend class SipAddressesModel;
 
-  Q_OBJECT;
+	Q_OBJECT;
 
-  Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT);
-  Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
+	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT);
+	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
 
-  Q_PROPERTY(ContactModel *contact READ getContact NOTIFY contactChanged);
-  Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
-  Q_PROPERTY(int unreadMessageCount READ getUnreadMessageCount NOTIFY unreadMessageCountChanged);
+	Q_PROPERTY(ContactModel *contact READ getContact NOTIFY contactChanged);
+	Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
+	Q_PROPERTY(int unreadMessageCount READ getUnreadMessageCount NOTIFY unreadMessageCountChanged);
 
+	Q_PROPERTY(bool isOneToOne MEMBER isOneToOne CONSTANT);
+	Q_PROPERTY(bool haveEncryption MEMBER haveEncryption CONSTANT);
+	Q_PROPERTY(int securityLevel MEMBER securityLevel CONSTANT);
 public:
-  SipAddressObserver (const QString &peerAddress, const QString &localAddress);
+	SipAddressObserver (const QString &peerAddress, const QString &localAddress);
+
+	bool isOneToOne = true;
+	bool haveEncryption = false;
+	int securityLevel = 1;
 
 signals:
-  void contactChanged (ContactModel *contact);
-  void presenceStatusChanged (const Presence::PresenceStatus &presenceStatus);
-  void unreadMessageCountChanged (int unreadMessageCount);
+	void contactChanged (ContactModel *contact);
+	void presenceStatusChanged (const Presence::PresenceStatus &presenceStatus);
+	void unreadMessageCountChanged (int unreadMessageCount);
 
 private:
-  QString getPeerAddress () const {
-    return mPeerAddress;
-  }
+	QString getPeerAddress () const {
+		return mPeerAddress;
+	}
 
-  QString getLocalAddress () const {
-    return mLocalAddress;
-  }
+	QString getLocalAddress () const {
+		return mLocalAddress;
+	}
 
-  // ---------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------
 
-  ContactModel *getContact () const {
-    return mContact;
-  }
+	ContactModel *getContact () const {
+		return mContact;
+	}
 
-  void setContact (ContactModel *contact);
+	void setContact (ContactModel *contact);
 
-  // ---------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------
 
-  Presence::PresenceStatus getPresenceStatus () const {
-    return mPresenceStatus;
-  }
+	Presence::PresenceStatus getPresenceStatus () const {
+		return mPresenceStatus;
+	}
 
-  void setPresenceStatus (const Presence::PresenceStatus &presenceStatus);
+	void setPresenceStatus (const Presence::PresenceStatus &presenceStatus);
 
-  // ---------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------
 
-  int getUnreadMessageCount () const {
-    return mUnreadMessageCount;
-  }
+	int getUnreadMessageCount () const {
+		return mUnreadMessageCount;
+	}
 
-  void setUnreadMessageCount (int unreadMessageCount);
+	void setUnreadMessageCount (int unreadMessageCount);
 
-  QString mPeerAddress;
-  QString mLocalAddress;
+	QString mPeerAddress;
+	QString mLocalAddress;
 
-  ContactModel *mContact = nullptr;
-  Presence::PresenceStatus mPresenceStatus = Presence::PresenceStatus::Offline;
-  int mUnreadMessageCount = 0;
+	ContactModel *mContact = nullptr;
+	Presence::PresenceStatus mPresenceStatus = Presence::PresenceStatus::Offline;
+	int mUnreadMessageCount = 0;
 };
 
 Q_DECLARE_METATYPE(SipAddressObserver *);

@@ -116,7 +116,7 @@ RowLayout {
 
     delegate: Item {
       implicitHeight: textInput.height
-      width: parent.width
+      width: values.width
 
       TransparentTextInput {
         id: textInput

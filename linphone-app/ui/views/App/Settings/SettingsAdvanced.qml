@@ -75,7 +75,10 @@ TabContainer {
             TextButtonB {
                 text: qsTr('cleanLogs')
                 
-                onClicked: Logic.cleanLogs()
+                onClicked: {
+						Logic.cleanLogs()
+						sendLogsBlock.setText('')
+					}
             }
             
             TextButtonB {
@@ -279,13 +282,14 @@ TabContainer {
                     id: pluginChoice
                     model:ContactsImporterPluginsManager.getPlugins()
                     textRole: "pluginTitle"
-                    displayText: currentIndex === -1 ? 'No Plugins to load' : currentText
+                    //: 'No Plugins to load' : Text in combobox
+                    displayText: currentIndex === -1 ? qsTr('noPlugin') : currentText
                     Text{// Hack, combobox show empty text when empty
                         anchors.fill:parent
                         visible:pluginChoice.currentIndex===-1
                         verticalAlignment: Qt.AlignVCenter
                         horizontalAlignment: Qt.AlignHCenter
-                        text: 'No Plugins to load'
+                        text: qsTr('noPlugin')
                         font {
                             bold:false
                             italic: true

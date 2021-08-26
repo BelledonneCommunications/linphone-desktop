@@ -61,20 +61,4 @@ ColumnLayout {
       }
     }
   }
-
-  Text {
-    Layout.fillWidth: true
-    Layout.preferredHeight: FormVGroupStyle.error.height
-
-    color: FormVGroupStyle.error.color
-    elide: Text.ElideRight
-
-    font {
-      italic: true
-      pointSize: FormVGroupStyle.error.pointSize
-    }
-
-    text: _content && _content.error && _content.error.length ? _content.error : ''
-    visible: parent.parent.dealWithErrors
-  }
 }

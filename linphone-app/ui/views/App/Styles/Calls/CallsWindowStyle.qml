@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 
 // =============================================================================
 
@@ -14,14 +13,14 @@ QtObject {
   }
 
   property QtObject callsList: QtObject {
-    property color color: Colors.q
+    property color color: Colors.q.color
     property int defaultWidth: 250
     property int maximumWidth: 250
     property int minimumWidth: 110
 
     property QtObject header: QtObject {
-      property color color1: Colors.q
-      property color color2: Colors.f
+      property color color1: Colors.q.color
+      property color color2: Colors.f.color
       property int height: 60
       property int iconSize: 40
       property int leftMargin: 10

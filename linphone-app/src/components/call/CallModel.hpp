@@ -26,6 +26,8 @@
 #include "../search/SearchHandler.hpp"
 
 // =============================================================================
+class ContactModel;
+class ChatRoomModel;
 
 class CallModel : public QObject {
   Q_OBJECT;
@@ -34,6 +36,15 @@ class CallModel : public QObject {
   Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
   Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged);
   Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT);
+	
+	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT )
+	Q_PROPERTY(ChatRoomModel * chatRoomModel READ getChatRoomModel CONSTANT)
+	
+	/*
+	Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
+	Q_PROPERTY(QString username READ getUsername NOTIFY usernameChanged)
+	Q_PROPERTY(QString avatar READ getAvatar NOTIFY avatarChanged)
+	Q_PROPERTY(int presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)*/
 
   Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
   Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged);
@@ -67,6 +78,8 @@ class CallModel : public QObject {
 
   Q_PROPERTY(float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged);
   Q_PROPERTY(float microVolumeGain READ getMicroVolumeGain WRITE setMicroVolumeGain NOTIFY microVolumeGainChanged);
+  
+  
 
 public:
   enum CallStatus {
@@ -98,6 +111,10 @@ public:
   QString getLocalAddress () const;
   QString getFullPeerAddress () const;
   QString getFullLocalAddress () const;
+  
+  ContactModel *getContactModel() const;
+  
+  ChatRoomModel * getChatRoomModel() const;
 
   bool isInConference () const {
     return mIsInConference;
@@ -144,6 +161,7 @@ public:
 public slots:
 // Set remote display name when a search has been done
   void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
+  void callEnded();
 
 signals:
   void callErrorChanged (const QString &callError);

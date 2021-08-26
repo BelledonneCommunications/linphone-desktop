@@ -26,12 +26,15 @@
 
 #include "app/App.hpp"
 #include "components/calls/CallsListModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
+#include "components/contact/ContactModel.hpp"
+#include "components/contacts/ContactsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
-#include "utils/LinphoneUtils.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
@@ -70,14 +73,8 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
   }
 
   CoreHandlers *coreHandlers = coreManager->getHandlers().get();
-  QObject::connect(
-    coreHandlers, &CoreHandlers::callStateChanged,
-    this, &CallModel::handleCallStateChanged
-  );
-  QObject::connect(
-    coreHandlers, &CoreHandlers::callEncryptionChanged,
-    this, &CallModel::handleCallEncryptionChanged
-  );
+  QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &CallModel::handleCallStateChanged );
+  QObject::connect(coreHandlers, &CoreHandlers::callEncryptionChanged, this, &CallModel::handleCallEncryptionChanged );
 
 // Update fields and make a search to know to who the call belong
   mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
@@ -104,14 +101,27 @@ QString CallModel::getLocalAddress () const {
   return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asStringUriOnly());
 }
 QString CallModel::getFullPeerAddress () const {
-  return QString::fromStdString(mRemoteAddress->asString());
+  return Utils::coreStringToAppString(mRemoteAddress->asString());
 }
 
 QString CallModel::getFullLocalAddress () const {
-  return QString::fromStdString(mCall->getCallLog()->getLocalAddress()->asString());
+  return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asString());
 }
 // -----------------------------------------------------------------------------
 
+ContactModel *CallModel::getContactModel() const{
+	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()));
+	return contact;
+}
+
+ChatRoomModel * CallModel::getChatRoomModel() const{
+	if(mCall->getCallLog()->getCallId() != "")
+		return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(mCall->getChatRoom(), true).get();
+	else
+		return nullptr;
+}
+
+// -----------------------------------------------------------------------------
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams) {
   callParams->setRecordFile(Utils::appStringToCoreString(
     CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder()
@@ -122,7 +132,7 @@ void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParam
 
 void CallModel::setRecordFile (const shared_ptr<linphone::CallParams> &callParams, const QString &to) {
   const QString from(
-    QString::fromStdString(
+    Utils::coreStringToAppString(
       CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->getUsername()
     )
   );
@@ -649,6 +659,25 @@ void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>
 	}
 }
 
+void CallModel::callEnded(){
+	ChatRoomModel * model = getChatRoomModel();
+	
+	if(model){
+		model->callEnded(mCall);
+	}else{// No chat rooms have been associated for this call. Search one in current chat room list
+		shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+		std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+		std::list<std::shared_ptr<linphone::Address>> participants;
+		
+		auto chatRoom = core->searchChatRoom(params, mCall->getCallLog()->getLocalAddress()
+											 , mCall->getRemoteAddress()
+											 , participants);
+		std::shared_ptr<ChatRoomModel> chatRoomModel= CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false);
+		if(chatRoomModel)
+			chatRoomModel->callEnded(mCall);
+	}
+}
+
 void CallModel::setRemoteDisplayName(const std::string& name){
 	mRemoteAddress->setDisplayName(name);
 	emit fullPeerAddressChanged();
@@ -814,8 +843,8 @@ QString CallModel::iceStateToString (linphone::IceState state) const {
 QString CallModel::generateSavedFilename () const {
   const shared_ptr<linphone::CallLog> callLog(mCall->getCallLog());
   return generateSavedFilename(
-    QString::fromStdString(callLog->getFromAddress()->getUsername()),
-    QString::fromStdString(callLog->getToAddress()->getUsername())
+    Utils::coreStringToAppString(callLog->getFromAddress()->getUsername()),
+    Utils::coreStringToAppString(callLog->getToAddress()->getUsername())
   );
 }
 

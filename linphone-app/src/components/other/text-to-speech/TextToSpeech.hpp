@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -22,25 +22,32 @@
 #define TEXT_TO_SPEECH_H_
 
 #include <QObject>
+#ifdef TEXTTOSPEECH_ENABLED
+#include <QTextToSpeech>
+#endif // ifdef TEXTTOSPEECH_ENABLED
 
 // =============================================================================
 
 class QTextToSpeech;
 
 class TextToSpeech : public QObject {
-  Q_OBJECT;
-
-  Q_PROPERTY(bool available READ available CONSTANT);
-
+	Q_OBJECT;
+	
+	Q_PROPERTY(bool available READ available CONSTANT);
+	
 public:
-  TextToSpeech (QObject *parent = Q_NULLPTR);
-
-  Q_INVOKABLE void say (const QString &text);
-
+	TextToSpeech (QObject *parent = Q_NULLPTR);
+	
+	Q_INVOKABLE void say (const QString &text);
+#ifdef TEXTTOSPEECH_ENABLED
+public slots:
+	void onStateChanged(QTextToSpeech::State state);
+#endif
+	
 private:
-  bool available () const;
-
-  QTextToSpeech *mQtTextToSpeech = nullptr;
+	bool available () const;
+	
+	QTextToSpeech *mQtTextToSpeech = nullptr;
 };
 
 #endif // ifndef TEXT_TO_SPEECH_H_

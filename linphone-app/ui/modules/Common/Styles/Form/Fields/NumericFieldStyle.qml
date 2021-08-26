@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
@@ -12,12 +11,12 @@ QtObject {
 
     property QtObject button: QtObject {
       property QtObject color: QtObject {
-        property color normal: Colors.f
-        property color pressed: Colors.c
+        property color normal: Colors.f.color
+        property color pressed: Colors.c.color
       }
 
       property QtObject text: QtObject {
-        property color color: Colors.d
+        property color color: Colors.d.color
         property int pointSize: Units.dp * 9
       }
     }

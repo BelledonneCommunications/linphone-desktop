@@ -63,7 +63,7 @@ QString DefaultTranslator::translate (
   QString translation = QTranslator::translate(context, sourceText, disambiguation, n);
 
   if (translation.length() == 0 && mContexts.contains(context))
-    qWarning() << QStringLiteral("Unable to find a translation. (context=%1, label=%2, disambiguation=%3)")
+    qDebug() << QStringLiteral("Unable to find a translation. (context=%1, label=%2, disambiguation=%3)")
       .arg(context).arg(sourceText).arg(disambiguation);
 
   return translation;

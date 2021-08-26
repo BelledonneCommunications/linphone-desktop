@@ -9,7 +9,6 @@ Form {
   property bool mainActionEnabled: phoneNumber.text.length &&
     !phoneNumberError.length
 
-  dealWithErrors: true
   orientation: Qt.Vertical
 
   FormLine {

@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 
 // =============================================================================
@@ -15,7 +14,7 @@ QtObject {
     property int maxWidth: 400
 
     property QtObject text: QtObject {
-      property color color: Colors.j
+      property color color: Colors.j.color
       property int pointSize: Units.dp * 10
     }
   }
