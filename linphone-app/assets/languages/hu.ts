@@ -92,6 +92,22 @@
         <source>about</source>
         <translation>A Linphone névjegye</translation>
     </message>
+    <message>
+        <source>commandLineOptionFetchConfig</source>
+        <translation>Adja meg a beolvasandó %1 beállítási fájlt. Összevonásra kerül a jelenlegi konfigurációval.</translation>
+    </message>
+    <message>
+        <source>commandLineOptionFetchConfigArg</source>
+        <translation>URL-cím, elérési út vagy fájl</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCall</source>
+        <translation>hívás kezdeményezése</translation>
+    </message>
+    <message>
+        <source>commandLineOptionCallArg</source>
+        <translation>SIP-cím</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -116,7 +132,7 @@
     </message>
     <message>
         <source>homeTitle</source>
-        <translation>Isten hozott!</translation>
+        <translation>Isten hozott</translation>
     </message>
     <message>
         <source>homeDescription</source>
@@ -434,6 +450,14 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>isComposing</source>
         <translation>%1 gépel…</translation>
     </message>
+    <message numerus="yes">
+        <source>chatTyping</source>
+        <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
+        <translation>
+            <numerusform>%1 éppen gépel…</numerusform>
+            <numerusform>%1 éppen gépel…</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>Cli</name>
@@ -443,11 +467,11 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-address&gt;?method=&lt;method&gt;([&amp;&lt;argument&gt;=&lt;base64-value&gt;]*)</translation>
+        <translation>%1 &lt;sip-cím&gt;?method=&lt;módszer&gt;([&amp;&lt;argumentum&gt;=&lt;base64-érték&gt;]*)</translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;method&gt; ([&lt;argument&gt;=&lt;value&gt;]*)&quot;</translation>
+        <translation>%1 &quot;&lt;módszer&gt; ([&lt;argumentum&gt;=&lt;érték&gt;]*)&quot;</translation>
     </message>
     <message>
         <source>commandsName</source>
@@ -472,6 +496,10 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
         <translation>Csatlakozzon a SIP-cím által üzemeltetett konferenciához, mint a vendég-sip-cím. Ha nem csatlakozik proxy-konfigurátorhoz, olvassa el a csatlakozási konferencia részt.</translation>
+    </message>
+    <message>
+        <source>byeFunctionDescription</source>
+        <translation>Egy adott hívás, az összes hívás vagy az jelenlegi hívás befejezése.</translation>
     </message>
 </context>
 <context>
@@ -642,6 +670,11 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>removeContactDescription</source>
         <translation>Tényleg eltávolítja ezt a névjegyet a címjegyzékből?</translation>
     </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
+        <translation>Konferenciaalapú csevegőszoba létrehozásához be kell állítania a konferencia URI-címét a fiókbeállításokban.</translation>
+    </message>
 </context>
 <context>
     <name>Conversation</name>
@@ -672,6 +705,27 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>cleanHistory</source>
         <translation>Előzmények törlése</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation>Felügyelet</translation>
+        <extra-Context>One word title for describing the current admin status</extra-Context>
+    </message>
+    <message>
+        <source>conversationMenuGroupInformations</source>
+        <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
+        <translation>Csoportadatok</translation>
+    </message>
+    <message>
+        <source>conversationMenuDevices</source>
+        <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
+        <translation>Beszélgetés eszközei</translation>
+    </message>
+    <message>
+        <source>conversationMenuEphemeral</source>
+        <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
+        <translation>Elmúló üzenetek</translation>
     </message>
 </context>
 <context>
@@ -779,6 +833,76 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
 </context>
 <context>
+    <name>EphemeralChatRoom</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
+        <translation>Indítás</translation>
+    </message>
+    <message>
+        <source>ephemeralTitle</source>
+        <extracomment>&quot;Ephemeral messages&quot; : Popup title for ephemerals</extracomment>
+        <translation>Elmúló üzenetek</translation>
+    </message>
+    <message>
+        <source>ephemeralText</source>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <translation>Az új üzenetek mindkét végén törlődnek, amint a kapcsolattartó elolvasta. Válasszon egy időkorlátot.</translation>
+        <extra-Context>Explanation for ephemerals</extra-Context>
+    </message>
+    <message>
+        <source>ephemeralNotInConference!</source>
+        <extracomment>&apos;
+Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
+        <translation>Az elmúló üzenetet csak a konferencia alapú csevegőszoba támogatja!</translation>
+        <extra-Context>Warning about not being in conference based chat room.</extra-Context>
+    </message>
+    <message>
+        <source>disabled</source>
+        <extracomment>&apos;Disabled&apos;</extracomment>
+        <translation>Letiltva</translation>
+    </message>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <extracomment>&apos;%1 minute&apos;</extracomment>
+        <translation>
+            <numerusform>%1 perc</numerusform>
+            <numerusform>%1 perc</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <extracomment>&apos;%1 hour&apos;</extracomment>
+        <translation>
+            <numerusform>%1 óra</numerusform>
+            <numerusform>%1 óra</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <extracomment>&apos;%1 day&apos;
+----------
+&apos;%1 days&apos;</extracomment>
+        <translation>
+            <numerusform>%1 nap</numerusform>
+            <numerusform>%1 nap</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <extracomment>&apos;%1 week&apos;</extracomment>
+        <translation>
+            <numerusform>%1 hét</numerusform>
+            <numerusform>%1 hét</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
@@ -836,19 +960,19 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished">Biztosan törölni kívánja ezt az előzményt?</translation>
+        <translation>Biztosan törölni kívánja ezt az előzményt?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished">Kapcsolat szerkesztése</translation>
+        <translation>Kapcsolat szerkesztése</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished">Kapcsolat hozzáadása</translation>
+        <translation>Kapcsolat hozzáadása</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished">Előzmények törlése</translation>
+        <translation>Előzmények törlése</translation>
     </message>
 </context>
 <context>
@@ -937,6 +1061,76 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
 </context>
 <context>
+    <name>InfoChatRoom</name>
+    <message>
+        <source>quitGroupButton</source>
+        <extracomment>&apos;Exit group&apos; : Button label</extracomment>
+        <translation>Csoport elhagyása</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <extracomment>&apos;OK&apos; : Button label</extracomment>
+        <translation>Rendben</translation>
+    </message>
+    <message>
+        <source>addParticipantPlaceholder</source>
+        <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
+        <translation>Résztvevők hozzáadása</translation>
+    </message>
+    <message>
+        <source>addParticipantTooltip</source>
+        <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
+        <translation>Keresse meg a résztvevőket a névjegyzékben, hogy meghívhassa őket a csevegőszobába.</translation>
+        <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantList</source>
+        <extracomment>&apos;Participant list&apos;</extracomment>
+        <translation>Résztvevők listája</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation>Felügyelet</translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+</context>
+<context>
+    <name>InfoEncryption</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;CANCEL&apos; : button text for cancelling operation</extracomment>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>callButton</source>
+        <extracomment>&apos;CALL&apos; : Button that lead to a call</extracomment>
+        <translation>Hívás</translation>
+    </message>
+    <message>
+        <source>okButton</source>
+        <extracomment>&apos;OK&apos; : Button that validate the popup to be redirected to the device list</extracomment>
+        <translation>Rendben</translation>
+    </message>
+    <message>
+        <source>infoEncryptionTitle</source>
+        <extracomment>&apos;End-to-end encrypted&apos; Popup title about encryption information.</extracomment>
+        <translation>Végpontok között titkosított</translation>
+    </message>
+    <message>
+        <source>encryptionExplanation</source>
+        <extracomment>&quot;Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants.&quot;</extracomment>
+        <translation>Végpontok között titkosított azonnali üzenetek a biztonságos beszélgetésekben. Lehetőség van a beszélgetés biztonsági szintjének növelésére a résztvevők hitelesítésével.</translation>
+        <extra-Context>Explanation of Encryption</extra-Context>
+    </message>
+    <message>
+        <source>encryptionProcessExplanation</source>
+        <extracomment>&quot;To do so, call the contact and follow the authentification process.&quot;</extracomment>
+        <translation>Ehhez hívja fel a kapcsolatot és kövesse a hitelesítési folyamatot.</translation>
+        <extra-Context>Explanation process</extra-Context>
+    </message>
+</context>
+<context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
@@ -970,18 +1164,15 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>forcedMessage</source>
         <translation>Töltse le az alkalmazást a számítógépén, és kezdje el ingyen hívni és csevegni a felhasználókkal.
 
-Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
+Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
+</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Keressen névjegyet, indítson hívást vagy csevegést…</translation>
-    </message>
-    <message>
-        <source>homeEntry</source>
-        <translation>Kezdőlap</translation>
+        <translation>Névjegy keresése, hívás indítása vagy csevegés kezdése…</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -998,6 +1189,11 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>newConferenceButton</source>
         <translation>Konferencia-beszélgetés indítása</translation>
+    </message>
+    <message>
+        <source>newChatRoom</source>
+        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
+        <translation>Konferencia megnyitása</translation>
     </message>
 </context>
 <context>
@@ -1023,7 +1219,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>about</source>
-        <translation>Ról ről</translation>
+        <translation>A Linphone névjegye</translation>
     </message>
     <message>
         <source>quit</source>
@@ -1049,11 +1245,51 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <name>Message</name>
     <message>
         <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
         <translation>Másolás</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation>Lejátszás</translation>
+        <translation>Lejátszás!</translation>
+    </message>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation>Összes másolása</translation>
+    </message>
+    <message>
+        <source>menuDeliveryStatus</source>
+        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation>Kézbesítés állapota</translation>
+    </message>
+    <message>
+        <source>menuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>deliveryDelivered</source>
+        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Küldés: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDeliveredToUser</source>
+        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Letöltve: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDisplayed</source>
+        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Olvassa el: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryNotDelivered</source>
+        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
+        <translation>%1 semmit sem kapott</translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
 </context>
 <context>
@@ -1061,6 +1297,85 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>ok</source>
         <translation>Rendben</translation>
+    </message>
+</context>
+<context>
+    <name>NewChatRoom</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;Launch&apos; : Start button</extracomment>
+        <translation>Indítás</translation>
+    </message>
+    <message>
+        <source>missingSubject</source>
+        <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
+        <translation>Ki kell töltenie egy tárgyat.</translation>
+    </message>
+    <message numerus="yes">
+        <source>missingParticipants</source>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
+        <translation>
+            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
+            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <translation>Konferenciaalapú csevegőszoba létrehozásához be kell állítania a konferencia URI-címét a fiókbeállításokban.</translation>
+    </message>
+    <message>
+        <source>newChatRoomTitle</source>
+        <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
+        <translation>Csevegőszoba indítása</translation>
+    </message>
+    <message>
+        <source>askEncryption</source>
+        <extracomment>&apos;Would you like to encrypt your chat?&apos; : Ask about setting the chat room as secured.</extracomment>
+        <translation>Szeretné titkosítani a csevegését?</translation>
+    </message>
+    <message>
+        <source>subjectLabel</source>
+        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
+        <translation>Tárgy</translation>
+    </message>
+    <message>
+        <source>subjectTooltip</source>
+        <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
+        <translation>A csevegőszoba jelenlegi témája. Nem lehet üres.</translation>
+        <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantSelectionPlaceholder</source>
+        <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
+        <translation>Résztvevők kiválasztása</translation>
+    </message>
+    <message>
+        <source>participantSelectionTooltip</source>
+        <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
+        <translation>Keressen a névjegyek között vagy adjon hozzá egy egyediet a csevegőszobához.</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation>Felügyelet</translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+    <message>
+        <source>removeParticipantSelection</source>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <translation>Távolítsa el ezt a résztvevőt a kiválasztásból</translation>
+        <extra-Tooltip>This is a tooltip</extra-Tooltip>
+    </message>
+    <message>
+        <source>requiredField</source>
+        <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
+        <translation>Kötelező</translation>
     </message>
 </context>
 <context>
@@ -1110,6 +1425,15 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>messageDelivered</source>
         <translation>Kézbesítve</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsView</name>
+    <message>
+        <source>participantsAdminHeader</source>
+        <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
+        <translation>(Felügyelet)</translation>
+        <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
 </context>
 <context>
@@ -1184,7 +1508,12 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished">Névjegyek</translation>
+        <translation>Névjegyek-összekötő</translation>
+    </message>
+    <message>
+        <source>noPlugin</source>
+        <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
+        <translation>Nincsenek betölthető beépülő modulok</translation>
     </message>
 </context>
 <context>
@@ -1239,23 +1568,23 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Visszhangtörlő kalibrálása</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationInProgress</source>
-        <translation type="unfinished"></translation>
+        <translation>Visszhangtörlő kalibrálás folyamatban…</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1ezredmásodperc értékre kalibrálva</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Sikertelen kalibrálás</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem észlelt visszhang</translation>
     </message>
 </context>
 <context>
@@ -1363,6 +1692,182 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>encryptionMandatoryLabel</source>
         <translation>A titkosítás kötelező</translation>
+    </message>
+    <message>
+        <source>hideEmptyChatRoomsLabel</source>
+        <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
+        <translation>Üres csevegőszobák elrejtése</translation>
+    </message>
+    <message>
+        <source>waitRegistrationForCallLabel</source>
+        <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
+        <translation>Ha regisztrált, használja híváskor</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsLdap</name>
+    <message>
+        <source>newServer</source>
+        <translation>Új kiszolgáló</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsLdapEdit</name>
+    <message>
+        <source>cancel</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>Megerősít</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation>Megjelenítendő név</translation>
+    </message>
+    <message>
+        <source>displayNameTooltip</source>
+        <translation>A listában megjelenítendő kiszolgáló megjelenített neve.</translation>
+    </message>
+    <message>
+        <source>connectionTitle</source>
+        <translation>Kapcsolat</translation>
+    </message>
+    <message>
+        <source>serverLabel</source>
+        <translation>Kiszolgáló URL-címe</translation>
+    </message>
+    <message>
+        <source>serverTooltip</source>
+        <translation>LDAP-kiszolgáló. Például: ldap:/// helyi állomás kiszolgálóhoz vagy ldap://ldap.example.org/</translation>
+    </message>
+    <message>
+        <source>bindDNLabel</source>
+        <translation>Kötési DN</translation>
+    </message>
+    <message>
+        <source>bindDNTooltip</source>
+        <translation>A kötési DN az a hitelesítő adat, amelyet LDAP-kiszolgálóval való hitelesítésre használnak.&lt;br&gt;például: cn=felhasználónév,ou=emberek,dc=bc,dc=com</translation>
+    </message>
+    <message>
+        <source>passwordLabel</source>
+        <translation>Jelszó</translation>
+    </message>
+    <message>
+        <source>useTLSLabel</source>
+        <translation>TLS használata</translation>
+    </message>
+    <message>
+        <source>useTLSTooltip</source>
+        <translation>Titkosítsa a tranzakciókat LDAP segítségével TLS(StartTLS) használatával. Az „ldap” sémát kell használnia. Az SSL-en keresztüli LDAP „ldaps” nem szabványosított és elavult.&lt;br&gt;StartTLS az LDAP protokoll kiterjesztésében, amely a TLS protokollt használja a kommunikáció titkosításához.&lt;br&gt;Úgy működik, hogy normál – azaz nem biztonságos – kapcsolatot létesít az LDAP kiszolgálóval, mielőtt a szerver és a webszolgáltatások között kézfogási egyeztetés zajlik. Itt a szerver elküldi tanúsítványát, hogy igazolja személyazonosságát, mielőtt a biztonságos kapcsolat létrejön.</translation>
+    </message>
+    <message>
+        <source>useSalLabel</source>
+        <translation>SAL használata</translation>
+    </message>
+    <message>
+        <source>useSalTooltip</source>
+        <translation>A DNS feloldását Linphone végzi SAL használatával. Egy IP-címet továbbít az LDAP kiszolgálónak. Ezzel a TLS tárgyalás nem tudta ellenőrizni az állomásnévét. Deaktiválhatja az ellenőrzéseket, ha kényszeríteni szeretné a kapcsolatot.</translation>
+    </message>
+    <message>
+        <source>verifyTLSLabel</source>
+        <translation>Tanúsítványok ellenőrzése a TLS használatával</translation>
+    </message>
+    <message>
+        <source>AutoMode</source>
+        <translation>Önműködő</translation>
+    </message>
+    <message>
+        <source>offMode</source>
+        <translation>Ki</translation>
+    </message>
+    <message>
+        <source>onMode</source>
+        <translation>Be</translation>
+    </message>
+    <message>
+        <source>verifyTLSTooltip</source>
+        <translation>Adja meg, hogy az LDAP-kiszolgálóhoz való csatlakozáskor ellenőrizni kell-e a TLS-kiszolgáló tanúsítványát.</translation>
+    </message>
+    <message>
+        <source>searchTitle</source>
+        <translation>Keresés</translation>
+    </message>
+    <message>
+        <source>baseObjectLabel</source>
+        <translation>Keresési bázis</translation>
+    </message>
+    <message>
+        <source>baseObjectPlaceholder</source>
+        <translation>Keresési bázis</translation>
+    </message>
+    <message>
+        <source>baseObjectTooltip</source>
+        <translation>Az Base Object/Search Base az LDAP keresési hatókörök specifikációja, amely meghatározza, hogy a keresési kérelmet csak a keresési bázis DN-ként megadott bejegyzéssel kell végrehajtani.&lt;br&gt;A feletti bejegyzéseket nem vesszük figyelembe.</translation>
+    </message>
+    <message>
+        <source>filterLabel</source>
+        <translation>Szűrő</translation>
+    </message>
+    <message>
+        <source>filterTooltip</source>
+        <translation>A keresés a szűrőn alapul a névjegyek kereséséhez.&lt;br&gt;Alapértelmezett érték: (sn=%s)</translation>
+    </message>
+    <message>
+        <source>maxResultsLabel</source>
+        <translation>Eredmények legfeljebb száma</translation>
+    </message>
+    <message>
+        <source>maxResultsTooltip</source>
+        <translation>A keresési kérelmek eredmények legfeljebb száma.</translation>
+    </message>
+    <message>
+        <source>timeoutLabel</source>
+        <translation>Időkorlát</translation>
+    </message>
+    <message>
+        <source>timeoutTooltip</source>
+        <translation>A kapcsolat és a keresés időtúllépése másodpercek alatt. Pozitívnak kell lennie.&lt;br&gt;Az alapértelmezett érték 5 másodperc.</translation>
+    </message>
+    <message>
+        <source>parsingTitle</source>
+        <translation>Elemzés</translation>
+    </message>
+    <message>
+        <source>nameAttributesLabel</source>
+        <translation>Névattribútumok</translation>
+    </message>
+    <message>
+        <source>nameAttributesTooltip</source>
+        <translation>Ellenőrizze ezeket az attribútumokat: To, build, Name, Contact. Ezeket vesszők választják el egymástól, amelyek első sorban a legmagasabb prioritással szerepelnek.&lt;br&gt;Az alapértelmezett érték: sn</translation>
+    </message>
+    <message>
+        <source>sipAttributesLabel</source>
+        <translation>SIP-attribútumok</translation>
+    </message>
+    <message>
+        <source>sipAttributesTooltip</source>
+        <translation>Ellenőrizze ezeket az attribútumokat a SIP felhasználónév felépítéséhez a kapcsolattartó címében. Az attribútumokat vessző választja el, és az első a legfontosabb.&lt;br&gt;Az alapértelmezett érték: mobile,telephoneNumber,homePhone,sn</translation>
+    </message>
+    <message>
+        <source>domainLabel</source>
+        <translation>Tartomány</translation>
+    </message>
+    <message>
+        <source>domainTooltip</source>
+        <translation>Tartomány hozzáadása a SIP-címhez (sip:felhasználónév@tartomány).&lt;br&gt;Az alapértelmezett érték a sip.linphone.org</translation>
+    </message>
+    <message>
+        <source>miscLabel</source>
+        <translation>Egyéb</translation>
+    </message>
+    <message>
+        <source>debugLabel</source>
+        <translation>Hibakeresés</translation>
+    </message>
+    <message>
+        <source>debugTooltip</source>
+        <translation>Részletes naplófájlok beszerzése a Linphone naplófájljába tranzakciók során (hasznos a TLS-kapcsolatok hibakereséséhez).</translation>
     </message>
 </context>
 <context>
@@ -1808,8 +2313,54 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
 <context>
     <name>Timeline</name>
     <message>
-        <source>timelineTitle</source>
-        <translation>Korábban</translation>
+        <source>timelineFilter</source>
+        <extracomment>A title for filtering mode.</extracomment>
+        <translation>Szűrő</translation>
+    </message>
+    <message>
+        <source>timelineFilterAll</source>
+        <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
+        <translation>Összes</translation>
+    </message>
+    <message>
+        <source>timelineFilterCustom</source>
+        <extracomment>&apos;Custom&apos; The mode for timelines filtering.</extracomment>
+        <translation>Egyéni</translation>
+    </message>
+    <message>
+        <source>timelineFilterSimpleRooms</source>
+        <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
+        <translation>Egyszerű szobák</translation>
+        <extra-Mode>Selecting it will show all simple romms</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterSecureRooms</source>
+        <extracomment>&apos;Secure rooms&apos; : Filter item</extracomment>
+        <translation>Biztonságos szobák</translation>
+        <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterChatGroups</source>
+        <extracomment>&apos;Chat groups&apos; : Filter item</extracomment>
+        <translation>Csevegőcsoportok</translation>
+        <extra-Mode>Selecting it will show all chat groups (with more than one participant)</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterSecureChatGroups</source>
+        <extracomment>&apos;Secure Chat Groups&apos; : Filter item</extracomment>
+        <translation>Biztonságos csevegőcsoportok</translation>
+        <extra-Mode>Selecting it will show all secure chat groups (with more than one participant)</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterEphemerals</source>
+        <extracomment>&apos;Ephemerals&apos; : Filter item</extracomment>
+        <translation>Elmúlók</translation>
+        <extra-Mode>Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extra-Mode>
+    </message>
+    <message>
+        <source>timelineSearchPlaceholderText</source>
+        <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
+        <translation>Keresés a listában</translation>
     </message>
 </context>
 <context>
@@ -2575,7 +3126,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>Reunion</source>
-        <translation>Reunion</translation>
+        <translation>Réunion</translation>
     </message>
     <message>
         <source>Romania</source>
@@ -2791,7 +3342,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     </message>
     <message>
         <source>WallisAndFutunaIslands</source>
-        <translation>Wallis- és Futuna-szigetek </translation>
+        <translation>Wallis- és Futuna-szigetek</translation>
     </message>
     <message>
         <source>Yemen</source>
@@ -2811,6 +3362,235 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;</translation>
     <message>
         <source>downloadCodecDescription</source>
         <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>deliveryDelivered</source>
+        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Küldés: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDeliveredToUser</source>
+        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Letöltve: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDisplayed</source>
+        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Olvassa el: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryNotDelivered</source>
+        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
+        <translation>%1 semmit sem kapott</translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+    <message>
+        <source>menuPlayMe</source>
+        <translation>Lejátszás!</translation>
+    </message>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation>Az összes másolása</translation>
+    </message>
+    <message>
+        <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <source>menuDeliveryStatus</source>
+        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation>Kézbesítés állapota</translation>
+    </message>
+    <message>
+        <source>menuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>conferenceCreatedEvent</source>
+        <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
+        <translation>Csatlakozott a csoporthoz</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantSetAdminEvent</source>
+        <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
+        <translation>%1 most rendszergazdai jogosultság kapott</translation>
+    </message>
+    <message>
+        <source>groupChatCallButton</source>
+        <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
+        <translation>Az összes résztvevő hívása a szobában</translation>
+    </message>
+    <message>
+        <source>conferenceCreatedTerminated</source>
+        <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
+        <translation>Kilépett a csoportból</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantAddedEvent</source>
+        <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
+        <translation>%1 csatlakozott</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantRemovedEvent</source>
+        <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
+        <translation>%1 kilépett</translation>
+    </message>
+    <message>
+        <source>conferencePArticipantUnsetAdminEvent</source>
+        <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+        <translation>%1 most rendszergazdai jogosultság eltávolított</translation>
+    </message>
+    <message>
+        <source>conferenceSecurityEvent</source>
+        <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
+        <translation>Csökkent biztonsági szint a következő szerint: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageEnabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
+        <translation>Elmúló üzenetek engedélyezve: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageDisabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
+        <translation>Elmúló üzenetek letiltva: %1</translation>
+    </message>
+    <message>
+        <source>conferenceSubjectChangedEvent</source>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
+        <translation>Új tárgy: %1</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantAddedEvent</source>
+        <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
+        <translation>%1 csatlakozott</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantRemovedEvent</source>
+        <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
+        <translation>%1 kilépett</translation>
+    </message>
+    <message>
+        <source>conferencePArticipantUnsetAdminEvent</source>
+        <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+        <translation>%1 most rendszergazdai jogosultság eltávolított</translation>
+    </message>
+    <message>
+        <source>conferenceSecurityEvent</source>
+        <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
+        <translation>Csökkent biztonsági szint a következő szerint: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageDisabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
+        <translation>Elmúló üzenetek letiltva: %1</translation>
+    </message>
+    <message>
+        <source>conferenceSubjectChangedEvent</source>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
+        <translation>Új tárgy: %1</translation>
+    </message>
+    <message>
+        <source>deliveryDelivered</source>
+        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Küldés: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDeliveredToUser</source>
+        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Letöltve: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
+    </message>
+    <message>
+        <source>menuPlayMe</source>
+        <translation>Lejátszás!</translation>
+    </message>
+    <message>
+        <source>menuDeliveryStatus</source>
+        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation>Kézbesítés állapota</translation>
+    </message>
+    <message>
+        <source>subjectPlaceholder</source>
+        <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
+        <translation>Tárgy hozzáadása</translation>
+    </message>
+    <message>
+        <source>conferenceCreatedEvent</source>
+        <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
+        <translation>Csatlakozott a csoporthoz</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantSetAdminEvent</source>
+        <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
+        <translation>%1 most rendszergazdai jogosultság kapott</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageEnabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
+        <translation>Elmúló üzenetek engedélyezve: %1</translation>
+    </message>
+    <message>
+        <source>passwordRecovery</source>
+        <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
+        <translation>Elfelejtett jelszó?</translation>
+    </message>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation>Összes másolása</translation>
+    </message>
+    <message>
+        <source>menuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
+        <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>groupChatCallButton</source>
+        <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
+        <translation>Az összes résztvevő hívása a szobában</translation>
+    </message>
+    <message>
+        <source>conferenceCreatedTerminated</source>
+        <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
+        <translation>Kilépett a csoportból</translation>
+    </message>
+    <message>
+        <source>deliveryDisplayed</source>
+        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Olvassa el: %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryNotDelivered</source>
+        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
+        <translation>%1 semmit sem kapott</translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+    <message>
+        <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
+        <translation>Másolás</translation>
+    </message>
+    <message>
+        <source>searchMessagesPlaceholder</source>
+        <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
+        <translation>Üzenetek keresése</translation>
+    </message>
+    <message>
+        <source>LastContactsTitle</source>
+        <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
+        <translation>Legutóbbi névjegyek</translation>
     </message>
 </context>
 </TS>

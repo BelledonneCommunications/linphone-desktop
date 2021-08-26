@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -22,6 +22,7 @@
 #define CONTACT_MODEL_H_
 
 #include "components/presence/Presence.hpp"
+#include "utils/LinphoneEnums.hpp"
 
 // =============================================================================
 
@@ -32,6 +33,7 @@ class ContactModel : public QObject {
   friend class ContactsListModel;
   friend class ContactsListProxyModel;
   friend class SipAddressesProxyModel;
+  friend class SipAddressesSorter;
 
   Q_OBJECT;
 
@@ -51,6 +53,8 @@ public:
   void mergeVcardModel (VcardModel *vcardModel);
 
   Q_INVOKABLE VcardModel *cloneVcardModel () const;
+  Presence::PresenceLevel getPresenceLevel () const;
+  Q_INVOKABLE bool hasCapability(const LinphoneEnums::FriendCapability& capability);
 
 signals:
   void contactUpdated ();
@@ -65,7 +69,7 @@ private:
   void updateSipAddresses (VcardModel *oldVcardModel);
 
   Presence::PresenceStatus getPresenceStatus () const;
-  Presence::PresenceLevel getPresenceLevel () const;
+  
 
   VcardModel *mVcardModel = nullptr;
   std::shared_ptr<linphone::Friend> mLinphoneFriend;

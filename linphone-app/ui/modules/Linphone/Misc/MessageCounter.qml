@@ -28,7 +28,7 @@ Icon {
       anchors.centerIn: parent
       color: MessageCounterStyle.text.color
       font.pointSize: MessageCounterStyle.text.pointSize
-      text: messageCounter.count
+      text: (messageCounter.count>99 ? '+' : messageCounter.count)
     }
   }
 }

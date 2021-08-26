@@ -1,7 +1,6 @@
 pragma Singleton
 import QtQml 2.2
 
-import Colors 1.0
 import Units 1.0
 // =============================================================================
 
@@ -11,10 +10,10 @@ QtObject {
   }
   
   property QtObject error: QtObject {
-    property color color: Colors.error
+    property color color: Colors.error.color
   }
   property QtObject info: QtObject {
-    property color color: Colors.j
+    property color color: Colors.j.color
     property int pointSize: Units.dp * 11
   }
   property QtObject lists: QtObject {

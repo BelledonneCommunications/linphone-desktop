@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -21,6 +21,7 @@
 #include <QtDebug>
 
 #include "components/core/CoreManager.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/Utils.hpp"
 
@@ -81,6 +82,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const shared_pt
   beginInsertRows(QModelIndex(), row, row);
   addToConferencePrivate(linphoneAddress->clone());
   endInsertRows();
+  emit layoutChanged();
 
   mConferenceHelperModel->invalidate();
 
@@ -104,10 +106,20 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
   addToConferencePrivate(address);
 
   endInsertRows();
+  emit layoutChanged();
 
   mConferenceHelperModel->invalidate();
 
   return true;
+}
+
+void ConferenceHelperModel::ConferenceAddModel::addParticipants(ChatRoomModel * model){
+	auto participants = model->getChatRoom()->getParticipants();
+	for( auto participant : participants){
+		if(participant){
+			addToConference(Utils::coreStringToAppString(participant->getAddress()->asString()));
+		}
+	}
 }
 
 bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QString &sipAddress) {

@@ -23,12 +23,13 @@
 #include <QDateTime>
 #include <QThread>
 #include <QMessageBox>
+#include <QLoggingCategory>
 
 #include "config.h"
 
 #include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
-
+#include "utils/Constants.hpp"
 #include "Logger.hpp"
 
 // =============================================================================
@@ -50,12 +51,6 @@
 #endif // if defined(__linux__) || defined(__APPLE__)
 
 using namespace std;
-
-namespace {
-  constexpr char QtDomain[] = "qt";
-  constexpr size_t MaxLogsCollectionSize = 10485760; // 10MB.
-  constexpr char SrcPattern[] = "/src/";
-}
 
 QMutex Logger::mMutex;
 
@@ -151,10 +146,10 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
     QByteArray contextArr;
     {
       const char *file = context.file;
-      const char *pos = file ? Utils::rstrstr(file, SrcPattern) : file;
+      const char *pos = file ? Utils::rstrstr(file, Constants::SrcPattern) : file;
 
       contextArr = QStringLiteral("%1:%2: ")
-        .arg(pos ? pos + sizeof(SrcPattern) - 1 : file)
+        .arg(pos ? pos + sizeof(Constants::SrcPattern) - 1 : file)
         .arg(context.line)
         .toLocal8Bit();
       contextStr = contextArr.constData();
@@ -171,7 +166,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
   fprintf(stdout, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
   if( level == BCTBX_LOG_FATAL)
       QMessageBox::critical(nullptr, "Linphone will crash", msg); // Print an error message before sending msg to bctoolbox
-  bctbx_log(QtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
+  bctbx_log(Constants::QtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
 
   mMutex.unlock();
 
@@ -192,7 +187,7 @@ void Logger::enable (bool status) {
 void Logger::init (const shared_ptr<linphone::Config> &config) {
   if (mInstance)
     return;
-
+  QLoggingCategory::setFilterRules("qt.qml.connections.warning=false");
   const QString folder = SettingsModel::getLogsFolder(config);
   Q_ASSERT(!folder.isEmpty());
 
@@ -202,14 +197,14 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 
   {
     shared_ptr<linphone::LoggingService> loggingService = mInstance->mLoggingService = linphone::LoggingService::get();
-    loggingService->setDomain(QtDomain);
+    loggingService->setDomain(Constants::QtDomain);
     loggingService->setLogLevel(linphone::LogLevel::Message);
     loggingService->addListener(make_shared<LinphoneLogger>(mInstance));
   }
 
   linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(folder));
   linphone::Core::setLogCollectionPrefix(EXECUTABLE_NAME);
-  linphone::Core::setLogCollectionMaxFileSize(MaxLogsCollectionSize);
+  linphone::Core::setLogCollectionMaxFileSize(Constants::MaxLogsCollectionSize);
 
   mInstance->enable(SettingsModel::getLogsEnabled(config));
 }

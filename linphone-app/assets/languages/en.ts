@@ -94,11 +94,11 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation>specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
+        <translation>Specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation>url, path or file</translation>
+        <translation>URL, path or file</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
@@ -106,7 +106,7 @@
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation>sip address</translation>
+        <translation>SIP address</translation>
     </message>
 </context>
 <context>
@@ -195,7 +195,7 @@
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation>Server error: cannot send sms.</translation>
+        <translation>Server error: cannot send SMS.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
@@ -448,7 +448,69 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>isComposing</source>
-        <translation>%1 is typing...</translation>
+        <translation>%1 is typing…</translation>
+    </message>
+    <message numerus="yes">
+        <source>chatTyping</source>
+        <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
+        <translation>
+            <numerusform>%1 is typing…</numerusform>
+            <numerusform>%1 are typing…</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>ChatDeliveries</name>
+    <message>
+        <source>deliveryDelivered</source>
+        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Send to %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDeliveredToUser</source>
+        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Delivered by %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDisplayed</source>
+        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation>Read by %1 - %2</translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryNotDelivered</source>
+        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
+        <translation>%1 received nothing</translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+</context>
+<context>
+    <name>ChatMenu</name>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation>Copy all</translation>
+    </message>
+    <message>
+        <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
+        <translation>Copy</translation>
+    </message>
+    <message>
+        <source>menuPlayMe</source>
+        <translation>Play me!</translation>
+    </message>
+    <message>
+        <source>menuDeliveryStatus</source>
+        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation>Delivery status</translation>
+    </message>
+    <message>
+        <source>menuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
+        <translation>Delete</translation>
     </message>
 </context>
 <context>
@@ -662,6 +724,11 @@ Server URL not configured.</translation>
         <source>removeContactDescription</source>
         <translation>Do you really want to remove this contact from your address book?</translation>
     </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
+        <translation>You need to set the conference URI in your account settings to create a conference based chat room.</translation>
+    </message>
 </context>
 <context>
     <name>Conversation</name>
@@ -692,6 +759,37 @@ Server URL not configured.</translation>
     <message>
         <source>cleanHistory</source>
         <translation>Delete history</translation>
+    </message>
+    <message>
+        <source>conversationMenuGroupInformations</source>
+        <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
+        <translation>Group information</translation>
+    </message>
+    <message>
+        <source>conversationMenuDevices</source>
+        <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
+        <translation>Conversation&apos;s devices</translation>
+    </message>
+    <message>
+        <source>conversationMenuEphemeral</source>
+        <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
+        <translation>Ephemeral messages</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation>Admin</translation>
+        <extra-Context>One word title for describing the current admin status</extra-Context>
+    </message>
+    <message>
+        <source>groupChatCallButton</source>
+        <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
+        <translation>Call all participants in the chat room</translation>
+    </message>
+    <message>
+        <source>searchMessagesPlaceholder</source>
+        <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
+        <translation>Search messages</translation>
     </message>
 </context>
 <context>
@@ -799,6 +897,76 @@ Server URL not configured.</translation>
     </message>
 </context>
 <context>
+    <name>EphemeralChatRoom</name>
+    <message>
+        <source>ephemeralTitle</source>
+        <extracomment>&quot;Ephemeral messages&quot; : Popup title for ephemerals</extracomment>
+        <translation>Ephemeral messages</translation>
+    </message>
+    <message>
+        <source>ephemeralText</source>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <translation>New messages will be deleted on both ends once it has been read by your contact. Select a timeout.</translation>
+        <extra-Context>Explanation for ephemerals</extra-Context>
+    </message>
+    <message>
+        <source>ephemeralNotInConference!</source>
+        <extracomment>&apos;
+Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
+        <translation>Ephemeral message is only supported in conference based chat room!</translation>
+        <extra-Context>Warning about not being in conference based chat room.</extra-Context>
+    </message>
+    <message>
+        <source>disabled</source>
+        <extracomment>&apos;Disabled&apos;</extracomment>
+        <translation>Disabled</translation>
+    </message>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <extracomment>&apos;%1 minute&apos;</extracomment>
+        <translation>
+            <numerusform>%1 minute</numerusform>
+            <numerusform>%1 minutes</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <extracomment>&apos;%1 hour&apos;</extracomment>
+        <translation>
+            <numerusform>%1 hour</numerusform>
+            <numerusform>%1 hours</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <extracomment>&apos;%1 day&apos;
+----------
+&apos;%1 days&apos;</extracomment>
+        <translation>
+            <numerusform>%1 day</numerusform>
+            <numerusform>%1 days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <extracomment>&apos;%1 week&apos;</extracomment>
+        <translation>
+            <numerusform>%1 week</numerusform>
+            <numerusform>%1 weeks</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
+        <translation>CANCEL</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
+        <translation>START</translation>
+    </message>
+</context>
+<context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
@@ -860,15 +1028,15 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished">Edit contact</translation>
+        <translation>Edit contact</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished">Add contact</translation>
+        <translation>Add contact</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished">Delete history</translation>
+        <translation>Delete history</translation>
     </message>
 </context>
 <context>
@@ -957,6 +1125,82 @@ Server URL not configured.</translation>
     </message>
 </context>
 <context>
+    <name>InfoChatRoom</name>
+    <message>
+        <source>quitGroupButton</source>
+        <extracomment>&apos;Exit group&apos; : Button label</extracomment>
+        <translation>Exit group</translation>
+    </message>
+    <message>
+        <source>ok</source>
+        <extracomment>&apos;OK&apos; : Button label</extracomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>addParticipantPlaceholder</source>
+        <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
+        <translation>Add participants</translation>
+    </message>
+    <message>
+        <source>addParticipantTooltip</source>
+        <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
+        <translation>Search participants in your contact list in order to invite them into the chat room.</translation>
+        <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantList</source>
+        <extracomment>&apos;Participant list&apos;</extracomment>
+        <translation>Participant list</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation>Admin</translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+    <message>
+        <source>chatRoomDetailsTitle</source>
+        <extracomment>&quot;Group information&quot; : Popup title.</extracomment>
+        <translation>Group information</translation>
+        <extra-This>popup display data about the current chat room</extra-This>
+    </message>
+</context>
+<context>
+    <name>InfoEncryption</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;CANCEL&apos; : button text for cancelling operation</extracomment>
+        <translation>CANCEL</translation>
+    </message>
+    <message>
+        <source>callButton</source>
+        <extracomment>&apos;CALL&apos; : Button that lead to a call</extracomment>
+        <translation>CALL</translation>
+    </message>
+    <message>
+        <source>okButton</source>
+        <extracomment>&apos;OK&apos; : Button that validate the popup to be redirected to the device list</extracomment>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>infoEncryptionTitle</source>
+        <extracomment>&apos;End-to-end encrypted&apos; Popup title about encryption information.</extracomment>
+        <translation>End-to-end encrypted</translation>
+    </message>
+    <message>
+        <source>encryptionExplanation</source>
+        <extracomment>&quot;Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants.&quot;</extracomment>
+        <translation>Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authenticating participants.</translation>
+        <extra-Context>Explanation of Encryption</extra-Context>
+    </message>
+    <message>
+        <source>encryptionProcessExplanation</source>
+        <extracomment>&quot;To do so, call the contact and follow the authentification process.&quot;</extracomment>
+        <translation>To do so, call the contact and follow the authentification process.</translation>
+        <extra-Context>Explanation process</extra-Context>
+    </message>
+</context>
+<context>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
@@ -998,11 +1242,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Search contact, start a call or a chat...</translation>
-    </message>
-    <message>
-        <source>homeEntry</source>
-        <translation>HOME</translation>
+        <translation>Search contact, start a call or a chat…</translation>
     </message>
     <message>
         <source>contactsEntry</source>
@@ -1019,6 +1259,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceButton</source>
         <translation>Start conference call</translation>
+    </message>
+    <message>
+        <source>newChatRoom</source>
+        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
+        <translation>Open Conference</translation>
     </message>
 </context>
 <context>
@@ -1067,21 +1312,152 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>Message</name>
-    <message>
-        <source>menuCopy</source>
-        <translation>Copy</translation>
-    </message>
-    <message>
-        <source>menuPlayMe</source>
-        <translation>Play me!</translation>
-    </message>
-</context>
-<context>
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
         <translation>OK</translation>
+    </message>
+</context>
+<context>
+    <name>NewChatRoom</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
+        <translation>CANCEL</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;Launch&apos; : Start button</extracomment>
+        <translation>LAUNCH</translation>
+    </message>
+    <message>
+        <source>newChatRoomTitle</source>
+        <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
+        <translation>Start a chat room</translation>
+    </message>
+    <message>
+        <source>askEncryption</source>
+        <extracomment>&apos;Would you like to encrypt your chat?&apos; : Ask about setting the chat room as secured.</extracomment>
+        <translation>Would you like to encrypt your chat?</translation>
+    </message>
+    <message>
+        <source>subjectLabel</source>
+        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
+        <translation>Subject</translation>
+    </message>
+    <message>
+        <source>subjectTooltip</source>
+        <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
+        <translation>Current subject of the Chat Room. It cannot be empty.</translation>
+        <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantSelectionPlaceholder</source>
+        <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
+        <translation>Select participants</translation>
+    </message>
+    <message>
+        <source>participantSelectionTooltip</source>
+        <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
+        <translation>Search in your contacts or add a custom one to the chat room.</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation>Admin</translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+    <message>
+        <source>removeParticipantSelection</source>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <translation>Remove this participant from the selection</translation>
+        <extra-Tooltip>This is a tooltip</extra-Tooltip>
+    </message>
+    <message>
+        <source>requiredField</source>
+        <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
+        <translation>Required</translation>
+    </message>
+    <message>
+        <source>missingSubject</source>
+        <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
+        <translation>You need to fill a subject.</translation>
+    </message>
+    <message numerus="yes">
+        <source>missingParticipants</source>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
+        <translation>
+            <numerusform>You need at least %1 participant.</numerusform>
+            <numerusform>You need at least %1 participants.</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <translation>You need to set the conference URI in your account settings to create a conference based chat room.</translation>
+    </message>
+    <message>
+        <source>subjectPlaceholder</source>
+        <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
+        <translation>Give a subject</translation>
+    </message>
+    <message>
+        <source>LastContactsTitle</source>
+        <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
+        <translation>Recent contacts</translation>
+    </message>
+</context>
+<context>
+    <name>Notice</name>
+    <message>
+        <source>conferenceCreatedEvent</source>
+        <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
+        <translation>You have joined the group</translation>
+    </message>
+    <message>
+        <source>conferenceCreatedTerminated</source>
+        <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
+        <translation>You have left the group</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantAddedEvent</source>
+        <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
+        <translation>%1 has joined</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantRemovedEvent</source>
+        <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
+        <translation>%1 has left</translation>
+    </message>
+    <message>
+        <source>conferenceParticipantSetAdminEvent</source>
+        <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
+        <translation>%1 is now an admin</translation>
+    </message>
+    <message>
+        <source>conferencePArticipantUnsetAdminEvent</source>
+        <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+        <translation>%1 is no more an admin</translation>
+    </message>
+    <message>
+        <source>conferenceSecurityEvent</source>
+        <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
+        <translation>Security level degraded by %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageEnabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
+        <translation>Ephemeral messages have been enabled: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageDisabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
+        <translation>Ephemeral messages have been disabled</translation>
+    </message>
+    <message>
+        <source>conferenceSubjectChangedEvent</source>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
+        <translation>New subject: %1</translation>
     </message>
 </context>
 <context>
@@ -1103,11 +1479,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation>Extracting %1...</translation>
+        <translation>Extracting %1…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>Downloading %1...</translation>
+        <translation>Downloading %1…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
@@ -1131,6 +1507,15 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>messageDelivered</source>
         <translation>Delivered</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsView</name>
+    <message>
+        <source>participantsAdminHeader</source>
+        <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
+        <translation>(Admin)</translation>
+        <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
 </context>
 <context>
@@ -1207,6 +1592,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>contactsTitle</source>
         <translation>Address Book Connector</translation>
     </message>
+    <message>
+        <source>noPlugin</source>
+        <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
+        <translation>No Plugins to load</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
@@ -1266,7 +1656,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>calibratingEchoCancellationInProgress</source>
         <translatorcomment>Message while calibrating</translatorcomment>
-        <translation>...calibrating...</translation>
+        <translation>…calibrating…</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
@@ -1390,6 +1780,16 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>encryptionMandatoryLabel</source>
         <translation>Encryption is mandatory</translation>
     </message>
+    <message>
+        <source>hideEmptyChatRoomsLabel</source>
+        <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
+        <translation>Hide empty chat rooms</translation>
+    </message>
+    <message>
+        <source>waitRegistrationForCallLabel</source>
+        <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
+        <translation>Call when registered</translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>
@@ -1404,12 +1804,12 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancel</source>
         <translatorcomment>Cancel button label</translatorcomment>
-        <translation>cancel</translation>
+        <translation>Cancel</translation>
     </message>
     <message>
         <source>confirm</source>
         <translatorcomment>Confirm button label</translatorcomment>
-        <translation>confirm</translation>
+        <translation>Confirm</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -1460,11 +1860,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalLabel</source>
-        <translation>Use Sal</translation>
+        <translation>Use SAL</translation>
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation>The dns resolution is done by Linphone using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
+        <translation>The DNS resolution is done by Linphone using SAL. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -1487,7 +1887,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>verifyTLSTooltip</source>
-        <translation>Specify whether the tls server certificate must be verified when connecting to a LDAP server.</translation>
+        <translation>Specify whether the TLS server certificate must be verified when connecting to a LDAP server.</translation>
     </message>
     <message>
         <source>searchTitle</source>
@@ -1506,7 +1906,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>baseObjectTooltip</source>
         <translatorcomment>&apos;Base Object&apos;, &apos;Search Base&apos; and &apos;Base DN&apos; can be keywords. Check LDAP documentations</translatorcomment>
-        <translation>Base Object/Search Base is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.&lt;br&gt;No entries above it will be considered.</translation>
+        <translation>Base Object/Search Base is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search Base DN.&lt;br&gt;No entries above it will be considered.</translation>
     </message>
     <message>
         <source>filterLabel</source>
@@ -1514,7 +1914,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation>The search is base on this filter to search contacts.&lt;br&gt;Default value : (sn=%s)</translation>
+        <translation>The search is based on this filter to search contacts.&lt;br&gt;Default value: (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
@@ -1534,11 +1934,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation>Check these attributes To build Name Contact, separated by a comma and the first is the highest priority.&lt;br&gt;The default value is: sn</translation>
+        <translation>Check these attributes to build name contact, separated by a comma and the first is the highest priority.&lt;br&gt;The default value is: sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation>Sip Attributes</translation>
+        <translation>SIP Attributes</translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
@@ -1551,7 +1951,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation>Add the domain to the sip address(sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
+        <translation>Add the domain to the SIP address (sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -1579,7 +1979,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>DTMFs send method</translation>
+        <translation>DTMF send method</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -2018,8 +2418,54 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 <context>
     <name>Timeline</name>
     <message>
-        <source>timelineTitle</source>
-        <translation>Previously</translation>
+        <source>timelineFilter</source>
+        <extracomment>A title for filtering mode.</extracomment>
+        <translation>Filter</translation>
+    </message>
+    <message>
+        <source>timelineFilterAll</source>
+        <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
+        <translation>All</translation>
+    </message>
+    <message>
+        <source>timelineFilterCustom</source>
+        <extracomment>&apos;Custom&apos; The mode for timelines filtering.</extracomment>
+        <translation>Custom</translation>
+    </message>
+    <message>
+        <source>timelineFilterSimpleRooms</source>
+        <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
+        <translation>Simple rooms</translation>
+        <extra-Mode>Selecting it will show all simple romms</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterSecureRooms</source>
+        <extracomment>&apos;Secure rooms&apos; : Filter item</extracomment>
+        <translation>Secure rooms</translation>
+        <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterChatGroups</source>
+        <extracomment>&apos;Chat groups&apos; : Filter item</extracomment>
+        <translation>Chat groups</translation>
+        <extra-Mode>Selecting it will show all chat groups (with more than one participant)</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterSecureChatGroups</source>
+        <extracomment>&apos;Secure Chat Groups&apos; : Filter item</extracomment>
+        <translation>Secure Chat Groups</translation>
+        <extra-Mode>Selecting it will show all secure chat groups (with more than one participant)</extra-Mode>
+    </message>
+    <message>
+        <source>timelineFilterEphemerals</source>
+        <extracomment>&apos;Ephemerals&apos; : Filter item</extracomment>
+        <translation>Ephemerals</translation>
+        <extra-Mode>Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extra-Mode>
+    </message>
+    <message>
+        <source>timelineSearchPlaceholderText</source>
+        <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
+        <translation>Search in the list</translation>
     </message>
 </context>
 <context>
@@ -2039,6 +2485,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>quitWarning</source>
         <translation>Your account has been created but has not been validated yet. Are you sure you want to quit this view?</translation>
+    </message>
+    <message>
+        <source>passwordRecovery</source>
+        <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
+        <translation>Forgotten password?</translation>
     </message>
 </context>
 <context>

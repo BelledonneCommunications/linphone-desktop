@@ -26,6 +26,7 @@
 // =============================================================================
 
 function setSelectedEntry (peerAddress, localAddress) {
+	/*
   if (localAddress != null && localAddress !== Linphone.AccountSettingsModel.sipAddress) {
     resetSelectedEntry()
     return
@@ -42,16 +43,19 @@ function setSelectedEntry (peerAddress, localAddress) {
       return
     }
   }
+  */
 }
 
 function resetSelectedEntry () {
+	/*
   view.currentIndex = -1
-  timeline._selectedSipAddress = ''
+  timeline._selectedSipAddress = ''*/
 }
 
 // -----------------------------------------------------------------------------
 
 function handleDataChanged (topLeft, bottomRight, roles) {
+	/*
   var index = view.currentIndex
   var model = timeline.model
   var sipAddress = timeline._selectedSipAddress
@@ -62,18 +66,22 @@ function handleDataChanged (topLeft, bottomRight, roles) {
   ) {
     setSelectedEntry(sipAddress)
   }
+  */
 }
 
 function handleRowsAboutToBeRemoved (parent, first, last) {
+	/*
   var index = view.currentIndex
   if (index >= first && index <= last) {
     view.currentIndex = -1
   }
+  */
 }
 
 function handleCountChanged (_) {
+	/*
   var sipAddress = timeline._selectedSipAddress
   if (sipAddress.length > 0) {
     setSelectedEntry(sipAddress)
-  }
+  }*/
 }

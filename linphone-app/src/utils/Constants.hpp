@@ -1,0 +1,146 @@
+/*
+ * Copyright (c) 2021 Belledonne Communications SARL.
+ *
+ * This file is part of linphone-desktop
+ * (see https://www.linphone.org).
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef CONSTANTS_H_
+#define CONSTANTS_H_
+
+#include <QObject>
+#include <QString>
+#include <QDir>
+
+#include "config.h"
+
+// =============================================================================
+
+class Constants : public QObject{
+	Q_OBJECT
+public:
+	Constants(QObject * parent = nullptr) : QObject(parent){}
+	
+	//----------------------------------------------------------------------------------	
+	
+	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
+	static constexpr char DefaultLocale[] = "en";
+		
+	static constexpr char ApplicationMinimalQtVersion[] = "5.9.0";
+	static constexpr char DefaultFont[] = "Noto Sans";
+	
+	static constexpr size_t MaxLogsCollectionSize = 10485760; // 10MB.
+	
+	
+#ifdef ENABLE_UPDATE_CHECK
+	static constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
+#endif // ifdef ENABLE_UPDATE_CHECK
+	
+	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
+	static constexpr char LinphoneDomain[] = "sip.linphone.org";
+	static constexpr char DefaultContactParameters[] = "message-expires=604800";
+	static constexpr int DefaultExpires = 3600;
+	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
+	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login";
+	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
+	
+	static constexpr char LinphoneBZip2_exe[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
+	static constexpr char LinphoneBZip2_dll[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
+	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
+	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
+	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
+	
+	
+	// Max image size in bytes. (100Kb)
+	static constexpr qint64 MaxImageSize = 102400;// In Bytes.
+	static constexpr qint64 FileSizeLimit = 524288000;// In Bytes.
+	static constexpr int ThumbnailImageFileWidth = 100;
+	static constexpr int ThumbnailImageFileHeight = 100;
+
+	static constexpr char PathAssistantConfig[] = "/" EXECUTABLE_NAME "/assistant/";
+	static constexpr char PathAvatars[] = "/avatars/";
+	static constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
+	static constexpr char PathCodecs[] =  "/codecs/";
+	static constexpr char PathTools[] =  "/tools/";
+	static constexpr char PathLogs[] = "/logs/";
+#ifdef APPLE
+	static constexpr char PathPlugins[] = "/Plugins/";
+#else
+	static constexpr char PathPlugins[] = "/plugins/";
+#endif
+	static constexpr char PathPluginsApp[] = "app/";
+	static constexpr char PathThumbnails[] = "/thumbnails/";
+	static constexpr char PathUserCertificates[] = "/usr-crt/";
+	
+	static constexpr char PathCallHistoryList[] = "/call-history.db";
+	static constexpr char PathConfig[] = "/linphonerc";
+	static constexpr char PathFactoryConfig[] = "/" EXECUTABLE_NAME "/linphonerc-factory";
+	static constexpr char PathRootCa[] = "/" EXECUTABLE_NAME "/rootca.pem";
+	static constexpr char PathFriendsList[] = "/friends.db";
+	static constexpr char PathMessageHistoryList[] = "/message-history.db";
+	static constexpr char PathZrtpSecrets[] = "/zidcache";
+	
+	static constexpr char LanguagePath[] = ":/languages/";
+	
+	// The main windows of Linphone desktop.
+	static constexpr char QmlViewMainWindow[] = "qrc:/ui/views/App/Main/MainWindow.qml";
+	static constexpr char QmlViewCallsWindow[] = "qrc:/ui/views/App/Calls/CallsWindow.qml";
+	static constexpr char QmlViewSettingsWindow[] = "qrc:/ui/views/App/Settings/SettingsWindow.qml";
+	
+	static constexpr char MainQmlUri[] = "Linphone";
+	
+	static constexpr char AttachVirtualWindowMethodName[] = "attachVirtualWindow";
+	static constexpr char AboutPath[] = "qrc:/ui/views/App/Main/Dialogs/About.qml";
+	
+	static constexpr char AssistantViewName[] = "Assistant";
+	
+	static constexpr char QtDomain[] = "qt";
+	static constexpr char SrcPattern[] = "/src/";
+	
+	static constexpr char VcardScheme[] = "linphone-desktop:/";
+	static constexpr int CbsCallInterval = 20;
+	static constexpr char RcVersionName[] = "rc_version";
+	static constexpr int RcVersionCurrent = 1;
+	
+//--------------------------------------------------------------------------------	
+//								CISCO
+//--------------------------------------------------------------------------------
+#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+	static constexpr char H264Description[] = "Provided by CISCO SYSTEM,INC";
+#endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+	
+#ifdef Q_OS_LINUX
+	static constexpr char LibraryExtension[] = "so";
+	static constexpr char H264InstallName[] = "libopenh264.so";
+#ifdef Q_PROCESSOR_X86_64
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1.0-linux64.5.so.bz2";
+#else
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1-0-linux32.5.so.bz2";
+#endif // ifdef Q_PROCESSOR_X86_64
+#elif defined(Q_OS_WIN)
+	static constexpr char LibraryExtension[] = "dll";
+	static constexpr char H264InstallName[] = "openh264.dll";
+#ifdef Q_OS_WIN64
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.1.0-win64.dll.bz2";
+#else
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.1.0-win32.dll.bz2";
+#endif // ifdef Q_OS_WIN64
+#endif // ifdef Q_OS_LINUX
+
+//--------------------------------------------------------------------------------	
+};
+
+#endif

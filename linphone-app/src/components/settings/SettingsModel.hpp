@@ -103,7 +103,10 @@ class SettingsModel : public QObject {
     Q_PROPERTY(bool muteMicrophoneEnabled READ getMuteMicrophoneEnabled WRITE setMuteMicrophoneEnabled NOTIFY muteMicrophoneEnabledChanged)
 
     Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged)
-
+    Q_PROPERTY(bool hideEmptyChatRooms READ getHideEmptyChatRooms WRITE setHideEmptyChatRooms NOTIFY hideEmptyChatRoomsChanged)
+    
+    Q_PROPERTY(bool waitRegistrationForCall READ getWaitRegistrationForCall WRITE setWaitRegistrationForCall NOTIFY waitRegistrationForCallChanged)// Allow call only if the current proxy has been registered
+    
     Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged)
 
     Q_PROPERTY(bool chatNotificationSoundEnabled READ getChatNotificationSoundEnabled WRITE setChatNotificationSoundEnabled NOTIFY chatNotificationSoundEnabledChanged)
@@ -171,7 +174,7 @@ class SettingsModel : public QObject {
     Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged)
 
 	Q_PROPERTY(bool showLocalSipAccount READ getShowLocalSipAccount CONSTANT)
-	Q_PROPERTY(bool showStartChat READ getShowStartChatButton CONSTANT)
+	Q_PROPERTY(bool showStartChatButton READ getShowStartChatButton CONSTANT)
 	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
 
 	// Advanced. -----------------------------------------------------------------
@@ -320,6 +323,12 @@ public:
 
 	bool getChatEnabled () const;
 	void setChatEnabled (bool status);
+	
+	bool getHideEmptyChatRooms() const;
+	void setHideEmptyChatRooms(const bool& data);
+	
+	bool getWaitRegistrationForCall() const;
+	void setWaitRegistrationForCall(const bool& data);
 
 	bool getConferenceEnabled () const;
 	void setConferenceEnabled (bool status);
@@ -430,9 +439,9 @@ public:
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
 
-	bool getShowLocalSipAccount () const;
-	bool getShowStartChatButton () const;
-	bool getShowStartVideoCallButton () const;
+	Q_INVOKABLE bool getShowLocalSipAccount () const;
+	Q_INVOKABLE bool getShowStartChatButton () const;
+	Q_INVOKABLE bool getShowStartVideoCallButton () const;
 
 	// Advanced. ---------------------------------------------------------------------------
 	
@@ -536,6 +545,8 @@ signals:
 	void muteMicrophoneEnabledChanged (bool status);
 
 	void chatEnabledChanged (bool status);
+	void hideEmptyChatRoomsChanged (bool status);
+	void waitRegistrationForCallChanged (bool status);
 
 	void conferenceEnabledChanged (bool status);
 

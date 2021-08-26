@@ -10,6 +10,7 @@ Button {
   id: button
 
   property alias backgroundColor: background.color
+  property alias radius: background.radius
 
   background: Rectangle {
     id: background
@@ -26,11 +27,13 @@ Button {
   contentItem: Text {
     color: SmallButtonStyle.text.color
     font.pointSize: SmallButtonStyle.text.pointSize
+    font.weight: Font.Bold
     horizontalAlignment: Text.AlignHCenter
     text: button.text
     verticalAlignment: Text.AlignVCenter
     leftPadding: SmallButtonStyle.leftPadding
     rightPadding: SmallButtonStyle.rightPadding
+    
   }
   hoverEnabled: true
   MouseArea {

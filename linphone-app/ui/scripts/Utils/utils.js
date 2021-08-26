@@ -211,7 +211,8 @@ function openWindow (window, parent, options, fullscreen) {
 
 function resolveImageUri (name) {
   return name
-    ? 'image://internal/' + removeScheme(Qt.resolvedUrl('/assets/images/' + name + '.svg'))
+    //? 'image://internal/' + removeScheme(Qt.resolvedUrl('/assets/images/' + name + '.svg'))
+    ? 'image://internal/' + name
     : ''
 }
 
@@ -477,27 +478,39 @@ function findIndex (array, cb, context) {
 }
 
 // -----------------------------------------------------------------------------
-
 function formatElapsedTime (seconds) {
   seconds = parseInt(seconds, 10)
-
-  var h = Math.floor(seconds / 3600)
-  var m = Math.floor((seconds - h * 3600) / 60)
-  var s = seconds - h * 3600 - m * 60
-
-  if (h < 10 && h > 0) {
-    h = '0' + h
-  }
-
-  if (m < 10) {
-    m = '0' + m
-  }
-
-  if (s < 10) {
-    s = '0' + s
-  }
-
-  return (h === 0 ? '' : h + ':') + m + ':' + s
+//s,	m,	h,		d,		W,		M,			Y
+//1,	60,	3600,	86400,	604800,	2592000,	31104000
+	var y = Math.floor(seconds / 31104000)
+	if(y > 0)
+		return y+ ' years'
+	var M = Math.floor(seconds / 2592000)
+	if(M > 0)
+		return M+' months'
+	var w = Math.floor(seconds / 604800)
+	if(w>0)
+		return w+' week';
+	var d = Math.floor(seconds / 86400)
+	if(d>0)
+		return d+' days'
+	var h = Math.floor(seconds / 3600)
+	var m = Math.floor((seconds - h * 3600) / 60)
+	var s = seconds - h * 3600 - m * 60
+	
+	if (h < 10 && h > 0) {
+		h = '0' + h
+	}
+	
+	if (m < 10) {
+		m = '0' + m
+	}
+	
+	if (s < 10) {
+		s = '0' + s
+	}
+	
+	return (h === 0 ? '' : h + ':') + m + ':' + s
 }
 
 // -----------------------------------------------------------------------------

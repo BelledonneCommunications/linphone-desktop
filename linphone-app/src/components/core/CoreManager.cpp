@@ -29,7 +29,8 @@
 
 #include "app/paths/Paths.hpp"
 #include "components/calls/CallsListModel.hpp"
-#include "components/chat/ChatModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
+#include "components/chat-room/ChatRoomListModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contacts/ContactsImporterListModel.hpp"
@@ -38,8 +39,10 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 
 #if defined(Q_OS_MACOS)
   #include "event-count-notifier/EventCountNotifierMacOs.hpp"
@@ -56,19 +59,6 @@
 // =============================================================================
 
 using namespace std;
-
-namespace {
-  constexpr int CbsCallInterval = 20;
-
-  constexpr char RcVersionName[] = "rc_version";
-  constexpr int RcVersionCurrent = 1;
-
-  // TODO: Remove hardcoded values. Use config directly.
-  constexpr char LinphoneDomain[] = "sip.linphone.org";
-  constexpr char DefaultContactParameters[] = "message-expires=604800";
-  constexpr int DefaultExpires = 3600;
-  constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
-}
 
 // -----------------------------------------------------------------------------
 
@@ -99,6 +89,7 @@ CoreManager::~CoreManager(){
 
 void CoreManager::initCoreManager(){
 	mCallsListModel = new CallsListModel(this);
+	mChatRoomListModel = new ChatRoomListModel(this);
 	mContactsListModel = new ContactsListModel(this);
 	mContactsImporterListModel = new ContactsImporterListModel(this);
 	mAccountSettingsModel = new AccountSettingsModel(this);
@@ -106,6 +97,7 @@ void CoreManager::initCoreManager(){
 	mSettingsModel = new SettingsModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
+	mTimelineListModel = new TimelineListModel(this);
 	mEventCountNotifier->updateUnreadMessageCount();
 	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
@@ -114,49 +106,15 @@ void CoreManager::initCoreManager(){
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
 }
+
+AbstractEventCountNotifier * CoreManager::getEventCountNotifier(){
+	return mEventCountNotifier;
+}
+
 CoreManager *CoreManager::getInstance (){
    return mInstance;
  }
 
-shared_ptr<ChatModel> CoreManager::getChatModel (const QString &peerAddress, const QString &localAddress) {
-  if (peerAddress.isEmpty() || localAddress.isEmpty())
-    return nullptr;
-
-  // Create a new chat model.
-  QPair<QString, QString> chatModelId{ peerAddress, localAddress };
-  if (!mChatModels.contains(chatModelId)) {
-    if (
-      !mCore->createAddress(peerAddress.toStdString()) ||
-      !mCore->createAddress(localAddress.toStdString())
-    ) {
-      qWarning() << QStringLiteral("Unable to get chat model from invalid chat model id: (%1, %2).")
-        .arg(peerAddress).arg(localAddress);
-      return nullptr;
-    }
-
-    auto deleter = [this, chatModelId](ChatModel *chatModel) {
-      bool removed = mChatModels.remove(chatModelId);
-      Q_ASSERT(removed);
-      delete chatModel;
-    };
-
-    shared_ptr<ChatModel> chatModel(new ChatModel(peerAddress, localAddress), deleter);
-    mChatModels[chatModelId] = chatModel;
-
-    emit chatModelCreated(chatModel);
-
-    return chatModel;
-  }
-
-  // Returns an existing chat model.
-  shared_ptr<ChatModel> chatModel = mChatModels[chatModelId].lock();
-  Q_CHECK_PTR(chatModel);
-  return chatModel;
-}
-
-bool CoreManager::chatModelExists (const QString &peerAddress, const QString &localAddress) {
-  return mChatModels.contains({ peerAddress, localAddress });
-}
 
 HistoryModel* CoreManager::getHistoryModel(){
   if(!mHistoryModel){
@@ -206,7 +164,9 @@ void CoreManager::forceRefreshRegisters () {
   qInfo() << QStringLiteral("Refresh registers.");
   mCore->refreshRegisters();
 }
-
+void CoreManager::updateUnreadMessageCount(){
+	mEventCountNotifier->updateUnreadMessageCount();
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::sendLogs () const {
@@ -275,6 +235,12 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
     Paths::getFactoryConfigFilePath(),
     nullptr
   );
+  // You only need to give your LIME server URL
+  mCore->setLimeX3DhServerUrl("https://lime.linphone.org/lime-server/lime-server.php");
+	// and enable LIME on your core to use encryption.
+  mCore->enableLimeX3Dh(true);
+					  // Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
+  
   mCore->addListener(mHandlers);
   mCore->setVideoDisplayFilter("MSQOGL");
   mCore->usePreviewWindow(true);
@@ -302,29 +268,44 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
   mCore->enableFriendListSubscription(true);
 }
 
+void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel){
+	emit chatRoomModelCreated(chatRoomModel);
+}
+
 void CoreManager::migrate () {
   shared_ptr<linphone::Config> config = mCore->getConfig();
-  int rcVersion = config->getInt(SettingsModel::UiSection, RcVersionName, 0);
-  if (rcVersion == RcVersionCurrent)
+  int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
+  if (rcVersion == Constants::RcVersionCurrent)
     return;
-  if (rcVersion > RcVersionCurrent) {
+  if (rcVersion > Constants::RcVersionCurrent) {
     qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
-      .arg(rcVersion).arg(RcVersionCurrent);
+      .arg(rcVersion).arg(Constants::RcVersionCurrent);
     return;
   }
 
   qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
-    .arg(rcVersion).arg(RcVersionCurrent);
+    .arg(rcVersion).arg(Constants::RcVersionCurrent);
 
   // Add message_expires param on old proxy configs.
+  /*
   for (const auto &proxyConfig : mCore->getProxyConfigList()) {
-    if (proxyConfig->getDomain() == LinphoneDomain) {
-      proxyConfig->setContactParameters(DefaultContactParameters);
-      proxyConfig->setExpires(DefaultExpires);
+    if (proxyConfig->getDomain() == Constants::LinphoneDomain) {
+      proxyConfig->setContactParameters(Constants::DefaultContactParameters);
+      proxyConfig->setExpires(Constants::DefaultExpires);
       proxyConfig->done();
     }
+  }*/
+  for(const auto &account : mCore->getAccountList()){
+	auto params = account->getParams();
+	if( params->getDomain() == Constants::LinphoneDomain) {
+		auto newParams = params->clone();
+		newParams->setContactParameters(Constants::DefaultContactParameters);
+		newParams->setExpires(Constants::DefaultExpires);
+		account->setParams(newParams);
+	}
   }
-  config->setInt(SettingsModel::UiSection, RcVersionName, RcVersionCurrent);
+  
+  config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
 // -----------------------------------------------------------------------------
@@ -349,7 +330,7 @@ int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
 
 void CoreManager::startIterate(){
     mCbsTimer = new QTimer(this);
-    mCbsTimer->setInterval(CbsCallInterval);
+    mCbsTimer->setInterval(Constants::CbsCallInterval);
     QObject::connect(mCbsTimer, &QTimer::timeout, this, &CoreManager::iterate);
     qInfo() << QStringLiteral("Start iterate");
     mCbsTimer->start();
@@ -386,7 +367,7 @@ void CoreManager::handleLogsUploadStateChanged (linphone::Core::LogCollectionUpl
 // -----------------------------------------------------------------------------
 
 QString CoreManager::getDownloadUrl () {
-  return DownloadUrl;
+  return Constants::DownloadUrl;
 }
 
 void CoreManager::setLastRemoteProvisioningState(const linphone::ConfiguringState& state){
