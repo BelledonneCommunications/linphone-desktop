@@ -2254,12 +2254,12 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceURI</source>
         <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conference URI</translation>
     </message>
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Invalid conference URI</translation>
     </message>
 </context>
 <context>
