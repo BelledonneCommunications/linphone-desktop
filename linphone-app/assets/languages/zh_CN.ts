@@ -462,7 +462,7 @@
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation>使用命令行工具控制 %1 应用的方法</translation>
+        <translation>使用命令行工具控制 %1 应用的方法.</translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
