@@ -53,6 +53,7 @@ Row {
              )
           )
       text: modelData
+      radius: height/2
 
       onClicked: {
         if (selectedButton !== index) {

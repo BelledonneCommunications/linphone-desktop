@@ -29,18 +29,14 @@
 #include "AppController.hpp"
 
 #include "components/other/desktop-tools/DesktopTools.hpp"
+#include "utils/Constants.hpp"
 // =============================================================================
 
 using namespace std;
 
-namespace {
-  constexpr char ApplicationMinimalQtVersion[] = "5.9.0";
-  constexpr char DefaultFont[] = "Noto Sans";
-}
-
 AppController::AppController (int &argc, char *argv[]) {
   DesktopTools::init();
-  QT_REQUIRE_VERSION(argc, argv, ApplicationMinimalQtVersion)
+  QT_REQUIRE_VERSION(argc, argv, Constants::ApplicationMinimalQtVersion)
   Q_ASSERT(!mApp);
   // Disable QML cache. Avoid malformed cache.
   qputenv("QML_DISABLE_DISK_CACHE", "true");
@@ -99,7 +95,7 @@ AppController::AppController (int &argc, char *argv[]) {
   }
   qInfo() << "Available fonts : " << QFontDatabase().families();
 
-  mApp->setFont(QFont(DefaultFont));
+  mApp->setFont(QFont(Constants::DefaultFont));
 }
 
 AppController::~AppController () {

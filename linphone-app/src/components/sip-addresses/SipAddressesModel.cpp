@@ -24,7 +24,7 @@
 #include <QtDebug>
 
 #include "components/call/CallModel.hpp"
-#include "components/chat/ChatModel.hpp"
+#include "components/chat-room/ChatRoomModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
@@ -32,7 +32,6 @@
 #include "components/core/CoreManager.hpp"
 #include "components/history/HistoryModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "SipAddressesModel.hpp"
@@ -46,7 +45,7 @@ using namespace std;
 static inline QVariantMap buildVariantMap (const SipAddressesModel::SipAddressEntry &sipAddressEntry) {
   return QVariantMap{
     { "sipAddress", sipAddressEntry.sipAddress },
-    { "contact", QVariant::fromValue(sipAddressEntry.contact) },
+    { "contactModel", QVariant::fromValue(sipAddressEntry.contact) },
     { "presenceStatus", sipAddressEntry.presenceStatus },
     { "__localToConferenceEntry", QVariant::fromValue(&sipAddressEntry.localAddressToConferenceEntry) }
   };
@@ -59,7 +58,7 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
 
   mCoreHandlers = coreManager->getHandlers();
 
-  QObject::connect(coreManager, &CoreManager::chatModelCreated, this, &SipAddressesModel::handleChatModelCreated);
+  QObject::connect(coreManager, &CoreManager::chatRoomModelCreated, this, &SipAddressesModel::handleChatRoomModelCreated);
   QObject::connect(coreManager, &CoreManager::historyModelCreated, this, &SipAddressesModel::handleHistoryModelCreated);
 
   ContactsListModel *contacts = CoreManager::getInstance()->getContactsListModel();
@@ -155,7 +154,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &pee
 QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress) {
     if( sipAddress.toUpper().contains("TRANSPORT="))
     {// Transport has been specified : check for it
-      const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
+      const shared_ptr<const linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
       if (!address)
         return QString("TLS");  // Return TLS by default
 
@@ -175,14 +174,14 @@ QString SipAddressesModel::getTransportFromSipAddress (const QString &sipAddress
 }
 
 QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, const QString &transport) {
-  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
 
   if (!address)
     return QString("");
 
-  address->setTransport(LinphoneUtils::stringToTransportType(transport.toUpper()));
+  address->setTransport(Utils::stringToTransportType(transport.toUpper()));
 
-  return QString::fromStdString(address->asString());
+  return Utils::coreStringToAppString(address->asString());
 }
 
 // -----------------------------------------------------------------------------
@@ -228,11 +227,11 @@ QString SipAddressesModel::interpretSipAddress (const QUrl &sipAddress) {
 }
 
 bool SipAddressesModel::addressIsValid (const QString &address) {
-  return !!linphone::Factory::get()->createAddress(address.toStdString());
+  return !!linphone::Factory::get()->createAddress(Utils::appStringToCoreString(address));
 }
 
 bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
-  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(sipAddress.toStdString());
+  shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
   return address && !address->getUsername().empty();
 }
 // Return at most : sip:username@domain
@@ -264,20 +263,20 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
 
 // -----------------------------------------------------------------------------
 
-void SipAddressesModel::handleChatModelCreated (const shared_ptr<ChatModel> &chatModel) {
-  ChatModel *ptr = chatModel.get();
+void SipAddressesModel::handleChatRoomModelCreated (const shared_ptr<ChatRoomModel> &chatRoomModel) {
+  ChatRoomModel *ptr = chatRoomModel.get();
 
-  QObject::connect(ptr, &ChatModel::allEntriesRemoved, this, [this, ptr] {
+  QObject::connect(ptr, &ChatRoomModel::allEntriesRemoved, this, [this, ptr] {
     handleAllEntriesRemoved(ptr);
   });
-  QObject::connect(ptr, &ChatModel::lastEntryRemoved, this, [this, ptr] {
+  QObject::connect(ptr, &ChatRoomModel::lastEntryRemoved, this, [this, ptr] {
     handleLastEntryRemoved(ptr);
   });
-  QObject::connect(ptr, &ChatModel::messageCountReset, this, [this, ptr] {
+  QObject::connect(ptr, &ChatRoomModel::messageCountReset, this, [this, ptr] {
     handleMessageCountReset(ptr);
   });
 
-  QObject::connect(ptr, &ChatModel::messageSent, this, &SipAddressesModel::handleMessageSent);
+  QObject::connect(ptr, &ChatRoomModel::messageSent, this, &SipAddressesModel::handleMessageSent);
 }
 
 void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
@@ -286,8 +285,9 @@ void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
   });
 }
 void SipAddressesModel::handleContactAdded (ContactModel *contact) {
-  for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses())
-    addOrUpdateSipAddress(sipAddress.toString(), contact);
+  for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses()) {
+	addOrUpdateSipAddress(sipAddress.toString(), contact);
+  }
 }
 
 void SipAddressesModel::handleContactRemoved (const ContactModel *contact) {
@@ -301,7 +301,6 @@ void SipAddressesModel::handleSipAddressAdded (ContactModel *contact, const QStr
     qWarning() << "Unable to map sip address" << sipAddress << "to" << contact << "- already used by" << mappedContact;
     return;
   }
-
   addOrUpdateSipAddress(sipAddress, contact);
 }
 
@@ -316,7 +315,6 @@ void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QS
 }
 
 void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
-  qInfo() << "Handle message received.";
   const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
   addOrUpdateSipAddress(peerAddress, message);
 }
@@ -365,12 +363,12 @@ void SipAddressesModel::handlePresenceReceived (
   updateObservers(sipAddress, status);
 }
 
-void SipAddressesModel::handleAllEntriesRemoved (ChatModel *chatModel) {
-  auto it = mPeerAddressToSipAddressEntry.find(chatModel->getPeerAddress());
+void SipAddressesModel::handleAllEntriesRemoved (ChatRoomModel *chatRoomModel) {
+  auto it = mPeerAddressToSipAddressEntry.find(chatRoomModel->getPeerAddress());
   if (it == mPeerAddressToSipAddressEntry.end())
     return;
 
-  auto it2 = it->localAddressToConferenceEntry.find(Utils::cleanSipAddress(chatModel->getLocalAddress()));
+  auto it2 = it->localAddressToConferenceEntry.find(Utils::cleanSipAddress(chatRoomModel->getLocalAddress()));
   if (it2 == it->localAddressToConferenceEntry.end())
     return;
   it->localAddressToConferenceEntry.erase(it2);
@@ -387,22 +385,22 @@ void SipAddressesModel::handleAllEntriesRemoved (ChatModel *chatModel) {
   emit dataChanged(index(row, 0), index(row, 0));
 }
 
-void SipAddressesModel::handleLastEntryRemoved (ChatModel *chatModel) {
-  auto it = mPeerAddressToSipAddressEntry.find(chatModel->getPeerAddress());
+void SipAddressesModel::handleLastEntryRemoved (ChatRoomModel *chatRoomModel) {
+  auto it = mPeerAddressToSipAddressEntry.find(chatRoomModel->getPeerAddress());
   if (it == mPeerAddressToSipAddressEntry.end())
     return;
 
-  auto it2 = it->localAddressToConferenceEntry.find(Utils::cleanSipAddress(chatModel->getLocalAddress()));
+  auto it2 = it->localAddressToConferenceEntry.find(Utils::cleanSipAddress(chatRoomModel->getLocalAddress()));
   if (it2 == it->localAddressToConferenceEntry.end())
     return;
 
   int row = mRefs.indexOf(&(*it));
   Q_ASSERT(row != -1);
 
-  Q_ASSERT(chatModel->rowCount() > 0);
-  const QVariantMap map = chatModel->data(
-    chatModel->index(chatModel->rowCount() - 1, 0),
-    ChatModel::ChatEntry
+  Q_ASSERT(chatRoomModel->rowCount() > 0);
+  const QVariantMap map = chatRoomModel->data(
+    chatRoomModel->index(chatRoomModel->rowCount() - 1, 0),
+    ChatRoomModel::ChatEntry
   ).toMap();
 
   // Update the timestamp with the new last chat message timestamp.
@@ -419,13 +417,13 @@ void SipAddressesModel::handleAllCallCountReset () {
     emit dataChanged(index(row, 0), index(row, 0));
   }
 }
-void SipAddressesModel::handleMessageCountReset (ChatModel *chatModel) {
-  const QString &peerAddress = Utils::cleanSipAddress(chatModel->getPeerAddress());
+void SipAddressesModel::handleMessageCountReset (ChatRoomModel *chatRoomModel) {
+  const QString &peerAddress = Utils::cleanSipAddress(chatRoomModel->getPeerAddress());
   auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
   if (it == mPeerAddressToSipAddressEntry.end())
     return;
 
-  const QString &localAddress = Utils::cleanSipAddress(chatModel->getLocalAddress());
+  const QString &localAddress = Utils::cleanSipAddress(chatRoomModel->getLocalAddress());
   auto it2 = it->localAddressToConferenceEntry.find(localAddress);
   if (it2 == it->localAddressToConferenceEntry.end())
     return;
@@ -441,7 +439,6 @@ void SipAddressesModel::handleMessageCountReset (ChatModel *chatModel) {
 }
 
 void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
-  qInfo() << "Handle message sent.";
   const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
   addOrUpdateSipAddress(peerAddress, message);
 }
@@ -532,6 +529,7 @@ void SipAddressesModel::addOrUpdateSipAddress (const QString &sipAddress, T data
   mRefs << &mPeerAddressToSipAddressEntry[sipAddress];
 
   endInsertRows();
+  emit layoutChanged();
 }
 
 // -----------------------------------------------------------------------------

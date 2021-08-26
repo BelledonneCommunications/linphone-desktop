@@ -30,53 +30,54 @@
 // =============================================================================
 
 namespace linphone {
-  class ChatMessage;
+class ChatMessage;
 }
 
 class CallModel;
-class ChatModel;
+class ChatRoomModel;
 class HistoryModel;
 
 class AbstractEventCountNotifier : public QObject {
-  Q_OBJECT;
-
+	Q_OBJECT
+	
 public:
-  AbstractEventCountNotifier (QObject *parent = Q_NULLPTR);
-
-  void updateUnreadMessageCount ();
-
-  int getUnreadMessageCount () const { return mUnreadMessageCount; }
-  int getMissedCallCount () const {
-    int t = 0;
-    for (int n : mMissedCalls) t += n;
-    return t;
-  }
-
-  int getEventCount () const { return mUnreadMessageCount + getMissedCallCount(); }
-  int getMissedCallCount(const QString &peerAddress, const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
-  int getMissedCallCountFromLocal(const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
-
+	AbstractEventCountNotifier (QObject *parent = Q_NULLPTR);
+	
+	void updateUnreadMessageCount ();
+	
+	int getUnreadMessageCount () const { return mUnreadMessageCount; }
+	int getMissedCallCount () const {
+		int t = 0;
+		for (int n : mMissedCalls) t += n;
+		return t;
+	}
+	
+	int getEventCount () const { return mUnreadMessageCount + getMissedCallCount(); }
+	int getMissedCallCount(const QString &peerAddress, const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
+	int getMissedCallCountFromLocal(const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
+	
 signals:
-  void eventCountChanged (int count);
-
+	void eventCountChanged ();
+	
+public slots:
+	void handleCallMissed (const QString& localAddress, const QString& peerAddress); 
+	void handleResetAllMissedCalls ();
+	void handleResetMissedCalls (ChatRoomModel *chatRoomModel);
+	void handleCallMissed (CallModel *callModel);
+	
 protected:
-  virtual void notifyEventCount (int n) = 0;
-
+	virtual void notifyEventCount (int n) = 0;
+	
 private:
-  using ConferenceId = QPair<QString, QString>;
-
-  void internalnotifyEventCount ();
-
-  void handleChatModelCreated (const std::shared_ptr<ChatModel> &chatModel);
-  void handleHistoryModelCreated (HistoryModel *historyModel);
-  
-  
-  void handleResetAllMissedCalls ();
-  void handleResetMissedCalls (ChatModel *chatModel);
-  void handleCallMissed (CallModel *callModel);
-
-  QHash<ConferenceId, int> mMissedCalls;
-  int mUnreadMessageCount = 0;
+	using ConferenceId = QPair<QString, QString>;
+	
+	void internalnotifyEventCount ();
+	
+	void handleChatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
+	void handleHistoryModelCreated (HistoryModel *historyModel);
+	
+	QHash<ConferenceId, int> mMissedCalls;
+	int mUnreadMessageCount = 0;
 };
 
 #endif // ABSTRACT_EVENT_COUNT_NOTIFIER_H_

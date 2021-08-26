@@ -30,7 +30,7 @@ DialogPlus {
 		}
 	]
 	
-	centeredButtons: true
+	buttonsAlignment: Qt.AlignCenter
 	
 	height: SettingsSipAccountsEditStyle.height
 	width: SettingsSipAccountsEditStyle.width
@@ -57,6 +57,7 @@ DialogPlus {
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							TooltipArea{
 								text : qsTr('displayNameTooltip')//'The display name of the server to be shown in the list'
+								//tooltipParent: dialog
 							}
 						}
 					}
@@ -79,6 +80,7 @@ DialogPlus {
 							error : ldapData.serverFieldError
 							TooltipArea{
 								text : qsTr('serverTooltip')//'LDAP Server. eg: ldap:/// for a localhost server or ldap://ldap.example.org/'
+								//tooltipParent: dialog
 							}
 						}
 					}
@@ -96,6 +98,7 @@ DialogPlus {
 							onTextChanged: ldapData.bindDn= text
 							TooltipArea{
 								text : qsTr('bindDNTooltip')//'The bind DN is the credential that is used to authenticate against an LDAP.\n eg: cn=ausername,ou=people,dc=bc,dc=com'
+								//tooltipParent: dialog
 							}
 						}
 					}
@@ -162,6 +165,7 @@ DialogPlus {
 							onActivated: ldapData.verifyServerCertificates = index-1
 							TooltipArea{
 								text : qsTr('verifyTLSTooltip')//'Specify whether the tls server certificate must be verified when connecting to a LDAP server.'
+								//tooltipParent: dialog
 							}
 						}
 					}
@@ -187,6 +191,7 @@ DialogPlus {
 							onTextChanged: ldapData.baseObject = text
 							TooltipArea{
 								text : qsTr('baseObjectTooltip')//'BaseObject is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.\n\nNo entries below it will be considered.'
+								//tooltipParent: dialog
 							}
 						}
 					}
@@ -206,6 +211,7 @@ DialogPlus {
 							placeholderText :"(sn=%s)"
 							TooltipArea{
 								text : qsTr('filterTooltip')//'The search is base on this filter to search friends. Default value : (sn=%s)'
+								//tooltipParent: dialog
 							}
 						}
 					}
@@ -249,6 +255,7 @@ DialogPlus {
 			// -----------------------------------------------------------------------
 			
 			Form {
+				id:parsingForm
 				title: qsTr('parsingTitle')//'Parsing'
 				width: parent.width
 				
@@ -263,6 +270,7 @@ DialogPlus {
 							onTextChanged: ldapData.nameAttributes = text
 							TooltipArea{
 								text : qsTr('nameAttributesTooltip')//'Check these attributes To build Name Friend, separated by a comma and the first is the highest priority. The default value is: sn'
+								tooltipParent: nameAttributes
 							}
 						}
 					}
@@ -278,6 +286,7 @@ DialogPlus {
 							onTextChanged: ldapData.sipAttributes = text
 							TooltipArea{
 								text : qsTr('sipAttributesTooltip')//'Check these attributes to build the SIP username in address of Friend. Attributes are separated by a comma and the first is the highest priority. The default value is: mobile,telephoneNumber,homePhone,sn'
+								tooltipParent: sipAttributes
 							}
 						}
 					}
@@ -293,6 +302,7 @@ DialogPlus {
 							onTextChanged: ldapData.sipDomain = text
 							TooltipArea{
 								text : qsTr('domainTooltip')//'Add the domain to the sip address(username@domain). The default value is sip.linphone.org'
+								//tooltipParent: dialog
 							}
 						}
 					}

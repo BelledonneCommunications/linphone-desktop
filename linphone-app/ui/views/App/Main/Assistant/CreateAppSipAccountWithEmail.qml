@@ -31,7 +31,6 @@ AssistantAbstractView {
     anchors.fill: parent
 
     Form {
-      dealWithErrors: true
       orientation: Qt.Vertical
       width: parent.width
 

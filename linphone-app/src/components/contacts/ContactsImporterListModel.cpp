@@ -152,6 +152,7 @@ ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVarian
 			beginInsertRows(QModelIndex(), row, row);
 			addContactsImporter(contactsImporter);
 			endInsertRows();
+			emit layoutChanged();
 		
 			emit contactsImporterAdded(contactsImporter);
 		}

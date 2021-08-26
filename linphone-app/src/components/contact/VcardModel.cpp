@@ -29,6 +29,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/Utils.hpp"
+#include "utils/Constants.hpp"
 
 #include "VcardModel.hpp"
 
@@ -37,10 +38,6 @@
 using namespace std;
 
 #define CHECK_VCARD_IS_WRITABLE(VCARD) Q_ASSERT(VCARD->mIsReadOnly == false)
-
-namespace {
-  constexpr char VcardScheme[] = "linphone-desktop:/";
-}
 
 template<class T>
 static inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T>> &list, const string &value) {
@@ -56,7 +53,7 @@ static inline shared_ptr<T> findBelCardValue (const list<shared_ptr<T>> &list, c
 }
 
 static inline bool isLinphoneDesktopPhoto (const shared_ptr<belcard::BelCardPhoto> &photo) {
-  return !photo->getValue().compare(0, sizeof(VcardScheme) - 1, VcardScheme);
+  return !photo->getValue().compare(0, sizeof(Constants::VcardScheme) - 1, Constants::VcardScheme);
 }
 
 static shared_ptr<belcard::BelCardPhoto> findBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard) {
@@ -78,7 +75,7 @@ static void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, boo
   for (const auto photo : photos) {
     QString imagePath(
       Utils::coreStringToAppString(
-        Paths::getAvatarsDirPath() + photo->getValue().substr(sizeof(VcardScheme) - 1)
+        Paths::getAvatarsDirPath() + photo->getValue().substr(sizeof(Constants::VcardScheme) - 1)
       )
     );
 
@@ -122,7 +119,7 @@ QString VcardModel::getAvatar () const {
 
   // Returns right path.
   return QStringLiteral("image://%1/%2").arg(AvatarProvider::ProviderId).arg(
-    Utils::coreStringToAppString(photo->getValue().substr(sizeof(VcardScheme) - 1))
+    Utils::coreStringToAppString(photo->getValue().substr(sizeof(Constants::VcardScheme) - 1))
   );
 }
 
@@ -171,7 +168,7 @@ bool VcardModel::setAvatar (const QString &path) {
   // 3. Update new photo.
   if (!path.isEmpty()) {
     shared_ptr<belcard::BelCardPhoto> photo = belcard::BelCardGeneric::create<belcard::BelCardPhoto>();
-    photo->setValue(VcardScheme + Utils::appStringToCoreString(fileId));
+    photo->setValue(Constants::VcardScheme + Utils::appStringToCoreString(fileId));
 
     if (!belcard->addPhoto(photo)) {
       file.remove();
@@ -187,7 +184,8 @@ bool VcardModel::setAvatar (const QString &path) {
 // -----------------------------------------------------------------------------
 
 QString VcardModel::getUsername () const {
-  return decode(QString::fromStdString(mVcard->getFullName()));// Is in UTF8
+  //return decode(Utils::coreStringToAppString(mVcard->getFullName()));// Is in UTF8
+	return decode(QString::fromStdString(mVcard->getFullName()));// Is in UTF8
 }
 
 void VcardModel::setUsername (const QString &username) {
@@ -196,6 +194,7 @@ void VcardModel::setUsername (const QString &username) {
   if (username.length() == 0 || username == getUsername())
     return;
 
+  //mVcard->setFullName(Utils::appStringToCoreString(encode(username)));
   mVcard->setFullName(encode(username).toStdString());
   emit vcardUpdated();
 }

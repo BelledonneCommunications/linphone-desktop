@@ -23,213 +23,214 @@
 #include <QPainter>
 #include <QScreen>
 #include <QSvgRenderer>
+#include <QQmlPropertyMap>
 
 #include "app/App.hpp"
-#include "components/other/colors/Colors.hpp"
 
 #include "ImageProvider.hpp"
+#include "components/other/colors/ColorListModel.hpp"
+#include "components/other/colors/ColorModel.hpp"
+#include "components/other/images/ImageListModel.hpp"
+#include "components/other/images/ImageModel.hpp"
+
+#include "utils/Constants.hpp"
 
 // =============================================================================
 
 using namespace std;
 
-namespace {
-  // Max image size in bytes. (100Kb)
-  constexpr qint64 MaxImageSize = 102400;
-}
-
 static void removeAttribute (QXmlStreamAttributes &readerAttributes, const QString &name) {
-  auto it = find_if(readerAttributes.cbegin(), readerAttributes.cend(), [&name](const QXmlStreamAttribute &attribute) {
-    return name == attribute.name() && !attribute.prefix().length();
-  });
-  if (it != readerAttributes.cend())
-    readerAttributes.remove(int(distance(readerAttributes.cbegin(), it)));
+	auto it = find_if(readerAttributes.cbegin(), readerAttributes.cend(), [&name](const QXmlStreamAttribute &attribute) {
+		return name == attribute.name() && !attribute.prefix().length();
+	});
+	if (it != readerAttributes.cend())
+		readerAttributes.remove(int(distance(readerAttributes.cbegin(), it)));
 }
 
 static QByteArray buildByteArrayAttribute (const QByteArray &name, const QByteArray &value) {
-  QByteArray attribute = name;
-  attribute.append("=\"");
-  attribute.append(value);
-  attribute.append("\" ");
-  return attribute;
+	QByteArray attribute = name;
+	attribute.append("=\"");
+	attribute.append(value);
+	attribute.append("\" ");
+	return attribute;
 }
 
-static QByteArray parseFillAndStroke (QXmlStreamAttributes &readerAttributes, const Colors &colors) {
-  static QRegExp regex("^color-([^-]+)-(fill|stroke)$");
-
-  QByteArray attributes;
-
-  for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
-    regex.indexIn(classValue.trimmed());
-    if (Q_LIKELY(regex.pos() == -1))
-      continue;
-
-    const QStringList list = regex.capturedTexts();
-
-    const QVariant colorValue = colors.property(list[1].toStdString().c_str());
-    if (Q_UNLIKELY(!colorValue.isValid())) {
-      qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
-      continue;
-    }
-
-    removeAttribute(readerAttributes, list[2]);
-    attributes.append(buildByteArrayAttribute(list[2].toLatin1(), colorValue.value<QColor>().name().toLatin1()));
-  }
-
-  return attributes;
+static QByteArray parseFillAndStroke (QXmlStreamAttributes &readerAttributes, const ColorListModel *colors) {
+	static QRegExp regex("^color-([^-]+)-(fill|stroke)$");
+	
+	QByteArray attributes;
+	
+	for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
+		regex.indexIn(classValue.trimmed());
+		if (Q_LIKELY(regex.pos() == -1))
+			continue;
+		
+		const QStringList list = regex.capturedTexts();
+		
+		const QVariant colorValue = colors->getQmlData()->value(list[1]);
+		if (Q_UNLIKELY(!colorValue.isValid())) {
+			qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
+			continue;
+		}
+		
+		removeAttribute(readerAttributes, list[2]);
+		attributes.append(buildByteArrayAttribute(list[2].toLatin1(), colorValue.value<ColorModel*>()->getColor().name().toLatin1()));
+	}
+	
+	return attributes;
 }
 
-static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const Colors &colors) {
-  static QRegExp regex("^color-([^-]+)-style-(fill|stroke)$");
-
-  QByteArray attribute;
-
-  QSet<QString> overrode;
-  for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
-    regex.indexIn(classValue.trimmed());
-    if (Q_LIKELY(regex.pos() == -1))
-      continue;
-
-    const QStringList list = regex.capturedTexts();
-
-    overrode.insert(list[2]);
-
-    const QVariant colorValue = colors.property(list[1].toStdString().c_str());
-    if (Q_UNLIKELY(!colorValue.isValid())) {
-      qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
-      continue;
-    }
-
-    attribute.append(list[2].toLatin1());
-    attribute.append(":");
-    attribute.append(colorValue.value<QColor>().name().toLatin1());
-    attribute.append(";");
-  }
-
-  const QByteArrayList styleValues = readerAttributes.value("style").toLatin1().split(';');
-  for (const auto &styleValue : styleValues) {
-    const QByteArrayList list = styleValue.split(':');
-    if (Q_UNLIKELY(list.length() > 0 && !overrode.contains(list[0]))) {
-      attribute.append(styleValue);
-      attribute.append(";");
-    }
-  }
-
-  removeAttribute(readerAttributes, "style");
-
-  if (attribute.length() > 0) {
-    attribute.prepend("style=\"");
-    attribute.append("\" ");
-  }
-
-  return attribute;
+static QByteArray parseStyle (QXmlStreamAttributes &readerAttributes, const ColorListModel *colors) {
+	static QRegExp regex("^color-([^-]+)-style-(fill|stroke)$");
+	
+	QByteArray attribute;
+	
+	QSet<QString> overrode;
+	for (const auto &classValue : readerAttributes.value("class").toLatin1().split(' ')) {
+		regex.indexIn(classValue.trimmed());
+		if (Q_LIKELY(regex.pos() == -1))
+			continue;
+		
+		const QStringList list = regex.capturedTexts();
+		
+		overrode.insert(list[2]);
+		
+		const QVariant colorValue = colors->getQmlData()->value(list[1]);
+		if (Q_UNLIKELY(!colorValue.isValid())) {
+			qWarning() << QStringLiteral("Color name `%1` does not exist.").arg(list[1]);
+			continue;
+		}
+		
+		attribute.append(list[2].toLatin1());
+		attribute.append(":");
+		attribute.append(colorValue.value<ColorModel*>()->getColor().name().toLatin1());
+		attribute.append(";");
+	}
+	
+	const QByteArrayList styleValues = readerAttributes.value("style").toLatin1().split(';');
+	for (const auto &styleValue : styleValues) {
+		const QByteArrayList list = styleValue.split(':');
+		if (Q_UNLIKELY(list.length() > 0 && !overrode.contains(list[0]))) {
+			attribute.append(styleValue);
+			attribute.append(";");
+		}
+	}
+	
+	removeAttribute(readerAttributes, "style");
+	
+	if (attribute.length() > 0) {
+		attribute.prepend("style=\"");
+		attribute.append("\" ");
+	}
+	
+	return attribute;
 }
 
-static QByteArray parseAttributes (const QXmlStreamReader &reader, const Colors &colors) {
-  QXmlStreamAttributes readerAttributes = reader.attributes();
-
-  QByteArray attributes = parseFillAndStroke(readerAttributes, colors);
-  attributes.append(parseStyle(readerAttributes, colors));
-
-  for (const auto &attribute : readerAttributes) {
-    const QByteArray prefix = attribute.prefix().toLatin1();
-    if (Q_UNLIKELY(prefix.length() > 0)) {
-      attributes.append(prefix);
-      attributes.append(":");
-    }
-
-    attributes.append(
-      buildByteArrayAttribute(attribute.name().toLatin1(), attribute.value().toLatin1())
-    );
-  }
-
-  return attributes;
+static QByteArray parseAttributes (const QXmlStreamReader &reader, const ColorListModel *colors) {
+	QXmlStreamAttributes readerAttributes = reader.attributes();
+	
+	QByteArray attributes = parseFillAndStroke(readerAttributes, colors);
+	attributes.append(parseStyle(readerAttributes, colors));
+	
+	for (const auto &attribute : readerAttributes) {
+		const QByteArray prefix = attribute.prefix().toLatin1();
+		if (Q_UNLIKELY(prefix.length() > 0)) {
+			attributes.append(prefix);
+			attributes.append(":");
+		}
+		
+		attributes.append(
+					buildByteArrayAttribute(attribute.name().toLatin1(), attribute.value().toLatin1())
+					);
+	}
+	
+	return attributes;
 }
 
 static QByteArray parseDeclarations (const QXmlStreamReader &reader) {
-  QByteArray declarations;
-  for (const auto &declaration : reader.namespaceDeclarations()) {
-    const QByteArray prefix = declaration.prefix().toLatin1();
-    if (Q_UNLIKELY(prefix.length() > 0)) {
-      declarations.append("xmlns:");
-      declarations.append(prefix);
-    } else
-      declarations.append("xmlns");
-
-    declarations.append("=\"");
-    declarations.append(declaration.namespaceUri().toLatin1());
-    declarations.append("\" ");
-  }
-
-  return declarations;
+	QByteArray declarations;
+	for (const auto &declaration : reader.namespaceDeclarations()) {
+		const QByteArray prefix = declaration.prefix().toLatin1();
+		if (Q_UNLIKELY(prefix.length() > 0)) {
+			declarations.append("xmlns:");
+			declarations.append(prefix);
+		} else
+			declarations.append("xmlns");
+		
+		declarations.append("=\"");
+		declarations.append(declaration.namespaceUri().toLatin1());
+		declarations.append("\" ");
+	}
+	
+	return declarations;
 }
 
 static QByteArray parseStartDocument (const QXmlStreamReader &reader) {
-  QByteArray startDocument = "<?xml version=\"";
-  startDocument.append(reader.documentVersion().toLatin1());
-  startDocument.append("\" encoding=\"");
-  startDocument.append(reader.documentEncoding().toLatin1());
-  startDocument.append("\"?>");
-  return startDocument;
+	QByteArray startDocument = "<?xml version=\"";
+	startDocument.append(reader.documentVersion().toLatin1());
+	startDocument.append("\" encoding=\"");
+	startDocument.append(reader.documentEncoding().toLatin1());
+	startDocument.append("\"?>");
+	return startDocument;
 }
 
-static QByteArray parseStartElement (const QXmlStreamReader &reader, const Colors &colors) {
-  QByteArray startElement = "<";
-  startElement.append(reader.name().toLatin1());
-  startElement.append(" ");
-  startElement.append(parseAttributes(reader, colors));
-  startElement.append(" ");
-  startElement.append(parseDeclarations(reader));
-  startElement.append(">");
-  return startElement;
+static QByteArray parseStartElement (const QXmlStreamReader &reader, const ColorListModel *colors) {
+	QByteArray startElement = "<";
+	startElement.append(reader.name().toLatin1());
+	startElement.append(" ");
+	startElement.append(parseAttributes(reader, colors));
+	startElement.append(" ");
+	startElement.append(parseDeclarations(reader));
+	startElement.append(">");
+	return startElement;
 }
 
 static QByteArray parseEndElement (const QXmlStreamReader &reader) {
-  QByteArray endElement = "</";
-  endElement.append(reader.name().toLatin1());
-  endElement.append(">");
-  return endElement;
+	QByteArray endElement = "</";
+	endElement.append(reader.name().toLatin1());
+	endElement.append(">");
+	return endElement;
 }
 
 // -----------------------------------------------------------------------------
 
 static QByteArray computeContent (QFile &file) {
-  const Colors *colors = App::getInstance()->getColors();
-
-  QByteArray content;
-  QXmlStreamReader reader(&file);
-  while (!reader.atEnd())
-    switch (reader.readNext()) {
-      case QXmlStreamReader::Comment:
-      case QXmlStreamReader::DTD:
-      case QXmlStreamReader::EndDocument:
-      case QXmlStreamReader::Invalid:
-      case QXmlStreamReader::NoToken:
-      case QXmlStreamReader::ProcessingInstruction:
-        break;
-
-      case QXmlStreamReader::StartDocument:
-        content.append(parseStartDocument(reader));
-        break;
-
-      case QXmlStreamReader::StartElement:
-        content.append(parseStartElement(reader, *colors));
-        break;
-
-      case QXmlStreamReader::EndElement:
-        content.append(parseEndElement(reader));
-        break;
-
-      case QXmlStreamReader::Characters:
-        content.append(reader.text().toLatin1());
-        break;
-
-      case QXmlStreamReader::EntityReference:
-        content.append(reader.name().toLatin1());
-        break;
-    }
-
-  return reader.hasError() ? QByteArray() : content;
+	const ColorListModel *colors = App::getInstance()->getColorListModel();
+	
+	QByteArray content;
+	QXmlStreamReader reader(&file);
+	while (!reader.atEnd())
+		switch (reader.readNext()) {
+			case QXmlStreamReader::Comment:
+			case QXmlStreamReader::DTD:
+			case QXmlStreamReader::EndDocument:
+			case QXmlStreamReader::Invalid:
+			case QXmlStreamReader::NoToken:
+			case QXmlStreamReader::ProcessingInstruction:
+				break;
+				
+			case QXmlStreamReader::StartDocument:
+				content.append(parseStartDocument(reader));
+				break;
+				
+			case QXmlStreamReader::StartElement:
+				content.append(parseStartElement(reader, colors));
+				break;
+				
+			case QXmlStreamReader::EndElement:
+				content.append(parseEndElement(reader));
+				break;
+				
+			case QXmlStreamReader::Characters:
+				content.append(reader.text().toLatin1());
+				break;
+				
+			case QXmlStreamReader::EntityReference:
+				content.append(reader.name().toLatin1());
+				break;
+		}
+	
+	return reader.hasError() ? QByteArray() : content;
 }
 
 // -----------------------------------------------------------------------------
@@ -237,70 +238,79 @@ static QByteArray computeContent (QFile &file) {
 const QString ImageProvider::ProviderId = "internal";
 
 ImageProvider::ImageProvider () : QQuickImageProvider(
-  QQmlImageProviderBase::Image,
-  QQmlImageProviderBase::ForceAsynchronousImageLoading
-) {}
+									  QQmlImageProviderBase::Image,
+									  QQmlImageProviderBase::ForceAsynchronousImageLoading
+									  ) {}
 
 // -----------------------------------------------------------------------------
 
 QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize) {
-  const QString path = QStringLiteral(":%1").arg(id);
-//  qDebug() << QStringLiteral("Image `%1` requested with size: (%2, %3).")
-//    .arg(path).arg(requestedSize.width()).arg(requestedSize.height());
-
-  QElapsedTimer timer;
-  timer.start();
-
-  // 1. Read and update XML content.
-  *size = QSize();
-  QFile file(path);
-  if (Q_UNLIKELY(QFileInfo(file).size() > MaxImageSize)) {
-    qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
-    return QImage();
-  }
-
-  if (Q_UNLIKELY(!file.open(QIODevice::ReadOnly))) {
-    qWarning() << QStringLiteral("Unable to open file: `%1`.").arg(path);
-    return QImage();
-  }
-
-  const QByteArray content = computeContent(file);
-  if (Q_UNLIKELY(!content.length())) {
-    qWarning() << QStringLiteral("Unable to parse file: `%1`.").arg(path);
-    return QImage();
-  }
-
-  // 2. Build svg renderer.
-  QSvgRenderer renderer(content);
-  if (Q_UNLIKELY(!renderer.isValid())) {
-    qWarning() << QStringLiteral("Invalid svg file: `%1`.").arg(path);
-    return QImage();
-  }
-
-  QSize askedSize = !requestedSize.isEmpty()
-    ? requestedSize
-    : renderer.defaultSize() * QGuiApplication::primaryScreen()->devicePixelRatio();
-
-  // 3. Create image.
-  QImage image(askedSize, QImage::Format_ARGB32_Premultiplied);
-  if (Q_UNLIKELY(image.isNull())) {
-    qWarning() << QStringLiteral("Unable to create image from path: `%1`.")
-      .arg(path);
-    return QImage(); // Memory cannot be allocated.
-  }
-  image.fill(Qt::transparent);// Fill with transparent to set alpha channel
-
-  *size = image.size();
-
-  // 4. Paint!
-  QPainter painter(&image);
-  renderer.render(&painter);
-
-//  qDebug() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
-
-  return image;
+	ImageModel * model = App::getInstance()->getImageListModel()->getImageModel(id);
+	if(!model)
+		return QImage();
+	const QString path = model->getPath();
+	//qDebug() << QStringLiteral("Image `%1` requested with size: (%2, %3).")
+		//		.arg(path).arg(requestedSize.width()).arg(requestedSize.height());
+	
+	QElapsedTimer timer;
+	timer.start();
+	
+	// 1. Read and update XML content.
+	*size = QSize();
+	QFile file(path);
+	
+	if(!file.exists()){	
+		qWarning() << QStringLiteral("File doesn't exist: `%1`.").arg(path);
+		return QImage();
+	}
+	
+	if (Q_UNLIKELY(QFileInfo(file).size() > Constants::MaxImageSize)) {
+		qWarning() << QStringLiteral("Unable to open large file: `%1`.").arg(path);
+		return QImage();
+	}
+	
+	if (Q_UNLIKELY(!file.open(QIODevice::ReadOnly))) {
+		qWarning() << QStringLiteral("Unable to open file: `%1`.").arg(path);
+		return QImage();
+	}
+	
+	const QByteArray content = computeContent(file);
+	if (Q_UNLIKELY(!content.length())) {
+		qWarning() << QStringLiteral("Unable to parse file: `%1`.").arg(path);
+		return QImage();
+	}
+	
+	// 2. Build svg renderer.
+	QSvgRenderer renderer(content);
+	if (Q_UNLIKELY(!renderer.isValid())) {
+		qWarning() << QStringLiteral("Invalid svg file: `%1`.").arg(path);
+		return QImage();
+	}
+	
+	QSize askedSize = !requestedSize.isEmpty()
+			? requestedSize
+			: renderer.defaultSize() * QGuiApplication::primaryScreen()->devicePixelRatio();
+	
+	// 3. Create image.
+	QImage image(askedSize, QImage::Format_ARGB32_Premultiplied);
+	if (Q_UNLIKELY(image.isNull())) {
+		qWarning() << QStringLiteral("Unable to create image from path: `%1`.")
+					  .arg(path);
+		return QImage(); // Memory cannot be allocated.
+	}
+	image.fill(Qt::transparent);// Fill with transparent to set alpha channel
+	
+	*size = image.size();
+	
+	// 4. Paint!
+	QPainter painter(&image);
+	renderer.render(&painter);
+	
+	//  qDebug() << QStringLiteral("Image `%1` loaded in %2 milliseconds.").arg(path).arg(timer.elapsed());
+	
+	return image;
 }
 
 QPixmap ImageProvider::requestPixmap (const QString &id, QSize *size, const QSize &requestedSize) {
-  return QPixmap::fromImage(requestImage(id, size, requestedSize));
+	return QPixmap::fromImage(requestImage(id, size, requestedSize));
 }

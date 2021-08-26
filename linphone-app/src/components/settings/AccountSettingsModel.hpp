@@ -37,6 +37,8 @@ class AccountSettingsModel : public QObject {
   Q_PROPERTY(QString sipAddress READ getUsedSipAddressAsStringUriOnly NOTIFY accountSettingsUpdated);
   Q_PROPERTY(QString fullSipAddress READ getUsedSipAddressAsString);
   Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY accountSettingsUpdated);
+  
+  Q_PROPERTY(QString conferenceURI READ getConferenceURI NOTIFY accountSettingsUpdated)
 
   // Default info.
   Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY accountSettingsUpdated);
@@ -65,6 +67,7 @@ public:
   bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
 
   Q_INVOKABLE QVariantMap getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
+  QString getConferenceURI() const;
 
   Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig = nullptr);
   Q_INVOKABLE void setDefaultProxyConfigFromSipAddress (const QString &sipAddress);
@@ -84,7 +87,9 @@ public:
 
 signals:
   void accountSettingsUpdated ();
+  void defaultProxyChanged();
   void publishPresenceChanged();
+  void defaultRegistrationChanged();
 
 private:
   QString getUsername () const;

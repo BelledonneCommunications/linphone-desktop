@@ -25,7 +25,6 @@
 
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
-#include "utils/LinphoneUtils.hpp"
 #include "utils/Utils.hpp"
 
 #include "LdapListModel.hpp"
@@ -127,7 +126,7 @@ void LdapListModel::add(){
 	ldap->init();
 	mServers << ldap;
 	endInsertRows();
-	resetInternalData();
+	emit layoutChanged();
 }
 
 void LdapListModel::remove (LdapModel *ldap) {
