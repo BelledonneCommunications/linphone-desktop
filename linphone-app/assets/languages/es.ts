@@ -460,6 +460,60 @@ URL del servidor no configurada.</translation>
     </message>
 </context>
 <context>
+    <name>ChatDeliveries</name>
+    <message>
+        <source>deliveryDelivered</source>
+        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDeliveredToUser</source>
+        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
+    </message>
+    <message>
+        <source>deliveryDisplayed</source>
+        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryNotDelivered</source>
+        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+</context>
+<context>
+    <name>ChatMenu</name>
+    <message>
+        <source>menuCopyAll</source>
+        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>menuCopy</source>
+        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
+        <translation type="unfinished">Copiar</translation>
+    </message>
+    <message>
+        <source>menuPlayMe</source>
+        <translation type="unfinished">¡Reprodúceme!</translation>
+    </message>
+    <message>
+        <source>menuDeliveryStatus</source>
+        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>menuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
@@ -726,6 +780,16 @@ URL del servidor no configurada.</translation>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
         <translation type="unfinished"></translation>
         <extra-Context>One word title for describing the current admin status</extra-Context>
+    </message>
+    <message>
+        <source>groupChatCallButton</source>
+        <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>searchMessagesPlaceholder</source>
+        <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1094,6 +1158,12 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <translation type="unfinished"></translation>
         <extra-one>word for admin status</extra-one>
     </message>
+    <message>
+        <source>chatRoomDetailsTitle</source>
+        <extracomment>&quot;Group information&quot; : Popup title.</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-This>popup display data about the current chat room</extra-This>
+    </message>
 </context>
 <context>
     <name>InfoEncryption</name>
@@ -1242,57 +1312,6 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>Message</name>
-    <message>
-        <source>menuCopy</source>
-        <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation>Copiar</translation>
-    </message>
-    <message>
-        <source>menuPlayMe</source>
-        <translation>¡Reprodúceme!</translation>
-    </message>
-    <message>
-        <source>menuDeliveryStatus</source>
-        <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>menuDelete</source>
-        <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>deliveryDelivered</source>
-        <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
-        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
-    </message>
-    <message>
-        <source>deliveryDeliveredToUser</source>
-        <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
-        <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
-    </message>
-    <message>
-        <source>deliveryDisplayed</source>
-        <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
-        <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
-    </message>
-    <message>
-        <source>deliveryNotDelivered</source>
-        <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
-        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
-    </message>
-    <message>
-        <source>menuCopyAll</source>
-        <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
@@ -1375,6 +1394,69 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>subjectPlaceholder</source>
+        <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LastContactsTitle</source>
+        <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Notice</name>
+    <message>
+        <source>conferenceCreatedEvent</source>
+        <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceCreatedTerminated</source>
+        <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceParticipantAddedEvent</source>
+        <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceParticipantRemovedEvent</source>
+        <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceParticipantSetAdminEvent</source>
+        <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferencePArticipantUnsetAdminEvent</source>
+        <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceSecurityEvent</source>
+        <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageEnabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageDisabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceSubjectChangedEvent</source>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2146,6 +2228,16 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <source>mainSipAccountSettingsTitle</source>
         <translation>Ajustes principales de cuenta SIP</translation>
     </message>
+    <message>
+        <source>conferenceURI</source>
+        <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalidConferenceURI</source>
+        <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsUi</name>
@@ -2380,6 +2472,11 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>quitWarning</source>
         <translation>Tu cuenta se ha creado pero aún no se ha validado. ¿Está seguro de que desea salir de esta vista?</translation>
+    </message>
+    <message>
+        <source>passwordRecovery</source>
+        <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
