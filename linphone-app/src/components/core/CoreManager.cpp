@@ -235,10 +235,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 				Paths::getFactoryConfigFilePath(),
 				nullptr
 				);
-	// You only need to give your LIME server URL
-	mCore->setLimeX3DhServerUrl("https://lime.linphone.org/lime-server/lime-server.php");
-	// and enable LIME on your core to use encryption.
-	mCore->enableLimeX3Dh(true);
+	// Enable LIME on your core to use encryption.
+	mCore->enableLimeX3Dh(mCore->getLimeX3DhServerUrl() != "");
 	// Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
 	
 	mCore->addListener(mHandlers);
@@ -295,6 +293,7 @@ void CoreManager::migrate () {
 	  proxyConfig->done();
 	}
   }*/
+	bool setlimeServerUrl = false;
 	for(const auto &account : mCore->getAccountList()){
 		auto params = account->getParams();
 		if( params->getDomain() == Constants::LinphoneDomain) {
@@ -305,10 +304,16 @@ void CoreManager::migrate () {
 			}
 			if( rcVersion < 2) {
 				newParams->setConferenceFactoryUri(Constants::DefaultConferenceURI);
+				setlimeServerUrl = true;
 			}
 			account->setParams(newParams);
 		}
 	}
+	if(setlimeServerUrl) {
+		mCore->setLimeX3DhServerUrl(Constants::DefaultLimeServerURL);
+		mCore->enableLimeX3Dh(true);
+	}
+	
 	
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
