@@ -61,6 +61,7 @@ constexpr qint64 Constants::FileSizeLimit;
 
 constexpr char Constants::DefaultXmlrpcUri[];
 constexpr char Constants::DefaultConferenceURI[];
+constexpr char Constants::DefaultLimeServerURL[];
 
 
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
