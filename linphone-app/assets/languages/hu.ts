@@ -3364,4 +3364,12 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
     </message>
 </context>
+<context>
+    <name></name>
+    <message>
+        <source>conferenceEphemeralMessageDisabledEvent</source>
+        <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
+        <translation>Elmúló üzenetek letiltva: %1</translation>
+    </message>
+</context>
 </TS>
