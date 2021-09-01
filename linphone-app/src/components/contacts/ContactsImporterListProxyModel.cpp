@@ -55,7 +55,7 @@ bool ContactsImporterListProxyModel::lessThan (const QModelIndex &left, const QM
   const ContactsImporterModel *contactA = sourceModel()->data(left).value<ContactsImporterModel *>();
   const ContactsImporterModel *contactB = sourceModel()->data(right).value<ContactsImporterModel *>();
 
-  return contactA->getIdentity() <= contactB->getIdentity();
+  return contactA->getIdentity() < contactB->getIdentity();
 }
 
 // -----------------------------------------------------------------------------

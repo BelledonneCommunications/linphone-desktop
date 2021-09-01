@@ -142,7 +142,7 @@ Rectangle {
 				CheckBoxText {
 					id:simpleFilter
 					//: 'Simple rooms' : Filter item
-					//~ Mode Selecting it will show all simple romms
+					//~ Mode Selecting it will show all simple rooms
 					text:qsTr('timelineFilterSimpleRooms')
 					property var value : (checked?TimelineProxyModel.SimpleChatRoom:0)
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()

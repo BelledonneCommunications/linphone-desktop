@@ -94,7 +94,7 @@ bool SipAddressesProxyModel::lessThan (const QModelIndex &left, const QModelInde
     return diff <= 0;
 
   // 6. Same contact name, so compare sip addresses.
-  return sipAddressA <= sipAddressB;
+  return sipAddressA < sipAddressB;
 }
 
 int SipAddressesProxyModel::computeEntryWeight (const QVariantMap &entry) const {

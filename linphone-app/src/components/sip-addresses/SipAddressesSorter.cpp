@@ -79,7 +79,7 @@ bool SipAddressesSorter::lessThan (const QString& filter, const SearchResultMode
     return diff <= 0;
 
   // 6. Same contact name, so compare sip addresses.
-  return sipAddressA <= sipAddressB;
+  return sipAddressA < sipAddressB;
 }
 
 int SipAddressesSorter::computeEntryWeight (const QString& filter, const SearchResultModel *entry) {

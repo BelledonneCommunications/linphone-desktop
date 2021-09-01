@@ -75,7 +75,7 @@ quint64 ContentModel::getFileSize() const{
 }
 
 QString ContentModel::getName() const{
-	return Utils::coreStringToAppString(mContent->getName());
+	return QString::fromStdString(mContent->getName());
 }
 
 QString ContentModel::getThumbnail() const{
@@ -125,10 +125,10 @@ void ContentModel::createThumbnail () {
 		QString id;
 		QString path = Utils::coreStringToAppString(mChatMessageModel->getChatMessage()->getFileTransferInformation()->getFilePath());
 		
-		auto appdata = ChatMessageModel::AppDataManager(Utils::coreStringToAppString(mChatMessageModel->getChatMessage()->getAppdata()));
+		auto appdata = ChatMessageModel::AppDataManager(QString::fromStdString(mChatMessageModel->getChatMessage()->getAppdata()));
 		
 		if(!appdata.mData.contains(path) 
-				|| !QFileInfo(Utils::coreStringToAppString(Paths::getThumbnailsDirPath())+appdata.mData[path]).isFile()){
+				|| !QFileInfo(QString::fromStdString(Paths::getThumbnailsDirPath())+appdata.mData[path]).isFile()){
 			// File don't exist. Create the thumbnail
 			
 			QImage image(path);
@@ -164,11 +164,11 @@ void ContentModel::createThumbnail () {
 				QString uuid = QUuid::createUuid().toString();
 				id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
 				
-				if (!thumbnail.save(Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + id , "jpg", 100)) {
+				if (!thumbnail.save(QString::fromStdString(Paths::getThumbnailsDirPath()) + id , "jpg", 100)) {
 					qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(path);
 				}else{
 					appdata.mData[path] = id;
-					mChatMessageModel->getChatMessage()->setAppdata(Utils::appStringToCoreString(appdata.toString()));
+					mChatMessageModel->getChatMessage()->setAppdata(appdata.toString().toStdString());
 				}
 			}
 		}
@@ -456,11 +456,11 @@ void ChatMessageModel::resendMessage (){
 void ChatMessageModel::deleteEvent(){
 	if (mChatMessage && mChatMessage->getFileTransferInformation()) {// Remove thumbnail
 		mChatMessage->cancelFileTransfer();
-		QString appdata = Utils::coreStringToAppString(mChatMessage->getAppdata());
+		QString appdata = QString::fromStdString(mChatMessage->getAppdata());
 		QStringList fields = appdata.split(':');
 		
 		if(fields[0].size() > 0) {
-			QString thumbnailPath = Utils::coreStringToAppString(Paths::getThumbnailsDirPath()) + fields[0];
+			QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) + fields[0];
 			if (!QFile::remove(thumbnailPath))
 				qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
 		}
