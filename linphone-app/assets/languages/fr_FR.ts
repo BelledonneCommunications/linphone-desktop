@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Un SMS de validation a été envoyé au %1. Afin de compléter la vérification du numéro de téléphone, veuillez entrer le code à 4 chiffres ci-dessous.</translation>
+        <translation>Un code de validation a été envoyé par SMS au %1. Afin de compléter la vérification du numéro de téléphone, veuillez entrer le code à 4 chiffres ci-dessous.</translation>
     </message>
 </context>
 <context>
@@ -58,7 +58,7 @@
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation>file</translation>
+        <translation>fichier</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
@@ -147,7 +147,7 @@
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation>La connection a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
+        <translation>La connexion a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
@@ -171,7 +171,7 @@
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation>Trop long ! (%1 caractères max.)&gt;</translation>
+        <translation>Trop long ! (%1 caractères max.)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
@@ -187,11 +187,11 @@
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>Adresse incorrecte.</translation>
+        <translation>Adresse mail incorrecte.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>Adresse incorrecte ou caractères invalides.</translation>
+        <translation>Adresse mail incorrecte ou caractères invalides.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation>Le compte existe déjà.</translation>
+        <translation>Ce compte existe déjà.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
@@ -227,7 +227,7 @@
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation>La connection a échoué. Merci de vérifier votre numéro.</translation>
+        <translation>La connexion a échoué. Merci de vérifier votre numéro.</translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
@@ -258,11 +258,11 @@
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation>ID utilisateur (optionnel)</translation>
+        <translation>Nom d&apos;utilisateur (optionnel)</translation>
     </message>
     <message>
         <source>realmLabel</source>
-        <translation>Realm</translation>
+        <translation>Domaine</translation>
     </message>
 </context>
 <context>
@@ -1821,7 +1821,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation type="unfinished">Serveur LDAP. ie: ldap&#x202f;:// pour un serveur local ou ldap&#x202f;://ldap.example.org/</translation>
+        <translation type="unfinished">Serveur LDAP. ie: ldap :// pour un serveur local ou ldap ://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
