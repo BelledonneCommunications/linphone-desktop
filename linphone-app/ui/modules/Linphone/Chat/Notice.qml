@@ -75,19 +75,20 @@ RowLayout{
 			return qsTr('conferenceEphemeralMessageDisabledEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceSubjectChanged) {
-			//: 'New subject : %1' : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.
+			//: 'New subject : %1' : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.
 			return qsTr('conferenceSubjectChangedEvent');
 		}
 		
 		return 'unknown_notice'
 	}
+	property bool isImportant : $chatEntry.status == ChatNoticeModel.NoticeError || $chatEntry.eventLogType == LinphoneEnums.EventLogTypeConferenceTerminated
 	
 	Layout.preferredHeight: ChatStyle.entry.lineHeight
 	spacing: ChatStyle.entry.message.extraContent.spacing
 	Rectangle{
 		height:1
 		Layout.fillWidth: true
-		color:( $chatEntry.status == ChatNoticeModel.NoticeError ? '#FF0000' : '#979797' )
+		color:( isImportant ? '#FF0000' : '#979797' )
 	}
 	
 	Text {
@@ -102,7 +103,7 @@ RowLayout{
 		}
 		Layout.preferredWidth: contentWidth
 		id:message
-		color:( $chatEntry.status == ChatNoticeModel.NoticeError ? '#FF0000' : '#979797' )
+		color:( isImportant ? '#FF0000' : '#979797' )
 		font {
 			//bold: true
 			pointSize: Units.dp * 7
@@ -117,6 +118,6 @@ RowLayout{
 	Rectangle{
 		height:1
 		Layout.fillWidth: true
-		color:( $chatEntry.status == ChatNoticeModel.NoticeError ? '#FF0000' : '#979797' )
+		color:( isImportant ? '#FF0000' : '#979797' )
 	}
 }

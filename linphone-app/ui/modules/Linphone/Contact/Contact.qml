@@ -83,7 +83,7 @@ Rectangle {
 			
 			icon:'chat_room'
 			iconSize: ContactStyle.contentHeight
-			visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne && entry.participants.count > 2
+			visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
 			
 			Icon{
 				anchors.right: parent.right
