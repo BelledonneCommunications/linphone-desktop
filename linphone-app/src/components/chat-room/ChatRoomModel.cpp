@@ -638,7 +638,7 @@ void ChatRoomModel::sendFileMessage (const QString &path) {
 		content->setSubtype(Utils::appStringToCoreString(mimeType[1]));
 	}
 	content->setSize(size_t(fileSize)); 
-	content->setName(Utils::appStringToCoreString( QFileInfo(file).fileName()));
+	content->setName(QFileInfo(file).fileName().toStdString());
 
 	shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
 	message->getContents().front()->setFilePath(Utils::appStringToCoreString(path));

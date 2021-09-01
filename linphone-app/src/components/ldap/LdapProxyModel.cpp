@@ -45,5 +45,5 @@ bool LdapProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right
     const LdapModel* ldapA = sourceModel()->data(left).value<LdapModel*>();
     const LdapModel* ldapB = sourceModel()->data(right).value<LdapModel*>();
   
-    return ldapA->mId <= ldapB->mId;
+	return ldapA->mId < ldapB->mId;
 }
