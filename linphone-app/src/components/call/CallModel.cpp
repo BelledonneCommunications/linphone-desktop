@@ -680,6 +680,11 @@ void CallModel::callEnded(){
 
 void CallModel::setRemoteDisplayName(const std::string& name){
 	mRemoteAddress->setDisplayName(name);
+	auto callLog = mCall->getCallLog();
+	if(name!= "") {
+		auto core = CoreManager::getInstance()->getCore();
+		callLog->setRemoteAddress(Utils::interpretUrl(getFullPeerAddress()));
+	}
 	emit fullPeerAddressChanged();
 }
 // -----------------------------------------------------------------------------
