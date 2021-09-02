@@ -469,7 +469,14 @@ QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& ad
 		if(model && model->getVcardModel())
 			displayName = model->getVcardModel()->getUsername();
 		else{
-			displayName = Utils::coreStringToAppString(address->getDisplayName());
+			auto callHistory = CoreManager::getInstance()->getCore()->getCallLogs();
+			auto callLog = std::find_if(callHistory.begin(), callHistory.end(), [address](std::shared_ptr<linphone::CallLog>& cl){
+					return cl->getRemoteAddress()->weakEqual(address);
+			});
+			if(callLog != callHistory.end())
+				displayName = Utils::coreStringToAppString((*callLog)->getRemoteAddress()->getDisplayName());
+			if(displayName == "")
+				displayName = Utils::coreStringToAppString(address->getDisplayName());
 			if(displayName == "")
 				displayName = Utils::coreStringToAppString(address->getUsername());
 		}
