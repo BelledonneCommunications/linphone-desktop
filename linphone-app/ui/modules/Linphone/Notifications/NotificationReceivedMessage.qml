@@ -37,9 +37,14 @@ Notification {
 			
 			Contact {
 				Layout.fillWidth: true
-				
-				//entry: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)
-				entry:notification.timelineModel.getChatRoomModel()
+				property ChatRoomModel chatRoomModel : notification.timelineModel.getChatRoomModel()
+				//entry: notification.fullPeerAddress? SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress): notification.timelineModel.getChatRoomModel()
+				entry: ({
+								sipAddress: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress),
+								isOneToOne: chatRoomModel.isOneToOne,
+								haveEncryption: chatRoomModel.haveEncryption,
+								securityLevel: chatRoomModel.securityLevel
+							})
 			}
 			
 			Rectangle {
