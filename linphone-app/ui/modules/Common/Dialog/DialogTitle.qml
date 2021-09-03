@@ -22,8 +22,8 @@ Item {
 	Rectangle{
 		anchors.fill:parent
 		gradient: Gradient {
-			GradientStop { position: 0.0; color: "white" }
-			GradientStop { position: 1.0; color: "#E2E2E2" }
+			GradientStop { position: 0.0; color: Colors.y.color }
+			GradientStop { position: 1.0; color: Colors.z.color}
 		}
 		visible:showBar
 	}

@@ -17,7 +17,6 @@ DialogPlus {
 	id: conferenceManager
 	property ChatRoomModel chatRoomModel
 	
-	readonly property int maxParticipants: 20
 	readonly property int minParticipants: 1
 	
 	buttons: [
@@ -140,7 +139,6 @@ DialogPlus {
 				}
 				ColumnLayout {
 					Layout.fillWidth: true
-					//Layout.preferredHeight: 90
 					spacing:10
 					Text{
 						textFormat: Text.RichText
@@ -275,7 +273,7 @@ DialogPlus {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				border.width: 1
-				border.color: "black"
+				border.color: Colors.l.color
 				
 				ColumnLayout {
 					anchors.fill: parent
@@ -333,7 +331,6 @@ DialogPlus {
 						Layout.fillWidth: true
 						Layout.bottomMargin: 5
 						
-						//readOnly: toAddView.count >= conferenceManager.maxParticipants
 						textFieldStyle: TextFieldStyle.unbordered
 						
 						ParticipantsView {
@@ -349,7 +346,7 @@ DialogPlus {
 							
 							actions: [{
 									icon: 'remove_participant',
-									//: 'Remove this participant from the selection' : Explanation abo^ut removing participant from a selection
+									//: 'Remove this participant from the selection' : Explanation about removing participant from a selection
 									//~ Tooltip This is a tooltip
 									tooltipText: qsTr('removeParticipantSelection'),
 									handler: function (entry) {

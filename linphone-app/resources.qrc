@@ -554,6 +554,7 @@
 		<file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/AboutStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/AuthenticationRequestStyle.qml</file>
+		<file>ui/views/App/Styles/Main/Dialogs/EphemeralChatRoomStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/InfoChatRoomStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/InfoEncryptionStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/ManageAccountsStyle.qml</file>

@@ -14,11 +14,12 @@ QtObject {
 		property int leftMargin: 25
 		property int rightMargin: 25
 		property int spacing: 7
-		
 	}
+	
 	property QtObject searchBar : QtObject{
 		property int topMargin : 10
 	}
+	
 	property QtObject results : QtObject{
 		property int topMargin : 10
 		property color color : Colors.g.color

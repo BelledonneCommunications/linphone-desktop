@@ -57,7 +57,7 @@ Item {
 			spacing:5
 			Text{
 				text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
-				color:"#FF5E00"
+				color: Colors.ad.color
 				font.pointSize: Units.dp * 8
 				Timer{
 					running:parent.visible

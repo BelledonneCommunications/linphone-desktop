@@ -19,7 +19,7 @@ QtObject {
 
     property QtObject text: QtObject {
       property int pointSize: Units.dp * 10
-      property color color: Colors.g.color
+      property color color: Colors.ab.color
     }
   }
 
@@ -50,7 +50,7 @@ QtObject {
       property int iconSize: 18
 
       property QtObject text: QtObject {
-        property color color: Colors.d.color
+        property color color: Colors.ac.color
         property int pointSize: Units.dp * 10
       }
     }

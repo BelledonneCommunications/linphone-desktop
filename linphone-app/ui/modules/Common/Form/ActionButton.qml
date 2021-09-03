@@ -86,62 +86,7 @@ Item {
 		acceptedButtons: Qt.NoButton
 		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
       }
-	  
-	  
-	  /*
-      Rectangle {
-          anchors.fill:parent
-          color:  button.down?'white':'black'
-          opacity: 0.2
-          visible:autoIcon && (button.down || button.hovered)
-      }*/
     }
-	/*
-	Colorize{
-		anchors.fill:icon
-		source:icon
-		hue:0.0
-		saturation:0.0
-		lightness: 0.5
-		visible:autoIcon && button.down
-	}*/
-	/*
-	GammaAdjust{
-		anchors.fill:icon
-		source:icon
-		gamma:1.6
-		visible:autoIcon && button.down
-	}*/
-	/*
-	Colorize{
-		anchors.fill:icon
-		source:icon
-		hue:0.0
-		saturation:0.0
-		lightness: -0.5
-		visible:autoIcon && button.hovered && !button.down
-	}*/	
-	/*
-	Desaturate{
-		anchors.fill:icon
-		source:icon
-		desaturation: 1.0
-		visible:autoIcon && button.hovered && !button.down
-	}*/
-	/*
-	GammaAdjust{
-		anchors.fill:icon
-		source:icon
-		gamma:0.4
-		visible:autoIcon && button.hovered && !button.down
-	}*/
-	/*
-	ColorOverlay{
-		anchors.fill:icon
-		source:icon
-		color:button.down?'white':'orange'
-		visible:autoIcon && (button.down || button.hovered)
-	}*/
     TooltipArea {
         id:tooltip
         text: ''

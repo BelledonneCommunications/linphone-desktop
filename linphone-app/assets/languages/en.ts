@@ -915,9 +915,8 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>ephemeralText</source>
-        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
         <translation>New messages will be deleted on both ends once it has been read by your contact. Select a timeout.</translation>
-        <extra-Context>Explanation for ephemerals</extra-Context>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
@@ -1379,7 +1378,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>removeParticipantSelection</source>
-        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
         <translation>Remove this participant from the selection</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>

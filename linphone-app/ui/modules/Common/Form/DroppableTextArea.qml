@@ -47,7 +47,7 @@ Item {
 	
 	Rectangle{
 		anchors.fill: parent
-		color:'#E1E1E1'
+		color: DroppableTextAreaStyle.outsideBackgroundColor
 		// ---------------------------------------------------------------------------
 		RowLayout{
 			anchors.fill: parent
@@ -77,12 +77,6 @@ Item {
 				tooltipText: droppableTextArea.dropEnabled
 							 ? qsTr('attachmentTooltip')
 							 : droppableTextArea.dropDisabledReason
-				/*
-				TooltipArea {
-					text: droppableTextArea.dropEnabled
-						  ? qsTr('attachmentTooltip')
-						  : droppableTextArea.dropDisabledReason
-				}*/
 			}
 			// Record audio
 			ActionButton {
@@ -141,7 +135,7 @@ Item {
 					}
 
 					background: Rectangle {
-						color: '#f3f3f3' //DroppableTextAreaStyle.backgroundColor
+						color: DroppableTextAreaStyle.backgroundColor
 						radius: 5
 						clip:true
 					}
