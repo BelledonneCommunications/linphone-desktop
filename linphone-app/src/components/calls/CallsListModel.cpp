@@ -93,15 +93,27 @@ QVariant CallsListModel::data (const QModelIndex &index, int role) const {
 	return QVariant();
 }
 
+CallModel *CallsListModel::findCallModelFromPeerAddress (const QString &peerAddress) const {
+	std::shared_ptr<linphone::Address> address = Utils::interpretUrl(peerAddress);
+	auto it = find_if(mList.begin(), mList.end(), [address](CallModel *callModel) {
+			return callModel->getRemoteAddress()->weakEqual(address);
+	});
+	return it != mList.end() ? *it : nullptr;
+}
+
 // -----------------------------------------------------------------------------
 
 void CallsListModel::askForTransfer (CallModel *callModel) {
 	emit callTransferAsked(callModel);
 }
 
+void CallsListModel::askForAttendedTransfer (CallModel *callModel) {
+	emit callAttendedTransferAsked(callModel);
+}
+
 // -----------------------------------------------------------------------------
 
-void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QString, QString> &headers) const {
+void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& prepareTransfertAddress, const QHash<QString, QString> &headers) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
@@ -122,23 +134,23 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QHash<QSt
 	shared_ptr<linphone::ProxyConfig> currentProxyConfig = core->getDefaultProxyConfig();
 	if(currentProxyConfig){
 		if(!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() || currentProxyConfig->getState() == linphone::RegistrationState::Ok)
-			core->inviteAddressWithParams(address, params);
+			CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 		else{
 			QObject * context = new QObject();
 			QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,context,
-							 [address,core,params,currentProxyConfig, context](const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state) mutable {
+							 [address,core,params,currentProxyConfig,prepareTransfertAddress, context](const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state) mutable {
 				if(context && proxyConfig==currentProxyConfig && state==linphone::RegistrationState::Ok){
+					CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 					delete context;
 					context = nullptr;
-					core->inviteAddressWithParams(address, params);
 				}
 			});
 		}
 	}else
-		core->inviteAddressWithParams(address, params);
+		CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 }
 
-void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers) const {
+void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers, const QString& prepareTransfertAddress) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
@@ -160,28 +172,28 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 	params->setMediaEncryption(LinphoneEnums::toLinphone(encryption));
 	if(currentProxyConfig){
 		if(!CoreManager::getInstance()->getSettingsModel()->getWaitRegistrationForCall() || currentProxyConfig->getState() == linphone::RegistrationState::Ok)
-			core->inviteAddressWithParams(address, params);
+			CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 		else{
 			QObject * context = new QObject();
 			QObject::connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged,context,
-							 [address,core,params,currentProxyConfig, context](const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state) mutable {
+							 [address,core,params,currentProxyConfig,prepareTransfertAddress, context](const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state) mutable {
 				if(context && proxyConfig==currentProxyConfig && state==linphone::RegistrationState::Ok){
+					CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 					delete context;
 					context = nullptr;
-					core->inviteAddressWithParams(address, params);
 				}
 			});
 		}
 	}else
-		core->inviteAddressWithParams(address, params);
+		CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 }
 
-void CallsListModel::launchVideoCall (const QString &sipAddress) const {
+void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	if (!core->videoSupported()) {
 		qWarning() << QStringLiteral("Unable to launch video call. (Video not supported.) Launching audio call...");
-		launchAudioCall(sipAddress);
+		launchAudioCall(sipAddress, prepareTransfertAddress, {});
 		return;
 	}
 	
@@ -193,7 +205,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress) const {
 	params->enableVideo(true);
 	params->setProxyConfig(core->getDefaultProxyConfig());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
-	core->inviteAddressWithParams(address, params);
+	CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 }
 
 ChatRoomModel* CallsListModel::launchSecureChat (const QString &sipAddress) const {
@@ -249,7 +261,7 @@ ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) co
 	params->setBackend(linphone::ChatRoomBackend::Basic);
 	
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
-
+	
 	if( chatRoom != nullptr){
 		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 		auto timeline = timelineList->getTimeline(chatRoom, true);
@@ -315,7 +327,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 				address = Utils::interpretUrl(participant);
 		}
 		if( address)
-				chatRoomParticipants.push_back( address );
+			chatRoomParticipants.push_back( address );
 	}
 	auto proxy = core->getDefaultProxyConfig();
 	params->enableEncryption(securityLevel>0);
@@ -344,7 +356,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			chatRoom = core->createChatRoom(params, localAddress, chatRoomParticipants);
 			if(chatRoom != nullptr && admins.size() > 0)
 				ChatRoomInitializer::setAdminsAsync(params->getSubject(), params->getBackend(), params->groupEnabled(), admins );
-				timeline = timelineList->getTimeline(chatRoom, false);
+			timeline = timelineList->getTimeline(chatRoom, false);
 		}else{
 			if(admins.size() > 0){
 				ChatRoomInitializer::setAdminsSync(chatRoom, admins);
@@ -391,6 +403,7 @@ void CallsListModel::terminateCall (const QString& sipAddress) const{
 		}
 	}
 }
+
 // -----------------------------------------------------------------------------
 
 static void joinConference (const shared_ptr<linphone::Call> &call) {

@@ -58,7 +58,7 @@ static void cliCall (QHash<QString, QString> &args) {
 		app->processArguments(args);
 		app->initContentApp();
 	}else
-		CoreManager::getInstance()->getCallsListModel()->launchAudioCall(args["sip-address"]);
+		CoreManager::getInstance()->getCallsListModel()->launchAudioCall(args["sip-address"], "");
 }
 
 static void cliBye (QHash<QString, QString> &args) {
@@ -89,7 +89,7 @@ static void cliJoinConference (QHash<QString, QString> &args) {
 	}
 
 	args["method"] = QStringLiteral("join-conference");
-	coreManager->getCallsListModel()->launchAudioCall(sipAddress, args);
+	coreManager->getCallsListModel()->launchAudioCall(sipAddress, "", args);
 }
 
 static void cliJoinConferenceAs (QHash<QString, QString> &args) {
@@ -121,7 +121,7 @@ static void cliJoinConferenceAs (QHash<QString, QString> &args) {
 	}
 
 	args["method"] = QStringLiteral("join-conference");
-	coreManager->getCallsListModel()->launchAudioCall(toSipAddress, args);
+	coreManager->getCallsListModel()->launchAudioCall(toSipAddress, "", args);
 }
 
 static void cliInitiateConference (QHash<QString, QString> &args) {
