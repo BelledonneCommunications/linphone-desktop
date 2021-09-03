@@ -53,7 +53,7 @@ Rectangle {
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
-			visible:view.count > 0
+			visible:view.count > 0 || searchView.visible
 			
 			MouseArea{// no more showing history
 				id:showHistory
@@ -185,7 +185,12 @@ Rectangle {
 			border.width: 2
 			visible:false
 			//color: ContactsStyle.bar.backgroundColor
-			onVisibleChanged: timeline.model.filterText = (visible?searchBar.text : '')
+			onVisibleChanged: if(visible){
+									timeline.model.filterText = searchBar.text
+									searchBar.forceActiveFocus()
+								}else{
+									timeline.model.filterText =  ''
+								}
 			
 			TextField {
 				id:searchBar
