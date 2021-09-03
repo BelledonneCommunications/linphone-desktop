@@ -3461,4 +3461,17 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
     </message>
 </context>
+<context>
+    <name></name>
+    <message>
+        <source>attendedTransferComplete</source>
+        <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
+        <translation>Hívásátirányítás teljes részvétele</translation>
+    </message>
+    <message>
+        <source>attendedTransferCall</source>
+        <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
+        <translation>Hívásátirányítás részvétele</translation>
+    </message>
+</context>
 </TS>
