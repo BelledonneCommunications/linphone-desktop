@@ -35,7 +35,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Un SMS de validation a été envoyé au %1. Afin de compléter la vérification du numéro de téléphone, veuillez entrer le code à 4 chiffres ci-dessous.</translation>
+        <translation>Un code de validation a été envoyé par SMS au %1. Afin de compléter la vérification du numéro de téléphone, veuillez entrer le code à 4 chiffres ci-dessous.</translation>
     </message>
 </context>
 <context>
@@ -58,7 +58,7 @@
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation>file</translation>
+        <translation>fichier</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
@@ -147,7 +147,7 @@
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation>La connection a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
+        <translation>La connexion a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
@@ -171,7 +171,7 @@
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation>Trop long ! (%1 caractères max.)&gt;</translation>
+        <translation>Trop long ! (%1 caractères max.)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
@@ -187,11 +187,11 @@
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>Adresse incorrecte.</translation>
+        <translation>Adresse mail incorrecte.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>Adresse incorrecte ou caractères invalides.</translation>
+        <translation>Adresse mail incorrecte ou caractères invalides.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation>Le compte existe déjà.</translation>
+        <translation>Ce compte existe déjà.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
@@ -227,7 +227,7 @@
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation>La connection a échoué. Merci de vérifier votre numéro.</translation>
+        <translation>La connexion a échoué. Merci de vérifier votre numéro.</translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
@@ -258,11 +258,11 @@
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation>ID utilisateur (optionnel)</translation>
+        <translation>Nom d&apos;utilisateur (optionnel)</translation>
     </message>
     <message>
         <source>realmLabel</source>
-        <translation>Realm</translation>
+        <translation>Domaine</translation>
     </message>
 </context>
 <context>
@@ -422,6 +422,16 @@
     <message>
         <source>callPause</source>
         <translation>PAUSE</translation>
+    </message>
+    <message>
+        <source>attendedTransferComplete</source>
+        <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attendedTransferCall</source>
+        <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -915,9 +925,8 @@ Url du serveur non configurée.</translation>
     </message>
     <message>
         <source>ephemeralText</source>
-        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
         <translation type="unfinished">Les nouveaux messages seront effacés automatiquement lorsque ils seront lu par tous les contacts. Sélectionnez un temps limite.</translation>
-        <extra-Context>Explanation for ephemerals</extra-Context>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
@@ -1387,7 +1396,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>removeParticipantSelection</source>
-        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
         <translation type="unfinished">Enlever ce participant de la sélection</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
@@ -1456,7 +1465,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>conferenceSubjectChangedEvent</source>
-        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1821,7 +1830,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation type="unfinished">Serveur LDAP. ie: ldap&#x202f;:// pour un serveur local ou ldap&#x202f;://ldap.example.org/</translation>
+        <translation type="unfinished">Serveur LDAP. ie: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -2423,7 +2432,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
         <translation type="unfinished">Chats simples</translation>
-        <extra-Mode>Selecting it will show all simple romms</extra-Mode>
+        <extra-Mode>Selecting it will show all simple rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>
