@@ -182,10 +182,10 @@ ApplicationWindow {
 							}
 						}
 						
-						onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
+						onLaunchCall: CallsListModel.launchAudioCall(sipAddress, "")
 						onLaunchChat: CallsListModel.launchChat( sipAddress,0 )
 						onLaunchSecureChat: CallsListModel.launchChat( sipAddress,1 )
-						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
+						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress, "")
 					}
 					
 					

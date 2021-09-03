@@ -259,7 +259,6 @@ ColumnLayout  {
 						icon: 'group_chat'
 						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.hasBeenLeft
 						
-						//onClicked: CallsListModel.launchAudioCall(conversation.chatRoomModel)
 						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
 						TooltipArea {
 							//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room

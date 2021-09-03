@@ -423,6 +423,16 @@
         <source>callPause</source>
         <translation>HOLD CALL</translation>
     </message>
+    <message>
+        <source>attendedTransferComplete</source>
+        <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
+        <translation>COMPLETE ATTENDED TRANSFER</translation>
+    </message>
+    <message>
+        <source>attendedTransferCall</source>
+        <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
+        <translation>ATTENDED TRANSFER CALL</translation>
+    </message>
 </context>
 <context>
     <name>CallsWindow</name>

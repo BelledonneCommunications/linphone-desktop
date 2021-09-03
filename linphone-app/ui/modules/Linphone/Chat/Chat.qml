@@ -245,7 +245,7 @@ Rectangle {
 
       borderColor: ChatStyle.sendArea.border.color
       topWidth: ChatStyle.sendArea.border.width
-      visible: SettingsModel.chatEnabled && !proxyModel.chatRoomModel.hasBeenLeft
+      visible: SettingsModel.chatEnabled && proxyModel.chatRoomModel && !proxyModel.chatRoomModel.hasBeenLeft
 
       DroppableTextArea {
         id: textArea
