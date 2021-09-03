@@ -423,6 +423,16 @@
         <source>callPause</source>
         <translation>PAUSA SAMTAL</translation>
     </message>
+    <message>
+        <source>attendedTransferComplete</source>
+        <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attendedTransferCall</source>
+        <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallsWindow</name>
@@ -915,9 +925,8 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>ephemeralText</source>
-        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
         <translation type="unfinished"></translation>
-        <extra-Context>Explanation for ephemerals</extra-Context>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
@@ -1387,7 +1396,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>removeParticipantSelection</source>
-        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
         <translation type="unfinished"></translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
@@ -1456,7 +1465,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>conferenceSubjectChangedEvent</source>
-        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2423,7 +2432,7 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
         <translation type="unfinished"></translation>
-        <extra-Mode>Selecting it will show all simple romms</extra-Mode>
+        <extra-Mode>Selecting it will show all simple rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>

@@ -423,6 +423,16 @@
         <source>callPause</source>
         <translation>暂挂通话</translation>
     </message>
+    <message>
+        <source>attendedTransferComplete</source>
+        <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>attendedTransferCall</source>
+        <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallsWindow</name>
@@ -914,9 +924,8 @@
     </message>
     <message>
         <source>ephemeralText</source>
-        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
         <translation type="unfinished"></translation>
-        <extra-Context>Explanation for ephemerals</extra-Context>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
@@ -1381,7 +1390,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>removeParticipantSelection</source>
-        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
         <translation type="unfinished"></translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
