@@ -355,7 +355,10 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		}
 		if(!found){// Create a default chat room
 			QVariantList participants;
-			participants << Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
+			//participants << Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());	// This allow chatting to a specific device but the current design is not adapted to show them
+			auto remoteAddress = callLog->getRemoteAddress()->clone();
+			remoteAddress->clean();
+			participants << Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
 			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", 0,  participants, isOutgoing);
 		}
 }
