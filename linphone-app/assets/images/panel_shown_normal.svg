@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
-   version="1.1"
-   id="svg2"
    width="20"
    height="20"
-   viewBox="0 0 20 20"
-   sodipodi:docname="panel_shown.svg"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="panel_shown_normal.svg"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs6" />
+     id="defs14" />
   <sodipodi:namedview
-     id="namedview4"
+     id="namedview12"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -25,33 +21,38 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="9.7"
-     inkscape:cx="11.597938"
-     inkscape:cy="10.824742"
+     inkscape:zoom="38.8"
+     inkscape:cx="9.9871134"
+     inkscape:cy="10"
      inkscape:window-width="1920"
      inkscape:window-height="1131"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g8" />
+     inkscape:current-layer="svg10" />
   <g
-     inkscape:groupmode="layer"
-     inkscape:label="Image"
+     fill="none"
+     fill-rule="evenodd"
      id="g8">
-    <image
-       width="20"
-       height="20"
-       preserveAspectRatio="none"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAAAXNSR0IArs4c6QAAAERlWElmTU0A
-KgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAFKADAAQAAAAB
-AAAAFAAAAACy3fD9AAABaUlEQVQ4EWP0jUuT+/f730MGEPCOTPkPZgAJJhgDRDPCZf6fXAlWgpAG
-ScFEYXoQsjARkCE+kSk/gZrZ4GKMjHsYQFrhpgNlvKNSV2HVTrwgA9gioLnoZsMtBtkTmbKdCcU1
-yLLIbEbGz1jtRlYDYxOtkBHoz93GckIunOwsDEduvQQGD+NqmCkwmpGBIRiskOH/fxeYIDoNVPSL
-kZVJlaGuohzs40fb5v33iUprQFcI4oNChglkJSEAChmiPTOsFDL6RKX8s1YVZ3z96efrmy8/vgYG
-1VWU4Pr/nxcYWyzgmGFk+O9sJCfMCAtTsKYXH0SBCq5haEQxBcoBGsbIyOgGDO99LKBotlYTZ6jw
-0oMrffz2q2jm4mMMjAyMq7csm9UAl8DDAOUhoFmhRMcLHrNQpEYNRAkOsjjUD0NQCfD95x+yXIOs
-CWgOH7g0AVcKf/7PZfz/346oIhLZFCgbZNB/RsZDTCyMyQDaFIDgRDxcmgAAAABJRU5ErkJggg==
-"
-       id="image10" />
+    <rect
+       fill="#FFC9A9"
+       x="1"
+       y="1"
+       width="5"
+       height="18"
+       rx="1"
+       id="rect2" />
+    <path
+       d="M17.5 0h-15A2.503 2.503 0 0 0 0 2.5v15C0 18.879 1.121 20 2.5 20h15c1.379 0 2.5-1.121 2.5-2.5v-15C20 1.121 18.879 0 17.5 0zM1.667 17.5v-15c0-.46.373-.833.833-.833h3.333v16.666H2.5a.834.834 0 0 1-.833-.833zm16.666 0c0 .46-.373.833-.833.833h-10V1.667h10c.46 0 .833.373.833.833v15z"
+       fill="#4B5964"
+       fill-rule="nonzero"
+       id="path4" />
+    <path
+       d="m14 7-3 3m3 3-3-3"
+       stroke="#4B5964"
+       stroke-width="1.5"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path6" />
   </g>
 </svg>
