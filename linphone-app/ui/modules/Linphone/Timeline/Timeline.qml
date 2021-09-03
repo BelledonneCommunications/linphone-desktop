@@ -252,7 +252,7 @@ Rectangle {
 						}
 					}
 					Icon{
-						icon:'timer'
+						icon: modelData.selected ? 'timer_light' : 'timer'
 						iconSize: 15
 						anchors.right:parent.right
 						anchors.bottom:parent.bottom

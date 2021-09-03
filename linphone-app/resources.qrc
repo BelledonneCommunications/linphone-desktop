@@ -78,6 +78,7 @@
 		<file>assets/images/chat_pressed.svg</file>
 		<file>assets/images/chat_read.svg</file>
 		<file>assets/images/chat_room.svg</file>
+		<file>assets/images/chat_room_light.svg</file>
 		<file>assets/images/close.svg</file>
 		<file>assets/images/collapse.svg</file>
 		<file>assets/images/collapsed.svg</file>
@@ -244,6 +245,7 @@
 		<file>assets/images/speaker_on_pressed.svg</file>
 		<file>assets/images/speaker.svg</file>
 		<file>assets/images/timer.svg</file>
+		<file>assets/images/timer_light.svg</file>
 		<file>assets/images/tel_keypad_hovered.svg</file>
 		<file>assets/images/tel_keypad_normal.svg</file>
 		<file>assets/images/tel_keypad_pressed.svg</file>
