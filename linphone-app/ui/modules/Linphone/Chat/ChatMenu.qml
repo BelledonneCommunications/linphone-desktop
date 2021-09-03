@@ -27,7 +27,7 @@ Item {
 	signal removeEntryRequested()
 
 	function open(){
-		messageMenu.open()
+		messageMenu.popup()
 	}
 	
 	
@@ -92,7 +92,7 @@ Item {
 					 ? Qt.PointingHandCursor
 					 : Qt.IBeamCursor
 		
-		onClicked: mouse.button === Qt.RightButton && messageMenu.open()
+		onClicked: mouse.button === Qt.RightButton && messageMenu.popup()
 	}
 	
 }
