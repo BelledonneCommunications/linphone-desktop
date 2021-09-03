@@ -49,36 +49,36 @@ DialogPlus {
 	
 	buttonsAlignment: Qt.AlignCenter
 	
-	height: ManageAccountsStyle.height
-	width: ManageAccountsStyle.width
+	height: InfoEncryptionStyle.height
+	width: InfoEncryptionStyle.width
 	
 	// ---------------------------------------------------------------------------
 	ColumnLayout {
 		anchors.fill: parent
-		anchors.topMargin: 15
-		anchors.leftMargin: 10
-		anchors.rightMargin: 10
-		spacing: 0
+		anchors.topMargin: InfoEncryptionStyle.mainLayout.topMargin
+		anchors.leftMargin: InfoEncryptionStyle.mainLayout.leftMargin
+		anchors.rightMargin: InfoEncryptionStyle.mainLayout.rightMargin
+		spacing: InfoEncryptionStyle.mainLayout.spacing
 		
 		Layout.alignment: Qt.AlignCenter
 		
 		Icon{
 			icon: dialog.securityLevel === 2?'secure_level_1': dialog.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'
-			iconSize:40
-			Layout.preferredHeight: 50
-			Layout.preferredWidth: 50
+			iconSize: InfoEncryptionStyle.securityIcon.iconSize
+			Layout.preferredHeight: InfoEncryptionStyle.securityIcon.preferredHeight
+			Layout.preferredWidth: InfoEncryptionStyle.securityIcon.preferredWidth
 			Layout.alignment: Qt.AlignCenter
 		}
 		Text{
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignCenter
-			Layout.leftMargin: 10
-			Layout.rightMargin: 10
+			Layout.leftMargin: InfoEncryptionStyle.descriptionText.leftMargin
+			Layout.rightMargin: InfoEncryptionStyle.descriptionText.rightMargin
 			
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
-			font.pointSize: Units.dp * 11
-			color: Colors.d.color
+			font.pointSize: InfoEncryptionStyle.descriptionText.pointSize
+			color: InfoEncryptionStyle.descriptionText.color
 			
 			wrapMode: Text.Wrap
 			//: "Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants."
@@ -88,13 +88,13 @@ DialogPlus {
 		Text{
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignCenter
-			Layout.leftMargin: 10
-			Layout.rightMargin: 10
+			Layout.leftMargin: InfoEncryptionStyle.descriptionText.leftMargin
+			Layout.rightMargin: InfoEncryptionStyle.descriptionText.rightMargin
 			
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
-			font.pointSize: Units.dp * 11
-			color: Colors.d.color
+			font.pointSize: InfoEncryptionStyle.descriptionText.pointSize
+			color: InfoEncryptionStyle.descriptionText.color
 			
 			wrapMode: Text.Wrap
 			//: "To do so, call the contact and follow the authentification process."

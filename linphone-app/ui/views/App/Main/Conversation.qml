@@ -117,7 +117,7 @@ ColumnLayout  {
 								//: 'Admin' : Admin(istrator)
 								//~ Context One word title for describing the current admin status
 								text: qsTr('adminStatus')
-								color:"#9FA6AB"
+								color: Colors.af.color
 								font.pointSize: Units.dp * 8
 							}
 						}
@@ -468,11 +468,6 @@ ColumnLayout  {
 			localAddress: conversation.localAddress// Reload is done on localAddress. Use this order
 		}
 	}
-	/*
-  Connections {
-	target: SettingsModel
-	onChatEnabledChanged: chatRoomProxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry)
-  }*/
 	
 	Connections {
 		target: AccountSettingsModel

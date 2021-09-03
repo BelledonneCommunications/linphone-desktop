@@ -49,49 +49,48 @@ DialogPlus {
 	property int timer : 0
 	buttonsAlignment: Qt.AlignCenter
 	
-	height: 320
-	width: ManageAccountsStyle.width
+	height: EphemeralChatRoomStyle.height
+	width: EphemeralChatRoomStyle.width
 	
 	// ---------------------------------------------------------------------------
 	ColumnLayout {
 		anchors.fill: parent
-		anchors.topMargin: 15
-		anchors.leftMargin: 10
-		anchors.rightMargin: 10
-		spacing: 0
+		anchors.topMargin: EphemeralChatRoomStyle.mainLayout.topMargin
+		anchors.leftMargin: EphemeralChatRoomStyle.mainLayout.leftMargin
+		anchors.rightMargin: EphemeralChatRoomStyle.mainLayout.rightMargin
+		spacing: EphemeralChatRoomStyle.mainLayout.spacing
 		
 		Layout.alignment: Qt.AlignCenter
 		Icon{
 			icon:'timer'
-			iconSize:40
-			Layout.preferredHeight: 50
-			Layout.preferredWidth: 50
+			iconSize: EphemeralChatRoomStyle.timer.iconSize
+			Layout.preferredHeight: EphemeralChatRoomStyle.timer.preferredHeight
+			Layout.preferredWidth: EphemeralChatRoomStyle.timer.preferredWidth
 			Layout.alignment: Qt.AlignCenter
 		}
 		Text{
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignCenter
-			Layout.leftMargin: 10
-			Layout.rightMargin: 10
+			Layout.leftMargin: EphemeralChatRoomStyle.descriptionText.leftMargin
+			Layout.rightMargin: EphemeralChatRoomStyle.descriptionText.rightMargin
 			
 			maximumLineCount: 4
 			wrapMode: Text.Wrap
-			//: 'New messages will be deleted on both ends once it has been read by your contact. Select a timeout.'
-			//~ Context Explanation for ephemerals
+			//: 'New messages will be deleted on both ends once it has been read by your contact. Select a timeout.' : Context Explanation for ephemerals
 			text: qsTr('ephemeralText')
 			//: '\nEphemeral message is only supported in conference based chat room!'
 			//~ Context Warning about not being in conference based chat room.
 				+(!chatRoomModel.canBeEphemeral?'\n'+qsTr('ephemeralNotInConference!'):'')
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
-			font.pointSize: Units.dp * 11
-			color: Colors.d.color
+			font.pointSize: EphemeralChatRoomStyle.descriptionText.pointSize
+			color: EphemeralChatRoomStyle.descriptionText.color
 		}
 		ComboBox{
 			Layout.alignment: Qt.AlignCenter
-			Layout.preferredWidth: 150
-			Layout.topMargin:10
-			Layout.bottomMargin:10
+			Layout.preferredWidth: EphemeralChatRoomStyle.descriptionText.preferredWidth
+			Layout.topMargin: EphemeralChatRoomStyle.descriptionText.topMargin
+			Layout.bottomMargin: EphemeralChatRoomStyle.descriptionText.bottomMargin
 			id:timerPicker
 			textRole: "text"
 			currentIndex:	if( chatRoomModel.ephemeralLifetime == 0 || !chatRoomModel.ephemeralEnabled)
@@ -108,22 +107,6 @@ DialogPlus {
 								return 5;
 							else
 								return 5;
-								/*
-			property var fields : [
-			//: 'Disabled'
-			qsTr('disabled'),
-			//: '%1 minute'
-			qsTr('nMinute', '', 1).arg(1),
-			//: '%1 hour'
-			qsTr('nHour', '', 1).arg(1),
-			//: '%1 day'
-			qsTr('nDay', '', 1).arg(1),
-			//: '%1 days'
-			qsTr('nDay', '', 3).arg(3),
-			//: '%1 week'
-			qsTr('nWeek', '', 1).arg(1)
-			]
-			*/
 			model:[
 				//: 'Disabled'
 				{text:qsTr('disabled'), value:0},
@@ -142,7 +125,5 @@ DialogPlus {
 			onActivated: dialog.timer = model[index].value
 			visible: chatRoomModel.canBeEphemeral
 		}
-		
 	}
-	
 }

@@ -6,7 +6,8 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.q.color
+  property color backgroundColor: Colors.e.color
+  property color outsideBackgroundColor: Colors.aa.color
 
   property QtObject fileChooserButton: QtObject {
     property int margins: 6

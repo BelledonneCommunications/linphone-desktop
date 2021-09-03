@@ -11,6 +11,7 @@ import Units 1.0
 // =============================================================================
 
 RowLayout{
+	id: mainLayout
 	property string _type: {
 		var status = $chatEntry.eventLogType
 		
@@ -81,35 +82,29 @@ RowLayout{
 		
 		return 'unknown_notice'
 	}
-	property bool isImportant : $chatEntry.status == ChatNoticeModel.NoticeError || $chatEntry.eventLogType == LinphoneEnums.EventLogTypeConferenceTerminated
+	property bool isImportant: $chatEntry.eventLogType == LinphoneEnums.EventLogTypeConferenceTerminated
+	property bool isError: $chatEntry.status == ChatNoticeModel.NoticeError
+	property color eventColor : (isError ? Colors.error.color : ( isImportant ? Colors.error.color : Colors.ab.color ))
+	
 	
 	Layout.preferredHeight: ChatStyle.entry.lineHeight
 	spacing: ChatStyle.entry.message.extraContent.spacing
 	Rectangle{
 		height:1
 		Layout.fillWidth: true
-		color:( isImportant ? '#FF0000' : '#979797' )
+		color: mainLayout.eventColor
 	}
 	
 	Text {
-		 Component {
-		  // Never created.
-		  // Private data for `lupdate`.
-		  Item {
-			property var i18n: [
-			  "You have joined the group" //QT_TR_NOOP('declinedIncomingCall'),
-			]
-		  }
-		}
-		Layout.preferredWidth: contentWidth
 		id:message
-		color:( isImportant ? '#FF0000' : '#979797' )
+		Layout.preferredWidth: contentWidth
+		
+		color: mainLayout.eventColor
 		font {
-			//bold: true
 			pointSize: Units.dp * 7
 		}
 		height: parent.height
-		text: $chatEntry.name?_type.arg($chatEntry.name):_type	//qsTr(Utils.snakeToCamel(_type))
+		text: $chatEntry.name?_type.arg($chatEntry.name):_type
 		verticalAlignment: Text.AlignVCenter
 		TooltipArea {
 		  text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
@@ -118,6 +113,6 @@ RowLayout{
 	Rectangle{
 		height:1
 		Layout.fillWidth: true
-		color:( isImportant ? '#FF0000' : '#979797' )
+		color: mainLayout.eventColor
 	}
 }

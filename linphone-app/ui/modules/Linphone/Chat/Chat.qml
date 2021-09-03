@@ -95,8 +95,7 @@ Rectangle {
               id: text
 
               anchors.fill: parent
-              //color: ChatStyle.sectionHeading.text.color
-              color: '#979797'
+              color: ChatStyle.sectionHeading.text.color
               font {
                 bold: true
                 pointSize: ChatStyle.sectionHeading.text.pointSize
@@ -173,8 +172,8 @@ Rectangle {
 							return null
 					}
 					
-					color: '#B1B1B1'
-					font.pointSize: ChatStyle.entry.time.pointSize
+					color: ChatStyle.entry.event.text.color
+					font.pointSize: ChatStyle.entry.event.text.pointSize
 					visible: isMessage 
 							&& $chatEntry != undefined
 							&& !$chatEntry.isOutgoing // Only outgoing
@@ -196,7 +195,7 @@ Rectangle {
 				  Layout.preferredHeight: ChatStyle.entry.lineHeight
 				  Layout.preferredWidth: ChatStyle.entry.time.width
 	
-				  color: '#B1B1B1'
+				  color: ChatStyle.entry.event.text.color
 				  font.pointSize: ChatStyle.entry.time.pointSize
 	
 				  text: $chatEntry.timestamp.toLocaleString(

@@ -55,7 +55,7 @@ GridView{
 		height: ChatStyle.composingText.height-5
 		width: GridView.width
 		text: deliveryLayout.getText(modelData.state, modelData.displayName, UtilsCpp.toDateTimeString(modelData.stateChangeTime))
-		color: "#B1B1B1"
+		color: ChatStyle.entry.event.text.color
 		font.pointSize: Units.dp * 8
 		elide: Text.ElideMiddle
 	}

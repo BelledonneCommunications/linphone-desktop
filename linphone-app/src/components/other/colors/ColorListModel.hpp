@@ -53,10 +53,10 @@ class ColorListModel : public QAbstractListModel {
 		ADD_COLOR("b", "#D64D00", "Primary color for hovered items.")
 		
 		ADD_COLOR("c", "#CBCBCB", "Button pressed, separatos, fields.")
-		ADD_COLOR("d", "#5A585B", "")
-		ADD_COLOR("e", "#F3F3F3", "")
+		ADD_COLOR("d", "#5A585B", "Text (Ephemerals)")
+		ADD_COLOR("e", "#F3F3F3", "Chat text area Background")
 		ADD_COLOR("f", "#E8E8E8", "Border color")
-		ADD_COLOR("g", "#6B7A86", "SIP Address, Contact Text, Selected button.")
+		ADD_COLOR("g", "#6B7A86", "SIP Address; Text of Contact, question popup; Selected button.")
 		ADD_COLOR("h", "#687680", "")
 		
 		// Primary color.
@@ -89,6 +89,26 @@ class ColorListModel : public QAbstractListModel {
 		ADD_COLOR("w", "#EDEDED", "Menu background (conversation)")
 		
 		ADD_COLOR("x", "#D0D8DE", "Background unselected round button")
+		
+		ADD_COLOR("y", "#FFFFFF", "Gradient dialog start")
+		ADD_COLOR("z", "#E2E2E2", "Gradient dialog end")
+		
+		ADD_COLOR("aa", "#E1E1E1", "Chat text outside background")
+		ADD_COLOR("ab", "#979797", "Chat heading section text")
+		ADD_COLOR("ac", "#B1B1B1", "Chat bubble author/ text")
+		ADD_COLOR("ad", "#FF5E00", "Ephemeral main color")
+		ADD_COLOR("ae", "#FF0000", "Important message")
+		ADD_COLOR("af", "#9FA6AB", "Admin Status")
+		ADD_COLOR("ag", "#EBEBEB", "Line between items in list")
+		ADD_COLOR("ah", "#F5F5F5", "Main List item background")
+		ADD_COLOR("slider_background", "#bdbebf", "Slider background")
+		ADD_COLOR("slider_low", "#21be2b", "Slider low value")
+		ADD_COLOR("slider_high", "#ff0000", "Slider high value")
+		
+		
+		ADD_COLOR("border", "black", "Borders")
+		
+		
 		
 		// Field error.
 		ADD_COLOR("error", "#FF0000", "Error Generic button.")

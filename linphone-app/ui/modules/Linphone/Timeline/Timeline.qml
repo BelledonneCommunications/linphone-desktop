@@ -43,16 +43,7 @@ Rectangle {
 				}
 			}
 			onSelectedChanged : if(timelineModel) timeline.entrySelected(timelineModel)
-			// onCurrentTimelineChanged:entrySelected(currentTimeline)
 		}
-		/*
-	Connections {
-	  target: model
-	  
-	  onDataChanged: Logic.handleDataChanged(topLeft, bottomRight, roles)
-	  onRowsAboutToBeRemoved: Logic.handleRowsAboutToBeRemoved(parent, first, last)
-	}
-*/
 		// -------------------------------------------------------------------------
 		// Legend.
 		// -------------------------------------------------------------------------
@@ -126,7 +117,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: filterChoices.height
 			Layout.alignment: Qt.AlignCenter
-			border.color: 'black'
+			border.color: Colors.border.color
 			border.width: 2
 			visible:false
 			
@@ -190,7 +181,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: 40
 			Layout.alignment: Qt.AlignCenter
-			border.color: 'black'
+			border.color: Colors.border.color
 			border.width: 2
 			visible:false
 			//color: ContactsStyle.bar.backgroundColor
