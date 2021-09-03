@@ -72,7 +72,7 @@ DialogPlus {
 								secure:0,
 								visible:true,
 								handler: function (entry) {
-									CallsListModel.launchAudioCall(entry.sipAddress)
+									CallsListModel.launchAudioCall(entry.sipAddress, "")
 									exit(1)
 								}
 							}]
