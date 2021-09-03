@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Created with Inkscape (http://www.inkscape.org/) -->
-
 <svg
-   version="1.1"
-   id="svg66"
    width="20"
    height="20"
-   viewBox="0 0 20 20"
-   sodipodi:docname="panel_hide_normal.svg"
+   version="1.1"
+   id="svg20"
+   sodipodi:docname="panel_hidden_normal.svg"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs70" />
   <sodipodi:namedview
-     id="namedview68"
+     id="namedview22"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -25,33 +19,65 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     inkscape:zoom="5.725"
-     inkscape:cx="3.7554585"
-     inkscape:cy="13.973799"
+     inkscape:zoom="38.8"
+     inkscape:cx="9.9871134"
+     inkscape:cy="10"
      inkscape:window-width="1920"
      inkscape:window-height="1131"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g72" />
+     inkscape:current-layer="svg20" />
+  <defs
+     id="defs8">
+    <filter
+       color-interpolation-filters="auto"
+       id="a"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         in="SourceGraphic"
+         values="0 0 0 0 0.588144 0 0 0 0 0.648824 0 0 0 0 0.694542 0 0 0 1.000000 0"
+         id="feColorMatrix2" />
+    </filter>
+    <filter
+       color-interpolation-filters="auto"
+       id="b"
+       x="0"
+       y="0"
+       width="1"
+       height="1">
+      <feColorMatrix
+         in="SourceGraphic"
+         values="0 0 0 0 0.294118 0 0 0 0 0.349020 0 0 0 0 0.392157 0 0 0 1.000000 0"
+         id="feColorMatrix5" />
+    </filter>
+  </defs>
   <g
-     inkscape:groupmode="layer"
-     inkscape:label="Image"
-     id="g72">
-    <image
-       width="20"
-       height="20"
-       preserveAspectRatio="none"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAAH6ji2bAAAAAXNSR0IArs4c6QAAAERlWElmTU0A
-KgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAFKADAAQAAAAB
-AAAAFAAAAACy3fD9AAABRklEQVQ4EWOcuWqz3N/f/x4ygMC0pRv/gxlAggnGANGMyDLIEkA2NikU
-zTD1jNOXbfz5/z8DG0wASO8Bs5GNALJXYdVOvCADyCKYJchmw8RA9LRlm7YzobkGWR7B/v//M1a7
-ESoQLKIVgkJ0NwMj4x8GoPFA/aFAvBphDpwVDFHIwOACF0JjMDIy/GJiYVIF+wgkN2PVNq3pSzc2
-oKkDc0EhwwS1Eps8XAwUMkR7ZlgpBAX4X2A4rAUGLB/DfwZZYJa4Cg8XEIORkRcYhCywmHECCuyC
-hSlIEzDs3BkZGK5haEQxBcqBGOYG5O1jARKgaF6dFeUXBpUGx+b/379BLlidFe3fABPHR4PyEFA+
-lOh4wWcYstyogcihQR6b6mHIAioB/jMAEyWFAJzgGRh+MUIrhblAATuiikgsFoMd9Z/hEDMrUzIA
-qmd2ang5O3UAAAAASUVORK5CYII=
-"
-       id="image74" />
+     fill="none"
+     fill-rule="evenodd"
+     id="g18">
+    <g
+       filter="url(#a)"
+       id="g14">
+      <g
+         filter="url(#b)"
+         id="g12">
+        <path
+           d="M17.5 0h-15A2.503 2.503 0 0 0 0 2.5v15C0 18.879 1.121 20 2.5 20h15c1.379 0 2.5-1.121 2.5-2.5v-15C20 1.121 18.879 0 17.5 0zM1.667 17.5v-15c0-.46.373-.833.833-.833h3.333v16.666H2.5a.834.834 0 0 1-.833-.833zm16.666 0c0 .46-.373.833-.833.833h-10V1.667h10c.46 0 .833.373.833.833v15z"
+           fill="#000"
+           fill-rule="nonzero"
+           id="path10" />
+      </g>
+    </g>
+    <path
+       d="m11 13 3-3m-3-3 3 3"
+       stroke="#96A5B1"
+       stroke-width="1.5"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       id="path16" />
   </g>
 </svg>

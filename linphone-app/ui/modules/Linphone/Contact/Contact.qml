@@ -28,7 +28,10 @@ Rectangle {
 	
 	// entry should have these functions : presenceStatus, sipAddress, username, avatar (image)
 	
-	//readonly property var _contact: entry.contact
+	property string username: (entry != undefined ?(entry.contactModel != undefined ? entry.contactModel.vcard.username
+																			:entry.username != undefined ?entry.username:
+																										   LinphoneUtils.getContactUsername(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+											):'')
 	
 	// ---------------------------------------------------------------------------
 	
@@ -60,12 +63,19 @@ Rectangle {
 			//username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
 			//username: UtilsCpp.getDisplayName(entry.sipAddress || entry.peerAddress )
 			
-			username : entry != undefined ?(entry.contactModel != undefined ? entry.contactModel.vcard.username
-																			:entry.username != undefined ?entry.username:
-																										   LinphoneUtils.getContactUsername(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
-											):''
+			username : entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne ? '' : item.username
+						
 
 			visible:!groupChat.visible
+			Icon {
+				
+				anchors.fill: parent
+				
+				icon: 'chat_room_light'
+				iconSize: 20
+				visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
+			}
+			
 			Icon{
 				anchors.right: parent.right
 				anchors.top:parent.top
@@ -83,7 +93,7 @@ Rectangle {
 			
 			icon:'chat_room'
 			iconSize: ContactStyle.contentHeight
-			visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
+			visible: false //entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
 			
 			Icon{
 				anchors.right: parent.right
@@ -107,7 +117,7 @@ Rectangle {
 						 ? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
 						 : '')
 			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne && entry.participants ? entry.participants.addressesToString : ''
-			username: avatar.username
+			username: item.username
 		}
 		
 		ContactMessageCounter {
