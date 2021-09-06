@@ -295,9 +295,17 @@ DialogPlus {
 						placeholderText: qsTr('participantSelectionPlaceholder')
 						//: 'Search in your contacts or add a custom one to the chat room.'
 						tooltipText: qsTr('participantSelectionTooltip')
+						function isUsable(sipAddress){
+									return  UtilsCpp.hasCapability(sipAddress,  LinphoneEnums.FriendCapabilityGroupChat) && 
+										(secureSwitch.checked ? UtilsCpp.hasCapability(sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh) : true);
+						}
 						actions:[{
 								icon: 'add_participant',
 								secure:0,
+								visible: true,
+								visibleHandler : function(entry) {
+									return isUsable(entry.sipAddress)
+								},
 								handler: function (entry) {
 									selectedParticipants.add(entry.sipAddress)
 									smartSearchBar.addAddressToIgnore(entry.sipAddress);
@@ -306,9 +314,11 @@ DialogPlus {
 							}]
 						
 						onEntryClicked: {
-							selectedParticipants.add(entry)
-							smartSearchBar.addAddressToIgnore(entry);
-							++lastContacts.reloadCount
+							if( isUsable(entry)){
+								selectedParticipants.add(entry)
+								smartSearchBar.addAddressToIgnore(entry);
+								++lastContacts.reloadCount
+							}
 						}
 					}
 					Text{

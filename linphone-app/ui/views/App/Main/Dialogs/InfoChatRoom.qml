@@ -9,6 +9,7 @@ import LinphoneEnums 1.0
 import App.Styles 1.0
 import Common.Styles 1.0
 import Units 1.0
+import UtilsCpp 1.0
 
 
 // =============================================================================
@@ -86,7 +87,10 @@ DialogPlus {
 			tooltipText: qsTr('addParticipantTooltip')
 			actions:[{
 					icon: 'add_participant',
-					secure:0,
+					secure: chatRoomModel.haveEncryption,
+					visibleHandler : function(entry) {
+									return !chatRoomModel.haveEncryption || UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh);
+								},
 					handler: function (entry) {
 						selectedParticipants.add(entry.sipAddress)
 					},

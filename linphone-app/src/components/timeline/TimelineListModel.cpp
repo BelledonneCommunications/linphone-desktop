@@ -165,10 +165,12 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 		}
 	}
 	for(auto contact : sortedData){
-		++count;
-		contacts << QVariant::fromValue(contact);
-		if(count >= maxCount)
-			return contacts;
+		if(Utils::hasCapability(contact->getFullPeerAddress(),  LinphoneEnums::FriendCapabilityGroupChat)  ) {
+			++count;
+			contacts << QVariant::fromValue(contact);
+			if(count >= maxCount)
+				return contacts;
+		}
 	}
 	
 	return contacts;
