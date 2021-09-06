@@ -81,6 +81,8 @@ DialogPlus {
 						
 						actions: [{
 								icon: 'transfer',
+								secure: 0,
+								visible: true,
 								handler: function (entry) { 
 									if (attended) {
 										var call = CallsListModel.launchAudioCall(entry.sipAddress, callTransfer.call.peerAddress)

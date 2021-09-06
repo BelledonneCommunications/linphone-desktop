@@ -94,6 +94,8 @@ DialogPlus {
 
             actions: [{
               icon: 'transfer',
+              secure:0,
+              visible: true,
               handler: function (entry) {
                 conferenceHelperModel.toAdd.addToConference(entry.sipAddress)
               }
@@ -140,6 +142,8 @@ DialogPlus {
 
         actions: [{
           icon: 'cancel',
+          visible:true,
+          secure:0,
           handler: function (entry) {
             model.removeFromConference(entry.sipAddress)
           }
