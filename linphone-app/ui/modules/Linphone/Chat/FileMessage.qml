@@ -292,6 +292,7 @@ Row {
 					onMouseYChanged: handleMouseMove.call(this, mouse)
 				}
 				ChatMenu{
+					id: chatMenu
 					height: parent.height
 					width: rectangle.width
 					
