@@ -104,14 +104,19 @@ ApplicationWindow {
 					
 					ActionButton {
 						icon: (leftPanel.visible?'panel_shown':'panel_hidden')
-						tooltipText : (leftPanel.visible?'Open Timeline':'Hide Timeline')
+						
+						//: 'Hide Timeline' : Tooltip for a button that hide the timeline
+						tooltipText : (leftPanel.visible?qsTr('hideTimeline')
+						//: 'Open Timeline' : Tooltip for a button that open the timeline
+							:qsTr('openTimeline'))
 						iconSize: MainWindowStyle.panelButtonSize
 						//autoIcon: true
 						onClicked: leftPanel.visible = !leftPanel.visible
 					}
 					ActionButton {
 						icon: 'home'
-						tooltipText : 'Open Home'
+						//: 'Open Home' : Tooltip for a button that open the home view
+						tooltipText : qsTr('openHome')
 						iconSize: MainWindowStyle.homeButtonSize
 						//autoIcon: true
 						onClicked: setView('Home')
@@ -123,8 +128,6 @@ ApplicationWindow {
 						Layout.preferredHeight: parent.height
 						Layout.preferredWidth: MainWindowStyle.accountStatus.width
 						Layout.fillWidth: false
-						//height: parent.height
-						//width: MainWindowStyle.accountStatus.width
 						
 						TooltipArea {
 							text: AccountSettingsModel.sipAddress

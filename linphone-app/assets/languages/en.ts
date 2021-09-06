@@ -1274,6 +1274,21 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
         <translation>Open Conference</translation>
     </message>
+    <message>
+        <source>hideTimeline</source>
+        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
+        <translation>Hide Timeline</translation>
+    </message>
+    <message>
+        <source>openTimeline</source>
+        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
+        <translation>Open Timeline</translation>
+    </message>
+    <message>
+        <source>openHome</source>
+        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
+        <translation>Open Home</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
