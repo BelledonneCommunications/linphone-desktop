@@ -117,17 +117,15 @@ ScrollableListView {
 
 								ActionButton {
 									icon: modelData.icon
-									visible: {
-										var visible = sipAddressesView.actions[index].visible
-										return (visible === undefined || visible) && (modelData.secure==0 || UtilsCpp.hasCapability(sipAddressesView.interpretableSipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh))
-									}
+									
+									visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler({ sipAddress : sipAddressesView.interpretableSipAddress}) : sipAddressesView.actions[index].visible)
 
 									onClicked: sipAddressesView.actions[index].handler({
 																						   sipAddress: sipAddressesView.interpretableSipAddress
 																					   })
 									Icon{
 										visible: modelData.secure>0
-										icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+										icon: 'secure_on'
 										iconSize:15
 										anchors.right:parent.right
 										anchors.top:parent.top
@@ -276,17 +274,13 @@ ScrollableListView {
 						ActionButton {
 							icon: modelData.icon
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
-							visible: {
-								var visible = sipAddressesView.actions[index].visible
-								return (visible === undefined || visible) && (modelData.secure==0 || !$sipAddress.contactModel || $sipAddress.contactModel.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh))
-							}
-
+							visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
 							onClicked: {
 								sipAddressesView.actions[index].handler($sipAddress)
 							}
 							Icon{
 								visible: modelData.secure>0
-								icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+								icon: 'secure_on'
 								iconSize:15
 								anchors.right:parent.right
 								anchors.top:parent.top
