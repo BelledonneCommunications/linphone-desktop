@@ -57,6 +57,8 @@ DialogPlus {
 					id: item
 					Layout.fillWidth: true
 					Layout.preferredHeight: 50
+					Layout.minimumHeight: 50// Fix layout to avoid infinite update loop between ListView and RowLayout
+					Layout.maximumHeight: 50
 					Avatar{
 						id:avatar
 						Layout.preferredHeight: 32
