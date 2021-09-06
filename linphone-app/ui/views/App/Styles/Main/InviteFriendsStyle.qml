@@ -1,11 +1,12 @@
 pragma Singleton
 import QtQml 2.2
 
+import ColorsList 1.0
 
 // =============================================================================
 
 QtObject {
-  property color color: Colors.k.color
+  property color color: ColorsList.add("InviteFriends_background", "k").color
   property int width: 400
 
   property QtObject message: QtObject {

@@ -69,14 +69,60 @@ QVariant ColorListModel::data (const QModelIndex &index, int role) const {
 
 void ColorListModel::add(std::shared_ptr<ColorModel> color){
 	int row = mList.count();
+	
+	connect(color.get(), &ColorModel::uiColorChanged, this, &ColorListModel::handleUiColorChanged);
+	
 	beginInsertRows(QModelIndex(), row, row);
 	setProperty(color->getName().toStdString().c_str(), QVariant::fromValue(color.get()));
+	
+	
 	
 	mData.insert(color->getName(), QVariant::fromValue(color.get()));
 	mList << color;
 	
 	endInsertRows();
 	emit layoutChanged();
+}
+
+ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue){
+	ColorModel * color = getColor(id);
+	if(!color){
+		if(idLink != ""){
+			if( colorValue == ""){
+				auto linkColor = getColor(idLink);
+				if(linkColor){
+					colorValue = linkColor->getColor().name(QColor::HexArgb);
+				}
+			}
+			addLink(id, idLink);
+		}
+		if( description == ""){
+			description = id;
+			description.replace("_", " ");
+		}
+		auto colorShared = std::make_shared<ColorModel>(id, colorValue, description);
+		add(colorShared);
+		color = colorShared.get();
+	}
+	return color;
+}
+
+void ColorListModel::addLink(const QString& a, const QString& b){
+	int index = 0;
+	if( mColorLinkIndexes.contains(b)){
+		index = mColorLinkIndexes[b];
+	}else {
+		index = mColorLinks.size();
+		mColorLinks.push_back(QStringList(b));
+		mColorLinkIndexes[b] = index;
+	}
+	mColorLinks[index].push_back(a);
+	mColorLinkIndexes[a] = index;
+}
+
+void ColorListModel::removeLink(const QString& a){
+	mColorLinks[mColorLinkIndexes[a]].removeOne(a);
+	mColorLinkIndexes.remove(a);
 }
 
 bool ColorListModel::removeRow (int row, const QModelIndex &parent){
@@ -117,12 +163,26 @@ QString ColorListModel::getNames(){
     return names.join(", ");
 }
 
+ColorModel * ColorListModel::getColor(const QString& id){
+	if(mData.contains(id)){
+		return mData[id].value<ColorModel*>();
+	}else
+		return nullptr;
+}
+
 QQmlPropertyMap * ColorListModel::getQmlData() {
 	return &mData;
 }
 
 const QQmlPropertyMap * ColorListModel::getQmlData() const{
 	return &mData;
+}
+
+int ColorListModel::getLinkIndex(const QString& id){
+	if( mColorLinkIndexes.contains(id))
+		return  mColorLinkIndexes[id];
+	else
+		return -1;
 }
 
 void ColorListModel::overrideColors (const std::shared_ptr<linphone::Config> &config) {
@@ -137,7 +197,21 @@ void ColorListModel::overrideColors (const std::shared_ptr<linphone::Config> &co
 	}
 }
 
+
+void ColorListModel::handleUiColorChanged(const QString& id, const QColor& color){
+	if( mColorLinkIndexes.contains(id)){
+		int index = mColorLinkIndexes[id];
+		for(int i = 0 ; i < mColorLinks[index].size() ; ++i){
+			auto colorToUpdate  =getColor(mColorLinks[index][i]);
+			if(colorToUpdate)
+				colorToUpdate->setInternalColor(color);
+		}
+	}
+}
 //--------------------------------------------------------------------------------
+
+
+
 /*
 std::shared_ptr<ColorModel> ColorListModel::getImdnState(const std::shared_ptr<const linphone::Color> & state){
 	std::shared_ptr<ColorModel> imdn;

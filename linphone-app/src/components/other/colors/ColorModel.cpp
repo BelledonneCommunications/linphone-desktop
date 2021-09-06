@@ -54,6 +54,14 @@ void ColorModel::setColor(const QColor& color){
 	if(color != mColor){
 		mColor = color;
 		emit colorChanged();
+		emit uiColorChanged(mName, color);
+	}
+}
+
+void ColorModel::setInternalColor(const QColor& color){
+	if(color != mColor){
+		mColor = color;
+		emit colorChanged();
 	}
 }
 

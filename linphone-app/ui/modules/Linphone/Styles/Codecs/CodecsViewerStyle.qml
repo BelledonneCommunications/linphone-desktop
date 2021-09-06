@@ -2,6 +2,7 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -13,8 +14,8 @@ QtObject {
 
     property QtObject background: QtObject {
       property QtObject color: QtObject {
-        property color normal: Colors.a.color
-        property color hovered: Colors.o.color
+        property color normal: ColorsList.add("Codecs_normal", "a").color
+        property color hovered: ColorsList.add("Codecs_hovered", "o").color
       }
     }
 
@@ -23,7 +24,7 @@ QtObject {
     }
 
     property QtObject text: QtObject {
-      property color color: Colors.j.color
+      property color color: ColorsList.add("Codecs_text", "j").color
       property int pointSize: Units.dp * 10
     }
   }
@@ -38,7 +39,7 @@ QtObject {
   }
 
   property QtObject legend: QtObject {
-    property color color: Colors.j.color
+    property color color: ColorsList.add("Codecs_legend", "j").color
     property int pointSize: Units.dp * 10
     property int height: 50
   }

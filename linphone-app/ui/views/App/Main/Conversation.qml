@@ -11,6 +11,8 @@ import App.Styles 1.0
 import Common.Styles 1.0
 import Units 1.0
 
+import ColorsList 1.0
+
 
 import 'Conversation.js' as Logic
 
@@ -117,7 +119,7 @@ ColumnLayout  {
 								//: 'Admin' : Admin(istrator)
 								//~ Context One word title for describing the current admin status
 								text: qsTr('adminStatus')
-								color: Colors.af.color
+								color: ColorsList.add("Conversation_admin_status", "af").color
 								font.pointSize: Units.dp * 8
 							}
 						}
@@ -336,7 +338,7 @@ ColumnLayout  {
 						id: separator1
 						height:1
 						width:parent.width
-						color:Colors.u.color
+						color: ColorsList.add("Conversation_menu_separator", "u").color
 						visible: groupInfoMenu.visible && devicesMenuItem.visible
 					}
 					MenuItem{
@@ -357,7 +359,7 @@ ColumnLayout  {
 						id: separator2
 						height:1
 						width:parent.width
-						color:Colors.u.color
+						color: ColorsList.add("Conversation_menu_separator", "u").color
 						visible: ephemeralMenuItem.visible && (groupInfoMenu.visible || devicesMenuItem.visible)
 					}
 					MenuItem{

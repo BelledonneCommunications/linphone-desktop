@@ -1,6 +1,7 @@
 pragma Singleton
 import QtQml 2.2
 
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -14,7 +15,7 @@ QtObject {
     }
 
     property QtObject separator: QtObject {
-      property color color: Colors.c.color
+      property color color: ColorsList.add("ConferenceManager_separator", "c").color
       property int leftMargin: 25
       property int rightMargin: 25
       property int width: 1

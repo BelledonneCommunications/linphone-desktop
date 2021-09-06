@@ -10,6 +10,7 @@ import App.Styles 1.0
 import Common.Styles 1.0
 import Units 1.0
 import UtilsCpp 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -94,7 +95,7 @@ DialogPlus {
 						Layout.fillWidth: true
 						//: 'Would you like to encrypt your chat?' : Ask about setting the chat room as secured.
 						text:qsTr('askEncryption')
-						color: Colors.g.color
+						color: ColorsList.add("NewChatRoom_ask_encryption", "g").color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
 					}
@@ -153,7 +154,7 @@ DialogPlus {
 						textFormat: Text.RichText
 						//: 'Subject' : Label of a text field about the subject of the chat room
 						text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
-						color: Colors.g.color
+						color: ColorsList.add("NewChatRoom_subject_title", "g").color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
 					}
@@ -183,7 +184,7 @@ DialogPlus {
 					Text{
 						//: 'Last contacts' : Header for showing last contacts
 						text : qsTr('LastContactsTitle')
-						color: Colors.g.color
+						color: ColorsList.add("NewChatRoom_recent_contact_title", "g").color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.DemiBold
 					}
@@ -231,7 +232,7 @@ DialogPlus {
 										
 										font.weight: Font.DemiBold
 										lineHeight: 0.8
-										color: Colors.g.color
+										color: ColorsList.add("NewChatRoom_recent_contact_username", "g").color
 										font.pointSize: Units.dp * 9
 										clip:false
 									}
@@ -282,7 +283,7 @@ DialogPlus {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				border.width: 1
-				border.color: Colors.l.color
+				border.color: ColorsList.add("NewChatRoom_addresses_border", "l").color
 				
 				ColumnLayout {
 					anchors.fill: parent
@@ -339,7 +340,7 @@ DialogPlus {
 						//~ one word for admin status
 						text : qsTr('adminStatus')
 						
-						color: Colors.g.color
+						color: ColorsList.add("NewChatRoom_addresses_admin", "g").color
 						font.pointSize: Units.dp * 11
 						font.weight: Font.Light
 						visible: participantView.count > 0
@@ -401,7 +402,7 @@ DialogPlus {
 					//: 'Required' : Word relative to a star to explain that it is a requirement (Field form)
 					text : '<span style="color:red">*</span> '+qsTr('requiredField')
 					//font.weight: Font.DemiBold
-					color: Colors.g.color
+					color: ColorsList.add("NewChatRoom_requiered_text", "g").color
 					font.pointSize: Units.dp * 8
 				}
 			}

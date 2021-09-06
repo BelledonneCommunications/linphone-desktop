@@ -1,6 +1,8 @@
 pragma Singleton
 import QtQml 2.2
 
+import ColorsList 1.0
+
 // =============================================================================
 
 QtObject {
@@ -10,26 +12,26 @@ QtObject {
   property QtObject high: QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
-        property color disabled: Colors.o.color
-        property color enabled: Colors.n.color
+        property color disabled:  ColorsList.add("VuMeter_background_disabled", "o").color
+        property color enabled: ColorsList.add("VuMeter_background_enabled", "n").color
       }
     }
 
     property QtObject contentItem: QtObject {
-      property color color: Colors.b.color
+      property color color: ColorsList.add("VuMeter_contentItem", "b").color
     }
   }
 
   property QtObject low: QtObject {
     property QtObject background: QtObject {
       property QtObject color: QtObject {
-        property color disabled: Colors.o.color
-        property color enabled: Colors.n.color
+        property color disabled: ColorsList.add("VuMeter_low_background_disabled", "o").color
+        property color enabled: ColorsList.add("VuMeter_low_background_enabled", "n").color
       }
     }
 
     property QtObject contentItem: QtObject {
-      property color color: Colors.j.color
+      property color color: ColorsList.add("VuMeter_low_contentItem", "j").color
     }
   }
 }

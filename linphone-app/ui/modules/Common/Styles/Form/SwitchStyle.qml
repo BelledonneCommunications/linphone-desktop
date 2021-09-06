@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQml 2.2
+import ColorsList 1.0
 
 // =============================================================================
 QtObject{
@@ -14,16 +15,16 @@ QtObject{
 		property int width: 48
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.i.color
-			property color disabled: Colors.c.color
-			property color normal: Colors.c.color
+			property color checked: ColorsList.add("Switch_normal_indicator_border_checked", "i").color
+			property color disabled: ColorsList.add("Switch_normal_indicator_border_disabled", "c").color
+			property color normal: ColorsList.add("Switch_normal_indicator_border_normal", "c").color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color checked: Colors.i.color
-		  property color disabled: Colors.e.color
-		  property color normal: Colors.q.color
+		  property color checked: ColorsList.add("Switch_normal_indicator_checked", "i").color
+		  property color disabled: ColorsList.add("Switch_normal_indicator_disabled", "e").color
+		  property color normal: ColorsList.add("Switch_normal_indicator_normal", "q").color
 		}
 	  }
 	
@@ -32,17 +33,17 @@ QtObject{
 	
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.i.color
-			property color disabled: Colors.c.color
-			property color normal: Colors.n.color
-			property color pressed: Colors.n.color
+			property color checked: ColorsList.add("Switch_normal_sphere_border_checked", "i").color
+			property color disabled: ColorsList.add("Switch_normal_sphere_border_disabled", "c").color
+			property color normal: ColorsList.add("Switch_normal_sphere_border_normal", "n").color
+			property color pressed: ColorsList.add("Switch_normal_sphere_border_pressed", "n").color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color pressed: Colors.c.color
-		  property color disabled: Colors.e.color
-		  property color normal: Colors.q.color
+		  property color pressed: ColorsList.add("Switch_normal_sphere_pressed", "c").color
+		  property color disabled: ColorsList.add("Switch_normal_sphere_disabled", "e").color
+		  property color normal: ColorsList.add("Switch_normal_sphere_normal", "q").color
 		}
 	  }
 	}
@@ -57,16 +58,16 @@ QtObject{
 		property int width: 48
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.s.color
-			property color disabled: Colors.c.color
-			property color normal: Colors.c.color
+			property color checked: ColorsList.add("Switch_aux_indicator_border_checked", "s").color
+			property color disabled: ColorsList.add("Switch_aux_indicator_border_disabled", "c").color
+			property color normal: ColorsList.add("Switch_aux_indicator_border_normal", "c").color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color checked: Colors.s.color
-		  property color disabled: Colors.e.color
-		  property color normal: Colors.q.color
+		  property color checked: ColorsList.add("Switch_aux_indicator_checked", "s").color
+		  property color disabled: ColorsList.add("Switch_aux_indicator_disabled", "e").color
+		  property color normal: ColorsList.add("Switch_aux_indicator_normal", "q").color
 		}
 	  }
 	
@@ -75,17 +76,17 @@ QtObject{
 	
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: Colors.s.color
-			property color disabled: Colors.c.color
-			property color normal: Colors.n.color
-			property color pressed: Colors.n.color
+			property color checked:  ColorsList.add("Switch_aux_sphere_border_checked", "s").color
+			property color disabled: ColorsList.add("Switch_aux_sphere_border_disabled", "c").color
+			property color normal: ColorsList.add("Switch_aux_sphere_border_normal", "n").color
+			property color pressed: ColorsList.add("Switch_aux_sphere_border_pressed", "n").color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color pressed: Colors.c.color
-		  property color disabled: Colors.e.color
-		  property color normal: Colors.q.color
+		  property color pressed: ColorsList.add("Switch_aux_sphere_pressed", "c").color
+		  property color disabled: ColorsList.add("Switch_aux_sphere_disabled", "e").color
+		  property color normal: ColorsList.add("Switch_aux_sphere_normal", "q").color
 		}
 	  }
 	}

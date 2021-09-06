@@ -13,6 +13,8 @@ import Units 1.0
 import UtilsCpp 1.0
 import LinphoneEnums 1.0
 
+import ColorsList 1.0
+
 import 'Message.js' as Logic
 
 // =============================================================================
@@ -57,7 +59,7 @@ Item {
 			spacing:5
 			Text{
 				text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
-				color: Colors.ad.color
+				color: ColorsList.add("Message_ephemeral_text", "ad").color 
 				font.pointSize: Units.dp * 8
 				Timer{
 					running:parent.visible
