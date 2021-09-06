@@ -118,7 +118,16 @@ DialogPlus {
 							anchors.verticalCenter: parent.verticalCenter
 							width:50
 							enabled:true
-							onClicked: checked = !checked
+							onClicked: {
+								if(!checked){	// Remove all participants that have not the capabilities
+									var participants = selectedParticipants.getParticipants()
+									for(var index in participants){
+										if(!smartSearchBar.isUsable(participants[index].sipAddress))
+											participantView.removeParticipant(participants[index])
+									}
+								}
+								checked = !checked
+							}
 							indicatorStyle: SwitchStyle.aux
 						}
 						Icon{
@@ -295,9 +304,17 @@ DialogPlus {
 						placeholderText: qsTr('participantSelectionPlaceholder')
 						//: 'Search in your contacts or add a custom one to the chat room.'
 						tooltipText: qsTr('participantSelectionTooltip')
+						function isUsable(sipAddress){
+									return  UtilsCpp.hasCapability(sipAddress,  LinphoneEnums.FriendCapabilityGroupChat) && 
+										(secureSwitch.checked ? UtilsCpp.hasCapability(sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh) : true);
+						}
 						actions:[{
 								icon: 'add_participant',
 								secure:0,
+								visible: true,
+								visibleHandler : function(entry) {
+									return isUsable(entry.sipAddress)
+								},
 								handler: function (entry) {
 									selectedParticipants.add(entry.sipAddress)
 									smartSearchBar.addAddressToIgnore(entry.sipAddress);
@@ -306,9 +323,11 @@ DialogPlus {
 							}]
 						
 						onEntryClicked: {
-							selectedParticipants.add(entry)
-							smartSearchBar.addAddressToIgnore(entry);
-							++lastContacts.reloadCount
+							if( isUsable(entry)){
+								selectedParticipants.add(entry)
+								smartSearchBar.addAddressToIgnore(entry);
+								++lastContacts.reloadCount
+							}
 						}
 					}
 					Text{
@@ -342,6 +361,11 @@ DialogPlus {
 							showSeparator: false
 							isSelectable: false
 							showInvitingIndicator: false
+							function removeParticipant(entry){
+										smartSearchBar.removeAddressToIgnore(entry.sipAddress)
+										selectedParticipants.remove(entry)
+										++lastContacts.reloadCount
+							}
 							
 							
 							actions: [{
@@ -350,9 +374,7 @@ DialogPlus {
 									//~ Tooltip This is a tooltip
 									tooltipText: qsTr('removeParticipantSelection'),
 									handler: function (entry) {
-										smartSearchBar.removeAddressToIgnore(entry.sipAddress)
-										selectedParticipants.remove(entry)
-										++lastContacts.reloadCount
+										removeParticipant(entry)
 									}
 								}]
 							
