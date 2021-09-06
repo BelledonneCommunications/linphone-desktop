@@ -2,6 +2,8 @@ import QtQuick 2.7
 
 import Common 1.0
 import Linphone 1.0
+import UtilsCpp 1.0
+import LinphoneEnums 1.0
 
 import Linphone.Styles 1.0
 
@@ -86,6 +88,9 @@ SearchBox {
 				icon: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
 				secure:1,
 				visible:SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && AccountSettingsModel.conferenceURI != '',
+				visibleHandler : function(entry) {
+									return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh);
+								},
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchSecureChat(entry.sipAddress)

@@ -94,6 +94,7 @@ DialogPlus {
 
             actions: [{
               icon: 'transfer',
+              visible: true,
               handler: function (entry) {
                 conferenceHelperModel.toAdd.addToConference(entry.sipAddress)
               }
