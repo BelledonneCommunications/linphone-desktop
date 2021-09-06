@@ -2,6 +2,7 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -12,7 +13,7 @@ QtObject {
   }
 
   property QtObject bar: QtObject {
-    property color color: Colors.e.color
+    property color color: ColorsList.add("ContactEdit_bar", "e").color
     property int avatarSize: 60
     property int height: 80
     property int leftMargin: 40
@@ -41,13 +42,13 @@ QtObject {
     }
 
     property QtObject username: QtObject {
-      property color color: Colors.j.color
+      property color color: ColorsList.add("ContactEdit_username", "j").color
       property int pointSize: Units.dp * 13
     }
   }
 
   property QtObject content: QtObject {
-    property color color: Colors.k.color
+    property color color: ColorsList.add("ContactEdit_content", "k").color
   }
 
   property QtObject values: QtObject {
@@ -57,7 +58,7 @@ QtObject {
     property int topMargin: 20
 
     property QtObject separator: QtObject {
-      property color color: Colors.f.color
+      property color color: ColorsList.add("ContactEdit_separator", "f").color
       property int height: 1
     }
   }

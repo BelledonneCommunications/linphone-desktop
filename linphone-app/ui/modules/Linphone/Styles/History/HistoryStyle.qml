@@ -2,24 +2,25 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
 QtObject {
-  property color color: Colors.q.color
+  property color color: ColorsList.add("History", "q").color
 
   property QtObject sectionHeading: QtObject {
     property int padding: 5
     property int bottomMargin: 20
 
     property QtObject border: QtObject {
-      property color color: Colors.g10.color
+      property color color: ColorsList.add("History_section_border", "g10").color
       property int width: 1
     }
 
     property QtObject text: QtObject {
       property int pointSize: Units.dp * 10
-      property color color: Colors.g.color
+      property color color: ColorsList.add("History_section_text", "g").color
     }
   }
 
@@ -35,7 +36,7 @@ QtObject {
       property int iconSize: 18
 
       property QtObject text: QtObject {
-        property color color: Colors.d.color
+        property color color: ColorsList.add("History_event_text", "d").color
         property int pointSize: Units.dp * 10
       }
     }
@@ -52,7 +53,7 @@ QtObject {
     }
 
     property QtObject time: QtObject {
-      property color color: Colors.d.color
+      property color color: ColorsList.add("History_time", "d").color
       property int pointSize: Units.dp * 10
       property int width: 44
     }

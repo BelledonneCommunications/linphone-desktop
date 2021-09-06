@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.10
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
+import ColorsList 1.0
 
 import App.Styles 1.0
 
@@ -141,12 +142,12 @@ TabContainer {
 							width: audioTestSlider.availableWidth
 							height: implicitHeight
 							radius: 2
-							color: Colors.slider_background.color
+							color: ColorsList.add("SettingsAudio_slider_background", "slider_background").color
 							
 							Rectangle {
 								width: audioTestSlider.visualPosition * parent.width
 								height: parent.height
-								color: audioTestSlider.value > 0.8 ? Colors.slider_high.color : Colors.slider_low.color
+								color: audioTestSlider.value > 0.8 ? ColorsList.add("SettingsAudio_slider_high", "slider_high").color : ColorsList.add("SettingsAudio_slider_low", "slider_low").color
 								radius: 2
 							}
 						}

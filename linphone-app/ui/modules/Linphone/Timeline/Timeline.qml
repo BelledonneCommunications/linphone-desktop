@@ -5,6 +5,7 @@ import QtQuick.Controls 2.5
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import ColorsList 1.0
 
 import 'Timeline.js' as Logic
 
@@ -117,7 +118,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: filterChoices.height
 			Layout.alignment: Qt.AlignCenter
-			border.color: Colors.border.color
+			border.color: ColorsList.add("Timeline_filter_border", "border").color
 			border.width: 2
 			visible:false
 			
@@ -181,10 +182,9 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: 40
 			Layout.alignment: Qt.AlignCenter
-			border.color: Colors.border.color
+			border.color: ColorsList.add("Timeline_search_border", "border").color
 			border.width: 2
 			visible:false
-			//color: ContactsStyle.bar.backgroundColor
 			onVisibleChanged: if(visible){
 									timeline.model.filterText = searchBar.text
 									searchBar.forceActiveFocus()

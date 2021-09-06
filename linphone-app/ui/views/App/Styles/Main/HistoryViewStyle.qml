@@ -1,12 +1,12 @@
 pragma Singleton
 import QtQml 2.2
-
+import ColorsList 1.0
 
 // =============================================================================
 
 QtObject {
   property QtObject bar: QtObject {
-    property color backgroundColor: Colors.e.color
+    property color backgroundColor: ColorsList.add("HistoryView_bar_background", "e").color
     property int avatarSize: 60
     property int height: 80
     property int leftMargin: 40
@@ -30,18 +30,18 @@ QtObject {
     }
 
     property QtObject description: QtObject {
-      property color sipAddressColor: Colors.g.color
-      property color usernameColor: Colors.j.color
+      property color sipAddressColor: ColorsList.add("HistoryView_bar_description_sipAddress", "g").color
+      property color usernameColor: ColorsList.add("HistoryView_bar_description_username", "j").color
     }
   }
 
   property QtObject filters: QtObject {
-    property color backgroundColor: Colors.q.color
+    property color backgroundColor: ColorsList.add("HistoryView_filters_background", "q").color
     property int height: 51
     property int leftMargin: 40
 
     property QtObject border: QtObject {
-      property color color: Colors.g10.color
+      property color color: ColorsList.add("HistoryView_filters_border", "g10").color
       property int bottomWidth: 1
       property int topWidth: 0
     }

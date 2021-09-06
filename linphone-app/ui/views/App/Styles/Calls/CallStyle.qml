@@ -2,11 +2,12 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.f.color
+  property color backgroundColor: ColorsList.add("Call_background", "f").color
 
   property QtObject actionArea: QtObject {
     property int height: 100
@@ -27,7 +28,7 @@ QtObject {
     }
 
     property QtObject callError: QtObject {
-      property color color: Colors.i.color
+      property color color: ColorsList.add("Call_action_error", "i").color
       property int pointSize: Units.dp * 12
     }
   }
@@ -36,15 +37,15 @@ QtObject {
     property int margins: 15
 
     property QtObject avatar: QtObject {
-      property color backgroundColor: Colors.n.color
+      property color backgroundColor: ColorsList.add("Call_container_avatar_background", "n").color
       property int maxSize: 300
     }
 
     property QtObject pause: QtObject {
-      property color color: Colors.g90.color
+      property color color: ColorsList.add("Call_container_pause", "g90").color
 
       property QtObject text: QtObject {
-        property color color: Colors.q.color
+        property color color: ColorsList.add("Call_container_pause_text", "q").color
         property int pointSizeFactor: 10
       }
     }
@@ -59,7 +60,7 @@ QtObject {
     property int topMargin: 26
 
     property QtObject busyIndicator: QtObject {
-      property color color: Colors.g.color
+      property color color: ColorsList.add("Call_header_busy", "g").color
       property int height: 30
       property int width: 30
     }
@@ -70,7 +71,7 @@ QtObject {
     }
 
     property QtObject elapsedTime: QtObject {
-      property color color: Colors.j.color
+      property color color: ColorsList.add("Call_header_elapsed_time", "j").color
       property int pointSize: Units.dp * 10
 
       property QtObject fullscreen: QtObject {
@@ -91,8 +92,8 @@ QtObject {
     }
 
     property QtObject text: QtObject {
-      property color colorA: Colors.j.color
-      property color colorB: Colors.i.color
+      property color colorA: ColorsList.add("Call_zrtp_text_a", "j").color
+      property color colorB: ColorsList.add("Call_zrtp_text_b", "i").color
       property int pointSize: Units.dp * 10
       property int wordsSpacing: 5
     }

@@ -133,10 +133,22 @@ public:
 	void useConfig (const std::shared_ptr<linphone::Config> &config);
 	
 	Q_INVOKABLE QString getNames();
+	ColorModel * getColor(const QString& id);
+
+// id: set an ID. If the ID already exist, the funtion return the item instead of create one.
+// color : if empty, use the color from link
+// description : describe the color
+// idLink : link this color with another ID
+	Q_INVOKABLE ColorModel * add(const QString& id, const QString& idLink, QString description = "", QString color = "");
+	
+	void addLink(const QString& a, const QString& b);
+	void removeLink(const QString& a);
 	
 	QQmlPropertyMap * getQmlData();
 	const QQmlPropertyMap * getQmlData() const;
 	
+public slots:
+	void handleUiColorChanged(const QString& id, const QColor& color);
 
 signals:
 	void colorChanged();
@@ -153,6 +165,8 @@ private:
 	QStringList getColorNames () const;
 	
 	QQmlPropertyMap mData;
+	QVector<QStringList> mColorLinks;
+	QMap<QString, int> mColorLinkIndexes;// Optimization for access
 	
 };
 #undef ADD_COLOR

@@ -2,6 +2,7 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -10,7 +11,7 @@ QtObject {
 
   property QtObject value: QtObject {
     property QtObject placeholder: QtObject {
-      property color color: Colors.n.color
+      property color color: ColorsList.add("ListForm_placeholder", "n").color
       property int pointSize: Units.dp * 10
     }
 
@@ -24,7 +25,7 @@ QtObject {
     property int iconSize: 18
 
     property QtObject text: QtObject {
-      property color color: Colors.j.color
+      property color color: ColorsList.add("ListForm_text", "j").color
       property int pointSize: Units.dp * 9
       property int width: 130
     }
