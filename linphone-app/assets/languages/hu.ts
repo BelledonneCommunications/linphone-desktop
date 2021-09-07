@@ -956,6 +956,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
             <numerusform>%1 óra</numerusform>
+            <numerusform>%1 óra</numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -1363,6 +1364,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
         <translation>
+            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
             <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
         </translation>
     </message>
@@ -3482,6 +3484,24 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>downloadCodecDescription</source>
         <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>hideTimeline</source>
+        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
+        <translation>Idővonal elrejtése</translation>
+    </message>
+    <message>
+        <source>openTimeline</source>
+        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
+        <translation>Idővonal megnyitása</translation>
+    </message>
+    <message>
+        <source>openHome</source>
+        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
+        <translation>Kezdőlap megnyitása</translation>
     </message>
 </context>
 </TS>
