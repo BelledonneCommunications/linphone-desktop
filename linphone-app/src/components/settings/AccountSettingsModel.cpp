@@ -19,6 +19,7 @@
  */
 
 #include <QtDebug>
+#include <QTimer>
 
 #include "config.h"
 
@@ -205,14 +206,19 @@ void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyCo
 	Q_CHECK_PTR(proxyConfig);
 	
 	CoreManager *coreManager = CoreManager::getInstance();
-	std::list<std::shared_ptr<linphone::ProxyConfig>> allProxies = coreManager->getCore()->getProxyConfigList();
-	std::shared_ptr<const linphone::Address> proxyAddress = proxyConfig->getIdentityAddress();
+	std::shared_ptr<linphone::ProxyConfig> newProxy = nullptr;
+	if( proxyConfig == getUsedSipAddress()){
+		std::list<std::shared_ptr<linphone::ProxyConfig>> allProxies = coreManager->getCore()->getProxyConfigList();
+		for(auto proxy : allProxies){
+			if( proxy != proxyConfig ){
+				newProxy = proxy;
+				break;
+			}
+		}
+		setDefaultProxyConfig(newProxy);
+	}
 	
 	coreManager->getCore()->removeProxyConfig(proxyConfig);// Remove first to avoid requesting password when deleting it
-	if(proxyConfig->findAuthInfo())
-		coreManager->getCore()->removeAuthInfo(proxyConfig->findAuthInfo());// Remove passwords
-	
-	coreManager->getSettingsModel()->configureRlsUri();
 	
 	emit accountSettingsUpdated();
 }
@@ -446,8 +452,16 @@ void AccountSettingsModel::handleRegistrationStateChanged (
 		) {
 	Q_UNUSED(proxy)
 	Q_UNUSED(state)
-	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	shared_ptr<linphone::ProxyConfig> defaultProxyConfig = core->getDefaultProxyConfig();
+	auto coreManager = CoreManager::getInstance();
+	shared_ptr<linphone::ProxyConfig> defaultProxyConfig = getUsedSipAddress();
+	if( state == linphone::RegistrationState::Cleared){
+		auto authInfo = proxy->findAuthInfo();
+		if(authInfo)
+			QTimer::singleShot(60000, [authInfo](){// 60s is just to be sure. proxy_update remove deleted proxy only after 32s
+				CoreManager::getInstance()->getCore()->removeAuthInfo(authInfo);
+			});
+		coreManager->getSettingsModel()->configureRlsUri();
+	}
 	if(defaultProxyConfig == proxy)
 		emit defaultRegistrationChanged();
 	emit accountSettingsUpdated();
