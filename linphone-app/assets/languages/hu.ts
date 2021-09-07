@@ -956,7 +956,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
             <numerusform>%1 óra</numerusform>
-            <numerusform>%1 óra</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -1365,7 +1365,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
         <translation>
             <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
-            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
