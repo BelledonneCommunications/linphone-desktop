@@ -455,7 +455,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation>
             <numerusform>%1 éppen gépel…</numerusform>
-            <numerusform>%1 éppen gépel…</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -936,7 +936,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation>
             <numerusform>%1 perc</numerusform>
-            <numerusform>%1 perc</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -944,7 +944,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
             <numerusform>%1 óra</numerusform>
-            <numerusform>%1 óra</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -954,7 +954,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
 &apos;%1 days&apos;</extracomment>
         <translation>
             <numerusform>%1 nap</numerusform>
-            <numerusform>%1 nap</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -962,7 +962,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation>
             <numerusform>%1 hét</numerusform>
-            <numerusform>%1 hét</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -1340,7 +1340,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
         <translation>
             <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
-            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
