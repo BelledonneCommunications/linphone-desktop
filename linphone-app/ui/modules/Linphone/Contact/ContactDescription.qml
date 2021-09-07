@@ -8,7 +8,7 @@ import Common 1.0
 
 Column {
 	id:mainItem
-	property alias username: username.text
+	property alias username: username.fullText
 	property string sipAddress
 	property string participants
 	
@@ -19,7 +19,7 @@ Column {
 	property color sipAddressColor: contactDescriptionStyle.sipAddress.color
 	property color usernameColor: contactDescriptionStyle.username.color
 	property int horizontalTextAlignment
-	property int contentWidth : Math.max(username.implicitWidth, address.implicitWidth)
+	property int contentWidth : Math.max(usernameImplicitWidthWorkaround.implicitWidth, addressImplicitWidthWorkaround.implicitWidth)
 									+10
 									+statusWidth
 	property int contentHeight : Math.max(username.implicitHeight, address.implicitHeight)+10
@@ -29,23 +29,41 @@ Column {
 	property bool usernameClickable: false
 	
 	signal usernameClicked()
-
-	
-	
 	
 	// ---------------------------------------------------------------------------
-	
-	Text {
+
+	TextEdit {
 		id: username
+		property string fullText
 		anchors.horizontalCenter: (horizontalTextAlignment == Text.AlignHCenter ? parent.horizontalCenter : undefined)
 		color: usernameColor
-		elide: Text.ElideRight
 		font.weight: contactDescriptionStyle.username.weight
 		font.pointSize: contactDescriptionStyle.username.pointSize
 		horizontalAlignment: horizontalTextAlignment
 		verticalAlignment: (address.visible?Text.AlignBottom:Text.AlignVCenter)
-		width: Math.min(parent.width-statusWidth, implicitWidth)
+		width: Math.min(parent.width-statusWidth, usernameImplicitWidthWorkaround.implicitWidth)
 		height: (parent.height-parent.topPadding-parent.bottomPadding)/parent.visibleChildren.length
+		
+		text: metrics.elidedText
+		onActiveFocusChanged: deselect();
+		readOnly: true
+		selectByMouse: true
+		
+		Text{// Workaround to get implicitWidth from text without eliding
+				id: usernameImplicitWidthWorkaround
+				text: username.fullText
+				font.weight: username.font.weight
+				font.pointSize: username.font.pointSize
+				visible: false
+			}
+		
+		TextMetrics {
+			id: metrics
+			font: username.font
+			text: username.fullText
+			elideWidth: username.width
+			elide: Qt.ElideRight
+		}
 		Text{
 			id:status
 			anchors.top:parent.top
@@ -66,19 +84,38 @@ Column {
 		}
 	}
 	
-	Text {
+	TextEdit {
 		id:address
+		property string fullText: sipAddress?SipAddressesModel.cleanSipAddress(sipAddress):participants
 		anchors.horizontalCenter: (horizontalTextAlignment == Text.AlignHCenter ? parent.horizontalCenter : undefined)
-		text: sipAddress?SipAddressesModel.cleanSipAddress(sipAddress):participants
 		color: sipAddressColor
-		elide: Text.ElideRight
 		font.weight: contactDescriptionStyle.sipAddress.weight
 		font.pointSize: contactDescriptionStyle.sipAddress.pointSize
 		horizontalAlignment: horizontalTextAlignment
 		verticalAlignment: (username.visible?Text.AlignTop:Text.AlignVCenter)
-		width: Math.min(parent.width-statusWidth, implicitWidth)
+		width: Math.min(parent.width-statusWidth, addressImplicitWidthWorkaround.implicitWidth)
 		height: (parent.height-parent.topPadding-parent.bottomPadding)/parent.visibleChildren.length
 		visible: text != ''
+		
+		text: addressMetrics.elidedText
+		onActiveFocusChanged: deselect();
+		readOnly: true
+		selectByMouse: true
+		Text{// Workaround to get implicitWidth from text without eliding
+			id: addressImplicitWidthWorkaround
+			text: address.fullText
+			font.weight: address.font.weight
+			font.pointSize: address.font.pointSize
+			visible: false
+		}
+		
+		TextMetrics {
+			id: addressMetrics
+			font: address.font
+			text: address.fullText
+			elideWidth: address.width
+			elide: Qt.ElideRight
+		}
 	}
 	
 }
