@@ -1,10 +1,11 @@
 pragma Singleton
 import QtQml 2.2
+import ColorsList 1.0
 
 // =============================================================================
 
 QtObject {
-  property color color: Colors.k.color
+  property color color: ColorsList.add("TabContainer", "k").color
   property int bottomMargin: 30
   property int leftMargin: 30
   property int rightMargin: 40
@@ -12,6 +13,6 @@ QtObject {
 
   property QtObject separator: QtObject {
     property int height: 2
-    property color color: Colors.f.color
+    property color color: ColorsList.add("TabContainer_separator", "f").color
   }
 }

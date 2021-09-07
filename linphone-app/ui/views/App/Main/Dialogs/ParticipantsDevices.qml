@@ -9,6 +9,7 @@ import LinphoneEnums 1.0
 
 import App.Styles 1.0
 import Units 1.0
+import ColorsList 1.0
 
 import '../Conversation.js' as Logic
 
@@ -121,7 +122,7 @@ DialogPlus {
 					}
 				}
 				Rectangle {
-					color: Colors.ag.color
+					color: ColorsList.add("ParticipantDevices_separator", "ag").color
 					Layout.preferredHeight: 1
 					Layout.fillWidth: true
 				}
@@ -147,7 +148,7 @@ DialogPlus {
 						
 						width:parent.width
 						height:50
-						color: Colors.ah.color
+						color: ColorsList.add("ParticipantDevices_line_background", "ah").color
 						RowLayout{
 							anchors.fill:parent
 							Text{
@@ -188,7 +189,7 @@ DialogPlus {
 							}
 						}
 						Rectangle {
-							color: Colors.ag.color
+							color: ColorsList.add("ParticipantDevices_separator", "ag").color
 							anchors.left : parent.left
 							anchors.right  :parent.right
 							anchors.bottom: parent.bottom

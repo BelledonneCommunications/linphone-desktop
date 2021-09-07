@@ -45,11 +45,13 @@ public:
 	
 	
 	void setColor(const QColor& color);
+	void setInternalColor(const QColor& color);
 	void setAlpha(const int& alpha);
 	void setDescription(const QString& description);
 	
 signals:
 	void colorChanged();
+	void uiColorChanged(const QString& id, const QColor& color);	// UI request a change
 	void descriptionChanged();
 
 private:

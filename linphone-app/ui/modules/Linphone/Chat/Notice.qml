@@ -7,6 +7,7 @@ import Linphone.Styles 1.0
 import Utils 1.0
 import LinphoneEnums 1.0
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -84,7 +85,7 @@ RowLayout{
 	}
 	property bool isImportant: $chatEntry.eventLogType == LinphoneEnums.EventLogTypeConferenceTerminated
 	property bool isError: $chatEntry.status == ChatNoticeModel.NoticeError
-	property color eventColor : (isError ? Colors.error.color : ( isImportant ? Colors.error.color : Colors.ab.color ))
+	property color eventColor : (isError ? ColorsList.add("Notice_error", "error").color  : ( isImportant ? ColorsList.add("Notice_important", "error").color  : ColorsList.add("Notice", "ab").color ))
 	
 	
 	Layout.preferredHeight: ChatStyle.entry.lineHeight

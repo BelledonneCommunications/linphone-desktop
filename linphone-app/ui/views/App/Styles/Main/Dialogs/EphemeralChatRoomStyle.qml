@@ -3,6 +3,7 @@ import QtQml 2.2
 import QtQuick 2.7
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 QtObject {
@@ -22,10 +23,11 @@ QtObject {
 		property int preferredWidth: 50
 	}
 	property QtObject descriptionText: QtObject {
+		property int preferredWidth: 200
 		property int leftMargin: 10
 		property int rightMargin: 10
 		property real pointSize: Units.dp * 11
-		property color color: Colors.d.color
+		property color color: ColorsList.add("Ephemeral_popup_description", "d").color
 	}
 	property QtObject timerPicker: QtObject {
 		property int preferredWidth: 150

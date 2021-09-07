@@ -2,15 +2,16 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: Colors.k.color
+  property color backgroundColor: ColorsList.add("Contacts_background", "k").color
   property int spacing: 20
 
   property QtObject bar: QtObject {
-    property color backgroundColor: Colors.e.color
+    property color backgroundColor: ColorsList.add("Contacts_bar_background", "e").color
     property int height: 60
     property int leftMargin: 18
     property int rightMargin: 18
@@ -27,27 +28,27 @@ QtObject {
     property int spacing: 15
 
     property QtObject backgroundColor: QtObject {
-      property color normal: Colors.k.color
-      property color hovered: Colors.g10.color
+      property color normal: ColorsList.add("Contacts_contact_background_normal", "k").color
+      property color hovered: ColorsList.add("Contacts_contact_background_hovered", "g10").color
     }
 
     property QtObject border: QtObject {
-      property color color: Colors.f.color
+      property color color: ColorsList.add("Contacts_contact_border", "f").color
       property int width: 1
     }
 
     property QtObject indicator: QtObject {
-      property color color: Colors.i.color
+      property color color: ColorsList.add("Contacts_contact_indicator", "i").color
       property int width: 5
     }
 
     property QtObject presence: QtObject {
       property int pointSize: Units.dp * 10
-      property color color: Colors.n.color
+      property color color: ColorsList.add("Contacts_contact_presence", "n").color
     }
 
     property QtObject username: QtObject {
-      property color color: Colors.j.color
+      property color color: ColorsList.add("Contacts_contact_username", "j").color
       property int pointSize: Units.dp * 10
       property int width: 220
     }

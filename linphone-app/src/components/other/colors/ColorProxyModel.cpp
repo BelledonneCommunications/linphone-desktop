@@ -32,23 +32,26 @@
 
 ColorProxyModel::ColorProxyModel (QObject *parent) : QSortFilterProxyModel(parent){
 	setSourceModel(App::getInstance()->getColorListModel());
+	sort(0);
 }
 
 bool ColorProxyModel::filterAcceptsRow (
-  int sourceRow,
-  const QModelIndex &sourceParent
-) const {
+		int sourceRow,
+		const QModelIndex &sourceParent
+		) const {
 	Q_UNUSED(sourceRow)
 	Q_UNUSED(sourceParent)
-  //const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  //const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
+	//const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	//const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
 	return true;
 }
 
 bool ColorProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const ColorModel *a = sourceModel()->data(left).value<ColorModel *>();
-  const ColorModel *b = sourceModel()->data(right).value<ColorModel *>();
-
-  return a->getName() < b->getName() ;
+	ColorListModel * model = static_cast<ColorListModel*>(sourceModel());
+	const ColorModel *a = model->data(left).value<ColorModel *>();
+	const ColorModel *b = model->data(right).value<ColorModel *>();
+	
+	return model->getLinkIndex(a->getName()) < model->getLinkIndex(b->getName());
+			//return a->getName() < b->getName() ;
 }
 //---------------------------------------------------------------------------------
