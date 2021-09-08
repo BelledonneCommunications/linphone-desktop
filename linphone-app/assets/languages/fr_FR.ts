@@ -42,7 +42,7 @@
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation>afficher sur stdout les informations de débogage</translation>
+        <translation>afficher dans le flux de sortie &apos;stdout&apos; les informations de débogage</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
@@ -159,7 +159,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex: `%1`)</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex: `%1`)</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -474,7 +474,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>deliveryDelivered</source>
         <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished">Envoi à %1 - %2</translation>
+        <translation>Envoi à %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
     </message>
     <message>
@@ -486,7 +486,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>deliveryDisplayed</source>
         <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished">Lu par %1 - %2</translation>
+        <translation>Lu par %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
     </message>
     <message>
@@ -510,7 +510,7 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished">Joue-moi !</translation>
+        <translation>Joue-moi !</translation>
     </message>
     <message>
         <source>menuDeliveryStatus</source>
@@ -520,7 +520,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished">Effacer</translation>
+        <translation>Supprimer</translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
@@ -1850,7 +1850,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -1898,7 +1898,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>verifyTLSTooltip</source>
-        <translation type="unfinished">Indiquer si le certificat du serveur TLS doit être vérifié lors de la connexion à un serveur LDAP.</translation>
+        <translation>Indiquer si le certificat du serveur TLS doit être vérifié lors de la connexion à un serveur LDAP.</translation>
     </message>
     <message>
         <source>searchTitle</source>
@@ -1934,11 +1934,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>timeoutLabel</source>
-        <translation type="unfinished">Durée sélectionnée</translation>
+        <translation>Durée sélectionnée</translation>
     </message>
     <message>
         <source>timeoutTooltip</source>
-        <translation type="unfinished">Le délai de connexion et de recherche en secondes. Il doit être positif.&lt;br&gt;La valeur par défaut est 5s.</translation>
+        <translation>Le délai de connexion et de recherche en secondes. Il doit être positif.&lt;br&gt;La valeur par défaut est 5s.</translation>
     </message>
     <message>
         <source>parsingTitle</source>
@@ -1974,7 +1974,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugLabel</source>
-        <translation type="unfinished">Débogage</translation>
+        <translation>Débogage</translation>
     </message>
     <message>
         <source>debugTooltip</source>
@@ -1985,7 +1985,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation type="unfinished">Méthode d&apos;envoi des DTMFs</translation>
+        <translation>Méthode d&apos;envoi des DTMFs</translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
@@ -2112,7 +2112,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation type="unfinished">Comptes SIP</translation>
+        <translation>Comptes SIP</translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
@@ -2227,7 +2227,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished">Route invalide.</translation>
+        <translation>Route invalide.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
@@ -2260,12 +2260,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceURI</source>
         <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
-        <translation>URI conférence</translation>
+        <translation>URI de conférence</translation>
     </message>
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation type="unfinished">URI conférence invalide</translation>
+        <translation>URI de conférence invalide</translation>
     </message>
 </context>
 <context>
@@ -2292,7 +2292,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>systemLocale</source>
-        <translation type="unfinished">Locale du système</translation>
+        <translation>Locale du système</translation>
     </message>
     <message>
         <source>cleanAvatars</source>
@@ -2320,7 +2320,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished">Données</translation>
+        <translation>Données</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
@@ -2335,15 +2335,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation type="unfinished">Images/s</translation>
+        <translation>Images/s</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation>Paramètres d&apos;enregistrement vidéo</translation>
+        <translation>Paramètres de capture vidéo</translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished">Profil vidéo</translation>
+        <translation>Profil vidéo</translation>
     </message>
     <message>
         <source>presetDefault</source>
@@ -2351,7 +2351,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished">Fluide</translation>
+        <translation>Fluide</translation>
     </message>
     <message>
         <source>presetCustom</source>
@@ -2451,19 +2451,19 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
-        <translation type="unfinished">Conversations 1-1</translation>
+        <translation>Conversations 1-1</translation>
         <extra-Mode>Selecting it will show all simple rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>
         <extracomment>&apos;Secure rooms&apos; : Filter item</extracomment>
-        <translation type="unfinished">Conversations sécurisées</translation>
+        <translation>Conversations sécurisées</translation>
         <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterChatGroups</source>
         <extracomment>&apos;Chat groups&apos; : Filter item</extracomment>
-        <translation type="unfinished">Conversations de groupe</translation>
+        <translation>Conversations de groupe</translation>
         <extra-Mode>Selecting it will show all chat groups (with more than one participant)</extra-Mode>
     </message>
     <message>
@@ -2481,7 +2481,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineSearchPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
-        <translation>Rechercher dans la liste</translation>
+        <translation>Rechercher dans la chronologie</translation>
     </message>
 </context>
 <context>
