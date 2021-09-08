@@ -42,7 +42,7 @@
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation>afficher sur stdout les informations de debug</translation>
+        <translation>afficher sur stdout les informations de débogage</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
@@ -94,19 +94,19 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished">Spécifier le fichier de configuration %1 à récupérer. Il sera fusionné avec la configuration actuelle.</translation>
+        <translation>Spécifier le fichier de configuration %1 à récupérer. Il sera fusionné avec la configuration actuelle.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation type="unfinished">URL, chemin ou fichier</translation>
+        <translation>URL, chemin ou fichier</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
-        <translation type="unfinished">lancer un appel</translation>
+        <translation>lancer un appel</translation>
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished">adresse SIP</translation>
+        <translation>adresse SIP</translation>
     </message>
 </context>
 <context>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>identityLabel</source>
-        <translation>Identité</translation>
+        <translation type="unfinished">Identité</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -421,7 +421,7 @@
     </message>
     <message>
         <source>callPause</source>
-        <translation>METTRE EN PAUSE L&apos;APPEL</translation>
+        <translation>SUSPENDRE L&apos;APPEL</translation>
     </message>
     <message>
         <source>attendedTransferComplete</source>
@@ -506,7 +506,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">Copier</translation>
+        <translation>Copier</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
@@ -548,15 +548,15 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation>Affiche la fenêtre principale de l&apos;application.</translation>
+        <translation>Afficher la fenêtre principale de l&apos;application.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>Initie un appel vers l&apos;adresse SIP.</translation>
+        <translation>Lancer un appel vers l&apos;adresse SIP.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Initie une conférence.</translation>
+        <translation>Lancer une conférence.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -642,7 +642,7 @@ URL du serveur non configurée.</translation>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation>Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
+        <translation>Voulez-vous vraiment supprimer ce contact de votre carnet d&apos;adresses ?</translation>
     </message>
     <message>
         <source>sipAccounts</source>
@@ -706,11 +706,11 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation>Localité</translation>
+        <translation type="unfinished">Localité</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation>Êtes-vous sûr de vouloir annuler l&apos;édition du contact ?</translation>
+        <translation>Êtes-vous sûr de vouloir annuler la modification du contact ?</translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
@@ -737,7 +737,7 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation>Voulez-vous vraiment supprimer ce contact de votre carnet ?</translation>
+        <translation>Voulez-vous vraiment supprimer ce contact de votre carnet d&apos;adresses ?</translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
@@ -778,28 +778,28 @@ URL du serveur non configurée.</translation>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Admin</translation>
+        <translation>Admin</translation>
         <extra-Context>One word title for describing the current admin status</extra-Context>
     </message>
     <message>
         <source>conversationMenuGroupInformations</source>
         <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
-        <translation type="unfinished">Informations du groupe</translation>
+        <translation>Informations du groupe</translation>
     </message>
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation type="unfinished">Appareils enregistrés</translation>
+        <translation>Terminaux de la conversation</translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
         <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
-        <translation type="unfinished">Messages éphémères</translation>
+        <translation>Messages éphémères</translation>
     </message>
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation type="unfinished">Appeler tous les participants</translation>
+        <translation>Appeler tous les participants de la conversation</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
@@ -916,12 +916,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
-        <translation type="unfinished">ANNULER</translation>
+        <translation>ANNULER</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
-        <translation type="unfinished">LANCER</translation>
+        <translation>LANCER</translation>
     </message>
     <message>
         <source>ephemeralTitle</source>
@@ -931,13 +931,13 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralText</source>
         <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
-        <translation type="unfinished">Les nouveaux messages seront effacés des deux côtés automatiquement lorsqu&apos;ils auront été lus par tous les contacts. Sélectionnez un temps limite.</translation>
+        <translation>Les nouveaux messages seront automatiquement effacés des deux côtés lorsqu&apos;ils auront été lus par tous les contacts. Sélectionnez un durée.</translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;
 Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une chat room définie en mode conférence !</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -948,7 +948,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message numerus="yes">
         <source>nMinute</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 minute</numerusform>
             <numerusform>%1 minutes</numerusform>
         </translation>
@@ -956,7 +956,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 heure</numerusform>
             <numerusform>%1 heures</numerusform>
         </translation>
@@ -966,7 +966,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 day&apos;
 ----------
 &apos;%1 days&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 jour</numerusform>
             <numerusform>%1 jours</numerusform>
         </translation>
@@ -974,7 +974,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 semaine</numerusform>
             <numerusform>%1 semaines</numerusform>
         </translation>
@@ -992,11 +992,11 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation>Appel entrant décliné</translation>
+        <translation>Appel entrant refusé</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation>Appel sortant décliné</translation>
+        <translation>Appel sortant refusé</translation>
     </message>
     <message>
         <source>endedCall</source>
@@ -1085,7 +1085,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>showTooltips</source>
-        <translation>Voir les bulles d&apos;aides</translation>
+        <translation type="unfinished">Voir les bulles d&apos;aides</translation>
     </message>
     <message>
         <source>inviteButton</source>
@@ -1116,11 +1116,11 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished">Commencer l&apos;enregistrement.</translation>
+        <translation>Commencer l&apos;enregistrement.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished">Arrêter l&apos;enregistrement.</translation>
+        <translation>Arrêter l&apos;enregistrement.</translation>
     </message>
 </context>
 <context>
@@ -1131,11 +1131,11 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation type="unfinished">Commencer l&apos;enregistrement.</translation>
+        <translation>Commencer l&apos;enregistrement.</translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation type="unfinished">Arrêter l&apos;enregistrement.</translation>
+        <translation>Arrêter l&apos;enregistrement.</translation>
     </message>
 </context>
 <context>
@@ -1158,7 +1158,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished">Cherchez des participants parmi vos contacts afin de les inviter dans la chat room.</translation>
+        <translation>Cherchez des participants parmi vos contacts afin de les inviter dans la conversation de groupe.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
@@ -1169,13 +1169,13 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Admin</translation>
+        <translation>Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>chatRoomDetailsTitle</source>
         <extracomment>&quot;Group information&quot; : Popup title.</extracomment>
-        <translation type="unfinished">Informations du groupe</translation>
+        <translation>Informations du groupe</translation>
         <extra-This>popup display data about the current chat room</extra-This>
     </message>
 </context>
@@ -1199,7 +1199,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>infoEncryptionTitle</source>
         <extracomment>&apos;End-to-end encrypted&apos; Popup title about encryption information.</extracomment>
-        <translation type="unfinished">Chiffrement de bout-en-bout</translation>
+        <translation>Chiffrement de bout-en-bout</translation>
     </message>
     <message>
         <source>encryptionExplanation</source>
@@ -1277,7 +1277,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newChatRoom</source>
         <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
-        <translation type="unfinished">Créer une conférence</translation>
+        <translation>Créer une conférence</translation>
     </message>
     <message>
         <source>hideTimeline</source>
@@ -1337,7 +1337,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation>Compte principal</translation>
+        <translation>Compte actif</translation>
     </message>
 </context>
 <context>
@@ -1362,14 +1362,14 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished">Vous devez définir un sujet.</translation>
+        <translation>Vous devez définir un sujet.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
-        <translation type="unfinished">
-            <numerusform>Il faut ajouter au moins %1 participant.</numerusform>
-            <numerusform>Il faut ajouter au moins %1 participants.</numerusform>
+        <translation>
+            <numerusform>Vous devez ajouter au moins %1 participant.</numerusform>
+            <numerusform>Vous devez ajouter au moins %1 participants.</numerusform>
         </translation>
     </message>
     <message>
@@ -1428,12 +1428,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">Entrez un sujet</translation>
+        <translation>Définissez un sujet</translation>
     </message>
     <message>
         <source>LastContactsTitle</source>
         <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
-        <translation type="unfinished">Contacts récents</translation>
+        <translation>Contacts récents</translation>
     </message>
 </context>
 <context>
@@ -1441,7 +1441,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceCreatedEvent</source>
         <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
-        <translation type="unfinished">Vous avez rejoint le groupe</translation>
+        <translation>Vous avez rejoint le groupe</translation>
     </message>
     <message>
         <source>conferenceCreatedTerminated</source>
@@ -1543,7 +1543,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantsAdminHeader</source>
         <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
-        <translation type="unfinished">(Admin)</translation>
+        <translation>(Admin)</translation>
         <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
 </context>
@@ -1570,35 +1570,35 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation>Logs</translation>
+        <translation>Traces</translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation>Dossier des logs</translation>
+        <translation>Dossier des traces</translation>
     </message>
     <message>
         <source>sendLogs</source>
-        <translation>ENVOYER LES LOGS</translation>
+        <translation>ENVOYER LES TRACES</translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation>URL du serveur de logs</translation>
+        <translation>URL du serveur de traces</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation>L&apos;envoi des logs a échoué.</translation>
+        <translation>L&apos;envoi des traces a échoué.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation>Activer les logs</translation>
+        <translation>Activer les traces de débogage</translation>
     </message>
     <message>
         <source>cleanLogs</source>
-        <translation>NETTOYER LES LOGS</translation>
+        <translation>NETTOYER LES TRACES</translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation>Voulez-vous vraiment supprimer tous les logs ?</translation>
+        <translation>Voulez-vous vraiment supprimer toutes les traces ?</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
@@ -1611,11 +1611,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation>Impossible de trouver un logiciel de mail. Les logs ont été téléchargés sur %1</translation>
+        <translation>Impossible de trouver un logiciel de mail. Les traces ont été téléchargées sur %1</translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation>Les logs ont été téléchargés sur %1</translation>
+        <translation>Les traces ont été téléchargées sur %1</translation>
     </message>
     <message>
         <source>contactsTitle</source>
@@ -1722,7 +1722,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished">Chat</translation>
+        <translation type="unfinished">Conversation</translation>
     </message>
     <message>
         <source>callsTitle</source>
@@ -1790,7 +1790,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished">Enregister auto. les appels</translation>
+        <translation type="unfinished">Enregistrement auto. des appels</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
@@ -1834,7 +1834,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">Nom d&apos;affichage (optionnel)</translation>
+        <translation>Nom d&apos;affichage</translation>
     </message>
     <message>
         <source>displayNameTooltip</source>
@@ -1842,7 +1842,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>connectionTitle</source>
-        <translation type="unfinished">Connexion</translation>
+        <translation>Connexion</translation>
     </message>
     <message>
         <source>serverLabel</source>
@@ -1902,7 +1902,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>searchTitle</source>
-        <translation type="unfinished">Recherche</translation>
+        <translation>Recherche</translation>
     </message>
     <message>
         <source>baseObjectLabel</source>
@@ -1934,7 +1934,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>timeoutLabel</source>
-        <translation type="unfinished">Temps limite</translation>
+        <translation type="unfinished">Durée sélectionnée</translation>
     </message>
     <message>
         <source>timeoutTooltip</source>
@@ -1974,7 +1974,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugLabel</source>
-        <translation type="unfinished">Debug</translation>
+        <translation type="unfinished">Débogage</translation>
     </message>
     <message>
         <source>debugTooltip</source>
@@ -2451,31 +2451,31 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
-        <translation type="unfinished">Chats simples</translation>
+        <translation type="unfinished">Conversations 1-1</translation>
         <extra-Mode>Selecting it will show all simple rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>
         <extracomment>&apos;Secure rooms&apos; : Filter item</extracomment>
-        <translation type="unfinished">Chats sécurisés</translation>
+        <translation type="unfinished">Conversations sécurisées</translation>
         <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterChatGroups</source>
         <extracomment>&apos;Chat groups&apos; : Filter item</extracomment>
-        <translation type="unfinished">Chats de groupe</translation>
+        <translation type="unfinished">Conversations de groupe</translation>
         <extra-Mode>Selecting it will show all chat groups (with more than one participant)</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureChatGroups</source>
         <extracomment>&apos;Secure Chat Groups&apos; : Filter item</extracomment>
-        <translation type="unfinished">Chats de groupe sécurisés</translation>
+        <translation>Conversations de groupe sécurisées</translation>
         <extra-Mode>Selecting it will show all secure chat groups (with more than one participant)</extra-Mode>
     </message>
     <message>
         <source>timelineFilterEphemerals</source>
         <extracomment>&apos;Ephemerals&apos; : Filter item</extracomment>
-        <translation type="unfinished">Éphémères</translation>
+        <translation>Éphémères</translation>
         <extra-Mode>Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extra-Mode>
     </message>
     <message>
