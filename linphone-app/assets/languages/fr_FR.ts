@@ -46,7 +46,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>spécifier le fichier de configuration à utiliser</translation>
+        <translation>spécifier le fichier de configuration %1 à utiliser</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -159,7 +159,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex : `%1`)</translation>
+        <translation>Caractères invalides détectés. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -175,7 +175,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés. (regex : `%1`)</translation>
+        <translation>Caractères invalides détectés. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>identityLabel</source>
-        <translation type="unfinished">Identité</translation>
+        <translation>Identité</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -560,11 +560,11 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished">Rejoindre la conférence hébergée par l&apos;adresse SIP avec votre nom d&apos;affichage. Si vous êtes connecté à une proxy config, voir join-conference-as.</translation>
+        <translation>Rejoindre la conférence hébergée par l&apos;adresse SIP avec votre nom d&apos;affichage. Si vous êtes connecté à une proxy config, voir &apos;join-conference-as&apos;.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished">Rejoindre la conférence hébergée par l&apos;adresse SIP avec l&apos;adresse SIP invitée. Si vous n&apos;êtes pas connecté à une proxy-config, voir join-conference.</translation>
+        <translation>Rejoindre la conférence hébergée par l&apos;adresse SIP avec l&apos;adresse SIP invitée. Si vous n&apos;êtes pas connecté à une proxy-config, voir join-conference.</translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
@@ -706,7 +706,7 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>locality</source>
-        <translation type="unfinished">Localité</translation>
+        <translation>Localité</translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
@@ -742,7 +742,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished">Vous devez définir l&apos;URI de la conférence dans les paramètres de votre compte pour créer une conférence.</translation>
+        <translation>Vous devez définir l&apos;URI de la conférence dans les paramètres de votre compte pour créer une conférence.</translation>
     </message>
 </context>
 <context>
@@ -804,7 +804,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
-        <translation type="unfinished">Rechercher dans les messages</translation>
+        <translation>Rechercher dans les messages</translation>
     </message>
 </context>
 <context>
@@ -931,13 +931,13 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralText</source>
         <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
-        <translation>Les nouveaux messages seront automatiquement effacés des deux côtés lorsqu&apos;ils auront été lus par tous les contacts. Sélectionnez un durée.</translation>
+        <translation>Les nouveaux messages seront automatiquement effacés des deux côtés lorsqu&apos;ils auront été lus par tous les contacts. Sélectionnez une durée.</translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;
 Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1085,7 +1085,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>showTooltips</source>
-        <translation type="unfinished">Voir les bulles d&apos;aides</translation>
+        <translation>Voir les bulles d&apos;aides</translation>
     </message>
     <message>
         <source>inviteButton</source>
@@ -1246,7 +1246,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation type="unfinished">Téléchargez l’application sur votre ordinateur et appelez vos amis ou envoyez-leur un message gratuitement.
+        <translation>Téléchargez l’application sur votre ordinateur et appelez vos amis ou envoyez-leur un message gratuitement.
 
 Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 </translation>
@@ -1375,7 +1375,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished">Vous devez définir l&apos;URI de la conférence dans les paramètres de votre compte pour créer une conférence.</translation>
+        <translation>Vous devez définir l&apos;URI de la conférence dans les paramètres de votre compte pour créer une conférence.</translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
@@ -1461,7 +1461,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceParticipantSetAdminEvent</source>
         <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
-        <translation>%1 est devenu(e) admin</translation>
+        <translation>%1 est admin</translation>
     </message>
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
@@ -1471,7 +1471,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceSecurityEvent</source>
         <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
-        <translation type="unfinished">Niveau de sécurité dégradé par %1</translation>
+        <translation>Niveau de sécurité dégradé par %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
@@ -1663,15 +1663,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation type="unfinished">Gain de lecture</translation>
+        <translation>Volume d&apos;écoute</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation type="unfinished">Gain de capture</translation>
+        <translation>Gain du microphone</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation type="unfinished">Niveau micro</translation>
+        <translation>Niveau microphone</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
@@ -1687,7 +1687,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation type="unfinished">Calibré en -%1ms</translation>
+        <translation>Calibré en -%1ms</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
@@ -1722,7 +1722,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>chatTitle</source>
-        <translation type="unfinished">Conversation</translation>
+        <translation>Conversation</translation>
     </message>
     <message>
         <source>callsTitle</source>
@@ -1750,7 +1750,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation type="unfinished">Activer le chat</translation>
+        <translation>Activer le chat</translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
@@ -1774,7 +1774,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation type="unfinished">Activer les contacts</translation>
+        <translation>Activer les contacts</translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
@@ -1790,7 +1790,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation type="unfinished">Enregistrement auto. des appels</translation>
+        <translation>Enregistrement auto. des appels</translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
@@ -3506,6 +3506,21 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>openHome</source>
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
         <translation type="unfinished">Ouvrir la page d&apos;accueil</translation>
+    </message>
+    <message>
+        <source>hideTimeline</source>
+        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
+        <translation>Masquer la chronologie</translation>
+    </message>
+    <message>
+        <source>openTimeline</source>
+        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
+        <translation>Afficher la chronologie</translation>
+    </message>
+    <message>
+        <source>openHome</source>
+        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
+        <translation>Ouvrir la page d&apos;accueil</translation>
     </message>
 </context>
 </TS>
