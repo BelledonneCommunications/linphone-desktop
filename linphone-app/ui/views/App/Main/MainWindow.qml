@@ -18,6 +18,7 @@ ApplicationWindow {
 	
 	property string _currentView
 	property var _lockedInfo
+	property SmartSearchBar mainSearchBar : (mainLoader.item ? mainLoader.item.mainSearchBar : null)
 	
 	// ---------------------------------------------------------------------------
 	
@@ -74,6 +75,7 @@ ApplicationWindow {
 			readonly property alias menu: menu
 			
 			readonly property alias timeline: timeline
+			readonly property alias mainSearchBar: toolBar.mainSearchBar
 			
 			spacing: 0
 			
@@ -88,6 +90,8 @@ ApplicationWindow {
 			// -----------------------------------------------------------------------
 			
 			ToolBar {
+				id: toolBar
+				property alias mainSearchBar : smartSearchBar
 				Layout.fillWidth: true
 				Layout.preferredHeight: MainWindowStyle.toolBar.height
 				hoverEnabled : true

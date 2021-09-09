@@ -16,7 +16,7 @@ MouseArea {
 	
 	property bool _visible: false
 	property int hoveringCursor : Qt.PointingHandCursor
-	property bool isClickable : true
+	property bool isClickable : false
 	
 	anchors.fill:parent
 	
@@ -26,13 +26,14 @@ MouseArea {
 	onContainsMouseChanged: _visible = containsMouse
 	cursorShape: containsMouse ? hoveringCursor : Qt.ArrowCursor
 	
-	onPressed: mouse.accepted = false
+	onPressed: {
+		mouse.accepted = isClickable
+		}
 	onWheel: {
 		_visible = false
 		wheel.accepted = false
 	}
 	onClicked:{
-		console.log("Clicked")
 		if(isClickable){
 			if(tooltip.delay>0) {
 				tooltip.oldDelay = tooltip.delay
