@@ -1282,17 +1282,17 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>hideTimeline</source>
         <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Masquer la chronologie</translation>
     </message>
     <message>
         <source>openTimeline</source>
         <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Afficher la chronologie</translation>
     </message>
     <message>
         <source>openHome</source>
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir la page d&apos;accueil</translation>
     </message>
 </context>
 <context>
@@ -3488,39 +3488,6 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>downloadCodecDescription</source>
         <translation>Voulez-vous installer %1 (%2) ?</translation>
-    </message>
-</context>
-<context>
-    <name></name>
-    <message>
-        <source>hideTimeline</source>
-        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation type="unfinished">Masquer la chronologie</translation>
-    </message>
-    <message>
-        <source>openTimeline</source>
-        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation type="unfinished">Afficher la chronologie</translation>
-    </message>
-    <message>
-        <source>openHome</source>
-        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation type="unfinished">Ouvrir la page d&apos;accueil</translation>
-    </message>
-    <message>
-        <source>hideTimeline</source>
-        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation>Masquer la chronologie</translation>
-    </message>
-    <message>
-        <source>openTimeline</source>
-        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation>Afficher la chronologie</translation>
-    </message>
-    <message>
-        <source>openHome</source>
-        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation>Ouvrir la page d&apos;accueil</translation>
     </message>
 </context>
 </TS>

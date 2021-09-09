@@ -3486,22 +3486,4 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
     </message>
 </context>
-<context>
-    <name></name>
-    <message>
-        <source>hideTimeline</source>
-        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation>Idővonal elrejtése</translation>
-    </message>
-    <message>
-        <source>openTimeline</source>
-        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation>Idővonal megnyitása</translation>
-    </message>
-    <message>
-        <source>openHome</source>
-        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation>Kezdőlap megnyitása</translation>
-    </message>
-</context>
 </TS>
