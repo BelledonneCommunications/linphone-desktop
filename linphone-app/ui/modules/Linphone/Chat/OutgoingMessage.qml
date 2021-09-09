@@ -43,9 +43,9 @@ Item {
           readonly property bool isDelivered: $chatEntry.state == LinphoneEnums.ChatMessageStateDeliveredToUser
           readonly property bool isRead: $chatEntry.state == LinphoneEnums.ChatMessageStateDisplayed
 
-          icon: isError
+          icon: iconId.isError
             ? 'chat_error'
-            : (isRead ? 'chat_read' : (isDelivered  ? 'chat_delivered' : '' ) )
+            : (iconId.isRead ? 'chat_read' : (iconId.isDelivered  ? 'chat_delivered' : '' ) )
           iconSize: ChatStyle.entry.message.outgoing.sendIconSize
 
           MouseArea {
@@ -59,7 +59,7 @@ Item {
             id:tooltip
             text: iconId.isError
               ? qsTr('messageError')
-              : (isRead ? qsTr('messageRead') : qsTr('messageDelivered'))
+              : (iconId.isRead ? qsTr('messageRead') : qsTr('messageDelivered'))
               hoveringCursor : retryAction.visible?Qt.PointingHandCursor:Qt.ArrowCursor
           }
         }

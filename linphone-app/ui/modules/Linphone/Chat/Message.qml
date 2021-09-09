@@ -43,7 +43,7 @@ Item {
 		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
 		radius: ChatStyle.entry.message.radius
 		width: (
-				   message.contentWidth < ephemeralTimerRow.width
+				   ephemeralTimerRow.visible && message.contentWidth < ephemeralTimerRow.width
 				   ? ephemeralTimerRow.width
 				   : message.contentWidth < parent.width
 					 ? message.contentWidth
@@ -123,6 +123,7 @@ Item {
 			deliveryCount: deliveryLayout.model.count
 			onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 			onRemoveEntryRequested: removeEntry()
+			deliveryVisible: deliveryLayout.visible
 		}
 	}
 	
