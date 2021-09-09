@@ -40,7 +40,7 @@ Notification {
 				property ChatRoomModel chatRoomModel : notification.timelineModel.getChatRoomModel()
 				//entry: notification.fullPeerAddress? SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress): notification.timelineModel.getChatRoomModel()
 				entry: ({
-								sipAddress: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress),
+								sipAddress: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress).peerAddress,
 								isOneToOne: chatRoomModel.isOneToOne,
 								haveEncryption: chatRoomModel.haveEncryption,
 								securityLevel: chatRoomModel.securityLevel

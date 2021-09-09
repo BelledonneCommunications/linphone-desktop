@@ -444,6 +444,7 @@ void ChatMessageModel::resendMessage (){
 		case LinphoneEnums::ChatMessageStateFileTransferError:
 		case LinphoneEnums::ChatMessageStateNotDelivered: {
 			mChatMessage->send();
+			emit stateChanged();
 			break;
 		}
 			
