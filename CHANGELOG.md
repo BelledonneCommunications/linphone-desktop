@@ -4,36 +4,93 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 4.3.0 - [Undefined]
+## 4.4.0 - [Undefined]
+
+## 4.3.0 - 2021-10-20
 
 ### Added
 
-- Sort contact list using System Locale
-- In fullscreen mode, the preview size can be changed by using mouse wheel
-- Echo calibration in settings view
-- In Chat, allow custom menu to appear by removing the repeating key when holding it. On Mac, there is an accent menu for this feature.
-- Add URI handler configuration : `linphone-config` to fetch a configuration file
-- Fetch a configuration file from a CLI command/URI Handlers : 
-    sip:user@domain?method=call&fetch-config=base64(scheme://url)
-    linphone-config://url
-    linphone-config:fetch-config=base64(scheme://url)
-    linphone --fetch-config=scheme://url
-    linphone "<method> fetch-config=scheme://url"
-- Options to audio codec can be used and stored
-- Opus can now use `packetlosspercentage` and `useinbandfec` configuration
-- A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music)
-- MSYS2 support for Windows
-- OpenLDAP support
+- Features:
+	* Chat groups with administrator mode, participants management and devices display.
+	* Secure chat rooms for 1-1 and group chat using LIME end-to-end encryption.
+	* Ephemerals Chat rooms (per-participant mode).
+	* Attended transfer.
+	* LDAP integration: settings allow remote LDAP servers to be configured. Contacts can then be searched in the smart search bar, and during incoming call the display name of the caller is automatically retrieved from the LDAP server.
+	* Address book connectors : custom plugins can now be imported from settings in order to be used to synchronize contacts.
 
+- Enhance user experience :
+	* Show subject in notifications for group chats.
+	* Attended transfer.
+	* Chat area is no more fixed but adapts to content.
+	* Click on notification bubble in top left account lead to the call history view.
+	* Double-Click on avatar in conversation to fill the smart search bar with the participant address.
+	* Allow to hide or show the timeline panel.
+	* Allow to hide or show empty chat rooms in settings.
+	* Messages font can now be changed in settings.
+	* Sort contact list using System Locale.
+	* In fullscreen mode, the preview size can be changed by using mouse wheel.
+	* Echo calibration in settings view.
+	* Autostart for AppImage.
+	* Add more tooltips.
+	* Add a forgotten password link in assistant.
+
+- Search and filtering features:
+	* Search in timeline from subject/addresses.
+	* Search in messages.
+	* Filter timelines by the kind of chat rooms (1-1, group chats) and modes (secure and ephemerals).
+	
+- Chat room management:
+	* Updatable subject by clicking on it.
+	* Upgrade security level by authenticating participants.
+	* Add more events in chat rooms like chat rooms status, participants updates, security level updates, ephemerals activations.
+
+- In Chat, allow custom menu to appear by removing the repeating key when holding it. On Mac, there is an accent menu for this feature.
+- Add URI handler configuration : `linphone-config` to fetch a configuration file.
+- Fetch a configuration file from a CLI command/URI Handlers : 
+    * sip:user@domain?method=call&fetch-config=base64(scheme://url)
+    * linphone-config://url
+    * linphone-config:fetch-config=base64(scheme://url)
+    * linphone --fetch-config=scheme://url
+    * linphone "<method> fetch-config=scheme://url"
+- Options to audio codec can be used and stored.
+- Devices can be selected in linphone configuration file from a regex rule.
+- Opus can now use `packetlosspercentage` and `useinbandfec` configuration.
+- A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music).
+- Use of new mediastreamer2 MSQOgl filter as video display backend (based on QQuickFramebufferObject).
+- MSYS2 support for Windows.
 
 ### Fixed
 
-- Cursor shape of mouse is changed when hovering on buttons
-- When clicking on a chat notification, it will close it
-- Fix on Missed calls and messages count bubbles
-- Contact names handle special characters
-- Unmatched room when using malformed username
+- Cursor shape of mouse is changed when hovering on buttons.
+- When clicking on a chat notification, it will close it.
+- Persistent call bubble notifications.
+- Fix on Missed calls and messages count bubbles.
+- Unmatched room when using malformed username.
+- Contact names handle special characters.
+- UTF8 characters on Windows.
+- Mark as Read only if in foreground.
+- Show avatar and username once for a same kind of message.
+- Load optimizations.
+- Refactoring data modelisation and colors management.
+- On Mac : Camera freeze and black screen when using third-party.
+- Prevent opening call Window if the option to stay in background has been activated.
+- Crash while searching contacts.
+- Stop receiving messages when proxy has been deleted.
+- Transfer menu of calls : Dynamic size for texts.
+- XCode build wasn't fully supported.
+- Sort languages in the UI settings.
 
+## 4.2.5 - 2020-12-18
+
+### Added
+
+-iLBC support
+
+### Fixed
+
+- VP8 freeze
+- Audio quality distortion
+- OSX deployment target propagated to linphone SDK
 
 ## 4.2.4 - 2020-11-21
 
