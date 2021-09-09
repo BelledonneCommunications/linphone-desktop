@@ -515,7 +515,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation>État du message</translation>
+        <translation>Statut du message</translation>
     </message>
     <message>
         <source>menuDelete</source>
