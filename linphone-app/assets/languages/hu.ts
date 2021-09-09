@@ -1278,17 +1278,17 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>hideTimeline</source>
         <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Idővonal elrejtése</translation>
     </message>
     <message>
         <source>openTimeline</source>
         <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Idővonal megnyitása</translation>
     </message>
     <message>
         <source>openHome</source>
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kezdőlap megnyitása</translation>
     </message>
 </context>
 <context>
