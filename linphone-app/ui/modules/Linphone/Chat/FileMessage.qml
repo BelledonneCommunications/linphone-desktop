@@ -300,6 +300,7 @@ Row {
 					deliveryCount: deliveryLayout.model.count
 					onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 					onRemoveEntryRequested: removeEntry()
+					deliveryVisible: deliveryLayout.visible
 				}
 				
 				Row{

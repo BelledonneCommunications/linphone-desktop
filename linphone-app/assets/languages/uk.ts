@@ -523,6 +523,11 @@
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>menuHideDeliveryStatus</source>
+        <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Cli</name>
@@ -1277,6 +1282,21 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>newChatRoom</source>
         <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>hideTimeline</source>
+        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>openTimeline</source>
+        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>openHome</source>
+        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
