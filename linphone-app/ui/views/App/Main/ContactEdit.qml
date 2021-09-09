@@ -131,6 +131,7 @@ ColumnLayout  {
 						onClicked: sipAddressesMenu.open()
 						
 						TooltipArea {
+							isClickable: false
 							text: qsTr('tooltipShowConversation')
 						}
 					}

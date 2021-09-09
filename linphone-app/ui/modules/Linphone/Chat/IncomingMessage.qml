@@ -44,6 +44,10 @@ RowLayout {
 				delay:0
 				text:avatar.username+'\n'+$chatEntry.fromSipAddress
 				tooltipParent:mainRow
+				isClickable: true
+				onDoubleClicked: {
+					window.mainSearchBar.text = $chatEntry.fromSipAddress
+					}
 			}
 		}
 	}
