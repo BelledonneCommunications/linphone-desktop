@@ -24,6 +24,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music)
 - MSYS2 support for Windows
 - OpenLDAP support
+- Chat Groups
+- Secure chat rooms for 1-1 and group chat using LIME end-to-end encryption
+- Ephemerals Chat rooms
+- Double Click on avatar in conversation to fill the smart search bar with the participant address
+- Attended transfert
+- Dynamic size on chat area
+- Search in timeline and in messages
+- Use of MSQOgl as display filter
+- Autostart for AppImage
 
 
 ### Fixed
@@ -33,7 +42,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix on Missed calls and messages count bubbles
 - Contact names handle special characters
 - Unmatched room when using malformed username
+- UTF8 characters in Windows
+- Mark as Read only if in foreground
+- Show avatar and username once for a same kind of message
+- Persistent call notifications
+- Load optimization
+- On Mac : Camera freeze and black screen when using third-party
+- Prevent opening call Window if the option to stay in background has been activated
 
+## 4.2.5 - 2020-12-18
+
+### Added
+
+-iLBC support
+
+### Fixed
+
+- VP8 freeze
+- Audio quality distortion
+- OSX deployment target propagated to linphone SDK
 
 ## 4.2.4 - 2020-11-21
 
