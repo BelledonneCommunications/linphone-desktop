@@ -525,7 +525,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cacher le statut du message</translation>
     </message>
 </context>
 <context>
@@ -943,7 +943,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>disabled</source>
         <extracomment>&apos;Disabled&apos;</extracomment>
-        <translation type="unfinished">Désactivé</translation>
+        <translation>Désactivé</translation>
     </message>
     <message numerus="yes">
         <source>nMinute</source>
@@ -1858,7 +1858,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>bindDNTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Le bind DN est la référence qui est utilisée pour s&apos;authentifier auprès du protocole LDAP.</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -1906,11 +1906,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>baseObjectLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de recherche</translation>
     </message>
     <message>
         <source>baseObjectPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de recherche</translation>
     </message>
     <message>
         <source>baseObjectTooltip</source>
@@ -1922,7 +1922,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>La recherche se base sur ce filtre pour chercher des contacts. &lt;br&gt;Valeur par défaut : (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
@@ -1950,7 +1950,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifiez ces attributs pour construire le nom de contact, séparés par une virgule. Le premier a la plus haute priorité.&lt;br&gt;La valeur par défaut est : sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
@@ -1958,7 +1958,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifiez ces attributs pour construire le nom d&apos;utilisateur SIP dans l&apos;adresse du contact. Les attributs sont séparés par une virgule et le premier a la plus haute priorité.&lt;br&gt;La valeur par défaut est : mobile, numéro de téléphone, téléphone fixe,sn</translation>
     </message>
     <message>
         <source>domainLabel</source>
@@ -1966,7 +1966,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter le domaine à l&apos;adresse SIP (sip:nomdutilisateur@domaine). La valeur par défaut est sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -1978,7 +1978,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Obtenir des traces dans le fichier traces de Linphone lors des opérations (utile pour déboguer les connexions TLS).</translation>
     </message>
 </context>
 <context>
