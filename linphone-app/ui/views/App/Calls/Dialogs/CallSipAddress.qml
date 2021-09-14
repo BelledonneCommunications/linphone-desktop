@@ -63,16 +63,22 @@ DialogPlus {
 								secure:0,
 								visible:true,
 								handler: function (entry) {
-									CallsListModel.launchVideoCall(entry.sipAddress)
-									exit(1)
+									handlerSipAddress(entry.sipAddress)
 								},
-								visible: SettingsModel.videoSupported && SettingsModel.showStartVideoCallButton
+								visible: SettingsModel.videoSupported && SettingsModel.showStartVideoCallButton,
+								handlerSipAddress: function(sipAddress) {
+									CallsListModel.launchVideoCall(sipAddress)
+									exit(1)
+								}
 							}, {
 								icon: 'call',
 								secure:0,
 								visible:true,
 								handler: function (entry) {
-									CallsListModel.launchAudioCall(entry.sipAddress, "")
+									handlerSipAddress(entry.sipAddress)
+								},
+								handlerSipAddress: function(sipAddress) {
+									CallsListModel.launchAudioCall(sipAddress, "")
 									exit(1)
 								}
 							}]
@@ -83,7 +89,7 @@ DialogPlus {
 							id: sipAddressesModel
 						}
 						
-						onEntryClicked: actions[0].handler(entry)
+						onEntryClicked: actions[0].handlerSipAddress(entry)
 					}
 				}
 			}
