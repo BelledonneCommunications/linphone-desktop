@@ -187,6 +187,8 @@ void CoreHandlers::onMessageReceived (
 		const shared_ptr<linphone::ChatRoom> &chatRoom,
 		const shared_ptr<linphone::ChatMessage> &message
 		) {
+	if( message->isOutgoing()  )
+		return;
 	const string contentType = message->getContentType();
 	
 	if (contentType == "text/plain" || contentType == "application/vnd.gsma.rcs-ft-http+xml") {
@@ -209,15 +211,7 @@ void CoreHandlers::onMessageReceived (
 		
 		if (
 				!app->hasFocus() ||
-				!CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false)	
-				/*
-					  !CoreManager::getInstance()->chatRoomModelExists(
-						Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()),
-						Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly()),
-								chatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted
-										   || chatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Safe
-												   
-					  )*/
+				!CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false)
 				)
 			core->playLocal(Utils::appStringToCoreString(settingsModel->getChatNotificationSoundPath()));
 	}
