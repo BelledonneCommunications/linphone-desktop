@@ -431,7 +431,7 @@
     <message>
         <source>attendedTransferCall</source>
         <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>TRANSFERER AVEC CONSULTATION</translation>
     </message>
 </context>
 <context>
