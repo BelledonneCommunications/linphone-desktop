@@ -611,7 +611,7 @@ void SettingsModel::setChatEnabled (bool status) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getHideEmptyChatRooms() const{
-	return !!mConfig->getInt("misc", "hide_empty_chat_rooms", 1);
+	return !!mConfig->getInt("misc", "hide_empty_chat_rooms", 0);
 }
 
 void SettingsModel::setHideEmptyChatRooms(const bool& status){
