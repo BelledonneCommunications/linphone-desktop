@@ -97,8 +97,12 @@ DialogPlus {
               secure:0,
               visible: true,
               handler: function (entry) {
-                conferenceHelperModel.toAdd.addToConference(entry.sipAddress)
+				handlerSipAddress(entry.sipAddress)  
+              },
+              handerSipAddress: function(sipAddress){
+				conferenceHelperModel.toAdd.addToConference(sipAddress)
               }
+              
             }]
 
             genSipAddress: filter.text
@@ -107,7 +111,7 @@ DialogPlus {
               id: conferenceHelperModel
             }
 
-            onEntryClicked: actions[0].handler(entry)
+            onEntryClicked: actions[0].handerSipAddress(entry)
           }
         }
       }
@@ -145,13 +149,16 @@ DialogPlus {
           visible:true,
           secure:0,
           handler: function (entry) {
-            model.removeFromConference(entry.sipAddress)
+			  handlerSipAddress(entry.sipAddress)
+          },
+          handlerSipAddress: function(sipAddress){
+			model.removeFromConference(sipAddress)
           }
         }]
 
         model: conferenceHelperModel.toAdd
 
-        onEntryClicked: actions[0].handler(entry)
+        onEntryClicked: actions[0].handlerSipAddress(entry)
       }
     }
   }
