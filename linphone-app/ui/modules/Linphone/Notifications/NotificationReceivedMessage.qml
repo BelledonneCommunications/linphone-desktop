@@ -39,8 +39,11 @@ Notification {
 				Layout.fillWidth: true
 				property ChatRoomModel chatRoomModel : notification.timelineModel.getChatRoomModel()
 				//entry: notification.fullPeerAddress? SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress): notification.timelineModel.getChatRoomModel()
+				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)		
+		
 				entry: ({
-								sipAddress: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress).peerAddress,
+								sipAddress: sipObserver.peerAddress,
+								contactModel: sipObserver.contact,
 								isOneToOne: chatRoomModel.isOneToOne,
 								haveEncryption: chatRoomModel.haveEncryption,
 								securityLevel: chatRoomModel.securityLevel
