@@ -141,18 +141,10 @@ ListView {
       var params = loader.params
       return params ? 'call_sign_' + params.string : ''
     }
-/*
-    peerAddress: $call.peerAddress
-    localAddress: $call.localAddress
-    fullPeerAddress: $call.fullPeerAddress
-    fullLocalAddress: $call.fullLocalAddress
-  
-    onPeerAddressChanged: console.log("Call : " +peerAddress)
-    */
     
     entry: $call
 
-    width: parent.width
+    width: calls.width
 
     onClicked: {
       if ($call.status !== CallModel.CallStatusEnded) {

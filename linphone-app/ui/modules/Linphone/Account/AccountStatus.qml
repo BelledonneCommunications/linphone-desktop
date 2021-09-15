@@ -19,6 +19,12 @@ Item {
 	property alias betterIcon : presenceLevel.betterIcon
 	
 	// ---------------------------------------------------------------------------
+	MouseArea {
+		id:mouseArea
+		anchors.fill:parent
+		
+		onClicked: accountStatus.clicked()
+	}
 	
 	ColumnLayout {
 		anchors.fill:parent
@@ -77,6 +83,10 @@ Item {
 					id: messageCounter
 					anchors.fill: parent
 					count: CoreManager.eventCount
+					MouseArea{
+						anchors.fill: parent
+						onClicked: window.setView('HistoryView')
+					}
 				}
 			}
 			Item{//Spacer
@@ -96,10 +106,5 @@ Item {
 		}
 	}//ColumnLayout
 	
-	MouseArea {
-		id:mouseArea
-		anchors.fill:parent
-		
-		onClicked: accountStatus.clicked()
-	}
+	
 }
