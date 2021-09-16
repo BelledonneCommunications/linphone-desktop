@@ -42,12 +42,14 @@ public:
 	QColor getColor() const;
 	QString getDescription() const;
 	QString getName() const;
-	
+	Q_INVOKABLE QString toString(){return getName();}
+	QString getLinkedToImage() const;
 	
 	void setColor(const QColor& color);
 	void setInternalColor(const QColor& color);
 	void setAlpha(const int& alpha);
 	void setDescription(const QString& description);
+	void setLinkedToImage(const QString& id);
 	
 signals:
 	void colorChanged();
@@ -58,6 +60,7 @@ private:
 	QString mName;
 	QColor mColor;
 	QString mDescription;
+	QString mLinkedToImage;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<ColorModel>);

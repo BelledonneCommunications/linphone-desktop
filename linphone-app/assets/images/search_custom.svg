@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="search.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.81875"
+     inkscape:cx="-81.099656"
+     inkscape:cy="92.371134"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12" />
+  <!-- Generator: Sketch 40.3 (33839) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">search</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="Symbols"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     transform="matrix(2.6923078,0,0,2.6923077,19.807692,19.923077)">
+    <g
+       id="search"
+       fill="#000000">
+      <path
+         d="m 0.07142857,6.3142857 c 0,-0.8511947 0.16517692,-1.6651747 0.49553572,-2.4419643 C 0.89732308,3.0955318 1.3437472,2.4258957 1.90625,1.8633929 2.4687528,1.30089 3.138389,0.85446593 3.9151786,0.52410714 4.6919682,0.19374834 5.5059481,0.02857142 6.3571429,0.02857142 c 0.8511947,0 1.6651746,0.16517692 2.4419642,0.49553572 0.7767896,0.33035879 1.4464259,0.77678286 2.0089289,1.33928576 0.562503,0.5625028 1.008927,1.2321389 1.339285,2.0089285 0.330359,0.7767896 0.495536,1.5907696 0.495536,2.4419643 0,1.3095304 -0.369044,2.4970185 -1.107143,3.5625 l 3.0625,3.0625003 c 0.22024,0.220239 0.330357,0.488093 0.330357,0.803571 0,0.309526 -0.113094,0.57738 -0.339285,0.803572 -0.226192,0.226191 -0.494046,0.339285 -0.803572,0.339285 -0.32143,0 -0.589284,-0.113094 -0.803571,-0.339285 L 9.9196429,11.492857 C 8.8541613,12.230956 7.6666732,12.6 6.3571429,12.6 5.5059481,12.6 4.6919682,12.434823 3.9151786,12.104464 3.138389,11.774105 2.4687528,11.327681 1.90625,10.765179 1.3437472,10.202676 0.89732308,9.5330396 0.56696429,8.75625 0.23660549,7.9794604 0.07142857,7.1654804 0.07142857,6.3142857 Z m 2.28571433,0 c 0,1.101196 0.3913651,2.0431509 1.1741071,2.8258929 0.782742,0.782742 1.7246969,1.1741074 2.8258929,1.1741074 1.1011959,0 2.0431508,-0.3913654 2.8258928,-1.1741074 0.782742,-0.782742 1.1741073,-1.7246969 1.1741073,-2.8258929 0,-1.101196 -0.3913653,-2.0431508 -1.1741073,-2.8258928 C 8.4002937,2.7056508 7.4583388,2.3142857 6.3571429,2.3142857 5.2559469,2.3142857 4.313992,2.7056508 3.53125,3.4883929 2.748508,4.2711349 2.3571429,5.2130897 2.3571429,6.3142857 Z"
+         id="path8" />
+    </g>
+  </g>
+  <metadata
+     id="metadata831">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>search</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

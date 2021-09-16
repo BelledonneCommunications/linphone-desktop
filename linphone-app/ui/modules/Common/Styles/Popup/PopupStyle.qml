@@ -6,10 +6,11 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: ColorsList.add("Popup_background", "k").color
+	property string sectionName: 'Popup'
+  property color backgroundColor: ColorsList.add(sectionName+'_bg', 'k').color
 
   property QtObject shadow: QtObject {
-    property color color: ColorsList.add("Popup_shadow", "l").color
+    property color color: ColorsList.add(sectionName+'_shadow', 'l').color
     property int horizontalOffset: 2
     property int radius: 10
     property int samples: 15

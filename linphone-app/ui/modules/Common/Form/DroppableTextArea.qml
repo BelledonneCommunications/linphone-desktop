@@ -60,8 +60,10 @@ Item {
 				Layout.alignment: Qt.AlignVCenter
 				//anchors.verticalCenter: parent.verticalCenter
 				enabled: droppableTextArea.dropEnabled
-				icon: 'attachment'
-				iconSize: DroppableTextAreaStyle.fileChooserButton.size
+				isCustom: true
+				backgroundRadius: 8
+				colorSet: DroppableTextAreaStyle.fileChooserButton
+					
 				visible: droppableTextArea.enabled
 				
 				onClicked: fileDialog.open()
@@ -87,8 +89,10 @@ Item {
 				Layout.alignment: Qt.AlignVCenter
 
 				enabled: droppableTextArea.dropEnabled
-				icon: 'chat_micro'
-				iconSize: DroppableTextAreaStyle.fileChooserButton.size
+				isCustom: true
+				backgroundRadius: 8
+				colorSet: DroppableTextAreaStyle.chatMicro
+				
 				useStates:false
 				
 				onClicked: {console.log('Record audio request')}
@@ -189,26 +193,22 @@ Item {
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignVCenter
 				visible: droppableTextArea.enabled
-				icon: 'send'
-				iconSize: DroppableTextAreaStyle.fileChooserButton.size
-				useStates:false
+				isCustom: true
+				backgroundRadius: 8
+				colorSet: DroppableTextAreaStyle.send
+				
 				onClicked: textArea.handleValidation()
 				Icon{
 					visible:droppableTextArea.isEphemeral
-					icon:'timer'
-					iconSize:15
+					icon: DroppableTextAreaStyle.ephemeralTimer.icon
+					overwriteColor: DroppableTextAreaStyle.ephemeralTimer.timerColor
+					iconSize: DroppableTextAreaStyle.ephemeralTimer.iconSize
 					anchors.right:parent.right
 					anchors.bottom : parent.bottom
-					anchors.rightMargin:-15
+					anchors.rightMargin:-10
 				}
 			}
-		}/*
-		MouseArea{
-			anchors.top:parent.top
-			anchors.verticalCenter: parent.verticalCenter
-			//icon: 'burger_menu'
-			//iconSize: 5
-		}*/
+		}
 		// Hovered style.
 		Rectangle {
 			id: hoverContent

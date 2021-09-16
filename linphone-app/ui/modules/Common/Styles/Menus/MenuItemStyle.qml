@@ -8,6 +8,35 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
+	property string sectionName: 'MenuItem'
+	
+	property QtObject speaker: QtObject {
+		property int iconSize: 30
+		property string icon : 'speaker_on_custom'
+	}
+	property QtObject copy: QtObject {
+		property int iconSize: 30
+		property string icon : 'menu_copy_text_custom'
+	}
+	property QtObject imdn: QtObject {
+		property int iconSize: 30
+		property string icon : 'menu_imdn_info_custom'
+	}
+	property QtObject deleteEntry: QtObject {
+		property int iconSize: 30
+		property string icon : 'delete_custom'
+	}
+	property QtObject info: QtObject {
+		property string icon : 'menu_info_custom'
+	}
+	property QtObject devices: QtObject {
+		property string icon : 'menu_devices_custom'
+	}
+	property QtObject ephemeral: QtObject {
+		property string icon : 'menu_ephemeral_custom'
+	}
+	
+	
 	property QtObject normal : QtObject{
 		property int leftMargin: 5
 		property int rightMargin: 5
@@ -16,9 +45,9 @@ QtObject {
 			property int height: 30
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_normal_background_hovered", "o").color
-				property color normal: ColorsList.add("MenuItem_normal_background_normal", "q").color
-				property color pressed: ColorsList.add("MenuItem_normal_background_pressed", "o").color
+				property color hovered: ColorsList.add(sectionName+'_normal_bg_h', 'o').color
+				property color normal: ColorsList.add(sectionName+'_normal_bg_n', 'q').color
+				property color pressed: ColorsList.add(sectionName+'_normal_bg_p', 'o').color
 			}
 		}
 		
@@ -27,10 +56,10 @@ QtObject {
 			property int weight : Font.Bold
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_normal_text_hovered", "j").color
-				property color normal: ColorsList.add("MenuItem_normal_text_normal", "j").color
-				property color pressed: ColorsList.add("MenuItem_normal_text_pressed", "j").color
-				property color disabled: ColorsList.add("MenuItem_normal_text_disabled", "l50").color
+				property color hovered: ColorsList.add(sectionName+'_n_text_h', 'j').color
+				property color normal: ColorsList.add(sectionName+'_n_text_n', 'j').color
+				property color pressed: ColorsList.add(sectionName+'_n_text_p', 'j').color
+				property color disabled: ColorsList.add(sectionName+'_n_text_d', 'l50').color
 			}
 		}
 	}
@@ -42,9 +71,9 @@ QtObject {
 			property int height: 40
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_aux_background_hovered", "v").color
-				property color normal: ColorsList.add("MenuItem_aux_background_normal", "a").color
-				property color pressed: ColorsList.add("MenuItem_aux_background_pressed", "v").color
+				property color hovered: ColorsList.add(sectionName+'_aux_bg_h', 'v').color
+				property color normal: ColorsList.add(sectionName+'_aux_bg_n', 'a').color
+				property color pressed: ColorsList.add(sectionName+'_aux_bg_p', 'v').color
 			}
 		}
 		
@@ -53,10 +82,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_aux_text_hovered", "j").color
-				property color normal: ColorsList.add("MenuItem_aux_text_normal", "j").color
-				property color pressed: ColorsList.add("MenuItem_aux_text_pressed", "j").color
-				property color disabled: ColorsList.add("MenuItem_aux_text_disabled", "l50").color
+				property color hovered: ColorsList.add(sectionName+'_aux_text_h', 'j').color
+				property color normal: ColorsList.add(sectionName+'_aux_text_n', 'j').color
+				property color pressed: ColorsList.add(sectionName+'_aux_text_p', 'j').color
+				property color disabled: ColorsList.add(sectionName+'_aux_text_d', 'l50').color
 			}
 		}
 	}
@@ -68,9 +97,9 @@ QtObject {
 			property int height: 40
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_auxRed_background_hovered", "v").color
-				property color normal: ColorsList.add("MenuItem_auxRed_background_normal", "a").color
-				property color pressed: ColorsList.add("MenuItem_auxRed_background_pressed", "v").color
+				property color hovered: ColorsList.add(sectionName+'_auxRed_bg_h', 'v').color
+				property color normal: ColorsList.add(sectionName+'_auxRed_bg_n', 'a').color
+				property color pressed: ColorsList.add(sectionName+'_auxRed_bg_p', 'v').color
 			}
 		}
 		
@@ -79,10 +108,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_auxRed_text_hovered", "error").color
-				property color normal: ColorsList.add("MenuItem_auxRed_text_normal", "error").color
-				property color pressed: ColorsList.add("MenuItem_auxRed_text_pressed", "error").color
-				property color disabled: ColorsList.add("MenuItem_auxRed_text_disabled", "l50").color
+				property color hovered: ColorsList.add(sectionName+'_auxRed_text_h', 'error').color
+				property color normal: ColorsList.add(sectionName+'_auxRed_text_n', 'error').color
+				property color pressed: ColorsList.add(sectionName+'_auxRed_text_p', 'error').color
+				property color disabled: ColorsList.add(sectionName+'_auxRed_text_d', 'l50').color
 			}
 		}
 	}
@@ -94,9 +123,9 @@ QtObject {
 			property int height: 50
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_aux2_background_hovered", "w").color
-				property color normal: ColorsList.add("MenuItem_aux2_background_normal", "w").color
-				property color pressed: ColorsList.add("MenuItem_aux2_background_pressed", "v").color
+				property color hovered: ColorsList.add(sectionName+'_aux2_bg_h', 'w').color
+				property color normal: ColorsList.add(sectionName+'_aux2_bg_n', 'w').color
+				property color pressed: ColorsList.add(sectionName+'_aux2_bg_p', 'v').color
 			}
 		}
 		
@@ -105,10 +134,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add("MenuItem_aux2_text_hovered", "m").color
-				property color normal: ColorsList.add("MenuItem_aux2_text_normal", "j").color
-				property color pressed: ColorsList.add("MenuItem_aux2_text_pressed", "m").color
-				property color disabled: ColorsList.add("MenuItem_aux2_text_disabled", "l50").color
+				property color hovered: ColorsList.add(sectionName+'_aux2_text_h', 'm').color
+				property color normal: ColorsList.add(sectionName+'_aux2_text_n', 'j').color
+				property color pressed: ColorsList.add(sectionName+'_aux2_text_p', 'm').color
+				property color disabled: ColorsList.add(sectionName+'_aux2_text_d', 'l50').color
 			}
 		}
 	}

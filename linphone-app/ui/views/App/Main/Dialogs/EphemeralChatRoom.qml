@@ -62,8 +62,9 @@ DialogPlus {
 		
 		Layout.alignment: Qt.AlignCenter
 		Icon{
-			icon:'timer'
+			icon: EphemeralChatRoomStyle.timer.icon
 			iconSize: EphemeralChatRoomStyle.timer.iconSize
+			overwriteColor: EphemeralChatRoomStyle.timer.timerColor
 			Layout.preferredHeight: EphemeralChatRoomStyle.timer.preferredHeight
 			Layout.preferredWidth: EphemeralChatRoomStyle.timer.preferredWidth
 			Layout.alignment: Qt.AlignCenter

@@ -86,8 +86,9 @@ RowLayout{
 	}
 	property bool isImportant: $chatEntry.eventLogType == LinphoneEnums.EventLogTypeConferenceTerminated
 	property bool isError: $chatEntry.status == ChatNoticeModel.NoticeError
-	property color eventColor : (isError ? ColorsList.add("Notice_error", "error").color  : ( isImportant ? ColorsList.add("Notice_important", "error").color  : ColorsList.add("Notice", "ab").color ))
-	
+	property color eventColor : (isError ? ChatStyle.entry.event.notice.errorColor 
+								: ( isImportant ? ChatStyle.entry.event.notice.importantColor  
+									: ChatStyle.entry.event.notice.color ))
 	
 	Layout.preferredHeight: ChatStyle.entry.lineHeight
 	spacing: ChatStyle.entry.message.extraContent.spacing

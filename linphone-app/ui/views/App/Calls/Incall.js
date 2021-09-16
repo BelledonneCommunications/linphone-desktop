@@ -146,12 +146,3 @@ function showFullscreen (position) {
     }
   }, true)
 }
-
-function updateCallQualityIcon (callQuality,call) {
-  var quality = call.quality
-  callQuality.icon = 'call_quality_' + (
-    // Note: `quality` is in the [0, 5] interval.
-    // It's necessary to map in the `call_quality_` interval. ([0, 3])
-    quality >= 0 ? Math.round(quality / (5 / 3)) : 0
-  )
-}

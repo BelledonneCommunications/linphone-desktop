@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg21"
+   sodipodi:docname="file_hovered_custom.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata25">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>settings_file_1</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     id="namedview23"
+     showgrid="false"
+     inkscape:zoom="2.95"
+     inkscape:cx="-48.983051"
+     inkscape:cy="29.830508"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg21"
+     inkscape:pagecheckerboard="0" />
+  <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">settings_file_1</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="Symbols"
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
+     transform="matrix(2.1875226,0,0,1.9999927,22.5,20)">
+    <g
+       id="settings_file_1"
+       style="stroke:#000000">
+      <g
+         id="Group-13">
+        <g
+           id="Group-12">
+          <rect
+             id="Rectangle-10-Copy"
+             transform="rotate(90,8,10)"
+             x="-1.5"
+             y="2.5"
+             width="19"
+             height="15"
+             rx="3" />
+          <g
+             id="Group-9"
+             transform="translate(4,4)"
+             style="stroke-linecap:round">
+            <path
+               d="M 0.44444444,4.5 H 7.5555556"
+               id="Line"
+               inkscape:connector-curvature="0" />
+            <path
+               d="M 0.44444444,1.5 H 7.5555556"
+               id="path10"
+               inkscape:connector-curvature="0" />
+            <path
+               d="M 0.44444444,10.5 H 7.5555556"
+               id="path12"
+               inkscape:connector-curvature="0" />
+            <path
+               d="M 0.44444444,7.5 H 7.5555556"
+               id="path14"
+               inkscape:connector-curvature="0" />
+          </g>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

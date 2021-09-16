@@ -48,19 +48,11 @@ TextField {
             : FileChooserButtonStyle.tools.button.color.normal
         )
 
-      Icon {
+      ActionButton {
         anchors.centerIn: parent
-
-        icon: (textField.selectFolder ? 'folder' : 'file') + (mouseArea.pressed
-          ? '_pressed'
-          : (
-            mouseArea.containsMouse
-              ? '_hovered'
-              : '_normal'
-          )
-        )
-
-        iconSize: FileChooserButtonStyle.tools.button.iconSize
+        isCustom: true
+        backgroundRadius: 90
+		colorSet: textField.selectFolder ? FileChooserButtonStyle.folder : FileChooserButtonStyle.file
       }
     }
   }

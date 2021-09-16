@@ -84,6 +84,7 @@
 #include "other/colors/ColorModel.hpp"
 #include "other/colors/ColorListModel.hpp"
 #include "other/colors/ColorProxyModel.hpp"
+#include "other/colors/ImageColorsProxyModel.hpp"
 #include "other/clipboard/Clipboard.hpp"
 #include "other/desktop-tools/DesktopTools.hpp"
 #include "other/images/ImageModel.hpp"

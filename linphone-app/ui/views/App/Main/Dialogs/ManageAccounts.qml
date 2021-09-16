@@ -86,8 +86,9 @@ DialogPlus {
               }
 
               ActionButton {
-                icon: 'options'
-                iconSize: 30
+                isCustom: true
+                backgroundRadius: 90
+                colorSet: ManageAccountsStyle.options
                 anchors.fill: parent
                 visible:false
 		//TODO handle click and jump to proxy config settings

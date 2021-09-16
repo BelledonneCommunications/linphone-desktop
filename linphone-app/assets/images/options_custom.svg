@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="options_custom.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="5.45625"
+     inkscape:cx="-5.9564719"
+     inkscape:cy="57.365407"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <path
+     d="m 58.46317,43.898165 v -7.79633 h -3.327966 a 15.435226,15.510596 0 0 0 -1.678273,-4.041783 l 2.356118,-2.357364 -5.514622,-5.514878 -2.358161,2.359416 a 15.572019,15.648057 0 0 0 -4.042558,-1.682367 v -3.329854 h -7.799282 v 3.329854 a 15.598561,15.674729 0 0 0 -4.042559,1.678264 l -2.354076,-2.359417 -5.51258,5.518982 2.356117,2.355314 a 15.429101,15.504441 0 0 0 -1.680315,4.041781 h -3.330008 v 7.800434 h 3.327965 c 0.371589,1.436167 0.943264,2.794369 1.678275,4.041781 l -2.352034,2.357366 5.51258,5.514878 2.358159,-2.357365 a 15.598561,15.674729 0 0 0 4.04256,1.678264 v 3.329854 h 7.79928 v -3.329854 a 15.576103,15.65216 0 0 0 4.04256,-1.678264 l 2.356118,2.357365 5.514622,-5.514878 -2.356119,-2.357366 a 15.414808,15.490079 0 0 0 1.678276,-4.041781 h 3.327966 z M 31.725113,40 c 0,4.571113 3.703637,8.274369 8.274996,8.274369 4.569317,0 8.274996,-3.703256 8.274996,-8.274369 0,-4.56906 -3.705679,-8.274369 -8.274996,-8.274369 -4.571359,0 -8.277038,3.705309 -8.277038,8.274369 v 0 z"
+     stroke="#000000"
+     stroke-width="3.07001"
+     fill="none"
+     fill-rule="evenodd"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path2" />
+</svg>

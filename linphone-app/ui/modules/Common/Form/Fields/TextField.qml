@@ -14,6 +14,8 @@ Controls.TextField {
   // ---------------------------------------------------------------------------
 
   property alias icon: icon.icon
+  property alias iconSize: icon.iconSize
+  property alias overwriteColor: icon.overwriteColor
   property string error: ''
   property var tools
   property QtObject textFieldStyle : TextFieldStyle.normal

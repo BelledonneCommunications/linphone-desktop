@@ -6,7 +6,8 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property QtObject transientWindow: QtObject {
-    property color color: ColorsList.add("Window_transient", "l80").color
-  }
+	property string sectionName: 'Window'
+	property QtObject transientWindow: QtObject {
+		property color color: ColorsList.add(sectionName+'_transient', 'l80').color
+	}
 }

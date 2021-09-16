@@ -7,11 +7,12 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property color backgroundColor: ColorsList.add("Avatar_background", "d").color
-
-  property QtObject initials: QtObject {
-    property color color: ColorsList.add("Avatar_initials", "q").color
-    property int pointSize: Units.dp * 10
-    property int ratio: 30
-  }
+	property string sectionName: 'Avatar'
+	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'd').color
+	
+	property QtObject initials: QtObject {
+		property color color: ColorsList.add(sectionName+'_initials', 'q').color
+		property int pointSize: Units.dp * 10
+		property int ratio: 30
+	}
 }

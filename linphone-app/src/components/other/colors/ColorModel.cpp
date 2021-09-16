@@ -48,7 +48,9 @@ QColor ColorModel::getColor() const{
 QString ColorModel::getDescription() const{
 	return mDescription;
 }
-
+QString ColorModel::getLinkedToImage() const{
+	return mLinkedToImage;
+}
 
 void ColorModel::setColor(const QColor& color){
 	if(color != mColor){
@@ -75,4 +77,8 @@ void ColorModel::setDescription(const QString& description){
 		mDescription = description;
 		emit descriptionChanged();
 	}
+}
+
+void ColorModel::setLinkedToImage(const QString& id){
+	mLinkedToImage = id;
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg27"
+   sodipodi:docname="tel_keypad_custom.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata31">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>dialer_dtmf</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     id="namedview29"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     units="px"
+     inkscape:zoom="4.5384615"
+     inkscape:cx="84.059323"
+     inkscape:cy="4.1864407"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg27"
+     inkscape:pagecheckerboard="0" />
+  <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">dialer_dtmf</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="Page-1"
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
+     transform="matrix(5.8333331,0,0,5.6538462,5,3.3295455)">
+    <g
+       id="08-INCALL-02-Simple-Chiffrement"
+       transform="translate(-301,-64)"
+       style="fill:#000000">
+      <g
+         id="dialer_dtmf"
+         transform="translate(301,64)">
+        <g
+           id="Group-2">
+          <rect
+             id="Rectangle"
+             x="0"
+             y="0.29545453"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="Rectangle-Copy"
+             x="4.2352943"
+             y="0.29545453"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="Rectangle-Copy-2"
+             x="8.4705887"
+             y="0.29545453"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="rect11"
+             x="0"
+             y="4.6652026"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="rect13"
+             x="4.2352943"
+             y="4.6652026"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="rect15"
+             x="8.4705887"
+             y="4.6652026"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="rect17"
+             x="0"
+             y="9.0349503"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="rect19"
+             x="4.2352943"
+             y="9.0349503"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+          <rect
+             id="rect21"
+             x="8.4705887"
+             y="9.0349503"
+             width="3.5294118"
+             height="3.6414566"
+             rx="1" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

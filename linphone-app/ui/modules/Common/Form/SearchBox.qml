@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2 as Controls
 
 import Common 1.0
 import Utils 1.0
+import Common.Styles 1.0
 
 // =============================================================================
 
@@ -74,7 +75,8 @@ Item {
 		TextField {
 			id: searchField
 			
-			icon: 'search'
+			icon: 'search_custom'
+			overwriteColor: SearchBoxStyle.iconColor
 			readOnly: !searchBox.enabled
 			width: parent.width
 			

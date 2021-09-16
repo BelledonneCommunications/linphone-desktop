@@ -86,7 +86,7 @@ DialogPlus {
 			//~ Tooltip Explanation for inviting the selected participants into chat room 
 			tooltipText: qsTr('addParticipantTooltip')
 			actions:[{
-					icon: 'add_participant',
+					colorSet: InfoChatRoomStyle.addParticipant,
 					secure: chatRoomModel.haveEncryption,
 					visible: true,
 					visibleHandler : function(entry) {
@@ -154,7 +154,7 @@ DialogPlus {
 					
 					
 					actions:  dialog.adminMode ? [{
-															 icon: 'remove_participant',
+															 colorSet: InfoChatRoomStyle.removeParticipant,
 															 secure:0,
 															 visible:true,
 															 tooltipText: 'Remove this participant from the selection',

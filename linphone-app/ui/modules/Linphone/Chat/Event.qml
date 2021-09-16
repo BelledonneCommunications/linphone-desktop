@@ -9,34 +9,81 @@ import Utils 1.0
 // =============================================================================
 
 Row {
-	property string _type: {
-		var status = $chatEntry.status
-		if (status == LinphoneEnums.CallStatusSuccess) {
-			if (!$chatEntry.isStart) {
-				return 'ended_call'
+	id: mainItem
+	property QtObject iconData
+	property string translation
+	Component.onCompleted: {
+		if ($chatEntry.status == LinphoneEnums.CallStatusSuccess) {
+			if(!$chatEntry.isStart){
+				iconData = ChatStyle.entry.event.endedCall
+				translation ='endedCall'
+			}else if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.outgoingCall
+				translation ='outgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.incomingCall
+				translation ='incomingCall'
 			}
-			return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
+		}else if($chatEntry.status == LinphoneEnums.CallStatusDeclined) {
+			if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.declinedOutgoingCall
+				translation ='declinedOutgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.declinedIncomingCall
+				translation ='declinedIncomingCall'
+			}
+		}else if($chatEntry.status == LinphoneEnums.CallStatusMissed) {
+			if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.missedOutgoingCall
+				translation ='missedOutgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.missedIncomingCall
+				translation ='missedIncomingCall'
+			}
+		}else if($chatEntry.status == LinphoneEnums.CallStatusAborted) {
+			if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.outgoingCall
+				translation ='outgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.incomingCall
+				translation ='incomingCall'
+			}
+		}else if($chatEntry.status == LinphoneEnums.CallStatusDeclined) {
+			if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.declinedOutgoingCall
+				translation ='declinedOutgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.declinedIncomingCall
+				translation ='declinedIncomingCall'
+			}
+		}else if($chatEntry.status == LinphoneEnums.CallStatusEarlyAborted) {
+			if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.missedOutgoingCall
+				translation ='missedOutgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.missedIncomingCall
+				translation ='missedIncomingCall'
+			}
+		}else if($chatEntry.status == LinphoneEnums.CallStatusAcceptedElsewhere) {
+			if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.outgoingCall
+				translation ='outgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.incomingCall
+				translation ='incomingCall'
+			}
+		}else if($chatEntry.status == LinphoneEnums.CallStatusDeclinedElsewhere) {
+			if($chatEntry.isOutgoing ){
+				iconData = ChatStyle.entry.event.declinedOutgoingCall
+				translation ='declinedOutgoingCall'
+			}else{
+				iconData = ChatStyle.entry.event.declinedIncomingCall
+				translation ='declinedIncomingCall'
+			}
+		}else {
+			iconData = ChatStyle.entry.event.unknownCallEvent
+			translation = 'unknownCallEvent'
 		}
-		if (status == LinphoneEnums.CallStatusDeclined) {
-			return $chatEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
-		}
-		if (status == LinphoneEnums.CallStatusMissed) {
-			return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
-		}
-		if (status == LinphoneEnums.CallStatusAborted) {
-			return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
-		}
-		if (status == LinphoneEnums.CallStatusEarlyAborted) {
-			return $chatEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
-		}
-		if (status == LinphoneEnums.CallStatusAcceptedElsewhere) {
-			return $chatEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
-		}
-		if (status == LinphoneEnums.CallStatusDeclinedElsewhere) {
-			return $chatEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
-		}
-		
-		return 'unknown_call_event'
 	}
 	
 	height: ChatStyle.entry.lineHeight
@@ -44,7 +91,8 @@ Row {
 	
 	Icon {
 		height: parent.height
-		icon: _type
+		icon: mainItem.iconData ? mainItem.iconData.icon : null
+		overwriteColor: mainItem.iconData ? mainItem.iconData.color: null
 		iconSize: ChatStyle.entry.event.iconSize
 		width: ChatStyle.entry.metaWidth
 	}
@@ -73,7 +121,7 @@ Row {
 			pointSize: ChatStyle.entry.event.text.pointSize
 		}
 		height: parent.height
-		text: qsTr(Utils.snakeToCamel(_type))
+		text: mainItem.translation ? qsTr(mainItem.translation) : ''
 		verticalAlignment: Text.AlignVCenter
 		ChatMenu{
 			id:chatMenu
@@ -86,10 +134,11 @@ Row {
 	}
 	
 	ActionButton {
-		height: ChatStyle.entry.lineHeight
+		height: ChatStyle.entry.menu.iconSize
+		isCustom: true
+		backgroundRadius: 8
+		colorSet: ChatStyle.entry.menu
 		
-		icon: 'chat_menu'
-		iconSize: ChatStyle.entry.deleteIconSize
 		visible: isHoverEntry()
 		
 		onClicked: chatMenu.open()

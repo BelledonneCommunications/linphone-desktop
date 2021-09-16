@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2  as Controls
+import QtQuick.Controls 2.3  as Controls	//2.3 for menu property (Qt 5.10)
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -15,6 +15,7 @@ Controls.MenuItem {
 	id: button
 	property alias iconMenu : iconArea.icon
 	property alias iconSizeMenu : iconArea.iconSize
+	property alias iconOverwriteColorMenu: iconArea.overwriteColor
 	property alias iconLayoutDirection : rowArea.layoutDirection
 	property var menuItemStyle : MenuItemStyle.normal
 	
@@ -23,6 +24,8 @@ Controls.MenuItem {
 	property int offsetBottomMargin : 0
 	
 	height:visible?undefined:0
+	
+	Component.onCompleted: menu.width = Math.max(menu.width, implicitWidth)
 	
 	background: Rectangle {	
 		color: button.down
@@ -36,13 +39,22 @@ Controls.MenuItem {
 	}
 	contentItem:RowLayout{
 		id:rowArea		
-		spacing:20
+		spacing:15
 		Icon{
 			id: iconArea
 			visible: icon
 			width: icon?iconSize:0
 			Layout.leftMargin:(iconLayoutDirection == Qt.LeftToRight ? menuItemStyle.leftMargin : 0)
 			Layout.rightMargin:(iconLayoutDirection == Qt.LeftToRight ? 0 : menuItemStyle.rightMargin)
+			overwriteColor: button.enabled
+							? (button.down
+							   ? menuItemStyle.text.color.pressed
+							   : (
+									 button.hovered
+									 ? menuItemStyle.text.color.hovered
+									 : menuItemStyle.text.color.normal
+									 ))
+							: menuItemStyle.text.color.disabled
 		}
 		Text {
 			id:rowText
@@ -52,12 +64,12 @@ Controls.MenuItem {
 			Layout.rightMargin:(iconLayoutDirection == Qt.LeftToRight ? menuItemStyle.rightMargin : 0)
 			color: button.enabled
 				   ? (button.down
-					   ? menuItemStyle.text.color.pressed
-					   : (
-							 button.hovered
-							 ? menuItemStyle.text.color.hovered
-							 : menuItemStyle.text.color.normal
-							 ))
+					  ? menuItemStyle.text.color.pressed
+					  : (
+							button.hovered
+							? menuItemStyle.text.color.hovered
+							: menuItemStyle.text.color.normal
+							))
 				   : menuItemStyle.text.color.disabled
 			
 			elide: Text.ElideRight
@@ -84,7 +96,7 @@ Controls.MenuItem {
 		propagateComposedEvents:true
 		acceptedButtons: Qt.NoButton
 		cursorShape: parent.hovered
-						 ? Qt.PointingHandCursor
-						 : Qt.ArrowCursor
+					 ? Qt.PointingHandCursor
+					 : Qt.ArrowCursor
 	}
 }

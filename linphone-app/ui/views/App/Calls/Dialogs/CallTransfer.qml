@@ -67,7 +67,8 @@ DialogPlus {
 					
 					Layout.fillWidth: true
 					
-					icon: 'search'
+					icon: 'search_custom'
+					overwriteColor: CallTransferStyle.searchField.color
 					
 					onTextChanged: sipAddressesModel.setFilter(text)
 				}
@@ -88,7 +89,7 @@ DialogPlus {
 							exit(1)
 						}
 						actions: [{
-								icon: 'transfer',
+								colorSet: CallTransferStyle.transfer,
 								secure: 0,
 								visible: true,
 								handlerSipAddress: function(sipAddress){

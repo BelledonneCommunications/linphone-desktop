@@ -7,16 +7,17 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property int height: 60
-
-  property QtObject error: QtObject {
-    property color color: ColorsList.add("RequestBlock_error", "error").color
-    property int pointSize: Units.dp * 11
-    property int padding: 4
-  }
-
-  property QtObject loadingIndicator: QtObject {
-    property int height: 20
-    property int width: 20
-  }
+	property string sectionName: 'RequestBlock'
+	property int height: 60
+	
+	property QtObject error: QtObject {
+		property color color: ColorsList.add(sectionName+'_error', 'error').color
+		property int pointSize: Units.dp * 11
+		property int padding: 4
+	}
+	
+	property QtObject loadingIndicator: QtObject {
+		property int height: 20
+		property int width: 20
+	}
 }

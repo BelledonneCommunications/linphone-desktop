@@ -142,12 +142,12 @@ TabContainer {
 							width: audioTestSlider.availableWidth
 							height: implicitHeight
 							radius: 2
-							color: ColorsList.add("SettingsAudio_slider_background", "slider_background").color
+							color: SettingsAudioStyle.sliderBackgroundColor
 							
 							Rectangle {
 								width: audioTestSlider.visualPosition * parent.width
 								height: parent.height
-								color: audioTestSlider.value > 0.8 ? ColorsList.add("SettingsAudio_slider_high", "slider_high").color : ColorsList.add("SettingsAudio_slider_low", "slider_low").color
+								color: audioTestSlider.value > 0.8 ? SettingsAudioStyle.sliderHighColor : SettingsAudioStyle.sliderLowColor
 								radius: 2
 							}
 						}
@@ -201,18 +201,15 @@ TabContainer {
 							SettingsModel.ringPath = selectedFile
 						}
 						
-						ActionSwitch {
+						ActionButton{
 							anchors {
 								left: parent.right
 								leftMargin: SettingsAudioStyle.ringPlayer.leftMargin
 							}
-							
-							enabled: {
-								var item = ringPlayer.item
-								return item && item.playbackState === SoundPlayer.PlayingState
-							}
-							
-							icon: 'pause'
+							property bool playing :  ringPlayer.item && ringPlayer.item.playbackState === SoundPlayer.PlayingState
+							isCustom: true
+							backgroundRadius: 90
+							colorSet: playing ? SettingsAudioStyle.pause : SettingsAudioStyle.play
 							
 							onClicked: {
 								var item = ringPlayer.item
@@ -220,7 +217,7 @@ TabContainer {
 									return
 								}
 								
-								if (enabled) {
+								if (playing) {
 									item.stop()
 								} else {
 									item.play()

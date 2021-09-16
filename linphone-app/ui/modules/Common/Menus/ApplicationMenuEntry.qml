@@ -16,6 +16,7 @@ Rectangle {
 	
 	readonly property bool isSelected: parent.parent._selected === this
 	property alias iconSize : mainIcon.iconSize
+	property alias overwriteColor: mainIcon.overwriteColor
 	
 	// ---------------------------------------------------------------------------
 	
@@ -68,11 +69,7 @@ Rectangle {
 		
 		Icon {
 			id:mainIcon
-			icon: entry.icon + (
-					  entry.isSelected
-					  ? '_selected'
-					  : '_normal'
-					  )
+			icon: entry.icon
 			iconSize: ApplicationMenuStyle.entry.iconSize
 		}
 		

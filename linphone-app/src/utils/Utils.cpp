@@ -30,6 +30,7 @@
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
+#include "app/paths/Paths.hpp"
 
 // =============================================================================
 
@@ -505,4 +506,12 @@ QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& ad
 		}
 	}
 	return displayName;
+}
+
+std::shared_ptr<linphone::Config> Utils::getConfigIfExists (const QString &configPath) {
+	std::string factoryPath(Paths::getFactoryConfigFilePath());
+	if (!Paths::filePathExists(factoryPath))
+		factoryPath.clear();
+	
+	return linphone::Config::newWithFactory(configPath.toStdString(), factoryPath);
 }

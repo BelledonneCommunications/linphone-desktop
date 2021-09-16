@@ -117,7 +117,9 @@ ScrollableListView {
 								model: sipAddressesView.actions
 								
 								ActionButton {
-									icon: modelData.icon
+									isCustom: true
+									backgroundRadius: 90
+									colorSet: modelData.colorSet
 									visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
 									
 									onClicked: sipAddressesView.actions[index].handler({
@@ -275,7 +277,10 @@ ScrollableListView {
 						model: sipAddressesView.actions
 						
 						ActionButton {
-							icon: modelData.icon
+							isCustom: true
+							backgroundRadius: 90
+							colorSet: modelData.colorSet
+							anchors.verticalCenter: parent.verticalCenter
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
 							visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
 							onClicked: {

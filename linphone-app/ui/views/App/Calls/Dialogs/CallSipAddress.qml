@@ -46,7 +46,8 @@ DialogPlus {
 					
 					Layout.fillWidth: true
 					
-					icon: 'search'
+					icon: 'search_custom'
+					overwriteColor: CallSipAddressStyle.searchField.color
 					
 					onTextChanged: sipAddressesModel.setFilter(text)
 				}
@@ -68,7 +69,7 @@ DialogPlus {
 						}
 						
 						actions: [{
-								icon: 'video_call',
+								colorSet: CallSipAddressStyle.videoCall,
 								secure:0,
 								visible:true,
 								handler: function (entry) {
@@ -79,7 +80,7 @@ DialogPlus {
 									launchVideoCall(sipAddress)
 								}
 							}, {
-								icon: 'call',
+								colorSet: CallSipAddressStyle.call,
 								secure:0,
 								visible:true,
 								handler: function (entry) {

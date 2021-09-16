@@ -7,6 +7,7 @@ import Units 1.0
 // =============================================================================
 
 QtObject {
+	property string sectionName: 'About'
   property int height: 225
   property int spacing: 20
   property int width: 400
@@ -15,12 +16,12 @@ QtObject {
     property int spacing: 10
 
     property QtObject license: QtObject {
-      property color color: ColorsList.add("About_license", "d").color
+      property color color: ColorsList.add(sectionName+'_license', 'd').color
       property int pointSize: Units.dp * 10
     }
 
     property QtObject url: QtObject {
-      property color color: ColorsList.add("About_url", "i").color
+      property color color: ColorsList.add(sectionName+'_url', 'i').color
       property int pointSize: Units.dp * 10
     }
   }
@@ -30,12 +31,12 @@ QtObject {
     property int spacing: 10
 
     property QtObject appVersion: QtObject {
-      property color color: ColorsList.add("About_appVersion", "d").color
+      property color color: ColorsList.add(sectionName+'_appVersion', 'd').color
       property int pointSize: Units.dp * 10
     }
 
     property QtObject coreVersion: QtObject {
-      property color color: ColorsList.add("About_coreVersion", "d").color
+      property color color: ColorsList.add(sectionName+'_coreVersion', 'd').color
       property int pointSize: Units.dp * 10
     }
   }

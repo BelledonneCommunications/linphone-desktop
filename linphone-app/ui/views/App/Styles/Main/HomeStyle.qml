@@ -5,6 +5,7 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property color color: ColorsList.add("Home_background", "k").color
-  property int spacing: 20
+	property string sectionName: 'Home'
+	property color color: ColorsList.add(sectionName+'_bg', 'k').color
+	property int spacing: 20
 }

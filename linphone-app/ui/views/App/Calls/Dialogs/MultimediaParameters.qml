@@ -48,8 +48,9 @@ DialogPlus {
         Layout.alignment: Qt.AlignTop
         Layout.preferredHeight: ComboBoxStyle.background.height
 
-        icon: 'speaker'
-        iconSize: MultimediaParametersStyle.column.entry.iconSize
+        icon: MultimediaParametersStyle.column.entry.speaker.icon
+        overwriteColor: MultimediaParametersStyle.column.entry.speaker.color
+        iconSize: MultimediaParametersStyle.column.entry.speaker.iconSize
       }
 
       Column {
@@ -91,8 +92,9 @@ DialogPlus {
         Layout.alignment: Qt.AlignTop
         Layout.preferredHeight: ComboBoxStyle.background.height
 
-        icon: 'micro'
-        iconSize: MultimediaParametersStyle.column.entry.iconSize
+        icon: MultimediaParametersStyle.column.entry.micro.icon
+        overwriteColor: MultimediaParametersStyle.column.entry.micro.color
+        iconSize: MultimediaParametersStyle.column.entry.micro.iconSize
       }
 
       Column {
@@ -131,8 +133,9 @@ DialogPlus {
       width: parent.width
 
       Icon {
-        icon: 'camera'
-        iconSize: MultimediaParametersStyle.column.entry.iconSize
+        icon: MultimediaParametersStyle.column.entry.camera.icon
+        overwriteColor: MultimediaParametersStyle.column.entry.camera.color
+        iconSize: MultimediaParametersStyle.column.entry.speaker.iconSize
       }
 
       ComboBox {

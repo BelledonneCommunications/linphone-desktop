@@ -72,8 +72,9 @@ Controls.ComboBox {
   // ---------------------------------------------------------------------------
 
   indicator: Icon {
-    icon: 'drop_down'
-    iconSize: ComboBoxStyle.background.iconSize
+    icon: ComboBoxStyle.indicator.dropDown.icon
+    iconSize: ComboBoxStyle.indicator.dropDown.iconSize
+    overwriteColor: ComboBoxStyle.indicator.dropDown.color
 
     x: comboBox.width - width - comboBox.rightPadding
     y: comboBox.topPadding + (comboBox.availableHeight - height) / 2

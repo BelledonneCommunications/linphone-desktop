@@ -72,8 +72,9 @@ Rectangle {
 				
 				anchors.fill: parent
 				
-				icon: 'chat_room_light'
-				iconSize: 20
+				icon: ContactStyle.groupChat.icon
+				overwriteColor: ContactStyle.groupChat.avatarColor
+				iconSize: ContactStyle.contentHeight
 				visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
 			}
 			
@@ -92,7 +93,8 @@ Rectangle {
 			Layout.preferredHeight: ContactStyle.contentHeight
 			Layout.preferredWidth: ContactStyle.contentHeight
 			
-			icon:'chat_room'
+			icon: ContactStyle.groupChat.icon
+			overwriteColor: ContactStyle.groupChat.color
 			iconSize: ContactStyle.contentHeight
 			visible: false //entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
 			

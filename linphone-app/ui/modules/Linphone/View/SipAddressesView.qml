@@ -6,6 +6,7 @@ import Linphone 1.0
 import LinphoneEnums 1.0
 import UtilsCpp 1.0
 
+import App.Styles 1.0
 import Linphone.Styles 1.0
 import Common.Styles 1.0
 
@@ -27,6 +28,7 @@ ScrollableListView {
 	// Optional parameters.
 	property string headerButtonDescription
 	property string headerButtonIcon
+	property color headerButtonOverwriteColor
 	property var headerButtonAction
 	property bool showHeader : true
 	property bool showContactAddress : true
@@ -116,7 +118,9 @@ ScrollableListView {
 								model: sipAddressesView.actions
 
 								ActionButton {
-									icon: modelData.icon
+									isCustom: true
+									backgroundRadius: 90
+									colorSet: modelData.colorSet
 									
 									visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler({ sipAddress : sipAddressesView.interpretableSipAddress}) : sipAddressesView.actions[index].visible)
 
@@ -185,6 +189,7 @@ ScrollableListView {
 
 						icon: sipAddressesView.headerButtonIcon
 						iconSize: SipAddressesViewStyle.header.iconSize
+						overwriteColor: sipAddressesView.headerButtonOverwriteColor
 
 						visible: icon.length > 0
 					}
@@ -272,7 +277,9 @@ ScrollableListView {
 						model: sipAddressesView.actions
 
 						ActionButton {
-							icon: modelData.icon
+							isCustom: true
+							backgroundRadius: 90
+							colorSet: modelData.colorSet
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
 							visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
 							onClicked: {

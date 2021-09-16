@@ -7,12 +7,13 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property int leftMargin: 30
-  property int rightMargin: 15
-  property int overrodeHeight: 55
-
-  property QtObject message: QtObject {
-    property color color: ColorsList.add("Notification_basic_message", "h").color
-    property int pointSize: Units.dp * 10
-  }
+	property string sectionName: 'NotificationBasic'
+	property int leftMargin: 30
+	property int rightMargin: 15
+	property int overrodeHeight: 55
+	
+	property QtObject message: QtObject {
+		property color color: ColorsList.add(sectionName+'_message', 'h').color
+		property int pointSize: Units.dp * 10
+	}
 }

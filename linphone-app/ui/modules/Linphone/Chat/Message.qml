@@ -38,8 +38,8 @@ Item {
 	// ---------------------------------------------------------------------------
 	
 	implicitHeight: message.contentHeight 
-						+ (ephemeralTimerRow.visible? message.padding * 4 : message.padding * 2) 
-						+ (deliveryLayout.visible? deliveryLayout.height : 0)
+					+ (ephemeralTimerRow.visible? message.padding * 4 : message.padding * 2) 
+					+ (deliveryLayout.visible? deliveryLayout.height : 0)
 	
 	
 	Rectangle {
@@ -57,14 +57,14 @@ Item {
 		Row{
 			id:ephemeralTimerRow
 			anchors.right:parent.right
-			anchors.bottom:parent.bottom	
-			anchors.bottomMargin: 5
+			anchors.bottom:parent.bottom
 			anchors.rightMargin : 5
 			visible:$chatEntry.isEphemeral
-			spacing:5
 			Text{
+				anchors.bottom: parent.bottom	
+				anchors.bottomMargin: 5
 				text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
-				color: ColorsList.add("Message_ephemeral_text", "ad").color 
+				color: ChatStyle.ephemeralTimer.timerColor
 				font.pointSize: Units.dp * 8
 				Timer{
 					running:parent.visible
@@ -74,8 +74,9 @@ Item {
 				}
 			}
 			Icon{
-				icon:'timer'
-				iconSize: 15
+				icon: ChatStyle.ephemeralTimer.icon
+				overwriteColor: ChatStyle.ephemeralTimer.timerColor
+				iconSize: ChatStyle.ephemeralTimer.iconSize
 			}
 		}		
 	}
@@ -159,18 +160,20 @@ Item {
 		
 		chatMessageModel: $chatEntry
 	}
-
+	
 	ActionButton {
-	  height: ChatStyle.entry.lineHeight
-	  anchors.left:rectangle.right
-	  anchors.leftMargin: -10
-	  anchors.top:rectangle.top
-	  anchors.topMargin: 5
-
-	  icon: 'chat_menu'
-	  iconSize: ChatStyle.entry.deleteIconSize
-	  visible: isHoverEntry()
-
-	  onClicked: chatMenu.open()
+		anchors.left:rectangle.right
+		anchors.leftMargin: -10
+		anchors.top:rectangle.top
+		anchors.topMargin: 5
+		
+		height: ChatStyle.entry.menu.iconSize
+		isCustom: true
+		backgroundRadius: 8
+		
+		colorSet : ChatStyle.entry.menu
+		visible: isHoverEntry()
+		
+		onClicked: chatMenu.open()
 	}
 }

@@ -157,13 +157,6 @@ static inline string getConfigPathIfExists (const QCommandLineParser &parser) {
 	return configPath;
 }
 
-static inline shared_ptr<linphone::Config> getConfigIfExists (const string &configPath) {
-	string factoryPath(Paths::getFactoryConfigFilePath());
-	if (!Paths::filePathExists(factoryPath))
-		factoryPath.clear();
-	
-	return linphone::Config::newWithFactory(configPath, factoryPath);
-}
 bool App::setFetchConfig (QCommandLineParser *parser) {
 	bool fetched = false;
 	QString filePath = parser->value("fetch-config");
@@ -208,7 +201,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	mParser->process(*this);
 	
 	// Initialize logger.
-	shared_ptr<linphone::Config> config = getConfigIfExists(getConfigPathIfExists(*mParser));
+	shared_ptr<linphone::Config> config = Utils::getConfigIfExists (QString::fromStdString(getConfigPathIfExists(*mParser)));
 	Logger::init(config);
 	if (mParser->isSet("verbose"))
 		Logger::getInstance()->setVerbose(true);
@@ -321,11 +314,11 @@ void App::initContentApp () {
 		mTranslator = new DefaultTranslator(this);
 		mDefaultTranslator = new DefaultTranslator(this);
 		configPath = getConfigPathIfExists(*mParser);
-		config = getConfigIfExists(configPath);
+		config = Utils::getConfigIfExists (QString::fromStdString(configPath));
 		initLocale(config);
 	} else {
 		configPath = getConfigPathIfExists(*mParser);
-		config = getConfigIfExists(configPath);
+		config = Utils::getConfigIfExists(QString::fromStdString(configPath));
 		// Update and download codecs.
 		VideoCodecsModel::updateCodecs();
 		VideoCodecsModel::downloadUpdatableCodecs(this);
@@ -608,6 +601,7 @@ void App::registerTypes () {
 	
 	
 	registerType<ColorProxyModel>("ColorProxyModel");
+	registerType<ImageColorsProxyModel>("ImageColorsProxyModel");
 	registerType<ImageProxyModel>("ImageProxyModel");
 	registerType<TimelineProxyModel>("TimelineProxyModel");
 	registerType<ParticipantProxyModel>("ParticipantProxyModel");

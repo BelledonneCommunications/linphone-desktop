@@ -11,7 +11,7 @@ Controls.Menu {
   property var menuStyle : MenuStyle.normal
 
   background: Rectangle {
-    implicitWidth: menuStyle.width
+    implicitWidth: menu.width
     color: menuStyle.color
     radius: menuStyle.radius
 	

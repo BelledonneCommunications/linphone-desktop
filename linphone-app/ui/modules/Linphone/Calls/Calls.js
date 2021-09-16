@@ -107,7 +107,7 @@ function getParams (call) {
 		return {
 			component: callAction,
 			handler: call.terminate,
-			icon: 'hangup',
+			useIcon: 1,
 			string: 'outgoing'
 		}
 	}
