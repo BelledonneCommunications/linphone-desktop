@@ -773,7 +773,7 @@ void ChatRoomModel::initEntries(){
 	}
 }
 
-void ChatRoomModel::loadMoreEntries(){
+int ChatRoomModel::loadMoreEntries(){
 	QList<std::shared_ptr<ChatEvent> > entries;
 	QList<EntrySorterHelper> prepareEntries;
 // Get current event count for each type
@@ -838,6 +838,7 @@ void ChatRoomModel::loadMoreEntries(){
 		emit layoutChanged();
 		updateLastUpdateTime();
 	}
+	return entries.size();
 }
 
 //-------------------------------------------------

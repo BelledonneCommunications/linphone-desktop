@@ -414,6 +414,17 @@ ColumnLayout  {
 			
 			onClicked: Logic.updateChatFilter(button)
 		}
+		BusyIndicator{
+			id: chatLoading
+			width: 20
+			height: 20
+			anchors.left: filterButtons.right
+			anchors.leftMargin: 50
+			anchors.verticalCenter: parent.verticalCenter
+			//anchors.horizontalCenter: parent.horizontalCenter
+			visible: chatArea.tryingToLoadMoreEntries
+		}
+			
 		// -------------------------------------------------------------------------
 		// Search.
 		// -------------------------------------------------------------------------
@@ -422,9 +433,9 @@ ColumnLayout  {
 			anchors.right: parent.right
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
-			anchors.left : filterButtons.right
+			anchors.left : chatLoading.right
 			anchors.rightMargin: 10
-			anchors.leftMargin: 80
+			anchors.leftMargin: 50
 			anchors.topMargin: 10
 			anchors.bottomMargin: 10
 			
