@@ -81,14 +81,18 @@ ColumnLayout  {
           iconSize: HistoryViewStyle.bar.actions.call.iconSize
 
           ActionButton {
-            icon: 'video_call'
+            isCustom: true
+			backgroundRadius: 90
+			colorSet: ContactsStyle.videoCall
             visible: peerAddress && SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 
             onClicked: CallsListModel.launchVideoCall(historyView.peerAddress)
           }
 
           ActionButton {
-            icon: 'call'
+            isCustom: true
+			backgroundRadius: 90
+			colorSet: ContactsStyle.call
             visible: peerAddress && SettingsModel.outgoingCallsEnabled
 
             onClicked: CallsListModel.launchAudioCall(historyView.peerAddress)
@@ -99,25 +103,24 @@ ColumnLayout  {
           anchors.verticalCenter: parent.verticalCenter
 
           ActionButton {
-            icon: Logic.getEditIcon()
+			isCustom: true
+			backgroundRadius: 4
+			colorSet: historyView._sipAddressObserver && historyView._sipAddressObserver.contact ? ConversationStyle.bar.actions.edit.viewContact : ConversationStyle.bar.actions.edit.addContact
             iconSize: HistoryViewStyle.bar.actions.edit.iconSize
             visible: peerAddress && SettingsModel.contactsEnabled
 
             onClicked: window.setView('ContactEdit', { sipAddress: historyView.peerAddress })
-            TooltipArea {
-              text: peerAddress?Logic.getEditTooltipText():''
-            }
+            tooltipText: peerAddress?Logic.getEditTooltipText():''
           }
 
           ActionButton {
-            icon: 'delete'
-            iconSize: HistoryViewStyle.bar.actions.edit.iconSize
+            isCustom: true
+			backgroundRadius: 90
+			colorSet: ContactsStyle.deleteAction
 
             onClicked: Logic.removeAllEntries()
 
-            TooltipArea {
-              text: qsTr('cleanHistory')
-            }
+            tooltipText: qsTr('cleanHistory')
           }
         }
       }

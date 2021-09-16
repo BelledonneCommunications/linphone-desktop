@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="download_custom.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview16"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="4.2868349"
+     inkscape:cx="-28.809134"
+     inkscape:cy="15.162702"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">dowanload_icon</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="Symbols"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     transform="matrix(2.2335962,0,0,2.2491777,20,20)">
+    <g
+       id="dowanload_icon"
+       fill-rule="nonzero"
+       fill="#000000">
+      <g
+         id="Group-3">
+        <path
+           d="m 15.726521,15.51676 v 0.107517 h 0.269557 c -0.147928,0 -0.269557,0.120412 -0.269557,0.267862 z M 2.1818182,15.89269 c 0,-0.148211 -0.1215552,-0.268413 -0.2695565,-0.268413 H 2.1818182 Z M 15.726521,15.624277 V 15.51676 14.554108 14.004511 L 17.90834,14 v 1.892139 c 0,1.044999 -0.854714,1.892138 -1.912262,1.892138 H 1.9122617 C 0.85614875,17.784277 0,16.938276 0,15.89269 v -1.827177 l 2.1818036,-0.008 c 9.7e-6,0.0027 1.46e-5,1.566745 1.46e-5,1.566745 z M 2.1818182,15.89269 c 0,-0.148211 -0.1215552,-0.268413 -0.2695565,-0.268413 H 2.1818182 Z M 15.726521,15.624277 h 0.269557 c -0.147928,0 -0.269557,0.120412 -0.269557,0.267862 V 15.51676 Z m 0,0 c 0,-0.51447 0,-0.60716 0,-1.070169 V 14.004511 L 17.90834,14 v 1.892139 c 0,1.044999 -0.854714,1.892138 -1.912262,1.892138 H 1.9122617 C 0.85614875,17.784277 0,16.938276 0,15.89269 v -1.827177 l 2.1818036,-0.008 c 9.7e-6,0.0027 1.46e-5,1.566745 1.46e-5,1.566745 z"
+           id="Rectangle-7" />
+        <path
+           d="m 14.096382,6.3163423 c 0.203114,-0.2013792 0.476342,-0.3139381 0.763667,-0.3139381 0.287347,0 0.560605,0.1125986 0.755176,0.3057344 0.207887,0.1985658 0.325375,0.4760016 0.325375,0.7629669 0,0.2823762 -0.115368,0.5551801 -0.316873,0.7546035 l -5.388737,5.345112 c -0.203132,0.201469 -0.4763863,0.314077 -0.7637471,0.314077 -0.287381,0 -0.5606382,-0.112602 -0.763697,-0.313998 L 3.316315,7.8257203 C 3.1133743,7.624513 3,7.3541252 3,7.0698885 3,6.7856519 3.1133743,6.515264 3.316315,6.3140568 3.5194763,6.1126309 3.7926854,6 4.080042,6 4.3673986,6 4.6406077,6.1126309 4.843769,6.3140568 L 9.470123,10.900894 Z M 9.3341928,12.280702 c 0.035222,-0.03493 0.085867,-0.0558 0.1370501,-0.0558 0.05113,0 0.1017542,0.02085 0.1369544,0.05574 l -0.1370002,-0.13583 z"
+           id="Fill-1-Copy-6" />
+        <path
+           d="m 10.554476,12.074777 -0.009,-10.8158175 C 10.544874,0.563081 9.9745839,-5.7419236e-4 9.2716763,4.3897543e-7 8.5687687,5.7507031e-4 7.99942,0.56516192 8.0000004,1.2610405 l 0.00902,10.8158175 c 5.804e-4,0.695878 0.5708702,1.259533 1.2737778,1.258959 0.7029076,-5.75e-4 1.2722558,-0.565162 1.2716758,-1.26104 z"
+           id="Line-Copy" />
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata833">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>dowanload_icon</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

@@ -23,8 +23,8 @@ Item {
 	Rectangle{
 		anchors.fill:parent
 		gradient: Gradient {
-			GradientStop { position: 0.0; color: ColorsList.add("Dialog_title_gradient_low", "y").color }
-			GradientStop { position: 1.0; color: ColorsList.add("Dialog_title_gradient_high", "z").color}
+			GradientStop { position: 0.0; color: DialogStyle.title.lowGradient }
+			GradientStop { position: 1.0; color: DialogStyle.title.highGradient }
 		}
 		visible:showBar
 	}
@@ -49,10 +49,12 @@ Item {
 		anchors.right:parent.right
 		anchors.rightMargin: 14
 		anchors.top:parent.top
-		anchors.bottom:parent.bottom
-		icon: 'close'
-		iconSize: 12
-		useStates: false
+		anchors.topMargin: 5
+		height: DialogStyle.closeButton.iconSize
+		isCustom: true
+		backgroundRadius: 90
+		colorSet: DialogStyle.closeButton
+
 		visible:mainItem.showCloseCross
 		
 		onClicked: close()

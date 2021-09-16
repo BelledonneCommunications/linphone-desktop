@@ -38,10 +38,16 @@ class ColorProxyModel : public QSortFilterProxyModel {
 public:
 	ColorProxyModel (QObject *parent = nullptr);
 	
+	Q_INVOKABLE void updateLink(const QString& id, const QString& newLink);
+	Q_INVOKABLE void changeSort();
+	
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	
+private:
+	int mSortMode;
 	
 };
 

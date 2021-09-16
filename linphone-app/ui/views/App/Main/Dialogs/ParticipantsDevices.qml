@@ -107,23 +107,32 @@ DialogPlus {
 					}
 					
 					ActionButton {
-						Layout.preferredHeight: 20
-						Layout.preferredWidth: 20
-						Layout.leftMargin: 14
-						Layout.rightMargin: 14
-						icon: modelData.deviceCount > 0?
-								  (participantDevices.visible ? 'expanded' : 'collapsed')
-								: (modelData.securityLevel === 2?'secure_level_1': 
-																  (modelData.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe')
-								   )
-						iconSize: 20
+						Layout.preferredHeight: iconSize
+						Layout.preferredWidth: iconSize
+						Layout.leftMargin: isCustom ? 9 : 14
+						Layout.rightMargin: isCustom ? 9 : 14
+						property int securityLevel : modelData.securityLevel
+						property bool participantsDevicesVisible: participantDevices.visible
+						function setColorSet(){
+							if(isCustom)
+								colorSet = participantsDevicesVisible ? ParticipantsDevicesStyle.expanded : ParticipantsDevicesStyle.collapsed
+							iconSize = colorSet.iconSize
+						}
+						onSecurityLevelChanged: if( modelData.deviceCount == 0){
+							icon = securityLevel === 2?'secure_level_1': 
+																  (securityLevel===3? 'secure_level_2' : 'secure_level_unsafe')
+							iconSize = 20
+						}
+						onParticipantsDevicesVisibleChanged: setColorSet()
 						visible:true
-						useStates: false
+						useStates: modelData.deviceCount > 0
+						isCustom: useStates
+						onIsCustomChanged: setColorSet()
 						onClicked: participantDevices.visible = !participantDevices.visible
 					}
 				}
 				Rectangle {
-					color: ColorsList.add("ParticipantDevices_separator", "ag").color
+					color: ParticipantsDevicesStyle.lineSeparatorColor
 					Layout.preferredHeight: 1
 					Layout.fillWidth: true
 				}
@@ -149,7 +158,7 @@ DialogPlus {
 						
 						width:parent.width
 						height:50
-						color: ColorsList.add("ParticipantDevices_line_background", "ah").color
+						color: ParticipantsDevicesStyle.lineBackgroundColor
 						RowLayout{
 							anchors.fill:parent
 							Text{
@@ -190,7 +199,7 @@ DialogPlus {
 							}
 						}
 						Rectangle {
-							color: ColorsList.add("ParticipantDevices_separator", "ag").color
+							color: ParticipantsDevicesStyle.lineSeparatorColor
 							anchors.left : parent.left
 							anchors.right  :parent.right
 							anchors.bottom: parent.bottom

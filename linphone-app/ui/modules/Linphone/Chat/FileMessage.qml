@@ -288,9 +288,10 @@ Row {
 						rightMargin: ChatStyle.entry.message.file.margins
 					}
 					
-					icon: 'download'
-					iconSize: ChatStyle.entry.message.file.iconSize
-					visible: (rectangle.contentModel?!isOutgoing && !rectangle.contentModel.wasDownloaded : false)
+					icon: ChatStyle.entry.message.file.download.icon
+					iconSize: ChatStyle.entry.message.file.download.iconSize
+					overwriteColor: isOutgoing ? ChatStyle.entry.message.file.download.outgoingColor : ChatStyle.entry.message.file.download.incomingColor
+					visible: (rectangle.contentModel? !rectangle.contentModel.wasDownloaded : false)
 				}
 				
 				MouseArea {
@@ -331,7 +332,7 @@ Row {
 					spacing:5
 					Text{
 						text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
-						color: ColorsList.add("FileMessage_ephemeral_text", "ad").color 
+						color: ChatStyle.ephemeralTimer.timerColor
 						font.pointSize: Units.dp * 8
 						Timer{
 							running:parent.visible
@@ -341,8 +342,9 @@ Row {
 						}
 					}
 					Icon{
-						icon:'timer'
-						iconSize: 15
+						icon: ChatStyle.ephemeralTimer.icon
+						overwriteColor: ChatStyle.ephemeralTimer.timerColor
+						iconSize: ChatStyle.ephemeralTimer.iconSize
 					}
 				}
 			}
@@ -358,14 +360,15 @@ Row {
 			}
 			
 			ActionButton {
-				height: ChatStyle.entry.lineHeight
 				anchors.left:rectangle.right
 				anchors.leftMargin: -10
 				anchors.top:rectangle.top
 				anchors.topMargin: 5
 				
-				icon: 'chat_menu'
-				iconSize: ChatStyle.entry.deleteIconSize
+				height: ChatStyle.entry.menu.iconSize
+				isCustom: true
+				backgroundRadius: 8
+				colorSet: ChatStyle.entry.menu
 				visible: isHoverEntry()
 				
 				onClicked: chatMenu.open()

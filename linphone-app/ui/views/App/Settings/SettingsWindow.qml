@@ -53,33 +53,33 @@ ApplicationWindow {
 				onCurrentIndexChanged: SettingsModel.onSettingsTabChanged(currentIndex)
 				
 				TabButton {
-					iconName: 'settings_sip_accounts'
+					iconName: TabButtonStyle.icon.sipAccountsIcon
 					text: qsTr('sipAccountsTab')
 					width: implicitWidth
 				}
 				
 				TabButton {
-					iconName: 'settings_audio'
+					iconName: TabButtonStyle.icon.audioIcon
 					text: qsTr('audioTab')
 					width: implicitWidth
 				}
 				
 				TabButton {
 					enabled: SettingsModel.videoSupported
-					iconName: 'settings_video'
+					iconName: TabButtonStyle.icon.videoIcon
 					text: qsTr('videoTab')
 					width: implicitWidth
 				}
 				
 				TabButton {
-					iconName: 'settings_call'
+					iconName: TabButtonStyle.icon.callIcon
 					text: qsTr('callsAndChatTab')
 					width: implicitWidth
 				}
 				
 				TabButton {
 					enabled: SettingsModel.showNetworkSettings || SettingsModel.developerSettingsEnabled
-					iconName: 'settings_network'
+					iconName: TabButtonStyle.icon.networkIcon
 					text: qsTr('networkTab')
 					width: implicitWidth
 				}
@@ -87,20 +87,20 @@ ApplicationWindow {
 				TabButton {
 					visible: SettingsModel.tunnelAvailable()
 					enabled: visible			
-					iconName: 'settings_network'
+					iconName: TabButtonStyle.icon.sipAccountsIcon
 					//: 'Tunnel' : Tab title for tunnel section in settings.
 					text: qsTr('tunnelTab')
 					width: visible ? implicitWidth : 0
 				}
 				
 				TabButton {
-					iconName: 'settings_advanced'
+					iconName: TabButtonStyle.icon.advancedIcon
 					text: qsTr('uiTab')
 					width: implicitWidth
 				}
 				
 				TabButton {
-					iconName: 'settings_advanced'
+					iconName: TabButtonStyle.icon.advancedIcon
 					text: qsTr('uiAdvanced')
 					width: implicitWidth
 				}

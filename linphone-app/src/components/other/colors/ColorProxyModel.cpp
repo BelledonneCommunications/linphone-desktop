@@ -32,7 +32,18 @@
 
 ColorProxyModel::ColorProxyModel (QObject *parent) : QSortFilterProxyModel(parent){
 	setSourceModel(App::getInstance()->getColorListModel());
+	mSortMode = 0;
 	sort(0);
+}
+
+void ColorProxyModel::updateLink(const QString& id, const QString& newLink){
+	App::getInstance()->getColorListModel()->updateLink(id, newLink);
+	invalidate();
+}
+
+void ColorProxyModel::changeSort(){
+	mSortMode = (mSortMode+1)%3;
+	invalidate();
 }
 
 bool ColorProxyModel::filterAcceptsRow (
@@ -41,8 +52,9 @@ bool ColorProxyModel::filterAcceptsRow (
 		) const {
 	Q_UNUSED(sourceRow)
 	Q_UNUSED(sourceParent)
-	//const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-	//const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
+	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	const ColorModel *model= index.data().value<ColorModel *>();
+	//return model->getLinkedToImage() == "";// Remove linked to image from list
 	return true;
 }
 
@@ -50,8 +62,15 @@ bool ColorProxyModel::lessThan (const QModelIndex &left, const QModelIndex &righ
 	ColorListModel * model = static_cast<ColorListModel*>(sourceModel());
 	const ColorModel *a = model->data(left).value<ColorModel *>();
 	const ColorModel *b = model->data(right).value<ColorModel *>();
-	
-	return model->getLinkIndex(a->getName()) < model->getLinkIndex(b->getName());
-			//return a->getName() < b->getName() ;
+	switch(mSortMode){
+	case 0 : 
+		return model->getLinkIndex(a->getName()) < model->getLinkIndex(b->getName());
+	case 1:
+		return a->getName() < b->getName();
+	case 2:
+		return a->getDescription() < b->getDescription();
+	default:
+		return a->getName() < b->getName();
+	}
 }
 //---------------------------------------------------------------------------------

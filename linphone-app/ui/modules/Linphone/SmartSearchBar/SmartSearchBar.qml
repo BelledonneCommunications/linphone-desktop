@@ -59,7 +59,7 @@ SearchBox {
 		id: view
 		
 		actions: [{
-				icon: 'video_call',
+				colorSet: SipAddressesViewStyle.videoCall,
 				secure: 0,
 				visible: true,
 				handler: function (entry) {
@@ -68,7 +68,7 @@ SearchBox {
 				},
 				visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 			}, {
-				icon: 'call',
+				colorSet: SipAddressesViewStyle.call,
 				secure: 0,
 				visible: true,
 				handler: function (entry) {
@@ -77,7 +77,7 @@ SearchBox {
 				},
 				visible: SettingsModel.outgoingCallsEnabled
 			}, {
-				icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
+				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 0,
 				visible: SettingsModel.standardChatEnabled ,
 				handler: function (entry) {
@@ -85,7 +85,7 @@ SearchBox {
 					searchBox.launchChat(entry.sipAddress)
 				}
 			}, {
-				icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
+				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 1,
 				visible: SettingsModel.secureChatEnabled && AccountSettingsModel.conferenceURI != '',
 				visibleHandler : function(entry) {
@@ -103,7 +103,8 @@ SearchBox {
 		]
 		
 		headerButtonDescription: qsTr('addContact')
-		headerButtonIcon: 'contact_add'
+		headerButtonIcon: 'contact_add_custom'
+		headerButtonOverwriteColor: SipAddressesViewStyle.header.button.color
 		headerButtonAction: SettingsModel.contactsEnabled && (function (sipAddress) {
 			searchBox.closeMenu()
 			searchBox.addContact(sipAddress)

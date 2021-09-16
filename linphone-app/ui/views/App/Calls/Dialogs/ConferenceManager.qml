@@ -78,7 +78,8 @@ DialogPlus {
 
           Layout.fillWidth: true
 
-          icon: 'search'
+          icon: 'search_custom'
+          overwriteColor: ConferenceManagerStyle.searchField.color
 
           onTextChanged: conferenceHelperModel.setFilter(text)
         }
@@ -96,7 +97,7 @@ DialogPlus {
 				conferenceHelperModel.toAdd.addToConference(sipAddress)
 			}
             actions: [{
-              icon: 'transfer',
+              colorSet: ConferenceManagerStyle.transfer,
               secure:0,
               visible: true,
               handler: function (entry) {
@@ -151,7 +152,7 @@ DialogPlus {
 			model.removeFromConference(sipAddress)
 		}
         actions: [{
-          icon: 'cancel',
+          colorSet: ConferenceManagerStyle.cancel,
           visible:true,
           secure:0,
           handler: function (entry) {

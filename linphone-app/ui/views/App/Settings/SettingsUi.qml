@@ -65,8 +65,9 @@ TabContainer {
 						label: qsTr('fontsTextChange')
 						RowLayout{
 							ActionButton {
-								icon: 'options'
-								iconSize: 25
+								isCustom: true
+								backgroundRadius: 90
+								colorSet: SettingsUiStyle.options
 								onClicked: fontDialog.visible = true
 								Layout.preferredWidth: 25
 								FontDialog {

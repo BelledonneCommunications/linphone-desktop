@@ -74,8 +74,11 @@ Rectangle {
 				ActionButton {
 					id: callQuality
 					
-					icon: 'call_quality_0'
-					useStates: false
+					isCustom: true
+					backgroundRadius: 4
+					colorSet: CallStyle.buttons.callQuality
+					
+					percentageDisplayed: 0
 					
 					onClicked: Logic.openCallStatistics()
 					
@@ -86,7 +89,14 @@ Rectangle {
 						running: true
 						triggeredOnStart: true
 						
-						onTriggered: Logic.updateCallQualityIcon(callQuality, call)
+						onTriggered: {
+									// Note: `quality` is in the [0, 5] interval and -1.
+									var quality = call.quality
+									if(quality >= 0)
+										callQuality.percentageDisplayed = quality * 100 / 5
+									else
+										callQuality.percentageDisplayed = 0
+							}						
 					}
 					
 					CallStatistics {
@@ -103,21 +113,23 @@ Rectangle {
 				}
 				
 				ActionButton {
-					icon: 'tel_keypad'
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: CallStyle.buttons.telKeyad
 					
 					onClicked: telKeypad.visible = !telKeypad.visible
 				}
 				
 				ActionButton {
 					id: callSecure
+					isCustom: true
+					backgroundRadius: 90
 					
-					icon: incall.call.isSecured ? 'call_chat_secure' : 'call_chat_unsecure'
+					colorSet: incall.call.isSecured ? CallStyle.buttons.secure : CallStyle.buttons.unsecure
 					
 					onClicked: zrtp.visible = (incall.call.encryption === CallModel.CallEncryptionZrtp)
 					
-					TooltipArea {
-						text: Logic.makeReadableSecuredString(incall.call.securedString)
-					}
+					tooltipText: Logic.makeReadableSecuredString(incall.call.securedString)
 				}
 			}
 			
@@ -160,27 +172,28 @@ Rectangle {
 				iconSize: CallStyle.header.buttonIconSize
 				
 				ActionButton {
-					icon: 'screenshot'
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: CallStyle.buttons.screenshot
+				
 					visible: incall.call.videoEnabled
 					
 					onClicked: incall.call.takeSnapshot()
 					
-					TooltipArea {
-						text: qsTr('takeSnapshotLabel')
-					}
+					tooltipText:qsTr('takeSnapshotLabel')
 				}
 				
-				ActionSwitch {
+				ActionButton {
 					id: recordingSwitch
 					
-					enabled: incall.call.recording
-					icon: 'record'
-					useStates: false
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: incall.call.recording ? CallStyle.buttons.recordOn : CallStyle.buttons.recordOff
 					visible: SettingsModel.callRecorderEnabled
 					
 					onClicked: {
 						var call = incall.call
-						return !enabled
+						return !incall.call.recording
 								? call.startRecording()
 								: call.stopRecording()
 					}
@@ -192,14 +205,16 @@ Rectangle {
 					}
 					
 					TooltipArea {
-						text: !recordingSwitch.enabled
+						text: !incall.call.recording
 							  ? qsTr('startRecordingLabel')
 							  : qsTr('stopRecordingLabel')
 					}
 				}
 				
 				ActionButton {
-					icon: 'fullscreen'
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: CallStyle.buttons.fullscreen
 					visible: incall.call.videoEnabled
 					
 					onClicked: Logic.showFullscreen(contactDescription.mapToGlobal(0,0))
@@ -296,22 +311,20 @@ Rectangle {
 						Timer {
 							interval: 50
 							repeat: true
-							running: micro.enabled
+							running: parent.enabled
 							
 							onTriggered: parent.value = incall.call.microVu
 						}
 						
-						enabled: micro.enabled
+						enabled: !incall.call.microMuted
 					}
 					
-					ActionSwitch {
+					ActionButton {
 						id: micro
-						
-						enabled: !call.microMuted
-						icon: 'micro'
-						iconSize: CallStyle.actionArea.iconSize
-						
-						onClicked: incall.call.microMuted = enabled
+						isCustom: true
+						backgroundRadius: 90
+						colorSet: incall.call.microMuted ? CallStyle.buttons.microOff : CallStyle.buttons.microOn
+						onClicked: incall.call.microMuted = !incall.call.microMuted
 					}
 				}
 				
@@ -322,33 +335,32 @@ Rectangle {
 						Timer {
 							interval: 50
 							repeat: true
-							running: speaker.enabled
+							running: parent.enabled
 							
 							onTriggered: parent.value = incall.call.speakerVu
 						}
 						
-						enabled: speaker.enabled
+						enabled: !incall.call.speakerMuted
 					}
 					
-					ActionSwitch {
+					ActionButton {
 						id: speaker
+						isCustom: true
+						backgroundRadius: 90
+						colorSet: incall.call.speakerMuted ? CallStyle.buttons.speakerOff : CallStyle.buttons.speakerOn
 						
-						enabled: !call.speakerMuted
-						icon: 'speaker'
-						iconSize: CallStyle.actionArea.iconSize
-						
-						onClicked: incall.call.speakerMuted = enabled
+						onClicked: incall.call.speakerMuted = !incall.call.speakerMuted
 					}
 				}
 				
-				ActionSwitch {
-					enabled: incall.call.videoEnabled
-					icon: 'camera'
-					iconSize: CallStyle.actionArea.iconSize
-					updating: incall.call.updating
+				ActionButton {
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: incall.call.videoEnabled ? CallStyle.buttons.cameraOn : CallStyle.buttons.cameraOff
+					updating: incall.call.videoEnabled && incall.call.updating
 					visible: SettingsModel.videoSupported
 					
-					onClicked: incall.call.videoEnabled = !enabled
+					onClicked: incall.call.videoEnabled = !incall.call.videoEnabled
 					
 					TooltipArea {
 						text: qsTr('pendingRequestLabel')
@@ -357,11 +369,12 @@ Rectangle {
 				}
 				
 				ActionButton {
-					Layout.preferredHeight: CallStyle.actionArea.iconSize
-					Layout.preferredWidth: CallStyle.actionArea.iconSize
+					Layout.preferredHeight: CallStyle.buttons.options.iconSize
+					Layout.preferredWidth: CallStyle.buttons.options.iconSize
 					
-					icon: 'options'
-					iconSize: CallStyle.actionArea.iconSize
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: CallStyle.buttons.options
 					
 					onClicked: Logic.openMediaParameters(window, incall)
 				}
@@ -400,13 +413,14 @@ Rectangle {
 				}
 				iconSize: CallStyle.actionArea.iconSize
 				
-				ActionSwitch {
-					enabled: !call.pausedByUser
-					icon: 'pause'
+				ActionButton {
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: call.pausedByUser ? CallStyle.buttons.play : CallStyle.buttons.pause
 					updating: incall.call.updating
 					visible: SettingsModel.callPauseEnabled
 					
-					onClicked: incall.call.pausedByUser = enabled
+					onClicked: incall.call.pausedByUser = !incall.call.pausedByUser
 					
 					TooltipArea {
 						text: qsTr('pendingRequestLabel')
@@ -415,13 +429,17 @@ Rectangle {
 				}
 				
 				ActionButton {
-					icon: 'hangup'
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: CallStyle.buttons.hangup
 					
 					onClicked: incall.call.terminate()
 				}
 				
 				ActionButton {
-					icon: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && SettingsModel.showStartChatButton ? 'chat' : 'history'
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && SettingsModel.showStartChatButton ? CallStyle.buttons.chat : CallStyle.buttons.history
 					
 					onClicked: {
 						if (window.chatIsOpened) {

@@ -7,63 +7,67 @@ import Common 1.0
 // =============================================================================
 
 Column {
-  property alias title: title.text
-  property int orientation: Qt.Horizontal
-  property bool addButton : false
-  signal addButtonClicked;
-  property bool removeButton : false
-  signal removeButtonClicked;
-
-  // ---------------------------------------------------------------------------
-
-  spacing: FormStyle.spacing
-
-  // ---------------------------------------------------------------------------
-
-  ColumnLayout {
-    spacing: FormStyle.header.spacing
-    visible: parent.title.length > 0
-    width: parent.width
-
-    Row{
-		spacing:10
-	    Text {
-	      id: title
-		  anchors.verticalCenter: parent.verticalCenter
+	property alias title: title.text
+	property int orientation: Qt.Horizontal
+	property bool addButton : false
+	signal addButtonClicked;
+	property bool removeButton : false
+	signal removeButtonClicked;
 	
-	      color: FormStyle.header.title.color
-	      font {
-		bold: true
-		pointSize: FormStyle.header.title.pointSize
-	      }
-	    }
-	    ActionButton {
-		 visible:addButton
-		 anchors.verticalCenter: parent.verticalCenter
-		 icon: 'add'
-		 iconSize:38
-		 scale:0.8
-		 onClicked:addButtonClicked()
-	 }
-	 ActionButton {
-		 visible:removeButton
-		 anchors.verticalCenter: parent.verticalCenter
-		 icon: 'delete'
-		 iconSize:38
-		 scale:0.8
-		 onClicked:removeButtonClicked()
-	 }
-    }
-
-    Rectangle {
-      Layout.fillWidth: true
-      Layout.preferredHeight: FormStyle.header.separator.height
-
-      color: FormStyle.header.separator.color
-    }
-
-    Item {
-      height: FormStyle.header.bottomMargin
-    }
-  }
+	// ---------------------------------------------------------------------------
+	
+	spacing: FormStyle.spacing
+	
+	// ---------------------------------------------------------------------------
+	
+	ColumnLayout {
+		spacing: FormStyle.header.spacing
+		visible: parent.title.length > 0
+		width: parent.width
+		
+		Row{
+			spacing:10
+			Text {
+				id: title
+				anchors.verticalCenter: parent.verticalCenter
+				
+				color: FormStyle.header.title.color
+				font {
+					bold: true
+					pointSize: FormStyle.header.title.pointSize
+				}
+			}
+			ActionButton {
+				visible:addButton
+				anchors.verticalCenter: parent.verticalCenter
+				isCustom: true
+				backgroundRadius: 90
+				colorSet: FormStyle.header.add
+				
+				scale:0.8
+				onClicked:addButtonClicked()
+			}
+			ActionButton {
+				visible:removeButton
+				anchors.verticalCenter: parent.verticalCenter
+				isCustom: true
+				backgroundRadius: 90
+				
+				colorSet: FormStyle.header.deleteAction
+				scale:0.8
+				onClicked:removeButtonClicked()
+			}
+		}
+		
+		Rectangle {
+			Layout.fillWidth: true
+			Layout.preferredHeight: FormStyle.header.separator.height
+			
+			color: FormStyle.header.separator.color
+		}
+		
+		Item {
+			height: FormStyle.header.bottomMargin
+		}
+	}
 }

@@ -98,7 +98,8 @@ ColumnLayout  {
 				Layout.preferredHeight: ConversationStyle.bar.groupChatSize
 				Layout.preferredWidth: ConversationStyle.bar.groupChatSize
 				
-				icon:'chat_room'
+				icon: ConversationStyle.bar.groupChatIcon
+				overwriteColor: ConversationStyle.bar.groupChatColor
 				iconSize: ConversationStyle.bar.groupChatSize
 				visible: !chatRoomModel.isOneToOne
 			}
@@ -128,15 +129,16 @@ ColumnLayout  {
 							
 							Icon{
 								id:adminIcon
-								icon : 'admin_selected'
-								iconSize:14
+								icon : ConversationStyle.bar.status.adminStatusIcon
+								overwriteColor: ConversationStyle.bar.status.adminStatusColor
+								iconSize: ConversationStyle.bar.status.adminStatusIconSize
 							}
 							Text{
 								anchors.verticalCenter: parent.verticalCenter
 								//: 'Admin' : Admin(istrator)
 								//~ Context One word title for describing the current admin status
 								text: qsTr('adminStatus')
-								color: ColorsList.add("Conversation_admin_status", "af").color
+								color: ConversationStyle.bar.status.adminTextColor
 								font.pointSize: Units.dp * 8
 							}
 						}
@@ -244,26 +246,37 @@ ColumnLayout  {
 					iconSize: ConversationStyle.bar.actions.call.iconSize
 					
 					ActionButton {
-						icon: 'video_call'
+						isCustom: true
+						backgroundRadius: 1000
+						colorSet: ConversationStyle.bar.actions.videoCall
+						
 						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.haveMoreThanOneParticipants
 						
 						onClicked: CallsListModel.launchVideoCall(chatRoomModel.participants.addressesToString)
 					}
 					
 					ActionButton {
-						icon: 'call'
+						isCustom: true
+						backgroundRadius: 1000
+						colorSet: ConversationStyle.bar.actions.call
+						
 						visible: SettingsModel.outgoingCallsEnabled && !conversation.haveMoreThanOneParticipants
 						
 						onClicked: CallsListModel.launchAudioCall(chatRoomModel.participants.addressesToString)
 					}
 					ActionButton {
-						icon: 'chat'
+						isCustom: true
+						backgroundRadius: 1000
+						colorSet: ConversationStyle.bar.actions.chat
+						
 						visible: SettingsModel.standardChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel != 1
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 0)
 					}
 					ActionButton {
-						icon: 'chat'
+						isCustom: true
+						backgroundRadius: 1000
+						colorSet: ConversationStyle.bar.actions.chat
 						visible: SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 1)
@@ -277,14 +290,15 @@ ColumnLayout  {
 					}
 					
 					ActionButton {
-						icon: 'group_chat'
+						isCustom: true
+						backgroundRadius: 1000
+						colorSet: ConversationStyle.bar.actions.groupChat
+						
 						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.hasBeenLeft
 						
 						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
-						TooltipArea {
-							//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room
-							text: qsTr("groupChatCallButton")
-						}
+						//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room
+						tooltipText: qsTr("groupChatCallButton")
 					}
 				}
 				
@@ -293,21 +307,22 @@ ColumnLayout  {
 					anchors.verticalCenter: parent.verticalCenter
 					
 					ActionButton {
-						icon: Logic.getEditIcon()
-						iconSize: ConversationStyle.bar.actions.edit.iconSize
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: conversation._sipAddressObserver.contact ? ConversationStyle.bar.actions.edit.viewContact : ConversationStyle.bar.actions.edit.addContact
 						visible: SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
 						
 						onClicked: window.setView('ContactEdit', {
 													  sipAddress: conversation.getPeerAddress()
 												  })
-						TooltipArea {
-							text: Logic.getEditTooltipText()
-						}
+						tooltipText: Logic.getEditTooltipText()
 					}
 					
 					ActionButton {
-						icon: 'delete'
-						iconSize: ConversationStyle.bar.actions.edit.iconSize
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: 	ConversationStyle.bar.actions.del.deleteHistory
+						iconSize: ConversationStyle.bar.actions.del.iconSize
 						
 						onClicked: Logic.removeAllEntries()
 						
@@ -317,12 +332,11 @@ ColumnLayout  {
 					}
 					ActionButton {
 						id:dotButton
-						icon: 'menu_vdots'
-						iconSize: ConversationStyle.bar.actions.edit.iconSize
+						isCustom: true
+						backgroundRadius: 90
+						colorSet: 	ConversationStyle.bar.actions.openMenu
 						visible: conversationMenu.showGroupInfo || conversationMenu.showDevices || conversationMenu.showEphemerals
-						
-						//autoIcon: true
-						
+												
 						onClicked: {
 							conversationMenu.open()
 						}
@@ -343,8 +357,8 @@ ColumnLayout  {
 						id:groupInfoMenu
 						//: 'Group information' : Item menu to get information about the chat room
 						text: qsTr('conversationMenuGroupInformations')
-						iconMenu: (hovered ? 'menu_infos_selected' : 'menu_infos')
-						iconSizeMenu: 25
+						iconMenu: MenuItemStyle.info.icon
+						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						visible: conversationMenu.showGroupInfo
 						onTriggered: {
@@ -357,16 +371,16 @@ ColumnLayout  {
 						id: separator1
 						height:1
 						width:parent.width
-						color: ColorsList.add("Conversation_menu_separator", "u").color
+						color: ConversationStyle.menu.separatorColor
 						visible: groupInfoMenu.visible && devicesMenuItem.visible
 					}
 					MenuItem{
 						id: devicesMenuItem
 						//: "Conversation's devices" : Item menu to get all participant devices of the chat room
 						text: qsTr('conversationMenuDevices')
-						iconMenu: (hovered ? 'menu_devices_selected' : 'menu_devices' )
+						iconMenu: MenuItemStyle.devices.icon
 						visible: conversationMenu.showDevices
-						iconSizeMenu: 25
+						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
 							window.detachVirtualWindow()
@@ -378,15 +392,15 @@ ColumnLayout  {
 						id: separator2
 						height:1
 						width:parent.width
-						color: ColorsList.add("Conversation_menu_separator", "u").color
+						color: ConversationStyle.menu.separatorColor
 						visible: ephemeralMenuItem.visible && (groupInfoMenu.visible || devicesMenuItem.visible)
 					}
 					MenuItem{
 						id: ephemeralMenuItem
 						//: 'Ephemeral messages' : Item menu to enable ephemeral mode
 						text: qsTr('conversationMenuEphemeral')
-						iconMenu: (hovered ? 'menu_ephemeral_selected' : 'menu_ephemeral')
-						iconSizeMenu: 25
+						iconMenu: MenuItemStyle.ephemeral.icon
+						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						visible: conversationMenu.showEphemerals
 						onTriggered: {
@@ -458,8 +472,9 @@ ColumnLayout  {
 			Icon{
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.horizontalCenter: parent.horizontalCenter
-				icon: (searchView.visible? 'close': 'search')
-				iconSize: 20
+				icon: (searchView.visible? 'close_custom': 'search_custom')
+				iconSize: 30
+				overwriteColor: ConversationStyle.bar.searchIconColor
 			}
 			onClicked: {
 				searchView.visible = !searchView.visible
@@ -486,7 +501,8 @@ ColumnLayout  {
 					margins: 1
 				}
 				width: parent.width-14
-				icon: 'textfield_close'
+				icon: 'close_custom'
+				overwriteColor: ConversationStyle.filters.iconColor
 				persistentIcon: true
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')

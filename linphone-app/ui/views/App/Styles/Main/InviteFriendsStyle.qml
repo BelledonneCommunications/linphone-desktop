@@ -6,15 +6,16 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property color color: ColorsList.add("InviteFriends_background", "k").color
-  property int width: 400
-
-  property QtObject message: QtObject {
-    property int height: 140
-  }
-
-  property QtObject buttons: QtObject {
-    property int bottomMargin: 35
-    property int spacing: 10
-  }
+	property string sectionName: 'InviteFriends'
+	property color color: ColorsList.add(sectionName+'_bg', 'k').color
+	property int width: 400
+	
+	property QtObject message: QtObject {
+		property int height: 140
+	}
+	
+	property QtObject buttons: QtObject {
+		property int bottomMargin: 35
+		property int spacing: 10
+	}
 }

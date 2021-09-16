@@ -99,9 +99,10 @@ ColumnLayout  {
 			spacing: ContactEditStyle.bar.spacing
 			
 			ActionButton {
+				isCustom: true
+				backgroundRadius: 90
+				colorSet: ContactEditStyle.bar.avatarTakePicture
 				enabled: _edition
-				icon: 'contact_card_photo'
-				iconSize: ContactEditStyle.bar.avatarSize
 				
 				onClicked: avatarChooser.open()
 				
@@ -153,17 +154,19 @@ ColumnLayout  {
 					iconSize: ContactEditStyle.bar.actions.history.iconSize
 					
 					ActionButton {
-									icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
-									visible: SettingsModel.standardChatEnabled
-									onClicked: sipAddressesMenu.open(false)
-									TooltipArea {
-										isClickable: false
-										text: qsTr('tooltipShowConversation')
-									}
+						isCustom: true
+						backgroundRadius: 90
+						colorSet: SettingsModel.getShowStartChatButton() ? ContactEditStyle.chat : ContactEditStyle.history
+						visible: SettingsModel.standardChatEnabled
+						onClicked: sipAddressesMenu.open(false)
+						tooltipText: qsTr('tooltipShowConversation')
+						tooltipIsClickable: false
 					}
 								
 					ActionButton {
-						icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+						isCustom: true
+						backgroundRadius: 90
+						colorSet: SettingsModel.getShowStartChatButton() ? ContactEditStyle.chat : ContactEditStyle.history
 						visible: SettingsModel.secureChatEnabled && _contact && _contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
 						enabled: AccountSettingsModel.conferenceURI != ''
 						Icon{
@@ -174,13 +177,11 @@ ColumnLayout  {
 							anchors.topMargin: -3
 						}
 						onClicked: {sipAddressesMenu.open(true)}
-						TooltipArea{
-							maxWidth: actionBar.width
-							visible: AccountSettingsModel.conferenceURI == ''
+						
+						tooltipMaxWidth: actionBar.width
+						tooltipVisible: AccountSettingsModel.conferenceURI == ''
 							//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
-							text: '- ' + qsTr('missingConferenceURI') + '\n'
-							
-						}
+						tooltipText: '- ' + qsTr('missingConferenceURI') + '\n'
 					}
 				}
 				
@@ -188,16 +189,18 @@ ColumnLayout  {
 					anchors.verticalCenter: parent.verticalCenter
 					
 					ActionButton {
-						icon: 'edit'
-						iconSize: ContactEditStyle.bar.actions.edit.iconSize
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: ContactEditStyle.bar.actions.edit.colorSet
 						
 						visible: !_edition
 						onClicked: Logic.editContact()
 					}
 					
 					ActionButton {
-						icon: 'delete'
-						iconSize: ContactEditStyle.bar.actions.del.iconSize
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: ContactEditStyle.bar.actions.del.colorSet
 						
 						onClicked: Logic.removeContact()
 					}

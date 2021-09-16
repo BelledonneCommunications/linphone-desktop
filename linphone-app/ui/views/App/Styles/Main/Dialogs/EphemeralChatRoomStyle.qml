@@ -7,6 +7,7 @@ import ColorsList 1.0
 
 // =============================================================================
 QtObject {
+	property string sectionName: 'EphemeralChatRoom'
 	property int height: 320
 	property int width: 450
 	
@@ -18,16 +19,18 @@ QtObject {
 	}
 		
 	property QtObject timer: QtObject {
-		property int iconSize: 40
-		property int preferredHeight: 50
-		property int preferredWidth: 50
+		property int iconSize: 60
+		property int preferredHeight: 60
+		property int preferredWidth: 60
+		property string icon: 'timer_custom'
+		property color timerColor: ColorsList.addImageColor(sectionName+'_timer', icon, 'ad').color
 	}
 	property QtObject descriptionText: QtObject {
 		property int preferredWidth: 200
 		property int leftMargin: 10
 		property int rightMargin: 10
 		property real pointSize: Units.dp * 11
-		property color color: ColorsList.add("Ephemeral_popup_description", "d").color
+		property color color: ColorsList.add(sectionName+'_popup_description', 'd').color
 	}
 	property QtObject timerPicker: QtObject {
 		property int preferredWidth: 150

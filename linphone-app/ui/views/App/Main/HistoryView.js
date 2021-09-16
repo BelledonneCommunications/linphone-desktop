@@ -44,10 +44,6 @@ function getAvatar () {
   return contact ? contact.vcard.avatar : ''
 }
 
-function getEditIcon () {
-  return historyView._sipAddressObserver && historyView._sipAddressObserver.contact ? 'contact_edit' : 'contact_add'
-}
-
 function getEditTooltipText() {
     return historyView._sipAddressObserver && historyView._sipAddressObserver.contact ? qsTr('tooltipContactEdit') : qsTr('tooltipContactAdd')
 }

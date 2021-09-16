@@ -5,5 +5,7 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-  property color shadowColor: ColorsList.add("SearchBox_shadow", "l").color
+	property string sectionName: 'SearchBox'
+	property color shadowColor: ColorsList.add(sectionName+'_shadow', 'l').color
+	property color iconColor: ColorsList.add(sectionName+'_icon', 'c').color
 }

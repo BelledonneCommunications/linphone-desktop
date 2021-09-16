@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg13"
+   sodipodi:docname="contact_card_photo_custom.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <sodipodi:namedview
+     id="namedview15"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="3.6375"
+     inkscape:cx="-10.584192"
+     inkscape:cy="50.309278"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg13" />
+  <!-- Generator: Sketch 41.2 (35397) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">contact_card_photo_over</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="Symbols"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     transform="matrix(1.3797593,0,0,1.2597605,-2.0761488,3.5840715)">
+    <g
+       id="contact_card_photo_over">
+      <g
+         id="Group-7">
+        <path
+           d="M 42.703145,40.81405 H 18.234171 C 17.01066,40.81405 16,39.819638 16,38.615797 v -15.38757 c 0,-1.203841 1.01066,-2.198186 2.234171,-2.198186 h 3.5639 c 0.585235,0 1.276758,-0.471045 1.436292,-1.046871 l 0.319138,-1.046804 C 23.925886,17.837375 25.09615,17 26.266344,17 h 8.457874 c 1.170195,0 2.340459,0.837375 2.712844,1.936366 l 0.319137,1.046804 c 0.159535,0.575826 0.851057,1.046871 1.436293,1.046871 h 3.563969 c 1.223442,0 2.234102,0.994345 2.234102,2.198186 v 15.38757 c 0,1.203841 -1.01066,2.198253 -2.287418,2.198253 z M 18.234171,22.338393 c -0.531988,0 -0.957413,0.418857 -0.957413,0.942292 v 15.3873 c 0,0.523367 0.425425,0.942224 0.957413,0.942224 h 24.468974 c 0.531988,0 0.957689,-0.418857 0.957689,-0.942224 v -15.3873 c 0,-0.523435 -0.425701,-0.942292 -0.957689,-0.942292 h -3.5639 c -1.170195,0 -2.340459,-0.837375 -2.712844,-1.936366 L 36.107264,19.355223 C 35.947729,18.7796 35.256207,18.308352 34.670971,18.308352 h -8.457874 c -0.585028,0 -1.276551,0.471248 -1.436361,1.046871 l -0.319137,1.046804 c -0.372385,1.098991 -1.54258,1.936366 -2.712844,1.936366 z"
+           id="Fill-1"
+           fill="#000000" />
+        <path
+           d="M 30.181116,37.131338 C 26.244762,37.131338 23,33.991131 23,30.065669 23,26.192666 26.191791,23 30.181116,23 c 3.989601,0 7.181392,3.140207 7.181392,7.065669 0,3.925462 -3.244831,7.065669 -7.181392,7.065669 z m 0,-12.770527 c -3.244762,0 -5.851042,2.564651 -5.851042,5.757317 0,3.192598 2.60628,5.75725 5.851042,5.75725 3.245038,0 5.851319,-2.564652 5.851319,-5.75725 0,-3.192666 -2.606281,-5.757317 -5.851319,-5.757317 z"
+           id="Fill-2"
+           fill="#000000" />
+      </g>
+    </g>
+  </g>
+  <metadata
+     id="metadata832">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>contact_card_photo_over</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

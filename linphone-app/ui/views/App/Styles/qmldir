@@ -6,6 +6,7 @@ module App.Styles
 
 # Calls Window -----------------------------------------------------------------
 
+singleton CallFullscreenStyle                            1.0 Calls/CallFullscreenStyle.qml
 singleton CallStyle                                      1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                               1.0 Calls/CallsWindowStyle.qml
 singleton ConferenceStyle                                1.0 Calls/ConferenceStyle.qml
@@ -36,15 +37,18 @@ singleton MainWindowStyle                                1.0 Main/MainWindowStyl
 singleton AboutStyle                                     1.0 Main/Dialogs/AboutStyle.qml
 singleton AuthenticationRequestStyle                     1.0 Main/Dialogs/AuthenticationRequestStyle.qml
 singleton EphemeralChatRoomStyle                         1.0 Main/Dialogs/EphemeralChatRoomStyle.qml
-singleton ManageAccountsStyle                            1.0 Main/Dialogs/ManageAccountsStyle.qml
 singleton InfoChatRoomStyle                              1.0 Main/Dialogs/InfoChatRoomStyle.qml
 singleton InfoEncryptionStyle                            1.0 Main/Dialogs/InfoEncryptionStyle.qml
+singleton ManageAccountsStyle                            1.0 Main/Dialogs/ManageAccountsStyle.qml
+singleton NewChatRoomStyle                               1.0 Main/Dialogs/NewChatRoomStyle.qml
+singleton ParticipantsDevicesStyle                       1.0 Main/Dialogs/ParticipantsDevicesStyle.qml
 
 
 # Settings Window --------------------------------------------------------------
 
 singleton SettingsAdvancedStyle                          1.0 Settings/SettingsAdvancedStyle.qml
 singleton SettingsAudioStyle                             1.0 Settings/SettingsAudioStyle.qml
+singleton SettingsUiStyle                                1.0 Settings/SettingsUiStyle.qml
 singleton SettingsWindowStyle                            1.0 Settings/SettingsWindowStyle.qml
 
 singleton SettingsSipAccountsEditStyle                   1.0 Settings/Dialogs/SettingsSipAccountsEditStyle.qml

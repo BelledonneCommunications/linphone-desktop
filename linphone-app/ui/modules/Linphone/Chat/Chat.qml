@@ -306,7 +306,8 @@ Rectangle {
 					anchors.centerIn: parent
 					spacing: 5
 					Icon{
-						icon: "copy_light"
+						icon: ChatStyle.copyTextIcon
+						overwriteColor: ChatStyle.messageBanner.textColor
 						iconSize: 20
 					}
 					Text{

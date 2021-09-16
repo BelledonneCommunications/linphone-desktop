@@ -68,8 +68,9 @@ Column {
 					anchors.verticalCenter: parent.verticalCenter
 					anchors.right:parent.right
 					anchors.rightMargin:SettingsAdvancedStyle.lists.margin
-					icon: 'cancel'
-					iconSize:CallsStyle.entry.iconActionSize
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: SettingsAdvancedStyle.cancel
 					scale:SettingsAdvancedStyle.lists.iconScale
 					onClicked:{
 						LdapListModel.remove(modelData)

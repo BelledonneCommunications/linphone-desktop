@@ -44,7 +44,8 @@ ColumnLayout {
 			
 			TextField {
 				Layout.fillWidth: true
-				icon: 'filter'
+				icon: ContactsStyle.filter.icon
+				overwriteColor: ContactsStyle.filter.color
 				placeholderText: qsTr('searchContactPlaceholder')
 				
 				onTextChanged: contacts.setFilter(text)
@@ -134,27 +135,35 @@ ColumnLayout {
 								iconSize: ContactsStyle.contact.actionButtonsSize
 								
 								ActionButton {
-									icon: 'video_call'
+									isCustom: true
+									backgroundRadius: 90
+									colorSet: ContactsStyle.videoCall
 									visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.getShowStartVideoCallButton()
 									
 									onClicked: actions.itemAt(0).open()
 								}
 								
 								ActionButton {
-									icon: 'call'
+									isCustom: true
+									backgroundRadius: 90
+									colorSet: ContactsStyle.call
 									visible: SettingsModel.outgoingCallsEnabled
 									
 									onClicked: actions.itemAt(1).open()
 								}
 								
 								ActionButton {
-									icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+									isCustom: true
+									backgroundRadius: 90
+									colorSet: SettingsModel.getShowStartChatButton() ? ContactsStyle.chat : ContactsStyle.history
 									visible: SettingsModel.standardChatEnabled
 									onClicked: actions.itemAt(2).open()
 								}
 								
 								ActionButton {
-									icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+									isCustom: true
+									backgroundRadius: 90
+									colorSet: SettingsModel.getShowStartChatButton() ? ContactsStyle.chat : ContactsStyle.history
 									visible: SettingsModel.secureChatEnabled && $contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
 									enabled: AccountSettingsModel.conferenceURI != ''
 									Icon{
@@ -165,23 +174,21 @@ ColumnLayout {
 										anchors.topMargin: -3
 									}
 									onClicked: {actions.itemAt(3).open()}
-									TooltipArea{
-										maxWidth: actionBar.width
-										visible: AccountSettingsModel.conferenceURI == ''
+									tooltipMaxWidth: actionBar.width
+									tooltipVisible: AccountSettingsModel.conferenceURI == ''
 										//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
-										text: '- ' + qsTr('missingConferenceURI') + '\n'
-										
-									}
+									tooltipText: '- ' + qsTr('missingConferenceURI') + '\n'
 								}
 							}
 							
 							ActionButton {
+								isCustom: true
+								backgroundRadius: 90
+								colorSet: ContactsStyle.deleteAction
 								anchors {
 									right: parent.right
 									verticalCenter: parent.verticalCenter
 								}
-								icon: 'delete'
-								iconSize: ContactsStyle.contact.deleteButtonSize
 								
 								onClicked: _removeContact($contact)
 							}

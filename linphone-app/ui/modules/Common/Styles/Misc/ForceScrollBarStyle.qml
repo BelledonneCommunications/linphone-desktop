@@ -5,8 +5,9 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
+	property string sectionName: 'ForceScrollBar'
 	property QtObject background : QtObject {
-		property color color:  ColorsList.add("ForceScrollBar_background", "g20").color
+		property color color:  ColorsList.add(sectionName+'_bg', 'g20').color
 		property int radius : 10
 	}
 	
@@ -17,8 +18,8 @@ QtObject {
 	}
 	
 	property QtObject color: QtObject {
-		property color hovered: ColorsList.add("ForceScrollBar_hovered", "h").color
-		property color normal: ColorsList.add("ForceScrollBar_normal", "g20").color
-		property color pressed: ColorsList.add("ForceScrollBar_pressed", "d").color
+		property color hovered: ColorsList.add(sectionName+'_h', 'h').color
+		property color normal: ColorsList.add(sectionName+'_n', 'g20').color
+		property color pressed: ColorsList.add(sectionName+'_p', 'd').color
 	}
 }

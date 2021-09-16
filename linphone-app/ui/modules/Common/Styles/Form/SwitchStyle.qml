@@ -4,6 +4,7 @@ import ColorsList 1.0
 
 // =============================================================================
 QtObject{
+	property string sectionName: 'Switch'
 	property QtObject normal :QtObject {
 	  property QtObject animation: QtObject {
 		property int duration: 200
@@ -15,16 +16,16 @@ QtObject{
 		property int width: 48
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: ColorsList.add("Switch_normal_indicator_border_checked", "i").color
-			property color disabled: ColorsList.add("Switch_normal_indicator_border_disabled", "c").color
-			property color normal: ColorsList.add("Switch_normal_indicator_border_normal", "c").color
+			property color checked: ColorsList.add(sectionName+'_n_indicator_border_c', 'i').color
+			property color disabled: ColorsList.add(sectionName+'_n_indicator_border_d', 'c').color
+			property color normal: ColorsList.add(sectionName+'_n_indicator_border_n', 'c').color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color checked: ColorsList.add("Switch_normal_indicator_checked", "i").color
-		  property color disabled: ColorsList.add("Switch_normal_indicator_disabled", "e").color
-		  property color normal: ColorsList.add("Switch_normal_indicator_normal", "q").color
+		  property color checked: ColorsList.add(sectionName+'_n_indicator_c', 'i').color
+		  property color disabled: ColorsList.add(sectionName+'_n_indicator_d', 'e').color
+		  property color normal: ColorsList.add(sectionName+'_n_indicator_n', 'q').color
 		}
 	  }
 	
@@ -33,17 +34,17 @@ QtObject{
 	
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: ColorsList.add("Switch_normal_sphere_border_checked", "i").color
-			property color disabled: ColorsList.add("Switch_normal_sphere_border_disabled", "c").color
-			property color normal: ColorsList.add("Switch_normal_sphere_border_normal", "n").color
-			property color pressed: ColorsList.add("Switch_normal_sphere_border_pressed", "n").color
+			property color checked: ColorsList.add(sectionName+'_n_sphere_border_c', 'i').color
+			property color disabled: ColorsList.add(sectionName+'_n_sphere_border_d', 'c').color
+			property color normal: ColorsList.add(sectionName+'_n_sphere_border_n', 'n').color
+			property color pressed: ColorsList.add(sectionName+'_n_sphere_border_p', 'n').color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color pressed: ColorsList.add("Switch_normal_sphere_pressed", "c").color
-		  property color disabled: ColorsList.add("Switch_normal_sphere_disabled", "e").color
-		  property color normal: ColorsList.add("Switch_normal_sphere_normal", "q").color
+		  property color pressed: ColorsList.add(sectionName+'_n_sphere_p', 'c').color
+		  property color disabled: ColorsList.add(sectionName+'_n_sphere_d', 'e').color
+		  property color normal: ColorsList.add(sectionName+'_n_sphere_n', 'q').color
 		}
 	  }
 	}
@@ -58,16 +59,16 @@ QtObject{
 		property int width: 48
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked: ColorsList.add("Switch_aux_indicator_border_checked", "s").color
-			property color disabled: ColorsList.add("Switch_aux_indicator_border_disabled", "c").color
-			property color normal: ColorsList.add("Switch_aux_indicator_border_normal", "c").color
+			property color checked: ColorsList.add(sectionName+'_aux_indicator_border_c', 's').color
+			property color disabled: ColorsList.add(sectionName+'_aux_indicator_border_d', 'c').color
+			property color normal: ColorsList.add(sectionName+'_aux_indicator_border_n', 'c').color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color checked: ColorsList.add("Switch_aux_indicator_checked", "s").color
-		  property color disabled: ColorsList.add("Switch_aux_indicator_disabled", "e").color
-		  property color normal: ColorsList.add("Switch_aux_indicator_normal", "q").color
+		  property color checked: ColorsList.add(sectionName+'_aux_indicator_c', 's').color
+		  property color disabled: ColorsList.add(sectionName+'_aux_indicator_d', 'e').color
+		  property color normal: ColorsList.add(sectionName+'_aux_indicator_n', 'q').color
 		}
 	  }
 	
@@ -76,17 +77,17 @@ QtObject{
 	
 		property QtObject border: QtObject {
 		  property QtObject color: QtObject {
-			property color checked:  ColorsList.add("Switch_aux_sphere_border_checked", "s").color
-			property color disabled: ColorsList.add("Switch_aux_sphere_border_disabled", "c").color
-			property color normal: ColorsList.add("Switch_aux_sphere_border_normal", "n").color
-			property color pressed: ColorsList.add("Switch_aux_sphere_border_pressed", "n").color
+			property color checked:  ColorsList.add(sectionName+'_aux_sphere_border_c', 's').color
+			property color disabled: ColorsList.add(sectionName+'_aux_sphere_border_d', 'c').color
+			property color normal: ColorsList.add(sectionName+'_aux_sphere_border_n', 'n').color
+			property color pressed: ColorsList.add(sectionName+'_aux_sphere_border_p', 'n').color
 		  }
 		}
 	
 		property QtObject color: QtObject {
-		  property color pressed: ColorsList.add("Switch_aux_sphere_pressed", "c").color
-		  property color disabled: ColorsList.add("Switch_aux_sphere_disabled", "e").color
-		  property color normal: ColorsList.add("Switch_aux_sphere_normal", "q").color
+		  property color pressed: ColorsList.add(sectionName+'_aux_sphere_p', 'c').color
+		  property color disabled: ColorsList.add(sectionName+'_aux_sphere_d', 'e').color
+		  property color normal: ColorsList.add(sectionName+'_aux_sphere_n', 'q').color
 		}
 	  }
 	}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg11"
+   sodipodi:docname="folder_hovered_custom.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <metadata
+     id="metadata15">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>settings_folder_1</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     id="namedview13"
+     showgrid="false"
+     inkscape:zoom="3.2777778"
+     inkscape:cx="-18.762712"
+     inkscape:cy="25.932204"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg11"
+     inkscape:pagecheckerboard="0" />
+  <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">settings_folder_1</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs6" />
+  <g
+     id="Symbols"
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
+     transform="matrix(2.142856,0,0,2.2222245,17.5,20)">
+    <g
+       id="settings_folder_1"
+       style="stroke:#000000">
+      <path
+         d="m 10.171755,2.5 h 0.353078 L 10.642948,2.1672651 C 10.994552,1.1767811 11.937246,0.5 13.005798,0.5 h 4.988404 C 19.380082,0.5 20.5,1.6171248 20.5,3.0016655 v 1.996669 c -1e-6,0.00234 -1e-6,0.00234 -4e-6,0.00468 3e-6,0.00412 3e-6,0.00412 4e-6,0.00646 V 14.990522 C 20.5,16.377047 19.377689,17.5 17.991212,17.5 H 3.008788 C 1.619248,17.5 0.5,16.38326 0.5,14.990522 V 5.0094776 C 0.5,3.6229526 1.6223112,2.5 3.008788,2.5 Z"
+         id="Combined-Shape"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>

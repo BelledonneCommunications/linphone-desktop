@@ -83,8 +83,9 @@ TabContainer {
 
             FormTableEntry {
               ActionButton {
-                icon: 'edit'
-                iconSize: SettingsWindowStyle.sipAccounts.iconSize
+                isCustom: true
+                backgroundRadius: 4
+                colorSet: SettingsWindowStyle.buttons.editProxy
 
                 onClicked: Logic.editAccount(modelData)
               }
@@ -92,8 +93,9 @@ TabContainer {
 
             FormTableEntry {
               ActionButton {
-                icon: 'delete'
-                iconSize: SettingsWindowStyle.sipAccounts.iconSize
+                isCustom: true
+                backgroundRadius: 4
+                colorSet: SettingsWindowStyle.buttons.deleteProxy
 
                 onClicked: Logic.deleteAccount(modelData)
               }

@@ -8,6 +8,7 @@ import Linphone 1.0
 import Utils 1.0
 
 import App.Styles 1.0
+import ColorsList 1.0
 
 import 'MainWindow.js' as Logic
 
@@ -71,7 +72,7 @@ ApplicationWindow {
 			// Workaround to get these properties in `MainWindow.js`.
 			readonly property alias contactsEntry: contactsEntry
 			readonly property alias contentLoader: contentLoader
-			readonly property alias conferencesEntry: conferencesEntry
+			//readonly property alias conferencesEntry: conferencesEntry
 			readonly property alias menu: menu
 			
 			readonly property alias timeline: timeline
@@ -118,10 +119,11 @@ ApplicationWindow {
 						onClicked: leftPanel.visible = !leftPanel.visible
 					}
 					ActionButton {
-						icon: 'home'
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: MainWindowStyle.buttons.home
 						//: 'Open Home' : Tooltip for a button that open the home view
 						tooltipText : qsTr('openHome')
-						iconSize: MainWindowStyle.homeButtonSize
 						//autoIcon: true
 						onClicked: setView('Home')
 					}
@@ -150,9 +152,10 @@ ApplicationWindow {
 						
 						Icon {
 							icon: SettingsModel.autoAnswerStatus
-								  ? 'auto_answer'
+								  ? 'auto_answer_custom'
 								  : ''
 							iconSize: MainWindowStyle.autoAnswerStatus.iconSize
+							overwriteColor: MainWindowStyle.autoAnswerStatus.text.color
 						}
 						
 						Text {
@@ -185,22 +188,24 @@ ApplicationWindow {
 							if (SettingsModel.contactsEnabled) {
 								window.setView('ContactEdit', { sipAddress: entry })
 							} else {
-								CallsListModel.createChatRoom( "", false, [entry], true )
+								CallsListModel.createChatRoom( '', false, [entry], true )
 							}
 						}
 						
-						onLaunchCall: CallsListModel.launchAudioCall(sipAddress, "")
+						onLaunchCall: CallsListModel.launchAudioCall(sipAddress, '')
 						onLaunchChat: CallsListModel.launchChat( sipAddress,0 )
 						onLaunchSecureChat: CallsListModel.launchChat( sipAddress,1 )
-						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress, "")
+						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress, '')
 					}
 					
 					
 					ActionButton {
-						icon: 'new_chat_group'
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: MainWindowStyle.buttons.newChatGroup
+											
 						//: 'Open Conference' : Tooltip to illustrate a button
 						tooltipText : qsTr('newChatRoom')
-						iconSize: MainWindowStyle.newConferenceSize
 						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled 
 						//autoIcon: true
 						onClicked: {
@@ -211,8 +216,9 @@ ApplicationWindow {
 					}
 					
 					ActionButton {
-						icon: 'new_conference'
-						iconSize: MainWindowStyle.newConferenceSize
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: MainWindowStyle.buttons.newConference
 						visible: SettingsModel.conferenceEnabled
 						tooltipText:qsTr('newConferenceButton')
 						//autoIcon: true
@@ -221,8 +227,9 @@ ApplicationWindow {
 					}
 					
 					ActionButton {
-						icon: 'burger_menu'
-						iconSize: MainWindowStyle.menuBurgerSize
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: MainWindowStyle.buttons.burgerMenu
 						visible: Qt.platform.os !== 'osx'
 						
 						onClicked: menuBar.open()
@@ -233,6 +240,7 @@ ApplicationWindow {
 					}
 					
 				}
+				
 			}
 			Loader{
 				active:Qt.platform.os === 'osx'
@@ -267,7 +275,9 @@ ApplicationWindow {
 						ApplicationMenuEntry {
 							id: contactsEntry
 							
-							icon: 'contact'
+							icon: MainWindowStyle.menu.contacts.icon
+							iconSize: MainWindowStyle.menu.contacts.iconSize
+							overwriteColor: isSelected ? MainWindowStyle.menu.contacts.selectedColor : MainWindowStyle.menu.contacts.color
 							name: qsTr('contactsEntry')
 							visible: SettingsModel.contactsEnabled
 							
@@ -282,22 +292,23 @@ ApplicationWindow {
 								anchors.right:parent.right
 								anchors.verticalCenter: parent.verticalCenter
 								anchors.rightMargin: 10
-								icon:'panel_arrow'
-								iconSize:10
+								icon: MainWindowStyle.menu.direction.icon
+								overwriteColor: contactsEntry.overwriteColor
+								iconSize: MainWindowStyle.menu.direction.iconSize
 								
 							}
 						}
-						
+						/*
 						ApplicationMenuEntry {
 							visible : false	//TODO
 							id: conferencesEntry
 							
-							icon: 'conferences'
-							iconSize: 32
+							icon: MainWindowStyle.menu.conferencesIcon
 							name: 'MES CONFERENCES'
+							overwriteColor: isSelected ? MainWindowStyle.menu.conferencesSelectedColor : MainWindowStyle.menu.conferencesColor
 							
 							onSelected: window.setView('HistoryView')
-						}
+						}*/
 					}
 					
 					// History.
@@ -338,7 +349,6 @@ ApplicationWindow {
 			}
 		}
 	}
-	
 	// ---------------------------------------------------------------------------
 	// Url handlers.
 	// ---------------------------------------------------------------------------
