@@ -34,14 +34,6 @@ function initView () {
   chat.bindToEnd = true
 }
 
-function loadMoreEntries () {
-  if (chat.atYBeginning && !chat.tryToLoadMoreEntries) {
-    chat.tryToLoadMoreEntries = true
-    chat.positionViewAtBeginning()
-    container.proxyModel.loadMoreEntries()
-  }
-}
-
 function getComponentFromEntry (chatEntry) {
   if (chatEntry.fileContentModel && chatEntry.fileContentModel.name) {
     return 'FileMessage.qml'
@@ -77,7 +69,6 @@ function handleFilesDropped (files) {
 
 function handleMoreEntriesLoaded (n) {
   chat.positionViewAtIndex(n - 1, QtQuick.ListView.Beginning)
-  chat.tryToLoadMoreEntries = false
 }
 
 function handleMovementEnded () {

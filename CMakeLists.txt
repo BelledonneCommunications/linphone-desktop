@@ -47,7 +47,7 @@ if(WIN32)
 	endif()
 elseif( APPLE )
 	if( NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9")
+		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
 	endif()
 endif()
 

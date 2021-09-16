@@ -140,17 +140,14 @@ void ChatRoomProxyModel::compose (const QString& text) {
 
 void ChatRoomProxyModel::loadMoreEntries () {
 	if(mChatRoomModel ) {
-		int count = rowCount();
-		int parentCount = sourceModel()->rowCount();
-		if (count == mMaxDisplayedEntries)
-			mMaxDisplayedEntries += EntriesChunkSize;
-		
-		if (count + 10 >= parentCount) // Magic number : try to load more entries if near to max event count
-			mChatRoomModel->loadMoreEntries();
-		invalidateFilter();
-		count = rowCount() - count;
-		if (count > 0)
-			emit moreEntriesLoaded(count);
+		int currentRowCount = rowCount();
+		int newEntries = 0;
+		do{
+			newEntries = mChatRoomModel->loadMoreEntries();
+			invalidate();
+		}while( newEntries>0 && currentRowCount == rowCount());
+		currentRowCount = rowCount() - currentRowCount + 1;
+		emit moreEntriesLoaded(currentRowCount);
 	}
 }
 
@@ -262,7 +259,6 @@ QString ChatRoomProxyModel::getCachedText() const{
 // -----------------------------------------------------------------------------
 
 void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
-	mMaxDisplayedEntries = EntriesChunkSize;
 	
 	if (mChatRoomModel) {
 		ChatRoomModel *ChatRoomModel = mChatRoomModel.get();
@@ -294,8 +290,13 @@ void ChatRoomProxyModel::resetMessageCount(){
 void ChatRoomProxyModel::setFilterText(const QString& text){
 	if( mFilterText != text){
 		mFilterText = text;
-		invalidate();
-		emit filterTextChanged();
+		int currentRowCount = rowCount();
+		int newEntries = 0;
+		do{
+			newEntries = mChatRoomModel->loadMoreEntries();
+			invalidate();
+			emit filterTextChanged();
+		}while( newEntries>0 && currentRowCount == rowCount());
 	}
 }
 
@@ -336,7 +337,6 @@ void ChatRoomProxyModel::handleIsRemoteComposingChanged () {
 }
 
 void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
-	mMaxDisplayedEntries++;
 	
 	QWindow *window = getParentWindow(this);
 	if (window && window->isActive())
@@ -344,5 +344,4 @@ void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatM
 }
 
 void ChatRoomProxyModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &) {
-	mMaxDisplayedEntries++;
 }
