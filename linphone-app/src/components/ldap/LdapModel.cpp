@@ -68,24 +68,26 @@ bool LdapModel::isValid(){
 	return mIsValid;
 }
 void LdapModel::save(){
-    if(isValid()){
+	if(isValid()){
 		set();
-        CoreManager *coreManager = CoreManager::getInstance();
-        auto lConfig = coreManager->getCore()->getConfig();
-        std::string section = ("ldap_"+QString::number(mId)).toStdString();
-        lConfig->cleanSection(section);
-        for(auto it = mConfig.begin() ; it != mConfig.end() ; ++it)
-            lConfig->setString(section, it.key().toStdString(), it.value().toString().toStdString());
-    }
+		CoreManager *coreManager = CoreManager::getInstance();
+		auto lConfig = coreManager->getCore()->getConfig();
+		std::string section = ("ldap_"+QString::number(mId)).toStdString();
+		lConfig->cleanSection(section);
+		for(auto it = mConfig.begin() ; it != mConfig.end() ; ++it)
+			lConfig->setString(section, it.key().toStdString(), it.value().toString().toStdString());
+		lConfig->sync();
+	}
 }
 
 void LdapModel::unsave(){
-    if(mId>=0){
-        CoreManager *coreManager = CoreManager::getInstance();
-        auto lConfig = coreManager->getCore()->getConfig();
-        std::string section = ("ldap_"+QString::number(mId)).toStdString();
-        lConfig->cleanSection(section);
-    }
+	if(mId>=0){
+		CoreManager *coreManager = CoreManager::getInstance();
+		auto lConfig = coreManager->getCore()->getConfig();
+		std::string section = ("ldap_"+QString::number(mId)).toStdString();
+		lConfig->cleanSection(section);
+		lConfig->sync();
+	}
 }
 
 bool LdapModel::load(const std::string& section){
