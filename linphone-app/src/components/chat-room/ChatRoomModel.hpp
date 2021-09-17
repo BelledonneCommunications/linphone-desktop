@@ -218,7 +218,7 @@ public:
 	void compose ();
 	void resetMessageCount ();
 	Q_INVOKABLE void initEntries();
-	Q_INVOKABLE void loadMoreEntries();
+	Q_INVOKABLE int loadMoreEntries();	// return new entries count
 	void callEnded(std::shared_ptr<linphone::Call> call);
 	
 	QDateTime mLastUpdateTime;
