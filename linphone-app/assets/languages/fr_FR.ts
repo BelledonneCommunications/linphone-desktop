@@ -431,7 +431,7 @@
     <message>
         <source>attendedTransferCall</source>
         <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>CONSULTATION AVANT TRANSFERT</translation>
     </message>
 </context>
 <context>
@@ -480,7 +480,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>deliveryDeliveredToUser</source>
         <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished">Reçu par %1 - %2</translation>
+        <translation>Reçu par %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
     </message>
     <message>
@@ -492,7 +492,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>deliveryNotDelivered</source>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished">%1 n&apos;a encore rien reçu</translation>
+        <translation>%1 n&apos;a encore rien reçu</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
 </context>
@@ -525,7 +525,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cacher le statut du message</translation>
     </message>
 </context>
 <context>
@@ -943,7 +943,7 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>disabled</source>
         <extracomment>&apos;Disabled&apos;</extracomment>
-        <translation type="unfinished">Désactivé</translation>
+        <translation>Désactivé</translation>
     </message>
     <message numerus="yes">
         <source>nMinute</source>
@@ -1380,7 +1380,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newChatRoomTitle</source>
         <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
-        <translation type="unfinished">Commencer une conversation</translation>
+        <translation>Commencer une conversation</translation>
     </message>
     <message>
         <source>askEncryption</source>
@@ -1406,7 +1406,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation type="unfinished">Chercher dans vos contacts ou ajouter à la main dans la conversation.</translation>
+        <translation>Chercher dans vos contacts ou ajouter à la main dans la conversation.</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -1624,7 +1624,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>noPlugin</source>
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
-        <translation type="unfinished">Pas de plugin à charger</translation>
+        <translation>Pas de plugin à charger</translation>
     </message>
 </context>
 <context>
@@ -1812,14 +1812,14 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>waitRegistrationForCallLabel</source>
         <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Appeler seulement si enregistré</translation>
     </message>
 </context>
 <context>
     <name>SettingsLdap</name>
     <message>
         <source>newServer</source>
-        <translation type="unfinished">Nouveau serveur</translation>
+        <translation>Nouveau serveur</translation>
     </message>
 </context>
 <context>
@@ -1838,7 +1838,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameTooltip</source>
-        <translation type="unfinished">Le nom d&apos;affichage des serveurs seront visibles dans la liste.</translation>
+        <translation>Le nom d&apos;affichage des serveurs qui sera visible dans la liste.</translation>
     </message>
     <message>
         <source>connectionTitle</source>
@@ -1846,7 +1846,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverLabel</source>
-        <translation type="unfinished">URL serveur</translation>
+        <translation>URL serveur</translation>
     </message>
     <message>
         <source>serverTooltip</source>
@@ -1858,7 +1858,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>bindDNTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Le bind DN est la référence qui est utilisée pour s&apos;authentifier auprès du protocole LDAP.</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -1886,7 +1886,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>AutoMode</source>
-        <translation type="unfinished">Auto</translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <source>offMode</source>
@@ -1894,7 +1894,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>onMode</source>
-        <translation type="unfinished">Activé</translation>
+        <translation>Activé</translation>
     </message>
     <message>
         <source>verifyTLSTooltip</source>
@@ -1906,11 +1906,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>baseObjectLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de recherche</translation>
     </message>
     <message>
         <source>baseObjectPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Base de recherche</translation>
     </message>
     <message>
         <source>baseObjectTooltip</source>
@@ -1922,15 +1922,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>La recherche se base sur ce filtre pour chercher des contacts. &lt;br&gt;Valeur par défaut : (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
-        <translation type="unfinished">Résultats maximum</translation>
+        <translation>Résultats maximum</translation>
     </message>
     <message>
         <source>maxResultsTooltip</source>
-        <translation type="unfinished">Le nombre maximum de résultats lors d&apos;une recherche.</translation>
+        <translation>Le nombre maximum de résultats lors d&apos;une recherche.</translation>
     </message>
     <message>
         <source>timeoutLabel</source>
@@ -1942,35 +1942,35 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>parsingTitle</source>
-        <translation type="unfinished">Analyse</translation>
+        <translation>Analyse</translation>
     </message>
     <message>
         <source>nameAttributesLabel</source>
-        <translation type="unfinished">Attributs de nom</translation>
+        <translation>Attributs de nom</translation>
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifiez ces attributs pour construire le nom de contact, séparés par une virgule. Le premier a la plus haute priorité.&lt;br&gt;La valeur par défaut est : sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation type="unfinished">Attributs SIP</translation>
+        <translation>Attributs SIP</translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Vérifiez ces attributs pour construire le nom d&apos;utilisateur SIP dans l&apos;adresse du contact. Les attributs sont séparés par une virgule et le premier a la plus haute priorité.&lt;br&gt;La valeur par défaut est : mobile, numéro de téléphone, téléphone fixe,sn</translation>
     </message>
     <message>
         <source>domainLabel</source>
-        <translation type="unfinished">Domaine</translation>
+        <translation>Domaine</translation>
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Ajouter le domaine à l&apos;adresse SIP (sip:nomdutilisateur@domaine). La valeur par défaut est sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
-        <translation type="unfinished">Divers</translation>
+        <translation>Divers</translation>
     </message>
     <message>
         <source>debugLabel</source>
@@ -1978,7 +1978,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Obtenir des traces dans le fichier traces de Linphone lors des opérations (utile pour déboguer les connexions TLS).</translation>
     </message>
 </context>
 <context>
