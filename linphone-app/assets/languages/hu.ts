@@ -524,7 +524,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kézbesítési állapot elrejtése</translation>
     </message>
 </context>
 <context>
