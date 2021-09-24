@@ -54,6 +54,8 @@ public:
 // Remove a chatroom
 	Q_INVOKABLE void remove (TimelineModel *importer);
 	void remove(std::shared_ptr<TimelineModel> model);
+	
+	Q_INVOKABLE void select(ChatRoomModel * chatRoomModel);
 	int mSelectedCount;
 	
 	bool mAutoSelectAfterCreation = false;// Request to select the next chat room after creation
