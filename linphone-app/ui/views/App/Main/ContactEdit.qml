@@ -169,14 +169,16 @@ ColumnLayout  {
 		relativeY: infoBar.height
 		
 		sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
-		
+				
 		onSipAddressClicked: {
-			var entry = CallsListModel.createChatRoom( "", false, [sipAddress], true )
-			if(entry)
+			var entry = CallsListModel.createChatRoom( "", false, [sipAddress], false )
+			if(entry){
 				window.setView('Conversation', {
-								   chatRoomModel:entry.chatRoomModel
-								   
+									chatRoomModel:entry.chatRoomModel
+								}, function(){
+									TimelineListModel.select(entry.chatRoomModel)
 							   })
+				}
 		}
 	}
 	
