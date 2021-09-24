@@ -66,7 +66,8 @@ RowLayout{
 			return qsTr('conferenceSecurityEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageLifetimeChanged) {
-			return 'EventLogTypeConferenceEphemeralMessageLifetimeChanged';
+			//: 'Ephemeral messages have been updated: %1' : Little message to show on the event when ephemeral has been updated. %1 is a date time
+			return qsTr('conferenceEphemeralMessageLifetimeChangedEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageEnabled) {
 			//: 'Ephemeral messages have been enabled: %1' : Little message to show on the event when ephemeral has been activated. %1 is a date time

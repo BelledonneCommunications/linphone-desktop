@@ -89,18 +89,20 @@ bool ChatNoticeModel::update(){
 				handledEvent = false;
 				break;
 		}
-		case linphone::EventLog::Type::ConferenceEphemeralMessageEnabled :{
+		case linphone::EventLog::Type::ConferenceEphemeralMessageEnabled :
+		case linphone::EventLog::Type::ConferenceEphemeralMessageLifetimeChanged :
+		{
 			int selectedTime = mEventLog->getEphemeralMessageLifetime();
 			if(selectedTime == 60)
-				setName( "1 minute" );
+				setName( tr("nMinute", "", 1).arg(1) );
 			else if(selectedTime == 3600)
-				setName( "1 heure" );
+				setName( tr("nHour", "", 1).arg(1));
 			else if(selectedTime == 86400)
-				setName( "1 jour" );
+				setName(tr("nDay", "", 1).arg(1) );
 			else if(selectedTime == 259200)
-				setName( "3 jours" );
+				setName( tr("nDay", "", 3).arg(3) );
 			else if(selectedTime == 604800)
-				setName( "1 semaine" );
+				setName( tr("nWeek", "", 1).arg(1) );
 			setStatus(NoticeType::NoticeMessage);
 			break;
 		}
