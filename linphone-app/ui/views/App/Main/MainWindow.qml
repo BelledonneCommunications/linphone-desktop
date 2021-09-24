@@ -30,8 +30,8 @@ ApplicationWindow {
 		Logic.unlockView()
 	}
 	
-	function setView (view, props) {
-		Logic.setView(view, props)
+	function setView (view, props, callback) {
+		Logic.setView(view, props, callback)
 	}
 	
 	// ---------------------------------------------------------------------------

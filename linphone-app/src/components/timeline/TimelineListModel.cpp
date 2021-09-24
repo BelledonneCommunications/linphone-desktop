@@ -317,6 +317,15 @@ void TimelineListModel::removeChatRoomModel(std::shared_ptr<ChatRoomModel> model
 	}
 }
 
+void TimelineListModel::select(ChatRoomModel * chatRoomModel){
+	if(chatRoomModel) {
+		auto timeline = getTimeline(chatRoomModel->getChatRoom(), false);
+		if(timeline){
+			timeline->setSelected(true);
+		}
+	}
+}
+
 void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state){
 	if( state == linphone::ChatRoom::State::Created
 			&& !getTimeline(chatRoom, false)){// Create a new Timeline if needed

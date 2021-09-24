@@ -58,8 +58,8 @@ function unlockView () {
   window._lockedInfo = undefined
 }
 
-function setView (view, props) {
-  function apply (view, props, showWindow) {
+function setView (view, props, callback) {
+  function apply (view, props, showWindow, callback) {
 	if(showWindow)
 		Linphone.App.smartShowWindow(window)
 
@@ -68,20 +68,21 @@ function setView (view, props) {
     updateSelectedEntry(view, props)
     window._currentView = view
     item.contentLoader.setSource(view + '.qml', props || {})
+    if(callback)
+		callback()
   }
 
   var lockedInfo = window._lockedInfo
   if (!lockedInfo) {
-    apply(view, props, false)
+    apply(view, props, false, callback)
     return
   }
-
   window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
     descriptionText: lockedInfo.descriptionText,
   }, function (status) {
     if (status) {
       unlockView()
-      apply(view, props, true)
+      apply(view, props, true, callback)
     } else {
       updateSelectedEntry(window._currentView, props)
     }
