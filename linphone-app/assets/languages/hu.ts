@@ -528,6 +528,33 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
 </context>
 <context>
+    <name>ChatNoticeModel</name>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <translation type="unfinished">
+            <numerusform>%1 perc</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <translation type="unfinished">
+            <numerusform>%1 óra</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <translation type="unfinished">
+            <numerusform>%1 nap</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <translation type="unfinished">
+            <numerusform>%1 hét</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
@@ -956,7 +983,6 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
             <numerusform>%1 óra</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
@@ -1365,7 +1391,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
         <translation>
             <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message>
@@ -1483,6 +1508,11 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
         <translation>Új téma: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
+        <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
