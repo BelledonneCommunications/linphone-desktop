@@ -529,6 +529,37 @@ URL du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>ChatNoticeModel</name>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <translation type="unfinished">
+            <numerusform>%1 minute</numerusform>
+            <numerusform>%1 minutes</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <translation type="unfinished">
+            <numerusform>%1 heure</numerusform>
+            <numerusform>%1 heures</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <translation type="unfinished">
+            <numerusform>%1 jour</numerusform>
+            <numerusform>%1 jours</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <translation type="unfinished">
+            <numerusform>%1 semaine</numerusform>
+            <numerusform>%1 semaines</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
@@ -1487,6 +1518,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
         <translation>Nouveau sujet : %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
+        <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

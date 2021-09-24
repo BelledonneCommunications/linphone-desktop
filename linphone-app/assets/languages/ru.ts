@@ -530,6 +530,41 @@
     </message>
 </context>
 <context>
+    <name>ChatNoticeModel</name>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
@@ -1492,6 +1527,11 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
     <message>
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
+        <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
