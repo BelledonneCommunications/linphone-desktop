@@ -84,6 +84,7 @@ Item {
 	TextEdit {
 		id: message
 		property string lastTextSelected : ''
+		property font customFont : SettingsModel.textMessageFont
 		
 		anchors {
 			left: container.left
@@ -94,6 +95,8 @@ Item {
 		padding: ChatStyle.entry.message.padding
 		readOnly: true
 		selectByMouse: true
+		font.family: customFont.family
+		font.pointSize: Units.dp * customFont.pointSize
 		text: Utils.encodeTextToQmlRichFormat($chatEntry.content, {
 												  imagesHeight: ChatStyle.entry.message.images.height,
 												  imagesWidth: ChatStyle.entry.message.images.width
