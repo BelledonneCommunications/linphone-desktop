@@ -532,28 +532,28 @@ Server URL not configured.</translation>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 minute</numerusform>
             <numerusform>%1 minutes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 hour</numerusform>
             <numerusform>%1 hours</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 day</numerusform>
             <numerusform>%1 days</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 week</numerusform>
             <numerusform>%1 weeks</numerusform>
         </translation>
