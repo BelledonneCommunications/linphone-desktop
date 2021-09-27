@@ -531,26 +531,30 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 perc</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 óra</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 nap</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 hét</numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -1512,7 +1516,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
         <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mulandó üzenetek frissítve: %1</translation>
     </message>
 </context>
 <context>
