@@ -2372,6 +2372,21 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <source>autoStartLabel</source>
         <translation>Самозапуск</translation>
     </message>
+    <message>
+        <source>fontsTitle</source>
+        <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fontsTextChange</source>
+        <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fontsPopupTitle</source>
+        <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

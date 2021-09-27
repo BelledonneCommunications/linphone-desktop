@@ -26,6 +26,7 @@
 #include <cstdlib>
 #include <cmath>
 
+#include "app/App.hpp"
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
@@ -1132,6 +1133,27 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 // UI.
 // =============================================================================
 
+QFont SettingsModel::getTextMessageFont() const{
+	QString family = Utils::coreStringToAppString(mConfig->getString(UiSection, "text_message_font", Utils::appStringToCoreString(App::getInstance()->font().family())));
+	int pointSize = getTextMessageFontSize();
+	return QFont(family,pointSize);
+}
+
+void SettingsModel::setTextMessageFont(const QFont& font){
+	mConfig->setString(UiSection, "text_message_font", Utils::appStringToCoreString(font.family()));
+	setTextMessageFontSize(font.pointSize());
+	emit textMessageFontChanged(font);
+}
+
+int SettingsModel::getTextMessageFontSize() const{
+	return mConfig->getInt(UiSection, "text_message_font_size", 10);
+}
+
+void SettingsModel::setTextMessageFontSize(const int& size){
+	mConfig->setInt(UiSection, "text_message_font_size", size);
+	emit textMessageFontSizeChanged(size);
+}
+	
 QString SettingsModel::getSavedScreenshotsFolder () const {
 	return QDir::cleanPath(
 			       Utils::coreStringToAppString(
