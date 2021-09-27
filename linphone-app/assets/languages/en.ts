@@ -2385,6 +2385,21 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>autoStartLabel</source>
         <translation>Autostart app</translation>
     </message>
+    <message>
+        <source>fontsTitle</source>
+        <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
+        <translation>Fonts</translation>
+    </message>
+    <message>
+        <source>fontsTextChange</source>
+        <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
+        <translation>Text Messages</translation>
+    </message>
+    <message>
+        <source>fontsPopupTitle</source>
+        <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
+        <translation>Select a new font</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

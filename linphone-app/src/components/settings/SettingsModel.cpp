@@ -26,6 +26,7 @@
 #include <cstdlib>
 #include <cmath>
 
+#include "app/App.hpp"
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
@@ -1132,6 +1133,15 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 // UI.
 // =============================================================================
 
+QFont SettingsModel::getTextMessageFont() const{
+	return QFont(Utils::coreStringToAppString(mConfig->getString(UiSection, "text_message_font", Utils::appStringToCoreString(App::getInstance()->font().family()))));
+}
+
+void SettingsModel::setTextMessageFont(const QFont& font){
+	mConfig->setString(UiSection, "text_message_font", Utils::appStringToCoreString(font.family()));
+	emit textMessageFontChanged(font);
+}
+	
 QString SettingsModel::getSavedScreenshotsFolder () const {
 	return QDir::cleanPath(
 			       Utils::coreStringToAppString(

@@ -94,6 +94,7 @@ Item {
 		padding: ChatStyle.entry.message.padding
 		readOnly: true
 		selectByMouse: true
+		font.family: SettingsModel.textMessageFont.family
 		text: Utils.encodeTextToQmlRichFormat($chatEntry.content, {
 												  imagesHeight: ChatStyle.entry.message.images.height,
 												  imagesWidth: ChatStyle.entry.message.images.width
