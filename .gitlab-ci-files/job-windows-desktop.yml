@@ -103,7 +103,7 @@ job-windows-vs2017-win32-upload:
     variables:
       - $NIGHTLY_MASTER
       - $DEPLOY_WINDOWS
-  dependencies:
+  needs:
     - job-windows-vs2017-package
   script:
     - scp "build/OUTPUT/Packages/*.exe" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%"
@@ -115,7 +115,7 @@ job-windows-vs2017-plugins-upload:
   only:
     variables:
       - $DEPLOY_PLUGINS
-  dependencies:
+  needs:
     - job-windows-vs2017-scheduled
   script:
     - scp "build/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
