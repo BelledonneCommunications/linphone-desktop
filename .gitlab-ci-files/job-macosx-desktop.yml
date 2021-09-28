@@ -111,7 +111,7 @@ job-macosx-makefile-package:
 job-macosx-makefile-deploy:
   stage: deploy
   tags: [ "macosx-xcode11" ]
-  dependencies:
+  needs:
     - job-macosx-makefile-package
   only:
      variables:
@@ -124,7 +124,7 @@ job-macosx-makefile-deploy:
 job-macosx-makefile-plugins-deploy:
   stage: deploy
   tags: [ "macosx-xcode11" ]
-  dependencies:
+  needs:
     - job-macosx-makefile
   only:
      variables:

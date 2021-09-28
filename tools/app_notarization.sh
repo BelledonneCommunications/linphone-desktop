@@ -23,7 +23,7 @@ do
 	xcrun_result=$?
 	if [ "${xcrun_result}" != "0" ]
 	then
-		if [ "${trycount}" -lt "4" ]
+		if [ ${trycount} -lt 4 ]
 		then
 			tryCount=$((tryCount+1))
 			sleep 60

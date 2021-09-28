@@ -151,7 +151,7 @@ job-debian9-makefile-clang-package:
 job-debian9-makefile-clang-deploy:
   stage: deploy
   tags: [ "deploy" ]
-  dependencies:
+  needs:
     - job-debian9-makefile-clang-package
   only:
      variables:
@@ -164,7 +164,7 @@ job-debian9-makefile-clang-deploy:
 job-debian9-makefile-clang-plugins-deploy:
   stage: deploy
   tags: [ "deploy" ]
-  dependencies:
+  needs:
     - job-debian9-makefile-clang
   only:
      variables:
