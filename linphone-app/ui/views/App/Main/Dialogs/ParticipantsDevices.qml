@@ -9,6 +9,7 @@ import LinphoneEnums 1.0
 
 import App.Styles 1.0
 import Units 1.0
+import ColorsList 1.0
 
 import '../Conversation.js' as Logic
 
@@ -27,8 +28,8 @@ DialogPlus {
 	property var window
 	buttonsAlignment: Qt.AlignCenter
 	
-	height: ManageAccountsStyle.height + 30
-	width: ManageAccountsStyle.width
+	height: 383
+	width: 450
 	
 	// ---------------------------------------------------------------------------
 	
@@ -57,6 +58,8 @@ DialogPlus {
 					id: item
 					Layout.fillWidth: true
 					Layout.preferredHeight: 50
+					Layout.minimumHeight: 50// Fix layout to avoid infinite update loop between ListView and RowLayout
+					Layout.maximumHeight: 50
 					Avatar{
 						id:avatar
 						Layout.preferredHeight: 32
@@ -94,7 +97,6 @@ DialogPlus {
 						MouseArea{
 									anchors.fill:contactDescription
 									onClicked: {
-										//mainHeader.window.detachVirtualWindow()
 										mainHeader.window.attachVirtualWindow(Qt.resolvedUrl('InfoEncryption.qml')
 																   ,{securityLevel : mainHeader.securityLevel
 																   , addressToCall : mainHeader.addressToCall}
@@ -120,7 +122,7 @@ DialogPlus {
 					}
 				}
 				Rectangle {
-					color: "#ebebeb"
+					color: ColorsList.add("ParticipantDevices_separator", "ag").color
 					Layout.preferredHeight: 1
 					Layout.fillWidth: true
 				}
@@ -146,7 +148,7 @@ DialogPlus {
 						
 						width:parent.width
 						height:50
-						color: '#f5f5f5'
+						color: ColorsList.add("ParticipantDevices_line_background", "ah").color
 						RowLayout{
 							anchors.fill:parent
 							Text{
@@ -154,7 +156,6 @@ DialogPlus {
 								Layout.fillHeight: true
 								Layout.leftMargin: avatar.width+14*2
 								font.weight: Font.Light
-								//color: DialogStyle.description.color
 								font.pointSize: Units.dp * 11
 								verticalAlignment: Text.AlignVCenter
 								wrapMode: Text.WordWrap
@@ -188,7 +189,7 @@ DialogPlus {
 							}
 						}
 						Rectangle {
-							color: "#ebebeb"
+							color: ColorsList.add("ParticipantDevices_separator", "ag").color
 							anchors.left : parent.left
 							anchors.right  :parent.right
 							anchors.bottom: parent.bottom

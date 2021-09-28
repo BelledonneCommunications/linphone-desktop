@@ -3,6 +3,8 @@ import QtQml 2.2
 
 import Units 1.0
 
+import ColorsList 1.0
+
 // =============================================================================
 
 QtObject {
@@ -12,7 +14,7 @@ QtObject {
   }
 
   property QtObject text: QtObject {
-    property color color: Colors.q.color
+    property color color: ColorsList.add("MessageCounter_text", "q").color
     property int pointSize: Units.dp * 6
   }
 }

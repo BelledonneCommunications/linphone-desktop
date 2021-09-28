@@ -18,6 +18,7 @@ ApplicationWindow {
 	
 	property string _currentView
 	property var _lockedInfo
+	property SmartSearchBar mainSearchBar : (mainLoader.item ? mainLoader.item.mainSearchBar : null)
 	
 	// ---------------------------------------------------------------------------
 	
@@ -29,8 +30,8 @@ ApplicationWindow {
 		Logic.unlockView()
 	}
 	
-	function setView (view, props) {
-		Logic.setView(view, props)
+	function setView (view, props, callback) {
+		Logic.setView(view, props, callback)
 	}
 	
 	// ---------------------------------------------------------------------------
@@ -74,6 +75,7 @@ ApplicationWindow {
 			readonly property alias menu: menu
 			
 			readonly property alias timeline: timeline
+			readonly property alias mainSearchBar: toolBar.mainSearchBar
 			
 			spacing: 0
 			
@@ -88,6 +90,8 @@ ApplicationWindow {
 			// -----------------------------------------------------------------------
 			
 			ToolBar {
+				id: toolBar
+				property alias mainSearchBar : smartSearchBar
 				Layout.fillWidth: true
 				Layout.preferredHeight: MainWindowStyle.toolBar.height
 				hoverEnabled : true
@@ -104,14 +108,19 @@ ApplicationWindow {
 					
 					ActionButton {
 						icon: (leftPanel.visible?'panel_shown':'panel_hidden')
-						tooltipText : (leftPanel.visible?'Open Timeline':'Hide Timeline')
+						
+						//: 'Hide Timeline' : Tooltip for a button that hide the timeline
+						tooltipText : (leftPanel.visible?qsTr('hideTimeline')
+						//: 'Open Timeline' : Tooltip for a button that open the timeline
+							:qsTr('openTimeline'))
 						iconSize: MainWindowStyle.panelButtonSize
 						//autoIcon: true
 						onClicked: leftPanel.visible = !leftPanel.visible
 					}
 					ActionButton {
 						icon: 'home'
-						tooltipText : 'Open Home'
+						//: 'Open Home' : Tooltip for a button that open the home view
+						tooltipText : qsTr('openHome')
 						iconSize: MainWindowStyle.homeButtonSize
 						//autoIcon: true
 						onClicked: setView('Home')
@@ -123,8 +132,6 @@ ApplicationWindow {
 						Layout.preferredHeight: parent.height
 						Layout.preferredWidth: MainWindowStyle.accountStatus.width
 						Layout.fillWidth: false
-						//height: parent.height
-						//width: MainWindowStyle.accountStatus.width
 						
 						TooltipArea {
 							text: AccountSettingsModel.sipAddress
@@ -182,10 +189,10 @@ ApplicationWindow {
 							}
 						}
 						
-						onLaunchCall: CallsListModel.launchAudioCall(sipAddress)
+						onLaunchCall: CallsListModel.launchAudioCall(sipAddress, "")
 						onLaunchChat: CallsListModel.launchChat( sipAddress,0 )
 						onLaunchSecureChat: CallsListModel.launchChat( sipAddress,1 )
-						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress)
+						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress, "")
 					}
 					
 					

@@ -638,7 +638,7 @@ void ChatRoomModel::sendFileMessage (const QString &path) {
 		content->setSubtype(Utils::appStringToCoreString(mimeType[1]));
 	}
 	content->setSize(size_t(fileSize)); 
-	content->setName(Utils::appStringToCoreString( QFileInfo(file).fileName()));
+	content->setName(QFileInfo(file).fileName().toStdString());
 
 	shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
 	message->getContents().front()->setFilePath(Utils::appStringToCoreString(path));
@@ -773,7 +773,7 @@ void ChatRoomModel::initEntries(){
 	}
 }
 
-void ChatRoomModel::loadMoreEntries(){
+int ChatRoomModel::loadMoreEntries(){
 	QList<std::shared_ptr<ChatEvent> > entries;
 	QList<EntrySorterHelper> prepareEntries;
 // Get current event count for each type
@@ -838,6 +838,7 @@ void ChatRoomModel::loadMoreEntries(){
 		emit layoutChanged();
 		updateLastUpdateTime();
 	}
+	return entries.size();
 }
 
 //-------------------------------------------------
@@ -870,7 +871,6 @@ void ChatRoomModel::insertCall (const std::shared_ptr<linphone::CallLog> &callLo
 					endInsertRows();
 				}
 			}
-			emit layoutChanged();
 			updateLastUpdateTime();
 		}
 	}
@@ -910,7 +910,6 @@ void ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<linphone::ChatMess
 			beginInsertRows(QModelIndex(), row, row);
 			mEntries << model;
 			endInsertRows();
-			emit layoutChanged();
 		}
 	}
 }
@@ -942,7 +941,6 @@ void ChatRoomModel::insertNotice (const std::shared_ptr<linphone::EventLog> &eve
 			beginInsertRows(QModelIndex(), row, row);
 			mEntries << model;
 			endInsertRows();
-			emit layoutChanged();
 		}
 	}
 }

@@ -11,6 +11,8 @@ import App.Styles 1.0
 import Common.Styles 1.0
 import Units 1.0
 
+import ColorsList 1.0
+
 
 import 'Conversation.js' as Logic
 
@@ -86,7 +88,7 @@ ColumnLayout  {
 				
 				icon:'chat_room'
 				iconSize: ConversationStyle.bar.groupChatSize
-				visible: conversation.haveMoreThanOneParticipants
+				visible: !chatRoomModel.isOneToOne
 			}
 			Item{
 				Layout.fillHeight: true
@@ -117,7 +119,7 @@ ColumnLayout  {
 								//: 'Admin' : Admin(istrator)
 								//~ Context One word title for describing the current admin status
 								text: qsTr('adminStatus')
-								color:"#9FA6AB"
+								color: ColorsList.add("Conversation_admin_status", "af").color
 								font.pointSize: Units.dp * 8
 							}
 						}
@@ -156,9 +158,11 @@ ColumnLayout  {
 								
 							}
 							onUsernameClicked: {
+													if(!conversation.hasBeenLeft) {
 														usernameEdit.visible = !usernameEdit.visible
 														usernameEdit.forceActiveFocus()
 													}
+												}
 						}
 						Item{
 							Layout.fillHeight: true
@@ -173,6 +177,7 @@ ColumnLayout  {
 						iconSize:30
 						MouseArea{
 							anchors.fill:parent
+							visible: !conversation.hasBeenLeft
 							onClicked : {
 								window.detachVirtualWindow()
 								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
@@ -254,9 +259,8 @@ ColumnLayout  {
 					
 					ActionButton {
 						icon: 'group_chat'
-						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall
+						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.hasBeenLeft
 						
-						//onClicked: CallsListModel.launchAudioCall(conversation.chatRoomModel)
 						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
 						TooltipArea {
 							//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room
@@ -296,6 +300,8 @@ ColumnLayout  {
 						id:dotButton
 						icon: 'menu_vdots'
 						iconSize: ConversationStyle.bar.actions.edit.iconSize
+						visible: conversationMenu.showGroupInfo || conversationMenu.showDevices || conversationMenu.showEphemerals
+						
 						//autoIcon: true
 						
 						onClicked: {
@@ -309,12 +315,19 @@ ColumnLayout  {
 					x:mainBar.width-width
 					y:mainBar.height
 					menuStyle : MenuStyle.aux2
+					
+					property bool showGroupInfo: !chatRoomModel.isOneToOne
+					property bool showDevices : conversation.securityLevel != 1
+					property bool showEphemerals:  conversation.securityLevel != 1 && chatRoomModel.isMeAdmin
+					
 					MenuItem{
+						id:groupInfoMenu
 						//: 'Group information' : Item menu to get information about the chat room
 						text: qsTr('conversationMenuGroupInformations')
 						iconMenu: (hovered ? 'menu_infos_selected' : 'menu_infos')
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2
+						visible: conversationMenu.showGroupInfo
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoChatRoom.qml')
@@ -322,17 +335,18 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
+						id: separator1
 						height:1
 						width:parent.width
-						color:Colors.u.color
-						visible: devicesMenuItem.visible
+						color: ColorsList.add("Conversation_menu_separator", "u").color
+						visible: groupInfoMenu.visible && devicesMenuItem.visible
 					}
 					MenuItem{
 						id: devicesMenuItem
 						//: "Conversation's devices" : Item menu to get all participant devices of the chat room
 						text: qsTr('conversationMenuDevices')
 						iconMenu: (hovered ? 'menu_devices_selected' : 'menu_devices' )
-						visible: conversation.securityLevel != 1
+						visible: conversationMenu.showDevices
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
@@ -342,10 +356,11 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
+						id: separator2
 						height:1
 						width:parent.width
-						color:Colors.u.color
-						visible: ephemeralMenuItem.visible
+						color: ColorsList.add("Conversation_menu_separator", "u").color
+						visible: ephemeralMenuItem.visible && (groupInfoMenu.visible || devicesMenuItem.visible)
 					}
 					MenuItem{
 						id: ephemeralMenuItem
@@ -354,7 +369,7 @@ ColumnLayout  {
 						iconMenu: (hovered ? 'menu_ephemeral_selected' : 'menu_ephemeral')
 						iconSizeMenu: 25
 						menuItemStyle : MenuItemStyle.aux2
-						visible: conversation.securityLevel != 1 && chatRoomModel.isMeAdmin
+						visible: conversationMenu.showEphemerals
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/EphemeralChatRoom.qml')
@@ -399,6 +414,17 @@ ColumnLayout  {
 			
 			onClicked: Logic.updateChatFilter(button)
 		}
+		BusyIndicator{
+			id: chatLoading
+			width: 20
+			height: 20
+			anchors.left: filterButtons.right
+			anchors.leftMargin: 50
+			anchors.verticalCenter: parent.verticalCenter
+			//anchors.horizontalCenter: parent.horizontalCenter
+			visible: chatArea.tryingToLoadMoreEntries
+		}
+			
 		// -------------------------------------------------------------------------
 		// Search.
 		// -------------------------------------------------------------------------
@@ -407,9 +433,9 @@ ColumnLayout  {
 			anchors.right: parent.right
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
-			anchors.left : filterButtons.right
+			anchors.left : chatLoading.right
 			anchors.rightMargin: 10
-			anchors.leftMargin: 80
+			anchors.leftMargin: 50
 			anchors.topMargin: 10
 			anchors.bottomMargin: 10
 			
@@ -455,11 +481,6 @@ ColumnLayout  {
 			localAddress: conversation.localAddress// Reload is done on localAddress. Use this order
 		}
 	}
-	/*
-  Connections {
-	target: SettingsModel
-	onChatEnabledChanged: chatRoomProxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry)
-  }*/
 	
 	Connections {
 		target: AccountSettingsModel

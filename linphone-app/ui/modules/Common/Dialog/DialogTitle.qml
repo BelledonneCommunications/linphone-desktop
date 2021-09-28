@@ -5,6 +5,7 @@ import Linphone 1.0
 
 import Common.Styles 1.0
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 // Title bar used by dialogs.
@@ -22,8 +23,8 @@ Item {
 	Rectangle{
 		anchors.fill:parent
 		gradient: Gradient {
-			GradientStop { position: 0.0; color: "white" }
-			GradientStop { position: 1.0; color: "#E2E2E2" }
+			GradientStop { position: 0.0; color: ColorsList.add("Dialog_title_gradient_low", "y").color }
+			GradientStop { position: 1.0; color: ColorsList.add("Dialog_title_gradient_high", "z").color}
 		}
 		visible:showBar
 	}

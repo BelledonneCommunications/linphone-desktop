@@ -1,6 +1,7 @@
 pragma Singleton
 import QtQml 2.2
 
+import ColorsList 1.0
 // =============================================================================
 
 QtObject {
@@ -10,9 +11,9 @@ QtObject {
     property int width: 5
 
     property QtObject color: QtObject {
-      property color hovered: Colors.h.color
-      property color normal: Colors.c.color
-      property color pressed: Colors.d.color
+      property color hovered: ColorsList.add("Paned_hovered", "h").color
+      property color normal: ColorsList.add("Paned_normal", "c").color
+      property color pressed: ColorsList.add("Paned_pressed", "d").color
     }
   }
 }

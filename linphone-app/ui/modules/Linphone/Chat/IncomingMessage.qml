@@ -44,6 +44,10 @@ RowLayout {
 				delay:0
 				text:avatar.username+'\n'+$chatEntry.fromSipAddress
 				tooltipParent:mainRow
+				isClickable: true
+				onDoubleClicked: {
+					window.mainSearchBar.text = $chatEntry.fromSipAddress
+					}
 			}
 		}
 	}
@@ -59,6 +63,5 @@ RowLayout {
 		
 		backgroundColor: ChatStyle.entry.message.incoming.backgroundColor
 		color: ChatStyle.entry.message.incoming.text.color
-		pointSize: ChatStyle.entry.message.incoming.text.pointSize
 	}
 }

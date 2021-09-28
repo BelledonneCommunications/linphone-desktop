@@ -2,6 +2,7 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -9,7 +10,7 @@ QtObject {
   property int height: 60
 
   property QtObject error: QtObject {
-    property color color: Colors.error.color
+    property color color: ColorsList.add("RequestBlock_error", "error").color
     property int pointSize: Units.dp * 11
     property int padding: 4
   }

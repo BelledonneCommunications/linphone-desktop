@@ -423,6 +423,16 @@
         <source>callPause</source>
         <translation>Hívástartás</translation>
     </message>
+    <message>
+        <source>attendedTransferComplete</source>
+        <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
+        <translation>Hívásátirányítás teljes részvétele</translation>
+    </message>
+    <message>
+        <source>attendedTransferCall</source>
+        <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
+        <translation>Hívásátirányítás részvétele</translation>
+    </message>
 </context>
 <context>
     <name>CallsWindow</name>
@@ -454,7 +464,6 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation>
-            <numerusform>%1 éppen gépel…</numerusform>
             <numerusform>%1 éppen gépel…</numerusform>
         </translation>
     </message>
@@ -511,6 +520,42 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
         <translation>Törlés</translation>
+    </message>
+    <message>
+        <source>menuHideDeliveryStatus</source>
+        <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
+        <translation>Kézbesítési állapot elrejtése</translation>
+    </message>
+</context>
+<context>
+    <name>ChatNoticeModel</name>
+    <message numerus="yes">
+        <source>nMinute</source>
+        <translation>
+            <numerusform>%1 perc</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nHour</source>
+        <translation>
+            <numerusform>%1 óra</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nDay</source>
+        <translation>
+            <numerusform>%1 nap</numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>nWeek</source>
+        <translation>
+            <numerusform>%1 hét</numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -915,9 +960,8 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
     <message>
         <source>ephemeralText</source>
-        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos;</extracomment>
+        <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
         <translation>Az új üzenetek mindkét végén törlődnek, amint a kapcsolattartó elolvasta. Válasszon egy időkorlátot.</translation>
-        <extra-Context>Explanation for ephemerals</extra-Context>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
@@ -936,14 +980,12 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation>
             <numerusform>%1 perc</numerusform>
-            <numerusform>%1 perc</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
-            <numerusform>%1 óra</numerusform>
             <numerusform>%1 óra</numerusform>
         </translation>
     </message>
@@ -954,14 +996,12 @@ Ephemeral message is only supported in conference based chat room!&apos;</extrac
 &apos;%1 days&apos;</extracomment>
         <translation>
             <numerusform>%1 nap</numerusform>
-            <numerusform>%1 nap</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation>
-            <numerusform>%1 hét</numerusform>
             <numerusform>%1 hét</numerusform>
         </translation>
     </message>
@@ -1265,6 +1305,21 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
         <translation>Konferencia megnyitása</translation>
     </message>
+    <message>
+        <source>hideTimeline</source>
+        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
+        <translation>Idővonal elrejtése</translation>
+    </message>
+    <message>
+        <source>openTimeline</source>
+        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
+        <translation>Idővonal megnyitása</translation>
+    </message>
+    <message>
+        <source>openHome</source>
+        <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
+        <translation>Kezdőlap megnyitása</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1340,7 +1395,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
         <translation>
             <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
-            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
         </translation>
     </message>
     <message>
@@ -1387,7 +1441,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>removeParticipantSelection</source>
-        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation abo^ut removing participant from a selection</extracomment>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
         <translation>Távolítsa el ezt a résztvevőt a kiválasztásból</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
@@ -1456,8 +1510,13 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>conferenceSubjectChangedEvent</source>
-        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.</extracomment>
+        <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
         <translation>Új téma: %1</translation>
+    </message>
+    <message>
+        <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
+        <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
+        <translation>Mulandó üzenetek frissítve: %1</translation>
     </message>
 </context>
 <context>
@@ -2297,6 +2356,21 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>autoStartLabel</source>
         <translation>Alkalmazás önműködő indítása</translation>
     </message>
+    <message>
+        <source>fontsTitle</source>
+        <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fontsTextChange</source>
+        <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fontsPopupTitle</source>
+        <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -2423,7 +2497,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
         <translation>Egyszerű szobák</translation>
-        <extra-Mode>Selecting it will show all simple romms</extra-Mode>
+        <extra-Mode>Selecting it will show all simple rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>

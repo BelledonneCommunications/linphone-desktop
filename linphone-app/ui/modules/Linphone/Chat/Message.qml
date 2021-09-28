@@ -13,6 +13,8 @@ import Units 1.0
 import UtilsCpp 1.0
 import LinphoneEnums 1.0
 
+import ColorsList 1.0
+
 import 'Message.js' as Logic
 
 // =============================================================================
@@ -41,7 +43,7 @@ Item {
 		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
 		radius: ChatStyle.entry.message.radius
 		width: (
-				   message.contentWidth < ephemeralTimerRow.width
+				   ephemeralTimerRow.visible && message.contentWidth < ephemeralTimerRow.width
 				   ? ephemeralTimerRow.width
 				   : message.contentWidth < parent.width
 					 ? message.contentWidth
@@ -57,7 +59,7 @@ Item {
 			spacing:5
 			Text{
 				text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
-				color:"#FF5E00"
+				color: ColorsList.add("Message_ephemeral_text", "ad").color 
 				font.pointSize: Units.dp * 8
 				Timer{
 					running:parent.visible
@@ -82,6 +84,7 @@ Item {
 	TextEdit {
 		id: message
 		property string lastTextSelected : ''
+		property font customFont : SettingsModel.textMessageFont
 		
 		anchors {
 			left: container.left
@@ -92,6 +95,8 @@ Item {
 		padding: ChatStyle.entry.message.padding
 		readOnly: true
 		selectByMouse: true
+		font.family: customFont.family
+		font.pointSize: Units.dp * customFont.pointSize
 		text: Utils.encodeTextToQmlRichFormat($chatEntry.content, {
 												  imagesHeight: ChatStyle.entry.message.images.height,
 												  imagesWidth: ChatStyle.entry.message.images.width
@@ -121,6 +126,7 @@ Item {
 			deliveryCount: deliveryLayout.model.count
 			onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 			onRemoveEntryRequested: removeEntry()
+			deliveryVisible: deliveryLayout.visible
 		}
 	}
 	

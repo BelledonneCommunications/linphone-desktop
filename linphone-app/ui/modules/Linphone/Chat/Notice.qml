@@ -7,10 +7,12 @@ import Linphone.Styles 1.0
 import Utils 1.0
 import LinphoneEnums 1.0
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
 RowLayout{
+	id: mainLayout
 	property string _type: {
 		var status = $chatEntry.eventLogType
 		
@@ -64,7 +66,8 @@ RowLayout{
 			return qsTr('conferenceSecurityEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageLifetimeChanged) {
-			return 'EventLogTypeConferenceEphemeralMessageLifetimeChanged';
+			//: 'Ephemeral messages have been updated: %1' : Little message to show on the event when ephemeral has been updated. %1 is a date time
+			return qsTr('conferenceEphemeralMessageLifetimeChangedEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceEphemeralMessageEnabled) {
 			//: 'Ephemeral messages have been enabled: %1' : Little message to show on the event when ephemeral has been activated. %1 is a date time
@@ -75,40 +78,35 @@ RowLayout{
 			return qsTr('conferenceEphemeralMessageDisabledEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceSubjectChanged) {
-			//: 'New subject : %1' : Little message to show on the event when the subject of the chat romm has been changed. %1 is the new subject.
+			//: 'New subject : %1' : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.
 			return qsTr('conferenceSubjectChangedEvent');
 		}
 		
 		return 'unknown_notice'
 	}
+	property bool isImportant: $chatEntry.eventLogType == LinphoneEnums.EventLogTypeConferenceTerminated
+	property bool isError: $chatEntry.status == ChatNoticeModel.NoticeError
+	property color eventColor : (isError ? ColorsList.add("Notice_error", "error").color  : ( isImportant ? ColorsList.add("Notice_important", "error").color  : ColorsList.add("Notice", "ab").color ))
+	
 	
 	Layout.preferredHeight: ChatStyle.entry.lineHeight
 	spacing: ChatStyle.entry.message.extraContent.spacing
 	Rectangle{
 		height:1
 		Layout.fillWidth: true
-		color:( $chatEntry.status == ChatNoticeModel.NoticeError ? '#FF0000' : '#979797' )
+		color: mainLayout.eventColor
 	}
 	
 	Text {
-		 Component {
-		  // Never created.
-		  // Private data for `lupdate`.
-		  Item {
-			property var i18n: [
-			  "You have joined the group" //QT_TR_NOOP('declinedIncomingCall'),
-			]
-		  }
-		}
-		Layout.preferredWidth: contentWidth
 		id:message
-		color:( $chatEntry.status == ChatNoticeModel.NoticeError ? '#FF0000' : '#979797' )
+		Layout.preferredWidth: contentWidth
+		
+		color: mainLayout.eventColor
 		font {
-			//bold: true
 			pointSize: Units.dp * 7
 		}
 		height: parent.height
-		text: $chatEntry.name?_type.arg($chatEntry.name):_type	//qsTr(Utils.snakeToCamel(_type))
+		text: $chatEntry.name?_type.arg($chatEntry.name):_type
 		verticalAlignment: Text.AlignVCenter
 		TooltipArea {
 		  text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
@@ -117,6 +115,6 @@ RowLayout{
 	Rectangle{
 		height:1
 		Layout.fillWidth: true
-		color:( $chatEntry.status == ChatNoticeModel.NoticeError ? '#FF0000' : '#979797' )
+		color: mainLayout.eventColor
 	}
 }

@@ -47,7 +47,7 @@ Item {
 	
 	Rectangle{
 		anchors.fill: parent
-		color:'#E1E1E1'
+		color: DroppableTextAreaStyle.outsideBackgroundColor
 		// ---------------------------------------------------------------------------
 		RowLayout{
 			anchors.fill: parent
@@ -62,6 +62,7 @@ Item {
 				enabled: droppableTextArea.dropEnabled
 				icon: 'attachment'
 				iconSize: DroppableTextAreaStyle.fileChooserButton.size
+				visible: droppableTextArea.enabled
 				
 				onClicked: fileDialog.open()
 				
@@ -76,16 +77,10 @@ Item {
 				tooltipText: droppableTextArea.dropEnabled
 							 ? qsTr('attachmentTooltip')
 							 : droppableTextArea.dropDisabledReason
-				/*
-				TooltipArea {
-					text: droppableTextArea.dropEnabled
-						  ? qsTr('attachmentTooltip')
-						  : droppableTextArea.dropDisabledReason
-				}*/
 			}
 			// Record audio
 			ActionButton {
-				visible:false	// TODO
+				visible:false && droppableTextArea.enabled// TODO
 				id: recordAudioButton
 				
 				//anchors.verticalCenter: parent.verticalCenter
@@ -140,7 +135,7 @@ Item {
 					}
 
 					background: Rectangle {
-						color: '#f3f3f3' //DroppableTextAreaStyle.backgroundColor
+						color: DroppableTextAreaStyle.backgroundColor
 						radius: 5
 						clip:true
 					}
@@ -193,14 +188,7 @@ Item {
 				Layout.rightMargin: DroppableTextAreaStyle.fileChooserButton.margins+15
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignVCenter
-				//anchors.verticalCenter: parent.verticalCenter
-				/*{
-					right: parent.right
-					rightMargin: scrollBar.width +
-								 DroppableTextAreaStyle.fileChooserButton.margins
-					verticalCenter: parent.verticalCenter
-				}*/
-				//enabled: droppableTextArea.dropEnabled
+				visible: droppableTextArea.enabled
 				icon: 'send'
 				iconSize: DroppableTextAreaStyle.fileChooserButton.size
 				useStates:false

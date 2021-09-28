@@ -16,7 +16,7 @@ DialogPlus {
 	property bool _sipAddressOk: false
 	property bool _serverAddressOk: false
 	property bool _routeOk: false
-	property bool _conferenceUriOk: false
+	property bool _conferenceUriOk: true
 	
 	buttons: [
 		TextButtonA {

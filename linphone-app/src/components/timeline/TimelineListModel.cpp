@@ -165,10 +165,12 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 		}
 	}
 	for(auto contact : sortedData){
-		++count;
-		contacts << QVariant::fromValue(contact);
-		if(count >= maxCount)
-			return contacts;
+		if(Utils::hasCapability(contact->getFullPeerAddress(),  LinphoneEnums::FriendCapabilityGroupChat)  ) {
+			++count;
+			contacts << QVariant::fromValue(contact);
+			if(count >= maxCount)
+				return contacts;
+		}
 	}
 	
 	return contacts;
@@ -315,6 +317,15 @@ void TimelineListModel::removeChatRoomModel(std::shared_ptr<ChatRoomModel> model
 	}
 }
 
+void TimelineListModel::select(ChatRoomModel * chatRoomModel){
+	if(chatRoomModel) {
+		auto timeline = getTimeline(chatRoomModel->getChatRoom(), false);
+		if(timeline){
+			timeline->setSelected(true);
+		}
+	}
+}
+
 void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state){
 	if( state == linphone::ChatRoom::State::Created
 			&& !getTimeline(chatRoom, false)){// Create a new Timeline if needed
@@ -355,7 +366,10 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		}
 		if(!found){// Create a default chat room
 			QVariantList participants;
-			participants << Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
+			//participants << Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());	// This allow chatting to a specific device but the current design is not adapted to show them
+			auto remoteAddress = callLog->getRemoteAddress()->clone();
+			remoteAddress->clean();
+			participants << Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
 			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", 0,  participants, isOutgoing);
 		}
 }

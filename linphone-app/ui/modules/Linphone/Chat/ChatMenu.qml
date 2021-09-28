@@ -22,12 +22,13 @@ Item {
 	property string lastTextSelected
 	property string content
 	property int deliveryCount : 0
+	property bool deliveryVisible: false
 	
 	signal deliveryStatusClicked()
 	signal removeEntryRequested()
 
 	function open(){
-		messageMenu.open()
+		messageMenu.popup()
 	}
 	
 	
@@ -58,8 +59,11 @@ Item {
 			visible: content != ''
 		}
 		MenuItem {
+			//: 'Hide delivery status' : Item menu that lead to IMDN of a message
+			text: (deliveryVisible ? qsTr('menuHideDeliveryStatus')
 			//: 'Delivery status' : Item menu that lead to IMDN of a message
-			text: qsTr('menuDeliveryStatus')
+			: qsTr('menuDeliveryStatus')
+			)
 			iconMenu: 'menu_imdn_info'
 			iconSizeMenu: 17
 			iconLayoutDirection: Qt.RightToLeft
@@ -92,7 +96,7 @@ Item {
 					 ? Qt.PointingHandCursor
 					 : Qt.IBeamCursor
 		
-		onClicked: mouse.button === Qt.RightButton && messageMenu.open()
+		onClicked: mouse.button === Qt.RightButton && messageMenu.popup()
 	}
 	
 }

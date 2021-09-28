@@ -2,6 +2,7 @@ pragma Singleton
 import QtQml 2.2
 
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -11,7 +12,7 @@ QtObject {
   property int overrodeHeight: 55
 
   property QtObject message: QtObject {
-    property color color: Colors.h.color
+    property color color: ColorsList.add("Notification_basic_message", "h").color
     property int pointSize: Units.dp * 10
   }
 }

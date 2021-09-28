@@ -15,6 +15,7 @@ echo "dmg processed. Checking UUID"
 request_uuid="$("/usr/libexec/PlistBuddy" -c "Print notarization-upload:RequestUUID"  notarize_result.plist)"
 echo "Notarization UUID: ${request_uuid}"
 #Get status from upload
+tryCount=0
 for (( ; ; ))
 do
     echo "Getting notarization status"
@@ -22,9 +23,16 @@ do
 	xcrun_result=$?
 	if [ "${xcrun_result}" != "0" ]
 	then
-		echo "Notarization failed: ${xcrun_result}"
-		cat "notarize_result2.plist"
-		exit 1
+		if [ ${trycount} -lt 4 ]
+		then
+			tryCount=$((tryCount+1))
+			sleep 60
+			continue
+		else
+			echo "Notarization failed: ${xcrun_result}"
+			cat "notarize_result2.plist"
+			exit 1
+		fi
 	fi
 	notarize_status="$("/usr/libexec/PlistBuddy" -c "Print notarization-info:Status"  notarize_result2.plist)"
 	if [[ "${notarize_status}" == *"in progress"* ]]; then

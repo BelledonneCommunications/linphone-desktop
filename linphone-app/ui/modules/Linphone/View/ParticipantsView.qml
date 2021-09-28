@@ -118,10 +118,7 @@ ScrollableListView {
 								
 								ActionButton {
 									icon: modelData.icon
-									visible: {
-										var visible = sipAddressesView.actions[index].visible
-										return visible === undefined || visible
-									}
+									visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
 									
 									onClicked: sipAddressesView.actions[index].handler({
 																						   sipAddress: sipAddressesView.interpretableSipAddress
@@ -280,11 +277,7 @@ ScrollableListView {
 						ActionButton {
 							icon: modelData.icon
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
-							visible: {
-								var visible = sipAddressesView.actions[index].visible
-								return visible === undefined || visible
-							}
-							
+							visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
 							onClicked: {
 								sipAddressesView.actions[index].handler(contactView.entry)
 							}

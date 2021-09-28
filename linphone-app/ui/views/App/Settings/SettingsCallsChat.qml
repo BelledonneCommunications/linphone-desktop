@@ -10,8 +10,8 @@ import App.Styles 1.0
 
 TabContainer {
 	Column {
-		anchors.fill: parent
 		spacing: SettingsWindowStyle.forms.spacing
+		width: parent.width
 		
 		Form {
 			title: qsTr('callsTitle')
@@ -296,7 +296,7 @@ TabContainer {
 			}
 			
 			FormLine {
-				visible: false // TODO: Use `SettingsModel.limeIsSupported` binding in V2.
+				visible: false // Use SettingsModel.limeIsSupported when we want to control lime
 				
 				FormGroup {
 					label: qsTr('encryptWithLimeLabel')

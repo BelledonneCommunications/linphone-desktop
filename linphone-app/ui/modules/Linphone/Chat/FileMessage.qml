@@ -9,6 +9,7 @@ import LinphoneEnums 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 import Units 1.0
+import ColorsList 1.0
 
 // =============================================================================
 
@@ -72,7 +73,7 @@ Row {
 				
 				//property ContentModel contentModel : ($chatEntry.getContent(0) ? $chatEntry.getContent(0) : null)
 				property ContentModel contentModel : $chatEntry.fileContentModel
-				property string thumbnail :  contentModel.thumbnail
+				property string thumbnail :  contentModel ? contentModel.thumbnail : ''
 				color: isOutgoing
 					   ? ChatStyle.entry.message.outgoing.backgroundColor
 					   : ChatStyle.entry.message.incoming.backgroundColor
@@ -292,12 +293,14 @@ Row {
 					onMouseYChanged: handleMouseMove.call(this, mouse)
 				}
 				ChatMenu{
+					id: chatMenu
 					height: parent.height
 					width: rectangle.width
 					
 					deliveryCount: deliveryLayout.model.count
 					onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 					onRemoveEntryRequested: removeEntry()
+					deliveryVisible: deliveryLayout.visible
 				}
 				
 				Row{
@@ -310,7 +313,7 @@ Row {
 					spacing:5
 					Text{
 						text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
-						color:"#FF5E00"
+						color: ColorsList.add("FileMessage_ephemeral_text", "ad").color 
 						font.pointSize: Units.dp * 8
 						Timer{
 							running:parent.visible

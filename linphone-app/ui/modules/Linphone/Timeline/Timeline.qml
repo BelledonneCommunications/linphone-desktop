@@ -5,6 +5,7 @@ import QtQuick.Controls 2.5
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import ColorsList 1.0
 
 import 'Timeline.js' as Logic
 
@@ -43,16 +44,7 @@ Rectangle {
 				}
 			}
 			onSelectedChanged : if(timelineModel) timeline.entrySelected(timelineModel)
-			// onCurrentTimelineChanged:entrySelected(currentTimeline)
 		}
-		/*
-	Connections {
-	  target: model
-	  
-	  onDataChanged: Logic.handleDataChanged(topLeft, bottomRight, roles)
-	  onRowsAboutToBeRemoved: Logic.handleRowsAboutToBeRemoved(parent, first, last)
-	}
-*/
 		// -------------------------------------------------------------------------
 		// Legend.
 		// -------------------------------------------------------------------------
@@ -62,7 +54,7 @@ Rectangle {
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
-			visible:view.count > 0
+			visible:view.count > 0 || searchView.visible
 			
 			MouseArea{// no more showing history
 				id:showHistory
@@ -126,7 +118,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: filterChoices.height
 			Layout.alignment: Qt.AlignCenter
-			border.color: 'black'
+			border.color: ColorsList.add("Timeline_filter_border", "border").color
 			border.width: 2
 			visible:false
 			
@@ -142,7 +134,7 @@ Rectangle {
 				CheckBoxText {
 					id:simpleFilter
 					//: 'Simple rooms' : Filter item
-					//~ Mode Selecting it will show all simple romms
+					//~ Mode Selecting it will show all simple rooms
 					text:qsTr('timelineFilterSimpleRooms')
 					property var value : (checked?TimelineProxyModel.SimpleChatRoom:0)
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
@@ -190,11 +182,15 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: 40
 			Layout.alignment: Qt.AlignCenter
-			border.color: 'black'
+			border.color: ColorsList.add("Timeline_search_border", "border").color
 			border.width: 2
 			visible:false
-			//color: ContactsStyle.bar.backgroundColor
-			onVisibleChanged: timeline.model.filterText = (visible?searchBar.text : '')
+			onVisibleChanged: if(visible){
+									timeline.model.filterText = searchBar.text
+									searchBar.forceActiveFocus()
+								}else{
+									timeline.model.filterText =  ''
+								}
 			
 			TextField {
 				id:searchBar
@@ -256,7 +252,7 @@ Rectangle {
 						}
 					}
 					Icon{
-						icon:'timer'
+						icon: modelData.selected ? 'timer_light' : 'timer'
 						iconSize: 15
 						anchors.right:parent.right
 						anchors.bottom:parent.bottom
