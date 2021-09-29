@@ -79,21 +79,23 @@ DialogPlus {
 					SipAddressesView {
 						anchors.fill: parent
 						
-						
+						function transfer(sipAddress){
+							if (attended) {
+								var call = CallsListModel.launchAudioCall(sipAddress, callTransfer.call.peerAddress)
+							} else {
+								callTransfer.call.transferTo(sipAddress)
+							}
+							exit(1)
+						}
 						actions: [{
 								icon: 'transfer',
 								secure: 0,
 								visible: true,
-								handler: function (entry) { 
-									handlerSipAddress(entry.sipAddress)
-								},
 								handlerSipAddress: function(sipAddress){
-									if (attended) {
-										var call = CallsListModel.launchAudioCall(sipAddress, callTransfer.call.peerAddress)
-									} else {
-										callTransfer.call.transferTo(sipAddress)
-									}
-									exit(1)
+									transfer(sipAddress)
+								},
+								handler: function (entry) { 
+									transfer(entry.sipAddress)
 								}
 								
 							}]

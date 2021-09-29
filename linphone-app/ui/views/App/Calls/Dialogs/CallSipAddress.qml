@@ -58,28 +58,35 @@ DialogPlus {
 					SipAddressesView {
 						anchors.fill: parent
 						
+						function launchVideoCall(sipAddress){
+							CallsListModel.launchVideoCall(sipAddress)
+							exit(1)
+						}
+						function launchAudioCall(sipAddress){
+							CallsListModel.launchAudioCall(sipAddress, "")
+							exit(1)
+						}
+						
 						actions: [{
 								icon: 'video_call',
 								secure:0,
 								visible:true,
 								handler: function (entry) {
-									handlerSipAddress(entry.sipAddress)
+									launchVideoCall(entry.sipAddress)
 								},
 								visible: SettingsModel.videoSupported && SettingsModel.showStartVideoCallButton,
 								handlerSipAddress: function(sipAddress) {
-									CallsListModel.launchVideoCall(sipAddress)
-									exit(1)
+									launchVideoCall(sipAddress)
 								}
 							}, {
 								icon: 'call',
 								secure:0,
 								visible:true,
 								handler: function (entry) {
-									handlerSipAddress(entry.sipAddress)
+									launchAudioCall(entry.sipAddress)
 								},
 								handlerSipAddress: function(sipAddress) {
-									CallsListModel.launchAudioCall(sipAddress, "")
-									exit(1)
+									launchAudioCall(sipAddress)
 								}
 							}]
 						
