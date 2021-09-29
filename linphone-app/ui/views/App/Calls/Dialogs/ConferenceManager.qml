@@ -92,15 +92,18 @@ DialogPlus {
           SipAddressesView {
             anchors.fill: parent
 
+			function transfer(sipAddress){
+				conferenceHelperModel.toAdd.addToConference(sipAddress)
+			}
             actions: [{
               icon: 'transfer',
               secure:0,
               visible: true,
               handler: function (entry) {
-				handlerSipAddress(entry.sipAddress)  
+				transfer(entry.sipAddress)  
               },
               handerSipAddress: function(sipAddress){
-				conferenceHelperModel.toAdd.addToConference(sipAddress)
+				transfer(sipAddress)
               }
               
             }]
@@ -144,15 +147,18 @@ DialogPlus {
 
         anchors.fill: parent
 
+		function cancel(sipAddress){
+			model.removeFromConference(sipAddress)
+		}
         actions: [{
           icon: 'cancel',
           visible:true,
           secure:0,
           handler: function (entry) {
-			  handlerSipAddress(entry.sipAddress)
+			  cancel(entry.sipAddress)
           },
           handlerSipAddress: function(sipAddress){
-			model.removeFromConference(sipAddress)
+			cancel(sipAddress)
           }
         }]
 
