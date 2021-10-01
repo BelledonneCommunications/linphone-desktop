@@ -312,7 +312,7 @@ if (APPLE)
     src/app/single-application/SingleApplication.cpp
     src/components/core/event-count-notifier/EventCountNotifierMacOs.m
     src/components/other/desktop-tools/DesktopToolsMacOs.cpp
-    src/components/other/desktop-tools/DesktopToolsMacOs.mm
+    src/components/other/desktop-tools/DesktopToolsMacOsNative.mm
     src/components/other/desktop-tools/screen-saver/ScreenSaverMacOs.m
     src/components/other/desktop-tools/state-process/StateProcessMacOs.mm
     )
