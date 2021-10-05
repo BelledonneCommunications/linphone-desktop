@@ -318,7 +318,7 @@ ColumnLayout  {
 					
 					property bool showGroupInfo: !chatRoomModel.isOneToOne
 					property bool showDevices : conversation.securityLevel != 1
-					property bool showEphemerals:  conversation.securityLevel != 1 && chatRoomModel.isMeAdmin
+					property bool showEphemerals:  conversation.securityLevel != 1 // && chatRoomModel.isMeAdmin // Uncomment when session mode will be implemented
 					
 					MenuItem{
 						id:groupInfoMenu
