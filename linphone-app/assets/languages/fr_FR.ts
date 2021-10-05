@@ -426,7 +426,7 @@
     <message>
         <source>attendedTransferComplete</source>
         <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Valider le transfert</translation>
     </message>
     <message>
         <source>attendedTransferCall</source>
@@ -532,28 +532,28 @@ URL du serveur non configurée.</translation>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 minute</numerusform>
             <numerusform>%1 minutes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 heure</numerusform>
             <numerusform>%1 heures</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 jour</numerusform>
             <numerusform>%1 jours</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 semaine</numerusform>
             <numerusform>%1 semaines</numerusform>
         </translation>
@@ -1522,7 +1522,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
         <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Délai d’expiration des messages : %1</translation>
     </message>
 </context>
 <context>
@@ -1906,7 +1906,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useTLSTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Encode les transactions en utilisant LDAP sur TLS (StartTLS). Vous devez utiliser le protocole \&apos;ldap\&apos;. Utiliser \&apos;ldaps\&apos; pour LDAP sur SSL n&apos;est pas standard et déprécié.&lt;br&gt;StartTLS est une extension du protocole LDAP qui utilise le protocole TLS pour encoder la communication. &lt;br&gt;Elle fonctionne en effectuant une connexion normale (ie. non-sécurisée) avec un serveur LDAP avant d&apos;entamer un protocole d&apos;établissement de liaison entre le serveur et les services web. Ici, le serveur envoie son certificat pour prouver son identité avant d&apos;établir une connexion sécurisée.</translation>
     </message>
     <message>
         <source>useSalLabel</source>
@@ -1914,7 +1914,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>La résolution DNS est effectuée par Linphone en utilisant SAL. Il fournira une IP à LDAP. Ce faisant, la négociation TLS ne pourra pas vérifier le nom d&apos;hôte. Vous devrez donc désactiver les vérifications si vous voulez forcer la connexion.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -1950,7 +1950,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>baseObjectTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Base Object/Search Base est une spécification pour les recherches LDAP. Elle indique que la recherche ne doit être effectuée qu&apos;en se basant sur cette entrée.&lt;br&gt;Aucune entrée au-dessus ne sera prise en compte.</translation>
     </message>
     <message>
         <source>filterLabel</source>
@@ -2365,17 +2365,17 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsTitle</source>
         <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Polices</translation>
     </message>
     <message>
         <source>fontsTextChange</source>
         <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Messages textes</translation>
     </message>
     <message>
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionnez une nouvelle police</translation>
     </message>
 </context>
 <context>
