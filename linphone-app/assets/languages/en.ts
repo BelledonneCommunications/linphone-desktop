@@ -1918,7 +1918,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useTLSTooltip</source>
-        <translation>Encrypt transactions by LDAP over TLS(StartTLS). You must use \&apos;ldap\&apos; scheme. \&apos;ldaps\&apos; for LDAP over SSL is non-standardized and deprecated.&lt;br&gt;StartTLS in an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. &lt;br&gt;It works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established.</translation>
+        <translation>Encrypt transactions by LDAP over TLS(StartTLS). You must use \&apos;ldap\&apos; scheme. \&apos;ldaps\&apos; for LDAP over SSL is non-standardized and deprecated.&lt;br&gt;StartTLS is an extension to the LDAP protocol which uses the TLS protocol to encrypt communication. &lt;br&gt;It works by establishing a normal - i.e. unsecured - connection with the LDAP server before a handshake negotiation between the server and the web services is carried out. Here, the server sends its certificate to prove its identity before the secure connection is established.</translation>
     </message>
     <message>
         <source>useSalLabel</source>
