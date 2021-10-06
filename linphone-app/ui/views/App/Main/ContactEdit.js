@@ -167,6 +167,7 @@ function handleValueChanged (fields, index, oldValue, newValue, add, update) {
     : vcard[update](oldValue, newValue)
 
   fields.setInvalid(index, !soFarSoGood)
+  handleVcardChanged(vcard)
 }
 
 function handleSipAddressChanged () {
