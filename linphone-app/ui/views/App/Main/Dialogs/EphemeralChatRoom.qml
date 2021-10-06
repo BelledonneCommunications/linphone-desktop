@@ -116,7 +116,6 @@ DialogPlus {
 				{ text:qsTr('nHour', '', 1).arg(1), value:3600},
 				//: '%1 day'
 				{ text:qsTr('nDay', '', 1).arg(1), value:86400},
-				//: '%1 days'
 				{ text:qsTr('nDay', '', 3).arg(3), value:259200},
 				//: '%1 week'
 				{ text:qsTr('nWeek', '', 1).arg(1), value:604800}
