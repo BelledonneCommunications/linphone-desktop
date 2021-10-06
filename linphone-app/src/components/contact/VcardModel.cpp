@@ -302,7 +302,7 @@ bool VcardModel::addSipAddress (const QString &sipAddress) {
 		return false;
 	}
 
-	qInfo() << QStringLiteral("Add new sip address on vcard: `%1`.").arg(sipAddress);
+	qInfo() << QStringLiteral("Add new sip address on vcard: `%1` from `%2`.").arg(QString::fromStdString(interpretedSipAddress)).arg(sipAddress);
 
 	emit vcardUpdated();
 	return true;
