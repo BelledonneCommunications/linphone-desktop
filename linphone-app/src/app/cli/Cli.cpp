@@ -409,7 +409,7 @@ QString Cli::Command::getFunctionSyntax () const {
 // FIXME: Do not accept args without value like: cmd toto.
 // In the future `toto` could be a boolean argument.
 QRegExp Cli::mRegExpArgs("(?:(?:([\\w-]+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|([^\\s]+)\\s*))");
-QRegExp Cli::mRegExpFunctionName("^\\s*([A-Z-]+)\\s*");
+QRegExp Cli::mRegExpFunctionName("^\\s*([a-z-]+)\\s*");
 
 QMap<QString, Cli::Command> Cli::mCommands = {
 	createCommand("show", QT_TR_NOOP("showFunctionDescription"), cliShow, QHash<QString, Argument>(), true),
@@ -480,7 +480,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 			if (format)
 				*format = UriFormat;
 			qInfo() << QStringLiteral("Detecting uri command: `%1`...").arg(command);
-			QString functionName, alternativeCommand = command;
+			QString functionName;
 			if( address) {
 				functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
 						? QStringLiteral("call")
@@ -498,7 +498,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 						functionName = "call";
 				}
 			}
-			functionName = functionName.toUpper();
+			functionName = functionName.toLower();
 			if( functionName.isEmpty()){
 				qWarning() << QStringLiteral("There is no method set in `%1`.").arg(command);
 				return;
@@ -539,13 +539,13 @@ pair<QString, Cli::Command> Cli::createCommand (
 		const QHash<QString, Argument> &argsScheme,
 		const bool &genericArguments
 		) {
-	return { functionName.toUpper(), Cli::Command(functionName.toUpper(), functionDescription, function, argsScheme, genericArguments) };
+	return { functionName.toLower(), Cli::Command(functionName.toLower(), functionDescription, function, argsScheme, genericArguments) };
 }
 
 // -----------------------------------------------------------------------------
 
 QString Cli::parseFunctionName (const QString &command) {
-	mRegExpFunctionName.indexIn(command.toUpper());
+	mRegExpFunctionName.indexIn(command.toLower());
 	if (mRegExpFunctionName.pos(1) == -1) {
 		qWarning() << QStringLiteral("Unable to parse function name of command: `%1`.").arg(command);
 		return QString("");
@@ -566,7 +566,7 @@ QHash<QString, QString> Cli::parseArgs (const QString &command) {
 	QHash<QString, QString> args;
 	int pos = 0;
 
-	while ((pos = mRegExpArgs.indexIn(command.toUpper(), pos)) != -1) {
+	while ((pos = mRegExpArgs.indexIn(command.toLower(), pos)) != -1) {
 		pos += mRegExpArgs.matchedLength();
 		args[mRegExpArgs.cap(1)] = (mRegExpArgs.cap(2).isEmpty() ? mRegExpArgs.cap(3) : mRegExpArgs.cap(2));
 	}
