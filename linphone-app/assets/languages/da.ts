@@ -966,8 +966,7 @@ Server url ikke konfigureret.</translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
-        <extracomment>&apos;
-Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
+        <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
         <translation type="unfinished"></translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>

@@ -533,28 +533,24 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>nMinute</source>
         <translation>
             <numerusform>%1 perc</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <translation>
             <numerusform>%1 óra</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
         <translation>
             <numerusform>%1 nap</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <translation>
             <numerusform>%1 hét</numerusform>
-            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -965,8 +961,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
-        <extracomment>&apos;
-Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
+        <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
         <translation>Az elmúló üzenetet csak a konferencia alapú csevegőszoba támogatja!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
