@@ -107,18 +107,20 @@ QVariant SipAddressesModel::data (const QModelIndex &index, int role) const {
 // -----------------------------------------------------------------------------
 
 QVariantMap SipAddressesModel::find (const QString &sipAddress) const {
-  auto it = mPeerAddressToSipAddressEntry.find(sipAddress);
-  if (it == mPeerAddressToSipAddressEntry.end())
-    return QVariantMap();
+	QString cleanedAddress = Utils::cleanSipAddress(sipAddress);
+	auto it = mPeerAddressToSipAddressEntry.find(cleanedAddress);
+	if (it == mPeerAddressToSipAddressEntry.end())
+		return QVariantMap();
 
-  return buildVariantMap(*it);
+	return buildVariantMap(*it);
 }
 
 // -----------------------------------------------------------------------------
 
 ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sipAddress) const {
-  auto it = mPeerAddressToSipAddressEntry.find(sipAddress);
-  return it == mPeerAddressToSipAddressEntry.end() ? nullptr : it->contact;
+	QString cleanedAddress = Utils::cleanSipAddress(sipAddress);
+	auto it = mPeerAddressToSipAddressEntry.find(cleanedAddress);
+	return it == mPeerAddressToSipAddressEntry.end() ? nullptr : it->contact;
 }
 
 // -----------------------------------------------------------------------------
