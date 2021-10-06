@@ -116,6 +116,7 @@ QtObject {
 
         property QtObject text: QtObject {
           property color color: ColorsList.add("Chat_incoming_text", "d").color
+          property int pointSize: Units.dp * 10
         }
       }
 
@@ -127,6 +128,7 @@ QtObject {
 
         property QtObject text: QtObject {
           property color color: ColorsList.add("Chat_outgoing_text", "d").color
+          property int pointSize: Units.dp * 10
         }
       }
     }
