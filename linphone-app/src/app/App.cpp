@@ -242,7 +242,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
 App::~App () {
 	qInfo() << QStringLiteral("Destroying app...");
-	delete mEngine;
+	mEngine->deleteLater();// Let to Qt the time to delete its data
 	delete mParser;
 }
 

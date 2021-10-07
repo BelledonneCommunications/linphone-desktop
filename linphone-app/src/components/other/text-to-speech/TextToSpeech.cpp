@@ -34,6 +34,9 @@ TextToSpeech::TextToSpeech (QObject *parent) : QObject(parent) {
 	mQtTextToSpeech = new QTextToSpeech(this);
 	connect(mQtTextToSpeech, &QTextToSpeech::stateChanged, this, &TextToSpeech::onStateChanged);
 }
+TextToSpeech::~TextToSpeech(){
+	mQtTextToSpeech->deleteLater();
+}
 
 void TextToSpeech::say (const QString &text) {
 	if(mQtTextToSpeech->volume() == 0.0)
