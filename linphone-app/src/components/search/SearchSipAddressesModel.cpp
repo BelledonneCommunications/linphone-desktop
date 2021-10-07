@@ -50,7 +50,7 @@ SearchSipAddressesModel::SearchSipAddressesModel (QObject *parent) : QAbstractLi
 	
 	mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
 	mSearch = std::make_shared<SearchHandler>(this);
-	QObject::connect(mSearch.get(), SIGNAL(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> )), this, SLOT(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>>)));
+	QObject::connect(mSearch.get(), &SearchHandler::searchReceived, this, &SearchSipAddressesModel::searchReceived, Qt::QueuedConnection);
 	mMagicSearch->addListener(mSearch);
 	
 }
@@ -111,9 +111,10 @@ void SearchSipAddressesModel::setFilter(const QString& filter){
 }
 
 void SearchSipAddressesModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
-	beginResetModel();
-	mAddresses.clear();
+	QList<std::shared_ptr<SearchResultModel> > addresses;
 	for(auto it = results.begin() ; it != results.end() ; ++it)
-		mAddresses << std::make_shared<SearchResultModel>((*it)->getFriend(), (*it)->getAddress());
+		addresses << std::make_shared<SearchResultModel>((*it)->getFriend(), (*it)->getAddress());
+	beginResetModel();
+	mAddresses = addresses;
 	endResetModel();
 }
