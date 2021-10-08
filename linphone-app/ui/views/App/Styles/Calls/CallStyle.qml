@@ -46,7 +46,7 @@ QtObject {
 
       property QtObject text: QtObject {
         property color color: ColorsList.add("Call_container_pause_text", "q").color
-        property int pointSizeFactor: 10
+        property int pointSizeFactor: 5
       }
     }
   }

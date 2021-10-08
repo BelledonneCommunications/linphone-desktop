@@ -132,3 +132,12 @@ std::shared_ptr<ParticipantDeviceListModel> ParticipantModel::getParticipantDevi
 	return mParticipantDevices;
 }
 
+void ParticipantModel::startInvitation(const int& secs){
+	QTimer::singleShot(secs * 1000, this, &ParticipantModel::onEndOfInvitation);
+}
+
+void ParticipantModel::onEndOfInvitation(){
+	if( getInviting())
+		emit invitationTimeout(this);
+}
+

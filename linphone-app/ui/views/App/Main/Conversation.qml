@@ -40,6 +40,18 @@ ColumnLayout  {
 	property bool haveMoreThanOneParticipants: chatRoomModel ? chatRoomModel.participants.count > 2 : false
 	property bool haveLessThanMinParticipantsForCall: chatRoomModel ? chatRoomModel.participants.count <= 5 : false
 	
+	function getPeerAddress() {
+		if(chatRoomModel) {
+			if(chatRoomModel.groupEnabled || chatRoomModel.isSecure()) {
+				return chatRoomModel.participants.addressesToString;
+			}else {
+				return chatRoomModel.sipAddress;
+			}
+		}else {
+			return conversation.fullPeerAddress || conversation.peerAddress || '';
+		}	
+	}
+	
 	// ---------------------------------------------------------------------------
 	
 	spacing: 0
@@ -279,7 +291,7 @@ ColumnLayout  {
 						visible: SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
 						
 						onClicked: window.setView('ContactEdit', {
-													  sipAddress: conversation.peerAddress
+													  sipAddress: conversation.getPeerAddress()
 												  })
 						TooltipArea {
 							text: Logic.getEditTooltipText()

@@ -7,6 +7,8 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 import ColorsList 1.0
 
+import UtilsCpp 1.0
+
 import 'Timeline.js' as Logic
 
 // =============================================================================
@@ -222,6 +224,7 @@ Rectangle {
 				width: parent ? parent.width : 0
 				
 				Contact {
+					id: contactView
 					property bool isSelected: modelData != undefined && modelData.selected	//view.currentIndex === index
 					
 					anchors.fill: parent
@@ -240,16 +243,10 @@ Rectangle {
 					usernameColor: isSelected
 								   ? TimelineStyle.contact.username.color.selected
 								   : TimelineStyle.contact.username.color.normal
-					
-					Loader {
-						anchors.fill: parent
-						sourceComponent: TooltipArea {
-							
-							//text: $timelineEntry.timestamp.toLocaleString(
-							//Qt.locale(App.locale),
-							//Locale.ShortFormat
-							//)
-						}
+					TooltipArea {	
+						id: contactTooltip						
+						text: UtilsCpp.toDateTimeString(modelData.chatRoomModel.lastUpdateTime)
+						isClickable: true
 					}
 					Icon{
 						icon: modelData.selected ? 'timer_light' : 'timer'
@@ -264,12 +261,19 @@ Rectangle {
 				
 				MouseArea {
 					anchors.fill: parent
+					acceptedButtons: Qt.LeftButton | Qt.RightButton
+					propagateComposedEvents: true
+					preventStealing: false
 					onClicked: {
 						//timeline.model.unselectAll()
-						if(modelData.selected)// Update selection
-							timeline.entrySelected(modelData)
-						modelData.selected = true
-						view.currentIndex = index;
+						if(mouse.button == Qt.LeftButton){
+							if(modelData.selected)// Update selection
+								timeline.entrySelected(modelData)
+							modelData.selected = true
+							view.currentIndex = index;
+						}else{
+							contactTooltip.show()
+						}
 					}
 				}
 				

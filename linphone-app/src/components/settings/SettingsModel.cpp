@@ -612,7 +612,10 @@ void SettingsModel::setChatEnabled (bool status) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getHideEmptyChatRooms() const{
-	return !!mConfig->getInt("misc", "hide_empty_chat_rooms", 0);
+	int defaultValue = 0;
+	if(!mConfig->hasEntry("misc", "hide_empty_chat_rooms"))// This step should be removed when this option comes from API and not directly from config file
+		mConfig->setInt("misc", "hide_empty_chat_rooms", defaultValue);
+	return !!mConfig->getInt("misc", "hide_empty_chat_rooms", defaultValue);
 }
 
 void SettingsModel::setHideEmptyChatRooms(const bool& status){

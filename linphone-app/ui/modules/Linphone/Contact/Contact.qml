@@ -30,7 +30,7 @@ Rectangle {
 	
 	property string username: (entry != undefined ?(entry.contactModel != undefined ? entry.contactModel.vcard.username
 																			:entry.username != undefined ?entry.username:
-																										   LinphoneUtils.getContactUsername(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+																										   UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
 											):'')
 	
 	// ---------------------------------------------------------------------------
@@ -53,8 +53,9 @@ Rectangle {
 			Layout.preferredWidth: ContactStyle.contentHeight
 			
 			//image: _contact && _contact.vcard.avatar
-			image: entry?(entry.contactModel?entry.contactModel.vcard.avatar:entry.avatar?entry.avatar: ''):''
-			
+			image: entry?(entry.contactModel	? entry.contactModel.vcard.avatar
+												: entry.avatar ? entry.avatar : '')
+						:''
 			presenceLevel: entry?(entry.contactModel ? (entry.contactModel.presenceStatus >= 0 ? Presence.getPresenceLevel(entry.contactModel.presenceStatus) : -1)
 													 : (entry.presenceStatus >= 0 ? Presence.getPresenceLevel(entry.presenceStatus) : -1)
 								  )

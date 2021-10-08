@@ -56,6 +56,7 @@ public:
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
 	Q_INVOKABLE static QString toTimeString(QDateTime date);
 	Q_INVOKABLE static QString toDateString(QDateTime date);
+	Q_INVOKABLE static QString getDisplayName(const QString& address);
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {

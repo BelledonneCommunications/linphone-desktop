@@ -76,12 +76,13 @@ Rectangle {
         id: rightActions
 
         anchors.right: parent.right
-        iconSize: CallStyle.header.iconSize
+        iconSize: CallStyle.header.buttonIconSize
 
         ActionSwitch {
           enabled: conference.conferenceModel.recording
           icon: 'record'
           useStates: false
+          visible: SettingsModel.callRecorderEnabled
 
           onClicked: !enabled
             ? conference.conferenceModel.startRecording()
