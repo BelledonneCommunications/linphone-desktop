@@ -993,9 +993,7 @@ URL du serveur non configurée.</translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <extracomment>&apos;%1 day&apos;
-----------
-&apos;%1 days&apos;</extracomment>
+        <extracomment>&apos;%1 day&apos;</extracomment>
         <translation>
             <numerusform>%1 jour</numerusform>
             <numerusform>%1 jours</numerusform>

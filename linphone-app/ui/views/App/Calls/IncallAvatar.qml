@@ -35,7 +35,7 @@ Avatar {
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
 
-    text: '&#9616;&nbsp;&#9612;'
+    text: '&#10073;&#10073;'
     textFormat: Text.RichText
     visible: call.status === CallModel.CallStatusPaused
   }

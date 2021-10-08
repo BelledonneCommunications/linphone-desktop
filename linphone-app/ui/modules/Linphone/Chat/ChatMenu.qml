@@ -86,17 +86,15 @@ Item {
 	
 	// Handle hovered link.
 	MouseArea {
-		anchors.fill:parent	
-		//	height: parent.height
-		//			width: rectangle.width
+		anchors.fill: parent
+		//height: messageMenu.height
+		//width: messageMenu.width
 		
 		acceptedButtons: Qt.RightButton
 		propagateComposedEvents:true
 		cursorShape: parent.hoveredLink
 					 ? Qt.PointingHandCursor
 					 : Qt.IBeamCursor
-		
 		onClicked: mouse.button === Qt.RightButton && messageMenu.popup()
 	}
-	
 }

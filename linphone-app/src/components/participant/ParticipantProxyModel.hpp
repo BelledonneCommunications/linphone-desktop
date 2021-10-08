@@ -52,8 +52,8 @@ public:
   
   void setChatRoomModel(ChatRoomModel * chatRoomModel);
   
-  Q_INVOKABLE void add(const QString& address);
-  Q_INVOKABLE void remove(ParticipantModel * participant);
+  Q_INVOKABLE void addAddress(const QString& address);
+  Q_INVOKABLE void removeModel(ParticipantModel * participant);
   
   
   

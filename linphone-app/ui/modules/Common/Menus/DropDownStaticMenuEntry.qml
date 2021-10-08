@@ -20,6 +20,7 @@ Rectangle {
       )
   height: parent.entryHeight
   width: parent.entryWidth
+  property int implicitWidth : text.implicitWidth + DropDownStaticMenuStyle.entry.leftMargin + DropDownStaticMenuStyle.entry.rightMargin + 5 // 5 = Elide width
 
   Text {
     id: text

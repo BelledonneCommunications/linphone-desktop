@@ -117,12 +117,12 @@ function getParams (call) {
 		if (call.pausedByUser) {
 			optActions.push({
 								handler: (function () { call.pausedByUser = false }),
-								name: qsTr('resumeCall')
+								name: qsTr('resumeCall').toUpperCase() 
 							})
 		} else if (Linphone.SettingsModel.callPauseEnabled) {
 			optActions.push({
 								handler: (function () { call.pausedByUser = true }),
-								name: qsTr('callPause')
+								name: qsTr('callPause').toUpperCase() 
 							})
 		}
 		
@@ -130,25 +130,25 @@ function getParams (call) {
 			optActions.push({
 								handler: call.askForTransfer,
 								//: 'COMPLETE ATTENDED TRANSFER' : Title button, design is in uppercase.
-								name: qsTr('attendedTransferComplete')
+								name: qsTr('attendedTransferComplete').toUpperCase() 
 							})
 		}
 		else {
 			optActions.push({
 								handler: call.askForTransfer,
-								name: qsTr('transferCall')
+								name: qsTr('transferCall').toUpperCase() 
 							})
 			optActions.push({
 								handler: call.askForAttendedTransfer,
 								//: 'ATTENDED TRANSFER CALL' : Title button, design is in uppercase.
-								name: qsTr('attendedTransferCall')
+								name: qsTr('attendedTransferCall').toUpperCase() 
 							})
 		}
 		
 		return {
 			actions: optActions.concat([{
 											handler: call.terminate,
-											name: qsTr('terminateCall')
+											name: qsTr('terminateCall').toUpperCase() 
 										}]),
 			component: callActions,
 			string: 'paused'

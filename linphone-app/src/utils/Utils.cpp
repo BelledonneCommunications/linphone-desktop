@@ -93,6 +93,10 @@ QString Utils::toDateString(QDateTime date){
 	return date.toString("yyyy/MM/dd");
 }
 
+QString Utils::getDisplayName(const QString& address){
+	return getDisplayName(interpretUrl(address));
+}
+
 QImage Utils::getImage(const QString &pUri) {
 	QImage image(pUri);
 	if(image.isNull()){// Try to determine format from headers instead of using suffix

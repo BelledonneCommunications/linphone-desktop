@@ -28,51 +28,52 @@
 class CallModel;
 
 class ConferenceModel : public QSortFilterProxyModel {
-  Q_OBJECT;
-
-  Q_PROPERTY(int count READ getCount NOTIFY countChanged);
-
-  Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
-  Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
-
-  Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
-  Q_PROPERTY(bool isInConf READ isInConference NOTIFY conferenceChanged);
-
+	Q_OBJECT;
+	
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged);
+	
+	Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
+	Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
+	
+	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
+	Q_PROPERTY(bool isInConf READ isInConference NOTIFY conferenceChanged);
+	
 public:
-  ConferenceModel (QObject *parent = Q_NULLPTR);
-
+	ConferenceModel (QObject *parent = Q_NULLPTR);
+	
 protected:
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-
-  Q_INVOKABLE void terminate ();
-
-  Q_INVOKABLE void startRecording ();
-  Q_INVOKABLE void stopRecording ();
-
-  Q_INVOKABLE void join ();
-  Q_INVOKABLE void leave ();
-
+	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	
+	Q_INVOKABLE void terminate ();
+	
+	Q_INVOKABLE void startRecording ();
+	Q_INVOKABLE void stopRecording ();
+	
+	Q_INVOKABLE void join ();
+	Q_INVOKABLE void leave ();
+	
 signals:
-  void countChanged (int count);
-
-  void microMutedChanged (bool status);
-  void recordingChanged (bool status);
-  void conferenceChanged ();
-
+	void countChanged (int count);
+	
+	void microMutedChanged (bool status);
+	void recordingChanged (bool status);
+	void conferenceChanged ();
+	
 private:
-  int getCount () const {
-    return rowCount();
-  }
-
-  bool getMicroMuted () const;
-  void setMicroMuted (bool status);
-  float getMicroVu () const;
-
-  bool isInConference () const;
-
-  bool getRecording () const;
-
-  bool mRecording = false;
+	int getCount () const {
+		return rowCount();
+	}
+	
+	bool getMicroMuted () const;
+	void setMicroMuted (bool status);
+	float getMicroVu () const;
+	
+	bool isInConference () const;
+	
+	bool getRecording () const;
+	
+	bool mRecording = false;
+	QString mLastRecordFile;
 };
 
 #endif // CONFERENCE_MODEL_H_

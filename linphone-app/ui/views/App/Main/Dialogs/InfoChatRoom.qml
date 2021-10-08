@@ -93,12 +93,12 @@ DialogPlus {
 									return !chatRoomModel.haveEncryption || UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh);
 								},
 					handler: function (entry) {
-						selectedParticipants.add(entry.sipAddress)
+						selectedParticipants.addAddress(entry.sipAddress)
 					},
 				}]
 			
 			onEntryClicked: {
-				selectedParticipants.add(entry)
+				selectedParticipants.addAddress(entry)
 			}
 		}
 		
@@ -159,7 +159,7 @@ DialogPlus {
 															 visible:true,
 															 tooltipText: 'Remove this participant from the selection',
 															 handler: function (entry) {
-																 selectedParticipants.remove(entry)
+																 selectedParticipants.removeModel(entry)
 																 //							++lastContacts.reloadCount
 															 }
 														 }]

@@ -83,28 +83,29 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 	}
 }
 
-void ParticipantProxyModel::add(const QString& address){
+void ParticipantProxyModel::addAddress(const QString& address){
 	ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
 	if(!participantsModel->contains(address)){
 		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
 		participant->setSipAddress(address);
 		participantsModel->add(participant);
-		if(mChatRoomModel && mChatRoomModel->getChatRoom())// Invite and wait for its creation
+		if(mChatRoomModel && mChatRoomModel->getChatRoom()){// Invite and wait for its creation
 			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
+			connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
+			participant->startInvitation();
+		}
 		emit countChanged();
 		emit addressAdded(address);
 	}
 }
 
-void ParticipantProxyModel::remove(ParticipantModel * participant){
+void ParticipantProxyModel::removeModel(ParticipantModel * participant){
 	if(participant) {
 		QString sipAddress =  participant->getSipAddress();
-		if( !mChatRoomModel){
-			ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
-			participantsModel->remove(participant);
-		}else if(mChatRoomModel->getChatRoom() && participant->getParticipant() )
-			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());			
-		//dynamic_cast<ParticipantListModel*>(sourceModel())->remove(participant);
+		if(mChatRoomModel && mChatRoomModel->getChatRoom() && participant->getParticipant() )
+			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());	// Remove already added
+		ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
+		participantsModel->remove(participant);
 		emit countChanged();
 		emit addressRemoved(sipAddress);
 	}

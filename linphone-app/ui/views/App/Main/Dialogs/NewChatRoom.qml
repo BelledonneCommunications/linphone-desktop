@@ -256,7 +256,7 @@ DialogPlus {
 									anchors.fill:parent
 									visible:!mask.visible
 									onClicked: {
-										selectedParticipants.add(modelData.sipAddress)
+										selectedParticipants.addAddress(modelData.sipAddress)
 										smartSearchBar.addAddressToIgnore(modelData.sipAddress);
 										++lastContacts.reloadCount
 									}
@@ -317,7 +317,7 @@ DialogPlus {
 									return isUsable(entry.sipAddress)
 								},
 								handler: function (entry) {
-									selectedParticipants.add(entry.sipAddress)
+									selectedParticipants.addAddress(entry.sipAddress)
 									smartSearchBar.addAddressToIgnore(entry.sipAddress);
 									++lastContacts.reloadCount
 								},
@@ -325,7 +325,7 @@ DialogPlus {
 						
 						onEntryClicked: {
 							if( isUsable(entry)){
-								selectedParticipants.add(entry)
+								selectedParticipants.addAddress(entry)
 								smartSearchBar.addAddressToIgnore(entry);
 								++lastContacts.reloadCount
 							}
@@ -364,7 +364,7 @@ DialogPlus {
 							showInvitingIndicator: false
 							function removeParticipant(entry){
 										smartSearchBar.removeAddressToIgnore(entry.sipAddress)
-										selectedParticipants.remove(entry)
+										selectedParticipants.removeModel(entry)
 										++lastContacts.reloadCount
 							}
 							

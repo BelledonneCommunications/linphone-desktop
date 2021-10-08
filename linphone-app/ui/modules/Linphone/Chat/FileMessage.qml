@@ -39,7 +39,12 @@ Row {
 					delay:0
 					text:parent.username+'\n'+ (isOutgoing ? $chatEntry.toSipAddress : $chatEntry.fromSipAddress)
 					tooltipParent:mainRow
+					isClickable: true
+					onDoubleClicked: {
+						window.mainSearchBar.text = $chatEntry.fromSipAddress
+					}
 				}
+				
 			}
 		}
 		
@@ -74,6 +79,7 @@ Row {
 				//property ContentModel contentModel : ($chatEntry.getContent(0) ? $chatEntry.getContent(0) : null)
 				property ContentModel contentModel : $chatEntry.fileContentModel
 				property string thumbnail :  contentModel ? contentModel.thumbnail : ''
+				
 				color: isOutgoing
 					   ? ChatStyle.entry.message.outgoing.backgroundColor
 					   : ChatStyle.entry.message.incoming.backgroundColor
@@ -186,70 +192,83 @@ Row {
 					// ---------------------------------------------------------------------
 					// Upload or file status.
 					// ---------------------------------------------------------------------
-					
-					Column {
+					Item{
 						Layout.fillWidth: true
 						Layout.fillHeight: true
-						
-						spacing: ChatStyle.entry.message.file.status.spacing
-						
-						Text {
-							id: fileName
+						Column {
+							anchors.fill: parent
 							
-							color: isOutgoing
-								   ? ChatStyle.entry.message.outgoing.text.color
-								   : ChatStyle.entry.message.incoming.text.color
-							elide: Text.ElideRight
+							spacing: ChatStyle.entry.message.file.status.spacing
 							
-							font {
-								bold: true
-								pointSize: isOutgoing
-										   ? ChatStyle.entry.message.outgoing.text.pointSize
-										   : ChatStyle.entry.message.incoming.text.pointSize
+							Text {
+								id: fileName
+								
+								color: isOutgoing
+									   ? ChatStyle.entry.message.outgoing.text.color
+									   : ChatStyle.entry.message.incoming.text.color
+								elide: Text.ElideRight
+								
+								font {
+									bold: true
+									pointSize: isOutgoing
+											   ? ChatStyle.entry.message.outgoing.text.pointSize
+											   : ChatStyle.entry.message.incoming.text.pointSize
+								}
+								
+								text: (rectangle.contentModel ? rectangle.contentModel.name : '')
+								width: parent.width
 							}
 							
-							text: (rectangle.contentModel ? rectangle.contentModel.name : '')
-							width: parent.width
-						}
-						
-						ProgressBar {
-							id: progressBar
-							
-							height: ChatStyle.entry.message.file.status.bar.height
-							width: parent.width
-							
-							to: (rectangle.contentModel ? rectangle.contentModel.fileSize : 0)
-							value: rectangle.contentModel ? rectangle.contentModel.fileOffset || 0 : 0
-							visible: $chatEntry.state == LinphoneEnums.ChatMessageStateInProgress || $chatEntry.state == LinphoneEnums.ChatMessageStateFileTransferInProgress
-							background: Rectangle {
-								color: ChatStyle.entry.message.file.status.bar.background.color
-								radius: ChatStyle.entry.message.file.status.bar.radius
-							}
-							
-							contentItem: Item {
-								Rectangle {
-									color: ChatStyle.entry.message.file.status.bar.contentItem.color
-									height: parent.height
-									width: progressBar.visualPosition * parent.width
-									
+							ProgressBar {
+								id: progressBar
+								
+								height: ChatStyle.entry.message.file.status.bar.height
+								width: parent.width
+								
+								to: (rectangle.contentModel ? rectangle.contentModel.fileSize : 0)
+								value: rectangle.contentModel ? rectangle.contentModel.fileOffset || 0 : 0
+								visible: $chatEntry.state == LinphoneEnums.ChatMessageStateInProgress || $chatEntry.state == LinphoneEnums.ChatMessageStateFileTransferInProgress
+								background: Rectangle {
+									color: ChatStyle.entry.message.file.status.bar.background.color
 									radius: ChatStyle.entry.message.file.status.bar.radius
+								}
+								
+								contentItem: Item {
+									Rectangle {
+										color: ChatStyle.entry.message.file.status.bar.contentItem.color
+										height: parent.height
+										width: progressBar.visualPosition * parent.width
+										
+										radius: ChatStyle.entry.message.file.status.bar.radius
+									}
+								}
+							}
+							
+							Text {
+								color: fileName.color
+								elide: Text.ElideRight
+								font.pointSize: fileName.font.pointSize
+								text: {
+									if(rectangle.contentModel){
+										var fileSize = Utils.formatSize(rectangle.contentModel.fileSize)
+										return progressBar.visible
+												? Utils.formatSize(rectangle.contentModel.fileOffset) + '/' + fileSize
+												: fileSize
+									}else
+										return ''
 								}
 							}
 						}
-						
-						Text {
-							color: fileName.color
-							elide: Text.ElideRight
-							font.pointSize: fileName.font.pointSize
-							text: {
-								if(rectangle.contentModel){
-									var fileSize = Utils.formatSize(rectangle.contentModel.fileSize)
-									return progressBar.visible
-											? Utils.formatSize(rectangle.contentModel.fileOffset) + '/' + fileSize
-											: fileSize
-								}else
-									return ''
-							}
+						ChatMenu{
+							id: chatMenu
+							anchors.fill: parent
+							//height: parent.height
+							//width: parent.width
+							
+							deliveryCount: deliveryLayout.model.count
+							onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
+							onRemoveEntryRequested: removeEntry()
+							deliveryVisible: deliveryLayout.visible
 						}
 					}
 				}
@@ -283,25 +302,18 @@ Row {
 							rectangle.contentModel.openFile()
 						} else if (rectangle.contentModel && rectangle.contentModel.wasDownloaded) {
 							rectangle.contentModel.openFile(true)// Show directory
+							thumbnailProvider.state = ''
 						} else  {
 							rectangle.contentModel.downloadFile()
+							thumbnailProvider.state = ''
 						}
 					}
-					
 					onExited: thumbnailProvider.state = ''
 					onMouseXChanged: handleMouseMove.call(this, mouse)
 					onMouseYChanged: handleMouseMove.call(this, mouse)
 				}
-				ChatMenu{
-					id: chatMenu
-					height: parent.height
-					width: rectangle.width
-					
-					deliveryCount: deliveryLayout.model.count
-					onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
-					onRemoveEntryRequested: removeEntry()
-					deliveryVisible: deliveryLayout.visible
-				}
+				
+				
 				
 				Row{
 					id:ephemeralTimerRow
@@ -326,7 +338,7 @@ Row {
 						icon:'timer'
 						iconSize: 15
 					}
-				}		
+				}
 			}
 			
 			ChatDeliveries{

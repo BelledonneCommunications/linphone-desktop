@@ -21,10 +21,12 @@
 #include <QDateTime>
 #include <QtDebug>
 
+#include "app/App.hpp"
 #include "components/call/CallModel.hpp"
 #include "components/calls/CallsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/notifier/Notifier.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
@@ -76,13 +78,11 @@ void ConferenceModel::startRecording () {
   qInfo() << QStringLiteral("Start recording conference:") << this;
 
   CoreManager *coreManager = CoreManager::getInstance();
-  coreManager->getCore()->startConferenceRecording(
-    Utils::appStringToCoreString(
+  mLastRecordFile = 
       QStringLiteral("%1%2.mkv")
         .arg(coreManager->getSettingsModel()->getSavedCallsFolder())
-        .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
-    )
-  );
+        .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"));
+  coreManager->getCore()->startConferenceRecording(Utils::appStringToCoreString(mLastRecordFile) );
   mRecording = true;
 
   emit recordingChanged(true);
@@ -95,7 +95,9 @@ void ConferenceModel::stopRecording () {
   qInfo() << QStringLiteral("Stop recording conference:") << this;
 
   mRecording = false;
+  
   CoreManager::getInstance()->getCore()->stopConferenceRecording();
+  App::getInstance()->getNotifier()->notifyRecordingCompleted(mLastRecordFile);
 
   emit recordingChanged(false);
 }
