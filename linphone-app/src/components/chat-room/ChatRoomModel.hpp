@@ -287,7 +287,7 @@ signals:
 	void participantsChanged();
 	void subjectChanged(QString subject);
 	void usernameChanged();
-	void avatarChanged(QString avatar);
+	void avatarChanged();
 	void presenceStatusChanged();
 	void lastUpdateTimeChanged();
 	void unreadMessagesCountChanged();

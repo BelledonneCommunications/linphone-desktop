@@ -70,14 +70,15 @@ ListView {
         relativeX: callControls.width
 
         entryHeight: CallsStyle.entry.height
-        entryWidth: CallsStyle.entry.width
+        entryWidth: maxWidth 
+        property int maxWidth :  CallsStyle.entry.width
 
         Repeater {
           model: params ? params.actions : []
 
           DropDownStaticMenuEntry {
             entryName: modelData.name
-
+			Component.onCompleted: if( menu.maxWidth < implicitWidth ) menu.maxWidth = implicitWidth
             onClicked: {
               menu.close()
               params.actions[index].handler()

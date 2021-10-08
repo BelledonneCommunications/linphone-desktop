@@ -68,11 +68,13 @@ public:
     //linphone::ChatRoomSecurityLevel getSecurityLevel() const;
     //std::shared_ptr<linphone::ParticipantDevice> findDevice(const std::shared_ptr<const linphone::Address> & address) const;
 	
+	void startInvitation(const int& secondes = 30);	// Start a timer to remove the model if the invitation didn't ended after some time
 	
 	
 public slots:
 	void onSecurityLevelChanged();	
 	void onDeviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	void onEndOfInvitation();
 	
 signals:
 	void securityLevelChanged();
@@ -82,6 +84,8 @@ signals:
 	void adminStatusChanged();
 	void deviceCountChanged();
 	void invitingChanged();
+	
+	void invitationTimeout(ParticipantModel* model);
 	
 //    void contactUpdated ();
 
