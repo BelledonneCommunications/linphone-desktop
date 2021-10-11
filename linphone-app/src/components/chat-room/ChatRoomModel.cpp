@@ -516,7 +516,7 @@ QList<QString> ChatRoomModel::getComposers(){
 
 void ChatRoomModel::setSubject(QString& subject){
 	if(mChatRoom && getSubject() != subject){
-		mChatRoom->setSubject(subject.toStdString());	// in UTF8
+		mChatRoom->setSubject(subject.toUtf8().toStdString());	// in UTF8
 		emit subjectChanged(subject);
 	}
 }
