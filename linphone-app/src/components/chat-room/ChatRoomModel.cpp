@@ -516,7 +516,7 @@ QList<QString> ChatRoomModel::getComposers(){
 
 void ChatRoomModel::setSubject(QString& subject){
 	if(mChatRoom && getSubject() != subject){
-		mChatRoom->setSubject(subject.toStdString());	// in UTF8
+		mChatRoom->setSubject(subject.toUtf8().toStdString());	// in UTF8
 		emit subjectChanged(subject);
 	}
 }
@@ -613,8 +613,7 @@ void ChatRoomModel::updateParticipants(const QVariantList& participants){
 // -----------------------------------------------------------------------------
 
 void ChatRoomModel::sendMessage (const QString &message) {
-	shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessageFromUtf8("");
-	_message->getContents().begin()->get()->setUtf8Text(message.toUtf8().toStdString());
+	shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessageFromUtf8(message.toUtf8().toStdString());
 	_message->send();
 	
 	emit messageSent(_message);
