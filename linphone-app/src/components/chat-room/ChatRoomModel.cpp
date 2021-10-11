@@ -614,7 +614,7 @@ void ChatRoomModel::updateParticipants(const QVariantList& participants){
 
 void ChatRoomModel::sendMessage (const QString &message) {
 	shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessageFromUtf8("");
-	_message->getContents().begin()->get()->setUtf8Text(message.toUtf8().toStdString());
+	_message->setUtf8Text(message.toUtf8().toStdString());
 	_message->send();
 	
 	emit messageSent(_message);
