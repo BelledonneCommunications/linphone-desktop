@@ -207,8 +207,8 @@ void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyCo
 	
 	CoreManager *coreManager = CoreManager::getInstance();
 	std::shared_ptr<linphone::ProxyConfig> newProxy = nullptr;
+	std::list<std::shared_ptr<linphone::ProxyConfig>> allProxies = coreManager->getCore()->getProxyConfigList();
 	if( proxyConfig == coreManager->getCore()->getDefaultProxyConfig()){
-		std::list<std::shared_ptr<linphone::ProxyConfig>> allProxies = coreManager->getCore()->getProxyConfigList();
 		for(auto proxy : allProxies){
 			if( proxy != proxyConfig ){
 				newProxy = proxy;
@@ -217,8 +217,23 @@ void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyCo
 		}
 		setDefaultProxyConfig(newProxy);
 	}
-	
-	coreManager->getCore()->removeProxyConfig(proxyConfig);// Remove first to avoid requesting password when deleting it
+// "message-expires" is used to keep contact for messages. Setting to 0 will remove the contact for messages too.
+// Check if a "message-expires" exists and set it to 0
+	QStringList parameters = Utils::coreStringToAppString(proxyConfig->getContactParameters()).split(";");
+	for(int i = 0 ; i < parameters.size() ; ++i){
+		QStringList fields = parameters[i].split("=");
+		if( fields.size() > 1 && fields[0].simplified() == "message-expires"){
+			parameters[i] = Constants::DefaultContactParametersOnRemove;
+		}
+	}
+	proxyConfig->edit();
+	proxyConfig->setContactParameters(Utils::appStringToCoreString(parameters.join(";")));
+	if (proxyConfig->done() == -1) {
+		qWarning() << QStringLiteral("Unable to reset message-expiry property before removing proxy config: `%1`.")
+				  .arg(QString::fromStdString(proxyConfig->getIdentityAddress()->asString()));
+	}else { // Wait for update
+		mRemovingProxies.push_back(proxyConfig);
+	}
 	
 	emit accountSettingsUpdated();
 }
@@ -461,6 +476,11 @@ void AccountSettingsModel::handleRegistrationStateChanged (
 				CoreManager::getInstance()->getCore()->removeAuthInfo(authInfo);
 			});
 		coreManager->getSettingsModel()->configureRlsUri();
+	}else if(mRemovingProxies.contains(proxy)){
+		mRemovingProxies.removeAll(proxy);
+		QTimer::singleShot(100, [proxy](){// removeProxyConfig cannot be called from callback
+				CoreManager::getInstance()->getCore()->removeProxyConfig(proxy);
+		});
 	}
 	if(defaultProxyConfig == proxy)
 		emit defaultRegistrationChanged();

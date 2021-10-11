@@ -26,6 +26,7 @@
 #include <QString>
 #include <QVariantMap>
 #include <QVariantList>
+#include <QVector>
 
 // =============================================================================
 
@@ -117,6 +118,8 @@ private:
     const std::shared_ptr<linphone::ProxyConfig> &proxyConfig,
     linphone::RegistrationState state
   );
+  
+  QVector<std::shared_ptr<linphone::ProxyConfig> > mRemovingProxies;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig>);
