@@ -52,6 +52,7 @@ public:
 	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
 	static constexpr char LinphoneDomain[] = "sip.linphone.org";
 	static constexpr char DefaultContactParameters[] = "message-expires=604800";
+	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 3600;
 	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
 	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login";
