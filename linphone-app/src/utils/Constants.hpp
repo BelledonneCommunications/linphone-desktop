@@ -64,7 +64,8 @@ public:
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
 	static constexpr char DefaultLimeServerURL[] = "https://lime.linphone.org/lime-server/lime-server.php";
-	
+	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
+	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
 	
 	// Max image size in bytes. (100Kb)
 	static constexpr qint64 MaxImageSize = 102400;// In Bytes.

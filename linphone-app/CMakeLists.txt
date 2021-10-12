@@ -90,7 +90,7 @@ if( WIN32)
 endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network Test)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network Test WebView)
 if (UNIX AND NOT APPLE)
     list(APPEND QT5_PACKAGES DBus)
 endif ()

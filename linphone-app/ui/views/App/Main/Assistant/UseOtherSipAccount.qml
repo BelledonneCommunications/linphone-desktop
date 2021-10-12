@@ -3,102 +3,113 @@ import QtQuick 2.7
 import Common 1.0
 import Linphone 1.0
 
+import App.Styles 1.0
+
 // =============================================================================
+Item{
+	
+	AssistantAbstractView {
+		mainAction: requestBlock.execute
+		
+		mainActionEnabled: username.text.length &&
+						   sipDomain.text.length &&
+						   password.text.length
 
-AssistantAbstractView {
-  mainAction: requestBlock.execute
+		mainActionLabel: qsTr('confirmAction')
 
-  mainActionEnabled: username.text.length &&
-    sipDomain.text.length &&
-    password.text.length
+		title: qsTr('useOtherSipAccountTitle')
 
-  mainActionLabel: qsTr('confirmAction')
+		width: AssistantAbstractViewStyle.content.width
+		height: AssistantAbstractViewStyle.content.height
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.verticalCenter: parent.verticalCenter
 
-  title: qsTr('useOtherSipAccountTitle')
+		// ---------------------------------------------------------------------------
+		//anchors.centerIn: parent
+		//anchors.horizontalCenter:parent.horizontalCenter
+		Column {
+			anchors.fill: parent.contentItem
+			width: AssistantAbstractViewStyle.content.width
+			height: AssistantAbstractViewStyle.content.height
 
-  // ---------------------------------------------------------------------------
+			Form {
+				dealWithErrors: true
+				orientation: Qt.Vertical
+				width: parent.width
 
-  Column {
-    anchors.fill: parent
+				FormLine {
+					FormGroup {
+						label: qsTr('usernameLabel')
 
-    Form {
-      orientation: Qt.Vertical
-      width: parent.width
+						TextField {
+							id: username
+						}
+					}
 
-      FormLine {
-        FormGroup {
-          label: qsTr('usernameLabel')
+					FormGroup {
+						label: qsTr('displayNameLabel')
 
-          TextField {
-            id: username
-          }
-        }
+						TextField {
+							id: displayName
+						}
+					}
+				}
 
-        FormGroup {
-          label: qsTr('displayNameLabel')
+				FormLine {
+					FormGroup {
+						label: qsTr('sipDomainLabel')
 
-          TextField {
-            id: displayName
-          }
-        }
-      }
+						TextField {
+							id: sipDomain
+						}
+					}
+				}
 
-      FormLine {
-        FormGroup {
-          label: qsTr('sipDomainLabel')
+				FormLine {
+					FormGroup {
+						label: qsTr('passwordLabel')
 
-          TextField {
-            id: sipDomain
-          }
-        }
-      }
+						PasswordField {
+							id: password
+						}
+					}
+				}
 
-      FormLine {
-        FormGroup {
-          label: qsTr('passwordLabel')
+				FormLine {
+					FormGroup {
+						label: qsTr('transportLabel')
 
-          PasswordField {
-            id: password
-          }
-        }
-      }
+						ComboBox {
+							id: transport
+							model: [ 'UDP', 'TCP', 'TLS']
+						}
+					}
+				}
+			}
 
-      FormLine {
-        FormGroup {
-          label: qsTr('transportLabel')
+			RequestBlock {
+				id: requestBlock
+				width: parent.width
 
-          ComboBox {
-            id: transport
-            model: [ 'UDP', 'TCP', 'TLS']
-          }
-        }
-      }
-    }
-
-    RequestBlock {
-      id: requestBlock
-
-      action: (function () {
-        if (!assistantModel.addOtherSipAccount({
-          username: username.text,
-          displayName: displayName.text,
-          sipDomain: sipDomain.text,
-          password: password.text,
-          transport: transport.model[transport.currentIndex]
-        })) {
-          requestBlock.stop(qsTr('addOtherSipAccountError'))
-        } else {
-          requestBlock.stop('')
-          window.setView('Home')
-        }
-      })
-
-      width: parent.width
-    }
-  }
-
-  AssistantModel {
-    id: assistantModel
-    configFilename: 'use-other-sip-account.rc'
-  }
+				action: (function () {
+					if (!assistantModel.addOtherSipAccount({
+															   username: username.text,
+															   displayName: displayName.text,
+															   sipDomain: sipDomain.text,
+															   password: password.text,
+															   transport: transport.model[transport.currentIndex]
+														   })) {
+						requestBlock.stop(qsTr('addOtherSipAccountError'))
+					} else {
+						requestBlock.stop('')
+						window.setView('Home')
+					}
+				})
+			}
+		}
+		AssistantModel {
+			id: assistantModel
+			configFilename: 'use-other-sip-account.rc'
+		}
+	}
 }

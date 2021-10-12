@@ -58,7 +58,7 @@ TabContainer {
         }
       }
     }
-
+	
     // -------------------------------------------------------------------------
     // Proxy accounts.
     // -------------------------------------------------------------------------
@@ -129,10 +129,35 @@ TabContainer {
 
     Form {
       title: qsTr('assistantTitle')
-      visible: SettingsModel.developerSettingsEnabled
+      
       width: parent.width
+	  
+	  FormLine {
+        FormGroup {
+          label: 'Registration URL'
+
+          TextField {
+            text: SettingsModel.assistantRegistrationUrl
+
+            onEditingFinished: SettingsModel.assistantRegistrationUrl = text
+          }
+        }
+      }
+
+	  FormLine {
+        FormGroup {
+          label: 'Login URL'
+
+          TextField {
+            text: SettingsModel.assistantLoginUrl
+
+            onEditingFinished: SettingsModel.assistantLoginUrl = text
+          }
+        }
+      }
 
       FormLine {
+		  visible: SettingsModel.developerSettingsEnabled
         FormGroup {
           label: qsTr('createAppSipAccountEnabledLabel')
 
@@ -155,6 +180,7 @@ TabContainer {
       }
 
       FormLine {
+		  visible: SettingsModel.developerSettingsEnabled
         FormGroup {
           label: qsTr('useOtherSipAccountEnabledLabel')
 
@@ -177,6 +203,7 @@ TabContainer {
       }
 
       FormLine {
+		  visible: SettingsModel.developerSettingsEnabled
         FormGroup {
           label: qsTr('assistantSupportsPhoneNumbersLabel')
 

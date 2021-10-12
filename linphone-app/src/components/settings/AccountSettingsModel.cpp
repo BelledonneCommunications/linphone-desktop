@@ -330,13 +330,28 @@ bool AccountSettingsModel::addOrUpdateProxyConfig (
 	return addOrUpdateProxyConfig(proxyConfig);
 }
 
+bool AccountSettingsModel::addOrUpdateProxyConfig (
+  const QVariantMap &data
+) {
+	shared_ptr<linphone::ProxyConfig> proxyConfig;
+	QString sipAddress = data["sipAddress"].toString();
+	shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(sipAddress.toStdString());
+	
+	for (const auto &databaseProxyConfig : CoreManager::getInstance()->getCore()->getProxyConfigList())
+	  if (databaseProxyConfig->getIdentityAddress()->weakEqual(address)) {
+		proxyConfig = databaseProxyConfig;
+	  }
+	if(!proxyConfig)
+		proxyConfig = createProxyConfig();
+	return addOrUpdateProxyConfig(proxyConfig, data);
+}
+
 shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig () {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
 	core->getConfig()->loadFromXmlFile(
 				Paths::getAssistantConfigDirPath() + "create-app-sip-account.rc"
   );
-	
 	return core->createProxyConfig();
 }
 
