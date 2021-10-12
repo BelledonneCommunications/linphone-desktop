@@ -8,107 +8,112 @@ import App.Styles 1.0
 // =============================================================================
 
 Item {
-  id: view
-
-  // ---------------------------------------------------------------------------
-
-  property alias mainActionEnabled: mainActionButton.enabled
-  property alias mainActionLabel: mainActionButton.text
-  property var mainAction
-
-  property alias description: description.text
-  property alias title: title.text
-
-  property bool backEnabled: true
-  property bool maximized: false	// Used to stretch content to fit all the view (the title will be set to top)
-
-  default property alias _content: content.data
-
-  // ---------------------------------------------------------------------------
-
-  height: stack.height
-  width: stack.width
-
-  // ---------------------------------------------------------------------------
-  // Info.
-  // ---------------------------------------------------------------------------
-
-  Column {
-	  id:titleBar
-    anchors.centerIn: parent
-
-    spacing: AssistantAbstractViewStyle.info.spacing
-    width: parent.width
-
-    Text {
-      id: title
-
-      color: AssistantAbstractViewStyle.info.title.color
-      elide: Text.ElideRight
-
-      font {
-        pointSize: AssistantAbstractViewStyle.info.title.pointSize
-        bold: true
-      }
-
-      horizontalAlignment: Text.AlignHCenter
-      width: parent.width
-    }
-
-    Text {
-      id: description
-
-      color: AssistantAbstractViewStyle.info.description.color
-      elide: Text.ElideRight
-
-      font.pointSize: AssistantAbstractViewStyle.info.description.pointSize
-
-      horizontalAlignment: Text.AlignHCenter
-      width: parent.width
-
-      visible: text.length > 0
-    }
-
-    // -------------------------------------------------------------------------
-    // Content.
-    // -------------------------------------------------------------------------
-
-    Item {
-      id: content
-
-      anchors.horizontalCenter: parent.horizontalCenter
-	  height: (maximized?view.height - description.height - title.height - buttons.height -titleBar.spacing*3 : AssistantAbstractViewStyle.content.height)
-      width: AssistantAbstractViewStyle.content.width
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // Nav buttons.
-  // ---------------------------------------------------------------------------
-
-  Row {
-    id: buttons
-
-    anchors {
-      bottom: parent.bottom
-      horizontalCenter: parent.horizontalCenter
-    }
-
-    spacing: AssistantAbstractViewStyle.buttons.spacing
-
-    TextButtonA {
-      text: qsTr('back')
-      visible: view.backEnabled
-
-      onClicked: assistant.popView()
-    }
-
-    TextButtonB {
-      id: mainActionButton
-
-      visible: !!view.mainAction
-
-      onClicked: view.mainAction()
-    }
-  }
+	id: view
+	
+	// ---------------------------------------------------------------------------
+	
+	property alias mainActionEnabled: mainActionButton.enabled
+	property alias mainActionLabel: mainActionButton.text
+	property var mainAction
+	
+	property alias description: description.text
+	property alias title: title.text
+	
+	property bool backEnabled: true
+	property bool maximized: false	// Used to stretch content to fit all the view (the title will be set to top)
+	
+	default property alias _content: content.data
+	property alias contentItem: content
+	
+	// ---------------------------------------------------------------------------
+	
+	height: (maximized?stack.height:AssistantAbstractViewStyle.content.height)
+	width: (maximized?stack.width:AssistantAbstractViewStyle.content.width)
+	
+	// ---------------------------------------------------------------------------
+	// Info.
+	// ---------------------------------------------------------------------------
+	Text {
+		id: title
+		anchors.top:parent.top
+		anchors.topMargin:(visible?AssistantAbstractViewStyle.info.spacing:0)
+		anchors.horizontalCenter: parent.horizontalCenter
+		color: AssistantAbstractViewStyle.info.title.color
+		elide: Text.ElideRight
+		
+		font {
+			pointSize: AssistantAbstractViewStyle.info.title.pointSize
+			bold: true
+		}
+		
+		horizontalAlignment: Text.AlignHCenter
+		width: parent.width
+		visible: text.length > 0
+		height:(visible?contentHeight:0)
+	}
+	
+	Text {
+		id: description
+		anchors.top:title.bottom
+		anchors.topMargin:(visible?AssistantAbstractViewStyle.info.spacing:0)
+		anchors.horizontalCenter: parent.horizontalCenter
+		
+		color: AssistantAbstractViewStyle.info.description.color
+		elide: Text.ElideRight
+		
+		font.pointSize: AssistantAbstractViewStyle.info.description.pointSize
+		
+		horizontalAlignment: Text.AlignHCenter
+		width: parent.width
+		
+		visible: text.length > 0
+		height:(visible?contentHeight:0)
+	}
+	
+	// -------------------------------------------------------------------------
+	// Content.
+	// -------------------------------------------------------------------------
+	
+	Item {
+		id: content
+		anchors.top:description.bottom
+		anchors.topMargin:(description.visible || title.visible?AssistantAbstractViewStyle.info.spacing:0)
+		anchors.bottom:buttons.top
+		anchors.horizontalCenter: parent.horizontalCenter
+		width: parent.width
+	}
+	
+	// ---------------------------------------------------------------------------
+	// Nav buttons.
+	// ---------------------------------------------------------------------------
+	
+	Row {
+		id: buttons
+		
+		anchors {
+			bottom: parent.bottom
+			bottomMargin:AssistantAbstractViewStyle.info.spacing
+			horizontalCenter: parent.horizontalCenter
+			
+		}
+		
+		spacing: AssistantAbstractViewStyle.buttons.spacing
+		
+		TextButtonA {
+			text: qsTr('back')
+			visible: view.backEnabled
+			
+			onClicked: assistant.popView()
+			anchors.verticalCenter: parent.verticalCenter
+		}
+		
+		TextButtonB {
+			id: mainActionButton
+			
+			visible: !!view.mainAction
+			
+			onClicked: view.mainAction()
+			anchors.verticalCenter: parent.verticalCenter
+		}
+	}
 }

@@ -40,14 +40,16 @@ class SettingsModel : public QObject {
 	// ===========================================================================
 	
 	// Assistant. ----------------------------------------------------------------
-	
+
 	Q_PROPERTY(bool createAppSipAccountEnabled READ getCreateAppSipAccountEnabled WRITE setCreateAppSipAccountEnabled NOTIFY createAppSipAccountEnabledChanged)
 	Q_PROPERTY(bool fetchRemoteConfigurationEnabled READ getFetchRemoteConfigurationEnabled WRITE setFetchRemoteConfigurationEnabled NOTIFY fetchRemoteConfigurationEnabledChanged)
 	Q_PROPERTY(bool useAppSipAccountEnabled READ getUseAppSipAccountEnabled WRITE setUseAppSipAccountEnabled NOTIFY useAppSipAccountEnabledChanged)
 	Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged)
 	
 	Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged)
-	
+	Q_PROPERTY(QString assistantRegistrationUrl READ getAssistantRegistrationUrl WRITE setAssistantRegistrationUrl NOTIFY assistantRegistrationUrlChanged)
+	Q_PROPERTY(QString assistantLoginUrl READ getAssistantLoginUrl WRITE setAssistantLoginUrl NOTIFY assistantLoginUrlChanged)
+
 	// Audio. --------------------------------------------------------------------
 	
 	Q_PROPERTY(bool captureGraphRunning READ getCaptureGraphRunning NOTIFY captureGraphRunningChanged)
@@ -228,7 +230,13 @@ public:
 	
 	bool getAssistantSupportsPhoneNumbers () const;
 	void setAssistantSupportsPhoneNumbers (bool status);
-	
+
+	QString getAssistantRegistrationUrl () const;
+	void setAssistantRegistrationUrl (QString url);
+
+	QString getAssistantLoginUrl () const;
+	void setAssistantLoginUrl (QString url);
+
 	// Audio. --------------------------------------------------------------------
 	
 	void createCaptureGraph();
@@ -502,7 +510,10 @@ signals:
 	void useOtherSipAccountEnabledChanged (bool status);
 	
 	void assistantSupportsPhoneNumbersChanged (bool status);
-	
+
+	void assistantRegistrationUrlChanged (QString url);
+	void assistantLoginUrlChanged (QString url);
+
 	// Audio. --------------------------------------------------------------------
 	
 	void captureGraphRunningChanged(bool running);

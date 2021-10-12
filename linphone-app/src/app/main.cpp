@@ -28,8 +28,8 @@
 // =============================================================================
 
 int main (int argc, char *argv[]) {
-	QtWebView::initialize();
   AppController controller(argc, argv);
+  QtWebView::initialize();
 #ifdef QT_QML_DEBUG
   QQmlDebuggingEnabler enabler;
 #endif
