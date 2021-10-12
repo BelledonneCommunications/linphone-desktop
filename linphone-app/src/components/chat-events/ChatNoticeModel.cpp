@@ -113,7 +113,7 @@ bool ChatNoticeModel::update(){
 		}
 		
 		case linphone::EventLog::Type::ConferenceSubjectChanged : {
-			setName(Utils::coreStringToAppString(mEventLog->getSubject()));
+			setName(QString::fromStdString(mEventLog->getSubject()));
 			setStatus(NoticeType::NoticeMessage);
 			break;
 		}
