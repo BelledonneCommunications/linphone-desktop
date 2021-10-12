@@ -124,7 +124,7 @@ ColumnLayout  {
 							Layout.topMargin: 15
 							Layout.preferredHeight: implicitHeight
 							Layout.alignment: Qt.AlignBottom
-							visible:chatRoomModel.isMeAdmin
+							visible:chatRoomModel.isMeAdmin && !usernameEdit.visible
 							
 							Icon{
 								id:adminIcon
@@ -148,6 +148,7 @@ ColumnLayout  {
 							Layout.preferredWidth: contentWidth
 							Layout.preferredHeight: contentHeight
 							Layout.alignment: Qt.AlignTop | Qt.AlignLeft
+							visible: !usernameEdit.visible 
 							contactDescriptionStyle: ConversationStyle.bar.contactDescription
 							username: avatar.username
 							usernameClickable: chatRoomModel.isMeAdmin
@@ -215,21 +216,21 @@ ColumnLayout  {
 						Layout.fillWidth: true
 					}
 				}
-				
-				TextField{
-							id: usernameEdit
-							anchors.fill: parent
-							//anchors.margins: -1
-							//textFieldStyle : TextFieldStyle.flat
-							text: avatar.username
-							visible: false
-							onEditingFinished: {
-								chatRoomModel.subject = text
-								visible = false
-							}
-							font.bold: true
-							onFocusChanged: if(!focus) visible=false
+				ColumnLayout{
+					id: usernameEdit
+					anchors.fill: parent
+					visible: false
+					TextField{
+						Layout.fillWidth: true
+						text: avatar.username
+						onEditingFinished: {
+							chatRoomModel.subject = text
+							usernameEdit.visible = false
 						}
+						font.bold: true
+						onFocusChanged: if(!focus) usernameEdit.visible = false
+					}
+				}
 			}
 			
 			Row {
