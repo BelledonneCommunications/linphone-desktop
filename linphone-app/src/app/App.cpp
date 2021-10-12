@@ -308,8 +308,9 @@ void App::initContentApp () {
 		setFetchConfig(mParser);
 		setOpened(false);
 		qInfo() << QStringLiteral("Restarting app...");
-		delete mEngine;
+		mEngine->deleteLater();
 		
+		mEngine = nullptr;
 		mNotifier = nullptr;
 		mSystemTrayIcon = nullptr;
 		//
