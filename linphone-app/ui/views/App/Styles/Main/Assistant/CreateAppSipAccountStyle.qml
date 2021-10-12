@@ -12,4 +12,8 @@ QtObject {
       property int width: 258
     }
   }
+
+  property QtObject busy: QtObject {
+    property int size: 40
+  }
 }

@@ -4,66 +4,73 @@ import Common 1.0
 import Linphone 1.0
 import Utils 1.0
 
+import App.Styles 1.0
 // =============================================================================
+Item{
+	AssistantAbstractView {
+		mainAction: requestBlock.execute
+		mainActionEnabled: url.text.length > 0
+		mainActionLabel: qsTr('confirmAction')
 
-AssistantAbstractView {
-  mainAction: requestBlock.execute
-  mainActionEnabled: url.text.length > 0
-  mainActionLabel: qsTr('confirmAction')
+		title: qsTr('fetchRemoteConfigurationTitle')
+		width: AssistantAbstractViewStyle.content.width
+		height: AssistantAbstractViewStyle.content.height
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.verticalCenter: parent.verticalCenter
+		// ---------------------------------------------------------------------------
 
-  title: qsTr('fetchRemoteConfigurationTitle')
+		Connections {
+			target: SettingsModel
 
-  // ---------------------------------------------------------------------------
+			onRemoteProvisioningChanged: {
+				requestBlock.stop('')
+				window.detachVirtualWindow()
+				window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+											   descriptionText: qsTr('remoteProvisioningUpdateDescription'),
+										   }, function (status) {
+											   if (status) {
+												   App.restart()
+											   } else {
+												   window.setView('Home')
+											   }
+										   })
+			}
 
-  Connections {
-    target: SettingsModel
+			onRemoteProvisioningNotChanged: requestBlock.stop(qsTr('remoteProvisioningError'))
+		}
 
-    onRemoteProvisioningChanged: {
-      requestBlock.stop('')
+		// ---------------------------------------------------------------------------
 
-      window.detachVirtualWindow()
-      window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
-        descriptionText: qsTr('remoteProvisioningUpdateDescription'),
-      }, function (status) {
-        if (status) {
-          App.restart()
-        } else {
-          window.setView('Home')
-        }
-      })
-    }
+		Column {
+			anchors.fill: parent.contentItem
+			anchors.topMargin: AssistantAbstractViewStyle.info.spacing
+			width: AssistantAbstractViewStyle.content.width
+			height: AssistantAbstractViewStyle.content.height
 
-    onRemoteProvisioningNotChanged: requestBlock.stop(qsTr('remoteProvisioningError'))
-  }
+			Form {
+				orientation: Qt.Vertical
+				width: parent.width
 
-  // ---------------------------------------------------------------------------
+				FormLine {
+					FormGroup {
+						label: qsTr('urlLabel')
 
-  Column {
-    anchors.fill: parent
+						TextField {
+							id: url
+						}
+					}
+				}
+			}
 
-    Form {
-      orientation: Qt.Vertical
-      width: parent.width
+			RequestBlock {
+				id: requestBlock
 
-      FormLine {
-        FormGroup {
-          label: qsTr('urlLabel')
+				action: (function () {
+					SettingsModel.remoteProvisioning = url.text
+				})
 
-          TextField {
-            id: url
-          }
-        }
-      }
-    }
-
-    RequestBlock {
-      id: requestBlock
-
-      action: (function () {
-        SettingsModel.remoteProvisioning = url.text
-      })
-
-      width: parent.width
-    }
-  }
+				width: parent.width
+			}
+		}
+	}
 }
