@@ -308,20 +308,25 @@ void App::initContentApp () {
 		setFetchConfig(mParser);
 		setOpened(false);
 		qInfo() << QStringLiteral("Restarting app...");
-		delete mEngine;
+		mEngine->deleteLater();
 		
+		mEngine = nullptr;
 		mNotifier = nullptr;
 		mSystemTrayIcon = nullptr;
-		//
+		qInfo() << QStringLiteral("Uninit core");
 		CoreManager::uninit();
 		removeTranslator(mTranslator);
 		removeTranslator(mDefaultTranslator);
-		delete mTranslator;
-		delete mDefaultTranslator;
+		qInfo() << QStringLiteral("Deleting old translators");
+		mTranslator->deleteLater();
+		mDefaultTranslator->deleteLater();
+		qInfo() << QStringLiteral("Creating new translators");
 		mTranslator = new DefaultTranslator(this);
 		mDefaultTranslator = new DefaultTranslator(this);
+		qInfo() << QStringLiteral("Set config paths");
 		configPath = getConfigPathIfExists(*mParser);
 		config = getConfigIfExists(configPath);
+		qInfo() << QStringLiteral("Init Locale");
 		initLocale(config);
 	} else {
 		configPath = getConfigPathIfExists(*mParser);
