@@ -21,6 +21,7 @@
 #include "ChatRoomInitializer.hpp"
 
 #include <QObject>
+#include <QDebug>
 
 #include "components/core/CoreManager.hpp"
 #include "components/core/CoreHandlers.hpp"
@@ -31,6 +32,7 @@ ChatRoomInitializer::ChatRoomInitializer(){}
 ChatRoomInitializer::~ChatRoomInitializer(){}
 
 void ChatRoomInitializer::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
+	qInfo() << "[ChatRoomInitializer] Conference has been set";
 	if(mAdmins.size() > 0){
 		setAdminsSync(chatRoom, mAdmins);
 	}
@@ -40,15 +42,18 @@ void ChatRoomInitializer::onConferenceJoined(const std::shared_ptr<linphone::Cha
 
 void ChatRoomInitializer::setAdminsSync(const std::shared_ptr<linphone::ChatRoom> & chatRoom, QList< std::shared_ptr<linphone::Address>> admins){
 	std::list<std::shared_ptr<linphone::Participant>> chatRoomParticipants = chatRoom->getParticipants();
+	int count = 0;
 	for(auto participant : chatRoomParticipants){
 		auto address = participant->getAddress();
 		auto isAdmin = std::find_if(admins.begin(), admins.end(), [address](std::shared_ptr<linphone::Address> addr){
 				return addr->weakEqual(address);
 	});
 		if( isAdmin != admins.end()){
+			++count;
 			chatRoom->setParticipantAdminStatus(participant, true);
 		}
 	}
+	qInfo() << "[ChatRoomInitializer] '" << admins.size() << "' admin(s) specified in addition of Me, " << count << " set.";
 }
 
 void ChatRoomInitializer::setAdminsAsync(const std::string& subject, const linphone::ChatRoomBackend& backend, const bool& groupEnabled, QList< std::shared_ptr<linphone::Address>> admins){
