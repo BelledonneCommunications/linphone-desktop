@@ -44,7 +44,7 @@ job-centos7-ninja-gcc:
   before_script:
     - source /opt/rh/devtoolset-8/enable
 
-  
+
 
 #job-centos7-ninja-clang:
 
@@ -94,7 +94,7 @@ job-centos7-ninja-gcc-package:
     - echo $DEFAULT_LINUX_CMAKE_OPTIONS
     - echo $CMAKE_SANITIZER_OPTIONS
     - cd build
-    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
     - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
   artifacts:
     paths:
@@ -116,7 +116,7 @@ job-centos7-ninja-gcc-deploy:
        - $DEPLOY_LINUX_CENTOS7
   script:
     - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
-    
+
 #################################################
 # Debug
 #################################################
