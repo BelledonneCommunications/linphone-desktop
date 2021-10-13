@@ -17,6 +17,7 @@ Controls.TextField {
   property string error: ''
   property var tools
   property QtObject textFieldStyle : TextFieldStyle.normal
+  property bool persistentIcon: false
   onTextFieldStyleChanged: if( !textFieldStyle) textFieldStyle = TextFieldStyle.normal
   
   signal iconClicked()
@@ -84,7 +85,7 @@ Controls.TextField {
     }
 
     iconSize: parent.contentHeight
-    visible: !parent.text
+    visible: persistentIcon || !parent.text
     MouseArea{
 		anchors.fill:	parent
 		onClicked: textField.iconClicked()
