@@ -215,7 +215,7 @@ void ParticipantListModel::updateParticipants () {
 				mParticipants << participant;
 				endInsertRows();
 				changed = true;
-			}else if(!(*itParticipant)->getParticipant()){
+			}else if(!(*itParticipant)->getParticipant() || (*itParticipant)->getParticipant() != dbParticipant){
 				(*itParticipant)->setParticipant(dbParticipant);
 				changed = true;
 			}
