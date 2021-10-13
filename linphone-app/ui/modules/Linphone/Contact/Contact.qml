@@ -22,6 +22,7 @@ Rectangle {
 	
 	property bool displayUnreadMessageCount: false
 	property bool showContactAddress : true
+	property bool showAuxData : false
 	
 	// A entry from `SipAddressesModel` or an `SipAddressObserver`.
 	property var entry
@@ -114,9 +115,12 @@ Rectangle {
 			Layout.leftMargin: ContactStyle.spacing
 			
 			sipAddress: (entry && item.showContactAddress
-						 && (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
-						 ? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
-						 : '')
+						&& (item.showAuxData
+							? entry.auxDataToShow || ''
+							: (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
+								? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+								: '')
+						) || ''
 			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne && entry.participants ? entry.participants.addressesToString : ''
 			username: item.username
 		}
