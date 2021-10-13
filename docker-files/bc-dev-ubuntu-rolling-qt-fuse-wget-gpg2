@@ -1,0 +1,35 @@
+FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu-rolling:20210217_python3
+
+MAINTAINER Peio Rigaux <peio.rigaux@belledonne-communications.com>
+
+#Tools for QT buid script
+RUN sudo apt-get update && sudo apt-get install -y pigz
+
+RUN sudo ln -s /usr/bin/python3 /usr/bin/python
+
+#QT Dependencies
+#atspi and dbus may be used to enable qt accessibility for screan reader
+#xkbcommon is needed for special keyboard features
+#flite1-dev, libspeechd-dev speech-dispatcher are needed for text to speech
+#libfontconfig1-dev is needed to load correct fonts (support of ideograms, etc..)
+RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* libxcb-xfixes0-dev flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev qdbus-qt5 libqt5dbus5 libdbus-1-dev libdbus-glib-1-dev libatspi2.0-0 libatspi2.0-dev
+
+#needed fot qt to find dbus
+ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
+# Build qt5.12.5
+RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
+    ./linphone-desktop/tools/build_qt_rpm && \
+    find "./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/" -iname "*.rpm" -exec sudo fakeroot alien -d {} + && \
+    find "." -maxdepth 1 -iname "*.deb" -exec sudo dpkg -i --force-overwrite {} + && \
+    rm -rf ./linphone-desktop
+
+ENV Qt5_DIR=/opt/com.belledonne-communications/linphone/lib/cmake
+ENV PATH=/opt/com.belledonne-communications/linphone/bin:$PATH
+
+#Appimage deps
+RUN sudo apt-get install -y wget fuse libfuse2 gnupg2
+
+USER bc
+WORKDIR /home/bc
+ENV PS1='\[\e[34m\]\u@bc-dev-centos7>\[\e[0m\] '
+CMD bash
