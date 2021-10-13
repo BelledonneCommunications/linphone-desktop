@@ -94,19 +94,19 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>指定要获取的配置文件： %1。 它将与当前配置合并。</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>URL、路径或文件</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
-        <translation type="unfinished"></translation>
+        <translation>打个电话</translation>
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP地址</translation>
     </message>
 </context>
 <context>
@@ -289,7 +289,7 @@
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation>IP family</translation>
+        <translation>IP 系列</translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
@@ -426,12 +426,12 @@
     <message>
         <source>attendedTransferComplete</source>
         <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>转移完成</translation>
     </message>
     <message>
         <source>attendedTransferCall</source>
         <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>转接电话</translation>
     </message>
 </context>
 <context>
@@ -463,8 +463,8 @@
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 正在输入…</numerusform>
         </translation>
     </message>
 </context>
@@ -473,25 +473,25 @@
     <message>
         <source>deliveryDelivered</source>
         <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>发送到 %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
     </message>
     <message>
         <source>deliveryDeliveredToUser</source>
         <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>由 %1 - %2 接收</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
     </message>
     <message>
         <source>deliveryDisplayed</source>
         <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>由%1 - %2 读取</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
     </message>
     <message>
         <source>deliveryNotDelivered</source>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 没有收到消息</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
 </context>
@@ -500,7 +500,7 @@
     <message>
         <source>menuCopyAll</source>
         <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>全部复制</translation>
     </message>
     <message>
         <source>menuCopy</source>
@@ -514,43 +514,43 @@
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>发送状态</translation>
     </message>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>删除</translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>隐藏发送状态</translation>
     </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 分钟</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 小时</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 天</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 周</numerusform>
         </translation>
     </message>
 </context>
@@ -594,7 +594,7 @@
     </message>
     <message>
         <source>byeFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>结束特定通话、所有通话或当前通话。</translation>
     </message>
 </context>
 <context>
@@ -768,7 +768,7 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>您需要在帐户设置中设置会议 URI 以创建基于会议的聊天室。</translation>
     </message>
 </context>
 <context>
@@ -804,33 +804,33 @@
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>管理员</translation>
         <extra-Context>One word title for describing the current admin status</extra-Context>
     </message>
     <message>
         <source>conversationMenuGroupInformations</source>
         <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>群组信息</translation>
     </message>
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>通话设备</translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
         <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>临时信息</translation>
     </message>
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>呼叫聊天室中的所有人</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>查找信息</translation>
     </message>
 </context>
 <context>
@@ -942,60 +942,60 @@
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>开始</translation>
     </message>
     <message>
         <source>ephemeralTitle</source>
         <extracomment>&quot;Ephemeral messages&quot; : Popup title for ephemerals</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>临时信息</translation>
     </message>
     <message>
         <source>ephemeralText</source>
         <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>一旦您的联系人阅读了新消息，两端的新消息都会被删除。 请选择超时时间。</translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>仅在基于会议的聊天室中支持临时消息！</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
         <source>disabled</source>
         <extracomment>&apos;Disabled&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>禁用</translation>
     </message>
     <message numerus="yes">
         <source>nMinute</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 分钟</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 小时</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 天</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 周</numerusform>
         </translation>
     </message>
 </context>
@@ -1162,7 +1162,7 @@
     <message>
         <source>quitGroupButton</source>
         <extracomment>&apos;Exit group&apos; : Button label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>退出群组</translation>
     </message>
     <message>
         <source>ok</source>
@@ -1172,29 +1172,29 @@
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>添加成员</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>在您的联系人列表中搜索成员来邀请他们进入聊天室。</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>成员列表</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>管理员</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>chatRoomDetailsTitle</source>
         <extracomment>&quot;Group information&quot; : Popup title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>群组信息</translation>
         <extra-This>popup display data about the current chat room</extra-This>
     </message>
 </context>
@@ -1203,33 +1203,33 @@
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;CANCEL&apos; : button text for cancelling operation</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>callButton</source>
         <extracomment>&apos;CALL&apos; : Button that lead to a call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>通话</translation>
     </message>
     <message>
         <source>okButton</source>
         <extracomment>&apos;OK&apos; : Button that validate the popup to be redirected to the device list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>好</translation>
     </message>
     <message>
         <source>infoEncryptionTitle</source>
         <extracomment>&apos;End-to-end encrypted&apos; Popup title about encryption information.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>端到端加密</translation>
     </message>
     <message>
         <source>encryptionExplanation</source>
         <extracomment>&quot;Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>即时消息在安全对话中进行端到端加密。 可以通过对参与者进行身份验证来升级对话的安全级别。</translation>
         <extra-Context>Explanation of Encryption</extra-Context>
     </message>
     <message>
         <source>encryptionProcessExplanation</source>
         <extracomment>&quot;To do so, call the contact and follow the authentification process.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>为此，请致电联系人并按照身份验证流程进行操作。</translation>
         <extra-Context>Explanation process</extra-Context>
     </message>
 </context>
@@ -1296,22 +1296,22 @@
     <message>
         <source>newChatRoom</source>
         <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>公开会议</translation>
     </message>
     <message>
         <source>hideTimeline</source>
         <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>隐藏时间线</translation>
     </message>
     <message>
         <source>openTimeline</source>
         <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>公开时间线</translation>
     </message>
     <message>
         <source>openHome</source>
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>开放主页</translation>
     </message>
 </context>
 <context>
@@ -1371,87 +1371,87 @@
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Launch&apos; : Start button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>实施</translation>
     </message>
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>你需要填写一个主题。</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>你需要至少%1成员</numerusform>
         </translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>您需要在帐户设置中设置会议 URI 以创建基于会议的聊天室。</translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
         <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>创建聊天室</translation>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your chat?&apos; : Ask about setting the chat room as secured.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>是否加密你的聊天？</translation>
     </message>
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>主题</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>聊天室的当前主题。 它不能为空。</translation>
         <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>选择成员</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>搜索您的联系人或向聊天室添加自定义联系人。</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>管理员</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>从选择中删除此成员</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>要求</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>指定一个主题</translation>
     </message>
     <message>
         <source>LastContactsTitle</source>
         <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>最近联系人</translation>
     </message>
 </context>
 <context>
@@ -1459,57 +1459,57 @@
     <message>
         <source>conferenceCreatedEvent</source>
         <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>你已加入群组</translation>
     </message>
     <message>
         <source>conferenceCreatedTerminated</source>
         <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>你已退出群组</translation>
     </message>
     <message>
         <source>conferenceParticipantAddedEvent</source>
         <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 已加入</translation>
     </message>
     <message>
         <source>conferenceParticipantRemovedEvent</source>
         <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 已离开</translation>
     </message>
     <message>
         <source>conferenceParticipantSetAdminEvent</source>
         <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 现在成为管理员</translation>
     </message>
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
         <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 不再是管理员</translation>
     </message>
     <message>
         <source>conferenceSecurityEvent</source>
         <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>由于%1，安全级别降低了</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 已启用临时消息</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageDisabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>临时消息被禁用</translation>
     </message>
     <message>
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>新主题： %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
         <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>临时消息已被更新： %1</translation>
     </message>
 </context>
 <context>
@@ -1566,7 +1566,7 @@
     <message>
         <source>participantsAdminHeader</source>
         <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>（管理员）</translation>
         <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
 </context>
@@ -1647,7 +1647,7 @@
     <message>
         <source>noPlugin</source>
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>没有插件可加载</translation>
     </message>
 </context>
 <context>
@@ -1702,23 +1702,23 @@
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>校准</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationInProgress</source>
-        <translation type="unfinished"></translation>
+        <translation>…校准中…</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation type="unfinished"></translation>
+        <translation>校准至 -%1ms</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>校准失败</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
-        <translation type="unfinished"></translation>
+        <translation>未检测到回声</translation>
     </message>
 </context>
 <context>
@@ -1830,19 +1830,19 @@
     <message>
         <source>hideEmptyChatRoomsLabel</source>
         <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>隐藏空的聊天室</translation>
     </message>
     <message>
         <source>waitRegistrationForCallLabel</source>
         <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>注册时拨打</translation>
     </message>
 </context>
 <context>
     <name>SettingsLdap</name>
     <message>
         <source>newServer</source>
-        <translation type="unfinished"></translation>
+        <translation>新服务器</translation>
     </message>
 </context>
 <context>
@@ -1853,35 +1853,35 @@
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>确认</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>显示名称</translation>
     </message>
     <message>
         <source>displayNameTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>服务器名称会在列表中显示。</translation>
     </message>
     <message>
         <source>connectionTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>连接</translation>
     </message>
     <message>
         <source>serverLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>服务器URL</translation>
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>LDAP 服务器。例如：ldap:/// for a localhost server or ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>绑定DN</translation>
     </message>
     <message>
         <source>bindDNTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>绑定的 DN 是用于针对 LDAP 进行身份验证的凭据。&lt;br&gt; 例如：cn=ausername,ou=people,dc=bc,dc=com</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -1889,119 +1889,119 @@
     </message>
     <message>
         <source>useTLSLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>使用TLS</translation>
     </message>
     <message>
         <source>useTLSTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>通过 LDAP over TLS(StartTLS) 加密交易。 您必须使用\&apos;ldap\&apos; 方案。 LDAP over SSL 的 \&apos;ldaps\&apos; 未标准化且已弃用。&lt;br&gt;StartTLS 是 LDAP 协议的扩展，它使用 TLS 协议来加密通信。 &lt;br&gt;它的工作原理是在服务器和 Web 服务之间进行握手协商之前，与 LDAP 服务器建立正常的（即不安全的）连接。 在这里，服务器在建立安全连接之前发送其证书以证明其身份。</translation>
     </message>
     <message>
         <source>useSalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>使用SAL</translation>
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>DNS 解析已由 Linphone 使用 SAL 完成。 它会将 IP 传递给 LDAP。 通过这样做，TLS 协商无法检查主机名。 如果想强制连接，您可以停用验证。</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TLS证书验证</translation>
     </message>
     <message>
         <source>AutoMode</source>
-        <translation type="unfinished"></translation>
+        <translation>自动</translation>
     </message>
     <message>
         <source>offMode</source>
-        <translation type="unfinished"></translation>
+        <translation>关闭</translation>
     </message>
     <message>
         <source>onMode</source>
-        <translation type="unfinished"></translation>
+        <translation>开启</translation>
     </message>
     <message>
         <source>verifyTLSTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>指定连接到 LDAP 服务器时是否必须验证 TLS 服务器证书。</translation>
     </message>
     <message>
         <source>searchTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>查找</translation>
     </message>
     <message>
         <source>baseObjectLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索库</translation>
     </message>
     <message>
         <source>baseObjectPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索库</translation>
     </message>
     <message>
         <source>baseObjectTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>基本对象/搜索库是 LDAP 搜索范围的规范，它指定搜索请求应仅针对指定为搜索库 DN 的条目执行。&lt;br&gt;不会考虑上面的任何条目。</translation>
     </message>
     <message>
         <source>filterLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>筛选</translation>
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>搜索基于此过滤器来搜索联系人。&lt;br&gt;默认值：(sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>最多的结果</translation>
     </message>
     <message>
         <source>maxResultsTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>请求搜索时的最多结果。</translation>
     </message>
     <message>
         <source>timeoutLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>超时</translation>
     </message>
     <message>
         <source>timeoutTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>连接和搜索的超时时间（秒）。一定为正数。&lt;br&gt;默认为 5 秒。</translation>
     </message>
     <message>
         <source>parsingTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>解析中</translation>
     </message>
     <message>
         <source>nameAttributesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>名称属性</translation>
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>检查这些属性来建立姓名联系人，用逗号分隔，第一个优先级最高。&lt;br&gt;默认值为：sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP 属性</translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>检查这些属性来在联系人地址中构创建 SIP 用户名。 属性用逗号分隔，第一个优先级最高。&lt;br&gt;默认值为：mobile,telephoneNumber,homePhone,sn</translation>
     </message>
     <message>
         <source>domainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>域名</translation>
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>添加域名到SIP地址（sip:username@domain）。&lt;br&gt;默认值是sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Misc</translation>
     </message>
     <message>
         <source>debugLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>调试</translation>
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>执行事务时在 Linphone 日志文件中获取详细日志（用于调试 TLS 连接）。</translation>
     </message>
 </context>
 <context>
@@ -2283,12 +2283,12 @@
     <message>
         <source>conferenceURI</source>
         <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会议URI</translation>
     </message>
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>无效的会议URI</translation>
     </message>
 </context>
 <context>
@@ -2352,17 +2352,17 @@
     <message>
         <source>fontsTitle</source>
         <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>字体</translation>
     </message>
     <message>
         <source>fontsTextChange</source>
         <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>短信</translation>
     </message>
     <message>
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>选择新字体</translation>
     </message>
 </context>
 <context>
@@ -2474,52 +2474,52 @@
     <message>
         <source>timelineFilter</source>
         <extracomment>A title for filtering mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>筛选</translation>
     </message>
     <message>
         <source>timelineFilterAll</source>
         <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>全部</translation>
     </message>
     <message>
         <source>timelineFilterCustom</source>
         <extracomment>&apos;Custom&apos; The mode for timelines filtering.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>基础聊天室</translation>
         <extra-Mode>Selecting it will show all simple rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>
         <extracomment>&apos;Secure rooms&apos; : Filter item</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>安全室</translation>
         <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterChatGroups</source>
         <extracomment>&apos;Chat groups&apos; : Filter item</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>聊天群</translation>
         <extra-Mode>Selecting it will show all chat groups (with more than one participant)</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureChatGroups</source>
         <extracomment>&apos;Secure Chat Groups&apos; : Filter item</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>安全聊天群</translation>
         <extra-Mode>Selecting it will show all secure chat groups (with more than one participant)</extra-Mode>
     </message>
     <message>
         <source>timelineFilterEphemerals</source>
         <extracomment>&apos;Ephemerals&apos; : Filter item</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>阅后即焚</translation>
         <extra-Mode>Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extra-Mode>
     </message>
     <message>
         <source>timelineSearchPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>在列表中查找</translation>
     </message>
 </context>
 <context>
@@ -2543,7 +2543,7 @@
     <message>
         <source>passwordRecovery</source>
         <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>忘记密码？</translation>
     </message>
 </context>
 <context>
