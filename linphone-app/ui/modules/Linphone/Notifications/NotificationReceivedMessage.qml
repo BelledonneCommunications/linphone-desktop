@@ -40,13 +40,14 @@ Notification {
 				property ChatRoomModel chatRoomModel : notification.timelineModel.getChatRoomModel()
 				//entry: notification.fullPeerAddress? SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress): notification.timelineModel.getChatRoomModel()
 				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)		
-		
+				showAuxData: !chatRoomModel.isOneToOne
 				entry: ({
 								sipAddress: sipObserver.peerAddress,
 								contactModel: sipObserver.contact,
 								isOneToOne: chatRoomModel.isOneToOne,
 								haveEncryption: chatRoomModel.haveEncryption,
-								securityLevel: chatRoomModel.securityLevel
+								securityLevel: chatRoomModel.securityLevel,
+								auxDataToShow: '- ' + chatRoomModel.subject+' -'
 							})
 			}
 			
