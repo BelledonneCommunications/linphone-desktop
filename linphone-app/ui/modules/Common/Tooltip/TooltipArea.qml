@@ -12,7 +12,7 @@ MouseArea {
 	property int delay: TooltipStyle.delay
 	property bool force: false
 	property var tooltipParent: parent
-	property int maxWidth : tooltipParent.width
+	property int maxWidth : window.width
 	
 	property bool _visible: false
 	property int hoveringCursor : Qt.PointingHandCursor
