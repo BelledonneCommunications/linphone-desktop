@@ -1,3 +1,6 @@
+.<<: *install-qt-webview: &<<: *install-qt-webview
+  before_script: sudo pacman -Ssy qt5-webview -noprogressbar --noconfirm
+
 job-archlinux-latest-ninja-clang:
   tags: [ "docker-archlinux-latest" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:$ARCHLINUX_IMAGE_VERSION
@@ -9,11 +12,12 @@ job-archlinux-latest-ninja-clang:
     CC: clang
     CXX: clang++
   extends: .job-linux-desktop
-  
+  <<: *install-qt-webview
+
 #################################################
 #               Nightly
-################################################# 
-  
+#################################################
+
 job-archlinux-latest-makefile-gcc:
   tags: [ "docker-archlinux-latest" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-archlinux:$ARCHLINUX_IMAGE_VERSION
@@ -25,6 +29,7 @@ job-archlinux-latest-makefile-gcc:
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
+  <<: *install-qt-webview
 
 
 job-archlinux-latest-makefile-clang:
@@ -38,6 +43,7 @@ job-archlinux-latest-makefile-clang:
     CC: clang
     CXX: clang++
   extends: .job-linux-desktop
+  <<: *install-qt-webview
 
 
 job-archlinux-latest-ninja-gcc:
@@ -51,6 +57,7 @@ job-archlinux-latest-ninja-gcc:
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
+  <<: *install-qt-webview
 
 job-archlinux-latest-ninja-gcc-novideo:
   tags: [ "docker-archlinux-latest" ]
@@ -60,6 +67,7 @@ job-archlinux-latest-ninja-gcc-novideo:
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO
   extends: job-archlinux-latest-ninja-gcc
+  <<: *install-qt-webview
 
 job-archlinux-latest-ninja-clang-novideo:
   tags: [ "docker-archlinux-latest" ]
@@ -73,7 +81,8 @@ job-archlinux-latest-ninja-clang-novideo:
     CC: clang
     CXX: clang++
   extends: .job-linux-desktop
-  
+  <<: *install-qt-webview
+
 #################################################
 # Package - Nightly
 #################################################
@@ -108,4 +117,3 @@ job-archlinux-latest-ninja-clang-novideo:
 #       - $DEPLOY_LINUX
 #  script:
 #    - scp build/OUTPUT/Packages/Linphone*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
-
