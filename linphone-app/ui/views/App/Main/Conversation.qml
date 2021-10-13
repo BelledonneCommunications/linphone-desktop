@@ -110,9 +110,14 @@ ColumnLayout  {
 					spacing:0
 					
 					ColumnLayout{
+					
+						property int maximumContentWidth: contactBar.width
+															-(avatar.visible?avatar.width:0)-(groupChat.visible?groupChat.width:0)
+															-actionBar.width - (secureIcon.visible?secureIcon.width :0)
+															-3*ConversationStyle.bar.spacing 
 						Layout.fillHeight: true
 						Layout.minimumWidth: 20
-						Layout.maximumWidth: contactBar.width-avatar.width-actionBar.width-3*ConversationStyle.bar.spacing
+						Layout.maximumWidth: maximumContentWidth
 						Layout.preferredWidth: contactDescription.contentWidth
 						spacing: 5
 						Row{
@@ -139,7 +144,7 @@ ColumnLayout  {
 						ContactDescription {
 							id:contactDescription
 							Layout.minimumWidth: 20
-							Layout.maximumWidth: contactBar.width-avatar.width-actionBar.width-3*ConversationStyle.bar.spacing
+							Layout.maximumWidth: parent.maximumContentWidth
 							Layout.preferredWidth: contentWidth
 							Layout.preferredHeight: contentHeight
 							Layout.alignment: Qt.AlignTop | Qt.AlignLeft
@@ -183,6 +188,7 @@ ColumnLayout  {
 						}
 					}
 					Icon{
+						id: secureIcon
 						Layout.alignment: Qt.AlignVCenter
 						visible: securityLevel != 1
 						icon: securityLevel === 2?'secure_level_1': securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'
@@ -440,8 +446,28 @@ ColumnLayout  {
 		// -------------------------------------------------------------------------
 		// Search.
 		// -------------------------------------------------------------------------
+		MouseArea{
+			anchors.right: parent.right
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.rightMargin: 10
+			anchors.topMargin: 10
+			anchors.bottomMargin: 10
+			width: 30
+			Icon{
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.horizontalCenter: parent.horizontalCenter
+				icon: (searchView.visible? 'close': 'search')
+				iconSize: 20
+			}
+			onClicked: {
+				searchView.visible = !searchView.visible
+				chatRoomProxyModel.filterText = searchView.text
+			}
+		}
 		Rectangle{
 			id:searchView
+			property alias text: searchBar.text
 			anchors.right: parent.right
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
@@ -450,6 +476,7 @@ ColumnLayout  {
 			anchors.leftMargin: 50
 			anchors.topMargin: 10
 			anchors.bottomMargin: 10
+			visible: false
 			
 			TextField {
 				id:searchBar
@@ -458,11 +485,16 @@ ColumnLayout  {
 					margins: 1
 				}
 				width: parent.width-14
-				icon: 'search'
+				icon: 'textfield_close'
+				persistentIcon: true
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')
 				
 				onTextChanged: chatRoomProxyModel.filterText = text
+				onIconClicked: {
+					searchView.visible = false
+					chatRoomProxyModel.filterText = ''
+				}
 			}
 			
 		}

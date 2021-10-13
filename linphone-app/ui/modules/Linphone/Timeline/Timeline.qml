@@ -96,18 +96,21 @@ Rectangle {
 						}
 					}
 				}
-				
-				Icon {
-					id:searchButton
+				MouseArea{
 					Layout.alignment: Qt.AlignRight
 					Layout.rightMargin: TimelineStyle.legend.rightMargin
-					icon: (searchView.visible? 'timeline_close': 'timeline_search')
-					iconSize: TimelineStyle.legend.iconSize
-					MouseArea{
-						anchors.fill:parent
-						onClicked:{
-							searchView.visible = !searchView.visible
-						}
+					Layout.fillHeight: true
+					Layout.preferredWidth: TimelineStyle.legend.iconSize
+					onClicked:{
+						searchView.visible = !searchView.visible
+					}
+				
+					Icon {
+						id:searchButton
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.horizontalCenter: parent.horizontalCenter						
+						icon: (searchView.visible? 'timeline_close': 'timeline_search')
+						iconSize: TimelineStyle.legend.iconSize
 					}
 				}
 			}
