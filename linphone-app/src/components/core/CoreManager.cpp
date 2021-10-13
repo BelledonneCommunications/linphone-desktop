@@ -208,12 +208,15 @@ void CoreManager::setDatabasesPaths () {
 // -----------------------------------------------------------------------------
 
 void CoreManager::setOtherPaths () {
-	if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile()))
+	if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile(), true))
 		mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
-	if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath()))
+	qInfo() << "Using ZrtpSecrets path : " << QString::fromStdString(mCore->getZrtpSecretsFile());
+	if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath(), true))
 		mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
+	qInfo() << "Using UserCertificate path : " << QString::fromStdString(mCore->getUserCertificatesPath());
 	if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa()))
 		mCore->setRootCa(Paths::getRootCaFilePath());
+	qInfo() << "Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
 }
 
 void CoreManager::setResourcesPaths () {
