@@ -697,6 +697,10 @@ void App::registerSharedToolTypes () {
 // -----------------------------------------------------------------------------
 
 void App::setTrayIcon () {
+	if(mSystemTrayIcon){
+		mSystemTrayIcon->hide();
+		delete mSystemTrayIcon;
+	}
 	QQuickWindow *root = getMainWindow();
 	QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(mEngine);
 	
@@ -750,6 +754,7 @@ void App::setTrayIcon () {
 	systemTrayIcon->setIcon(QIcon(Constants::WindowIconPath));
 	systemTrayIcon->setToolTip(APPLICATION_NAME);
 	systemTrayIcon->show();
+	
 	mSystemTrayIcon = systemTrayIcon;
 	if(!QSystemTrayIcon::isSystemTrayAvailable())
 		qInfo() << "System tray is not available";

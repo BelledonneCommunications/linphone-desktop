@@ -72,7 +72,6 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	QObject::connect(coreHandlers, &CoreHandlers::coreStarting, this, &CoreManager::startIterate, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::setLastRemoteProvisioningState, this, &CoreManager::setLastRemoteProvisioningState);
 	QObject::connect(coreHandlers, &CoreHandlers::coreStarted, this, &CoreManager::initCoreManager, Qt::QueuedConnection);
-	QObject::connect(coreHandlers, &CoreHandlers::coreStopped, this, &CoreManager::stopIterate, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::logsUploadStateChanged, this, &CoreManager::handleLogsUploadStateChanged);
 	QTimer::singleShot(10, [this, configPath](){// Delay the creation in order to have the CoreManager instance set before
 		createLinphoneCore(configPath);
@@ -134,14 +133,12 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
 void CoreManager::uninit () {
 	if (mInstance) {
 		connect(mInstance, &QObject::destroyed, []()mutable{
-			mInstance = nullptr;
 			qInfo() << "Core is correctly destroyed";
+			mInstance = nullptr;
 		});
 		QObject::connect(mInstance->getHandlers().get(), &CoreHandlers::coreStopped, mInstance, &QObject::deleteLater, Qt::QueuedConnection); // Delete data only when the core is Off
+		mInstance->stopIterate();
 		
-		mInstance->lockVideoRender();// Stop do iterations. We have to protect GUI.
-		mInstance->mCore->stop();
-		mInstance->unlockVideoRender();
 		qInfo() << "Waiting for completion of stopping core";
 		QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
 		if( mInstance){
@@ -348,17 +345,28 @@ void CoreManager::startIterate(){
 }
 
 void CoreManager::stopIterate(){
-	qInfo() << QStringLiteral("Stop iterate");
-	mCbsTimer->stop();
-	mCbsTimer->deleteLater();// allow the timer to continue its stuff
-	mCbsTimer = nullptr;
+	qInfo() << QStringLiteral("Stopping iterate");
+	mCbsTimerStop = true;
 }
 
 void CoreManager::iterate () {
-	lockVideoRender();
-	if(mCore)
-		mCore->iterate();
-	unlockVideoRender();
+	if( mCbsTimerStop){
+		qInfo() << QStringLiteral("Stop iterate");
+		mCbsTimerStop = false;
+		mCbsTimer->stop();
+		mCbsTimer->deleteLater();// allow the timer to continue its stuff
+		mCbsTimer = nullptr;
+		qInfo() << "Stopping core";
+		mCore->stop();
+	}else{
+		lockVideoRender();
+		if(mCore){
+			auto state = mCore->getGlobalState();
+			if( state != linphone::GlobalState::Shutdown && state != linphone::GlobalState::Off)
+				mCore->iterate();
+		}
+		unlockVideoRender();
+	}
 }
 
 // -----------------------------------------------------------------------------

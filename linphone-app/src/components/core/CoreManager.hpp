@@ -229,6 +229,7 @@ private:
 	LdapListModel *mLdapListModel = nullptr;
 	
 	QTimer *mCbsTimer = nullptr;
+	bool mCbsTimerStop = false;
 	
 	QMutex mMutexVideoRender;
 	
