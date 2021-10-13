@@ -26,7 +26,7 @@
 // =============================================================================
 
 namespace Paths {
-  bool filePathExists (const std::string &path);
+  bool filePathExists (const std::string &path, const bool isWritable = false);
 
 
   std::string getAssistantConfigDirPath ();
