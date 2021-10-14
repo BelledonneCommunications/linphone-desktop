@@ -40,11 +40,12 @@ static inline bool dirPathExists (const QString &path) {
   return dir.exists();
 }
 
-static inline bool filePathExists (const QString &path) {
+static inline bool filePathExists (const QString &path, const bool& isWritable) {
   QFileInfo info(path);
   if (!dirPathExists(info.path()))
     return false;
-
+  if( isWritable && !info.isWritable())
+	return false;
   QFile file(path);
   return file.exists();
 }
@@ -177,9 +178,10 @@ static inline QString getAppPluginsDirPath () {
 }
 // -----------------------------------------------------------------------------
 
-bool Paths::filePathExists (const string &path) {
-  return filePathExists(Utils::coreStringToAppString(path));
+bool Paths::filePathExists (const string &path, const bool isWritable) {
+  return filePathExists(Utils::coreStringToAppString(path), isWritable);
 }
+
 
 // -----------------------------------------------------------------------------
 
@@ -319,7 +321,7 @@ static void migrateConfigurationFile (const QString &oldPath, const QString &new
 }
 void migrateFlatpakVersionFiles(){
 #ifdef Q_OS_LINUX
-  if(!filePathExists(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/linphone.db")){
+  if(!filePathExists(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + "/linphone.db", true)){
 // Copy all files if linphone.db doesn't exist
     QString flatpakPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+"/.var/app/com.belledonnecommunications.linphone/data/linphone";
     if( QDir().exists(flatpakPath)){
@@ -336,25 +338,25 @@ void migrateGTKVersionFiles(){
     : QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   QString oldPath = oldBaseDir + "/.linphonerc";
 
-  if (!filePathExists(newPath) && filePathExists(oldPath))
+  if (!filePathExists(newPath, false) && filePathExists(oldPath, false))
     migrateConfigurationFile(oldPath, newPath);
 
   newPath = getAppCallHistoryFilePath();
   oldPath = oldBaseDir + "/.linphone-call-history.db";
 
-  if (!filePathExists(newPath) && filePathExists(oldPath))
+  if (!filePathExists(newPath, false) && filePathExists(oldPath, false))
     migrateFile(oldPath, newPath);
 
   newPath = getAppFriendsFilePath();
   oldPath = oldBaseDir + "/.linphone-friends.db";
 
-  if (!filePathExists(newPath) && filePathExists(oldPath))
+  if (!filePathExists(newPath, false) && filePathExists(oldPath, false))
     migrateFile(oldPath, newPath);
 
   newPath = getAppMessageHistoryFilePath();
   oldPath = oldBaseDir + "/.linphone-history.db";
 
-  if (!filePathExists(newPath) && filePathExists(oldPath))
+  if (!filePathExists(newPath, false) && filePathExists(oldPath, false))
     migrateFile(oldPath, newPath);
 }
 void Paths::migrate () {
