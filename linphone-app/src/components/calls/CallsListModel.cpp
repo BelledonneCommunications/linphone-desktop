@@ -448,8 +448,10 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 			
 		case linphone::Call::State::End:
 		case linphone::Call::State::Error:{
-			CallModel * model = &call->getData<CallModel>("call-model");
-			model->callEnded();
+			if(call->dataExists("call-model")) {
+				CallModel * model = &call->getData<CallModel>("call-model");
+				model->callEnded();
+			}
 			removeCall(call);
 		} break;
 		case linphone::Call::State::StreamsRunning: {
