@@ -73,8 +73,10 @@ bool SearchSipAddressesProxyModel::isIgnored(const QString& address) const{
 bool SearchSipAddressesProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
 	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 	const SearchResultModel * model = sourceModel()->data(index).value<SearchResultModel*>();
-
-	return !mResultsToIgnore.contains(Utils::coreStringToAppString(model->getAddress()->asStringUriOnly()));
+	if(!model)
+		return false;
+	else
+		return !mResultsToIgnore.contains(Utils::coreStringToAppString(model->getAddress()->asStringUriOnly()));
 }
 
 bool SearchSipAddressesProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
