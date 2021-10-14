@@ -16,7 +16,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>激活</translation>
+        <translation type="unfinished">激活</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>激活</translation>
+        <translation type="unfinished">激活</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>一个免费（且自由）的 SIP 网络电话.</translation>
+        <translation>一个免费（且自由）的 SIP 视频电话.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -505,11 +505,11 @@
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">复制</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished">玩玩看！</translation>
+        <translation>玩玩看！</translation>
     </message>
     <message>
         <source>menuDeliveryStatus</source>
@@ -1057,19 +1057,19 @@
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished">你确定要清除该历史吗？</translation>
+        <translation>你确定要清除该历史吗？</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished">编辑联系人</translation>
+        <translation>编辑联系人</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished">添加联系人</translation>
+        <translation>添加联系人</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished">删除历史记录</translation>
+        <translation>删除历史记录</translation>
     </message>
 </context>
 <context>
@@ -1167,7 +1167,7 @@
     <message>
         <source>ok</source>
         <extracomment>&apos;OK&apos; : Button label</extracomment>
-        <translation type="unfinished">好</translation>
+        <translation>好</translation>
     </message>
     <message>
         <source>addParticipantPlaceholder</source>
@@ -1642,7 +1642,7 @@
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished">联系人</translation>
+        <translation>联系人</translation>
     </message>
     <message>
         <source>noPlugin</source>
@@ -1849,7 +1849,7 @@
     <name>SettingsLdapEdit</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">取消</translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>confirm</source>
@@ -1885,7 +1885,7 @@
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished">密码</translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>useTLSLabel</source>
