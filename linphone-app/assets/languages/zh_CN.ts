@@ -50,7 +50,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>一个免费（且自由）的 SIP 视频电话.</translation>
+        <translation>一个免费（且自由）的 SIP 网络电话.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -231,7 +231,7 @@
     </message>
     <message>
         <source>unableToAddAccount</source>
-        <translation>无法添加此账户</translation>
+        <translation>无法添加此账户。</translation>
     </message>
 </context>
 <context>
