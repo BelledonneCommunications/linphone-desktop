@@ -273,7 +273,7 @@ else()# Not Windows and Apple
 	install(FILES ${PLUGINS_FILES} DESTINATION "plugins/mediastreamer/" )
 # Install desktop/icon files.
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphone.desktop.cmake" "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" @ONLY)	
-	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" DESTINATION "${CMAKE_INSTALL_DATADIR}/applications")
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" DESTINATION "${CMAKE_INSTALL_DATADIR}/applications" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
 	set(APP_QT_CONF_PATH "")	
 
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/qt.conf.in" "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" @ONLY)

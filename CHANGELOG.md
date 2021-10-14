@@ -4,27 +4,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 4.3.0 - [Undefined]
+## 4.4.0 - [Undefined]
+
+## 4.3.0 - 2021-10-15
 
 ### Added
 
-- Sort contact list using System Locale
-- In fullscreen mode, the preview size can be changed by using mouse wheel
-- Echo calibration in settings view
+- Sort contact list using System Locale.
+- In fullscreen mode, the preview size can be changed by using mouse wheel.
+- Echo calibration in settings view.
 - In Chat, allow custom menu to appear by removing the repeating key when holding it. On Mac, there is an accent menu for this feature.
-- Add URI handler configuration : `linphone-config` to fetch a configuration file
+- Add URI handler configuration : `linphone-config` to fetch a configuration file.
 - Fetch a configuration file from a CLI command/URI Handlers : 
     sip:user@domain?method=call&fetch-config=base64(scheme://url)
     linphone-config://url
     linphone-config:fetch-config=base64(scheme://url)
     linphone --fetch-config=scheme://url
     linphone "<method> fetch-config=scheme://url"
-- Options to audio codec can be used and stored
-- Opus can now use `packetlosspercentage` and `useinbandfec` configuration
-- A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music)
-- MSYS2 support for Windows
-- OpenLDAP support
-
+- Options to audio codec can be used and stored.
+- Opus can now use `packetlosspercentage` and `useinbandfec` configuration.
+- A silence file have been added : `silence.mkv` and can be used to switch off some musics (hold_music).
+- Use of MSQOgl as display filter.
+- Autostart for AppImage.
+- Allow to hide or show the timeline panel.
+- Allow to hide or show empty chat rooms in settings.
+- Messages font option in settings.
+- MSYS2 support for Windows.
+- OpenLDAP support.
+- Dynamic size on chat area.
+- Add more events in chat rooms.
+- Chat Groups with participants managment and devices display.
+- Secure chat rooms for 1-1 and group chat using LIME end-to-end encryption.
+- Upgrade security level by authenticating participants.
+- Ephemerals Chat rooms (Participant mode).
+- Double Click on avatar in conversation to fill the smart search bar with the participant address.
+- Attended transfert.
+- Search in timeline and in messages.
+- Show subject in notifications for group chats.
+- Add more tooltips.
+- Add a forgotten password link in assistant.
 
 ### Fixed
 
@@ -33,7 +51,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix on Missed calls and messages count bubbles
 - Contact names handle special characters
 - Unmatched room when using malformed username
+- UTF8 characters on Windows
+- Mark as Read only if in foreground
+- Show avatar and username once for a same kind of message
+- Persistent call notifications
+- Load optimizations
+- On Mac : Camera freeze and black screen when using third-party
+- Prevent opening call Window if the option to stay in background has been activated
+- Crash while searching contacts
+- Stop receiving messages when proxy has been deleted
+- Transfer menu of calls : Dynamic size for texts
+- XCode build
+- Sort languages in selection
 
+## 4.2.5 - 2020-12-18
+
+### Added
+
+-iLBC support
+
+### Fixed
+
+- VP8 freeze
+- Audio quality distortion
+- OSX deployment target propagated to linphone SDK
 
 ## 4.2.4 - 2020-11-21
 
