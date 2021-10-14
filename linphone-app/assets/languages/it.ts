@@ -979,32 +979,32 @@ URL del server non configurato.</translation>
         <source>nMinute</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 minuto</numerusform>
+            <numerusform>%1 minuti</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 ora</numerusform>
+            <numerusform>%1 ore</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 giorno</numerusform>
+            <numerusform>%1 giorni</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 settimana</numerusform>
+            <numerusform>%1 settimane</numerusform>
         </translation>
     </message>
 </context>
