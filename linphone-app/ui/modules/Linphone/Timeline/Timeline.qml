@@ -56,7 +56,7 @@ Rectangle {
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
-			visible:view.count > 0 || searchView.visible
+			visible:view.count > 0 || searchView.visible || filterView.visible
 			
 			MouseArea{// no more showing history
 				id:showHistory
