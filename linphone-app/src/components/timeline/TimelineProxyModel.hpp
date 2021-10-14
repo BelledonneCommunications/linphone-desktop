@@ -40,6 +40,12 @@ public:
 		SecureGroupChatRoom=8,
 		EphemeralChatRoom=16,
 		
+		NoSimpleChatRoom=32,
+		NoSecureChatRoom=64,
+		NoGroupChatRoom=128,
+		NoSecureGroupChatRoom=256,
+		NoEphemeralChatRoom=512,
+		
 		AllChatRooms = SimpleChatRoom+SecureChatRoom+GroupChatRoom+SecureGroupChatRoom+EphemeralChatRoom
 	};
 	Q_ENUM(TimelineFilter)

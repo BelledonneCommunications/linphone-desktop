@@ -141,40 +141,45 @@ Rectangle {
 					//: 'Simple rooms' : Filter item
 					//~ Mode Selecting it will show all simple rooms
 					text:qsTr('timelineFilterSimpleRooms')
-					property var value : (checked?TimelineProxyModel.SimpleChatRoom:0)
+					property var value : (checkState==Qt.Checked?TimelineProxyModel.SimpleChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.NoSimpleChatRoom:0))
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
+					tristate: true
 				}
 				CheckBoxText {
 					id:secureFilter
 					//: 'Secure rooms' : Filter item
 					//~ Mode Selecting it will show all secure rooms
 					text:qsTr('timelineFilterSecureRooms')
-					property var value : (checked?TimelineProxyModel.SecureChatRoom:0)
+					property var value : (checkState==Qt.Checked?TimelineProxyModel.SecureChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.NoSecureChatRoom:0))
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
+					tristate: true
 				}
 				CheckBoxText {
 					id:groupFilter
 					//: 'Chat groups' : Filter item
 					//~ Mode Selecting it will show all chat groups (with more than one participant)
 					text:qsTr('timelineFilterChatGroups')
-					property var value : (checked?TimelineProxyModel.GroupChatRoom:0)
+					property var value : (checkState==Qt.Checked?TimelineProxyModel.GroupChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.NoGroupChatRoom:0))
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
+					tristate: true
 				}
 				CheckBoxText {
 					id:secureGroupFilter
 					//: 'Secure Chat Groups' : Filter item
 					//~ Mode Selecting it will show all secure chat groups (with more than one participant)
 					text:qsTr('timelineFilterSecureChatGroups')
-					property var value : (checked?TimelineProxyModel.SecureGroupChatRoom:0)
+					property var value : (checkState==Qt.Checked?TimelineProxyModel.SecureGroupChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.NoSecureGroupChatRoom:0))
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
+					tristate: true
 				}
 				CheckBoxText {
 					id:ephemeralsFilter
 					//: 'Ephemerals' : Filter item
 					//~ Mode Selecting it will show all chat rooms where the ephemeral mode has been enabled.
 					text:qsTr('timelineFilterEphemerals')
-					property var value : (checked?TimelineProxyModel.EphemeralChatRoom:0)
+					property var value : (checkState==Qt.Checked?TimelineProxyModel.EphemeralChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.NoEphemeralChatRoom:0))
 					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
+					tristate: true
 				}
 				
 			}
