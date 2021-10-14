@@ -51,7 +51,9 @@ function getAvailableLocales () {
     key: qsTr('systemLocale'),
     value: ''
   }].concat(locales.sort(function (a, b) {
-    return a > b
+		if( a.key < b.key ) return -1;
+		if( a.key > b.key ) return 1;
+		return 0;
   }))
 }
 
