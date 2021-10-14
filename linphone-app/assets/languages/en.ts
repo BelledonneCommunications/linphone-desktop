@@ -16,7 +16,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>ACTIVATE</translation>
+        <translation>USE ACCOUNT</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -31,7 +31,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>ACTIVATE</translation>
+        <translation>USE ACCOUNT</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -2540,7 +2540,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilterSecureChatGroups</source>
         <extracomment>&apos;Secure Chat Groups&apos; : Filter item</extracomment>
-        <translation>Secure Chat Groups</translation>
+        <translation>Secure chat groups</translation>
         <extra-Mode>Selecting it will show all secure chat groups (with more than one participant)</extra-Mode>
     </message>
     <message>
