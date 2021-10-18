@@ -6,6 +6,8 @@ import Common.Styles 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
 
+import UtilsCpp 1.0
+
 import App.Styles 1.0
 
 // =============================================================================
@@ -135,7 +137,7 @@ Rectangle {
 
               horizontalTextAlignment: Text.AlignHCenter
               sipAddress: parent.sipAddress
-              username: LinphoneUtils.getContactUsername(parent._sipAddressObserver)
+              username: UtilsCpp.getDisplayName(parent._sipAddressObserver.peerAddress)
             }
             IncallAvatar {
             

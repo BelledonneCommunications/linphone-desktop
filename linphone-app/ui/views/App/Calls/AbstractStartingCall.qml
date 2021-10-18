@@ -5,6 +5,8 @@ import Common 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
 
+import UtilsCpp 1.0
+
 import App.Styles 1.0
 
 // =============================================================================
@@ -42,7 +44,7 @@ Rectangle {
         height: CallStyle.header.contactDescription.height
         horizontalTextAlignment: Text.AlignHCenter
         sipAddress: call.peerAddress
-        username: LinphoneUtils.getContactUsername(_sipAddressObserver)
+        username: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
         width: contentWidth
       }
 

@@ -62,7 +62,6 @@ Rectangle {
 								  )
 								:-1
 			
-			//username: LinphoneUtils.getContactUsername(_contact || entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
 			//username: UtilsCpp.getDisplayName(entry.sipAddress || entry.peerAddress )
 			
 			username : entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne ? '' : item.username

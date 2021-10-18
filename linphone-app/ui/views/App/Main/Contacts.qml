@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
+import UtilsCpp 1.0
 import LinphoneEnums 1.0
 
 import App.Styles 1.0

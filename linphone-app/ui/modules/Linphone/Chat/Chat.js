@@ -24,6 +24,7 @@
 .import QtQuick 2.7 as QtQuick
 
 .import Linphone 1.0 as Linphone
+.import UtilsCpp 1.0 as UtilsCpp
 
 .import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 
@@ -48,18 +49,6 @@ function getComponentFromEntry (chatEntry) {
   }
 
   return chatEntry.isOutgoing ? 'OutgoingMessage.qml' : 'IncomingMessage.qml'
-}
-
-function getIsComposingMessage () {
-  if (!container.proxyModel.isRemoteComposing || !Linphone.SettingsModel.chatEnabled) {
-    return ''
-  }
-
-  var sipAddressObserver = chat.sipAddressObserver
-  return qsTr('isComposing').replace(
-    '%1',
-    LinphoneUtils.getContactUsername(sipAddressObserver)
-  )
 }
 
 function handleFilesDropped (files) {

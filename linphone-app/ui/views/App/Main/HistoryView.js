@@ -22,6 +22,7 @@
 // =============================================================================
 
 .import Linphone 1.0 as Linphone
+.import UtilsCpp 1.0 as UtilsCpp
 
 .import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -49,10 +50,6 @@ function getEditIcon () {
 
 function getEditTooltipText() {
     return historyView._sipAddressObserver && historyView._sipAddressObserver.contact ? qsTr('tooltipContactEdit') : qsTr('tooltipContactAdd')
-}
-
-function getUsername () {
-  return LinphoneUtils.getContactUsername(historyView._sipAddressObserver)
 }
 
 function updateHistoryFilter (button) {

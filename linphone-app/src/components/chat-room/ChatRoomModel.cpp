@@ -220,29 +220,26 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatRoomModel::handleCallStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::presenceStatusReceived, this, &ChatRoomModel::handlePresenceStatusReceived);
 		//QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatRoomModel::handleIsComposingChanged);
-		
-	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactAdded, this, &ChatRoomModel::usernameChanged);
+
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactAdded, this, &ChatRoomModel::fullPeerAddressChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactAdded, this, &ChatRoomModel::avatarChanged);
-	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactRemoved, this, &ChatRoomModel::usernameChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactRemoved, this, &ChatRoomModel::fullPeerAddressChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactRemoved, this, &ChatRoomModel::avatarChanged);
-	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::usernameChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::fullPeerAddressChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::avatarChanged);
+
+	connect(this, &ChatRoomModel::fullPeerAddressChanged, this, &ChatRoomModel::usernameChanged);
 	
 
 	//QObject::connect(this, &ChatRoomModel::messageCountReset, coreManager, &CoreManager::eventCountChanged  );
 	if(mChatRoom){
 		mParticipantListModel = std::make_shared<ParticipantListModel>(this);
 		connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ChatRoomModel::fullPeerAddressChanged);
-		connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ChatRoomModel::usernameChanged);
 		auto participants = mChatRoom->getParticipants();	
 		for(auto participant : participants){
 			auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((participant)->getAddress()->asString()));
 			if(contact) {
 				connect(contact, &ContactModel::contactUpdated, this, &ChatRoomModel::fullPeerAddressChanged);
-				connect(contact, &ContactModel::contactUpdated, this, &ChatRoomModel::usernameChanged);
 			}
 		}
 	}else
@@ -354,6 +351,10 @@ void ChatRoomModel::removeEntry(ChatEvent* entry){
 			removeRow(row);
 	}
 }
+
+void ChatRoomModel::emitFullPeerAddressChanged(){
+	emit fullPeerAddressChanged();
+}
 //--------------------------------------------------------------------------------------------
 
 QString ChatRoomModel::getPeerAddress () const {
@@ -403,6 +404,13 @@ QString ChatRoomModel::getUsername () const {
 	
 	if(username != "")
 		return username;
+	if(  mChatRoom->getNbParticipants() == 1 ) {
+		auto call = mChatRoom->getCall();
+		if(call)
+			username = Utils::getDisplayName(call->getRemoteAddress());
+		if(username != "")
+			return username;
+	}
 	if(  mChatRoom->getNbParticipants() >= 1)
 		username = mParticipantListModel->displayNamesToString();
 	if(username != "")
@@ -854,6 +862,8 @@ void ChatRoomModel::callEnded(std::shared_ptr<linphone::Call> call){
 	else{
 		insertCall(call->getCallLog());
 	}
+	// When a call is end, a new log WILL be written in database. It may have information on display name.
+	QTimer::singleShot(100, this, &ChatRoomModel::fullPeerAddressChanged);
 }
 
 // -----------------------------------------------------------------------------

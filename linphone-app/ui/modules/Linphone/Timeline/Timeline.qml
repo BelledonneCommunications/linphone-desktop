@@ -257,7 +257,7 @@ Rectangle {
 						isClickable: true
 					}
 					Icon{
-						icon: modelData.selected ? 'timer_light' : 'timer'
+						icon: modelData && modelData.selected ? 'timer_light' : 'timer'
 						iconSize: 15
 						anchors.right:parent.right
 						anchors.bottom:parent.bottom

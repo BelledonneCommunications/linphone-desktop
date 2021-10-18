@@ -60,10 +60,15 @@ void FileExtractor::extract () {
   }
 #ifdef WIN32
 // Test the presence of bzip2 in the system
-	int result = QProcess::execute("bzip2.exe", QStringList());
-	if( result != -2 || QProcess::execute(Utils::coreStringToAppString(Paths::getToolsDirPath())+"\\bzip2.exe", QStringList())!=-2){
+	QProcess process;
+	process.closeReadChannel(QProcess::StandardOutput);
+	process.closeReadChannel(QProcess::StandardError);
+	process.start("bzip2.exe",QStringList("--help") );
+	//int result = QProcess::execute("bzip2.exe", QStringList("--help"));
+	if( process.error() != QProcess::FailedToStart || QProcess::execute(Utils::coreStringToAppString(Paths::getToolsDirPath())+"\\bzip2.exe", QStringList())!=-2){
 		mTimer->start();
 	}else{// Download bzip2
+		qWarning() << "bzip2 was not found. Downloading it.";
 		QTimer * timer = mTimer;
 		FileDownloader * fileDownloader = new FileDownloader();
 		int downloadStep = 0;

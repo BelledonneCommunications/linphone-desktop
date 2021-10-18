@@ -88,7 +88,7 @@ ColumnLayout  {
 				presenceLevel: chatRoomModel.presenceStatus
 				
 				//username: Logic.getUsername()
-				username: chatRoomModel?chatRoomModel.username:Logic.getUsername()
+				username: chatRoomModel?chatRoomModel.username:UtilsCpp.getDisplayName(conversation._sipAddressObserver.peerAddress)
 				visible: !groupChat.visible				
 			}
 			
