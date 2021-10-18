@@ -7,6 +7,8 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
+import UtilsCpp 1.0
+
 import App.Styles 1.0
 
 import 'ContactEdit.js' as Logic
@@ -28,7 +30,30 @@ ColumnLayout  {
 	
 	spacing: 0
 	
-	Component.onCompleted: Logic.handleCreation()
+	Component.onCompleted:{
+		var sipAddress = contactEdit.sipAddress
+		var contact = contactEdit._contact = SipAddressesModel.mapSipAddressToContact(
+		  sipAddress
+		)
+	  
+		if (!contact) {
+		  // Add a new contact.
+		  var vcard = CoreManager.createDetachedVcardModel()
+	  
+		  if (sipAddress && sipAddress.length > 0) {
+			vcard.addSipAddress(sipAddress)
+			vcard.username = UtilsCpp.getDisplayName(SipAddressesModel.getSipAddressObserver(sipAddress, sipAddress).peerAddress)
+		  }else{
+			vcard.username = ' '// Username initialization to avoid Belr parsing issue when setting new name
+		  }
+	  
+		  contactEdit._vcard = vcard
+		  contactEdit._edition = true
+		} else {
+		  // See or edit a contact.
+		  contactEdit._vcard = contact.vcard
+		}
+	  }
 	
 	onVcardChanged: Logic.handleVcardChanged(vcard)
 	

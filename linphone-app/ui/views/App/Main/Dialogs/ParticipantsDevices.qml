@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
+import UtilsCpp 1.0
 import LinphoneUtils 1.0
 import LinphoneEnums 1.0
 
@@ -67,7 +68,7 @@ DialogPlus {
 						Layout.leftMargin: 14
 						username: modelData?(modelData.contactModel ? modelData.contactModel.vcard.username
 																	:modelData.username?modelData.username:
-																						 LinphoneUtils.getContactUsername(modelData.sipAddress)
+																						 UtilsCpp.getDisplayName(modelData.sipAddress)
 											 ):''
 						Icon{
 							property int securityLevel : modelData.securityLevel

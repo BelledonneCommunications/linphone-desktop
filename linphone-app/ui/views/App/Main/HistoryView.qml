@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import UtilsCpp 1.0
 
 import App.Styles 1.0
 
@@ -55,7 +56,7 @@ ColumnLayout  {
           historyView._sipAddressObserver.presenceStatus
         ):null
 
-        username: peerAddress?Logic.getUsername():null
+        username: peerAddress? UtilsCpp.getDisplayName(historyView._sipAddressObserver.peerAddress):null
         visible:peerAddress
       }
 

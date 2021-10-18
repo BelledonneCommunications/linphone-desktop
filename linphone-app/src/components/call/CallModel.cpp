@@ -100,6 +100,7 @@ QString CallModel::getPeerAddress () const {
 QString CallModel::getLocalAddress () const {
 	return Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asStringUriOnly());
 }
+
 QString CallModel::getFullPeerAddress () const {
 	return Utils::coreStringToAppString(mRemoteAddress->asString());
 }
@@ -668,7 +669,9 @@ void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>
 			}
 		}else{
 			if((*it)->getAddress()->weakEqual(mRemoteAddress)){
-				setRemoteDisplayName((*it)->getAddress()->getDisplayName());
+				std::string newDisplayName = (*it)->getAddress()->getDisplayName();
+				if(!newDisplayName.empty())// Override only if there is one
+					setRemoteDisplayName(newDisplayName);
 				found = true;
 			}
 		}
@@ -702,6 +705,9 @@ void CallModel::setRemoteDisplayName(const std::string& name){
 		callLog->setRemoteAddress(Utils::interpretUrl(getFullPeerAddress()));
 	}
 	emit fullPeerAddressChanged();
+	ChatRoomModel * model = getChatRoomModel();
+	if(model)
+		model->emitFullPeerAddressChanged();
 }
 
 QString CallModel::getTransferAddress () const {

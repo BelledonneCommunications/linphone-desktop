@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import UtilsCpp 1.0
 
 import 'Chat.js' as Logic
 

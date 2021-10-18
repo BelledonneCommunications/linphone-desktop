@@ -5,6 +5,7 @@ import Linphone 1.0
 import LinphoneUtils 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
+import UtilsCpp 1.0
 
 // =============================================================================
 
@@ -87,7 +88,7 @@ Row {
       pointSize: HistoryStyle.entry.event.text.pointSize
     }
     height: parent.height
-    text: LinphoneUtils.getContactUsername(_sipAddressObserver)
+    text: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
     verticalAlignment: Text.AlignVCenter
     MouseArea{
         anchors.fill:parent

@@ -24,6 +24,7 @@
 .pragma library
 
 .import Linphone 1.0 as Linphone
+.import UtilsCpp 1.0 as UtilsCpp
 
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
@@ -78,37 +79,6 @@ function _getUsername (str) {
   }
 
   return Utils.decode(str.substring(start, end))
-}
-
-// -----------------------------------------------------------------------------
-
-// Returns the username of a contact/sipAddressObserver object or URI string.
-function getContactUsername (contact) {
-  if(contact){
-      var object = contact.contact || // Contact object from `SipAddressObserver`.
-        (contact.vcard && contact) // Contact object.
-    
-      // 1. `object` is a contact.
-      if (object) {
-        return object.vcard.username
-      }
-    
-      // 2. `object` is just a string.
-      object = Utils.isString(contact.peerAddress)
-        ? contact.peerAddress // String from `SipAddressObserver`.
-        : contact // Just a String.
-    
-      // Use display name.
-      var name = _getDisplayName(object)
-      if (name != null) {
-        return name
-      }
-    
-      // Use username.
-      name = _getUsername(object)
-      return name == null ? 'Bad EGG' : name
-  }else
-    return '';
 }
 
 // =============================================================================

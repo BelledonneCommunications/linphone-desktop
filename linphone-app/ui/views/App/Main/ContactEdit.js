@@ -22,6 +22,7 @@
 // =============================================================================
 
 .import Linphone 1.0 as Linphone
+.import UtilsCpp 1.0 as UtilsCpp
 
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 .import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
@@ -45,31 +46,6 @@ function handleContactUpdated () {
     // Edition not ended, the contact was updated in other place.
     // Update fields with new data.
     contactEdit._vcard = contact.cloneVcardModel()
-  }
-}
-
-function handleCreation () {
-  var sipAddress = contactEdit.sipAddress
-  var contact = contactEdit._contact = Linphone.SipAddressesModel.mapSipAddressToContact(
-    sipAddress
-  )
-
-  if (!contact) {
-    // Add a new contact.
-    var vcard = Linphone.CoreManager.createDetachedVcardModel()
-
-    if (sipAddress && sipAddress.length > 0) {
-      vcard.addSipAddress(sipAddress)
-      vcard.username = LinphoneUtils.getContactUsername(Linphone.SipAddressesModel.getSipAddressObserver(sipAddress, sipAddress))
-    }else{
-      vcard.username = ' '// Username initialization to avoid Belr parsing issue when setting new name
-    }
-
-    contactEdit._vcard = vcard
-    contactEdit._edition = true
-  } else {
-    // See or edit a contact.
-    contactEdit._vcard = contact.vcard
   }
 }
 

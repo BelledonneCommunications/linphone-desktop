@@ -481,9 +481,9 @@ QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& ad
 					return cl->getRemoteAddress()->weakEqual(address);
 		});
 			if(callLog != callHistory.end())
-				displayName = Utils::coreStringToAppString((*callLog)->getRemoteAddress()->getDisplayName());
+				displayName = QString::fromStdString((*callLog)->getRemoteAddress()->getDisplayName());
 			if(displayName == "")
-				displayName = Utils::coreStringToAppString(address->getDisplayName());
+				displayName = QString::fromStdString(address->getDisplayName());
 			if(displayName == "")
 				displayName = Utils::coreStringToAppString(address->getUsername());
 		}

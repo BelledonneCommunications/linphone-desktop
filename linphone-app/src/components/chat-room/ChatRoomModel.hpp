@@ -269,6 +269,8 @@ public slots:
 
 
 	void removeEntry(ChatEvent* entry);	
+
+	void emitFullPeerAddressChanged();	// Use to call signal when changing data that are not managed by the chat room (like data coming from call)
 	
 signals:
 	bool isRemoteComposingChanged ();

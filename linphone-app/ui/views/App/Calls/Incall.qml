@@ -7,6 +7,7 @@ import Common.Styles 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
 import Utils 1.0
+import UtilsCpp 1.0
 
 import App.Styles 1.0
 
@@ -126,7 +127,7 @@ Rectangle {
 				anchors.centerIn: parent
 				horizontalTextAlignment: Text.AlignHCenter
 				sipAddress: _sipAddressObserver.peerAddress
-				username: LinphoneUtils.getContactUsername(_sipAddressObserver)
+				username: UtilsCpp.getDisplayName(sipAddress)
 				
 				height: parent.height
 				width: parent.width - rightActions.width - leftActions.width
