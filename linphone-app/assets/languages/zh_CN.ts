@@ -456,16 +456,22 @@
         <translation>无法发送文件。
 未配置服务器地址。</translation>
     </message>
-    <message>
-        <source>isComposing</source>
-        <translation>%1 正在输入…</translation>
-    </message>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation>
             <numerusform>%1 正在输入…</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>allTextCopied</source>
+        <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>selectedTextCopied</source>
+        <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

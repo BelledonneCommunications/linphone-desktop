@@ -456,10 +456,6 @@
         <translation>Unable to send file.
 Server URL not configured.</translation>
     </message>
-    <message>
-        <source>isComposing</source>
-        <translation>%1 is typing…</translation>
-    </message>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
@@ -467,6 +463,16 @@ Server URL not configured.</translation>
             <numerusform>%1 is typing…</numerusform>
             <numerusform>%1 are typing…</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>allTextCopied</source>
+        <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
+        <translation>Copied to clipboard</translation>
+    </message>
+    <message>
+        <source>selectedTextCopied</source>
+        <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
+        <translation>Selection copied to clipboard</translation>
     </message>
 </context>
 <context>

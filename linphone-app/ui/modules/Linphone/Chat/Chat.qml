@@ -17,6 +17,9 @@ Rectangle {
 	property alias proxyModel: chat.model	// ChatRoomProxyModel
 	property alias tryingToLoadMoreEntries : chat.tryToLoadMoreEntries
 	
+	property string noticeBannerText : ''	// When set, show a banner with text and hide after some time
+	onNoticeBannerTextChanged: if(noticeBannerText!='') messageBlock.state = "showed"
+	
 	// ---------------------------------------------------------------------------
 	
 	signal messageToSend (string text)
@@ -251,24 +254,97 @@ Rectangle {
 							
 							// Display content.
 							Loader {
+								id: loader
 								Layout.fillWidth: true
 								source: Logic.getComponentFromEntry($chatEntry)
 							}
+							Connections{
+									target: loader.item
+									ignoreUnknownSignals: true
+									//: "Copied to clipboard" : when a user copy a text from the menu, this message show up.
+									onCopyAllDone: container.noticeBannerText = qsTr("allTextCopied")
+									//: "Selection copied to clipboard" : when a user copy a text from the menu, this message show up.
+									onCopySelectionDone: container.noticeBannerText = qsTr("selectedTextCopied")
+								}
 						}
 					}
 				}
 			}
 			
-			footer: Text {
-				property var composers : container.proxyModel.composers
-				color: ChatStyle.composingText.color
-				font.pointSize: ChatStyle.composingText.pointSize
-				height: visible ? undefined : 0
-				leftPadding: ChatStyle.composingText.leftPadding
-				visible: composers.length > 0 && SettingsModel.chatEnabled
-				wrapMode: Text.Wrap
-				//: '%1 is typing...' indicate that someone is composing in chat
-				text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
+			footer: Item{
+						Text {
+							property var composers : container.proxyModel.composers
+							color: ChatStyle.composingText.color
+							font.pointSize: ChatStyle.composingText.pointSize
+							height: visible ? undefined : 0
+							leftPadding: ChatStyle.composingText.leftPadding
+							visible: composers.length > 0 && SettingsModel.chatEnabled
+							wrapMode: Text.Wrap
+							//: '%1 is typing...' indicate that someone is composing in chat
+							text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
+						}
+					}
+					
+			Rectangle{
+				id: messageBlock
+				height: 32
+				anchors.left: parent.left
+				anchors.right: parent.right
+				anchors.bottom: parent.bottom
+				anchors.leftMargin: ChatStyle.entry.leftMargin
+				anchors.rightMargin: ChatStyle.entry.leftMargin
+				anchors.bottomMargin: ChatStyle.entry.bottomMargin
+				color: ChatStyle.messageBanner.color
+				radius: 10
+				state: "hidden"
+				Timer{
+					id: hideNoticeBanner
+					interval: 4000
+					repeat: false
+					onTriggered: messageBlock.state = "hidden"
+				}
+				RowLayout{
+					anchors.centerIn: parent
+					spacing: 5
+					Icon{
+						icon: "copy_light"
+						iconSize: 20
+					}
+					Text{
+						Layout.fillHeight: true
+						Layout.fillWidth: true
+						text: container.noticeBannerText
+						font {
+								pointSize: ChatStyle.messageBanner.pointSize
+							}
+						color: ChatStyle.messageBanner.textColor
+					}
+				}
+				states: [
+					 State {
+						 name: "hidden"
+						 PropertyChanges { target: messageBlock; opacity: 0 }
+					 },
+					 State {
+						 name: "showed"
+						 PropertyChanges { target: messageBlock; opacity: 1 }
+					 }
+				 ]
+				 transitions: [
+					 Transition {
+						 from: "*"; to: "showed"
+						 SequentialAnimation{
+							NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 500 }
+							 ScriptAction{ script: hideNoticeBanner.start()}	
+						}
+					 },
+					 Transition {
+						SequentialAnimation{
+							NumberAnimation{ properties: "opacity"; duration: 1000 }
+							ScriptAction{ script: container.noticeBannerText = '' }
+						}
+					}
+				]
 			}
 		}
 		
@@ -277,6 +353,7 @@ Rectangle {
 		// -------------------------------------------------------------------------
 		
 		Borders {
+			id: textAreaBorders
 			Layout.fillWidth: true
 			Layout.preferredHeight: textArea.height
 			
@@ -325,6 +402,8 @@ Rectangle {
 			}
 		}
 	}
+	
+	
 	
 	// ---------------------------------------------------------------------------
 	// Scroll at end if necessary.

@@ -456,16 +456,22 @@
         <translation>ファイルを送信できませんでした。
 サーバURLが設定されていません。</translation>
     </message>
-    <message>
-        <source>isComposing</source>
-        <translation>入力中: %1…</translation>
-    </message>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>allTextCopied</source>
+        <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>selectedTextCopied</source>
+        <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

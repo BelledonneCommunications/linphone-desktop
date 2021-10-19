@@ -39,11 +39,18 @@ QtObject {
     property int leftPadding: 20
     property int pointSize: Units.dp * 9
   }
+  
+  property QtObject messageBanner: QtObject {
+	property color color: ColorsList.add("Chat_message_banner", "", "Background of message banner", "#9ecd1d").color
+	property color textColor: ColorsList.add("Chat_message_banner_text", "q", "Text of message banner").color
+	property int pointSize: Units.dp * 9
+  }
 
   property QtObject entry: QtObject {
     property int bottomMargin: 10
     property int deleteIconSize: 22
     property int leftMargin: 18
+    property int rightMargin: 18
     property int lineHeight: 30
     property int metaWidth: 40
 

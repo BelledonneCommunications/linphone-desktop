@@ -566,15 +566,19 @@ void SipAddressesModel::removeContactOfSipAddress (const QString &sipAddress) {
 // -----------------------------------------------------------------------------
 
 void SipAddressesModel::initSipAddresses () {
-  QElapsedTimer timer;
-  timer.start();
+	QElapsedTimer timer, stepsTimer;
+	timer.start();
 
-  initSipAddressesFromChat();
-  initSipAddressesFromCalls();
-  initRefs();
-  initSipAddressesFromContacts();
-
-  qInfo() << "Sip addresses model initialized in:" << timer.elapsed() << "ms.";
+	stepsTimer.start();
+	initSipAddressesFromChat();
+	qInfo() << "Sip addresses model from Chats :" << stepsTimer.restart() << "ms.";
+	initSipAddressesFromCalls();
+	qInfo() << "Sip addresses model from Calls :" << stepsTimer.restart() << "ms.";
+	initRefs();
+	qInfo() << "Sip addresses model from Refs :" << stepsTimer.restart() << "ms.";
+	initSipAddressesFromContacts();
+	qInfo() << "Sip addresses model from Contacts :" << stepsTimer.restart() << "ms.";
+	qInfo() << "Sip addresses model initialized in:" << timer.elapsed() << "ms.";
 }
 
 void SipAddressesModel::initSipAddressesFromChat () {

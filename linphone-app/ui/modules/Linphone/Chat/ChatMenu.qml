@@ -16,7 +16,7 @@ import LinphoneEnums 1.0
 import 'Message.js' as Logic
 
 // =============================================================================
-
+// ChatMenu
 Item {
 	id: container
 	property string lastTextSelected
@@ -26,6 +26,8 @@ Item {
 	
 	signal deliveryStatusClicked()
 	signal removeEntryRequested()
+	signal copyAllDone()
+	signal copySelectionDone()
 
 	function open(){
 		messageMenu.popup()
@@ -44,7 +46,15 @@ Item {
 			iconSizeMenu: 17
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
-			onTriggered: Clipboard.text = (container.lastTextSelected == '' ? container.content : container.lastTextSelected)
+			onTriggered: {
+				if( container.lastTextSelected == ''){
+					Clipboard.text = container.content
+					container.copyAllDone();
+				}else{
+					Clipboard.text = container.lastTextSelected
+					container.copySelectionDone()
+				}
+			}
 			visible: content != ''
 		}
 		

@@ -32,6 +32,11 @@ Item {
 	
 	// ---------------------------------------------------------------------------
 	
+	signal copyAllDone()
+	signal copySelectionDone()
+	
+	// ---------------------------------------------------------------------------
+	
 	implicitHeight: message.contentHeight 
 						+ (ephemeralTimerRow.visible? message.padding * 4 : message.padding * 2) 
 						+ (deliveryLayout.visible? deliveryLayout.height : 0)
@@ -127,6 +132,9 @@ Item {
 			onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 			onRemoveEntryRequested: removeEntry()
 			deliveryVisible: deliveryLayout.visible
+			
+			onCopyAllDone: container.copyAllDone()
+			onCopySelectionDone: container.copySelectionDone()
 		}
 	}
 	
