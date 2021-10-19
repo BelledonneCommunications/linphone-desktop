@@ -13,10 +13,16 @@ import Utils 1.0
 Item {
   implicitHeight: message.height
   width: parent.width
+  
+  signal copyAllDone()
+  signal copySelectionDone()
 
   Message {
     id: message
-
+    
+	onCopyAllDone: parent.copyAllDone()
+	onCopySelectionDone: parent.copySelectionDone()
+	
     anchors {
       left: parent.left
       leftMargin: ChatStyle.entry.metaWidth

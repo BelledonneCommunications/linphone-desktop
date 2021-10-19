@@ -10,6 +10,10 @@ import LinphoneUtils 1.0
 
 RowLayout {
 	id:mainRow
+	
+	signal copyAllDone()
+	signal copySelectionDone()
+  
 	implicitHeight: message.height
 	spacing: 0
 	
@@ -54,6 +58,9 @@ RowLayout {
 	
 	Message {
 		id: message
+		
+		onCopyAllDone: parent.copyAllDone()
+		onCopySelectionDone: parent.copySelectionDone()
 		
 		Layout.fillWidth: true
 		

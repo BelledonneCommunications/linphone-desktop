@@ -21,6 +21,9 @@ Row {
 	
 	property bool isOutgoing : $chatEntry.isOutgoing  || $chatEntry.state == LinphoneEnums.ChatMessageStateIdle;
 	
+	signal copyAllDone()
+	signal copySelectionDone()
+	
 	Item {
 		height: ChatStyle.entry.lineHeight
 		width: ChatStyle.entry.metaWidth
@@ -269,6 +272,9 @@ Row {
 							onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 							onRemoveEntryRequested: removeEntry()
 							deliveryVisible: deliveryLayout.visible
+							
+							onCopyAllDone: mainRow.copyAllDone()
+							onCopySelectionDone: mainRow.copySelectionDone()
 						}
 					}
 				}
