@@ -148,13 +148,14 @@ ColumnLayout {
 								}
 								
 								ActionButton {
-									icon: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+									icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+									visible: SettingsModel.chatEnabled
 									onClicked: actions.itemAt(2).open()
 								}
 								
 								ActionButton {
-									icon: 'chat'
-									visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && $contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
+									icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+									visible: SettingsModel.secureChatEnabled && $contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
 									enabled: AccountSettingsModel.conferenceURI != ''
 									Icon{
 										icon:'secure_level_1'

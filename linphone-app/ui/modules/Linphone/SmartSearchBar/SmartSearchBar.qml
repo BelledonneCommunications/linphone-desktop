@@ -60,8 +60,8 @@ SearchBox {
 		
 		actions: [{
 				icon: 'video_call',
-				secure:0,
-				visible:true,
+				secure: 0,
+				visible: true,
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchVideoCall(entry.sipAddress)
@@ -69,27 +69,30 @@ SearchBox {
 				visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 			}, {
 				icon: 'call',
-				secure:0,
-				visible:true,
+				secure: 0,
+				visible: true,
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchCall(entry.sipAddress)
 				},
 				visible: SettingsModel.outgoingCallsEnabled
 			}, {
-				icon: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
-				secure:0,
-				visible:true,
+				icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
+				secure: 0,
+				visible: SettingsModel.chatEnabled ,
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchChat(entry.sipAddress)
 				}
 			}, {
-				icon: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
-				secure:1,
-				visible:SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && AccountSettingsModel.conferenceURI != '',
+				icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
+				secure: 1,
+				visible: SettingsModel.secureChatEnabled && AccountSettingsModel.conferenceURI != '',
 				visibleHandler : function(entry) {
-									return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh);
+									if(entry)
+										return UtilsCpp.hasCapability(entry.sipAddress ? entry.sipAddress : entry,  LinphoneEnums.FriendCapabilityLimeX3Dh);
+									else
+										return false;
 								},
 				handler: function (entry) {
 					searchBox.closeMenu()

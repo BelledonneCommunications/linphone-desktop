@@ -41,6 +41,7 @@
 using namespace std;
 
 const string SettingsModel::UiSection("ui");
+const string SettingsModel::AppSection("app");
 const string SettingsModel::ContactsSection("contacts_import");
 
 SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
@@ -601,12 +602,21 @@ void SettingsModel::setMuteMicrophoneEnabled (bool status) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getChatEnabled () const {
-	return !!mConfig->getInt(UiSection, "chat_enabled", 1);
+	return !!mConfig->getInt(AppSection, "chat_enabled", 1);
 }
 
 void SettingsModel::setChatEnabled (bool status) {
-	mConfig->setInt(UiSection, "chat_enabled", status);
+	mConfig->setInt(AppSection, "chat_enabled", status);
 	emit chatEnabledChanged(status);
+}
+
+bool SettingsModel::getSecureChatEnabled () const {
+	return !!mConfig->getInt(AppSection, "secure_chat_enabled", 1);
+}
+
+void SettingsModel::setSecureChatEnabled (bool status) {
+	mConfig->setInt(AppSection, "secure_chat_enabled", status);
+	emit secureChatEnabledChanged(status);
 }
 
 // -----------------------------------------------------------------------------

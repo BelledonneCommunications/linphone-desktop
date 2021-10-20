@@ -197,7 +197,8 @@ void CoreHandlers::onMessageReceived (
 		// 1. Do not notify if chat is not activated.
 		CoreManager *coreManager = CoreManager::getInstance();
 		SettingsModel *settingsModel = coreManager->getSettingsModel();
-		if (!settingsModel->getChatEnabled())
+		if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getChatEnabled()
+			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
 			return;
 		
 		// 2. Notify with Notification popup.

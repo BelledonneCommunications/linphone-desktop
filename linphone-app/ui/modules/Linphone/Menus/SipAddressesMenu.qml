@@ -18,16 +18,16 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  function open () {
+  function open (isSecure) {
     var length = sipAddresses.length
     if (!length) {
       return
     }
 
     if (length === 1) {
-      return sipAddressesMenu.sipAddressClicked(sipAddresses[0])
+      return sipAddressesMenu.sipAddressClicked(sipAddresses[0], isSecure)
     }
-
+	menu.isSecure = isSecure
     menu.open()
   }
 
@@ -41,7 +41,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  signal sipAddressClicked (string sipAddress)
+  signal sipAddressClicked (string sipAddress, bool isSecure)
 
   // ---------------------------------------------------------------------------
 
@@ -51,6 +51,7 @@ Item {
 
   DropDownDynamicMenu {
     id: menu
+    property bool isSecure : false
 
     parent: sipAddressesMenu.parent
 
@@ -104,7 +105,7 @@ Item {
 
           onClicked: {
             menu.close()
-            sipAddressesMenu.sipAddressClicked($sipAddress)
+            sipAddressesMenu.sipAddressClicked($sipAddress, menu.isSecure)
           }
         }
       }

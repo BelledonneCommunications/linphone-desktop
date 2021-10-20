@@ -264,7 +264,7 @@ ColumnLayout  {
 					}
 					ActionButton {
 						icon: 'chat'
-						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+						visible: SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 1)
 						Icon{
@@ -415,7 +415,7 @@ ColumnLayout  {
 		bottomWidth: ConversationStyle.filters.border.bottomWidth
 		color: ConversationStyle.filters.backgroundColor
 		topWidth: ConversationStyle.filters.border.topWidth
-		visible: SettingsModel.chatEnabled
+		visible: !chatRoomModel.haveEncryption && SettingsModel.chatEnabled || chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled
 		
 		ExclusiveButtons {
 			id: filterButtons
@@ -515,7 +515,8 @@ ColumnLayout  {
 			id: chatRoomProxyModel
 			
 			Component.onCompleted: {
-				if (!SettingsModel.chatEnabled) {
+				if ( (!chatRoomModel.haveEncryption && !SettingsModel.chatEnabled)
+						|| (chatRoomModel.haveEncryption && !SettingsModel.secureChatEnabled) ) {
 					setEntryTypeFilter(ChatRoomModel.CallEntry)
 				}
 			}
