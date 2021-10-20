@@ -578,12 +578,10 @@ void SipAddressesModel::initSipAddresses () {
 }
 
 void SipAddressesModel::initSipAddressesFromChat () {
-  
   for (const auto &chatRoom : CoreManager::getInstance()->getCore()->getChatRooms()) {
-    list<shared_ptr<linphone::ChatMessage>> history(chatRoom->getHistory(1));
-    if (history.empty())
-      continue;
-
+		auto lastMessage = chatRoom->getLastMessageInHistory();
+		if( !lastMessage)
+			continue;
     QString peerAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly())));
     QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())));
 
@@ -591,7 +589,7 @@ void SipAddressesModel::initSipAddressesFromChat () {
       chatRoom->getUnreadMessagesCount(),
       CoreManager::getInstance()->getMissedCallCount(peerAddress, localAddress),
       false,
-      QDateTime::fromMSecsSinceEpoch(history.back()->getTime() * 1000)
+      QDateTime::fromMSecsSinceEpoch(lastMessage->getTime() * 1000)
     };
   }
 }
