@@ -15,7 +15,8 @@ echo "dmg processed. Checking UUID"
 request_uuid="$("/usr/libexec/PlistBuddy" -c "Print notarization-upload:RequestUUID"  notarize_result.plist)"
 echo "Notarization UUID: ${request_uuid}"
 #Get status from upload
-tryCount=0
+declare -i tryCount=0
+declare -i maxCount=4
 for (( ; ; ))
 do
     echo "Getting notarization status"
@@ -23,7 +24,7 @@ do
 	xcrun_result=$?
 	if [ "${xcrun_result}" != "0" ]
 	then
-		if [ "${trycount}" -lt 4 ]
+		if [ "$trycount" -lt "$maxCount" ]
 		then
 			tryCount=$((tryCount+1))
 			sleep 60
