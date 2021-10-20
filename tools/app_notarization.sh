@@ -24,9 +24,9 @@ do
 	xcrun_result=$?
 	if [ "${xcrun_result}" != "0" ]
 	then
-		if [ "$trycount" -lt "$maxCount" ]
+		if [ "$tryCount" -lt "$maxCount" ]
 		then
-			tryCount=$((tryCount+1))
+			tryCount=$((tryCount + 1))
 			sleep 60
 			continue
 		else
