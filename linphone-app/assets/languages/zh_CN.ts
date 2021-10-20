@@ -748,6 +748,11 @@
         <source>tooltipShowConversation</source>
         <translation>显示对话</translation>
     </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
+        <translation type="unfinished">您需要在帐户设置中设置会议 URI 以创建基于会议的聊天室。</translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>

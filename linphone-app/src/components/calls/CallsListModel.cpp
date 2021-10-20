@@ -223,8 +223,7 @@ ChatRoomModel* CallsListModel::launchSecureChat (const QString &sipAddress) cons
 	params->enableEncryption(true);
 	
 	params->setSubject("Dummy Subject");
-	params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
-	params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
+	params->enableEncryption(true);
 	
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
 	if( chatRoom != nullptr){
@@ -293,8 +292,7 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	params->enableEncryption(true);
 	
 	params->setSubject(Utils::appStringToCoreString(subject));
-	params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
-	params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
+	params->enableEncryption(true);
 	params->enableGroup(true);
 	
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
@@ -309,7 +307,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	QList< std::shared_ptr<linphone::Address>> admins;
 	std::shared_ptr<TimelineModel> timeline;
 	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
-	qWarning() << "ChatRoom creation of " << subject << " at " << securityLevel << " security and with " << participants;
+	qInfo() << "ChatRoom creation of " << subject << " at " << securityLevel << " security and with " << participants;
 	
 	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
 	std::list <shared_ptr<linphone::Address> > chatRoomParticipants;
@@ -333,8 +331,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	params->enableEncryption(securityLevel>0);
 	
 	if( securityLevel>0){
-		params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
-		params->setEncryptionBackend(linphone::ChatRoomEncryptionBackend::Lime);
+		params->enableEncryption(true);
 	}else
 		params->setBackend(linphone::ChatRoomBackend::Basic);
 	params->enableGroup( subject!="" );

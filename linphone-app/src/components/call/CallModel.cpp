@@ -116,9 +116,41 @@ ContactModel *CallModel::getContactModel() const{
 }
 
 ChatRoomModel * CallModel::getChatRoomModel() const{
-	if(mCall->getCallLog()->getCallId() != "")
+	if(mCall->getCallLog()->getCallId() != "") {
+		auto currentParams = mCall->getCurrentParams();
+		bool isEncrypted = currentParams->getMediaEncryption() != linphone::MediaEncryption::None;
+		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
+		
+		if( mCall->getChatRoom() && (settingsModel->getSecureChatEnabled() && 
+			(!settingsModel->getChatEnabled() || (settingsModel->getChatEnabled() && isEncrypted))
+			)){
+			std::shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+			std::shared_ptr<const linphone::ChatRoomParams> dbParams = mCall->getChatRoom()->getCurrentParams();
+			std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+			auto callLog = mCall->getCallLog();
+			auto callLocalAddress = callLog->getLocalAddress();
+			std::list<std::shared_ptr<linphone::Address>> participants;
+			std::shared_ptr<linphone::ChatRoom> chatRoom;
+// Copy parameters			
+			params->setBackend(dbParams->getBackend());
+			params->setEncryptionBackend(dbParams->getEncryptionBackend());
+			params->enableEncryption(dbParams->encryptionEnabled());
+			params->enableGroup(dbParams->groupEnabled());
+			params->enableRtt(dbParams->rttEnabled());
+			params->setSubject(dbParams->getSubject());
+			params->enableEncryption(true);
+			std::list<std::shared_ptr<linphone::Participant>> chatRoomParticipants = mCall->getChatRoom()->getParticipants();
+			for(auto p : chatRoomParticipants){
+				participants.push_back(p->getAddress()->clone());
+			}
+			chatRoom = core->searchChatRoom(params, callLocalAddress
+											 , nullptr
+											 , participants);
+			if(chatRoom)
+				return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, true).get();
+		}
 		return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(mCall->getChatRoom(), true).get();
-	else
+	}else
 		return nullptr;
 }
 

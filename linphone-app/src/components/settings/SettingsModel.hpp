@@ -104,6 +104,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool muteMicrophoneEnabled READ getMuteMicrophoneEnabled WRITE setMuteMicrophoneEnabled NOTIFY muteMicrophoneEnabledChanged)
 	
 	Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged)
+	Q_PROPERTY(bool secureChatEnabled READ getSecureChatEnabled WRITE setSecureChatEnabled NOTIFY secureChatEnabledChanged)
 	Q_PROPERTY(bool hideEmptyChatRooms READ getHideEmptyChatRooms WRITE setHideEmptyChatRooms NOTIFY hideEmptyChatRoomsChanged)
 	
 	Q_PROPERTY(bool waitRegistrationForCall READ getWaitRegistrationForCall WRITE setWaitRegistrationForCall NOTIFY waitRegistrationForCallChanged)// Allow call only if the current proxy has been registered
@@ -328,6 +329,9 @@ public:
 	bool getChatEnabled () const;
 	void setChatEnabled (bool status);
 	
+	bool getSecureChatEnabled () const;
+	void setSecureChatEnabled (bool status);
+	
 	bool getHideEmptyChatRooms() const;
 	void setHideEmptyChatRooms(const bool& data);
 	
@@ -487,6 +491,7 @@ public:
 	bool getIsInCall() const;
 	
 	static const std::string UiSection;
+	static const std::string AppSection;
 	static const std::string ContactsSection;
 	
 	// ===========================================================================
@@ -555,6 +560,7 @@ signals:
 	void muteMicrophoneEnabledChanged (bool status);
 	
 	void chatEnabledChanged (bool status);
+	void secureChatEnabledChanged (bool status);
 	void hideEmptyChatRoomsChanged (bool status);
 	void waitRegistrationForCallChanged (bool status);
 	

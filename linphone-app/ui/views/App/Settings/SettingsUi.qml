@@ -107,6 +107,7 @@ TabContainer {
 			visible: SettingsModel.videoSupported ||
 					 SettingsModel.callRecorderEnabled ||
 					 SettingsModel.chatEnabled ||
+					 SettingsModel.secureChatEnabled ||
 					 SettingsModel.developerSettingsEnabled
 			width: parent.width
 			
@@ -141,7 +142,7 @@ TabContainer {
 			}
 			
 			FormLine {
-				visible: SettingsModel.chatEnabled || SettingsModel.developerSettingsEnabled
+				visible: SettingsModel.chatEnabled || SettingsModel.secureChatEnabled || SettingsModel.developerSettingsEnabled
 				
 				FormGroup {
 					label: qsTr('downloadLabel')

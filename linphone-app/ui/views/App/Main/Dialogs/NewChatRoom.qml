@@ -119,15 +119,20 @@ DialogPlus {
 							anchors.verticalCenter: parent.verticalCenter
 							width:50
 							enabled:true
+							checked: !SettingsModel.chatEnabled && SettingsModel.secureChatEnabled 
+							
 							onClicked: {
-								if(!checked){	// Remove all participants that have not the capabilities
-									var participants = selectedParticipants.getParticipants()
-									for(var index in participants){
-										if(!smartSearchBar.isUsable(participants[index].sipAddress))
-											participantView.removeParticipant(participants[index])
+								var newCheck = checked
+								if(! ( SettingsModel.chatEnabled && !checked || SettingsModel.secureChatEnabled && checked))
+										newCheck = !checked;
+									if(newCheck){	// Remove all participants that have not the capabilities
+										var participants = selectedParticipants.getParticipants()
+										for(var index in participants){
+											if(!smartSearchBar.isUsable(participants[index].sipAddress))
+												participantView.removeParticipant(participants[index])
+										}
 									}
-								}
-								checked = !checked
+								checked = newCheck;
 							}
 							indicatorStyle: SwitchStyle.aux
 						}

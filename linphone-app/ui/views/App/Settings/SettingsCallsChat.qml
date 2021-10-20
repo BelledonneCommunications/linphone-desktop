@@ -216,7 +216,7 @@ TabContainer {
 		
 		Form {
 			title: qsTr('chatTitle')
-			visible: SettingsModel.chatEnabled || SettingsModel.developerSettingsEnabled
+			visible: SettingsModel.chatEnabled || SettingsModel.secureChatEnabled || SettingsModel.developerSettingsEnabled
 			width: parent.width
 			
 			FormLine {
@@ -231,7 +231,16 @@ TabContainer {
 						onClicked: SettingsModel.chatEnabled = !checked
 					}
 				}
-				
+				FormGroup {
+					label: 'Activate secure chats'
+					
+					Switch {
+						checked: SettingsModel.secureChatEnabled
+						
+						onClicked: SettingsModel.secureChatEnabled = !checked
+					}
+				}
+								
 				FormGroup {
 					label: qsTr('conferenceEnabledLabel')
 					

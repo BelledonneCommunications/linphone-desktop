@@ -8,6 +8,7 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 
 import UtilsCpp 1.0
+import LinphoneEnums 1.0
 
 import App.Styles 1.0
 
@@ -147,17 +148,38 @@ ColumnLayout  {
 				visible: _contact != null
 				
 				ActionBar {
+					id: actionBar
 					anchors.verticalCenter: parent.verticalCenter
 					iconSize: ContactEditStyle.bar.actions.history.iconSize
 					
 					ActionButton {
-						icon: 'history'
-						
-						onClicked: sipAddressesMenu.open()
-						
-						TooltipArea {
-							isClickable: false
-							text: qsTr('tooltipShowConversation')
+									icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+									visible: SettingsModel.chatEnabled
+									onClicked: sipAddressesMenu.open(false)
+									TooltipArea {
+										isClickable: false
+										text: qsTr('tooltipShowConversation')
+									}
+					}
+								
+					ActionButton {
+						icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
+						visible: SettingsModel.secureChatEnabled && _contact && _contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
+						enabled: AccountSettingsModel.conferenceURI != ''
+						Icon{
+							icon:'secure_level_1'
+							iconSize:15
+							anchors.right:parent.right
+							anchors.top:parent.top
+							anchors.topMargin: -3
+						}
+						onClicked: {sipAddressesMenu.open(true)}
+						TooltipArea{
+							maxWidth: actionBar.width
+							visible: AccountSettingsModel.conferenceURI == ''
+							//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
+							text: '- ' + qsTr('missingConferenceURI') + '\n'
+							
 						}
 					}
 				}
@@ -196,7 +218,7 @@ ColumnLayout  {
 		sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
 				
 		onSipAddressClicked: {
-			var entry = CallsListModel.createChatRoom( "", false, [sipAddress], false )
+			var entry = CallsListModel.createChatRoom( "", isSecure, [sipAddress], false )
 			if(entry){
 				window.setView('Conversation', {
 									chatRoomModel:entry.chatRoomModel

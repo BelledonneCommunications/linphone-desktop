@@ -352,8 +352,22 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		bool found = false;
 		auto callLog = call->getCallLog();
 		auto callLocalAddress = callLog->getLocalAddress();
+		auto currentParams = call->getCurrentParams();
+		bool isEncrypted = currentParams->getMediaEncryption() != linphone::MediaEncryption::None;
+		bool createSecureChatRoom = false;
+		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
+		
+		
+		
+		if( settingsModel->getSecureChatEnabled() && 
+			(!settingsModel->getChatEnabled() || (settingsModel->getChatEnabled() && isEncrypted))
+			){
+			params->enableEncryption(true);
+			createSecureChatRoom = true;
+		}
+		participants.push_back(callLog->getRemoteAddress()->clone());
 		auto chatRoom = core->searchChatRoom(params, callLocalAddress
-											 , callLog->getRemoteAddress()
+											 , nullptr//callLog->getRemoteAddress()
 											 , participants);
 		if(chatRoom){
 			for(auto timeline : mTimelines){
@@ -370,7 +384,7 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 			auto remoteAddress = callLog->getRemoteAddress()->clone();
 			remoteAddress->clean();
 			participants << Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
-			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", 0,  participants, isOutgoing);
+			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", (createSecureChatRoom?1:0),  participants, isOutgoing);
 		}
 }
 

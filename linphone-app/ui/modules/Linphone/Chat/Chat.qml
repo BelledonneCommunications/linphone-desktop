@@ -270,7 +270,6 @@ Rectangle {
 					}
 				}
 			}
-			
 			footer: Item{
 						Text {
 							property var composers : container.proxyModel.composers
@@ -278,7 +277,7 @@ Rectangle {
 							font.pointSize: ChatStyle.composingText.pointSize
 							height: visible ? undefined : 0
 							leftPadding: ChatStyle.composingText.leftPadding
-							visible: composers.length > 0 && SettingsModel.chatEnabled
+							visible: composers.length > 0 && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.chatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 							wrapMode: Text.Wrap
 							//: '%1 is typing...' indicate that someone is composing in chat
 							text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
@@ -359,7 +358,8 @@ Rectangle {
 			
 			borderColor: ChatStyle.sendArea.border.color
 			topWidth: ChatStyle.sendArea.border.width
-			visible: SettingsModel.chatEnabled && proxyModel.chatRoomModel && !proxyModel.chatRoomModel.hasBeenLeft
+			visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.hasBeenLeft && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.chatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
+						
 			
 			DroppableTextArea {
 				id: textArea

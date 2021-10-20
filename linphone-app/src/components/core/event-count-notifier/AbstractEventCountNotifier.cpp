@@ -53,6 +53,10 @@ AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObje
     coreManager->getSettingsModel(), &SettingsModel::chatEnabledChanged,
     this, &AbstractEventCountNotifier::internalnotifyEventCount
   );
+  QObject::connect(
+    coreManager->getSettingsModel(), &SettingsModel::secureChatEnabledChanged,
+    this, &AbstractEventCountNotifier::internalnotifyEventCount
+  );
   /*
   QObject::connect(
     coreManager->getCallsListModel(), &CallsListModel::callMissed,
@@ -72,7 +76,7 @@ void AbstractEventCountNotifier::internalnotifyEventCount () {
   qInfo() << QStringLiteral("Notify event count: %1.").arg(n);
   n = n > 99 ? 99 : n;
 
-  notifyEventCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() ? n : 0);
+  notifyEventCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() || CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled()? n : 0);
   emit eventCountChanged();
 }
 

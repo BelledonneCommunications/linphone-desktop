@@ -243,7 +243,7 @@ Rectangle {
 								 ? TimelineStyle.contact.backgroundColor.a
 								 : TimelineStyle.contact.backgroundColor.b
 								 )
-					displayUnreadMessageCount: SettingsModel.chatEnabled
+					displayUnreadMessageCount: SettingsModel.chatEnabled || SettingsModel.secureChatEnabled
 					entry: modelData.chatRoomModel
 					sipAddressColor: isSelected
 									 ? TimelineStyle.contact.sipAddress.color.selected
