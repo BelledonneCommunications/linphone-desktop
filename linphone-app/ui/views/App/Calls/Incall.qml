@@ -421,7 +421,7 @@ Rectangle {
 				}
 				
 				ActionButton {
-					icon: (SettingsModel.chatEnabled || SettingsModel.secureChatEnabled) && SettingsModel.showStartChatButton ? 'chat' : 'history'
+					icon: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && SettingsModel.showStartChatButton ? 'chat' : 'history'
 					
 					onClicked: {
 						if (window.chatIsOpened) {

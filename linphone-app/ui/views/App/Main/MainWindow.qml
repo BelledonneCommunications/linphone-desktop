@@ -201,7 +201,7 @@ ApplicationWindow {
 						//: 'Open Conference' : Tooltip to illustrate a button
 						tooltipText : qsTr('newChatRoom')
 						iconSize: MainWindowStyle.newConferenceSize
-						visible: SettingsModel.chatEnabled || SettingsModel.secureChatEnabled 
+						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled 
 						//autoIcon: true
 						onClicked: {
 							window.detachVirtualWindow()

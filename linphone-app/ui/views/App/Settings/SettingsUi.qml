@@ -106,7 +106,7 @@ TabContainer {
 			title: qsTr('pathsTitle')
 			visible: SettingsModel.videoSupported ||
 					 SettingsModel.callRecorderEnabled ||
-					 SettingsModel.chatEnabled ||
+					 SettingsModel.standardChatEnabled ||
 					 SettingsModel.secureChatEnabled ||
 					 SettingsModel.developerSettingsEnabled
 			width: parent.width
@@ -142,7 +142,7 @@ TabContainer {
 			}
 			
 			FormLine {
-				visible: SettingsModel.chatEnabled || SettingsModel.secureChatEnabled || SettingsModel.developerSettingsEnabled
+				visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled || SettingsModel.developerSettingsEnabled
 				
 				FormGroup {
 					label: qsTr('downloadLabel')

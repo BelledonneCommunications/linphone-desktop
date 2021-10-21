@@ -258,7 +258,7 @@ ColumnLayout  {
 					}
 					ActionButton {
 						icon: 'chat'
-						visible: SettingsModel.chatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel != 1
+						visible: SettingsModel.standardChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel != 1
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 0)
 					}
@@ -415,7 +415,7 @@ ColumnLayout  {
 		bottomWidth: ConversationStyle.filters.border.bottomWidth
 		color: ConversationStyle.filters.backgroundColor
 		topWidth: ConversationStyle.filters.border.topWidth
-		visible: !chatRoomModel.haveEncryption && SettingsModel.chatEnabled || chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled
+		visible: !chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled
 		
 		ExclusiveButtons {
 			id: filterButtons
@@ -515,7 +515,7 @@ ColumnLayout  {
 			id: chatRoomProxyModel
 			
 			Component.onCompleted: {
-				if ( (!chatRoomModel.haveEncryption && !SettingsModel.chatEnabled)
+				if ( (!chatRoomModel.haveEncryption && !SettingsModel.standardChatEnabled)
 						|| (chatRoomModel.haveEncryption && !SettingsModel.secureChatEnabled) ) {
 					setEntryTypeFilter(ChatRoomModel.CallEntry)
 				}
