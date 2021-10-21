@@ -2,9 +2,8 @@
 <svg
    width="8"
    height="8"
-   viewBox="0 0 8 8"
    version="1.1"
-   id="svg16"
+   id="svg8"
    sodipodi:docname="led_green.svg"
    inkscape:version="1.1 (c68e22c387, 2021-05-23)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -12,9 +11,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs20" />
+     id="defs12" />
   <sodipodi:namedview
-     id="namedview18"
+     id="namedview10"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -26,36 +25,23 @@
      inkscape:cx="3.9948454"
      inkscape:cy="4"
      inkscape:window-width="1920"
-     inkscape:window-height="1043"
+     inkscape:window-height="1131"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg16" />
+     inkscape:current-layer="g6" />
   <g
      fill="none"
      fill-rule="evenodd"
-     id="g14">
-    <g
-       id="g12">
-      <g
-         id="g10">
-        <g
-           id="g8">
-          <g
-             id="g6">
-            <path
-               fill="#9ECD1D"
-               d="M4 8C1.79 8 0 6.21 0 4c0-2.209 1.79-4 4-4 2.209 0 4 1.791 4 4 0 2.21-1.791 4-4 4z"
-               transform="translate(-32.000000, -327.000000) translate(0.000000, 200.000000) translate(0.000000, 90.000000) translate(32.000000, 37.000000)"
-               id="path2" />
-            <path
-               stroke="#FFF"
-               d="M4 .5c.966 0 1.841.392 2.475 1.025C7.108 2.16 7.5 3.034 7.5 4c0 .967-.392 1.842-1.025 2.475C5.84 7.108 4.966 7.5 4 7.5c-.967 0-1.842-.392-2.475-1.025C.892 5.842.5 4.967.5 4c0-.966.392-1.842 1.025-2.475C2.158.892 3.033.5 4 .5z"
-               transform="translate(-32.000000, -327.000000) translate(0.000000, 200.000000) translate(0.000000, 90.000000) translate(32.000000, 37.000000)"
-               id="path4" />
-          </g>
-        </g>
-      </g>
-    </g>
+     id="g6">
+    <path
+       d="m 3.9893579,7.0334297 a 3.018311,3.0309466 0 1 1 0,-6.06189295 3.018311,3.0309466 0 0 1 0,6.06189295 z"
+       fill="#9ecd1d"
+       id="path2"
+       style="stroke-width:0.756155" />
+    <path
+       d="M4 .5a3.49 3.49 0 0 1 2.475 1.025A3.489 3.489 0 0 1 7.5 4c0 .967-.392 1.842-1.025 2.475A3.49 3.49 0 0 1 4 7.5a3.489 3.489 0 0 1-2.475-1.025A3.49 3.49 0 0 1 .5 4a3.49 3.49 0 0 1 1.025-2.475A3.489 3.489 0 0 1 4 .5z"
+       stroke="#FFF"
+       id="path4" />
   </g>
 </svg>

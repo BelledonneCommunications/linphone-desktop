@@ -1621,6 +1621,24 @@
     </message>
 </context>
 <context>
+    <name>QObject</name>
+    <message>
+        <source>LinphoneEnums_TunnelModeEnable</source>
+        <extracomment>&apos;Enable&apos; : One word for button action to enable tunnel mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LinphoneEnums_TunnelModeDisable</source>
+        <extracomment>&apos;Disable&apos; : One word for button action to disable tunnel mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>LinphoneEnums_TunnelModeAuto</source>
+        <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
@@ -2323,6 +2341,119 @@
     </message>
 </context>
 <context>
+    <name>SettingsTunnel</name>
+    <message>
+        <source>tunnelStatus</source>
+        <extracomment>&apos;Tunnel Status&apos; : Field title to introduce the status of the tunnel (activated or not)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tunnelDomain</source>
+        <extracomment>&apos;Domain&apos; : Field title of a textfield to set domain.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tunnelUsername</source>
+        <extracomment>&apos;Username&apos; : Field title of a textfield to set username.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tunnelSIP</source>
+        <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <extracomment>&apos;Cancel&apos; : Button to cancel the action.</extracomment>
+        <translation type="unfinished">ОТМЕНА</translation>
+    </message>
+    <message>
+        <source>setHTTPProxy</source>
+        <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>proxyHttpHost</source>
+        <extracomment>&apos;Host&apos; : Placeholder to set hostname.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>proxyHttpPort</source>
+        <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>proxyHttpUsername</source>
+        <extracomment>&apos;Username&apos; : Placeholder to set username.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>proxyHttpPassword</source>
+        <extracomment>&apos;Password&apos; : Placeholder to set password.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>proxyHttpApply</source>
+        <extracomment>&apos;Apply&apos; : Button to set proxy from changes.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverMode</source>
+        <extracomment>&apos;Mode&apos; : Field title on form to set tunnel mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverDualMode</source>
+        <extracomment>&apos;Dual mode&apos; : Field title on form to set dual mode of the tunnel.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverTitle</source>
+        <extracomment>&apos;Server&apos; : Title form to set a server</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverHostname</source>
+        <extracomment>&apos;Hostname&apos; : Field title on form to set hostname.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverPort</source>
+        <extracomment>&apos;Port&apos; : Field title on form to set port.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverDualHostname</source>
+        <extracomment>&apos;Dual hostname URL&apos; : Field title on form to set the second hostname for dual configuration.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverDualPort</source>
+        <extracomment>&apos;Dual port&apos; : Field title on form to set the second port for the dual configuration.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverRemoteUDPMirrorPort</source>
+        <extracomment>&apos;Remote UDP mirror port&apos; : Field title on form to set the remote UDP mirror port.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>serverDelay</source>
+        <extracomment>&apos;Delay&apos; : Field title on form to set the delay of the tunnel.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tunnelAddServer</source>
+        <extracomment>&apos;Add server&apos; : Button for adding a server</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tunnelApply</source>
+        <extracomment>&apos;Apply&apos; : Button to apply changes.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
@@ -2491,6 +2622,11 @@
     <message>
         <source>uiAdvanced</source>
         <translation>Дополнительные</translation>
+    </message>
+    <message>
+        <source>tunnelTab</source>
+        <extracomment>&apos;Tunnel&apos; : Tab title for tunnel section in settings.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -189,6 +189,10 @@ set(SOURCES
     src/components/timeline/TimelineModel.cpp
     src/components/timeline/TimelineListModel.cpp
     src/components/timeline/TimelineProxyModel.cpp
+    src/components/tunnel/TunnelModel.cpp
+    src/components/tunnel/TunnelConfigModel.cpp
+    src/components/tunnel/TunnelConfigListModel.cpp    
+    src/components/tunnel/TunnelConfigProxyModel.cpp
     src/components/url-handlers/UrlHandlers.cpp
     src/utils/Constants.cpp
     src/utils/LinphoneEnums.cpp
@@ -291,6 +295,10 @@ set(HEADERS
     src/components/timeline/TimelineModel.hpp
     src/components/timeline/TimelineListModel.hpp
     src/components/timeline/TimelineProxyModel.hpp
+    src/components/tunnel/TunnelModel.hpp
+    src/components/tunnel/TunnelConfigModel.hpp
+    src/components/tunnel/TunnelConfigListModel.hpp
+    src/components/tunnel/TunnelConfigProxyModel.hpp
     src/components/url-handlers/UrlHandlers.hpp
     src/utils/Constants.hpp
     src/utils/LinphoneEnums.hpp

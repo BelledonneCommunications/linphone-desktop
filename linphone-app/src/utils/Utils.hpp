@@ -57,6 +57,7 @@ public:
 	Q_INVOKABLE static QString toTimeString(QDateTime date);
 	Q_INVOKABLE static QString toDateString(QDateTime date);
 	Q_INVOKABLE static QString getDisplayName(const QString& address);
+	Q_INVOKABLE static QString toString(const LinphoneEnums::TunnelMode& mode);
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {

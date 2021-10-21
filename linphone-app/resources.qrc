@@ -534,6 +534,7 @@
 		<file>ui/views/App/Settings/SettingsNetwork.qml</file>
 		<file>ui/views/App/Settings/SettingsSipAccounts.js</file>
 		<file>ui/views/App/Settings/SettingsSipAccounts.qml</file>
+		<file>ui/views/App/Settings/SettingsTunnel.qml</file>
 		<file>ui/views/App/Settings/SettingsUi.js</file>
 		<file>ui/views/App/Settings/SettingsUi.qml</file>
 		<file>ui/views/App/Settings/SettingsVideo.js</file>

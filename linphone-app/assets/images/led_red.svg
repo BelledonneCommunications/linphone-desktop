@@ -25,19 +25,20 @@
      inkscape:cx="3.9948454"
      inkscape:cy="4"
      inkscape:window-width="1920"
-     inkscape:window-height="1043"
+     inkscape:window-height="1131"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg8" />
+     inkscape:current-layer="g6" />
   <g
      fill="none"
      fill-rule="evenodd"
      id="g6">
     <path
-       d="M4 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"
-       fill="#DC4100"
-       id="path2" />
+       d="m 4.0111984,7.0605044 a 3.0433256,3.053726 0 1 1 0,-6.10745189 3.0433256,3.053726 0 0 1 0,6.10745189 z"
+       fill="#dc4100"
+       id="path2"
+       style="stroke-width:0.76213" />
     <path
        d="M4 .5a3.49 3.49 0 0 1 2.475 1.025A3.489 3.489 0 0 1 7.5 4c0 .967-.392 1.842-1.025 2.475A3.49 3.49 0 0 1 4 7.5a3.489 3.489 0 0 1-2.475-1.025A3.49 3.49 0 0 1 .5 4a3.49 3.49 0 0 1 1.025-2.475A3.489 3.489 0 0 1 4 .5z"
        stroke="#FFF"
