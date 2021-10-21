@@ -11,6 +11,8 @@ Column {
   property int orientation: Qt.Horizontal
   property bool addButton : false
   signal addButtonClicked;
+  property bool removeButton : false
+  signal removeButtonClicked;
 
   // ---------------------------------------------------------------------------
 
@@ -42,6 +44,14 @@ Column {
 		 iconSize:38
 		 scale:0.8
 		 onClicked:addButtonClicked()
+	 }
+	 ActionButton {
+		 visible:removeButton
+		 anchors.verticalCenter: parent.verticalCenter
+		 icon: 'delete'
+		 iconSize:38
+		 scale:0.8
+		 onClicked:removeButtonClicked()
 	 }
     }
 

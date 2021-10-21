@@ -319,7 +319,7 @@ TabContainer {
 
         Form {
             title: qsTr('developerSettingsTitle')
-            visible: SettingsModel.developerSettingsEnabled
+            visible: SettingsModel.isDeveloperSettingsAvailable()
             width: parent.width
             
             FormLine {

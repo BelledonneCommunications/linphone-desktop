@@ -97,6 +97,22 @@ QString Utils::getDisplayName(const QString& address){
 	return getDisplayName(interpretUrl(address));
 }
 
+QString Utils::toString(const LinphoneEnums::TunnelMode& mode){
+	switch(mode){
+	case LinphoneEnums::TunnelMode::TunnelModeEnable :
+		//: 'Enable' : One word for button action to enable tunnel mode.
+		return QObject::tr("LinphoneEnums_TunnelModeEnable");
+	case LinphoneEnums::TunnelMode::TunnelModeDisable :
+		//: 'Disable' : One word for button action to disable tunnel mode.
+		return QObject::tr("LinphoneEnums_TunnelModeDisable");
+	case LinphoneEnums::TunnelMode::TunnelModeAuto :
+		//: 'Auto' : One word for button action to set the auto tunnel mode.
+		return QObject::tr("LinphoneEnums_TunnelModeAuto");
+	default:
+		return "";
+	}
+}
+
 QImage Utils::getImage(const QString &pUri) {
 	QImage image(pUri);
 	if(image.isNull()){// Try to determine format from headers instead of using suffix

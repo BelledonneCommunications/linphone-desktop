@@ -30,11 +30,13 @@
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/tunnel/TunnelModel.hpp"
 #include "include/LinphoneApp/PluginNetworkHelper.hpp"
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "SettingsModel.hpp"
+
 
 // =============================================================================
 
@@ -1144,6 +1146,16 @@ void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfi
 	mConfig->setString("sip", "rls_uri", "");
 }
 
+//------------------------------------------------------------------------------
+
+bool SettingsModel::tunnelAvailable() const{
+	return CoreManager::getInstance()->getCore()->tunnelAvailable();
+}
+
+TunnelModel* SettingsModel::getTunnel() const{
+	return new TunnelModel(CoreManager::getInstance()->getCore()->getTunnel());
+}
+
 // =============================================================================
 // UI.
 // =============================================================================
@@ -1343,6 +1355,13 @@ bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) 
 }
 
 // ---------------------------------------------------------------------------
+bool SettingsModel::isDeveloperSettingsAvailable() const {
+#ifdef DEBUG
+	return true;
+#else
+	return false;
+#endif
+}
 bool SettingsModel::getDeveloperSettingsEnabled () const {
 #ifdef DEBUG
 	return !!mConfig->getInt(UiSection, "developer_settings", 0);

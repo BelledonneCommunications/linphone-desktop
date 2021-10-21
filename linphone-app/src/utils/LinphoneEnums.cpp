@@ -66,3 +66,10 @@ linphone::Call::Status LinphoneEnums::toLinphone(const LinphoneEnums::CallStatus
 LinphoneEnums::CallStatus LinphoneEnums::fromLinphone(const linphone::Call::Status& data){
 	return static_cast<LinphoneEnums::CallStatus>(data); 
 }
+
+linphone::Tunnel::Mode LinphoneEnums::toLinphone(const LinphoneEnums::TunnelMode& data){
+	return static_cast<linphone::Tunnel::Mode>(data);
+}
+LinphoneEnums::TunnelMode LinphoneEnums::fromLinphone(const linphone::Tunnel::Mode& data){
+	return static_cast<LinphoneEnums::TunnelMode>(data);
+}

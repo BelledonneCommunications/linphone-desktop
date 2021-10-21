@@ -115,7 +115,7 @@ public:
 		CallEntry,
 		NoticeEntry
 	};
-	Q_ENUM(EntryType);
+	Q_ENUM(EntryType)
 	
 	
 	//Q_PROPERTY(QString participants READ getParticipants NOTIFY participantsChanged);

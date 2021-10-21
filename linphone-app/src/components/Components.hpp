@@ -75,6 +75,10 @@
 #include "timeline/TimelineModel.hpp"
 #include "timeline/TimelineProxyModel.hpp"
 #include "timeline/TimelineListModel.hpp"
+#include "tunnel/TunnelModel.hpp"
+#include "tunnel/TunnelConfigModel.hpp"
+#include "tunnel/TunnelConfigListModel.hpp"
+#include "tunnel/TunnelConfigProxyModel.hpp"
 #include "url-handlers/UrlHandlers.hpp"
 
 #include "other/colors/ColorModel.hpp"

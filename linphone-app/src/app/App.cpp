@@ -636,9 +636,12 @@ void App::registerTypes () {
 	registerUncreatableType<HistoryModel>("HistoryModel");
 	registerUncreatableType<LdapModel>("LdapModel");
 	registerUncreatableType<SearchResultModel>("SearchResultModel");
-	registerUncreatableType<SipAddressObserver>("SipAddressObserver");
+	registerUncreatableType<SipAddressObserver>("SipAddressObserver");	
 	registerUncreatableType<VcardModel>("VcardModel");
 	registerUncreatableType<TimelineModel>("TimelineModel");
+	registerUncreatableType<TunnelModel>("TunnelModel");
+	registerUncreatableType<TunnelConfigModel>("TunnelConfigModel");
+	registerUncreatableType<TunnelConfigProxyModel>("TunnelConfigProxyModel");
 	registerUncreatableType<ParticipantModel>("ParticipantModel");
 	registerUncreatableType<ParticipantListModel>("ParticipantListModel");
 	registerUncreatableType<ParticipantDeviceModel>("ParticipantDeviceModel");

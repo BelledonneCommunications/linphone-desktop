@@ -106,13 +106,21 @@ enum CallStatus {
 		CallStatusEarlyAborted = int(linphone::Call::Status::EarlyAborted),
 		CallStatusAcceptedElsewhere = int(linphone::Call::Status::AcceptedElsewhere),
 		CallStatusDeclinedElsewhere = int(linphone::Call::Status::DeclinedElsewhere)
-	};
+};
 Q_ENUM_NS(CallStatus)
 
 linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus& capability);
 LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status& capability);
 
+enum TunnelMode {
+		TunnelModeDisable = int(linphone::Tunnel::Mode::Disable),
+		TunnelModeEnable= int(linphone::Tunnel::Mode::Enable),
+		TunnelModeAuto = int(linphone::Tunnel::Mode::Auto)
+};
+Q_ENUM_NS(TunnelMode)
 
+linphone::Tunnel::Mode toLinphone(const LinphoneEnums::TunnelMode& mode);
+LinphoneEnums::TunnelMode fromLinphone(const linphone::Tunnel::Mode& mode);
 }
 
 Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)
@@ -120,5 +128,6 @@ Q_DECLARE_METATYPE(LinphoneEnums::FriendCapability)
 Q_DECLARE_METATYPE(LinphoneEnums::EventLogType)
 Q_DECLARE_METATYPE(LinphoneEnums::ChatMessageState)
 Q_DECLARE_METATYPE(LinphoneEnums::CallStatus)
+Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
 
 #endif

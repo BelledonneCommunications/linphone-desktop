@@ -31,6 +31,7 @@
 #include "components/contacts/ContactsImporterModel.hpp"
 
 // =============================================================================
+class TunnelModel;
 
 class SettingsModel : public QObject {
 	Q_OBJECT
@@ -430,6 +431,9 @@ public:
 	void configureRlsUri ();
 	void configureRlsUri (const std::shared_ptr<const linphone::ProxyConfig> &proxyConfig);
 	
+	Q_INVOKABLE bool tunnelAvailable() const;
+	Q_INVOKABLE TunnelModel * getTunnel() const;
+	
 	// UI. -----------------------------------------------------------------------
 	
 	QFont getTextMessageFont() const;
@@ -480,7 +484,7 @@ public:
 	static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
 	
 	// ---------------------------------------------------------------------------
-	
+	Q_INVOKABLE bool isDeveloperSettingsAvailable() const;
 	bool getDeveloperSettingsEnabled () const;
 	void setDeveloperSettingsEnabled (bool status);
 	
@@ -490,7 +494,6 @@ public:
 	
 	bool getIsInCall() const;
 	
-
 	bool isReadOnly(const std::string& section, const std::string& name) const;
 	std::string getEntryFullName(const std::string& section, const std::string& name) const;	// Return the full name of the entry : 'name/readonly' or 'name'
 	
@@ -611,7 +614,7 @@ signals:
 	void dscpVideoChanged (int dscp);
 	
 	void rlsUriEnabledChanged (bool status);
-	
+		
 	// UI. -----------------------------------------------------------------------
 	
 	void textMessageFontChanged(const QFont& font);
