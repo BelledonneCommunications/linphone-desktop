@@ -11,14 +11,16 @@ RUN sudo apt-get update && sudo apt-get install -y pigz
 #xkbcommon is needed for special keyboard features
 #flite1-dev, libspeechd-dev speech-dispatcher are needed for text to speech
 #libfontconfig1-dev is needed to load correct fonts (support of ideograms, etc..)
-RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev qdbus-qt5 libqt5dbus5 libdbus-1-dev libdbus-glib-1-dev libatspi2.0-0 libatspi2.0-dev
+#needed for xcb : libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxkbcommon-x11-dev
+RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libx11-xcb* libxcb* qdbus-qt5 libqt5dbus5 libdbus-1-dev libdbus-glib-1-dev libatspi2.0-0 libatspi2.0-dev
+RUN sudo apt-get update && sudo apt-get install -y libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev 
 
 #needed fot qt to find dbus
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
 # Build qt5.12.5
-RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
+RUN git clone -b fix/build_qt_5.12.11_to_fix_issues --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
     ./linphone-desktop/tools/build_qt_rpm && \
-    find "./linphone-desktop/rpm-linphone-qt-5.12.5/rpmbuild/RPMS/x86_64/" -iname "*.rpm" -exec sudo fakeroot alien -d {} + && \
+    find "./linphone-desktop/rpm-linphone-qt-5.12.11/rpmbuild/RPMS/x86_64/" -iname "*.rpm" -exec sudo fakeroot alien -d {} + && \
     find "." -maxdepth 1 -iname "*.deb" -exec sudo dpkg -i --force-overwrite {} + && \
     rm -rf ./linphone-desktop
 
