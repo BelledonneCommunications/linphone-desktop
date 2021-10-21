@@ -466,12 +466,12 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vágólapra másolva</translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A kijelölés a vágólapra másolva</translation>
     </message>
 </context>
 <context>
