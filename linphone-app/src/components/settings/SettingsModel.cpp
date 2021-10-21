@@ -41,7 +41,6 @@
 using namespace std;
 
 const string SettingsModel::UiSection("ui");
-const string SettingsModel::AppSection("app");
 const string SettingsModel::ContactsSection("contacts_import");
 
 SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
@@ -601,22 +600,24 @@ void SettingsModel::setMuteMicrophoneEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
-bool SettingsModel::getChatEnabled () const {
-	return !!mConfig->getInt(AppSection, "chat_enabled", 1);
+bool SettingsModel::getStandardChatEnabled () const {
+	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection,"standard_chat_enabled"), 1);
 }
 
-void SettingsModel::setChatEnabled (bool status) {
-	mConfig->setInt(AppSection, "chat_enabled", status);
-	emit chatEnabledChanged(status);
+void SettingsModel::setStandardChatEnabled (bool status) {
+	if(!isReadOnly(UiSection, "standard_chat_enabled"))
+		mConfig->setInt(UiSection, "standard_chat_enabled", status);
+	emit standardChatEnabledChanged(getStandardChatEnabled ());
 }
 
 bool SettingsModel::getSecureChatEnabled () const {
-	return !!mConfig->getInt(AppSection, "secure_chat_enabled", 1);
+	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "secure_chat_enabled"), 1);
 }
 
 void SettingsModel::setSecureChatEnabled (bool status) {
-	mConfig->setInt(AppSection, "secure_chat_enabled", status);
-	emit secureChatEnabledChanged(status);
+	if(!isReadOnly(UiSection, "secure_chat_enabled"))
+		mConfig->setInt(UiSection, "secure_chat_enabled", status);
+	emit secureChatEnabledChanged(getSecureChatEnabled () );
 }
 
 // -----------------------------------------------------------------------------
@@ -790,8 +791,9 @@ bool SettingsModel::getContactsEnabled () const {
 }
 
 void SettingsModel::setContactsEnabled (bool status) {
-	mConfig->setInt(UiSection, "contacts_enabled", status);
-	emit contactsEnabledChanged(status);
+	if(!isReadOnly(UiSection, "contacts_enabled"))
+		mConfig->setInt(UiSection, "contacts_enabled", status);
+	emit contactsEnabledChanged(getContactsEnabled ());
 }
 
 // =============================================================================
@@ -1371,4 +1373,12 @@ void SettingsModel::handleEcCalibrationResult(linphone::EcCalibratorStatus statu
 }
 bool SettingsModel::getIsInCall() const {
 	return CoreManager::getInstance()->getCore()->getCallsNb() != 0;
+}
+
+bool SettingsModel::isReadOnly(const std::string& section, const std::string& name) const {
+	return mConfig->hasEntry(section, name+"/readonly");
+}
+
+std::string SettingsModel::getEntryFullName(const std::string& section, const std::string& name) const {
+	return isReadOnly(section, name)?name+"/readonly" : name;
 }

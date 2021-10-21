@@ -50,7 +50,7 @@ AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObje
     this, &AbstractEventCountNotifier::updateUnreadMessageCount
   );
   QObject::connect(
-    coreManager->getSettingsModel(), &SettingsModel::chatEnabledChanged,
+    coreManager->getSettingsModel(), &SettingsModel::standardChatEnabledChanged,
     this, &AbstractEventCountNotifier::internalnotifyEventCount
   );
   QObject::connect(
@@ -76,7 +76,7 @@ void AbstractEventCountNotifier::internalnotifyEventCount () {
   qInfo() << QStringLiteral("Notify event count: %1.").arg(n);
   n = n > 99 ? 99 : n;
 
-  notifyEventCount(CoreManager::getInstance()->getSettingsModel()->getChatEnabled() || CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled()? n : 0);
+  notifyEventCount(CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled() || CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled()? n : 0);
   emit eventCountChanged();
 }
 

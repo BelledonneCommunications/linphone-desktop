@@ -79,7 +79,7 @@ SearchBox {
 			}, {
 				icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history',
 				secure: 0,
-				visible: SettingsModel.chatEnabled ,
+				visible: SettingsModel.standardChatEnabled ,
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchChat(entry.sipAddress)

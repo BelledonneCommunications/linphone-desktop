@@ -216,7 +216,7 @@ TabContainer {
 		
 		Form {
 			title: qsTr('chatTitle')
-			visible: SettingsModel.chatEnabled || SettingsModel.secureChatEnabled || SettingsModel.developerSettingsEnabled
+			visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled || SettingsModel.developerSettingsEnabled
 			width: parent.width
 			
 			FormLine {
@@ -226,9 +226,9 @@ TabContainer {
 					label: qsTr('chatEnabledLabel')
 					
 					Switch {
-						checked: SettingsModel.chatEnabled
+						checked: SettingsModel.standardChatEnabled
 						
-						onClicked: SettingsModel.chatEnabled = !checked
+						onClicked: SettingsModel.standardChatEnabled = !checked
 					}
 				}
 				FormGroup {

@@ -360,7 +360,7 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		
 		
 		if( settingsModel->getSecureChatEnabled() && 
-			(!settingsModel->getChatEnabled() || (settingsModel->getChatEnabled() && isEncrypted))
+			(!settingsModel->getStandardChatEnabled() || (settingsModel->getStandardChatEnabled() && isEncrypted))
 			){
 			params->enableEncryption(true);
 			createSecureChatRoom = true;

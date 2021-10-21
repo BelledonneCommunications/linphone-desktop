@@ -122,7 +122,7 @@ ChatRoomModel * CallModel::getChatRoomModel() const{
 		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
 		
 		if( mCall->getChatRoom() && (settingsModel->getSecureChatEnabled() && 
-			(!settingsModel->getChatEnabled() || (settingsModel->getChatEnabled() && isEncrypted))
+			(!settingsModel->getStandardChatEnabled() || (settingsModel->getStandardChatEnabled() && isEncrypted))
 			)){
 			std::shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 			std::shared_ptr<const linphone::ChatRoomParams> dbParams = mCall->getChatRoom()->getCurrentParams();

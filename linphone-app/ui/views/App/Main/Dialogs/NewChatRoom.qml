@@ -119,11 +119,11 @@ DialogPlus {
 							anchors.verticalCenter: parent.verticalCenter
 							width:50
 							enabled:true
-							checked: !SettingsModel.chatEnabled && SettingsModel.secureChatEnabled 
+							checked: !SettingsModel.standardChatEnabled && SettingsModel.secureChatEnabled 
 							
 							onClicked: {
 								var newCheck = checked
-								if(! ( SettingsModel.chatEnabled && !checked || SettingsModel.secureChatEnabled && checked))
+								if(! ( SettingsModel.standardChatEnabled && !checked || SettingsModel.secureChatEnabled && checked))
 										newCheck = !checked;
 									if(newCheck){	// Remove all participants that have not the capabilities
 										var participants = selectedParticipants.getParticipants()

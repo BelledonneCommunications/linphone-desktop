@@ -154,7 +154,7 @@ ColumnLayout  {
 					
 					ActionButton {
 									icon: SettingsModel.getShowStartChatButton() ? 'chat' : 'history'
-									visible: SettingsModel.chatEnabled
+									visible: SettingsModel.standardChatEnabled
 									onClicked: sipAddressesMenu.open(false)
 									TooltipArea {
 										isClickable: false

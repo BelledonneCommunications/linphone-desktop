@@ -203,7 +203,7 @@ Window {
           proxyModel: ChatRoomProxyModel {
             Component.onCompleted: {
               if (chatRoomModel
-					&& (!chatRoomModel.haveEncryption && !SettingsModel.chatEnabled || chatRoomModel.haveEncryption && !SettingsModel.secureChatEnabled)) {
+					&& (!chatRoomModel.haveEncryption && !SettingsModel.standardChatEnabled || chatRoomModel.haveEncryption && !SettingsModel.secureChatEnabled)) {
                 setEntryTypeFilter(ChatRoomModel.CallEntry | ChatRoomModel.NoticeEntry)
               }
             }
@@ -218,7 +218,7 @@ Window {
 
           Connections {
             target: SettingsModel
-            onChatEnabledChanged: if(!chatRoomModel.haveEncryption) proxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
+            onStandardChatEnabledChanged: if(!chatRoomModel.haveEncryption) proxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
             onSecureChatEnabledChanged: if(chatRoomModel.haveEncryption) proxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
           }
         }

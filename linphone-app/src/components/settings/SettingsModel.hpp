@@ -103,7 +103,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool callPauseEnabled READ getCallPauseEnabled WRITE setCallPauseEnabled NOTIFY callPauseEnabledChanged)
 	Q_PROPERTY(bool muteMicrophoneEnabled READ getMuteMicrophoneEnabled WRITE setMuteMicrophoneEnabled NOTIFY muteMicrophoneEnabledChanged)
 	
-	Q_PROPERTY(bool chatEnabled READ getChatEnabled WRITE setChatEnabled NOTIFY chatEnabledChanged)
+	Q_PROPERTY(bool standardChatEnabled READ getStandardChatEnabled WRITE setStandardChatEnabled NOTIFY standardChatEnabledChanged)
 	Q_PROPERTY(bool secureChatEnabled READ getSecureChatEnabled WRITE setSecureChatEnabled NOTIFY secureChatEnabledChanged)
 	Q_PROPERTY(bool hideEmptyChatRooms READ getHideEmptyChatRooms WRITE setHideEmptyChatRooms NOTIFY hideEmptyChatRoomsChanged)
 	
@@ -326,8 +326,8 @@ public:
 	bool getMuteMicrophoneEnabled () const;
 	void setMuteMicrophoneEnabled (bool status);
 	
-	bool getChatEnabled () const;
-	void setChatEnabled (bool status);
+	bool getStandardChatEnabled () const;
+	void setStandardChatEnabled (bool status);
 	
 	bool getSecureChatEnabled () const;
 	void setSecureChatEnabled (bool status);
@@ -490,8 +490,10 @@ public:
 	
 	bool getIsInCall() const;
 	
+	bool isReadOnly(const std::string& section, const std::string& name) const;
+	std::string getEntryFullName(const std::string& section, const std::string& name) const;	// Return the full name of the entry : 'name/readonly' or 'name'
+	
 	static const std::string UiSection;
-	static const std::string AppSection;
 	static const std::string ContactsSection;
 	
 	// ===========================================================================
@@ -559,7 +561,7 @@ signals:
 	void callPauseEnabledChanged (bool status);
 	void muteMicrophoneEnabledChanged (bool status);
 	
-	void chatEnabledChanged (bool status);
+	void standardChatEnabledChanged (bool status);
 	void secureChatEnabledChanged (bool status);
 	void hideEmptyChatRoomsChanged (bool status);
 	void waitRegistrationForCallChanged (bool status);
