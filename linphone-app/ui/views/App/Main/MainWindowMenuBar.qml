@@ -5,6 +5,7 @@ import QtQuick 2.7
 import Linphone 1.0
 import Common 1.0
 import Utils 1.0
+
 // =============================================================================
 
 Item {
@@ -57,6 +58,13 @@ Item {
       text: qsTr('settings')
 
       onTriggered: settingsShortcut.onActivated()
+    }
+    
+    MenuItem {
+	//: 'Check for updates' : Item menu for checking updates
+      text: qsTr('checkForUpdates')
+
+      onTriggered: App.checkForUpdates(true)
     }
 
     MenuItem {

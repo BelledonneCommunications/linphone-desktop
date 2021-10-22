@@ -203,6 +203,16 @@ TabContainer {
 						onClicked: App.autoStart = !checked
 					}
 				}
+				FormGroup {
+					//: 'Check for updates' : Label switch for enabling check for updates
+					label: qsTr('checkForUpdateLabel')
+					
+					Switch {
+						checked: SettingsModel.checkForUpdateEnabled
+						
+						onClicked: SettingsModel.checkForUpdateEnabled = !checked
+					}
+				}
 			}
 		}
 	}

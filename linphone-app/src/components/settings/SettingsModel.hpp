@@ -178,6 +178,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
 	
 	Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged)
+	Q_PROPERTY(bool checkForUpdateEnabled READ isCheckForUpdateEnabled WRITE setCheckForUpdateEnabled NOTIFY checkForUpdateEnabledChanged)
 	
 	Q_PROPERTY(bool showLocalSipAccount READ getShowLocalSipAccount CONSTANT)
 	Q_PROPERTY(bool showStartChatButton READ getShowStartChatButton CONSTANT)
@@ -457,6 +458,9 @@ public:
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
 	
+	bool isCheckForUpdateEnabled() const;
+	void setCheckForUpdateEnabled(bool enable);
+	
 	Q_INVOKABLE bool getShowLocalSipAccount () const;
 	Q_INVOKABLE bool getShowStartChatButton () const;
 	Q_INVOKABLE bool getShowStartVideoCallButton () const;
@@ -628,6 +632,8 @@ signals:
 	void remoteProvisioningNotChanged (const QString &remoteProvisioning);
 	
 	void exitOnCloseChanged (bool value);
+	
+	void checkForUpdateEnabledChanged();
 	
 	// Advanced. -----------------------------------------------------------------
 	

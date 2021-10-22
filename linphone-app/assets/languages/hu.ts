@@ -1339,6 +1339,11 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>quit</source>
         <translation>Kilépés</translation>
     </message>
+    <message>
+        <source>checkForUpdates</source>
+        <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowTopMenuBar</name>
@@ -2505,6 +2510,11 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
         <translation>Új betűkészlet kijelölése</translation>
+    </message>
+    <message>
+        <source>checkForUpdateLabel</source>
+        <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
