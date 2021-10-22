@@ -14,10 +14,10 @@ DeleteRegValue HKLM "SOFTWARE\RegisteredApplications" "@APPLICATION_NAME@"
 ## Handlers
 
 DeleteRegKey HKCR "@APPLICATION_NAME@.sip"
-DeleteRegKey HKCR "@APPLICATION_NAME@.sip-linphone"
+DeleteRegKey HKCR "@APPLICATION_NAME@.sip-@EXECUTABLE_NAME@"
 DeleteRegKey HKCR "@APPLICATION_NAME@.sips"
-DeleteRegKey HKCR "@APPLICATION_NAME@.sips-linphone"
-DeleteRegKey HKCR "@APPLICATION_NAME@.linphone-config"
+DeleteRegKey HKCR "@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@"
+DeleteRegKey HKCR "@APPLICATION_NAME@.@EXECUTABLE_NAME@-config"
 DeleteRegKey HKCR "@APPLICATION_NAME@.tel"
 DeleteRegKey HKCR "@APPLICATION_NAME@.callto"
 

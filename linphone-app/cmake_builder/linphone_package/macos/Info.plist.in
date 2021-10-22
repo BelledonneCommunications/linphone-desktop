@@ -40,12 +40,12 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>sip</string>
-				<string>sip-linphone</string>
+				<string>sip-@EXECUTABLE_NAME@</string>
 				<string>sips</string>
-				<string>sips-linphone</string>
+				<string>sips-@EXECUTABLE_NAME@</string>
 				<string>tel</string>
 				<string>callto</string>
-				<string>linphone-config</string>
+				<string>@EXECUTABLE_NAME@-config</string>
 			</array>
 		</dict>
 	</array>
