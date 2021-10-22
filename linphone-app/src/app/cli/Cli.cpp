@@ -51,6 +51,8 @@ static void cliShow (QHash<QString, QString> &args) {
 }
 
 static void cliCall (QHash<QString, QString> &args) {
+	QString addressToCall = args["sip-address"];
+	
 	if(args.size() > 1){// Call with options
 		App *app = App::getInstance();
 		args["call"] = args["sip-address"];// Swap cli def to parser
@@ -429,42 +431,65 @@ QMap<QString, Cli::Command> Cli::mCommands = {
 };
 
 // -----------------------------------------------------------------------------
-
-void Cli::executeCommand (const QString &command, CommandFormat *format) {
-	shared_ptr<linphone::Address> address;
-	QStringList tempSipAddress = command.split(':');
-	bool ok = false;
+/*
+string Cli::getScheme(const QString& address){
+	QStringList tempSipAddress = address->split(':');
+	if( tempSipAddress.size() > 0)
+		return tempSipAddress[0].toStdString();
+	else
+		return "";
+}
+bool Cli::changeScheme(QString * address){
+	QStringList tempSipAddress = address->split(':');
 	string scheme;
+	bool ok = false;
 	if(tempSipAddress.size() > 1) {
 		scheme = tempSipAddress[0].toStdString();
-		for (const string &validScheme : { "sip", "sip-linphone", "sips", "sips-linphone", "tel", "callto", "linphone-config" })
+		for (const string &validScheme : { string("sip"), "sip-"+string(EXECUTABLE_NAME), string("sips"), "sips-"+string(EXECUTABLE_NAME), string("tel"), string("callto"), string(EXECUTABLE_NAME)+ "-config" })
 			if (scheme == validScheme)
 				ok = true;
 		if( !ok){
-			qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.").arg(command).arg(Utils::coreStringToAppString(scheme));
+			qWarning() << QStringLiteral("Not a valid uri: `%1` Unsupported scheme: `%2`.").arg(*address).arg(Utils::coreStringToAppString(scheme));
 		}else{
 			tempSipAddress[0] = "sip";// In order to pass bellesip parsing.
-			QString bellesipAddress = tempSipAddress.join(':');
-			address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(bellesipAddress));
+			*address = tempSipAddress.join(':');
 		}
 	}
+	return ok;
+}
+*/
+void Cli::executeCommand (const QString &command, CommandFormat *format) {
 
-	// Execute cli command.
-	if (!address) {
+// Detect if command is a CLI by testing commands
+	const QString &functionName = parseFunctionName(command);
+	
+	if(!functionName.isEmpty()){// It is a CLI
 		qInfo() << QStringLiteral("Detecting cli command: `%1`...").arg(command);
-		const QString &functionName = parseFunctionName(command);
-		if (!functionName.isEmpty()) {
-			QHash<QString, QString> args = parseArgs(command);
-			mCommands[functionName].execute(args);
-			if (format)
-				*format = CliFormat;
-			return;
+		QHash<QString, QString> args = parseArgs(command);
+		mCommands[functionName].execute(args);
+		if (format)
+			*format = CliFormat;
+		return;
+	}else{// It is a URI
+		QStringList tempSipAddress = command.split(':');
+		string scheme="sip";
+		QString transformedCommand;	// In order to pass bellesip parsing, set scheme to 'sip:'.
+		if( tempSipAddress.size() == 1){
+			transformedCommand = "sip:"+command;
+		}else{
+			scheme = tempSipAddress[0].toStdString();
+			bool ok = false;
+			for (const string &validScheme : { string("sip"), "sip-"+string(EXECUTABLE_NAME), string("sips"), "sips-"+string(EXECUTABLE_NAME), string("tel"), string("callto"), string(EXECUTABLE_NAME)+ "-config" })
+				if (scheme == validScheme)
+					ok = true;
+			if( !ok){
+				qWarning() << QStringLiteral("Not a valid URI: `%1` Unsupported scheme: `%2`.").arg(command).arg(Utils::coreStringToAppString(scheme));
+				return;
+			}
+			tempSipAddress[0] = "sip";
+			transformedCommand = tempSipAddress.join(':');
 		}
-	}
-
-	// Execute uri
-	if(ok){
-		if( scheme == "linphone-config" ){
+		if( scheme == string(EXECUTABLE_NAME)+"-config" ){
 			QHash<QString, QString> args = parseArgs(command);
 			if(args.contains("fetch-config"))
 				args["fetch-config"] = QByteArray::fromBase64(args["fetch-config"].toUtf8() );
@@ -477,9 +502,10 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 				*format = CliFormat;
 			mCommands["show"].execute(args);
 		}else{
+			shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand));// Test if command is an address
 			if (format)
 				*format = UriFormat;
-			qInfo() << QStringLiteral("Detecting uri command: `%1`...").arg(command);
+			qInfo() << QStringLiteral("Detecting URI command: `%1`...").arg(command);
 			QString functionName;
 			if( address) {
 				functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
