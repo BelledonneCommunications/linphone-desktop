@@ -42,49 +42,54 @@ TunnelModel::TunnelModel (shared_ptr<linphone::Tunnel> tunnel, QObject *parent) 
 // -----------------------------------------------------------------------------
 
 QString TunnelModel::getDomain() const{
-	return Utils::coreStringToAppString(mTunnel->getDomain());
+	return mTunnel ? Utils::coreStringToAppString(mTunnel->getDomain()) : "";
 }
 
 QString TunnelModel::getUsername() const{
-	return Utils::coreStringToAppString(mTunnel->getUsername());
+	return mTunnel ? Utils::coreStringToAppString(mTunnel->getUsername()) : "";
 }
 
 bool TunnelModel::getDualModeEnabled() const{
-	return mTunnel->dualModeEnabled();
+	return mTunnel ? mTunnel->dualModeEnabled() : false;
 }
 
 LinphoneEnums::TunnelMode TunnelModel::getMode() const{
-	return LinphoneEnums::fromLinphone(mTunnel->getMode());
+	return mTunnel ? LinphoneEnums::fromLinphone(mTunnel->getMode()) : LinphoneEnums::TunnelMode::TunnelModeDisable;
 }
 
 bool TunnelModel::getSipEnabled() const{
-	return mTunnel->sipEnabled();
+	return mTunnel ? mTunnel->sipEnabled() : false;
 }
 
 // -----------------------------------------------------------------------------
 
 void TunnelModel::setDomain(const QString& data){
-	mTunnel->setDomain(Utils::appStringToCoreString(data));
+	if(mTunnel)
+		mTunnel->setDomain(Utils::appStringToCoreString(data));
 	emit domainChanged();
 }
 
 void TunnelModel::setUsername(const QString& data){
-	mTunnel->setUsername(Utils::appStringToCoreString(data));
+	if(mTunnel)
+		mTunnel->setUsername(Utils::appStringToCoreString(data));
 	emit usernameChanged();
 }
 
 void TunnelModel::setDualModeEnabled(const bool& data){
-	mTunnel->enableDualMode(data);
+	if(mTunnel)
+		mTunnel->enableDualMode(data);
 	emit dualModeEnabledChanged();
 }
 
 void TunnelModel::setMode(const LinphoneEnums::TunnelMode& data){
-	mTunnel->setMode(LinphoneEnums::toLinphone(data));
+	if(mTunnel)
+		mTunnel->setMode(LinphoneEnums::toLinphone(data));
 	emit modeChanged();
 }
 
 void TunnelModel::setSipEnabled(const bool& data){
-	mTunnel->enableSip(data);
+	if(mTunnel)
+		mTunnel->enableSip(data);
 	emit sipEnabledChanged();
 }
 
@@ -124,5 +129,6 @@ bool TunnelModel::getActivated()const{
 }
 
 void TunnelModel::setHttpProxy(const QString& host, int port, const QString& username, const QString& passwd){
-	mTunnel->setHttpProxy(Utils::appStringToCoreString(host), port, Utils::appStringToCoreString(username), Utils::appStringToCoreString(passwd));
+	if(mTunnel)
+		mTunnel->setHttpProxy(Utils::appStringToCoreString(host), port, Utils::appStringToCoreString(username), Utils::appStringToCoreString(passwd));
 }
