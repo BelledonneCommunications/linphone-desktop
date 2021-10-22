@@ -1255,6 +1255,15 @@ void SettingsModel::setExitOnClose (bool value) {
 	emit exitOnCloseChanged(value);
 }
 
+bool SettingsModel::isCheckForUpdateEnabled() const{
+	return !!mConfig->getInt(UiSection, "check_for_update_enabled", 1);
+}
+
+void SettingsModel::setCheckForUpdateEnabled(bool enable){
+	mConfig->setInt(UiSection, "check_for_update_enabled", enable);
+	emit checkForUpdateEnabledChanged();
+}
+
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getShowLocalSipAccount()const{

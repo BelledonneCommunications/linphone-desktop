@@ -99,5 +99,9 @@ AppController::AppController (int &argc, char *argv[]) {
 }
 
 AppController::~AppController () {
-  delete mApp;
+ try{
+    delete mApp;
+  }
+  catch(...){
+  }
 }

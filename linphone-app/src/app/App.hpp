@@ -113,6 +113,7 @@ public:
   Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
+  Q_INVOKABLE static void checkForUpdates(bool force = false);
   
 public slots:
   void stateChanged(Qt::ApplicationState);

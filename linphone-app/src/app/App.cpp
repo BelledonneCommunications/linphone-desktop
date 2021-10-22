@@ -950,7 +950,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
 	QObject::connect(timer, &QTimer::timeout, this, &App::checkForUpdate);
 	timer->start();
 	
-	checkForUpdate();
+	checkForUpdates();
 #endif // ifdef ENABLE_UPDATE_CHECK
 	
 	if(setFetchConfig(mParser))
@@ -999,8 +999,12 @@ QString App::getStrippedApplicationVersion(){// x.y.z but if 'z-*' then x.y.z-1
 	}
 	return currentVersion;
 }
-void App::checkForUpdate () {
-	CoreManager::getInstance()->getCore()->checkForUpdate(
-				Utils::appStringToCoreString(getStrippedApplicationVersion())
-				);
+void App::checkForUpdate() {
+	checkForUpdates(false);
+}
+void App::checkForUpdates(bool force) {
+	if(force || CoreManager::getInstance()->getSettingsModel()->isCheckForUpdateEnabled())
+		CoreManager::getInstance()->getCore()->checkForUpdate(
+					Utils::appStringToCoreString(getStrippedApplicationVersion())
+					);
 }
