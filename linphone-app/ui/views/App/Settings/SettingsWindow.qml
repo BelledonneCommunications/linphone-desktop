@@ -85,11 +85,12 @@ ApplicationWindow {
 				}
 				
 				TabButton {
-					enabled: SettingsModel.tunnelAvailable
+					visible: SettingsModel.tunnelAvailable()
+					enabled: visible			
 					iconName: 'settings_network'
 					//: 'Tunnel' : Tab title for tunnel section in settings.
 					text: qsTr('tunnelTab')
-					width: implicitWidth
+					width: visible ? implicitWidth : 0
 				}
 				
 				TabButton {
