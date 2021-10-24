@@ -751,7 +751,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished">Konferenciaalapú csevegőszoba létrehozásához be kell állítania a konferencia URI-címét a fiókbeállításokban.</translation>
+        <translation>Konferenciaalapú csevegőszoba létrehozásához be kell állítania a konferencia URI-címét a fiókbeállításokban.</translation>
     </message>
 </context>
 <context>
@@ -1342,7 +1342,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Frissítések keresése</translation>
     </message>
 </context>
 <context>
@@ -1610,17 +1610,17 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
         <extracomment>&apos;Enable&apos; : One word for button action to enable tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Engedélyezés</translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeDisable</source>
         <extracomment>&apos;Disable&apos; : One word for button action to disable tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Letiltás</translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeAuto</source>
         <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Önműködő</translation>
     </message>
 </context>
 <context>
@@ -2330,112 +2330,112 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelStatus</source>
         <extracomment>&apos;Tunnel Status&apos; : Field title to introduce the status of the tunnel (activated or not)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Alagút állapota</translation>
     </message>
     <message>
         <source>tunnelDomain</source>
         <extracomment>&apos;Domain&apos; : Field title of a textfield to set domain.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tartomány</translation>
     </message>
     <message>
         <source>tunnelUsername</source>
         <extracomment>&apos;Username&apos; : Field title of a textfield to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <source>tunnelSIP</source>
         <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>cancel</source>
         <extracomment>&apos;Cancel&apos; : Button to cancel the action.</extracomment>
-        <translation type="unfinished">Mégse</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>setHTTPProxy</source>
         <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>HTTP-proxy megadása</translation>
     </message>
     <message>
         <source>proxyHttpHost</source>
         <extracomment>&apos;Host&apos; : Placeholder to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Állomásnév</translation>
     </message>
     <message>
         <source>proxyHttpPort</source>
         <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kikötő</translation>
     </message>
     <message>
         <source>proxyHttpUsername</source>
         <extracomment>&apos;Username&apos; : Placeholder to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <source>proxyHttpPassword</source>
         <extracomment>&apos;Password&apos; : Placeholder to set password.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <source>proxyHttpApply</source>
         <extracomment>&apos;Apply&apos; : Button to set proxy from changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Alkalmazás</translation>
     </message>
     <message>
         <source>serverMode</source>
         <extracomment>&apos;Mode&apos; : Field title on form to set tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Alagútmód</translation>
     </message>
     <message>
         <source>serverDualMode</source>
         <extracomment>&apos;Dual mode&apos; : Field title on form to set dual mode of the tunnel.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kettős mód</translation>
     </message>
     <message>
         <source>serverTitle</source>
         <extracomment>&apos;Server&apos; : Title form to set a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kiszolgáló</translation>
     </message>
     <message>
         <source>serverHostname</source>
         <extracomment>&apos;Hostname&apos; : Field title on form to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Állomásnév</translation>
     </message>
     <message>
         <source>serverPort</source>
         <extracomment>&apos;Port&apos; : Field title on form to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kikötő</translation>
     </message>
     <message>
         <source>serverDualHostname</source>
         <extracomment>&apos;Dual hostname URL&apos; : Field title on form to set the second hostname for dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kettős állomásnév URL-címe</translation>
     </message>
     <message>
         <source>serverDualPort</source>
         <extracomment>&apos;Dual port&apos; : Field title on form to set the second port for the dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kettős kikötő</translation>
     </message>
     <message>
         <source>serverRemoteUDPMirrorPort</source>
         <extracomment>&apos;Remote UDP mirror port&apos; : Field title on form to set the remote UDP mirror port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Távoli UDP-tükörkikötő</translation>
     </message>
     <message>
         <source>serverDelay</source>
         <extracomment>&apos;Delay&apos; : Field title on form to set the delay of the tunnel.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Késleltetés</translation>
     </message>
     <message>
         <source>tunnelAddServer</source>
         <extracomment>&apos;Add server&apos; : Button for adding a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kiszolgáló hozzáadása</translation>
     </message>
     <message>
         <source>tunnelApply</source>
         <extracomment>&apos;Apply&apos; : Button to apply changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Alkalmazás</translation>
     </message>
 </context>
 <context>
@@ -2514,7 +2514,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdateLabel</source>
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Frissítések keresése</translation>
     </message>
     <message>
         <source>mipmapLabel</source>
@@ -2631,7 +2631,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelTab</source>
         <extracomment>&apos;Tunnel&apos; : Tab title for tunnel section in settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Alagút</translation>
     </message>
 </context>
 <context>
