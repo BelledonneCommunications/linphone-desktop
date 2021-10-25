@@ -212,7 +212,7 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 
   // Destroy it after timeout.
   QObject::connect(timer, &QTimer::timeout, this, [this, notification]() {
-    deleteNotification(QVariant::fromValue(notification));
+    deleteNotificationOnTimeout(QVariant::fromValue(notification));
   });
 
   // Called explicitly (by a click on notification for example)
@@ -222,6 +222,16 @@ void Notifier::showNotification (QObject *notification, int timeout) {
 }
 
 // -----------------------------------------------------------------------------
+void Notifier::deleteNotificationOnTimeout(QVariant notification) {
+#ifdef Q_OS_MACOS
+	for(auto w : QGuiApplication::topLevelWindows()){
+		if( (w->windowState()&Qt::WindowFullScreen)==Qt::WindowFullScreen){
+			w->requestActivate();// Used to get focus on fullscreens on Mac in order to avoid screen switching.
+		}
+	}
+#endif
+	deleteNotification(notification);
+}
 
 void Notifier::deleteNotification (QVariant notification) {
   mMutex->lock();

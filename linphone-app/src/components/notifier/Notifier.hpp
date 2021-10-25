@@ -60,6 +60,7 @@ public:
   void notifyRecordingCompleted (const QString &filePath);
 
 public slots:
+  void deleteNotificationOnTimeout(QVariant notification);
   void deleteNotification (QVariant notification);
 
 private:
