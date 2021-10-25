@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -132,6 +132,7 @@ function openMediaParameters (window, incall) {
 
 function showFullscreen (position) {
   if (incall._fullscreen) {
+    incall._fullscreen.raise()
     return
   }
   DesktopTools.DesktopTools.screenSaverStatus = false
