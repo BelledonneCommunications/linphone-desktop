@@ -23,6 +23,8 @@
 #ifdef QT_QML_DEBUG
 #include <QQmlDebuggingEnabler>
 #endif
+
+#include "components/core/CoreManager.hpp"
 // =============================================================================
 
 int main (int argc, char *argv[]) {
@@ -45,5 +47,9 @@ int main (int argc, char *argv[]) {
     app->initContentApp();
     ret = app->exec();
   } while (ret == App::RestartCode);
+  auto core = CoreManager::getInstance()->getCore();
+  if(core && core->getGlobalState() == linphone::GlobalState::On)
+	core->stop();
+  
   return ret;
 }
