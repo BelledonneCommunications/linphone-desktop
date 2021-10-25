@@ -64,11 +64,14 @@ CameraPreview::CameraPreview (QQuickItem *parent) : QQuickFramebufferObject(pare
 }
 
 CameraPreview::~CameraPreview () {
-	mCounterMutex.lock();
-	if (--mCounter == 0)
-		CoreManager::getInstance()->getCore()->enableVideoPreview(false);
-	mCounterMutex.unlock();
-	CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);
+	auto core = CoreManager::getInstance()->getCore();
+	if(core){
+		mCounterMutex.lock();
+		if (--mCounter == 0)
+			core->enableVideoPreview(false);
+		mCounterMutex.unlock();
+		core->setNativePreviewWindowId(NULL);
+	}
 }
 
 class SafeFramebuffer : public QQuickFramebufferObject::Renderer{

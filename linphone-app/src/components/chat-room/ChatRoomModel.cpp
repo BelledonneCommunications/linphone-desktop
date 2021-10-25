@@ -248,17 +248,19 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 
 ChatRoomModel::~ChatRoomModel () {
 	mParticipantListModel = nullptr;
-	if(mChatRoom){
+	if(mChatRoom ){
 		mChatRoom->removeListener(mChatRoomModelListener);
 		if(mDeleteChatRoom){
 			mDeleteChatRoom = false;
-			auto participants = mChatRoom->getParticipants();
-			std::list<std::shared_ptr<linphone::Address>> participantsAddress;
-			for(auto p : participants)
-				participantsAddress.push_back(p->getAddress()->clone());
-			auto internalChatRoom = CoreManager::getInstance()->getCore()->searchChatRoom(mChatRoom->getCurrentParams(), mChatRoom->getLocalAddress(), mChatRoom->getPeerAddress(), participantsAddress);
-			if( internalChatRoom)
-				CoreManager::getInstance()->getCore()->deleteChatRoom(internalChatRoom);
+			if(CoreManager::getInstance()->getCore() ){
+				auto participants = mChatRoom->getParticipants();
+				std::list<std::shared_ptr<linphone::Address>> participantsAddress;
+				for(auto p : participants)
+					participantsAddress.push_back(p->getAddress()->clone());
+				auto internalChatRoom = CoreManager::getInstance()->getCore()->searchChatRoom(mChatRoom->getCurrentParams(), mChatRoom->getLocalAddress(), mChatRoom->getPeerAddress(), participantsAddress);
+				if( internalChatRoom)
+					CoreManager::getInstance()->getCore()->deleteChatRoom(internalChatRoom);
+			}
 		}
 	}
 	mChatRoom = nullptr;
