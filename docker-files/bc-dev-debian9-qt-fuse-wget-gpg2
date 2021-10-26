@@ -17,10 +17,10 @@ RUN sudo apt-get update && sudo apt-get install -y libxcb-keysyms1-dev libxcb-im
 
 #needed fot qt to find dbus
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
-# Build qt5.12.5
-RUN git clone -b fix/build_qt_5.12.11_to_fix_issues --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
+# Build qt5.12.12
+RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
     ./linphone-desktop/tools/build_qt_rpm && \
-    find "./linphone-desktop/rpm-linphone-qt-5.12.11/rpmbuild/RPMS/x86_64/" -iname "*.rpm" -exec sudo fakeroot alien -d {} + && \
+    find "./linphone-desktop/rpm-linphone-qt-5.12/rpmbuild/RPMS/x86_64/" -iname "*.rpm" -exec sudo fakeroot alien -d {} + && \
     find "." -maxdepth 1 -iname "*.deb" -exec sudo dpkg -i --force-overwrite {} + && \
     rm -rf ./linphone-desktop
 

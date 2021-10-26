@@ -4,7 +4,7 @@
 # See: http://doc.qt.io/qt-5/configure-options.html
 
 REPO_URL='https://gitlab.linphone.org/BC/public/external/qt/qt5.git'
-QT_VERSION='5.12.11'
+QT_VERSION='5.12'
 
 RPM_NAME=linphone-qt-${QT_VERSION}
 
@@ -41,7 +41,7 @@ do
 done
 
 git checkout "${QT_VERSION}"
-git submodule foreach --recursive 'if [ -n "$(git branch -a | grep 5.12.11)" ]; then git checkout 5.12.11; fi'
+git submodule foreach --recursive 'if [ -n "$(git branch -a | grep 5.12)" ]; then git checkout 5.12; fi'
 if [[ $? != 0 ]] ; then
   printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
   exit 1
