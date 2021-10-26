@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 
-%define _qt5_version 5.12.11
+%define _qt5_version 5.12
 %define _qt5_dir /opt/com.belledonne-communications/linphone
 
 %define _qt5_archdatadir %{_qt5_dir}
@@ -59,7 +59,7 @@ Qt is a software toolkit for developing applications.
   -qt-libjpeg \
   -qt-libpng \
   -qt-pcre \
-  -system-xcb \
+  -qt-xcb \
   -xkbcommon \
   -system-freetype \
   -feature-freetype -fontconfig \
