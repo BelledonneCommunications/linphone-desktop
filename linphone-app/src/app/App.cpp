@@ -935,7 +935,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
 	
 	// Display Assistant if it does not exist proxy config.
 	if (coreManager->getCore()->getAccountList().empty())
-		QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, Constants::AssistantViewName), Q_ARG(QVariant, QString("")));
+		QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, Constants::AssistantViewName), Q_ARG(QVariant, QString("")), Q_ARG(QVariant, QString("")));
 	
 #ifdef ENABLE_UPDATE_CHECK
 	QTimer *timer = new QTimer(mEngine);
