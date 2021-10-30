@@ -71,7 +71,6 @@ QtObject {
 			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, '', '', '#595759').color
 			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, '', '', '#595759').color
 			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, '', '', '#595759').color
-			
 		}
 		property QtObject deleteAction: QtObject {
 			property int iconSize: 22
@@ -83,7 +82,6 @@ QtObject {
 			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, '', '', '#595759').color
 			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, '', '', '#595759').color
 			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, '', '', '#595759').color
-			
 		}
 		
 		property QtObject event: QtObject {

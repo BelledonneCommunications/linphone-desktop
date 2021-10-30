@@ -331,6 +331,9 @@ ApplicationWindow {
 							}
 							menu.resetSelectedEntry()
 						}
+						onShowHistoryRequest: {
+							window.setView('HistoryView')
+						}
 					}
 				}
 				

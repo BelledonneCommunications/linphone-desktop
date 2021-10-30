@@ -20,73 +20,73 @@ Row {
 	Component.onCompleted: {
 		if ($historyEntry.status == LinphoneEnums.CallStatusSuccess) {
 			if(!$historyEntry.isStart){
-				iconData = ChatStyle.entry.event.endedCall
+				iconData = HistoryStyle.entry.event.endedCall
 				translation ='endedCall'
 			}else if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.outgoingCall
+				iconData = HistoryStyle.entry.event.outgoingCall
 				translation ='outgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.incomingCall
+				iconData = HistoryStyle.entry.event.incomingCall
 				translation ='incomingCall'
 			}
 		}else if($historyEntry.status == LinphoneEnums.CallStatusDeclined) {
 			if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.declinedOutgoingCall
+				iconData = HistoryStyle.entry.event.declinedOutgoingCall
 				translation ='declinedOutgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.declinedIncomingCall
+				iconData = HistoryStyle.entry.event.declinedIncomingCall
 				translation ='declinedIncomingCall'
 			}
 		}else if($historyEntry.status == LinphoneEnums.CallStatusMissed) {
 			if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.missedOutgoingCall
+				iconData = HistoryStyle.entry.event.missedOutgoingCall
 				translation ='missedOutgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.missedIncomingCall
+				iconData = HistoryStyle.entry.event.missedIncomingCall
 				translation ='missedIncomingCall'
 			}
 		}else if($historyEntry.status == LinphoneEnums.CallStatusAborted) {
 			if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.outgoingCall
+				iconData = HistoryStyle.entry.event.outgoingCall
 				translation ='outgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.incomingCall
+				iconData = HistoryStyle.entry.event.incomingCall
 				translation ='incomingCall'
 			}
 		}else if($historyEntry.status == LinphoneEnums.CallStatusDeclined) {
 			if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.declinedOutgoingCall
+				iconData = HistoryStyle.entry.event.declinedOutgoingCall
 				translation ='declinedOutgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.declinedIncomingCall
+				iconData = HistoryStyle.entry.event.declinedIncomingCall
 				translation ='declinedIncomingCall'
 			}
 		}else if($historyEntry.status == LinphoneEnums.CallStatusEarlyAborted) {
 			if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.missedOutgoingCall
+				iconData = HistoryStyle.entry.event.missedOutgoingCall
 				translation ='missedOutgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.missedIncomingCall
+				iconData = HistoryStyle.entry.event.missedIncomingCall
 				translation ='missedIncomingCall'
 			}
 		}else if($historyEntry.status == LinphoneEnums.CallStatusAcceptedElsewhere) {
 			if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.outgoingCall
+				iconData = HistoryStyle.entry.event.outgoingCall
 				translation ='outgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.incomingCall
+				iconData = HistoryStyle.entry.event.incomingCall
 				translation ='incomingCall'
 			}
 		}else if($historyEntry.status == LinphoneEnums.CallStatusDeclinedElsewhere) {
 			if($historyEntry.isOutgoing ){
-				iconData = ChatStyle.entry.event.declinedOutgoingCall
+				iconData = HistoryStyle.entry.event.declinedOutgoingCall
 				translation ='declinedOutgoingCall'
 			}else{
-				iconData = ChatStyle.entry.event.declinedIncomingCall
+				iconData = HistoryStyle.entry.event.declinedIncomingCall
 				translation ='declinedIncomingCall'
 			}
 		}else {
-			iconData = ChatStyle.entry.event.unknownCallEvent
+			iconData = HistoryStyle.entry.event.unknownCallEvent
 			translation = 'unknownCallEvent'
 		}
 	}
@@ -129,7 +129,7 @@ Row {
 		height: parent.height
 		icon: mainItem.iconData ? mainItem.iconData.icon : null
 		overwriteColor: mainItem.iconData ? mainItem.iconData.color: null
-		iconSize: ChatStyle.entry.event.iconSize
+		iconSize: HistoryStyle.entry.event.iconSize
 		width: HistoryStyle.entry.metaWidth
 	}
 	
@@ -174,10 +174,10 @@ Row {
 		}
 	}
 	ActionButton {
-		height: HistoryStyle.entry.lineHeight
+		//height: HistoryStyle.entry.lineHeight
 		isCustom: true
 		backgroundRadius: 8
-		colorSet: ChatStyle.entry.deleteAction
+		colorSet: HistoryStyle.entry.deleteAction
 		visible: isHoverEntry()
 		
 		onClicked: removeEntry()

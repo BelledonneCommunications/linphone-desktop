@@ -129,7 +129,7 @@ Rectangle {
           leftMargin: HistoryStyle.entry.leftMargin
           right: parent ? parent.right : undefined
 
-          rightMargin: HistoryStyle.entry.deleteIconSize +
+          rightMargin: HistoryStyle.entry.deleteAction.iconSize +
             HistoryStyle.entry.message.extraContent.spacing +
             HistoryStyle.entry.message.extraContent.rightMargin +
             HistoryStyle.entry.message.extraContent.leftMargin

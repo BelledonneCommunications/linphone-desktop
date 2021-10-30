@@ -83,7 +83,7 @@ ColumnLayout  {
           ActionButton {
             isCustom: true
 			backgroundRadius: 90
-			colorSet: ContactsStyle.videoCall
+			colorSet: HistoryViewStyle.videoCall
             visible: peerAddress && SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 
             onClicked: CallsListModel.launchVideoCall(historyView.peerAddress)
@@ -92,7 +92,7 @@ ColumnLayout  {
           ActionButton {
             isCustom: true
 			backgroundRadius: 90
-			colorSet: ContactsStyle.call
+			colorSet: HistoryViewStyle.call
             visible: peerAddress && SettingsModel.outgoingCallsEnabled
 
             onClicked: CallsListModel.launchAudioCall(historyView.peerAddress)
@@ -116,7 +116,7 @@ ColumnLayout  {
           ActionButton {
             isCustom: true
 			backgroundRadius: 90
-			colorSet: ContactsStyle.deleteAction
+			colorSet: HistoryViewStyle.deleteAction
 
             onClicked: Logic.removeAllEntries()
 

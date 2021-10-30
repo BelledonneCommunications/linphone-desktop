@@ -52,6 +52,7 @@ QtObject {
 		property int iconSize: 28
 		property int leftMargin: 17
 		property int rightMargin: 17
+		property int lastRightMargin: 5
 		property int spacing: 1
 	}
 	property QtObject filterField: QtObject {
