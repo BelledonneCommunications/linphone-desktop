@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   version="1.1"
+   id="svg4"
+   sodipodi:docname="call_history_custom2.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs8" />
+  <sodipodi:namedview
+     id="namedview6"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="6.7098284"
+     inkscape:cx="2.6081144"
+     inkscape:cy="59.763078"
+     inkscape:window-width="1920"
+     inkscape:window-height="1131"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg4" />
+  <path
+     d="m 20.032548,25.306346 c -2.922789,8.273156 1.173621,20.093116 7.803662,26.723927 l 0.139279,0.137194 c 6.627993,6.628763 18.450233,10.726431 26.718838,7.802159 l 6.271605,-8.22196 -8.541016,-8.539373 -7.815954,6.608287 -7.14209,-7.142763 -0.13723,-0.137195 -7.142092,-7.14276 6.607512,-7.818542 -8.53897,-8.53937 z"
+     stroke="#000000"
+     stroke-width="5.072"
+     fill="none"
+     fill-rule="evenodd"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path2"
+     style="stroke-width:5.2119685;stroke-miterlimit:4;stroke-dasharray:none;paint-order:normal" />
+  <path
+     d="m 63.999928,25.141826 a 9.230749,9.2313207 0 1 1 -18.461498,0 9.2307491,9.2313205 0 0 1 18.461498,0 z m -9.232801,-4.989014 v 5.060814 H 60.0625"
+     stroke="#000000"
+     stroke-width="3.03851"
+     fill="none"
+     fill-rule="evenodd"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path2-5"
+     style="stroke-width:3.17784;stroke-miterlimit:4;stroke-dasharray:none" />
+</svg>

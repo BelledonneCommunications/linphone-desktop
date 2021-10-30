@@ -25,6 +25,7 @@ Rectangle {
 	
 	//signal entrySelected (string entry)
 	signal entrySelected (TimelineModel entry)
+	signal showHistoryRequest()
 	
 	// ---------------------------------------------------------------------------
 	
@@ -99,7 +100,6 @@ Rectangle {
 				}
 				MouseArea{
 					Layout.alignment: Qt.AlignRight
-					Layout.rightMargin: TimelineStyle.legend.rightMargin
 					Layout.fillHeight: true
 					Layout.preferredWidth: TimelineStyle.legend.iconSize
 					onClicked:{
@@ -112,6 +112,24 @@ Rectangle {
 						anchors.horizontalCenter: parent.horizontalCenter
 						property bool searching: searchView.visible
 						icon: (searchView.visible? 'close_custom': 'search_custom')
+						iconSize: TimelineStyle.legend.iconSize
+						overwriteColor: TimelineStyle.legend.color
+					}
+				}
+				MouseArea{
+					Layout.alignment: Qt.AlignRight
+					Layout.rightMargin: TimelineStyle.legend.lastRightMargin
+					Layout.fillHeight: true
+					Layout.preferredWidth: TimelineStyle.legend.iconSize
+					onClicked:{
+						showHistoryRequest()
+					}
+					Icon {
+						id:callHistoryButton
+						anchors.verticalCenter: parent.verticalCenter
+						anchors.horizontalCenter: parent.horizontalCenter
+						property bool searching: searchView.visible
+						icon: 'call_history_custom'
 						iconSize: TimelineStyle.legend.iconSize
 						overwriteColor: TimelineStyle.legend.color
 					}
