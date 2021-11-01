@@ -89,6 +89,7 @@ job-macosx-makefile-package:
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $PACKAGE_MACOSX
        - $DEPLOY_MACOSX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
@@ -110,6 +111,7 @@ job-macosx-codesigning:
   only:
      variables:
        - $NIGHTLY_MASTER
+       - $PACKAGE_MACOSX
        - $DEPLOY_MACOSX
   script:
     - cd build

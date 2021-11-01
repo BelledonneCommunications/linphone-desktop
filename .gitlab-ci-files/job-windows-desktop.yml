@@ -79,6 +79,7 @@ job-windows-vs2017-package:
   only:
     variables:
       - $NIGHTLY_MASTER
+      - $PACKAGE_WINDOWS
       - $DEPLOY_WINDOWS
   variables:
       CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGNING_DIR=$WINDOWS_SIGNING_DIRECTORY
