@@ -114,8 +114,20 @@ void ColorListModel::add(std::shared_ptr<ColorModel> color){
 	emit layoutChanged();
 }
 
+QString ColorListModel::buildDescription(QString description){
+	QStringList tokens = description.split('_');
+	for(int index = 0 ; index < tokens.size() ; ++index)
+		if(mKeywordsMap.contains(tokens[index]))
+			tokens[index] = mKeywordsMap[tokens[index]];
+	description = tokens.join(' ');
+	description[0] = description[0].toUpper();
+	return description;
+}
+
 ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue){
 	ColorModel * color = getColor(id);
+	if( description == "")
+		description = buildDescription(id);
 	if(!color){
 		if(idLink != ""){
 			if( colorValue == ""){
@@ -126,18 +138,12 @@ ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QStri
 			}
 			addLink(id, idLink);
 		}
-		if( description == ""){
-			description = id;
-			QStringList tokens = description.split('_');
-			for(int index = 0 ; index < tokens.size() ; ++index)
-				if(mKeywordsMap.contains(tokens[index]))
-					tokens[index] = mKeywordsMap[tokens[index]];
-			description = tokens.join(' ');
-			description[0] = description[0].toUpper();
-		}
 		auto colorShared = std::make_shared<ColorModel>(id, colorValue, description);
 		add(colorShared);
 		color = colorShared.get();
+		emit colorChanged();
+	}else if( description != color->getDescription()) {
+		color->setDescription(description);
 		emit colorChanged();
 	}
 	return color;

@@ -333,6 +333,7 @@ private:
 	void add(std::shared_ptr<ColorModel> imdn);
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
 	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
+	QString buildDescription(QString description);	// return a description from id by splitting '_'
 	
 	QList<std::shared_ptr<ColorModel>> mList;
 	
