@@ -109,7 +109,7 @@ Row {
 						id: thumbnailImage
 						
 						Image {
-							mipmap: Qt.platform.os === 'osx'
+							mipmap: SettingsModel.mipmapEnabled
 							source: rectangle.contentModel.thumbnail
 						}
 					}

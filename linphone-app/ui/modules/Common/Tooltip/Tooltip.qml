@@ -3,6 +3,7 @@ import QtQuick.Controls 2.2 as Core
 import QtGraphicalEffects 1.12
 
 import Common 1.0
+import Linphone 1.0
 import Common.Styles 1.0
 import Utils 1.0
 
@@ -100,7 +101,7 @@ Core.ToolTip {
     // and `implicitWidth`.
     Core.Image {
       id: icon
-      mipmap: Qt.platform.os === 'osx'
+      mipmap: SettingsModel.mipmapEnabled
       fillMode: Core.Image.PreserveAspectFit
       height: TooltipStyle.arrowSize
       source: _edge

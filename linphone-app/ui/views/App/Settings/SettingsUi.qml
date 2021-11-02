@@ -215,6 +215,24 @@ TabContainer {
 					}
 				}
 			}
+			FormLine {
+				FormGroup {
+					//: 'Enable Mipmap'
+					label: qsTr('mipmapLabel')
+					
+					Switch {
+						checked: SettingsModel.mipmapEnabled
+						
+						onClicked: SettingsModel.mipmapEnabled = !checked
+						TooltipArea{
+						//: 'This property holds whether the image uses mipmap filtering when scaled or transformed.' : first line of a tooltip about Mipmap mode.
+							text: qsTr('mipmapTooltip1')+'\n'
+						//: 'Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).' : Second line of a tooltip about Mipmap mode.
+								+qsTr('mipmapTooltip2')
+						}
+					}
+				}
+			}
 		}
 	}
 }

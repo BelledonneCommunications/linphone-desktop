@@ -128,6 +128,8 @@ Usually, if it is about VPX or Decaf, this could come from your Perl installatio
 
 * If the application doesn't start and create an empty file with a random name, it could be come from a bad configuration between your application and others sub-modules. Check your configurations and force them with `-DCMAKE_BUILD_TYPE=<your_config>` or `--config <your_config>`.
 
+* On Mac, the application can crash at the start from QOpenGLContext. A workaround is to deactivate the mipmap mode on images by adding into your configuration file (linphonerc): `mipmap_enabled=0` in `[ui]` section.
+
 
 ## Specific instructions for the Mac Os X platform
 
