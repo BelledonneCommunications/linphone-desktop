@@ -11,7 +11,7 @@
 	<key>CFBundleExecutable</key>
 	<string>@EXECUTABLE_NAME@</string>
 	<key>CFBundleGetInfoString</key>
-	<string>@PACKAGE_VERSION@, (C) 2011-2020 @APPLICATION_NAME@ @APPLICATION_URL@</string>
+	<string>@PACKAGE_VERSION@, (C) @COPYRIGHT_RANGE_DATE@ @APPLICATION_NAME@ @APPLICATION_URL@</string>
 	<key>CFBundleIconFile</key>
 	<string>@EXECUTABLE_NAME@.icns</string>
 	<key>CFBundleIdentifier</key>
@@ -27,7 +27,7 @@
 	<key>CFBundleVersion</key>
 	<string>@PACKAGE_VERSION@</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright 2011-2020 @APPLICATION_VENDOR@</string>
+	<string>Copyright @COPYRIGHT_RANGE_DATE@ @APPLICATION_VENDOR@</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>@CMAKE_OSX_DEPLOYMENT_TARGET@</string>
 	<key>NSAppSleepDisabled</key>

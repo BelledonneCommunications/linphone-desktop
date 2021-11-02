@@ -1238,10 +1238,15 @@ QString SettingsModel::getRemoteProvisioning () const {
 }
 
 void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {
-	if (!CoreManager::getInstance()->getCore()->setProvisioningUri(Utils::appStringToCoreString(remoteProvisioning)))
-		emit remoteProvisioningChanged(remoteProvisioning);
+	QString urlRemoteProvisioning = remoteProvisioning;
+	QUrl url(urlRemoteProvisioning);
+	if( !url.isValid()) {
+		urlRemoteProvisioning = QString(Constants::RemoteProvisioningURL) +"/"+ remoteProvisioning;
+	}
+	if (!CoreManager::getInstance()->getCore()->setProvisioningUri(Utils::appStringToCoreString(urlRemoteProvisioning)))
+		emit remoteProvisioningChanged(urlRemoteProvisioning);
 	else
-		emit remoteProvisioningNotChanged(remoteProvisioning);
+		emit remoteProvisioningNotChanged(urlRemoteProvisioning);
 }
 
 // -----------------------------------------------------------------------------

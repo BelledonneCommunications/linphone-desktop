@@ -373,6 +373,13 @@ void App::initContentApp () {
 	mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 	
 	mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
+	mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
+#ifdef APPLICATION_LICENCE
+	mEngine->rootContext()->setContextProperty("applicationLicence", APPLICATION_LICENCE);
+#else
+	mEngine->rootContext()->setContextProperty("applicationLicence", "");
+#endif
+	mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
 	mEngine->rootContext()->setContextProperty("Colors", mColorListModel->getQmlData());
 	mEngine->rootContext()->setContextProperty("Images", mImageListModel->getQmlData());
 	
@@ -735,8 +742,6 @@ void App::setTrayIcon () {
 	menu->addAction(restoreAction);
 	menu->addSeparator();
 	menu->addAction(quitAction);
-	
-	
 	
 	systemTrayIcon->setContextMenu(menu);
 	systemTrayIcon->setIcon(QIcon(Constants::WindowIconPath));

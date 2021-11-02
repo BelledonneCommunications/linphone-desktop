@@ -173,7 +173,7 @@ function handleUrlChanged () {
 // -----------------------------------------------------------------------------
 
 function buildAddressFields () {
-/*
+
   var address = contactEdit._vcard.address
 
   return [{
@@ -189,8 +189,7 @@ function buildAddressFields () {
     placeholder: qsTr('country'),
     text: address.country
   }]
-  */
-  return null
+  
 }
 
 function handleAddressChanged (index, value) {

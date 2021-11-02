@@ -28,7 +28,11 @@ Item {
   }
 
   function popView () {
-    stack.pop()
+	if( nViews <= 1 ) {
+		stack.pop()
+		window.setView('Home')
+	}else
+		stack.pop()
   }
 
   // ---------------------------------------------------------------------------

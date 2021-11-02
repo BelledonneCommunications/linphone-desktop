@@ -322,7 +322,22 @@ void ColorListModel::handleUiColorChanged(const QString& id, const QColor& color
 }
 //--------------------------------------------------------------------------------
 
-
+/* Snippet for having 2 custom colors
+QPixmap ColorListModel::getLogoIcon(){
+// Icon colors
+    QPixmap foregroundPixmap = QPixmap(Constants::WindowIconPath);
+    QPixmap backgroundPixmap = QPixmap(Constants::WindowIconPath);
+    QBitmap inMask = backgroundPixmap.createMaskFromColor(QColor("black"), Qt::MaskInColor);
+    QBitmap outMask = backgroundPixmap.createMaskFromColor(QColor("black"), Qt::MaskOutColor);
+    backgroundPixmap.fill(App::getInstance()->getColorListModel()->addImageColor("Logo_bg", Constants::WindowIconPath, "i")->getColor());
+	backgroundPixmap.setMask(inMask);
+	foregroundPixmap.fill(App::getInstance()->getColorListModel()->addImageColor("Logo_fg", Constants::WindowIconPath, "ai")->getColor());
+	foregroundPixmap.setMask(outMask);
+    QPainter painter(&backgroundPixmap);
+    painter.drawPixmap(0,backgroundPixmap.height()-foregroundPixmap.height(),foregroundPixmap); 
+	
+	return backgroundPixmap;	
+}*/
 
 /*
 std::shared_ptr<ColorModel> ColorListModel::getImdnState(const std::shared_ptr<const linphone::Color> & state){
