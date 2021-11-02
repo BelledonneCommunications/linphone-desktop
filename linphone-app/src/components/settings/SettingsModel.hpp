@@ -184,6 +184,8 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool showStartChatButton READ getShowStartChatButton CONSTANT)
 	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
 	
+	Q_PROPERTY(bool mipmapEnabled READ isMipmapEnabled WRITE setMipmapEnabled NOTIFY mipmapEnabledChanged)
+	
 	// Advanced. -----------------------------------------------------------------
 	
 	Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged)
@@ -465,6 +467,9 @@ public:
 	Q_INVOKABLE bool getShowStartChatButton () const;
 	Q_INVOKABLE bool getShowStartVideoCallButton () const;
 	
+	bool isMipmapEnabled() const;
+	void setMipmapEnabled(const bool& enabled);
+	
 	// Advanced. ---------------------------------------------------------------------------
 	
 	
@@ -632,6 +637,7 @@ signals:
 	void remoteProvisioningNotChanged (const QString &remoteProvisioning);
 	
 	void exitOnCloseChanged (bool value);
+	void mipmapEnabledChanged();
 	
 	void checkForUpdateEnabledChanged();
 	

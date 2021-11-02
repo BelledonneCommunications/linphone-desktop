@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 
@@ -44,7 +45,7 @@ Notification {
       }
       Image{
         id:image
-        mipmap: Qt.platform.os === 'osx'
+        mipmap: SettingsModel.mipmapEnabled
         Layout.fillHeight: true
         Layout.fillWidth: true
         fillMode: Image.PreserveAspectFit

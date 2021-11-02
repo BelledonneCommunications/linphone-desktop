@@ -1,5 +1,7 @@
 import QtQuick 2.7
 
+import Linphone 1.0
+
 // =============================================================================
 
 Item {
@@ -19,7 +21,7 @@ Item {
 
     Image {
       id: image
-      mipmap: Qt.platform.os === 'osx'
+      mipmap: SettingsModel.mipmapEnabled
       anchors.fill: parent
       fillMode: Image.PreserveAspectCrop
       sourceSize.width: parent.width

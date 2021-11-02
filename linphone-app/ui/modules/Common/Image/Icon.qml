@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtGraphicalEffects 1.12
 
 import Common 1.0
+import Linphone 1.0
 import Utils 1.0
 
 // =============================================================================
@@ -24,7 +25,7 @@ Item {
 	Image {
 		id:image
 		property bool colorOverwriteEnabled : false
-		mipmap: Qt.platform.os === 'osx'
+		mipmap: SettingsModel.mipmapEnabled
 		cache: Images.areReadOnlyImages
 		function getIconSize () {
 			Utils.assert(
