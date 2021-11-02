@@ -39,7 +39,7 @@ public:
 	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
 	static constexpr char DefaultLocale[] = "en";
 		
-	static constexpr char ApplicationMinimalQtVersion[] = "5.9.0";
+	static constexpr char ApplicationMinimalQtVersion[] = "5.10.0";
 	static constexpr char DefaultFont[] = "Noto Sans";
 	
 	static constexpr size_t MaxLogsCollectionSize = 10485760; // 10MB.
@@ -56,7 +56,6 @@ public:
 	static constexpr int DefaultExpires = 3600;
 	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
 	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login";
-	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
 	
 	static constexpr char LinphoneBZip2_exe[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
 	static constexpr char LinphoneBZip2_dll[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
@@ -64,7 +63,9 @@ public:
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
 	static constexpr char DefaultLimeServerURL[] = "https://lime.linphone.org/lime-server/lime-server.php";
-	
+	static constexpr char RemoteProvisioningURL[] = "https://subscribe.linphone.org/flexiapi/provisioning";
+		
+	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
 	
 	// Max image size in bytes. (100Kb)
 	static constexpr qint64 MaxImageSize = 102400;// In Bytes.

@@ -28,6 +28,7 @@
 #include "app/App.hpp"
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
+#include "components/other/colors/ColorListModel.hpp"
 
 #include "EventCountNotifierSystemTrayIcon.hpp"
 
@@ -37,10 +38,8 @@ namespace {
   constexpr int IconWidth = 256;
   constexpr int IconHeight = 256;
 
-  constexpr char IconCounterBackgroundColor[] = "#FF3C31";
   constexpr int IconCounterBackgroundRadius = 100;
   constexpr int IconCounterBlinkInterval = 1000;
-  constexpr char IconCounterTextColor[] = "#FFFBFA";
   constexpr int IconCounterTextPixelSize = 144;
 }
 
@@ -92,7 +91,7 @@ void EventCountNotifier::notifyEventCount (int n) {
 
   // Draw background.
   {
-    p.setBrush(QColor(IconCounterBackgroundColor));
+    p.setBrush(App::getInstance()->getColorListModel()->addImageColor("Logo_tray_blink_bg", Constants::WindowIconPath,"b")->getColor());
     p.drawEllipse(QPointF(width / 2, height / 2), IconCounterBackgroundRadius, IconCounterBackgroundRadius);
   }
 
@@ -102,7 +101,7 @@ void EventCountNotifier::notifyEventCount (int n) {
     font.setPixelSize(IconCounterTextPixelSize);
 
     p.setFont(font);
-    p.setPen(QPen(QColor(IconCounterTextColor), 1));
+    p.setPen(QPen(App::getInstance()->getColorListModel()->addImageColor("Logo_tray_blink_fg", Constants::WindowIconPath,"ai")->getColor(), 1));
     p.drawText(QRect(0, 0, width, height), Qt::AlignCenter, QString::number(n));
   }
 
