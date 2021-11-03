@@ -63,7 +63,6 @@ namespace {
 
   constexpr int NotificationSpacing = 10;
   constexpr int MaxNotificationsNumber = 5;
-  constexpr int MaxTimeout = 30000;
 }
 
 // =============================================================================
@@ -81,13 +80,15 @@ void setProperty (QObject &object, const char *property, const T &value) {
 // =============================================================================
 
 const QHash<int, Notifier::Notification> Notifier::Notifications = {
-  { Notifier::ReceivedMessage, { "NotificationReceivedMessage.qml", 10 } },
-  { Notifier::ReceivedFileMessage, { "NotificationReceivedFileMessage.qml", 10 } },
-  { Notifier::ReceivedCall, { "NotificationReceivedCall.qml", 30 } },
-  { Notifier::NewVersionAvailable, { "NotificationNewVersionAvailable.qml", 30 } },
-  { Notifier::SnapshotWasTaken, { "NotificationSnapshotWasTaken.qml", 10 } },
-  { Notifier::RecordingCompleted, { "NotificationRecordingCompleted.qml", 10 } }
+  { Notifier::ReceivedMessage, { Notifier::ReceivedMessage, "NotificationReceivedMessage.qml", 10 } },
+  { Notifier::ReceivedFileMessage, { Notifier::ReceivedFileMessage, "NotificationReceivedFileMessage.qml", 10 } },
+  { Notifier::ReceivedCall, { Notifier::ReceivedCall, "NotificationReceivedCall.qml", 30 } },
+  { Notifier::NewVersionAvailable, { Notifier::NewVersionAvailable, "NotificationNewVersionAvailable.qml", 30 } },
+  { Notifier::SnapshotWasTaken, { Notifier::SnapshotWasTaken, "NotificationSnapshotWasTaken.qml", 10 } },
+  { Notifier::RecordingCompleted, { Notifier::RecordingCompleted, "NotificationRecordingCompleted.qml", 10 } }
 };
+
+
 
 // -----------------------------------------------------------------------------
 
@@ -206,7 +207,7 @@ void Notifier::showNotification (QObject *notification, int timeout) {
   QMetaObject::invokeMethod(notification, NotificationShowMethodName, Qt::DirectConnection);
 
   QTimer *timer = new QTimer(notification);
-  timer->setInterval(timeout > MaxTimeout ? MaxTimeout : timeout);
+  timer->setInterval(timeout);
   timer->setSingleShot(true);
   notification->setProperty(NotificationPropertyTimer, QVariant::fromValue(timer));
 
@@ -266,7 +267,7 @@ void Notifier::deleteNotification (QVariant notification) {
   QObject * notification = createNotification(TYPE, DATA); \
   if (!notification) \
     return; \
-  const int timeout = Notifications[TYPE].timeout * 1000; \
+  const int timeout = Notifications[TYPE].getTimeout() * 1000; \
   showNotification(notification, timeout);
 
 // -----------------------------------------------------------------------------

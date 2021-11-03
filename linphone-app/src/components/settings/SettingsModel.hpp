@@ -370,6 +370,8 @@ public:
 	bool getContactsEnabled () const;
 	void setContactsEnabled (bool status);
 	
+	int getIncomingCallTimeout() const;
+	
 	// Network. ------------------------------------------------------------------
 	
 	bool getShowNetworkSettings () const;
