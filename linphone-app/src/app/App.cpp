@@ -992,9 +992,14 @@ QString App::getStrippedApplicationVersion(){// x.y.z but if 'z-*' then x.y.z-1
 	if(versions.size() >=3){
 		currentVersion = versions[0]+"."+versions[1]+".";
 		QStringList patchVersions = versions[2].split('-');
-		if( patchVersions.size() > 1)
-			currentVersion += QString::number(patchVersions[0].toInt()-1);
-		else
+		if( patchVersions.size() > 1 ) {
+			bool ok;
+			patchVersions[1].toInt(&ok);
+			if( !ok)	// Second part of patch is not a number (ie: alpha, beta, pre). Reduce version.
+				currentVersion += QString::number(patchVersions[0].toInt()-1);
+			else
+				currentVersion += patchVersions[0];
+		} else
 			currentVersion += patchVersions[0];
 	}
 	return currentVersion;
