@@ -26,64 +26,74 @@
 #include <QObject>
 #include <QHash>
 
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 // =============================================================================
 
 class QMutex;
 class QQmlComponent;
 
 namespace linphone {
-  class Call;
-  class ChatMessage;
+class Call;
+class ChatMessage;
 }
 
 class Notifier : public QObject {
-  Q_OBJECT;
-
+	Q_OBJECT;
+	
 public:
-  Notifier (QObject *parent = Q_NULLPTR);
-  ~Notifier ();
-
-  enum NotificationType {
-    ReceivedMessage,
-    ReceivedFileMessage,
-    ReceivedCall,
-    NewVersionAvailable,
-    SnapshotWasTaken,
-    RecordingCompleted
-  };
-
-  void notifyReceivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
-  void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message);
-  void notifyReceivedCall (const std::shared_ptr<linphone::Call> &call);
-  void notifyNewVersionAvailable (const QString &version, const QString &url);
-  void notifySnapshotWasTaken (const QString &filePath);
-  void notifyRecordingCompleted (const QString &filePath);
-
+	Notifier (QObject *parent = Q_NULLPTR);
+	~Notifier ();
+	
+	enum NotificationType {
+		ReceivedMessage,
+		ReceivedFileMessage,
+		ReceivedCall,
+		NewVersionAvailable,
+		SnapshotWasTaken,
+		RecordingCompleted
+	};
+	
+	void notifyReceivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+	void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+	void notifyReceivedCall (const std::shared_ptr<linphone::Call> &call);
+	void notifyNewVersionAvailable (const QString &version, const QString &url);
+	void notifySnapshotWasTaken (const QString &filePath);
+	void notifyRecordingCompleted (const QString &filePath);
+	
 public slots:
-  void deleteNotificationOnTimeout(QVariant notification);
-  void deleteNotification (QVariant notification);
-
+	void deleteNotificationOnTimeout(QVariant notification);
+	void deleteNotification (QVariant notification);
+	
 private:
-  struct Notification {
-    Notification (const QString &filename = QString(""), int timeout = 0) {
-      this->filename = filename;
-      this->timeout = timeout;
-    }
-
-    QString filename;
-    int timeout;
-  };
-
-  QObject *createNotification (NotificationType type, QVariantMap data);
-  void showNotification (QObject *notification, int timeout);
-
-  QHash<QString,int> mScreenHeightOffset;
-  int mInstancesNumber = 0;
-
-  QMutex *mMutex = nullptr;
-  QQmlComponent **mComponents = nullptr;
-
-  static const QHash<int, Notification> Notifications;
+	struct Notification {
+		Notification (const int& type = 0, const QString &filename = QString(""), int timeout = 0) {
+			this->type = type;
+			this->filename = filename;
+			this->timeout = timeout;
+		}
+		int getTimeout() const{
+			if( type == Notifier::ReceivedCall){
+				return CoreManager::getInstance()->getSettingsModel()->getIncomingCallTimeout();
+			}else
+				return timeout;
+		}
+		QString filename;
+	private:
+		int timeout;
+		int type;
+	};
+	
+	QObject *createNotification (NotificationType type, QVariantMap data);
+	void showNotification (QObject *notification, int timeout);
+	
+	QHash<QString,int> mScreenHeightOffset;
+	int mInstancesNumber = 0;
+	
+	QMutex *mMutex = nullptr;
+	QQmlComponent **mComponents = nullptr;
+	
+	static const QHash<int, Notification> Notifications;
 };
 
 #endif // NOTIFIER_H_

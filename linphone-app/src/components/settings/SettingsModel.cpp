@@ -798,6 +798,9 @@ void SettingsModel::setContactsEnabled (bool status) {
 	emit contactsEnabledChanged(getContactsEnabled ());
 }
 
+int SettingsModel::getIncomingCallTimeout() const {
+	return CoreManager::getInstance()->getCore()->getIncTimeout();
+}
 // =============================================================================
 // Network.
 // =============================================================================
