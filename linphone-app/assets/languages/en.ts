@@ -2548,8 +2548,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>checkForUpdateLabel</source>
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
         <translation>Check for updates</translation>
-	</message>
-	<message>
+    </message>
+    <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
         <translation>Enable Mipmap</translation>

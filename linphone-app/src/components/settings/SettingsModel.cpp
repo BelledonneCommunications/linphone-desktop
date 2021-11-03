@@ -1268,6 +1268,14 @@ void SettingsModel::setCheckForUpdateEnabled(bool enable){
 	emit checkForUpdateEnabledChanged();
 }
 
+QString SettingsModel::getVersionCheckUrl() const{
+	return Utils::coreStringToAppString(mConfig->getString("misc", "version_check_url_root", Constants::VersionCheckUrl));
+}
+
+void SettingsModel::setVersionCheckUrl(const QString& url){
+	mConfig->setString("misc", "version_check_url_root", Utils::appStringToCoreString(url));
+	emit versionCheckUrlChanged();
+}
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getShowLocalSipAccount()const{

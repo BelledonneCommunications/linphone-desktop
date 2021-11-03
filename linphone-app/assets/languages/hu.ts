@@ -2516,7 +2516,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
         <translation type="unfinished"></translation>
     </message>
-	<message>
+    <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
         <translation type="unfinished"></translation>
