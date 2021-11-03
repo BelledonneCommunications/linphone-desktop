@@ -372,6 +372,7 @@ void App::initContentApp () {
 	mEngine->addImageProvider(ExternalImageProvider::ProviderId, new ExternalImageProvider());
 	mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 	
+	mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 	mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
 	mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
 #ifdef APPLICATION_LICENCE
