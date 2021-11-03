@@ -55,6 +55,7 @@ public:
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 3600;
 	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
+	static constexpr char VersionCheckUrl[] = "https://linphone.org/releases";
 	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login";
 	
 	static constexpr char LinphoneBZip2_exe[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";

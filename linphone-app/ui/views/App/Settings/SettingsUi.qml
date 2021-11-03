@@ -204,16 +204,6 @@ TabContainer {
 						onClicked: App.autoStart = !checked
 					}
 				}
-				FormGroup {
-					//: 'Check for updates' : Label switch for enabling check for updates
-					label: qsTr('checkForUpdateLabel')
-					
-					Switch {
-						checked: SettingsModel.checkForUpdateEnabled
-						
-						onClicked: SettingsModel.checkForUpdateEnabled = !checked
-					}
-				}
 			}
 			FormLine {
 				FormGroup {
@@ -230,6 +220,28 @@ TabContainer {
 						//: 'Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).' : Second line of a tooltip about Mipmap mode.
 								+qsTr('mipmapTooltip2')
 						}
+					}
+				}
+			}
+			FormLine {
+				FormGroup {
+					//: 'Check for updates' : Label switch for enabling check for updates
+					label: qsTr('checkForUpdateLabel')
+					maxWidth: 150
+					width: 150
+					Switch {
+						checked: SettingsModel.checkForUpdateEnabled
+						
+						onClicked: SettingsModel.checkForUpdateEnabled = !checked
+					}
+				}
+				FormGroup {
+					maxWidth: parent.width - 200
+					width: parent.width - 200
+					TextField {
+						text: SettingsModel.versionCheckUrl
+						
+						onEditingFinished: SettingsModel.versionCheckUrl = text
 					}
 				}
 			}

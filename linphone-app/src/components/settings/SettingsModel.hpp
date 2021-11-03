@@ -179,6 +179,7 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged)
 	Q_PROPERTY(bool checkForUpdateEnabled READ isCheckForUpdateEnabled WRITE setCheckForUpdateEnabled NOTIFY checkForUpdateEnabledChanged)
+	Q_PROPERTY(QString versionCheckUrl READ getVersionCheckUrl WRITE setVersionCheckUrl NOTIFY versionCheckUrlChanged)
 	
 	Q_PROPERTY(bool showLocalSipAccount READ getShowLocalSipAccount CONSTANT)
 	Q_PROPERTY(bool showStartChatButton READ getShowStartChatButton CONSTANT)
@@ -463,6 +464,10 @@ public:
 	bool isCheckForUpdateEnabled() const;
 	void setCheckForUpdateEnabled(bool enable);
 	
+	QString getVersionCheckUrl() const;
+	void setVersionCheckUrl(const QString& url);
+	
+	
 	Q_INVOKABLE bool getShowLocalSipAccount () const;
 	Q_INVOKABLE bool getShowStartChatButton () const;
 	Q_INVOKABLE bool getShowStartVideoCallButton () const;
@@ -640,6 +645,7 @@ signals:
 	void mipmapEnabledChanged();
 	
 	void checkForUpdateEnabledChanged();
+	void versionCheckUrlChanged();
 	
 	// Advanced. -----------------------------------------------------------------
 	

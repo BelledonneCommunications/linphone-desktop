@@ -1,5 +1,4 @@
 [misc]
-version_check_url_root=https://linphone.org/releases
 log_collection_upload_server_url=https://www.linphone.org:444/lft.php
 
 [sound]

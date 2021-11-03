@@ -10,7 +10,7 @@ RowLayout {
   property alias label: label.text
 
   default property var _content: null
-
+  property int maxWidth: FormHGroupStyle.content.maxWidth
   // ---------------------------------------------------------------------------
 
   spacing: FormHGroupStyle.spacing
@@ -63,7 +63,7 @@ RowLayout {
 
         Component.onCompleted: _content.width = Qt.binding(function () {
           var contentWidth = content.width
-          var wishedWidth = FormHGroupStyle.content.maxWidth
+          var wishedWidth = parent.parent.parent.maxWidth
           return contentWidth > wishedWidth ? wishedWidth : contentWidth
         })
       }
