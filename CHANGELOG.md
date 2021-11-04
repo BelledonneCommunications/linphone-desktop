@@ -6,6 +6,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.4.0 - [Undefined]
 
+## 4.3.1 - 2021-11-04
+
+### Added
+
+- Features:
+	* New version behavior : Manual check for new version, option to activate the automatic check and a way to set the URL.
+	* A banner is shown when copying text.
+	* Options to enable standard and secure chats.
+	* Add tunnel support if build.
+	* Overhaul of color managment and use monochrome images.
+	* Change Contact Edit and SIP Addresses selections to start a standard chat or a secure one.
+	* Call history button in the timeline panel.
+	* Timeout of incoming call notification is now based on `inc_timeout`
+	* More actions in contact edit panel (call/video call).
+	* Allow to make a readonly variable in configuration (only for enabling chats yet).
+	
+### Fixed
+
+- Better quality of icons.
+- Crash on start and on exit.
+- Allow to use a secure chat room to be used when calling (set by context : encrypted call/secure chat enabled).
+- History buttons that should not appear if chat room mode is not activated.
+- Keep the fullscreen mode when receiving a notification.
+- Clicking on the fullscreen action on the call window will go to the fullscreen if exists.
+- Fix scrolling speed and add a cache in lists.
+- Fix Mac crash by adding an option to deactivate mipmap.
+- Add more translations.
+- Mac: Enable automatic graphics switching indicating whether an OpenGL app may utilize the integrated GPU.
+- Version checking that could request an update to older version.
+- A crash on authentication with empty configs.
+- Main search with UTF8
+- When requested, remove all history of a chat room and not only desplayed entries.
+- Fix missing qml variables.
+- Add more debug logs.
+- Use macqtdeploy when building in order to use binary without having enabling packaging.
+
 ## 4.3.0 - 2021-10-20
 
 ### Added
