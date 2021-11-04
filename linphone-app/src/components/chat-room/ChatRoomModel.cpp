@@ -332,11 +332,18 @@ bool ChatRoomModel::removeRows (int row, int count, const QModelIndex &parent) {
 void ChatRoomModel::removeAllEntries () {
 	qInfo() << QStringLiteral("Removing all entries of: (%1, %2).")
 			   .arg(getPeerAddress()).arg(getLocalAddress());
-	
+	auto core = CoreManager::getInstance()->getCore();
+	bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
 	beginResetModel();	
-	for (auto &entry : mEntries)
-		entry->deleteEvent();
 	mEntries.clear();
+	mChatRoom->deleteHistory();
+	if( isOneToOne() && // Remove calls only if chat room is one-one and not secure (if available)
+		( !standardChatEnabled || !isSecure())
+		) {
+		auto callLogs = core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress());
+		for(auto callLog : callLogs)
+			core->removeCallLog(callLog);
+	}
 	endResetModel();
 	emit allEntriesRemoved(mSelf.lock());
 	emit focused();// Removing all entries is like having focus. Don't wait asynchronous events.
