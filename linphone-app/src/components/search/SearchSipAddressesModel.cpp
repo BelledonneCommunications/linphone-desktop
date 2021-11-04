@@ -106,7 +106,7 @@ bool SearchSipAddressesModel::removeRows (int row, int count, const QModelIndex 
 }
 
 void SearchSipAddressesModel::setFilter(const QString& filter){
-	mMagicSearch->getContactListFromFilterAsync(Utils::appStringToCoreString(filter),"");
+	mMagicSearch->getContactListFromFilterAsync(filter.toStdString(),"");
 	//searchReceived(mMagicSearch->getContactListFromFilter(Utils::appStringToCoreString(filter),""));	// Just to show how to use sync method
 }
 
