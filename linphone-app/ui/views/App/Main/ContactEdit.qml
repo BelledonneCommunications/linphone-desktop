@@ -156,9 +156,28 @@ ColumnLayout  {
 					ActionButton {
 						isCustom: true
 						backgroundRadius: 90
+						colorSet: ContactEditStyle.videoCall
+						
+						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
+						
+						onClicked: sipAddressesMenu.open(sipAddressesMenu.startVideoCall)
+					}
+					
+					ActionButton {
+						isCustom: true
+						backgroundRadius: 90
+						colorSet: ContactEditStyle.call
+						
+						visible: SettingsModel.outgoingCallsEnabled 
+						
+						onClicked: sipAddressesMenu.open(sipAddressesMenu.startCall)
+					}
+					ActionButton {
+						isCustom: true
+						backgroundRadius: 90
 						colorSet: SettingsModel.getShowStartChatButton() ? ContactEditStyle.chat : ContactEditStyle.history
 						visible: SettingsModel.standardChatEnabled
-						onClicked: sipAddressesMenu.open(false)
+						onClicked: sipAddressesMenu.open(sipAddressesMenu.createChatRoom)
 						tooltipText: qsTr('tooltipShowConversation')
 						tooltipIsClickable: false
 					}
@@ -176,7 +195,7 @@ ColumnLayout  {
 							anchors.top:parent.top
 							anchors.topMargin: -3
 						}
-						onClicked: {sipAddressesMenu.open(true)}
+						onClicked: {sipAddressesMenu.open(sipAddressesMenu.createSecureChatRoom)}
 						
 						tooltipMaxWidth: actionBar.width
 						tooltipVisible: AccountSettingsModel.conferenceURI == ''
@@ -219,16 +238,30 @@ ColumnLayout  {
 		relativeY: infoBar.height
 		
 		sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
-				
-		onSipAddressClicked: {
-			var entry = CallsListModel.createChatRoom( "", isSecure, [sipAddress], false )
-			if(entry){
-				window.setView('Conversation', {
-									chatRoomModel:entry.chatRoomModel
-								}, function(){
-									TimelineListModel.select(entry.chatRoomModel)
-							   })
-				}
+		
+		function vewConversation(chatRoomModel){
+			window.setView('Conversation', {
+								chatRoomModel:chatRoomModel
+							}, function(){
+								TimelineListModel.select(chatRoomModel)
+						   })
+		}
+		
+		function createChatRoom(sipAddress){
+			var entry = CallsListModel.createChatRoom( "", false, [sipAddress], false )
+			if(entry)
+				vewConversation(entry.chatRoomModel)
+		}
+		function createSecureChatRoom(sipAddress){
+			var entry = CallsListModel.createChatRoom( "", true, [sipAddress], false )
+			if(entry)
+				vewConversation(entry.chatRoomModel)
+		}
+		function startCall(sipAddress){
+			CallsListModel.launchAudioCall([sipAddress])
+		}
+		function startVideoCall(sipAddress){
+			CallsListModel.launchVideoCall([sipAddress])
 		}
 	}
 	

@@ -4,7 +4,7 @@ import Common 1.0
 import Linphone.Styles 1.0
 
 // =============================================================================
-
+// SipAddressesMenu
 Item {
   id: sipAddressesMenu
 
@@ -18,16 +18,19 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  function open (isSecure) {
+  function open (callback) {
     var length = sipAddresses.length
     if (!length) {
       return
     }
 
     if (length === 1) {
-      return sipAddressesMenu.sipAddressClicked(sipAddresses[0], isSecure)
+		if(callback)
+			return callback(sipAddresses[0])
+		else
+			return sipAddressesMenu.sipAddressClicked(sipAddresses[0])
     }
-	menu.isSecure = isSecure
+	menu.callback = callback
     menu.open()
   }
 
@@ -41,7 +44,7 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  signal sipAddressClicked (string sipAddress, bool isSecure)
+  signal sipAddressClicked (string sipAddress)
 
   // ---------------------------------------------------------------------------
 
@@ -51,7 +54,7 @@ Item {
 
   DropDownDynamicMenu {
     id: menu
-    property bool isSecure : false
+    property var callback
 
     parent: sipAddressesMenu.parent
 
@@ -105,7 +108,10 @@ Item {
 
           onClicked: {
             menu.close()
-            sipAddressesMenu.sipAddressClicked($sipAddress, menu.isSecure)
+            if( menu.callback)
+				menu.callback($sipAddress)
+			else
+				sipAddressesMenu.sipAddressClicked($sipAddress)
           }
         }
       }

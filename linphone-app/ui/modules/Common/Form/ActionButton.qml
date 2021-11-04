@@ -181,7 +181,7 @@ Item {
 			anchors.centerIn: parent
 			icon: {
 				if(!Images[_getIcon()])
-					console.log(_getIcon())
+					console.log("No images for: "+_getIcon())
 				return Images[_getIcon()].id
 				}
 			iconSize: wrappedButton.iconSize || (
