@@ -2519,17 +2519,17 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mipmap engedélyezése</translation>
     </message>
     <message>
         <source>mipmapTooltip1</source>
         <extracomment>&apos;This property holds whether the image uses mipmap filtering when scaled or transformed.&apos; : first line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ez a tulajdonság megmarad, függetlenül attól, hogy a kép mipmap-szűrést használ-e méretezéskor vagy átalakításkor.</translation>
     </message>
     <message>
         <source>mipmapTooltip2</source>
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A mipmap-szűrés jobb vizuális minőséget biztosít kicsinyítéskor, mint a sima, de teljesítményköltséggel járhat (mind a kép inicializálásakor, mind a renderelés során).</translation>
     </message>
 </context>
 <context>
