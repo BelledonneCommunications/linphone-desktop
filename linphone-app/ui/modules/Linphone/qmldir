@@ -15,6 +15,9 @@ Calls               1.0 Calls/Calls.qml
 CallStatistics      1.0 Calls/CallStatistics.qml
 
 Chat                1.0 Chat/Chat.qml
+ChatMessagePreview  1.0 Chat/ChatMessagePreview.qml
+ChatReplyMessage    1.0 Chat/ChatReplyMessage.qml
+ChatReplyPreview    1.0 Chat/ChatReplyPreview.qml
 
 History             1.0 History/History.qml
 

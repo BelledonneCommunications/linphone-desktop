@@ -28,6 +28,8 @@ Item {
 	signal removeEntryRequested()
 	signal copyAllDone()
 	signal copySelectionDone()
+	signal replyClicked()
+	signal forwardClicked()
 
 	function open(){
 		messageMenu.popup()
@@ -69,6 +71,27 @@ Item {
 			visible: content != ''
 		}
 		MenuItem {
+			//: 'Forward' : Forward  a message from menu
+			text: qsTr('menuForward')
+			iconMenu: MenuItemStyle.forward.icon
+			iconSizeMenu: MenuItemStyle.forward.iconSize
+			iconLayoutDirection: Qt.RightToLeft
+			menuItemStyle : MenuItemStyle.aux
+			onTriggered: container.forwardClicked()
+			visible: content != ''
+		}
+		MenuItem {
+			//: 'Reply' : Reply to a message from menu
+			text: qsTr('menuReply')
+			iconMenu: MenuItemStyle.reply.icon
+			iconSizeMenu: MenuItemStyle.reply.iconSize
+			iconLayoutDirection: Qt.RightToLeft
+			menuItemStyle : MenuItemStyle.aux
+			onTriggered: container.replyClicked()
+			visible: content != ''
+		}
+		
+		MenuItem {
 			//: 'Hide delivery status' : Item menu that lead to IMDN of a message
 			text: (deliveryVisible ? qsTr('menuHideDeliveryStatus')
 			//: 'Delivery status' : Item menu that lead to IMDN of a message
@@ -97,8 +120,6 @@ Item {
 	// Handle hovered link.
 	MouseArea {
 		anchors.fill: parent
-		//height: messageMenu.height
-		//width: messageMenu.width
 		
 		acceptedButtons: Qt.RightButton
 		propagateComposedEvents:true

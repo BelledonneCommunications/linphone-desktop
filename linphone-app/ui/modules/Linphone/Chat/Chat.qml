@@ -5,7 +5,10 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import Utils 1.0
 import UtilsCpp 1.0
+
+import Units 1.0
 
 import 'Chat.js' as Logic
 
@@ -19,6 +22,8 @@ Rectangle {
 	
 	property string noticeBannerText : ''	// When set, show a banner with text and hide after some time
 	onNoticeBannerTextChanged: if(noticeBannerText!='') messageBlock.state = "showed"
+	
+	property alias replyChatMessageModel: chatMessagePreview.replyChatMessageModel
 	
 	// ---------------------------------------------------------------------------
 	
@@ -259,31 +264,38 @@ Rectangle {
 								source: Logic.getComponentFromEntry($chatEntry)
 							}
 							Connections{
-									target: loader.item
-									ignoreUnknownSignals: true
-									//: "Copied to clipboard" : when a user copy a text from the menu, this message show up.
-									onCopyAllDone: container.noticeBannerText = qsTr("allTextCopied")
-									//: "Selection copied to clipboard" : when a user copy a text from the menu, this message show up.
-									onCopySelectionDone: container.noticeBannerText = qsTr("selectedTextCopied")
+								target: loader.item
+								ignoreUnknownSignals: true
+								//: "Copied to clipboard" : when a user copy a text from the menu, this message show up.
+								onCopyAllDone: container.noticeBannerText = qsTr("allTextCopied")
+								//: "Selection copied to clipboard" : when a user copy a text from the menu, this message show up.
+								onCopySelectionDone: container.noticeBannerText = qsTr("selectedTextCopied")
+								onReplyClicked: {
+									proxyModel.setReply($chatEntry)
+									container.replyChatMessageModel = $chatEntry
 								}
+							}
 						}
 					}
 				}
 			}
 			footer: Item{
-						Text {
-							property var composers : container.proxyModel.composers
-							color: ChatStyle.composingText.color
-							font.pointSize: ChatStyle.composingText.pointSize
-							height: visible ? undefined : 0
-							leftPadding: ChatStyle.composingText.leftPadding
-							visible: composers.length > 0 && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
-							wrapMode: Text.Wrap
-							//: '%1 is typing...' indicate that someone is composing in chat
-							text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
-						}
-					}
-					
+				Text {
+					property var composers : container.proxyModel.composers
+					color: ChatStyle.composingText.color
+					font.pointSize: ChatStyle.composingText.pointSize
+					height: visible ? undefined : 0
+					leftPadding: ChatStyle.composingText.leftPadding
+					visible: composers.length > 0 && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
+					wrapMode: Text.Wrap
+					//: '%1 is typing...' indicate that someone is composing in chat
+					text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
+				}
+			}
+			
+			ChatMessagePreview{
+				id: chatMessagePreview
+			}
 			Rectangle{
 				id: messageBlock
 				height: 32
@@ -315,30 +327,30 @@ Rectangle {
 						Layout.fillWidth: true
 						text: container.noticeBannerText
 						font {
-								pointSize: ChatStyle.messageBanner.pointSize
-							}
+							pointSize: ChatStyle.messageBanner.pointSize
+						}
 						color: ChatStyle.messageBanner.textColor
 					}
 				}
 				states: [
-					 State {
-						 name: "hidden"
-						 PropertyChanges { target: messageBlock; opacity: 0 }
-					 },
-					 State {
-						 name: "showed"
-						 PropertyChanges { target: messageBlock; opacity: 1 }
-					 }
-				 ]
-				 transitions: [
-					 Transition {
-						 from: "*"; to: "showed"
-						 SequentialAnimation{
+					State {
+						name: "hidden"
+						PropertyChanges { target: messageBlock; opacity: 0 }
+					},
+					State {
+						name: "showed"
+						PropertyChanges { target: messageBlock; opacity: 1 }
+					}
+				]
+				transitions: [
+					Transition {
+						from: "*"; to: "showed"
+						SequentialAnimation{
 							NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 500 }
-							 ScriptAction{ script: hideNoticeBanner.start()}	
+							ScriptAction{ script: hideNoticeBanner.start()}	
 						}
-					 },
-					 Transition {
+					},
+					Transition {
 						SequentialAnimation{
 							NumberAnimation{ properties: "opacity"; duration: 1000 }
 							ScriptAction{ script: container.noticeBannerText = '' }
@@ -360,7 +372,7 @@ Rectangle {
 			borderColor: ChatStyle.sendArea.border.color
 			topWidth: ChatStyle.sendArea.border.width
 			visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.hasBeenLeft && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
-						
+			
 			
 			DroppableTextArea {
 				id: textArea
@@ -385,9 +397,10 @@ Rectangle {
 				onValidText: {
 					textArea.text = ''
 					chat.bindToEnd = true
-					if(proxyModel.chatRoomModel)
+					if(proxyModel.chatRoomModel) {
 						proxyModel.sendMessage(text)
-					else{
+						
+					}else{
 						console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
 						proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
 						proxyModel.sendMessage(text)

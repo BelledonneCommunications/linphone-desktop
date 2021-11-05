@@ -35,6 +35,7 @@ class ParticipantListModel;
 class ChatEvent;
 class ContactModel;
 class ChatRoomModel;
+class ChatMessageModel;
 
 class ChatRoomModelListener : public QObject, public linphone::ChatRoomListener {
 Q_OBJECT
@@ -207,6 +208,9 @@ public:
 	void addMissedCallsCount(std::shared_ptr<linphone::Call> call);
 	void setEphemeralEnabled(bool enabled);
 	void setEphemeralLifetime(long lifetime);
+	
+	void setReply(ChatMessageModel * model);
+	void clearReply();
 
 // Tools
 	
@@ -335,6 +339,8 @@ private:
 	QMap<std::shared_ptr<const linphone::Address>, QString> mComposers;	// Store all addresses that are composing with its username
 	std::shared_ptr<linphone::ChatRoom> mChatRoom;
 	std::shared_ptr<ChatRoomModelListener> mChatRoomModelListener;
+	
+	std::shared_ptr<linphone::ChatMessage> mReply;
 	
 	std::weak_ptr<ChatRoomModel> mSelf;
 };

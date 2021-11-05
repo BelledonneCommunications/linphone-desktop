@@ -23,6 +23,9 @@ Item {
 	property string dropDisabledReason
 	property bool isEphemeral : false
 	
+	property int textLeftMargin: (fileChooserButton.visible? fileChooserButton.totalWidth + DroppableTextAreaStyle.fileChooserButton.margins: 0)
+	property int textRightMargin: sendButton.visible ? sendButton.totalWidth + DroppableTextAreaStyle.fileChooserButton.margins : 0
+	
 	// ---------------------------------------------------------------------------
 	
 	signal dropped (var files)
@@ -55,6 +58,7 @@ Item {
 			// Handle click to select files.
 			ActionButton {
 				id: fileChooserButton
+				property int totalWidth: DroppableTextAreaStyle.fileChooserButton.margins + width
 				
 				Layout.leftMargin: DroppableTextAreaStyle.fileChooserButton.margins
 				Layout.alignment: Qt.AlignVCenter
@@ -189,6 +193,7 @@ Item {
 			// Handle click to select files.
 			ActionButton {
 				id: sendButton
+				property int totalWidth: Layout.rightMargin + Layout.leftMargin + width
 				Layout.rightMargin: DroppableTextAreaStyle.fileChooserButton.margins+15
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignVCenter

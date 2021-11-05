@@ -16,12 +16,16 @@ Item {
   
   signal copyAllDone()
   signal copySelectionDone()
+  signal replyClicked()
+  signal forwardClicked()
 
   Message {
     id: message
     
 	onCopyAllDone: parent.copyAllDone()
 	onCopySelectionDone: parent.copySelectionDone()
+	onReplyClicked: parent.replyClicked()
+	onForwardClicked: parent.forwardClicked()
 	
     anchors {
       left: parent.left

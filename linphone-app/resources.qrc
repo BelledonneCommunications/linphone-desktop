@@ -82,6 +82,8 @@
 		<file>assets/images/led_red.svg</file>
 		<file>assets/images/led_white.svg</file>
 		<file>assets/images/menu_copy_text_custom.svg</file>
+		<file>assets/images/menu_reply_custom.svg</file>
+		<file>assets/images/menu_forward_custom.svg</file>
 		<file>assets/images/menu_imdn_info_custom.svg</file>
 		<file>assets/images/menu_vdots_custom.svg</file>
 		<file>assets/images/menu_info_custom.svg</file>
@@ -134,7 +136,7 @@
 		<file>assets/images/tooltip_arrow_right_custom.svg</file>
 		<file>assets/images/tooltip_arrow_top_custom.svg</file>
 		<file>assets/images/transfer_custom.svg</file>
-		<file>assets/images/update_sign.svg</file>		
+		<file>assets/images/update_sign.svg</file>
 		<file>assets/images/video_call_accept_custom.svg</file>
 		<file>assets/images/video_call_custom.svg</file>
 		<file>assets/images/warning.svg</file>
@@ -268,6 +270,9 @@
 		<file>ui/modules/Linphone/Chat/Chat.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatDeliveries.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMenu.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatMessagePreview.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatReplyMessage.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatReplyPreview.qml</file>
 		<file>ui/modules/Linphone/Chat/Event.qml</file>
 		<file>ui/modules/Linphone/Chat/FileMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/IncomingMessage.qml</file>
@@ -307,6 +312,7 @@
 		<file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Calls/ConferenceControlsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Chat/ChatReplyMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>

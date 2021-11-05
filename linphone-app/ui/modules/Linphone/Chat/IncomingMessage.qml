@@ -13,6 +13,8 @@ RowLayout {
 	
 	signal copyAllDone()
 	signal copySelectionDone()
+	signal replyClicked()
+	signal forwardClicked()
   
 	implicitHeight: message.height
 	spacing: 0
@@ -61,6 +63,8 @@ RowLayout {
 		
 		onCopyAllDone: parent.copyAllDone()
 		onCopySelectionDone: parent.copySelectionDone()
+		onReplyClicked: parent.replyClicked()
+		onForwardClicked: parent.forwardClicked()
 		
 		Layout.fillWidth: true
 		

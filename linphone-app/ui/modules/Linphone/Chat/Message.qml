@@ -34,26 +34,28 @@ Item {
 	
 	signal copyAllDone()
 	signal copySelectionDone()
+	signal replyClicked()
+	signal forwardClicked()
 	
 	// ---------------------------------------------------------------------------
 	
-	implicitHeight: message.contentHeight 
+	implicitHeight: message.contentHeight + 
+					+ (replyMessage.visible ? replyMessage.contentHeight + 5 : 0)
 					+ (ephemeralTimerRow.visible? message.padding * 4 : message.padding * 2) 
 					+ (deliveryLayout.visible? deliveryLayout.height : 0)
 	
 	
 	Rectangle {
 		id: rectangle
-		
+		property int maxWidth: parent.width
+		property int dataWidth: Math.max(message.implicitWidth + 2*ChatStyle.entry.message.padding + 10, replyMessage.contentWidth)
 		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
 		radius: ChatStyle.entry.message.radius
 		width: (
-				   ephemeralTimerRow.visible && message.contentWidth < ephemeralTimerRow.width
+				   ephemeralTimerRow.visible && dataWidth < ephemeralTimerRow.width
 				   ? ephemeralTimerRow.width
-				   : message.contentWidth < parent.width
-					 ? message.contentWidth
-					 : parent.width
-				   ) + message.padding * 2
+				   : Math.min(dataWidth, maxWidth)
+				   )
 		Row{
 			id:ephemeralTimerRow
 			anchors.right:parent.right
@@ -78,64 +80,73 @@ Item {
 				overwriteColor: ChatStyle.ephemeralTimer.timerColor
 				iconSize: ChatStyle.ephemeralTimer.iconSize
 			}
-		}		
-	}
-	
-	
+		}
 	
 	// ---------------------------------------------------------------------------
 	// Message.
 	// ---------------------------------------------------------------------------
-	
-	TextEdit {
-		id: message
-		property string lastTextSelected : ''
-		property font customFont : SettingsModel.textMessageFont
-		
-		anchors {
-			left: container.left
-			right: container.right
-		}
-		
-		clip: true
-		padding: ChatStyle.entry.message.padding
-		readOnly: true
-		selectByMouse: true
-		font.family: customFont.family
-		font.pointSize: Units.dp * customFont.pointSize
-		text: Utils.encodeTextToQmlRichFormat($chatEntry.content, {
-												  imagesHeight: ChatStyle.entry.message.images.height,
-												  imagesWidth: ChatStyle.entry.message.images.width
-											  })
-		
-		// See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
-		// and http://doc.qt.io/qt-5/richtext-html-subset.html
-		textFormat: Text.RichText // To supports links and imgs.
-		wrapMode: TextEdit.Wrap
-		
-		onCursorRectangleChanged: Logic.ensureVisible(cursorRectangle)
-		onLinkActivated: Qt.openUrlExternally(link)
-		onSelectedTextChanged:if(selectedText != '') lastTextSelected = selectedText
-		onActiveFocusChanged: {
-			if(activeFocus)
-				lastTextSelected = ''
-			deselect()
-		}
-		
-		ChatMenu{
-			id:chatMenu
-			height: parent.height
-			width: rectangle.width
-			
-			lastTextSelected: message.lastTextSelected 
-			content: $chatEntry.content
-			deliveryCount: deliveryLayout.model.count
-			onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
-			onRemoveEntryRequested: removeEntry()
-			deliveryVisible: deliveryLayout.visible
-			
-			onCopyAllDone: container.copyAllDone()
-			onCopySelectionDone: container.copySelectionDone()
+		Column{
+			anchors.left: parent.left
+			anchors.right: parent.right
+			spacing: 5
+			ChatReplyMessage{
+				id: replyMessage
+				mainChatMessageModel: $chatEntry
+				visible: $chatEntry.isReply
+				maxWidth: container.width
+				height: contentHeight
+			}
+			TextEdit {
+				id: message
+				property string lastTextSelected : ''
+				property font customFont : SettingsModel.textMessageFont
+				
+				anchors.left: parent.left
+				anchors.right: parent.right
+				
+				clip: true
+				padding: ChatStyle.entry.message.padding
+				readOnly: true
+				selectByMouse: true
+				font.family: customFont.family
+				font.pointSize: Units.dp * customFont.pointSize
+				text: Utils.encodeTextToQmlRichFormat($chatEntry.content, {
+														  imagesHeight: ChatStyle.entry.message.images.height,
+														  imagesWidth: ChatStyle.entry.message.images.width
+													  })
+				
+				// See http://doc.qt.io/qt-5/qml-qtquick-text.html#textFormat-prop
+				// and http://doc.qt.io/qt-5/richtext-html-subset.html
+				textFormat: Text.RichText // To supports links and imgs.
+				wrapMode: TextEdit.Wrap
+				
+				onCursorRectangleChanged: Logic.ensureVisible(cursorRectangle)
+				onLinkActivated: Qt.openUrlExternally(link)
+				onSelectedTextChanged:if(selectedText != '') lastTextSelected = selectedText
+				onActiveFocusChanged: {
+					if(activeFocus)
+						lastTextSelected = ''
+					deselect()
+				}
+				
+				ChatMenu{
+					id:chatMenu
+					height: parent.height
+					width: rectangle.width
+					
+					lastTextSelected: message.lastTextSelected 
+					content: $chatEntry.content
+					deliveryCount: deliveryLayout.model.count
+					onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
+					onRemoveEntryRequested: removeEntry()
+					deliveryVisible: deliveryLayout.visible
+					
+					onCopyAllDone: container.copyAllDone()
+					onCopySelectionDone: container.copySelectionDone()
+					onReplyClicked: container.replyClicked()
+					onForwardClicked: container.forwardClicked()
+				}
+			}
 		}
 	}
 	

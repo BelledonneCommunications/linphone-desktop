@@ -60,6 +60,7 @@ public:
 	Q_PROPERTY(QString thumbnail READ getThumbnail WRITE setThumbnail NOTIFY thumbnailChanged)
 	Q_PROPERTY(bool wasDownloaded MEMBER mWasDownloaded WRITE setWasDownloaded NOTIFY wasDownloadedChanged)
 	
+	
 	std::shared_ptr<linphone::Content> getContent()const;	
 	
 	quint64 getFileSize() const;
@@ -135,6 +136,7 @@ public:
 	
 	
 	Q_PROPERTY(QString fromDisplayName READ getFromDisplayName CONSTANT)
+	Q_PROPERTY(QString fromDisplayNameReplyMessage READ getFromDisplayNameReplyMessage CONSTANT)
 	Q_PROPERTY(QString fromSipAddress READ getFromSipAddress CONSTANT)
 	Q_PROPERTY(QString toDisplayName READ getToDisplayName CONSTANT)
 	Q_PROPERTY(QString toSipAddress READ getToSipAddress CONSTANT)
@@ -155,6 +157,9 @@ public:
 	Q_PROPERTY(ContentModel * fileContentModel READ getFileContentModel NOTIFY fileContentChanged)
 	//Q_PROPERTY(QList<ContentModel *> contents READ getContents CONSTANT)
 	
+	Q_PROPERTY(bool isReply READ isReply CONSTANT)
+	Q_PROPERTY(ChatMessageModel* replyChatMessageModel READ getReplyChatMessageModel CONSTANT)
+	
 	std::shared_ptr<linphone::ChatMessage> getChatMessage();
 	std::shared_ptr<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);
 	Q_INVOKABLE ContentModel * getContent(int i);
@@ -162,6 +167,7 @@ public:
 	//----------------------------------------------------------------------------
 	
 	QString getFromDisplayName() const;
+	QString getFromDisplayNameReplyMessage() const;
 	QString getFromSipAddress() const;
 	QString getToDisplayName() const;
 	QString getToSipAddress() const;
@@ -175,6 +181,9 @@ public:
 	QList<ContentModel*> getContents() const;
 	Q_INVOKABLE ParticipantImdnStateProxyModel * getProxyImdnStates();
 	std::shared_ptr<ParticipantImdnStateListModel> getParticipantImdnStates() const;
+	
+	bool isReply() const;
+	ChatMessageModel * getReplyChatMessageModel() const;
 	
 	//----------------------------------------------------------------------------
 	
@@ -219,6 +228,8 @@ private:
 	std::shared_ptr<linphone::ChatMessage> mChatMessage;
 	std::shared_ptr<ParticipantImdnStateListModel> mParticipantImdnStateListModel;
 	std::shared_ptr<ChatMessageListener> mChatMessageListener;
+	
+	std::shared_ptr<ChatMessageModel> mReplyChatMessageModel;
 };
 Q_DECLARE_METATYPE(ChatMessageModel*)
 Q_DECLARE_METATYPE(std::shared_ptr<ChatMessageModel>)

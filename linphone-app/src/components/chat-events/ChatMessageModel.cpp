@@ -82,7 +82,6 @@ QString ContentModel::getThumbnail() const{
 	return mThumbnail;
 }
 
-
 void ContentModel::setFileOffset(quint64 fileOffset){
 	if( mFileOffset != fileOffset) {
 		mFileOffset = fileOffset;
@@ -302,6 +301,12 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 	mWasDownloaded = false;
 	mChatMessage->addListener(mChatMessageListener);
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessage->getTime() * 1000);
+	if( mChatMessage->isReply()){
+		auto replyMessage = mChatMessage->getReplyMessage();
+		if( replyMessage)// Reply message could be inexistant (for example : when locally deleted)
+			mReplyChatMessageModel = create(replyMessage, parent);
+	}
+	
 	connect(this, &ChatMessageModel::remove, dynamic_cast<ChatRoomModel*>(parent), &ChatRoomModel::removeEntry);
 	
 	std::list<std::shared_ptr<linphone::Content>> contents = chatMessage->getContents();
@@ -365,6 +370,13 @@ QString ChatMessageModel::getFromDisplayName() const{
 	return Utils::getDisplayName(mChatMessage->getFromAddress());	
 }
 
+QString ChatMessageModel::getFromDisplayNameReplyMessage() const{
+	if( isReply())
+		return Utils::getDisplayName(mChatMessage->getReplyMessageSenderAddress());
+	else
+		return "";
+}
+
 QString ChatMessageModel::getFromSipAddress() const{
 	return Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asStringUriOnly()));
 }
@@ -424,6 +436,13 @@ std::shared_ptr<ParticipantImdnStateListModel> ChatMessageModel::getParticipantI
 	return mParticipantImdnStateListModel;
 }
 
+bool ChatMessageModel::isReply() const{
+	return mChatMessage->isReply();
+}
+
+ChatMessageModel * ChatMessageModel::getReplyChatMessageModel() const{
+	return mReplyChatMessageModel.get();
+}
 
 
 //-----------------------------------------------------------------------------------------------------------------------

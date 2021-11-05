@@ -18,6 +18,14 @@ QtObject {
 		property int iconSize: 30
 		property string icon : 'menu_copy_text_custom'
 	}
+	property QtObject reply: QtObject {
+		property int iconSize: 30
+		property string icon : 'menu_reply_custom'
+	}
+	property QtObject forward: QtObject {
+		property int iconSize: 30
+		property string icon : 'menu_forward_custom'
+	}
 	property QtObject imdn: QtObject {
 		property int iconSize: 30
 		property string icon : 'menu_imdn_info_custom'

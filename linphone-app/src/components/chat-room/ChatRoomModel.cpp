@@ -187,7 +187,7 @@ std::shared_ptr<ChatRoomModel> ChatRoomModel::create(std::shared_ptr<linphone::C
 ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject * parent) : QAbstractListModel(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	CoreManager *coreManager = CoreManager::getInstance();
-	
+	mReply = nullptr;
 	mCoreHandlers = coreManager->getHandlers();
 	
 	mChatRoom = chatRoom;
@@ -592,6 +592,14 @@ void ChatRoomModel::setEphemeralLifetime(long lifetime){
 	}
 }
 
+void ChatRoomModel::setReply(ChatMessageModel * model){
+	if(mReply)
+		clearReply();
+	mReply = model->getChatMessage();
+}
+void ChatRoomModel::clearReply(){
+	mReply = nullptr;
+}
 //------------------------------------------------------------------------------------------------
 
 void ChatRoomModel::deleteChatRoom(){
@@ -630,9 +638,15 @@ void ChatRoomModel::updateParticipants(const QVariantList& participants){
 // -----------------------------------------------------------------------------
 
 void ChatRoomModel::sendMessage (const QString &message) {
-	shared_ptr<linphone::ChatMessage> _message = mChatRoom->createMessageFromUtf8(message.toUtf8().toStdString());
-	_message->send();
+	shared_ptr<linphone::ChatMessage> _message;
+	if(mReply){
+		_message = mChatRoom->createReplyMessage(mReply);
+		_message->addUtf8TextContent(message.toUtf8().toStdString());
+	}else{
+		 _message= mChatRoom->createMessageFromUtf8(message.toUtf8().toStdString());
+	}
 	
+	_message->send();
 	emit messageSent(_message);
 }
 

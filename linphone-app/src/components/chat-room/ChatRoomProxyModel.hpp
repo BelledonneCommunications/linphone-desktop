@@ -70,6 +70,9 @@ public:
 	
 	Q_INVOKABLE void setFilterText(const QString& text);
 	
+	Q_INVOKABLE void setReply(ChatMessageModel* model);
+	Q_INVOKABLE void clearReply();
+	
 signals:
 	void peerAddressChanged (const QString &peerAddress);
 	void localAddressChanged (const QString &localAddress);
