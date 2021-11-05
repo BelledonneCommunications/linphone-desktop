@@ -224,6 +224,7 @@ float SettingsModel::getPlaybackGain() const {
 }
 
 void SettingsModel::setPlaybackGain(float gain) {
+	CoreManager::getInstance()->getCore()->setPlaybackGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setPlaybackGain(gain);
 	}
@@ -235,6 +236,7 @@ float SettingsModel::getCaptureGain() const {
 }
 
 void SettingsModel::setCaptureGain(float gain) {
+	CoreManager::getInstance()->getCore()->setMicGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setCaptureGain(gain);
 	}

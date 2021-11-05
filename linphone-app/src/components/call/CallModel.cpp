@@ -199,22 +199,34 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 // -----------------------------------------------------------------------------
 
 float CallModel::getSpeakerVolumeGain () const {
-	return mCall->getSpeakerVolumeGain();
+	float gain = mCall->getSpeakerVolumeGain();
+	if( gain < 0)
+		gain = CoreManager::getInstance()->getSettingsModel()->getPlaybackGain();
+	return gain;
 }
 
 void CallModel::setSpeakerVolumeGain (float volume) {
 	Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
-	mCall->setSpeakerVolumeGain(volume);
+	if( mCall->getSpeakerVolumeGain() >= 0)
+		mCall->setSpeakerVolumeGain(volume);
+	else
+		CoreManager::getInstance()->getSettingsModel()->setPlaybackGain(volume);
 	emit speakerVolumeGainChanged(getSpeakerVolumeGain());
 }
 
 float CallModel::getMicroVolumeGain () const {
-	return mCall->getMicrophoneVolumeGain();
+	float gain = mCall->getMicrophoneVolumeGain();
+	if( gain < 0)
+		gain = CoreManager::getInstance()->getSettingsModel()->getCaptureGain();
+	return gain;
 }
 
 void CallModel::setMicroVolumeGain (float volume) {
 	Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
-	mCall->setMicrophoneVolumeGain(volume);
+	if(mCall->getMicrophoneVolumeGain() >= 0)
+		mCall->setMicrophoneVolumeGain(volume);
+	else
+		CoreManager::getInstance()->getSettingsModel()->setCaptureGain(volume);
 	emit microVolumeGainChanged(getMicroVolumeGain());
 }
 

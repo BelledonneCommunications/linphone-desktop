@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.4.0 - [Undefined]
 
+## Added
+
+## Fixed
+
+- Changing volume in settings has a overall effect.
+- ALSA volumes can be view/changed while being in call.
+
 ## 4.3.1 - 2021-11-04
 
 ### Added
