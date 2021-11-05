@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.4.0 - [Undefined]
 
+## 4.3.2
+
+## Added
+
+## Fixed
+
+- ALSA volumes can be view/changed while being in call.
+- Remove constraints on actions (call/chat) that were based on friends capabilities.
+- Unblock secure group chat activation.
+
 ## 4.3.1 - 2021-11-04
 
 ### Added
