@@ -544,12 +544,12 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Továbbítás</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Válasz</translation>
     </message>
 </context>
 <context>
@@ -584,7 +584,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Válasz</translation>
     </message>
 </context>
 <context>
@@ -592,7 +592,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>titleReply</source>
         <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Válaszul erre: %1</translation>
     </message>
 </context>
 <context>
