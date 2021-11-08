@@ -36,14 +36,17 @@ namespace Paths {
   std::string getCodecsDirPath ();
   std::string getConfigDirPath (bool writable = true);
   std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
+  std::string getDatabaseFilePath ();
   std::string getDownloadDirPath ();
   std::string getFactoryConfigFilePath ();
   std::string getFriendsListFilePath ();
+  std::string getLimeDatabasePath ();
   std::string getLogsDirPath ();
   std::string getMessageHistoryFilePath ();
   std::string getPackageDataDirPath ();
   std::string getPackageMsPluginsDirPath ();
   std::string getPackagePluginsAppDirPath ();
+  std::string getPackageSoundsResourcesDirPath ();
   std::string getPluginsAppDirPath ();
   QStringList getPluginsAppFolders();
   std::string getRootCaFilePath ();

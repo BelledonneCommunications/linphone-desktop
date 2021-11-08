@@ -186,7 +186,7 @@ ColumnLayout  {
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: SettingsModel.getShowStartChatButton() ? ContactEditStyle.chat : ContactEditStyle.history
-						visible: SettingsModel.secureChatEnabled && _contact && _contact.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
+						visible: SettingsModel.secureChatEnabled
 						enabled: AccountSettingsModel.conferenceURI != ''
 						Icon{
 							icon:'secure_level_1'

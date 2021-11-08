@@ -120,11 +120,20 @@ ScrollableListView {
 									isCustom: true
 									backgroundRadius: 90
 									colorSet: modelData.colorSet
-									visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
+									visible: sipAddressesView.actions[index].visible
 									
 									onClicked: sipAddressesView.actions[index].handler({
 																						   sipAddress: sipAddressesView.interpretableSipAddress
 																					   })
+									Icon{
+										visible: modelData.secure>0 &&
+											(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler($sipAddress) : true)
+										icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+										iconSize:15
+										anchors.right:parent.right
+										anchors.top:parent.top
+										anchors.topMargin: -3
+									}
 								}
 							}
 						}
@@ -282,12 +291,13 @@ ScrollableListView {
 							colorSet: modelData.colorSet
 							anchors.verticalCenter: parent.verticalCenter
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
-							visible: (sipAddressesView.actions[index].visibleHandler ? sipAddressesView.actions[index].visibleHandler($sipAddress) : sipAddressesView.actions[index].visible)
+							visible: sipAddressesView.actions[index].visible
 							onClicked: {
 								sipAddressesView.actions[index].handler(contactView.entry)
 							}
 							Icon{
-								visible: modelData.secure>0
+								visible: modelData.secure>0 &&
+									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler($sipAddress) : true)
 								icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
 								iconSize:15
 								anchors.right:parent.right

@@ -76,7 +76,7 @@ bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCap
 	if(contact)
 		return contact->hasCapability(capability);
 	else
-		return true;
+		return false;
 }
 
 QString Utils::toDateTimeString(QDateTime date){

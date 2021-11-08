@@ -40,14 +40,17 @@ constexpr char Constants::PathPlugins[];
 constexpr char Constants::PathPlugins[];
 #endif
 constexpr char Constants::PathPluginsApp[];
+constexpr char Constants::PathSounds[];
 constexpr char Constants::PathThumbnails[];
 constexpr char Constants::PathUserCertificates[];
 
 constexpr char Constants::PathCallHistoryList[];
 constexpr char Constants::PathConfig[];
+constexpr char Constants::PathDatabase[];
 constexpr char Constants::PathFactoryConfig[];
 constexpr char Constants::PathRootCa[];
 constexpr char Constants::PathFriendsList[];
+constexpr char Constants::PathLimeDatabase[];
 constexpr char Constants::PathMessageHistoryList[];
 constexpr char Constants::PathZrtpSecrets[];
 

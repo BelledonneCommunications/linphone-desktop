@@ -227,6 +227,10 @@ string Paths::getConfigFilePath (const QString &configPath, bool writable) {
   return writable ? getWritableFilePath(path) : getReadableFilePath(path);
 }
 
+std::string Paths::getDatabaseFilePath (){
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)) + Constants::PathDatabase;
+}
+
 string Paths::getFactoryConfigFilePath () {
   return getReadableFilePath(getAppFactoryConfigFilePath());
 }
@@ -237,6 +241,10 @@ string Paths::getFriendsListFilePath () {
 
 string Paths::getDownloadDirPath () {
   return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+}
+
+std::string Paths::getLimeDatabasePath (){
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)) + Constants::PathLimeDatabase;
 }
 
 string Paths::getLogsDirPath () {
@@ -257,6 +265,10 @@ string Paths::getPackageMsPluginsDirPath () {
 
 string Paths::getPackagePluginsAppDirPath () {
   return getReadableDirPath(getAppPackagePluginsDirPath() + Constants::PathPluginsApp);
+}
+
+std::string Paths::getPackageSoundsResourcesDirPath (){
+	return getReadableDirPath(getAppPackageDataDirPath() + Constants::PathSounds);
 }
 
 string Paths::getPluginsAppDirPath () {
