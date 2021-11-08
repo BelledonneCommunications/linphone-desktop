@@ -372,8 +372,18 @@ void App::initContentApp () {
 	mEngine->addImageProvider(ExternalImageProvider::ProviderId, new ExternalImageProvider());
 	mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 	
+	mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
+#ifdef APPLICATION_URL
 	mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
+#else
+	mEngine->rootContext()->setContextProperty("applicationUrl", "");
+#endif
+	
+#ifdef APPLICATION_VENDOR
 	mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
+#else
+	mEngine->rootContext()->setContextProperty("applicationVendor", "");
+#endif
 #ifdef APPLICATION_LICENCE
 	mEngine->rootContext()->setContextProperty("applicationLicence", APPLICATION_LICENCE);
 #else
@@ -862,7 +872,7 @@ void App::setAutoStart (bool enabled) {
     "Exec=" + exec + " --iconified\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
-    "MimeType=x-scheme-handler/sip-linphone;x-scheme-handler/sip;x-scheme-handler/sips-linphone;x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
+    "MimeType=x-scheme-handler/sip-" EXECUTABLE_NAME ";x-scheme-handler/sip;x-scheme-handler/sips-" EXECUTABLE_NAME ";x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
   );
 	
 	mAutoStart = enabled;
