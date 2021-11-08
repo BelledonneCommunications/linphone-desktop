@@ -208,14 +208,11 @@ void CoreManager::setDatabasesPaths () {
 // -----------------------------------------------------------------------------
 
 void CoreManager::setOtherPaths () {
-	if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile(), true))
-		mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
+	mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
 	qInfo() << "Using ZrtpSecrets path : " << QString::fromStdString(mCore->getZrtpSecretsFile());
-	if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath(), true))
-		mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
+	mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
 	qInfo() << "Using UserCertificate path : " << QString::fromStdString(mCore->getUserCertificatesPath());
-	if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa()))
-		mCore->setRootCa(Paths::getRootCaFilePath());
+	mCore->setRootCa(Paths::getRootCaFilePath());
 	qInfo() << "Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
 }
 
@@ -223,6 +220,7 @@ void CoreManager::setResourcesPaths () {
 	shared_ptr<linphone::Factory> factory = linphone::Factory::get();
 	factory->setMspluginsDir(Paths::getPackageMsPluginsDirPath());
 	factory->setTopResourcesDir(Paths::getPackageDataDirPath());
+	factory->setSoundResourcesDir(Paths::getPackageSoundsResourcesDirPath());
 }
 
 // -----------------------------------------------------------------------------
@@ -258,11 +256,15 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	// Force capture/display.
 	// Useful if the app was built without video support.
 	// (The capture/display attributes are reset by the core in this case.)
+	shared_ptr<linphone::Config> config = mCore->getConfig();
 	if (mCore->videoSupported()) {
-		shared_ptr<linphone::Config> config = mCore->getConfig();
 		config->setInt("video", "capture", 1);
 		config->setInt("video", "display", 1);
 	}
+	if(!config->hasEntry("storage", "uri"))
+		config->setString("storage", "uri", Paths::getDatabaseFilePath());
+	if(!config->hasEntry("lime", "x3dh_db_path"))
+		config->setString("lime", "x3dh_db_path", Paths::getLimeDatabasePath());
 	mCore->start();
 	setDatabasesPaths();
 	setOtherPaths();

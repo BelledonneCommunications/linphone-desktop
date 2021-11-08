@@ -277,7 +277,7 @@ ColumnLayout  {
 						isCustom: true
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.chat
-						visible: SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1 && UtilsCpp.hasCapability(conversation.peerAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+						visible: SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 1)
 						Icon{

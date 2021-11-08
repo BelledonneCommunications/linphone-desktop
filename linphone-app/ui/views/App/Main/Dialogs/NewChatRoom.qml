@@ -123,8 +123,9 @@ DialogPlus {
 							
 							onClicked: {
 								var newCheck = checked
-								if(! ( SettingsModel.standardChatEnabled && !checked || SettingsModel.secureChatEnabled && checked))
+								if(SettingsModel.standardChatEnabled && checked || SettingsModel.secureChatEnabled && !checked)
 										newCheck = !checked;
+/*	Uncomment if we need to remove participants that doesn't have the capability (was commented because we cannot get capabilities in all cases)
 									if(newCheck){	// Remove all participants that have not the capabilities
 										var participants = selectedParticipants.getParticipants()
 										for(var index in participants){
@@ -132,6 +133,7 @@ DialogPlus {
 												participantView.removeParticipant(participants[index])
 										}
 									}
+*/
 								checked = newCheck;
 							}
 							indicatorStyle: SwitchStyle.aux
@@ -310,17 +312,14 @@ DialogPlus {
 						placeholderText: qsTr('participantSelectionPlaceholder')
 						//: 'Search in your contacts or add a custom one to the chat room.'
 						tooltipText: qsTr('participantSelectionTooltip')
-						function isUsable(sipAddress){
-									return  UtilsCpp.hasCapability(sipAddress,  LinphoneEnums.FriendCapabilityGroupChat) && 
-										(secureSwitch.checked ? UtilsCpp.hasCapability(sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh) : true);
-						}
+						
 						actions:[{
 								colorSet: NewChatRoomStyle.addParticipant,
 								secure: secureSwitch.checked,
 								visible: true,
-								visibleHandler : function(entry) {
-									return isUsable(entry.sipAddress)
-								},
+								secureIconVisibleHandler : function(entry) {
+									return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+ 								},
 								handler: function (entry) {
 									selectedParticipants.addAddress(entry.sipAddress)
 									smartSearchBar.addAddressToIgnore(entry.sipAddress);
@@ -329,11 +328,9 @@ DialogPlus {
 							}]
 						
 						onEntryClicked: {
-							if( isUsable(entry)){
 								selectedParticipants.addAddress(entry)
 								smartSearchBar.addAddressToIgnore(entry);
 								++lastContacts.reloadCount
-							}
 						}
 					}
 					Text{

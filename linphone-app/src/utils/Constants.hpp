@@ -86,14 +86,17 @@ public:
 	static constexpr char PathPlugins[] = "/plugins/";
 #endif
 	static constexpr char PathPluginsApp[] = "app/";
+	static constexpr char PathSounds[] = "/sounds/" EXECUTABLE_NAME;
 	static constexpr char PathThumbnails[] = "/thumbnails/";
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
 	
 	static constexpr char PathCallHistoryList[] = "/call-history.db";
 	static constexpr char PathConfig[] = "/linphonerc";
+	static constexpr char PathDatabase[] = "/" EXECUTABLE_NAME ".db";
 	static constexpr char PathFactoryConfig[] = "/" EXECUTABLE_NAME "/linphonerc-factory";
 	static constexpr char PathRootCa[] = "/" EXECUTABLE_NAME "/rootca.pem";
 	static constexpr char PathFriendsList[] = "/friends.db";
+	static constexpr char PathLimeDatabase[] = "/x3dh.c25519.sqlite3";
 	static constexpr char PathMessageHistoryList[] = "/message-history.db";
 	static constexpr char PathZrtpSecrets[] = "/zidcache";
 	
@@ -114,7 +117,7 @@ public:
 	static constexpr char QtDomain[] = "qt";
 	static constexpr char SrcPattern[] = "/src/";
 	
-	static constexpr char VcardScheme[] = "linphone-desktop:/";
+	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
 	static constexpr int RcVersionCurrent = 2;// 2 = Conference URI

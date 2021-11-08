@@ -88,7 +88,7 @@ SearchBox {
 				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 1,
 				visible: SettingsModel.secureChatEnabled && AccountSettingsModel.conferenceURI != '',
-				visibleHandler : function(entry) {
+				secureIconVisibleHandler : function(entry) {
 									if(entry)
 										return UtilsCpp.hasCapability(entry.sipAddress ? entry.sipAddress : entry,  LinphoneEnums.FriendCapabilityLimeX3Dh);
 									else

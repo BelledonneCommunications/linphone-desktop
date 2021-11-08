@@ -89,9 +89,9 @@ DialogPlus {
 					colorSet: InfoChatRoomStyle.addParticipant,
 					secure: chatRoomModel.haveEncryption,
 					visible: true,
-					visibleHandler : function(entry) {
-									return !chatRoomModel.haveEncryption || UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh);
-								},
+					secureIconVisibleHandler : function(entry) {
+									return chatRoomModel.haveEncryption && UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh);
+ 								},
 					handler: function (entry) {
 						selectedParticipants.addAddress(entry.sipAddress)
 					},
