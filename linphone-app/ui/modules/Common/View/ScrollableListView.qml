@@ -9,14 +9,14 @@ ListView {
   id: view
 
   // ---------------------------------------------------------------------------
-
+  
   ScrollBar.vertical: ForceScrollBar {
     id: vScrollBar
 
     onPressedChanged: pressed ? view.movementStarted() : view.movementEnded()
-	visible:view.contentHeight > view.height
+    // ScrollBar.AsNeeded doesn't work. Do it ourself.
+	policy: (view.contentHeight > view.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff)
   }
-
   // ---------------------------------------------------------------------------
 
   boundsBehavior: Flickable.StopAtBounds

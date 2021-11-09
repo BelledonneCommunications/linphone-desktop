@@ -40,15 +40,15 @@ Item {
 	// ---------------------------------------------------------------------------
 	
 	implicitHeight: message.contentHeight + 
-					+ (replyMessage.visible ? replyMessage.contentHeight + 5 : 0)
+					+ (forwardMessage.visible ? forwardMessage.fitHeight + 5 : 0)
+					+ (replyMessage.visible ? replyMessage.fitHeight + 5 : 0)
 					+ (ephemeralTimerRow.visible? message.padding * 4 : message.padding * 2) 
 					+ (deliveryLayout.visible? deliveryLayout.height : 0)
-	
 	
 	Rectangle {
 		id: rectangle
 		property int maxWidth: parent.width
-		property int dataWidth: Math.max(message.implicitWidth + 2*ChatStyle.entry.message.padding + 10, replyMessage.contentWidth)
+		property int dataWidth: Math.max(Math.max(message.implicitWidth + 2*ChatStyle.entry.message.padding + 10, replyMessage.fitWidth),  forwardMessage.fitWidth)
 		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
 		radius: ChatStyle.entry.message.radius
 		width: (
@@ -88,13 +88,18 @@ Item {
 		Column{
 			anchors.left: parent.left
 			anchors.right: parent.right
-			spacing: 5
+			spacing: 0
+			ChatForwardMessage{
+				id: forwardMessage
+				mainChatMessageModel: $chatEntry
+				visible: $chatEntry.isForward
+				maxWidth: container.width
+			}
 			ChatReplyMessage{
 				id: replyMessage
 				mainChatMessageModel: $chatEntry
 				visible: $chatEntry.isReply
 				maxWidth: container.width
-				height: contentHeight
 			}
 			TextEdit {
 				id: message

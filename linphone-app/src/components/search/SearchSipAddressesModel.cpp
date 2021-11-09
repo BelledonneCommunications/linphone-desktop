@@ -112,8 +112,12 @@ void SearchSipAddressesModel::setFilter(const QString& filter){
 
 void SearchSipAddressesModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
 	QList<std::shared_ptr<SearchResultModel> > addresses;
-	for(auto it = results.begin() ; it != results.end() ; ++it)
-		addresses << std::make_shared<SearchResultModel>((*it)->getFriend(), (*it)->getAddress());
+	for(auto it = results.begin() ; it != results.end() ; ++it){
+		auto linphoneFriend = (*it)->getFriend();
+		auto address = (*it)->getAddress();
+		if( linphoneFriend || address)
+			addresses << std::make_shared<SearchResultModel>(linphoneFriend,address );
+	}
 // Fix crash on Qt 5.15.2 with endResetModel (index out of range).
 	if(mAddresses.size() > 0){// Workaround : remove all
 		beginRemoveRows(QModelIndex(), 0, mAddresses.size()-1);

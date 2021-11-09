@@ -11,6 +11,8 @@ import LinphoneUtils 1.0
 RowLayout {
 	id:mainRow
 	
+	Layout.fillWidth: true
+	
 	signal copyAllDone()
 	signal copySelectionDone()
 	signal replyClicked()

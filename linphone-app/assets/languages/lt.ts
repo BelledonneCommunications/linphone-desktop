@@ -475,6 +475,11 @@ Nesukonfigūruotas serverio url.</translation>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>forwardDialogTitle</source>
+        <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatDeliveries</name>
@@ -2677,6 +2682,28 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelTab</source>
         <extracomment>&apos;Tunnel&apos; : Tab title for tunnel section in settings.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SipAddressDialog</name>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished">ATSISAKYTI</translation>
+    </message>
+    <message>
+        <source>contactsSearchPlaceholder</source>
+        <extracomment>&apos;Search in contacts&apos; : Placeholder for a search a contact</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsSearchTooltip</source>
+        <extracomment>&apos;Search an address in your contacts or use a custom one.&apos; : tooltip</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineSelectionHeader</source>
+        <extracomment>&apos;Conversations&apos; : header for a selection in conversation list</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -21,6 +21,10 @@ ColumnLayout{
 	anchors.bottom: parent.bottom
 	height: replyPreview.height
 	
+	function hide(){
+		replyPreview.hide()
+	}
+	
 	ChatReplyPreview{
 		id: replyPreview
 		Layout.fillWidth: true

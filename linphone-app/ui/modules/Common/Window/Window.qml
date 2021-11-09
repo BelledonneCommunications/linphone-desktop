@@ -20,7 +20,7 @@ Window {
   // ---------------------------------------------------------------------------
 
   function attachVirtualWindow (component, properties, exitStatusHandler) {
-    Logic.attachVirtualWindow.call(this, component, properties, exitStatusHandler)
+    return Logic.attachVirtualWindow.call(this, component, properties, exitStatusHandler)
   }
 
   function detachVirtualWindow () {

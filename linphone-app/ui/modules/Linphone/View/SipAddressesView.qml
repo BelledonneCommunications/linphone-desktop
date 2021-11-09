@@ -241,11 +241,11 @@ ScrollableListView {
 					Layout.fillWidth: true
 					showContactAddress: sipAddressesView.showContactAddress
 
-					entry:  $sipAddress
+					entry: modelData
 
 					MouseArea {
 						anchors.fill: parent
-						onClicked: sipAddressesView.entryClicked($sipAddress.sipAddress, index)
+						onClicked: sipAddressesView.entryClicked(modelData.sipAddress, index)
 					}
 				}
 
@@ -284,11 +284,11 @@ ScrollableListView {
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
 							visible: sipAddressesView.actions[index].visible
 							onClicked: {
-								sipAddressesView.actions[index].handler($sipAddress)
+								sipAddressesView.actions[index].handler(modelData)
 							}
 							Icon{
 								visible: modelData.secure>0 && 
-									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler($sipAddress) : true)
+									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler(modelData) : true)
 								icon: 'secure_on'
 								iconSize:15
 								anchors.right:parent.right

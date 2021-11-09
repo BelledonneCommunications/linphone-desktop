@@ -23,6 +23,7 @@ Row {
 	
 	signal copyAllDone()
 	signal copySelectionDone()
+	signal forwardClicked()
 	
 	Item {
 		height: ChatStyle.entry.lineHeight
@@ -275,6 +276,7 @@ Row {
 							
 							onCopyAllDone: mainRow.copyAllDone()
 							onCopySelectionDone: mainRow.copySelectionDone()
+							onForwardClicked: mainRow.forwardClicked()
 						}
 					}
 				}

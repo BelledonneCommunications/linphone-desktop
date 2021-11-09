@@ -274,6 +274,25 @@ Rectangle {
 									proxyModel.setReply($chatEntry)
 									container.replyChatMessageModel = $chatEntry
 								}
+								onForwardClicked:{
+									window.attachVirtualWindow(Qt.resolvedUrl('../Dialog/SipAddressDialog.qml')
+										//: 'Choose where to forward the message' : Dialog title for choosing where to forward the current message.
+										, {title: qsTr('forwardDialogTitle'),
+											addressSelectedCallback: function (sipAddress) {
+																		var chat = CallsListModel.createChat(sipAddress)
+																		if(chat){
+																			chat.forwardMessage($chatEntry)
+																			TimelineListModel.select(chat)
+																		}
+																	},
+											chatRoomSelectedCallback: function (chatRoomModel){
+																		if(chatRoomModel){
+																			chatRoomModel.forwardMessage($chatEntry)
+																			TimelineListModel.select(chatRoomModel)
+																		}
+										}
+									})
+								}
 							}
 						}
 					}
@@ -399,11 +418,12 @@ Rectangle {
 					chat.bindToEnd = true
 					if(proxyModel.chatRoomModel) {
 						proxyModel.sendMessage(text)
-						
+						chatMessagePreview.hide()
 					}else{
 						console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
 						proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
 						proxyModel.sendMessage(text)
+						chatMessagePreview.hide()
 					}
 				}
 				Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}

@@ -30,6 +30,9 @@ Rectangle{
 	visible: container.replyChatMessageModel
 // Remove bottom corners				
 	clip: false
+	function hide(){
+		state = 'hidden'
+	}
 	Rectangle{
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
@@ -110,7 +113,7 @@ Rectangle{
 		backgroundRadius: 90
 		colorSet: ChatStyle.replyPreview.closeButton
 		
-		onClicked: parent.state = 'hidden'
+		onClicked: parent.hide()
 	}
 	states: [
 		 State {

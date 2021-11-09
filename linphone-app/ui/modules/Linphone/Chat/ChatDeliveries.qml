@@ -22,15 +22,14 @@ GridView{
 	id: deliveryLayout
 	
 	property ChatMessageModel chatMessageModel
-	
-	
+		
 	//height: visible ? ChatStyle.composingText.height*container.proxyModel.composers.length : 0
 	height: visible ? (ChatStyle.composingText.height-5)*deliveryLayout.model.count : 0
 	cellWidth: parent.width; cellHeight: ChatStyle.composingText.height-5
 	visible:false
 	model: ParticipantImdnStateProxyModel{
 		id: imdnStatesModel
-		chatMessageModel: deliveryLayout.chatMessageModel
+		chatMessageModel: deliveryLayout.visible ? deliveryLayout.chatMessageModel: null
 	}
 	function getText(state, displayName, stateChangeTime){
 		if(state == LinphoneEnums.ChatMessageStateDelivered)

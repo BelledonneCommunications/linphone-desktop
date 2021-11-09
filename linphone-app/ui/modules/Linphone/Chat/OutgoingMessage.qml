@@ -12,7 +12,8 @@ import Utils 1.0
 
 Item {
   implicitHeight: message.height
-  width: parent.width
+  //width: parent.width
+  Layout.fillWidth: true
   
   signal copyAllDone()
   signal copySelectionDone()
@@ -66,9 +67,10 @@ Item {
 
           TooltipArea {
             id:tooltip
+            visible: text != ''
             text: iconId.isError
               ? qsTr('messageError')
-              : (iconId.isRead ? qsTr('messageRead') : qsTr('messageDelivered'))
+              : (iconId.isRead ? qsTr('messageRead') : (isDelivered ? qsTr('messageDelivered') : ''))
               hoveringCursor : retryAction.visible?Qt.PointingHandCursor:Qt.ArrowCursor
           }
         }

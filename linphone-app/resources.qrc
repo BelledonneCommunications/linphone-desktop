@@ -271,6 +271,7 @@
 		<file>ui/modules/Linphone/Chat/ChatDeliveries.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMenu.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMessagePreview.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatForwardMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatReplyMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatReplyPreview.qml</file>
 		<file>ui/modules/Linphone/Chat/Event.qml</file>
@@ -288,6 +289,7 @@
 		<file>ui/modules/Linphone/Contact/ContactMessageCounter.qml</file>
 		<file>ui/modules/Linphone/Contact/Contact.qml</file>
 		<file>ui/modules/Linphone/Dialog/OnlineInstallerDialog.qml</file>
+		<file>ui/modules/Linphone/Dialog/SipAddressDialog.qml</file>
 		<file>ui/modules/Linphone/History/History.qml</file>
 		<file>ui/modules/Linphone/History/History.js</file>
 		<file>ui/modules/Linphone/History/Event.qml</file>
@@ -312,6 +314,7 @@
 		<file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Calls/ConferenceControlsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Chat/ChatForwardMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatReplyMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>
@@ -319,6 +322,7 @@
 		<file>ui/modules/Linphone/Styles/Contact/ContactMessageCounterStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Dialog/OnlineInstallerDialogStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Dialog/SipAddressDialogStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/History/HistoryStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Menus/SipAddressesMenuStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Misc/MessageCounterStyle.qml</file>

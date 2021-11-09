@@ -20,6 +20,9 @@ Rectangle {
 	
 	property alias model: view.model
 	property string _selectedSipAddress
+	property bool showHistoryButton : true
+	property bool updateSelectionModels : true
+	property bool isFilterVisible: searchView.visible || filterView.visible
 	
 	// ---------------------------------------------------------------------------
 	
@@ -46,18 +49,19 @@ Rectangle {
 					timeline.entrySelected('')
 				}
 			}
-			onSelectedChanged : if(timelineModel) timeline.entrySelected(timelineModel)
+			onSelectedChanged : if(timelineModel && timeline.updateSelectionModels) timeline.entrySelected(timelineModel)
 		}
 		// -------------------------------------------------------------------------
 		// Legend.
 		// -------------------------------------------------------------------------
 		
 		Rectangle {
+			id: legendArea
 			Layout.fillWidth: true
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
-			visible:view.count > 0 || searchView.visible || filterView.visible
+			visible:view.count > 0 || timeline.isFilterVisible
 			
 			MouseArea{// no more showing history
 				id:showHistory
@@ -121,6 +125,7 @@ Rectangle {
 					Layout.rightMargin: TimelineStyle.legend.lastRightMargin
 					Layout.fillHeight: true
 					Layout.preferredWidth: TimelineStyle.legend.iconSize
+					visible: timeline.showHistoryButton 
 					onClicked:{
 						showHistoryRequest()
 					}
@@ -246,6 +251,7 @@ Rectangle {
 		
 		ScrollableListView {
 			id: view
+			property alias updateSelectionModels: timeline.updateSelectionModels
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			currentIndex: -1
@@ -297,12 +303,14 @@ Rectangle {
 					propagateComposedEvents: true
 					preventStealing: false
 					onClicked: {
-						//timeline.model.unselectAll()
 						if(mouse.button == Qt.LeftButton){
-							if(modelData.selected)// Update selection
+							if(modelData.selected || !view.updateSelectionModels)// Update selection
 								timeline.entrySelected(modelData)
-							modelData.selected = true
-							view.currentIndex = index;
+							if(view){
+								if(view.updateSelectionModels)
+									modelData.selected = true
+								view.currentIndex = index;
+							}
 						}else{
 							contactTooltip.show()
 						}
@@ -312,7 +320,7 @@ Rectangle {
 				Connections{
 					target:modelData
 					onSelectedChanged:{
-						if(selected) {
+						if(view.updateSelectionModels && selected) {
 							view.currentIndex = index;
 						}
 					}

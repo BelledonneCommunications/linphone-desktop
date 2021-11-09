@@ -160,6 +160,11 @@ public:
 	Q_PROPERTY(bool isReply READ isReply CONSTANT)
 	Q_PROPERTY(ChatMessageModel* replyChatMessageModel READ getReplyChatMessageModel CONSTANT)
 	
+	Q_PROPERTY(bool isForward READ isForward CONSTANT)
+	Q_PROPERTY(QString getForwardInfo READ getForwardInfo CONSTANT)
+	Q_PROPERTY(QString getForwardInfoDisplayName READ getForwardInfoDisplayName CONSTANT)
+	
+	
 	std::shared_ptr<linphone::ChatMessage> getChatMessage();
 	std::shared_ptr<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);
 	Q_INVOKABLE ContentModel * getContent(int i);
@@ -184,6 +189,10 @@ public:
 	
 	bool isReply() const;
 	ChatMessageModel * getReplyChatMessageModel() const;
+	
+	bool isForward() const;
+	QString getForwardInfo() const;
+	QString getForwardInfoDisplayName() const;
 	
 	//----------------------------------------------------------------------------
 	

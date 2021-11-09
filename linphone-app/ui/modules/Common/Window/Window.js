@@ -31,7 +31,7 @@
 //
 // The exit status handler is optional.
 function attachVirtualWindow (component, properties, exitStatusHandler) {
-    virtualWindow.setContent(component, properties, exitStatusHandler);
+    return virtualWindow.setContent(component, properties, exitStatusHandler);
 }
 
 function detachVirtualWindow () {

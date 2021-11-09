@@ -682,6 +682,14 @@ void ChatRoomModel::sendFileMessage (const QString &path) {
 	emit messageSent(message);
 }
 
+void ChatRoomModel::forwardMessage(ChatMessageModel * model){
+	if(model){
+		shared_ptr<linphone::ChatMessage> _message;
+		_message = mChatRoom->createForwardMessage(model->getChatMessage());
+		_message->send();
+		emit messageSent(_message);
+	}
+}
 // -----------------------------------------------------------------------------
 
 void ChatRoomModel::compose () {

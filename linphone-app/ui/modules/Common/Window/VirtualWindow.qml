@@ -5,6 +5,7 @@ import Common 1.0
 import Common.Styles 1.0
 import 'Window.js' as Logic
 
+import Linphone 1.0 as M
 // =============================================================================
 StackView{
     id:stackView
@@ -13,7 +14,6 @@ StackView{
     visible:!stackView.empty
     
     function setContent(url, properties, exitStatusHandler){
-        var isEmpty = stackView.empty;
         if(properties && properties.virtualWindowHash){
             var haveItem = stackView.find(function(item, index) {
                 return item.sourceProperties && item.sourceProperties.virtualWindowHash && item.sourceProperties.virtualWindowHash == properties.virtualWindowHash;
@@ -27,7 +27,7 @@ StackView{
         }else{
             push(page, {"sourceUrl":url, "sourceProperties":properties, "exitStatusHandler":exitStatusHandler, "setData":true, "active":true});
         }
-        return isEmpty;
+        return stackView.currentItem
     }
     function unsetContent () {
         if(stackView.depth == 1)

@@ -217,8 +217,9 @@ public:
 	void deleteChatRoom();
 	Q_INVOKABLE void leaveChatRoom ();
 	Q_INVOKABLE void updateParticipants(const QVariantList& participants);		
-	void sendMessage (const QString &message);	
+	void sendMessage (const QString &message);
 	void sendFileMessage (const QString &path);
+	Q_INVOKABLE void forwardMessage(ChatMessageModel * model);
 	void compose ();
 	void resetMessageCount ();
 	Q_INVOKABLE void initEntries();

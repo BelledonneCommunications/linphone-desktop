@@ -10,6 +10,7 @@ singleton CardBlockStyle                       1.0 Blocks/CardBlockStyle.qml
 singleton RequestBlockStyle                    1.0 Blocks/RequestBlockStyle.qml
 
 singleton ChatStyle                            1.0 Chat/ChatStyle.qml
+singleton ChatForwardMessageStyle              1.0 Chat/ChatForwardMessageStyle.qml
 singleton ChatReplyMessageStyle                1.0 Chat/ChatReplyMessageStyle.qml
 
 singleton CallControlsStyle                    1.0 Calls/CallControlsStyle.qml
@@ -25,6 +26,7 @@ singleton ContactMessageCounterStyle           1.0 Contact/ContactMessageCounter
 singleton ContactStyle                         1.0 Contact/ContactStyle.qml
 
 singleton OnlineInstallerDialogStyle           1.0 Dialog/OnlineInstallerDialogStyle.qml
+singleton SipAddressDialogStyle                1.0 Dialog/SipAddressDialogStyle.qml
 
 singleton HistoryStyle                         1.0 History/HistoryStyle.qml
 

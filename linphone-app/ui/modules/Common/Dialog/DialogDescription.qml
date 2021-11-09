@@ -8,10 +8,12 @@ import Common.Styles 1.0
 
 Item {
   property alias text: description.text
+  property alias horizontalAlignment: description.horizontalAlignment
+  property int marginOffset: 0
 
-  height: !text ? DialogStyle.description.verticalMargin : undefined
+  height: !text ? (DialogStyle.description.verticalMargin + marginOffset) : undefined
   implicitHeight: text
-    ? description.implicitHeight + DialogStyle.description.verticalMargin * 2
+    ? description.implicitHeight + (DialogStyle.description.verticalMargin + marginOffset) * 2
     : 0
 
   Text {

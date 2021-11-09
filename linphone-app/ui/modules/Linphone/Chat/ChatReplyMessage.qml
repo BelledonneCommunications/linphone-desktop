@@ -24,20 +24,25 @@ Item {
 	property ChatMessageModel chatMessageModel
 	property ChatMessageModel mainChatMessageModel
 	property int maxWidth : parent.width
-	property int contentWidth: Math.max(usernameReplied.implicitWidth + replyMessage.implicitWidth , headerArea.width) + 7 + ChatReplyMessageStyle.padding * 2
-	property int contentHeight: headerArea.height + replyArea.height
+	property int headerHeight: ChatReplyMessageStyle.header.replyIcon.iconSize
+	property int replyHeight: (chatMessageModel ? replyMessage.implicitHeight + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 2 + 3 : 0)
+	property int fitWidth: Math.max(usernameReplied.implicitWidth + replyMessage.implicitWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2
+	property int fitHeight: headerHeight + replyHeight
+	
 	property font customFont : SettingsModel.textMessageFont
 	
-	width: maxWidth > contentWidth ? contentWidth : maxWidth
-	
+	width: maxWidth < 0 || maxWidth > fitWidth ? fitWidth : maxWidth
+	height: fitHeight
 	onMainChatMessageModelChanged: if( mainChatMessageModel.replyChatMessageModel) chatMessageModel = mainChatMessageModel.replyChatMessageModel
+	
 	
 	ColumnLayout{
 		anchors.fill: parent
 		spacing: 5
 		Row{
 			id: headerArea
-			Layout.preferredHeight: icon.height
+			property int fitWidth: icon.width + headerText.implicitWidth
+			Layout.preferredHeight: headerHeight
 			Layout.topMargin: 5
 			Icon{
 				id: icon
@@ -47,7 +52,8 @@ Item {
 				overwriteColor: ChatReplyMessageStyle.header.color
 			}
 			Text{
-				height: icon.height
+				id: headerText
+				height: parent.height
 				verticalAlignment: Qt.AlignVCenter
 				//: 'Reply' : Header on a message that contains a reply.
 				text: qsTr('headerReply')
@@ -60,7 +66,7 @@ Item {
 		Rectangle{
 			id: replyArea
 			Layout.fillWidth: true
-			Layout.preferredHeight: (chatMessageModel ? replyMessage.implicitHeight + usernameReplied.implicitHeight + ChatStyle.entry.message.padding : 0)
+			Layout.fillHeight: true
 			Layout.bottomMargin: ChatStyle.entry.message.padding
 			Layout.leftMargin: 10
 			Layout.rightMargin: 10

@@ -43,6 +43,7 @@
 #include "components/notifier/Notifier.hpp"
 #include "components/participant-imdn/ParticipantImdnStateListModel.hpp"
 #include "components/participant-imdn/ParticipantImdnStateProxyModel.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
@@ -444,7 +445,22 @@ ChatMessageModel * ChatMessageModel::getReplyChatMessageModel() const{
 	return mReplyChatMessageModel.get();
 }
 
+bool ChatMessageModel::isForward() const{
+	return mChatMessage->isForward();
+}
 
+QString ChatMessageModel::getForwardInfo() const{
+	return Utils::coreStringToAppString(mChatMessage->getForwardInfo());
+}
+
+QString ChatMessageModel::getForwardInfoDisplayName() const{
+	QString forwardInfo = getForwardInfo();
+	auto forwardAddress = Utils::interpretUrl(forwardInfo);
+	if(!forwardAddress || CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(forwardAddress))
+		return "";// myself
+	else
+		return Utils::getDisplayName(forwardInfo);
+}
 //-----------------------------------------------------------------------------------------------------------------------
 
 
