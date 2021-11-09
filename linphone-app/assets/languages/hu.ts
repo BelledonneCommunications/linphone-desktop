@@ -532,6 +532,16 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
         <translation>Kézbesítési állapot elrejtése</translation>
     </message>
+    <message>
+        <source>menuForward</source>
+        <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
+        <translation>Továbbítás</translation>
+    </message>
+    <message>
+        <source>menuReply</source>
+        <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
+        <translation>Válasz</translation>
+    </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>
@@ -558,6 +568,22 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <translation>
             <numerusform>%1 hét</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name>ChatReplyMessage</name>
+    <message>
+        <source>headerReply</source>
+        <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
+        <translation>Válasz</translation>
+    </message>
+</context>
+<context>
+    <name>ChatReplyPreview</name>
+    <message>
+        <source>titleReply</source>
+        <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
+        <translation>Válaszul erre: %1</translation>
     </message>
 </context>
 <context>
