@@ -113,6 +113,8 @@ option(ENABLE_VIDEO "Enable Video support." YES)
 option(ENABLE_DAEMON "Enable the linphone daemon interface." NO)
 option(ENABLE_CONSOLE_UI "Turn on or off compilation of console interface." NO)
 
+option(ENABLE_APP_LICENSE "Enable the license in packages." YES)
+
 
 
 
@@ -138,6 +140,8 @@ list(APPEND APP_OPTIONS "-DENABLE_BUILD_EXAMPLES=${ENABLE_BUILD_EXAMPLES}")
 list(APPEND APP_OPTIONS "-DENABLE_DAEMON=${ENABLE_DAEMON}")
 list(APPEND APP_OPTIONS "-DENABLE_CONSOLE_UI=${ENABLE_CONSOLE_UI}")
 list(APPEND APP_OPTIONS "-DENABLE_VIDEO=${ENABLE_VIDEO}")
+list(APPEND APP_OPTIONS "-DENABLE_APP_LICENSE=${ENABLE_APP_LICENSE}")
+
 
 	
 if(ENABLE_V4L)
