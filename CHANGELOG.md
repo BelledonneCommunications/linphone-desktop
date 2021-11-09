@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.4.0 - [Undefined]
 
-## 4.3.2
+## 4.3.2 - 2021-11-09
 
 ### Fixed
 
@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unblock secure group chat activation.
 - Unselect current contact if history call view is displayed.
 - Show chat actions in history view
+- Group chat creation : If no groupchat capabilities has been found in recent contacts, ignore test on capability and display them.
 
 ## 4.3.1 - 2021-11-04
 

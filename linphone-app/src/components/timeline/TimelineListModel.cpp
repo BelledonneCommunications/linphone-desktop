@@ -154,24 +154,27 @@ std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<li
 QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	QVariantList contacts;
 	QMultiMap<qint64, ChatRoomModel*> sortedData;
-	int count = 0;
-	
 	QDateTime currentDateTime = QDateTime::currentDateTime();
+	bool doTest = true;
 	
 	for(auto timeline : mTimelines){
 		auto chatRoom = timeline->getChatRoomModel();
-		if(chatRoom && chatRoom->isCurrentProxy() && !chatRoom->isGroupEnabled() && !chatRoom->haveEncryption()) {
+		if(chatRoom && chatRoom->isCurrentProxy() && chatRoom->isOneToOne() && !chatRoom->haveEncryption()) {
 			sortedData.insert(chatRoom->mLastUpdateTime.secsTo(currentDateTime),chatRoom);
 		}
 	}
-	for(auto contact : sortedData){
-		if(Utils::hasCapability(contact->getFullPeerAddress(),  LinphoneEnums::FriendCapabilityGroupChat)  ) {
-			++count;
-			contacts << QVariant::fromValue(contact);
-			if(count >= maxCount)
-				return contacts;
+	do{
+		int count = 0;
+		for(auto contact : sortedData){
+			if(!doTest || Utils::hasCapability(contact->getFullPeerAddress(),  LinphoneEnums::FriendCapabilityGroupChat)  ) {
+				++count;
+				contacts << QVariant::fromValue(contact);
+				if(count >= maxCount)
+					return contacts;
+			}
 		}
-	}
+		doTest = false;
+	}while( contacts.size() == 0 && sortedData.size() > 0);// no friends capability have been found : take contacts without testing capabilities.
 	
 	return contacts;
 }
