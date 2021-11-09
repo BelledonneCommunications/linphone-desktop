@@ -332,6 +332,7 @@ ApplicationWindow {
 							menu.resetSelectedEntry()
 						}
 						onShowHistoryRequest: {
+							timeline.model.unselectAll()
 							window.setView('HistoryView')
 						}
 					}

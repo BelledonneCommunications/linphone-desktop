@@ -549,7 +549,10 @@ FunctionEnd
 ;Pages
   !insertmacro MUI_PAGE_WELCOME
 
-  !insertmacro MUI_PAGE_LICENSE "@CPACK_RESOURCE_FILE_LICENSE@"
+  !if @CPACK_RESOURCE_FILE_LICENSE_PROVIDED@
+    !insertmacro MUI_PAGE_LICENSE "@CPACK_RESOURCE_FILE_LICENSE@"
+  !endif
+
   Page custom InstallOptionsPage
   !insertmacro MUI_PAGE_DIRECTORY
 
