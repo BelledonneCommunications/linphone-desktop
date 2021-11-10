@@ -108,6 +108,10 @@
         <source>commandLineOptionCallArg</source>
         <translation>adresse SIP</translation>
     </message>
+    <message>
+        <source>checkForUpdates</source>
+        <translation type="unfinished">Vérifier les mises à jour</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1398,6 +1402,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>quit</source>
         <translation>Quitter</translation>
+    </message>
+    <message>
+        <source>checkForUpdates</source>
+        <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
+        <translation type="unfinished">Vérifier les mises à jour</translation>
     </message>
 </context>
 <context>

@@ -716,6 +716,11 @@ void App::setTrayIcon () {
 		App::smartShowWindow(getSettingsWindow());
 	});
 	
+	QAction *updateCheckAction = new QAction(tr("checkForUpdates"), root);
+	root->connect(updateCheckAction, &QAction::triggered, root, [this] {
+		checkForUpdates(true);
+	});
+	
 	QAction *aboutAction = new QAction(tr("about"), root);
 	root->connect(aboutAction, &QAction::triggered, root, [root] {
 		App::smartShowWindow(root);
@@ -748,6 +753,7 @@ void App::setTrayIcon () {
 	menu->setTitle(APPLICATION_NAME);
 	// Build trayIcon menu.
 	menu->addAction(settingsAction);
+	menu->addAction(updateCheckAction);
 	menu->addAction(aboutAction);
 	menu->addSeparator();
 	menu->addAction(restoreAction);

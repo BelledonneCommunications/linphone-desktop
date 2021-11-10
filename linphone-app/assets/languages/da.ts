@@ -108,6 +108,10 @@
         <source>commandLineOptionCallArg</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>checkForUpdates</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1398,6 +1402,11 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>quit</source>
         <translation>Stop</translation>
+    </message>
+    <message>
+        <source>checkForUpdates</source>
+        <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -108,6 +108,10 @@
         <source>commandLineOptionCallArg</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>checkForUpdates</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1389,6 +1393,11 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>quit</source>
         <translation>Bırakın</translation>
+    </message>
+    <message>
+        <source>checkForUpdates</source>
+        <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

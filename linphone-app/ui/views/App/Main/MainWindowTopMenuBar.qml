@@ -56,6 +56,13 @@ MenuBar {
 
       onTriggered: settingsShortcut.onActivated()
     }
+    
+    MenuItem {
+	//: 'Check for updates' : Item menu for checking updates
+      text: qsTr('checkForUpdates')
+
+      onTriggered: App.checkForUpdates(true)
+    }
 
     MenuItem {
       text: qsTr('about')
