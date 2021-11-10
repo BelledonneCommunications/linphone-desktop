@@ -30,6 +30,10 @@
 		<file>assets/images/cancel_custom.svg</file>
 		<file>assets/images/chat_custom.svg</file>
 		<file>assets/images/chat_amount.svg</file>
+		<file>assets/images/chat_audio_pause_custom.svg</file>
+		<file>assets/images/chat_audio_play_custom.svg</file>
+		<file>assets/images/chat_audio_soundwave_custom.svg</file>
+		<file>assets/images/chat_audio_stop_custom.svg</file>
 		<file>assets/images/chat_count.svg</file>
 		<file>assets/images/chat_delivered.svg</file>
 		<file>assets/images/chat_error.svg</file>
@@ -193,6 +197,7 @@
 		<file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
 		<file>ui/modules/Common/Image/Icon.qml</file>
 		<file>ui/modules/Common/Image/RoundedImage.qml</file>
+		<file>ui/modules/Common/Indicators/MediaProgressBar.qml</file>
 		<file>ui/modules/Common/Indicators/VuMeter.qml</file>
 		<file>ui/modules/Common/Menus/ApplicationMenuEntry.qml</file>
 		<file>ui/modules/Common/Menus/ApplicationMenu.qml</file>
@@ -238,6 +243,7 @@
 		<file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/TransparentTextInputStyle.qml</file>
+		<file>ui/modules/Common/Styles/Indicators/MediaProgressBarStyle.qml</file>
 		<file>ui/modules/Common/Styles/Indicators/VuMeterStyle.qml</file>
 		<file>ui/modules/Common/Styles/Menus/ApplicationMenuStyle.qml</file>
 		<file>ui/modules/Common/Styles/Menus/DropDownStaticMenuStyle.qml</file>
@@ -270,6 +276,7 @@
 		<file>ui/modules/Linphone/Chat/Chat.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatDeliveries.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMenu.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatAudioPreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMessagePreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatForwardMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatReplyMessage.qml</file>
@@ -314,6 +321,7 @@
 		<file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Calls/ConferenceControlsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Chat/ChatAudioPreviewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatForwardMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatReplyMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>

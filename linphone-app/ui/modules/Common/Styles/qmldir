@@ -41,6 +41,7 @@ singleton FormVGroupStyle           1.0 Form/Placements/FormVGroupStyle.qml
 singleton TabButtonStyle            1.0 Form/Tab/TabButtonStyle.qml
 singleton TabContainerStyle         1.0 Form/Tab/TabContainerStyle.qml
 
+singleton MediaProgressBarStyle     1.0 Indicators/MediaProgressBarStyle.qml
 singleton VuMeterStyle              1.0 Indicators/VuMeterStyle.qml
 
 singleton ApplicationMenuStyle      1.0 Menus/ApplicationMenuStyle.qml

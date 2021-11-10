@@ -181,6 +181,8 @@ set(SOURCES
 	src/components/participant-imdn/ParticipantImdnStateProxyModel.cpp
     src/components/presence/OwnPresenceModel.cpp
     src/components/presence/Presence.cpp
+    src/components/recorder/RecorderManager.cpp
+    src/components/recorder/RecorderModel.cpp
     src/components/search/SearchHandler.cpp
     src/components/search/SearchResultModel.cpp
     src/components/search/SearchSipAddressesModel.cpp
@@ -288,6 +290,8 @@ set(HEADERS
 	src/components/participant-imdn/ParticipantImdnStateProxyModel.cpp
     src/components/presence/OwnPresenceModel.hpp
     src/components/presence/Presence.hpp
+    src/components/recorder/RecorderManager.hpp
+    src/components/recorder/RecorderModel.hpp
     src/components/search/SearchHandler.hpp
     src/components/search/SearchResultModel.hpp
     src/components/search/SearchSipAddressesModel.hpp

@@ -37,11 +37,11 @@ namespace linphone {
 class SoundPlayer : public QObject {
   class Handlers;
 
-  Q_OBJECT;
+  Q_OBJECT
 
-  Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged);
-  Q_PROPERTY(PlaybackState playbackState READ getPlaybackState WRITE setPlaybackState NOTIFY playbackStateChanged);
-  Q_PROPERTY(int duration READ getDuration NOTIFY sourceChanged);
+  Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged)
+  Q_PROPERTY(PlaybackState playbackState READ getPlaybackState WRITE setPlaybackState NOTIFY playbackStateChanged)
+  Q_PROPERTY(int duration READ getDuration NOTIFY sourceChanged)
 
 public:
   enum PlaybackState {

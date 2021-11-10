@@ -49,7 +49,7 @@ Item {
 				id: headerText
 				height: icon.height
 				verticalAlignment: Qt.AlignVCenter
-				property string forwardInfo: mainChatMessageModel.getForwardInfoDisplayName
+				property string forwardInfo: mainChatMessageModel ? mainChatMessageModel.getForwardInfoDisplayName : ''
 				//: 'Forwarded' : Header on a message that contains a forward.
 				text: 'Forwarded' + (forwardInfo ? ' : ' +forwardInfo : '')
 				font.family: mainItem.customFont.family

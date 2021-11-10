@@ -36,6 +36,7 @@
 #include "components/contacts/ContactsImporterListModel.hpp"
 #include "components/history/HistoryModel.hpp"
 #include "components/ldap/LdapListModel.hpp"
+#include "components/recorder/RecorderManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
@@ -123,6 +124,14 @@ HistoryModel* CoreManager::getHistoryModel(){
 	}
 	return mHistoryModel;
 }
+
+RecorderManager* CoreManager::getRecorderManager(){
+	if(!mRecorderManager){
+		mRecorderManager = new RecorderManager(this);
+		emit recorderManagerCreated(mRecorderManager);
+	}
+	return mRecorderManager;
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::init (QObject *parent, const QString &configPath) {
@@ -183,6 +192,7 @@ void CoreManager::cleanLogs () const {
 	
 	mCore->resetLogCollection();
 }
+// -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
 

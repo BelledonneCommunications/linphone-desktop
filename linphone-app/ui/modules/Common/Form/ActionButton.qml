@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
+import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.12
 
 import Common 1.0
@@ -33,6 +34,8 @@ Item {
 	property bool useStates: true
 	//property bool autoIcon : false    // hovered/pressed : use an automatic layer instead of specific icon image
 	property int iconSize : colorSet.iconSize
+	property int iconHeight: colorSet.iconHeight ? colorSet.iconHeight : 0
+	property int iconWidth: colorSet.iconWidth ? colorSet.iconWidth : 0
 	readonly property alias hovered: button.hovered
 	property alias text: button.text
 	// Tooltip aliases
@@ -44,16 +47,26 @@ Item {
 	
 	property alias backgroundRadius : backgroundColor.radius
 	
+	property alias horizontalAlignment: icon.horizontalAlignment
+	property alias verticalAlignment: icon.verticalAlignment
+	property alias fillMode: icon.fillMode
 	
-// AutoColor for hide part	alpha /4
-	property color foregroundHiddenPartNormalColor : colorSet.foregroundNormalColor ? Qt.rgba(colorSet.foregroundNormalColor.r, colorSet.foregroundNormalColor.g, colorSet.foregroundNormalColor.b, colorSet.foregroundNormalColor.a/4) : 'transparent'
-	property color foregroundHiddenPartDisabledColor : colorSet.foregroundDisabledColor ? Qt.rgba(colorSet.foregroundDisabledColor.r, colorSet.foregroundDisabledColor.g, colorSet.foregroundDisabledColor.b, colorSet.foregroundDisabledColor.a/4): 'transparent'
-	property color foregroundHiddenPartHoveredColor : colorSet.foregroundHoveredColor ? Qt.rgba(colorSet.foregroundHoveredColor.r, colorSet.foregroundHoveredColor.g, colorSet.foregroundHoveredColor.b, colorSet.foregroundHoveredColor.a/4): 'transparent'
-	property color foregroundHiddenPartUpdatingColor : colorSet.foregroundUpdatingColor ? Qt.rgba(colorSet.foregroundUpdatingColor.r, colorSet.foregroundUpdatingColor.g, colorSet.foregroundUpdatingColor.b, colorSet.foregroundUpdatingColor.a/4): 'transparent'
-	property color foregroundHiddenPartPressedColor : colorSet.foregroundPressedColor ? Qt.rgba(colorSet.foregroundPressedColor.r, colorSet.foregroundPressedColor.g, colorSet.foregroundPressedColor.b, colorSet.foregroundPressedColor.a/4): 'transparent'
 	
+// Hidden part : transparent if not specified
+	property color backgroundHiddenPartNormalColor : colorSet.backgroundHiddenPartNormalColor ? colorSet.backgroundHiddenPartNormalColor : (colorSet.backgroundNormalColor ? colorSet.backgroundNormalColor : 'transparent')
+	property color backgroundHiddenPartDisabledColor : colorSet.backgroundHiddenPartDisabledColor ? colorSet.backgroundHiddenPartDisabledColor : (colorSet.backgroundDisabledColor ? colorSet.backgroundDisabledColor : 'transparent')
+	property color backgroundHiddenPartHoveredColor : colorSet.backgroundHiddenPartHoveredColor ? colorSet.backgroundHiddenPartHoveredColor : (colorSet.backgroundHoveredColor ? colorSet.backgroundHoveredColor : 'transparent')
+	property color backgroundHiddenPartUpdatingColor : colorSet.backgroundHiddenPartUpdatingColor ? colorSet.backgroundHiddenPartUpdatingColor : (colorSet.backgroundUpdatingColor ? colorSet.backgroundUpdatingColor : 'transparent')
+	property color backgroundHiddenPartPressedColor : colorSet.backgroundHiddenPartPressedColor ? colorSet.backgroundHiddenPartPressedColor : (colorSet.backgroundPressedColor ? colorSet.backgroundPressedColor : 'transparent')
+	
+// AutoColor : alpha /4	for foreground
+	property color foregroundHiddenPartNormalColor : colorSet.foregroundHiddenPartNormalColor ? colorSet.foregroundHiddenPartNormalColor : (colorSet.foregroundNormalColor ? Qt.rgba(colorSet.foregroundNormalColor.r, colorSet.foregroundNormalColor.g, colorSet.foregroundNormalColor.b, colorSet.foregroundNormalColor.a/4) : 'transparent')
+	property color foregroundHiddenPartDisabledColor : colorSet.foregroundHiddenPartDisabledColor ? colorSet.foregroundHiddenPartDisabledColor : (colorSet.foregroundDisabledColor ? Qt.rgba(colorSet.foregroundDisabledColor.r, colorSet.foregroundDisabledColor.g, colorSet.foregroundDisabledColor.b, colorSet.foregroundDisabledColor.a/4): 'transparent')
+	property color foregroundHiddenPartHoveredColor : colorSet.foregroundHiddenPartHoveredColor ? colorSet.foregroundHiddenPartHoveredColor : (colorSet.foregroundHoveredColor ? Qt.rgba(colorSet.foregroundHoveredColor.r, colorSet.foregroundHoveredColor.g, colorSet.foregroundHoveredColor.b, colorSet.foregroundHoveredColor.a/4): 'transparent')
+	property color foregroundHiddenPartUpdatingColor : colorSet.foregroundHiddenPartUpdatingColor ? colorSet.foregroundHiddenPartUpdatingColor : (colorSet.foregroundUpdatingColor ? Qt.rgba(colorSet.foregroundUpdatingColor.r, colorSet.foregroundUpdatingColor.g, colorSet.foregroundUpdatingColor.b, colorSet.foregroundUpdatingColor.a/4): 'transparent')
+	property color foregroundHiddenPartPressedColor : colorSet.foregroundHiddenPartPressedColor ? colorSet.foregroundHiddenPartPressedColor : (colorSet.foregroundPressedColor ? Qt.rgba(colorSet.foregroundPressedColor.r, colorSet.foregroundPressedColor.g, colorSet.foregroundPressedColor.b, colorSet.foregroundPressedColor.a/4): 'transparent')
+//---------------------------------------------	
 	property int percentageDisplayed : 100
-	
 	
 	// If `useStates` = true, the used icons are:
 	// `icon`_pressed, `icon`_hovered and `icon`_normal.
@@ -61,7 +74,7 @@ Item {
 	
 	// ---------------------------------------------------------------------------
 	
-	signal clicked
+	signal clicked(real x, real y)
 	
 	// ---------------------------------------------------------------------------
 	
@@ -120,6 +133,21 @@ Item {
 		}else
 			return "black"
 	}
+	function getBackgroundHiddenPartColor(){
+		if(isCustom){
+			if(wrappedButton.icon == '')
+				return wrappedButton.backgroundHiddenPartNormalColor
+			if (wrappedButton.updating)
+				return wrappedButton.backgroundHiddenPartUpdatingColor
+			if (!useStates)
+				return wrappedButton.backgroundHiddenPartNormalColor
+			if (!wrappedButton.enabled)
+				return wrappedButton.backgroundHiddenPartDisabledColor
+			return button.down ? wrappedButton.backgroundHiddenPartPressedColor
+							   : (button.hovered ? wrappedButton.backgroundHiddenPartHoveredColor: wrappedButton.backgroundHiddenPartNormalColor)
+		}else
+			return 'transparent'
+	}
 	function getForegroundHiddenPartColor(){
 		if(isCustom){
 			if(wrappedButton.icon == '')
@@ -137,20 +165,31 @@ Item {
 	}
 	// ---------------------------------------------------------------------------
 	
-	height: iconSize || parent.iconSize || parent.height
-	width: iconSize || parent.iconSize || parent.width
+	height: iconHeight || iconSize || parent.iconSize || parent.height
+	width: iconWidth || iconSize || parent.iconSize || parent.width
 	
 	Button {
 		id: button
 		
 		anchors.fill: parent
-		background: Rectangle {
-			id: backgroundColor
-			color: getBackgroundColor()
-		}
+		background: Row{
+				anchors.fill: parent
+				Rectangle {
+					height: parent.height
+					width:parent.width  * wrappedButton.percentageDisplayed / 100
+					id: backgroundColor
+					color: getBackgroundColor()
+				}
+				Rectangle {
+					height: parent.height
+					width: parent.width  * ( 1 - wrappedButton.percentageDisplayed / 100 )
+					id: backgroundHiddenPartColor
+					color: getBackgroundHiddenPartColor()
+				}
+			}
 		hoverEnabled: !wrappedButton.updating//|| wrappedButton.autoIcon
 		
-		onClicked: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.clicked()
+		onClicked: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.clicked(pressX, pressY)
 		Rectangle{
 			id: foregroundColor
 			anchors.fill:parent
@@ -179,6 +218,7 @@ Item {
 			id: icon
 			
 			anchors.centerIn: parent
+			anchors.fill: iconHeight>0 || iconWidth ? parent : undefined
 			icon: {
 				if(!Images[_getIcon()])
 					console.log("No images for: "+_getIcon())
@@ -187,6 +227,8 @@ Item {
 			iconSize: wrappedButton.iconSize || (
 						  parent.width > parent.height ? parent.height : parent.width
 						  )
+			iconHeight: wrappedButton.iconHeight
+			iconWidth: wrappedButton.iconWidth
 			visible: !isCustom
 		}
 		

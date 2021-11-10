@@ -426,6 +426,7 @@ Rectangle {
 						chatMessagePreview.hide()
 					}
 				}
+				onAudioRecordRequest: RecorderManager.resetVocalRecorder()
 				Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
 				Rectangle{
 					anchors.fill:parent

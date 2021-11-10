@@ -63,6 +63,8 @@
 #include "participant-imdn/ParticipantImdnStateListModel.hpp"
 #include "participant-imdn/ParticipantImdnStateProxyModel.hpp"
 #include "presence/OwnPresenceModel.hpp"
+#include "recorder/RecorderModel.hpp"
+#include "recorder/RecorderManager.hpp"
 #include "settings/AccountSettingsModel.hpp"
 #include "settings/SettingsModel.hpp"
 #include "search/SearchResultModel.hpp"

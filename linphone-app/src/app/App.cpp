@@ -533,6 +533,14 @@ static inline void registerSharedSingletonType (const char *name) {
 	qmlRegisterSingletonType<T>(Constants::MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
 }
 
+template<typename T, T *(CoreManager::*function)()>
+static QObject *makeSharedSingleton (QQmlEngine *, QJSEngine *) {
+	QObject *object = (CoreManager::getInstance()->*function)();
+	QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+	return object;
+}
+
+
 template<typename T, T *(CoreManager::*function)() const>
 static QObject *makeSharedSingleton (QQmlEngine *, QJSEngine *) {
 	QObject *object = (CoreManager::getInstance()->*function)();
@@ -541,6 +549,11 @@ static QObject *makeSharedSingleton (QQmlEngine *, QJSEngine *) {
 }
 
 template<typename T, T *(CoreManager::*function)() const>
+static inline void registerSharedSingletonType (const char *name) {
+	qmlRegisterSingletonType<T>(Constants::MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
+}
+
+template<typename T, T *(CoreManager::*function)()>
 static inline void registerSharedSingletonType (const char *name) {
 	qmlRegisterSingletonType<T>(Constants::MainQmlUri, 1, 0, name, makeSharedSingleton<T, function>);
 }
@@ -647,6 +660,7 @@ void App::registerTypes () {
 	registerUncreatableType<ContentModel>("ContentModel");
 	registerUncreatableType<HistoryModel>("HistoryModel");
 	registerUncreatableType<LdapModel>("LdapModel");
+	registerUncreatableType<RecorderModel>("RecorderModel");
 	registerUncreatableType<SearchResultModel>("SearchResultModel");
 	registerUncreatableType<SipAddressObserver>("SipAddressObserver");	
 	registerUncreatableType<VcardModel>("VcardModel");
@@ -680,6 +694,7 @@ void App::registerSharedTypes () {
 	registerSharedSingletonType<ContactsImporterListModel, &CoreManager::getContactsImporterListModel>("ContactsImporterListModel");
 	registerSharedSingletonType<LdapListModel, &CoreManager::getLdapListModel>("LdapListModel");
 	registerSharedSingletonType<TimelineListModel, &CoreManager::getTimelineListModel>("TimelineListModel");
+	registerSharedSingletonType<RecorderManager, &CoreManager::getRecorderManager>("RecorderManager");
 	
 	//qmlRegisterSingletonType<ColorListModel>(Constants::MainQmlUri, 1, 0, "ColorList", mColorListModel);
 	

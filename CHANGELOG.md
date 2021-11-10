@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Added
 - Features:
-	* messages features : Reply, forward (to contact, to a SIP address or to a timeline)
+	* messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record (on send)
 
 ## 4.3.2
 

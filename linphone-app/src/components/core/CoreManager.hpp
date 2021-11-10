@@ -42,6 +42,7 @@ class CoreHandlers;
 class EventCountNotifier;
 class HistoryModel;
 class LdapListModel;
+class RecorderManager;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
@@ -76,6 +77,7 @@ public:
 	//bool chatRoomModelExists (std::shared_ptr<linphone::ChatRoom> chatRoom);
 	
 	HistoryModel* getHistoryModel();
+	RecorderManager* getRecorderManager();
 	
 	// ---------------------------------------------------------------------------
 	// Video render lock.
@@ -179,6 +181,7 @@ signals:
 	
 	void chatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
 	void historyModelCreated (HistoryModel *historyModel);
+	void recorderManagerCreated(RecorderManager *recorderModel);
 	
 	void logsUploaded (const QString &url);
 	
@@ -227,6 +230,7 @@ private:
 	//QList<QPair<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>>> mChatRoomModels;
 	HistoryModel * mHistoryModel = nullptr;
 	LdapListModel *mLdapListModel = nullptr;
+	RecorderManager* mRecorderManager = nullptr;
 	
 	QTimer *mCbsTimer = nullptr;
 	

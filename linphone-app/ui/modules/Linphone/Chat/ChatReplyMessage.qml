@@ -33,7 +33,7 @@ Item {
 	
 	width: maxWidth < 0 || maxWidth > fitWidth ? fitWidth : maxWidth
 	height: fitHeight
-	onMainChatMessageModelChanged: if( mainChatMessageModel.replyChatMessageModel) chatMessageModel = mainChatMessageModel.replyChatMessageModel
+	onMainChatMessageModelChanged: if( mainChatMessageModel && mainChatMessageModel.replyChatMessageModel) chatMessageModel = mainChatMessageModel.replyChatMessageModel
 	
 	
 	ColumnLayout{
@@ -118,7 +118,7 @@ Item {
 				font.pointSize: Units.dp * (customFont.pointSize + ChatReplyMessageStyle.replyArea.pointSizeOffset)
 				font.weight: Font.Light
 				color: ChatReplyMessageStyle.replyArea.foregroundColor
-				text: (visible ? Utils.encodeTextToQmlRichFormat(chatMessageModel.content, {
+				text: (visible && chatMessageModel? Utils.encodeTextToQmlRichFormat(chatMessageModel.content, {
 														  imagesHeight: ChatStyle.entry.message.images.height,
 														  imagesWidth: ChatStyle.entry.message.images.width
 													  }) 

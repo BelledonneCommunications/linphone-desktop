@@ -4,6 +4,7 @@ import QtQuick.Dialogs 1.2
 import QtQuick.Layouts 1.12
 
 import Common 1.0
+import Linphone 1.0
 import Common.Styles 1.0
 import Utils 1.0
 
@@ -30,6 +31,7 @@ Item {
 	
 	signal dropped (var files)
 	signal validText (string text)
+	signal audioRecordRequest()
 	
 	// ---------------------------------------------------------------------------
 	
@@ -86,7 +88,7 @@ Item {
 			}
 			// Record audio
 			ActionButton {
-				visible:false && droppableTextArea.enabled// TODO
+				visible:droppableTextArea.enabled
 				id: recordAudioButton
 				
 				//anchors.verticalCenter: parent.verticalCenter
@@ -97,9 +99,7 @@ Item {
 				backgroundRadius: 8
 				colorSet: DroppableTextAreaStyle.chatMicro
 				
-				useStates:false
-				
-				onClicked: {console.log('Record audio request')}
+				onClicked: droppableTextArea.audioRecordRequest()
 				
 			}
 			
@@ -137,7 +137,7 @@ Item {
 						}
 					}
 					function handleValidation () {
-						if (text.length !== 0) {
+						if (RecorderManager.haveVocalRecorder || text.length !== 0) {
 							validText(text)
 						}
 					}

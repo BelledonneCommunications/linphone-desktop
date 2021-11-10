@@ -19,7 +19,7 @@ Rectangle{
 	property ChatMessageModel replyChatMessageModel
 	onReplyChatMessageModelChanged: if(replyChatMessageModel) replyPreviewBlock.state = "showed"
 	
-	Layout.preferredHeight: Math.min(replayPreviewText.implicitHeight + replyPreviewHeaderArea.implicitHeight + 10, parent.maxHeight)
+	Layout.preferredHeight: Math.min(replyPreviewText.implicitHeight + replyPreviewHeaderArea.implicitHeight + 10, parent.maxHeight)
 	
 	property int leftMargin: textArea.textLeftMargin
 	property int rightMargin: textArea.textRightMargin
@@ -69,11 +69,11 @@ Rectangle{
 			}
 		}
 		Flickable {
-			id: replayPreviewTextArea
-			ScrollBar.vertical: ForceScrollBar {visible: replayPreviewTextArea.height < replayPreviewText.implicitHeight}
+			id: replyPreviewTextArea
+			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < replyPreviewText.implicitHeight}
 			boundsBehavior: Flickable.StopAtBounds
 			clip: true
-			contentHeight: replayPreviewText.implicitHeight
+			contentHeight: replyPreviewText.implicitHeight
 			contentWidth: width - ScrollBar.vertical.width
 			flickableDirection: Flickable.VerticalFlick 
 			
@@ -81,7 +81,7 @@ Rectangle{
 			Layout.fillWidth: true
 		
 			TextEdit {
-				id: replayPreviewText
+				id: replyPreviewText
 				property font customFont : SettingsModel.textMessageFont
 				
 				anchors.left: parent.left

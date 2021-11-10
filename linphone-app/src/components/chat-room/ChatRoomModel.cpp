@@ -52,6 +52,8 @@
 #include "components/participant/ParticipantModel.hpp"
 #include "components/participant/ParticipantListModel.hpp"
 #include "components/presence/Presence.hpp"
+#include "components/recorder/RecorderManager.hpp"
+#include "components/recorder/RecorderModel.hpp"
 #include "components/timeline/TimelineModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
 #include "components/core/event-count-notifier/AbstractEventCountNotifier.hpp"
@@ -600,6 +602,7 @@ void ChatRoomModel::setReply(ChatMessageModel * model){
 void ChatRoomModel::clearReply(){
 	mReply = nullptr;
 }
+
 //------------------------------------------------------------------------------------------------
 
 void ChatRoomModel::deleteChatRoom(){
@@ -639,13 +642,18 @@ void ChatRoomModel::updateParticipants(const QVariantList& participants){
 
 void ChatRoomModel::sendMessage (const QString &message) {
 	shared_ptr<linphone::ChatMessage> _message;
-	if(mReply){
+	if(mReply)
 		_message = mChatRoom->createReplyMessage(mReply);
-		_message->addUtf8TextContent(message.toUtf8().toStdString());
-	}else{
-		 _message= mChatRoom->createMessageFromUtf8(message.toUtf8().toStdString());
+	else
+		 _message= mChatRoom->createEmptyMessage();
+	auto recorder = CoreManager::getInstance()->getRecorderManager();
+	if(recorder->haveVocalRecorder()) {
+		auto content = recorder->getVocalRecorder()->getRecorder()->createContent();
+		if(content)
+			_message->addContent(content);
 	}
-	
+	if(!message.isEmpty())
+		_message->addUtf8TextContent(message.toUtf8().toStdString());
 	_message->send();
 	emit messageSent(_message);
 }
@@ -677,6 +685,13 @@ void ChatRoomModel::sendFileMessage (const QString &path) {
 
 	shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
 	message->getContents().front()->setFilePath(Utils::appStringToCoreString(path));
+	
+	auto recorder = CoreManager::getInstance()->getRecorderManager();
+	if(recorder->haveVocalRecorder()) {
+		auto content = recorder->getVocalRecorder()->getRecorder()->createContent();
+		if(content)
+			message->addContent(content);
+	}
 	message->send();
 	
 	emit messageSent(message);
@@ -686,6 +701,12 @@ void ChatRoomModel::forwardMessage(ChatMessageModel * model){
 	if(model){
 		shared_ptr<linphone::ChatMessage> _message;
 		_message = mChatRoom->createForwardMessage(model->getChatMessage());
+		auto recorder = CoreManager::getInstance()->getRecorderManager();
+		if(recorder->haveVocalRecorder()) {
+			auto content = recorder->getVocalRecorder()->getRecorder()->createContent();
+			if(content)
+				_message->addContent(content);
+		}
 		_message->send();
 		emit messageSent(_message);
 	}

@@ -29,8 +29,10 @@ void LinphoneEnums::registerMetaTypes(){
 	qRegisterMetaType<LinphoneEnums::FriendCapability>();
 	qRegisterMetaType<LinphoneEnums::EventLogType>();
 	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
+	qRegisterMetaType<LinphoneEnums::CallStatus>();
+	qRegisterMetaType<LinphoneEnums::TunnelMode>();
+	qRegisterMetaType<LinphoneEnums::RecorderState>();
 }
-
 
 linphone::MediaEncryption LinphoneEnums::toLinphone(const LinphoneEnums::MediaEncryption& data){
 	return static_cast<linphone::MediaEncryption>(data);
@@ -72,4 +74,11 @@ linphone::Tunnel::Mode LinphoneEnums::toLinphone(const LinphoneEnums::TunnelMode
 }
 LinphoneEnums::TunnelMode LinphoneEnums::fromLinphone(const linphone::Tunnel::Mode& data){
 	return static_cast<LinphoneEnums::TunnelMode>(data);
+}
+
+linphone::RecorderState LinphoneEnums::toLinphone(const LinphoneEnums::RecorderState& data){
+	return static_cast<linphone::RecorderState>(data);
+}
+LinphoneEnums::RecorderState LinphoneEnums::fromLinphone(const linphone::RecorderState& data){
+	return static_cast<LinphoneEnums::RecorderState>(data);
 }

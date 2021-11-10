@@ -121,6 +121,16 @@ Q_ENUM_NS(TunnelMode)
 
 linphone::Tunnel::Mode toLinphone(const LinphoneEnums::TunnelMode& mode);
 LinphoneEnums::TunnelMode fromLinphone(const linphone::Tunnel::Mode& mode);
+
+enum RecorderState{
+		RecorderStateClosed = int(linphone::RecorderState::Closed),
+		RecorderStatePaused = int(linphone::RecorderState::Paused),
+		RecorderStateRunning = int(linphone::RecorderState::Running)
+};
+Q_ENUM_NS(RecorderState)
+
+linphone::RecorderState toLinphone(const LinphoneEnums::RecorderState& state);
+LinphoneEnums::RecorderState fromLinphone(const linphone::RecorderState& state);
 }
 
 Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)
@@ -129,5 +139,6 @@ Q_DECLARE_METATYPE(LinphoneEnums::EventLogType)
 Q_DECLARE_METATYPE(LinphoneEnums::ChatMessageState)
 Q_DECLARE_METATYPE(LinphoneEnums::CallStatus)
 Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
+Q_DECLARE_METATYPE(LinphoneEnums::RecorderState)
 
 #endif
