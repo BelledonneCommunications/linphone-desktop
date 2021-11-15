@@ -140,7 +140,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Der Assistent hilft Ihnen das %1 Konto zu konfigurieren und zu nutzen.</translation>
+        <translation>Der Assistent hilft Ihnen das SIP-Konto zu konfigurieren und zu nutzen.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
