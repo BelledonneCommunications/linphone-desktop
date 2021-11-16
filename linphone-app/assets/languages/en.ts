@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation>Specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
+        <translation type="unfinished">Specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
