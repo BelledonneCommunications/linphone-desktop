@@ -151,6 +151,8 @@ public:
 	
 	Q_PROPERTY(ParticipantListModel* participants READ getParticipants CONSTANT)
 	
+	Q_PROPERTY(ChatMessageModel * reply READ getReply WRITE setReply NOTIFY replyChanged)
+	
 	
 	
 	//ChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure);
@@ -211,6 +213,7 @@ public:
 	void setEphemeralLifetime(long lifetime);
 	
 	void setReply(ChatMessageModel * model);
+	ChatMessageModel * getReply()const;
 	void clearReply();
 
 // Tools
@@ -309,7 +312,8 @@ signals:
 	void ephemeralEnabledChanged();
 	void ephemeralLifetimeChanged();
 	void canBeEphemeralChanged();
-	void chatRoomDeleted();// Must be connected with DirectConnection mode	
+	void chatRoomDeleted();// Must be connected with DirectConnection mode
+	void replyChanged();	
 	
 // Chat Room listener callbacks	
 	
@@ -342,7 +346,7 @@ private:
 	std::shared_ptr<linphone::ChatRoom> mChatRoom;
 	std::shared_ptr<ChatRoomModelListener> mChatRoomModelListener;
 	
-	std::shared_ptr<linphone::ChatMessage> mReply;
+	std::shared_ptr<ChatMessageModel> mReplyModel;
 	
 	std::weak_ptr<ChatRoomModel> mSelf;
 };

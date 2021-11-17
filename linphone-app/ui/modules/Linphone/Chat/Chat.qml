@@ -23,8 +23,6 @@ Rectangle {
 	property string noticeBannerText : ''	// When set, show a banner with text and hide after some time
 	onNoticeBannerTextChanged: if(noticeBannerText!='') messageBlock.state = "showed"
 	
-	property alias replyChatMessageModel: chatMessagePreview.replyChatMessageModel
-	
 	// ---------------------------------------------------------------------------
 	
 	signal messageToSend (string text)
@@ -271,8 +269,7 @@ Rectangle {
 								//: "Selection copied to clipboard" : when a user copy a text from the menu, this message show up.
 								onCopySelectionDone: container.noticeBannerText = qsTr("selectedTextCopied")
 								onReplyClicked: {
-									proxyModel.setReply($chatEntry)
-									container.replyChatMessageModel = $chatEntry
+									proxyModel.chatRoomModel.reply = $chatEntry
 								}
 								onForwardClicked:{
 									window.attachVirtualWindow(Qt.resolvedUrl('../Dialog/SipAddressDialog.qml')
@@ -314,6 +311,7 @@ Rectangle {
 			
 			ChatMessagePreview{
 				id: chatMessagePreview
+				replyChatRoomModel: proxyModel.chatRoomModel
 			}
 			Rectangle{
 				id: messageBlock
@@ -418,12 +416,10 @@ Rectangle {
 					chat.bindToEnd = true
 					if(proxyModel.chatRoomModel) {
 						proxyModel.sendMessage(text)
-						chatMessagePreview.hide()
 					}else{
 						console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
 						proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
 						proxyModel.sendMessage(text)
-						chatMessagePreview.hide()
 					}
 				}
 				onAudioRecordRequest: RecorderManager.resetVocalRecorder()

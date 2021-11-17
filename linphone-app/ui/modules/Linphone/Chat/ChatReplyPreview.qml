@@ -16,8 +16,7 @@ import 'Chat.js' as Logic
 
 Rectangle{
 	id: replyPreviewBlock
-	property ChatMessageModel replyChatMessageModel
-	onReplyChatMessageModelChanged: if(replyChatMessageModel) replyPreviewBlock.state = "showed"
+	property ChatRoomModel chatRoomModel
 	
 	Layout.preferredHeight: Math.min(replyPreviewText.implicitHeight + replyPreviewHeaderArea.implicitHeight + 10, parent.maxHeight)
 	
@@ -26,8 +25,7 @@ Rectangle{
 	
 	color: ChatStyle.replyPreview.backgroundColor
 	radius: 10
-	state: "hidden"
-	visible: container.replyChatMessageModel
+	state: chatRoomModel && chatRoomModel.reply ? 'showed' : 'hidden'
 // Remove bottom corners				
 	clip: false
 	function hide(){
@@ -62,7 +60,7 @@ Rectangle{
 				Layout.fillWidth: true
 				Layout.preferredHeight: implicitHeight
 				//: 'Reply to %1' : Title for a reply preview to know who said what.
-				text: container.replyChatMessageModel ?  qsTr('titleReply').arg(container.replyChatMessageModel.fromDisplayName) : ''
+				text: replyPreviewBlock.chatRoomModel && replyPreviewBlock.chatRoomModel.reply ?  qsTr('titleReply').arg(replyPreviewBlock.chatRoomModel.reply.fromDisplayName) : ''
 				font.pointSize: ChatStyle.replyPreview.headerPointSize
 				font.weight: Font.Bold
 				color: ChatStyle.replyPreview.headerTextColor
@@ -92,7 +90,7 @@ Rectangle{
 				selectByMouse: true
 				font.family: customFont.family
 				font.pointSize: Units.dp * (customFont.pointSize - 2)
-				text: replyChatMessageModel ? Utils.encodeTextToQmlRichFormat(replyChatMessageModel.content, {
+				text: chatRoomModel && chatRoomModel.reply ? Utils.encodeTextToQmlRichFormat(chatRoomModel.reply.content, {
 														  imagesHeight: ChatStyle.entry.message.images.height,
 														  imagesWidth: ChatStyle.entry.message.images.width
 													  })
@@ -113,29 +111,31 @@ Rectangle{
 		backgroundRadius: 90
 		colorSet: ChatStyle.replyPreview.closeButton
 		
-		onClicked: parent.hide()
+		onClicked: chatRoomModel.reply = null
 	}
 	states: [
 		 State {
 			 name: "hidden"
-			 PropertyChanges { target: replyPreviewBlock; opacity: 0 }
+			 PropertyChanges { target: replyPreviewBlock; opacity: 0 ; visible: false }
 		 },
 		 State {
 			 name: "showed"
-			 PropertyChanges { target: replyPreviewBlock; opacity: 1 }
+			 PropertyChanges { target: replyPreviewBlock; opacity: 1 ; visible: true}
 		 }
 	 ]
 	 transitions: [
 		 Transition {
 			 from: "*"; to: "showed"
 			 SequentialAnimation{
+				ScriptAction{ script: replyPreviewBlock.visible = true }
 				NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 500 }
 			}
 		 },
 		 Transition {
+			from: "*"; to: "hidden"
 			SequentialAnimation{
 				NumberAnimation{ properties: "opacity"; duration: 250 }
-				ScriptAction{ script: container.replyChatMessageModel = null }
+				ScriptAction{ script: replyPreviewBlock.visible = false }
 			}
 		}
 	]

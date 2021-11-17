@@ -14,7 +14,7 @@ import 'Chat.js' as Logic
 
 // =============================================================================
 ColumnLayout{
-	property alias replyChatMessageModel : replyPreview.replyChatMessageModel
+	property alias replyChatRoomModel : replyPreview.chatRoomModel
 	property int maxHeight: parent.height - ( audioPreview.visible ? audioPreview.height : 0)
 	anchors.left: parent.left
 	anchors.right: parent.right
@@ -22,7 +22,6 @@ ColumnLayout{
 	spacing: 0
 	
 	function hide(){
-		replyPreview.hide()
 		audioPreview.hide()
 	}
 	ChatReplyPreview{
