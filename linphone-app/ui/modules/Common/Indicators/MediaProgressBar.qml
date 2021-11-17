@@ -17,7 +17,7 @@ ProgressBar {
 	property bool stopAtEnd: true
 	property bool resetAtEnd: false
 	property int progressDuration			// Max duration
-	property int progressPosition	// Position of pregress bar in [0 ; progressDuration]
+	property int progressPosition	// Position of progress bar in [0 ; progressDuration]
 	property alias colorSet: progression.colorSet
 	
 	function start(){
@@ -54,7 +54,6 @@ ProgressBar {
 							progressBar.value = 100// Stay at 100
 							progressPosition = progressDuration
 						}
-						
 						progressBar.endReached()
 					}else
 						progression.percentageDisplayed = value

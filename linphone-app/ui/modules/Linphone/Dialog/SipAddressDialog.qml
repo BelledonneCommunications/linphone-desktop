@@ -58,7 +58,7 @@ DialogPlus {
 						return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
 					},
 					handler: function (entry) {
-						mainItem.addressSelectedCallback(sipAddress)
+						mainItem.addressSelectedCallback(entry.sipAddress)
 						exit(1)
 					},
 				}]

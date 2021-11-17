@@ -663,6 +663,7 @@ void ChatRoomModel::sendMessage (const QString &message) {
 		 _message= mChatRoom->createEmptyMessage();
 	auto recorder = CoreManager::getInstance()->getRecorderManager();
 	if(recorder->haveVocalRecorder()) {
+		recorder->getVocalRecorder()->stop();
 		auto content = recorder->getVocalRecorder()->getRecorder()->createContent();
 		if(content)
 			_message->addContent(content);
@@ -672,6 +673,8 @@ void ChatRoomModel::sendMessage (const QString &message) {
 	_message->send();
 	emit messageSent(_message);
 	setReply(nullptr);
+	if(recorder->haveVocalRecorder())
+		recorder->clearVocalRecorder();
 }
 
 void ChatRoomModel::sendFileMessage (const QString &path) {

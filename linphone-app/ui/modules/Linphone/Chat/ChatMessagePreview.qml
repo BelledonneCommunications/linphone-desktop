@@ -22,7 +22,6 @@ ColumnLayout{
 	spacing: 0
 	
 	function hide(){
-		audioPreview.hide()
 	}
 	ChatReplyPreview{
 		id: replyPreview

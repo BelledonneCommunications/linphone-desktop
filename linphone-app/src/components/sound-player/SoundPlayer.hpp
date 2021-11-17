@@ -31,75 +31,75 @@
 class QTimer;
 
 namespace linphone {
-  class Player;
+	class Player;
 }
 
 class SoundPlayer : public QObject {
-  class Handlers;
-
-  Q_OBJECT
-
-  Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged)
-  Q_PROPERTY(PlaybackState playbackState READ getPlaybackState WRITE setPlaybackState NOTIFY playbackStateChanged)
-  Q_PROPERTY(int duration READ getDuration NOTIFY sourceChanged)
-
+	class Handlers;
+	
+	Q_OBJECT
+	
+	Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged)
+	Q_PROPERTY(PlaybackState playbackState READ getPlaybackState WRITE setPlaybackState NOTIFY playbackStateChanged)
+	Q_PROPERTY(int duration READ getDuration NOTIFY sourceChanged)
+	
 public:
-  enum PlaybackState {
-    PlayingState,
-    PausedState,
-    StoppedState,
-    ErrorState
-  };
-  Q_ENUM(PlaybackState);
-
-  SoundPlayer (QObject *parent = Q_NULLPTR);
-  ~SoundPlayer ();
-
-  Q_INVOKABLE void pause ();
-  Q_INVOKABLE void play ();
-  Q_INVOKABLE void stop ();
-
-  Q_INVOKABLE void seek (int offset);
-
-  Q_INVOKABLE int getPosition () const;
-
+	enum PlaybackState {
+		PlayingState,
+		PausedState,
+		StoppedState,
+		ErrorState
+	};
+	Q_ENUM(PlaybackState);
+	
+	SoundPlayer (QObject *parent = Q_NULLPTR);
+	~SoundPlayer ();
+	
+	Q_INVOKABLE void pause ();
+	Q_INVOKABLE void play ();
+	Q_INVOKABLE void stop ();
+	
+	Q_INVOKABLE void seek (int offset);
+	
+	Q_INVOKABLE int getPosition () const;
+	
 signals:
-  void sourceChanged (const QString &source);
-
-  void paused ();
-  void playing ();
-  void stopped ();
-
-  void playbackStateChanged (PlaybackState playbackState);
-
+	void sourceChanged (const QString &source);
+	
+	void paused ();
+	void playing ();
+	void stopped ();
+	
+	void playbackStateChanged (PlaybackState playbackState);
+	
 private:
-  void buildInternalPlayer ();
-  void rebuildInternalPlayer ();
-
-  void stop (bool force);
-
-  void handleEof ();
-
-  void setError (const QString &message);
-
-  QString getSource () const;
-  void setSource (const QString &source);
-
-  PlaybackState getPlaybackState () const;
-  void setPlaybackState (PlaybackState playbackState);
-
-  int getDuration () const;
-
-  QString mSource;
-  PlaybackState mPlaybackState = StoppedState;
-
-  bool mForceClose = false;
-  QMutex mForceCloseMutex;
-
-  QTimer *mForceCloseTimer = nullptr;
-
-  std::shared_ptr<linphone::Player> mInternalPlayer;
-  std::shared_ptr<Handlers> mHandlers;
+	void buildInternalPlayer ();
+	void rebuildInternalPlayer ();
+	
+	void stop (bool force);
+	
+	void handleEof ();
+	
+	void setError (const QString &message);
+	
+	QString getSource () const;
+	void setSource (const QString &source);
+	
+	PlaybackState getPlaybackState () const;
+	void setPlaybackState (PlaybackState playbackState);
+	
+	int getDuration () const;
+	
+	QString mSource;
+	PlaybackState mPlaybackState = StoppedState;
+	
+	bool mForceClose = false;
+	QMutex mForceCloseMutex;
+	
+	QTimer *mForceCloseTimer = nullptr;
+	
+	std::shared_ptr<linphone::Player> mInternalPlayer;
+	std::shared_ptr<Handlers> mHandlers;
 };
 
 #endif // SOUND_PLAYER_H_

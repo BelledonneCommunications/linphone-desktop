@@ -22,10 +22,8 @@ Rectangle{
 	property bool isRecording : (vocalRecorder ? vocalRecorder.state != LinphoneEnums.RecorderStateClosed : false)
 	property bool isPlaying : vocalPlayer.item && vocalPlayer.item.playbackState === SoundPlayer.PlayingState
 	
-	onVocalRecorderChanged: if(haveRecorder)
-								audioPreviewBlock.state = 'showed'
 	onIsRecordingChanged: if(isRecording) {
-								mediaProgressBar.start()
+								mediaProgressBar.resume()
 							}else
 								mediaProgressBar.stop()
 	onIsPlayingChanged: isPlaying ? mediaProgressBar.resume() : mediaProgressBar.stop()
@@ -34,25 +32,22 @@ Rectangle{
 	
 	color: ChatAudioPreviewStyle.backgroundColor
 	radius: 0
-	state: "hidden"
-	visible: haveRecorder
-	onVisibleChanged: if(!visible) hide()
+	state: haveRecorder ? 'showed' : 'hidden'
 	clip: false
-	function hide(){
-		state = 'hidden'
-	}
 	Loader {
 		id: vocalPlayer
 		
-		active: false
+		active: haveRecorder && vocalRecorder && !isRecording
 		sourceComponent: SoundPlayer {
 			source: (haveRecorder && vocalRecorder? vocalRecorder.file : '')
 			onStopped:{
-				mediaProgressBar.value = 100
+				mediaProgressBar.value = 101
 			}
 			Component.onCompleted: {
 				play()// This will open the file and allow seeking
 				pause()
+				mediaProgressBar.value = 101
+				mediaProgressBar.refresh()
 			}
 		}
 	}
@@ -67,7 +62,7 @@ Rectangle{
 			Layout.alignment: Qt.AlignVCenter
 			isCustom: true
 			colorSet: ChatAudioPreviewStyle.deleteAction
-			onClicked: audioPreviewBlock.hide()
+			onClicked: RecorderManager.clearVocalRecorder()
 		}
 		Item{
 			Layout.fillHeight: true
@@ -78,23 +73,27 @@ Rectangle{
 			MediaProgressBar{
 				id: mediaProgressBar
 				anchors.fill: parent
-				progressDuration: 0
-				progressPosition: 0
+				progressDuration: !vocalPlayer.item ? vocalRecorder.getDuration() : 0
+				progressPosition: !vocalPlayer.item ? progressDuration : 0
+				value: !vocalPlayer.item ? 0.01 * progressDuration / 5 : 100
 				stopAtEnd: !audioPreviewBlock.isRecording 
 				resetAtEnd: false
 				colorSet: isRecording ? ChatAudioPreviewStyle.recordingProgressionWave : ChatAudioPreviewStyle.progressionWave
+				function refresh(){
+					if( vocalPlayer.item){
+						progressPosition = vocalPlayer.item.getPosition()
+						value = 100 * ( progressPosition / vocalPlayer.item.duration)
+					}else{// Recording
+						progressDuration = vocalRecorder.getDuration()
+						progressPosition = progressDuration
+						value = value + 0.01
+					}
+				}
 				onEndReached:{
 					if(vocalPlayer.item)
 						vocalPlayer.item.stop()
 				}
-				onRefreshPositionRequested: if( vocalPlayer.item){
-												progressPosition = vocalPlayer.item.getPosition()
-												value = 100 * ( progressPosition / vocalPlayer.item.duration)
-											}else{// Recording
-												progressDuration = vocalRecorder.getDuration()
-												progressPosition = progressDuration
-												value = value + 0.01
-											}
+				onRefreshPositionRequested: refresh()
 				onSeekRequested: if(  vocalPlayer.item){
 					vocalPlayer.item.seek(ms)
 					progressPosition = vocalPlayer.item.getPosition()
@@ -115,8 +114,7 @@ Rectangle{
 			onClicked:{
 				if(audioPreviewBlock.isRecording){// Stop the record and save the file
 					audioPreviewBlock.vocalRecorder.stop()
-					mediaProgressBar.value = 100
-					vocalPlayer.active = true
+					//mediaProgressBar.value = 100
 				}else if(audioPreviewBlock.isPlaying){// Pause the play
 					vocalPlayer.item.pause()
 				}else{// Play the audio
@@ -128,17 +126,18 @@ Rectangle{
 	states: [
 		 State {
 			 name: "hidden"
-			 PropertyChanges { target: audioPreviewBlock; opacity: 0 }
+			 PropertyChanges { target: audioPreviewBlock; opacity: 0 ; visible: false }
 		 },
 		 State {
 			 name: "showed"
-			 PropertyChanges { target: audioPreviewBlock; opacity: 1 }
+			 PropertyChanges { target: audioPreviewBlock; opacity: 1 ; visible: true }
 		 }
 	 ]
 	 transitions: [
 		 Transition {
 			 from: "*"; to: "showed"
 			 SequentialAnimation{
+				ScriptAction{ script: audioPreviewBlock.visible = true }
 				ScriptAction{ script: audioPreviewBlock.vocalRecorder.start() }
 				NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 250 }
 			}
@@ -146,9 +145,8 @@ Rectangle{
 		 Transition {
 		 from: "*"; to: "hidden"
 			SequentialAnimation{
-				ScriptAction{ script: RecorderManager.clearVocalRecorder()}
-				ScriptAction{ script: vocalPlayer.active = false }
 				NumberAnimation{ properties: "opacity"; duration: 250 }
+				ScriptAction{ script: audioPreviewBlock.visible = false }
 			}
 		}
 	]
