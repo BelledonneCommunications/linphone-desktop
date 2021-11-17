@@ -1397,7 +1397,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished">Frissítések keresése</translation>
+        <translation>Frissítések keresése</translation>
     </message>
 </context>
 <context>
