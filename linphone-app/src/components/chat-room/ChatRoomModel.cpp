@@ -37,6 +37,7 @@
 #include "app/App.hpp"
 #include "app/paths/Paths.hpp"
 #include "app/providers/ThumbnailProvider.hpp"
+#include "components/calls/CallsListModel.hpp"
 #include "components/chat-events/ChatCallModel.hpp"
 #include "components/chat-events/ChatEvent.hpp"
 #include "components/chat-events/ChatMessageModel.hpp"
@@ -194,19 +195,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	
 	mChatRoom = chatRoom;
 	mChatRoomModelListener = std::make_shared<ChatRoomModelListener>(this, parent);
-	mChatRoom->addListener(mChatRoomModelListener);
-	
-// Get Max updatetime from chat room and last call event	
-	
-	auto callHistory = CoreManager::getInstance()->getCore()->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress());
-	if(callHistory.size() > 0){
-		auto callDate = callHistory.front()->getStartDate();
-		if( callHistory.front()->getStatus() == linphone::Call::Status::Success )
-			callDate += callHistory.front()->getDuration();
-		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(max(mChatRoom->getLastUpdateTime(), callDate )*1000));
-	}else
-		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(mChatRoom->getLastUpdateTime()*1000));
-	
+	mChatRoom->addListener(mChatRoomModelListener);	
 	
 	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 	setMissedCallsCount(0);
@@ -246,6 +235,15 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 		}
 	}else
 		mParticipantListModel = nullptr;
+	// Get Max updatetime from chat room and last call event
+	auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
+	if(callHistory.size() > 0){
+		auto callDate = callHistory.front()->getStartDate();
+		if( callHistory.front()->getStatus() == linphone::Call::Status::Success )
+			callDate += callHistory.front()->getDuration();
+		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(max(mChatRoom->getLastUpdateTime(), callDate )*1000));
+	}else
+		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(mChatRoom->getLastUpdateTime()*1000));
 }
 
 ChatRoomModel::~ChatRoomModel () {
@@ -342,7 +340,7 @@ void ChatRoomModel::removeAllEntries () {
 	if( isOneToOne() && // Remove calls only if chat room is one-one and not secure (if available)
 		( !standardChatEnabled || !isSecure())
 		) {
-		auto callLogs = core->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress());
+		auto callLogs = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
 		for(auto callLog : callLogs)
 			core->removeCallLog(callLog);
 	}
@@ -529,6 +527,18 @@ std::shared_ptr<linphone::ChatRoom> ChatRoomModel::getChatRoom(){
 
 QList<QString> ChatRoomModel::getComposers(){
 	return mComposers.values();
+}
+
+QString ChatRoomModel::getParticipantAddress(){
+	if(!isSecure())
+		return Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString());
+	else{
+		auto participants = getParticipants();
+		if(participants->getCount() > 1)
+			return participants->getAt(1)->getSipAddress();
+		else
+			return "";
+	}	
 }
 
 //------------------------------------------------------------------------------------------------
@@ -819,8 +829,12 @@ void ChatRoomModel::initEntries(){
 	for(auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesStep))
 		prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
 // Get calls.
-	if(!isSecure() ) {
-		auto callHistory = CoreManager::getInstance()->getCore()->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress());
+	bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
+	bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
+
+	if( isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
+		|| standardChatEnabled && !isSecure()) ) {
+		auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
 		// callhistory is sorted from newest to oldest
 		int count = 0;
 		for (auto callLog = callHistory.begin() ; count < mLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
@@ -867,8 +881,12 @@ int ChatRoomModel::loadMoreEntries(){
 	}
 
 // Calls
-	if(!isSecure() ) {
-		auto callHistory = CoreManager::getInstance()->getCore()->getCallHistory(mChatRoom->getPeerAddress(), mChatRoom->getLocalAddress());
+	bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
+	bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
+
+	if( isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
+		|| standardChatEnabled && !isSecure()) ) {
+		auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
 		int count = 0;
 		auto itCallHistory = callHistory.begin();
 		while(count < entriesCounts[1] && itCallHistory != callHistory.end()){

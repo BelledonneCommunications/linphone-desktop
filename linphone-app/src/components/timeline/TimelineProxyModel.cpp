@@ -21,6 +21,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/participant/ParticipantListModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "utils/Utils.hpp"
 
@@ -94,6 +95,10 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 	bool haveEncryption = timeline->getChatRoomModel()->haveEncryption();
 	bool isEphemeral = timeline->getChatRoomModel()->isEphemeralEnabled();
 	
+	if(!CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled() && !haveEncryption)
+		return false;
+	if(!CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled() && haveEncryption)
+		return false;
 
 	if( mFilterFlags > 0) {
 		if( !show && ( (mFilterFlags & TimelineFilter::SimpleChatRoom) == TimelineFilter::SimpleChatRoom))

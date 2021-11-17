@@ -62,6 +62,8 @@ public:
 	
 	Q_INVOKABLE void terminateAllCalls () const;
 	Q_INVOKABLE void terminateCall (const QString& sipAddress) const;
+	
+	static std::list<std::shared_ptr<linphone::CallLog>> getCallHistory(const QString& peerAddress, const QString& localAddress);	
 		
 signals:
 	void callRunning (int index, CallModel *callModel);

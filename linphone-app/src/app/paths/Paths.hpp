@@ -26,37 +26,38 @@
 // =============================================================================
 
 namespace Paths {
-  bool filePathExists (const std::string &path, const bool isWritable = false);
-
-
-  std::string getAssistantConfigDirPath ();
-  std::string getAvatarsDirPath ();
-  std::string getCallHistoryFilePath ();
-  std::string getCapturesDirPath ();
-  std::string getCodecsDirPath ();
-  std::string getConfigDirPath (bool writable = true);
-  std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
-  std::string getDatabaseFilePath ();
-  std::string getDownloadDirPath ();
-  std::string getFactoryConfigFilePath ();
-  std::string getFriendsListFilePath ();
-  std::string getLimeDatabasePath ();
-  std::string getLogsDirPath ();
-  std::string getMessageHistoryFilePath ();
-  std::string getPackageDataDirPath ();
-  std::string getPackageMsPluginsDirPath ();
-  std::string getPackagePluginsAppDirPath ();
-  std::string getPackageSoundsResourcesDirPath ();
-  std::string getPluginsAppDirPath ();
-  QStringList getPluginsAppFolders();
-  std::string getRootCaFilePath ();
-  std::string getThumbnailsDirPath ();
-  std::string getToolsDirPath ();
-  std::string getUserCertificatesDirPath ();
-  std::string getZrtpDataFilePath ();
-  std::string getZrtpSecretsFilePath ();
-
-  void migrate ();
+	bool filePathExists (const std::string &path, const bool isWritable = false);
+	
+	std::string getAppLocalDirPath ();
+	std::string getAssistantConfigDirPath ();
+	std::string getAvatarsDirPath ();
+	std::string getCallHistoryFilePath ();
+	std::string getCapturesDirPath ();
+	std::string getCodecsDirPath ();
+	std::string getConfigDirPath (bool writable = true);
+	std::string getConfigFilePath (const QString &configPath = QString(), bool writable = true);
+	std::string getDatabaseFilePath ();
+	std::string getDownloadDirPath ();
+	std::string getFactoryConfigFilePath ();
+	std::string getFriendsListFilePath ();
+	std::string getLimeDatabasePath ();
+	std::string getLogsDirPath ();
+	std::string getMessageHistoryFilePath ();
+	std::string getPackageDataDirPath ();
+	std::string getPackageMsPluginsDirPath ();
+	std::string getPackagePluginsAppDirPath ();
+	std::string getPackageSoundsResourcesDirPath ();
+	std::string getPackageTopDirPath ();
+	std::string getPluginsAppDirPath ();
+	QStringList getPluginsAppFolders();
+	std::string getRootCaFilePath ();
+	std::string getThumbnailsDirPath ();
+	std::string getToolsDirPath ();
+	std::string getUserCertificatesDirPath ();
+	std::string getZrtpDataFilePath ();
+	std::string getZrtpSecretsFilePath ();
+	
+	void migrate ();
 }
 
 #endif // PATHS_H_

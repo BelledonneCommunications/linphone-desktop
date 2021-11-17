@@ -78,6 +78,7 @@ public:
 	static constexpr char PathAvatars[] = "/avatars/";
 	static constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
 	static constexpr char PathCodecs[] =  "/codecs/";
+	static constexpr char PathData[] =  "/" EXECUTABLE_NAME;
 	static constexpr char PathTools[] =  "/tools/";
 	static constexpr char PathLogs[] = "/logs/";
 #ifdef APPLE
@@ -92,7 +93,7 @@ public:
 	
 	static constexpr char PathCallHistoryList[] = "/call-history.db";
 	static constexpr char PathConfig[] = "/linphonerc";
-	static constexpr char PathDatabase[] = "/" EXECUTABLE_NAME ".db";
+	static constexpr char PathDatabase[] = "/linphone.db";
 	static constexpr char PathFactoryConfig[] = "/" EXECUTABLE_NAME "/linphonerc-factory";
 	static constexpr char PathRootCa[] = "/" EXECUTABLE_NAME "/rootca.pem";
 	static constexpr char PathFriendsList[] = "/friends.db";

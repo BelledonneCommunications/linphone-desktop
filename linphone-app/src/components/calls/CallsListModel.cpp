@@ -401,6 +401,12 @@ void CallsListModel::terminateCall (const QString& sipAddress) const{
 	}
 }
 
+std::list<std::shared_ptr<linphone::CallLog>> CallsListModel::getCallHistory(const QString& peerAddress, const QString& localAddress){
+	std::shared_ptr<linphone::Address> cleanedPeerAddress = Utils::interpretUrl(Utils::cleanSipAddress(peerAddress));
+	std::shared_ptr<linphone::Address> cleanedLocalAddress = Utils::interpretUrl(Utils::cleanSipAddress(localAddress));
+	return CoreManager::getInstance()->getCore()->getCallHistory(cleanedPeerAddress, cleanedLocalAddress);
+}
+
 // -----------------------------------------------------------------------------
 
 static void joinConference (const shared_ptr<linphone::Call> &call) {

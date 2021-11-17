@@ -197,6 +197,7 @@ public:
 	ParticipantListModel* getParticipants() const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
+	QString getParticipantAddress();	// return peerAddress if not secure else return the first participant SIP address.
 		
 //---- Setters
 	void setSubject(QString& subject);

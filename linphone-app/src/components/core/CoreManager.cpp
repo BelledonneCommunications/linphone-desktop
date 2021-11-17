@@ -218,19 +218,26 @@ void CoreManager::setDatabasesPaths () {
 // -----------------------------------------------------------------------------
 
 void CoreManager::setOtherPaths () {
-	mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());
+	if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile(), true))
+		mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());// Use application path if Linphone default is not available
 	qInfo() << "Using ZrtpSecrets path : " << QString::fromStdString(mCore->getZrtpSecretsFile());
-	mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());
+	if (mCore->getUserCertificatesPath().empty() || !Paths::filePathExists(mCore->getUserCertificatesPath(), true))
+		mCore->setUserCertificatesPath(Paths::getUserCertificatesDirPath());// Use application path if Linphone default is not available
 	qInfo() << "Using UserCertificate path : " << QString::fromStdString(mCore->getUserCertificatesPath());
-	mCore->setRootCa(Paths::getRootCaFilePath());
+	if (mCore->getRootCa().empty() || !Paths::filePathExists(mCore->getRootCa()))
+		mCore->setRootCa(Paths::getRootCaFilePath());// Use application path if Linphone default is not available
 	qInfo() << "Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
 }
 
 void CoreManager::setResourcesPaths () {
 	shared_ptr<linphone::Factory> factory = linphone::Factory::get();
 	factory->setMspluginsDir(Paths::getPackageMsPluginsDirPath());
-	factory->setTopResourcesDir(Paths::getPackageDataDirPath());
+	factory->setTopResourcesDir(Paths::getPackageTopDirPath());
 	factory->setSoundResourcesDir(Paths::getPackageSoundsResourcesDirPath());
+	factory->setDataResourcesDir(Paths::getPackageDataDirPath());
+	factory->setDataDir(Paths::getAppLocalDirPath());
+	factory->setDownloadDir(Paths::getDownloadDirPath());
+	factory->setConfigDir(Paths::getConfigDirPath(true));
 }
 
 // -----------------------------------------------------------------------------
@@ -271,10 +278,6 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 		config->setInt("video", "capture", 1);
 		config->setInt("video", "display", 1);
 	}
-	if(!config->hasEntry("storage", "uri"))
-		config->setString("storage", "uri", Paths::getDatabaseFilePath());
-	if(!config->hasEntry("lime", "x3dh_db_path"))
-		config->setString("lime", "x3dh_db_path", Paths::getLimeDatabasePath());
 	mCore->start();
 	setDatabasesPaths();
 	setOtherPaths();

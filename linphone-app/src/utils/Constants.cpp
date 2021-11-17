@@ -32,6 +32,7 @@ constexpr char Constants::PathAssistantConfig[];
 constexpr char Constants::PathAvatars[];
 constexpr char Constants::PathCaptures[];
 constexpr char Constants::PathCodecs[];
+constexpr char Constants::PathData[];
 constexpr char Constants::PathTools[];
 constexpr char Constants::PathLogs[];
 #ifdef APPLE
