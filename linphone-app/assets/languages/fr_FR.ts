@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished">Vérifier les mises à jour</translation>
+        <translation>Vérifier les mises à jour</translation>
     </message>
 </context>
 <context>
@@ -163,7 +163,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -179,7 +179,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -481,7 +481,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Choisir où faire suivre le message</translation>
     </message>
 </context>
 <context>
@@ -545,12 +545,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Transférer</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Répondre</translation>
     </message>
 </context>
 <context>
@@ -589,7 +589,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Réponse</translation>
     </message>
 </context>
 <context>
@@ -597,7 +597,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>titleReply</source>
         <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Répondre à %1</translation>
     </message>
 </context>
 <context>
@@ -994,7 +994,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1091,7 +1091,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La dernière configuration n&apos;a pas pu être récupérée</translation>
     </message>
 </context>
 <context>
@@ -1392,7 +1392,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished">Vérifier les mises à jour</translation>
+        <translation>Vérifier les mises à jour</translation>
     </message>
 </context>
 <context>
@@ -1951,7 +1951,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -2563,17 +2563,17 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Activer le Mipmap</translation>
     </message>
     <message>
         <source>mipmapTooltip1</source>
         <extracomment>&apos;This property holds whether the image uses mipmap filtering when scaled or transformed.&apos; : first line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cette propriété détermine si les images doivent utiliser un filtre Mipmap lorsqu&apos;elles sont remises à l’échelle ou transformée.</translation>
     </message>
     <message>
         <source>mipmapTooltip2</source>
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lorsque les images sont rétrécies, un filtre Mipmap a une meilleure qualité visuelle par rapport à un lissage standard mais nécessite plus de calculs lors de l&apos;initialisation des images et pendant le rendu.</translation>
     </message>
 </context>
 <context>
@@ -2682,22 +2682,22 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SipAddressDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>contactsSearchPlaceholder</source>
         <extracomment>&apos;Search in contacts&apos; : Placeholder for a search a contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher un contact</translation>
     </message>
     <message>
         <source>contactsSearchTooltip</source>
         <extracomment>&apos;Search an address in your contacts or use a custom one.&apos; : tooltip</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher une adresse dans les contacts ou utiliser une adresse personnalisée.</translation>
     </message>
     <message>
         <source>timelineSelectionHeader</source>
         <extracomment>&apos;Conversations&apos; : header for a selection in conversation list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conversations</translation>
     </message>
 </context>
 <context>
@@ -2752,27 +2752,27 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilterAllSecureLevelRooms</source>
         <extracomment>&apos;All security levels&apos; : Filter item. Selecting it will not do any filter on security level.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tous les niveaux de sécurité</translation>
     </message>
     <message>
         <source>timelineFilterStandardRooms</source>
         <extracomment>&apos;Standard rooms&apos; : Filter item. Selecting it will show all simple rooms.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Standards</translation>
     </message>
     <message>
         <source>timelineFilterAnyChatRooms</source>
         <extracomment>&apos;Any conversations&apos; : Filter item. Selecting it will not do any filter on the type of conversations.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tous les types</translation>
     </message>
     <message>
         <source>timelineFilterAnyEphemerals</source>
         <extracomment>&apos;Ephemerals on/off&apos; : Filter item. Selecting it will not do any filter on ephemerals activation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Éphémères on/off</translation>
     </message>
     <message>
         <source>timelineFilterNoEphemerals</source>
         <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sans éphémères</translation>
     </message>
 </context>
 <context>
