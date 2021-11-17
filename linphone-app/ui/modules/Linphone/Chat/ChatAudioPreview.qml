@@ -73,7 +73,7 @@ Rectangle{
 			MediaProgressBar{
 				id: mediaProgressBar
 				anchors.fill: parent
-				progressDuration: !vocalPlayer.item ? vocalRecorder.getDuration() : 0
+				progressDuration: !vocalPlayer.item && vocalRecorder? vocalRecorder.getDuration() : 0
 				progressPosition: !vocalPlayer.item ? progressDuration : 0
 				value: !vocalPlayer.item ? 0.01 * progressDuration / 5 : 100
 				stopAtEnd: !audioPreviewBlock.isRecording 

@@ -34,19 +34,14 @@ class TimelineProxyModel : public QSortFilterProxyModel {
 	
 public:
 	enum TimelineFilter {
-		SimpleChatRoom=1,
+		StandardChatRoom=1,
 		SecureChatRoom=2,
-		GroupChatRoom=4,
-		SecureGroupChatRoom=8,
+		SimpleChatRoom=4,
+		GroupChatRoom=8,
 		EphemeralChatRoom=16,
+		NoEphemeralChatRoom=32,
 		
-		NoSimpleChatRoom=32,
-		NoSecureChatRoom=64,
-		NoGroupChatRoom=128,
-		NoSecureGroupChatRoom=256,
-		NoEphemeralChatRoom=512,
-		
-		AllChatRooms = SimpleChatRoom+SecureChatRoom+GroupChatRoom+SecureGroupChatRoom+EphemeralChatRoom
+		AllChatRooms = 0
 	};
 	Q_ENUM(TimelineFilter)
 	

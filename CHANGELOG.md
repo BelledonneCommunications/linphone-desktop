@@ -6,9 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.4.0 - [Undefined]
 
-## Added
+### Added
 - Features:
-	* messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record (on send)
+	* messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record (on send).
+	
+- Add a feedback on fetching remote provisioning when it failed.
+
+### Fixed
+- Simplify filtering timelines on 3 kind of search : security level, simple/group chats, ephemerals.
+- Fix systemTrayIcon that could be cloned on each restart.
+- Fix errors on Action-Buttons on restart.
 
 ## 4.3.2
 

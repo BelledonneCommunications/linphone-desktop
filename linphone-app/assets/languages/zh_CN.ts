@@ -1098,6 +1098,11 @@
         <source>remoteProvisioningUpdateDescription</source>
         <translation>需要重启应用程序。您想要立刻重启吗？</translation>
     </message>
+    <message>
+        <source>lastProvisioningFailed</source>
+        <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HistoryView</name>
@@ -2722,38 +2727,53 @@
     </message>
     <message>
         <source>timelineFilterSimpleRooms</source>
-        <extracomment>&apos;Simple rooms&apos; : Filter item</extracomment>
+        <extracomment>&apos;Simple rooms&apos; : Filter item. Selecting it will show all secure chat groups (with more than one participant).</extracomment>
         <translation>基础聊天室</translation>
-        <extra-Mode>Selecting it will show all simple rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>
-        <extracomment>&apos;Secure rooms&apos; : Filter item</extracomment>
+        <extracomment>&apos;Secure rooms&apos; : Filter item. Selecting it will show all secure rooms.</extracomment>
         <translation>安全室</translation>
-        <extra-Mode>Selecting it will show all secure rooms</extra-Mode>
     </message>
     <message>
         <source>timelineFilterChatGroups</source>
-        <extracomment>&apos;Chat groups&apos; : Filter item</extracomment>
+        <extracomment>&apos;Chat groups&apos; : Filter item. Selecting it will show all chat groups (with more than one participant).</extracomment>
         <translation>聊天群</translation>
-        <extra-Mode>Selecting it will show all chat groups (with more than one participant)</extra-Mode>
-    </message>
-    <message>
-        <source>timelineFilterSecureChatGroups</source>
-        <extracomment>&apos;Secure Chat Groups&apos; : Filter item</extracomment>
-        <translation>安全聊天群</translation>
-        <extra-Mode>Selecting it will show all secure chat groups (with more than one participant)</extra-Mode>
     </message>
     <message>
         <source>timelineFilterEphemerals</source>
-        <extracomment>&apos;Ephemerals&apos; : Filter item</extracomment>
+        <extracomment>&apos;Ephemerals&apos; : Filter item. Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extracomment>
         <translation>阅后即焚</translation>
-        <extra-Mode>Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extra-Mode>
     </message>
     <message>
         <source>timelineSearchPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
         <translation>在列表中查找</translation>
+    </message>
+    <message>
+        <source>timelineFilterAllSecureLevelRooms</source>
+        <extracomment>&apos;All security levels&apos; : Filter item. Selecting it will not do any filter on security level.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineFilterStandardRooms</source>
+        <extracomment>&apos;Standard rooms&apos; : Filter item. Selecting it will show all simple rooms.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineFilterAnyChatRooms</source>
+        <extracomment>&apos;Any conversations&apos; : Filter item. Selecting it will not do any filter on the type of conversations.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineFilterAnyEphemerals</source>
+        <extracomment>&apos;Ephemerals on/off&apos; : Filter item. Selecting it will not do any filter on ephemerals activation.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timelineFilterNoEphemerals</source>
+        <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

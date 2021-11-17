@@ -166,7 +166,7 @@ public:
 	
 	static bool isInstanciated(){return mInstance!=nullptr;}
 	
-	bool isLastRemoteProvisioningGood();
+	Q_INVOKABLE bool isLastRemoteProvisioningGood();
 	
 public slots:
 	void initCoreManager();

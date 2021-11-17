@@ -301,10 +301,10 @@ void App::initContentApp () {
 		setFetchConfig(mParser);
 		setOpened(false);
 		qInfo() << QStringLiteral("Restarting app...");
+		
 		delete mEngine;
 		
 		mNotifier = nullptr;
-		mSystemTrayIcon = nullptr;
 		//
 		CoreManager::uninit();
 		removeTranslator(mTranslator);
@@ -723,8 +723,8 @@ void App::registerSharedToolTypes () {
 
 void App::setTrayIcon () {
 	QQuickWindow *root = getMainWindow();
-	QSystemTrayIcon *systemTrayIcon = new QSystemTrayIcon(mEngine);
-	
+	QSystemTrayIcon* systemTrayIcon = (mSystemTrayIcon?mSystemTrayIcon : new QSystemTrayIcon(nullptr));// Workaround : QSystemTrayIcon cannot be deleted because of setContextMenu (indirectly)
+		
 	// trayIcon: Right click actions.
 	QAction *settingsAction = new QAction(tr("settings"), root);
 	root->connect(settingsAction, &QAction::triggered, root, [this] {
@@ -754,7 +754,7 @@ void App::setTrayIcon () {
 	root->connect(quitAction, &QAction::triggered, this, &App::quit);
 	
 	// trayIcon: Left click actions.
-	QMenu *menu = new QMenu();
+	static QMenu *menu = new QMenu();// Static : Workaround about a bug with setContextMenu where it cannot be called more than once.
 	root->connect(systemTrayIcon, &QSystemTrayIcon::activated, [root](
 				  QSystemTrayIcon::ActivationReason reason
 				  ) {
@@ -774,12 +774,13 @@ void App::setTrayIcon () {
 	menu->addAction(restoreAction);
 	menu->addSeparator();
 	menu->addAction(quitAction);
-	
-	systemTrayIcon->setContextMenu(menu);
+	if(!mSystemTrayIcon)
+		systemTrayIcon->setContextMenu(menu);// This is a Qt bug. We cannot call setContextMenu more than once. So we have to keep an instance of the menu.
 	systemTrayIcon->setIcon(QIcon(Constants::WindowIconPath));
 	systemTrayIcon->setToolTip(APPLICATION_NAME);
 	systemTrayIcon->show();
-	mSystemTrayIcon = systemTrayIcon;
+	if(!mSystemTrayIcon)
+		mSystemTrayIcon = systemTrayIcon;
 	if(!QSystemTrayIcon::isSystemTrayAvailable())
 		qInfo() << "System tray is not available";
 }

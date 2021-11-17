@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.4
 import QtQuick.Shapes 1.10
 
 import Common.Styles 1.0

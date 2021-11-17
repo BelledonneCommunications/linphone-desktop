@@ -13,7 +13,7 @@ Item {
 	id: wrappedButton
 	
 	// ---------------------------------------------------------------------------
-	property QtObject colorSet: QtObject {
+	readonly property QtObject defaultColorSet : QtObject {
 		property int iconSize: 30
 		property string icon : ''
 		property color backgroundNormalColor : "white"
@@ -28,12 +28,14 @@ Item {
 		property color foregroundUpdatingColor : "black"
 		property color foregroundPressedColor : "black"
 	}
+	property QtObject colorSet: defaultColorSet
+	onColorSetChanged: if(!colorSet) colorSet = defaultColorSet
 	property bool isCustom : false
 	property bool enabled: true
 	property bool updating: false
 	property bool useStates: true
 	//property bool autoIcon : false    // hovered/pressed : use an automatic layer instead of specific icon image
-	property int iconSize : colorSet.iconSize
+	property int iconSize : colorSet ? colorSet.iconSize : 0
 	property int iconHeight: colorSet.iconHeight ? colorSet.iconHeight : 0
 	property int iconWidth: colorSet.iconWidth ? colorSet.iconWidth : 0
 	readonly property alias hovered: button.hovered
@@ -70,7 +72,7 @@ Item {
 	
 	// If `useStates` = true, the used icons are:
 	// `icon`_pressed, `icon`_hovered and `icon`_normal.
-	property string icon : colorSet.icon
+	property string icon : colorSet ? colorSet.icon : ''
 	
 	// ---------------------------------------------------------------------------
 	
@@ -220,10 +222,15 @@ Item {
 			anchors.centerIn: parent
 			anchors.fill: iconHeight>0 || iconWidth ? parent : undefined
 			icon: {
-				if(!Images[_getIcon()])
-					console.log("No images for: "+_getIcon())
-				return Images[_getIcon()].id
+				var iconString = _getIcon()
+				if( iconString ) {
+					if(Images[iconString])
+						return Images[iconString].id
+					else
+						console.log("No images for: "+iconString)
 				}
+				return ''
+			}
 			iconSize: wrappedButton.iconSize || (
 						  parent.width > parent.height ? parent.height : parent.width
 						  )
