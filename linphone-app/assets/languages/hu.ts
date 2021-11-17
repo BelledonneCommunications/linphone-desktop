@@ -1082,7 +1082,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Az utolsó távoli kiépítés nem sikerült</translation>
     </message>
 </context>
 <context>
@@ -2742,27 +2742,27 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilterAllSecureLevelRooms</source>
         <extracomment>&apos;All security levels&apos; : Filter item. Selecting it will not do any filter on security level.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Minden biztonsági szint</translation>
     </message>
     <message>
         <source>timelineFilterStandardRooms</source>
         <extracomment>&apos;Standard rooms&apos; : Filter item. Selecting it will show all simple rooms.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Szabványos szobák</translation>
     </message>
     <message>
         <source>timelineFilterAnyChatRooms</source>
         <extracomment>&apos;Any conversations&apos; : Filter item. Selecting it will not do any filter on the type of conversations.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Minden beszélgetés</translation>
     </message>
     <message>
         <source>timelineFilterAnyEphemerals</source>
         <extracomment>&apos;Ephemerals on/off&apos; : Filter item. Selecting it will not do any filter on ephemerals activation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elmúlók be/ki</translation>
     </message>
     <message>
         <source>timelineFilterNoEphemerals</source>
         <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elmúlók nélkül</translation>
     </message>
 </context>
 <context>
