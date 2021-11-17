@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>%1-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
@@ -430,12 +430,12 @@
     <message>
         <source>attendedTransferComplete</source>
         <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ANGENOMMENEN ANRUF WEITERLEITEN</translation>
     </message>
     <message>
         <source>attendedTransferCall</source>
         <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ANGENOMMENEN ANRUF WEITERLEITEN</translation>
     </message>
 </context>
 <context>
@@ -481,7 +481,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie das Ziel der weiterzuleitenden Nachricht</translation>
     </message>
 </context>
 <context>
@@ -521,11 +521,11 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">Kopieren</translation>
+        <translation>Kopieren</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished">Spiel mich ab!</translation>
+        <translation>Abspielen!</translation>
     </message>
     <message>
         <source>menuDeliveryStatus</source>
@@ -791,7 +791,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen eine Konferenz-URI in den Kontoeinstellungen festlegen um einen konferenzbasierten Chatraum zu erstellen.</translation>
     </message>
 </context>
 <context>
@@ -819,7 +819,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen eine Konferenz-URI in den Kontoeinstellungen festlegen um einen konferenzbasierten Chatraum zu erstellen.</translation>
     </message>
 </context>
 <context>
@@ -866,7 +866,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gesprächsgeräte</translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
@@ -1013,7 +1013,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kurzlebige Nachrichten werden nur in konferenzbasierten Chaträumen unterstützt!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1112,19 +1112,19 @@ Server URL ist nicht konfiguriert.</translation>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished">Möchten Sie diese Historie wirklich löschen?</translation>
+        <translation>Möchten Sie diesen Verlauf wirklich löschen?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished">Kontakt bearbeiten</translation>
+        <translation>Kontakt bearbeiten</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished">Kontakt hinzufügen</translation>
+        <translation>Kontakt hinzufügen</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished">Verlauf löschen</translation>
+        <translation>Verlauf löschen</translation>
     </message>
 </context>
 <context>
@@ -1222,7 +1222,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>ok</source>
         <extracomment>&apos;OK&apos; : Button label</extracomment>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>addParticipantPlaceholder</source>
@@ -1232,7 +1232,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach Teilnehmern in der Kontaktliste um sie in den Chatraum einzuladen.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
@@ -1278,13 +1278,13 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>encryptionExplanation</source>
         <extracomment>&quot;Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sofortnachrichten sind in sicheren Gesprächen ende-zu-ende-verschlüsselt. Es ist möglich die Sicherheit zu erhöhen, indem die Teilnehmer authentifiziert werden.</translation>
         <extra-Context>Explanation of Encryption</extra-Context>
     </message>
     <message>
         <source>encryptionProcessExplanation</source>
         <extracomment>&quot;To do so, call the contact and follow the authentification process.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Um das durchzuführen, rufen Sie den Kontakt an und folgen Sie dem Authentifizierungsprozess.</translation>
         <extra-Context>Explanation process</extra-Context>
     </message>
 </context>
@@ -1406,7 +1406,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Auf Aktualisierungen prüfen</translation>
     </message>
 </context>
 <context>
@@ -1459,7 +1459,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sie müssen eine Konferenz-URI in den Kontoeinstellungen festlegen um einen konferenzbasierten Chatraum zu erstellen.</translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
@@ -1490,7 +1490,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>In Kontakten suchen oder einen eigenen zum Chatraum hinzufügen.</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -1501,7 +1501,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Teilnehmer aus Auswahl entfernen</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
@@ -1555,7 +1555,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceSecurityEvent</source>
         <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sicherheitsstufe durch %1 heruntergesetzt</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
@@ -1597,11 +1597,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation>%1 wird extrahiert...</translation>
+        <translation>%1 wird extrahiert…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>%1 wird heruntergeladen...</translation>
+        <translation>%1 wird heruntergeladen…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
@@ -1726,7 +1726,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished">Kontakte</translation>
+        <translation>Adressbuchquelle</translation>
     </message>
     <message>
         <source>noPlugin</source>
@@ -1933,7 +1933,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsLdapEdit</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ABBRECHEN</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>confirm</source>
@@ -1941,7 +1941,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">Anzeigename (optional)</translation>
+        <translation>Anzeigename</translation>
     </message>
     <message>
         <source>displayNameTooltip</source>
@@ -1969,7 +1969,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished">Passwort</translation>
+        <translation>Passwort</translation>
     </message>
     <message>
         <source>useTLSLabel</source>
@@ -1977,7 +1977,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useTLSTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>LDAP-Verbindungen mit TLS(StartTLS) verschlüsseln. Sie müssen das \&apos;ldap\&apos;-Schema benutzen. \&apos;ldaps\&apos; für LDAP-über-SSL ist nicht standardisiert und sollte nicht mehr benutzt werden.&lt;br&gt;StartTLS ist eine Erweiterung zum LDAP-Protokoll, die das TLS-Protokoll zum Verschlüsseln der Kommunikation nutzt. &lt;br&gt;Es wird eine normale - also unverschlüsselte - Verbindung mit dem LDAP-Server aufgebaut bevor eine Handshake-Verhandlung zwischen Server und dem Client durchgeführt wird. Der Server schickt sein eigenes Zertifikat zur Prüfung, bevor die Verschlüsselung aktiviert wird.</translation>
     </message>
     <message>
         <source>useSalLabel</source>
@@ -1985,7 +1985,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>DNS-Auflösung wird von Linphone via SAL gemacht. Die IP wird an den LDAP-Server übertragen. Dadurch kann bei der TLS-Verhandlung der Hostname nicht geprüft werden. Sie können die Prüfung deaktivieren um die Verbindung zu erzwingen.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2021,7 +2021,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>baseObjectTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei Suchanfragen an den LDAP-Server werden nur Einträge berücksichtigt, die unterhalb der Suchbasis liegen.</translation>
     </message>
     <message>
         <source>filterLabel</source>
@@ -2029,7 +2029,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Filter ist die Basis für Suchanfragen.&lt;br&gt;Standardwert: (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
@@ -2045,11 +2045,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>timeoutTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Verbindungs- und Suchablauffrist. Muss positiv sein.&lt;br&gt;Standardwert: 5s.</translation>
     </message>
     <message>
         <source>parsingTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Parsing</translation>
     </message>
     <message>
         <source>nameAttributesLabel</source>
@@ -2057,7 +2057,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Attribute werden zur Namensgenerierung genutzt. Durch Komma trennen, erstes Attribut hat die höchste Priorität.&lt;br&gt;Standardwert: sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
@@ -2065,7 +2065,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Diese Attribute werden zur SIP-Namensgenerierung der Kontaktadresse genutzt. Durch Komma trennen, erstes Attribut hat die höchste Priorität.&lt;br&gt;Standardwert: mobile,telephoneNumber,homePhone,sn</translation>
     </message>
     <message>
         <source>domainLabel</source>
@@ -2085,7 +2085,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei LDAP-Anfragen ausführliche Logeinträge in die Linphone-Logdatei schreiben (hilfreich um TLS-Verbindungen zu untersuchen).</translation>
     </message>
 </context>
 <context>
@@ -2302,7 +2302,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation>Presence Informationen publizieren.</translation>
+        <translation>Präsenzinformationen publizieren</translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
@@ -2400,7 +2400,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancel</source>
         <extracomment>&apos;Cancel&apos; : Button to cancel the action.</extracomment>
-        <translation type="unfinished">ABBRECHEN</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>setHTTPProxy</source>
@@ -2536,7 +2536,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation>Beende App beim Schließen des Fensters.</translation>
+        <translation>Beende Programm beim Schließen des Fensters</translation>
     </message>
     <message>
         <source>dataTitle</source>
@@ -2549,7 +2549,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsTitle</source>
         <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Schriftarten</translation>
     </message>
     <message>
         <source>fontsTextChange</source>
@@ -2559,7 +2559,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Neue Schriftart wählen</translation>
     </message>
     <message>
         <source>checkForUpdateLabel</source>
@@ -2569,17 +2569,17 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mipmap aktivieren</translation>
     </message>
     <message>
         <source>mipmapTooltip1</source>
         <extracomment>&apos;This property holds whether the image uses mipmap filtering when scaled or transformed.&apos; : first line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bei Skalierung oder Transformierung eines Bildes Mipmap-Filterung nutzen.</translation>
     </message>
     <message>
         <source>mipmapTooltip2</source>
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mipmap-Filterung führt bei Verkleinerung im Vergleich zu &quot;Smooth&quot; zu besserer Bildqualität, aber es ist langsamer (sowohl beim Initialisieren als auch bei der Anzeige).</translation>
     </message>
 </context>
 <context>
@@ -2688,7 +2688,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SipAddressDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ABBRECHEN</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>contactsSearchPlaceholder</source>
@@ -2698,7 +2698,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>contactsSearchTooltip</source>
         <extracomment>&apos;Search an address in your contacts or use a custom one.&apos; : tooltip</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adresse in den Kontakten suchen oder eigene nutzen.</translation>
     </message>
     <message>
         <source>timelineSelectionHeader</source>
@@ -2718,7 +2718,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilter</source>
         <extracomment>A title for filtering mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>timelineFilterAll</source>
@@ -2778,7 +2778,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation>Benutzername und Passwort soll nicht gleich sein, wie die Telefonnummer</translation>
+        <translation>Benutzername und Passwort verwenden, nicht die Telefonnummer.</translation>
     </message>
     <message>
         <source>quitWarning</source>
@@ -2851,7 +2851,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation>Bestätige folgende SAS mit der Gegenstelle</translation>
+        <translation>Bestätige folgende SAS mit der Gegenstelle.</translation>
     </message>
     <message>
         <source>codeA</source>
