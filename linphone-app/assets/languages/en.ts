@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished">Specify the %1 configuration file to be fetch. It will be merged with the current configuration.</translation>
+        <translation>Specify the %1 configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
@@ -1406,7 +1406,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished">Check for updates</translation>
+        <translation>Check for updates</translation>
     </message>
 </context>
 <context>
