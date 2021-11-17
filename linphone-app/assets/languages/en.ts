@@ -2000,7 +2000,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation>The DNS resolution is done by Linphone using SAL. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
+        <translation>The DNS resolution is done by Linphone using SAL. It will pass an IP to LDAP. By doing that, the TLS negotiation cannot check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
