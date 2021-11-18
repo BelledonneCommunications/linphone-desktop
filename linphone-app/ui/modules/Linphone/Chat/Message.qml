@@ -141,7 +141,7 @@ Item {
 					
 					lastTextSelected: message.lastTextSelected 
 					content: $chatEntry.content
-					deliveryCount: deliveryLayout.model.count
+					deliveryCount: deliveryLayout.imdnStatesModel.count
 					onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 					onRemoveEntryRequested: removeEntry()
 					deliveryVisible: deliveryLayout.visible

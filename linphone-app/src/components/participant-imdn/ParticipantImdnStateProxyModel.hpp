@@ -53,6 +53,7 @@ protected:
 	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
 	std::shared_ptr<ParticipantImdnStateListModel> mImdns;
+	ChatMessageModel * mChatMessageModel = nullptr;
 	
 };
 #endif

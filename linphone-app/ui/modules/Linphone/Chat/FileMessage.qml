@@ -269,7 +269,7 @@ Row {
 							//height: parent.height
 							//width: parent.width
 							
-							deliveryCount: deliveryLayout.model.count
+							deliveryCount: deliveryLayout.imdnStatesModel.count
 							onDeliveryStatusClicked: deliveryLayout.visible = !deliveryLayout.visible
 							onRemoveEntryRequested: removeEntry()
 							deliveryVisible: deliveryLayout.visible
