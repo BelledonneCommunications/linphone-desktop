@@ -61,7 +61,7 @@ Rectangle {
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
-			visible:view.count > 0 || timeline.isFilterVisible
+			visible:view.count > 0 || timeline.isFilterVisible || timeline.model.filterFlags > 0
 			
 			MouseArea{// no more showing history
 				id:showHistory
@@ -160,60 +160,76 @@ Rectangle {
 				anchors.right:parent.right
 				spacing:-4
 				function getFilterFlags(){
-					return secureFilter.value | groupFilter.value | ephemeralsFilter.value;
+					return secureFilter.model.get(secureFilter.currentIndex).value | groupFilter.model.get(groupFilter.currentIndex).value | ephemeralsFilter.model.get(ephemeralsFilter.currentIndex).value;
 				}
-				function getNextState(checkState){
-						if(checkState === Qt.Unchecked)
-							return Qt.Checked;
-						else if(checkState === Qt.Checked)
-							return Qt.PartiallyChecked;
-						else
-							return Qt.Unchecked;
-				}
-				CheckBoxText {
+				ComboBox {
 					Layout.fillWidth: true
 					id:secureFilter
-					//: 'Secure rooms' : Filter item. Selecting it will show all secure rooms.
-					text: checkState === Qt.Checked ? qsTr('timelineFilterSecureRooms') : checkState === Qt.Unchecked
+					currentIndex: 0
+					textRole: "key"
+					model:  ListModel {
+						ListElement { 
 					//: 'All security levels' : Filter item. Selecting it will not do any filter on security level.
-						? qsTr('timelineFilterAllSecureLevelRooms')
-					//: 'Standard rooms' : Filter item. Selecting it will show all simple rooms.
-						: qsTr('timelineFilterStandardRooms')
-					property var value : (checkState==Qt.Checked?TimelineProxyModel.SecureChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.StandardChatRoom:0))
-					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
-					tristate: true
+							key: qsTr('timelineFilterAllSecureLevelRooms'); value: 0}
+						ListElement { 
+					//: 'Standard rooms' : Filter item. Selecting it will show all simple rooms.	
+							key: qsTr('timelineFilterStandardRooms'); value: TimelineProxyModel.StandardChatRoom}
+						ListElement { 
+					//: 'Secure rooms' : Filter item. Selecting it will show all secure rooms.
+							key: qsTr('timelineFilterSecureRooms'); value: TimelineProxyModel.SecureChatRoom}
+					}
+					
+					haveBorder: false
+					haveMargin: false
+					backgroundColor: 'transparent'
 					visible: SettingsModel.secureChatEnabled && SettingsModel.standardChatEnabled
-					nextCheckState: function(){ return parent.getNextState(checkState)}
+					onActivated:  timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
-				CheckBoxText {
+				ComboBox {
+					Layout.fillWidth: true
 					id:groupFilter
-					Layout.fillWidth: true
-					//: 'Chat groups' : Filter item. Selecting it will show all chat groups (with more than one participant).
-					text: checkState === Qt.Checked ? qsTr('timelineFilterChatGroups') : checkState === Qt.Unchecked 
+					currentIndex: 0
+					textRole: "key"
+					model:  ListModel {
+						ListElement { 
 					//: 'Any conversations' : Filter item. Selecting it will not do any filter on the type of conversations.
-						? qsTr('timelineFilterAnyChatRooms')
+							key: qsTr('timelineFilterAnyChatRooms'); value: 0}
+						ListElement { 
 					//: 'Simple rooms' : Filter item. Selecting it will show all secure chat groups (with more than one participant).
-						: qsTr('timelineFilterSimpleRooms')
-					property var value : (checkState==Qt.Checked?TimelineProxyModel.GroupChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.SimpleChatRoom:0))
-					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
-					tristate: true
+							key: qsTr('timelineFilterSimpleRooms'); value: TimelineProxyModel.SimpleChatRoom}
+						ListElement { 
+					//: 'Chat groups' : Filter item. Selecting it will show all chat groups (with more than one participant).
+							key: qsTr('timelineFilterChatGroups'); value: TimelineProxyModel.GroupChatRoom}
+					}
+					
+					haveBorder: false
+					haveMargin: false
+					backgroundColor: 'transparent'
 					visible: SettingsModel.secureChatEnabled || SettingsModel.standardChatEnabled
-					nextCheckState: function(){ return parent.getNextState(checkState)}
+					onActivated:  timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
-				CheckBoxText {
-					id:ephemeralsFilter
+				ComboBox {
 					Layout.fillWidth: true
-					//: 'Ephemerals' : Filter item. Selecting it will show all chat rooms where the ephemeral mode has been enabled.
-					text: checkState === Qt.Checked ? qsTr('timelineFilterEphemerals') : checkState === Qt.Unchecked 
+					id:ephemeralsFilter
+					currentIndex: 0
+					textRole: "key"
+					model:  ListModel {
+						ListElement { 
 					//: 'Ephemerals on/off' : Filter item. Selecting it will not do any filter on ephemerals activation.
-						? qsTr('timelineFilterAnyEphemerals')
+							key: qsTr('timelineFilterAnyEphemerals'); value: 0}
+						ListElement { 
 					//: 'No Ephemerals' : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.
-						: qsTr('timelineFilterNoEphemerals')
-					property var value : (checkState==Qt.Checked?TimelineProxyModel.EphemeralChatRoom: (checkState == Qt.PartiallyChecked ?TimelineProxyModel.NoEphemeralChatRoom:0))
+							key: qsTr('timelineFilterNoEphemerals'); value: TimelineProxyModel.NoEphemeralChatRoom}
+						ListElement { 
+					//: 'Ephemerals' : Filter item. Selecting it will show all chat rooms where the ephemeral mode has been enabled.
+							key: qsTr('timelineFilterEphemerals'); value: TimelineProxyModel.EphemeralChatRoom}
+					}
+					
+					haveBorder: false
+					haveMargin: false
+					backgroundColor: 'transparent'
 					visible: SettingsModel.secureChatEnabled || SettingsModel.standardChatEnabled
-					onValueChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
-					tristate: true
-					nextCheckState: function(){ return parent.getNextState(checkState)}
+					onActivated:  timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 			}
 		}

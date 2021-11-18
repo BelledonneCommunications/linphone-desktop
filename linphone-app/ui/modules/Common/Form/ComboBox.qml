@@ -15,17 +15,20 @@ Controls.ComboBox {
   // ---------------------------------------------------------------------------
 
   property var iconRole
+  property bool haveBorder: true
+  property bool haveMargin: true
+  property color backgroundColor: ComboBoxStyle.background.color.normal
 
   // ---------------------------------------------------------------------------
 
   background: Rectangle {
     border {
       color: ComboBoxStyle.background.border.color
-      width: ComboBoxStyle.background.border.width
+      width: comboBox.haveBorder ? ComboBoxStyle.background.border.width : 0
     }
 
     color: comboBox.enabled
-      ? ComboBoxStyle.background.color.normal
+      ? comboBox.backgroundColor
       : ComboBoxStyle.background.color.readOnly
 
     radius: ComboBoxStyle.background.radius
@@ -43,7 +46,7 @@ Controls.ComboBox {
     RowLayout {
       anchors {
         fill: parent
-        leftMargin: ComboBoxStyle.contentItem.leftMargin
+        leftMargin: comboBox.haveMargin ? ComboBoxStyle.contentItem.leftMargin : 0
       }
 
       spacing: ComboBoxStyle.contentItem.spacing
