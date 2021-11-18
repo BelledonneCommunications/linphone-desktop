@@ -2,18 +2,29 @@ FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-centos7:20210217_pyt
 
 MAINTAINER Peio Rigaux <peio.rigaux@belledonne-communications.com>
 
+
 # QT Dependenciesi (pigz is used to parallelize compression)
 RUN sudo yum install -y libxkbcommon* libxcb  freeglut-devel pigz icc-profiles-openicc fontconfig fontconfig-devel libfontconfig1-dev freetype-devel
-RUN scl enable devtoolset-7 bash
+RUN sudo yum install -y devtoolset-8
+RUN sudo yum install -y devtoolset-8-gcc*
+RUN scl enable devtoolset-8 bash
 
+RUN sudo yum install -y gperf flex
+
+SHELL ["/bin/bash", "--login", "-c"]
+
+RUN scl enable devtoolset-8 bash
+RUN gcc --version
 # Configure AppImages dependencies
 RUN sudo yum install -y fuse fuse-libs wget
 
-# Build qt5.12
-RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
+
+
+# Build qt5.12.12
+RUN git clone -b feature/webview_subscription --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
     ./linphone-desktop/tools/build_qt_rpm && \
-    sudo rpm -i ./linphone-desktop/rpm-linphone-qt-5.12/rpmbuild/RPMS/x86_64/*.rpm && \
-    sudo mv ./linphone-desktop/rpm-linphone-qt-5.12/rpmbuild/RPMS/x86_64/*.rpm / && \
+    sudo rpm -i ./linphone-desktop/rpm-linphone-qt-5.12.12/rpmbuild/RPMS/x86_64/*.rpm && \
+    sudo mv ./linphone-desktop/rpm-linphone-qt-5.12.12/rpmbuild/RPMS/x86_64/*.rpm / && \
     sudo rm -rf ./linphone-desktop
 
 

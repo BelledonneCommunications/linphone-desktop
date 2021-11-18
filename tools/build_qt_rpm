@@ -4,7 +4,7 @@
 # See: http://doc.qt.io/qt-5/configure-options.html
 
 REPO_URL='https://gitlab.linphone.org/BC/public/external/qt/qt5.git'
-QT_VERSION='5.12'
+QT_VERSION='5.12.12'
 
 RPM_NAME=linphone-qt-${QT_VERSION}
 
@@ -24,7 +24,8 @@ if [ ! -d "${REPO_FOLDER}/.git" ]; then
   
   #Simplest way to use paralle fetch if available
   #Otherwise we would have to parse the git version number
-  git clone "${REPO_URL}" "${REPO_FOLDER}" --recursive -j 12 || git clone "${REPO_URL}" "${REPO_FOLDER}"
+  git --version
+  git clone "${REPO_URL}" "${REPO_FOLDER}" --recursive -j 12 -b ${QT_VERSION} || git clone "${REPO_URL}" "${REPO_FOLDER}" -b ${QT_VERSION} --recursive || git clone "${REPO_URL}" "${REPO_FOLDER}" -b ${QT_VERSION}
 fi
 cd "${REPO_FOLDER}"
 while test $# -gt 0
@@ -40,8 +41,9 @@ do
   shift
 done
 
-git checkout "${QT_VERSION}"
-git submodule foreach --recursive 'if [ -n "$(git branch -a | grep 5.12)" ]; then git checkout 5.12; fi'
+git submodule update --init --recursive
+#git checkout "${QT_VERSION}"
+#git submodule foreach --recursive 'if [ -n "$(git branch -a | grep 5.12.12)" ]; then git checkout 5.12.12; fi'
 if [[ $? != 0 ]] ; then
   printf "${RED}Unable to checkout ${QT_VERSION}.${NC}\n"
   exit 1

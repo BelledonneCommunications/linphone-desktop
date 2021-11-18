@@ -1,6 +1,6 @@
 # -*- rpm-spec -*-
 
-%define _qt5_version 5.12
+%define _qt5_version 5.12.12
 %define _qt5_dir /opt/com.belledonne-communications/linphone
 
 %define _qt5_archdatadir %{_qt5_dir}
@@ -82,16 +82,6 @@ make install INSTALL_ROOT=%{buildroot} -j12
 
 # Some files got ambiguous python shebangs, we fix them to avoid install errors
 # Because in centos8 shebangs like #!/usr/bin/python are FORBIDDEN (see https://fedoraproject.org/wiki/Changes/Make_ambiguous_python_shebangs_error)
-
-%build qtwebengine
-cd qtwebengine
-qmake
-make -j12
-
-find . \( -type d -name .git -prune \) -o -type f -print0 | xargs -0 sed -i 's/#!\/usr\/bin\/python/#!\/usr\/bin\/python3/g'
-make install INSTALL_ROOT=%{buildroot} -j12
-
-cd ..
 
 
 %files
