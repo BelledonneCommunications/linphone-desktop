@@ -75,6 +75,5 @@ RowLayout {
 		Layout.minimumWidth: 1
 		
 		backgroundColor: ChatStyle.entry.message.incoming.backgroundColor
-		color: ChatStyle.entry.message.incoming.text.color
 	}
 }

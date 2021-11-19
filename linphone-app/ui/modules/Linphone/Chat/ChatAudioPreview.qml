@@ -23,9 +23,9 @@ Rectangle{
 	property bool isPlaying : vocalPlayer.item && vocalPlayer.item.playbackState === SoundPlayer.PlayingState
 	
 	onIsRecordingChanged: if(isRecording) {
-								mediaProgressBar.resume()
-							}else
-								mediaProgressBar.stop()
+							  mediaProgressBar.resume()
+						  }else
+							  mediaProgressBar.stop()
 	onIsPlayingChanged: isPlaying ? mediaProgressBar.resume() : mediaProgressBar.stop()
 	
 	Layout.preferredHeight: 70
@@ -95,10 +95,10 @@ Rectangle{
 				}
 				onRefreshPositionRequested: refresh()
 				onSeekRequested: if(  vocalPlayer.item){
-					vocalPlayer.item.seek(ms)
-					progressPosition = vocalPlayer.item.getPosition()
-					value = 100 * (progressPosition / vocalPlayer.item.duration)
-				}
+									 vocalPlayer.item.seek(ms)
+									 progressPosition = vocalPlayer.item.getPosition()
+									 value = 100 * (progressPosition / vocalPlayer.item.duration)
+								 }
 			}
 		}
 		ActionButton{
@@ -109,8 +109,8 @@ Rectangle{
 			Layout.alignment: Qt.AlignVCenter
 			isCustom: true
 			colorSet: audioPreviewBlock.isRecording ? ChatAudioPreviewStyle.stopAction
-						: (audioPreviewBlock.isPlaying ? ChatAudioPreviewStyle.pauseAction
-							: ChatAudioPreviewStyle.playAction)
+													: (audioPreviewBlock.isPlaying ? ChatAudioPreviewStyle.pauseAction
+																				   : ChatAudioPreviewStyle.playAction)
 			onClicked:{
 				if(audioPreviewBlock.isRecording){// Stop the record and save the file
 					audioPreviewBlock.vocalRecorder.stop()
@@ -124,26 +124,26 @@ Rectangle{
 		}
 	}
 	states: [
-		 State {
-			 name: "hidden"
-			 PropertyChanges { target: audioPreviewBlock; opacity: 0 ; visible: false }
-		 },
-		 State {
-			 name: "showed"
-			 PropertyChanges { target: audioPreviewBlock; opacity: 1 ; visible: true }
-		 }
-	 ]
-	 transitions: [
-		 Transition {
-			 from: "*"; to: "showed"
-			 SequentialAnimation{
+		State {
+			name: "hidden"
+			PropertyChanges { target: audioPreviewBlock; opacity: 0 ; visible: false }
+		},
+		State {
+			name: "showed"
+			PropertyChanges { target: audioPreviewBlock; opacity: 1 ; visible: true }
+		}
+	]
+	transitions: [
+		Transition {
+			from: "*"; to: "showed"
+			SequentialAnimation{
 				ScriptAction{ script: audioPreviewBlock.visible = true }
 				ScriptAction{ script: audioPreviewBlock.vocalRecorder.start() }
 				NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 250 }
 			}
-		 },
-		 Transition {
-		 from: "*"; to: "hidden"
+		},
+		Transition {
+			from: "*"; to: "hidden"
 			SequentialAnimation{
 				NumberAnimation{ properties: "opacity"; duration: 250 }
 				ScriptAction{ script: audioPreviewBlock.visible = false }

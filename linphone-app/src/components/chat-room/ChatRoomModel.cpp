@@ -333,7 +333,7 @@ void ChatRoomModel::removeAllEntries () {
 			   .arg(getPeerAddress()).arg(getLocalAddress());
 	auto core = CoreManager::getInstance()->getCore();
 	bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
-	beginResetModel();	
+	beginResetModel();
 	mEntries.clear();
 	mChatRoom->deleteHistory();
 	if( isOneToOne() && // Remove calls only if chat room is one-one and not secure (if available)

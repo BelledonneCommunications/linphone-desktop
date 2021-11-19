@@ -36,9 +36,6 @@ function initView () {
 }
 
 function getComponentFromEntry (chatEntry) {
-  if (chatEntry.fileContentModel && chatEntry.fileContentModel.name) {
-    return 'FileMessage.qml'
-  }
 
   if (chatEntry.type === Linphone.ChatRoomModel.CallEntry) {
     return 'Event.qml'

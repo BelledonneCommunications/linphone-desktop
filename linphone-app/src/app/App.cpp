@@ -621,6 +621,7 @@ void App::registerTypes () {
 	registerType<ConferenceModel>("ConferenceModel");
 	registerType<ContactsListProxyModel>("ContactsListProxyModel");
 	registerType<ContactsImporterListProxyModel>("ContactsImporterListProxyModel");
+	registerType<ContentProxyModel>("ContentProxyModel");
 	registerType<FileDownloader>("FileDownloader");
 	registerType<FileExtractor>("FileExtractor");
 	registerType<HistoryProxyModel>("HistoryProxyModel");
@@ -658,6 +659,7 @@ void App::registerTypes () {
 	registerUncreatableType<ContactModel>("ContactModel");
 	registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
 	registerUncreatableType<ContentModel>("ContentModel");
+	registerUncreatableType<ContentListModel>("ContentListModel");
 	registerUncreatableType<HistoryModel>("HistoryModel");
 	registerUncreatableType<LdapModel>("LdapModel");
 	registerUncreatableType<RecorderModel>("RecorderModel");

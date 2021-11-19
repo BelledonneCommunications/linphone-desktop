@@ -25,12 +25,13 @@ Item {
 	property ChatMessageModel mainChatMessageModel
 	property int maxWidth : parent.width
 	property int headerHeight: ChatReplyMessageStyle.header.replyIcon.iconSize
-	property int replyHeight: (chatMessageModel ? replyMessage.implicitHeight + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 2 + 3 : 0)
-	property int fitWidth: Math.max(usernameReplied.implicitWidth + replyMessage.implicitWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2
-	property int fitHeight: headerHeight + replyHeight
+	property int replyHeight: (chatMessageModel ? replyMessage.height + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 3 + 3 : 0)
+	property int fitWidth: visible ? Math.max(usernameReplied.implicitWidth + replyMessage.fitWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2 : 0
+	property int fitHeight: visible ? headerHeight + replyHeight : 0
 	
 	property font customFont : SettingsModel.textMessageFont
 	
+	visible: mainChatMessageModel && mainChatMessageModel.isReply
 	width: maxWidth < 0 || maxWidth > fitWidth ? fitWidth : maxWidth
 	height: fitHeight
 	onMainChatMessageModelChanged: if( mainChatMessageModel && mainChatMessageModel.replyChatMessageModel) chatMessageModel = mainChatMessageModel.replyChatMessageModel
@@ -57,7 +58,7 @@ Item {
 				verticalAlignment: Qt.AlignVCenter
 				//: 'Reply' : Header on a message that contains a reply.
 				text: qsTr('headerReply')
-							+ (chatMessageModel || !mainChatMessageModel? '' : ' - ' + mainChatMessageModel.fromDisplayNameReplyMessage)
+					  + (chatMessageModel || !mainChatMessageModel? '' : ' - ' + mainChatMessageModel.fromDisplayNameReplyMessage)
 				font.family: mainItem.customFont.family
 				font.pointSize: Units.dp * (mainItem.customFont.pointSize + ChatReplyMessageStyle.header.pointSizeOffset)
 				color: ChatReplyMessageStyle.header.color
@@ -98,34 +99,39 @@ Item {
 				
 				color: ChatReplyMessageStyle.replyArea.foregroundColor
 			}
-			TextEdit {
+			ListView {
 				id: replyMessage
-				property string lastTextSelected : ''
-				property font customFont : SettingsModel.textMessageFont
-				
+				property int fitWidth : 0
 				anchors.top: usernameReplied.bottom
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.topMargin: 3
+				anchors.leftMargin: 5
 				
-				clip: true
-				leftPadding: 2*ChatStyle.entry.message.padding
-				rightPadding: ChatStyle.entry.message.padding
-				bottomPadding: ChatStyle.entry.message.padding
-				readOnly: true
-				selectByMouse: true
-				font.family: customFont.family
-				font.pointSize: Units.dp * (customFont.pointSize + ChatReplyMessageStyle.replyArea.pointSizeOffset)
-				font.weight: Font.Light
-				color: ChatReplyMessageStyle.replyArea.foregroundColor
-				text: (visible && chatMessageModel? Utils.encodeTextToQmlRichFormat(chatMessageModel.content, {
-														  imagesHeight: ChatStyle.entry.message.images.height,
-														  imagesWidth: ChatStyle.entry.message.images.width
-													  }) 
-								: '')
+				function updateWidth(){
+					var maxWidth = 0
+					for(var child in replyMessage.contentItem.children) {
+						var a = replyMessage.contentItem.children[child].fitWidth
+						if(a)
+							maxWidth = Math.max(maxWidth,a)
+					}
+					fitWidth = maxWidth
+				}
 				
-				textFormat: Text.RichText // To supports links and imgs.
-				wrapMode: TextEdit.Wrap
+				model: ContentProxyModel{
+					chatMessageModel: mainItem.chatMessageModel
+				}
+				height: contentHeight
+				
+				delegate: ChatContent{
+					contentModel: modelData
+					textColor: ChatReplyMessageStyle.replyArea.foregroundColor
+					textFont.pointSize: Units.dp * (customFont.pointSize + ChatReplyMessageStyle.replyArea.pointSizeOffset)
+					textFont.weight: Font.Light
+					onFitWidthChanged:{
+						replyMessage.updateWidth()			
+					}
+				}
 			}
 		}
 	}

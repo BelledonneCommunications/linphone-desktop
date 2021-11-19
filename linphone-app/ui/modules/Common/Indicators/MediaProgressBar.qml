@@ -19,6 +19,8 @@ ProgressBar {
 	property int progressDuration			// Max duration
 	property int progressPosition	// Position of progress bar in [0 ; progressDuration]
 	property alias colorSet: progression.colorSet
+	property alias backgroundColor: backgroundArea.color
+	property alias durationTextColor: durationText.color
 	
 	function start(){
 		progressBar.value = 0
@@ -63,6 +65,7 @@ ProgressBar {
 	anchors.bottomMargin: 5
 			
 	background: Rectangle {
+		id: backgroundArea
 		color: MediaProgressBarStyle.backgroundColor
 		radius: 5
 	}
@@ -72,16 +75,14 @@ ProgressBar {
 		Rectangle{
 			anchors.fill: parent
 			radius: 5
+			color: 'transparent'
 			RowLayout{
 				anchors.fill: parent
-				
+				spacing: 10
 				ActionButton{
 					id: progression
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Layout.topMargin: 5
-					Layout.bottomMargin: 5
-					Layout.leftMargin: 10
 					backgroundRadius: 5
 					fillMode: Image.TileHorizontally
 					verticalAlignment: Image.AlignLeft
@@ -91,9 +92,10 @@ ProgressBar {
 					onClicked: progressBar.seekRequested(x * progressBar.progressDuration/width)
 				}
 				Text{
+					id: durationText
 					Layout.fillHeight: true
-					Layout.preferredWidth: 100
-					Layout.rightMargin: 10
+					Layout.preferredWidth: implicitWidth
+					Layout.rightMargin: 5
 					horizontalAlignment: Qt.AlignRight
 					verticalAlignment: Qt.AlignVCenter
 					text: progressBar.progressPosition >= 0 ? Utils.formatElapsedTime( progressBar.progressPosition / 1000 ) : '-'					

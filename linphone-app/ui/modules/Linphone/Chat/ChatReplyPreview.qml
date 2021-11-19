@@ -18,7 +18,7 @@ Rectangle{
 	id: replyPreviewBlock
 	property ChatRoomModel chatRoomModel
 	
-	Layout.preferredHeight: Math.min(replyPreviewText.implicitHeight + replyPreviewHeaderArea.implicitHeight + 10, parent.maxHeight)
+	Layout.preferredHeight: Math.min(messageContentsList.height + replyPreviewHeaderArea.implicitHeight + 15, parent.maxHeight)
 	
 	property int leftMargin: textArea.textLeftMargin
 	property int rightMargin: textArea.textRightMargin
@@ -26,10 +26,13 @@ Rectangle{
 	color: ChatStyle.replyPreview.backgroundColor
 	radius: 10
 	state: chatRoomModel && chatRoomModel.reply ? 'showed' : 'hidden'
-// Remove bottom corners				
+	// Remove bottom corners				
 	clip: false
 	function hide(){
 		state = 'hidden'
+	}
+	MouseArea{// Block mouse events
+		anchors.fill: parent
 	}
 	Rectangle{
 		anchors.bottom: parent.bottom
@@ -38,11 +41,12 @@ Rectangle{
 		height: parent.radius
 		color: parent.color
 	}
-//-------------------------
+	//-------------------------
 	ColumnLayout{
 		anchors.fill: parent
 		anchors.leftMargin: replyPreviewBlock.leftMargin
 		anchors.rightMargin: replyPreviewBlock.rightMargin
+		anchors.bottomMargin: 5
 		spacing: 0
 		RowLayout{
 			id: replyPreviewHeaderArea
@@ -68,37 +72,28 @@ Rectangle{
 		}
 		Flickable {
 			id: replyPreviewTextArea
-			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < replyPreviewText.implicitHeight}
+			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < messageContentsList.implicitHeight}
 			boundsBehavior: Flickable.StopAtBounds
 			clip: true
-			contentHeight: replyPreviewText.implicitHeight
+			contentHeight: messageContentsList.height
 			contentWidth: width - ScrollBar.vertical.width
 			flickableDirection: Flickable.VerticalFlick 
 			
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-		
-			TextEdit {
-				id: replyPreviewText
-				property font customFont : SettingsModel.textMessageFont
-				
+			ListView {
+				id: messageContentsList
 				anchors.left: parent.left
 				anchors.right: parent.right
-				clip: true
-				padding: ChatStyle.entry.message.padding
-				readOnly: true
-				selectByMouse: true
-				font.family: customFont.family
-				font.pointSize: Units.dp * (customFont.pointSize - 2)
-				text: chatRoomModel && chatRoomModel.reply ? Utils.encodeTextToQmlRichFormat(chatRoomModel.reply.content, {
-														  imagesHeight: ChatStyle.entry.message.images.height,
-														  imagesWidth: ChatStyle.entry.message.images.width
-													  })
-													: ''
-				textFormat: Text.RichText // To supports links and imgs.
-				wrapMode: TextEdit.Wrap
+				model: ContentProxyModel{
+					chatMessageModel: replyPreviewBlock.chatRoomModel.reply
+				}
+				height: contentHeight
 				
-				onLinkActivated: Qt.openUrlExternally(link)
+				delegate: ChatContent{
+					contentModel: modelData
+					textFont.pointSize: Units.dp * (SettingsModel.textMessageFont.pointSize - 2)
+				}
 			}
 		}
 	}
@@ -114,24 +109,24 @@ Rectangle{
 		onClicked: chatRoomModel.reply = null
 	}
 	states: [
-		 State {
-			 name: "hidden"
-			 PropertyChanges { target: replyPreviewBlock; opacity: 0 ; visible: false }
-		 },
-		 State {
-			 name: "showed"
-			 PropertyChanges { target: replyPreviewBlock; opacity: 1 ; visible: true}
-		 }
-	 ]
-	 transitions: [
-		 Transition {
-			 from: "*"; to: "showed"
-			 SequentialAnimation{
+		State {
+			name: "hidden"
+			PropertyChanges { target: replyPreviewBlock; opacity: 0 ; visible: false }
+		},
+		State {
+			name: "showed"
+			PropertyChanges { target: replyPreviewBlock; opacity: 1 ; visible: true}
+		}
+	]
+	transitions: [
+		Transition {
+			from: "*"; to: "showed"
+			SequentialAnimation{
 				ScriptAction{ script: replyPreviewBlock.visible = true }
 				NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 500 }
 			}
-		 },
-		 Transition {
+		},
+		Transition {
 			from: "*"; to: "hidden"
 			SequentialAnimation{
 				NumberAnimation{ properties: "opacity"; duration: 250 }

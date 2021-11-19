@@ -34,7 +34,6 @@ Item {
       right: parent.right
     }
     backgroundColor: ChatStyle.entry.message.outgoing.backgroundColor
-    color: ChatStyle.entry.message.outgoing.text.color
     width: parent.width
 
     Row {

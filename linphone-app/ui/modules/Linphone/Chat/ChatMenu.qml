@@ -20,7 +20,7 @@ import 'Message.js' as Logic
 Item {
 	id: container
 	property string lastTextSelected
-	property string content
+	property ChatMessageModel chatMessageModel
 	property int deliveryCount : 0
 	property bool deliveryVisible: false
 	
@@ -34,6 +34,8 @@ Item {
 	function open(){
 		messageMenu.popup()
 	}
+	
+	property string chatTextContent: chatMessageModel && chatMessageModel.content
 	
 	
 	Menu {
@@ -50,14 +52,14 @@ Item {
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: {
 				if( container.lastTextSelected == ''){
-					Clipboard.text = container.content
+					Clipboard.text = container.chatTextContent
 					container.copyAllDone();
 				}else{
 					Clipboard.text = container.lastTextSelected
 					container.copySelectionDone()
 				}
 			}
-			visible: content != ''
+			visible: chatTextContent != ''
 		}
 		
 		MenuItem {
@@ -67,8 +69,8 @@ Item {
 			iconSizeMenu: MenuItemStyle.speaker.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
-			onTriggered: TextToSpeech.say(container.content)
-			visible: content != ''
+			onTriggered: TextToSpeech.say(container.chatTextContent)
+			visible: chatTextContent != ''
 		}
 		MenuItem {
 			//: 'Forward' : Forward  a message from menu
@@ -78,7 +80,6 @@ Item {
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: container.forwardClicked()
-			visible: content != ''
 		}
 		MenuItem {
 			//: 'Reply' : Reply to a message from menu
@@ -88,7 +89,6 @@ Item {
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: container.replyClicked()
-			visible: content != ''
 		}
 		
 		MenuItem {

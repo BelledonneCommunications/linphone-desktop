@@ -10,6 +10,7 @@ singleton CardBlockStyle                       1.0 Blocks/CardBlockStyle.qml
 singleton RequestBlockStyle                    1.0 Blocks/RequestBlockStyle.qml
 
 singleton ChatStyle                            1.0 Chat/ChatStyle.qml
+singleton ChatAudioMessageStyle                1.0 Chat/ChatAudioMessageStyle.qml
 singleton ChatAudioPreviewStyle                1.0 Chat/ChatAudioPreviewStyle.qml
 singleton ChatForwardMessageStyle              1.0 Chat/ChatForwardMessageStyle.qml
 singleton ChatReplyMessageStyle                1.0 Chat/ChatReplyMessageStyle.qml
