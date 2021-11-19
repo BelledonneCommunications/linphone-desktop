@@ -56,6 +56,8 @@ project(linphoneqt)
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
+set(CMAKE_CXX_STANDARD 11)
+
 # Prepare gobal CMAKE configuration specific to the current project
 set(SDK_BUILD_DIR "${CMAKE_BINARY_DIR}/WORK")       # SDK build in WORK. Keep all in it.
 set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/desktop")
@@ -173,7 +175,7 @@ endif()
 if(CMAKE_OSX_DEPLOYMENT_TARGET)
 	list(APPEND APP_OPTIONS "-DCMAKE_OSX_DEPLOYMENT_TARGET=${CMAKE_OSX_DEPLOYMENT_TARGET}")
 endif()
-
+list(APPEND APP_OPTIONS "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}")
 
 if(ENABLE_BUILD_APP_PLUGINS)
 	file(GLOB children "plugins/*")
