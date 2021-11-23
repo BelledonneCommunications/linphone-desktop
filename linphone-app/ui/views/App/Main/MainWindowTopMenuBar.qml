@@ -7,73 +7,47 @@ import Linphone 1.0
 // =============================================================================
 
 MenuBar {
-  function open () {
-    menu.open()
-  }
+	function open () {
+		menu.open()
+	}
 
-  // ---------------------------------------------------------------------------
-  // Shortcuts.
-  // ---------------------------------------------------------------------------
+	// ---------------------------------------------------------------------------
+	// Menu.
+	// ---------------------------------------------------------------------------
 
-  Shortcut {
-    id: settingsShortcut
+	Menu {
+		id: menu
+		title: qsTr('settings')
 
-    sequence: 'Ctrl+P'
+		MenuItem {
+			text: qsTr('settings')
+			role: MenuItem.ApplicationSpecificRole    //PreferencesRole doesn't seems to work with Qt 5.15.2
+			onTriggered: App.smartShowWindow(App.getSettingsWindow())
+			shortcut: StandardKey.Preferences
+		}
 
-    onActivated: App.smartShowWindow(App.getSettingsWindow())
-  }
+		MenuItem {
+			//: 'Check for updates' : Item menu for checking updates
+			text: qsTr('checkForUpdates')
+			role: MenuItem.ApplicationSpecificRole
+			onTriggered: App.checkForUpdates(true)
+		}
 
-  Shortcut {
-    id: quitShortcut
+		MenuItem {
+			text: qsTr('about')
 
-    context: Qt.ApplicationShortcut
-    sequence: StandardKey.Quit
+			onTriggered: {
+				window.detachVirtualWindow()
+				window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/About.qml'))
+			}
+			shortcut: StandardKey.HelpContents
+		}
 
-    onActivated: Qt.quit()
-  }
+		MenuItem {
+			text: qsTr('quit')
 
-  Shortcut {
-    id: aboutShortcut
-
-    sequence: StandardKey.HelpContents
-
-    onActivated: {
-      window.detachVirtualWindow()
-      window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/About.qml'))
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-  // Menu.
-  // ---------------------------------------------------------------------------
-
-  Menu {
-    id: menu
-    title: qsTr('settings')
-
-    MenuItem {
-      text: qsTr('settings')
-
-      onTriggered: settingsShortcut.onActivated()
-    }
-    
-    MenuItem {
-	//: 'Check for updates' : Item menu for checking updates
-      text: qsTr('checkForUpdates')
-
-      onTriggered: App.checkForUpdates(true)
-    }
-
-    MenuItem {
-      text: qsTr('about')
-
-      onTriggered: aboutShortcut.onActivated()
-    }
-
-    MenuItem {
-      text: qsTr('quit')
-
-      onTriggered: quitShortcut.onActivated()
-    }
-  }
+			onTriggered: Qt.quit()
+			shortcut: StandardKey.Quit
+		}
+	}
 }

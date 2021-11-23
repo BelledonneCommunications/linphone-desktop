@@ -112,8 +112,8 @@ ApplicationWindow {
 						
 						//: 'Hide Timeline' : Tooltip for a button that hide the timeline
 						tooltipText : (leftPanel.visible?qsTr('hideTimeline')
-						//: 'Open Timeline' : Tooltip for a button that open the timeline
-							:qsTr('openTimeline'))
+														  //: 'Open Timeline' : Tooltip for a button that open the timeline
+														:qsTr('openTimeline'))
 						iconSize: MainWindowStyle.panelButtonSize
 						//autoIcon: true
 						onClicked: leftPanel.visible = !leftPanel.visible
@@ -203,10 +203,10 @@ ApplicationWindow {
 						isCustom: true
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newChatGroup
-											
+
 						//: 'Open Conference' : Tooltip to illustrate a button
 						tooltipText : qsTr('newChatRoom')
-						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled 
+						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
 						//autoIcon: true
 						onClicked: {
 							window.detachVirtualWindow()
@@ -242,10 +242,7 @@ ApplicationWindow {
 				}
 				
 			}
-			Loader{
-				active:Qt.platform.os === 'osx'
-				sourceComponent:MainWindowTopMenuBar{}
-			}
+
 			// -----------------------------------------------------------------------
 			// Content.
 			// -----------------------------------------------------------------------
@@ -282,7 +279,7 @@ ApplicationWindow {
 							visible: SettingsModel.contactsEnabled
 							
 							onSelected: {
-								timeline.model.unselectAll() 
+								timeline.model.unselectAll()
 								setView('Contacts')
 							}
 							onClicked:{
@@ -319,7 +316,7 @@ ApplicationWindow {
 						Layout.fillWidth: true
 						model: TimelineProxyModel{}
 						
-						onEntrySelected:{ 
+						onEntrySelected:{
 							if( entry ) {
 								window.setView('Conversation', {
 												   chatRoomModel:entry.chatRoomModel
@@ -353,6 +350,12 @@ ApplicationWindow {
 			}
 		}
 	}
+	Loader{
+		id: customMenuBar
+		active:Qt.platform.os === 'osx'
+		sourceComponent:MainWindowTopMenuBar{}
+	}
+	Component.onCompleted: if(Qt.platform.os === 'osx') menuBar = customMenuBar
 	// ---------------------------------------------------------------------------
 	// Url handlers.
 	// ---------------------------------------------------------------------------
