@@ -167,6 +167,7 @@ public:
 	static bool isInstanciated(){return mInstance!=nullptr;}
 	
 	Q_INVOKABLE bool isLastRemoteProvisioningGood();
+	Q_INVOKABLE QString getUserAgent()const;
 	
 public slots:
 	void initCoreManager();

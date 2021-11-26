@@ -111,8 +111,8 @@ QString CallModel::getFullLocalAddress () const {
 // -----------------------------------------------------------------------------
 
 ContactModel *CallModel::getContactModel() const{
-	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()));
-	return contact;
+	QString cleanedAddress = Utils::cleanSipAddress(Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()));
+	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(cleanedAddress);
 }
 
 ChatRoomModel * CallModel::getChatRoomModel() const{

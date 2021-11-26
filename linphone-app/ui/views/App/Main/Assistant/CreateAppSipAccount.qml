@@ -38,7 +38,7 @@ AssistantAbstractView {
 			id:webview
 			property bool isLogingOut : true
 			state: 'hidden'
-			Component.onCompleted: {if(webview.httpUserAgent != undefined) webview.httpUserAgent = Linphone.App.getUserAgent()	// only available on Qt 5.15 (QtWebView 1.15)
+			Component.onCompleted: {if(webview.httpUserAgent != undefined) webview.httpUserAgent = Linphone.CoreManager.getUserAgent()	// only available on Qt 5.15 (QtWebView 1.15)
 				isLogingOut = true
 				webview.url = view.defaultLogoutUrl
 			}

@@ -20,7 +20,6 @@
 
 #include "AppController.hpp"
 #include <qloggingcategory.h>
-#include <QtWebView>
 #ifdef QT_QML_DEBUG
 #include <QQmlDebuggingEnabler>
 #endif
@@ -30,7 +29,6 @@
 
 int main (int argc, char *argv[]) {
   AppController controller(argc, argv);
-  QtWebView::initialize();
 #ifdef QT_QML_DEBUG
   QQmlDebuggingEnabler enabler;
 #endif

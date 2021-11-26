@@ -405,3 +405,10 @@ void CoreManager::setLastRemoteProvisioningState(const linphone::ConfiguringStat
 bool CoreManager::isLastRemoteProvisioningGood(){
 	return mLastRemoteProvisioningState != linphone::ConfiguringState::Failed;
 }
+
+QString CoreManager::getUserAgent()const {
+	if(mCore)
+		return Utils::coreStringToAppString(mCore->getUserAgent());
+	else
+		return EXECUTABLE_NAME " Desktop";// Just in case
+}
