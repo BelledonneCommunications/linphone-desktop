@@ -57,11 +57,13 @@ body:
     description: |
                   Complete it multiple time if there are multiple devices involved.
                   Please note that the issue has more chances to be read if you report a bug seen in the latest version of the app.
-    placeholder: |
-            - Device: [e.g. ASUS Zenbook Pro UX501]
-            - OS: [e.g. Manjaro 21.1.6 Pahvo KDE, Windows 10 - 2004, MacOs 10.5]
-            - Version of the App [e.g. 4.3.2]
-            - Version of the SDK [e.g 5.0.49]
+
+                  Ex :
+                  - Device: [e.g. ASUS Zenbook Pro UX501]
+                  - OS: [e.g. Manjaro 21.1.6 Pahvo KDE, Windows 10 - 2004, MacOs 10.5]
+                  - Version of the App [e.g. 4.3.2]
+                  - Version of the SDK [e.g 5.0.49]
+
     value: |
             - Device:
             - OS:
