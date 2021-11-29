@@ -41,10 +41,11 @@ body:
 - type: textarea
   attributes:
     label: |
-            Please explain the context (ex: Running with sip.linphone.org/own self-hosted server with [...] SIP server of version [...]) :
+            Context
     description: |
                   - For which purpose do you use the project ?
                   - With which software/hardware it is integrated ?
+                  - Did you use sip.linphone.org or a different SIP service (in this case specify which one and which version) ?
     placeholder: |
             I use the linphone-sdk in the Linphone-desktop Linux version with sip.linphone.org for my company. I want to do a simple call between an Android phone and a Linux client.
   validations:
@@ -53,14 +54,19 @@ body:
 - type: textarea
   attributes:
     label: General information
-    value: |
+    description: |
+                  Complete it multiple time if there are multiple devices involved.
+                  Please note that the issue has more chances to be read if you report a bug seen in the latest version of the app.
+    placeholder: |
             - Device: [e.g. ASUS Zenbook Pro UX501]
             - OS: [e.g. Manjaro 21.1.6 Pahvo KDE, Windows 10 - 2004, MacOs 10.5]
             - Version of the App [e.g. 4.3.2]
             - Version of the SDK [e.g 5.0.49]
-
-            Complete it multiple time if there are multiple devices involved.
-            Please note that the issue has more chances to be read if you report a bug seen in the latest version of the app.
+    value: |
+            - Device:
+            - OS:
+            - Version of the App:
+            - Version of the SDK:
   validations:
     required: true
 
@@ -77,7 +83,7 @@ body:
   attributes:
     label: To Reproduce
     description: "Steps to reproduce the behavior:"
-    value: |
+    placeholder: |
             1. Go to '...'
             2. Click on '....'
             3. Scroll down to '....'
@@ -96,13 +102,11 @@ body:
             # Logs
             ## SDK logs
             Launch the application with --verbose parameter to get full logs and send it with your request.
-            Enable debug logs in advanced section of the settings, restart the app, reproduce the issue and then go to the advanced section of settings page, click on "Send logs" and copy/paste the link here.
+            Enable debug logs in advanced section of the settings, restart the app, reproduce the issue and then go to the advanced section of settings page, click on "Send logs" and copy/paste the link here (or send them in attachments).
 
 - type: input
   attributes:
     label: 'SDK logs URL'
-  validations:
-    required: true
 
 - type: markdown
   attributes:
