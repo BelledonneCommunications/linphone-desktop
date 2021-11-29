@@ -1,0 +1,130 @@
+---
+name: Bug report
+description: File a bug/issue
+title: "[Bug]: "
+labels: ["bug"]
+
+body:
+- type: markdown
+  attributes:
+    value: '# Reminder'
+- type: markdown
+  attributes:
+    value: |
+            The responses are provided by the **community** and, on a **best effort** basis, by some Belledonne Communications SARL engineers working on Linphone and its related projects.
+            The community means any people all around the world simply willing to participate to the discussions.
+
+            Belledonne Communications SARL **disclaims any WARRANTY** that the content posted on github issues or mailing lists is technically correct.
+            Responses from Belledonne Communications SARL engineers shall be considered as individual contributions and shall not be seen as Belledonne Communications's official point of view or commitment.
+
+            The Github issue tracker must be seen as a place for **collaboration**. Issues submitted should be of general interest, in the goal of improving the software. Consider that a **well documented** issue (with precise reproduction procedure, logs, stack trace if relevant, possibly a corrective patch) has a higher chance to receive interest and feedback from community members and Belledonne Communications' engineers.
+
+            __Issues poorly documented, with no facts, or asking for debugging assistance for a custom app using Linphone's libraries, or for a modified version of Linphone are unlikely to receive any kind of response.__
+
+            People using Linphone or its related projects within the scope of their company job are invited to contact [Belledonne Communications](https://linphone.org/contact#content-bottom3) in order to obtain commercial support.
+
+- type: markdown
+  attributes:
+    value: |
+            # Well ordered issues are treated issues
+            **If the issue is about the SDK (build, issue, etc...) open the ticket in the [Linphone-SDK](https://github.com/BelledonneCommunications/linphone-sdk) repository.**
+
+- type: markdown
+  attributes:
+    value: |
+            # Useful links
+            [Linphone.org](https://linphone.org)
+            [Linphone commercial contact](https://linphone.org/contact#content-bottom3)
+            Linphone Vulnerability/Security contact: vulnerabilities@linphone.org
+            [Contributor agreement (to sign and to return to sales@belledonne-communications.com for a pull request)](https://linphone.org/sites/default/files/bc-contributor-agreement_0.pdf)
+
+- type: textarea
+  attributes:
+    label: |
+            Please explain the context (ex: Running with sip.linphone.org/own self-hosted server with [...] SIP server of version [...]) :
+    description: |
+                  - For which purpose do you use the project ?
+                  - With which software/hardware it is integrated ?
+    placeholder: |
+            I use the linphone-sdk in the Linphone-desktop Linux version with sip.linphone.org for my company. I want to do a simple call between an Android phone and a Linux client.
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: General information
+    value: |
+            - Device: [e.g. ASUS Zenbook Pro UX501]
+            - OS: [e.g. Manjaro 21.1.6 Pahvo KDE, Windows 10 - 2004, MacOs 10.5]
+            - Version of the App [e.g. 4.3.2]
+            - Version of the SDK [e.g 5.0.49]
+
+            Complete it multiple time if there are multiple devices involved.
+            Please note that the issue has more chances to be read if you report a bug seen in the latest version of the app.
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: Expected behaviour
+    description: "A clear and concise description of what you expected to happen."
+    value: |
+            I wanted to do a simple call with the Linux client calling the Android phone. However, the desktop app crashed.
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: To Reproduce
+    description: "Steps to reproduce the behavior:"
+    value: |
+            1. Go to '...'
+            2. Click on '....'
+            3. Scroll down to '....'
+            4. See error
+  validations:
+    required: true
+
+- type: textarea
+  attributes:
+    label: 'Additional context'
+    placeholder: Add any other context about the problem here.
+
+- type: markdown
+  attributes:
+    value: |
+            # Logs
+            ## SDK logs
+            Launch the application with --verbose parameter to get full logs and send it with your request.
+            Enable debug logs in advanced section of the settings, restart the app, reproduce the issue and then go to the advanced section of settings page, click on "Send logs" and copy/paste the link here.
+
+- type: input
+  attributes:
+    label: 'SDK logs URL'
+  validations:
+    required: true
+
+- type: markdown
+  attributes:
+    value: |
+            ## SDK crash logs
+            In case of a crash of the app related to the SDK, please also provide the backtrace of the crash in attachments using adb logcat (Android) or the device console (iOS).
+            For desktop versions, you can get the backtrace from a core dump.
+
+- type: markdown
+  attributes:
+    value: |
+            # Screenshots
+            Please add screenshots in attachments to help us to understand your problem.
+
+- type: markdown
+  attributes:
+    value: |
+              # Pcap file
+              If this is a network issue, join a pcap file of your attempt in attachments (done with Wireshark or TCPDump, for example)
+
+- type: markdown
+  attributes:
+    value: |
+              # Contributing
+              You can follow this [part](https://gitlab.linphone.org/BC/public/linphone-desktop#contributing) to contribute.
