@@ -880,25 +880,6 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
 </context>
 <context>
-    <name>CreateAppSipAccount</name>
-    <message>
-        <source>createAppSipAccountDescription</source>
-        <translation>Hesabınızı nasıl oluşturmak istersiniz?</translation>
-    </message>
-    <message>
-        <source>createAppSipAccountTitle</source>
-        <translation>%1 HESABI OLUŞTUR</translation>
-    </message>
-    <message>
-        <source>withPhoneNumber</source>
-        <translation>TELEFON NUMARASIYLA</translation>
-    </message>
-    <message>
-        <source>withEmailAddress</source>
-        <translation>E-POSTA ADRESİYLE</translation>
-    </message>
-</context>
-<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
@@ -1620,6 +1601,14 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>messageDelivered</source>
         <translation>İletildi</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsDevices</name>
+    <message>
+        <source>conversationDevicesTitle</source>
+        <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

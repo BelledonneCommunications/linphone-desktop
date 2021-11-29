@@ -62,5 +62,6 @@ QtObject {
 	property QtObject searchField: QtObject {
 		property color color: ColorsList.add(sectionName+'_searchField', 'c').color
 		property color borderColor: ColorsList.add(sectionName+'_searchField_border', 'border').color
+		property int pointSize: Units.dp * 9
 	}
 }

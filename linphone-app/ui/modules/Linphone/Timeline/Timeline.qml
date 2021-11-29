@@ -253,11 +253,12 @@ Rectangle {
 			
 			TextField {
 				id:searchBar
-				anchors {
-					fill: parent
-					margins: 7
-				}
-				width: parent.width - 14
+				anchors.fill: parent
+				anchors.rightMargin: 7
+				anchors.leftMargin: 7
+				anchors.topMargin: 5
+				anchors.bottomMargin: 5
+				width: parent.width - 14				
 				icon: 'search_custom'
 				iconSize: 30
 				overwriteColor: TimelineStyle.searchField.color
@@ -265,6 +266,7 @@ Rectangle {
 				placeholderText: qsTr('timelineSearchPlaceholderText')
 				
 				onTextChanged: timeline.model.filterText = text
+				font.pointSize: TimelineStyle.searchField.pointSize
 			}
 			
 		}

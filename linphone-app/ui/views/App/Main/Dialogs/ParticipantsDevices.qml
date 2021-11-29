@@ -20,8 +20,8 @@ DialogPlus {
 	id:dialog
 	buttons: []
 	flat : true
-	
-	title: "Conversation's devices"
+	//: 'Conversation's devices' : Title of window that show all devices
+	title: qsTr('conversationDevicesTitle')
 	showCloseCross:true
 	
 	

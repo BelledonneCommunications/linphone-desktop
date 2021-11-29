@@ -880,25 +880,6 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     </message>
 </context>
 <context>
-    <name>CreateAppSipAccount</name>
-    <message>
-        <source>createAppSipAccountDescription</source>
-        <translation>Hogyan szeretné létrehozni a fiókját?</translation>
-    </message>
-    <message>
-        <source>createAppSipAccountTitle</source>
-        <translation>%1 fiók létrehozása</translation>
-    </message>
-    <message>
-        <source>withPhoneNumber</source>
-        <translation>Telefonszámmal</translation>
-    </message>
-    <message>
-        <source>withEmailAddress</source>
-        <translation>E-mail címmel</translation>
-    </message>
-</context>
-<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
@@ -1620,6 +1601,14 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>messageDelivered</source>
         <translation>Kézbesítve</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsDevices</name>
+    <message>
+        <source>conversationDevicesTitle</source>
+        <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

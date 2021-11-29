@@ -498,7 +498,7 @@ ColumnLayout  {
 				id:searchBar
 				anchors {
 					fill: parent
-					margins: 1
+					margins: 0
 				}
 				width: parent.width-14
 				icon: 'close_custom'
@@ -512,6 +512,7 @@ ColumnLayout  {
 					searchView.visible = false
 					chatRoomProxyModel.filterText = ''
 				}
+				font.pointSize: ConversationStyle.filters.pointSize
 			}
 			
 		}

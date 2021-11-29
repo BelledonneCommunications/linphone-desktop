@@ -157,6 +157,7 @@ QtObject {
 		property color iconColor: ColorsList.add(sectionName+'_filters_icon', 'c').color
 		property int height: 51
 		property int leftMargin: 40
+		property int pointSize: Units.dp * 9
 		
 		property QtObject border: QtObject {
 			property color color: ColorsList.add(sectionName+'_filters_border', 'g10').color

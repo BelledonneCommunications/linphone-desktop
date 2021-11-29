@@ -34,6 +34,7 @@ Item {
 	property bool enabled: true
 	property bool updating: false
 	property bool useStates: true
+	property bool toggled: false
 	//property bool autoIcon : false    // hovered/pressed : use an automatic layer instead of specific icon image
 	property int iconSize : colorSet ? colorSet.iconSize : 0
 	property int iconHeight: colorSet.iconHeight ? colorSet.iconHeight : 0
@@ -79,13 +80,13 @@ Item {
 	signal clicked(real x, real y)
 	
 	// ---------------------------------------------------------------------------
-	
+		
 	function _getIcon () {
 		if(isCustom)
 			return wrappedButton.icon
 		if(wrappedButton.icon == '')
 			return wrappedButton.icon;
-		if (wrappedButton.updating) {
+		if (wrappedButton.updating || wrappedButton.toggled) {
 			return wrappedButton.icon + '_updating'
 		}
 		
@@ -109,7 +110,7 @@ Item {
 		if(isCustom){
 			if(wrappedButton.icon == '')
 				return wrappedButton.colorSet.backgroundNormalColor
-			if (wrappedButton.updating)
+			if (wrappedButton.updating || wrappedButton.toggled)
 				return wrappedButton.colorSet.backgroundUpdatingColor
 			if (!useStates)
 				return wrappedButton.colorSet.backgroundNormalColor
@@ -124,7 +125,7 @@ Item {
 		if(isCustom){
 			if(wrappedButton.icon == '')
 				return wrappedButton.colorSet.foregroundNormalColor
-			if (wrappedButton.updating)
+			if (wrappedButton.updating || wrappedButton.toggled)
 				return wrappedButton.colorSet.foregroundUpdatingColor
 			if (!useStates)
 				return wrappedButton.colorSet.foregroundNormalColor
@@ -139,7 +140,7 @@ Item {
 		if(isCustom){
 			if(wrappedButton.icon == '')
 				return wrappedButton.backgroundHiddenPartNormalColor
-			if (wrappedButton.updating)
+			if (wrappedButton.updating || wrappedButton.toggled)
 				return wrappedButton.backgroundHiddenPartUpdatingColor
 			if (!useStates)
 				return wrappedButton.backgroundHiddenPartNormalColor
@@ -154,7 +155,7 @@ Item {
 		if(isCustom){
 			if(wrappedButton.icon == '')
 				return wrappedButton.foregroundHiddenPartNormalColor
-			if (wrappedButton.updating)
+			if (wrappedButton.updating || wrappedButton.toggled)
 				return wrappedButton.foregroundHiddenPartUpdatingColor
 			if (!useStates)
 				return wrappedButton.foregroundHiddenPartNormalColor
@@ -190,7 +191,6 @@ Item {
 				}
 			}
 		hoverEnabled: !wrappedButton.updating//|| wrappedButton.autoIcon
-		
 		onClicked: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.clicked(pressX, pressY)
 		Rectangle{
 			id: foregroundColor

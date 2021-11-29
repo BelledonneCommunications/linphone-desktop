@@ -880,25 +880,6 @@
     </message>
 </context>
 <context>
-    <name>CreateAppSipAccount</name>
-    <message>
-        <source>createAppSipAccountDescription</source>
-        <translation>您想要如何创建账户？</translation>
-    </message>
-    <message>
-        <source>createAppSipAccountTitle</source>
-        <translation>创建一个 %1 账户</translation>
-    </message>
-    <message>
-        <source>withPhoneNumber</source>
-        <translation>用手机号码</translation>
-    </message>
-    <message>
-        <source>withEmailAddress</source>
-        <translation>用电子邮箱地址</translation>
-    </message>
-</context>
-<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
@@ -1620,6 +1601,14 @@
     <message>
         <source>messageDelivered</source>
         <translation>已送达</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsDevices</name>
+    <message>
+        <source>conversationDevicesTitle</source>
+        <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

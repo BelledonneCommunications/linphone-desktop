@@ -232,7 +232,8 @@ ApplicationWindow {
 						colorSet: MainWindowStyle.buttons.burgerMenu
 						visible: Qt.platform.os !== 'osx'
 						
-						onClicked: menuBar.open()
+						toggled: menuBar.isOpenned
+						onClicked: toggled ? menuBar.close() : menuBar.open()// a bit useless as Menu will depopup on losing focus but this code is kept for giving idea
 						MainWindowMenuBar {
 							id: menuBar
 						}

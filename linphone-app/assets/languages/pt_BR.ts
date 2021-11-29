@@ -885,25 +885,6 @@ URL do servidor não configurado.</translation>
     </message>
 </context>
 <context>
-    <name>CreateAppSipAccount</name>
-    <message>
-        <source>createAppSipAccountDescription</source>
-        <translation>Como você gostaria de criar sua conta?</translation>
-    </message>
-    <message>
-        <source>createAppSipAccountTitle</source>
-        <translation>CRIAR UMA CONTA %1</translation>
-    </message>
-    <message>
-        <source>withPhoneNumber</source>
-        <translation>COM UM NÚMERO DE TELEFONE</translation>
-    </message>
-    <message>
-        <source>withEmailAddress</source>
-        <translation>COM UM ENDEREÇO DE E-MAIL</translation>
-    </message>
-</context>
-<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
@@ -1630,6 +1611,14 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>messageDelivered</source>
         <translation>Entregue</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsDevices</name>
+    <message>
+        <source>conversationDevicesTitle</source>
+        <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

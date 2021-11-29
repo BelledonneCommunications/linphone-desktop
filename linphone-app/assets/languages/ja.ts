@@ -880,25 +880,6 @@
     </message>
 </context>
 <context>
-    <name>CreateAppSipAccount</name>
-    <message>
-        <source>createAppSipAccountDescription</source>
-        <translation>どのようにアカウントを作成しますか？</translation>
-    </message>
-    <message>
-        <source>createAppSipAccountTitle</source>
-        <translation>%1アカウントを作成する</translation>
-    </message>
-    <message>
-        <source>withPhoneNumber</source>
-        <translation>電話番号を利用</translation>
-    </message>
-    <message>
-        <source>withEmailAddress</source>
-        <translation>メールアドレスを利用</translation>
-    </message>
-</context>
-<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
@@ -1620,6 +1601,14 @@
     <message>
         <source>messageDelivered</source>
         <translation>配信済</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantsDevices</name>
+    <message>
+        <source>conversationDevicesTitle</source>
+        <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
