@@ -1608,7 +1608,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conversationDevicesTitle</source>
         <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beszélgetési eszközök</translation>
     </message>
 </context>
 <context>
