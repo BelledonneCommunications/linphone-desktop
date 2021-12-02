@@ -14,7 +14,7 @@ Rectangle {
   id: container
 
   property alias proxyModel: history.model
-  signal entryClicked(string sipAddress)
+  signal entryClicked(var entry)
 
   // ---------------------------------------------------------------------------
 
@@ -183,7 +183,7 @@ Rectangle {
             }
              Connections{
                 target:entryLoader.item
-                onEntryClicked:{entryClicked(sipAddress)}
+                onEntryClicked:{entryClicked(entry)}
               }
           }
         }

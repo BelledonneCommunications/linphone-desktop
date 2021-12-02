@@ -107,7 +107,7 @@ DialogPlus {
 							id: sipAddressesModel
 						}
 						
-						onEntryClicked: actions[0].handlerSipAddress(entry)
+						onEntryClicked: actions[0].handlerSipAddress(entry.sipAddress)
 					}
 				}
 			}

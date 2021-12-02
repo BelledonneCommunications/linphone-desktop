@@ -159,8 +159,8 @@ ColumnLayout  {
 		Layout.fillWidth: true
 		
 		onEntryClicked:{
-			historyView.fullPeerAddress=sipAddress
-			historyView.peerAddress=sipAddress
+			historyView.fullPeerAddress=entry.sipAddress
+			historyView.peerAddress=entry.sipAddress
 			historyProxyModel.resetMessageCount()
 		}
 		

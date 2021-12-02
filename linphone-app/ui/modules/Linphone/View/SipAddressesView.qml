@@ -205,6 +205,8 @@ ScrollableListView {
 
 	delegate: Rectangle {
 		id: sipAddressEntry
+		
+		property var entry: modelData
 
 		color: SipAddressesViewStyle.entry.color.normal
 		height: SipAddressesViewStyle.entry.height
@@ -245,7 +247,7 @@ ScrollableListView {
 
 					MouseArea {
 						anchors.fill: parent
-						onClicked: sipAddressesView.entryClicked(modelData.sipAddress, index)
+						onClicked: sipAddressesView.entryClicked(modelData, index)
 					}
 				}
 
@@ -284,11 +286,11 @@ ScrollableListView {
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
 							visible: sipAddressesView.actions[index].visible
 							onClicked: {
-								sipAddressesView.actions[index].handler(modelData)
+								sipAddressesView.actions[index].handler(sipAddressEntry.entry)
 							}
 							Icon{
 								visible: modelData.secure>0 && 
-									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler(modelData) : true)
+									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler(sipAddressEntry.entry) : true)
 								icon: 'secure_on'
 								iconSize:15
 								anchors.right:parent.right

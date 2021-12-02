@@ -115,7 +115,7 @@ DialogPlus {
               id: conferenceHelperModel
             }
 
-            onEntryClicked: actions[0].handerSipAddress(entry)
+            onEntryClicked: actions[0].handerSipAddress(entry.sipAddress)
           }
         }
       }

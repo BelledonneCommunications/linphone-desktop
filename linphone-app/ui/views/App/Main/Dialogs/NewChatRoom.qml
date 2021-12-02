@@ -328,8 +328,8 @@ DialogPlus {
 							}]
 						
 						onEntryClicked: {
-								selectedParticipants.addAddress(entry)
-								smartSearchBar.addAddressToIgnore(entry);
+								selectedParticipants.addAddress(entry.sipAddress)
+								smartSearchBar.addAddressToIgnore(entry.sipAddress);
 								++lastContacts.reloadCount
 						}
 					}

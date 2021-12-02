@@ -12,7 +12,7 @@ import UtilsCpp 1.0
 
 Row {
 	id: mainItem
-	signal entryClicked(string sipAddress)
+	signal entryClicked(var entry)
 	
 	readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver($historyEntry.sipAddress, '')
 	property QtObject iconData
@@ -170,7 +170,7 @@ Row {
 		verticalAlignment: Text.AlignVCenter
 		MouseArea{
 			anchors.fill:parent
-			onClicked:entryClicked($historyEntry.sipAddress)
+			onClicked:entryClicked($historyEntry)
 		}
 	}
 	ActionButton {

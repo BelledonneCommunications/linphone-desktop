@@ -98,7 +98,7 @@ DialogPlus {
 				}]
 			
 			onEntryClicked: {
-				selectedParticipants.addAddress(entry)
+				selectedParticipants.addAddress(entry.sipAddress)
 			}
 		}
 		
