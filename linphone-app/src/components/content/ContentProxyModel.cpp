@@ -57,17 +57,22 @@ bool ContentProxyModel::lessThan (const QModelIndex &left, const QModelIndex &ri
 	const ContentModel *contentB = sourceModel()->data(right).value<ContentModel *>();
 	bool aIsForward = contentA->getChatMessageModel()->isForward();
 	bool aIsReply = contentA->getChatMessageModel()->isReply();
+	bool aIsVoiceRecording = contentA->isVoiceRecording();
 	bool aIsFile = contentA->isFile() || contentA->isFileEncrypted() || contentA->isFileTransfer();
 	bool aIsText = contentA->isText() ;
 	bool bIsForward = contentB->getChatMessageModel()->isForward();
 	bool bIsReply = contentB->getChatMessageModel()->isReply();
+	bool bIsVoiceRecording = contentB->isVoiceRecording();
 	bool bIsFile = contentB->isFile() || contentB->isFileEncrypted() || contentB->isFileTransfer();
 	bool bIsText = contentB->isText() ;
 	
-	return aIsForward && !bIsForward
-			|| aIsReply && !bIsForward && !bIsReply
-			|| aIsFile && !bIsForward && !bIsReply && !bIsFile
-			|| aIsText && !bIsForward && !bIsReply && !bIsFile && !bIsText
-			
-			;
+	return !bIsForward && (aIsForward
+			|| !bIsReply && (aIsReply
+				|| !bIsVoiceRecording && (aIsVoiceRecording
+					|| !bIsFile && (aIsFile
+						|| aIsText && !bIsText
+						)
+					)
+				)
+			);
 }

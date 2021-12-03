@@ -244,7 +244,7 @@ string Paths::getFriendsListFilePath () {
 }
 
 string Paths::getDownloadDirPath () {
-	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation));
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + QDir::separator());
 }
 
 std::string Paths::getLimeDatabasePath (){
