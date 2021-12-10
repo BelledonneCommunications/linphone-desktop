@@ -25,6 +25,7 @@ CommonItemDelegate      1.0 Form/CommonItemDelegate.qml
 DroppableTextArea       1.0 Form/DroppableTextArea.qml
 ListForm                1.0 Form/ListForm.qml
 ListItemSelector        1.0 Form/ListItemSelector.qml
+Mosaic                  1.0 Form/Mosaic.qml
 MouseArea               1.0 Form/MouseArea.qml
 SearchBox               1.0 Form/SearchBox.qml
 Slider                  1.0 Form/Slider.qml
@@ -79,6 +80,9 @@ MenuItem                1.0 Menus/MenuItem.qml
 Borders                 1.0 Misc/Borders.qml
 ForceScrollBar          1.0 Misc/ForceScrollBar.qml
 Paned                   1.0 Misc/Paned.qml
+
+DatePicker              1.0 Picker/DatePicker.qml
+TimePicker              1.0 Picker/TimePicker.qml
 
 DesktopPopup            1.0 Popup/DesktopPopup.qml
 Popup                   1.0 Popup/Popup.qml

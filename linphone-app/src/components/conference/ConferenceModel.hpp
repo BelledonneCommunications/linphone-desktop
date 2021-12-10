@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -21,59 +21,24 @@
 #ifndef CONFERENCE_MODEL_H_
 #define CONFERENCE_MODEL_H_
 
-#include <QSortFilterProxyModel>
 
+#include <linphone++/linphone.hh>
 // =============================================================================
+#include <QObject>
+#include <QDateTime>
+#include <QString>
 
-class CallModel;
-
-class ConferenceModel : public QSortFilterProxyModel {
-	Q_OBJECT;
-	
-	Q_PROPERTY(int count READ getCount NOTIFY countChanged);
-	
-	Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
-	Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
-	
-	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
-	Q_PROPERTY(bool isInConf READ isInConference NOTIFY conferenceChanged);
-	
+class ConferenceModel : public QObject{
+	Q_OBJECT
 public:
-	ConferenceModel (QObject *parent = Q_NULLPTR);
+	ConferenceModel(std::shared_ptr<linphone::Conference> content);
 	
-protected:
-	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	
-	Q_INVOKABLE void terminate ();
-	
-	Q_INVOKABLE void startRecording ();
-	Q_INVOKABLE void stopRecording ();
-	
-	Q_INVOKABLE void join ();
-	Q_INVOKABLE void leave ();
-	
-signals:
-	void countChanged (int count);
-	
-	void microMutedChanged (bool status);
-	void recordingChanged (bool status);
-	void conferenceChanged ();
+	std::shared_ptr<linphone::Conference> getConference()const;
 	
 private:
-	int getCount () const {
-		return rowCount();
-	}
-	
-	bool getMicroMuted () const;
-	void setMicroMuted (bool status);
-	float getMicroVu () const;
-	
-	bool isInConference () const;
-	
-	bool getRecording () const;
-	
-	bool mRecording = false;
-	QString mLastRecordFile;
+	std::shared_ptr<linphone::Conference> mConference;
 };
+Q_DECLARE_METATYPE(std::shared_ptr<ConferenceModel>)
 
-#endif // CONFERENCE_MODEL_H_
+#endif

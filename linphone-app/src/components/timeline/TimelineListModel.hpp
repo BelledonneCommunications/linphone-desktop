@@ -40,6 +40,7 @@ public:
 	void selectAll(const bool& selected);
 	TimelineModel * getAt(const int& index);
 	std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
+	//std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::Conference> chatRoom, const bool &create);
 	Q_INVOKABLE QVariantList getLastChatRooms(const int& maxCount) const;
 	std::shared_ptr<ChatRoomModel> getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
 	std::shared_ptr<ChatRoomModel> getChatRoomModel(ChatRoomModel * chatRoom);

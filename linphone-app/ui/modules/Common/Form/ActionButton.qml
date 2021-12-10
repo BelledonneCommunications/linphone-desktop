@@ -11,26 +11,29 @@ import Common 1.0
 
 Item {
 	id: wrappedButton
+	property color defaultBackgroundColor: 'white'
+	property color defaultForegroundColor: 'black'
 	
 	// ---------------------------------------------------------------------------
 	readonly property QtObject defaultColorSet : QtObject {
 		property int iconSize: 30
 		property string icon : ''
-		property color backgroundNormalColor : "white"
-		property color backgroundDisabledColor : "white"
-		property color backgroundHoveredColor : "white"
-		property color backgroundUpdatingColor : "white"
-		property color backgroundPressedColor : "white"
+		property color backgroundNormalColor : defaultBackgroundColor
+		property color backgroundDisabledColor : defaultBackgroundColor
+		property color backgroundHoveredColor : defaultBackgroundColor
+		property color backgroundUpdatingColor : defaultBackgroundColor
+		property color backgroundPressedColor : defaultBackgroundColor
 	// Color for shown part
-		property color foregroundNormalColor : "black"
-		property color foregroundDisabledColor : "black"
-		property color foregroundHoveredColor : "black"
-		property color foregroundUpdatingColor : "black"
-		property color foregroundPressedColor : "black"
+		property color foregroundNormalColor : defaultForegroundColor
+		property color foregroundDisabledColor : defaultForegroundColor
+		property color foregroundHoveredColor : defaultForegroundColor
+		property color foregroundUpdatingColor : defaultForegroundColor
+		property color foregroundPressedColor : defaultForegroundColor
 	}
 	property QtObject colorSet: defaultColorSet
 	onColorSetChanged: if(!colorSet) colorSet = defaultColorSet
 	property bool isCustom : false
+	property bool iconIsCustom: isCustom
 	property bool enabled: true
 	property bool updating: false
 	property bool useStates: true
@@ -253,14 +256,21 @@ Item {
 						  )
 			iconHeight: wrappedButton.iconHeight
 			iconWidth: wrappedButton.iconWidth
-			visible: !isCustom
+			visible: !iconIsCustom
 		}
 		
 		OpacityMask{
 			anchors.fill: foregroundColor
 			source: foregroundColor
 			maskSource: icon
-			visible: isCustom
+
+			visible: iconIsCustom
+			MouseArea{
+				anchors.fill:parent
+				hoverEnabled: true
+				acceptedButtons: Qt.NoButton
+				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+			}
 		}
 	 
 		OpacityMask{
@@ -268,20 +278,33 @@ Item {
 			anchors.fill: foregroundHiddenPartColor
 			source: foregroundHiddenPartColor
 			maskSource: icon
-			visible: isCustom && percentageDisplayed != 100
-			
-		}
-		
-		MouseArea{
-			anchors.fill:parent
-			hoverEnabled: true
-			acceptedButtons: Qt.NoButton
-			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+
+			visible: iconIsCustom && percentageDisplayed != 100
+			/*
+			layer {
+				enabled: true
+				effect: ColorOverlay {
+					color: "#80FFFFFF"
+				}
+			}*/
+			MouseArea{
+				anchors.fill:parent
+				hoverEnabled: true
+				acceptedButtons: Qt.NoButton
+				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+			}
 		}
 		TooltipArea {
 			id:tooltip
 			text: ''
 			visible:text!=''
+		}
+		MouseArea{
+			anchors.fill:parent
+			hoverEnabled: true
+			acceptedButtons: Qt.NoButton
+			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+			visible: !iconIsCustom
 		}
 	}
 	

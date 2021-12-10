@@ -29,6 +29,7 @@
 #include <QString>
 #include <QAbstractListModel>
 
+class CallModel;
 class ParticipantDeviceModel;
 
 class ParticipantDeviceListModel : public QAbstractListModel {
@@ -36,6 +37,7 @@ class ParticipantDeviceListModel : public QAbstractListModel {
 	
 public:
 	ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent = nullptr);
+	ParticipantDeviceListModel (CallModel * callModel, QObject *parent = nullptr);
 	
 	int rowCount (const QModelIndex &index = QModelIndex()) const override;
 	int count();

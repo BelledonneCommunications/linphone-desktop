@@ -14,8 +14,9 @@ Rectangle {
   property alias buttons: buttons.data // Optionnal.
   property alias title : titleBar.text	//Optionnal. Show a title bar with a close button.
   property alias descriptionText: description.text // Optionnal.
-  property int buttonsAlignment : Qt.AlignLeft
+  property int buttonsAlignment : Qt.AlignLeft  
   property bool flat : false	// Remove margins
+  property bool expandHeight: flat
   property alias showCloseCross : titleBar.showCloseCross
   
   property int buttonsLeftMargin :(buttonsAlignment & Qt.AlignLeft )== Qt.AlignLeft
@@ -86,7 +87,7 @@ Rectangle {
     Item {
       id: content
 
-	  Layout.fillHeight: (flat ? true : !dialog.contentIsEmpty)
+	  Layout.fillHeight: (expandHeight ? true : !dialog.contentIsEmpty)
       Layout.fillWidth: true
 	  Layout.leftMargin: (flat ? 0 : DialogStyle.content.leftMargin)
 	  Layout.rightMargin: (flat ? 0 : DialogStyle.content.rightMargin)

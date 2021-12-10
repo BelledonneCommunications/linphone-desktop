@@ -79,11 +79,12 @@ SearchBox {
 			}, {
 				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 0,
-				visible: SettingsModel.standardChatEnabled ,
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchChat(entry.sipAddress)
-				}
+				},
+				visible: SettingsModel.standardChatEnabled,
+				zz: 'toto'
 			}, {
 				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 1,

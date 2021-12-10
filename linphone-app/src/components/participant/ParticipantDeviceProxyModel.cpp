@@ -51,7 +51,15 @@ bool ParticipantDeviceProxyModel::lessThan (const QModelIndex &left, const QMode
   return deviceA->getTimeOfJoining() > deviceB->getTimeOfJoining();
 }
 //---------------------------------------------------------------------------------
-
+CallModel * ParticipantDeviceProxyModel::getCallModel() const{
+	return mCallModel;
+}
+	
+void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
+	mCallModel = callModel;
+	setSourceModel(new ParticipantDeviceListModel(mCallModel));
+}
+	
 void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant){
 	setSourceModel(participant->getParticipantDevices().get());
 }

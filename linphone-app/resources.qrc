@@ -20,6 +20,7 @@
 		<file>assets/images/call_custom.svg</file>
 		<file>assets/images/call_history_custom.svg</file>
 		<file>assets/images/call_quality_custom.svg</file>
+		<file>assets/images/call_menu_custom.svg</file>
 		<file>assets/images/call_sign_connected.svg</file>
 		<file>assets/images/call_sign_ended.svg</file>
 		<file>assets/images/call_sign_incoming.svg</file>
@@ -49,6 +50,7 @@
 		<file>assets/images/chat_room_custom.svg</file>
 		<file>assets/images/close_custom.svg</file>
 		<file>assets/images/collapsed_custom.svg</file>
+		<file>assets/images/conference_custom.svg</file>
 		<file>assets/images/contact_add_custom.svg</file>
 		<file>assets/images/contact_card_photo_custom.svg</file>
 		<file>assets/images/contact_custom.svg</file>
@@ -60,6 +62,7 @@
 		<file>assets/images/current_account_status_offline.svg</file>
 		<file>assets/images/current_account_status_dnd.svg</file>
 		<file>assets/images/current_account_status_busy.svg</file>
+		<file>assets/images/dialpad_custom.svg</file>
 		<file>assets/images/declined_incoming_call_custom.svg</file>
 		<file>assets/images/declined_outgoing_call_custom.svg</file>
 		<file>assets/images/delete_custom.svg</file>
@@ -103,7 +106,6 @@
 		<file>assets/images/move_to_bottom_custom.svg</file>
 		<file>assets/images/new_call_custom.svg</file>
 		<file>assets/images/new_chat_group_custom.svg</file>
-		<file>assets/images/new_conference_custom.svg</file>
 		<file>assets/images/options_custom.svg</file>
 		<file>assets/images/outgoing_call_custom.svg</file>
 		<file>assets/images/panel_arrow_custom.svg</file>
@@ -113,13 +115,16 @@
 		<file>assets/images/panel_shown_normal.svg</file>
 		<file>assets/images/panel_shown_hovered.svg</file>
 		<file>assets/images/panel_shown_pressed.svg</file>
+		<file>assets/images/participants_custom.svg</file>
 		<file>assets/images/pause_custom.svg</file>
 		<file>assets/images/play_custom.svg</file>
 		<file>assets/images/recording_sign.svg</file>
 		<file>assets/images/record_custom.svg</file>
 		<file>assets/images/remove_participant_custom.svg</file>
+		<file>assets/images/screen_sharing_custom.svg</file>
 		<file>assets/images/screenshot_custom.svg</file>
 		<file>assets/images/search_custom.svg</file>
+		<file>assets/images/schedule_custom.svg</file>
 		<file>assets/images/secure_level_unsafe.svg</file>
 		<file>assets/images/secure_level_1.svg</file>
 		<file>assets/images/secure_level_2.svg</file>
@@ -178,6 +183,7 @@
 		<file>ui/modules/Common/Form/ListForm.qml</file>
 		<file>ui/modules/Common/Form/ListItemSelector.js</file>
 		<file>ui/modules/Common/Form/ListItemSelector.qml</file>
+		<file>ui/modules/Common/Form/Mosaic.qml</file>
 		<file>ui/modules/Common/Form/MouseArea.qml</file>
 		<file>ui/modules/Common/Form/Placements/FormEmptyLine.qml</file>
 		<file>ui/modules/Common/Form/Placements/FormGroup.qml</file>
@@ -212,6 +218,8 @@
 		<file>ui/modules/Common/Misc/Borders.qml</file>
 		<file>ui/modules/Common/Misc/ForceScrollBar.qml</file>
 		<file>ui/modules/Common/Misc/Paned.qml</file>
+		<file>ui/modules/Common/Picker/DatePicker.qml</file>
+		<file>ui/modules/Common/Picker/TimePicker.qml</file>
 		<file>ui/modules/Common/Popup/DesktopPopup.qml</file>
 		<file>ui/modules/Common/Popup/Popup.qml</file>
 		<file>ui/modules/Common/Popup/PopupShadow.qml</file>
@@ -254,6 +262,8 @@
 		<file>ui/modules/Common/Styles/Menus/MenuStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/ForceScrollBarStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/PanedStyle.qml</file>
+		<file>ui/modules/Common/Styles/Picker/DatePickerStyle.qml</file>
+		<file>ui/modules/Common/Styles/Picker/TimePickerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Popup/PopupStyle.qml</file>
 		<file>ui/modules/Common/Styles/qmldir</file>
 		<file>ui/modules/Common/Styles/Tooltip/TooltipStyle.qml</file>
@@ -371,6 +381,7 @@
 		<file>ui/views/App/Calls/CallsWindow.js</file>
 		<file>ui/views/App/Calls/CallsWindow.qml</file>
 		<file>ui/views/App/Calls/Conference.qml</file>
+		<file>ui/views/App/Calls/VideoConference.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallTransfer.qml</file>
 		<file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
@@ -396,6 +407,7 @@
 		<file>ui/views/App/Main/Assistant/UseAppSipAccountWithPhoneNumber.qml</file>
 		<file>ui/views/App/Main/Assistant/UseAppSipAccountWithUsername.qml</file>
 		<file>ui/views/App/Main/Assistant/UseOtherSipAccount.qml</file>
+		<file>ui/views/App/Main/Conferences.qml</file>
 		<file>ui/views/App/Main/ContactEdit.js</file>
 		<file>ui/views/App/Main/ContactEdit.qml</file>
 		<file>ui/views/App/Main/Contacts.qml</file>
@@ -410,6 +422,7 @@
 		<file>ui/views/App/Main/Dialogs/ManageAccount.js</file>
 		<file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
 		<file>ui/views/App/Main/Dialogs/NewChatRoom.qml</file>
+		<file>ui/views/App/Main/Dialogs/NewConference.qml</file>
 		<file>ui/views/App/Main/Dialogs/ParticipantsDevices.qml</file>
 		<file>ui/views/App/Main/Home.qml</file>
 		<file>ui/views/App/Main/HistoryView.qml</file>
@@ -441,6 +454,7 @@
 		<file>ui/views/App/Styles/Calls/CallFullscreenStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
+		<file>ui/views/App/Styles/Calls/VideoConferenceStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallSipAddressStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>
@@ -452,6 +466,7 @@
 		<file>ui/views/App/Styles/Main/Assistant/CreateAppSipAccountStyle.qml</file>
 		<file>ui/views/App/Styles/Main/AssistantStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/UseAppSipAccountStyle.qml</file>
+		<file>ui/views/App/Styles/Main/ConferencesStyle.qml</file>
 		<file>ui/views/App/Styles/Main/ContactEditStyle.qml</file>
 		<file>ui/views/App/Styles/Main/ContactsStyle.qml</file>
 		<file>ui/views/App/Styles/Main/ConversationStyle.qml</file>
@@ -461,6 +476,7 @@
 		<file>ui/views/App/Styles/Main/Dialogs/InfoChatRoomStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/InfoEncryptionStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/NewChatRoomStyle.qml</file>
+		<file>ui/views/App/Styles/Main/Dialogs/NewConferenceStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/ManageAccountsStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/ParticipantsDevicesStyle.qml</file>
 		<file>ui/views/App/Styles/Main/HomeStyle.qml</file>

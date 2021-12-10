@@ -26,54 +26,56 @@
 #include "../search/SearchHandler.hpp"
 
 // =============================================================================
+class ConferenceModel;
 class ContactModel;
 class ChatRoomModel;
 
 class CallModel : public QObject {
-	Q_OBJECT;
+	Q_OBJECT
 	
-	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT);
-	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT);
-	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged);
-	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT);
+	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
+	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT)
+	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
+	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT)
 	
 	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT )
 	Q_PROPERTY(ChatRoomModel * chatRoomModel READ getChatRoomModel CONSTANT)
 	
-	Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged);
-	Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged);
+	Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged)
+	Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged)
 	
-	Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT);
+	Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT)
 	
-	Q_PROPERTY(bool isInConference READ isInConference NOTIFY isInConferenceChanged);
+	Q_PROPERTY(bool isInConference READ isInConference NOTIFY isInConferenceChanged)
+	Q_PROPERTY(bool isConference READ isConference CONSTANT)
 	
-	Q_PROPERTY(int duration READ getDuration CONSTANT); // Constants but called with a timer in qml.
-	Q_PROPERTY(float quality READ getQuality CONSTANT);
-	Q_PROPERTY(float speakerVu READ getSpeakerVu CONSTANT);
-	Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
+	Q_PROPERTY(int duration READ getDuration CONSTANT) // Constants but called with a timer in qml.
+	Q_PROPERTY(float quality READ getQuality CONSTANT)
+	Q_PROPERTY(float speakerVu READ getSpeakerVu CONSTANT)
+	Q_PROPERTY(float microVu READ getMicroVu CONSTANT)
 	
-	Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE setSpeakerMuted NOTIFY speakerMutedChanged);
-	Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
+	Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE setSpeakerMuted NOTIFY speakerMutedChanged)
+	Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged)
 	
-	Q_PROPERTY(float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged);
-	Q_PROPERTY(float microVolumeGain READ getMicroVolumeGain WRITE setMicroVolumeGain NOTIFY microVolumeGainChanged);
+	Q_PROPERTY(float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged)
+	Q_PROPERTY(float microVolumeGain READ getMicroVolumeGain WRITE setMicroVolumeGain NOTIFY microVolumeGainChanged)
 	
-	Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged);
-	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged);
+	Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged)
+	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged)
 	Q_PROPERTY(bool updating READ getUpdating NOTIFY statusChanged)
 	
-	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged);
+	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged)
 	
-	Q_PROPERTY(QVariantList audioStats READ getAudioStats NOTIFY statsUpdated);
-	Q_PROPERTY(QVariantList videoStats READ getVideoStats NOTIFY statsUpdated);
+	Q_PROPERTY(QVariantList audioStats READ getAudioStats NOTIFY statsUpdated)
+	Q_PROPERTY(QVariantList videoStats READ getVideoStats NOTIFY statsUpdated)
 	
-	Q_PROPERTY(CallEncryption encryption READ getEncryption NOTIFY securityUpdated);
-	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated);
-	Q_PROPERTY(QString localSas READ getLocalSas NOTIFY securityUpdated);
-	Q_PROPERTY(QString remoteSas READ getRemoteSas NOTIFY securityUpdated);
-	Q_PROPERTY(QString securedString READ getSecuredString NOTIFY securityUpdated);
+	Q_PROPERTY(CallEncryption encryption READ getEncryption NOTIFY securityUpdated)
+	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated)
+	Q_PROPERTY(QString localSas READ getLocalSas NOTIFY securityUpdated)
+	Q_PROPERTY(QString remoteSas READ getRemoteSas NOTIFY securityUpdated)
+	Q_PROPERTY(QString securedString READ getSecuredString NOTIFY securityUpdated)
 	
-	Q_PROPERTY(QString transferAddress READ getTransferAddress WRITE setTransferAddress NOTIFY transferAddressChanged);
+	Q_PROPERTY(QString transferAddress READ getTransferAddress WRITE setTransferAddress NOTIFY transferAddressChanged)
 	
 	
 	
@@ -109,12 +111,13 @@ public:
 	QString getFullLocalAddress () const;
 	
 	ContactModel *getContactModel() const;
-	
 	ChatRoomModel * getChatRoomModel() const;
+	std::shared_ptr<ConferenceModel> getConferenceModel() const;
 	
 	bool isInConference () const {
 		return mIsInConference;
 	}
+	bool isConference () const;
 	
 	void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams);
 	static void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams, const QString &to);
@@ -197,7 +200,7 @@ private:
 	CallStatus getStatus () const;
 	
 	bool isOutgoing () const {
-		return mCall->getDir() == linphone::Call::Dir::Outgoing;
+		return mCall && mCall->getDir() == linphone::Call::Dir::Outgoing;
 	}
 	
 	void updateIsInConference ();
@@ -268,6 +271,7 @@ private:
 	QVariantList mVideoStats;
 	std::shared_ptr<SearchHandler> mSearch;
 	QString mTransferAddress;
+	std::shared_ptr<ConferenceModel> mConferenceModel;
 };
 
 #endif // CALL_MODEL_H_

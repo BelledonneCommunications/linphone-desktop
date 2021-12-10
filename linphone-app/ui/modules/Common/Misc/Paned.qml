@@ -258,6 +258,7 @@ Item {
 
     height: parent.height
     visible: _isVisible(Qt.LeftEdge)
+    onVisibleChanged: console.log(visible)
   }
 
   MouseArea {

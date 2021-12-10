@@ -34,6 +34,9 @@ Window {
 	
 	
 	// ---------------------------------------------------------------------------
+	function openConference(){
+		middlePane.sourceComponent = videoConference
+	}
 	
 	function openChat () {
 		rightPaned.open()
@@ -42,7 +45,6 @@ Window {
 	function closeChat () {
 		rightPaned.close()
 	}
-	
 	
 	function conferenceManagerResult(exitValue){
 		window.detachVirtualWindow();
@@ -146,7 +148,7 @@ Window {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					
-					conferenceModel: ConferenceModel {}
+					conferenceModel: ConferenceProxyModel {}
 					model: CallsListProxyModel {}
 				}
 			}
@@ -234,12 +236,20 @@ Window {
 				}
 			}
 			
+			Component {
+				id: videoConference
+				VideoConference {
+					callModel: window.call
+				}
+			}
+			
 			// -----------------------------------------------------------------------
 			
 			childA: Loader {
+				id: middlePane
 				anchors.fill: parent
 				sourceComponent: Logic.getContent()
-				onSourceComponentChanged: {rightPaned.childAItem.update()}// Force update when loading a new Content. It's just to be sure
+				onSourceComponentChanged: {console.log(sourceComponent); rightPaned.childAItem.update()}// Force update when loading a new Content. It's just to be sure
 			}
 			
 			childB: Loader {

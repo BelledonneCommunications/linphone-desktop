@@ -10,6 +10,7 @@ singleton CallFullscreenStyle                            1.0 Calls/CallFullscree
 singleton CallStyle                                      1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                               1.0 Calls/CallsWindowStyle.qml
 singleton ConferenceStyle                                1.0 Calls/ConferenceStyle.qml
+singleton VideoConferenceStyle                           1.0 Calls/VideoConferenceStyle.qml
 
 singleton CallSipAddressStyle                            1.0 Calls/Dialogs/CallSipAddressStyle.qml
 singleton CallTransferStyle                              1.0 Calls/Dialogs/CallTransferStyle.qml
@@ -26,6 +27,7 @@ singleton CreateAppSipAccountStyle                       1.0 Main/Assistant/Crea
 singleton UseAppSipAccountStyle                          1.0 Main/Assistant/UseAppSipAccountStyle.qml
 
 singleton AssistantStyle                                 1.0 Main/AssistantStyle.qml
+singleton ConferencesStyle                               1.0 Main/ConferencesStyle.qml
 singleton ContactEditStyle                               1.0 Main/ContactEditStyle.qml
 singleton ContactsStyle                                  1.0 Main/ContactsStyle.qml
 singleton ConversationStyle                              1.0 Main/ConversationStyle.qml
@@ -41,6 +43,7 @@ singleton InfoChatRoomStyle                              1.0 Main/Dialogs/InfoCh
 singleton InfoEncryptionStyle                            1.0 Main/Dialogs/InfoEncryptionStyle.qml
 singleton ManageAccountsStyle                            1.0 Main/Dialogs/ManageAccountsStyle.qml
 singleton NewChatRoomStyle                               1.0 Main/Dialogs/NewChatRoomStyle.qml
+singleton NewConferenceStyle                             1.0 Main/Dialogs/NewConferenceStyle.qml
 singleton ParticipantsDevicesStyle                       1.0 Main/Dialogs/ParticipantsDevicesStyle.qml
 
 

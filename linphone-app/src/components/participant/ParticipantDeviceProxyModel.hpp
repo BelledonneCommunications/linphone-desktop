@@ -31,20 +31,29 @@
 
 class ParticipantDeviceListModel;
 class ParticipantModel;
+class CallModel;
 
 class ParticipantDeviceProxyModel : public QSortFilterProxyModel {
 	Q_OBJECT
 	
 public:
+	Q_PROPERTY(CallModel * callModel READ getCallModel WRITE setCallModel NOTIFY callModelChanged)
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
 	
+	CallModel * getCallModel() const;
+	
+	void setCallModel(CallModel * callModel);	
 	void setParticipant(ParticipantModel * participant);
+	
+signals:
+	void callModelChanged();
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
 	std::shared_ptr<ParticipantDeviceListModel> mDevices;
+	CallModel * mCallModel;
 	
 };
 

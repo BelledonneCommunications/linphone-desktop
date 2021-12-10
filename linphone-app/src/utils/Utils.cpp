@@ -70,6 +70,10 @@ bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCap
 		return false;
 }
 
+QDateTime Utils::addMinutes(QDateTime date, const int& min){
+	return date.addSecs(min*60);
+}
+
 QString Utils::toDateTimeString(QDateTime date){
 	if(date.date() == QDate::currentDate())
 		return toTimeString(date);

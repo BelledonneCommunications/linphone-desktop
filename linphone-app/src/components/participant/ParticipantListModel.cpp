@@ -70,6 +70,14 @@ int ParticipantListModel::getCount() const{
 	return mParticipants.size();
 }
 
+std::list<std::shared_ptr<linphone::Address>> ParticipantListModel::getParticipants()const{
+	std::list<std::shared_ptr<linphone::Address>> participants;
+	for(auto participant : mParticipants){
+		participants.push_back(Utils::interpretUrl(participant->getSipAddress()));
+	}
+	return participants;
+}
+
 QString ParticipantListModel::addressesToString()const{
 	QStringList txt;
 	for(auto participant : mParticipants){

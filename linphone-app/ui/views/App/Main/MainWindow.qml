@@ -223,7 +223,12 @@ ApplicationWindow {
 						tooltipText:qsTr('newConferenceButton')
 						//autoIcon: true
 						
-						onClicked: Logic.openConferenceManager()
+						//onClicked: Logic.openConferenceManager()
+						onClicked: {
+							window.detachVirtualWindow()
+							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/NewConference.qml')
+													   ,{})
+						}
 					}
 					
 					ActionButton {
@@ -296,17 +301,32 @@ ApplicationWindow {
 								
 							}
 						}
-						/*
 						ApplicationMenuEntry {
-							visible : false	//TODO
 							id: conferencesEntry
 							
-							icon: MainWindowStyle.menu.conferencesIcon
+							icon: MainWindowStyle.menu.conferences.icon
+							iconSize: MainWindowStyle.menu.conferences.iconSize
+							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor : MainWindowStyle.menu.conferences.color
 							name: 'MES CONFERENCES'
-							overwriteColor: isSelected ? MainWindowStyle.menu.conferencesSelectedColor : MainWindowStyle.menu.conferencesColor
+							visible: SettingsModel.conferencesEnabled
 							
-							onSelected: window.setView('HistoryView')
-						}*/
+							onSelected: {
+								timeline.model.unselectAll()
+								setView('Conferences')
+							}
+							onClicked:{
+								setView('Conferences')
+							}
+							Icon{
+								anchors.right:parent.right
+								anchors.verticalCenter: parent.verticalCenter
+								anchors.rightMargin: 10
+								icon: MainWindowStyle.menu.direction.icon
+								overwriteColor: conferencesEntry.overwriteColor
+								iconSize: MainWindowStyle.menu.direction.iconSize
+								
+							}
+						}
 					}
 					
 					// History.

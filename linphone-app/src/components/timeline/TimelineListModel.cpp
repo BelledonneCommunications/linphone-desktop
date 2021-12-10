@@ -152,7 +152,26 @@ std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<li
 	}
 	return nullptr;
 }
-
+/*
+std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<linphone::Conference> conference, const bool &create){
+	if(chatRoom){
+		for(auto it = mTimelines.begin() ; it != mTimelines.end() ; ++it){
+			if( (*it)->isConference() && (*it)->getConferenceModel()->getConference() == conference){
+				return *it;
+			}
+		}
+		if(create){
+			std::shared_ptr<TimelineModel> model = TimelineModel::create(conference);
+			//std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
+			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
+			//connect(model->getConferenceModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
+			add(model);
+			return model;
+		}
+	}
+	return nullptr;
+}
+*/
 QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	QVariantList contacts;
 	QMultiMap<qint64, ChatRoomModel*> sortedData;

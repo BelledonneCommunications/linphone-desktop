@@ -40,7 +40,7 @@ QtObject {
 		property QtObject newConference: QtObject {
 			property int iconSize: 40
 			property string name : 'newConference'
-			property string icon : 'new_conference_custom'
+			property string icon : 'conference_custom'
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg').color
 			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg').color
 			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg').color

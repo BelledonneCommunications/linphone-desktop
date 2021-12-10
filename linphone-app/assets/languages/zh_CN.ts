@@ -1534,6 +1534,89 @@
     </message>
 </context>
 <context>
+    <name>NewConference</name>
+    <message>
+        <source>askEncryption</source>
+        <extracomment>&apos;Would you like to encrypt your conference?&apos; : Ask about setting the conference as secured.</extracomment>
+        <translation type="unfinished">是否加密你的聊天？</translation>
+    </message>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;Launch&apos; : Start button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missingSubject</source>
+        <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
+        <translation type="unfinished">你需要填写一个主题。</translation>
+    </message>
+    <message numerus="yes">
+        <source>missingParticipants</source>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
+        <translation type="unfinished">
+            <numerusform>你需要至少%1成员</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <translation type="unfinished">您需要在帐户设置中设置会议 URI 以创建基于会议的聊天室。</translation>
+    </message>
+    <message>
+        <source>newConferenceTitle</source>
+        <extracomment>&apos;Start a video conference&apos; : Title of a popup about creation of a video conference</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>subjectLabel</source>
+        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
+        <translation type="unfinished">主题</translation>
+    </message>
+    <message>
+        <source>subjectPlaceholder</source>
+        <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
+        <translation type="unfinished">指定一个主题</translation>
+    </message>
+    <message>
+        <source>subjectTooltip</source>
+        <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
+        <translation type="unfinished">聊天室的当前主题。 它不能为空。</translation>
+        <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantSelectionPlaceholder</source>
+        <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
+        <translation type="unfinished">选择成员</translation>
+    </message>
+    <message>
+        <source>participantSelectionTooltip</source>
+        <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
+        <translation type="unfinished">搜索您的联系人或向聊天室添加自定义联系人。</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation type="unfinished">管理员</translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+    <message>
+        <source>removeParticipantSelection</source>
+        <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
+        <translation type="unfinished">从选择中删除此成员</translation>
+        <extra-Tooltip>This is a tooltip</extra-Tooltip>
+    </message>
+    <message>
+        <source>requiredField</source>
+        <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
+        <translation type="unfinished">要求</translation>
+    </message>
+</context>
+<context>
     <name>Notice</name>
     <message>
         <source>conferenceCreatedEvent</source>

@@ -68,7 +68,8 @@ public:
 	static constexpr char LinphoneBZip2_dll[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
-	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
+	//static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
+	static constexpr char DefaultConferenceURI[] = "sip:videoconference-factory2@sip.linphone.org";
 	static constexpr char DefaultLimeServerURL[] = "https://lime.linphone.org/lime-server/lime-server.php";
 	static constexpr char RemoteProvisioningURL[] = "https://subscribe.linphone.org/flexiapi/provisioning";
 		

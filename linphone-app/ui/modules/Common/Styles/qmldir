@@ -52,6 +52,9 @@ singleton MenuStyle                 1.0 Menus/MenuStyle.qml
 singleton ForceScrollBarStyle       1.0 Misc/ForceScrollBarStyle.qml
 singleton PanedStyle                1.0 Misc/PanedStyle.qml
 
+singleton DatePickerStyle           1.0 Picker/DatePickerStyle.qml
+singleton TimePickerStyle           1.0 Picker/TimePickerStyle.qml
+
 singleton PopupStyle                1.0 Popup/PopupStyle.qml
 
 singleton TooltipStyle              1.0 Tooltip/TooltipStyle.qml

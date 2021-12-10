@@ -343,6 +343,9 @@ void App::initContentApp () {
 	// Change colors if necessary.
 	mColorListModel->useConfig(config);
 	mImageListModel->useConfig(config);
+// There is no more database for callback. Setting it in the configuration before starting the core will do migration.
+// When the migration is done by SDK, further migrations on call logs will do nothing. It is safe to use .
+	config->setString("storage", "call_logs_db_uri", Paths::getCallHistoryFilePath());
 	
 	// Init core.
 	CoreManager::init(this, Utils::coreStringToAppString(configPath));
@@ -611,6 +614,7 @@ void App::registerTypes () {
 	qRegisterMetaType<std::shared_ptr<ChatMessageModel>>();
 	qRegisterMetaType<std::shared_ptr<ChatNoticeModel>>();
 	qRegisterMetaType<std::shared_ptr<ChatCallModel>>();
+	qRegisterMetaType<std::shared_ptr<ConferenceInfoModel>>();
 	//qRegisterMetaType<std::shared_ptr<ChatEvent>>();
 	LinphoneEnums::registerMetaTypes();
 	
@@ -621,7 +625,9 @@ void App::registerTypes () {
 	registerType<CameraPreview>("CameraPreview");
 	registerType<ChatRoomProxyModel>("ChatRoomProxyModel");
 	registerType<ConferenceHelperModel>("ConferenceHelperModel");
-	registerType<ConferenceModel>("ConferenceModel");
+	registerType<ConferenceProxyModel>("ConferenceProxyModel");
+	registerType<ConferenceInfoModel>("ConferenceInfoModel");
+	registerType<ConferenceInfoProxyModel>("ConferenceInfoProxyModel");
 	registerType<ContactsListProxyModel>("ContactsListProxyModel");
 	registerType<ContactsImporterListProxyModel>("ContactsImporterListProxyModel");
 	registerType<ContentProxyModel>("ContentProxyModel");
@@ -659,6 +665,8 @@ void App::registerTypes () {
 	registerUncreatableType<ColorModel>("ColorModel");
 	registerUncreatableType<ImageModel>("ImageModel");
 	registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
+	registerUncreatableType<ConferenceModel>("ConferenceModel");
+	registerUncreatableType<ConferenceInfoListModel>("ConferenceInfoListModel");
 	registerUncreatableType<ContactModel>("ContactModel");
 	registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
 	registerUncreatableType<ContentModel>("ContentModel");

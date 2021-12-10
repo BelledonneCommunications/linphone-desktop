@@ -31,6 +31,8 @@
 
 class ChatRoomModel;
 class CoreHandlers;
+class ConferenceModel;
+class ConferenceInfoModel;
 
 class CallsListModel : public QAbstractListModel {
 	Q_OBJECT
@@ -49,7 +51,7 @@ public:
 	
 	Q_INVOKABLE void launchAudioCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const QHash<QString, QString> &headers = {}) const;
 	Q_INVOKABLE void launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers = {}, const QString& prepareTransfertAddress = "") const;
-	Q_INVOKABLE void launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress = "") const;
+	Q_INVOKABLE void launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const bool& autoSelectAfterCreation = true) const;
 	Q_INVOKABLE ChatRoomModel* launchSecureChat (const QString &sipAddress) const;
 	Q_INVOKABLE QVariantMap launchChat(const QString &sipAddress, const int& securityLevel) const;
 	Q_INVOKABLE ChatRoomModel* createChat (const QString &participantAddress) const;
@@ -58,6 +60,9 @@ public:
 	
 	QVariantMap createChatRoom(const QString& subject, const int& securityLevel, std::shared_ptr<linphone::Address> localAddress, const QVariantList& participants, const bool& selectAfterCreation) const;
 	Q_INVOKABLE QVariantMap createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const;
+	//Q_INVOKABLE QVariantMap createConference(const QString& subject, const int& securityLevel, const QVariantList& participants, const int& inviteMode, const bool& selectAfterCreation);
+	Q_INVOKABLE QVariantMap createConference(ConferenceInfoModel * conferenceInfo, const int& securityLevel, const int& inviteMode, const bool& selectAfterCreation);
+	
 	
 	Q_INVOKABLE int getRunningCallsNumber () const;
 	
@@ -80,10 +85,12 @@ private:
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 	
 	void addCall (const std::shared_ptr<linphone::Call> &call);
+	void addDummyCall ();
 	void removeCall (const std::shared_ptr<linphone::Call> &call);
 	void removeCallCb (CallModel *callModel);
 	
 	QList<CallModel *> mList;
+	QList<std::shared_ptr<ConferenceModel>> mConferences;
 	
 	std::shared_ptr<CoreHandlers> mCoreHandlers;
 };

@@ -53,6 +53,7 @@ public:
 	Utils(QObject * parent = nullptr) : QObject(parent){}
 	// Qt interfaces	
 	Q_INVOKABLE static bool hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability);
+	Q_INVOKABLE static QDateTime addMinutes(QDateTime date, const int& min);
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
 	Q_INVOKABLE static QString toTimeString(QDateTime date);
 	Q_INVOKABLE static QString toDateString(QDateTime date);

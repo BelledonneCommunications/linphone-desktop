@@ -43,7 +43,13 @@ QtObject {
 			property int iconSize: 50
 			property color color: ColorsList.add(sectionName+'_me_contacts', 'me_n_b_inv_fg').color
 			property color selectedColor: ColorsList.add(sectionName+'_me_contacts_c', 'me_p_b_inv_fg').color
-		}		
+		}
+		property QtObject conferences: QtObject {
+			property string icon: 'conference_custom'
+			property int iconSize: 50
+			property color color: ColorsList.add(sectionName+'_me_conferences', 'me_n_b_inv_fg').color
+			property color selectedColor: ColorsList.add(sectionName+'_me_conferences_c', 'me_p_b_inv_fg').color
+		}
 		/*
 		property string conferencesIcon: 'conference'
 		property color conferencesColor: ColorsList.add(sectionName+'_me_confs', 'me_n_b_inv_fg').color
@@ -91,7 +97,7 @@ QtObject {
 		property QtObject newConference: QtObject {
 			property int iconSize: 40
 			property string name : 'newConference'
-			property string icon : 'new_conference_custom'
+			property string icon : 'conference_custom'
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg').color
 			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg').color
 			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg').color

@@ -63,7 +63,8 @@ function openConferenceManager (params, exitHandler) {
 function getContent () {
 	var call = window.call
 	if (call == null) {
-		return conference
+		//return conference
+		return videoConference
 	}
 	
 	var status = call.status
@@ -83,7 +84,8 @@ function getContent () {
 	if (status === CallModel.CallStatusEnded) {
 		return endedCall
 	}
-	
+	if(call.isConference)
+		return videoConference
 	return incall
 }
 

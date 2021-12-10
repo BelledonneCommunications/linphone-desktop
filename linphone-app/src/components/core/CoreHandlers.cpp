@@ -323,3 +323,21 @@ void CoreHandlers::onEcCalibrationResult(
 		) {
 	emit ecCalibrationResult(status, delayMs);
 }
+
+//------------------------------				 CONFERENCE INFO
+
+void CoreHandlers::onConferenceInfoCreated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
+	qWarning() << "onConferenceInfoCreated";
+}
+
+void CoreHandlers::onConferenceInfoOnSent(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
+	qWarning() << "onConferenceInfoOnSent";
+}
+
+void CoreHandlers::onConferenceInfoParticipantSent(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo, const std::shared_ptr<const linphone::Address> & participant){
+	qWarning() << "onConferenceInfoParticipantSent";
+}
+
+void CoreHandlers::onConferenceInfoParticipantError(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo, const std::shared_ptr<const linphone::Address> & participant, linphone::ConferenceInfoError error){
+	qWarning() << "onConferenceInfoParticipantError";
+}

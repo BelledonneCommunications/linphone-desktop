@@ -26,6 +26,8 @@
 #include "components/call/CallModel.hpp"
 #include "components/conference/ConferenceAddModel.hpp"
 #include "components/conference/ConferenceHelperModel.hpp"
+#include "components/conference/ConferenceModel.hpp"
+#include "components/conferenceInfo/ConferenceInfoModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/participant/ParticipantModel.hpp"
@@ -188,8 +190,8 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 		CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 }
 
-void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress) const {
-	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
+void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress, const bool& autoSelectAfterCreation) const {
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = autoSelectAfterCreation;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	if (!core->videoSupported()) {
 		qWarning() << QStringLiteral("Unable to launch video call. (Video not supported.) Launching audio call...");
@@ -378,6 +380,78 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	
 	return result;
 }
+QVariantMap CallsListModel::createConference(ConferenceInfoModel * conferenceInfo, const int& securityLevel, const int& inviteMode, const bool& selectAfterCreation) {
+	QVariantMap result;
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = selectAfterCreation;
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	std::shared_ptr<linphone::Conference> conference;
+	QList< std::shared_ptr<linphone::Address>> admins;
+	std::shared_ptr<TimelineModel> timeline;
+	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
+	qInfo() << "Conference creation of " << conferenceInfo->getSubject() << " at " << securityLevel << " security";// and with " << conferenceInfo->getConferenceInfo()->getParticipants().size();
+	
+	std::shared_ptr<linphone::ConferenceParams> params = core->createConferenceParams();
+	std::list <shared_ptr<linphone::Address> > participants = conferenceInfo->getConferenceInfo()->getParticipants();
+	std::shared_ptr<const linphone::Address> localAddress;
+	
+	/*
+	for(auto p : participants){
+		ParticipantModel* participant = p.value<ParticipantModel*>();
+		std::shared_ptr<linphone::Address> address;
+		if(participant) {
+			address = Utils::interpretUrl(participant->getSipAddress());
+			if(participant->getAdminStatus())
+				admins << address;
+		}else{
+			QString participant = p.toString();
+			if( participant != "")
+				address = Utils::interpretUrl(participant);
+		}
+		if( address)
+			chatRoomParticipants.push_back( address );
+	}*/
+	auto proxy = core->getDefaultProxyConfig();
+	params->setVideoEnabled(true);
+	params->setStartTime(conferenceInfo->getConferenceInfo()->getDateTime());
+	params->setEndTime(conferenceInfo->getConferenceInfo()->getDateTime()+conferenceInfo->getConferenceInfo()->getDuration()*60*1000);
+	//params->setDescription(conferenceInfo->getConferenceInfo()->getDescription());
+	
+	//params->enableEncryption(securityLevel>0);
+	
+//	if( securityLevel>0){
+//		params->enableEncryption(true);
+//	}else
+//		params->setBackend(linphone::ChatRoomBackend::Basic);
+//	params->enableGroup( subject!="" );
+	
+	
+	if(participants.size() > 0) {
+		params->setSubject(conferenceInfo->getSubject() != ""?Utils::appStringToCoreString(conferenceInfo->getSubject()):"Dummy Subject");
+		if( !conference) {
+			core->createConferenceOnServer(params, localAddress, participants);
+			/*
+			//conference = core->createConferenceWithParams(params);
+			if(conference != nullptr && admins.size() > 0){
+				for(auto a : admins) {
+					auto p = conference->findParticipant(a);
+					if( p )
+						conference->setParticipantAdminStatus(p, true);
+					else
+						qWarning() <<"Cannot set admin for " << a->asString().c_str() << ". It is not found in conference.";
+					}
+				}
+				// Warning: Should not be needed but SDK doesn't ref it
+				mConferences.append(std::make_shared<ConferenceModel>(conference));
+				//ChatRoomInitializer::setAdminsAsync(params->getSubject(), params->getBackend(), params->groupEnabled(), admins );
+		//	timeline = timelineList->getTimeline(conference, false);
+		*/
+		}
+		
+	}
+	//result["created"] = (conference != nullptr);
+	return result;
+}
+
 
 // -----------------------------------------------------------------------------
 
@@ -506,6 +580,31 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 	}
 	
 	CallModel *callModel = new CallModel(call);
+	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
+	App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
+	
+	// This connection is (only) useful for `CallsListProxyModel`.
+	QObject::connect(callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
+		int id = findCallIndex(mList, *callModel);
+		emit dataChanged(index(id, 0), index(id, 0));
+	});
+	
+	int row = mList.count();
+	
+	beginInsertRows(QModelIndex(), row, row);
+	mList << callModel;
+	endInsertRows();
+	emit layoutChanged();
+}
+
+
+void CallsListModel::addDummyCall () {
+	QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
+	if (callsWindow) {
+			App::smartShowWindow(callsWindow);
+	}
+	
+	CallModel *callModel = new CallModel(nullptr);
 	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
 	App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
 	

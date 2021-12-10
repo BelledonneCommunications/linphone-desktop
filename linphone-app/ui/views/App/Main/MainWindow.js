@@ -115,15 +115,8 @@ function updateSelectedEntry (view, props) {
     menu.resetSelectedEntry()
   } else if (view === 'Contacts') {
     item.contactsEntry.select()
-    //timeline.resetSelectedEntry()
-  } else {
-    //menu.resetSelectedEntry()
-/*
-    if (view === 'Conversation') {
-      timeline.setSelectedEntry(props.peerAddress, props.localAddress)
-    } else if (view === 'ContactEdit') {
-      timeline.resetSelectedEntry()
-    }*/
+  } else if (view === 'Conferences') {
+    item.contactsEntry.select()
   }
 }
 

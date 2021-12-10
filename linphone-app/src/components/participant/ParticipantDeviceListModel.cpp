@@ -38,6 +38,17 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (std::shared_ptr<linphone
 	}
 }
 
+ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, QObject *parent) : QAbstractListModel(parent) {
+	if(callModel->isConference()) {
+		std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = callModel->getConferenceModel()->getConference()->getParticipantDeviceList();
+		for(auto device : devices){
+			auto deviceModel = std::make_shared<ParticipantDeviceModel>(device);
+			connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
+			mList << deviceModel;
+		}
+	}
+}
+
 int ParticipantDeviceListModel::rowCount (const QModelIndex &index) const{
 	return mList.count();
 }

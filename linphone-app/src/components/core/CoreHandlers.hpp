@@ -60,7 +60,6 @@ signals:
 	void setLastRemoteProvisioningState(const linphone::ConfiguringState &state);
 	
 private:
-	
 	// ---------------------------------------------------------------------------
 	// Linphone callbacks.
 	// ---------------------------------------------------------------------------
@@ -159,8 +158,13 @@ private:
 			const std::shared_ptr<linphone::Core> &core,
 			const std::shared_ptr<linphone::Friend> &linphoneFriend
 			) override;
-	
-	//void onRegistrationStateChanged (
+
+	void onRegistrationStateChanged (
+			const std::shared_ptr<linphone::Core> &core,
+			const std::shared_ptr<linphone::ProxyConfig> &proxyConfig,
+			linphone::RegistrationState state,
+			const std::string &message
+			) override;
 	
 	void onTransferStateChanged (
 			const std::shared_ptr<linphone::Core> &core,
@@ -180,6 +184,13 @@ private:
 			linphone::EcCalibratorStatus status,
 			int delayMs
 			) override;
+	
+	// Conference Info
+	virtual void onConferenceInfoCreated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
+	virtual void onConferenceInfoOnSent(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
+	virtual void onConferenceInfoParticipantSent(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo, const std::shared_ptr<const linphone::Address> & participant);
+	virtual void onConferenceInfoParticipantError(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo, const std::shared_ptr<const linphone::Address> & participant, linphone::ConferenceInfoError error);
+	
 	
 	// ---------------------------------------------------------------------------
 };

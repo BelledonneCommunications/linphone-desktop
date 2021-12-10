@@ -111,6 +111,8 @@ class ColorListModel : public QAbstractListModel {
 		ADD_COLOR("event_neutral", "#424242", "Event colors that are neutral")
 		ADD_COLOR("event_in", "#96C11F", "Event colors that are incoming")
 		ADD_COLOR("event_out", "#18A7AF", "Event colors that are outgoing")
+		
+		ADD_COLOR("conference_bg", "#D0D8DE", "Conferences : Background entry")
 
 // Standard actions
 //

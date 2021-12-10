@@ -56,6 +56,7 @@ public:
 	Q_INVOKABLE void remove (ParticipantModel *importer);
 	Q_INVOKABLE ChatRoomModel* getChatRoomModel() const;
 	int getCount() const;
+	std::list<std::shared_ptr<linphone::Address>> getParticipants()const;
 	
 	Q_INVOKABLE QString addressesToString()const;	
 	Q_INVOKABLE QString displayNamesToString()const;

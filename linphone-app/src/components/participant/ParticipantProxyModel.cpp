@@ -45,6 +45,10 @@ ChatRoomModel *ParticipantProxyModel::getChatRoomModel() const{
 	return mChatRoomModel;
 }
 
+ParticipantListModel * ParticipantProxyModel::getParticipantListModel() const{
+	return dynamic_cast<ParticipantListModel*>(sourceModel());
+}
+
 QStringList ParticipantProxyModel::getSipAddresses() const{
 	QStringList participants;
 	ParticipantListModel * list = dynamic_cast<ParticipantListModel*>(sourceModel());
@@ -77,10 +81,12 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 		if(mChatRoomModel) {
 			auto participants = mChatRoomModel->getParticipants();
 			setSourceModel(participants);
+			emit participantListModelChanged();
 			for(int i = 0 ; i < participants->getCount() ; ++i)
 				emit addressAdded(participants->getAt(i)->getSipAddress());
 		}else {
 			setSourceModel(new ParticipantListModel(nullptr, this));
+			emit participantListModelChanged();
 		}
 		sort(0);
 		emit chatRoomModelChanged();
