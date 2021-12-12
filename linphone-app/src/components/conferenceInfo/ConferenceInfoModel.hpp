@@ -34,6 +34,7 @@ public:
 
 	Q_PROPERTY(QDateTime dateTime READ getDateTime WRITE setDateTime NOTIFY dateTimeChanged)
 	Q_PROPERTY(int duration READ getDuration WRITE setDuration NOTIFY durationChanged)
+	Q_PROPERTY(QDateTime endDateTime READ getEndDateTime NOTIFY dateTimeChanged)
 	Q_PROPERTY(QString organizer READ getOrganizer WRITE setOrganizer NOTIFY organizerChanged)
 	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
@@ -52,6 +53,7 @@ public:
 
 	QDateTime getDateTime() const;
 	int getDuration() const;
+	QDateTime getEndDateTime() const;
 	QString getOrganizer() const;	
 	QString getSubject() const;
 	QString getDescription() const;

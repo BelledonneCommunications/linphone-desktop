@@ -328,6 +328,7 @@ void CoreHandlers::onEcCalibrationResult(
 
 void CoreHandlers::onConferenceInfoCreated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
 	qWarning() << "onConferenceInfoCreated : sending invitation only for known participants (API fail? this should be done from SDK)";
+	qWarning() << "onConferenceInfoCreated : Duration: " << conferenceInfo->getDuration();
 	
 	for(auto participant : conferenceInfo->getParticipants()){
 		std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();

@@ -189,6 +189,7 @@ ColumnLayout {
 									elide: Text.ElideRight
 									font.pointSize: ConferencesStyle.conference.schedule.pointSize
 									text: Qt.formatDateTime(modelData.dateTime, 'yyyy/MM/dd hh:mm')
+										+', end at: ' +Qt.formatDateTime(modelData.endDateTime, 'yyyy/MM/dd hh:mm')
 								}
 							}
 							Text{

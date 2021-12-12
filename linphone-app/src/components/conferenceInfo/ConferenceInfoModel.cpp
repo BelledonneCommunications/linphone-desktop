@@ -109,7 +109,13 @@ QDateTime ConferenceInfoModel::getDateTime() const{
 }
 
 int ConferenceInfoModel::getDuration() const{
-	return mConferenceInfo->getDuration();
+	int duration = mConferenceInfo->getDuration();
+	qWarning() << "Duration: " << duration;
+	return duration;
+}
+
+QDateTime ConferenceInfoModel::getEndDateTime() const{
+	return getDateTime().addSecs(getDuration()*60);
 }
 
 QString ConferenceInfoModel::getOrganizer() const{
@@ -149,6 +155,7 @@ void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){
 }
 
 void ConferenceInfoModel::setDuration(const int& duration){
+	qWarning() << "Set Duration: " << duration;
 	mConferenceInfo->setDuration(duration);
 	emit durationChanged();
 }

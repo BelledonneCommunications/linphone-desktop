@@ -14,7 +14,7 @@ Avatar {
   property var participantDeviceModel
 
   readonly property var _sipAddressObserver: call ? SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
-												: SipAddressesModel.getSipAddressObserver(participantdeviceModel.address, '')
+												: SipAddressesModel.getSipAddressObserver(participantDeviceModel.address, '')
   readonly property var _username: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
 
   backgroundColor: CallStyle.container.avatar.backgroundColor
@@ -23,11 +23,14 @@ Avatar {
     : 'transparent'
 
   image: {
-    var contact = _sipAddressObserver.contact
-    return contact && contact.vcard.avatar
+		if (_sipAddressObserver) {
+			var contact = _sipAddressObserver.contact
+		    return contact && contact.vcard.avatar
+		}else
+			return null;
   }
 
-  username: call && call.status === CallModel.CallStatusPaused ? '' : _username
+  username: call && call.status === CallModel.CallStatusPaused || !_username? '' : _username
 
   Text {
     anchors.fill: parent

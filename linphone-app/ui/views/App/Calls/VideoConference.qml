@@ -11,6 +11,10 @@ import UtilsCpp 1.0
 
 import App.Styles 1.0
 
+
+// Temp
+import 'Incall.js' as Logic
+
 // =============================================================================
 
 Rectangle {
@@ -18,15 +22,19 @@ Rectangle {
 	
 	property CallModel callModel
 	
+	onCallModelChanged: if(callModel) {
+							grid.setParticipantDevicesMode()
+						}else
+							grid.setTestMode()
 	// ---------------------------------------------------------------------------
 	
 	color: VideoConferenceStyle.backgroundColor
 	
 	Component.onCompleted: {
-			for(var i = 0 ; i < 5 ; ++i)
-				grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)})
+			if(!callModel){
+				grid.setTestMode()
+			}else
+				grid.setParticipantDevicesMode()
 		}
 	
 	// ---------------------------------------------------------------------------
@@ -113,6 +121,20 @@ Rectangle {
 				anchors.fill: parent
 				
 				property int radius : 8
+				function setTestMode(){
+					grid.clear()
+					gridModel.model = gridModel.defaultList
+					for(var i = 0 ; i < 5 ; ++i)
+							grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
+											+Math.floor(Math.random()*255).toString(16)
+											+Math.floor(Math.random()*255).toString(16)})
+					console.log("Setting test mode : count=" + gridModel.defaultList.count)
+				}
+				function setParticipantDevicesMode(){
+					console.log("Setting participant mode : count=" + gridModel.participantDevices.count)
+					grid.clear()
+					gridModel.model = gridModel.participantDevices
+				}
 				
 				delegateModel: DelegateModel{
 					id: gridModel
@@ -131,7 +153,7 @@ Rectangle {
 					
 					
 					delegate: Rectangle{
-						color: gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : ''
+						color: !conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : ''
 						//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
 						//color:  modelData.color ? modelData.color : ''
 						radius: grid.radius
@@ -165,7 +187,8 @@ Rectangle {
 								
 								active: conference.callModel  && (gridModel.participantDevices.getAt(index).videoEnabled && !_fullscreen)
 								
-								sourceComponent: gridModel.participantDevices.getAt(index).isMe ? cameraPreview :  camera
+								sourceComponent: conference.callModel ? gridModel.participantDevices.getAt(index).isMe ? cameraPreview :  camera
+																	 : null
 								
 								Component {
 									id: camera
@@ -321,9 +344,9 @@ Rectangle {
 						id: camera
 						isCustom: true
 						backgroundRadius: 90
-						colorSet: conference.callModel.videoEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
-						updating: conference.callModel.videoEnabled && conference.callModel.updating
-						onClicked: conference.callModel.videoEnabled = !conference.callModel.videoEnabled
+						colorSet: conference.callModel && conference.callModel.videoEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
+						//updating: conference.callModel.videoEnabled && conference.callModel.updating
+						onClicked: if(conference.callModel) conference.callModel.videoEnabled = !conference.callModel.videoEnabled
 					}
 				}
 				RowLayout{

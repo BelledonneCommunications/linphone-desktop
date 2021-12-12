@@ -87,7 +87,7 @@ DialogPlus {
 			onClicked: exit(0)
 		},
 		TextButtonB {
-			//enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
+			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
 			//: 'Launch' : Start button
 			text: qsTr('startButton')
 			capitalization: Font.AllUppercase
@@ -100,12 +100,14 @@ DialogPlus {
 			onClicked: {
 				if( scheduledSwitch.checked){
 					var startDateTime = new Date()
-					startDateTime.setDate(Date.fromLocaleDateString(locale, dateField.text, Locale.ShortFormat))
-					startDateTime.setTime( Date.fromLocaleTimeString(locale, timeField.text, Locale.ShortFormat))
+					startDateTime.setDate(dateField.getDate())
+					startDateTime.setTime(timeField.getTime())
 					conferenceInfoModel.dateTime = startDateTime	
+					conferenceInfoModel.duration = durationField.text
 				}
 				conferenceInfoModel.subject = subject.text
 				conferenceInfoModel.description = description.text
+				
 				
 				conferenceInfoModel.setParticipants(selectedParticipants.participantListModel)
 				var callsWindow = App.getCallsWindow()
@@ -265,7 +267,10 @@ DialogPlus {
 								text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
 							}
 							MouseArea{
-								anchors.fill: parent
+								anchors.top: parent.top
+								anchors.bottom: parent.bottom
+								anchors.right: parent.right
+								width: parent.width-50
 								onClicked: {
 									if( rightStackView.currentItemType === 2) {
 										rightStackView.currentItemType = 0
@@ -279,7 +284,7 @@ DialogPlus {
 								}
 							}
 						}
-						NumericField{ text: '1200'; readOnly: true; Layout.preferredWidth: parent.cellWidth}
+						NumericField{id: durationField; text: '1200'; Layout.preferredWidth: parent.cellWidth}
 						TextField{ text: 'Paris'; readOnly: true; Layout.preferredWidth: parent.cellWidth}
 						function updateDateTime(){
 								var storedDate = new Date()
@@ -289,7 +294,7 @@ DialogPlus {
 								}
 								var currentDate = new Date()
 								if(currentDate >= storedDate){
-									var nextStoredDate = UtilsCpp.addMinutes(new Date(), 5)
+									var nextStoredDate = UtilsCpp.addMinutes(new Date(), 1)
 									dateField.setDate(nextStoredDate)
 									timeField.setTime(nextStoredDate)
 								}

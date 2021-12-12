@@ -679,7 +679,10 @@ void CallModel::setVideoEnabled (bool status) {
 			case linphone::Call::State::Connected:
 			case linphone::Call::State::StreamsRunning:
 				break;
-			default: return;
+			default: {
+				qWarning() << "Cannot set Video mode because of call status : " << (int)mCall->getState() << " is not in {" <<(int)linphone::Call::State::Connected << ", " <<(int)linphone::Call::State::StreamsRunning << "}"; 
+				return;
+			}
 		}
 		
 		if (status == getVideoEnabled())
