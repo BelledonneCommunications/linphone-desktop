@@ -37,10 +37,12 @@ class ConferenceInfoProxyModel : public QSortFilterProxyModel {
 	
 public:
 	ConferenceInfoProxyModel (QObject *parent = Q_NULLPTR);
+	
+	Q_INVOKABLE QVariant getAt(int row);
 		
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-	//bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
 private:
 	

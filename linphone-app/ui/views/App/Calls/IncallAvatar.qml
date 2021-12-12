@@ -11,12 +11,14 @@ import App.Styles 1.0
 
 Avatar {
   property var call
+  property var participantDeviceModel
 
-  readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
+  readonly property var _sipAddressObserver: call ? SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
+												: SipAddressesModel.getSipAddressObserver(participantdeviceModel.address, '')
   readonly property var _username: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
 
   backgroundColor: CallStyle.container.avatar.backgroundColor
-  foregroundColor: call.status === CallModel.CallStatusPaused
+  foregroundColor: call && call.status === CallModel.CallStatusPaused
     ? CallStyle.container.pause.color
     : 'transparent'
 
@@ -25,7 +27,7 @@ Avatar {
     return contact && contact.vcard.avatar
   }
 
-  username: call.status === CallModel.CallStatusPaused ? '' : _username
+  username: call && call.status === CallModel.CallStatusPaused ? '' : _username
 
   Text {
     anchors.fill: parent
@@ -39,6 +41,6 @@ Avatar {
 
     text: '&#10073;&#10073;'
     textFormat: Text.RichText
-    visible: call.status === CallModel.CallStatusPaused
+    visible: call && call.status === CallModel.CallStatusPaused
   }
 }

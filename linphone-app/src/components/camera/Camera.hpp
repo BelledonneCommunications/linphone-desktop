@@ -33,6 +33,7 @@ namespace linphone {
 }
 
 class CallModel;
+class ParticipantDeviceModel;
 // -----------------------------------------------------------------------------
 
 class Camera : public QQuickFramebufferObject {
@@ -40,6 +41,7 @@ class Camera : public QQuickFramebufferObject {
   Q_OBJECT;
 
   Q_PROPERTY(CallModel * call READ getCallModel WRITE setCallModel NOTIFY callChanged);
+  Q_PROPERTY(ParticipantDeviceModel * participantDeviceModel READ getParticipantDeviceModel WRITE setParticipantDeviceModel NOTIFY participantDeviceModelChanged)
   Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
 
 public:
@@ -52,16 +54,20 @@ public:
 signals:
   void callChanged (CallModel *callModel);
   void isPreviewChanged (bool isPreview);
+  void participantDeviceModelChanged(ParticipantDeviceModel *participantDeviceModel);
 
 private:
   CallModel *getCallModel () const;
-  void setCallModel (CallModel *callModel);
-
   bool getIsPreview () const;
+  ParticipantDeviceModel * getParticipantDeviceModel() const;
+  
+  void setCallModel (CallModel *callModel);
   void setIsPreview (bool status);
+  void setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel);
 
   bool mIsPreview = false;
   CallModel *mCallModel = nullptr;
+  ParticipantDeviceModel *mParticipantDeviceModel = nullptr;
 
   QTimer *mRefreshTimer = nullptr;
 };

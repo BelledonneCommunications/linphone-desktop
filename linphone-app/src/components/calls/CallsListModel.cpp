@@ -414,6 +414,7 @@ QVariantMap CallsListModel::createConference(ConferenceInfoModel * conferenceInf
 	params->setVideoEnabled(true);
 	params->setStartTime(conferenceInfo->getConferenceInfo()->getDateTime());
 	params->setEndTime(conferenceInfo->getConferenceInfo()->getDateTime()+conferenceInfo->getConferenceInfo()->getDuration()*60*1000);
+	params->setLayout(linphone::ConferenceLayout::Grid);
 	//params->setDescription(conferenceInfo->getConferenceInfo()->getDescription());
 	
 	//params->enableEncryption(securityLevel>0);

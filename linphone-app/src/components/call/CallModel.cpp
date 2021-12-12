@@ -87,7 +87,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	if(mCall) {
 		mRemoteAddress = mCall->getRemoteAddress()->clone();
 		if(mCall->getConference())
-			mConferenceModel = std::make_shared<ConferenceModel>(mCall->getConference());	
+			mConferenceModel = ConferenceModel::create(mCall->getConference());	
 	}
 	mMagicSearch->getContactListFromFilterAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain());
 }
@@ -161,7 +161,9 @@ ChatRoomModel * CallModel::getChatRoomModel() const{
 		return nullptr;
 }
 
-std::shared_ptr<ConferenceModel> CallModel::getConferenceModel() const{
+std::shared_ptr<ConferenceModel> CallModel::getConferenceModel(){
+	if(mCall->getConference() && !mConferenceModel)
+		mConferenceModel = ConferenceModel::create(mCall->getConference());	
 	return mConferenceModel;
 }
 

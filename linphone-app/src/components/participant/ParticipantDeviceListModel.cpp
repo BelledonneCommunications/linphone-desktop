@@ -32,20 +32,28 @@
 ParticipantDeviceListModel::ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent) : QAbstractListModel(parent) {
 	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = participant->getDevices() ;
 	for(auto device : devices){
-		auto deviceModel = std::make_shared<ParticipantDeviceModel>(device);
+		auto deviceModel = std::make_shared<ParticipantDeviceModel>(device, false);
 		connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 		mList << deviceModel;
 	}
 }
 
 ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, QObject *parent) : QAbstractListModel(parent) {
-	if(callModel->isConference()) {
-		std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = callModel->getConferenceModel()->getConference()->getParticipantDeviceList();
+	if(callModel && callModel->isConference()) {
+		mCallModel = callModel;
+		auto conferenceModel = callModel->getConferenceModel();
+		auto meDevices = conferenceModel->getConference()->getMe()->getDevices();
+		if(meDevices.size() > 0) 
+			mList << std::make_shared<ParticipantDeviceModel>(meDevices.front(), true);// Add Me in device list
+		 else
+			mList << std::make_shared<ParticipantDeviceModel>(nullptr, true);
+		std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = conferenceModel->getConference()->getParticipantDeviceList();
 		for(auto device : devices){
-			auto deviceModel = std::make_shared<ParticipantDeviceModel>(device);
+			auto deviceModel = std::make_shared<ParticipantDeviceModel>(device, false);
 			connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 			mList << deviceModel;
 		}
+		connect(conferenceModel.get(), &ConferenceModel::participantDeviceAdded, this, &ParticipantDeviceListModel::onParticipantDeviceAdded);
 	}
 }
 
@@ -62,7 +70,7 @@ void ParticipantDeviceListModel::updateDevices(std::shared_ptr<linphone::Partici
 	beginResetModel();
 	mList.clear();
 	for(auto device : devices){
-		auto deviceModel = std::make_shared<ParticipantDeviceModel>(device);
+		auto deviceModel = std::make_shared<ParticipantDeviceModel>(device, false);
 		connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 		mList << deviceModel;
 	}
@@ -110,4 +118,43 @@ bool ParticipantDeviceListModel::removeRows (int row, int count, const QModelInd
 
 void ParticipantDeviceListModel::onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device){
 	emit securityLevelChanged(device);
+}
+
+
+//----------------------------------------------------------------------------------------------------------
+
+void ParticipantDeviceListModel::onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	auto conferenceModel = mCallModel->getConferenceModel();
+	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = conferenceModel->getConference()->getParticipantDeviceList();
+	for(auto realParticipantDevice : devices){
+		if( realParticipantDevice == participantDevice){
+			int row = mList.count();
+			beginInsertRows(QModelIndex(), row, row);
+			auto deviceModel = std::make_shared<ParticipantDeviceModel>(realParticipantDevice, this);
+			connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
+			mList << deviceModel;
+			endInsertRows();
+			emit layoutChanged();
+			return;
+		}
+	}
+	qWarning() << "No participant device found from const linphone::ParticipantDevice at onParticipantDeviceAdded";
+}
+void ParticipantDeviceListModel::onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	int row = 0;
+	for(auto device : mList){
+		if( device->getDevice() == participantDevice){
+			removeRow(row);
+			emit layoutChanged();
+			return;
+		}
+		++row;
+	}
+	qWarning() << "No participant device found from const linphone::ParticipantDevice at onParticipantDeviceRemoved";
+}
+void ParticipantDeviceListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "onParticipantDeviceJoined is not yet implemented. Current participants count: " << mList.size();
+}
+void ParticipantDeviceListModel::onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "onParticipantDeviceLeft is not yet implemented. Current participants count: " << mList.size();
 }

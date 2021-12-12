@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
+import QtQml.Models 2.12
 
 import Common 1.0
 import Common.Styles 1.0
@@ -97,6 +98,7 @@ Rectangle {
 			Layout.topMargin: 15
 			Layout.bottomMargin: 20
 			onClicked: {
+						if(!conference.callModel)
 						grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
 										+Math.floor(Math.random()*255).toString(16)
 										+Math.floor(Math.random()*255).toString(16)})
@@ -112,57 +114,91 @@ Rectangle {
 				
 				property int radius : 8
 				
-				delegate: 
-				Rectangle{
-					color: grid.get(modelIndex) && grid.get(modelIndex).color ? grid.get(modelIndex).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
-					radius: grid.radius
-					/*
-					Item {
-						id: container
-						
-						Layout.fillWidth: true
-						Layout.fillHeight: true
-						Layout.margins: CallStyle.container.margins
-						
-						Component {
-							id: avatar
-							
-							IncallAvatar {
-								call: grid.get(modelIndex).call
-								height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
-								width: height
-							}
+				delegateModel: DelegateModel{
+					id: gridModel
+					property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
+						id: participantDevices
+						callModel: conference.callModel
+					}
+					property ListModel defaultList : ListModel{}
+					Component.onCompleted: {
+						if( conference.callModel ){
+							grid.clear()
+							gridModel.model = participantDevices
 						}
+					}
+					model: defaultList
+					
+					
+					delegate: Rectangle{
+						color: gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : ''
+						//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
+						//color:  modelData.color ? modelData.color : ''
+						radius: grid.radius
+						height: grid.cellHeight - 5
+						width: grid.cellWidth - 5
 						
-						Loader {
-							id: cameraLoader
-							
-							anchors.centerIn: parent
-							
-							active: incall.call.videoEnabled && !_fullscreen
-							sourceComponent: camera
+						Item {
+							id: container
+							anchors.fill: parent
+							anchors.margins: CallStyle.container.margins
+							visible: conference.callModel 
+							//Layout.fillWidth: true
+							//Layout.fillHeight: true
+							//Layout.margins: CallStyle.container.margins
 							
 							Component {
-								id: camera
+								id: avatar
 								
-								Camera {
-									call: grid.get(modelIndex).call
-									height: container.height
-									width: container.width
+								IncallAvatar {
+									//call: gridModel.participantDevices.get(index).call
+									participantDeviceModel: gridModel.participantDevices.getAt(index)
+									height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
+									width: height
 								}
 							}
-						}
-						
-						Loader {
-							anchors.centerIn: parent
 							
-							active: !grid.get(modelIndex).call.videoEnabled || _fullscreen
-							sourceComponent: avatar
+							Loader {
+								id: cameraLoader
+								
+								anchors.centerIn: parent
+								
+								active: conference.callModel  && (gridModel.participantDevices.getAt(index).videoEnabled && !_fullscreen)
+								
+								sourceComponent: gridModel.participantDevices.getAt(index).isMe ? cameraPreview :  camera
+								
+								Component {
+									id: camera
+									
+									Camera {
+										//call: grid.get(modelIndex).call
+										participantDeviceModel: gridModel.participantDevices.getAt(index)
+										height: container.height
+										width: container.width
+									}
+								}
+								Component {
+									id: cameraPreview
+									
+									Camera {
+										anchors.fill: parent
+										call: incall.call
+										isPreview: true
+									}
+								}
+							}
+							
+							Loader {
+								anchors.centerIn: parent
+								
+								active: conference.callModel  && (!gridModel.participantDevices.getAt(index).videoEnabled || _fullscreen)
+								sourceComponent: avatar
+							}
 						}
-					}*/
-					MouseArea{
-						anchors.fill: parent
-						onClicked: {grid.remove( modelIndex)}
+						MouseArea{
+							anchors.fill: parent
+							onClicked: {grid.remove( index)}
+						}
 					}
 				}
 			}
@@ -285,7 +321,9 @@ Rectangle {
 						id: camera
 						isCustom: true
 						backgroundRadius: 90
-						colorSet: enabled ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
+						colorSet: conference.callModel.videoEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
+						updating: conference.callModel.videoEnabled && conference.callModel.updating
+						onClicked: conference.callModel.videoEnabled = !conference.callModel.videoEnabled
 					}
 				}
 				RowLayout{
@@ -298,6 +336,8 @@ Rectangle {
 						isCustom: true
 						backgroundRadius: width/2
 						colorSet: VideoConferenceStyle.buttons.hangup
+						
+						onClicked: callModel.terminate()
 					}
 				}
 			}

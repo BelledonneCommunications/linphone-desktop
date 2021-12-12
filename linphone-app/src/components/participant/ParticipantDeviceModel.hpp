@@ -32,19 +32,21 @@ class ParticipantDeviceModel : public QObject {
     Q_OBJECT
 
 public:
-    ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, QObject *parent = nullptr);
+    ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
 	
 	Q_PROPERTY(QString name READ getName CONSTANT)
 	Q_PROPERTY(QString address READ getAddress CONSTANT)
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(time_t timeOfJoining READ getTimeOfJoining CONSTANT)
+	Q_PROPERTY(bool videoEnabled READ isVideoEnabled NOTIFY videoEnabledChanged)
+	Q_PROPERTY(bool isMe READ isMe CONSTANT)
   
 	QString getName() const;
     QString getAddress() const;
 	int getSecurityLevel() const;
 	time_t getTimeOfJoining() const;
-	
-	
+	bool isVideoEnabled() const;
+	bool isMe() const;
 	
 	std::shared_ptr<linphone::ParticipantDevice>  getDevice();
 	
@@ -54,8 +56,11 @@ public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 signals:
 	void securityLevelChanged();
+	void videoEnabledChanged();
 
 private:
+
+	bool mIsMe = false;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
 	

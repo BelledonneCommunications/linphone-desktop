@@ -327,7 +327,24 @@ void CoreHandlers::onEcCalibrationResult(
 //------------------------------				 CONFERENCE INFO
 
 void CoreHandlers::onConferenceInfoCreated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
-	qWarning() << "onConferenceInfoCreated";
+	qWarning() << "onConferenceInfoCreated : sending invitation only for known participants (API fail? this should be done from SDK)";
+	
+	for(auto participant : conferenceInfo->getParticipants()){
+		std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+		std::list<std::shared_ptr<linphone::Address>> participants;
+		std::shared_ptr<linphone::ChatRoom> chatRoom;
+		chatRoom = core->searchChatRoom(params, conferenceInfo->getOrganizer()
+										 , participant
+										 , participants);
+		if(chatRoom) {
+			auto timeLine = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, true);
+			if(timeLine)
+				timeLine->sendMessage("Conference invitation : " +QString::fromStdString(conferenceInfo->getUri()->asString()));
+			else
+				qWarning() << "Cannot use a timeline for invitation";
+		}else
+			qWarning() << "Cannot use a chatroom for invitation";
+	}
 }
 
 void CoreHandlers::onConferenceInfoOnSent(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){

@@ -49,6 +49,11 @@ public:
 		
 public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	
+	void onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 
 signals:
 	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);
@@ -58,6 +63,7 @@ private:
 	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	
 	QList<std::shared_ptr<ParticipantDeviceModel>> mList;
+	CallModel * mCallModel = nullptr;
 	
 };
 

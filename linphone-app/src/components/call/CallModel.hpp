@@ -112,7 +112,7 @@ public:
 	
 	ContactModel *getContactModel() const;
 	ChatRoomModel * getChatRoomModel() const;
-	std::shared_ptr<ConferenceModel> getConferenceModel() const;
+	std::shared_ptr<ConferenceModel> getConferenceModel();
 	
 	bool isInConference () const {
 		return mIsInConference;

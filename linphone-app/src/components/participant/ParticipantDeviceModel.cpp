@@ -18,47 +18,57 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QQmlApplicationEngine>
-
-#include "app/App.hpp"
-
 #include "ParticipantDeviceModel.hpp"
-#include "utils/Utils.hpp"
 
+#include <QQmlApplicationEngine>
+#include "app/App.hpp"
+#include "utils/Utils.hpp"
 #include "components/Components.hpp"
 
 // =============================================================================
 
-using namespace std;
-
-ParticipantDeviceModel::ParticipantDeviceModel (shared_ptr<linphone::ParticipantDevice> device, QObject *parent) : QObject(parent) {
-  mParticipantDevice = device;
+ParticipantDeviceModel::ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe, QObject *parent) : QObject(parent) {
+	mIsMe = isMe;
+	mParticipantDevice = device;
 }
 
 // -----------------------------------------------------------------------------
 
 QString ParticipantDeviceModel::getName() const{
-	return Utils::coreStringToAppString(mParticipantDevice->getName());
+	return mParticipantDevice ? Utils::coreStringToAppString(mParticipantDevice->getName()) : "NoName";
 }
 
 int ParticipantDeviceModel::getSecurityLevel() const{
-	int security =  (int)mParticipantDevice->getSecurityLevel();
-	return security;
+	if( mParticipantDevice) {
+		int security =  (int)mParticipantDevice->getSecurityLevel();
+		return security;
+	}else
+		return 0;
 }
 
 time_t ParticipantDeviceModel::getTimeOfJoining() const{
-	return mParticipantDevice->getTimeOfJoining();
+	return mParticipantDevice ? mParticipantDevice->getTimeOfJoining() : 0;
 }
 
 QString ParticipantDeviceModel::getAddress() const{
-    return Utils::coreStringToAppString(mParticipantDevice->getAddress()->asStringUriOnly());
+    return mParticipantDevice ? Utils::coreStringToAppString(mParticipantDevice->getAddress()->asStringUriOnly())
+		: "";
 }
 
 std::shared_ptr<linphone::ParticipantDevice>  ParticipantDeviceModel::getDevice(){
 	return mParticipantDevice;
 }
 
+bool ParticipantDeviceModel::isVideoEnabled() const{
+	return mParticipantDevice && (mParticipantDevice->getVideoDirection() == linphone::MediaDirection::SendRecv 
+		|| mParticipantDevice->getVideoDirection() == linphone::MediaDirection::SendOnly);
+}
+
+bool ParticipantDeviceModel::isMe() const{
+	return mIsMe;
+}
+
 void ParticipantDeviceModel::onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device){
-	if(!device || mParticipantDevice->getAddress()->weakEqual(device))
+	if(!device || mParticipantDevice && mParticipantDevice->getAddress()->weakEqual(device))
 		emit securityLevelChanged();
 }

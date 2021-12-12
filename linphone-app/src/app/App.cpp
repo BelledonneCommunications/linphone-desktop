@@ -646,6 +646,7 @@ void App::registerTypes () {
 	registerType<ImageProxyModel>("ImageProxyModel");
 	registerType<TimelineProxyModel>("TimelineProxyModel");
 	registerType<ParticipantProxyModel>("ParticipantProxyModel");
+	registerType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
 	registerType<SoundPlayer>("SoundPlayer");
 	registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
 	
@@ -685,7 +686,6 @@ void App::registerTypes () {
 	registerUncreatableType<ParticipantListModel>("ParticipantListModel");
 	registerUncreatableType<ParticipantDeviceModel>("ParticipantDeviceModel");
 	registerUncreatableType<ParticipantDeviceListModel>("ParticipantDeviceListModel");
-	registerUncreatableType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
 	registerUncreatableType<ParticipantImdnStateModel>("ParticipantImdnStateModel");
 	registerUncreatableType<ParticipantImdnStateListModel>("ParticipantImdnStateListModel");
 	

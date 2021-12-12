@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
+import QtQml.Models 2.12
 
 import Common 1.0
 import Common.Styles 1.0
@@ -8,10 +9,13 @@ import Common.Styles 1.0
 // =============================================================================
 ColumnLayout{
 	id: mainLayout
-	property Component delegate
+	property alias delegateModel: grid.model
+	property alias cellHeight: grid.cellHeight
+	property alias cellWidth: grid.cellWidth
 	
 	function appendItem(item){
-		grid.model.append(item)
+		console.log("Adding "+item)
+		mainLayout.delegateModel.model.append(item)
 	/*
 		if( bottomRowList.model.count < grid.columns - 1)
 			bottomRowList.model.append(item)
@@ -30,12 +34,13 @@ ColumnLayout{
 	}
 	
 	function remove(index){
-		if(grid.model.count > index)
-			grid.model.remove( index, 1)
+		console.log("Removing at "+index)
+		if(mainLayout.delegateModel.model.count > index)
+			mainLayout.delegateModel.model.remove( index, 1)
 	}
 	
 	function get(index){
-		return grid.model.get(index)
+		return mainLayout.delegateModel.model.get(index)
 	}
 	
 	function tryToAdd(item){
@@ -44,6 +49,13 @@ ColumnLayout{
 			return true
 		}else
 			return false
+	}
+	
+	function clear(){
+		if(mainLayout.delegateModel.model.clear) {
+			mainLayout.delegateModel.model.clear()
+			bufferModels.clear()
+		}
 	}
 	
 	
@@ -93,6 +105,8 @@ ColumnLayout{
 		Layout.alignment: Qt.AlignCenter
 		
 		interactive: false
+		model: DelegateModel{}
+		/*
 		model: ListModel{}
 		//delegate: internalComponent
 		delegate: Component{
@@ -102,7 +116,7 @@ ColumnLayout{
 				width: grid.cellWidth-5
 				sourceComponent: mainLayout.delegate
 			}
-		}
+		}*/
 		
 //-------------------				ANIMATIONS
 		property Transition defaultTransition: Transition {

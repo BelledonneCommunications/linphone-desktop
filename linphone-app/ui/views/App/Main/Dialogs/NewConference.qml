@@ -87,7 +87,7 @@ DialogPlus {
 			onClicked: exit(0)
 		},
 		TextButtonB {
-			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
+			//enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
 			//: 'Launch' : Start button
 			text: qsTr('startButton')
 			capitalization: Font.AllUppercase

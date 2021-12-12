@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -25,6 +25,7 @@
 
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/participant/ParticipantDeviceModel.hpp"
 
 #include "Camera.hpp"
 
@@ -80,15 +81,28 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
 		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 	}else{
-		auto call = mCallModel->getCall();
-		if(call){
-			call->setNativeVideoWindowId(NULL);// Reset
-			renderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
-			call->setNativeVideoWindowId(renderer);
-		}else{
-			CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
-			renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
-			CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
+		if(mCallModel){
+			auto call = mCallModel->getCall();
+			if(call){
+				call->setNativeVideoWindowId(NULL);// Reset
+				renderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
+				call->setNativeVideoWindowId(renderer);
+			}else{
+				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
+				renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
+			}
+		}else if( mParticipantDeviceModel){
+			auto participantDevice = mParticipantDeviceModel->getDevice();
+			if(participantDevice){
+				participantDevice->setNativeVideoWindowId(NULL);// Reset
+				renderer = (QQuickFramebufferObject::Renderer *) participantDevice->getNativeVideoWindowId();
+				participantDevice->setNativeVideoWindowId(renderer);
+			}else{
+				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
+				enderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
+			}
 		}
 	}
 	
@@ -106,6 +120,14 @@ CallModel *Camera::getCallModel () const {
 	return mCallModel;
 }
 
+bool Camera::getIsPreview () const {
+	return mIsPreview;
+}
+
+ParticipantDeviceModel * Camera::getParticipantDeviceModel() const{
+	return mParticipantDeviceModel;
+}
+
 void Camera::setCallModel (CallModel *callModel) {
 	if (mCallModel != callModel) {
 		mCallModel = callModel;
@@ -115,15 +137,19 @@ void Camera::setCallModel (CallModel *callModel) {
 	}
 }
 
-bool Camera::getIsPreview () const {
-	return mIsPreview;
-}
-
 void Camera::setIsPreview (bool status) {
 	if (mIsPreview != status) {
 		mIsPreview = status;
 		update();
 		
 		emit isPreviewChanged(status);
+	}
+}
+
+void Camera::setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel){
+if (mParticipantDeviceModel != participantDeviceModel) {
+		mParticipantDeviceModel = participantDeviceModel;
+		update();
+		emit participantDeviceModelChanged(mParticipantDeviceModel);
 	}
 }

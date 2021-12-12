@@ -30,6 +30,7 @@
 #include <QSortFilterProxyModel>
 
 class ParticipantDeviceListModel;
+class ParticipantDeviceModel;
 class ParticipantModel;
 class CallModel;
 
@@ -40,7 +41,9 @@ public:
 	Q_PROPERTY(CallModel * callModel READ getCallModel WRITE setCallModel NOTIFY callModelChanged)
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
 	
+	Q_INVOKABLE ParticipantDeviceModel* getAt(int row);
 	CallModel * getCallModel() const;
+	
 	
 	void setCallModel(CallModel * callModel);	
 	void setParticipant(ParticipantModel * participant);

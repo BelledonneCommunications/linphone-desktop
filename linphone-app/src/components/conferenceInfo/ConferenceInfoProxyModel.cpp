@@ -30,9 +30,21 @@ using namespace std;
 
 ConferenceInfoProxyModel::ConferenceInfoProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
 	setSourceModel(new ConferenceInfoListModel());
-	sort(0);
+	sort(0, Qt::DescendingOrder);
 }
 
 bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
 	return true;
+}
+
+bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+  const ConferenceInfoModel *deviceA = sourceModel()->data(left).value<ConferenceInfoModel *>();
+  const ConferenceInfoModel *deviceB = sourceModel()->data(right).value<ConferenceInfoModel *>();
+
+  return deviceA->getDateTime() < deviceB->getDateTime();
+}
+
+QVariant ConferenceInfoProxyModel::getAt(int row){
+	QModelIndex sourceIndex = mapToSource(this->index(row, 0));
+	return sourceModel()->data(sourceIndex);
 }
