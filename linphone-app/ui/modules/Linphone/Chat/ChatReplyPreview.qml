@@ -86,7 +86,7 @@ Rectangle{
 				anchors.left: parent.left
 				anchors.right: parent.right
 				model: ContentProxyModel{
-					chatMessageModel: replyPreviewBlock.chatRoomModel.reply
+					chatMessageModel: replyPreviewBlock.chatRoomModel && replyPreviewBlock.chatRoomModel.reply
 				}
 				height: contentHeight
 				

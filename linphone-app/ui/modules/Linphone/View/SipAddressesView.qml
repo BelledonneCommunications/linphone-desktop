@@ -124,12 +124,14 @@ ScrollableListView {
 									
 									visible: modelData.visible
 									
-									onClicked: modelData.handler({
+									onClicked: sipAddressesView.actions[index].handler({	// Do not use modelData on functions : Qt bug
 																	 sipAddress: sipAddressesView.interpretableSipAddress
 																 })
 									Icon{
 										visible: modelData.secure>0 && 
-												 (modelData.secureIconVisibleHandler ? modelData.secureIconVisibleHandler({ sipAddress : sipAddressesView.interpretableSipAddress}) : true)
+							 										// Do not use modelData on functions : Qt bug
+												 (sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({ sipAddress : sipAddressesView.interpretableSipAddress}) : true)
+
 										icon: 'secure_on'
 										iconSize:15
 										anchors.right:parent.right
@@ -285,12 +287,15 @@ ScrollableListView {
 							colorSet: modelData.colorSet
 							tooltipText:modelData.tooltipText?modelData.tooltipText:''
 							visible: modelData.visible
-							onClicked: {
-								modelData.handler(sipAddressEntry.entry)
+							onClicked: {// Do not use modelData on functions : Qt bug
+								sipAddressesView.actions[index].handler(sipAddressEntry.entry)
+
 							}
 							Icon{
 								visible: modelData.secure>0 && 
-										 (modelData.secureIconVisibleHandler ? modelData.secureIconVisibleHandler(sipAddressEntry.entry) : true)
+								// Do not use modelData on functions : Qt bug
+										 (sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler(sipAddressEntry.entry) : true)
+
 								icon: 'secure_on'
 								iconSize:15
 								anchors.right:parent.right

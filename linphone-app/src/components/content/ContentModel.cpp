@@ -201,8 +201,7 @@ void ContentModel::downloadFile(){
 			break;
 			
 		default:
-			qWarning() << QStringLiteral("Unable to download file of entry %1. It was not uploaded.").arg(mChatMessageModel->getState());
-			return;
+			qWarning() << QStringLiteral("Wrong message state when requesting downloading, state=%1.").arg(mChatMessageModel->getState());
 	}  
 	bool soFarSoGood;
 	QString filename = getName();//mFileTransfertContent->getName();
