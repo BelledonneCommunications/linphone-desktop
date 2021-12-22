@@ -97,6 +97,7 @@ Item {
     verticalAlignment: TextInput.AlignVCenter
 
     Keys.onEscapePressed: focus = false
+    Keys.onEnterPressed: focus = false
     Keys.onReturnPressed: focus = false
 
     onEditingFinished: {

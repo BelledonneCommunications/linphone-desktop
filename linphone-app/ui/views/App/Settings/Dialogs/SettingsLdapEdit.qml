@@ -54,6 +54,7 @@ DialogPlus {
 							placeholderText : (serverUrl.text?serverUrl.text:serverUrl.placeholderText)
 							text:ldapData.displayName
 							onTextChanged: ldapData.displayName = text
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							TooltipArea{
 								text : qsTr('displayNameTooltip')//'The display name of the server to be shown in the list'
@@ -76,6 +77,7 @@ DialogPlus {
 							placeholderText :"Server"
 							text:ldapData.server
 							onTextChanged: ldapData.server = text
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							error : ldapData.serverFieldError
 							TooltipArea{

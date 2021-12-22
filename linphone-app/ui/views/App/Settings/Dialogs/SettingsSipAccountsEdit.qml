@@ -64,6 +64,7 @@ DialogPlus {
 							error: dialog._sipAddressOk ? '' : qsTr('invalidSipAddress')
 							
 							onTextChanged: Logic.handleSipAddressChanged(text)
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
 					}
@@ -79,6 +80,7 @@ DialogPlus {
 							error: dialog._serverAddressOk ? '' : qsTr('invalidServerAddress')
 							onActiveFocusChanged: if(!activeFocus && dialog._serverAddressOk) Logic.handleTransportChanged(transport.model[transport.currentIndex])
 							onTextChanged: Logic.handleServerAddressChanged(text)
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
 					}
@@ -90,6 +92,7 @@ DialogPlus {
 						
 						NumericField {
 							id: registrationDuration
+							Keys.onEnterPressed:  route.forceActiveFocus()
 							Keys.onReturnPressed:  route.forceActiveFocus()
 						}
 					}
@@ -120,6 +123,7 @@ DialogPlus {
 							error: dialog._routeOk ? '' : qsTr('invalidRoute')
 							
 							onTextChanged: Logic.handleRouteChanged(text)
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
 					}
@@ -136,6 +140,7 @@ DialogPlus {
 							error: dialog._conferenceUriOk ? '' : qsTr("invalidConferenceURI")
 							
 							onTextChanged: Logic.handleConferenceUriChanged(text)
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
 					}
@@ -147,6 +152,7 @@ DialogPlus {
 						
 						TextField {
 							id: contactParams
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
 					}
@@ -161,6 +167,7 @@ DialogPlus {
 							
 							maxValue: 5
 							minValue: 1
+							Keys.onEnterPressed:  focus=false
 							Keys.onReturnPressed:  focus=false
 						}
 					}
@@ -230,6 +237,7 @@ DialogPlus {
 							placeholderText: 'stun.example.net'
 							
 							readOnly: !iceEnabled.checked
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
 					}
@@ -255,6 +263,7 @@ DialogPlus {
 							id: turnUser
 							
 							readOnly: !turnEnabled.checked || !turnEnabled.enabled
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
 					}

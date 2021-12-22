@@ -70,6 +70,7 @@ Item {
     width: parent.width
 
     // Workaround to supports empty string.
+    Keys.onEnterPressed: editingFinished()
     Keys.onReturnPressed: editingFinished()
     onActiveFocusChanged: !activeFocus && editingFinished()
 

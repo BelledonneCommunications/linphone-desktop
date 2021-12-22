@@ -80,10 +80,17 @@ Item {
 			readOnly: !searchBox.enabled
 			width: parent.width
 			
-			Keys.onEscapePressed: searchBox.closeMenu()
-			Keys.onReturnPressed: {
+			function enterButtonPressed(){
 				searchBox.enterPressed()
 				searchBox.closeMenu()
+			}
+			
+			Keys.onEscapePressed: searchBox.closeMenu()
+			Keys.onEnterPressed: {
+				enterButtonPressed()
+			}
+			Keys.onReturnPressed: {
+				enterButtonPressed()
 			}
 			onActiveFocusChanged: {
 				if (activeFocus && !_isOpen) {
