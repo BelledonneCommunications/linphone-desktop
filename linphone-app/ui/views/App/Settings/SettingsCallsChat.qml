@@ -254,6 +254,20 @@ TabContainer {
 			
 			FormLine {
 				FormGroup {
+					//: 'Enable notifications': settings label for enabling notifications.
+					label: qsTr('chatNotificationsEnabledLabel')
+					
+					Switch {
+						id: enableChatNotifications
+						
+						checked: SettingsModel.chatNotificationsEnabled
+						
+						onClicked: SettingsModel.chatNotificationsEnabled = !checked
+					}
+				}
+			}
+			FormLine {
+				FormGroup {
 					label: qsTr('chatNotificationSoundEnabledLabel')
 					
 					Switch {

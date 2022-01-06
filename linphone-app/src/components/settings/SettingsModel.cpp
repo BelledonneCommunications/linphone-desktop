@@ -689,6 +689,17 @@ void SettingsModel::setConferenceEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool SettingsModel::getChatNotificationsEnabled () const {
+	return !!mConfig->getInt(UiSection, "chat_notifications_enabled", 1);
+}
+
+void SettingsModel::setChatNotificationsEnabled (bool status) {
+	mConfig->setInt(UiSection, "chat_notifications_enabled", status);
+	emit chatNotificationsEnabledChanged(status);
+}
+
+// -----------------------------------------------------------------------------
+
 bool SettingsModel::getChatNotificationSoundEnabled () const {
 	return !!mConfig->getInt(UiSection, "chat_sound_notification_enabled", 1);
 }

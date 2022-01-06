@@ -1925,6 +1925,11 @@
         <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>chatNotificationsEnabledLabel</source>
+        <extracomment>&apos;Enable notifications&apos;: settings label for enabling notifications.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>

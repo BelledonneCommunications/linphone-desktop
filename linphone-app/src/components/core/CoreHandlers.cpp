@@ -207,11 +207,11 @@ void CoreHandlers::onMessageReceived (
 		
 		// 2. Notify with Notification popup.
 		const App *app = App::getInstance();
-		if (!app->hasFocus() || !chatRoom->getLocalAddress()->weakEqual(coreManager->getAccountSettingsModel()->getUsedSipAddress()))
+		if (coreManager->getSettingsModel()->getChatNotificationsEnabled() && (!app->hasFocus() || !chatRoom->getLocalAddress()->weakEqual(coreManager->getAccountSettingsModel()->getUsedSipAddress())))
 			app->getNotifier()->notifyReceivedMessage(message);
 		
 		// 3. Notify with sound.
-		if (!settingsModel->getChatNotificationSoundEnabled())
+		if (!coreManager->getSettingsModel()->getChatNotificationsEnabled() || !settingsModel->getChatNotificationSoundEnabled())
 			return;
 		
 		if (

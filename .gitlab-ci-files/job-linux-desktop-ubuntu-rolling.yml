@@ -88,7 +88,7 @@ job-ubuntu-rolling-ninja-clang-novideo:
 #       - $NIGHTLY_MASTER
 #       - $DEPLOY_LINUX
 #  variables:
-#    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES
+#    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON
 #  extends: job-ubuntu-rolling-makefile-clang
 #  artifacts:
 #    paths:

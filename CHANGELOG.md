@@ -11,11 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	* messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record and play, multi contents.
 	
 - Add a feedback on fetching remote provisioning when it failed.
+- Option to enable message notifications.
+- Based on Linphone SDK 5.1
 
 ### Fixed
 - Simplify filtering timelines on 3 kind of search : security level, simple/group chats, ephemerals.
 - Fix systemTrayIcon that could be cloned on each restart.
 - Fix errors on Action-Buttons on restart.
+- Enable G729 on public builds.
+- Take account of return key on Numpad
 
 ## 4.3.2
 
@@ -25,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove constraints on actions (call/chat) that were based on friends capabilities.
 - Unblock secure group chat activation.
 - Unselect current contact if history call view is displayed.
-- Show chat actions in history view
+- Show chat actions in history view.
 - Group chat creation : If no groupchat capabilities has been found in recent contacts, ignore test on capability and display them.
 
 ## 4.3.1 - 2021-11-04

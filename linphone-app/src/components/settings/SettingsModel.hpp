@@ -115,6 +115,8 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged)
 	
+	
+	Q_PROPERTY(bool chatNotificationsEnabled READ getChatNotificationsEnabled WRITE setChatNotificationsEnabled NOTIFY chatNotificationsEnabledChanged)
 	Q_PROPERTY(bool chatNotificationSoundEnabled READ getChatNotificationSoundEnabled WRITE setChatNotificationSoundEnabled NOTIFY chatNotificationSoundEnabledChanged)
 	Q_PROPERTY(QString chatNotificationSoundPath READ getChatNotificationSoundPath WRITE setChatNotificationSoundPath NOTIFY chatNotificationSoundPathChanged)
 	
@@ -357,6 +359,9 @@ public:
 	
 	bool getConferenceEnabled () const;
 	void setConferenceEnabled (bool status);
+	
+	bool getChatNotificationsEnabled () const;
+	void setChatNotificationsEnabled (bool status);
 	
 	bool getChatNotificationSoundEnabled () const;
 	void setChatNotificationSoundEnabled (bool status);
@@ -604,6 +609,7 @@ signals:
 	
 	void conferenceEnabledChanged (bool status);
 	
+	void chatNotificationsEnabledChanged (bool status);
 	void chatNotificationSoundEnabledChanged (bool status);
 	void chatNotificationSoundPathChanged (const QString &path);
 	
