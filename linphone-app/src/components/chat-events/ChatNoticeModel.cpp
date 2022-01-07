@@ -34,12 +34,29 @@ ChatNoticeModel::ChatNoticeModel ( std::shared_ptr<linphone::EventLog> eventLog,
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(eventLog->getCreationTime() * 1000);
 }
 
+ChatNoticeModel::ChatNoticeModel ( NoticeType noticeType, const QDateTime& timestamp, const QString& txt, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::NoticeEntry, parent) {
+	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
+	mEventLogType = LinphoneEnums::EventLogType::EventLogTypeNone;
+	setStatus(noticeType);
+	setName(txt);
+	mTimestamp = timestamp;
+}
+
 ChatNoticeModel::~ChatNoticeModel(){
 }
 
 std::shared_ptr<ChatNoticeModel> ChatNoticeModel::create(std::shared_ptr<linphone::EventLog> eventLog, QObject * parent){
 	auto model = std::make_shared<ChatNoticeModel>(eventLog, parent);
 	if(model && model->update()){
+		model->mSelf = model;
+		return model;
+	}else
+		return nullptr;
+}
+
+std::shared_ptr<ChatNoticeModel> ChatNoticeModel::create(NoticeType noticeType, const QDateTime& timestamp, const QString& txt, QObject * parent){
+	auto model = std::make_shared<ChatNoticeModel>(noticeType, timestamp, txt, parent);
+	if(model ){
 		model->mSelf = model;
 		return model;
 	}else
@@ -53,6 +70,8 @@ std::shared_ptr<linphone::EventLog> ChatNoticeModel::getEventLog(){
 //---------------------------------------------------------------------------------------------
 bool ChatNoticeModel::update(){
 	bool handledEvent = true;
+	if(!mEventLog)
+		return false;
 	auto participantAddress = mEventLog->getParticipantAddress();
 	
 	switch(mEventLog->getType()){
@@ -158,5 +177,6 @@ void ChatNoticeModel::setEventLogType(const LinphoneEnums::EventLogType& data){
 }
 
 void ChatNoticeModel::deleteEvent(){
-	mEventLog->deleteFromDatabase();
+	if(mEventLog)
+		mEventLog->deleteFromDatabase();
 }

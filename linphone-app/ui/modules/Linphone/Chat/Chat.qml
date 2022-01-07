@@ -296,13 +296,19 @@ Rectangle {
 				}
 			}
 			footer: Item{
+				implicitHeight: composersItem.implicitHeight
+				width: parent.width
 				Text {
-					property var composers : container.proxyModel.composers
+					id: composersItem
+					property var composers : container.proxyModel.chatRoomModel.composers
+					onComposersChanged: console.log(composers)
+					onVisibleChanged: console.log(visible)
 					color: ChatStyle.composingText.color
 					font.pointSize: ChatStyle.composingText.pointSize
 					height: visible ? undefined : 0
 					leftPadding: ChatStyle.composingText.leftPadding
-					visible: composers.length > 0 && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
+					visible: composers.length > 0 && ( (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled)
+														 || (proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled) )
 					wrapMode: Text.Wrap
 					//: '%1 is typing...' indicate that someone is composing in chat
 					text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
@@ -315,7 +321,7 @@ Rectangle {
 			}
 			Rectangle{
 				id: messageBlock
-				height: 32
+				height: opacity > 0 ? 32 : 0
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.bottom: parent.bottom
@@ -375,6 +381,31 @@ Rectangle {
 					}
 				]
 			}
+			
+			ActionButton{
+				anchors.bottom: messageBlock.top
+				anchors.bottomMargin: 10
+				anchors.right: parent.right
+				anchors.rightMargin: 40
+				visible: chat.isIndexAfter(chat.count-1)
+				onVisibleChanged: container.proxyModel.markAsReadEnabled = !visible
+				
+				isCustom: true
+				backgroundRadius: width/2
+				colorSet: ChatStyle.gotToBottom
+				onClicked: {
+						chat.bindToEnd = true
+					}
+				MessageCounter{
+					anchors.left: parent.right
+					anchors.bottom: parent.top
+					anchors.bottomMargin: -5
+					anchors.leftMargin: -5
+					count: container.proxyModel.chatRoomModel.unreadMessagesCount
+				}
+			}
+			
+			
 		}
 		
 		// -------------------------------------------------------------------------

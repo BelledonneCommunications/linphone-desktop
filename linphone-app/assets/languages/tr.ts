@@ -1558,6 +1558,13 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message numerus="yes">
+        <source>unreadMessageNotice</source>
+        <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>Notifier</name>

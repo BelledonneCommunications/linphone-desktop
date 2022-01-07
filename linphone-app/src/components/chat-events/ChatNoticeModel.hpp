@@ -32,16 +32,19 @@ class ChatNoticeModel : public ChatEvent {
 	
 public:
 	enum NoticeType {
-		NoticeMessage,
-		NoticeError
+		NoticeMessage,	// This is a Linphone message
+		NoticeError,	// This is a Linphone error
+		NoticeUnreadMessages
 	};
 	Q_ENUM(NoticeType);
 	
 	static std::shared_ptr<ChatNoticeModel> create(std::shared_ptr<linphone::EventLog> eventLog, QObject * parent = nullptr);// Call it instead constructor
+	static std::shared_ptr<ChatNoticeModel> create(NoticeType noticeType, const QDateTime& timestamp,const QString& txt, QObject * parent = nullptr);
 	ChatNoticeModel (std::shared_ptr<linphone::EventLog> eventLog, QObject * parent = nullptr);
+	ChatNoticeModel (NoticeType noticeType, const QDateTime& timestamp, const QString& txt, QObject * parent = nullptr);
 	virtual ~ChatNoticeModel();
 	
-	Q_PROPERTY(ChatRoomModel::EntryType type MEMBER mType CONSTANT)
+	Q_PROPERTY(ChatRoomModel::EntryType type MEMBER mType CONSTANT)// NoticeEntry
 	Q_PROPERTY(QDateTime timestamp MEMBER mTimestamp CONSTANT)
 	Q_PROPERTY(QString name MEMBER mName WRITE setName NOTIFY nameChanged)
 	Q_PROPERTY(NoticeType status MEMBER mStatus WRITE setStatus NOTIFY statusChanged)

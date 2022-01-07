@@ -47,6 +47,7 @@ class ChatRoomProxyModel : public QSortFilterProxyModel {
 	Q_PROPERTY(QString cachedText READ getCachedText)
 	
 	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
+	Q_PROPERTY(bool markAsReadEnabled READ markAsReadEnabled WRITE enableMarkAsRead NOTIFY markAsReadEnabledChanged)// Focus is at end of the list. Used to reset message count if not at end
 	
 public:
 	ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
@@ -78,6 +79,7 @@ signals:
 	void fullPeerAddressChanged (const QString &fullPeerAddress);
 	void fullLocalAddressChanged (const QString &fullLocalAddress);
 	bool isRemoteComposingChanged ();
+	void markAsReadEnabledChanged();
 	//bool isSecureChanged(bool secure);
 	
 	void chatRoomModelChanged();
@@ -104,6 +106,9 @@ private:
 	QString getFullLocalAddress () const;
 	void setFullLocalAddress (const QString &localAddress);
 	
+	bool markAsReadEnabled() const;
+	void enableMarkAsRead(const bool& enable);
+	
 	//bool isSecure () const;
 	//void setIsSecure (const int &secure);
 	
@@ -129,6 +134,7 @@ private:
 	QString mFullPeerAddress;
 	QString mFullLocalAddress;
 	static QString gCachedText;
+	bool mMarkAsReadEnabled;
 	
 	QString mFilterText;
 	
