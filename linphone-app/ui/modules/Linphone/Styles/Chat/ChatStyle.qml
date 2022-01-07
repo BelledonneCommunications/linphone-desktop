@@ -26,6 +26,18 @@ QtObject {
 		}
 	}
 	
+	property QtObject gotToBottom: QtObject{
+		property string name: 'goToBottom'
+		property string icon: 'move_to_bottom_custom'
+		property int iconSize: 30
+		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 's_n_b_bg').color
+		property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_h', icon, 's_h_b_bg').color
+		property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_p', icon, 's_p_b_bg').color
+		property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_n', icon, 's_n_b_fg').color
+		property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 's_h_b_fg').color
+		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 's_p_b_fg').color
+	}
+	
 	property QtObject sendArea: QtObject {
 		property int height: 80
 		

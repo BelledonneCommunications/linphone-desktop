@@ -76,6 +76,7 @@ private:
 
 ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
 	setSourceModel(new ChatRoomModelFilter(this));
+	mMarkAsReadEnabled = true;
 	//mIsSecure = false;
 	
 	App *app = App::getInstance();
@@ -240,6 +241,14 @@ void ChatRoomProxyModel::setFullLocalAddress (const QString &localAddress) {
 	//reload();
 }
 
+bool ChatRoomProxyModel::markAsReadEnabled() const{
+	return mChatRoomModel->markAsReadEnabled();
+}
+
+void ChatRoomProxyModel::enableMarkAsRead(const bool& enable){
+	mChatRoomModel->enableMarkAsRead(enable);
+}
+
 QList<QString> ChatRoomProxyModel::getComposers() const{
 	return (mChatRoomModel?mChatRoomModel->getComposers():QList<QString>());
 }
@@ -266,6 +275,7 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		QObject::disconnect(ChatRoomModel, &ChatRoomModel::isRemoteComposingChanged, this, &ChatRoomProxyModel::handleIsRemoteComposingChanged);
 		QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
 		QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
+		QObject::disconnect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
 	}
 	
 	
@@ -276,7 +286,8 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		ChatRoomModel *ChatRoomModel = mChatRoomModel.get();
 		QObject::connect(ChatRoomModel, &ChatRoomModel::isRemoteComposingChanged, this, &ChatRoomProxyModel::handleIsRemoteComposingChanged);
 		QObject::connect(ChatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
-		QObject::connect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
+		QObject::connect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);		
+		QObject::connect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
 	}
 	
 	static_cast<ChatRoomModelFilter *>(sourceModel())->setSourceModel(mChatRoomModel.get());
@@ -324,7 +335,7 @@ static inline QWindow *getParentWindow (QObject *object) {
 }
 
 void ChatRoomProxyModel::handleIsActiveChanged (QWindow *window) {
-	if (mChatRoomModel && window->isActive() && getParentWindow(this) == window) {
+	if (markAsReadEnabled() && mChatRoomModel && window->isActive() && getParentWindow(this) == window) {
 		auto timeline = CoreManager::getInstance()->getTimelineListModel()->getTimeline(mChatRoomModel->getChatRoom(), false);
 		if(timeline && timeline->mSelected){
 			mChatRoomModel->resetMessageCount();

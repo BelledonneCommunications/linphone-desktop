@@ -205,6 +205,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	QElapsedTimer timer;
 	timer.start();
 	CoreHandlers *coreHandlers = mCoreHandlers.get();
+	QObject::connect(this, &ChatRoomModel::messageSent, this, &ChatRoomModel::resetMessageCount);
 	//QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatRoomModel::handleMessageReceived);
 	QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &ChatRoomModel::handleCallCreated);
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatRoomModel::handleCallStateChanged);
@@ -482,6 +483,10 @@ bool ChatRoomModel::haveEncryption() const{
 	return mChatRoom && mChatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None;
 }
 
+bool ChatRoomModel::markAsReadEnabled() const{
+	return mMarkAsReadEnabled;
+}
+
 bool ChatRoomModel::isSecure() const{
 	return mChatRoom && (mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted
 			|| mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Safe);
@@ -514,11 +519,11 @@ bool ChatRoomModel::isCurrentProxy() const{
 bool ChatRoomModel::canHandleParticipants() const{
 	return mChatRoom->canHandleParticipants();
 }
-/*
+
 bool ChatRoomModel::getIsRemoteComposing () const {
-	return mIsRemoteComposing;
+	return mComposers.size() > 0;
 }
-*/
+
 
 std::shared_ptr<linphone::ChatRoom> ChatRoomModel::getChatRoom(){
 	return mChatRoom;
@@ -600,6 +605,13 @@ void ChatRoomModel::setEphemeralLifetime(long lifetime){
 	if(getEphemeralLifetime() != lifetime){
 		mChatRoom->setEphemeralLifetime(lifetime);
 		emit ephemeralLifetimeChanged();
+	}
+}
+
+void ChatRoomModel::enableMarkAsRead(const bool& enable){
+	if( mMarkAsReadEnabled != enable){
+		mMarkAsReadEnabled = enable;
+		emit markAsReadEnabledChanged();
 	}
 }
 
@@ -738,9 +750,15 @@ void ChatRoomModel::compose () {
 }
 
 void ChatRoomModel::resetMessageCount () {
-	if(mChatRoom && !mDeleteChatRoom){
+	if(mChatRoom && !mDeleteChatRoom && markAsReadEnabled()){
 		if (mChatRoom->getUnreadMessagesCount() > 0){
 			mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
+		}
+		if(!mUnreadMessageNotice.first)
+			mUnreadMessageNotice.first = true;
+		else if( mUnreadMessageNotice.second){
+			removeEntry(mUnreadMessageNotice.second.get());
+			mUnreadMessageNotice.second = nullptr;
 		}
 		setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 		setMissedCallsCount(0);
@@ -831,9 +849,14 @@ void ChatRoomModel::initEntries(){
 // On call : reinitialize all entries. This allow to free up memory
 	QList<std::shared_ptr<ChatEvent> > entries;
 	QList<EntrySorterHelper> prepareEntries;
+	QDateTime lastUnreadMessage = QDateTime::currentDateTime();
 // Get chat messages
-	for (auto &message : mChatRoom->getHistory(mLastEntriesStep))
+	for (auto &message : mChatRoom->getHistory(mLastEntriesStep)) {
 		prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
+		if( !message->isRead()) {
+			lastUnreadMessage = min(lastUnreadMessage, QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000));
+		}
+	}
 // Get events
 	for(auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesStep))
 		prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
@@ -851,6 +874,12 @@ void ChatRoomModel::initEntries(){
 		}
 	}
 	EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
+	
+	if( mChatRoom->getUnreadMessagesCount() > 0) {
+		mUnreadMessageNotice.first = false;
+		mUnreadMessageNotice.second = ChatNoticeModel::create(ChatNoticeModel::NoticeType::NoticeUnreadMessages, lastUnreadMessage, QString::number(mChatRoom->getUnreadMessagesCount()));
+		entries.push_front(mUnreadMessageNotice.second);
+	}
 	
 	mIsInitialized = true;
 	if(entries.size() >0){
@@ -914,7 +943,7 @@ int ChatRoomModel::loadMoreEntries(){
 		bool haveEntry = false;
 		while(!haveEntry && itEntries != mEntries.end()){
 			auto entry = dynamic_cast<ChatNoticeModel*>(itEntries->get());
-			haveEntry = (entry && entry->getEventLog() == eventLog);
+			haveEntry = (entry && entry->getEventLog() && entry->getEventLog() == eventLog);
 			++itEntries;
 		}
 		if(!haveEntry)
@@ -1057,6 +1086,12 @@ void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLo
 		}
 	}
 }
+
+// -----------------------------------------------------------------------------
+/*
+void ChatRoomModel::removeUnreadMessagesNotice() {
+	
+}*/
 // -----------------------------------------------------------------------------
 
 void ChatRoomModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) {
