@@ -216,7 +216,7 @@ elseif (APPLE)
   if (NOT DEPLOYQT_PROGRAM)
       message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
   endif()
-  install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR})")
+  install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip )")
   
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
    install(CODE "file(GLOB FRAMEWORKS_NAMES \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Frameworks/*\")
