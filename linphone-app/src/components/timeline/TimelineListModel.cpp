@@ -275,7 +275,7 @@ void TimelineListModel::updateTimelines () {
 	// Add new
 	for(auto dbChatRoom : allChatRooms){
 		auto haveTimeline = getTimeline(dbChatRoom, false);
-		if(!haveTimeline){// Create a new Timeline if needed
+		if(!haveTimeline && dbChatRoom){// Create a new Timeline if needed
 			
 			std::shared_ptr<TimelineModel> model = TimelineModel::create(dbChatRoom);
 			if( model){
