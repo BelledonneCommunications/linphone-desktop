@@ -19,7 +19,7 @@ RowLayout{
 		
 		if(type == ChatNoticeModel.NoticeUnreadMessages)
 			//: '%1 unread messages' : Little message to show on an event where unread messages begin.
-			return qsTr('unreadMessageNotice', '', $chatEntry.name)
+			return qsTr('unreadMessageNotice', '', parseInt($chatEntry.name))
 		
 		if (status == LinphoneEnums.EventLogTypeConferenceCreated) {
 			//: 'You have joined the group' : Little message to show on the event when the user join the chat group.
