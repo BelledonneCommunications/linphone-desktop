@@ -512,6 +512,14 @@ URL du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>ChatForwardMessage</name>
+    <message>
+        <source>Forwarded</source>
+        <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatMenu</name>
     <message>
         <source>menuCopyAll</source>
