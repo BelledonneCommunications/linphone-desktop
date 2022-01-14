@@ -50,9 +50,10 @@ Item {
 				id: headerText
 				height: icon.height
 				verticalAlignment: Qt.AlignVCenter
-				property string forwardInfo: mainChatMessageModel ? mainChatMessageModel.getForwardInfoDisplayName : ''
+				// Anonymized forward : this is wanted.
+				//property string forwardInfo: mainChatMessageModel ? mainChatMessageModel.getForwardInfoDisplayName : ''
 				//: 'Forwarded' : Header on a message that contains a forward.
-				text: 'Forwarded' + (forwardInfo ? ' : ' +forwardInfo : '')
+				text: qsTr('Forwarded')// + (forwardInfo ? ' : ' +forwardInfo : '')
 				font.family: mainItem.customFont.family
 				font.pointSize: Units.dp * (mainItem.customFont.pointSize + ChatForwardMessageStyle.header.pointSizeOffset)
 				color: ChatForwardMessageStyle.header.color
