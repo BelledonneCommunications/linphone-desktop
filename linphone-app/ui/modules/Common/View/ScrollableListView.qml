@@ -47,7 +47,9 @@ ListView {
 	contentWidth: width - (vScrollBar.visible?vScrollBar.width:0)
 	spacing: 0
 	synchronousDrag: true
+	onContentHeightChanged: cacheBuffer=view.contentHeight
 	cacheBuffer: height
+	
 	// ---------------------------------------------------------------------------
 	
 	// TODO: Find a solution at this bug =>
