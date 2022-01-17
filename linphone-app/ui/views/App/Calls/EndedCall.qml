@@ -68,7 +68,7 @@ Rectangle {
         image: _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
         username: contactDescription.username
 
-        height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
+        height: Logic.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
         width: height
       }
     }

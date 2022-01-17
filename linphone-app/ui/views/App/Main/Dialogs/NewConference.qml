@@ -17,7 +17,13 @@ import ColorsList 1.0
 
 DialogPlus {
 	id: conferenceManager
-	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
+	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{
+		onConferenceCreated: console.log("Conference has been created.")
+		onInvitationsSent: {
+						console.log("Conference => invitations sent. Check in log for invite states.")
+						exit(1)
+					}
+	}
 	
 	readonly property int minParticipants: 1
 	
@@ -98,6 +104,7 @@ DialogPlus {
 			}
 			
 			onClicked: {
+				conferenceInfoModel.isScheduled = scheduledSwitch.checked
 				if( scheduledSwitch.checked){
 					var startDateTime = new Date()
 					startDateTime.setDate(dateField.getDate())
@@ -110,11 +117,11 @@ DialogPlus {
 				
 				
 				conferenceInfoModel.setParticipants(selectedParticipants.participantListModel)
-				var callsWindow = App.getCallsWindow()
-				App.smartShowWindow(callsWindow)
-				callsWindow.openConference()
-				CallsListModel.createConference(conferenceInfoModel, secureSwitch.checked, getInviteMode(), false )
-				exit(1)
+				//var callsWindow = App.getCallsWindow()
+				//App.smartShowWindow(callsWindow)
+				//callsWindow.openConference()
+				//CallsListModel.createConference(conferenceInfoModel, secureSwitch.checked, getInviteMode(), false )
+				conferenceInfoModel.createConference(secureSwitch.checked, getInviteMode())
 			}
 			TooltipArea{
 				visible: AccountSettingsModel.conferenceURI == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
@@ -205,7 +212,7 @@ DialogPlus {
 							checked: true
 							
 							onClicked: {
-								//checked = !checked
+								checked = !checked
 							}
 							indicatorStyle: SwitchStyle.aux
 						}

@@ -23,6 +23,7 @@
 
 #include <linphone++/linphone.hh>
 #include <QAbstractListModel>
+#include <QDate>
 
 // =============================================================================
 
@@ -38,14 +39,16 @@ public:
 
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
+  ConferenceInfoModel* getAt(const int& index) const;
+  void add(std::shared_ptr<ConferenceInfoModel> conferenceInfoModel);
 
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
   QList<std::shared_ptr<ConferenceInfoModel>> mList;
+  //QMap<QDate, QList<ConferenceInfoModel*>> mMappedList;
 
 };
-
+Q_DECLARE_METATYPE(QList<ConferenceInfoModel*>*)
 #endif

@@ -64,29 +64,36 @@ std::shared_ptr<linphone::Conference> ConferenceModel::getConference()const{
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
 	qWarning() << "onParticipantAdded is not yet implemented.";
+	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
 	qWarning() << "onParticipantRemoved is not yet implemented.";
+	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
 }
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceAdded(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
 }
 void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
 }
 void ConferenceModel::onParticipantDeviceLeft(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceLeft(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceJoined(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceJoined(participantDevice);
 }
-void ConferenceModel::onParticipantDeviceMediaChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device){
-	qWarning() << "onParticipantDeviceMediaChanged is not yet implemented.";
+void ConferenceModel::onParticipantDeviceMediaChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "ConferenceModel::onParticipantDeviceMediaChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << conference->getMe()->getDevices().size();
+	emit participantDeviceMediaChanged(participantDevice);
 }
 void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference> & conference, linphone::Conference::State newState){
-	qWarning() << "onStateChanged is not yet implemented.";
+	emit conferenceStateChanged(newState);
 }
 void ConferenceModel::onSubjectChanged(const std::shared_ptr<linphone::Conference> & conference, const std::string & subject){
 	qWarning() << "onSubjectChanged is not yet implemented.";

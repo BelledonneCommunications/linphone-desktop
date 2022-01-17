@@ -189,7 +189,7 @@ signals:
 	void fullPeerAddressChanged();
 	void transferAddressChanged (const QString &transferAddress);
 	
-private:
+public:
 	void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 	
@@ -255,6 +255,7 @@ private:
 	
 	static QString generateSavedFilename (const QString &from, const QString &to);
 	
+private:
 	bool mIsInConference = false;
 	
 	bool mPausedByRemote = false;

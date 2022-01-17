@@ -420,6 +420,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 			break;
 			
 		case linphone::Call::State::UpdatedByRemote:
+			qWarning() << "UpdatedByRemote :" << (mCall ? mCall->getCurrentParams()->videoEnabled() + QString(" ")+mCall->getRemoteParams()->videoEnabled() : " call NULL");
 			if (mCall && !mCall->getCurrentParams()->videoEnabled() && mCall->getRemoteParams()->videoEnabled()) {
 				mCall->deferUpdate();
 				emit videoRequested();
@@ -663,7 +664,7 @@ bool CallModel::getRemoteVideoEnabled () const {
 bool CallModel::getVideoEnabled () const {
 	if(mCall){
 		shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
-		return params && params->videoEnabled() && getStatus() == CallStatusConnected;
+		return params && params->videoEnabled() && getStatus() == CallStatusConnected && mCall->getState() == linphone::Call::State::StreamsRunning;
 	}else
 		return true;
 }
@@ -795,7 +796,8 @@ void CallModel::setRemoteDisplayName(const std::string& name){
 		auto callLog = mCall->getCallLog();
 		if(name!= "") {
 			auto core = CoreManager::getInstance()->getCore();
-			callLog->setRemoteAddress(Utils::interpretUrl(getFullPeerAddress()));
+			auto address = Utils::interpretUrl(getFullPeerAddress());
+			callLog->setRemoteAddress(address);
 		}
 	}
 	emit fullPeerAddressChanged();

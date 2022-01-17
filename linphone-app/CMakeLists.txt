@@ -133,6 +133,7 @@ set(SOURCES
 	src/components/calls/CallsListModel.cpp
 	src/components/calls/CallsListProxyModel.cpp
 	src/components/camera/Camera.cpp
+	src/components/camera/CameraDummy.cpp
 	src/components/camera/CameraPreview.cpp
 	src/components/chat/ChatModel.cpp
 	src/components/chat-events/ChatCallModel.cpp
@@ -151,7 +152,9 @@ set(SOURCES
 	src/components/conference/ConferenceProxyModel.cpp
 	src/components/conferenceInfo/ConferenceInfoModel.cpp
 	src/components/conferenceInfo/ConferenceInfoListModel.cpp
+	src/components/conferenceInfo/ConferenceInfoMapModel.cpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.cpp
+	src/components/conferenceScheduler/ConferenceSchedulerModel.cpp
 	src/components/contact/ContactModel.cpp
 	src/components/contact/VcardModel.cpp
 	src/components/contacts/ContactsImporterModel.cpp
@@ -248,6 +251,7 @@ set(HEADERS
 	src/components/calls/CallsListModel.hpp
 	src/components/calls/CallsListProxyModel.hpp
 	src/components/camera/Camera.hpp
+	src/components/camera/CameraDummy.hpp
 	src/components/camera/CameraPreview.hpp
 	src/components/chat/ChatModel.hpp
 	src/components/chat-events/ChatCallModel.hpp
@@ -267,7 +271,9 @@ set(HEADERS
 	src/components/conference/ConferenceProxyModel.hpp
 	src/components/conferenceInfo/ConferenceInfoModel.hpp
 	src/components/conferenceInfo/ConferenceInfoListModel.hpp
+	src/components/conferenceInfo/ConferenceInfoMapModel.hpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.hpp
+	src/components/conferenceScheduler/ConferenceSchedulerModel.hpp
 	src/components/contact/ContactModel.hpp
 	src/components/contact/VcardModel.hpp
 	src/components/contacts/ContactsImporterModel.hpp

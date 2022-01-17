@@ -27,7 +27,7 @@ Row {
 	signal copySelectionDone()
 	signal forwardClicked()
 	height: fitHeight
-	visible: contentModel && (contentModel.isFile() || contentModel.isFileTransfer()) && !contentModel.isVoiceRecording()
+	visible: contentModel && !contentModel.isIcalendar() && (contentModel.isFile() || contentModel.isFileTransfer()) && !contentModel.isVoiceRecording()
 	// ---------------------------------------------------------------------------
 	// File message.
 	// ---------------------------------------------------------------------------

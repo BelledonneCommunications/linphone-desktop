@@ -28,6 +28,7 @@
 #include "components/participant/ParticipantDeviceModel.hpp"
 
 #include "Camera.hpp"
+#include "CameraDummy.hpp"
 
 // =============================================================================
 
@@ -36,7 +37,6 @@ using namespace std;
 namespace {
 constexpr int MaxFps = 30;
 }
-
 
 // =============================================================================
 Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
@@ -77,41 +77,53 @@ public:
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
 	if(mIsPreview){
-		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
-		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
-		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
+		renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
+		if(renderer)
+			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
+		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->createNativePreviewWindowId();
+		if(renderer)
+			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 	}else{
+		bool useDefaultWindow = false;
 		if(mCallModel){
 			auto call = mCallModel->getCall();
 			if(call){
-				call->setNativeVideoWindowId(NULL);// Reset
 				renderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
-				call->setNativeVideoWindowId(renderer);
-			}else{
-				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
-				renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
-				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
-			}
+				if(renderer)
+					call->setNativeVideoWindowId(NULL);// Reset
+				renderer = (QQuickFramebufferObject::Renderer *) call->createNativeVideoWindowId();
+				if(renderer)
+					call->setNativeVideoWindowId(renderer);
+			}else
+				useDefaultWindow = true;
 		}else if( mParticipantDeviceModel){
 			auto participantDevice = mParticipantDeviceModel->getDevice();
 			if(participantDevice){
-				participantDevice->setNativeVideoWindowId(NULL);// Reset
-				renderer = (QQuickFramebufferObject::Renderer *) participantDevice->getNativeVideoWindowId();
-				participantDevice->setNativeVideoWindowId(renderer);
-			}else{
+				renderer = (QQuickFramebufferObject::Renderer *)participantDevice->getNativeVideoWindowId();
+				if(renderer)
+					participantDevice->setNativeVideoWindowId(NULL);// Reset
+				renderer = (QQuickFramebufferObject::Renderer *) participantDevice->createNativeVideoWindowId();
+				if(renderer)
+					participantDevice->setNativeVideoWindowId(renderer);
+			}else
+				useDefaultWindow = true;
+		}
+		if(useDefaultWindow){
+			renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+			if(renderer)
 				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
-				enderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+			renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->createNativeVideoWindowId();
+			if(renderer)
 				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
-			}
 		}
 	}
-	
-	if(renderer)
-		return renderer;
-	else{
-		qWarning() << "Camera stream couldn't start for Rendering";
-		return new SafeFramebuffer();
+	if( !renderer){
+		qWarning() << "Camera stream couldn't start for Rendering. Retrying in 1s";
+		renderer = new CameraDummy();
+		QTimer::singleShot(1000, this, &Camera::requestNewRenderer);
+		
 	}
+	return renderer;
 }
 
 // -----------------------------------------------------------------------------

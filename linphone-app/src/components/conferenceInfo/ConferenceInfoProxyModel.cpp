@@ -22,6 +22,7 @@
 #include "components/core/CoreManager.hpp"
 
 #include "ConferenceInfoListModel.hpp"
+#include "ConferenceInfoMapModel.hpp"
 #include "ConferenceInfoProxyModel.hpp"
 
 // =============================================================================
@@ -29,7 +30,7 @@
 using namespace std;
 
 ConferenceInfoProxyModel::ConferenceInfoProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-	setSourceModel(new ConferenceInfoListModel());
+	setSourceModel(new ConferenceInfoMapModel());
 	sort(0, Qt::DescendingOrder);
 }
 
@@ -38,10 +39,10 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 }
 
 bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-  const ConferenceInfoModel *deviceA = sourceModel()->data(left).value<ConferenceInfoModel *>();
-  const ConferenceInfoModel *deviceB = sourceModel()->data(right).value<ConferenceInfoModel *>();
+  const ConferenceInfoListModel* deviceA = sourceModel()->data(left).value<ConferenceInfoListModel*>();
+  const ConferenceInfoListModel* deviceB = sourceModel()->data(right).value<ConferenceInfoListModel*>();
 
-  return deviceA->getDateTime() < deviceB->getDateTime();
+  return deviceA->getAt(0)->getDateTime() < deviceB->getAt(0)->getDateTime();
 }
 
 QVariant ConferenceInfoProxyModel::getAt(int row){

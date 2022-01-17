@@ -26,8 +26,9 @@
 #include <QObject>
 
 class ParticipantListModel;
+class ConferenceSchedulerModel;
 
-class ConferenceInfoModel : public QObject{
+class ConferenceInfoModel : public QObject {
 	Q_OBJECT
 	
 public:
@@ -40,6 +41,7 @@ public:
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
 	Q_PROPERTY(QString displayNamesToString READ displayNamesToString NOTIFY participantsChanged)
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
+	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	
 	//Q_PROPERTY(participants READ getParticipants WRITE setParticipants NOTIFY participantsChanged)
 	
@@ -59,14 +61,24 @@ public:
 	QString getDescription() const;
 	Q_INVOKABLE QString displayNamesToString()const;
 	QString getUri() const;
+	bool isScheduled() const;
 	
 	void setDateTime(const QDateTime& dateTime);
 	void setDuration(const int& duration);
 	void setSubject(const QString& subject);
 	void setOrganizer(const QString& organizerAddress);
 	void setDescription(const QString& description);
+	void setIsScheduled(const bool& on);
 	
 	Q_INVOKABLE void setParticipants(ParticipantListModel * participants);
+	
+// Tools
+	Q_INVOKABLE void createConference(const int& securityLevel, const int& inviteMode);
+
+// SCHEDULER
+	
+	//virtual void onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) override;
+	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 	
 	
 signals:
@@ -77,12 +89,19 @@ signals:
 	void descriptionChanged();
 	void participantsChanged();
 	void uriChanged();
+	void isScheduledChanged();
+	
+	void conferenceCreated();
+	void invitationsSent();
 	
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;
-	
+	std::shared_ptr<ConferenceSchedulerModel> mConferenceSchedulerModel = nullptr;
+	std::weak_ptr<ConferenceInfoModel> mSelf;	// For Linphone listener
+	bool mIsScheduled = true;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<ConferenceInfoModel>)
+Q_DECLARE_METATYPE(ConferenceInfoModel*)
 
 #endif

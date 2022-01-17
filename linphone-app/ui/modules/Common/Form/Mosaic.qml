@@ -164,6 +164,8 @@ ColumnLayout{
 		removeDisplaced: defaultTransition
 		populate:defaultTransition
 		
+		onItemCountChanged: console.log("Mosaic "+model+" itemCount: " +itemCount +" => " + (model.count ? " count="+model.count :( model.length ? " length":" no" )))
+		
 	}
 	/*
 	ListView{

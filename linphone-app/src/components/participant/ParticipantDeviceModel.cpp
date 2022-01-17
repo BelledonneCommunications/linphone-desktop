@@ -28,8 +28,17 @@
 // =============================================================================
 
 ParticipantDeviceModel::ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe, QObject *parent) : QObject(parent) {
+	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mIsMe = isMe;
 	mParticipantDevice = device;
+	mCall = nullptr;
+}
+
+ParticipantDeviceModel::ParticipantDeviceModel (CallModel * call, const bool& isMe, QObject *parent) : QObject(parent) {
+	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
+	mIsMe = isMe;
+	mCall = call;
+	connect(call, &CallModel::statusChanged, this, &ParticipantDeviceModel::videoEnabledChanged);
 }
 
 // -----------------------------------------------------------------------------
@@ -60,8 +69,9 @@ std::shared_ptr<linphone::ParticipantDevice>  ParticipantDeviceModel::getDevice(
 }
 
 bool ParticipantDeviceModel::isVideoEnabled() const{
-	return mParticipantDevice && (mParticipantDevice->getVideoDirection() == linphone::MediaDirection::SendRecv 
-		|| mParticipantDevice->getVideoDirection() == linphone::MediaDirection::SendOnly);
+	if(mParticipantDevice)
+		qWarning() << "VideoEnabled: " << (int)mParticipantDevice->getStreamAvailability(linphone::StreamType::Video);
+	return mParticipantDevice && mParticipantDevice->getStreamAvailability(linphone::StreamType::Video);
 }
 
 bool ParticipantDeviceModel::isMe() const{

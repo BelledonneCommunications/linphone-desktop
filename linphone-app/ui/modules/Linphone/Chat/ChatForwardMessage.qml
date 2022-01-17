@@ -50,7 +50,7 @@ Item {
 				id: headerText
 				height: icon.height
 				verticalAlignment: Qt.AlignVCenter
-				// Anonymized forward : this is wanted.
+				// Anonymized forward : do not get display name, this is wanted.
 				//property string forwardInfo: mainChatMessageModel ? mainChatMessageModel.getForwardInfoDisplayName : ''
 				//: 'Forwarded' : Header on a message that contains a forward.
 				text: qsTr('Forwarded')// + (forwardInfo ? ' : ' +forwardInfo : '')

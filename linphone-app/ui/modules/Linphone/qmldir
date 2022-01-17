@@ -17,6 +17,7 @@ CallStatistics      1.0 Calls/CallStatistics.qml
 Chat                1.0 Chat/Chat.qml
 ChatAudioMessage    1.0 Chat/ChatAudioMessage.qml
 ChatAudioPreview    1.0 Chat/ChatAudioPreview.qml
+ChatCalendarMessage 1.0 Chat/ChatCalendarMessage.qml
 ChatMessagePreview  1.0 Chat/ChatMessagePreview.qml
 ChatForwardMessage  1.0 Chat/ChatForwardMessage.qml
 ChatReplyMessage    1.0 Chat/ChatReplyMessage.qml

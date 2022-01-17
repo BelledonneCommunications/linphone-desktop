@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2021 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,31 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CAMERA_PREVIEW_H_
-#define CAMERA_PREVIEW_H_
+#ifndef _CONFERENCE_INFO_MAP_MODEL_H_
+#define _CONFERENCE_INFO_MAP_MODEL_H_
 
-#include <QMutex>
-#include <QQuickFramebufferObject>
+#include <linphone++/linphone.hh>
+#include <QAbstractListModel>
+#include <QDate>
 
 // =============================================================================
 
-class CameraPreview : public QQuickFramebufferObject {
-	Q_OBJECT
-	
+class ConferenceInfoListModel;
+
+class ConferenceInfoMapModel : public QAbstractListModel {
+  Q_OBJECT
+
 public:
-	CameraPreview (QQuickItem *parent = Q_NULLPTR);
-	~CameraPreview ();
-	
-	QQuickFramebufferObject::Renderer *createRenderer () const override;
-	
-signals:
-	void requestNewRenderer();
+  ConferenceInfoMapModel (QObject *parent = Q_NULLPTR);
+
+  int rowCount (const QModelIndex &index = QModelIndex()) const override;
+
+  QHash<int, QByteArray> roleNames () const override;
+  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 private:
-	QTimer *mRefreshTimer = nullptr;
-	
-	static QMutex mCounterMutex;
-	static int mCounter;
-};
+  QMap<QDate, ConferenceInfoListModel*> mMappedList;
 
-#endif // CAMERA_PREVIEW_H_
+};
+Q_DECLARE_METATYPE(ConferenceInfoMapModel*)
+#endif

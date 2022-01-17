@@ -87,6 +87,13 @@ QString ContentModel::getUtf8Text() const{
 	return QString::fromStdString(mContent->getUtf8Text());
 }
 
+ConferenceInfoModel * ContentModel::getConferenceInfoModel(){
+	if( !mConferenceInfoModel && isIcalendar()){
+		mConferenceInfoModel = ConferenceInfoModel::create(linphone::Factory::get()->createConferenceInfoFromIcalendarContent(mContent));
+	}
+	return mConferenceInfoModel.get();
+}
+
 void ContentModel::setFileOffset(quint64 fileOffset){
 	if( mFileOffset != fileOffset) {
 		mFileOffset = fileOffset;
@@ -109,6 +116,7 @@ void ContentModel::setWasDownloaded(bool wasDownloaded){
 void ContentModel::setContent(std::shared_ptr<linphone::Content> content){
 	mContent = content;
 	emit nameChanged();
+	mConferenceInfoModel = nullptr;
 	if(isFile() || isFileEncrypted() || isFileTransfer() ){
 		QString path = Utils::coreStringToAppString(mContent->getFilePath());
 		if (!path.isEmpty())

@@ -18,31 +18,27 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CAMERA_PREVIEW_H_
-#define CAMERA_PREVIEW_H_
+#include <QOpenGLFramebufferObject>
+#include <QQuickWindow>
+#include <QThread>
+#include <QTimer>
 
-#include <QMutex>
-#include <QQuickFramebufferObject>
+#include "components/core/CoreManager.hpp"
+
+#include "CameraDummy.hpp"
 
 // =============================================================================
 
-class CameraPreview : public QQuickFramebufferObject {
-	Q_OBJECT
-	
-public:
-	CameraPreview (QQuickItem *parent = Q_NULLPTR);
-	~CameraPreview ();
-	
-	QQuickFramebufferObject::Renderer *createRenderer () const override;
-	
-signals:
-	void requestNewRenderer();
 
-private:
-	QTimer *mRefreshTimer = nullptr;
-	
-	static QMutex mCounterMutex;
-	static int mCounter;
-};
+CameraDummy::CameraDummy(){
+}
 
-#endif // CAMERA_PREVIEW_H_
+QOpenGLFramebufferObject *CameraDummy::createFramebufferObject (const QSize &size){
+	return new QOpenGLFramebufferObject(size);
+}
+
+void CameraDummy::render (){
+}
+
+void CameraDummy::synchronize (QQuickFramebufferObject *item){
+}

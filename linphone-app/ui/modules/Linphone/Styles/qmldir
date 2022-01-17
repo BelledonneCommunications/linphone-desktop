@@ -13,6 +13,7 @@ singleton ChatStyle                            1.0 Chat/ChatStyle.qml
 singleton ChatAudioMessageStyle                1.0 Chat/ChatAudioMessageStyle.qml
 singleton ChatAudioPreviewStyle                1.0 Chat/ChatAudioPreviewStyle.qml
 singleton ChatFilePreviewStyle                 1.0 Chat/ChatFilePreviewStyle.qml
+singleton ChatCalendarMessageStyle             1.0 Chat/ChatCalendarMessageStyle.qml
 singleton ChatForwardMessageStyle              1.0 Chat/ChatForwardMessageStyle.qml
 singleton ChatReplyMessageStyle                1.0 Chat/ChatReplyMessageStyle.qml
 

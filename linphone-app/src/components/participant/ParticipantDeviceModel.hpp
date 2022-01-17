@@ -28,11 +28,14 @@
 #include <QDateTime>
 #include <QString>
 
+class CallModel;
+
 class ParticipantDeviceModel : public QObject {
     Q_OBJECT
 
 public:
     ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
+    ParticipantDeviceModel (CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
 	
 	Q_PROPERTY(QString name READ getName CONSTANT)
 	Q_PROPERTY(QString address READ getAddress CONSTANT)
@@ -63,6 +66,7 @@ private:
 	bool mIsMe = false;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
+    CallModel * mCall;
 	
 };
 

@@ -40,6 +40,7 @@
 #include "conferenceInfo/ConferenceInfoModel.hpp"
 #include "conferenceInfo/ConferenceInfoListModel.hpp"
 #include "conferenceInfo/ConferenceInfoProxyModel.hpp"
+#include "conferenceScheduler/ConferenceSchedulerModel.hpp"
 #include "contact/ContactModel.hpp"
 #include "contact/VcardModel.hpp"
 #include "contacts/ContactsListModel.hpp"

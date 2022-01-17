@@ -236,10 +236,17 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 				connect(contact, &ContactModel::contactUpdated, this, &ChatRoomModel::fullPeerAddressChanged);
 			}
 		}
-		
+		// Get Max updatetime from chat room and last call event
+		auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
+		if(callHistory.size() > 0){
+			auto callDate = callHistory.front()->getStartDate();
+			if( callHistory.front()->getStatus() == linphone::Call::Status::Success )
+				callDate += callHistory.front()->getDuration();
+			setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(max(mChatRoom->getLastUpdateTime(), callDate )*1000));
+		}else
+			setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(mChatRoom->getLastUpdateTime()*1000));
 	}else
 		mParticipantListModel = nullptr;
-	
 }
 
 ChatRoomModel::~ChatRoomModel () {

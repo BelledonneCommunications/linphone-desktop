@@ -39,10 +39,12 @@ class ParticipantDeviceProxyModel : public QSortFilterProxyModel {
 	
 public:
 	Q_PROPERTY(CallModel * callModel READ getCallModel WRITE setCallModel NOTIFY callModelChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
 	
 	Q_INVOKABLE ParticipantDeviceModel* getAt(int row);
 	CallModel * getCallModel() const;
+	Q_INVOKABLE int getCount() const;
 	
 	
 	void setCallModel(CallModel * callModel);	
@@ -50,6 +52,7 @@ public:
 	
 signals:
 	void callModelChanged();
+	void countChanged();
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;

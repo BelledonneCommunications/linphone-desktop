@@ -20,8 +20,8 @@ Column{
 	id: mainItem
 	property ContentModel contentModel
 	
-	property int fitHeight: message.fitHeight + fileMessage.fitHeight + audioMessage.fitHeight
-	property int fitWidth: message.fitWidth + fileMessage.fitWidth + audioMessage.fitWidth
+	property int fitHeight: calendarMessage.fitHeight + message.fitHeight + fileMessage.fitHeight + audioMessage.fitHeight
+	property int fitWidth: calendarMessage.fitWidth + message.fitWidth + fileMessage.fitWidth + audioMessage.fitWidth
 	property color backgroundColor
 	property string lastTextSelected
 	property alias textColor: message.color
@@ -29,6 +29,7 @@ Column{
 	
 	signal rightClicked()
 	
+	property int maxWidth
 	height: fitHeight
 	anchors.left: parent ? parent.left : undefined
 	anchors.right: parent ? parent.right : undefined
@@ -37,6 +38,12 @@ Column{
 	
 	property bool isOutgoing : contentModel && contentModel.chatMessageModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
 	
+	ChatCalendarMessage{
+		id: calendarMessage
+		contentModel: mainItem.contentModel
+		width: parent.width
+		maxWidth: mainItem.maxWidth
+	}
 	ChatAudioMessage{
 		id: audioMessage
 		contentModel: mainItem.contentModel

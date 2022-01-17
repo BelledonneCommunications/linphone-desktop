@@ -28,7 +28,7 @@
 
 // =============================================================================
 
-function computeAvatarSize (maxSize) {
+function computeAvatarSize (container, maxSize) {
   var height = container.height
   var width = container.width
 
@@ -71,39 +71,39 @@ function handleStatusChanged (status) {
   }
 }
 
-function handleVideoRequested () {
-  var call = incall.call
+function handleVideoRequested (call) {
+  console.log("handleVideoRequested")
   if (window.virtualWindowVisible || !Linphone.SettingsModel.videoSupported) {
     call.rejectVideoRequest()
     return
   }
-
+  /*
   // Close dialog after 10s.
   var timeout = Utils.setTimeout(incall, 10000, function () {
     call.statusChanged.disconnect(endedHandler)
     window.detachVirtualWindow()
     call.rejectVideoRequest()
   })
-
+  */
   // Close dialog if call is ended.
   var endedHandler = function (status) {
     if (status === Linphone.CallModel.CallStatusEnded) {
-      Utils.clearTimeout(timeout)
+      Utils.clearTimeout(timeout)	
       call.statusChanged.disconnect(endedHandler)
       window.detachVirtualWindow()
     }
   }
-
   call.statusChanged.connect(endedHandler)
-
+console.log("D")
   // Ask video to user.
   window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('acceptVideoDescription'),
   }, function (status) {
-    Utils.clearTimeout(timeout)
+    //Utils.clearTimeout(timeout)	
     call.statusChanged.disconnect(endedHandler)
-
+	console.log("E: "+status)
     if (status) {
+		console.log("TOTO")
       call.acceptVideoRequest()
     } else {
       call.rejectVideoRequest()

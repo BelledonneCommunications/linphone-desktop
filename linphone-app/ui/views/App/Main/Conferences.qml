@@ -27,8 +27,7 @@ ColumnLayout {
 		color: ConferencesStyle.bar.backgroundColor
 		Text{
 			anchors.verticalCenter: parent.center
-			anchors.left: parent.left
-			anchors.right: parent.right
+			anchors.fill: parent
 			
 			anchors.leftMargin: 40
 			
@@ -77,25 +76,11 @@ ColumnLayout {
 			section {
 				criteria: ViewSection.FullString
 				delegate: sectionHeading
-				property: 'dateTime'
+				property: 'date'
 			}
 			
 			model: ConferenceInfoProxyModel{}
 			
-			
-			/* ListModel{
-				ListElement{date: '2020/12/01'; time: '10:00:00';duration: 60;organizerName: 'Dupont';subject:'Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'  }
-				ListElement{date: '2020/12/01'; time: '14:00:00';duration: 30;organizerName: 'Moi';subject:'TOTO';participantes: 'Julien'  }
-				ListElement{date: '2020/12/01'; time: '10:10:00';duration: 120;organizerName: 'Henri';subject:'Eskimirbief, mais ou est donc Willy?';participantes: 'Julien'}
-				ListElement{date: '2020/12/04'; time: '09:00:00';duration: 300;organizerName: 'Houlahoup';subject:'Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'}
-				ListElement{date: '2020/12/05'; time: '10:00:00';duration: 60;organizerName: 'Dupont';subject:'1. Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'  }
-				ListElement{date: '2020/12/05'; time: '10:00:00';duration: 60;organizerName: 'Dupont';subject:'2. Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'  }
-				
-				ListElement{date: '2020/12/06'; time: '10:00:00';duration: 60;organizerName: 'Dupont';subject:'1. Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'  }
-				ListElement{date: '2020/12/06'; time: '10:00:00';duration: 60;organizerName: 'Dupont';subject:'2. Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'  }
-				ListElement{date: '2020/12/06'; time: '10:00:00';duration: 60;organizerName: 'Dupont';subject:'3. Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'  }
-				ListElement{date: '2020/12/06'; time: '10:00:00';duration: 60;organizerName: 'Dupont';subject:'4. Atelier loisir: boumbo en folie';participantes: 'Martin, Jordy, allelouilla, Artemis Gordon, jobarteam'  }
-			}*/
 			// -----------------------------------------------------------------------
 			// Heading.
 			// -----------------------------------------------------------------------
@@ -144,91 +129,38 @@ ColumnLayout {
 			//----------------------------------------------------------------------------------------------
 			//----------------------------------------------------------------------------------------------
 			
-			delegate: Rectangle {
-				id: entry
-				
+			delegate: Item {
+				implicitHeight: calendarGrid.height + ConferencesStyle.conference.bottomMargin
 				anchors {
-					left: parent ? parent.left : undefined
-					leftMargin: 0
-					right: parent ? parent.right : undefined
-					rightMargin: 0
-				}
-				radius: 6
-				color: ConferencesStyle.conference.backgroundColor.normal
-				implicitHeight: layout.height + ConferencesStyle.conference.bottomMargin
-				
-				// ---------------------------------------------------------------------
-				MouseArea {
-					id: mouseArea
-					
-					cursorShape: Qt.ArrowCursor
-					hoverEnabled: true
-					implicitHeight: layout.height
-					width: parent.width + parent.anchors.rightMargin
-					//acceptedButtons: Qt.NoButton
-					onClicked: CallsListModel.launchVideoCall(modelData.uri, '', 0)
-					ColumnLayout{
-						id: layout
-						spacing: 0
-						width: entry.width
+							left: parent ? parent.left : undefined
+							leftMargin: 10
+							right: parent ? parent.right : undefined
+							rightMargin: 10
+						}
+				GridView{
+					id: calendarGrid
+					//anchors.fill: parent
+					cellWidth: (container.width-20)/2
+					cellHeight: 112
+					model: modelData
+					height: cellHeight * ( (count+1) /2)
+					width: container.width - 20
+					delegate:Rectangle {
+						id: entry
+						width: calendarGrid.cellWidth -10
+						height: calendarGrid.cellHeight -10
+						radius: 6
+						color: ConferencesStyle.conference.backgroundColor.normal
 						
-						RowLayout {
-							RowLayout {
-								id: scheduleRow
-								spacing: ConferencesStyle.conference.spacing
-								
-								Icon{
-									icon: ConferencesStyle.conference.schedule.icon
-									iconSize: ConferencesStyle.conference.schedule.iconSize
-									overwriteColor: ConferencesStyle.conference.schedule.color
-								}
-								
-								Text {
-									Layout.fillWidth: true
-									color: ConferencesStyle.conference.schedule.color
-									elide: Text.ElideRight
-									font.pointSize: ConferencesStyle.conference.schedule.pointSize
-									text: Qt.formatDateTime(modelData.dateTime, 'yyyy/MM/dd hh:mm')
-										+', end at: ' +Qt.formatDateTime(modelData.endDateTime, 'yyyy/MM/dd hh:mm')
-								}
-							}
-							Text{
-								Layout.fillWidth: true
-								Layout.alignment: Qt.AlignRight
-								color: ConferencesStyle.conference.schedule.color
-								font.pointSize: ConferencesStyle.conference.schedule.pointSize
-								text: 'Organisateur : ' +UtilsCpp.getDisplayName(modelData.organizer)
-							}
+						ChatCalendarMessage{
+							id: calendarMessage
+							conferenceInfoModel: modelData
+							width: calendarGrid.cellWidth
+							maxWidth: calendarGrid.cellWidth
 						}
-						Text{
-							Layout.fillWidth: true
-							Layout.alignment: Qt.AlignRight
-							color: ConferencesStyle.conference.schedule.color
-							font.pointSize: ConferencesStyle.conference.schedule.pointSize
-							text: modelData.subject
-						}
-						RowLayout {
-							id: participantsRow
-							spacing: ConferencesStyle.conference.spacing
-							
-							Icon{
-								icon: ConferencesStyle.conference.participants.icon
-								iconSize: ConferencesStyle.conference.participants.iconSize
-								overwriteColor: ConferencesStyle.conference.participants.color
-							}
-							
-							Text {
-								Layout.fillWidth: true
-								color: ConferencesStyle.conference.participants.color
-								elide: Text.ElideRight
-								font.pointSize: ConferencesStyle.conference.participants.pointSize
-								text: modelData.displayNamesToString
-							}
-						}	
 					}
 				}
 			}
-			
 			
 		}
 	}

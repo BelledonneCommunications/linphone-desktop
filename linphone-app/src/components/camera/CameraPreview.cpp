@@ -26,6 +26,7 @@
 #include "components/core/CoreManager.hpp"
 
 #include "CameraPreview.hpp"
+#include "CameraDummy.hpp"
 
 // =============================================================================
 
@@ -74,25 +75,16 @@ CameraPreview::~CameraPreview () {
 	}
 }
 
-class SafeFramebuffer : public QQuickFramebufferObject::Renderer{
-public:
-	SafeFramebuffer(){}
-	QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override{
-		return new QOpenGLFramebufferObject(size);
-	}	
-	void render () override{}
-	void synchronize (QQuickFramebufferObject *item) override{}
-};
-
 QQuickFramebufferObject::Renderer *CameraPreview::createRenderer () const {
-	QQuickFramebufferObject::Renderer * renderer;
-	CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
-	renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
-	CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
+	QQuickFramebufferObject::Renderer * renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
 	if(renderer)
-		return renderer;
-	else{
-		qWarning() << "Preview stream couldn't start for Rendering";
-		return new SafeFramebuffer();
-	}
+		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
+	renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->createNativePreviewWindowId();
+	if( !renderer ) {
+		qWarning() << "Preview stream couldn't start for Rendering. Retrying in 1s";
+		renderer = new CameraDummy();
+		QTimer::singleShot(1000, this, &CameraPreview::requestNewRenderer);
+	}else
+		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
+	return renderer;
 }

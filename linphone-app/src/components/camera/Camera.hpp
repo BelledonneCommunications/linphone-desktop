@@ -55,6 +55,7 @@ signals:
   void callChanged (CallModel *callModel);
   void isPreviewChanged (bool isPreview);
   void participantDeviceModelChanged(ParticipantDeviceModel *participantDeviceModel);
+  void requestNewRenderer();
 
 private:
   CallModel *getCallModel () const;

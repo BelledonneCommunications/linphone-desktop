@@ -14,8 +14,9 @@ Avatar {
   property var participantDeviceModel
 
   readonly property var _sipAddressObserver: call ? SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
-												: SipAddressesModel.getSipAddressObserver(participantDeviceModel.address, '')
-  readonly property var _username: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
+												: participantDeviceModel ? SipAddressesModel.getSipAddressObserver(participantDeviceModel.address, '')
+													: null
+  readonly property var _username: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
 
   backgroundColor: CallStyle.container.avatar.backgroundColor
   foregroundColor: call && call.status === CallModel.CallStatusPaused
@@ -30,7 +31,7 @@ Avatar {
 			return null;
   }
 
-  username: call && call.status === CallModel.CallStatusPaused || !_username? '' : _username
+  username: call && (call.status === CallModel.CallStatusPaused) || !_username? '' : _username
 
   Text {
     anchors.fill: parent
@@ -44,6 +45,6 @@ Avatar {
 
     text: '&#10073;&#10073;'
     textFormat: Text.RichText
-    visible: call && call.status === CallModel.CallStatusPaused
+    visible: call && (call.status === CallModel.CallStatusPaused) || false
   }
 }

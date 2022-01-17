@@ -61,12 +61,26 @@ ParticipantDeviceModel *ParticipantDeviceProxyModel::getAt(int row){
 CallModel * ParticipantDeviceProxyModel::getCallModel() const{
 	return mCallModel;
 }
+
+int ParticipantDeviceProxyModel::getCount() const{
+	ParticipantDeviceListModel* devices = dynamic_cast<ParticipantDeviceListModel*>(sourceModel());
+	if(devices)
+		return devices->rowCount(); 
+	else
+		return 0;
+}
 	
 void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	mCallModel = callModel;
-	setSourceModel(new ParticipantDeviceListModel(mCallModel));
+	auto sourceModel = new ParticipantDeviceListModel(mCallModel);
+	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::countChanged);
+	setSourceModel(sourceModel);
+	emit countChanged();
 }
-	
+
 void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant){
-	setSourceModel(participant->getParticipantDevices().get());
+	auto sourceModel = participant->getParticipantDevices().get();
+	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::countChanged);
+	setSourceModel(sourceModel);
+	emit countChanged();
 }

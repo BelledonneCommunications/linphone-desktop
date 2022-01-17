@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,31 +18,20 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CAMERA_PREVIEW_H_
-#define CAMERA_PREVIEW_H_
+#ifndef CAMERA_DUMMY_H_
+#define CAMERA_DUMMY_H_
 
 #include <QMutex>
 #include <QQuickFramebufferObject>
 
 // =============================================================================
 
-class CameraPreview : public QQuickFramebufferObject {
-	Q_OBJECT
-	
+class CameraDummy : public QQuickFramebufferObject::Renderer{
 public:
-	CameraPreview (QQuickItem *parent = Q_NULLPTR);
-	~CameraPreview ();
-	
-	QQuickFramebufferObject::Renderer *createRenderer () const override;
-	
-signals:
-	void requestNewRenderer();
-
-private:
-	QTimer *mRefreshTimer = nullptr;
-	
-	static QMutex mCounterMutex;
-	static int mCounter;
+	CameraDummy();
+	QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override;
+	void render () override;
+	void synchronize (QQuickFramebufferObject *item) override;
 };
 
-#endif // CAMERA_PREVIEW_H_
+#endif

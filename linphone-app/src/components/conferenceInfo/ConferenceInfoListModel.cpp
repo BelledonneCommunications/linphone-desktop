@@ -36,14 +36,16 @@
 // =============================================================================
 
 ConferenceInfoListModel::ConferenceInfoListModel (QObject *parent) : QAbstractListModel(parent) {
-	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
-	for(auto conferenceInfo : conferenceInfos){
-		mList << ConferenceInfoModel::create( conferenceInfo );
-	}
+	//auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
+	//for(auto conferenceInfo : conferenceInfos){
+//		auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
+//		mList << conferenceInfoModel;
+		//mMappedList[conferenceInfoModel->getDateTime().date()].push_back(conferenceInfoModel.get());
+//	}
 }
 
 int ConferenceInfoListModel::rowCount (const QModelIndex &) const {
-	return mList.count();
+	return mList.size();
 }
 
 QHash<int, QByteArray> ConferenceInfoListModel::roleNames () const {
@@ -55,35 +57,46 @@ QHash<int, QByteArray> ConferenceInfoListModel::roleNames () const {
 QVariant ConferenceInfoListModel::data (const QModelIndex &index, int role) const {
 	int row = index.row();
 	
-	if (!index.isValid() || row < 0 || row >= mList.count())
+	if (!index.isValid() || row < 0 || row >= mList.size())
 		return QVariant();
+	auto it = mList.begin() + row;
 	
 	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mList[row].get());
+		return QVariant::fromValue(it->get());
 	
-	//return QVariant();
+	return QVariant();
+}
+
+ConferenceInfoModel* ConferenceInfoListModel::getAt(const int& index) const {
+	return mList[index].get();
 }
 
 // -----------------------------------------------------------------------------
-
-
+void ConferenceInfoListModel::add(std::shared_ptr<ConferenceInfoModel> conferenceInfoModel){
+	int row = mList.size();
+	beginInsertRows(QModelIndex(), row,row);
+	mList << conferenceInfoModel;
+	endInsertRows();
+}
+// Should not be called as item that need to be removed are usually a cell, not a row
 bool ConferenceInfoListModel::removeRow (int row, const QModelIndex &parent) {
 	return removeRows(row, 1, parent);
 }
 
 bool ConferenceInfoListModel::removeRows (int row, int count, const QModelIndex &parent) {
+/*
 	int limit = row + count - 1;
 	
-	if (row < 0 || count < 0 || limit >= mList.count())
+	if (row < 0 || count < 0 || limit >= mMappedList.count())
 		return false;
 	
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i)
-		mList.takeAt(row)->deleteLater();
+		mMappedList.takeAt(row)->deleteLater();
 	
 	endRemoveRows();
-	
+	*/
 	return true;
 }
 

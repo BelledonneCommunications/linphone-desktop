@@ -56,6 +56,8 @@ signals:
 	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void participantDeviceMediaChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void conferenceStateChanged(linphone::Conference::State newState);
 
 private:
 	std::shared_ptr<linphone::Conference> mConference;

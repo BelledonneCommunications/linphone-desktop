@@ -45,6 +45,7 @@
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
+#include "components/conferenceScheduler/ConferenceSchedulerModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
@@ -75,7 +76,7 @@ using namespace std;
 std::shared_ptr<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo){
 	std::shared_ptr<ConferenceInfoModel> model = std::make_shared<ConferenceInfoModel>(conferenceInfo);
 	if(model){
-		//model->mSelf = model;
+		model->mSelf = model;
 		 //chatRoom->addListener(model);
 		return model;
 	}else
@@ -85,6 +86,9 @@ std::shared_ptr<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr
 ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	//App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
+	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
+	accountAddress->clean();
+	mConferenceInfo->setOrganizer(accountAddress);
 }
 
 ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceInfo> conferenceInfo, QObject * parent) : QObject(parent){
@@ -147,6 +151,10 @@ QString ConferenceInfoModel::getUri() const{
 	return QString::fromStdString(mConferenceInfo->getUri()->asString());
 }
 
+bool ConferenceInfoModel::isScheduled() const{
+	return mIsScheduled;
+}
+
 //------------------------------------------------------------------------------------------------
 
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){
@@ -177,4 +185,56 @@ void ConferenceInfoModel::setDescription(const QString& description){
 
 void ConferenceInfoModel::setParticipants(ParticipantListModel * participants){
 	mConferenceInfo->setParticipants(participants->getParticipants());
+}
+
+void ConferenceInfoModel::setIsScheduled(const bool& on){
+	if( mIsScheduled != on){
+		mIsScheduled = on;
+		emit isScheduledChanged();
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+
+void ConferenceInfoModel::createConference(const int& securityLevel, const int& inviteMode) {
+	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	static std::shared_ptr<linphone::Conference> conference;
+	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();// and with " << conferenceInfo->getConferenceInfo()->getParticipants().size();
+	
+	if( true || isScheduled()){
+		mConferenceSchedulerModel = ConferenceSchedulerModel::create(this);
+		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
+		
+		mConferenceSchedulerModel->getConferenceScheduler()->setInfo(mConferenceInfo);
+	}else{
+		auto conferenceParameters = core->createConferenceParams();
+		conferenceParameters->enableAudio(true);
+		conferenceParameters->enableVideo(true);
+		conferenceParameters->setDescription(mConferenceInfo->getDescription());
+		conferenceParameters->setSubject(mConferenceInfo->getSubject());
+		conferenceParameters->setStartTime(mConferenceInfo->getDateTime());
+		conferenceParameters->setEndTime(mConferenceInfo->getDateTime() + (mConferenceInfo->getDuration() * 60));
+		conferenceParameters->enableLocalParticipant(true);
+		//conferenceParameters->enableOneParticipantConference(true);
+		/*
+		if(true) {//Remote
+			conferenceParameters->setConferenceFactoryUri(core->getDefaultAccount()->getContactAddress()->asStringUriOnly());
+		}else
+			conferenceParameters->setConferenceFactoryUri(nullptr);
+			*/
+		conference = core->createConferenceWithParams(conferenceParameters);
+		
+		//auto parameters = CoreManager::getInstance()->getCore()->createCallParams(nullptr);
+		//parameters->enableVideo(true);
+		//conference->inviteParticipants(mConferenceInfo->getParticipants(), parameters);
+	}
+}
+
+//-------------------------------------------------------------------------------------------------
+
+
+void ConferenceInfoModel::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
+	mConferenceSchedulerModel->getConferenceScheduler()->removeListener(mConferenceSchedulerModel);
+	emit invitationsSent();
 }

@@ -45,7 +45,7 @@ Rectangle {
 		
 		onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
 		onStatusChanged: Logic.handleStatusChanged (status)
-		onVideoRequested: Logic.handleVideoRequested()
+		onVideoRequested: Logic.handleVideoRequested(call)
 	}
 	
 	ColumnLayout {
@@ -239,7 +239,7 @@ Rectangle {
 				
 				IncallAvatar {
 					call: incall.call
-					height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
+					height: Logic.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
 					width: height
 				}
 			}
@@ -261,7 +261,9 @@ Rectangle {
 						width: container.width
 						Component.onDestruction: {
 							resetWindowId()
+							console.log("Camera incall destroyed")
 						}
+						Component.onCompleted: console.log("Camera incall completed")
 					}
 					
 				}
@@ -406,7 +408,9 @@ Rectangle {
 						isPreview: true
 						Component.onDestruction: {
 							resetWindowId()
+							 console.log("Camera preview incall destroyed")
 						}
+						Component.onCompleted: console.log("Camera preview incall completed")
 					}
 				}
 			}

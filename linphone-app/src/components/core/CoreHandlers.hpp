@@ -186,13 +186,14 @@ private:
 			) override;
 	
 	// Conference Info
+	virtual void onConferenceInfoReceived(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo) override;
+	/*
 	virtual void onConferenceInfoCreated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	virtual void onConferenceInfoOnSent(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	virtual void onConferenceInfoParticipantSent(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo, const std::shared_ptr<const linphone::Address> & participant);
 	virtual void onConferenceInfoParticipantError(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo, const std::shared_ptr<const linphone::Address> & participant, linphone::ConferenceInfoError error);
+	*/
 	
-	
-	// ---------------------------------------------------------------------------
 };
 
 #endif // CORE_HANDLERS_H_

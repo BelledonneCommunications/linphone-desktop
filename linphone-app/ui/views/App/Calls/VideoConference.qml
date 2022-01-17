@@ -21,21 +21,31 @@ Rectangle {
 	id: conference
 	
 	property CallModel callModel
-	
+	property var _fullscreen: null
+	/*
 	onCallModelChanged: if(callModel) {
 							grid.setParticipantDevicesMode()
 						}else
 							grid.setTestMode()
+							*/
 	// ---------------------------------------------------------------------------
 	
 	color: VideoConferenceStyle.backgroundColor
-	
+	/*
 	Component.onCompleted: {
 			if(!callModel){
 				grid.setTestMode()
 			}else
 				grid.setParticipantDevicesMode()
 		}
+		*/
+	Connections {
+		target: callModel
+		
+		onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
+		onStatusChanged: Logic.handleStatusChanged (status)
+		onVideoRequested: Logic.handleVideoRequested(callModel)
+	}
 	
 	// ---------------------------------------------------------------------------
 	ColumnLayout {
@@ -120,6 +130,7 @@ Rectangle {
 				id: grid
 				anchors.fill: parent
 				
+				
 				property int radius : 8
 				function setTestMode(){
 					grid.clear()
@@ -142,6 +153,7 @@ Rectangle {
 						id: participantDevices
 						callModel: conference.callModel
 					}
+					/*
 					property ListModel defaultList : ListModel{}
 					Component.onCompleted: {
 						if( conference.callModel ){
@@ -150,15 +162,20 @@ Rectangle {
 						}
 					}
 					model: defaultList
-					
-					
+					*/
+					model: participantDevices
+					onCountChanged: {console.log("Delegate count = "+count+"/"+participantDevices.count)}
 					delegate: Rectangle{
-						color: !conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : ''
+						id: avatarCell
+						property ParticipantDeviceModel currentDevice: gridModel.participantDevices.getAt(index)
+						onCurrentDeviceChanged: console.log("currentDevice changed: " +currentDevice +", me:"+currentDevice.isMe+" ["+index+"]")
+						color: /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */'#AAAAAAAA'
 						//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
 						//color:  modelData.color ? modelData.color : ''
 						radius: grid.radius
 						height: grid.cellHeight - 5
 						width: grid.cellWidth - 5
+						Component.onCompleted: console.log("Completed: ["+index+"] " +currentDevice.peerAddress+", isMe:"+currentDevice.isMe)
 						
 						Item {
 							id: container
@@ -174,30 +191,60 @@ Rectangle {
 								
 								IncallAvatar {
 									//call: gridModel.participantDevices.get(index).call
-									participantDeviceModel: gridModel.participantDevices.getAt(index)
-									height: Logic.computeAvatarSize(CallStyle.container.avatar.maxSize)
+									participantDeviceModel: avatarCell.currentDevice
+									height: Logic.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
 									width: height
+									Component.onCompleted: console.log("Avatar completed"+ " ["+index+"]")
+									Component.onDestruction: console.log("Avatar destroyed"+ " ["+index+"]")
 								}
 							}
-							
+							Loader {
+								anchors.centerIn: parent
+								
+								active: avatarCell.currentDevice && (!avatarCell.currentDevice.videoEnabled || conference._fullscreen)
+								sourceComponent: avatar
+							}
 							Loader {
 								id: cameraLoader
 								
-								anchors.centerIn: parent
+								//anchors.centerIn: parent
+								anchors.fill: parent
+								property bool isVideoEnabled : avatarCell.currentDevice && avatarCell.currentDevice.videoEnabled
+								property bool t_fullscreen: conference._fullscreen
+								property bool tCallModel: conference.callModel
+								property bool resetActive: false
+								onIsVideoEnabledChanged: console.log("Video is enabled : " +isVideoEnabled + " ["+index+"]")
+								onT_fullscreenChanged: console.log("_fullscreen changed: " +t_fullscreen+ " ["+index+"]")
+								onTCallModelChanged: console.log("CallModel changed: " +tCallModel+ " ["+index+"]")
 								
-								active: conference.callModel  && (gridModel.participantDevices.getAt(index).videoEnabled && !_fullscreen)
+								active: !resetActive && avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
+								onActiveChanged: {console.log("Active Changed: "+active+ " ["+index+"]")
+									if(!active && resetActive){
+										resetActive = false
+										active = true
+									}
+								}
 								
-								sourceComponent: conference.callModel ? gridModel.participantDevices.getAt(index).isMe ? cameraPreview :  camera
+								sourceComponent: avatarCell.currentDevice ? 
+																		avatarCell.currentDevice.isMe ? ( true ?  cameraPreview : null )
+																			:  camera
 																	 : null
+								onSourceComponentChanged: console.log("SourceComponent Changed: "+sourceComponent+ " ["+index+"]")
+																	 
 								
 								Component {
 									id: camera
 									
 									Camera {
 										//call: grid.get(modelIndex).call
-										participantDeviceModel: gridModel.participantDevices.getAt(index)
-										height: container.height
-										width: container.width
+										participantDeviceModel: avatarCell.currentDevice
+										//height: container.height
+										//width: container.width
+										anchors.fill: parent
+										onRequestNewRenderer: {cameraLoader.resetActive = true}
+										
+										Component.onCompleted: console.log("Camera completed"+ " ["+index+"]")
+										Component.onDestruction: console.log("Camera destroyed"+ " ["+index+"]")
 									}
 								}
 								Component {
@@ -205,17 +252,14 @@ Rectangle {
 									
 									Camera {
 										anchors.fill: parent
-										call: incall.call
+										//call: incall.call
 										isPreview: true
+										onRequestNewRenderer: {cameraLoader.resetActive = true}
+										
+										Component.onCompleted: console.log("Preview completed"+ " ["+index+"]")
+										Component.onDestruction: console.log("Preview destroyed"+ " ["+index+"]")
 									}
 								}
-							}
-							
-							Loader {
-								anchors.centerIn: parent
-								
-								active: conference.callModel  && (!gridModel.participantDevices.getAt(index).videoEnabled || _fullscreen)
-								sourceComponent: avatar
 							}
 						}
 						MouseArea{

@@ -384,11 +384,11 @@ void TimelineListModel::onCallStateChanged (const std::shared_ptr<linphone::Call
 }
 
 void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &call){
-		std::shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-		std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
-		std::list<std::shared_ptr<linphone::Address>> participants;
-		
-// Find all chat rooms with local address. If not, create one.
+	std::shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
+	std::list<std::shared_ptr<linphone::Address>> participants;
+	if( !call->getConference() && false ){
+	// Find all chat rooms with local address. If not, create one.
 		bool isOutgoing = (call->getDir() == linphone::Call::Dir::Outgoing) ;
 		bool found = false;
 		auto callLog = call->getCallLog();
@@ -429,6 +429,7 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 			participants << Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
 			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", (createSecureChatRoom?1:0),  callLocalAddress, participants, isOutgoing);
 		}
+	}
 }
 
 /*
