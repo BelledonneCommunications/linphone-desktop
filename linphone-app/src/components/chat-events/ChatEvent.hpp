@@ -32,9 +32,14 @@ public:
 	ChatEvent (ChatRoomModel::EntryType type, QObject * parent = nullptr);
 	virtual ~ChatEvent();
 	ChatRoomModel::EntryType mType;
-	QDateTime mTimestamp;
+	
+	virtual QDateTime  getTimestamp() const;
+	virtual void setTimestamp(const QDateTime& timestamp);
 	
 	virtual void deleteEvent();
+	
+protected: 
+	QDateTime mTimestamp;
 };
 Q_DECLARE_METATYPE(ChatEvent*)
 #endif

@@ -196,11 +196,11 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	mChatRoomModelListener = std::make_shared<ChatRoomModelListener>(this, parent);
 	mChatRoom->addListener(mChatRoomModelListener);	
 	
-	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
-	setMissedCallsCount(0);
-	
 	// Get messages.
 	mEntries.clear();
+	
+	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
+	setMissedCallsCount(0);
 	
 	QElapsedTimer timer;
 	timer.start();
@@ -297,7 +297,7 @@ QVariant ChatRoomModel::data (const QModelIndex &index, int role) const {
 				return QVariant();
 		}
 		case Roles::SectionDate:
-			return QVariant::fromValue(mEntries[row]->mTimestamp.date());
+			return QVariant::fromValue(mEntries[row]->getTimestamp().date());
 	}
 	
 	return QVariant();
@@ -581,14 +581,15 @@ void ChatRoomModel::updateLastUpdateTime(){
 		QDateTime lastDateTime = QDateTime::fromMSecsSinceEpoch(mChatRoom->getLastUpdateTime()*1000);
 		QDateTime lastCallTime = lastDateTime;
 		for(auto e : mEntries){
-			if(e->mType == CallEntry && e->mTimestamp > lastCallTime)
-				lastCallTime = e->mTimestamp;
+			if(e->mType == CallEntry && e->getTimestamp() > lastCallTime)
+				lastCallTime = e->getTimestamp();
 		}	
 		setLastUpdateTime(lastCallTime);
 	}
 }
 
 void ChatRoomModel::setUnreadMessagesCount(const int& count){
+	updateNewMessageNotice(count);
 	if(count != mUnreadMessagesCount){
 		mUnreadMessagesCount = count;
 		emit unreadMessagesCountChanged();
@@ -771,12 +772,6 @@ void ChatRoomModel::resetMessageCount () {
 		if (mChatRoom->getUnreadMessagesCount() > 0){
 			mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
 		}
-		if(!mUnreadMessageNotice.first)
-			mUnreadMessageNotice.first = true;
-		else if( mUnreadMessageNotice.second){
-			removeEntry(mUnreadMessageNotice.second.get());
-			mUnreadMessageNotice.second = nullptr;
-		}
 		setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 		setMissedCallsCount(0);
 		emit messageCountReset();
@@ -855,24 +850,47 @@ public:
 					}
 				}
 			}else{
-			auto entry = ChatNoticeModel::create(std::dynamic_pointer_cast<linphone::EventLog>(itEntries->mObject), chatRoomModel);
-				if(entry)
+				auto entry = ChatNoticeModel::create(std::dynamic_pointer_cast<linphone::EventLog>(itEntries->mObject), chatRoomModel);
+				if(entry) {
 					*resultEntries << entry;
+				}
 			}	
 		}
 	}
 };
+
+void ChatRoomModel::updateNewMessageNotice(const int& count){
+	if( mChatRoom ) {
+		if(mUnreadMessageNotice ) {
+				removeEntry(mUnreadMessageNotice.get());
+				mUnreadMessageNotice = nullptr;
+		}
+		if(count > 0){
+			QDateTime lastUnreadMessage = QDateTime::currentDateTime();
+			enableMarkAsRead(false);
+// Get chat messages
+			for (auto &message : mChatRoom->getHistory(mLastEntriesStep)) {
+				if( !message->isRead()) {
+					lastUnreadMessage = min(lastUnreadMessage, QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000 - 1 ));	//-1 to be sure that event will be before the message
+				}
+			}			
+			mUnreadMessageNotice = ChatNoticeModel::create(ChatNoticeModel::NoticeType::NoticeUnreadMessages, lastUnreadMessage, QString::number(count));
+			beginInsertRows(QModelIndex(), 0, 0);
+			mEntries.prepend(mUnreadMessageNotice);
+			endInsertRows();
+			qWarning() << "New message notice timestamp to :" << lastUnreadMessage.toString();
+		}
+		//emit layoutChanged();
+	}
+}
+
 void ChatRoomModel::initEntries(){
 // On call : reinitialize all entries. This allow to free up memory
 	QList<std::shared_ptr<ChatEvent> > entries;
 	QList<EntrySorterHelper> prepareEntries;
-	QDateTime lastUnreadMessage = QDateTime::currentDateTime();
 // Get chat messages
 	for (auto &message : mChatRoom->getHistory(mLastEntriesStep)) {
 		prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
-		if( !message->isRead()) {
-			lastUnreadMessage = min(lastUnreadMessage, QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000));
-		}
 	}
 // Get events
 	for(auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesStep))
@@ -892,16 +910,11 @@ void ChatRoomModel::initEntries(){
 	}
 	EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
 	
-	if( mChatRoom->getUnreadMessagesCount() > 0) {
-		mUnreadMessageNotice.first = false;
-		mUnreadMessageNotice.second = ChatNoticeModel::create(ChatNoticeModel::NoticeType::NoticeUnreadMessages, lastUnreadMessage, QString::number(mChatRoom->getUnreadMessagesCount()));
-		entries.push_front(mUnreadMessageNotice.second);
-	}
-	
 	mIsInitialized = true;
 	if(entries.size() >0){
 		beginResetModel();
 		mEntries = entries;
+		updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());
 		endResetModel();
 	}
 }
@@ -1062,11 +1075,11 @@ void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMe
 				entries << model;
 		}
 		if(entries.size() > 0){
-			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 			beginInsertRows(QModelIndex(), 0, entries.size()-1);
 			entries << mEntries;
 			mEntries = entries;
 			endInsertRows();
+			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 			emit layoutChanged();
 		}
 	}
@@ -1090,8 +1103,9 @@ void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLo
 		
 		for(auto eventLog : eventLogs) {
 			std::shared_ptr<ChatNoticeModel> model = ChatNoticeModel::create(eventLog, this);
-			if(model)
+			if(model) {
 				entries << model;
+			}
 		}
 		
 		if(entries.size() > 0){
