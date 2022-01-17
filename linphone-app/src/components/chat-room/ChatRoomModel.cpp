@@ -535,9 +535,23 @@ QList<QString> ChatRoomModel::getComposers(){
 }
 
 QString ChatRoomModel::getParticipantAddress(){
-	if(!isSecure())
-		return Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString());
-	else{
+	if(!isSecure()){
+		auto peerAddress = mChatRoom->getPeerAddress();
+		if( peerAddress)
+			return Utils::coreStringToAppString(peerAddress->asString());
+		else if(isConference()){
+			auto conferenceAddress = mChatRoom->getConferenceAddress();
+			if( conferenceAddress)
+				return Utils::coreStringToAppString(conferenceAddress->asString());
+			else{
+				qWarning() << "ConferenceAddress is NULL when requesting it from not secure and conference ChatRoomModel :" << mChatRoom.get();
+				return "";
+			}
+		}else {
+			qWarning() << "PeerAddress is NULL when requesting it from not secure ChatRoomModel :" << mChatRoom.get();
+			return "";
+		}
+	}else{
 		auto participants = getParticipants();
 		if(participants->getCount() > 1)
 			return participants->getAt(1)->getSipAddress();
