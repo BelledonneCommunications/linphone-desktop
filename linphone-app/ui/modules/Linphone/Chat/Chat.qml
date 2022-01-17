@@ -383,12 +383,24 @@ Rectangle {
 			}
 			
 			ActionButton{
+				id: gotToBottomButton
 				anchors.bottom: messageBlock.top
 				anchors.bottomMargin: 10
 				anchors.right: parent.right
 				anchors.rightMargin: 40
 				visible: chat.isIndexAfter(chat.count-1)
-				onVisibleChanged: container.proxyModel.markAsReadEnabled = !visible
+				onVisibleChanged: updateMarkAsRead()
+				Component.onCompleted: updateMarkAsRead()
+				function updateMarkAsRead(){
+					if(!visible)
+						container.proxyModel.markAsReadEnabled = true
+				}
+				
+				Connections{
+					target: container.proxyModel
+					onMarkAsReadEnabledChanged: if( !container.proxyModel.markAsReadEnabled)
+													gotToBottomButton.updateMarkAsRead()
+				}
 				
 				isCustom: true
 				backgroundRadius: width/2

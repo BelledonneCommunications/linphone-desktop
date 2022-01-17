@@ -32,5 +32,12 @@ ChatEvent::ChatEvent (ChatRoomModel::EntryType type, QObject * parent) : QObject
 ChatEvent::~ChatEvent(){
 }
 
+QDateTime ChatEvent::getTimestamp() const{
+	return mTimestamp;
+}
+void ChatEvent::setTimestamp(const QDateTime& timestamp){
+	mTimestamp = timestamp;
+}
+
 void ChatEvent::deleteEvent(){
 }

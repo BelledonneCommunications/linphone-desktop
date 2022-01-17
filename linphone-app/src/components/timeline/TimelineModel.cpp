@@ -109,8 +109,8 @@ void TimelineModel::setSelected(const bool& selected){
 }
 
 void TimelineModel::updateUnreadCount(){
-	if(mSelected){
-		mChatRoomModel->resetMessageCount();
+	if(!mSelected){// updateUnreadCount is called when selected has changed;: So if mSelected is false then we are going out of it.
+		mChatRoomModel->resetMessageCount();// The reset will appear when the chat room has "mark as read enabled", that means that we should have read messages when going out.
 	}
 }
 void TimelineModel::onDefaultProxyChanged(){

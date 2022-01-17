@@ -197,7 +197,7 @@ bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
 		return true;
 	if(!a)
 		return false;
-	return a->mTimestamp < b->mTimestamp;
+	return a->getTimestamp() < b->getTimestamp();
 }
 // -----------------------------------------------------------------------------
 
@@ -242,11 +242,12 @@ void ChatRoomProxyModel::setFullLocalAddress (const QString &localAddress) {
 }
 
 bool ChatRoomProxyModel::markAsReadEnabled() const{
-	return mChatRoomModel->markAsReadEnabled();
+	return (mChatRoomModel ? mChatRoomModel->markAsReadEnabled() : false);
 }
 
 void ChatRoomProxyModel::enableMarkAsRead(const bool& enable){
-	mChatRoomModel->enableMarkAsRead(enable);
+	if(mChatRoomModel)
+		mChatRoomModel->enableMarkAsRead(enable);
 }
 
 QList<QString> ChatRoomProxyModel::getComposers() const{
@@ -300,7 +301,7 @@ void ChatRoomProxyModel::resetMessageCount(){
 }
 
 void ChatRoomProxyModel::setFilterText(const QString& text){
-	if( mFilterText != text){
+	if( mFilterText != text && mChatRoomModel){
 		mFilterText = text;
 		int currentRowCount = rowCount();
 		int newEntries = 0;
@@ -351,7 +352,7 @@ void ChatRoomProxyModel::handleIsRemoteComposingChanged () {
 void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
 	
 	QWindow *window = getParentWindow(this);
-	if (window && window->isActive())
+	if (window && window->isActive() && mChatRoomModel)
 		mChatRoomModel->resetMessageCount();
 }
 

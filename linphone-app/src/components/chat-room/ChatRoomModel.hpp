@@ -36,6 +36,7 @@ class ChatEvent;
 class ContactModel;
 class ChatRoomModel;
 class ChatMessageModel;
+class ChatNoticeModel;
 
 class ChatRoomModelListener : public QObject, public linphone::ChatRoomListener {
 Q_OBJECT
@@ -232,6 +233,7 @@ public:
 	Q_INVOKABLE void initEntries();
 	Q_INVOKABLE int loadMoreEntries();	// return new entries count
 	void callEnded(std::shared_ptr<linphone::Call> call);
+	void updateNewMessageNotice(const int& count);
 	
 	QDateTime mLastUpdateTime;
 	int mUnreadMessagesCount = 0;
@@ -318,7 +320,7 @@ signals:
 	void canBeEphemeralChanged();
 	void markAsReadEnabledChanged();
 	void chatRoomDeleted();// Must be connected with DirectConnection mode
-	void replyChanged();	
+	void replyChanged();
 	
 // Chat Room listener callbacks	
 	
@@ -342,7 +344,7 @@ private:
 	//void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 	
 	//bool mIsRemoteComposing = false;
-	QPair<bool, std::shared_ptr<ChatEvent> > mUnreadMessageNotice;
+	std::shared_ptr<ChatNoticeModel> mUnreadMessageNotice;
 	QList<std::shared_ptr<ChatEvent> > mEntries;
 	std::shared_ptr<ParticipantListModel> mParticipantListModel;
 	std::shared_ptr<CoreHandlers> mCoreHandlers;
