@@ -147,29 +147,46 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 
 void ConferenceHelperModel::ConferenceAddModel::update () {
   shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
+  bool enablingVideo = true;// Video is not yet fully supported by the application in conference
   if(!conference){
     auto parameters = mConferenceHelperModel->mCore->createConferenceParams(conference);
-    parameters->enableVideo(false);// Video is not yet fully supported by the application in conference
+    parameters->enableVideo(enablingVideo);
     conference = mConferenceHelperModel->mCore->createConferenceWithParams(parameters);
   }
   auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
   list<shared_ptr<linphone::Address>> allLinphoneAddresses;
+  list<shared_ptr<linphone::Address>> newCalls;
+  list<shared_ptr<linphone::Call>> runningCallsToAdd;
 
-//1) Invite participants first to avoid removing conference if empty
+
   for (const auto &map : mRefs) {
     shared_ptr<linphone::Address> linphoneAddress = map->value("__linphoneAddress").value<shared_ptr<linphone::Address>>();
     Q_CHECK_PTR(linphoneAddress);
     allLinphoneAddresses.push_back(linphoneAddress);
+    auto haveCall = std::find_if(currentCalls.begin(), currentCalls.end(), [linphoneAddress](const std::shared_ptr<linphone::Call>& call){
+		return call->getRemoteAddress()->weakEqual(linphoneAddress);
+    });
+    if( haveCall == currentCalls.end())
+		newCalls.push_back(linphoneAddress);
+	else
+		runningCallsToAdd.push_back(*haveCall);
   }
-  if( allLinphoneAddresses.size() > 0){
+ 
+// 1) Add running calls
+  if( runningCallsToAdd.size() > 0){
+	conference->addParticipants(runningCallsToAdd);
+  }
+ //1) Invite participants
+  if( newCalls.size() > 0){
     auto parameters = CoreManager::getInstance()->getCore()->createCallParams(nullptr);
-    parameters->enableVideo(false);
+    parameters->enableVideo(enablingVideo);
     conference->inviteParticipants(
-      allLinphoneAddresses,
+      newCalls,
       parameters
     );
   }
-// 2) Put in pause and remove all calls that are not in the conference list
+  
+// 3) Put in pause and remove all calls that are not in the conference list
   for(const auto &call : CoreManager::getInstance()->getCore()->getCalls()){
       const std::string callAddress = call->getRemoteAddress()->asStringUriOnly();
       auto address = allLinphoneAddresses.begin();

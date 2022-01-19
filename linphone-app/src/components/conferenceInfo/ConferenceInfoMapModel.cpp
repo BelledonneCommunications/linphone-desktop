@@ -39,12 +39,21 @@
 
 ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : QAbstractListModel(parent) {
 	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
+	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	for(auto conferenceInfo : conferenceInfos){
-		auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
-		QDate t = conferenceInfoModel->getDateTime().date();
-		if( !mMappedList.contains(t))
-			mMappedList[t] = new ConferenceInfoListModel();
-		mMappedList[t]->add(conferenceInfoModel);
+		std::list<std::shared_ptr<linphone::Address>> participants = conferenceInfo->getParticipants();
+		bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
+		if(!haveMe)
+			haveMe = (std::find_if(participants.begin(), participants.end(), [me](const std::shared_ptr<linphone::Address>& address){
+				return me->weakEqual(address);
+			}) != participants.end());
+		if(haveMe){
+			auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
+			QDate t = conferenceInfoModel->getDateTime().date();
+			if( !mMappedList.contains(t))
+				mMappedList[t] = new ConferenceInfoListModel();
+			mMappedList[t]->add(conferenceInfoModel);
+		}
 	}
 }
 

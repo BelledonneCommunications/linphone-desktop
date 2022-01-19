@@ -464,7 +464,15 @@ void CallModel::accept (bool withVideo) {
 		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
 		params->enableVideo(withVideo);
 		setRecordFile(params);
-	
+		auto localAddress = mCall->getCallLog()->getLocalAddress();
+		std::list<std::shared_ptr<linphone::ProxyConfig>> proxies = core->getProxyConfigList() ;
+		for(auto proxy : proxies){
+			if(proxy->getIdentityAddress()->weakEqual(localAddress)) {
+				params->setProxyConfig(proxy);
+				break;
+			}
+		}
+		
 		mCall->acceptWithParams(params);
 	}
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   version="1.1"
+   id="svg2"
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   sodipodi:docname="calendar_participants_custom.svg"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs6" />
+  <sodipodi:namedview
+     id="namedview4"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="16.361665"
+     inkscape:cx="35.112563"
+     inkscape:cy="39.054705"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g8" />
+  <g
+     inkscape:groupmode="layer"
+     inkscape:label="Image"
+     id="g8">
+    <ellipse
+       style="fill:#000000;fill-opacity:0.00214251;fill-rule:evenodd;stroke:#000000;stroke-width:4.912;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.829898;paint-order:stroke fill markers"
+       id="path1021"
+       cx="40.049999"
+       cy="29.935541"
+       rx="8.3143759"
+       ry="8.3581972" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:5.019;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 22.625379,59.537559 C 20.852602,42.5342 34.990346,45.364885 38.035408,45.118993 c 0.862155,-0.0059 0.856369,0.0053 1.982855,0.0175 4.052775,0.04406 19.276663,-1.075963 17.436412,14.344184"
+       id="path2356"
+       sodipodi:nodetypes="ccsc" />
+    <rect
+       style="fill:#000000;fill-opacity:0.00214251;fill-rule:evenodd;stroke:#000000;stroke-width:3.841;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;paint-order:normal"
+       id="rect4364"
+       width="35.325611"
+       height="0.065393761"
+       x="22.402658"
+       y="57.667183" />
+  </g>
+</svg>
