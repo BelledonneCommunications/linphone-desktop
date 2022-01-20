@@ -298,11 +298,10 @@ Rectangle {
 			footer: Item{
 				implicitHeight: composersItem.implicitHeight
 				width: parent.width
+				visible: composersItem.visible
 				Text {
 					id: composersItem
 					property var composers : container.proxyModel.chatRoomModel.composers
-					onComposersChanged: console.log(composers)
-					onVisibleChanged: console.log(visible)
 					color: ChatStyle.composingText.color
 					font.pointSize: ChatStyle.composingText.pointSize
 					height: visible ? undefined : 0
@@ -314,20 +313,58 @@ Rectangle {
 					text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
 				}
 			}
+						
+			ActionButton{
+				id: gotToBottomButton
+				anchors.bottom: parent.bottom
+				anchors.bottomMargin: 10
+				anchors.right: parent.right
+				anchors.rightMargin: 40
+				visible: chat.isIndexAfter(chat.count-1)
+				onVisibleChanged: updateMarkAsRead()
+				Component.onCompleted: updateMarkAsRead()
+				function updateMarkAsRead(){
+					if(!visible)
+						container.proxyModel.markAsReadEnabled = true
+				}
+				
+				Connections{
+					target: container.proxyModel
+					onMarkAsReadEnabledChanged: if( !container.proxyModel.markAsReadEnabled)
+													gotToBottomButton.updateMarkAsRead()
+				}
+				
+				isCustom: true
+				backgroundRadius: width/2
+				colorSet: ChatStyle.gotToBottom
+				onClicked: {
+						chat.bindToEnd = true
+					}
+				MessageCounter{
+					anchors.left: parent.right
+					anchors.bottom: parent.top
+					anchors.bottomMargin: -5
+					anchors.leftMargin: -5
+					count: container.proxyModel.chatRoomModel.unreadMessagesCount
+				}
+			}
 			
-			ChatMessagePreview{
+			
+		}
+		ChatMessagePreview{
 				id: chatMessagePreview
+				Layout.fillWidth: true
+				
 				replyChatRoomModel: proxyModel.chatRoomModel
+				
 			}
 			Rectangle{
 				id: messageBlock
-				height: opacity > 0 ? 32 : 0
-				anchors.left: parent.left
-				anchors.right: parent.right
-				anchors.bottom: parent.bottom
-				anchors.leftMargin: ChatStyle.entry.leftMargin
-				anchors.rightMargin: ChatStyle.entry.leftMargin
-				anchors.bottomMargin: ChatStyle.entry.bottomMargin
+				onHeightChanged: height = Layout.preferredHeight
+				Layout.preferredHeight: visible && opacity > 0 ? 32 : 0
+				Layout.fillWidth: true
+				Layout.leftMargin: ChatStyle.entry.leftMargin
+				Layout.rightMargin: ChatStyle.entry.rightMargin
 				color: ChatStyle.messageBanner.color
 				radius: 10
 				state: "hidden"
@@ -381,45 +418,6 @@ Rectangle {
 					}
 				]
 			}
-			
-			ActionButton{
-				id: gotToBottomButton
-				anchors.bottom: messageBlock.top
-				anchors.bottomMargin: 10
-				anchors.right: parent.right
-				anchors.rightMargin: 40
-				visible: chat.isIndexAfter(chat.count-1)
-				onVisibleChanged: updateMarkAsRead()
-				Component.onCompleted: updateMarkAsRead()
-				function updateMarkAsRead(){
-					if(!visible)
-						container.proxyModel.markAsReadEnabled = true
-				}
-				
-				Connections{
-					target: container.proxyModel
-					onMarkAsReadEnabledChanged: if( !container.proxyModel.markAsReadEnabled)
-													gotToBottomButton.updateMarkAsRead()
-				}
-				
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: ChatStyle.gotToBottom
-				onClicked: {
-						chat.bindToEnd = true
-					}
-				MessageCounter{
-					anchors.left: parent.right
-					anchors.bottom: parent.top
-					anchors.bottomMargin: -5
-					anchors.leftMargin: -5
-					count: container.proxyModel.chatRoomModel.unreadMessagesCount
-				}
-			}
-			
-			
-		}
-		
 		// -------------------------------------------------------------------------
 		// Send area.
 		// -------------------------------------------------------------------------

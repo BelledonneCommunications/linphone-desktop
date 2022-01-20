@@ -316,13 +316,20 @@ void CoreManager::migrate () {
 		auto params = account->getParams();
 		if( params->getDomain() == Constants::LinphoneDomain) {
 			auto newParams = params->clone();
+			QString accountIdentity = (newParams->getIdentityAddress() ? newParams->getIdentityAddress()->asString().c_str() : "no-identity");
 			if( rcVersion < 1) {
 				newParams->setContactParameters(Constants::DefaultContactParameters);
 				newParams->setExpires(Constants::DefaultExpires);
+				qInfo() << "Migrating " << accountIdentity << " for version 1. contact parameters = " << Constants::DefaultContactParameters << ", expires = " << Constants::DefaultExpires;
 			}
 			if( rcVersion < 2) {
 				newParams->setConferenceFactoryUri(Constants::DefaultConferenceURI);
 				setlimeServerUrl = true;
+				qInfo() << "Migrating " << accountIdentity << " for version 2. conference factory URI = " << Constants::DefaultConferenceURI;
+			}
+			if( rcVersion < 3){
+				newParams->enableCpimInBasicChatRoom(true);
+				qInfo() << "Migrating " << accountIdentity << " for version 3. enable Cpim in basic chat rooms";
 			}
 			account->setParams(newParams);
 		}
