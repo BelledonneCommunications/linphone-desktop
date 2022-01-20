@@ -40,6 +40,7 @@ public:
 	std::shared_ptr<linphone::Recorder> getRecorder();
 	
 	Q_INVOKABLE int getDuration()const;
+	Q_INVOKABLE float getCaptureVolume()const;
 	LinphoneEnums::RecorderState getState() const;
 	Q_INVOKABLE QString getFile()const;
 	

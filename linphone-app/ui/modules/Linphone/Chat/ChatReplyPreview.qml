@@ -18,7 +18,7 @@ Rectangle{
 	id: replyPreviewBlock
 	property ChatRoomModel chatRoomModel
 	
-	Layout.preferredHeight: Math.min(messageContentsList.height + replyPreviewHeaderArea.implicitHeight + 15, parent.maxHeight)
+	Layout.preferredHeight: visible ? Math.min(messageContentsList.height + replyPreviewHeaderArea.implicitHeight + 15, parent.maxHeight) : 0
 	
 	property int leftMargin: textArea.textLeftMargin
 	property int rightMargin: textArea.textRightMargin

@@ -52,6 +52,10 @@ int RecorderModel::getDuration()const{
 	return mRecorder->getDuration();
 }
 
+float RecorderModel::getCaptureVolume()const{
+	return mRecorder->getCaptureVolume();
+}
+
 LinphoneEnums::RecorderState RecorderModel::getState() const{
 	return LinphoneEnums::fromLinphone(mRecorder->getState());
 }

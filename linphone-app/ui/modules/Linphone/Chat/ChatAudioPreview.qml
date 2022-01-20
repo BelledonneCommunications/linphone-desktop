@@ -28,7 +28,7 @@ Rectangle{
 							  mediaProgressBar.stop()
 	onIsPlayingChanged: isPlaying ? mediaProgressBar.resume() : mediaProgressBar.stop()
 	
-	Layout.preferredHeight: 70
+	Layout.preferredHeight: visible ? 70 : 0
 	
 	color: ChatAudioPreviewStyle.backgroundColor
 	radius: 0
@@ -63,6 +63,16 @@ Rectangle{
 			isCustom: true
 			colorSet: ChatAudioPreviewStyle.deleteAction
 			onClicked: RecorderManager.clearVocalRecorder()
+		}
+		VuMeter {
+			Timer {
+				interval: 50
+				repeat: true
+				running: audioPreviewBlock.isRecording
+				
+				onTriggered: parent.value = audioPreviewBlock.vocalRecorder.getCaptureVolume()
+			}
+			visible: audioPreviewBlock.isRecording
 		}
 		Item{
 			Layout.fillHeight: true
