@@ -98,13 +98,15 @@ Item {
 					chatMessageModel: $chatEntry
 				}
 				height: contentHeight
-				
+				boundsBehavior: Flickable.StopAtBounds
+				interactive: false
 				delegate: ChatContent{
 					contentModel: modelData
 					onFitWidthChanged:{
 						rectangle.updateWidth()			
 					}
 					onLastTextSelectedChanged: container.lastTextSelected= lastTextSelected
+					onRightClicked: chatMenu.open()
 				}
 			}
 		}

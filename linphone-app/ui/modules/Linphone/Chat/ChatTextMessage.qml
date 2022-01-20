@@ -26,6 +26,8 @@ TextEdit {
 	property int fitHeight: visible ? contentHeight + padding : 0
 	property int fitWidth: visible ? implicitWidth + padding*2 : 0
 	
+	signal rightClicked()
+	
 	
 	property int removeWarningFromBindingLoop : implicitWidth	// Just a dummy variable to remove meaningless binding loop on implicitWidth
 	
@@ -49,12 +51,44 @@ TextEdit {
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	
-	onCursorRectangleChanged: Logic.ensureVisible(cursorRectangle)
+	onCursorRectangleChanged: if(!readOnly) Logic.ensureVisible(cursorRectangle)
 	onLinkActivated: Qt.openUrlExternally(link)
-	onSelectedTextChanged:if(selectedText != '') lastTextSelected = selectedText
+	onSelectedTextChanged:{
+							if(selectedText != '') lastTextSelected = selectedText
+							else {
+								if( mouseArea.keepLastSelection) {
+									mouseArea.keepLastSelection = false
+									select(mouseArea.lastStartSelection, mouseArea.lastEndSelection)
+								}
+							}
+						}
 	onActiveFocusChanged: {
-		if(activeFocus)
+		if(activeFocus) {
 			lastTextSelected = ''
+			mouseArea.keepLastSelection = false
+		}
 		deselect()
+	}
+	
+	MouseArea {
+		id: mouseArea
+		property bool keepLastSelection: false
+		property int lastStartSelection:0
+		property int lastEndSelection:0
+		anchors.fill: parent
+		propagateComposedEvents: true
+		hoverEnabled: false
+		scrollGestureEnabled: false
+		cursorShape: parent.hoveredLink ? Qt.PointingHandCursor : Qt.IBeamCursor
+		acceptedButtons: Qt.RightButton
+		onClicked: {
+				if(!keepLastSelection) {
+					lastStartSelection = parent.selectionStart
+					lastEndSelection = parent.selectionEnd
+				}
+				keepLastSelection = true
+				message.rightClicked()
+				mouse.accepted = true
+		}
 	}
 }
