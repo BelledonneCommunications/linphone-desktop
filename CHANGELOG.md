@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	
 - Add a feedback on fetching remote provisioning when it failed.
 - Option to enable message notifications.
+- CPIM on basic chat rooms.
+- New event on new messages in chat and a shortcut to go to the end of chat if last message is not shown.
 - Based on Linphone SDK 5.1
 
 ### Fixed
@@ -20,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix errors on Action-Buttons on restart.
 - Enable G729 on public builds.
 - Take account of return key on Numpad
+- Huge messages are better shown and with less flickering.
 
 ## 4.3.2
 
