@@ -114,18 +114,4 @@ Item {
 			onTriggered: container.removeEntryRequested()
 		}
 	}
-	
-	
-	
-	// Handle hovered link.
-	MouseArea {
-		anchors.fill: parent
-		
-		acceptedButtons: Qt.RightButton
-		propagateComposedEvents:true
-		cursorShape: parent.hoveredLink
-					 ? Qt.PointingHandCursor
-					 : Qt.IBeamCursor
-		onClicked: mouse.button === Qt.RightButton && messageMenu.popup()
-	}
 }
