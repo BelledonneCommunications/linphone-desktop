@@ -298,7 +298,6 @@ Rectangle {
 			footer: Item{
 				implicitHeight: composersItem.implicitHeight
 				width: parent.width
-				visible: composersItem.visible
 				Text {
 					id: composersItem
 					property var composers : container.proxyModel.chatRoomModel.composers
