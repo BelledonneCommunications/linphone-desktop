@@ -69,6 +69,7 @@ void ParticipantImdnStateProxyModel::setChatMessageModel(ChatMessageModel * mess
 			setSourceModel(messageModel);
 			connect(messageModel, &ParticipantImdnStateListModel::countChanged, this, &ParticipantImdnStateProxyModel::countChanged);
 			sort(0);
+			emit countChanged();
 		}
 	}
 	emit chatMessageModelChanged();
