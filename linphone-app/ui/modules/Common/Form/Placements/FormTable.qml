@@ -43,10 +43,10 @@ Column {
   Row {
     spacing: FormTableLineStyle.spacing
     width: parent.width
-
+	
     // No title for the titles column.
     Item {
-      height: FormTableStyle.entry.height
+      height: header.model.count > 0 ? FormTableStyle.entry.height : 0
       width: formTable.legendLineWidth
 
       visible: !formTable.disableLineTitle

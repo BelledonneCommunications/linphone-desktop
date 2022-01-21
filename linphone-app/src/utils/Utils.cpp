@@ -25,11 +25,13 @@
 #include <QImageReader>
 #include <QDebug>
 
+#include "config.h"
 #include "Utils.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "app/paths/Paths.hpp"
 
 // =============================================================================
@@ -514,4 +516,12 @@ std::shared_ptr<linphone::Config> Utils::getConfigIfExists (const QString &confi
 		factoryPath.clear();
 	
 	return linphone::Config::newWithFactory(configPath.toStdString(), factoryPath);
+}
+
+QString Utils::computeUserAgent(const std::shared_ptr<linphone::Config>& config){
+	return QStringLiteral(APPLICATION_NAME" Desktop/%1 (%2) %3, Qt %4 LinphoneCore")
+					.arg(QCoreApplication::applicationVersion())
+					.arg(SettingsModel::getDeviceName(config))
+					.arg(QSysInfo::prettyProductName())
+					.arg(qVersion());
 }

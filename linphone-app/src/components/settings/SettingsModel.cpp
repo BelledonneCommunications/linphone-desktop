@@ -191,6 +191,24 @@ void SettingsModel::setAssistantLogoutUrl (QString url) {
 }
 
 // =============================================================================
+// SIP Accounts.
+// =============================================================================
+
+QString SettingsModel::getDeviceName(const std::shared_ptr<linphone::Config>& config){
+	return Utils::coreStringToAppString(config->getString(UiSection, "device_name", Utils::appStringToCoreString(QSysInfo::machineHostName())));
+}
+
+QString SettingsModel::getDeviceName() const{
+	return getDeviceName(mConfig);
+}
+
+void SettingsModel::setDeviceName(const QString& deviceName){
+	mConfig->setString(UiSection, "device_name", Utils::appStringToCoreString(deviceName));
+	emit deviceNameChanged();
+	CoreManager::getInstance()->updateUserAgent();
+}
+
+// =============================================================================
 // Audio.
 // =============================================================================
 

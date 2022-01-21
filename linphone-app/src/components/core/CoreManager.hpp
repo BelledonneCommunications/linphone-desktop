@@ -168,6 +168,7 @@ public:
 	
 	Q_INVOKABLE bool isLastRemoteProvisioningGood();
 	Q_INVOKABLE QString getUserAgent()const;
+	void updateUserAgent();
 	
 public slots:
 	void initCoreManager();

@@ -51,6 +51,10 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(QString assistantRegistrationUrl READ getAssistantRegistrationUrl WRITE setAssistantRegistrationUrl NOTIFY assistantRegistrationUrlChanged)
 	Q_PROPERTY(QString assistantLoginUrl READ getAssistantLoginUrl WRITE setAssistantLoginUrl NOTIFY assistantLoginUrlChanged)
 	Q_PROPERTY(QString assistantLogoutUrl READ getAssistantLogoutUrl WRITE setAssistantLogoutUrl NOTIFY assistantLogoutUrlChanged)
+	
+	// SIP Accounts. -------------------------------------------------------------
+	
+	Q_PROPERTY(QString deviceName READ getDeviceName WRITE setDeviceName NOTIFY deviceNameChanged)
 
 	// Audio. --------------------------------------------------------------------
 	
@@ -248,6 +252,12 @@ public:
 	
 	QString getAssistantLogoutUrl () const;
 	void setAssistantLogoutUrl (QString url);
+	
+	// SIP Accounts. -------------------------------------------------------------
+	
+	static QString getDeviceName(const std::shared_ptr<linphone::Config>& config);
+	QString getDeviceName() const;
+	void setDeviceName(const QString& deviceName);
 
 	// Audio. --------------------------------------------------------------------
 	
@@ -550,6 +560,10 @@ signals:
 	void assistantRegistrationUrlChanged (QString url);
 	void assistantLoginUrlChanged (QString url);
 	void assistantLogoutUrlChanged (QString url);
+	
+	// SIP Accounts. -------------------------------------------------------------
+	
+	void deviceNameChanged();
 
 	// Audio. --------------------------------------------------------------------
 	
