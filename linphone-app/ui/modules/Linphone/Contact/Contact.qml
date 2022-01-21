@@ -134,7 +134,7 @@ Rectangle {
 			Layout.alignment: Qt.AlignTop
 			
 			count: entry?Number(entry.unreadMessagesCount) + Number(entry.missedCallsCount):0
-			isComposing: Boolean(entry && entry.isComposing)
+			isComposing: Boolean(entry && entry.composers && entry.composers.length > 0)
 			
 			visible: entry?(entry.unreadMessagesCount !== null || entry.missedCallsCount !== null) && item.displayUnreadMessageCount:false
 		}
