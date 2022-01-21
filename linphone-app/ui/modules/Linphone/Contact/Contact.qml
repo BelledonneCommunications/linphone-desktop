@@ -33,7 +33,7 @@ Rectangle {
 																			:entry.username != undefined ?entry.username:
 																										   UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
 											):'')
-	
+	signal avatarClicked(var mouse)
 	// ---------------------------------------------------------------------------
 	
 	color: 'transparent' // No color by default.
@@ -85,6 +85,10 @@ Rectangle {
 				visible: entry!=undefined && entry.haveEncryption != undefined && entry.haveEncryption
 				icon: entry?(entry.securityLevel === 2?'secure_level_1': entry.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'):'secure_level_unsafe'
 				iconSize:15
+			}
+			MouseArea{
+				anchors.fill: parent
+				onClicked: item.avatarClicked(mouse)
 			}
 		}
 		Icon {
