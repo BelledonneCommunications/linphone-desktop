@@ -44,7 +44,7 @@ ScrollableListView {
 	
 	// ---------------------------------------------------------------------------
 	
-	signal entryClicked (var entry, var index)
+	signal entryClicked (var entry, var index, var contactItem)
 	
 	
 	// ---------------------------------------------------------------------------
@@ -244,11 +244,8 @@ ScrollableListView {
 					
 					entry:  modelData
 					
-					MouseArea {
-						anchors.fill: parent
-						onClicked: sipAddressesView.entryClicked(parent.entry, index)
-						cursorShape: sipAddressesView.hoveredCursor
-					}
+					onAvatarClicked: sipAddressesView.entryClicked(parent.entry, index, contactView)
+					
 					BusyIndicator{
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.horizontalCenter: parent.horizontalCenter
