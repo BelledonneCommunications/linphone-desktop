@@ -300,16 +300,16 @@ Rectangle {
 				width: parent.width
 				Text {
 					id: composersItem
-					property var composers : container.proxyModel.chatRoomModel.composers
+					property var composers : container.proxyModel.chatRoomModel && container.proxyModel.chatRoomModel.composers
 					color: ChatStyle.composingText.color
 					font.pointSize: ChatStyle.composingText.pointSize
 					height: visible ? undefined : 0
 					leftPadding: ChatStyle.composingText.leftPadding
-					visible: composers.length > 0 && ( (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled)
+					visible: composers && composers.length > 0 && ( (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled)
 														 || (proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled) )
 					wrapMode: Text.Wrap
 					//: '%1 is typing...' indicate that someone is composing in chat
-					text:(composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
+					text:(!composers || composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
 				}
 			}
 						
@@ -344,7 +344,7 @@ Rectangle {
 					anchors.bottom: parent.top
 					anchors.bottomMargin: -5
 					anchors.leftMargin: -5
-					count: container.proxyModel.chatRoomModel.unreadMessagesCount
+					count: container.proxyModel.chatRoomModel ? container.proxyModel.chatRoomModel.unreadMessagesCount : 0
 				}
 			}
 			
