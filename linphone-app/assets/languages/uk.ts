@@ -2299,6 +2299,11 @@
         <source>assistantSupportsPhoneNumbersLabel</source>
         <translation>Підтримує номери телефонів</translation>
     </message>
+    <message>
+        <source>defaultDeviceNameLabel</source>
+        <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

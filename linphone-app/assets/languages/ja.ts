@@ -2277,6 +2277,11 @@
         <source>assistantSupportsPhoneNumbersLabel</source>
         <translation>電話番号をサポート</translation>
     </message>
+    <message>
+        <source>defaultDeviceNameLabel</source>
+        <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

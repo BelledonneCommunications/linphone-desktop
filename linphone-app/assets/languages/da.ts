@@ -2288,6 +2288,11 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>assistantSupportsPhoneNumbersLabel</source>
         <translation>Understøtter telefonnumre</translation>
     </message>
+    <message>
+        <source>defaultDeviceNameLabel</source>
+        <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>

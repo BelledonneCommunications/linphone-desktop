@@ -261,15 +261,6 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	mCore->setVideoDisplayFilter("MSQOGL");
 	mCore->usePreviewWindow(true);
 	mCore->enableVideoPreview(false);
-	mCore->setUserAgent(
-				Utils::appStringToCoreString(
-					QStringLiteral(APPLICATION_NAME" Desktop/%1 (%2, Qt %3) LinphoneCore")
-					.arg(QCoreApplication::applicationVersion())
-					.arg(QSysInfo::prettyProductName())
-					.arg(qVersion())
-					),
-				mCore->getVersion()
-				);
 	// Force capture/display.
 	// Useful if the app was built without video support.
 	// (The capture/display attributes are reset by the core in this case.)
@@ -278,10 +269,17 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 		config->setInt("video", "capture", 1);
 		config->setInt("video", "display", 1);
 	}
+	QString userAgent = Utils::computeUserAgent(config);
+	mCore->setUserAgent(Utils::appStringToCoreString(userAgent), mCore->getVersion());
 	mCore->start();
 	setDatabasesPaths();
 	setOtherPaths();
 	mCore->enableFriendListSubscription(true);
+}
+
+void CoreManager::updateUserAgent(){
+	mCore->setUserAgent(Utils::appStringToCoreString(Utils::computeUserAgent(mCore->getConfig())), mCore->getVersion());
+	forceRefreshRegisters(); 	// After setting a new device name, REGISTER need to take account it.
 }
 
 void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel){

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Option to enable message notifications.
 - CPIM on basic chat rooms.
 - New event on new messages in chat and a shortcut to go to the end of chat if last message is not shown.
+- Device name can be changed from settings.
 - Based on Linphone SDK 5.1
 
 ### Fixed
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enable G729 on public builds.
 - Take account of return key on Numpad
 - Huge messages are better shown and with less flickering.
+- Adapt UserAgent with device name.
 
 ## 4.3.2
 
