@@ -52,6 +52,16 @@ Rectangle {
 				if( loadingEntries && !displaying)
 					displaying = true
 			}
+			onBindToEndChanged: if( bindToEnd){
+				markAsReadTimer.start()
+			}
+			Timer{
+				id: markAsReadTimer
+				interval: 5000
+				repeat: false
+				running: false
+				onTriggered: container.proxyModel.chatRoomModel.resetMessageCount()
+			}
 			//property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
 			// -----------------------------------------------------------------------
 			Layout.fillHeight: true
