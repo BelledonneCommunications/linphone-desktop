@@ -228,7 +228,7 @@ void ContentModel::downloadFile(){
 }
 
 void ContentModel::openFile (bool showDirectory) {
-	if (!mWasDownloaded && !mChatMessageModel->isOutgoing()) {
+	if ((!mWasDownloaded && !mChatMessageModel->isOutgoing()) || mContent->getFilePath() == "") {
 		downloadFile();
 	}else{
 		QFileInfo info( Utils::coreStringToAppString(mContent->getFilePath()));
