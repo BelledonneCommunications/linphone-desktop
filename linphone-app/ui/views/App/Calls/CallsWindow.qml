@@ -216,8 +216,6 @@ Window {
 						fullPeerAddress: window.call.fullPeerAddress
 						fullLocalAddress: window.call.fullLocalAddress
 						localAddress: window.call.localAddress
-						
-						onChatRoomModelChanged: if(chatRoomModel) chatRoomModel.initEntries()
 					}
 					
 					Connections {

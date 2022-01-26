@@ -88,6 +88,7 @@ QQuickFramebufferObject::Renderer *CameraPreview::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer;
 	CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
 	renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
+	CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 	if(renderer)
 		return renderer;
 	else{

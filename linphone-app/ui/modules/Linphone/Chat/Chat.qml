@@ -39,61 +39,42 @@ Rectangle {
 			id: chat
 			
 			// -----------------------------------------------------------------------
-			
 			property bool bindToEnd: false
-			property bool tryToLoadMoreEntries: true
-			//property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
+			property bool displaying: false
+			property int loaderCount: 0
+			property int readyItems : 0
+			property bool loadingLoader: (readyItems != loaderCount)
+			property bool loadingEntries: container.proxyModel.chatRoomModel.entriesLoading || displaying
+			property bool tryToLoadMoreEntries: loadingEntries || loadingLoader
+			property bool isMoving : false	// replace moving read-only property to allow using movement signals.
 			
+			onLoadingEntriesChanged: {
+				if( loadingEntries && !displaying)
+					displaying = true
+			}
+			//property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
 			// -----------------------------------------------------------------------
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			
 			highlightFollowsCurrentItem: false
-			
+			// Use moving event => this is a user action.
+			onIsMovingChanged:{
+				if(!chat.isMoving && chat.atYBeginning && !chat.loadingEntries){// Moving has stopped. Check if we are at beginning
+					chat.displaying = true
+					container.proxyModel.loadMoreEntriesAsync()
+				}
+			}
 			section {
 				criteria: ViewSection.FullString
 				delegate: sectionHeading
 				property: '$sectionDate'
 			}
-			
-			Timer {
-				id: loadMoreEntriesDelayer
-				interval: 1
-				repeat: false
-				running: false
-				
-				onTriggered: {
-					chat.positionViewAtBeginning()
-					container.proxyModel.loadMoreEntries()
-				}
-			}
-			Timer {
-				// Delay each search by 100ms
-				id: endOfLoadMoreEntriesDelayer
-				interval: 100
-				repeat: false
-				running: false
-				
-				onTriggered: {
-					if(chat.atYBeginning){// We are still at the beginning. Try to continue searching
-						loadMoreEntriesDelayer.start()
-					}else// We are not at the begining. New search can be done by moving to the top.
-						chat.tryToLoadMoreEntries = false
-				}
-			}
-			
 			// -----------------------------------------------------------------------
 			
 			Component.onCompleted: Logic.initView()
-			
-			onContentYChanged: {
-				if (chat.atYBeginning && !chat.tryToLoadMoreEntries) {
-					chat.tryToLoadMoreEntries = true// Show busy indicator
-					loadMoreEntriesDelayer.start()// Let GUI time to the busy indicator to be shown
-				}
-			}
-			onMovementEnded: Logic.handleMovementEnded()
-			onMovementStarted: Logic.handleMovementStarted()
+			onMovementStarted: {Logic.handleMovementStarted(); chat.isMoving = true}
+			onMovementEnded: {Logic.handleMovementEnded(); chat.isMoving = false}
 			
 			// -----------------------------------------------------------------------
 			
@@ -104,12 +85,10 @@ Rectangle {
 				// the position is set at end and it can be possible to load
 				// more entries.
 				onEntryTypeFilterChanged: Logic.initView()
+				
 				onMoreEntriesLoaded: {
-					Logic.handleMoreEntriesLoaded(n)
-					if(n>1)// New entries : delay the end
-						endOfLoadMoreEntriesDelayer.start()
-					else// No new entries, we can stop without waiting
-						chat.tryToLoadMoreEntries = false
+					Logic.handleMoreEntriesLoaded(n)// move view to n - 1 item
+					chat.displaying = false
 				}
 			}
 			
@@ -258,8 +237,18 @@ Rectangle {
 							// Display content.
 							Loader {
 								id: loader
+								height: (item !== null && typeof(item)!== 'undefined')? item.height: 0
 								Layout.fillWidth: true
 								source: Logic.getComponentFromEntry($chatEntry)
+								property int count: 0
+								asynchronous: chat.count - count > 100
+								onStatusChanged: if( status == Loader.Ready) ++chat.readyItems
+								Component.onCompleted: count = ++chat.loaderCount
+								Component.onDestruction: {
+														--chat.loaderCount
+														if( status == Loader.Ready)
+															--chat.readyItems
+														}
 							}
 							Connections{
 								target: loader.item
@@ -300,16 +289,17 @@ Rectangle {
 				width: parent.width
 				Text {
 					id: composersItem
-					property var composers : container.proxyModel.chatRoomModel && container.proxyModel.chatRoomModel.composers
+					property var composers : container.proxyModel.chatRoomModel ? container.proxyModel.chatRoomModel.composers : undefined
+					property int count : composers && composers.length ? composers.length : 0
 					color: ChatStyle.composingText.color
 					font.pointSize: ChatStyle.composingText.pointSize
 					height: visible ? undefined : 0
 					leftPadding: ChatStyle.composingText.leftPadding
-					visible: composers && composers.length > 0 && ( (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled)
+					visible: count > 0 && ( (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled)
 														 || (proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled) )
 					wrapMode: Text.Wrap
 					//: '%1 is typing...' indicate that someone is composing in chat
-					text:(!composers || composers.length==0?'': qsTr('chatTyping','',composers.length).arg(container.proxyModel.getDisplayNameComposers()))
+					text:(count==0?'': qsTr('chatTyping','',count).arg(container.proxyModel.getDisplayNameComposers()))
 				}
 			}
 						

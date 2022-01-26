@@ -102,10 +102,7 @@ void TimelineModel::setSelected(const bool& selected){
 			mChatRoomModel->initEntries();
 		}
 		emit selectedChanged(mSelected);
-	}else if(selected)//  Warning, Setting to true is only when we want to force a selection. It's why we send a signal only in this case. We want avoid to change the counter on timelines that are already unselected.
-	// This only work because we want at least only one timeline selected
-		emit selectedChanged(mSelected);
-	
+	}
 }
 
 void TimelineModel::updateUnreadCount(){

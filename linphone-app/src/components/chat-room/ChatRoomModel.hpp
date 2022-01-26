@@ -155,6 +155,8 @@ public:
 	
 	Q_PROPERTY(ChatMessageModel * reply READ getReply WRITE setReply NOTIFY replyChanged)
 	
+	Q_PROPERTY(bool entriesLoading READ isEntriesLoading WRITE setEntriesLoading NOTIFY entriesLoadingChanged)
+	
 	
 	
 	//ChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure);
@@ -199,6 +201,7 @@ public:
 	bool isCurrentProxy() const;						// Return true if this chat room is Me() is the current proxy
 	bool canHandleParticipants() const;
 	bool getIsRemoteComposing () const;
+	bool isEntriesLoading() const;
 	ParticipantListModel* getParticipants() const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
@@ -208,6 +211,7 @@ public:
 	void setSubject(QString& subject);
 	void setLastUpdateTime(const QDateTime& lastUpdateDate);
 	void updateLastUpdateTime();
+	void setEntriesLoading(const bool& loading);
 	
 	void setUnreadMessagesCount(const int& count);	
 	void setMissedCallsCount(const int& count);
@@ -243,6 +247,7 @@ public:
 	bool mDeleteChatRoom = false;	// Use as workaround because of core->deleteChatRoom() that call destructor without takking account of count ref : call it in ChatRoomModel destructor	
 	int mLastEntriesStep = 50;		// Retrieve a part of the history to avoid too much processing
 	bool mMarkAsReadEnabled = true;
+	bool mEntriesLoading = false;
 	
 	
 	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
@@ -289,6 +294,8 @@ public slots:
 	
 signals:
 	bool isRemoteComposingChanged ();
+	void entriesLoadingChanged(const bool& loading);
+	void moreEntriesLoaded(const int& count);
 	
 	void allEntriesRemoved (std::shared_ptr<ChatRoomModel> model);
 	void lastEntryRemoved ();

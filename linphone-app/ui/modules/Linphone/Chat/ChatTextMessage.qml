@@ -24,7 +24,7 @@ TextEdit {
 	property string lastTextSelected : ''
 	property font customFont : SettingsModel.textMessageFont
 	property int fitHeight: visible ? contentHeight + padding : 0
-	property int fitWidth: visible ? implicitWidth + padding*2 : 0
+	property int fitWidth: visible ? implicitWidth + 2: 0	// add 2 because there is a bug on border that lead to not fit text exactly
 	
 	signal rightClicked()
 	
@@ -36,10 +36,12 @@ TextEdit {
 	visible: contentModel && contentModel.isText()
 	clip: true
 	padding: ChatStyle.entry.message.padding
+	textMargin: 0
 	readOnly: true
 	selectByMouse: true
 	font.family: customFont.family
 	font.pointSize: Units.dp * customFont.pointSize
+	
 	text: visible ? Utils.encodeTextToQmlRichFormat(contentModel.text, {
 														imagesHeight: ChatStyle.entry.message.images.height,
 														imagesWidth: ChatStyle.entry.message.images.width
@@ -51,7 +53,7 @@ TextEdit {
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	
-	onCursorRectangleChanged: if(!readOnly) Logic.ensureVisible(cursorRectangle)
+	//onCursorRectangleChanged: if(!readOnly) Logic.ensureVisible(cursorRectangle)
 	onLinkActivated: Qt.openUrlExternally(link)
 	onSelectedTextChanged:{
 							if(selectedText != '') lastTextSelected = selectedText

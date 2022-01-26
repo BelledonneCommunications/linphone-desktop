@@ -19,6 +19,7 @@
  */
 
 #include <QQuickWindow>
+#include <QTimer>
 
 #include "app/App.hpp"
 #include "components/core/CoreManager.hpp"
@@ -140,16 +141,16 @@ void ChatRoomProxyModel::compose (const QString& text) {
 
 // -----------------------------------------------------------------------------
 
-void ChatRoomProxyModel::loadMoreEntries () {
+void ChatRoomProxyModel::loadMoreEntriesAsync(){
+	QTimer::singleShot(10, this, &ChatRoomProxyModel::loadMoreEntries);
+}
+
+void ChatRoomProxyModel::onMoreEntriesLoaded(const int& count){
+	emit moreEntriesLoaded(count);
+}
+void ChatRoomProxyModel::loadMoreEntries() {
 	if(mChatRoomModel ) {
-		int currentRowCount = rowCount();
-		int newEntries = 0;
-		do{
-			newEntries = mChatRoomModel->loadMoreEntries();
-			invalidate();
-		}while( newEntries>0 && currentRowCount == rowCount());
-		currentRowCount = rowCount() - currentRowCount + 1;
-		emit moreEntriesLoaded(currentRowCount);
+		mChatRoomModel->loadMoreEntries();
 	}
 }
 
@@ -228,7 +229,6 @@ QString ChatRoomProxyModel::getFullPeerAddress () const {
 void ChatRoomProxyModel::setFullPeerAddress (const QString &peerAddress) {
 	mFullPeerAddress = peerAddress;
 	emit fullPeerAddressChanged(mFullPeerAddress);
-	//reload();
 }
 
 QString ChatRoomProxyModel::getFullLocalAddress () const {
@@ -238,7 +238,6 @@ QString ChatRoomProxyModel::getFullLocalAddress () const {
 void ChatRoomProxyModel::setFullLocalAddress (const QString &localAddress) {
 	mFullLocalAddress = localAddress;
 	emit fullLocalAddressChanged(mFullLocalAddress);
-	//reload();
 }
 
 bool ChatRoomProxyModel::markAsReadEnabled() const{
@@ -277,6 +276,7 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
 		QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
 		QObject::disconnect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
+		QObject::disconnect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
 	}
 	
 	
@@ -289,6 +289,7 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		QObject::connect(ChatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
 		QObject::connect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);		
 		QObject::connect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
+		QObject::connect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
 	}
 	
 	static_cast<ChatRoomModelFilter *>(sourceModel())->setSourceModel(mChatRoomModel.get());

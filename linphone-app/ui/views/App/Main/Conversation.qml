@@ -455,7 +455,7 @@ ColumnLayout  {
 			anchors.leftMargin: 50
 			anchors.verticalCenter: parent.verticalCenter
 			//anchors.horizontalCenter: parent.horizontalCenter
-			visible: chatArea.tryingToLoadMoreEntries
+			running: chatArea.tryingToLoadMoreEntries
 		}
 			
 		// -------------------------------------------------------------------------
@@ -527,7 +527,6 @@ ColumnLayout  {
 		id:chatArea
 		Layout.fillHeight: true
 		Layout.fillWidth: true
-		
 		proxyModel: ChatRoomProxyModel {
 			id: chatRoomProxyModel
 			

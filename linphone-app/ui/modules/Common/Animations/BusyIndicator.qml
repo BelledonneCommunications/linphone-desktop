@@ -39,7 +39,7 @@ BusyIndicator {
       RotationAnimator {
         duration: BusyIndicatorStyle.duration
         loops: Animation.Infinite
-        running: busyIndicator.visible && busyIndicator.running
+        running: true
         target: item
 
         from: 0
