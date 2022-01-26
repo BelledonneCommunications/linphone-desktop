@@ -93,8 +93,7 @@ DialogPlus {
 				updateSelectionModels: false
 				anchors.fill: parent
 				model: TimelineProxyModel{}
-				onEntrySelected:{ 
-					console.log(entry)
+				onEntryClicked:{
 					if( entry ) {
 						mainItem.chatRoomSelectedCallback(entry.chatRoomModel)
 						exit(1)

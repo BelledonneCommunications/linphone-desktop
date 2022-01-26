@@ -31,53 +31,53 @@
 // =============================================================================
 
 function initView () {
-  chat.tryToLoadMoreEntries = false
-  chat.bindToEnd = true
+	chat.bindToEnd = true
+	chat.positionViewAtEnd()
+	if(chat.atYBeginning && !chat.loadingEntries){//Check if we are at beginning
+		chat.displaying = true
+		container.proxyModel.loadMoreEntriesAsync()
+	}
 }
 
 function getComponentFromEntry (chatEntry) {
-
-  if (chatEntry.type === Linphone.ChatRoomModel.CallEntry) {
-    return 'Event.qml'
-  }
-  
-  if (chatEntry.type === Linphone.ChatRoomModel.NoticeEntry) {
-    return 'Notice.qml'
-  }
-
-  return chatEntry.isOutgoing ? 'OutgoingMessage.qml' : 'IncomingMessage.qml'
+	
+	if (chatEntry.type === Linphone.ChatRoomModel.CallEntry) {
+		return 'Event.qml'
+	}
+	
+	if (chatEntry.type === Linphone.ChatRoomModel.NoticeEntry) {
+		return 'Notice.qml'
+	}
+	
+	return chatEntry.isOutgoing ? 'OutgoingMessage.qml' : 'IncomingMessage.qml'
 }
 
 function handleFilesDropped (files) {
-  chat.bindToEnd = true
-  files.forEach(container.proxyModel.sendFileMessage)
+	chat.bindToEnd = true
+	files.forEach(container.proxyModel.sendFileMessage)
 }
 
 function handleMoreEntriesLoaded (n) {
-  chat.positionViewAtIndex(n - 1, QtQuick.ListView.Beginning)
+	chat.positionViewAtIndex(n - 1, QtQuick.ListView.Beginning)
 }
 
 function handleMovementEnded () {
-  if (chat.atYEnd) {
-    chat.bindToEnd = true
-  }
+	if (chat.atYEnd) {
+		chat.bindToEnd = true
+	}
 }
 
 function handleMovementStarted () {
-  chat.bindToEnd = false
+	chat.bindToEnd = false
 }
 
 function handleTextChanged (text) {
-  container.proxyModel.compose(text)
+	container.proxyModel.compose(text)
 }
 
 function sendMessage (text) {
-  textArea.text = ''
-  chat.bindToEnd = true
-  if(container.proxyModel)
-	container.proxyModel.sendMessage(text)
-  /*
-	else{// Create a chat room
-		CallsListModel.createChat()
-	}*/
+	textArea.text = ''
+	chat.bindToEnd = true
+	if(container.proxyModel)
+		container.proxyModel.sendMessage(text)
 }

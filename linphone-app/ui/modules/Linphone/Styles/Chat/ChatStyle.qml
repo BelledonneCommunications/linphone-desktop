@@ -164,7 +164,7 @@ QtObject {
 		}
 		
 		property QtObject message: QtObject {
-			property int padding: 8
+			property int padding: 10
 			property int radius: 4
 			
 			property QtObject extraContent: QtObject {

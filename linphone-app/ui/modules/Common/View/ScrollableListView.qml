@@ -41,8 +41,8 @@ ListView {
 		policy: (view.contentHeight > view.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff)
 	}
 	// ---------------------------------------------------------------------------
-	
-	boundsBehavior: Flickable.StopAtBounds
+	boundsMovement: Flickable.StopAtBounds
+	boundsBehavior: Flickable.DragOverBounds
 	clip: true
 	contentWidth: width - (vScrollBar.visible?vScrollBar.width:0)
 	spacing: 0

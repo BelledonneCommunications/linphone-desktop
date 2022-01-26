@@ -319,10 +319,12 @@ ApplicationWindow {
 						
 						onEntrySelected:{
 							if( entry ) {
-								window.setView('Conversation', {
-												   chatRoomModel:entry.chatRoomModel
-												   
+								if( entry.selected){
+									console.log("Load conversation from entry selected on timeline")
+									window.setView('Conversation', {
+												chatRoomModel:entry.chatRoomModel
 											   })
+								}
 							}else{
 								
 								window.setView('Home', {})
@@ -364,11 +366,14 @@ ApplicationWindow {
 	Connections {
 		target: UrlHandlers
 		
-		onSip: window.setView('Conversation', {
+		onSip: {
+		console.log("Change conversation from url handler")
+			 window.setView('Conversation', {
 								  peerAddress: sipAddress,
 								  localAddress: AccountSettingsModel.sipAddress,
 								  fullPeerAddress: sipAddress,
 								  fullLocalAddress: AccountSettingsModel.fullSipAddress
 							  })
+							 }
 	}
 }

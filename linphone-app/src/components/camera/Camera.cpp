@@ -54,21 +54,40 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 	mRefreshTimer->start();
 }
 
+class SafeFramebuffer : public QQuickFramebufferObject::Renderer{
+public:
+	SafeFramebuffer(){}
+	QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override{
+		return new QOpenGLFramebufferObject(size);
+	}	
+	void render () override{}
+	void synchronize (QQuickFramebufferObject *item) override{}
+};
+
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
 	if(mIsPreview){
 		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
 		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
-		return renderer;
+		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 	}else{
 		auto call = mCallModel->getCall();
 		if(call){
 			call->setNativeVideoWindowId(NULL);// Reset
-			return (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
+			renderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
+			call->setNativeVideoWindowId(renderer);
 		}else{
 			CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
-			return (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+			renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+			CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
 		}
+	}
+	
+	if(renderer)
+		return renderer;
+	else{
+		qWarning() << "Camera stream couldn't start for Rendering";
+		return new SafeFramebuffer();
 	}
 }
 

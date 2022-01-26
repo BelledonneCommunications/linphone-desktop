@@ -28,6 +28,7 @@ Rectangle {
 	
 	//signal entrySelected (string entry)
 	signal entrySelected (TimelineModel entry)
+	signal entryClicked(TimelineModel entry)
 	signal showHistoryRequest()
 	
 	// ---------------------------------------------------------------------------
@@ -329,8 +330,8 @@ Rectangle {
 					preventStealing: false
 					onClicked: {
 						if(mouse.button == Qt.LeftButton){
-							if(modelData.selected || !view.updateSelectionModels)// Update selection
-								timeline.entrySelected(modelData)
+							//if(modelData.selected || !view.updateSelectionModels)// Update selection
+							timeline.entryClicked(modelData)
 							if(view){
 								if(view.updateSelectionModels)
 									modelData.selected = true

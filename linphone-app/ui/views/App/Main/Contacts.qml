@@ -204,6 +204,7 @@ ColumnLayout {
 						Connections{
 							target: lastChatRoom
 							onStateChanged: if(state === 1) {
+												console.log("Load conversation from contacts")
 												window.setView('Conversation', {
 																   chatRoomModel: lastChatRoom
 															   })

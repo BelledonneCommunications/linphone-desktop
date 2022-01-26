@@ -35,6 +35,7 @@ Item {
 		property bool colorOverwriteEnabled : false
 		mipmap: SettingsModel.mipmapEnabled
 		cache: Images.areReadOnlyImages	
+		asynchronous: true
 		
 		//anchors.centerIn: parent
 		anchors.fill: parent

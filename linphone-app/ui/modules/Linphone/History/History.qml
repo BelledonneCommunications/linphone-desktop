@@ -49,7 +49,7 @@ Rectangle {
 
       Component.onCompleted: Logic.initView()
 
-      onContentYChanged: Logic.loadMoreEntries()
+      onContentYChanged: Logic.loadMoreEntriesAsync()
       onMovementEnded: Logic.handleMovementEnded()
       onMovementStarted: Logic.handleMovementStarted()
 

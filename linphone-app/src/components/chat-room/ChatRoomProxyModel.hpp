@@ -55,6 +55,8 @@ public:
 	Q_INVOKABLE QString getDisplayNameComposers()const;
 	Q_INVOKABLE QVariant getAt(int row);
 	
+	
+	Q_INVOKABLE void loadMoreEntriesAsync ();
 	Q_INVOKABLE void loadMoreEntries ();
 	Q_INVOKABLE void setEntryTypeFilter (int type);
 	
@@ -72,6 +74,9 @@ public:
 	Q_INVOKABLE void resetMessageCount();
 	
 	Q_INVOKABLE void setFilterText(const QString& text);
+	
+public slots:
+	void onMoreEntriesLoaded(const int& count);
 	
 signals:
 	void peerAddressChanged (const QString &peerAddress);
