@@ -36,6 +36,7 @@ Item {
 	height: fitHeight
 	onMainChatMessageModelChanged: if( mainChatMessageModel && mainChatMessageModel.replyChatMessageModel) chatMessageModel = mainChatMessageModel.replyChatMessageModel
 	
+	signal goToMessage(ChatMessageModel message)
 	
 	ColumnLayout{
 		anchors.fill: parent
@@ -51,6 +52,10 @@ Item {
 				iconSize: ChatReplyMessageStyle.header.replyIcon.iconSize
 				height: iconSize
 				overwriteColor: ChatReplyMessageStyle.header.color
+				MouseArea{
+					anchors.fill: parent
+					onClicked: mainItem.goToMessage(mainItem.chatMessageModel)
+				}
 			}
 			Text{
 				id: headerText
@@ -62,6 +67,10 @@ Item {
 				font.family: mainItem.customFont.family
 				font.pointSize: Units.dp * (mainItem.customFont.pointSize + ChatReplyMessageStyle.header.pointSizeOffset)
 				color: ChatReplyMessageStyle.header.color
+				MouseArea{
+					anchors.fill: parent
+					onClicked: mainItem.goToMessage(mainItem.chatMessageModel)
+				}
 			}
 		}
 		Rectangle{

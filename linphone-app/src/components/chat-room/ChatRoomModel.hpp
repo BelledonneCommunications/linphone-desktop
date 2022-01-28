@@ -97,7 +97,6 @@ signals:
 	void chatMessageShouldBeStored(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message);
 	void chatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state);
 
-
 };
 
 class ChatRoomModel : public QAbstractListModel {
@@ -119,9 +118,6 @@ public:
 	};
 	Q_ENUM(EntryType)
 	
-	
-	//Q_PROPERTY(QString participants READ getParticipants NOTIFY participantsChanged);
-	//Q_PROPERTY(ParticipantProxyModel participants READ getParticipants NOTIFY participantsChanged);
 	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QDateTime lastUpdateTime MEMBER mLastUpdateTime WRITE setLastUpdateTime NOTIFY lastUpdateTimeChanged)
 	Q_PROPERTY(int unreadMessagesCount MEMBER mUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY unreadMessagesCountChanged)
@@ -238,6 +234,7 @@ public:
 	Q_INVOKABLE int loadMoreEntries();	// return new entries count
 	void callEnded(std::shared_ptr<linphone::Call> call);
 	void updateNewMessageNotice(const int& count);
+	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index. -1 if not found.
 	
 	QDateTime mLastUpdateTime;
 	int mUnreadMessagesCount = 0;

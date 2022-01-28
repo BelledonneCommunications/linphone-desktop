@@ -8,13 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Features:
-	* messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record and play, multi contents.
-	
+	* Messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record and play, multi contents.
 - Add a feedback on fetching remote provisioning when it failed.
 - Option to enable message notifications.
 - CPIM on basic chat rooms.
-- New event on new messages in chat and a shortcut to go to the end of chat if last message is not shown.
 - Device name can be changed from settings.
+- New event on new messages in chat and a shortcut to go to the end of chat if last message is not shown.
+- Shortcut in Reply to message's origin.
 - Based on Linphone SDK 5.1
 
 ### Fixed
@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Take account of return key on Numpad
 - Huge messages are better shown and with less flickering.
 - Adapt UserAgent with device name.
+- Video freeze on network change.
 
 ## 4.3.2
 

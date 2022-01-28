@@ -31,6 +31,15 @@ Rectangle {
 	
 	color: ChatStyle.color
 	
+	function positionViewAtIndex(index){
+		chat.bindToEnd = false
+		chat.positionViewAtIndex(index, ListView.Beginning)
+	}
+	
+	function goToMessage(message){
+		positionViewAtIndex(container.proxyModel.loadTillMessage(message))
+	}
+	
 	ColumnLayout {
 		anchors.fill: parent
 		spacing: 0
@@ -41,13 +50,15 @@ Rectangle {
 			// -----------------------------------------------------------------------
 			property bool bindToEnd: false
 			property bool displaying: false
-			property int loaderCount: 0
-			property int readyItems : 0
-			property bool loadingLoader: (readyItems != loaderCount)
-			property bool loadingEntries: container.proxyModel.chatRoomModel.entriesLoading || displaying
-			property bool tryToLoadMoreEntries: loadingEntries || loadingLoader
+			property bool loadingEntries: (container.proxyModel.chatRoomModel && container.proxyModel.chatRoomModel.entriesLoading) || displaying
+			property bool tryToLoadMoreEntries: loadingEntries || remainingLoadersCount>0
 			property bool isMoving : false	// replace moving read-only property to allow using movement signals.
 			
+// Load optimizations
+			property int remainingLoadersCount: 0
+			property int syncLoaderBatch: 50	// batch of simultaneous loaders on synchronous mode
+//------------------------------------
+						
 			onLoadingEntriesChanged: {
 				if( loadingEntries && !displaying)
 					displaying = true
@@ -60,10 +71,9 @@ Rectangle {
 				interval: 5000
 				repeat: false
 				running: false
-				onTriggered: container.proxyModel.chatRoomModel.resetMessageCount()
+				onTriggered: if(container.proxyModel.chatRoomModel) container.proxyModel.chatRoomModel.resetMessageCount()
 			}
-			//property var sipAddressObserver: SipAddressesModel.getSipAddressObserver(proxyModel.fullPeerAddress, proxyModel.fullLocalAddress)
-			// -----------------------------------------------------------------------
+			
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			
@@ -250,16 +260,20 @@ Rectangle {
 								height: (item !== null && typeof(item)!== 'undefined')? item.height: 0
 								Layout.fillWidth: true
 								source: Logic.getComponentFromEntry($chatEntry)
-								property int count: 0
-								asynchronous: chat.count - count > 100
-								onStatusChanged: if( status == Loader.Ready) ++chat.readyItems
-								Component.onCompleted: count = ++chat.loaderCount
-								Component.onDestruction: {
-														--chat.loaderCount
-														if( status == Loader.Ready)
-															--chat.readyItems
-														}
+								property int loaderIndex: 0	// index of loader from remaining loaders
+								property int remainingIndex : loaderIndex % ((chat.remainingLoadersCount) / chat.syncLoaderBatch) != 0	// Check loader index to remaining loader.
+								onRemainingIndexChanged: if( remainingIndex == 0 && asynchronous) asynchronous = false
+								asynchronous: true
+							
+								onStatusChanged:	if( status == Loader.Ready) {
+														remainingIndex = -1	// overwrite to remove signal changed. That way, there is no more binding loops.
+														--chat.remainingLoadersCount // Loader is ready: remove one from remaining count.
+													}
+								
+								Component.onCompleted: loaderIndex = ++chat.remainingLoadersCount	// on new Loader : one more remaining
+								Component.onDestruction: if( status != Loader.Ready) --chat.remainingLoadersCount	// Remove remaining count if not loaded
 							}
+							
 							Connections{
 								target: loader.item
 								ignoreUnknownSignals: true
@@ -288,6 +302,10 @@ Rectangle {
 																		}
 										}
 									})
+								}
+								
+								onGoToMessage:{
+									container.goToMessage(message)	// sometimes, there is no access to chat id (maybe because of cleaning component while loading new items). Use a global intermediate.
 								}
 							}
 						}
@@ -489,3 +507,4 @@ Rectangle {
 	}
 	
 }
+

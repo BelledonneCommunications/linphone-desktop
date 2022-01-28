@@ -881,10 +881,46 @@ void ChatRoomModel::updateNewMessageNotice(const int& count){
 			beginInsertRows(QModelIndex(), 0, 0);
 			mEntries.prepend(mUnreadMessageNotice);
 			endInsertRows();
-			qWarning() << "New message notice timestamp to :" << lastUnreadMessage.toString();
+			qDebug() << "New message notice timestamp to :" << lastUnreadMessage.toString();
 		}
 		//emit layoutChanged();
 	}
+}
+
+int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
+	if( message){
+		qDebug() << "Load history till message : " << message->getChatMessage()->getMessageId().c_str();
+		auto linphoneMessage = message->getChatMessage();
+	// First find on current list
+		auto entry = std::find_if(mEntries.begin(), mEntries.end(), [linphoneMessage](const std::shared_ptr<ChatEvent>& entry ){
+			return entry->mType == ChatRoomModel::EntryType::MessageEntry && dynamic_cast<ChatMessageModel*>(entry.get())->getChatMessage() == linphoneMessage;
+		});
+	// if not find, load more entries and find it in new entries.
+		if( entry == mEntries.end()){
+			int newEntries = loadMoreEntries();
+			while( newEntries > 0){// no more new entries
+				int entryCount = 0;
+				entry = mEntries.begin();
+				while(entryCount < newEntries && 
+					((*entry)->mType != ChatRoomModel::EntryType::MessageEntry || dynamic_cast<ChatMessageModel*>(entry->get())->getChatMessage() != linphoneMessage)
+				){
+					++entryCount;
+					++entry;
+				}
+				if( entryCount < newEntries){// We got it
+					qDebug() << "Find message at " << entryCount << " after loading new entries";
+					return entryCount;
+				}else
+					newEntries = loadMoreEntries();// continue
+			}
+		}else{
+			int entryCount = entry - mEntries.begin();
+			qDebug() << "Find message at " << entryCount;
+			return entryCount;
+		}
+		qWarning() << "Message has not been found in history";
+	}
+	return -1;
 }
 
 void ChatRoomModel::initEntries(){

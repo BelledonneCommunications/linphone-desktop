@@ -17,6 +17,7 @@ RowLayout {
 	signal copySelectionDone()
 	signal replyClicked()
 	signal forwardClicked()
+	signal goToMessage(ChatMessageModel message)
   
 	implicitHeight: message.height
 	spacing: 0
@@ -67,6 +68,7 @@ RowLayout {
 		onCopySelectionDone: parent.copySelectionDone()
 		onReplyClicked: parent.replyClicked()
 		onForwardClicked: parent.forwardClicked()
+		onGoToMessage: parent.goToMessage(message)
 		
 		Layout.fillWidth: true
 		

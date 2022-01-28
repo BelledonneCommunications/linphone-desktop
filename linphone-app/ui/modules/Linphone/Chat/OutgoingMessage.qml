@@ -19,6 +19,7 @@ Item {
   signal copySelectionDone()
   signal replyClicked()
   signal forwardClicked()
+  signal goToMessage(ChatMessageModel message)
 
   Message {
     id: message
@@ -27,6 +28,7 @@ Item {
 	onCopySelectionDone: parent.copySelectionDone()
 	onReplyClicked: parent.replyClicked()
 	onForwardClicked: parent.forwardClicked()
+	onGoToMessage: parent.goToMessage(message)
 	
     anchors {
       left: parent.left

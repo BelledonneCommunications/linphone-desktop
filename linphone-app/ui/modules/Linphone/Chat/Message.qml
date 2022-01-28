@@ -34,6 +34,7 @@ Item {
 	signal copySelectionDone()
 	signal replyClicked()
 	signal forwardClicked()
+	signal goToMessage(ChatMessageModel message)
 	
 	// ---------------------------------------------------------------------------
 	property string lastTextSelected
@@ -87,6 +88,7 @@ Item {
 				onFitWidthChanged:{
 					rectangle.updateWidth()
 				}
+				onGoToMessage: container.goToMessage(message)
 			}
 			
 			ListView {
