@@ -42,7 +42,7 @@ public:
 	static constexpr char ApplicationMinimalQtVersion[] = "5.10.0";
 	static constexpr char DefaultFont[] = "Noto Sans";
 	
-	static constexpr size_t MaxLogsCollectionSize = 10485760; // 10MB.
+	static constexpr size_t MaxLogsCollectionSize = 10485760*5; // 50MB.
 	
 	
 #ifdef ENABLE_UPDATE_CHECK

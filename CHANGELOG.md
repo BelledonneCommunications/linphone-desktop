@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Huge messages are better shown and with less flickering.
 - Adapt UserAgent with device name.
 - Video freeze on network change.
+- Set default log size to 50MB
 
 ## 4.3.2
 
