@@ -64,6 +64,10 @@ bool ParticipantModel::getInviting() const{
 	return !mParticipant;
 }
 
+bool ParticipantModel::isMe() const{
+	return CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(Utils::interpretUrl(getSipAddress()));
+}
+
 QString ParticipantModel::getSipAddress() const{
     return (mParticipant ? Utils::coreStringToAppString(mParticipant->getAddress()->asString()) : mSipAddress);
 }
