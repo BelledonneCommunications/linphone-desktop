@@ -58,6 +58,8 @@ public:
 	int getDeviceCount();
 	bool getInviting() const;
 	
+	bool isMe() const;
+	
 	void setSipAddress(const QString& address);
 	void setAdminStatus(const bool& status);
 	void setParticipant(std::shared_ptr<linphone::Participant> participant);

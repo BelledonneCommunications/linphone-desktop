@@ -41,6 +41,7 @@ public:
   
   Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
   Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+  Q_PROPERTY(bool showMe READ getShowMe WRITE setShowMe NOTIFY showMeChanged)
 
   bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
@@ -49,8 +50,10 @@ public:
   Q_INVOKABLE QStringList getSipAddresses() const;
   Q_INVOKABLE QVariantList getParticipants() const;
   Q_INVOKABLE int getCount() const;
+  bool getShowMe() const;
   
   void setChatRoomModel(ChatRoomModel * chatRoomModel);
+  void setShowMe(const bool& show);
   
   Q_INVOKABLE void addAddress(const QString& address);
   Q_INVOKABLE void removeModel(ParticipantModel * participant);
@@ -60,6 +63,7 @@ public:
 signals:
   void chatRoomModelChanged();
   void countChanged();
+  void showMeChanged();
   void addressAdded(QString sipAddress);
   void addressRemoved(QString sipAddress);
   
@@ -70,6 +74,7 @@ private:
 
   //std::shared_ptr<ParticipantListModel> mParticipantListModel;
   ChatRoomModel *mChatRoomModel;
+  bool mShowMe = true;
 };
 
 #endif // PARTICIPANT_PROXY_MODEL_H_

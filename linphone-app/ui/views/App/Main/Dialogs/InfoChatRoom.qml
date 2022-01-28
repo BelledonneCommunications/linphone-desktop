@@ -172,6 +172,7 @@ DialogPlus {
 						chatRoomModel:dialog.chatRoomModel
 						onAddressAdded: smartSearchBar.addAddressToIgnore(sipAddress)
 						onAddressRemoved: smartSearchBar.removeAddressToIgnore(sipAddress)
+						showMe: dialog.adminMode
 						
 					}
 					

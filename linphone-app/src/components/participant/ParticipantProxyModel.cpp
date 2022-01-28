@@ -65,6 +65,10 @@ int ParticipantProxyModel::getCount() const{
 	return dynamic_cast<ParticipantListModel*>(sourceModel())->rowCount();
 }
 
+bool ParticipantProxyModel::getShowMe() const{
+	return mShowMe;
+}
+
 // -----------------------------------------------------------------------------
 
 void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
@@ -80,6 +84,14 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 		}
 		sort(0);
 		emit chatRoomModelChanged();
+	}
+}
+
+void ParticipantProxyModel::setShowMe(const bool& show){
+	if(mShowMe != show){
+		mShowMe = show;
+		emit showMeChanged();
+		invalidate();
 	}
 }
 
@@ -114,8 +126,14 @@ void ParticipantProxyModel::removeModel(ParticipantModel * participant){
 // -----------------------------------------------------------------------------
 
 bool ParticipantProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+	if( mShowMe)
+		return true;
+	else{
+		const ParticipantModel* a = sourceModel()->data(sourceModel()->index(sourceRow, 0, sourceParent)).value<ParticipantModel*>();
+		return !a->isMe();
+	}
 	//const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-	return true;
+	//return true;
 }
 
 bool ParticipantProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
