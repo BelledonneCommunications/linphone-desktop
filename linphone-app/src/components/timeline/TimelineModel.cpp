@@ -99,7 +99,6 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", isAdmin:"<< mChatRoomModel->isMeAdmin()
 				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
 				<< ", hasBeenLeft:" << mChatRoomModel->hasBeenLeft();
-			mChatRoomModel->initEntries();
 		}
 		emit selectedChanged(mSelected);
 	}

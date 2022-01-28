@@ -52,13 +52,15 @@ class ChatRoomProxyModel : public QSortFilterProxyModel {
 public:
 	ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
 	
+	int getEntryTypeFilter ();
+	Q_INVOKABLE void setEntryTypeFilter (int type);
+	
 	Q_INVOKABLE QString getDisplayNameComposers()const;
 	Q_INVOKABLE QVariant getAt(int row);
 	
 	
 	Q_INVOKABLE void loadMoreEntriesAsync ();
 	Q_INVOKABLE void loadMoreEntries ();
-	Q_INVOKABLE void setEntryTypeFilter (int type);
 	
 	Q_INVOKABLE void removeAllEntries ();
 	Q_INVOKABLE void removeRow (int index);
@@ -74,6 +76,8 @@ public:
 	Q_INVOKABLE void resetMessageCount();
 	
 	Q_INVOKABLE void setFilterText(const QString& text);
+	
+	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index in displayed list (-1 if not found)
 	
 public slots:
 	void onMoreEntriesLoaded(const int& count);
@@ -133,6 +137,7 @@ private:
 	void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 	
 	int mMaxDisplayedEntries = EntriesChunkSize;
+	int mEntryTypeFilter = ChatRoomModel::EntryType::GenericEntry;
 	
 	QString mPeerAddress;
 	QString mLocalAddress;

@@ -38,47 +38,10 @@ using namespace std;
 
 QString ChatRoomProxyModel::gCachedText;
 
-// Fetch the L last filtered chat entries.
-class ChatRoomProxyModel::ChatRoomModelFilter : public QSortFilterProxyModel {
-public:
-	ChatRoomModelFilter (QObject *parent) : QSortFilterProxyModel(parent) {}
-	
-	int getEntryTypeFilter () {
-		return mEntryTypeFilter;
-	}
-	
-	void setEntryTypeFilter (int type) {
-		mEntryTypeFilter = type;
-		invalidate();
-	}
-	
-protected:
-	bool filterAcceptsRow (int sourceRow, const QModelIndex &) const override {
-		if (mEntryTypeFilter == ChatRoomModel::EntryType::GenericEntry)
-			return true;
-		
-		QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
-		auto eventModel = sourceModel()->data(index);
-		
-		if( mEntryTypeFilter == ChatRoomModel::EntryType::CallEntry && eventModel.value<ChatCallModel*>() != nullptr)
-			return true;
-		if( mEntryTypeFilter == ChatRoomModel::EntryType::MessageEntry && eventModel.value<ChatMessageModel*>() != nullptr)
-			return true;
-		if( mEntryTypeFilter == ChatRoomModel::EntryType::NoticeEntry && eventModel.value<ChatNoticeModel*>() != nullptr)
-			return true;
-		return false;
-	}
-	
-private:
-	int mEntryTypeFilter = ChatRoomModel::EntryType::GenericEntry;
-};
-
 // =============================================================================
 
 ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-	setSourceModel(new ChatRoomModelFilter(this));
 	mMarkAsReadEnabled = true;
-	//mIsSecure = false;
 	
 	App *app = App::getInstance();
 	QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
@@ -109,13 +72,12 @@ ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel
 	void ChatRoomProxyModel::METHOD (ARG_TYPE value) { \
 	GET_CHAT_MODEL()->METHOD(value); \
 	}
-
+	
 #define CREATE_PARENT_MODEL_FUNCTION_WITH_ID(METHOD) \
 	void ChatRoomProxyModel::METHOD (int id) { \
-	QModelIndex sourceIndex = mapToSource(index(id, 0)); \
-	GET_CHAT_MODEL()->METHOD( \
-	static_cast<ChatRoomModelFilter *>(sourceModel())->mapToSource(sourceIndex).row() \
-	); \
+		GET_CHAT_MODEL()->METHOD( \
+		mapFromSource(static_cast<ChatRoomModel*>(sourceModel())->index(id, 0)).row() \
+		); \
 	}
 
 CREATE_PARENT_MODEL_FUNCTION(removeAllEntries)
@@ -139,6 +101,10 @@ void ChatRoomProxyModel::compose (const QString& text) {
 	gCachedText = text;
 }
 
+int ChatRoomProxyModel::getEntryTypeFilter () {
+	return mEntryTypeFilter;
+}
+
 // -----------------------------------------------------------------------------
 
 void ChatRoomProxyModel::loadMoreEntriesAsync(){
@@ -155,10 +121,9 @@ void ChatRoomProxyModel::loadMoreEntries() {
 }
 
 void ChatRoomProxyModel::setEntryTypeFilter (int type) {
-	ChatRoomModelFilter *ChatRoomModelFilter = static_cast<ChatRoomProxyModel::ChatRoomModelFilter *>(sourceModel());
-	
-	if (ChatRoomModelFilter->getEntryTypeFilter() != type) {
-		ChatRoomModelFilter->setEntryTypeFilter(type);
+	if (getEntryTypeFilter() != type) {
+		mEntryTypeFilter = type;
+		invalidate();
 		emit entryTypeFilterChanged(type);
 	}
 }
@@ -167,7 +132,21 @@ void ChatRoomProxyModel::setEntryTypeFilter (int type) {
 
 bool ChatRoomProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = false;
-	if(mFilterText != ""){
+
+	if (mEntryTypeFilter == ChatRoomModel::EntryType::GenericEntry)
+		show = true;
+	else{
+		QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
+		auto eventModel = sourceModel()->data(index);
+		
+		if( mEntryTypeFilter == ChatRoomModel::EntryType::CallEntry && eventModel.value<ChatCallModel*>() != nullptr)
+			show = true;
+		else if( mEntryTypeFilter == ChatRoomModel::EntryType::MessageEntry && eventModel.value<ChatMessageModel*>() != nullptr)
+			show = true;
+		else if( mEntryTypeFilter == ChatRoomModel::EntryType::NoticeEntry && eventModel.value<ChatNoticeModel*>() != nullptr)
+			show = true;
+	}
+	if( show && mFilterText != ""){
 		QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 		auto eventModel = sourceModel()->data(index);
 		ChatMessageModel * chatModel = eventModel.value<ChatMessageModel*>();
@@ -175,11 +154,10 @@ bool ChatRoomProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 			QRegularExpression search(QRegularExpression::escape(mFilterText), QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
 			show = chatModel->mContent.contains(search);
 		}
-	}else
-		show = true;
-
+	}
 	return show;
 }
+
 bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	auto l = sourceModel()->data(left);
 	auto r = sourceModel()->data(right);
@@ -279,7 +257,6 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		QObject::disconnect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
 	}
 	
-	
 	mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoomModel);
 	
 	if (mChatRoomModel) {
@@ -290,11 +267,12 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		QObject::connect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);		
 		QObject::connect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
 		QObject::connect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
+		mChatRoomModel->initEntries();// This way, we don't load huge chat rooms (that lead to freeze GUI)
 	}
-	
-	static_cast<ChatRoomModelFilter *>(sourceModel())->setSourceModel(mChatRoomModel.get());
+	setSourceModel(mChatRoomModel.get());
 	invalidate();
 }
+
 void ChatRoomProxyModel::resetMessageCount(){
 	if( mChatRoomModel){
 		mChatRoomModel->resetMessageCount();
@@ -312,6 +290,15 @@ void ChatRoomProxyModel::setFilterText(const QString& text){
 			emit filterTextChanged();
 		}while( newEntries>0 && currentRowCount == rowCount());
 	}
+}
+
+int ChatRoomProxyModel::loadTillMessage(ChatMessageModel * message){
+	int messageIndex = mChatRoomModel->loadTillMessage(message);
+	if( messageIndex>= 0 ) {
+		messageIndex = mapFromSource(static_cast<ChatRoomModel*>(sourceModel())->index(messageIndex, 0)).row();
+	}
+	qDebug() << "Message index from chat room proxy : " << messageIndex;
+	return messageIndex;
 }
 
 ChatRoomModel *ChatRoomProxyModel::getChatRoomModel () const{
