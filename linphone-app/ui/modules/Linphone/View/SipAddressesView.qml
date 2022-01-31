@@ -260,22 +260,29 @@ ScrollableListView {
 				
 				ActionBar {
 					iconSize: SipAddressesViewStyle.entry.iconSize
-					
-					Switch{
+					Loader {
 						anchors.verticalCenter: parent.verticalCenter
 						width:50
-						//Layout.preferredWidth: 50
-						indicatorStyle: SwitchStyle.aux
 						
-						visible: sipAddressesView.showSwitch
-						
-						enabled:true
-						checked: false
-						onClicked: {
-							//checked = !checked
-							switchHandler(!checked, index)
+						sourceComponent: Component{
+							Switch{
+								anchors.verticalCenter: parent.verticalCenter
+								width:50
+								//Layout.preferredWidth: 50
+								indicatorStyle: SwitchStyle.aux
+								
+								visible: sipAddressesView.showSwitch
+								
+								enabled:true
+								checked: false
+								onClicked: {
+									//checked = !checked
+									switchHandler(!checked, index)
+								}
+							}
 						}
-						
+						active: sipAddressesView.showSwitch	// Resolve a random Qt crash from using indicator on switch. This way, switch is not loaded.
+						// https://bugreports.qt.io/browse/QTBUG-82285.
 					}
 					
 					Repeater {
