@@ -1,486 +1,486 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="hu">
+<TS version="2.1" language="pt">
 <context>
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation>Rendben</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation>%1 fiók aktiválása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>Aktiválása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Fiókja aktiválásához: kövesse az utasításokat, amelyeket a(z) %1 küldtünk, majd kattintson az alábbiakra.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation>%1 fiók aktiválása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>Aktiválása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>Az ellenőrzési kódot tartalmazó SMS-t elküldtük a(z) %1-nek. A telefonszám ellenőrzésének befejezéséhez kérjük, írja be az alábbi négyjegyű kódot.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation>küldjön naplót a stdout-hez néhány hibakeresési információ futtatás közben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>adja meg a kívánt %1 konfigurációs fájl használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>A szabad (ingyenes) SIP videótelefon.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation>indítsa el a tálcán, ne jelenítse meg a fő felületet</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation>fájl</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation>Súgó megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation>az alkalmazás verziójának megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>megjeleníti a súgó menüt a(z) %1 CLI-vel történő használatához</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation>küldjön megrendelést az alkalmazás számára a parancssornak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>restore</source>
-        <translation>Visszaállítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quit</source>
-        <translation>Kilépés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>settings</source>
-        <translation>Beállítások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>about</source>
-        <translation>A Linphone névjegye</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation>Adja meg a beolvasandó %1 beállítási fájlt. Összevonásra kerül a jelenlegi konfigurációval.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation>URL-cím, elérési út vagy fájl</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
-        <translation>hívás kezdeményezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation>SIP-cím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation>Frissítések keresése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation>Vissza</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation>%1 fiók használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation>SIP fiók használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation>Távoli konfiguráció lekérése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation>Isten hozott</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Ez a segéd segít a SIP fiók konfigurálásában és használatában.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
-        <translation>Készítsen egy %1 fiók</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation>Bejelentkezés sikertelen. Kérjük, ellenőrizze felhasználónevét/jelszavát.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation>Túl rövid! (legalább %1 karakter)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation>Túl hosszú! (legfeljebb %1 karakter)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Érvénytelen karaktereket észleltünk. (regex: `%1`)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation>Érvénytelen felhasználónév.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation>Túl rövid! (legalább %1 karakter)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation>Túl hosszú! (legfeljebb %1 karakter)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Érvénytelen karaktereket észleltünk. (regex: `%1`)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation>Hiányzó karakterek: „%1”.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation>Nem sikerült elküldeni a kérelmet.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>Helytelen e-mail cím.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>Helytelen e-mail cím vagy érvénytelen karakterek.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation>Kiszolgálóhiba: nem lehet SMS-t küldeni.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation>Ez a fiók már létezik.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation>Az SMS aktiválása sikertelen!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation>Kérjük, ellenőrizze, hogy érvényesítette-e fiókját, vagy próbálja újra.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation>Érvénytelen telefonszám!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
-        <translation>Túl rövid!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>phoneNumberStatusTooLong</source>
-        <translation>Túl hosszú!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation>Érvénytelen országkód!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation>Bejelentkezés sikertelen. Kérjük, ellenőrizze telefonszámát.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
-        <translation>Nem sikerült hozzáadni ezt a fiókot.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>Bejelentkezés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>identityLabel</source>
-        <translation>Felhasználó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation>Jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation>Nem sikerült a hitelesítés. Kérjük, ellenőrizze a jelszavát.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>userIdLabel</source>
-        <translation>Felhasználói azonosítás (választható)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>realmLabel</source>
-        <translation>Tartomány</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CallModel</name>
     <message>
         <source>callStatsCodec</source>
-        <translation>Kodek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsUploadBandwidth</source>
-        <translation>Feltöltési sávszélesség</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsDownloadBandwidth</source>
-        <translation>Letöltési sávszélesség</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsEstimatedDownloadBandwidth</source>
-        <translation>Becsült letöltési sávszélesség</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsIceState</source>
-        <translation>ICE állapot</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsIpFamily</source>
-        <translation>IP család</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsSenderLossRate</source>
-        <translation>Feladó adatvesztési aránya</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsReceiverLossRate</source>
-        <translation>Címzett adatvesztési arány</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation>Csúszás puffer</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
-        <translation>Küldött videó meghatározás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsReceivedVideoDefinition</source>
-        <translation>Fogadott videó meghatározás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateNotActivated</source>
-        <translation>Nincs aktiválva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateFailed</source>
-        <translation>Sikertelen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateInProgress</source>
-        <translation>Folyamatban</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateReflexiveConnection</source>
-        <translation>Reflexív kapcsolat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateHostConnection</source>
-        <translation>Gép kapcsolat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateRelayConnection</source>
-        <translation>Közvetítő kapcsolat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>iceStateInvalid</source>
-        <translation>Érvénytelen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation>A távoli fél elutasította a hívást.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
-        <translation>Távoli fél nem található.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callErrorBusy</source>
-        <translation>Távoli fél elfoglalt.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>A távoli fél nem fogadhatja el a hívást.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
-        <translation>Fogadott képkockasebesség</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callStatsSentFramerate</source>
-        <translation>Küldött képkockasebesség</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CallSipAddress</name>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Új hívás indítása.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CallStatistics</name>
     <message>
         <source>audioStatsLabel</source>
-        <translation>Hang</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoStatsLabel</source>
-        <translation>Videó</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CallTransfer</name>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation>Szeretné átirányítani a hívást?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation>Hanghívás elfogadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation>Videohívás elfogadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation>Hívás befejezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation>Hívás folytatása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation>Hívásátirányítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callPause</source>
-        <translation>Hívástartás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>attendedTransferComplete</source>
         <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
-        <translation>Hívásátirányítás teljes részvétele</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>attendedTransferCall</source>
         <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
-        <translation>Hívásátirányítás részvétele</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CallsWindow</name>
     <message>
         <source>callsTitle</source>
-        <translation>Hívások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation>Biztos benne, hogy be kívánja fejezni az összes hívást?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Chat</name>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation>Írja be az üzenetét</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation>Nem sikerült elküldeni a fájlt.
-A kiszolgáló URL-je nincs konfigurálva.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation>
-            <numerusform>%1 éppen gépel…</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation>Vágólapra másolva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation>A kijelölés a vágólapra másolva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation>Üzenettovábbítás helye kijelölése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -488,34 +488,26 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>deliveryDelivered</source>
         <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation>Küldött: %1 - %2</translation>
+        <translation type="unfinished"></translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
     </message>
     <message>
         <source>deliveryDeliveredToUser</source>
         <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation>Lekért: %1 - %2</translation>
+        <translation type="unfinished"></translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
     </message>
     <message>
         <source>deliveryDisplayed</source>
         <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation>Elolvasta: %1 - %2</translation>
+        <translation type="unfinished"></translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
     </message>
     <message>
         <source>deliveryNotDelivered</source>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation>%1 nem kapta meg az üzenetet</translation>
-        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
-    </message>
-</context>
-<context>
-    <name>ChatForwardMessage</name>
-    <message>
-        <source>Forwarded</source>
-        <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
         <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
 </context>
 <context>
@@ -523,67 +515,71 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>menuCopyAll</source>
         <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
-        <translation>Összes másolása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation>Másolás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation>Lejátszás!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation>Kézbesítés állapota</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation>Törlés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation>Kézbesítési állapot elrejtése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation>Továbbítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation>Válasz</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation>
-            <numerusform>%1 perc</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation>
-            <numerusform>%1 óra</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation>
-            <numerusform>%1 nap</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation>
-            <numerusform>%1 hét</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
 </context>
@@ -592,7 +588,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation>Válasz</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -600,601 +596,605 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>titleReply</source>
         <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
-        <translation>Válaszul erre: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Cli</name>
     <message>
         <source>appCliDescription</source>
-        <translation>A(z) %1 alkalmazás vezérlésének módja a parancssorokon keresztül.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uriCommandLineSyntax</source>
-        <translation>%1 &lt;sip-cím&gt;?method=&lt;módszer&gt;([&amp;&lt;argumentum&gt;=&lt;base64-érték&gt;]*)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cliCommandLineSyntax</source>
-        <translation>%1 &quot;&lt;módszer&gt; ([&lt;argumentum&gt;=&lt;érték&gt;]*)&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>commandsName</source>
-        <translation>parancsok listája:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>showFunctionDescription</source>
-        <translation>Alkalmazás főablakának megjelenítése.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>Hívást kezdeményez a sip-address.</translation>
-    </message>
-    <message>
-        <source>initiateConferenceFunctionDescription</source>
-        <translation>Konferencia kezdeményezése.</translation>
-    </message>
-    <message>
-        <source>joinConferenceFunctionDescription</source>
-        <translation>Csatlakozzon a SIP-cím által rendezett konferenciához megjelenítendő névként. Ha kapcsolódik egy proxy-konfigurátorhoz, olvassa el a join-conference-as című részt.</translation>
-    </message>
-    <message>
-        <source>joinConferenceAsFunctionDescription</source>
-        <translation>Csatlakozzon a SIP-cím által üzemeltetett konferenciához, mint a vendég-sip-cím. Ha nem csatlakozik proxy-konfigurátorhoz, olvassa el a csatlakozási konferencia részt.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
-        <translation>Egy adott hívás, az összes hívás vagy az jelenlegi hívás befejezése.</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>initiateConferenceFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>joinConferenceFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>joinConferenceAsFunctionDescription</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CodecsViewer</name>
     <message>
         <source>codecMime</source>
-        <translation>Név</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codecEncoderDescription</source>
-        <translation>Leírás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codecEncoderClockRate</source>
-        <translation>Sebesség (Hz)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codecBitrate</source>
-        <translation>Bitsebesség (Kbit/mp)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codecRecvFmtp</source>
-        <translation>Paraméterek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codecStatus</source>
-        <translation>Állapot</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation>Konferencia</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation>Konferencia</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Kezelje a konferencia résztvevőit.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>Indítás</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ConfirmDialog</name>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>Megerősít</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ContactEdit</name>
     <message>
         <source>removeContactDescription</source>
-        <translation>Tényleg eltávolítja ezt a névjegyet a címjegyzékből?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipAccounts</source>
-        <translation>SIP fiók(ok)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>address</source>
-        <translation>Cím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emails</source>
-        <translation>E-mail(ek)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>webSites</source>
-        <translation>Honlap(ok)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation>Avatár kiválasztása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>companies</source>
-        <translation>Cégek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>save</source>
-        <translation>Mentés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipAccountsPlaceholder</source>
-        <translation>SIP fiók</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>companiesPlaceholder</source>
-        <translation>Cég</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emailsPlaceholder</source>
-        <translation>E-mail</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>webSitesPlaceholder</source>
-        <translation>Honlap</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>street</source>
-        <translation>Utca</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>postalCode</source>
-        <translation>Irányítószám</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>country</source>
-        <translation>Ország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>locality</source>
-        <translation>Helyiség</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>abortEditDescriptionText</source>
-        <translation>Biztosan törli a névjegy változtatását?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tooltipShowConversation</source>
-        <translation>Beszélgetés megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation>Konferenciaalapú csevegőszoba létrehozásához be kell állítania a konferencia URI-címét a fiókbeállításokban.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Contacts</name>
     <message>
         <source>searchContactPlaceholder</source>
-        <translation>Névjegy keresése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectAllContacts</source>
-        <translation>Összes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectConnectedContacts</source>
-        <translation>Kapcsolódva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>addContact</source>
-        <translation>Névjegy hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>removeContactDescription</source>
-        <translation>Tényleg eltávolítja ezt a névjegyet a címjegyzékből?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation>Konferenciaalapú csevegőszoba létrehozásához be kell állítania a konferencia URI-címét a fiókbeállításokban.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Conversation</name>
     <message>
         <source>displayCallsAndMessages</source>
-        <translation>Összes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayCalls</source>
-        <translation>Hívások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayMessages</source>
-        <translation>Üzenetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation>Biztosan törölni kívánja ezt az előzményt?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation>Kapcsolat szerkesztése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation>Kapcsolat hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation>Előzmények törlése</translation>
-    </message>
-    <message>
-        <source>adminStatus</source>
-        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation>Felügyelet</translation>
-        <extra-Context>One word title for describing the current admin status</extra-Context>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conversationMenuGroupInformations</source>
         <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
-        <translation>Csoportadatok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation>Beszélgetés eszközei</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
         <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
-        <translation>Elmúló üzenetek</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>One word title for describing the current admin status</extra-Context>
     </message>
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation>Összes csevegőszobai résztvevő hívása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
-        <translation>Üzenetek keresése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation>%1 fiók létrehozása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>Létrehozás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>emailLabel</source>
-        <translation>E-mail</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation>Jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordConfirmationLabel</source>
-        <translation>Jelszó megerősítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordConfirmationError</source>
-        <translation>A megadott jelszavak nem egyeznek.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Fiókját létrehozta, de még nem hitelesítette. Biztosan le szeretne lépni erről a nézetről?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation>Megjelenítendő név (választható)</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>CreateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>createAppSipAccountTitle</source>
-        <translation>%1 fiók létrehozása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>countryLabel</source>
-        <translation>Ország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation>Telefonszám</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation>Megjelenítendő név (választható)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>Létrehozás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Fiókját létrehozta, de még nem hitelesítette. Ha kilép ebből a nézetből, akkor 24 órán belül kézzel kell hozzáadnia és érvényesítenie a fiókját.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
-        <translation>Válasszon egy vagy több fájlt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dropYourAttachment</source>
-        <translation>Adja hozzá ide a mellékletet</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>attachmentTooltip</source>
-        <translation>Fájl küldése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>EphemeralChatRoom</name>
     <message>
-        <source>cancelButton</source>
-        <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
-        <translation>Mégse</translation>
-    </message>
-    <message>
-        <source>startButton</source>
-        <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
-        <translation>Indítás</translation>
-    </message>
-    <message>
         <source>ephemeralTitle</source>
         <extracomment>&quot;Ephemeral messages&quot; : Popup title for ephemerals</extracomment>
-        <translation>Elmúló üzenetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ephemeralText</source>
         <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
-        <translation>Az új üzenetek mindkét végén törlődnek, amint a kapcsolattartó elolvasta. Válasszon egy időkorlátot.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Az elmúló üzenetet csak a konferencia alapú csevegőszoba támogatja!</translation>
+        <translation type="unfinished"></translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
         <source>disabled</source>
         <extracomment>&apos;Disabled&apos;</extracomment>
-        <translation>Letiltva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message numerus="yes">
         <source>nMinute</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation>
-            <numerusform>%1 perc</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation>
-            <numerusform>%1 óra</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation>
-            <numerusform>%1 nap</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation>
-            <numerusform>%1 hét</numerusform>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation>Bejövő hívás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation>Kimenő hívás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation>Bejövő hívás elutasítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation>Kimenő hívás elutasítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation>Befejezett hívás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation>Nem fogadott bejövő hívás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation>Nem fogadott kimenő hívás</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation>Lekérés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
-        <translation>Távoli konfiguráció lekérése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>urlLabel</source>
-        <translation>URL</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>remoteProvisioningError</source>
-        <translation>Nem sikerült beállítani ezt a távoli létesítési URI-t.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>remoteProvisioningUpdateDescription</source>
-        <translation>Az alkalmazás újraindítása szükséges. Szeretné most újraindítani?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation>Az utolsó távoli kiépítés nem sikerült</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation>Biztosan törölni kívánja ezt az előzményt?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation>Kapcsolat szerkesztése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation>Kapcsolat hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation>Előzmények törlése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Home</name>
     <message>
         <source>howToDescription</source>
-        <translation>Segítségre van szüksége a(z) %1 használatához?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>howToTitle</source>
-        <translation>Hogyan kell %1 használni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>inviteDescription</source>
-        <translation>Hívd meg ismerőseidet a %1-ra.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation>Hívd meg a ismerőseidet</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
-        <translation>A(z) %1 fiók létrehozása vagy kezelése.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>accountAssistantTitle</source>
-        <translation>Fióksegéd</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>assistantButton</source>
-        <translation>Segéd</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>showTooltips</source>
-        <translation>Buboréksúgók megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>inviteButton</source>
-        <translation>Meghívás</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Incall</name>
     <message>
         <source>acceptVideoDescription</source>
-        <translation>Kapcsolattartója szeretné bekapcsolni a videót.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>pendingRequestLabel</source>
-        <translation>Kérjük, várjon, egy kérés függőben van.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation>A hívás titkosítva: %1.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation>A hívás nincs titkosítva.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>Pillanatkép készítése.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>Felvétel megindítása.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>A felvétel leállítása.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>IncallFullscreenWindow</name>
     <message>
         <source>takeSnapshotLabel</source>
-        <translation>Pillanatkép készítése.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>startRecordingLabel</source>
-        <translation>Felvétel megindítása.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stopRecordingLabel</source>
-        <translation>A felvétel leállítása.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1202,39 +1202,39 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>quitGroupButton</source>
         <extracomment>&apos;Exit group&apos; : Button label</extracomment>
-        <translation>Csoport elhagyása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ok</source>
         <extracomment>&apos;OK&apos; : Button label</extracomment>
-        <translation>Rendben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation>Résztvevők hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation>Keresse meg a résztvevőket a névjegyzékben, hogy meghívhassa őket a csevegőszobába.</translation>
+        <translation type="unfinished"></translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation>Résztvevők listája</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation>Felügyelet</translation>
+        <translation type="unfinished"></translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>chatRoomDetailsTitle</source>
         <extracomment>&quot;Group information&quot; : Popup title.</extracomment>
-        <translation>Csoportadatok</translation>
+        <translation type="unfinished"></translation>
         <extra-This>popup display data about the current chat room</extra-This>
     </message>
 </context>
@@ -1243,33 +1243,33 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;CANCEL&apos; : button text for cancelling operation</extracomment>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callButton</source>
         <extracomment>&apos;CALL&apos; : Button that lead to a call</extracomment>
-        <translation>Hívás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>okButton</source>
         <extracomment>&apos;OK&apos; : Button that validate the popup to be redirected to the device list</extracomment>
-        <translation>Rendben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>infoEncryptionTitle</source>
         <extracomment>&apos;End-to-end encrypted&apos; Popup title about encryption information.</extracomment>
-        <translation>Végpontok között titkosított</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>encryptionExplanation</source>
         <extracomment>&quot;Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants.&quot;</extracomment>
-        <translation>Végpontok között titkosított azonnali üzenetek a biztonságos beszélgetésekben. Lehetőség van a beszélgetés biztonsági szintjének növelésére a résztvevők hitelesítésével.</translation>
+        <translation type="unfinished"></translation>
         <extra-Context>Explanation of Encryption</extra-Context>
     </message>
     <message>
         <source>encryptionProcessExplanation</source>
         <extracomment>&quot;To do so, call the contact and follow the authentification process.&quot;</extracomment>
-        <translation>Ehhez hívja fel a kapcsolatot és kövesse a hitelesítési folyamatot.</translation>
+        <translation type="unfinished"></translation>
         <extra-Context>Explanation process</extra-Context>
     </message>
 </context>
@@ -1277,143 +1277,140 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <name>InviteFriends</name>
     <message>
         <source>enterEmailLabel</source>
-        <translation>Ismerős e-mail címe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>messageLabel</source>
-        <translation>Üzenet</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>Megerősít</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>inviteFriendsTitle</source>
-        <translation>Ismerősök meghívása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 partnerfelkérései a %2-n!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultSubject</source>
-        <translation>%1 meghívás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Töltse le az alkalmazást a számítógépén, és kezdje el ingyen hívni és csevegni a felhasználókkal.
-
-Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
-        <translation>Névjegy keresése, hívás indítása vagy csevegés kezdése…</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactsEntry</source>
-        <translation>Névjegyek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>autoAnswerStatus</source>
-        <translation>önműködő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Az intelligens keresősáv segítségével közvetlenül kezdeményezheti audio- és videohívásokat, küldhet üzenetet vagy új névjegyet adhat hozzá. Csak írja be ismerőse SIP-címét vagy felhasználónevét.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation>Konferencia-beszélgetés indítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newChatRoom</source>
         <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
-        <translation>Konferencia megnyitása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>hideTimeline</source>
         <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation>Idővonal elrejtése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>openTimeline</source>
         <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation>Idővonal megnyitása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>openHome</source>
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation>Kezdőlap megnyitása</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
     <message>
         <source>settings</source>
-        <translation>Beállítások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>about</source>
-        <translation>A Linphone névjegye</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quit</source>
-        <translation>Kilépés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation>Frissítések keresése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MainWindowTopMenuBar</name>
     <message>
         <source>settings</source>
-        <translation>Beállítások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>about</source>
-        <translation>A Linphone névjegye</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quit</source>
-        <translation>Kilépés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation>Frissítések keresése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ManageAccounts</name>
     <message>
         <source>ok</source>
-        <translation>Rendben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectPresenceLabel</source>
-        <translation>Jelenléti állapot</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectAccountLabel</source>
-        <translation>Aktív fiók</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>MultimediaParameters</name>
     <message>
         <source>ok</source>
-        <translation>Rendben</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1421,87 +1418,88 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Launch&apos; : Start button</extracomment>
-        <translation>Indítás</translation>
-    </message>
-    <message>
-        <source>missingSubject</source>
-        <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation>Ki kell töltenie egy témát.</translation>
-    </message>
-    <message numerus="yes">
-        <source>missingParticipants</source>
-        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
-        <translation>
-            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
-        </translation>
-    </message>
-    <message>
-        <source>missingConferenceURI</source>
-        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation>Konferenciaalapú csevegőszoba létrehozásához be kell állítania a konferencia URI-címét a fiókbeállításokban.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
         <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
-        <translation>Csevegőszoba indítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your chat?&apos; : Ask about setting the chat room as secured.</extracomment>
-        <translation>Szeretné titkosítani a csevegését?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
-        <translation>Téma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
-        <translation>A csevegőszoba jelenlegi témája. Nem lehet üres.</translation>
+        <translation type="unfinished"></translation>
         <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation>Résztvevők kiválasztása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation>Keressen a névjegyek között vagy adjon hozzá egy egyediet a csevegőszobához.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation>Felügyelet</translation>
+        <translation type="unfinished"></translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation>Távolítsa el ezt a résztvevőt a kiválasztásból</translation>
+        <translation type="unfinished"></translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation>Kötelező</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missingSubject</source>
+        <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>missingParticipants</source>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>missingConferenceURI</source>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation>Téma hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>LastContactsTitle</source>
         <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
-        <translation>Legutóbbi névjegyek</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1509,113 +1507,106 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceCreatedEvent</source>
         <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
-        <translation>Csatlakozott a csoporthoz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceCreatedTerminated</source>
         <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
-        <translation>Kilépett a csoportból</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceParticipantAddedEvent</source>
         <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
-        <translation>%1 csatlakozott</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceParticipantRemovedEvent</source>
         <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
-        <translation>%1 kilépett</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceParticipantSetAdminEvent</source>
         <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
-        <translation>%1 most rendszergazdai jogosultság kapott</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
         <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
-        <translation>%1 most rendszergazdai jogosultság eltávolított</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceSecurityEvent</source>
         <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
-        <translation>Csökkent biztonsági szint a következő szerint: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
-        <translation>Elmúló üzenetek engedélyezve: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageDisabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
-        <translation>Elmúló üzenetek letiltva: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
-        <translation>Új téma: %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
         <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
-        <translation>Mulandó üzenetek frissítve: %1</translation>
-    </message>
-    <message numerus="yes">
-        <source>unreadMessageNotice</source>
-        <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-        </translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Notifier</name>
     <message>
         <source>newVersionAvailable</source>
-        <translation>Egy új frissítés (%1) érhető el!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newFileMessage</source>
-        <translation>Új melléklet érkezett!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>
     <message>
         <source>confirm</source>
-        <translation>Megerősít</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation>%1 kicsomagolása…</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>%1 letöltése…</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
-        <translation>A(z) %1 sikeresen telepítve lett!</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>onlineInstallerFailedDescription</source>
-        <translation>A(z) %1 telepítése nem sikerült!</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>OutgoingMessage</name>
     <message>
         <source>messageError</source>
-        <translation>Hiba</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>messageRead</source>
-        <translation>Olvasott</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>messageDelivered</source>
-        <translation>Kézbesítve</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1623,7 +1614,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conversationDevicesTitle</source>
         <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
-        <translation>Beszélgetési eszközök</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1631,7 +1622,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantsAdminHeader</source>
         <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
-        <translation>(Felügyelet)</translation>
+        <translation type="unfinished"></translation>
         <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
 </context>
@@ -1639,19 +1630,19 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>
-        <translation>Elérhető</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presenceBusy</source>
-        <translation>Elfoglalt</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presenceDoNotDisturb</source>
-        <translation>Ne zavarjanak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presenceOffline</source>
-        <translation>Kapcsolat nélküli</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1659,627 +1650,645 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
         <extracomment>&apos;Enable&apos; : One word for button action to enable tunnel mode.</extracomment>
-        <translation>Engedélyezés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeDisable</source>
         <extracomment>&apos;Disable&apos; : One word for button action to disable tunnel mode.</extracomment>
-        <translation>Letiltás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeAuto</source>
         <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
-        <translation>Önműködő</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation>Naplók</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation>Naplómappa</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sendLogs</source>
-        <translation>Naplók küldése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation>Naplók feltöltési kiszolgáló URL-je</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation>A naplók feltöltése nem sikerült.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
-        <translation>Naplók engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanLogs</source>
-        <translation>Napló kitakarítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation>Biztosan eltávolítja az összes naplót?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
-        <translation>Fejlesztői beállítások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>developerSettingsEnabledLabel</source>
-        <translation>Fejlesztői beállítások engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsMailerFailed</source>
         <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
-        <translation>A Mailer nem található, de a naplók feltöltődtek a %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>logsMailerSuccess</source>
-        <translation>A naplókat feltöltötték a %1</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation>Névjegyek-összekötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>noPlugin</source>
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
-        <translation>Nincsenek betölthető beépülő modulok</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsAudio</name>
     <message>
         <source>audioTitle</source>
-        <translation>Hang paraméterek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>playbackDeviceLabel</source>
-        <translation>Lejátszóeszköz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation>Felvevőeszköz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
-        <translation>Csörgetés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ringLabel</source>
-        <translation>Csörög</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
-        <translation>Visszhangkioltás engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioCodecsTitle</source>
-        <translation>Hang kodekek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation>Hang kodekek megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation>Lejátszás nyeresége</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation>Rögzítés nyereség</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation>Felvételi szint</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation>Hanghívás folyamatban: egyes beállítások nem érhetők el.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
-        <translation>Visszhangtörlő kalibrálása</translation>
+        <translatorcomment>Button title for the calibration of echo canceller</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>calibratingEchoCancellationInProgress</source>
-        <translation>Visszhangtörlő kalibrálás folyamatban…</translation>
+        <translatorcomment>Message while calibrating</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation>-%1ezredmásodperc értékre kalibrálva</translation>
+        <translatorcomment>%1 is a placeholder for the number of ms obtained by the calibration. ms = milliseconds</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
-        <translation>Sikertelen kalibrálás</translation>
+        <translatorcomment>Message  when the calibration cannot be done</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
-        <translation>Nem észlelt visszhang</translation>
+        <translatorcomment>Message when the calibration did not find any echo</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsCallsChat</name>
     <message>
         <source>fileServerLabel</source>
-        <translation>Fájlkiszolgáló</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>encryptWithLimeLabel</source>
-        <translation>LIME titkosítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limeDisabled</source>
-        <translation>Letiltva</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limeRequired</source>
-        <translation>Kötelező</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>limePreferred</source>
-        <translation>Elsődleges</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>chatTitle</source>
-        <translation>Csevegés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callsTitle</source>
-        <translation>Hívások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>encryptionLabel</source>
-        <translation>Titkosítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>noEncryption</source>
-        <translation>Nincs</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation>Önműködő válasz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
-        <translation>Késés (ms)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation>Önműködő válasz (videóval)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
-        <translation>Csevegés engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callRecorderEnabledLabel</source>
-        <translation>Hívásfelvétel engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>chatNotificationSoundEnabledLabel</source>
-        <translation>Értesítési hang engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>chatNotificationSoundLabel</source>
-        <translation>Értesítési hang</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceEnabledLabel</source>
-        <translation>Konferencia engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation>Névjegyek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactsEnabledLabel</source>
-        <translation>Névjegyek engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>muteMicrophoneEnabledLabel</source>
-        <translation>A mikrofon némításának engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation>Kimenő hívások engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
-        <translation>A telefonbillentyűzet önműködően megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>automaticallyRecordCallsLabel</source>
-        <translation>Hívások önműködő felvétele</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>keepCallsWindowInBackgroundLabel</source>
-        <translation>Tartsa a hívások ablakot a háttérben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation>A hívástartás engedélyezve</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
-        <translation>A titkosítás kötelező</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>hideEmptyChatRoomsLabel</source>
         <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
-        <translation>Üres csevegőszobák elrejtése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>waitRegistrationForCallLabel</source>
         <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
-        <translation>Ha regisztrált, használja híváskor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>chatNotificationsEnabledLabel</source>
         <extracomment>&apos;Enable notifications&apos;: settings label for enabling notifications.</extracomment>
-        <translation>Értesítések engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsLdap</name>
     <message>
         <source>newServer</source>
-        <translation>Új kiszolgáló</translation>
+        <translatorcomment>Display name of a new server</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsLdapEdit</name>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translatorcomment>Cancel button label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>Megerősít</translation>
+        <translatorcomment>Confirm button label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation>Megjelenítendő név</translation>
+        <translatorcomment>Label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayNameTooltip</source>
-        <translation>A listában megjelenítendő kiszolgáló megjelenített neve.</translation>
+        <translatorcomment>Tooltip for display name</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>connectionTitle</source>
-        <translation>Kapcsolat</translation>
+        <translatorcomment>Label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverLabel</source>
-        <translation>Kiszolgáló URL-címe</translation>
+        <translatorcomment>Label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>LDAP-kiszolgáló. Például: ldap:/// helyi állomás kiszolgálóhoz vagy ldap://ldap.example.org/</translation>
+        <translatorcomment>Tooltip for server URL</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bindDNLabel</source>
-        <translation>Kötési DN</translation>
+        <translatorcomment>Label for a &apos;Bind DN&apos;. &apos;Bind&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bindDNTooltip</source>
-        <translation>A kötési DN az a hitelesítő adat, amelyet LDAP-kiszolgálóval való hitelesítésre használnak.&lt;br&gt;például: cn=felhasználónév,ou=emberek,dc=bc,dc=com</translation>
+        <translatorcomment>&apos;Bind DN&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation>Jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useTLSLabel</source>
-        <translation>TLS használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useTLSTooltip</source>
-        <translation>Titkosítsa a tranzakciókat LDAP segítségével TLS(StartTLS) használatával. Az „ldap” sémát kell használnia. Az SSL-en keresztüli LDAP „ldaps” nem szabványosított és elavult.&lt;br&gt;StartTLS az LDAP protokoll kiterjesztésében, amely a TLS protokollt használja a kommunikáció titkosításához.&lt;br&gt;Úgy működik, hogy normál – azaz nem biztonságos – kapcsolatot létesít az LDAP kiszolgálóval, mielőtt a szerver és a webszolgáltatások között kézfogási egyeztetés zajlik. Itt a szerver elküldi tanúsítványát, hogy igazolja személyazonosságát, mielőtt a biztonságos kapcsolat létrejön.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useSalLabel</source>
-        <translation>SAL használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation>A DNS feloldását Linphone végzi SAL használatával. Egy IP-címet továbbít az LDAP kiszolgálónak. Ezzel a TLS tárgyalás nem tudta ellenőrizni az állomásnévét. Deaktiválhatja az ellenőrzéseket, ha kényszeríteni szeretné a kapcsolatot.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
-        <translation>Tanúsítványok ellenőrzése a TLS használatával</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>AutoMode</source>
-        <translation>Önműködő</translation>
+        <translatorcomment>ComboBox Label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>offMode</source>
-        <translation>Ki</translation>
+        <translatorcomment>ComboBox Label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>onMode</source>
-        <translation>Be</translation>
+        <translatorcomment>ComboBox label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>verifyTLSTooltip</source>
-        <translation>Adja meg, hogy az LDAP-kiszolgálóhoz való csatlakozáskor ellenőrizni kell-e a TLS-kiszolgáló tanúsítványát.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>searchTitle</source>
-        <translation>Keresés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>baseObjectLabel</source>
-        <translation>Keresési bázis</translation>
+        <translatorcomment>&apos;Base Object&apos;/&apos;Search Base&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>baseObjectPlaceholder</source>
-        <translation>Keresési bázis</translation>
+        <translatorcomment>&apos;Base Object&apos;/&apos;Search Base&apos; can be a keyword. Check LDAP documentations</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>baseObjectTooltip</source>
-        <translation>Az Base Object/Search Base az LDAP keresési hatókörök specifikációja, amely meghatározza, hogy a keresési kérelmet csak a keresési bázis DN-ként megadott bejegyzéssel kell végrehajtani.&lt;br&gt;A feletti bejegyzéseket nem vesszük figyelembe.</translation>
+        <translatorcomment>&apos;Base Object&apos;, &apos;Search Base&apos; and &apos;Base DN&apos; can be keywords. Check LDAP documentations</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>filterLabel</source>
-        <translation>Szűrő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation>A keresés a szűrőn alapul a névjegyek kereséséhez.&lt;br&gt;Alapértelmezett érték: (sn=%s)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
-        <translation>Eredmények legfeljebb száma</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>maxResultsTooltip</source>
-        <translation>A keresési kérelmek eredmények legfeljebb száma.</translation>
-    </message>
-    <message>
-        <source>timeoutLabel</source>
-        <translation>Időkorlát</translation>
-    </message>
-    <message>
-        <source>timeoutTooltip</source>
-        <translation>A kapcsolat és a keresés időtúllépése másodpercek alatt. Pozitívnak kell lennie.&lt;br&gt;Az alapértelmezett érték 5 másodperc.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>parsingTitle</source>
-        <translation>Elemzés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>nameAttributesLabel</source>
-        <translation>Névattribútumok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation>Ellenőrizze ezeket az attribútumokat: To, build, Name, Contact. Ezeket vesszők választják el egymástól, amelyek első sorban a legmagasabb prioritással szerepelnek.&lt;br&gt;Az alapértelmezett érték: sn</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation>SIP-attribútumok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
-        <translation>Ellenőrizze ezeket az attribútumokat a SIP felhasználónév felépítéséhez a kapcsolattartó címében. Az attribútumokat vessző választja el, és az első a legfontosabb.&lt;br&gt;Az alapértelmezett érték: mobile,telephoneNumber,homePhone,sn</translation>
+        <translatorcomment>Default values : (mobile,telephoneNumber,homePhone,sn) are keywords.</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>domainLabel</source>
-        <translation>Tartomány</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation>Tartomány hozzáadása a SIP-címhez (sip:felhasználónév@tartomány).&lt;br&gt;Az alapértelmezett érték a sip.linphone.org</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>miscLabel</source>
-        <translation>Egyéb</translation>
+        <translatorcomment>Miscellaneous label</translatorcomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>debugLabel</source>
-        <translation>Hibakeresés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Részletes naplófájlok beszerzése a Linphone naplófájljába tranzakciók során (hasznos a TLS-kapcsolatok hibakereséséhez).</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timeoutLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>timeoutTooltip</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsNetwork</name>
     <message>
         <source>sendDtmfsLabel</source>
-        <translation>DTMF küldési eljárás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>allowIpV6Label</source>
-        <translation>IPv6 engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>transportTitle</source>
-        <translation>Szállítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation>NAT és tűzfal</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation>ICE engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation>STUN/TURN kiszolgáló</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation>TURN engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation>TURN felhasználó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation>TURN jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>networkProtocolAndPortsTitle</source>
-        <translation>Hálózati protokoll és kikötők</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation>SIP UDP kikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation>SIP TCP kikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
-        <translation>Hang RTP UDP kikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation>Videó RTP UDP kikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>
-        <translation>DSCP mezők</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipFieldLabel</source>
-        <translation>SIP</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioRtpStreamFieldLabel</source>
-        <translation>Hang RTP adatfolyam</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoRtpStreamFieldLabel</source>
-        <translation>Videó RTP adatfolyam</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bandwidthControlTitle</source>
-        <translation>Sávszélesség-vezérlés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>downloadSpeedLimitLabel</source>
-        <translation>Letöltés sebességkorlátozása (Kbit/mp)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uploadSpeedLimitLabel</source>
-        <translation>Feltöltési sebességkorlátozása (Kbit/mp)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enableAdaptiveRateControlLabel</source>
-        <translation>Adaptív sebességszabályozás engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation>Jelenlét</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rlsUriLabel</source>
-        <translation>RLS URI használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rlsUriAuto</source>
-        <translation>Önműködő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rlsUriDisabled</source>
-        <translation>Soha</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>showNetworkSettingsLabel</source>
-        <translation>Hálózati beállítások megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>generalTitle</source>
-        <translation>Általános</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation>Alapértelmezett azonosság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
-        <translation>SIP cím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>proxyAccountsTitle</source>
-        <translation>Proxyfiókok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>eraseAllPasswords</source>
-        <translation>Jelszavak törlése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>addAccount</source>
-        <translation>Fiók hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>editHeader</source>
-        <translation>Szerkesztés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>deleteHeader</source>
-        <translation>Törlés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation>Biztosan törölni kívánja ezt a fiókot?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
-        <translation>Biztos, hogy eltávolítja az összes jelszavát?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation>Megjelenítendő név</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>assistantTitle</source>
-        <translation>Segéd</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation>Fióklétrehozás engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
-        <translation>Fiókhasználat engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation>Általános fiókhasználat engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
-        <translation>Konfiguráció lekérés engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>assistantSupportsPhoneNumbersLabel</source>
-        <translation>Támogatja a telefonszámokat</translation>
-    </message>
-    <message>
-        <source>defaultDeviceNameLabel</source>
-        <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2287,101 +2296,101 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsSipAccountsEdit</name>
     <message>
         <source>sipAddressLabel</source>
-        <translation>SIP cím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation>Szállítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverAddressLabel</source>
-        <translation>SIP kiszolgáló címe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>registrationDurationLabel</source>
-        <translation>Regisztráció időtartama (mp)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>routeLabel</source>
-        <translation>Útvonal</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactParamsLabel</source>
-        <translation>Névjegy paraméterei</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>publishPresenceLabel</source>
-        <translation>Jelenlét láthatóvá tétele</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>avpfIntervalLabel</source>
-        <translation>AVPF szokásos RTCP időközönként (mp)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>registerEnabledLabel</source>
-        <translation>Regisztráció</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>avpfEnabledLabel</source>
-        <translation>AVPF engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation>Megerősít</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation>Érvénytelen SIP-cím.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
-        <translation>Érvénytelen kiszolgáló cím.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation>Érvénytelen útvonal.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation>ICE engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation>STUN/TURN kiszolgáló</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation>TURN engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation>TURN felhasználó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
-        <translation>TURN jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation>NAT és tűzfal</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation>Fő SIP fiók beállításai</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferenceURI</source>
         <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
-        <translation>Konferencia URI-cím</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation>Érvénytelen konferencia URI-cím</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2389,337 +2398,337 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelStatus</source>
         <extracomment>&apos;Tunnel Status&apos; : Field title to introduce the status of the tunnel (activated or not)</extracomment>
-        <translation>Alagút állapota</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tunnelDomain</source>
         <extracomment>&apos;Domain&apos; : Field title of a textfield to set domain.</extracomment>
-        <translation>Tartomány</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tunnelUsername</source>
         <extracomment>&apos;Username&apos; : Field title of a textfield to set username.</extracomment>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tunnelSIP</source>
         <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
-        <translation>SIP</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cancel</source>
         <extracomment>&apos;Cancel&apos; : Button to cancel the action.</extracomment>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>setHTTPProxy</source>
         <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
-        <translation>HTTP-proxy megadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>proxyHttpHost</source>
         <extracomment>&apos;Host&apos; : Placeholder to set hostname.</extracomment>
-        <translation>Állomásnév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>proxyHttpPort</source>
         <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
-        <translation>Kikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>proxyHttpUsername</source>
         <extracomment>&apos;Username&apos; : Placeholder to set username.</extracomment>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>proxyHttpPassword</source>
         <extracomment>&apos;Password&apos; : Placeholder to set password.</extracomment>
-        <translation>Jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>proxyHttpApply</source>
         <extracomment>&apos;Apply&apos; : Button to set proxy from changes.</extracomment>
-        <translation>Alkalmazás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverMode</source>
         <extracomment>&apos;Mode&apos; : Field title on form to set tunnel mode.</extracomment>
-        <translation>Alagútmód</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverDualMode</source>
         <extracomment>&apos;Dual mode&apos; : Field title on form to set dual mode of the tunnel.</extracomment>
-        <translation>Kettős mód</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverTitle</source>
         <extracomment>&apos;Server&apos; : Title form to set a server</extracomment>
-        <translation>Kiszolgáló</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverHostname</source>
         <extracomment>&apos;Hostname&apos; : Field title on form to set hostname.</extracomment>
-        <translation>Állomásnév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverPort</source>
         <extracomment>&apos;Port&apos; : Field title on form to set port.</extracomment>
-        <translation>Kikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverDualHostname</source>
         <extracomment>&apos;Dual hostname URL&apos; : Field title on form to set the second hostname for dual configuration.</extracomment>
-        <translation>Kettős állomásnév URL-címe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverDualPort</source>
         <extracomment>&apos;Dual port&apos; : Field title on form to set the second port for the dual configuration.</extracomment>
-        <translation>Kettős kikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverRemoteUDPMirrorPort</source>
         <extracomment>&apos;Remote UDP mirror port&apos; : Field title on form to set the remote UDP mirror port.</extracomment>
-        <translation>Távoli UDP-tükörkikötő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>serverDelay</source>
         <extracomment>&apos;Delay&apos; : Field title on form to set the delay of the tunnel.</extracomment>
-        <translation>Késleltetés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tunnelAddServer</source>
         <extracomment>&apos;Add server&apos; : Button for adding a server</extracomment>
-        <translation>Kiszolgáló hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tunnelApply</source>
         <extracomment>&apos;Apply&apos; : Button to apply changes.</extracomment>
-        <translation>Alkalmazás</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation>Utak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
-        <translation>Mentett képernyőképek mappája</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation>Mentett hívások mappája</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>languagesTitle</source>
-        <translation>Nyelvek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>languagesLabel</source>
-        <translation>Nyelv</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>systemLocale</source>
-        <translation>Rendszer területi beállítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation>Megtestesülés törlése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
-        <translation>Biztos, hogy eltávolítja az összes megtestesülést?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation>Letöltési mappa</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
-        <translation>Az alkalmazás újraindítása szükséges. Szeretné most újraindítani?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>otherTitle</source>
-        <translation>Egyéb</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
-        <translation>Alkalmazás kilépése az ablak bezárásakor</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>dataTitle</source>
-        <translation>UI-adatok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>autoStartLabel</source>
-        <translation>Alkalmazás önműködő indítása</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fontsTitle</source>
         <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
-        <translation>Betűkészletek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fontsTextChange</source>
         <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
-        <translation>Szöveges üzenetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
-        <translation>Új betűkészlet kijelölése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>checkForUpdateLabel</source>
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
-        <translation>Frissítések keresése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
-        <translation>Mipmap engedélyezése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mipmapTooltip1</source>
         <extracomment>&apos;This property holds whether the image uses mipmap filtering when scaled or transformed.&apos; : first line of a tooltip about Mipmap mode.</extracomment>
-        <translation>Ez a tulajdonság megmarad, függetlenül attól, hogy a kép mipmap-szűrést használ-e méretezéskor vagy átalakításkor.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>mipmapTooltip2</source>
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
-        <translation>A mipmap-szűrés jobb vizuális minőséget biztosít kicsinyítéskor, mint a sima, de teljesítményköltséggel járhat (mind a kép inicializálásakor, mind a renderelés során).</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation>Videó beviteli eszköz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation>Képkockasebesség</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
-        <translation>Videofelvétel paraméterei</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation>Videó előbeállítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presetDefault</source>
-        <translation>Alapértelmezett</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation>Magas képkockák másodpercenkénti szám</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>presetCustom</source>
-        <translation>Egyéni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoSizeLabel</source>
-        <translation>Videó felbontás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoCodecsTitle</source>
-        <translation>Videó kodekek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>showCameraPreview</source>
-        <translation>Videó előnézete</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation>Videó kodekek megjelenítése</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoSettingsInCallWarning</source>
-        <translation>Videohívás folyamatban: egyes beállítások nem állnak rendelkezésre.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
     <message>
         <source>confirm</source>
-        <translation>Rendben</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SettingsWindow</name>
     <message>
         <source>settingsTitle</source>
-        <translation>Beállítások</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipAccountsTab</source>
-        <translation>SIP fiókok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>audioTab</source>
-        <translation>Hang</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>videoTab</source>
-        <translation>Videó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
-        <translation>Hívások és csevegés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>networkTab</source>
-        <translation>Hálózat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uiTab</source>
-        <translation>Felhasználói felület</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>validButton</source>
-        <translation>Rendben</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>uiAdvanced</source>
-        <translation>Haladó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tunnelTab</source>
         <extracomment>&apos;Tunnel&apos; : Tab title for tunnel section in settings.</extracomment>
-        <translation>Alagút</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SipAddressDialog</name>
     <message>
         <source>cancel</source>
-        <translation>Mégse</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactsSearchPlaceholder</source>
         <extracomment>&apos;Search in contacts&apos; : Placeholder for a search a contact</extracomment>
-        <translation>Keresés a névjegyek között</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>contactsSearchTooltip</source>
         <extracomment>&apos;Search an address in your contacts or use a custom one.&apos; : tooltip</extracomment>
-        <translation>Keressen egy címet a névjegyei között, vagy használjon egyéni címet.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineSelectionHeader</source>
         <extracomment>&apos;Conversations&apos; : header for a selection in conversation list</extracomment>
-        <translation>Beszélgetések</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>SmartSearchBar</name>
     <message>
         <source>addContact</source>
-        <translation>Névjegy hozzáadása</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2727,1073 +2736,1073 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilter</source>
         <extracomment>A title for filtering mode.</extracomment>
-        <translation>Szűrő</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterAll</source>
         <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
-        <translation>Összes</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterCustom</source>
         <extracomment>&apos;Custom&apos; The mode for timelines filtering.</extracomment>
-        <translation>Egyéni</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item. Selecting it will show all secure chat groups (with more than one participant).</extracomment>
-        <translation>Egyszerű szobák</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>
         <extracomment>&apos;Secure rooms&apos; : Filter item. Selecting it will show all secure rooms.</extracomment>
-        <translation>Biztonságos szobák</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterChatGroups</source>
         <extracomment>&apos;Chat groups&apos; : Filter item. Selecting it will show all chat groups (with more than one participant).</extracomment>
-        <translation>Csevegőcsoportok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterEphemerals</source>
         <extracomment>&apos;Ephemerals&apos; : Filter item. Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation>Elmúlók</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineSearchPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
-        <translation>Keresés a listában</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterAllSecureLevelRooms</source>
         <extracomment>&apos;All security levels&apos; : Filter item. Selecting it will not do any filter on security level.</extracomment>
-        <translation>Minden biztonsági szint</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterStandardRooms</source>
         <extracomment>&apos;Standard rooms&apos; : Filter item. Selecting it will show all simple rooms.</extracomment>
-        <translation>Szabványos szobák</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterAnyChatRooms</source>
         <extracomment>&apos;Any conversations&apos; : Filter item. Selecting it will not do any filter on the type of conversations.</extracomment>
-        <translation>Minden beszélgetés</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterAnyEphemerals</source>
         <extracomment>&apos;Ephemerals on/off&apos; : Filter item. Selecting it will not do any filter on ephemerals activation.</extracomment>
-        <translation>Elmúlók be/ki</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>timelineFilterNoEphemerals</source>
         <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation>Elmúlók nélkül</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation>Használat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useAppSipAccountTitle</source>
-        <translation>%1 fiók használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useUsernameToLogin</source>
-        <translation>A telefonszám helyett használjon felhasználónevet és jelszót.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Fiókját létrehozta, de még nem hitelesítette. Biztosan le szeretne lépni erről a nézetről?</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordRecovery</source>
         <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
-        <translation>Elfelejtett jelszó?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithPhoneNumber</name>
     <message>
         <source>countryLabel</source>
-        <translation>Ország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation>Telefonszám</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation>Jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
-        <translation>Használat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
-        <translation>SIP fiók használata</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>Felhasználónév</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation>Megjelenítendő név (választható)</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sipDomainLabel</source>
-        <translation>SIP tartomány</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation>Jelszó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>transportLabel</source>
-        <translation>Szállítás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation>Nem sikerült hozzáadni ezt a fiókot.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>ZrtpTokenAuthentication</name>
     <message>
         <source>confirmSas</source>
-        <translation>Erősítse meg a következő SAS-t a társsal.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation>Mond:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>codeB</source>
-        <translation>A kapcsolattartónak el kell mondania:</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>deny</source>
-        <translation>Letiltás</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>accept</source>
-        <translation>Megerősít</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>country</name>
     <message>
         <source>Afghanistan</source>
-        <translation>Afganisztán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Albania</source>
-        <translation>Albánia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Algeria</source>
-        <translation>Algéria</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>AmericanSamoa</source>
-        <translation>Amerikai Szamoa</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Andorra</source>
-        <translation>Andorra</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Angola</source>
-        <translation>Angola</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Anguilla</source>
-        <translation>Anguilla</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>AntiguaAndBarbuda</source>
-        <translation>Antigua és Barbuda</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Argentina</source>
-        <translation>Argentína</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Armenia</source>
-        <translation>Örményország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Aruba</source>
-        <translation>Aruba</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Australia</source>
-        <translation>Ausztrália</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Austria</source>
-        <translation>Ausztria</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Azerbaijan</source>
-        <translation>Azerbajdzsán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bahamas</source>
-        <translation>Bahamák</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bahrain</source>
-        <translation>Bahrein</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bangladesh</source>
-        <translation>Banglades</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Barbados</source>
-        <translation>Barbados</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Belarus</source>
-        <translation>Fehéroroszország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Belgium</source>
-        <translation>Belgium</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Belize</source>
-        <translation>Belize</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Benin</source>
-        <translation>Benin</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bermuda</source>
-        <translation>Bermuda</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bhutan</source>
-        <translation>Bhután</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bolivia</source>
-        <translation>Bolívia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>BosniaAndHerzegowina</source>
-        <translation>Bosznia és Hercegovina</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Botswana</source>
-        <translation>Botswana</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Brazil</source>
-        <translation>Brazília</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Brunei</source>
-        <translation>Brunei</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Bulgaria</source>
-        <translation>Bulgária</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>BurkinaFaso</source>
-        <translation>Burkina Faso</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Burundi</source>
-        <translation>Burundi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cambodia</source>
-        <translation>Kambodzsa</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cameroon</source>
-        <translation>Kamerun</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Canada</source>
-        <translation>Kanada</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>CapeVerde</source>
-        <translation>Zöld-foki-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>CaymanIslands</source>
-        <translation>Kajmán-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>CentralAfricanRepublic</source>
-        <translation>Közép-Afrikai Köztársaság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Chad</source>
-        <translation>Csád</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Chile</source>
-        <translation>Chile</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>China</source>
-        <translation>Kína</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Colombia</source>
-        <translation>Colombia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Comoros</source>
-        <translation>Comore-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PeoplesRepublicOfCongo</source>
-        <translation>Kongói Népköztársaság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>DemocraticRepublicOfCongo</source>
-        <translation>Kongói Demokratikus Köztársaság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>CookIslands</source>
-        <translation>Cook-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>CostaRica</source>
-        <translation>Costa Rica</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>IvoryCoast</source>
-        <translation>Elefántcsontpart</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Croatia</source>
-        <translation>Horvátország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cuba</source>
-        <translation>Kuba</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Cyprus</source>
-        <translation>Ciprus</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>CzechRepublic</source>
-        <translation>Cseh Köztársaság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Denmark</source>
-        <translation>Dánia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Djibouti</source>
-        <translation>Dzsibuti</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Dominica</source>
-        <translation>Dominika</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>DominicanRepublic</source>
-        <translation>Dominikai Köztársaság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ecuador</source>
-        <translation>Ecuador</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Egypt</source>
-        <translation>Egyiptom</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ElSalvador</source>
-        <translation>El Salvador</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>EquatorialGuinea</source>
-        <translation>Egyenlítői-Guinea</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Eritrea</source>
-        <translation>Eritrea</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Estonia</source>
-        <translation>Észtország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ethiopia</source>
-        <translation>Etiópia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FalklandIslands</source>
-        <translation>Falkland-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FaroeIslands</source>
-        <translation>Feröer-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fiji</source>
-        <translation>Fidzsi-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Finland</source>
-        <translation>Finnország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>France</source>
-        <translation>Franciaország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FrenchGuiana</source>
-        <translation>Francia Guyana</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>FrenchPolynesia</source>
-        <translation>Francia Polinézia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gabon</source>
-        <translation>Gabon</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gambia</source>
-        <translation>Gambia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Georgia</source>
-        <translation>Grúzia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Germany</source>
-        <translation>Németország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ghana</source>
-        <translation>Ghána</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Gibraltar</source>
-        <translation>Gibraltár</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Greece</source>
-        <translation>Görögország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Greenland</source>
-        <translation>Grönland</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Grenada</source>
-        <translation>Grenada</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Guadeloupe</source>
-        <translation>Guadeloupe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Guam</source>
-        <translation>Guam</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Guatemala</source>
-        <translation>Guatemala</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Guinea</source>
-        <translation>Guinea</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>GuineaBissau</source>
-        <translation>Bissau-Guinea</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Guyana</source>
-        <translation>Guyana</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Haiti</source>
-        <translation>Haiti</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Honduras</source>
-        <translation>Honduras</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>HongKong</source>
-        <translation>Hong Kong</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hungary</source>
-        <translation>Magyarország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Iceland</source>
-        <translation>Izland</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>India</source>
-        <translation>India</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Indonesia</source>
-        <translation>Indonézia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Iran</source>
-        <translation>Irán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Iraq</source>
-        <translation>Irak</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ireland</source>
-        <translation>Írország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Israel</source>
-        <translation>Izrael</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Italy</source>
-        <translation>Olaszország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Jamaica</source>
-        <translation>Jamaica</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Japan</source>
-        <translation>Japán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Jordan</source>
-        <translation>Jordánia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Kazakhstan</source>
-        <translation>Kazahsztán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Kenya</source>
-        <translation>Kenya</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Kiribati</source>
-        <translation>Kiribati</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>DemocraticRepublicOfKorea</source>
-        <translation>Koreai Népi Demokratikus Köztársaság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>RepublicOfKorea</source>
-        <translation>Koreai Köztársaság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Kuwait</source>
-        <translation>Kuvait</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Kyrgyzstan</source>
-        <translation>Kirgizisztán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Laos</source>
-        <translation>Laosz</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Latvia</source>
-        <translation>Lettország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lebanon</source>
-        <translation>Libanon</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lesotho</source>
-        <translation>Lesotho</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Liberia</source>
-        <translation>Libéria</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Libya</source>
-        <translation>Líbia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Liechtenstein</source>
-        <translation>Liechtenstein</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Lithuania</source>
-        <translation>Litvánia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Luxembourg</source>
-        <translation>Luxembourg</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Macau</source>
-        <translation>Makaó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Macedonia</source>
-        <translation>Macedónia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Madagascar</source>
-        <translation>Madagaszkár</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Malawi</source>
-        <translation>Malawi</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Malaysia</source>
-        <translation>Malaysia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Maldives</source>
-        <translation>Maldív-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mali</source>
-        <translation>Mali</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Malta</source>
-        <translation>Málta</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>MarshallIslands</source>
-        <translation>Marshall-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Martinique</source>
-        <translation>Martinique</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mauritania</source>
-        <translation>Mauritánia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mauritius</source>
-        <translation>Mauritius</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mayotte</source>
-        <translation>Mayotte</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mexico</source>
-        <translation>Mexikó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Micronesia</source>
-        <translation>Mikronézia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Moldova</source>
-        <translation>Moldova</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Monaco</source>
-        <translation>Monaco</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mongolia</source>
-        <translation>Mongólia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Montenegro</source>
-        <translation>Montenegró</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Montserrat</source>
-        <translation>Montserrat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Morocco</source>
-        <translation>Marokkó</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Mozambique</source>
-        <translation>Mozambik</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Myanmar</source>
-        <translation>Myanmar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Namibia</source>
-        <translation>Namíbia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NauruCountry</source>
-        <translation>Nauru</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nepal</source>
-        <translation>Nepál</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Netherlands</source>
-        <translation>Németalföld</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NewCaledonia</source>
-        <translation>Új-Kaledónia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NewZealand</source>
-        <translation>Új-Zéland</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nicaragua</source>
-        <translation>Nicaragua</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Niger</source>
-        <translation>Niger</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Nigeria</source>
-        <translation>Nigéria</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Niue</source>
-        <translation>Niue</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NorfolkIsland</source>
-        <translation>Norfolk-sziget</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>NorthernMarianaIslands</source>
-        <translation>Észak Mariana szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Norway</source>
-        <translation>Norvégia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Oman</source>
-        <translation>Omán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Pakistan</source>
-        <translation>Pakisztán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Palau</source>
-        <translation>Palau</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PalestinianTerritories</source>
-        <translation>Palesztin területek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Panama</source>
-        <translation>Panama</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PapuaNewGuinea</source>
-        <translation>Pápua Új-Guinea</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Paraguay</source>
-        <translation>Paraguay</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Peru</source>
-        <translation>Peru</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Philippines</source>
-        <translation>Fülöp-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Poland</source>
-        <translation>Lengyelország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Portugal</source>
-        <translation>Portugália</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>PuertoRico</source>
-        <translation>Puerto Rico</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Qatar</source>
-        <translation>Katar</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Reunion</source>
-        <translation>Réunion</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Romania</source>
-        <translation>Románia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>RussianFederation</source>
-        <translation>Orosz Föderáció</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rwanda</source>
-        <translation>Ruanda</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SaintHelena</source>
-        <translation>Saint Helena</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SaintKittsAndNevis</source>
-        <translation>Saint Kitts és Nevis</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SaintLucia</source>
-        <translation>Saint Lucia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SaintPierreAndMiquelon</source>
-        <translation>Saint Pierre és Miquelon</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SaintVincentAndTheGrenadines</source>
-        <translation>Saint Vincent és a Grenadine-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Samoa</source>
-        <translation>Szamoa</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SanMarino</source>
-        <translation>San Marino</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SaoTomeAndPrincipe</source>
-        <translation>São Tomé és Príncipe</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SaudiArabia</source>
-        <translation>Szaud-Arábia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Senegal</source>
-        <translation>Szenegál</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Serbia</source>
-        <translation>Szerbia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Seychelles</source>
-        <translation>Seychelles</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SierraLeone</source>
-        <translation>Sierra Leone</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Singapore</source>
-        <translation>Szingapúr</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Slovakia</source>
-        <translation>Szlovákia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Slovenia</source>
-        <translation>Szlovénia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SolomonIslands</source>
-        <translation>Salamon-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Somalia</source>
-        <translation>Szomália</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SouthAfrica</source>
-        <translation>Dél-Afrika</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Spain</source>
-        <translation>Spanyolország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>SriLanka</source>
-        <translation>Srí Lanka</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sudan</source>
-        <translation>Szudán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Suriname</source>
-        <translation>Suriname</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Swaziland</source>
-        <translation>Szváziföld</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Sweden</source>
-        <translation>Svédország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Switzerland</source>
-        <translation>Svájc</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Syria</source>
-        <translation>Szíria</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Taiwan</source>
-        <translation>Tajvan</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tajikistan</source>
-        <translation>Tádzsikisztán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tanzania</source>
-        <translation>Tanzánia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Thailand</source>
-        <translation>Thaiföld</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Togo</source>
-        <translation>Togo</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tokelau</source>
-        <translation>Tokelau</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tonga</source>
-        <translation>Tonga</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TrinidadAndTobago</source>
-        <translation>Trinidad és Tobago</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tunisia</source>
-        <translation>Tunézia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Turkey</source>
-        <translation>Törökország</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Turkmenistan</source>
-        <translation>Türkmenisztán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TurksAndCaicosIslands</source>
-        <translation>Turks- és Caicos-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Tuvalu</source>
-        <translation>Tuvalu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Uganda</source>
-        <translation>Uganda</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Ukraine</source>
-        <translation>Ukrajna</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>UnitedArabEmirates</source>
-        <translation>Egyesült Arab Emírségek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>UnitedKingdom</source>
-        <translation>Egyesült Királyság</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>UnitedStates</source>
-        <translation>Egyesült Államok</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Uruguay</source>
-        <translation>Uruguay</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Uzbekistan</source>
-        <translation>Üzbegisztán</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Vanuatu</source>
-        <translation>Vanuatu</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Venezuela</source>
-        <translation>Venezuela</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Vietnam</source>
-        <translation>Vietnam</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>WallisAndFutunaIslands</source>
-        <translation>Wallis- és Futuna-szigetek</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Yemen</source>
-        <translation>Jemen</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Zambia</source>
-        <translation>Zambia</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Zimbabwe</source>
-        <translation>Zimbabwe</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>linphone-utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
