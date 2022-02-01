@@ -190,6 +190,15 @@ void SettingsModel::setAssistantLogoutUrl (QString url) {
 	emit assistantLogoutUrlChanged(url);
 }
 
+bool SettingsModel::isCguAccepted () const{
+	return !!mConfig->getInt(UiSection, "read_and_agree_terms_and_privacy", 0);
+}
+
+void SettingsModel::acceptCgu(const bool accept){
+	mConfig->setInt(UiSection, "read_and_agree_terms_and_privacy", accept);
+	emit cguAcceptedChanged(accept);
+}
+
 // =============================================================================
 // SIP Accounts.
 // =============================================================================

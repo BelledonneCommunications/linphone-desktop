@@ -146,6 +146,11 @@
         <source>createAppSipAccount</source>
         <translation>OPRET EN %1 KONTO</translation>
     </message>
+    <message>
+        <source>homeCgu</source>
+        <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantModel</name>
