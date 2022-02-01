@@ -29,6 +29,13 @@ CheckBox {
 		wrapMode: Text.WordWrap
 		
 		verticalAlignment: Text.AlignVCenter
+		onLinkActivated: Qt.openUrlExternally(link)
+		MouseArea {
+			id: mouseArea
+			anchors.fill: parent
+			cursorShape: parent.hoveredLink != '' ? Qt.PointingHandCursor : Qt.ArrowCursor
+			acceptedButtons: Qt.NoButton
+		}
 	}
 	
 	font.pointSize: CheckBoxTextStyle.pointSize
