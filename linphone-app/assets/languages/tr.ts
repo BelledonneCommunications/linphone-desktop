@@ -94,11 +94,11 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>Alınacak %1 yapılandırma dosyasını belirtin. Bu, geçerli yapılandırmayla birleştirilecektir.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>URL, yol veya dosya</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
@@ -106,11 +106,11 @@
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP adresi</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished"></translation>
+        <translation>Güncellemeleri denetle</translation>
     </message>
 </context>
 <context>
@@ -468,24 +468,25 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 yazıyor…</numerusform>
+            <numerusform>%1 yazıyor…</numerusform>
         </translation>
     </message>
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Panoya kopyalandı</translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seçim panoya kopyalandı</translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>İletinin yönlendirileceği yeri seç</translation>
     </message>
 </context>
 <context>
@@ -493,25 +494,25 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>deliveryDelivered</source>
         <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gönderildi: %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
     </message>
     <message>
         <source>deliveryDeliveredToUser</source>
         <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aldı: %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
     </message>
     <message>
         <source>deliveryDisplayed</source>
         <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Okudu: %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
     </message>
     <message>
         <source>deliveryNotDelivered</source>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 iletiyi almadı</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
 </context>
@@ -528,67 +529,71 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>menuCopyAll</source>
         <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tümünü kopyala</translation>
     </message>
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">Kopyala</translation>
+        <translation>Kopyala</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished">Beni oynat!</translation>
+        <translation>Beni oynat!</translation>
     </message>
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dağıtım durumu</translation>
     </message>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sil</translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dağıtım durumunu gizle</translation>
     </message>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Yönlendir</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Yanıtla</translation>
     </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 dakika</numerusform>
+            <numerusform>%1 dakika</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 saat</numerusform>
+            <numerusform>%1 saat</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 gün</numerusform>
+            <numerusform>%1 gün</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 hafta</numerusform>
+            <numerusform>%1 hafta</numerusform>
         </translation>
     </message>
 </context>
@@ -597,7 +602,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Yanıt</translation>
     </message>
 </context>
 <context>
@@ -648,7 +653,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Belirli çağrıyı, tüm çağrıları veya geçerli çağrıyı bitir.</translation>
     </message>
 </context>
 <context>
@@ -799,7 +804,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Toplantı tabanlı konuşma odası oluşturmak için hesap ayarlarınızda toplantı URI&apos;si belirlemelisiniz.</translation>
     </message>
 </context>
 <context>
@@ -827,7 +832,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Toplantı tabanlı konuşma odası oluşturmak için hesap ayarlarınızda toplantı URI&apos;si belirlemelisiniz.</translation>
     </message>
 </context>
 <context>
@@ -863,18 +868,18 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Yönetici</translation>
         <extra-Context>One word title for describing the current admin status</extra-Context>
     </message>
     <message>
         <source>conversationMenuGroupInformations</source>
         <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Küme bilgisi</translation>
     </message>
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konuşmanın aygıtları</translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
@@ -884,12 +889,12 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konuşma odasındaki tüm katılımcıları ara</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>İletileri ara</translation>
     </message>
 </context>
 <context>
