@@ -5,68 +5,68 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>ACTIVAR A SUA CONTA %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>USAR CONTA</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>Para activar a sua conta: siga as instruções que enviámos em %1, depois clique abaixo.</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>ACTIVAR A SUA CONTA %1</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>USAR CONTA</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>Um SMS contendo um código de validação foi enviado para %1. Para concluir a verificação do número de telefone, insira o código de 4 dígitos abaixo.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"></translation>
+        <translation>log para stdout algumas informações de depuração durante a execução</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>especifique o arquivo de configuração %1 a ser usado</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Um vídeo-fone SIP gratuito (libre).</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"></translation>
+        <translation>iniciar na bandeja do sistema, não mostrar a interface principal</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>ficheiro</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>mostrar esta ajuda</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"></translation>
+        <translation>mostrar a versão do aplicativo</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
