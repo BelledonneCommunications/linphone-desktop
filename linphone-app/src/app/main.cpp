@@ -29,9 +29,6 @@
 // =============================================================================
 
 int main (int argc, char *argv[]) {
-  QSurfaceFormat defaultFormat = QSurfaceFormat::defaultFormat();
-  defaultFormat.setVersion(2,1);	// SDK doesn't support recent version yet. Request 2.1 (it will request compatibility mode if not available)
-  QSurfaceFormat::setDefaultFormat(defaultFormat);
   AppController controller(argc, argv);
 #ifdef QT_QML_DEBUG
   QQmlDebuggingEnabler enabler;
