@@ -95,15 +95,9 @@ bool LdapListModel::removeRows (int row, int count, const QModelIndex &parent) {
 
 void LdapListModel::initLdap () {
 	CoreManager *coreManager = CoreManager::getInstance();
-	auto lConfig = coreManager->getCore()->getConfig();
-	auto bcSections = lConfig->getSectionsNamesList();
-	// Loop on all sections and load configuration. If this is not a LDAP configuration, the model is discarded.
-	for(auto itSections = bcSections.begin(); itSections != bcSections.end(); ++itSections) {
-		LdapModel * ldap = new LdapModel();
-		if(ldap->load(*itSections)){
-			mServers.append(ldap);
-		}else
-			delete ldap;
+	auto ldapList = coreManager->getCore()->getLdapList();
+	for(auto ldap : ldapList){
+		mServers.append(new LdapModel(ldap));
 	}
 }
 
@@ -122,7 +116,8 @@ void LdapListModel::enable(int id, bool status){
 void LdapListModel::add(){
 	int row = mServers.count();
 	beginInsertRows(QModelIndex(), row, row);
-	auto ldap= new LdapModel(row);
+	auto ldap= new LdapModel(nullptr);
+	connect(ldap, &LdapModel::indexChanged, this, &LdapListModel::indexChanged);
 	ldap->init();
 	mServers << ldap;
 	endInsertRows();

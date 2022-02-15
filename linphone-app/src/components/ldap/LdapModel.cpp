@@ -33,16 +33,17 @@
 
 using namespace std;
 
-LdapModel::LdapModel (const int& id,QObject *parent ) : QObject(parent), mId(id){
-	mIsValid = false;
-	mMaxResults = 50;
-	mTimeout = 5;
-	mDebug = false;
-	mVerifyServerCertificates = -1;
-	mUseTls = true;
-	mUseSal = false;
-	mServer = "ldap://ldap.example.org";
-	mConfig["enable"] = "0";
+LdapModel::LdapModel (std::shared_ptr<linphone::Ldap> ldap, QObject *parent ) : QObject(parent){
+	mLdap = ldap;
+	if(mLdap)
+		mLdapParams = ldap->getParams()->clone();
+	else{
+		mLdapParams = CoreManager::getInstance()->getCore()->createLdapParams();
+		mLdapParams->setMaxResults(50);	// Desktop default
+		mLdapParams->setEnabled(false);
+	}
+
+	unset();
 }
 
 void LdapModel::init(){
@@ -70,98 +71,71 @@ bool LdapModel::isValid(){
 void LdapModel::save(){
 	if(isValid()){
 		set();
-		CoreManager *coreManager = CoreManager::getInstance();
-		auto lConfig = coreManager->getCore()->getConfig();
-		std::string section = ("ldap_"+QString::number(mId)).toStdString();
-		lConfig->cleanSection(section);
-		for(auto it = mConfig.begin() ; it != mConfig.end() ; ++it)
-			lConfig->setString(section, it.key().toStdString(), it.value().toString().toStdString());
-		lConfig->sync();
+		if(!mLdap) {
+			mLdap = CoreManager::getInstance()->getCore()->createLdapWithParams(mLdapParams);
+			emit indexChanged();
+		}else{
+			int oldIndex = getIndex();
+			mLdap->setParams(mLdapParams);
+			if( oldIndex != getIndex())
+				emit indexChanged();
+		}
 	}
 }
 
 void LdapModel::unsave(){
-	if(mId>=0){
-		CoreManager *coreManager = CoreManager::getInstance();
-		auto lConfig = coreManager->getCore()->getConfig();
-		std::string section = ("ldap_"+QString::number(mId)).toStdString();
-		lConfig->cleanSection(section);
-		lConfig->sync();
-	}
+	if(mLdap)
+		mLdap->removeFromConfigFile();
 }
-
-bool LdapModel::load(const std::string& section){
-	bool ok = false;
-	CoreManager *coreManager = CoreManager::getInstance();
-	auto lConfig = coreManager->getCore()->getConfig();
-	std::string sectionName;
-	size_t i = section.length()-1;
-	while(i>0 && section[i] != '_')// Get the name strip number
-		--i;
-	if(i>0){
-		sectionName = section.substr(0,i);
-		mId = atoi(section.substr(i+1).c_str());
-	}else{
-		sectionName = section;
-		mId = 0;
-	}
-	if(sectionName == "ldap"){
-		mConfig.clear();
-		auto keys = lConfig->getKeysNamesList(section);
-		for(auto itKeys = keys.begin() ; itKeys != keys.end() ; ++itKeys){
-			mConfig[QString::fromStdString(*itKeys)] = QString::fromStdString(lConfig->getString(section, *itKeys, ""));
-		}
-		unset();
-		ok = true;
-	}
-	return ok;
-}
-
 QVariantMap LdapModel::getConfig(){
-	return mConfig;
+	//return mConfig;
+	return QVariantMap();
 }
 
 void LdapModel::setConfig(const QVariantMap& config){
-	mConfig = config;
+	//mConfig = config;
 	emit configChanged();
 }
 
 void LdapModel::set(){
-	mConfig["server"] = mServer;
-	mConfig["display_name"] = mDisplayName;
-	mConfig["use_sal"] = (mUseSal?"1":"0");
-	mConfig["use_tls"] = (mUseTls?"1":"0");
-	mConfig["server"] = mServer;
-	mConfig["max_results"] = mMaxResults;
-	mConfig["timeout"] = mTimeout;
-	mConfig["password"] = mPassword;
-	mConfig["bind_dn"] = mBindDn;
-	mConfig["base_object"] = mBaseObject;
-	mConfig["filter"] = mFilter;
-	mConfig["name_attribute"] = mNameAttributes;
-	mConfig["sip_attribute"] = mSipAttributes;
-	mConfig["sip_domain"] = mSipDomain;
-	mConfig["debug"] = (mDebug?"1":"0");
-	mConfig["verify_server_certificates"] = mVerifyServerCertificates;
+	mLdapParams->setServer(mServer.toStdString());
+	mLdapParams->setCustomValue("display_name", mDisplayName.toStdString());
+	mLdapParams->enableSal(mUseSal);
+	mLdapParams->enableTls(mUseTls);
+	mLdapParams->setMaxResults(mMaxResults);
+	mLdapParams->setTimeout(mTimeout);
+	mLdapParams->setPassword(mPassword.toStdString());
+	mLdapParams->setBindDn(mBindDn.toStdString());
+	mLdapParams->setBaseObject(mBaseObject.toStdString());
+	mLdapParams->setFilter(mFilter.toStdString());
+	mLdapParams->setNameAttribute(mNameAttributes.toStdString());
+	mLdapParams->setSipAttribute(mSipAttributes.toStdString());
+	mLdapParams->setSipDomain(mSipDomain.toStdString());
+	mLdapParams->setDebugLevel( (linphone::LdapDebugLevel) mDebug);
+	mLdapParams->setServerCertificatesVerificationMode((linphone::LdapCertVerificationMode)mVerifyServerCertificates);
+	static int gCount = 0;
+	mLdapParams->setAuthMethod((++gCount % 2) == 0 ? linphone::LdapAuthMethod::Anonymous : linphone::LdapAuthMethod::Simple);
 }
 
 void LdapModel::unset(){
-	mServer = mConfig["server"].toString();
-	mDisplayName = mConfig["display_name"].toString();
-	mUseTls = mConfig["use_tls"].toString() == "1";
-	mUseSal = mConfig["use_sal"].toString() == "1";
-	mMaxResults = mConfig["max_results"].toInt();
-	mTimeout = mConfig["timeout"].toInt();
-	mPassword = mConfig["password"].toString();
-	mBindDn = mConfig["bind_dn"].toString();
-	mBaseObject = mConfig["base_object"].toString();
-	mFilter = mConfig["filter"].toString();
-	mNameAttributes = mConfig["name_attribute"].toString();
-	mSipAttributes = mConfig["sip_attribute"].toString();
-	mSipDomain = mConfig["sip_domain"].toString();
-	mDebug = mConfig["debug"].toString() == "1";
-	mVerifyServerCertificates = mConfig["verify_server_certificates"].toInt();
-	
+	mServer = QString::fromStdString(mLdapParams->getServer());
+	std::string t = mLdapParams->getCustomValue("display_name");
+	mDisplayName = QString::fromStdString(t);
+	mUseTls = mLdapParams->tlsEnabled();
+	mUseSal = mLdapParams->salEnabled();
+	mMaxResults = mLdapParams->getMaxResults();
+	mTimeout = mLdapParams->getTimeout();
+	mPassword = QString::fromStdString(mLdapParams->getPassword());
+	mBindDn = QString::fromStdString(mLdapParams->getBindDn());
+	mBaseObject = QString::fromStdString(mLdapParams->getBaseObject());
+	mFilter = QString::fromStdString(mLdapParams->getFilter());
+	mNameAttributes = QString::fromStdString(mLdapParams->getNameAttribute());
+	mSipAttributes = QString::fromStdString(mLdapParams->getSipAttribute());
+	mSipDomain = QString::fromStdString(mLdapParams->getSipDomain());
+	mDebug = (int)mLdapParams->getDebugLevel();
+	mVerifyServerCertificates = (int)mLdapParams->getServerCertificatesVerificationMode();
+	int c = (int) mLdapParams->getAuthMethod();
+	qWarning() << c;
 	testServerField();
 	testMaxResultsField();
 	testTimeoutField();
@@ -175,14 +149,14 @@ void LdapModel::unset(){
 	isValid();
 }
 bool LdapModel::isEnabled(){
-	return mConfig["enable"].toString() == "1";
+	return mLdapParams->getEnabled();
 }
 void LdapModel::setEnabled(const bool& data){
 	if(isValid()){
-		mConfig["enable"] = (data?"1":"0");
+		mLdapParams->setEnabled(data);
 		save();
 	}else
-		mConfig["enable"] = "0";
+		mLdapParams->setEnabled(false);
 	emit enabledChanged();
 }
 //------------------------------------------------------------------------------------
@@ -212,6 +186,11 @@ void LdapModel::testServerField(){
 		emit serverFieldErrorChanged();
 		isValid();
 	}
+}
+
+void LdapModel::setDisplayName(const QString& displayName){
+	mDisplayName = displayName;
+	emit displayNameChanged();
 }
 
 void LdapModel::setMaxResults(const int& data){
@@ -350,4 +329,11 @@ void LdapModel::testSipDomainField(){
 		emit sipDomainFieldErrorChanged();
 		isValid();
 	}
+}
+
+int LdapModel::getIndex() const{
+	if(mLdap)
+		return mLdap->getIndex();
+	else
+		return -2;
 }

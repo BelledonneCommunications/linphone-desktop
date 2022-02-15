@@ -49,6 +49,9 @@ public:
 	Q_INVOKABLE void add();
 // Remove a Server
 	Q_INVOKABLE void remove (LdapModel *importer);
+
+signals:
+	void indexChanged();
 	
 private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
