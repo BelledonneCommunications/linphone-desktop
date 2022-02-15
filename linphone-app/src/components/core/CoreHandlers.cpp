@@ -191,7 +191,7 @@ void CoreHandlers::onMessageReceived (
 		const shared_ptr<linphone::ChatRoom> &chatRoom,
 		const shared_ptr<linphone::ChatMessage> &message
 		) {
-	if( message->isOutgoing()  )
+	if( !message || message->isOutgoing()  )
 		return;
 	const string contentType = message->getContentType();
 	

@@ -52,8 +52,7 @@ For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.12 o
         Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake"
         PATH="~/Qt/5.12.5/gcc_64/bin/:$PATH"
 
-Note: If you have `qtchooser` set in your `PATH`, the best use is :
-
+Note: If you have the third party tool `qtchooser` installed : 
         eval "$(qtchooser -print-env)"
         export Qt5_DIR=${QTLIBDIR}/cmake/Qt5
         export PATH=${QTTOOLDIR}:$PATH
@@ -71,13 +70,7 @@ Note: If you have `qtchooser` set in your `PATH`, the best use is :
 
 ### Get sources
 
-1. Clone repository:
-
         git clone https://gitlab.linphone.org/BC/public/linphone-desktop.git --recursive        
-
-2. Update sub-modules
-
-        git submodule update --init --recursive
 
 		
 ### Building : General Steps
@@ -97,6 +90,8 @@ Note : For Makefile or Ninja, you have to add `-DCMAKE_BUILD_TYPE=<your_config>`
 Note : For XCode or Visual Studio, you have to add `--config <your_config>` if you wish to build in a specific configuration (for example `RelWithDebInfo`).
 
 When all are over, the files will be in the OUTPUT folder in the build directory. When rebuilding, you have to use `cmake --build . --target install` (or `cmake --install .`) to put the application in the correct configuration.
+
+Binaries inside other folders (like `linphone-app` and `linphone-sdk`) are not supposed to work.
 
 4. When doing some modifications in the SDK, you can rebuild only the SDK with the target `sdk` and the same for the application with `linphone-qt-only`
 
@@ -155,17 +150,7 @@ Before you install packages with Brew, you may have to change directories permis
         pip install pystache
         pip install graphviz
 
-6. Build as usual (General Steps) :
-  - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo`
-  - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
-
-7. The project folder will be in the build directory and binaries should be in the OUTPUT folder.
-
-8. When updating the project, the next build steps are a bit different:
-    - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .`
-OR
-    - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
+6. Build as usual (General Steps).
 
 ## Specific instructions for the Windows platform
 
@@ -201,34 +186,39 @@ The default build is very long. It is prefered to use the Ninja generator `-G "N
 
 5. The project folder will be in the build directory and binaries should be in the OUTPUT folder.
 
-6. When updating the project, the next build steps are a bit different:
-    - `cmake --build . --target ALL_BUILD --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .`
-OR
-    - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
 
-## Specific instructions for the Mac Os X platform
+## Installing dependencies
 
-1. Build as usual (General Steps) :
-  - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo`
-  - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
+There are [docker files](docker-files) configurations where dependencies can be retrieved. 
 
-2. The project folder will be in the build directory and binaries should be in the OUTPUT folder.
+Also, more configurations are available in the docker-files folder of linphone-sdk submodule.
 
-3. When updating the project, the next build steps are a bit different:
-    - `cmake --build . --target all --parallel 10 --config RelWithDebInfo`
-    - `cmake --install .`
-OR
-    - `cmake --build . --target install --parallel 10 --config RelWithDebInfo`
+## Options
 
 
-## Installing Linux dependencies
+| Options | Description | Default value |
+| :--- | :---: | ---: |
+| ENABLE_APP_PACKAGING | Enable packaging. Package will be deployed in `OUTPUT/packages` | NO |
+| ENABLE_APP_LICENSE | Enable the license in packages. | YES |
+| ENABLE_BUILD_APP_PLUGINS | Enable the build of plugins | YES |
+| ENABLE_BUILD_VERBOSE | Enable the build generation to be more verbose | NO |
+| ENABLE_BUILD_EXAMPLES | Enable the build of examples | NO |
+| ENABLE_DAEMON | Enable the linphone daemon interface. | NO |
+| ENABLE_STRICT | Build with strict compilator flags e.g. -Wall -Werror | NO |
+| ENABLE_TESTS | Build with testing binaries of SDK | NO |
+| ENABLE_TESTS_COMPONENTS | Build libbctoolbox-tester | NO |
+| ENABLE_TOOLS | Enable tools of SDK | NO |
+| ENABLE_UNIT_TESTS | Enable unit test of SDK. | NO |
+| ENABLE_UPDATE_CHECK | Enable update check. | YES |
 
 
-Dependencies from 4.1 version of Desktop (refer it only if you have issues):
-
-apt-get install libqt53dcore5:amd64 libqt53dextras5:amd64 libqt53dinput5:amd64 libqt53dlogic5:amd64 libqt53dquick5:amd64 libqt53dquickextras5:amd64 libqt53dquickinput5:amd64 libqt53dquickrender5:amd64  libqt53drender5:amd64 libqt5concurrent5:amd64 libqt5core5a:amd64 libqt5dbus5:amd64 libqt5designer5:amd64 libqt5designercomponents5:amd64 libqt5gui5:amd64 libqt5help5:amd64 libqt5multimedia5:amd64 libqt5multimedia5-plugins:amd64 libqt5multimediawidgets5:amd64 libqt5network5:amd64 libqt5opengl5:amd64 libqt5opengl5-dev:amd64 libqt5positioning5:amd64 libqt5printsupport5:amd64 libqt5qml5:amd64 libqt5quick5:amd64 libqt5quickcontrols2-5:amd64 libqt5quickparticles5:amd64 libqt5quicktemplates2-5:amd64 libqt5quicktest5:amd64 libqt5quickwidgets5:amd64 libqt5script5:amd64 libqt5scripttools5:amd64 libqt5sensors5:amd64 libqt5serialport5:amd64 libqt5sql5:amd64 libqt5sql5-sqlite:amd64 libqt5svg5:amd64 libqt5svg5-dev:amd64 libqt5test5:amd64 libqt5webchannel5:amd64 libqt5webengine-data libqt5webenginecore5:amd64 libqt5webenginewidgets5:amd64 libqt5webkit5:amd64 libqt5widgets5:amd64 libqt5x11extras5:amd64  libqt5xml5:amd64 libqt5xmlpatterns5:amd64 qt5-default:amd64 qt5-doc qt5-gtk-platformtheme:amd64 qt5-qmake:amd64 qt5-qmltooling-plugins:amd64
-
+<!-- Not customizable without warranty
+| ENABLE_VIDEO | Enable Video support. | YES |
+| ENABLE_OPENH264 | Enable the use of OpenH264 codec | YES |
+| ENABLE_NON_FREE_CODECS | Enable the use of non free codecs | YES |
+| ENABLE_FFMPEG | Build mediastreamer2 with ffmpeg video support. | ON |
+| ENABLE_CONSOLE_UI | Turn on or off compilation of console interface. | NO |
+-->
 
 ## Contributing
 

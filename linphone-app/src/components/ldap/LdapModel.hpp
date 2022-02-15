@@ -24,6 +24,7 @@
 #include <QAbstractListModel>
 #include <QDateTime>
 
+#include <linphone++/linphone.hh>
 
 // =============================================================================
 
@@ -37,7 +38,7 @@ class LdapModel : public QObject {
 	Q_PROPERTY(QString server MEMBER mServer WRITE setServer NOTIFY serverChanged)
 	Q_PROPERTY(QString serverFieldError MEMBER mServerFieldError NOTIFY serverFieldErrorChanged)
 	
-	Q_PROPERTY(QString displayName MEMBER mDisplayName NOTIFY displayNameChanged)
+	Q_PROPERTY(QString displayName MEMBER mDisplayName WRITE setDisplayName NOTIFY displayNameChanged)
 	
 	Q_PROPERTY(bool useTls MEMBER mUseTls NOTIFY useTlsChanged)
 	Q_PROPERTY(bool useSal MEMBER mUseSal NOTIFY useSalChanged)
@@ -76,11 +77,11 @@ class LdapModel : public QObject {
 	Q_PROPERTY(bool enabled READ isEnabled WRITE setEnabled NOTIFY enabledChanged)
 public:
 	
-	LdapModel (const int& id = 0,QObject *parent = nullptr);
+	LdapModel (std::shared_ptr<linphone::Ldap> ldap, QObject *parent = nullptr);
 	
-	QVariantMap mConfig;
+	//QVariantMap mConfig;
 	bool mIsValid;
-	int mId; // "ldap_mId" from section name
+	//int mId; // "ldap_mId" from section name
 	
 	QString mServer;
 	QString mServerFieldError;
@@ -88,6 +89,7 @@ public:
 	void testServerField();
 	
 	QString mDisplayName;
+	void setDisplayName(const QString& displayName);
 	
 	bool mUseSal;
 	bool mUseTls;
@@ -136,8 +138,10 @@ public:
 	QString mSipDomainFieldError;
 	void setSipDomain(const QString& data);
 	void testSipDomainField();
+
+	int getIndex() const;
 	
-	bool mDebug;
+	int mDebug;
 	int mVerifyServerCertificates;
 	
 // Test if the configuration is valid
@@ -145,7 +149,6 @@ public:
 	void init();// init configuration by default value
 	Q_INVOKABLE void save(); // Save configuration to linphonerc
 	void unsave();	// Remove configuration from linphonerc
-	bool load(const std::string& sectionName);// Load a configuration : ldap_x where x is a unique number
 	void set();	// Fix Configuration from variables
 	Q_INVOKABLE void unset(); // Set variables from Configuration
 	
@@ -174,6 +177,7 @@ signals:
 	void sipDomainChanged();
 	void debugChanged();
 	void verifyServerCertificatesChanged();
+	void indexChanged();
 	
 	
 	void serverFieldErrorChanged();
@@ -188,6 +192,10 @@ signals:
 	void sipDomainFieldErrorChanged();
 	
 	void enabledChanged();
+
+private:
+	std::shared_ptr<linphone::Ldap> mLdap;
+	std::shared_ptr<linphone::LdapParams> mLdapParams;
 };
 Q_DECLARE_METATYPE(LdapModel*);
 #endif // LDAP_MODEL_H_

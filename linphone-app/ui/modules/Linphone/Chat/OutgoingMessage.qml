@@ -63,7 +63,7 @@ Item {
             id:retryAction
             anchors.fill: parent
             visible: iconId.isError || $chatEntry.state == LinphoneEnums.ChatMessageStateIdle
-            onClicked: proxyModel.resendMessage(index)
+            onClicked: $chatEntry.resendMessage()
           }
 
           TooltipArea {
