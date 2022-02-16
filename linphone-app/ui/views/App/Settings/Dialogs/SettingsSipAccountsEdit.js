@@ -76,25 +76,28 @@ function formIsValid () {
 
 // -----------------------------------------------------------------------------
 
-function validProxyConfig () {
-  if (Linphone.AccountSettingsModel.addOrUpdateProxyConfig(proxyConfig, {
-    sipAddress: sipAddress.text,
-    serverAddress: serverAddress.text,
-    registrationDuration: registrationDuration.text,
-    transport: transport.currentText,
-    route: route.text,
-    conferenceUri: conferenceUri.text,
-    contactParams: contactParams.text,
-    avpfInterval: avpfInterval.text,
-    registerEnabled: registerEnabled.checked,
-    publishPresence: publishPresence.checked,
-    avpfEnabled: avpfEnabled.checked,
-    iceEnabled: iceEnabled.checked,
-    turnEnabled: turnEnabled.checked,
-    stunServer: stunServer.text,
-    turnUser: turnUser.text,
-    turnPassword: turnPassword.text
-  })) {
+function validProxyConfig (proxyConfig) {
+	var data = {
+		sipAddress: sipAddress.text,
+		serverAddress: serverAddress.text,
+		registrationDuration: registrationDuration.text,
+		transport: transport.currentText,
+		route: route.text,
+		conferenceUri: conferenceUri.text,
+		contactParams: contactParams.text,
+		avpfInterval: avpfInterval.text,
+		registerEnabled: registerEnabled.checked,
+		publishPresence: publishPresence.checked,
+		avpfEnabled: avpfEnabled.checked,
+		iceEnabled: iceEnabled.checked,
+		turnEnabled: turnEnabled.checked,
+		stunServer: stunServer.text,
+		turnUser: turnUser.text,
+		turnPassword: turnPassword.text
+	  }
+	  
+  if (proxyConfig && Linphone.AccountSettingsModel.addOrUpdateProxyConfig(proxyConfig, data)
+		|| !proxyConfig && Linphone.AccountSettingsModel.addOrUpdateProxyConfig(data)) {
     dialog.exit(1)
   } else {
     // TODO: Display errors on the form (if necessary).

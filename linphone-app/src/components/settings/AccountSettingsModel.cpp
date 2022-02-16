@@ -231,8 +231,10 @@ void AccountSettingsModel::removeProxyConfig (const shared_ptr<linphone::ProxyCo
 	if (proxyConfig->done() == -1) {
 		qWarning() << QStringLiteral("Unable to reset message-expiry property before removing proxy config: `%1`.")
 				  .arg(QString::fromStdString(proxyConfig->getIdentityAddress()->asString()));
-	}else { // Wait for update
+	}else if(proxyConfig->registerEnabled()) { // Wait for update
 		mRemovingProxies.push_back(proxyConfig);
+	}else{// Registration is not enabled : Removing without wait.
+		CoreManager::getInstance()->getCore()->removeProxyConfig(proxyConfig);
 	}
 	
 	emit accountSettingsUpdated();
@@ -504,8 +506,9 @@ void AccountSettingsModel::handleRegistrationStateChanged (
 		coreManager->getSettingsModel()->configureRlsUri();
 	}else if(mRemovingProxies.contains(proxy)){
 		mRemovingProxies.removeAll(proxy);
-		QTimer::singleShot(100, [proxy](){// removeProxyConfig cannot be called from callback
+		QTimer::singleShot(100, [proxy, this](){// removeProxyConfig cannot be called from callback
 				CoreManager::getInstance()->getCore()->removeProxyConfig(proxy);
+				emit accountSettingsUpdated();
 		});
 	}
 	if(defaultProxyConfig == proxy)
