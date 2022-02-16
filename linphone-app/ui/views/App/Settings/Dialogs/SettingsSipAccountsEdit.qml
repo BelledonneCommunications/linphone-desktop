@@ -15,7 +15,7 @@ DialogPlus {
 	
 	property bool _sipAddressOk: false
 	property bool _serverAddressOk: false
-	property bool _routeOk: false
+	property bool _routeOk: true
 	property bool _conferenceUriOk: true
 	
 	buttons: [
@@ -28,7 +28,7 @@ DialogPlus {
 			enabled: Logic.formIsValid()
 			text: qsTr('confirm')
 			
-			onClicked: Logic.validProxyConfig()
+			onClicked: Logic.validProxyConfig(dialog.account ? dialog.account.proxyConfig : null)
 		}
 	]
 	

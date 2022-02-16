@@ -132,7 +132,7 @@ TabContainer {
 			TextButtonB {
 				text: qsTr('addAccount')
 				
-				onClicked: Logic.editAccount()
+				onClicked: Logic.editAccount(null)
 			}
 		}
 		
