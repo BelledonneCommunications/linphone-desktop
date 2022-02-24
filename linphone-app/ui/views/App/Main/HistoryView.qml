@@ -50,7 +50,11 @@ ColumnLayout  {
 				Layout.preferredHeight: HistoryViewStyle.bar.avatarSize
 				Layout.preferredWidth: HistoryViewStyle.bar.avatarSize
 				
-				image: peerAddress?Logic.getAvatar():null
+				image: peerAddress ? 
+									(historyView._sipAddressObserver.contact
+											? historyView._sipAddressObserver.contact
+											 : null)
+									 :null
 				
 				presenceLevel: historyView._sipAddressObserver?Presence.getPresenceLevel(
 																	historyView._sipAddressObserver.presenceStatus

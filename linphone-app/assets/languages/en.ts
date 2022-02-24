@@ -7,6 +7,11 @@
         <source>ok</source>
         <translation>OK</translation>
     </message>
+    <message>
+        <source>aboutTranslation</source>
+        <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
+        <translation>Help us translate %1</translation>
+    </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
@@ -2879,6 +2884,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
+        <extracomment>&apos;Use&apos; : Popup confirmation for a form</extracomment>
         <translation>USE</translation>
     </message>
     <message>
@@ -2908,6 +2914,26 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addOtherSipAccountError</source>
         <translation>Unable to add this account.</translation>
+    </message>
+    <message>
+        <source>understandAction</source>
+        <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
+        <translation>I understand</translation>
+    </message>
+    <message>
+        <source>warningFeatures</source>
+        <extracomment>&apos;Some features require a Linphone account, such as group messaging or ephemeral messaging.&apos; : Warning text about features.</extracomment>
+        <translation>Some features require a Linphone account, such as group messaging or ephemeral messaging.</translation>
+    </message>
+    <message>
+        <source>warningThirdParty</source>
+        <extracomment>&apos;These features are hidden when you register with a third party SIP account.&apos; : Warning text for using third party account.</extracomment>
+        <translation>These features are hidden when you register with a third party SIP account.</translation>
+    </message>
+    <message>
+        <source>warningContact</source>
+        <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
+        <translation>To enable it in a commercial project, please contact us.</translation>
     </message>
 </context>
 <context>

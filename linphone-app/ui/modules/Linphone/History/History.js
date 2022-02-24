@@ -38,7 +38,7 @@ function loadMoreEntries () {
   if (history.atYBeginning && !history.tryToLoadMoreEntries) {
     history.tryToLoadMoreEntries = true
     history.positionViewAtBeginning()
-    container.proxyModel.loadMoreEntriesAsync()
+    container.proxyModel.loadMoreEntries()
   }
 }
 

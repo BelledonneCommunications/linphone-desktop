@@ -109,6 +109,8 @@ constexpr char Constants::VersionCheckUrl[];
 constexpr char Constants::PasswordRecoveryUrl[];
 constexpr char Constants::CguUrl[];
 constexpr char Constants::PrivatePolicyUrl[];
+constexpr char Constants::ContactUrl[];
+constexpr char Constants::TranslationUrl[];
 
 
 constexpr char Constants::LinphoneBZip2_exe[];

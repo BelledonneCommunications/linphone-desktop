@@ -38,7 +38,7 @@ Item {
 	
 	// ---------------------------------------------------------------------------
 	property string lastTextSelected
-	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + messageData.height +5
+	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + messageData.height
 	
 	Rectangle {
 		id: rectangle

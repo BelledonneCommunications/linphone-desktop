@@ -106,65 +106,81 @@ Item {
 		// }
 		// return wrappedButton.icon;
 	}
+	function getColor(color, defaultColor, debugVar){
+		if(color)
+			return color
+			else{
+				console.warn("No color defined for :"+debugVar)
+				return defaultColor
+			}
+	}
 	function getBackgroundColor(){
+		var defaultColor = 'transparent'
 		if(isCustom){
 			if(wrappedButton.icon == '')
-				return wrappedButton.colorSet.backgroundNormalColor
+				return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return wrappedButton.colorSet.backgroundUpdatingColor
+				return getColor(wrappedButton.colorSet.backgroundUpdatingColor, defaultColor, 'backgroundUpdatingColor')
 			if (!useStates)
-				return wrappedButton.colorSet.backgroundNormalColor
+				return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
 			if (!wrappedButton.enabled)
-				return wrappedButton.colorSet.backgroundDisabledColor
-			return button.down ? wrappedButton.colorSet.backgroundPressedColor
-							   : (button.hovered ? wrappedButton.colorSet.backgroundHoveredColor: wrappedButton.colorSet.backgroundNormalColor)
+				return getColor(wrappedButton.colorSet.backgroundDisabledColor, defaultColor, 'backgroundDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.backgroundPressedColor, defaultColor, 'backgroundPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.backgroundHoveredColor, defaultColor, 'backgroundHoveredColor')
+									: getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor'))
 		}else
-			return 'transparent'
+			return defaultColor
 	}
 	function getForegroundColor(){
+		var defaultColor = 'black'
 		if(isCustom){
 			if(wrappedButton.icon == '')
-				return wrappedButton.colorSet.foregroundNormalColor
+				return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return wrappedButton.colorSet.foregroundUpdatingColor
+				return getColor(wrappedButton.colorSet.foregroundUpdatingColor, defaultColor, 'foregroundUpdatingColor')
 			if (!useStates)
-				return wrappedButton.colorSet.foregroundNormalColor
+				return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
 			if (!wrappedButton.enabled)
-				return wrappedButton.colorSet.foregroundDisabledColor
-			return button.down ? wrappedButton.colorSet.foregroundPressedColor
-							   : (button.hovered ? wrappedButton.colorSet.foregroundHoveredColor: wrappedButton.colorSet.foregroundNormalColor)
+				return getColor(wrappedButton.colorSet.foregroundDisabledColor, defaultColor, 'foregroundDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.foregroundPressedColor, defaultColor, 'foregroundPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.foregroundHoveredColor, defaultColor, 'foregroundHoveredColor')
+									: getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor'))
 		}else
-			return "black"
+			return defaultColor
 	}
 	function getBackgroundHiddenPartColor(){
+		var defaultColor = 'transparent'
 		if(isCustom){
 			if(wrappedButton.icon == '')
-				return wrappedButton.backgroundHiddenPartNormalColor
+				return getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return wrappedButton.backgroundHiddenPartUpdatingColor
+				return getColor(wrappedButton.colorSet.backgroundHiddenPartUpdatingColor, defaultColor, 'backgroundHiddenPartUpdatingColor')
 			if (!useStates)
-				return wrappedButton.backgroundHiddenPartNormalColor
+				return getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor')
 			if (!wrappedButton.enabled)
-				return wrappedButton.backgroundHiddenPartDisabledColor
-			return button.down ? wrappedButton.backgroundHiddenPartPressedColor
-							   : (button.hovered ? wrappedButton.backgroundHiddenPartHoveredColor: wrappedButton.backgroundHiddenPartNormalColor)
+				return getColor(wrappedButton.colorSet.backgroundHiddenPartDisabledColor, defaultColor, 'backgroundHiddenPartDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.backgroundHiddenPartPressedColor, defaultColor, 'backgroundHiddenPartPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.backgroundHiddenPartHoveredColor, defaultColor, 'backgroundHiddenPartHoveredColor')
+									: getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor'))
 		}else
-			return 'transparent'
+			return defaultColor
 	}
 	function getForegroundHiddenPartColor(){
+	var defaultColor = '#80FFFFFF'
 		if(isCustom){
 			if(wrappedButton.icon == '')
-				return wrappedButton.foregroundHiddenPartNormalColor
+				return getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return wrappedButton.foregroundHiddenPartUpdatingColor
+				return getColor(wrappedButton.colorSet.foregroundHiddenPartUpdatingColor, defaultColor, 'foregroundHiddenPartUpdatingColor')
 			if (!useStates)
-				return wrappedButton.foregroundHiddenPartNormalColor
+				return getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor')
 			if (!wrappedButton.enabled)
-				return wrappedButton.foregroundHiddenPartDisabledColor
-			return button.down ? wrappedButton.foregroundHiddenPartPressedColor
-							   : (button.hovered ? wrappedButton.foregroundHiddenPartHoveredColor: wrappedButton.foregroundHiddenPartNormalColor)
+				return getColor(wrappedButton.colorSet.foregroundHiddenPartDisabledColor, defaultColor, 'foregroundHiddenPartDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.foregroundHiddenPartPressedColor, defaultColor, 'foregroundHiddenPartPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.foregroundHiddenPartHoveredColor, defaultColor, 'foregroundHiddenPartHoveredColor')
+									: getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor'))
 		}else
-			return "#80FFFFFF"
+			return defaultColor
 	}
 	// ---------------------------------------------------------------------------
 	
@@ -187,7 +203,7 @@ Item {
 					height: parent.height
 					width: parent.width  * ( 1 - wrappedButton.percentageDisplayed / 100 )
 					id: backgroundHiddenPartColor
-					color: getBackgroundHiddenPartColor()
+					color: width > 0 ? getBackgroundHiddenPartColor() : 'transparent'
 				}
 			}
 		hoverEnabled: !wrappedButton.updating//|| wrappedButton.autoIcon
@@ -199,7 +215,7 @@ Item {
 			color: 'transparent'
 			Rectangle{
 				anchors.fill:parent
-				color: getForegroundColor()	
+				color: getForegroundColor()
 				anchors.rightMargin: parent.width  * ( 1 - wrappedButton.percentageDisplayed / 100 )
 			}
 		}	
@@ -210,7 +226,7 @@ Item {
 			color: 'transparent'
 			Rectangle{
 				anchors.fill:parent
-				color: getForegroundHiddenPartColor()	
+				color: percentageDisplayed != 100 ? getForegroundHiddenPartColor() : 'transparent'
 				anchors.leftMargin: parent.width  * wrappedButton.percentageDisplayed / 100
 			}
 		}	

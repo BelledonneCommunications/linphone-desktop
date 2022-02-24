@@ -336,7 +336,7 @@ Rectangle {
 				anchors.bottom: parent.bottom
 				anchors.bottomMargin: 10
 				anchors.right: parent.right
-				anchors.rightMargin: 40
+				anchors.rightMargin: 35
 				visible: chat.isIndexAfter(chat.count-1)
 				onVisibleChanged: updateMarkAsRead()
 				Component.onCompleted: updateMarkAsRead()
@@ -360,9 +360,12 @@ Rectangle {
 				MessageCounter{
 					anchors.left: parent.right
 					anchors.bottom: parent.top
-					anchors.bottomMargin: -5
-					anchors.leftMargin: -5
+					anchors.bottomMargin: 0
+					anchors.leftMargin: -14
 					count: container.proxyModel.chatRoomModel ? container.proxyModel.chatRoomModel.unreadMessagesCount : 0
+					showOnlyNumber: true
+					iconSize: 15
+					pointSize: Units.dp * 7
 				}
 			}
 			
