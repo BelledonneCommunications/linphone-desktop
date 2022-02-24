@@ -26,7 +26,7 @@ Loader{
 	property ContentModel contentModel
 	property int maxWidth : parent.width
 	property int fitWidth: active ? Math.max(maxWidth - ChatAudioMessageStyle.emptySpace, ChatAudioMessageStyle.minWidth) : 0
-	property int fitHeight: active ? 50 : 0
+	property int fitHeight: active ? 40 : 0
 	
 	property font customFont : SettingsModel.textMessageFont
 	property bool isOutgoing : contentModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
@@ -63,6 +63,7 @@ Loader{
 			anchors.fill: parent
 			spacing: 5
 			ActionButton{
+				id: playButton
 				Layout.preferredHeight: iconSize
 				Layout.preferredWidth: iconSize
 				Layout.rightMargin: 5
@@ -83,8 +84,6 @@ Loader{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignVCenter
-				Layout.topMargin: 5
-				Layout.bottomMargin: 5
 				Layout.rightMargin: 15
 				MediaProgressBar{
 					id: mediaProgressBar

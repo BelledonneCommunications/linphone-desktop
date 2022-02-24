@@ -8,7 +8,7 @@ import Units 1.0
 
 QtObject {
 	property string sectionName: 'About'
-  property int height: 225
+  property int height: 255
   property int spacing: 20
   property int width: 400
 

@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
+import ConstantsCpp 1.0
 
 import App.Styles 1.0
 
@@ -99,6 +100,29 @@ DialogPlus {
 				width: parent.width
 				
 				horizontalAlignment: Text.AlignHCenter
+			}
+			Text {
+				elide: Text.ElideRight
+				font.pointSize: AboutStyle.copyrightBlock.url.pointSize
+				color: AboutStyle.copyrightBlock.url.color
+				linkColor: AboutStyle.copyrightBlock.url.color
+				//: 'Help us translate %1' : %1 is the application name
+				text: '<a href="'+ConstantsCpp.TranslationUrl+'" style="text-decoration:none;color:'+AboutStyle.copyrightBlock.url.color+'">'+qsTr('aboutTranslation').arg(applicationName)+'</a>'
+				textFormat: Text.RichText
+				
+				width: parent.width
+				visible: ConstantsCpp.TranslationUrl != ''
+				horizontalAlignment: Text.AlignHCenter
+				
+				onLinkActivated: Qt.openUrlExternally(link)
+				
+				MouseArea {
+					anchors.fill: parent
+					acceptedButtons: Qt.NoButton
+					cursorShape: parent.hoveredLink
+								 ? Qt.PointingHandCursor
+								 : Qt.IBeamCursor
+				}
 			}
 		}
 	}

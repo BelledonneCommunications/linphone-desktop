@@ -507,12 +507,21 @@ ColumnLayout  {
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')
 				
-				onTextChanged: chatRoomProxyModel.filterText = text
+				onTextChanged: searchDelay.restart()
 				onIconClicked: {
 					searchView.visible = false
 					chatRoomProxyModel.filterText = ''
 				}
 				font.pointSize: ConversationStyle.filters.pointSize
+				
+				Timer{
+					id: searchDelay
+					interval: 500
+					running: false
+					onTriggered: if( searchView.visible){
+						chatRoomProxyModel.filterText = searchBar.text
+					}
+				}
 			}
 			
 		}

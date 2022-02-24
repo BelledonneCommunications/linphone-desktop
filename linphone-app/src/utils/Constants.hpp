@@ -59,6 +59,10 @@ public:
 	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login";
 	static constexpr char CguUrl[] = "https://www.linphone.org/general-terms";
 	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/privacy-policy";
+	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
+	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
+	
+	
 	
 	static constexpr char LinphoneBZip2_exe[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
 	static constexpr char LinphoneBZip2_dll[] = "http://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
@@ -71,6 +75,9 @@ public:
 	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
 	Q_PROPERTY(QString CguUrl MEMBER CguUrl CONSTANT)
 	Q_PROPERTY(QString PrivatePolicyUrl MEMBER PrivatePolicyUrl CONSTANT)
+	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
+	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
+	
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
 	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";

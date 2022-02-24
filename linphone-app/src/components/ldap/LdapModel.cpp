@@ -134,8 +134,6 @@ void LdapModel::unset(){
 	mSipDomain = QString::fromStdString(mLdapParams->getSipDomain());
 	mDebug = (int)mLdapParams->getDebugLevel();
 	mVerifyServerCertificates = (int)mLdapParams->getServerCertificatesVerificationMode();
-	int c = (int) mLdapParams->getAuthMethod();
-	qWarning() << c;
 	testServerField();
 	testMaxResultsField();
 	testTimeoutField();

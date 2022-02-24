@@ -224,24 +224,23 @@ TabContainer {
 				}
 			}
 			FormLine {
+				maxItemWidth: parent.width
 				FormGroup {
 					//: 'Check for updates' : Label switch for enabling check for updates
 					label: qsTr('checkForUpdateLabel')
-					maxWidth: 150
-					width: 150
-					Switch {
-						checked: SettingsModel.checkForUpdateEnabled
-						
-						onClicked: SettingsModel.checkForUpdateEnabled = !checked
-					}
-				}
-				FormGroup {
-					maxWidth: parent.width - 200
-					width: parent.width - 200
-					TextField {
-						text: SettingsModel.versionCheckUrl
-						
-						onEditingFinished: SettingsModel.versionCheckUrl = text
+					
+					RowLayout{
+						Switch {
+							checked: SettingsModel.checkForUpdateEnabled
+							
+							onClicked: SettingsModel.checkForUpdateEnabled = !checked
+						}
+						TextField {
+							Layout.fillWidth: true
+							text: SettingsModel.versionCheckUrl
+							
+							onEditingFinished: SettingsModel.versionCheckUrl = text
+						}
 					}
 				}
 			}
