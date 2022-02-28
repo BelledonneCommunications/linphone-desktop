@@ -368,7 +368,7 @@ void ChatRoomModel::emitFullPeerAddressChanged(){
 //--------------------------------------------------------------------------------------------
 
 QString ChatRoomModel::getPeerAddress () const {
-	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asStringUriOnly()) : "";
+	return mChatRoom && mChatRoom->getPeerAddress() ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asStringUriOnly()) : "";
 }
 
 QString ChatRoomModel::getLocalAddress () const {
@@ -430,7 +430,15 @@ QString ChatRoomModel::getUsername () const {
 	username = Utils::getDisplayName(mChatRoom->getPeerAddress());
 	if(username != "")
 		return username;
-	return Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asStringUriOnly());
+	auto addr = mChatRoom->getPeerAddress();
+	if( addr)
+		return Utils::coreStringToAppString(addr->asStringUriOnly());
+	else {
+		qWarning() << "ChatRoom has no peer address or address is invalid : Subject=" << mChatRoom->getSubject().c_str() 
+			<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
+			<< " (" << mChatRoom.get() << ")";
+		return "";
+	}
 }
 
 QString ChatRoomModel::getAvatar () const {
@@ -547,11 +555,15 @@ QString ChatRoomModel::getParticipantAddress(){
 			if( conferenceAddress)
 				return Utils::coreStringToAppString(conferenceAddress->asString());
 			else{
-				qWarning() << "ConferenceAddress is NULL when requesting it from not secure and conference ChatRoomModel :" << mChatRoom.get();
+				qWarning() << "ConferenceAddress is NULL when requesting it from not secure and conference ChatRoomModel. Subject=" << mChatRoom->getSubject().c_str() 
+					<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
+					<< " (" << mChatRoom.get() << ")";
 				return "";
 			}
 		}else {
-			qWarning() << "PeerAddress is NULL when requesting it from not secure ChatRoomModel :" << mChatRoom.get();
+			qWarning() << "PeerAddress is NULL when requesting it from not secure ChatRoomModel. Subject=" << mChatRoom->getSubject().c_str()
+				<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
+				<< " (" << mChatRoom.get() << ")";
 			return "";
 		}
 	}else{
