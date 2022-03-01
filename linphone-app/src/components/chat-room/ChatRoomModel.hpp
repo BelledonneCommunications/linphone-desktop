@@ -243,6 +243,7 @@ public:
 	
 	bool mDeleteChatRoom = false;	// Use as workaround because of core->deleteChatRoom() that call destructor without takking account of count ref : call it in ChatRoomModel destructor	
 	int mLastEntriesStep = 50;		// Retrieve a part of the history to avoid too much processing
+	int mFirstLastEntriesStep = 10;	// Retrieve a part of the history to avoid too much processing at the init
 	bool mMarkAsReadEnabled = true;
 	bool mEntriesLoading = false;
 	

@@ -272,12 +272,15 @@ void TimelineListModel::updateTimelines () {
 		}else
 			++itTimeline;
 	}
-	// Add new
+	// Add new.
+// Call logs optimization : store all the list and check on it for each chat room instead of loading call logs on each chat room. See TimelineModel()
+	std::list<std::shared_ptr<linphone::CallLog>> callLogs = coreManager->getCore()->getCallLogs();
+//	
 	for(auto dbChatRoom : allChatRooms){
 		auto haveTimeline = getTimeline(dbChatRoom, false);
 		if(!haveTimeline && dbChatRoom){// Create a new Timeline if needed
 			
-			std::shared_ptr<TimelineModel> model = TimelineModel::create(dbChatRoom);
+			std::shared_ptr<TimelineModel> model = TimelineModel::create(dbChatRoom, callLogs);
 			if( model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);

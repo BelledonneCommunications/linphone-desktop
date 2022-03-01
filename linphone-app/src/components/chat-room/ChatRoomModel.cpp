@@ -233,15 +233,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 				connect(contact, &ContactModel::contactUpdated, this, &ChatRoomModel::fullPeerAddressChanged);
 			}
 		}
-		// Get Max updatetime from chat room and last call event
-		auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
-		if(callHistory.size() > 0){
-			auto callDate = callHistory.front()->getStartDate();
-			if( callHistory.front()->getStatus() == linphone::Call::Status::Success )
-				callDate += callHistory.front()->getDuration();
-			setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(max(mChatRoom->getLastUpdateTime(), callDate )*1000));
-		}else
-			setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(mChatRoom->getLastUpdateTime()*1000));
+		
 	}else
 		mParticipantListModel = nullptr;
 	
@@ -941,11 +933,11 @@ void ChatRoomModel::initEntries(){
 	QList<std::shared_ptr<ChatEvent> > entries;
 	QList<EntrySorterHelper> prepareEntries;
 // Get chat messages
-	for (auto &message : mChatRoom->getHistory(mLastEntriesStep)) {
+	for (auto &message : mChatRoom->getHistory(mFirstLastEntriesStep)) {
 		prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
 	}
 // Get events
-	for(auto &eventLog : mChatRoom->getHistoryEvents(mLastEntriesStep))
+	for(auto &eventLog : mChatRoom->getHistoryEvents(mFirstLastEntriesStep))
 		prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
 // Get calls.
 	bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
@@ -956,11 +948,11 @@ void ChatRoomModel::initEntries(){
 		auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
 		// callhistory is sorted from newest to oldest
 		int count = 0;
-		for (auto callLog = callHistory.begin() ; count < mLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
+		for (auto callLog = callHistory.begin() ; count < mFirstLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
 			prepareEntries << EntrySorterHelper((*callLog)->getStartDate(), CallEntry, *callLog);
 		}
 	}
-	EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
+	EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);
 	qDebug() << "Internal Entries : Built";
 	mIsInitialized = true;
 	if(entries.size() >0){

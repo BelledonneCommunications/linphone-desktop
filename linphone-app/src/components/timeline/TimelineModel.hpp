@@ -36,7 +36,7 @@ class TimelineModel : public QObject, public linphone::ChatRoomListener {
   Q_OBJECT
 
 public:
-	static std::shared_ptr<TimelineModel> create(std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
+	static std::shared_ptr<TimelineModel> create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs = std::list<std::shared_ptr<linphone::CallLog>>(), QObject *parent = Q_NULLPTR);
 	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
 	virtual ~TimelineModel();
 	

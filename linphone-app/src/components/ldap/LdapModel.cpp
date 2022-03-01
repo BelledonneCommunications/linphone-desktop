@@ -85,7 +85,7 @@ void LdapModel::save(){
 
 void LdapModel::unsave(){
 	if(mLdap)
-		mLdap->removeFromConfigFile();
+		CoreManager::getInstance()->getCore()->removeLdap(mLdap);
 }
 QVariantMap LdapModel::getConfig(){
 	//return mConfig;
