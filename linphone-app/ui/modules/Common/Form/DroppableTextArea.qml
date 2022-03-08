@@ -19,6 +19,7 @@ Item {
 	property alias placeholderText: textArea.placeholderText
 	property alias text: textArea.text
 	property alias cursorPosition: textArea.cursorPosition
+	property alias recordAudioToggled: recordAudioButton.toggled
 	
 	property bool dropEnabled: true
 	property string dropDisabledReason
@@ -56,11 +57,11 @@ Item {
 		// ---------------------------------------------------------------------------
 		RowLayout{
 			anchors.fill: parent
-			spacing: DroppableTextAreaStyle.fileChooserButton.margins
+			spacing: 0
 			// Handle click to select files.
 			ActionButton {
 				id: fileChooserButton
-				property int totalWidth: DroppableTextAreaStyle.fileChooserButton.margins + width
+				property int totalWidth: width
 				
 				Layout.leftMargin: DroppableTextAreaStyle.fileChooserButton.margins
 				Layout.alignment: Qt.AlignVCenter
@@ -88,12 +89,11 @@ Item {
 			}
 			// Record audio
 			ActionButton {
-				visible:droppableTextArea.enabled
 				id: recordAudioButton
+				visible: droppableTextArea.enabled
 				
-				//anchors.verticalCenter: parent.verticalCenter
 				Layout.alignment: Qt.AlignVCenter
-
+				Layout.leftMargin: 0
 				enabled: droppableTextArea.dropEnabled
 				isCustom: true
 				backgroundRadius: 8
@@ -111,6 +111,7 @@ Item {
 				Layout.maximumHeight: parent.height-20
 				Layout.topMargin: 10
 				Layout.bottomMargin: 10
+				Layout.leftMargin: 2
 				//anchors.fill: parent
 				boundsBehavior: Flickable.StopAtBounds
 				clip:true
@@ -137,9 +138,7 @@ Item {
 						}
 					}
 					function handleValidation () {
-						if (RecorderManager.haveVocalRecorder || text.length !== 0) {
 							validText(text)
-						}
 					}
 
 					background: Rectangle {
@@ -194,7 +193,7 @@ Item {
 			ActionButton {
 				id: sendButton
 				property int totalWidth: Layout.rightMargin + Layout.leftMargin + width
-				Layout.rightMargin: DroppableTextAreaStyle.fileChooserButton.margins+15
+				Layout.rightMargin: 15
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignVCenter
 				visible: droppableTextArea.enabled

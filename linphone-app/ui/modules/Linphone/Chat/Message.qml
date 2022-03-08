@@ -90,11 +90,11 @@ Item {
 				}
 				onGoToMessage: container.goToMessage(message)
 			}
-			
 			ListView {
 				id: messageContentsList
 				anchors.left: parent.left
 				anchors.right: parent.right
+				visible: count > 0
 				spacing: 0
 				model: ContentProxyModel{
 					chatMessageModel: $chatEntry
@@ -102,14 +102,22 @@ Item {
 				height: contentHeight
 				boundsBehavior: Flickable.StopAtBounds
 				interactive: false
-				delegate: ChatContent{
-					contentModel: modelData
-					onFitWidthChanged:{
-						rectangle.updateWidth()			
+				delegate: 
+					ChatContent{
+						contentModel: modelData
+						onFitWidthChanged:{
+							rectangle.updateWidth()			
+						}
+						onLastTextSelectedChanged: container.lastTextSelected= lastTextSelected
+						onRightClicked: chatMenu.open()
+						Rectangle{
+							anchors.left: parent.left
+							anchors.right: parent.right
+							color: ChatStyle.entry.separator.color
+							height: visible ? ChatStyle.entry.separator.width : 0
+							visible: (index !== (messageContentsList.count - 1)) 
+						}
 					}
-					onLastTextSelectedChanged: container.lastTextSelected= lastTextSelected
-					onRightClicked: chatMenu.open()
-				}
 			}
 		}
 		Row{

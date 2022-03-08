@@ -204,11 +204,9 @@ Rectangle {
 						}
 					}
 					
-					TooltipArea {
-						text: !incall.call.recording
+					tooltipText: !incall.call.recording
 							  ? qsTr('startRecordingLabel')
 							  : qsTr('stopRecordingLabel')
-					}
 				}
 				
 				ActionButton {

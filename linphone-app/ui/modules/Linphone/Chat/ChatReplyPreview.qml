@@ -17,9 +17,8 @@ import 'Chat.js' as Logic
 Rectangle{
 	id: replyPreviewBlock
 	property ChatRoomModel chatRoomModel
-	
-	Layout.preferredHeight: visible ? Math.min(messageContentsList.height + replyPreviewHeaderArea.implicitHeight + 15, parent.maxHeight) : 0
-	
+	property int maxHeight : parent.maxHeight
+	Layout.preferredHeight: visible ? Math.min(messageContentsList.height + replyPreviewHeaderArea.implicitHeight + 15, replyPreviewBlock.maxHeight) : 0
 	property int leftMargin: textArea.textLeftMargin
 	property int rightMargin: textArea.textRightMargin
 	
@@ -70,9 +69,10 @@ Rectangle{
 				color: ChatStyle.replyPreview.headerTextColor
 			}
 		}
+		
 		Flickable {
 			id: replyPreviewTextArea
-			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < messageContentsList.implicitHeight}
+			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < messageContentsList.height}
 			boundsBehavior: Flickable.StopAtBounds
 			clip: true
 			contentHeight: messageContentsList.height
@@ -93,13 +93,20 @@ Rectangle{
 				delegate: ChatContent{
 					contentModel: modelData
 					textFont.pointSize: Units.dp * (SettingsModel.textMessageFont.pointSize - 2)
+					Rectangle{
+							anchors.left: parent.left
+							anchors.right: parent.right
+							color: ChatStyle.entry.separator.color
+							height: visible ? ChatStyle.entry.separator.width : 0
+							visible: (index !== (messageContentsList.count - 1)) 
+						}
 				}
 			}
 		}
 	}
 	ActionButton{
 		anchors.right:parent.right
-		anchors.rightMargin: 14
+		anchors.rightMargin: ChatStyle.rightButtonMargin
 		anchors.verticalCenter: parent.verticalCenter
 		height: ChatStyle.replyPreview.closeButton.iconSize
 		isCustom: true

@@ -69,25 +69,25 @@ ColumnLayout {
 				text: qsTr('homeDescription')
 			}
 			
-			CheckBoxText{
-				id: cguCheckBox
-				Layout.topMargin: 10
-				Layout.maximumWidth: infoItem.width
-				Layout.alignment: Qt.AlignHCenter
-				visible: applicationVendor != '' && ConstantsCpp.CguUrl != '' && ConstantsCpp.PrivatePolicyUrl != ''				
-				checked: SettingsModel.cguAccepted
-				onCheckedChanged: SettingsModel.cguAccepted = checked
-				
-				//: 'I accept %1's %2terms of use%3 and %4privacy policy%5' : where %1 is the vendor name and other %n are internal keywords that encapsulate links.
-				text: qsTr('homeCgu').arg(applicationVendor).arg('< a href="'+ConstantsCpp.CguUrl+'">').arg('</a>').arg('<a href="'+ConstantsCpp.PrivatePolicyUrl+'">').arg('</a>')
-			}
+			
 		}
 	}
 	
 	// ---------------------------------------------------------------------------
 	// Buttons.
 	// ---------------------------------------------------------------------------
-	
+	CheckBoxText{
+		id: cguCheckBox
+		Layout.bottomMargin: 10
+		Layout.maximumWidth: infoItem.width
+		Layout.alignment: Qt.AlignHCenter
+		visible: applicationVendor != '' && ConstantsCpp.CguUrl != '' && ConstantsCpp.PrivatePolicyUrl != ''				
+		checked: SettingsModel.cguAccepted
+		onCheckedChanged: SettingsModel.cguAccepted = checked
+		
+		//: 'I accept %1's %2terms of use%3 and %4privacy policy%5' : where %1 is the vendor name and other %n are internal keywords that encapsulate links.
+		text: qsTr('homeCgu').arg(applicationVendor).arg('< a href="'+ConstantsCpp.CguUrl+'">').arg('</a>').arg('<a href="'+ConstantsCpp.PrivatePolicyUrl+'">').arg('</a>')
+	}
 	GridView {
 		id: buttons
 		

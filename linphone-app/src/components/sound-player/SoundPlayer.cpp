@@ -138,7 +138,7 @@ void SoundPlayer::buildInternalPlayer () {
 	SettingsModel *settingsModel = coreManager->getSettingsModel();
 	
 	mInternalPlayer = coreManager->getCore()->createLocalPlayer(
-				Utils::appStringToCoreString(settingsModel->getRingerDevice()), "", nullptr
+				Utils::appStringToCoreString(settingsModel->getPlaybackDevice()), "", nullptr
 				);
 	if(mInternalPlayer)
 		mInternalPlayer->addListener(mHandlers);

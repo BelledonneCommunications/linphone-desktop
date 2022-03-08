@@ -266,11 +266,9 @@ Window {
 								   ? call.startRecording()
 								   : call.stopRecording()
 						
-						TooltipArea {
-							text: !recordingSwitch.recording
+						tooltipText: !recordingSwitch.recording
 								  ? qsTr('startRecordingLabel')
 								  : qsTr('stopRecordingLabel')
-						}
 					}
 					
 					ActionButton {
@@ -373,7 +371,7 @@ Window {
 					ActionButton {
 						isCustom: true
 						backgroundRadius: 90
-						colorSet: CallFullscreenStyle.buttons.cameraOn
+						colorSet: call && call.videoEnabled ? CallStyle.buttons.cameraOn : CallStyle.buttons.cameraOff
 						updating: call && call.updating
 						
 						iconSize: CallFullscreenStyle.actionArea.iconSize

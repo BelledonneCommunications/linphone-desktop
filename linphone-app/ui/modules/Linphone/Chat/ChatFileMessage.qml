@@ -18,7 +18,7 @@ Row {
 	
 	property ChatMessageModel chatMessageModel: contentModel && contentModel.chatMessageModel
 	property ContentModel contentModel
-	property bool isOutgoing : contentModel && ( chatMessageModel.isOutgoing  || chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
+	property bool isOutgoing : chatMessageModel && ( chatMessageModel.isOutgoing  || chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
 	property int fitWidth: visible ? Math.max(fileName.implicitWidth + 5 + thumbnailProvider.width + 3*ChatStyle.entry.message.file.margins
 											  , Math.max(ChatStyle.entry.message.file.width, ChatStyle.entry.message.outgoing.areaSize)) : 0
 	property int fitHeight: visible ? rectangle.height : 0

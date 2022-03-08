@@ -26,13 +26,14 @@
 #include "utils/Utils.hpp"
 
 #include "components/Components.hpp"
+#include "components/chat/ChatModel.hpp"
 #include "components/chat-events/ChatMessageModel.hpp"
 #include "ContentListModel.hpp"
 
 // =============================================================================
 
 ContentProxyModel::ContentProxyModel (QObject * parent) : QSortFilterProxyModel(parent){
-	
+	setContentListModel(CoreManager::getInstance()->getChatModel()->getContentListModel().get());
 }
 
 void ContentProxyModel::setChatMessageModel(ChatMessageModel * message){
@@ -41,6 +42,17 @@ void ContentProxyModel::setChatMessageModel(ChatMessageModel * message){
 		sort(0);
 	}
 	emit chatMessageModelChanged();
+}
+
+void ContentProxyModel::setContentListModel(ContentListModel * model){
+	setSourceModel(model);
+	sort(0);
+	emit chatMessageModelChanged();
+}
+
+void ContentProxyModel::addFile(const QString& path){
+	ContentListModel* model = dynamic_cast<ContentListModel*>(sourceModel());
+	model->addFile(path);
 }
 
 bool ContentProxyModel::filterAcceptsRow (
@@ -55,13 +67,13 @@ bool ContentProxyModel::filterAcceptsRow (
 bool ContentProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	const ContentModel *contentA = sourceModel()->data(left).value<ContentModel *>();
 	const ContentModel *contentB = sourceModel()->data(right).value<ContentModel *>();
-	bool aIsForward = contentA->getChatMessageModel()->isForward();
-	bool aIsReply = contentA->getChatMessageModel()->isReply();
+	bool aIsForward = contentA->getChatMessageModel() && contentA->getChatMessageModel()->isForward();
+	bool aIsReply = contentA->getChatMessageModel() && contentA->getChatMessageModel()->isReply();
 	bool aIsVoiceRecording = contentA->isVoiceRecording();
 	bool aIsFile = contentA->isFile() || contentA->isFileEncrypted() || contentA->isFileTransfer();
 	bool aIsText = contentA->isText() ;
-	bool bIsForward = contentB->getChatMessageModel()->isForward();
-	bool bIsReply = contentB->getChatMessageModel()->isReply();
+	bool bIsForward = contentB->getChatMessageModel() && contentB->getChatMessageModel()->isForward();
+	bool bIsReply = contentB->getChatMessageModel() && contentB->getChatMessageModel()->isReply();
 	bool bIsVoiceRecording = contentB->isVoiceRecording();
 	bool bIsFile = contentB->isFile() || contentB->isFileEncrypted() || contentB->isFileTransfer();
 	bool bIsText = contentB->isText() ;
@@ -75,4 +87,11 @@ bool ContentProxyModel::lessThan (const QModelIndex &left, const QModelIndex &ri
 					)
 				)
 			);
+}
+void ContentProxyModel::remove(ContentModel * model){
+	dynamic_cast<ContentListModel*>(sourceModel())->remove(model);
+}
+
+void ContentProxyModel::clear(){
+	dynamic_cast<ContentListModel*>(sourceModel())->clear();
 }

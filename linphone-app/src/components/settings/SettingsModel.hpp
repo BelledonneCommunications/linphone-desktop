@@ -197,6 +197,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
 	
 	Q_PROPERTY(bool mipmapEnabled READ isMipmapEnabled WRITE setMipmapEnabled NOTIFY mipmapEnabledChanged)
+	Q_PROPERTY(bool useMinimalTimelineFilter READ useMinimalTimelineFilter WRITE setUseMinimalTimelineFilter NOTIFY useMinimalTimelineFilterChanged)
 	
 	// Advanced. -----------------------------------------------------------------
 	
@@ -509,6 +510,9 @@ public:
 	bool isMipmapEnabled() const;
 	void setMipmapEnabled(const bool& enabled);
 	
+	bool useMinimalTimelineFilter() const;
+	void setUseMinimalTimelineFilter(const bool& useMinimal);
+	
 	// Advanced. ---------------------------------------------------------------------------
 	
 	
@@ -688,6 +692,7 @@ signals:
 	
 	void exitOnCloseChanged (bool value);
 	void mipmapEnabledChanged();
+	void useMinimalTimelineFilterChanged();
 	
 	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();

@@ -30,6 +30,8 @@ ContactDescription  1.0 Contact/ContactDescription.qml
 
 SipAddressDialog    1.0 Dialog/SipAddressDialog.qml
 
+FileView            1.0 File/FileView.qml
+
 History             1.0 History/History.qml
 
 SipAddressesMenu    1.0 Menus/SipAddressesMenu.qml

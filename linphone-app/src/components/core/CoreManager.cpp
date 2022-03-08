@@ -29,6 +29,7 @@
 
 #include "app/paths/Paths.hpp"
 #include "components/calls/CallsListModel.hpp"
+#include "components/chat/ChatModel.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
 #include "components/chat-room/ChatRoomListModel.hpp"
 #include "components/contact/VcardModel.hpp"
@@ -90,6 +91,7 @@ CoreManager::~CoreManager(){
 
 void CoreManager::initCoreManager(){
 	mCallsListModel = new CallsListModel(this);
+	mChatModel = new ChatModel(this);
 	mChatRoomListModel = new ChatRoomListModel(this);
 	mContactsListModel = new ContactsListModel(this);
 	mContactsImporterListModel = new ContactsImporterListModel(this);

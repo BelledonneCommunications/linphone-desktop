@@ -35,7 +35,7 @@ Column{
 	
 	spacing: 0
 	
-	property bool isOutgoing : contentModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
+	property bool isOutgoing : contentModel && contentModel.chatMessageModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
 	
 	ChatAudioMessage{
 		id: audioMessage

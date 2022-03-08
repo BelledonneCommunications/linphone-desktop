@@ -12,9 +12,9 @@ QtObject {
 	property string gaugeIcon: 'chat_audio_soundwave_custom'
 	
 	property QtObject progressionWave: QtObject{
-		property int iconSize: 30
-		property int iconHeight: 40
-		property int iconWidth: 250
+		property int iconSize: 60
+		property int iconHeight: 60
+		property int iconWidth: 60
 		property string name : 'progression_soundwave'
 		property string icon : 'chat_audio_soundwave_custom'
 		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'a_n_b_bg').color

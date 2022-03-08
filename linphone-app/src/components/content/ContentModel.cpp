@@ -38,13 +38,13 @@
 
 // =============================================================================
 
-ContentModel::ContentModel(ChatMessageModel* chatModel){
+ContentModel::ContentModel(ChatMessageModel* chatModel) : mAppData(""){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mChatMessageModel = chatModel;
 	mWasDownloaded = false;
 	mFileOffset = 0;
 }
-ContentModel::ContentModel(std::shared_ptr<linphone::Content> content, ChatMessageModel* chatModel){
+ContentModel::ContentModel(std::shared_ptr<linphone::Content> content, ChatMessageModel* chatModel) : mAppData(""){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mChatMessageModel = chatModel;
 	mWasDownloaded = false;
@@ -131,12 +131,12 @@ bool ContentModel::isVoiceRecording()const{
 }
 
 // Create a thumbnail from the first content that have a file and store it in Appdata
-void ContentModel::createThumbnail () {
-	if(isFile() || isFileEncrypted() || isFileTransfer()){
+void ContentModel::createThumbnail (const bool& force) {
+	if(force || isFile() || isFileEncrypted() || isFileTransfer()){
 		QString id;
 		QString path = getFilePath();
 		
-		auto appdata = ChatMessageModel::AppDataManager(QString::fromStdString(mChatMessageModel->getChatMessage()->getAppdata()));
+		auto appdata = ChatMessageModel::AppDataManager(mChatMessageModel ? QString::fromStdString(mChatMessageModel->getChatMessage()->getAppdata()) : "");
 		
 		if(!appdata.mData.contains(path) 
 				|| !QFileInfo(QString::fromStdString(Paths::getThumbnailsDirPath())+appdata.mData[path]).isFile()){
@@ -179,7 +179,9 @@ void ContentModel::createThumbnail () {
 					qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(path);
 				}else{
 					appdata.mData[path] = id;
-					mChatMessageModel->getChatMessage()->setAppdata(appdata.toString().toStdString());
+					mAppData.mData[path] = id;
+					if(mChatMessageModel)
+						mChatMessageModel->getChatMessage()->setAppdata(appdata.toString().toStdString());
 				}
 			}
 		}
@@ -190,6 +192,16 @@ void ContentModel::createThumbnail () {
 				setThumbnail(QStringLiteral("image://%1/%2").arg(ThumbnailProvider::ProviderId).arg(appdata.mData[path]));
 		}
 	}
+}
+
+void ContentModel::removeThumbnail(){
+	for(QMap<QString, QString>::iterator itData = mAppData.mData.begin() ; itData != mAppData.mData.end() ; ++itData){
+		QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) +itData.value();
+		if( QFileInfo(thumbnailPath).isFile()){
+			QFile(thumbnailPath).remove();
+		}
+	}
+	mAppData.mData.clear();
 }
 
 void ContentModel::downloadFile(){
@@ -228,10 +240,11 @@ void ContentModel::downloadFile(){
 }
 
 void ContentModel::openFile (bool showDirectory) {
-	if ((!mWasDownloaded && !mChatMessageModel->isOutgoing()) || mContent->getFilePath() == "") {
+	if (mChatMessageModel && ((!mWasDownloaded && !mChatMessageModel->isOutgoing()) || mContent->getFilePath() == "")) {
 		downloadFile();
 	}else{
 		QFileInfo info( Utils::coreStringToAppString(mContent->getFilePath()));
+		showDirectory = showDirectory || !info.exists();
 		QDesktopServices::openUrl(
 					QUrl(QStringLiteral("file:///%1").arg(showDirectory ? info.absolutePath() : info.absoluteFilePath()))
 					);

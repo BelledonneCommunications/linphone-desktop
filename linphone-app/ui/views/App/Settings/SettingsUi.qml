@@ -222,6 +222,20 @@ TabContainer {
 						}
 					}
 				}
+				FormGroup {
+					//: 'Minimal Timeline filter'
+					label: qsTr('minimalTimelineFilterLabel')
+					
+					Switch {
+						checked: SettingsModel.useMinimalTimelineFilter
+						
+						onClicked: SettingsModel.useMinimalTimelineFilter = !checked
+						TooltipArea{
+						//: 'Show a minimal version of what to display in timeline.' :
+							text: qsTr('minimalTimelineFilterTooltip')
+						}
+					}
+				}
 			}
 			FormLine {
 				maxItemWidth: parent.width

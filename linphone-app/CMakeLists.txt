@@ -128,6 +128,7 @@ set(SOURCES
 	src/components/calls/CallsListProxyModel.cpp
 	src/components/camera/Camera.cpp
 	src/components/camera/CameraPreview.cpp
+	src/components/chat/ChatModel.cpp
 	src/components/chat-events/ChatCallModel.cpp
 	src/components/chat-events/ChatEvent.cpp
 	src/components/chat-events/ChatMessageModel.cpp
@@ -238,6 +239,7 @@ set(HEADERS
 	src/components/calls/CallsListProxyModel.hpp
 	src/components/camera/Camera.hpp
 	src/components/camera/CameraPreview.hpp
+	src/components/chat/ChatModel.hpp
 	src/components/chat-events/ChatCallModel.hpp
 	src/components/chat-events/ChatEvent.hpp
 	src/components/chat-events/ChatMessageModel.hpp

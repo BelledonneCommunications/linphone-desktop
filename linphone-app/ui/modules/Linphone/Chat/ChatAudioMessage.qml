@@ -26,12 +26,14 @@ Loader{
 	property ContentModel contentModel
 	property int maxWidth : parent.width
 	property int fitWidth: active ? Math.max(maxWidth - ChatAudioMessageStyle.emptySpace, ChatAudioMessageStyle.minWidth) : 0
-	property int fitHeight: active ? 40 : 0
+	property int fitHeight: active ? 60 : 0
 	
 	property font customFont : SettingsModel.textMessageFont
-	property bool isOutgoing : contentModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
+	property bool isOutgoing : contentModel && contentModel.chatMessageModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
+	property bool isActive: active
 	
 	active: contentModel && contentModel.isVoiceRecording()
+	
 	sourceComponent: Item{
 		id: loadedItem
 		property bool isPlaying : vocalPlayer.item && vocalPlayer.item.playbackState === SoundPlayer.PlayingState
@@ -70,6 +72,7 @@ Loader{
 				Layout.leftMargin: 15
 				Layout.alignment: Qt.AlignVCenter
 				isCustom: true
+				backgroundRadius: width
 				colorSet:  (loadedItem.isPlaying ? ChatAudioMessageStyle.pauseAction
 												 : ChatAudioMessageStyle.playAction)
 				onClicked:{
@@ -84,7 +87,9 @@ Loader{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignVCenter
-				Layout.rightMargin: 15
+				Layout.rightMargin: 10
+				Layout.topMargin: 10
+				Layout.bottomMargin: 10
 				MediaProgressBar{
 					id: mediaProgressBar
 					anchors.fill: parent

@@ -4,44 +4,51 @@
    height="80"
    viewBox="0 0 80 80"
    version="1.1"
-   id="svg8"
-   sodipodi:docname="chat_audio_play.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   id="svg14"
+   sodipodi:docname="chat_audio_play_custom.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs12" />
+     id="defs18" />
   <sodipodi:namedview
-     id="namedview10"
+     id="namedview16"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
-     inkscape:pagecheckerboard="0"
+     inkscape:pagecheckerboard="true"
      showgrid="false"
-     inkscape:zoom="5.3231707"
-     inkscape:cx="29.024055"
-     inkscape:cy="63.683849"
+     inkscape:zoom="6.5078125"
+     inkscape:cx="7.7599039"
+     inkscape:cy="15.827131"
      inkscape:window-width="1920"
      inkscape:window-height="1043"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg8" />
+     inkscape:current-layer="g8" />
   <g
      fill="none"
      fill-rule="evenodd"
-     id="g6"
-     transform="scale(0.96277665,0.97560976)">
+     id="g12">
     <g
-       fill="#444444"
-       id="g4">
-      <path
-         d="m 41.547,0 c 22.945,0 41.546,18.356 41.546,41 0,22.644 -18.6,41 -41.546,41 C 18.6,82 0,63.644 0,41 0,18.356 18.601,0 41.547,0 Z M 29.975,20.97 V 59.812 L 61.75,41.12 Z"
-         id="path2" />
+       id="g10">
+      <g
+         id="g8">
+        <g
+           transform="scale(4.9340074,5)"
+           id="g6">
+          <path
+             fill="#000000"
+             fill-rule="nonzero"
+             d="m 5.849,4.092 v 7.579 l 6.2,-3.648 z"
+             id="path4" />
+        </g>
+      </g>
     </g>
   </g>
 </svg>

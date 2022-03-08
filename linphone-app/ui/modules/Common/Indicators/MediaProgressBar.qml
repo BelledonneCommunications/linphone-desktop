@@ -21,6 +21,7 @@ ProgressBar {
 	property alias colorSet: progression.colorSet
 	property alias backgroundColor: backgroundArea.color
 	property alias durationTextColor: durationText.color
+	property int waveLeftMargin: 0
 	
 	function start(){
 		progressBar.value = 0
@@ -61,13 +62,14 @@ ProgressBar {
 						progression.percentageDisplayed = value
 		}
 	
-	anchors.topMargin: 5
-	anchors.bottomMargin: 5
+	anchors.topMargin: 2
+	anchors.bottomMargin: 2
 			
 	background: Rectangle {
 		id: backgroundArea
 		color: MediaProgressBarStyle.backgroundColor
 		radius: 5
+		clip: false
 	}
 	
 	
@@ -76,16 +78,19 @@ ProgressBar {
 			anchors.fill: parent
 			radius: 5
 			color: 'transparent'
+			clip: false
 			RowLayout{
 				anchors.fill: parent
-				spacing: 10
+				spacing: 0
 				ActionButton{
 					id: progression
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					Layout.leftMargin: progressBar.waveLeftMargin
 					backgroundRadius: 5
 					fillMode: Image.TileHorizontally
 					verticalAlignment: Image.AlignLeft
+					horizontalAlignment: Image.AlignLeft
 					isCustom: true
 					colorSet: MediaProgressBarStyle.progressionWave
 					percentageDisplayed: 0
@@ -95,13 +100,15 @@ ProgressBar {
 					id: durationText
 					Layout.fillHeight: true
 					Layout.preferredWidth: implicitWidth
-					Layout.rightMargin: 5
+					Layout.leftMargin: 15
+					Layout.rightMargin: 6
 					horizontalAlignment: Qt.AlignRight
 					verticalAlignment: Qt.AlignVCenter
-					text: progressBar.progressPosition >= 0 ? Utils.formatElapsedTime( progressBar.progressPosition / 1000 ) : '-'					
+					text: progressBar.progressPosition > 0 ? Utils.formatElapsedTime( progressBar.progressPosition / 1000 ) 
+										:( progressBar.progressPosition == 0 ? Utils.formatElapsedTime( progressBar.progressDuration / 1000) : '-')
 					property font customFont : SettingsModel.textMessageFont
 					font.family: customFont.family
-					font.pointSize: Units.dp * (customFont.pointSize + 2)
+					font.pointSize: Units.dp * (customFont.pointSize + 1)
 				}
 			}
 	}

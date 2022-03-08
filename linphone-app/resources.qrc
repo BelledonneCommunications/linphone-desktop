@@ -33,7 +33,9 @@
 		<file>assets/images/chat_audio_pause_custom.svg</file>
 		<file>assets/images/chat_audio_play_custom.svg</file>
 		<file>assets/images/chat_audio_soundwave_custom.svg</file>
-		<file>assets/images/chat_audio_stop_custom.svg</file>
+		<file>assets/images/chat_audio_preview_pause_custom.svg</file>
+		<file>assets/images/chat_audio_preview_play_custom.svg</file>
+		<file>assets/images/chat_audio_preview_stop_custom.svg</file>
 		<file>assets/images/chat_count.svg</file>
 		<file>assets/images/chat_delivered.svg</file>
 		<file>assets/images/chat_error.svg</file>
@@ -281,6 +283,7 @@
 		<file>ui/modules/Linphone/Chat/ChatAudioMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatAudioPreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatFileMessage.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatFilePreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatForwardMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMessagePreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatReplyMessage.qml</file>
@@ -301,6 +304,7 @@
 		<file>ui/modules/Linphone/Contact/Contact.qml</file>
 		<file>ui/modules/Linphone/Dialog/OnlineInstallerDialog.qml</file>
 		<file>ui/modules/Linphone/Dialog/SipAddressDialog.qml</file>
+		<file>ui/modules/Linphone/File/FileView.qml</file>
 		<file>ui/modules/Linphone/History/History.qml</file>
 		<file>ui/modules/Linphone/History/History.js</file>
 		<file>ui/modules/Linphone/History/Event.qml</file>
@@ -327,6 +331,7 @@
 		<file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatAudioMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatAudioPreviewStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Chat/ChatFilePreviewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatForwardMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatReplyMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
