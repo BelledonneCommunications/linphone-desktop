@@ -108,9 +108,10 @@ Item {
 				
 				color: ChatReplyMessageStyle.replyArea.foregroundColor
 			}
-			ListView {
+			ScrollableListView {
 				id: replyMessage
 				property int fitWidth : 0
+				hideScrollBars: true
 				anchors.top: usernameReplied.bottom
 				anchors.left: parent.left
 				anchors.right: parent.right
@@ -130,7 +131,13 @@ Item {
 				model: ContentProxyModel{
 					chatMessageModel: mainItem.chatMessageModel
 				}
-				height: contentHeight
+				Timer{// Delay to avoid binding loops
+					id:delayUpdate
+					interval:10
+					onTriggered: replyMessage.height = replyMessage.contentHeight
+				}
+				onContentHeightChanged: delayUpdate.restart()
+				//height: contentHeight
 				
 				delegate: ChatContent{
 					contentModel: modelData
@@ -140,6 +147,13 @@ Item {
 					onFitWidthChanged:{
 						replyMessage.updateWidth()			
 					}
+					Rectangle{
+							anchors.left: parent.left
+							anchors.right: parent.right
+							color: ChatStyle.entry.separator.color
+							height: visible ? ChatStyle.entry.separator.width : 0
+							visible: (index !== (replyMessage.count - 1)) 
+						}
 				}
 			}
 		}

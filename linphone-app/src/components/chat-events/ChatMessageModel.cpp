@@ -120,33 +120,36 @@ QString ChatMessageModel::AppDataManager::toString(){
 }
 ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::MessageEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it
-	mParticipantImdnStateListModel = std::make_shared<ParticipantImdnStateListModel>(chatMessage);
-	mChatMessageListener = std::make_shared<ChatMessageListener>(this, parent);
-	mChatMessage = chatMessage;
+	if(chatMessage){
+		mParticipantImdnStateListModel = std::make_shared<ParticipantImdnStateListModel>(chatMessage);
+		mChatMessageListener = std::make_shared<ChatMessageListener>(this, parent);
+		mChatMessage = chatMessage;
+		mChatMessage->addListener(mChatMessageListener);
+		if( mChatMessage->isReply()){
+			auto replyMessage = mChatMessage->getReplyMessage();
+			if( replyMessage)// Reply message could be inexistant (for example : when locally deleted)
+				mReplyChatMessageModel = create(replyMessage, parent);
+		}
+		connect(this, &ChatMessageModel::remove, dynamic_cast<ChatRoomModel*>(parent), &ChatRoomModel::removeEntry);
+	
+		std::list<std::shared_ptr<linphone::Content>> contents = chatMessage->getContents();
+		QString txt;
+		for(auto content : contents){
+			if(content->isText())
+				txt += content->getUtf8Text().c_str();
+		}
+		mContent = txt;
+	}
 	mWasDownloaded = false;
-	mChatMessage->addListener(mChatMessageListener);
+	
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessage->getTime() * 1000);
-	if( mChatMessage->isReply()){
-		auto replyMessage = mChatMessage->getReplyMessage();
-		if( replyMessage)// Reply message could be inexistant (for example : when locally deleted)
-			mReplyChatMessageModel = create(replyMessage, parent);
-	}
-	
-	connect(this, &ChatMessageModel::remove, dynamic_cast<ChatRoomModel*>(parent), &ChatRoomModel::removeEntry);
-	
-	std::list<std::shared_ptr<linphone::Content>> contents = chatMessage->getContents();
-	QString txt;
-	for(auto content : contents){
-		if(content->isText())
-			txt += content->getUtf8Text().c_str();
-	}
-	mContent = txt;
 
 	mContentListModel = std::make_shared<ContentListModel>(this);
 }
 
 ChatMessageModel::~ChatMessageModel(){
-	mChatMessage->removeListener(mChatMessageListener);
+	if(mChatMessage)
+		mChatMessage->removeListener(mChatMessageListener);
 }
 std::shared_ptr<ChatMessageModel> ChatMessageModel::create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent){
 	auto model = std::make_shared<ChatMessageModel>(chatMessage, parent);
@@ -163,7 +166,7 @@ std::shared_ptr<ContentModel> ChatMessageModel::getContentModel(std::shared_ptr<
 //-----------------------------------------------------------------------------------------------------------------------
 
 QString ChatMessageModel::getFromDisplayName() const{
-	return Utils::getDisplayName(mChatMessage->getFromAddress());	
+	return mChatMessage ? Utils::getDisplayName(mChatMessage->getFromAddress()) : "";
 }
 
 QString ChatMessageModel::getFromDisplayNameReplyMessage() const{
@@ -174,40 +177,40 @@ QString ChatMessageModel::getFromDisplayNameReplyMessage() const{
 }
 
 QString ChatMessageModel::getFromSipAddress() const{
-	return Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asStringUriOnly()));
+	return mChatMessage ? Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asStringUriOnly())) : "";
 }
 
 QString ChatMessageModel::getToDisplayName() const{
-	return Utils::getDisplayName(mChatMessage->getToAddress());
+	return mChatMessage ? Utils::getDisplayName(mChatMessage->getToAddress()) : "";
 }
 
 QString ChatMessageModel::getToSipAddress() const{
-	return Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getToAddress()->asStringUriOnly()));
+	return mChatMessage ? Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getToAddress()->asStringUriOnly())) : "";
 }
 
 ContactModel * ChatMessageModel::getContactModel() const{
-	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asString()));
+	return mChatMessage ? CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asString())) : nullptr;
 }
 
 bool ChatMessageModel::isEphemeral() const{
-	return mChatMessage->isEphemeral();
+	return mChatMessage && mChatMessage->isEphemeral();
 }
 
 qint64 ChatMessageModel::getEphemeralExpireTime() const{
-	time_t t = mChatMessage->getEphemeralExpireTime();
+	time_t t = mChatMessage ? mChatMessage->getEphemeralExpireTime() : 0;
 	return 	t >0 ? t - QDateTime::currentSecsSinceEpoch() : 0;
 }
 
 long ChatMessageModel::getEphemeralLifetime() const{
-	return mChatMessage->getEphemeralLifetime();
+	return mChatMessage ? mChatMessage->getEphemeralLifetime() : 0;
 }
 
 LinphoneEnums::ChatMessageState ChatMessageModel::getState() const{
-	return LinphoneEnums::fromLinphone(mChatMessage->getState());
+	return mChatMessage ? LinphoneEnums::fromLinphone(mChatMessage->getState()) : LinphoneEnums::ChatMessageStateIdle;
 }
 
 bool ChatMessageModel::isOutgoing() const{
-	return mChatMessage->isOutgoing();
+	return mChatMessage && mChatMessage->isOutgoing();
 }
 
 ParticipantImdnStateProxyModel * ChatMessageModel::getProxyImdnStates(){
@@ -229,7 +232,7 @@ std::shared_ptr<ContentListModel> ChatMessageModel::getContents() const{
 }
 
 bool ChatMessageModel::isReply() const{
-	return mChatMessage->isReply();
+	return mChatMessage && mChatMessage->isReply();
 }
 
 ChatMessageModel * ChatMessageModel::getReplyChatMessageModel() const{
@@ -237,11 +240,11 @@ ChatMessageModel * ChatMessageModel::getReplyChatMessageModel() const{
 }
 
 bool ChatMessageModel::isForward() const{
-	return mChatMessage->isForward();
+	return mChatMessage && mChatMessage->isForward();
 }
 
 QString ChatMessageModel::getForwardInfo() const{
-	return Utils::coreStringToAppString(mChatMessage->getForwardInfo());
+	return mChatMessage ? Utils::coreStringToAppString(mChatMessage->getForwardInfo()) : "";
 }
 
 QString ChatMessageModel::getForwardInfoDisplayName() const{
@@ -279,7 +282,6 @@ void ChatMessageModel::resendMessage (){
 	}
 }
 
-
 void ChatMessageModel::deleteEvent(){
 	if (mChatMessage && mChatMessage->getFileTransferInformation()) {// Remove thumbnail
 		mChatMessage->cancelFileTransfer();
@@ -293,7 +295,8 @@ void ChatMessageModel::deleteEvent(){
 		}
 		mChatMessage->setAppdata("");// Remove completely Thumbnail from the message
 	}
-	mChatMessage->getChatRoom()->deleteMessage(mChatMessage);
+	if(mChatMessage)
+		mChatMessage->getChatRoom()->deleteMessage(mChatMessage);
 }
 void ChatMessageModel::updateFileTransferInformation(){
 	mContentListModel->updateContents(this);
@@ -317,7 +320,7 @@ void ChatMessageModel::onFileTransferProgressIndication (const std::shared_ptr<l
 void ChatMessageModel::onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) {
 	updateFileTransferInformation();// On message state, file transfert information Content can be changed
 	// File message downloaded.
-	if (state == linphone::ChatMessage::State::FileTransferDone && !mChatMessage->isOutgoing()) {
+	if (mChatMessage && state == linphone::ChatMessage::State::FileTransferDone && !mChatMessage->isOutgoing()) {
 		mContentListModel->downloaded();
 		setWasDownloaded(true);
 		App::getInstance()->getNotifier()->notifyReceivedFileMessage(message);

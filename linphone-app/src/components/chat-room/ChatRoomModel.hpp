@@ -154,8 +154,6 @@ public:
 	Q_PROPERTY(bool entriesLoading READ isEntriesLoading WRITE setEntriesLoading NOTIFY entriesLoadingChanged)
 	
 	
-	
-	//ChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool& isSecure);
 	static std::shared_ptr<ChatRoomModel> create(std::shared_ptr<linphone::ChatRoom> chatRoom);
 	ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject * parent = nullptr);
 	~ChatRoomModel ();
@@ -202,6 +200,7 @@ public:
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
 	QString getParticipantAddress();	// return peerAddress if not secure else return the first participant SIP address.
+	int getAllUnreadCount();	// Return unread messages and missed call.
 		
 //---- Setters
 	void setSubject(QString& subject);
@@ -219,6 +218,8 @@ public:
 	void setReply(ChatMessageModel * model);
 	ChatMessageModel * getReply()const;
 	void clearReply();
+	
+	void clearFilesToSend();
 
 // Tools
 	
@@ -226,7 +227,6 @@ public:
 	Q_INVOKABLE void leaveChatRoom ();
 	Q_INVOKABLE void updateParticipants(const QVariantList& participants);		
 	void sendMessage (const QString &message);
-	void sendFileMessage (const QString &path);
 	Q_INVOKABLE void forwardMessage(ChatMessageModel * model);
 	void compose ();
 	Q_INVOKABLE void resetMessageCount ();

@@ -7,6 +7,7 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
 import UtilsCpp 1.0
+import LinphoneEnums 1.0
 
 import Units 1.0
 
@@ -46,7 +47,6 @@ Rectangle {
 		
 		ScrollableListView {
 			id: chat
-			
 			// -----------------------------------------------------------------------
 			property bool bindToEnd: false
 			property bool displaying: false
@@ -371,128 +371,140 @@ Rectangle {
 			
 			
 		}
-		ChatMessagePreview{
-				id: chatMessagePreview
-				Layout.fillWidth: true
-				
-				replyChatRoomModel: proxyModel.chatRoomModel
-				
-			}
-			Rectangle{
-				id: messageBlock
-				onHeightChanged: height = Layout.preferredHeight
-				Layout.preferredHeight: visible && opacity > 0 ? 32 : 0
-				Layout.fillWidth: true
-				Layout.leftMargin: ChatStyle.entry.leftMargin
-				Layout.rightMargin: ChatStyle.entry.rightMargin
-				color: ChatStyle.messageBanner.color
-				radius: 10
-				state: "hidden"
-				Timer{
-					id: hideNoticeBanner
-					interval: 4000
-					repeat: false
-					onTriggered: messageBlock.state = "hidden"
-				}
-				RowLayout{
-					anchors.centerIn: parent
-					spacing: 5
-					Icon{
-						icon: ChatStyle.copyTextIcon
-						overwriteColor: ChatStyle.messageBanner.textColor
-						iconSize: 20
-					}
-					Text{
-						Layout.fillHeight: true
-						Layout.fillWidth: true
-						text: container.noticeBannerText
-						font {
-							pointSize: ChatStyle.messageBanner.pointSize
-						}
-						color: ChatStyle.messageBanner.textColor
-					}
-				}
-				states: [
-					State {
-						name: "hidden"
-						PropertyChanges { target: messageBlock; opacity: 0 }
-					},
-					State {
-						name: "showed"
-						PropertyChanges { target: messageBlock; opacity: 1 }
-					}
-				]
-				transitions: [
-					Transition {
-						from: "*"; to: "showed"
-						SequentialAnimation{
-							NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 500 }
-							ScriptAction{ script: hideNoticeBanner.start()}	
-						}
-					},
-					Transition {
-						SequentialAnimation{
-							NumberAnimation{ properties: "opacity"; duration: 1000 }
-							ScriptAction{ script: container.noticeBannerText = '' }
-						}
-					}
-				]
-			}
-		// -------------------------------------------------------------------------
-		// Send area.
-		// -------------------------------------------------------------------------
-		
-		Borders {
-			id: textAreaBorders
+		Rectangle {
+			id: bottomChatBackground
 			Layout.fillWidth: true
-			Layout.preferredHeight: textArea.height
-			
-			borderColor: ChatStyle.sendArea.border.color
-			topWidth: ChatStyle.sendArea.border.width
-			visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.hasBeenLeft && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
-			
-			
-			DroppableTextArea {
-				id: textArea
-				
-				enabled:proxyModel && proxyModel.chatRoomModel ? !proxyModel.chatRoomModel.hasBeenLeft:false
-				isEphemeral : proxyModel && proxyModel.chatRoomModel ? proxyModel.chatRoomModel.ephemeralEnabled:false
-				
-				anchors.left: parent.left
-				anchors.right: parent.right
-				anchors.bottom: parent.bottom
-				
-				height:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
-				minimumHeight:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
-				maximumHeight:container.height/2
-				
-				dropEnabled: SettingsModel.fileTransferUrl.length > 0
-				dropDisabledReason: qsTr('noFileTransferUrl')
-				placeholderText: qsTr('newMessagePlaceholder')
-				
-				onDropped: Logic.handleFilesDropped(files)
-				onTextChanged: Logic.handleTextChanged(text)
-				onValidText: {
-					textArea.text = ''
-					chat.bindToEnd = true
-					if(proxyModel.chatRoomModel) {
-						proxyModel.sendMessage(text)
-					}else{
-						console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
-						proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
-						proxyModel.sendMessage(text)
-					}
-				}
-				onAudioRecordRequest: RecorderManager.resetVocalRecorder()
-				Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
+			Layout.preferredHeight: textAreaBorders.height + chatMessagePreview.height+messageBlock.height
+			color: ChatStyle.sendArea.backgroundBorder.color
+			clip: true
+			ColumnLayout{
+				anchors.fill: parent				
+				spacing: 0
 				Rectangle{
-					anchors.fill:parent
-					color:'white'
-					opacity: 0.5
-					visible:!textArea.enabled
+					id: messageBlock
+					onHeightChanged: height = Layout.preferredHeight
+					Layout.preferredHeight: visible && opacity > 0 ? 32 : 0
+					Layout.fillWidth: true
+					Layout.leftMargin: ChatStyle.entry.leftMargin
+					Layout.rightMargin: ChatStyle.entry.rightMargin
+					color: ChatStyle.messageBanner.color
+					radius: 10
+					state: "hidden"
+					Timer{
+						id: hideNoticeBanner
+						interval: 4000
+						repeat: false
+						onTriggered: messageBlock.state = "hidden"
+					}
+					RowLayout{
+						anchors.centerIn: parent
+						spacing: 5
+						Icon{
+							icon: ChatStyle.copyTextIcon
+							overwriteColor: ChatStyle.messageBanner.textColor
+							iconSize: 20
+						}
+						Text{
+							Layout.fillHeight: true
+							Layout.fillWidth: true
+							text: container.noticeBannerText
+							font {
+								pointSize: ChatStyle.messageBanner.pointSize
+							}
+							color: ChatStyle.messageBanner.textColor
+						}
+					}
+					states: [
+						State {
+							name: "hidden"
+							PropertyChanges { target: messageBlock; opacity: 0 }
+						},
+						State {
+							name: "showed"
+							PropertyChanges { target: messageBlock; opacity: 1 }
+						}
+					]
+					transitions: [
+						Transition {
+							from: "*"; to: "showed"
+							SequentialAnimation{
+								NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 500 }
+								ScriptAction{ script: hideNoticeBanner.start()}	
+							}
+						},
+						Transition {
+							SequentialAnimation{
+								NumberAnimation{ properties: "opacity"; duration: 1000 }
+								ScriptAction{ script: container.noticeBannerText = '' }
+							}
+						}
+					]
+				}// MessageBlock
+				ChatMessagePreview{
+						id: chatMessagePreview
+						Layout.fillWidth: true
+						Layout.leftMargin: ChatStyle.sendArea.backgroundBorder.width
+						maxHeight: container.height - textAreaBorders.height
+						replyChatRoomModel: proxyModel.chatRoomModel
+						
 				}
-			}
-		}
+				// -------------------------------------------------------------------------
+				// Send area.
+				// -------------------------------------------------------------------------
+				
+				Borders {
+					id: textAreaBorders
+					Layout.fillWidth: true
+					Layout.preferredHeight: textArea.height
+					Layout.leftMargin: ChatStyle.sendArea.backgroundBorder.width
+					borderColor: ChatStyle.sendArea.border.color
+					topWidth: ChatStyle.sendArea.border.width
+					visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.hasBeenLeft && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
+					
+					DroppableTextArea {
+						id: textArea
+						
+						enabled:proxyModel && proxyModel.chatRoomModel ? !proxyModel.chatRoomModel.hasBeenLeft:false
+						isEphemeral : proxyModel && proxyModel.chatRoomModel ? proxyModel.chatRoomModel.ephemeralEnabled:false
+						
+						anchors.left: parent.left
+						anchors.right: parent.right
+						anchors.bottom: parent.bottom
+						
+						height:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+						minimumHeight:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+						maximumHeight:container.height/2
+						
+						dropEnabled: SettingsModel.fileTransferUrl.length > 0
+						dropDisabledReason: qsTr('noFileTransferUrl')
+						placeholderText: qsTr('newMessagePlaceholder')
+						recordAudioToggled: RecorderManager.haveVocalRecorder && RecorderManager.getVocalRecorder().state != LinphoneEnums.RecorderStateClosed
+						
+						onDropped: Logic.handleFilesDropped(files)
+						onTextChanged: Logic.handleTextChanged(text)
+						onValidText: {
+							textArea.text = ''
+							chat.bindToEnd = true
+							if(proxyModel.chatRoomModel) {
+								proxyModel.sendMessage(text)
+							}else{
+								console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
+								proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
+								proxyModel.sendMessage(text)
+							}
+						}
+						onAudioRecordRequest: RecorderManager.resetVocalRecorder()
+						Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
+						Rectangle{
+							anchors.fill:parent
+							color:'white'
+							opacity: 0.5
+							visible:!textArea.enabled
+						}
+					}
+				}// Send Area
+			}// ColumnLayout
+		}// Bottom background
 	}
 	
 	

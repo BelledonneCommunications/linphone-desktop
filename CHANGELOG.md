@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Features:
-	* Messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record and play, multi contents.
+	* Messages features : Reply, forward (to contact, to a SIP address or to a timeline), Vocal record and play, multi contents, preview.
 - Add a feedback on fetching remote provisioning when it failed.
 - Option to enable message notifications.
 - CPIM on basic chat rooms.
@@ -18,7 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Based on Linphone SDK 5.1
 
 ### Fixed
-- Simplify filtering timelines on 3 kind of search : security level, simple/group chats, ephemerals.
+- Simplify filtering timelines with 2 modes (minimal or exhaustive) and on 3 kind of search : security level, simple/group chats, ephemerals.
+- Sort timelines by taken account of unread events in chat rooms.
 - Fix systemTrayIcon that could be cloned on each restart.
 - Fix errors on Action-Buttons on restart.
 - Enable G729 on public builds.
@@ -27,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adapt UserAgent with device name.
 - Video freeze on network change.
 - Set default log size to 50MB
+- Crash on the smart search bar.
 
 ## 4.3.2
 

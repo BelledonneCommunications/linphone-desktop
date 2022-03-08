@@ -23,7 +23,7 @@ TextEdit {
 	property ContentModel contentModel
 	property string lastTextSelected : ''
 	property font customFont : SettingsModel.textMessageFont
-	property int fitHeight: visible ? contentHeight + padding + 6 : 0
+	property int fitHeight: visible ? contentHeight + padding + 8 : 0
 	property int fitWidth: visible ? implicitWidth + 2: 0	// add 2 because there is a bug on border that lead to not fit text exactly
 	
 	signal rightClicked()

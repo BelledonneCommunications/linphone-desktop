@@ -43,8 +43,15 @@ public:
 	
 	virtual QHash<int, QByteArray> roleNames () const override;
 	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	std::shared_ptr<ContentModel> add(std::shared_ptr<linphone::Content> content);
+	void addFile(const QString& path);
+	Q_INVOKABLE void remove(ContentModel * model);
+	
+	void clear();
 	
 	std::shared_ptr<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);// Return the contentModel by checking Content, or if it is the same file.
+	QList<std::shared_ptr<ContentModel>> getContents();
+	
 	void updateContent(std::shared_ptr<linphone::Content> oldContent, std::shared_ptr<linphone::Content> newContent);
 	void updateContents(ChatMessageModel * messageModel);
 	void updateAllTransferData();
@@ -52,12 +59,14 @@ public:
 	
 signals:
 	void updateTransferDataRequested();
+	void contentsChanged();
 	
 private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
 	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	
 	QList<std::shared_ptr<ContentModel>> mList;
+	ChatMessageModel * mParent;
 	
 };
 

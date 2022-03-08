@@ -38,6 +38,7 @@
 #include "app/paths/Paths.hpp"
 #include "app/providers/ThumbnailProvider.hpp"
 #include "components/calls/CallsListModel.hpp"
+#include "components/chat/ChatModel.hpp"
 #include "components/chat-events/ChatCallModel.hpp"
 #include "components/chat-events/ChatEvent.hpp"
 #include "components/chat-events/ChatMessageModel.hpp"
@@ -45,6 +46,8 @@
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
+#include "components/content/ContentListModel.hpp"
+#include "components/content/ContentModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
@@ -567,6 +570,10 @@ QString ChatRoomModel::getParticipantAddress(){
 	}	
 }
 
+int ChatRoomModel::getAllUnreadCount(){
+	return mUnreadMessagesCount + mMissedCallsCount;
+}
+
 //------------------------------------------------------------------------------------------------
 
 void ChatRoomModel::setSubject(QString& subject){
@@ -654,7 +661,6 @@ ChatMessageModel * ChatRoomModel::getReply()const{
 	return mReplyModel.get();
 }
 
-
 //------------------------------------------------------------------------------------------------
 
 void ChatRoomModel::deleteChatRoom(){
@@ -694,63 +700,33 @@ void ChatRoomModel::updateParticipants(const QVariantList& participants){
 
 void ChatRoomModel::sendMessage (const QString &message) {
 	shared_ptr<linphone::ChatMessage> _message;
-	if(mReplyModel && mReplyModel->getChatMessage())
+	if(mReplyModel && mReplyModel->getChatMessage()) {
 		_message = mChatRoom->createReplyMessage(mReplyModel->getChatMessage());
-	else
+	}else
 		 _message= mChatRoom->createEmptyMessage();
 	auto recorder = CoreManager::getInstance()->getRecorderManager();
 	if(recorder->haveVocalRecorder()) {
 		recorder->getVocalRecorder()->stop();
 		auto content = recorder->getVocalRecorder()->getRecorder()->createContent();
-		if(content)
+		if(content) {
 			_message->addContent(content);
-	}
-	if(!message.isEmpty())
-		_message->addUtf8TextContent(message.toUtf8().toStdString());
-	_message->send();
-	emit messageSent(_message);
-	setReply(nullptr);
-	if(recorder->haveVocalRecorder())
-		recorder->clearVocalRecorder();
-}
-
-void ChatRoomModel::sendFileMessage (const QString &path) {
-	
-	QFile file(path);
-	if (!file.exists())
-		return;
-	
-	qint64 fileSize = file.size();
-	if (fileSize > Constants::FileSizeLimit) {
-		qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(Constants::FileSizeLimit);
-		return;
-	}
-	
-	shared_ptr<linphone::Content> content = CoreManager::getInstance()->getCore()->createContent();
-	{
-		QStringList mimeType = QMimeDatabase().mimeTypeForFile(path).name().split('/');
-		if (mimeType.length() != 2) {
-			qWarning() << QStringLiteral("Unable to get supported mime type for: `%1`.").arg(path);
-			return;
 		}
-		content->setType(Utils::appStringToCoreString(mimeType[0]));
-		content->setSubtype(Utils::appStringToCoreString(mimeType[1]));
 	}
-	content->setSize(size_t(fileSize)); 
-	content->setName(QFileInfo(file).fileName().toStdString());
-
-	shared_ptr<linphone::ChatMessage> message = mChatRoom->createFileTransferMessage(content);
-	message->getContents().front()->setFilePath(Utils::appStringToCoreString(path));
-	
-	auto recorder = CoreManager::getInstance()->getRecorderManager();
-	if(recorder->haveVocalRecorder()) {
-		auto content = recorder->getVocalRecorder()->getRecorder()->createContent();
-		if(content)
-			message->addContent(content);
+	auto fileContents = CoreManager::getInstance()->getChatModel()->getContentListModel()->getContents();
+	for(auto content : fileContents){
+		_message->addFileContent(content->getContent());
 	}
-	message->send();
-	
-	emit messageSent(message);
+	if(!message.isEmpty()) {
+		_message->addUtf8TextContent(message.toUtf8().toStdString());
+	}
+	if(_message->getContents().size() > 0){// Have something to send
+		_message->send();
+		emit messageSent(_message);
+		setReply(nullptr);
+		if(recorder->haveVocalRecorder())
+			recorder->clearVocalRecorder();
+		CoreManager::getInstance()->getChatModel()->clear();
+	}
 }
 
 void ChatRoomModel::forwardMessage(ChatMessageModel * model){

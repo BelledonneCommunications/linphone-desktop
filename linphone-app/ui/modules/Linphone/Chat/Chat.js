@@ -54,7 +54,7 @@ function getComponentFromEntry (chatEntry) {
 
 function handleFilesDropped (files) {
 	chat.bindToEnd = true
-	files.forEach(container.proxyModel.sendFileMessage)
+	files.forEach(chatMessagePreview.addFile)
 }
 
 function handleMoreEntriesLoaded (n) {

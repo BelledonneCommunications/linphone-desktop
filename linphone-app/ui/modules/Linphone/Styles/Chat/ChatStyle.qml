@@ -10,6 +10,10 @@ QtObject {
 	property string sectionName : 'Chat'
 	property color color: ColorsList.add(sectionName, 'q').color
 	property string copyTextIcon : 'copy_custom'
+	property int rightButtonMargin: 15
+	property int rightButtonSize: 30
+	property int rightButtonLMargin: 10
+	property int separatorHeight: 2
 	
 	property QtObject sectionHeading: QtObject {
 		property int padding: 5
@@ -45,6 +49,10 @@ QtObject {
 			property color color: ColorsList.add(sectionName+'_send_border', 'f').color
 			property int width: 1
 		}
+		property QtObject backgroundBorder: QtObject {
+			property color color: ColorsList.add(sectionName+'_send_background_border', 'ag').color
+			property int width: 2
+		}
 	}
 	
 	property QtObject composingText: QtObject {
@@ -64,7 +72,7 @@ QtObject {
 		property int pointSize: Units.dp * 9
 		property int headerPointSize: Units.dp * 9
 		property QtObject closeButton: QtObject{
-			property int iconSize: 30
+			property int iconSize: rightButtonSize
 			property string name : 'close'
 			property string icon : 'close_custom'
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+replyPreviewObject.name+'_'+name+'_b_n', icon, 'l_n_b_bg').color
@@ -93,6 +101,11 @@ QtObject {
 		property int rightMargin: 18
 		property int lineHeight: 30
 		property int metaWidth: 40
+		
+		property QtObject separator: QtObject {
+			property color color: ColorsList.add(sectionName+'_separator_border', 'g10').color
+			property int width: 2
+		}
 		
 		property QtObject menu: QtObject {
 			property int iconSize: 22
@@ -164,7 +177,7 @@ QtObject {
 		}
 		
 		property QtObject message: QtObject {
-			property int padding: 10
+			property int padding: 8
 			property int radius: 4
 			
 			property QtObject extraContent: QtObject {

@@ -67,8 +67,6 @@ public:
 	
 	Q_INVOKABLE void sendMessage (const QString &message);
 	
-	Q_INVOKABLE void sendFileMessage (const QString &path);
-	
 	Q_INVOKABLE void forwardMessage(ChatMessageModel * model);
 	
 	Q_INVOKABLE void compose (const QString& text);

@@ -1372,7 +1372,16 @@ void SettingsModel::setMipmapEnabled(const bool& enabled){
 	mConfig->setInt(UiSection, "mipmap_enabled", enabled);
 	emit mipmapEnabledChanged();
 }
-	
+
+bool SettingsModel::useMinimalTimelineFilter() const{
+	return !!mConfig->getInt(UiSection, "use_minimal_timeline_filter", 1);
+}
+
+void SettingsModel::setUseMinimalTimelineFilter(const bool& useMinimal) {
+	mConfig->setInt(UiSection, "use_minimal_timeline_filter", useMinimal);
+	emit useMinimalTimelineFilterChanged();
+}
+
 // =============================================================================
 // Advanced.
 // =============================================================================

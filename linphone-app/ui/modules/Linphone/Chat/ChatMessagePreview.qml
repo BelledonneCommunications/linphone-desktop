@@ -15,18 +15,48 @@ import 'Chat.js' as Logic
 // =============================================================================
 ColumnLayout{
 	property alias replyChatRoomModel : replyPreview.chatRoomModel
-	property int maxHeight: parent.height - ( audioPreview.visible ? audioPreview.height : 0)
+	property int maxHeight: parent.height
+	property int fitHeight: (replyPreview.visible ? replyPreview.height + replySeparator.height: 0 ) 
+							+ (audioPreview.visible ? audioPreview.height + audioSeparator.height: 0)
+							+ (filesPreview.visible ? filesPreview.height + filesSeparator.height: 0)
 	spacing: 0
-	Layout.preferredHeight: (replyPreview.visible ? replyPreview.height : 0 ) + (audioPreview.visible ? audioPreview.height : 0)
-	Layout.maximumHeight: Layout.preferredHeight
+	Layout.preferredHeight: fitHeight
+	Layout.maximumHeight: fitHeight> maxHeight ? maxHeight : fitHeight	// ?? just using maxHeight doesn't work.
 	function hide(){
+	}
+	function addFile(path){
+		filesPreview.addFile(path)
 	}
 	ChatReplyPreview{
 		id: replyPreview
 		Layout.fillWidth: true
+		maxHeight: parent.maxHeight - (audioPreview.visible ? audioPreview.height + audioSeparator.height: 0)
+								- (filesPreview.visible ? filesPreview.height + filesSeparator.height: 0)
+	}
+	Item{
+		id: replySeparator
+		visible: replyPreview.visible
+		Layout.preferredHeight: visible ? ChatStyle.separatorHeight : 0
+		Layout.fillWidth: true
 	}
 	ChatAudioPreview{
 		id: audioPreview
+		Layout.fillWidth: true
+	}
+	Item{
+		id: audioSeparator
+		visible: audioPreview.visible
+		Layout.preferredHeight: visible ? ChatStyle.separatorHeight : 0
+		Layout.fillWidth: true
+	}
+	ChatFilePreview{
+		id: filesPreview
+		Layout.fillWidth: true
+	}
+	Item{
+		id: filesSeparator
+		visible: filesPreview.visible
+		Layout.preferredHeight: visible ? ChatStyle.separatorHeight : 0
 		Layout.fillWidth: true
 	}
 }	

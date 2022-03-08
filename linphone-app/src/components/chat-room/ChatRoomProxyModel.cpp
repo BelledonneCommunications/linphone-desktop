@@ -82,7 +82,6 @@ ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel
 
 CREATE_PARENT_MODEL_FUNCTION(removeAllEntries)
 
-CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendFileMessage, const QString &)
 CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendMessage, const QString &)
 CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(forwardMessage, ChatMessageModel *)
 

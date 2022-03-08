@@ -217,7 +217,17 @@ class ColorListModel : public QAbstractListModel {
 		ADD_COLOR("me_d_b_inv_fg", "#80FFFFFF", "[M] Menu disabled button : inverse foreground")
 		ADD_COLOR("me_h_b_inv_fg", "#B0FFFFFF", "[M] Menu hovered button : inverse foreground")
 		ADD_COLOR("me_p_b_inv_fg", "white", "[M] Menu pressed button : inverse foreground")		
+//-------------------------------------	
+// Wave Play
+		ADD_COLOR_WITH_LINK("w_n_b_bg", "", "[M] Wave play normal button : background", "ma_n_b_bg")
+		ADD_COLOR_WITH_LINK("w_d_b_bg", "", "[M] Wave play disabled button : background", "ma_d_b_bg")
+		ADD_COLOR_WITH_LINK("w_h_b_bg", "", "[M] Wave play hovered button : background", "ma_h_b_bg")
+		ADD_COLOR_WITH_LINK("w_p_b_bg", "", "[M] Wave play pressed button : background", "ma_p_b_bg")
 		
+		ADD_COLOR_WITH_LINK("w_n_b_fg", "", "[M] Wave play normal button : foreground", "ma_n_b_fg")
+		ADD_COLOR_WITH_LINK("w_d_b_fg", "", "[M] Wave play disabled button : foreground", "ma_d_b_fg")
+		ADD_COLOR_WITH_LINK("w_h_b_fg", "", "[M] Wave play hovered button : foreground", "ma_h_b_fg")
+		ADD_COLOR_WITH_LINK("w_p_b_fg", "", "[M] Wave play pressed button : foreground", "ma_p_b_fg")
 		
 //--------------------------------------------------------------------------------------------------------------------
 /*		

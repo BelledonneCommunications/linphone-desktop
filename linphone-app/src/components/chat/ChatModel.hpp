@@ -1,5 +1,5 @@
-﻿/*
- * Copyright (c) 2021 Belledonne Communications SARL.
+/*
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,43 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONTENT_PROXY_MODEL_H_
-#define CONTENT_PROXY_MODEL_H_
+// Used to store data between chats
 
+#ifndef CHAT_MODEL_H_
+#define CHAT_MODEL_H_
 
 #include <linphone++/linphone.hh>
 // =============================================================================
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QSortFilterProxyModel>
-
 class ContentListModel;
-class ContentModel;
-class ChatMessageModel;
 
-class ContentProxyModel : public QSortFilterProxyModel {
+class ChatModel : public QObject{
 	Q_OBJECT
-	
 public:
-	ContentProxyModel (QObject *parent = nullptr);	
-	Q_PROPERTY(ChatMessageModel * chatMessageModel WRITE setChatMessageModel NOTIFY chatMessageModelChanged)
+	ChatModel(QObject * parent = nullptr);
 	
-	void setChatMessageModel(ChatMessageModel * message);
-	Q_INVOKABLE void setContentListModel(ContentListModel * model);
-	Q_INVOKABLE void addFile(const QString& path);
-	Q_INVOKABLE void remove(ContentModel * model);
+// Getters
+	std::shared_ptr<ContentListModel> getContentListModel() const;
+	
+// Tools
 	Q_INVOKABLE void clear();
 	
-signals:
-	void chatMessageModelChanged();
-	
-protected:
-	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
-	
+private:
 	std::shared_ptr<ContentListModel> mContents;
-	
 };
 
 #endif

@@ -492,7 +492,7 @@ ColumnLayout  {
 			anchors.leftMargin: 50
 			anchors.topMargin: 10
 			anchors.bottomMargin: 10
-			visible: false
+			visible: true
 			
 			TextField {
 				id:searchBar
@@ -503,14 +503,13 @@ ColumnLayout  {
 				width: parent.width-14
 				icon: 'close_custom'
 				overwriteColor: ConversationStyle.filters.iconColor
-				persistentIcon: true
+				showWhenEmpty: false
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')
 				
 				onTextChanged: searchDelay.restart()
 				onIconClicked: {
-					searchView.visible = false
-					chatRoomProxyModel.filterText = ''
+					searchView.text = ''
 				}
 				font.pointSize: ConversationStyle.filters.pointSize
 				

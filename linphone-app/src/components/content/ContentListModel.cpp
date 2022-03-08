@@ -24,6 +24,7 @@
 
 #include "ContentListModel.hpp"
 #include "ContentModel.hpp"
+#include "utils/Constants.hpp"
 #include "utils/Utils.hpp"
 
 #include "components/Components.hpp"
@@ -31,11 +32,14 @@
 // =============================================================================
 
 ContentListModel::ContentListModel (ChatMessageModel * message) : QAbstractListModel(message) {
-	std::list<std::shared_ptr<linphone::Content>> contents = message->getChatMessage()->getContents() ;
-	for(auto content : contents){
-		auto contentModel = std::make_shared<ContentModel>(content, message);
-		connect(this, &ContentListModel::updateTransferDataRequested, contentModel.get(), &ContentModel::updateTransferData);
-		mList << contentModel;
+	mParent = message;
+	if(message){
+		std::list<std::shared_ptr<linphone::Content>> contents = message->getChatMessage()->getContents() ;
+		for(auto content : contents){
+			auto contentModel = std::make_shared<ContentModel>(content, message);
+			connect(this, &ContentListModel::updateTransferDataRequested, contentModel.get(), &ContentModel::updateTransferData);
+			mList << contentModel;
+		}
 	}
 }
 
@@ -65,6 +69,57 @@ QVariant ContentListModel::data (const QModelIndex &index, int role) const {
 	return QVariant();
 }
 
+std::shared_ptr<ContentModel> ContentListModel::add(std::shared_ptr<linphone::Content> content){
+	int row = mList.count();
+	auto contentModel = std::make_shared<ContentModel>(content, mParent);
+	beginInsertRows(QModelIndex(), row, row);
+	mList << contentModel;
+	endInsertRows();
+	emit contentsChanged();
+	return contentModel;
+}
+
+void ContentListModel::addFile(const QString& path){
+	QFile file(path);
+	if (!file.exists())
+		return;
+	
+	qint64 fileSize = file.size();
+	if (fileSize > Constants::FileSizeLimit) {
+		qWarning() << QStringLiteral("Unable to send file. (Size limit=%1)").arg(Constants::FileSizeLimit);
+		return;
+	}
+	
+	std::shared_ptr<linphone::Content> content = CoreManager::getInstance()->getCore()->createContent();
+	{
+		QStringList mimeType = QMimeDatabase().mimeTypeForFile(path).name().split('/');
+		if (mimeType.length() != 2) {
+			qWarning() << QStringLiteral("Unable to get supported mime type for: `%1`.").arg(path);
+			return;
+		}
+		content->setType(Utils::appStringToCoreString(mimeType[0]));
+		content->setSubtype(Utils::appStringToCoreString(mimeType[1]));
+	}
+	content->setSize(size_t(fileSize)); 
+	content->setName(QFileInfo(file).fileName().toStdString());
+	content->setFilePath(Utils::appStringToCoreString(path));
+	
+	auto modelAdded = add(content);
+	if(!content->isFile())
+		modelAdded->createThumbnail(true);	// Was not created because linphone::Content is not considered as a file (yet)
+}
+
+void ContentListModel::remove(ContentModel * model){
+	int count = 0;
+	for(auto it = mList.begin() ; it != mList.end() ; ++count, ++it) {
+		if( it->get() == model) {
+			model->removeThumbnail();
+			removeRow(count, QModelIndex());
+			return;
+		}
+	}
+}
+
 bool ContentListModel::removeRow (int row, const QModelIndex &parent){
 	return removeRows(row, 1, parent);
 }
@@ -84,6 +139,17 @@ bool ContentListModel::removeRows (int row, int count, const QModelIndex &parent
 	
 	return true;
 }
+
+void ContentListModel::clear(){
+// Delete thumbnails
+	for(auto contentModel : mList){
+		contentModel->removeThumbnail();
+	}
+	beginResetModel();
+	mList.clear();
+	endResetModel();
+}
+
 std::shared_ptr<ContentModel> ContentListModel::getContentModel(std::shared_ptr<linphone::Content> content){
 	for(auto c : mList)
 		if(c->getContent() == content)
@@ -95,6 +161,11 @@ std::shared_ptr<ContentModel> ContentListModel::getContentModel(std::shared_ptr<
 	}
 	return nullptr;
 }
+
+QList<std::shared_ptr<ContentModel>> ContentListModel::getContents(){
+	return mList;
+}
+
 void ContentListModel::updateContent(std::shared_ptr<linphone::Content> oldContent, std::shared_ptr<linphone::Content> newContent){
 	int row = 0;
 	for(auto content = mList.begin() ; content != mList.end() ; ++content, ++row){

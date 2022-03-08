@@ -27,7 +27,8 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-class ChatMessageModel;
+
+#include "components/chat-events/ChatMessageModel.hpp"
 
 class ContentModel : public QObject{
 	Q_OBJECT
@@ -67,9 +68,11 @@ public:
 	Q_INVOKABLE bool isText() const;
 	Q_INVOKABLE bool isVoiceRecording()const;
 	
-	void createThumbnail ();
+	void createThumbnail (const bool& force = false);
+	void removeThumbnail ();
+	
 	Q_INVOKABLE void downloadFile();
-	Q_INVOKABLE void openFile (bool showDirectory = false);	
+	Q_INVOKABLE void openFile (bool showDirectory = false);
 	
 	
 	QString mThumbnail;
@@ -88,6 +91,7 @@ signals:
 private:
 	std::shared_ptr<linphone::Content> mContent;
 	ChatMessageModel* mChatMessageModel;
+	ChatMessageModel::AppDataManager mAppData;	// Used if there is no Chat Message model set.
 };
 Q_DECLARE_METATYPE(std::shared_ptr<ContentModel>)
 

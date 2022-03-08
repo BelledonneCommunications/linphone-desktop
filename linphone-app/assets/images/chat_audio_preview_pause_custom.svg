@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="chat_audio_pause.svg"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     id="namedview10"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="5.3231707"
+     inkscape:cx="28.460481"
+     inkscape:cy="64.623139"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g6"
+     transform="scale(0.96277665,0.97560976)">
+    <g
+       fill="#444444"
+       id="g4">
+      <path
+         d="m 41.547,0 c 22.945,0 41.546,18.356 41.546,41 0,22.644 -18.6,41 -41.546,41 C 18.6,82 0,63.644 0,41 0,18.356 18.601,0 41.547,0 Z M 30.04,21.5 c -1.933,0 -3.5,1.567 -3.5,3.5 v 32 l 0.005,0.192 c 0.1,1.844 1.626,3.308 3.495,3.308 1.933,0 3.5,-1.567 3.5,-3.5 V 25 L 33.535,24.808 C 33.435,22.964 31.909,21.5 30.04,21.5 Z m 21,0 c -1.933,0 -3.5,1.567 -3.5,3.5 v 32 l 0.005,0.192 c 0.1,1.844 1.626,3.308 3.495,3.308 1.933,0 3.5,-1.567 3.5,-3.5 V 25 L 54.535,24.808 C 54.435,22.964 52.909,21.5 51.04,21.5 Z"
+         id="path2" />
+    </g>
+  </g>
+</svg>
