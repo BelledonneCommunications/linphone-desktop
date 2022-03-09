@@ -193,8 +193,8 @@ Item {
 			ActionButton {
 				id: sendButton
 				property int totalWidth: Layout.rightMargin + Layout.leftMargin + width
-				Layout.rightMargin: 15
-				Layout.leftMargin: 10
+				Layout.rightMargin: droppableTextArea.isEphemeral ? 20 : 15
+				Layout.leftMargin: droppableTextArea.isEphemeral ? 5 : 10
 				Layout.alignment: Qt.AlignVCenter
 				visible: droppableTextArea.enabled
 				isCustom: true
@@ -209,7 +209,7 @@ Item {
 					iconSize: DroppableTextAreaStyle.ephemeralTimer.iconSize
 					anchors.right:parent.right
 					anchors.bottom : parent.bottom
-					anchors.rightMargin:-10
+					anchors.rightMargin:-20
 				}
 			}
 		}

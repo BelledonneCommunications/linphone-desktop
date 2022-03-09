@@ -33,8 +33,16 @@ if (POLICY CMP0079)
   cmake_policy(SET CMP0079 NEW)
 endif ()
 
-set(LINPHONE_QML_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../ui")
-
+set(LINPHONE_QML_DIR "WORK/qml_files/ui")
+set(QT_PATH "${Qt5Core_DIR}/../../..")
+install(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" \"-E\" \"copy_directory\" \"${CMAKE_CURRENT_SOURCE_DIR}/../../ui\" \"${LINPHONE_QML_DIR}\" WORKING_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/..\")")
+if(NOT ENABLE_APP_WEBVIEW)
+	set(RM_COMMAND "rm")
+	if(CMAKE_VERSION VERSION_LESS 3.17)
+		set(RM_COMMAND "remove")
+	endif()
+	install(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" \"-E\" \"${RM_COMMAND}\" \"-f\" \"${LINPHONE_QML_DIR}/views/App/Main/Assistant/CreateAppSipAccountWithWebView.qml\" WORKING_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/..\")")
+endif()
 # ==============================================================================
 # Build package version.
 # ==============================================================================
@@ -147,8 +155,10 @@ if (WIN32)
 		LIBRARY DESTINATION "${LIBDIR}"
 		RUNTIME DESTINATION "${LIBDIR}"
 		)
+#Workaround windeployqt bug on webview plugin : folder "webview" can be in bin/ where it should be in bin/plugins. Else, we got "Webview plugin not found" => use of --plugindir
+	install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}.exe\" --qmldir=${LINPHONE_QML_DIR} --plugindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/plugins --compiler-runtime)")# -verbose=2)"  COMPONENT binary_application)
 
-	install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}.exe\" -qmldir=${LINPHONE_QML_DIR} --compiler-runtime)")# -verbose=2)"  COMPONENT binary_application)
+
 #On Windows, OpenLDAP couldn't be build with static libraries. Add them in installation for deployment.
 	find_program(MSYS2_PROGRAM
 		NAMES msys2_shell.cmd
@@ -216,6 +226,7 @@ elseif (APPLE)
   if (NOT DEPLOYQT_PROGRAM)
       message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
   endif()
+  
   install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip )")
   
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
@@ -296,6 +307,10 @@ else()# Not Windows and Apple
 		LIBRARY DESTINATION "${LIBDIR}"
 		RUNTIME DESTINATION "${LIBDIR}"
 		)
+# WEBVIEW
+	if(ENABLE_APP_WEBVIEW)
+		install(FILES "${QT_PATH}/plugins/webview/libqtwebview_webengine.so" DESTINATION "plugins/webview")	#Workaround : linuxdeploy doesn't deploy it
+	endif()
 endif ()
 
 
@@ -376,6 +391,34 @@ if(${ENABLE_APP_PACKAGING})
 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-win32")
 		string(COMPARE EQUAL ${CPACK_GENERATOR} "NSIS" IS_NSIS)
 		if (${IS_NSIS})
+			find_program(NSIS_PROGRAM makensis)
+			if(NOT NSIS_PROGRAM)
+				if(MSVC)
+					set(MSVC_ARCH ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID})# ${MSVC_ARCH} MATCHES "X64"
+					string(TOUPPER ${MSVC_ARCH} MSVC_ARCH)
+					if(${MSVC_ARCH} MATCHES "X64")
+						set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
+						set(MINGW_TYPE "mingw64")
+					else()
+						set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
+						set(MINGW_TYPE "mingw32")
+					endif()
+				elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
+					set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
+					set(MINGW_TYPE "mingw64")
+				else()
+					set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
+					set(MINGW_TYPE "mingw32")
+				endif()
+				find_program(MSYS2_PROGRAM
+					NAMES msys2_shell.cmd
+					HINTS "C:/msys64/"
+				)
+				message(STATUS "Installing windows tools for nsis")
+				execute_process(
+					COMMAND "${MSYS2_PROGRAM}" "-${MINGW_TYPE}" "-here" "-full-path" "-defterm" "-shell" "sh" "-l" "-c" "pacman -Sy ${MINGW_PACKAGE_PREFIX}nsis --noconfirm  --needed"
+				)
+			endif()
 			set(PACKAGE_EXT "exe")
 			# Use magic `NSIS.template.in` template from the current source directory to force uninstallation
 			# and ensure that linphone is not running before installation.

@@ -215,7 +215,11 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
     shared_ptr<linphone::Address> address = factory->createAddress(
       Utils::appStringToCoreString(QStringLiteral("sip:%1").arg(domain))
     );
-
+	if(!address) {
+		qWarning() << QStringLiteral("Unable to create address from domain `%1`.")
+			.arg(domain);
+		return false;
+	}
     const QString &transport(map["transport"].toString());
     if (!transport.isEmpty())
       address->setTransport(Utils::stringToTransportType(transport));

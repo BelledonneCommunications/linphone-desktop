@@ -124,15 +124,17 @@ ColumnLayout {
 			Component.onCompleted: {
 				insert(0, {
 						   $text: qsTr('createAppSipAccount'),
-						   $view: 'CreateAppSipAccount',
+						   $view: SettingsModel.useWebview() ? 'CreateAppSipAccountWithWebView' : 'CreateAppSipAccount',
 						   $viewType: 'CreateAppSipAccount',
-						   $props:{defaultUrl: SettingsModel.assistantRegistrationUrl, defaultLogoutUrl:SettingsModel.assistantLogoutUrl, configFilename: 'create-app-sip-account.rc'}
+						   $props: SettingsModel.useWebview() ? {defaultUrl: SettingsModel.assistantRegistrationUrl, defaultLogoutUrl:SettingsModel.assistantLogoutUrl, configFilename: 'create-app-sip-account.rc'}
+																: {}
 					   })
 				append({
 						   $text: qsTr('useAppSipAccount'),
-						   $view: 'CreateAppSipAccount',
+						   $view: SettingsModel.useWebview() ? 'CreateAppSipAccountWithWebView' : 'UseAppSipAccount',
 						   $viewType: 'UseAppSipAccount',
-						   $props:{defaultUrl: SettingsModel.assistantLoginUrl, defaultLogoutUrl:SettingsModel.assistantLogoutUrl, configFilename: 'use-app-sip-account.rc'}
+						   $props: SettingsModel.useWebview() ? {defaultUrl: SettingsModel.assistantLoginUrl, defaultLogoutUrl:SettingsModel.assistantLogoutUrl, configFilename: 'use-app-sip-account.rc'}
+																: {}
 					   })
 				append({
 						   $text: qsTr('useOtherSipAccount'),

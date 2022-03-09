@@ -22,10 +22,12 @@
 # Arguments : 
 #	$1 = Executable Name
 #	$2 = Output Filename
-#	$3 = Key of the code sign (optional but mendatory if code signing)
-#	$4 = Passphrase of the code sign (Optional)
+#	$3 = Qt root path (eg. "~/Qt/5.15.2/gcc_64")
+#	$4 = Key of the code sign (optional but mendatory if code signing)
+#	$5 = Passphrase of the code sign (Optional)
 
 APP_NAME="$1"
+QT_PATH="$3"
 
 BIN_SOURCE_DIR="OUTPUT/"
 
@@ -45,6 +47,8 @@ rm -rf "${WORK_DIR}/AppDir/usr/lib64"
 mkdir -p "${WORK_DIR}/AppDir/usr/lib"
 cp -f "${BIN_SOURCE_DIR}/lib"/libsoci_sqlite3* "${WORK_DIR}/AppDir/usr/lib/"
 cp -f "${BIN_SOURCE_DIR}/lib"/libapp-plugin* "${WORK_DIR}/AppDir/usr/lib/"
+cp -f "${BIN_SOURCE_DIR}/lib64"/libsoci_sqlite3* "${WORK_DIR}/AppDir/usr/lib/"
+cp -f "${BIN_SOURCE_DIR}/lib64"/libapp-plugin* "${WORK_DIR}/AppDir/usr/lib/"
 
 if [ -d "${BIN_SOURCE_DIR}/lib64/mediastreamer" ]; then
 	mkdir -p "${WORK_DIR}/AppDir/usr/plugins/"
@@ -70,11 +74,14 @@ else
 	chmod +x "${WORK_DIR}/AppBin/linuxdeploy-plugin-qt-x86_64.AppImage"
 fi
 
-
+###########################################################################################
 
 export QML_SOURCES_PATHS=${QML_SOURCES_PATHS}:${WORK_DIR}/..
+export LD_LIBRARY_PATH=${QT_PATH}/lib
+#export EXTRA_QT_PLUGINS=webenginecore;webview;webengine
+
 echo "-- Generating AppDir for AppImage"
-if [ -z "$3" ]; then
+if [ -z "$4" ]; then
 	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
 else
 	if [ -f "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage" ]; then
@@ -86,10 +93,10 @@ else
 	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
 	#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/${APP_NAME} --output appimage --desktop-file=${WORK_DIR}/app/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/${APP_NAME}.svg
 	echo "-- Code Signing of AppImage"
-	if [ -z "$4" ]; then
-		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $3
+	if [ -z "$5" ]; then
+		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $4
 	else
-		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $3 --sign-args "--pinentry-mode loopback --passphrase $4"
+		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $4 --sign-args "--pinentry-mode loopback --passphrase $5"
 	fi
 fi
 

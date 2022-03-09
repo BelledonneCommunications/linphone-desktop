@@ -24,11 +24,18 @@ Item {
 	
 	default property alias _content: content.data
 	property alias contentItem: content
+
+	property int decorationHeight: title.implicitHeight + title.anchors.topMargin
+									+description.implicitHeight + description.anchors.topMargin
+									+content.anchors.topMargin
+									+buttons.implicitHeight+AssistantAbstractViewStyle.info.spacing
 	
 	// ---------------------------------------------------------------------------
 	
 	height: (maximized?stack.height:AssistantAbstractViewStyle.content.height)
 	width: (maximized?stack.width:AssistantAbstractViewStyle.content.width)
+	anchors.horizontalCenter: maximized || !parent? undefined : parent.horizontalCenter
+	anchors.verticalCenter: maximized || !parent? undefined : parent.verticalCenter
 	
 	// ---------------------------------------------------------------------------
 	// Info.

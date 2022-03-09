@@ -38,14 +38,7 @@ endforeach()
 if(ENABLE_BUILD_VERBOSE)
 	message("User Args : ${USER_ARGS}")
 endif()
-if(WIN32)
-	if(NOT ${CMAKE_GENERATOR} MATCHES "Ninja")
-		if(NOT CMAKE_GENERATOR_PLATFORM)
-			set(CMAKE_GENERATOR_PLATFORM "Win32")
-			message(STATUS "Setting Platform to ${CMAKE_GENERATOR_PLATFORM}")
-		endif()
-	endif()
-elseif( APPLE )
+if( APPLE )
 	if( NOT CMAKE_OSX_DEPLOYMENT_TARGET)
 		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
 	endif()
@@ -117,6 +110,8 @@ option(ENABLE_CONSOLE_UI "Turn on or off compilation of console interface." NO)
 
 option(ENABLE_APP_LICENSE "Enable the license in packages." YES)
 
+#Webview is not fully supported because of deployments. Used for subscription.
+option(ENABLE_APP_WEBVIEW "Enable webviews." NO)
 
 
 
@@ -144,6 +139,7 @@ list(APPEND APP_OPTIONS "-DENABLE_CONSOLE_UI=${ENABLE_CONSOLE_UI}")
 list(APPEND APP_OPTIONS "-DENABLE_VIDEO=${ENABLE_VIDEO}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_LICENSE=${ENABLE_APP_LICENSE}")
 list(APPEND APP_OPTIONS "-DENABLE_LDAP=YES")
+list(APPEND APP_OPTIONS "-DENABLE_APP_WEBVIEW=${ENABLE_APP_WEBVIEW}")
 
 
 	

@@ -7,6 +7,11 @@
         <source>ok</source>
         <translation>TAMAM</translation>
     </message>
+    <message>
+        <source>aboutTranslation</source>
+        <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
@@ -470,7 +475,6 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation>
             <numerusform>%1 yazıyor…</numerusform>
-            <numerusform>%1 yazıyor…</numerusform>
         </translation>
     </message>
     <message>
@@ -572,13 +576,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <source>nMinute</source>
         <translation>
             <numerusform>%1 dakika</numerusform>
-            <numerusform>%1 dakika</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <translation>
-            <numerusform>%1 saat</numerusform>
             <numerusform>%1 saat</numerusform>
         </translation>
     </message>
@@ -586,13 +588,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <source>nDay</source>
         <translation>
             <numerusform>%1 gün</numerusform>
-            <numerusform>%1 gün</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <translation>
-            <numerusform>%1 hafta</numerusform>
             <numerusform>%1 hafta</numerusform>
         </translation>
     </message>
@@ -898,6 +898,25 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
 </context>
 <context>
+    <name>CreateAppSipAccount</name>
+    <message>
+        <source>createAppSipAccountDescription</source>
+        <translation>Hesabınızı nasıl oluşturmak istersiniz?</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountTitle</source>
+        <translation>%1 HESABI OLUŞTUR</translation>
+    </message>
+    <message>
+        <source>withPhoneNumber</source>
+        <translation>TELEFON NUMARASIYLA</translation>
+    </message>
+    <message>
+        <source>withEmailAddress</source>
+        <translation>E-POSTA ADRESİYLE</translation>
+    </message>
+</context>
+<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
@@ -1019,28 +1038,28 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <source>nMinute</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 dakika</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 saat</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 gün</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 hafta</numerusform>
         </translation>
     </message>
 </context>
@@ -1238,7 +1257,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yönetici</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -1381,7 +1400,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Güncellemeleri denetle</translation>
     </message>
 </context>
 <context>
@@ -1401,7 +1420,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Güncellemeleri denetle</translation>
     </message>
 </context>
 <context>
@@ -1453,7 +1472,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toplantı tabanlı konuşma odası oluşturmak için hesap ayarlarınızda toplantı URI&apos;si belirlemelisiniz.</translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
@@ -1489,7 +1508,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yönetici</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -2600,6 +2619,16 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>minimalTimelineFilterLabel</source>
+        <extracomment>&apos;Minimal Timeline filter&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimalTimelineFilterTooltip</source>
+        <extracomment>&apos;Show a minimal version of what to display in timeline.&apos; :</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -2799,6 +2828,11 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>timelineFilterConferences</source>
+        <extracomment>&apos;Conferences&apos; : Filter item. Selecting it will show all conferences.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccount</name>
@@ -2850,6 +2884,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
+        <extracomment>&apos;Use&apos; : Popup confirmation for a form</extracomment>
         <translation>KULLAN</translation>
     </message>
     <message>
@@ -2879,6 +2914,26 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addOtherSipAccountError</source>
         <translation>Bu hesap eklenemiyor.</translation>
+    </message>
+    <message>
+        <source>understandAction</source>
+        <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warningFeatures</source>
+        <extracomment>&apos;Some features require a Linphone account, such as group messaging or ephemeral messaging.&apos; : Warning text about features.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warningThirdParty</source>
+        <extracomment>&apos;These features are hidden when you register with a third party SIP account.&apos; : Warning text for using third party account.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warningContact</source>
+        <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

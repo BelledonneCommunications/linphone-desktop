@@ -18,14 +18,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "config.h"
+
 #include <QtGlobal>
 #include <QDirIterator>
 #include <QFontDatabase>
 #include <QMessageBox>
 #include <QQuickStyle>
+#ifdef ENABLE_APP_WEBVIEW
 #include <QtWebView>
+#endif
 
-#include "config.h"
 #include "gitversion.h"
 
 #include "AppController.hpp"
@@ -51,11 +54,15 @@ AppController::AppController (int &argc, char *argv[]) {
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
+#ifdef ENABLE_APP_WEBVIEW
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
 	mApp = new App(argc, argv);
 	QtWebView::initialize();
 #else
 	QtWebView::initialize();
+	mApp = new App(argc, argv);
+#endif
+#else
 	mApp = new App(argc, argv);
 #endif
 	// ---------------------------------------------------------------------------

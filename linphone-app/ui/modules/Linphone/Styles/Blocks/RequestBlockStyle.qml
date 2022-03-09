@@ -8,7 +8,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'RequestBlock'
-	property int height: 60
+	property int height: 80
 	
 	property QtObject error: QtObject {
 		property color color: ColorsList.add(sectionName+'_error', 'error').color

@@ -1,0 +1,5 @@
+<RCC>
+	<qresource prefix="/">
+		<file>ui/views/App/Main/Assistant/CreateAppSipAccountWithWebView.qml</file>
+	</qresource>
+</RCC>

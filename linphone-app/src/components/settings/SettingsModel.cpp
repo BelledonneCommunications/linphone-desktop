@@ -26,6 +26,8 @@
 #include <cstdlib>
 #include <cmath>
 
+#include "config.h"
+
 #include "app/App.hpp"
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
@@ -163,6 +165,14 @@ void SettingsModel::setAssistantSupportsPhoneNumbers (bool status) {
 	emit assistantSupportsPhoneNumbersChanged(status);
 }
 
+bool SettingsModel::useWebview() const{
+#ifdef ENABLE_APP_WEBVIEW
+	return true;
+#else
+	return false;
+#endif
+}
+
 QString SettingsModel::getAssistantRegistrationUrl () const {
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "assistant_registration_url", Constants::DefaultAssistantRegistrationUrl));
 }
@@ -195,8 +205,11 @@ bool SettingsModel::isCguAccepted () const{
 }
 
 void SettingsModel::acceptCgu(const bool accept){
-	mConfig->setInt(UiSection, "read_and_agree_terms_and_privacy", accept);
-	emit cguAcceptedChanged(accept);
+	bool oldAccept = isCguAccepted();
+	if( oldAccept != accept){
+		mConfig->setInt(UiSection, "read_and_agree_terms_and_privacy", accept);
+		emit cguAcceptedChanged(accept);
+	}
 }
 
 // =============================================================================
@@ -1361,11 +1374,7 @@ bool SettingsModel::getShowStartVideoCallButton ()const{
 }
 
 bool SettingsModel::isMipmapEnabled() const{
-#ifdef __APPLE__
-	return !!mConfig->getInt(UiSection, "mipmap_enabled", 1);
-#else
 	return !!mConfig->getInt(UiSection, "mipmap_enabled", 0);
-#endif
 }
 
 void SettingsModel::setMipmapEnabled(const bool& enabled){

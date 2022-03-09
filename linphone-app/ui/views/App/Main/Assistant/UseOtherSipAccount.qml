@@ -13,10 +13,8 @@ Item{
 	AssistantAbstractView {
 		id: mainItem
 		mainAction: requestBlock.execute
-		
-		mainActionEnabled: username.text.length &&
-						   sipDomain.text.length &&
-						   password.text.length
+		property bool isValid: false
+		mainActionEnabled: mainItem.showWarning || isValid
 		//: 'I understand' : Popup confirmation for a warning
 		mainActionLabel: showWarning ? qsTr('understandAction').toUpperCase()
 		//: 'Use' : Popup confirmation for a form
@@ -24,29 +22,28 @@ Item{
 		
 		title: qsTr('useOtherSipAccountTitle')
 		
-		width: AssistantAbstractViewStyle.content.width
-		height: AssistantAbstractViewStyle.content.height
+		width: mainStack.currentItem.implicitWidth
+		height: mainStack.currentItem.implicitHeight 
+									+ (requestBlock.implicitHeight > 0 ? requestBlock.implicitHeight : 0)
+									+ mainItem.decorationHeight
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.verticalCenter: parent.verticalCenter
 		
 		property bool showWarning : true
-		
 		// ---------------------------------------------------------------------------
 		
 		StackView {
 			id: mainStack
-			anchors.fill: parent.contentItem
-			width: AssistantAbstractViewStyle.content.width
-			height: AssistantAbstractViewStyle.content.height
+			width: currentItem.implicitWidth>0 ? currentItem.implicitWidth : currentItem.width
+			height: currentItem.implicitHeight>0 ? currentItem.implicitHeight : currentItem.height
 			initialItem: warningComponent
 		}
 		Component{
 			id: warningComponent
-			Column{
+				Column{
 				spacing: UseAppSipAccountStyle.warningBlock.spacing
-				anchors.fill: parent.contentItem
-				
-				Text {
+				width: AssistantAbstractViewStyle.content.width
+					Text {
 					elide: Text.ElideRight
 					font.pointSize: UseAppSipAccountStyle.warningBlock.pointSize
 					
@@ -100,18 +97,28 @@ Item{
 						cursorShape: parent.hoveredLink
 									 ? Qt.PointingHandCursor
 									 : Qt.IBeamCursor
-					}	
+					}
 				}
 			}
-			
 		}
+			
 		Component {
 			id: formComponent
 			Column {
-				anchors.fill: parent.contentItem
 				width: AssistantAbstractViewStyle.content.width
-				height: AssistantAbstractViewStyle.content.height
+				property bool isValid: username.text.length &&
+								   sipDomain.text.length &&
+								   password.text.length
+				onIsValidChanged: mainItem.isValid = isValid
 				
+				property alias usernameText: username.text
+				property alias displayNameText: displayName.text
+				property alias sipDomainText: sipDomain.text
+				property alias passwordText: password.text
+				function getTransport(){
+					return transport.model[transport.currentIndex]
+				}
+					
 				Form {
 					orientation: Qt.Vertical
 					width: parent.width
@@ -169,30 +176,33 @@ Item{
 		}
 		
 		RequestBlock {
-			id: requestBlock
-			width: parent.width
-			
-			action: (function () {
-				if(mainItem.showWarning) {
-					mainItem.showWarning = false
-					mainStack.replace(formComponent);
-					requestBlock.stop('')
-				}else{
-					if (!assistantModel.addOtherSipAccount({
-															   username: username.text,
-															   displayName: displayName.text,
-															   sipDomain: sipDomain.text,
-															   password: password.text,
-															   transport: transport.model[transport.currentIndex]
-														   })) {
-						requestBlock.stop(qsTr('addOtherSipAccountError'))
-					} else {
+				id: requestBlock
+				width: parent.width
+				anchors.top: mainStack.bottom
+				anchors.topMargin: UseAppSipAccountStyle.warningBlock.spacing
+				
+				action: (function () {
+					if(mainItem.showWarning) {
+						mainItem.showWarning = false
+						mainStack.push(formComponent);
 						requestBlock.stop('')
-						window.setView('Home')
+					}else{
+						if (!assistantModel.addOtherSipAccount({
+																   username: mainStack.currentItem.usernameText,
+																   displayName: mainStack.currentItem.displayNameText,
+																   sipDomain: mainStack.currentItem.sipDomainText,
+																   password: mainStack.currentItem.passwordText,
+																   transport: mainStack.currentItem.getTransport()
+															   })) {
+							requestBlock.stop(qsTr('addOtherSipAccountError'))
+						} else {
+							requestBlock.stop('')
+							window.setView('Home')
+						}
 					}
-				}
-			})
-		}
+				})
+			}
+		
 		AssistantModel {
 			id: assistantModel
 			configFilename: 'use-other-sip-account.rc'
