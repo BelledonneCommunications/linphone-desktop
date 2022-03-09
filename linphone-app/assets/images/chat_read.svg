@@ -1,78 +1,67 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="28"
-   height="28"
-   viewBox="0 0 28 28"
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
    version="1.1"
-   id="svg3746"
+   id="svg9"
    sodipodi:docname="chat_read.svg"
-   inkscape:version="0.92.1 r">
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs13" />
+  <sodipodi:namedview
+     id="namedview11"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="8.33"
+     inkscape:cx="14.82593"
+     inkscape:cy="24.84994"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg9" />
+  <title
+     id="title2">imdn_read</title>
+  <g
+     id="chat_read"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     transform="scale(3.2)">
+    <circle
+       fill="#18a7af"
+       cx="12.5"
+       cy="12.5"
+       r="12.5"
+       id="circle4" />
+    <path
+       d="m 15.271856,7.7634143 c 0.682948,-0.9544274 2.010302,-1.1745055 2.96473,-0.4915581 0.954427,0.6829475 1.174505,2.010302 0.491558,2.9647298 l -5.724458,8 c -0.794734,1.110651 -2.415777,1.194038 -3.3202804,0.170796 L 5.407863,13.570566 C 4.6305873,12.691253 4.7133047,11.348323 5.5926177,10.571047 6.4719307,9.7937712 7.8148612,9.8764887 8.592137,10.755802 l 2.508159,2.837419 z"
+       fill="#ffffff"
+       fill-rule="nonzero"
+       id="path6" />
+  </g>
   <metadata
-     id="metadata3750">
+     id="metadata830">
     <rdf:RDF>
       <cc:Work
          rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title>chat_read</dc:title>
+        <dc:title>imdn_read</dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1920"
-     inkscape:window-height="1149"
-     id="namedview3748"
-     showgrid="false"
-     inkscape:zoom="19.125"
-     inkscape:cx="7.3157147"
-     inkscape:cy="4.6227334"
-     inkscape:window-x="0"
-     inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     inkscape:current-layer="svg3746" />
-  <!-- Generator: Sketch 42 (36781) - http://www.bohemiancoding.com/sketch -->
-  <title
-     id="title3735">chat_read</title>
-  <desc
-     id="desc3737">Created with Sketch.</desc>
-  <defs
-     id="defs3739" />
-  <g
-     id="Symbols"
-     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1">
-    <g
-       id="chat_read"
-       transform="translate(2,2)">
-      <g
-         id="Group-2">
-        <circle
-           id="Oval"
-           cx="12"
-           cy="12"
-           r="12"
-           style="fill:#18a7af" />
-        <path
-           d="M 6.939201,10.995575 C 6.4836409,10.476868 5.6938419,10.425678 5.1751355,10.881238 4.6564291,11.336798 4.6052389,12.126597 5.060799,12.645304 l 5.130651,5.841823 c 0.532252,0.606028 1.490618,0.556801 1.957975,-0.100572 L 19.018774,8.7242932 C 19.41879,8.1616401 19.286946,7.3812426 18.724293,6.9812265 18.16164,6.5812105 17.381243,6.7130538 16.981226,7.2757068 l -5.953917,8.3746382 z"
-           id="chat_message_delivered"
-           inkscape:connector-curvature="0"
-           style="fill:#ffffff;fill-rule:nonzero" />
-      </g>
-    </g>
-  </g>
 </svg>

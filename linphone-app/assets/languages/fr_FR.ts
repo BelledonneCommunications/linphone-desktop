@@ -903,6 +903,25 @@ URL du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>CreateAppSipAccount</name>
+    <message>
+        <source>createAppSipAccountDescription</source>
+        <translation>Comment souhaitez-vous créer votre compte ?</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountTitle</source>
+        <translation>CRÉER UN COMPTE %1</translation>
+    </message>
+    <message>
+        <source>withPhoneNumber</source>
+        <translation>AVEC UN NUMÉRO DE TÉLÉPHONE</translation>
+    </message>
+    <message>
+        <source>withEmailAddress</source>
+        <translation>AVEC UNE ADRESSE EMAIL</translation>
+    </message>
+</context>
+<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>
@@ -2611,6 +2630,16 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
         <translation>Lorsque les images sont rétrécies, un filtre Mipmap a une meilleure qualité visuelle par rapport à un lissage standard mais nécessite plus de calculs lors de l&apos;initialisation des images et pendant le rendu.</translation>
     </message>
+    <message>
+        <source>minimalTimelineFilterLabel</source>
+        <extracomment>&apos;Minimal Timeline filter&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimalTimelineFilterTooltip</source>
+        <extracomment>&apos;Show a minimal version of what to display in timeline.&apos; :</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -2809,6 +2838,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>timelineFilterNoEphemerals</source>
         <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
         <translation>Sans éphémères</translation>
+    </message>
+    <message>
+        <source>timelineFilterConferences</source>
+        <extracomment>&apos;Conferences&apos; : Filter item. Selecting it will show all conferences.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

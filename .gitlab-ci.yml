@@ -41,8 +41,8 @@ include:
   #- '.gitlab-ci-files/job-linux-desktop-debian8.yml'   #Removed as there is 5.10 and not at least 5.12
   - '.gitlab-ci-files/job-linux-desktop-debian9.yml'
 ##  - '.gitlab-ci-files/job-linux-desktop-debian10.yml'
-  - '.gitlab-ci-files/job-linux-desktop-ubuntu-rolling.yml'
-  - '.gitlab-ci-files/job-linux-desktop-archlinux-latest.yml'
+#  - '.gitlab-ci-files/job-linux-desktop-ubuntu-rolling.yml'	#Removed as there is no QtWebengine in image
+#  - '.gitlab-ci-files/job-linux-desktop-archlinux-latest.yml'	#Removed as there is no QtWebengine in image
 #  - '.gitlab-ci-files/job-linux-desktop-centos7.yml'	#QtWebengine cannot be build (support for C++14 is not found in configuration)
   - '.gitlab-ci-files/job-windows-desktop.yml'
   - '.gitlab-ci-files/job-macosx-desktop.yml'

@@ -96,12 +96,17 @@ if( WIN32)
 endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network Test WebView)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network Test)
+if(ENABLE_APP_WEBVIEW)
+	list(APPEND QT5_PACKAGES WebView WebEngine WebEngineCore)
+	add_definitions(-DENABLE_WEBVIEW)
+endif()
 if (UNIX AND NOT APPLE)
 	list(APPEND QT5_PACKAGES DBus)
 endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech)
 set(CMAKE_AUTOMOC ON)
+
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
@@ -378,6 +383,9 @@ else ()
 endif ()
 
 set(QRC_RESOURCES resources.qrc)
+if(ENABLE_APP_WEBVIEW)
+	set(QRC_WEBVIEW_RESOURCES webview_resources.qrc)
+endif()
 
 #qt5_add_big_resources(QRC_BIG_RESOURCES resources.qrc)	#Use this macro if resources size is too high
 
@@ -409,6 +417,10 @@ PREPEND(PLUGIN_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
 
 set(QML_SOURCES)
 file(STRINGS ${QRC_RESOURCES} QRC_RESOURCES_CONTENT)
+if(ENABLE_APP_WEBVIEW)
+	file(STRINGS ${QRC_WEBVIEW_RESOURCES} QRC_WEBVIEW_RESOURCES_CONTENT)
+	list(APPEND QRC_RESOURCES_CONTENT ${QRC_WEBVIEW_RESOURCES_CONTENT})
+endif()
 foreach (line ${QRC_RESOURCES_CONTENT})
 	set(result)
 	string(REGEX REPLACE
@@ -490,7 +502,7 @@ if(WIN32)
 endif()
 
 add_library(${APP_PLUGIN} SHARED ${PLUGIN_SOURCES} ${PLUGIN_HEADERS})
-add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES} ${PLUGIN_HEADERS})#Need to add Headers to resolve moc Qt symbols
+add_library(${APP_LIBRARY} OBJECT ${SOURCES} ${HEADERS} ${QML_SOURCES} ${QRC_RESOURCES} ${QRC_WEBVIEW_RESOURCES} ${PLUGIN_HEADERS})#Need to add Headers to resolve moc Qt symbols
 
 if (WIN32)
 	add_executable(${TARGET_NAME} WIN32 $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES} ${RC_FILE})
@@ -554,7 +566,10 @@ foreach (package ${QT5_PACKAGES})
 	# `qt5_create_translation` is provided from `LinguistTools` package.
 	# But the `Qt5::LinguistTools` lib does not exist. Remove it.
 	if (NOT (${package} STREQUAL LinguistTools))
-		list(APPEND LIBRARIES ${Qt5${package}_LIBRARIES})
+	#	list(APPEND LIBRARIES ${Qt5${package}_LIBRARIES})
+		target_link_libraries(${APP_LIBRARY} Qt5::${package})
+		target_link_libraries(${APP_PLUGIN} Qt5::${package})
+		target_link_libraries(${TARGET_NAME} Qt5::${package})
 	endif ()
 endforeach ()
 
@@ -588,8 +603,8 @@ target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
 if(WIN32)
-	find_library(LDAP_LIBRARIES NAMES ldap libldap HINTS "${LINPHONE_OUTPUT_DIR}/lib")
-	find_library(LBER_LIBRARIES NAMES lber liblber HINTS "${LINPHONE_OUTPUT_DIR}/lib")
+	find_library(LDAP_LIBRARIES NAMES ldap libldap HINTS "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
+	find_library(LBER_LIBRARIES NAMES lber liblber HINTS "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
 	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES} ${LBER_LIBRARIES})
 endif()
 
@@ -604,9 +619,9 @@ set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 
 add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/include/" "${CMAKE_INSTALL_PREFIX}/include/")
-add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_INSTALL_PREFIX}/lib/")
-add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/lib/")
-add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_LINKER_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/lib/")
+add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
+add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
+add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_LINKER_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
 #add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/include/LinphoneApp/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/")
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/" COPYONLY)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ".")

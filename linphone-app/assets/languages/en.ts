@@ -903,6 +903,25 @@ Server URL not configured.</translation>
     </message>
 </context>
 <context>
+    <name>CreateAppSipAccount</name>
+    <message>
+        <source>createAppSipAccountDescription</source>
+        <translation>How would you like to create your account?</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountTitle</source>
+        <translation>CREATE A %1 ACCOUNT</translation>
+    </message>
+    <message>
+        <source>withPhoneNumber</source>
+        <translation>WITH A PHONE NUMBER</translation>
+    </message>
+    <message>
+        <source>withEmailAddress</source>
+        <translation>WITH AN EMAIL ADDRESS</translation>
+    </message>
+</context>
+<context>
     <name>CreateAppSipAccountWithEmail</name>
     <message>
         <source>createAppSipAccountTitle</source>

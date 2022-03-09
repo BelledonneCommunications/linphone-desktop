@@ -36,7 +36,7 @@ Item {
 		mipmap: SettingsModel.mipmapEnabled
 		cache: Images.areReadOnlyImages	
 		asynchronous: true
-		
+		smooth: true
 		//anchors.centerIn: parent
 		anchors.fill: parent
 		
@@ -45,8 +45,8 @@ Item {
 		
 		fillMode: Image.PreserveAspectFit
 		source: Utils.resolveImageUri(icon)
-		sourceSize.width: iconWidth > 0 ? iconWidth : iconSize
-		sourceSize.height: iconHeight > 0 ? iconHeight : iconSize
+		sourceSize.width:  (iconWidth > 0 ? iconWidth : iconSize)
+		sourceSize.height: ( iconHeight > 0 ? iconHeight : iconSize)
 		layer {
 			enabled: image.colorOverwriteEnabled
 			effect: ColorOverlay {

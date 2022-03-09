@@ -246,6 +246,8 @@ public:
 	
 	bool getAssistantSupportsPhoneNumbers () const;
 	void setAssistantSupportsPhoneNumbers (bool status);
+	
+	Q_INVOKABLE bool useWebview() const;
 
 	QString getAssistantRegistrationUrl () const;
 	void setAssistantRegistrationUrl (QString url);

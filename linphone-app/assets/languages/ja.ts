@@ -7,6 +7,11 @@
         <source>ok</source>
         <translation>OK</translation>
     </message>
+    <message>
+        <source>aboutTranslation</source>
+        <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
@@ -890,6 +895,25 @@
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>CreateAppSipAccount</name>
+    <message>
+        <source>createAppSipAccountDescription</source>
+        <translation>どのようにアカウントを作成しますか？</translation>
+    </message>
+    <message>
+        <source>createAppSipAccountTitle</source>
+        <translation>%1アカウントを作成する</translation>
+    </message>
+    <message>
+        <source>withPhoneNumber</source>
+        <translation>電話番号を利用</translation>
+    </message>
+    <message>
+        <source>withEmailAddress</source>
+        <translation>メールアドレスを利用</translation>
     </message>
 </context>
 <context>
@@ -2595,6 +2619,16 @@
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>minimalTimelineFilterLabel</source>
+        <extracomment>&apos;Minimal Timeline filter&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>minimalTimelineFilterTooltip</source>
+        <extracomment>&apos;Show a minimal version of what to display in timeline.&apos; :</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -2794,6 +2828,11 @@
         <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>timelineFilterConferences</source>
+        <extracomment>&apos;Conferences&apos; : Filter item. Selecting it will show all conferences.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccount</name>
@@ -2845,6 +2884,7 @@
     <name>UseOtherSipAccount</name>
     <message>
         <source>confirmAction</source>
+        <extracomment>&apos;Use&apos; : Popup confirmation for a form</extracomment>
         <translation>使う</translation>
     </message>
     <message>
@@ -2874,6 +2914,26 @@
     <message>
         <source>addOtherSipAccountError</source>
         <translation>このアカウントを追加出来ませんでした。</translation>
+    </message>
+    <message>
+        <source>understandAction</source>
+        <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warningFeatures</source>
+        <extracomment>&apos;Some features require a Linphone account, such as group messaging or ephemeral messaging.&apos; : Warning text about features.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warningThirdParty</source>
+        <extracomment>&apos;These features are hidden when you register with a third party SIP account.&apos; : Warning text for using third party account.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>warningContact</source>
+        <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

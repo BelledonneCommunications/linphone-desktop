@@ -77,6 +77,9 @@ Row {
 							id: thumbnailImageSource
 							mipmap: SettingsModel.mipmapEnabled
 							source: mainRow.contentModel.thumbnail
+							fillMode: Image.PreserveAspectFit
+							sourceSize.width: 100
+							sourceSize.height: 100
 						}
 					}
 					

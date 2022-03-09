@@ -248,9 +248,9 @@ QtObject {
 			
 			property QtObject outgoing: QtObject {
 				property color backgroundColor: ColorsList.add(sectionName+'_outgoing_bg', 'e').color
-				property int areaSize: 16
-				property int busyIndicatorSize: 16
-				property int sendIconSize: 12
+				property int areaSize: 12
+				property int busyIndicatorSize: 12
+				property int sendIconSize: 60
 				
 				property QtObject text: QtObject {
 					property color color: ColorsList.add(sectionName+'_outgoing_text', 'd').color
