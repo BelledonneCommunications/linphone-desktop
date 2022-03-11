@@ -196,6 +196,7 @@ public:
 	bool canHandleParticipants() const;
 	bool getIsRemoteComposing () const;
 	bool isEntriesLoading() const;
+	bool isBasic() const;
 	ParticipantListModel* getParticipants() const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();

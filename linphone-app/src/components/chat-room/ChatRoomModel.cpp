@@ -532,6 +532,10 @@ bool ChatRoomModel::isEntriesLoading() const{
 	return mEntriesLoading;
 }
 
+bool ChatRoomModel::isBasic() const{
+	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic);
+}
+
 std::shared_ptr<linphone::ChatRoom> ChatRoomModel::getChatRoom(){
 	return mChatRoom;
 }
@@ -699,29 +703,40 @@ void ChatRoomModel::updateParticipants(const QVariantList& participants){
 // -----------------------------------------------------------------------------
 
 void ChatRoomModel::sendMessage (const QString &message) {
-	shared_ptr<linphone::ChatMessage> _message;
+	std::list<shared_ptr<linphone::ChatMessage> > _messages;
+	bool isBasicChatRoom = isBasic();
 	if(mReplyModel && mReplyModel->getChatMessage()) {
-		_message = mChatRoom->createReplyMessage(mReplyModel->getChatMessage());
+		_messages.push_back(mChatRoom->createReplyMessage(mReplyModel->getChatMessage()));
 	}else
-		 _message= mChatRoom->createEmptyMessage();
+		 _messages.push_back(mChatRoom->createEmptyMessage());
 	auto recorder = CoreManager::getInstance()->getRecorderManager();
 	if(recorder->haveVocalRecorder()) {
 		recorder->getVocalRecorder()->stop();
 		auto content = recorder->getVocalRecorder()->getRecorder()->createContent();
 		if(content) {
-			_message->addContent(content);
+			_messages.back()->addContent(content);
 		}
 	}
 	auto fileContents = CoreManager::getInstance()->getChatModel()->getContentListModel()->getContents();
 	for(auto content : fileContents){
-		_message->addFileContent(content->getContent());
+		if(isBasicChatRoom && _messages.back()->getContents().size() > 0)	// Basic chat rooms don't support multipart
+			_messages.push_back(mChatRoom->createEmptyMessage());
+		_messages.back()->addFileContent(content->getContent());
 	}
 	if(!message.isEmpty()) {
-		_message->addUtf8TextContent(message.toUtf8().toStdString());
+		if(isBasicChatRoom && _messages.back()->getContents().size() > 0)	// Basic chat rooms don't support multipart
+			_messages.push_back(mChatRoom->createEmptyMessage());
+		_messages.back()->addUtf8TextContent(message.toUtf8().toStdString());
 	}
-	if(_message->getContents().size() > 0){// Have something to send
-		_message->send();
-		emit messageSent(_message);
+	bool sent = false;
+	for(auto itMessage = _messages.begin() ; itMessage != _messages.end() ; ++itMessage) {
+		if((*itMessage)->getContents().size() > 0){// Have something to send
+			(*itMessage)->send();
+			emit messageSent((*itMessage));
+			sent = true;
+		}
+	}
+	if(sent){
 		setReply(nullptr);
 		if(recorder->haveVocalRecorder())
 			recorder->clearVocalRecorder();
