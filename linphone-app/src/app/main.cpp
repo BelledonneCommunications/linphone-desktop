@@ -29,6 +29,9 @@
 // =============================================================================
 
 int main (int argc, char *argv[]) {
+#ifdef __APPLE__
+	qputenv("QT_ENABLE_GLYPH_CACHE_WORKAROUND", "1");	// On Mac, set this workaround to avoid glitches on M1, because of https://bugreports.qt.io/browse/QTBUG-89379
+#endif
   AppController controller(argc, argv);
 #ifdef QT_QML_DEBUG
   QQmlDebuggingEnabler enabler;
