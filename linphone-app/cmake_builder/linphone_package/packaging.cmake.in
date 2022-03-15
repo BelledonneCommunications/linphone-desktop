@@ -69,10 +69,17 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
     endif()
   endif()
   if (@PERFORM_SIGNING@)
-    execute_process(
-      COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/sign_package.bat" "@PASSPHRASE_FILE@" "@SIGNTOOL_COMMAND@" "@PFX_FILE@" "@TIMESTAMP_URL@" @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
-      RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
-    )
+    if(@PASSPHRASE_FILE@)
+        execute_process(
+            COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/sign_package.bat" "@PASSPHRASE_FILE@" "@SIGNTOOL_COMMAND@" "@PFX_FILE@" "@TIMESTAMP_URL@" @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+            RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
+        )
+    else()
+        execute_process(
+            COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/sign_package.bat" "@SIGNTOOL_COMMAND@" "@TIMESTAMP_URL@" @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+            RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
+        )
+    endif()
     if(SIGNING_RESULT)
       message(FATAL_ERROR "Failed to sign the package! ${SIGNING_RESULT} ${RESULT_VARIABLE}")
     endif()
