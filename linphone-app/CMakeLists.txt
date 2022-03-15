@@ -43,6 +43,7 @@ include(CheckCXXCompilerFlag)
 
 
 set(TARGET_NAME linphone-qt)
+set(LINPHONE_QML_DIR "WORK/qml_files/ui")
 set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS true)
 set(CMAKE_CXX_STANDARD 11)
 
@@ -623,12 +624,21 @@ add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E m
 add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
 add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_LINKER_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
 #add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/include/LinphoneApp/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/")
+
+
+
+
+
+
+
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/" COPYONLY)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ".")
 
 
 add_subdirectory(build)
 add_subdirectory(cmake_builder/linphone_package)
+
+deployqt_hack(${TARGET_NAME} ${LINPHONE_QML_DIR})
 
 
 # ------------------------------------------------------------------------------

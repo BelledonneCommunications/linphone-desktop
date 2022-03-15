@@ -33,16 +33,9 @@ if (POLICY CMP0079)
   cmake_policy(SET CMP0079 NEW)
 endif ()
 
-set(LINPHONE_QML_DIR "WORK/qml_files/ui")
+
 set(QT_PATH "${Qt5Core_DIR}/../../..")
-install(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" \"-E\" \"copy_directory\" \"${CMAKE_CURRENT_SOURCE_DIR}/../../ui\" \"${LINPHONE_QML_DIR}\" WORKING_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/..\")")
-if(NOT ENABLE_APP_WEBVIEW)
-	set(RM_COMMAND "rm")
-	if(CMAKE_VERSION VERSION_LESS 3.17)
-		set(RM_COMMAND "remove")
-	endif()
-	install(CODE "execute_process(COMMAND \"${CMAKE_COMMAND}\" \"-E\" \"${RM_COMMAND}\" \"-f\" \"${LINPHONE_QML_DIR}/views/App/Main/Assistant/CreateAppSipAccountWithWebView.qml\" WORKING_DIRECTORY \"${CMAKE_INSTALL_PREFIX}/..\")")
-endif()
+
 # ==============================================================================
 # Build package version.
 # ==============================================================================
@@ -112,10 +105,7 @@ endif ()
 # ==============================================================================
 set(APP_QT_CONF_DPI "1")
 if (WIN32)	
-	find_program(DEPLOYQT_PROGRAM windeployqt)
-	if (NOT DEPLOYQT_PROGRAM)
-		message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
-	endif ()
+	
 	file(GLOB LIB_FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/*.dll")	
 	install(FILES ${LIB_FILES} DESTINATION "${CMAKE_INSTALL_BINDIR}/")
 	file(GLOB LIB_FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/*.dll")
@@ -155,23 +145,33 @@ if (WIN32)
 		LIBRARY DESTINATION "${LIBDIR}"
 		RUNTIME DESTINATION "${LIBDIR}"
 		)
-#Workaround windeployqt bug on webview plugin : folder "webview" can be in bin/ where it should be in bin/plugins. Else, we got "Webview plugin not found" => use of --plugindir
-	install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}.exe\" --qmldir=${LINPHONE_QML_DIR} --plugindir ${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/plugins --compiler-runtime)")# -verbose=2)"  COMPONENT binary_application)
+	
+##############################
 
-
-#On Windows, OpenLDAP couldn't be build with static libraries. Add them in installation for deployment.
+	set(BIN_ARCH "win32")
+	if(MSVC)
+		set(MSVC_ARCH ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID})# ${MSVC_ARCH} MATCHES "X64"
+		string(TOUPPER ${MSVC_ARCH} MSVC_ARCH)
+		if(${MSVC_ARCH} MATCHES "X64")
+			set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
+			set(MINGW_TYPE "mingw64")
+			set(BIN_ARCH "win64")
+		else()
+			set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
+			set(MINGW_TYPE "mingw32")
+		endif()
+	elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
+		set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
+		set(MINGW_TYPE "mingw64")
+		set(BIN_ARCH "win64")
+	else()
+		set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
+		set(MINGW_TYPE "mingw32")
+	endif()
 	find_program(MSYS2_PROGRAM
 		NAMES msys2_shell.cmd
 		HINTS "C:/msys64/"
 	)
-	get_filename_component(MSYS2_PATH ${MSYS2_PROGRAM} PATH )
-	set(MSVC_ARCH ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID})# ${MSVC_ARCH} MATCHES "X64"
-	string(TOUPPER ${MSVC_ARCH} MSVC_ARCH)
-	if(${MSVC_ARCH} MATCHES "X64")
-		set(MSYS2_MINGW "mingw64")
-	else()
-		set(MSYS2_MINGW "mingw32")
-	endif()
 
 #  list(REMOVE_ITEM SHARE_CONTENT "${CMAKE_INSTALL_DATAROOTDIR}/belr" "${CMAKE_INSTALL_DATAROOTDIR}/Belr" "${CMAKE_INSTALL_DATAROOTDIR}/images" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/${APPLICATION_NAME}" "${CMAKE_INSTALL_DATAROOTDIR}/sounds")
 #  foreach (ITEM IN LISTS SHARE_CONTENT)
@@ -221,13 +221,6 @@ elseif (APPLE)
 	  )
   install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
   install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
-  
-  find_program(DEPLOYQT_PROGRAM macdeployqt)
-  if (NOT DEPLOYQT_PROGRAM)
-      message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
-  endif()
-  
-  install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip )")
   
   if (LINPHONE_BUILDER_SIGNING_IDENTITY)
    install(CODE "file(GLOB FRAMEWORKS_NAMES \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/Frameworks/*\")
@@ -386,34 +379,15 @@ if(${ENABLE_APP_PACKAGING})
 		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}")
 		message(STATUS "Set AppImage CPack generator in OUTPUT/Packages")
 	else()
+		
 		set(CPACK_GENERATOR "NSIS")
 		set(DO_GENERATOR YES)
-		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-win32")
 		string(COMPARE EQUAL ${CPACK_GENERATOR} "NSIS" IS_NSIS)
+		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-${BIN_ARCH}")
 		if (${IS_NSIS})
 			find_program(NSIS_PROGRAM makensis)
 			if(NOT NSIS_PROGRAM)
-				if(MSVC)
-					set(MSVC_ARCH ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID})# ${MSVC_ARCH} MATCHES "X64"
-					string(TOUPPER ${MSVC_ARCH} MSVC_ARCH)
-					if(${MSVC_ARCH} MATCHES "X64")
-						set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
-						set(MINGW_TYPE "mingw64")
-					else()
-						set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
-						set(MINGW_TYPE "mingw32")
-					endif()
-				elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
-					set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
-					set(MINGW_TYPE "mingw64")
-				else()
-					set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
-					set(MINGW_TYPE "mingw32")
-				endif()
-				find_program(MSYS2_PROGRAM
-					NAMES msys2_shell.cmd
-					HINTS "C:/msys64/"
-				)
+				
 				message(STATUS "Installing windows tools for nsis")
 				execute_process(
 					COMMAND "${MSYS2_PROGRAM}" "-${MINGW_TYPE}" "-here" "-full-path" "-defterm" "-shell" "sh" "-l" "-c" "pacman -Sy ${MINGW_PACKAGE_PREFIX}nsis --noconfirm  --needed"
@@ -487,3 +461,54 @@ if(${ENABLE_APP_PACKAGING})
 	install(SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/packaging.cmake")
 	include(CPack)
 endif()
+
+
+function(deployqt_hack target qml_dir)
+	find_package(Qt5 COMPONENTS Core REQUIRED)
+	get_target_property(qmake_executable Qt5::qmake IMPORTED_LOCATION)
+	get_filename_component(_qt_bin_dir "${qmake_executable}" DIRECTORY)
+#Note: CMAKE_CURRENT_SOURCE_DIR point to linphone-app because deployqt_hack is called there.
+	add_custom_command(TARGET ${target} POST_BUILD 
+		COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${CMAKE_CURRENT_SOURCE_DIR}/ui" "${qml_dir}"
+		WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/..")
+	if(NOT ENABLE_APP_WEBVIEW)
+		set(RM_COMMAND "rm")
+		if(CMAKE_VERSION VERSION_LESS 3.17)
+			set(RM_COMMAND "remove")
+		endif()
+		add_custom_command(TARGET ${target} POST_BUILD 
+			COMMAND "${CMAKE_COMMAND}" "-E" "${RM_COMMAND}" "-f" "${qml_dir}/views/App/Main/Assistant/CreateAppSipAccountWithWebView.qml"
+			WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/..")
+	endif()
+		
+	if(WIN32)
+#Windeployqt hack for CPack. WindeployQt cannot be used only with a simple 'install(CODE "execute_process' or CPack will not have all required files.
+		find_program(DEPLOYQT_PROGRAM windeployqt HINTS "${_qt_bin_dir}")
+		if (NOT DEPLOYQT_PROGRAM)
+			message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
+		endif ()
+		
+		add_custom_command(TARGET ${target} POST_BUILD
+							COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
+							COMMAND "${CMAKE_COMMAND}" -E
+								env PATH="${_qt_bin_dir}" "${DEPLOYQT_PROGRAM}"
+								--qmldir "${qml_dir}"
+								--plugindir "${CMAKE_CURRENT_BINARY_DIR}/winqt/plugins"
+								--verbose 0
+								--no-compiler-runtime
+								--dir "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
+								"$<TARGET_FILE:${target}>"
+							COMMENT "Deploying Qt..."
+							WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/.."
+		)
+		install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/winqt/" DESTINATION bin)
+		set(CMAKE_INSTALL_UCRT_LIBRARIES TRUE)
+		include(InstallRequiredSystemLibraries)
+	elseif(APPLE)
+		find_program(DEPLOYQT_PROGRAM macdeployqt HINTS "${_qt_bin_dir}")
+		if (NOT DEPLOYQT_PROGRAM)
+			message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
+		endif()
+		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${qml_dir} -no-strip )")
+	endif()
+endfunction()
