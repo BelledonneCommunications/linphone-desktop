@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New event on new messages in chat and a shortcut to go to the end of chat if last message is not shown.
 - Shortcut in Reply to message's origin.
 - Based on Linphone SDK 5.1
+- 64bits application on Windows
 
 ### Fixed
 - Simplify filtering timelines with 2 modes (minimal or exhaustive) and on 3 kind of search : security level, simple/group chats, ephemerals.
