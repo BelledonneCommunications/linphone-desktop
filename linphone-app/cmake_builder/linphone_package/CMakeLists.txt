@@ -453,7 +453,17 @@ if(${ENABLE_APP_PACKAGING})
 			# TODO: Deal with install/uninstall.nsi
 		endif ()
 		
-		if(LINPHONE_WINDOWS_SIGNING_DIR)
+		if(LINPHONE_WINDOWS_SIGN_TOOL AND LINPHONE_WINDOWS_SIGN_TIMESTAMP_URL)
+			find_program(SIGNTOOL ${LINPHONE_WINDOWS_SIGN_TOOL})
+			set(TIMESTAMP_URL ${LINPHONE_WINDOWS_SIGN_TIMESTAMP_URL})
+			if (SIGNTOOL)
+				set(SIGNTOOL_COMMAND ${SIGNTOOL})
+				message("Found requested signtool")
+				set(PERFORM_SIGNING 1)
+			else ()
+				message(STATUS "Could not find requested signtool! Code signing disabled (${LINPHONE_WINDOWS_SIGN_TOOL})")
+			endif ()
+		elseif(LINPHONE_WINDOWS_SIGNING_DIR)
 			# Sign the installer.
 			set(TIMESTAMP_URL "http://timestamp.digicert.com")
 			set(PFX_FILE "${LINPHONE_WINDOWS_SIGNING_DIR}/linphone.pfx")
