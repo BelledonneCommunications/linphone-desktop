@@ -110,7 +110,7 @@ Item {
 		if(color)
 			return color
 			else{
-				console.warn("No color defined for :"+debugVar)
+				console.warn("No color defined for :"+debugVar+ " on "+_getIcon())
 				return defaultColor
 			}
 	}

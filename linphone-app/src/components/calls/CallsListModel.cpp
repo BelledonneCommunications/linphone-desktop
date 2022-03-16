@@ -298,8 +298,13 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
 	return chatRoom != nullptr;
 }
+
 // Created, timeline that can be used
 QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const{
+	return createChatRoom(subject, securityLevel, nullptr, participants, selectAfterCreation);
+}
+
+QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& securityLevel, std::shared_ptr<linphone::Address> localAddress, const QVariantList& participants, const bool& selectAfterCreation) const{
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = selectAfterCreation;
 	QVariantMap result;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
@@ -307,11 +312,11 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	QList< std::shared_ptr<linphone::Address>> admins;
 	std::shared_ptr<TimelineModel> timeline;
 	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
-	qInfo() << "ChatRoom creation of " << subject << " at " << securityLevel << " security and with " << participants;
+	QString localAddressStr = (localAddress ? Utils::coreStringToAppString(localAddress->asStringUriOnly()) : "local");
+	qInfo() << "ChatRoom creation of " << subject << " at " << securityLevel << " security, from " << localAddressStr << " and with " << participants;
 	
 	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
 	std::list <shared_ptr<linphone::Address> > chatRoomParticipants;
-	std::shared_ptr<const linphone::Address> localAddress;
 	for(auto p : participants){
 		ParticipantModel* participant = p.value<ParticipantModel*>();
 		std::shared_ptr<linphone::Address> address;
@@ -340,12 +345,12 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	if(chatRoomParticipants.size() > 0) {
 		if(!params->groupEnabled()) {// Chat room is one-one : check if it is already exist with empty or dummy subject
 			chatRoom = core->searchChatRoom(params, localAddress
-											, localAddress
+											, nullptr
 											, chatRoomParticipants);
 			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
 			if(!chatRoom)
 				chatRoom = core->searchChatRoom(params, localAddress
-												, localAddress
+												, nullptr
 												, chatRoomParticipants);
 		}else
 			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
@@ -370,6 +375,8 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			}
 		}
 	}
+	if( !chatRoom)
+		qWarning() << "Chat room cannot be created";
 	result["created"] = (chatRoom != nullptr);
 	
 	return result;

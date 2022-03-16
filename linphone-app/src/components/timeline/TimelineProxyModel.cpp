@@ -90,6 +90,8 @@ void TimelineProxyModel::setFilterText(const QString& text){
 bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
 	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 	auto timeline = sourceModel()->data(index).value<TimelineModel*>();
+	if(!timeline || !timeline->getChatRoomModel())
+		return false;
 	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
 	bool isGroup = timeline->getChatRoomModel()->isGroupEnabled();
 	bool haveEncryption = timeline->getChatRoomModel()->haveEncryption();
