@@ -357,7 +357,8 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		bool isOutgoing = (call->getDir() == linphone::Call::Dir::Outgoing) ;
 		bool found = false;
 		auto callLog = call->getCallLog();
-		auto callLocalAddress = callLog->getLocalAddress();
+		auto callLocalAddress = callLog->getLocalAddress()->clone();
+		callLocalAddress->clean();
 		auto currentParams = call->getCurrentParams();
 		bool isEncrypted = currentParams->getMediaEncryption() != linphone::MediaEncryption::None;
 		bool createSecureChatRoom = false;
@@ -372,6 +373,7 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 			createSecureChatRoom = true;
 		}
 		participants.push_back(callLog->getRemoteAddress()->clone());
+		participants.back()->clean();// Not cleaning allows chatting to a specific device but the current design is not adapted to show them
 		auto chatRoom = core->searchChatRoom(params, callLocalAddress
 											 , nullptr//callLog->getRemoteAddress()
 											 , participants);
@@ -390,7 +392,7 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 			auto remoteAddress = callLog->getRemoteAddress()->clone();
 			remoteAddress->clean();
 			participants << Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
-			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", (createSecureChatRoom?1:0),  participants, isOutgoing);
+			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", (createSecureChatRoom?1:0),  callLocalAddress, participants, isOutgoing);
 		}
 }
 
