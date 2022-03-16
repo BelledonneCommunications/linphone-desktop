@@ -80,6 +80,10 @@ void CoreHandlers::onCallEncryptionChanged (
 	emit callEncryptionChanged(call);
 }
 
+void CoreHandlers::onCallLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog){
+	emit callLogUpdated(callLog);
+}
+
 void CoreHandlers::onCallStateChanged (
 		const shared_ptr<linphone::Core> &,
 		const shared_ptr<linphone::Call> &call,

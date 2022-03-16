@@ -20,9 +20,10 @@ Rectangle {
 	
 	property alias model: view.model
 	property string _selectedSipAddress
-	property bool showHistoryButton : true
+	property bool showHistoryButton : CoreManager.callLogsCount
 	property bool updateSelectionModels : true
 	property bool isFilterVisible: searchView.visible || showFilterView
+	property bool showFiltersButtons: view.count > 0 || timeline.isFilterVisible || timeline.model.filterFlags > 0
 	
 	// ---------------------------------------------------------------------------
 	
@@ -62,11 +63,13 @@ Rectangle {
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
-			visible:view.count > 0 || timeline.isFilterVisible || timeline.model.filterFlags > 0
+			visible: showHistoryButton || showFiltersButtons
+			//visible:view.count > 0 || timeline.isFilterVisible || timeline.model.filterFlags > 0 || CoreManager.eventCount > 0
 			
 			MouseArea{// no more showing history
 				id:showHistory
 				anchors.fill:parent
+				visible: showFiltersButtons
 				onClicked: {
 					timeline.showFilterView = !timeline.showFilterView
 				}
@@ -78,6 +81,7 @@ Rectangle {
 					Layout.preferredHeight: parent.height
 					Layout.fillWidth: true
 					Layout.leftMargin: TimelineStyle.legend.leftMargin
+					visible: showFiltersButtons
 					color: TimelineStyle.legend.color
 					font.pointSize: TimelineStyle.legend.pointSize
 					//: A title for filtering mode.
@@ -96,6 +100,7 @@ Rectangle {
 					icon: 'filter_params_custom'
 					iconSize: TimelineStyle.legend.iconSize
 					overwriteColor: TimelineStyle.legend.color
+					visible: showFiltersButtons
 					MouseArea{
 						anchors.fill:parent
 						onClicked:{
@@ -107,6 +112,7 @@ Rectangle {
 					Layout.alignment: Qt.AlignRight
 					Layout.fillHeight: true
 					Layout.preferredWidth: TimelineStyle.legend.iconSize
+					visible: showFiltersButtons
 					onClicked:{
 						searchView.visible = !searchView.visible
 					}
