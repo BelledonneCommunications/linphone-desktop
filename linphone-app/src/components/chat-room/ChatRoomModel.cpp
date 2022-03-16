@@ -337,8 +337,11 @@ void ChatRoomModel::removeAllEntries () {
 		( !standardChatEnabled || !isSecure())
 		) {
 		auto callLogs = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
+		bool haveLogs = callLogs.size() > 0;
 		for(auto callLog : callLogs)
 			core->removeCallLog(callLog);
+		if(haveLogs)
+			emit CoreManager::getInstance()->callLogsCountChanged();
 	}
 	endResetModel();
 	emit allEntriesRemoved(mSelf.lock());

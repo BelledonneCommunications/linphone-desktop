@@ -84,4 +84,5 @@ void ChatCallModel::update(){
 
 void ChatCallModel::deleteEvent(){
 	CoreManager::getInstance()->getCore()->removeCallLog(mCallLog);
+	emit CoreManager::getInstance()->callLogsCountChanged();
 }

@@ -41,6 +41,7 @@ public:
 signals:
   void authenticationRequested (const std::shared_ptr<linphone::AuthInfo> &authInfo);
   void callEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
+  void callLogUpdated(const std::shared_ptr<linphone::CallLog> &call);
   void callStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
   void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
   void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
@@ -76,6 +77,8 @@ private:
     bool on,
     const std::string &authenticationToken
   ) override;
+  
+  void onCallLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog) override;
 
   void onCallStateChanged (
     const std::shared_ptr<linphone::Core> &core,
