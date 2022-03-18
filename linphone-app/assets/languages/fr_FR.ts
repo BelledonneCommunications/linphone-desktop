@@ -10,7 +10,7 @@
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation>Contribuer aux traductions</translation>
+        <translation>Contribuer aux traductions de %1</translation>
     </message>
 </context>
 <context>
@@ -1373,8 +1373,8 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newChatRoom</source>
-        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
-        <translation>Créer une conférence</translation>
+        <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
+        <translation>Commencer une conversation</translation>
     </message>
     <message>
         <source>hideTimeline</source>
@@ -1968,17 +1968,17 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>AutoDownload</source>
         <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
-        <translation type="unfinished">Téléchargement automatique</translation>
+        <translation>Téléchargement automatique</translation>
     </message>
     <message>
         <source>autoDownloadNever</source>
         <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
-        <translation type="unfinished">Jamais</translation>
+        <translation>Jamais</translation>
     </message>
     <message>
         <source>autoDownloadAlways</source>
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
-        <translation type="unfinished">Toujours</translation>
+        <translation>Toujours</translation>
     </message>
 </context>
 <context>

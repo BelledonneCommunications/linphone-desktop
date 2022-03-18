@@ -1373,8 +1373,8 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>newChatRoom</source>
-        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
-        <translation>Abrir Conferência</translation>
+        <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
+        <translation>Iniciar uma sala de chat</translation>
     </message>
     <message>
         <source>hideTimeline</source>
