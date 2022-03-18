@@ -29,10 +29,10 @@
 
 SearchResultModel::SearchResultModel(std::shared_ptr<const linphone::Friend> linphoneFriend, std::shared_ptr<const linphone::Address> address, QObject * parent) : QObject(parent){
 	mFriend = linphoneFriend;
-	if(linphoneFriend && linphoneFriend->getAddress())
-		mAddress = linphoneFriend->getAddress()->clone();
-	else
+	if( address)
 		mAddress = address->clone();
+	else if(linphoneFriend && linphoneFriend->getAddress())
+		mAddress = linphoneFriend->getAddress()->clone();
 }
 
 QString SearchResultModel::getAddressString() const{

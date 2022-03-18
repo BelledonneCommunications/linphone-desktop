@@ -654,8 +654,10 @@ int SettingsModel::getAutoDownloadMaxSize() const{
 }
 
 void SettingsModel::setAutoDownloadMaxSize(int maxSize){
-	CoreManager::getInstance()->getCore()->setMaxSizeForAutoDownloadIncomingFiles(maxSize);
-	emit autoDownloadMaxSizeChanged(maxSize);
+	if(maxSize != getAutoDownloadMaxSize()){
+		CoreManager::getInstance()->getCore()->setMaxSizeForAutoDownloadIncomingFiles(maxSize);
+		emit autoDownloadMaxSizeChanged(maxSize);
+	}
 }
 	
 // -----------------------------------------------------------------------------
