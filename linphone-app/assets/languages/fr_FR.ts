@@ -3872,4 +3872,22 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Voulez-vous installer %1 (%2) ?</translation>
     </message>
 </context>
+<context>
+    <name></name>
+    <message>
+        <source>autoDownloadNever</source>
+        <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
+        <translation>Jamais</translation>
+    </message>
+    <message>
+        <source>AutoDownload</source>
+        <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
+        <translation>Téléchargement automatique</translation>
+    </message>
+    <message>
+        <source>autoDownloadAlways</source>
+        <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
+        <translation>Toujours</translation>
+    </message>
+</context>
 </TS>
