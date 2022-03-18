@@ -1965,6 +1965,21 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Enable notifications&apos;: settings label for enabling notifications.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>AutoDownload</source>
+        <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>autoDownloadNever</source>
+        <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>autoDownloadAlways</source>
+        <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>
