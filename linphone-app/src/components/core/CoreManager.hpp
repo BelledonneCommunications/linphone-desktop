@@ -163,6 +163,7 @@ public:
 	
 	Q_INVOKABLE void forceRefreshRegisters ();
 	void updateUnreadMessageCount();
+	void stateChanged(Qt::ApplicationState pState);
 	
 	Q_INVOKABLE void sendLogs () const;
 	Q_INVOKABLE void cleanLogs () const;

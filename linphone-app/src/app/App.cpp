@@ -496,6 +496,9 @@ bool App::hasFocus () const {
 }
 void App::stateChanged(Qt::ApplicationState pState) {
 	DesktopTools::applicationStateChanged(pState);
+	auto core = CoreManager::getInstance();
+	if(core)
+		core->stateChanged(pState);
 }
 // -----------------------------------------------------------------------------
 

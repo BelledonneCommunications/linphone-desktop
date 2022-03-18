@@ -65,7 +65,14 @@ quint64 ContentModel::getFileSize() const{
 }
 
 QString ContentModel::getName() const{
-	return QString::fromStdString(mContent->getName());
+	QString name = QString::fromStdString(mContent->getName());
+	if( name == "") {	// Try to find the name from file Path
+		QString fileName = QString::fromStdString(mContent->getFilePath());
+		if(fileName != ""){
+			name = QFileInfo(fileName).baseName();
+		}
+	}
+	return name;
 }
 
 QString ContentModel::getThumbnail() const{
@@ -101,6 +108,7 @@ void ContentModel::setWasDownloaded(bool wasDownloaded){
 
 void ContentModel::setContent(std::shared_ptr<linphone::Content> content){
 	mContent = content;
+	emit nameChanged();
 	if(isFile() || isFileEncrypted() || isFileTransfer() ){
 		QString path = Utils::coreStringToAppString(mContent->getFilePath());
 		if (!path.isEmpty())
@@ -202,6 +210,13 @@ void ContentModel::removeThumbnail(){
 		}
 	}
 	mAppData.mData.clear();
+}
+
+void ContentModel::removeDownloadedFile(){
+	QString path = getFilePath();
+	if( path != ""){
+		QFile(path).remove();
+	}
 }
 
 void ContentModel::downloadFile(){

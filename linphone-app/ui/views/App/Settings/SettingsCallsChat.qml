@@ -1,10 +1,12 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
 
 import App.Styles 1.0
+import Common.Styles 1.0
 
 // =============================================================================
 
@@ -240,7 +242,7 @@ TabContainer {
 						onClicked: SettingsModel.secureChatEnabled = !checked
 					}
 				}
-								
+				
 				FormGroup {
 					label: qsTr('conferenceEnabledLabel')
 					
@@ -313,6 +315,79 @@ TabContainer {
 						checked: SettingsModel.hideEmptyChatRooms
 						
 						onClicked: SettingsModel.hideEmptyChatRooms = !checked
+					}
+				}
+				
+			}
+			FormLine {
+				FormGroup {
+					//: 'Auto download' : Label for a slider about auto download mode
+					label: qsTr('AutoDownload')
+					
+					RowLayout{
+						Layout.fillHeight: true
+						Layout.fillWidth: true
+						spacing: 0
+						Slider {
+							Layout.fillHeight: true
+							Layout.fillWidth: true
+							id: autoDownloadModes
+							width: parent.width
+							
+							function toSlider(value){
+								if( value == -1)
+									return autoDownloadModes.from;
+								else if(value == 0)
+									return autoDownloadModes.to;
+								else
+									return value/1000000+autoDownloadModes.from
+							}
+							function fromSlider(value){
+								if( value == autoDownloadModes.from)
+									return -1
+								else if( value == autoDownloadModes.to)
+									return 0
+								else
+									return (value - autoDownloadModes.from) * 1000000
+							}
+							
+							onValueChanged: {
+												SettingsModel.autoDownloadMaxSize = fromSlider(value)
+												autoDownloadText.updateText(value)
+											}
+							from: 1
+							to: 500
+							stepSize: 1
+							value: toSlider(SettingsModel.autoDownloadMaxSize)
+						}
+						Text {
+							id: autoDownloadText
+							property int preferredWidth : 0
+							Layout.preferredWidth: preferredWidth
+							color: FormHGroupStyle.legend.color
+							font.pointSize: FormHGroupStyle.legend.pointSize
+							
+							function updateText(value){
+								//: 'Never' : auto download mode description for deactivated feature.
+								text = value == autoDownloadModes.from ? qsTr('autoDownloadNever')
+								//: 'Always' : auto download mode description for activated feature without any constraints.
+									: value == autoDownloadModes.to ? qsTr('autoDownloadAlways')
+										: ' <  '+ ( autoDownloadModes.fromSlider(value) ).toFixed(0)/1000000 + ' Mb'
+							}
+							Component.onCompleted: updateMaxSize()
+							function updateMaxSize(){
+								autoDownloadText.visible = false
+								updateText(autoDownloadModes.from)
+								var maxWidth = autoDownloadText.implicitWidth
+								updateText(autoDownloadModes.to)
+								maxWidth = Math.max( maxWidth, autoDownloadText.implicitWidth)
+								updateText(autoDownloadModes.to-1)
+								maxWidth = Math.max( maxWidth, autoDownloadText.implicitWidth)
+								autoDownloadText.preferredWidth = maxWidth
+								updateText(autoDownloadModes.value)
+								autoDownloadText.visible = true
+							}
+						}
 					}
 				}
 				

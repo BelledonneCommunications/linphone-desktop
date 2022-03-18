@@ -180,6 +180,15 @@ void CoreManager::forceRefreshRegisters () {
 void CoreManager::updateUnreadMessageCount(){
 	mEventCountNotifier->updateUnreadMessageCount();
 }
+
+void CoreManager::stateChanged(Qt::ApplicationState pState){
+	if(mCbsTimer){
+		if(pState == Qt::ApplicationActive)
+			mCbsTimer->setInterval(	Constants::CbsCallInterval);
+		else
+			mCbsTimer->setInterval(	Constants::CbsCallInterval * 10);
+	}	
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::sendLogs () const {

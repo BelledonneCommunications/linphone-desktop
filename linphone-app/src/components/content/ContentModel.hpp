@@ -70,6 +70,7 @@ public:
 	
 	void createThumbnail (const bool& force = false);
 	void removeThumbnail ();
+	void removeDownloadedFile();
 	
 	Q_INVOKABLE void downloadFile();
 	Q_INVOKABLE void openFile (bool showDirectory = false);

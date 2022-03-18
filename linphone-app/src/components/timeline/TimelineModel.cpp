@@ -129,7 +129,7 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", ephemeralEnabled:" << mChatRoomModel->isEphemeralEnabled()
 				<< ", isAdmin:"<< mChatRoomModel->isMeAdmin()
 				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
-				<< ", hasBeenLeft:" << mChatRoomModel->hasBeenLeft();
+				<< ", isReadOnly:" << mChatRoomModel->isReadOnly();
 		}
 		emit selectedChanged(mSelected);
 	}

@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns="http://www.linphone.org/xsds/lpconfig.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.linphone.org/xsds/lpconfig.xsd lpconfig.xsd">
+  <section name="app">
+    <entry name="auto_download_incoming_files_max_size" overwrite="true">10000000</entry>
+  </section>
   <section name="proxy_default_values">
     <entry name="avpf" overwrite="true">0</entry>
     <entry name="dial_escape_plus" overwrite="true">0</entry>

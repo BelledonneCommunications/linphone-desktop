@@ -295,16 +295,16 @@ void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &m
   CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 }
 
-void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message) {
+void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message, const shared_ptr<linphone::Content> &content) {
   QVariantMap map;
   shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
   map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
-  map["fileUri"] = Utils::coreStringToAppString(message->getFileTransferInformation()->getFilePath());
+  map["fileUri"] = Utils::coreStringToAppString(content->getFilePath());
   if( Utils::getImage(map["fileUri"].toString()).isNull())
     map["imageUri"] = "";
   else
     map["imageUri"] = map["fileUri"];
-  map["fileSize"] = quint64(message->getFileTransferInformation()->getSize() +message->getFileTransferInformation()->getFileSize());
+  map["fileSize"] = quint64(content->getSize() + content->getFileSize());
   CREATE_NOTIFICATION(Notifier::ReceivedFileMessage, map)
 }
 
