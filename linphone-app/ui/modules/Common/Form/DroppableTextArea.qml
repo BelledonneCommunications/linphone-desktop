@@ -196,6 +196,8 @@ Item {
 				Layout.rightMargin: droppableTextArea.isEphemeral ? 20 : 15
 				Layout.leftMargin: droppableTextArea.isEphemeral ? 5 : 10
 				Layout.alignment: Qt.AlignVCenter
+				Layout.preferredWidth: fitWidth
+				Layout.preferredHeight: fitHeight
 				visible: droppableTextArea.enabled
 				isCustom: true
 				backgroundRadius: 8
@@ -203,13 +205,14 @@ Item {
 				
 				onClicked: textArea.handleValidation()
 				Icon{
-					visible:droppableTextArea.isEphemeral
+					visible: sendButton.visible && droppableTextArea.isEphemeral
 					icon: DroppableTextAreaStyle.ephemeralTimer.icon
 					overwriteColor: DroppableTextAreaStyle.ephemeralTimer.timerColor
 					iconSize: DroppableTextAreaStyle.ephemeralTimer.iconSize
 					anchors.right:parent.right
 					anchors.bottom : parent.bottom
-					anchors.rightMargin:-20
+					anchors.bottomMargin:-5
+					anchors.rightMargin:-17
 				}
 			}
 		}

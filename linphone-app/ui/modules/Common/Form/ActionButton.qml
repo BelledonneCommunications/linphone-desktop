@@ -183,9 +183,10 @@ Item {
 			return defaultColor
 	}
 	// ---------------------------------------------------------------------------
-	
-	height: iconHeight || iconSize || parent.iconSize || parent.height
-	width: iconWidth || iconSize || parent.iconSize || parent.width
+	property int fitHeight: iconHeight || iconSize || parent.iconSize || parent.height
+	property int fitWidth: iconWidth || iconSize || parent.iconSize || parent.width
+	height: fitHeight
+	width: fitWidth
 	
 	Button {
 		id: button
