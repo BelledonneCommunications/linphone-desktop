@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -1031,7 +1031,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1965,6 +1965,21 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Enable notifications&apos;: settings label for enabling notifications.</extracomment>
         <translation>Activer les notifications</translation>
     </message>
+    <message>
+        <source>AutoDownload</source>
+        <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
+        <translation type="unfinished">Téléchargement automatique</translation>
+    </message>
+    <message>
+        <source>autoDownloadNever</source>
+        <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
+        <translation type="unfinished">Jamais</translation>
+    </message>
+    <message>
+        <source>autoDownloadAlways</source>
+        <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
+        <translation type="unfinished">Toujours</translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>
@@ -2001,7 +2016,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3870,24 +3885,6 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>downloadCodecDescription</source>
         <translation>Voulez-vous installer %1 (%2) ?</translation>
-    </message>
-</context>
-<context>
-    <name></name>
-    <message>
-        <source>autoDownloadNever</source>
-        <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
-        <translation>Jamais</translation>
-    </message>
-    <message>
-        <source>AutoDownload</source>
-        <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
-        <translation>Téléchargement automatique</translation>
-    </message>
-    <message>
-        <source>autoDownloadAlways</source>
-        <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
-        <translation>Toujours</translation>
     </message>
 </context>
 </TS>
