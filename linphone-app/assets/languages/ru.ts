@@ -1382,7 +1382,7 @@
     </message>
     <message>
         <source>newChatRoom</source>
-        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
+        <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

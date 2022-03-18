@@ -204,7 +204,7 @@ ApplicationWindow {
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newChatGroup
 
-						//: 'Open Conference' : Tooltip to illustrate a button
+						//: 'Start a chat room' : Tooltip to illustrate a button
 						tooltipText : qsTr('newChatRoom')
 						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
 						//autoIcon: true

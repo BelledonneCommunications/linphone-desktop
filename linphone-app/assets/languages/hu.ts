@@ -1364,8 +1364,8 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newChatRoom</source>
-        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
-        <translation>Konferencia megnyitása</translation>
+        <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
+        <translation>Csevegőszoba indítása</translation>
     </message>
     <message>
         <source>hideTimeline</source>

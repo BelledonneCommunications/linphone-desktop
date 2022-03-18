@@ -1364,8 +1364,8 @@
     </message>
     <message>
         <source>newChatRoom</source>
-        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
-        <translation>公开会议</translation>
+        <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
+        <translation>创建聊天室</translation>
     </message>
     <message>
         <source>hideTimeline</source>
