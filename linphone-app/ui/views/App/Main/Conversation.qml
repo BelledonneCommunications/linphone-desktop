@@ -178,7 +178,7 @@ ColumnLayout  {
 								
 							}
 							onUsernameClicked: {
-													if(!conversation.hasBeenLeft) {
+													if(!conversation.isReadOnly) {
 														usernameEdit.visible = !usernameEdit.visible
 														usernameEdit.forceActiveFocus()
 													}
@@ -198,7 +198,7 @@ ColumnLayout  {
 						iconSize:30
 						MouseArea{
 							anchors.fill:parent
-							visible: !conversation.hasBeenLeft
+							visible: !conversation.isReadOnly
 							onClicked : {
 								window.detachVirtualWindow()
 								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
@@ -294,7 +294,7 @@ ColumnLayout  {
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.groupChat
 						
-						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.hasBeenLeft
+						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.isReadOnly
 						
 						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
 						//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room

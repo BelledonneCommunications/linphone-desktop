@@ -246,7 +246,7 @@ Row {
 					icon: ChatStyle.entry.message.file.download.icon
 					iconSize: ChatStyle.entry.message.file.download.iconSize
 					overwriteColor: isOutgoing ? ChatStyle.entry.message.file.download.outgoingColor : ChatStyle.entry.message.file.download.incomingColor
-					visible: (mainRow.contentModel? !mainRow.contentModel.wasDownloaded : false)
+					visible: !progressBar.visible && (mainRow.contentModel? !mainRow.contentModel.wasDownloaded : false)
 				}
 				
 				MouseArea {
@@ -257,7 +257,10 @@ Row {
 					}
 					
 					anchors.fill: parent
-					visible: downloadButton.visible || ((rectangle.isUploaded || rectangle.isRead) && !isOutgoing) || isOutgoing
+					visible: true
+					//downloadButton.visible || ((rectangle.isUploaded || rectangle.isRead) && !isOutgoing) || isOutgoing
+					//onVisibleChanged: console.log("Mouse of "+mainRow.contentModel.name+" / "+downloadButton.visible
+						//				+"/"+rectangle.isUploaded +"/"+rectangle.isRead)
 					
 					onClicked: {
 						if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {

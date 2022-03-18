@@ -150,6 +150,13 @@ void ContentListModel::clear(){
 	endResetModel();
 }
 
+void ContentListModel::removeDownloadedFiles(){
+	for(auto contentModel : mList){
+		contentModel->removeDownloadedFile();
+		contentModel->removeThumbnail();
+	}
+}
+
 std::shared_ptr<ContentModel> ContentListModel::getContentModel(std::shared_ptr<linphone::Content> content){
 	for(auto c : mList)
 		if(c->getContent() == content)

@@ -27,7 +27,7 @@ DialogPlus {
 				chatRoomModel.leaveChatRoom();
 				exit(0)
 			}
-			enabled: !chatRoomModel.hasBeenLeft
+			enabled: !chatRoomModel.isReadOnly
 			visible: !chatRoomModel.isOneToOne
 		},Item{
 			Layout.fillWidth: true
@@ -38,7 +38,7 @@ DialogPlus {
 			capitalization: Font.AllUppercase
 			
 			onClicked: {
-				if(!chatRoomModel.hasBeenLeft)
+				if(!chatRoomModel.isReadOnly)
 					chatRoomModel.updateParticipants(selectedParticipants.getParticipants()) // Remove/New
 				exit(1)
 			}
@@ -58,7 +58,7 @@ DialogPlus {
 	height: InfoChatRoomStyle.height
 	width: InfoChatRoomStyle.width
 	
-	readonly property bool adminMode : chatRoomModel.isMeAdmin && !chatRoomModel.hasBeenLeft
+	readonly property bool adminMode : chatRoomModel.isMeAdmin && !chatRoomModel.isReadOnly
 	
 	// ---------------------------------------------------------------------------
 	ColumnLayout {

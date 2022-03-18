@@ -649,6 +649,15 @@ void SettingsModel::setAutomaticallyRecordCalls (bool status) {
 	emit automaticallyRecordCallsChanged(status);
 }
 
+int SettingsModel::getAutoDownloadMaxSize() const{
+	return CoreManager::getInstance()->getCore()->getMaxSizeForAutoDownloadIncomingFiles();
+}
+
+void SettingsModel::setAutoDownloadMaxSize(int maxSize){
+	CoreManager::getInstance()->getCore()->setMaxSizeForAutoDownloadIncomingFiles(maxSize);
+	emit autoDownloadMaxSizeChanged(maxSize);
+}
+	
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getCallPauseEnabled () const {

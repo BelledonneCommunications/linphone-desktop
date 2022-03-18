@@ -55,7 +55,7 @@ public:
 	};
 	
 	void notifyReceivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
-	void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+	void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content);
 	void notifyReceivedCall (const std::shared_ptr<linphone::Call> &call);
 	void notifyNewVersionAvailable (const QString &version, const QString &url);
 	void notifySnapshotWasTaken (const QString &filePath);

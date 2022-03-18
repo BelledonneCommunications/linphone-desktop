@@ -48,6 +48,7 @@ public:
 	Q_INVOKABLE void remove(ContentModel * model);
 	
 	void clear();
+	void removeDownloadedFiles();
 	
 	std::shared_ptr<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);// Return the contentModel by checking Content, or if it is the same file.
 	QList<std::shared_ptr<ContentModel>> getContents();

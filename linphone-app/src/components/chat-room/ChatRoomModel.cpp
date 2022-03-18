@@ -470,8 +470,8 @@ int ChatRoomModel::getState() const {
 	return mChatRoom ? (int)mChatRoom->getState() : 0;	
 }
 
-bool ChatRoomModel::hasBeenLeft() const{
-	return mChatRoom && mChatRoom->hasBeenLeft();	
+bool ChatRoomModel::isReadOnly() const{
+	return mChatRoom && mChatRoom->isReadOnly();	
 }
 
 bool ChatRoomModel::isEphemeralEnabled() const{
@@ -1367,7 +1367,7 @@ void ChatRoomModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom>
 	updateLastUpdateTime();
 	emit usernameChanged();
 	emit conferenceJoined(chatRoom, eventLog);
-	emit hasBeenLeftChanged();
+	emit isReadOnlyChanged();
 }
 
 void ChatRoomModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
@@ -1384,7 +1384,7 @@ void ChatRoomModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> &
 		}
 		updateLastUpdateTime();
 		emit conferenceLeft(chatRoom, eventLog);
-		emit hasBeenLeftChanged();
+		emit isReadOnlyChanged();
 	}
 }
 

@@ -133,7 +133,7 @@ public:
 	
 	Q_PROPERTY(bool isComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
 	Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
-	Q_PROPERTY(bool hasBeenLeft READ hasBeenLeft NOTIFY hasBeenLeftChanged)
+	Q_PROPERTY(bool isReadOnly READ isReadOnly NOTIFY isReadOnlyChanged)
 	
 	Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
 	Q_PROPERTY(QString sipAddressUriOnly READ getPeerAddress NOTIFY fullPeerAddressChanged)
@@ -180,7 +180,7 @@ public:
 	QString getAvatar () const;
 	int getPresenceStatus() const;
 	int getState() const;
-	bool hasBeenLeft() const;
+	bool isReadOnly() const;
 	bool isEphemeralEnabled() const;
 	long getEphemeralLifetime() const;
 	bool canBeEphemeral();
@@ -320,7 +320,7 @@ signals:
 	void groupEnabledChanged(bool groupEnabled);
 	void isMeAdminChanged();
 	void stateChanged(int state);
-	void hasBeenLeftChanged();
+	void isReadOnlyChanged();
 	void ephemeralEnabledChanged();
 	void ephemeralLifetimeChanged();
 	void canBeEphemeralChanged();

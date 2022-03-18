@@ -109,6 +109,7 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(bool callRecorderEnabled READ getCallRecorderEnabled WRITE setCallRecorderEnabled NOTIFY callRecorderEnabledChanged)
 	Q_PROPERTY(bool automaticallyRecordCalls READ getAutomaticallyRecordCalls WRITE setAutomaticallyRecordCalls NOTIFY automaticallyRecordCallsChanged)
+	Q_PROPERTY(int autoDownloadMaxSize READ getAutoDownloadMaxSize WRITE setAutoDownloadMaxSize NOTIFY autoDownloadMaxSizeChanged)
 	
 	Q_PROPERTY(bool callPauseEnabled READ getCallPauseEnabled WRITE setCallPauseEnabled NOTIFY callPauseEnabledChanged)
 	Q_PROPERTY(bool muteMicrophoneEnabled READ getMuteMicrophoneEnabled WRITE setMuteMicrophoneEnabled NOTIFY muteMicrophoneEnabledChanged)
@@ -356,6 +357,9 @@ public:
 	
 	bool getAutomaticallyRecordCalls () const;
 	void setAutomaticallyRecordCalls (bool status);
+	
+	int getAutoDownloadMaxSize() const;
+	void setAutoDownloadMaxSize(int maxSize);
 	
 	bool getCallPauseEnabled () const;
 	void setCallPauseEnabled (bool status);
@@ -625,6 +629,7 @@ signals:
 	
 	void callRecorderEnabledChanged (bool status);
 	void automaticallyRecordCallsChanged (bool status);
+	void autoDownloadMaxSizeChanged (int maxSize);
 	
 	void callPauseEnabledChanged (bool status);
 	void muteMicrophoneEnabledChanged (bool status);

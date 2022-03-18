@@ -81,8 +81,8 @@ std::shared_ptr<linphone::Buffer> ChatMessageListener::onFileTransferSend(const 
 	emit fileTransferSend(message, content, offset, size);
 	return nullptr;
 }
-void ChatMessageListener::onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t i){
-	emit fileTransferProgressIndication(message, content, offset, i);
+void ChatMessageListener::onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t total){
+	emit fileTransferProgressIndication(message, content, offset, total);
 }
 void ChatMessageListener::onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state){
 	emit msgStateChanged(message, state);
@@ -298,6 +298,8 @@ void ChatMessageModel::deleteEvent(){
 	if(mChatMessage)
 		mChatMessage->getChatRoom()->deleteMessage(mChatMessage);
 }
+
+
 void ChatMessageModel::updateFileTransferInformation(){
 	mContentListModel->updateContents(this);
 }
@@ -311,20 +313,23 @@ std::shared_ptr<linphone::Buffer> ChatMessageModel::onFileTransferSend (const st
 	return nullptr;
 }
 
-void ChatMessageModel::onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message,const std::shared_ptr<linphone::Content> &content,size_t offset,size_t) {
+void ChatMessageModel::onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message,const std::shared_ptr<linphone::Content> &content,size_t offset,size_t total) {
 	auto contentModel = mContentListModel->getContentModel(content);
-	if(contentModel)		
+	if(contentModel) {
 		contentModel->setFileOffset(offset);
+		if (total == offset && mChatMessage && !mChatMessage->isOutgoing()) {
+			mContentListModel->downloaded();
+			bool allAreDownloaded = true;
+			for(auto content : mContentListModel->getContents())
+				allAreDownloaded &= content->mWasDownloaded;
+			setWasDownloaded(allAreDownloaded);
+			App::getInstance()->getNotifier()->notifyReceivedFileMessage(message, content);
+		}
+	}
 }
 
 void ChatMessageModel::onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) {
 	updateFileTransferInformation();// On message state, file transfert information Content can be changed
-	// File message downloaded.
-	if (mChatMessage && state == linphone::ChatMessage::State::FileTransferDone && !mChatMessage->isOutgoing()) {
-		mContentListModel->downloaded();
-		setWasDownloaded(true);
-		App::getInstance()->getNotifier()->notifyReceivedFileMessage(message);
-	}
 	emit stateChanged();
 }
 void ChatMessageModel::onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
@@ -335,6 +340,8 @@ void ChatMessageModel::onEphemeralMessageTimerStarted(const std::shared_ptr<linp
 }
 void ChatMessageModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message) {
 	//emit remove(mSelf.lock());
+	if(!isOutgoing())
+		mContentListModel->removeDownloadedFiles();
 	emit remove(this);
 }
 //-------------------------------------------------------------------------------------------------------
