@@ -149,18 +149,7 @@ if (WIN32)
 ##############################
 
 	set(BIN_ARCH "win32")
-	if(MSVC)
-		set(MSVC_ARCH ${CMAKE_CXX_COMPILER_ARCHITECTURE_ID})# ${MSVC_ARCH} MATCHES "X64"
-		string(TOUPPER ${MSVC_ARCH} MSVC_ARCH)
-		if(${MSVC_ARCH} MATCHES "X64")
-			set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
-			set(MINGW_TYPE "mingw64")
-			set(BIN_ARCH "win64")
-		else()
-			set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
-			set(MINGW_TYPE "mingw32")
-		endif()
-	elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL "x86_64" OR CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
+	if( CMAKE_SIZEOF_VOID_P EQUAL 8)
 		set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
 		set(MINGW_TYPE "mingw64")
 		set(BIN_ARCH "win64")
@@ -168,6 +157,7 @@ if (WIN32)
 		set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
 		set(MINGW_TYPE "mingw32")
 	endif()
+	
 	find_program(MSYS2_PROGRAM
 		NAMES msys2_shell.cmd
 		HINTS "C:/msys64/"
