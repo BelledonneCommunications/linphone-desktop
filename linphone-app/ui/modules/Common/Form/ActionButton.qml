@@ -256,18 +256,12 @@ Item {
 			visible: !isCustom
 		}
 		
-		
+	
 		OpacityMask{
 			anchors.fill: foregroundColor
 			source: foregroundColor
 			maskSource: icon
 			visible: isCustom
-			MouseArea{
-				anchors.fill:parent
-				hoverEnabled: true
-				acceptedButtons: Qt.NoButton
-				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-			}
 		}
 	 
      
@@ -277,19 +271,13 @@ Item {
 			source: foregroundHiddenPartColor
 			maskSource: icon
 			visible: isCustom && percentageDisplayed != 100
-			/*
-			layer {
-				enabled: true
-				effect: ColorOverlay {
-					color: "#80FFFFFF"
-				}
-			}*/
-			MouseArea{
-				anchors.fill:parent
-				hoverEnabled: true
-				acceptedButtons: Qt.NoButton
-				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-			}
+			
+		}
+		MouseArea{
+			anchors.fill:parent
+			hoverEnabled: true
+			acceptedButtons: Qt.NoButton
+			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 		}
 		TooltipArea {
 			id:tooltip

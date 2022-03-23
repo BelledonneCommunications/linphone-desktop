@@ -24,37 +24,58 @@
 #include <QQmlDebuggingEnabler>
 #endif
 #include <QSurfaceFormat>
+#ifdef _WIN32
+#include <Windows.h>
+FILE * gStream = NULL;
+#endif
 
 #include "components/core/CoreManager.hpp"
 // =============================================================================
 
+void cleanStream(){
+#ifdef _WIN32
+	if(gStream) {
+		fflush(stdout);
+		fflush(stderr);
+		fclose(gStream);
+	}
+}
+#endif
+
 int main (int argc, char *argv[]) {
 #ifdef __APPLE__
 	qputenv("QT_ENABLE_GLYPH_CACHE_WORKAROUND", "1");	// On Mac, set this workaround to avoid glitches on M1, because of https://bugreports.qt.io/browse/QTBUG-89379
+#elif defined _WIN32
+	// log in console only if launched from console
+	if (AttachConsole(ATTACH_PARENT_PROCESS)) {
+		freopen_s(&gStream, "CONOUT$", "w", stdout);
+		freopen_s(&gStream, "CONOUT$", "w", stderr);
+	}
 #endif
-  AppController controller(argc, argv);
+	AppController controller(argc, argv);
 #ifdef QT_QML_DEBUG
-  QQmlDebuggingEnabler enabler;
+	QQmlDebuggingEnabler enabler;
 #endif
-  //QLoggingCategory::setFilterRules("*.debug=true;qml=false");
-  App *app = controller.getApp();
-  
-  if (app->isSecondary())
-  {
-	  qInfo() << QStringLiteral("Running secondary app success. Kill it now.");
-	  return EXIT_SUCCESS;
-  }
-
-  qInfo() << QStringLiteral("Running app...");
-
-  int ret;
-  do {
-    app->initContentApp();
-    ret = app->exec();
-  } while (ret == App::RestartCode);
-  auto core = CoreManager::getInstance()->getCore();
-  if(core && core->getGlobalState() == linphone::GlobalState::On)
-	core->stop();
-  
-  return ret;
+	//QLoggingCategory::setFilterRules("*.debug=true;qml=false");
+	App *app = controller.getApp();
+	
+	if (app->isSecondary())
+	{
+		qInfo() << QStringLiteral("Running secondary app success. Kill it now.");
+		cleanStream();
+		return EXIT_SUCCESS;
+	}
+	
+	qInfo() << QStringLiteral("Running app...");
+	
+	int ret;
+	do {
+		app->initContentApp();
+		ret = app->exec();
+	} while (ret == App::RestartCode);
+	auto core = CoreManager::getInstance()->getCore();
+	if(core && core->getGlobalState() == linphone::GlobalState::On)
+		core->stop();
+	cleanStream();
+	return ret;
 }
