@@ -348,17 +348,17 @@ Window {
 							Timer {
 								interval: 50
 								repeat: true
-								running: speaker.enabled
+								running: parent.enabled
 								
 								onTriggered: parent.value = call.speakerVu
 							}
 							
-							enabled: speaker.enabled
+							enabled: !speaker.muted
 						}
 						
 						ActionButton {
 							id: speaker
-							property bool muted : call && !call.speakerMuted
+							property bool muted : call && call.speakerMuted
 							isCustom: true
 							backgroundRadius: 90
 							colorSet: muted ? CallFullscreenStyle.buttons.speakerOff : CallFullscreenStyle.buttons.speakerOn
