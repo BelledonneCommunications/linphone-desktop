@@ -554,7 +554,7 @@ ColumnLayout  {
 	
 	Connections {
 		target: AccountSettingsModel
-		onAccountSettingsUpdated: {
+		onSipAddressChanged: {
 			if (conversation.localAddress !== AccountSettingsModel.sipAddress) {
 				window.setView('Home')
 			}

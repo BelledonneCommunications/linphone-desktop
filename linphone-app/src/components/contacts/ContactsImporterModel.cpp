@@ -44,10 +44,10 @@ ContactsImporterModel::ContactsImporterModel (PluginDataAPI * data, QObject *par
 void ContactsImporterModel::setDataAPI(PluginDataAPI *data){
 	if(mData){// Unload the current plugin loader and delete it from memory
 		QPluginLoader * loader = mData->getPluginLoader();
-		delete mData;
+		mData->deleteLater();
 		if(loader){
 			loader->unload();
-			delete loader;
+			loader->deleteLater();
 		}
 		mData = data;
 	}else

@@ -34,19 +34,19 @@ class AccountSettingsModel : public QObject {
   Q_OBJECT
 
   // Selected proxy config.
-  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY accountSettingsUpdated)
-  Q_PROPERTY(QString sipAddress READ getUsedSipAddressAsStringUriOnly NOTIFY accountSettingsUpdated)
-  Q_PROPERTY(QString fullSipAddress READ getUsedSipAddressAsString)
-  Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY accountSettingsUpdated)
+  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
+  Q_PROPERTY(QString sipAddress READ getUsedSipAddressAsStringUriOnly NOTIFY sipAddressChanged)
+  Q_PROPERTY(QString fullSipAddress READ getUsedSipAddressAsString NOTIFY fullSipAddressChanged)
+  Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
   
-  Q_PROPERTY(QString conferenceURI READ getConferenceURI NOTIFY accountSettingsUpdated)
+  Q_PROPERTY(QString conferenceURI READ getConferenceURI NOTIFY conferenceURIChanged)
 
   // Default info.
-  Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY accountSettingsUpdated)
-  Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY accountSettingsUpdated)
-  Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY accountSettingsUpdated)
+  Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY primaryDisplayNameChanged)
+  Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY primaryUsernameChanged)
+  Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY primarySipAddressChanged)
 
-  Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountSettingsUpdated)
+  Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountsChanged)
 
 public:
   enum RegistrationState {
@@ -88,6 +88,21 @@ public:
   Q_INVOKABLE void eraseAllPasswords ();
 
 signals:
+  
+  void usernameChanged();
+  void sipAddressChanged();
+  void fullSipAddressChanged();
+  void registrationStateChanged();
+  void conferenceURIChanged();
+  
+  void primaryDisplayNameChanged();
+  void primaryUsernameChanged();
+  void primarySipAddressChanged();
+  
+  void accountsChanged();
+  
+  
+  
   void accountSettingsUpdated ();
   void defaultProxyChanged();
   void publishPresenceChanged();

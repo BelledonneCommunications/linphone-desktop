@@ -46,6 +46,8 @@ public:
   Camera (QQuickItem *parent = Q_NULLPTR);
 
   QQuickFramebufferObject::Renderer *createRenderer () const override;
+  
+  Q_INVOKABLE void resetWindowId();
 
 signals:
   void callChanged (CallModel *callModel);

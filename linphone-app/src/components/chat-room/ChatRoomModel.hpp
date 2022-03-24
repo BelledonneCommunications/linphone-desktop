@@ -231,7 +231,8 @@ public:
 	Q_INVOKABLE void forwardMessage(ChatMessageModel * model);
 	void compose ();
 	Q_INVOKABLE void resetMessageCount ();
-	Q_INVOKABLE void initEntries();
+	Q_INVOKABLE void resetEntries();
+	void initEntries();
 	Q_INVOKABLE int loadMoreEntries();	// return new entries count
 	void callEnded(std::shared_ptr<linphone::Call> call);
 	void updateNewMessageNotice(const int& count);

@@ -66,6 +66,8 @@ void ParticipantImdnStateProxyModel::setChatMessageModel(ChatMessageModel * mess
 		ParticipantImdnStateListModel *model = static_cast<ParticipantImdnStateListModel*>(sourceModel());
 		ParticipantImdnStateListModel *messageModel = message->getParticipantImdnStates().get();
 		if( model != messageModel){
+			if(model)
+				disconnect(model, &ParticipantImdnStateListModel::countChanged, this, &ParticipantImdnStateProxyModel::countChanged);
 			setSourceModel(messageModel);
 			connect(messageModel, &ParticipantImdnStateListModel::countChanged, this, &ParticipantImdnStateProxyModel::countChanged);
 			sort(0);

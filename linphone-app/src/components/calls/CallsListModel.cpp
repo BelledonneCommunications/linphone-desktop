@@ -141,7 +141,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& 
 							 [address,core,params,currentProxyConfig,prepareTransfertAddress, context](const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state) mutable {
 				if(context && proxyConfig==currentProxyConfig && state==linphone::RegistrationState::Ok){
 					CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
-					delete context;
+					context->deleteLater();
 					context = nullptr;
 				}
 			});
@@ -179,7 +179,7 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 							 [address,core,params,currentProxyConfig,prepareTransfertAddress, context](const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, linphone::RegistrationState state) mutable {
 				if(context && proxyConfig==currentProxyConfig && state==linphone::RegistrationState::Ok){
 					CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
-					delete context;
+					context->deleteLater();
 					context = nullptr;
 				}
 			});

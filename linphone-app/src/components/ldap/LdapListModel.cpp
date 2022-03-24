@@ -83,7 +83,7 @@ bool LdapListModel::removeRows (int row, int count, const QModelIndex &parent) {
   beginRemoveRows(parent, row, limit);
 
   for (int i = 0; i < count; ++i)
-    delete mServers.takeAt(row);
+    mServers.takeAt(row)->deleteLater();
 
   endRemoveRows();
 
