@@ -39,8 +39,9 @@ void cleanStream(){
 		fflush(stderr);
 		fclose(gStream);
 	}
-}
 #endif
+}
+
 
 int main (int argc, char *argv[]) {
 #ifdef __APPLE__
