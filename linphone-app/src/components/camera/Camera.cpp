@@ -48,10 +48,19 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 	QObject::connect(
 				mRefreshTimer, &QTimer::timeout,
 				this, &QQuickFramebufferObject::update,
-				Qt::DirectConnection
+				Qt::QueuedConnection
 				);
 	
 	mRefreshTimer->start();
+}
+
+void Camera::resetWindowId() {
+	if(mIsPreview)
+		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);
+	else if( mCallModel && mCallModel->getCall())
+		mCallModel->getCall()->setNativeVideoWindowId(NULL);
+	else
+		CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
 }
 
 class SafeFramebuffer : public QQuickFramebufferObject::Renderer{

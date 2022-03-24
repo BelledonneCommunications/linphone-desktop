@@ -21,15 +21,18 @@ Rectangle {
 	// ---------------------------------------------------------------------------
 	
 	// Used by `IncallFullscreenWindow.qml`.
-	readonly property bool cameraActivated:
-		cameraLoader.status !== Loader.Null ||
-		cameraPreviewLoader.status !== Loader.Null
+	readonly property bool cameraActivated: cameraIsReady || previewIsReady
+	
+	property bool cameraIsReady : false
+	property bool previewIsReady : false
 	
 	property var call
 	
 	property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
-	property var _fullscreen: null
 	
+	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
+	property var _fullscreen: null
+	on_FullscreenChanged: if( !_fullscreen) isFullScreen = false
 	// ---------------------------------------------------------------------------
 	
 	color: CallStyle.backgroundColor
@@ -246,7 +249,7 @@ Rectangle {
 				
 				anchors.centerIn: parent
 				
-				active: incall.call.videoEnabled && !_fullscreen
+				active: incall.call.videoEnabled && !isFullScreen
 				sourceComponent: camera
 				
 				Component {
@@ -256,14 +259,18 @@ Rectangle {
 						call: incall.call
 						height: container.height
 						width: container.width
+						Component.onDestruction: {
+							resetWindowId()
+						}
 					}
+					
 				}
 			}
 			
 			Loader {
 				anchors.centerIn: parent
 				
-				active: !call.videoEnabled || _fullscreen
+				active: !call.videoEnabled || isFullScreen
 				sourceComponent: avatar
 			}
 		}
@@ -388,7 +395,7 @@ Rectangle {
 				anchors.centerIn: parent
 				height: CallStyle.actionArea.userVideo.height
 				width: CallStyle.actionArea.userVideo.width
-				active: incall.width >= CallStyle.actionArea.lowWidth && incall.call.videoEnabled && !_fullscreen
+				active: incall.width >= CallStyle.actionArea.lowWidth && incall.call.videoEnabled && !isFullScreen
 				sourceComponent: cameraPreview
 				Component {
 					id: cameraPreview
@@ -397,6 +404,9 @@ Rectangle {
 						anchors.fill: parent
 						call: incall.call
 						isPreview: true
+						Component.onDestruction: {
+							resetWindowId()
+						}
 					}
 				}
 			}

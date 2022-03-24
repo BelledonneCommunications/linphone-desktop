@@ -67,9 +67,9 @@ void ChatRoomInitializer::setAdminsAsync(const std::string& subject, const linph
 				init->mAdmins = admins;
 				init->mSelf = init;
 				chatRoomEvent->addListener(init);
-				delete context;
+				context->deleteLater();
 			}else if( state >  linphone::ChatRoom::State::Created){// The chat room could be completed. Delete the bind.
-				delete context;
+				context->deleteLater();
 			}
 		}
 	});

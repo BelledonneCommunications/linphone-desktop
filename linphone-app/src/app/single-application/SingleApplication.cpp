@@ -69,17 +69,17 @@ SingleApplicationPrivate::SingleApplicationPrivate (SingleApplication *p_ptr) : 
 SingleApplicationPrivate::~SingleApplicationPrivate () {
   if (socket != nullptr) {
     socket->close();
-    delete socket;
+	socket->deleteLater();
   }
   memory->lock();
   InstancesInfo *inst = static_cast<InstancesInfo *>(memory->data());
   if (server != nullptr) {
     server->close();
-    delete server;
+    server->deleteLater();
     inst->primary = false;
   }
   memory->unlock();
-  delete memory;
+  memory->deleteLater();
 }
 
 void SingleApplicationPrivate::genBlockServerName (int timeout) {
@@ -276,7 +276,7 @@ void SingleApplicationPrivate::slotConnectionEstablished () {
 
   if (connectionType == InvalidConnection) {
     nextConnSocket->close();
-    delete nextConnSocket;
+    nextConnSocket->deleteLater();
     return;
   }
 
@@ -376,7 +376,7 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
   }
 
   d->connectToPrimary(timeout, NewInstance);
-  delete d;
+  d->deleteLater();
   ::exit(EXIT_SUCCESS);
 }
 
@@ -385,7 +385,7 @@ SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSeconda
  */
 SingleApplication::~SingleApplication () {
   Q_D(SingleApplication);
-  delete d;
+  d->deleteLater();
 }
 
 bool SingleApplication::isPrimary () {

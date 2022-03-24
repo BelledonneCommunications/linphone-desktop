@@ -148,7 +148,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 
   if (mLinphoneFriends->addFriend(contact->mLinphoneFriend) != linphone::FriendList::Status::OK) {
     qWarning() << QStringLiteral("Unable to add contact from vcard:") << vcardModel;
-    delete contact;
+    contact->deleteLater();
     return nullptr;
   }
 

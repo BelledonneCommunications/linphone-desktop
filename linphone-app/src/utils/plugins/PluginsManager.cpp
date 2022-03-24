@@ -66,7 +66,7 @@ QPluginLoader * PluginsManager::getPlugin(const QString &pluginIdentity){
 					loader->unload();
 				}
 			}
-			delete loader;
+			loader->deleteLater();
 		}
 	}
 	return nullptr;
@@ -93,7 +93,7 @@ void * PluginsManager::createInstance(const QString &pluginIdentity){
 				}else
 					loader->unload();
 			}
-			delete loader;
+			loader->deleteLater();
 		}
 	}
 	return dataInstance;
@@ -111,7 +111,7 @@ QJsonDocument PluginsManager::getJson(const QString &pluginIdentity){
 			}
 		}
 		pluginLoader->unload();
-		delete pluginLoader;
+		pluginLoader->deleteLater();
 	}
 	return doc;
 }

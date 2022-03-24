@@ -62,7 +62,17 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 				coreManager->getHandlers().get(), &CoreHandlers::registrationStateChanged,
 				this, &AccountSettingsModel::handleRegistrationStateChanged
 				);
-	QObject::connect(coreManager, &CoreManager::eventCountChanged, this, [this]() { emit accountSettingsUpdated(); });
+	//QObject::connect(coreManager, &CoreManager::eventCountChanged, this, [this]() { emit accountSettingsUpdated(); });
+	
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::usernameChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::sipAddressChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::fullSipAddressChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::registrationStateChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::conferenceURIChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primaryDisplayNameChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primaryUsernameChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primarySipAddressChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::accountsChanged);
 }
 
 // -----------------------------------------------------------------------------
@@ -79,6 +89,7 @@ void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::A
 	shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
 	
 	proxyConfig ? proxyConfig->setIdentityAddress(address) : core->setPrimaryContact(address->asString());
+	emit sipAddressChanged();
 }
 
 QString AccountSettingsModel::getUsedSipAddressAsStringUriOnly () const {
@@ -404,7 +415,7 @@ void AccountSettingsModel::setUsername (const QString &username) {
 						  .arg(Utils::coreStringToAppString(newAddress->asStringUriOnly()));
 		} else {
 			setUsedSipAddress(newAddress);
-			emit accountSettingsUpdated();
+			emit usernameChanged();
 		}
 	}
 }
@@ -432,7 +443,7 @@ void AccountSettingsModel::setPrimaryUsername (const QString &username) {
 								 username.isEmpty() ? APPLICATION_NAME : username
 													  ));
 		core->setPrimaryContact(primary->asString());
-		emit accountSettingsUpdated();
+		emit primaryUsernameChanged();
 	}
 }
 
@@ -448,7 +459,7 @@ void AccountSettingsModel::setPrimaryDisplayName (const QString &displayName) {
 	if(oldDisplayName != displayName){
 		primary->setDisplayName(Utils::appStringToCoreString(displayName));
 		core->setPrimaryContact(primary->asString());
-		emit accountSettingsUpdated();
+		emit primaryDisplayNameChanged();
 	}
 }
 
@@ -508,10 +519,10 @@ void AccountSettingsModel::handleRegistrationStateChanged (
 		mRemovingProxies.removeAll(proxy);
 		QTimer::singleShot(100, [proxy, this](){// removeProxyConfig cannot be called from callback
 				CoreManager::getInstance()->getCore()->removeProxyConfig(proxy);
-				emit accountSettingsUpdated();
+				emit accountsChanged();
 		});
 	}
 	if(defaultProxyConfig == proxy)
 		emit defaultRegistrationChanged();
-	emit accountSettingsUpdated();
+	emit registrationStateChanged();
 }

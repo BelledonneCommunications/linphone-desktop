@@ -131,7 +131,8 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
 				<< ", isReadOnly:" << mChatRoomModel->isReadOnly()
 				<< ", state:" << mChatRoomModel->getState();
-		}
+		}else
+			mChatRoomModel->resetEntries();// Cleanup leaving chat room
 		emit selectedChanged(mSelected);
 	}
 }

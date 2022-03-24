@@ -186,8 +186,8 @@ void CoreManager::stateChanged(Qt::ApplicationState pState){
 		if(pState == Qt::ApplicationActive)
 			mCbsTimer->setInterval(	Constants::CbsCallInterval);
 		else
-			mCbsTimer->setInterval(	Constants::CbsCallInterval * 10);
-	}	
+			mCbsTimer->setInterval(	Constants::CbsCallInterval * 2);// Reduce a little processes
+	}
 }
 // -----------------------------------------------------------------------------
 

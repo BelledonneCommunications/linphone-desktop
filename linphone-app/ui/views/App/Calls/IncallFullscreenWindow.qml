@@ -24,6 +24,8 @@ Window {
 	property var call
 	property var caller
 	property bool hideButtons: false
+	property bool cameraIsReady : false
+	property bool previewIsReady : false
 	
 	// ---------------------------------------------------------------------------
 	
@@ -72,7 +74,7 @@ Window {
 			
 			active: {
 				var caller = window.caller
-				return caller && !caller.cameraActivated
+				return window.cameraIsReady && caller && !caller.cameraActivated
 			}
 			
 			sourceComponent: camera
@@ -82,6 +84,9 @@ Window {
 				
 				Camera {
 					call: window.call
+					Component.onDestruction: {
+						resetWindowId()
+					}
 				}
 			}
 		}
@@ -430,7 +435,7 @@ Window {
 	Loader {
 		active: {
 			var caller = window.caller
-			return caller && !caller.cameraActivated
+			return window.previewIsReady && caller && !caller.cameraActivated
 		}
 		
 		sourceComponent: cameraPreview
@@ -457,6 +462,9 @@ Window {
 				
 				call: window.call
 				isPreview: true
+				Component.onDestruction: {
+					resetWindowId()
+				}
 				
 				height: Math.min(window.height, (CallFullscreenStyle.actionArea.userVideo.height * window.height/CallFullscreenStyle.actionArea.userVideo.heightReference) * scale)
 				width: Math.min(window.width, (CallFullscreenStyle.actionArea.userVideo.width * window.width/CallFullscreenStyle.actionArea.userVideo.widthReference) * scale )

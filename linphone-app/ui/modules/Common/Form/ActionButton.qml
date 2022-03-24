@@ -256,7 +256,6 @@ Item {
 			visible: !isCustom
 		}
 		
-	
 		OpacityMask{
 			anchors.fill: foregroundColor
 			source: foregroundColor
@@ -264,7 +263,6 @@ Item {
 			visible: isCustom
 		}
 	 
-     
 		OpacityMask{
 			id: mask
 			anchors.fill: foregroundHiddenPartColor
@@ -273,6 +271,7 @@ Item {
 			visible: isCustom && percentageDisplayed != 100
 			
 		}
+		
 		MouseArea{
 			anchors.fill:parent
 			hoverEnabled: true

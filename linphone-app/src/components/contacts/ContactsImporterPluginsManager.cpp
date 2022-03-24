@@ -112,6 +112,6 @@ void ContactsImporterPluginsManager::importContacts(const QVector<QMultiMap<QStr
 		if( card->getSipAddresses().size()>0){
 			CoreManager::getInstance()->getContactsListModel()->addContact(card);
 		}else
-			delete card;
+			card->deleteLater();
 	}
 }

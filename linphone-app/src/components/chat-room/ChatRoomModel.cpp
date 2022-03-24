@@ -921,41 +921,51 @@ int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
 	return -1;
 }
 
-void ChatRoomModel::initEntries(){
-	qDebug() << "Internal Entries : Init";
-// On call : reinitialize all entries. This allow to free up memory
-	QList<std::shared_ptr<ChatEvent> > entries;
-	QList<EntrySorterHelper> prepareEntries;
-// Get chat messages
-	for (auto &message : mChatRoom->getHistory(mFirstLastEntriesStep)) {
-		prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
-	}
-// Get events
-	for(auto &eventLog : mChatRoom->getHistoryEvents(mFirstLastEntriesStep))
-		prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
-// Get calls.
-	bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
-	bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
+void ChatRoomModel::resetEntries(){
+	beginResetModel();
+	mEntries.clear();
+	endResetModel();
+}
 
-	if( isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
-		|| standardChatEnabled && !isSecure()) ) {
-		auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
-		// callhistory is sorted from newest to oldest
-		int count = 0;
-		for (auto callLog = callHistory.begin() ; count < mFirstLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
-			prepareEntries << EntrySorterHelper((*callLog)->getStartDate(), CallEntry, *callLog);
+void ChatRoomModel::initEntries(){
+	if( mEntries.size() > mLastEntriesStep)
+		resetEntries();
+	if(mEntries.size() == 0) {
+		qDebug() << "Internal Entries : Init";
+	// On call : reinitialize all entries. This allow to free up memory
+		QList<std::shared_ptr<ChatEvent> > entries;
+		QList<EntrySorterHelper> prepareEntries;
+	// Get chat messages
+		for (auto &message : mChatRoom->getHistory(mFirstLastEntriesStep)) {
+			prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
 		}
+	// Get events
+		for(auto &eventLog : mChatRoom->getHistoryEvents(mFirstLastEntriesStep))
+			prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
+	// Get calls.
+		bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
+		bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
+	
+		if( isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
+			|| standardChatEnabled && !isSecure()) ) {
+			auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
+			// callhistory is sorted from newest to oldest
+			int count = 0;
+			for (auto callLog = callHistory.begin() ; count < mFirstLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
+				prepareEntries << EntrySorterHelper((*callLog)->getStartDate(), CallEntry, *callLog);
+			}
+		}
+		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);
+		qDebug() << "Internal Entries : Built";
+		mIsInitialized = true;
+		if(entries.size() >0){
+			beginInsertRows(QModelIndex(),0, entries.size()-1);
+			mEntries = entries;
+			updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());
+			endInsertRows();
+		}
+		qDebug() << "Internal Entries : End";
 	}
-	EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);
-	qDebug() << "Internal Entries : Built";
-	mIsInitialized = true;
-	if(entries.size() >0){
-		beginResetModel();
-		mEntries = entries;
-		updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());
-		endResetModel();
-	}
-	qDebug() << "Internal Entries : End";
 }
 void ChatRoomModel::setEntriesLoading(const bool& loading){
 	if( mEntriesLoading != loading){

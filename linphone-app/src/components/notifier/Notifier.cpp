@@ -114,7 +114,7 @@ Notifier::~Notifier () {
 
   const int nComponents = Notifications.size();
   for (int i = 0; i < nComponents; ++i)
-    delete mComponents[i];
+    mComponents[i]->deleteLater();
   delete[] mComponents;
 }
 
