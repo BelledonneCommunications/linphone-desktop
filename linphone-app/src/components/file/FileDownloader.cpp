@@ -78,6 +78,7 @@ void FileDownloader::download () {
   setDownloading(true);
 
   QNetworkRequest request(mUrl);
+  request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
   mNetworkReply = mManager.get(request);
 
   QNetworkReply *data = mNetworkReply.data();
@@ -135,7 +136,6 @@ void FileDownloader::handleDownloadFinished() {
   if (mNetworkReply->error() != QNetworkReply::NoError)
     return;
 
-  // TODO: Deal with redirection.
   if (isHttpRedirect(mNetworkReply)) {
     qWarning() << QStringLiteral("Request was redirected.");
     mDestinationFile.remove();
