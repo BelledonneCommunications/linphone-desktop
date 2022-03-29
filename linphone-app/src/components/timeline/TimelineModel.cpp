@@ -37,7 +37,7 @@
 
 // =============================================================================
 std::shared_ptr<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent){
-	if(!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) {
+	if((!chatRoom || chatRoom->getState() != linphone::ChatRoom::State::Terminated)  && (!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) ) {
 		std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom, parent);
 		if(model && model->getChatRoomModel()){
 			model->mSelf = model;
