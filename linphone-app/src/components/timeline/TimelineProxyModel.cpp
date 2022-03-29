@@ -90,17 +90,16 @@ void TimelineProxyModel::setFilterText(const QString& text){
 bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
 	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 	auto timeline = sourceModel()->data(index).value<TimelineModel*>();
-	if(!timeline || !timeline->getChatRoomModel())
+	if(!timeline || !timeline->getChatRoomModel() || timeline->getChatRoomModel()->getState() == (int)linphone::ChatRoom::State::Terminated)
 		return false;
-	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
-	bool isGroup = timeline->getChatRoomModel()->isGroupEnabled();
 	bool haveEncryption = timeline->getChatRoomModel()->haveEncryption();
-	bool isEphemeral = timeline->getChatRoomModel()->isEphemeralEnabled();
-	
 	if(!CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled() && !haveEncryption)
 		return false;
 	if(!CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled() && haveEncryption)
 		return false;
+	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
+	bool isGroup = timeline->getChatRoomModel()->isGroupEnabled();
+	bool isEphemeral = timeline->getChatRoomModel()->isEphemeralEnabled();
 
 	if( mFilterFlags > 0) {
 		show = !(( ( (mFilterFlags & TimelineFilter::SimpleChatRoom) == TimelineFilter::SimpleChatRoom) && isGroup)

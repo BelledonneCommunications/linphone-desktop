@@ -140,12 +140,14 @@ std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<li
 		}
 		if(create){
 			std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
+			if(model){
 			//std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
-			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
-			add(model);
+				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
+				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
+				add(model);
 			//connect(model.get(), SIGNAL(conferenceLeft()), this, SLOT(selectedHasChanged(bool)));
-			return model;
+				return model;
+			}
 		}
 	}
 	return nullptr;
@@ -240,8 +242,12 @@ void TimelineListModel::updateTimelines () {
 	CoreManager *coreManager = CoreManager::getInstance();
 	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
 
+// Clean terminated chat rooms.
+	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
+		return chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
+	}); 
 	
-	//Remove no more chat rooms
+//Remove no more chat rooms
 	auto itTimeline = mTimelines.begin();
 	while(itTimeline != mTimelines.end()) {
 		auto itDbTimeline = allChatRooms.begin();
@@ -341,7 +347,10 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 			add(model);			
 		}
-	}else if(state == linphone::ChatRoom::State::Deleted){
+	}else if(state == linphone::ChatRoom::State::Deleted || state == linphone::ChatRoom::State::Terminated){
+		auto timeline = getTimeline(chatRoom, false);
+		if(timeline)
+			remove(timeline);
 	}
 }
 
