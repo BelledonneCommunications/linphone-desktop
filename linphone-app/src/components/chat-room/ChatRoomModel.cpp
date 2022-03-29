@@ -957,7 +957,6 @@ void ChatRoomModel::initEntries(){
 		}
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);
 		qDebug() << "Internal Entries : Built";
-		mIsInitialized = true;
 		if(entries.size() >0){
 			beginInsertRows(QModelIndex(),0, entries.size()-1);
 			mEntries = entries;
@@ -966,6 +965,7 @@ void ChatRoomModel::initEntries(){
 		}
 		qDebug() << "Internal Entries : End";
 	}
+	mIsInitialized = true;
 }
 void ChatRoomModel::setEntriesLoading(const bool& loading){
 	if( mEntriesLoading != loading){
