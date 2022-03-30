@@ -230,6 +230,7 @@ TabContainer {
 								active: window.visible
 								sourceComponent: SoundPlayer {
 									source: SettingsModel.ringPath
+									isRinger: true
 								}
 							}
 						}

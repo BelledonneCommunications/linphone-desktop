@@ -220,12 +220,11 @@ DialogPlus {
 										image:modelData.avatar
 										Icon{
 											property int securityLevel : 2
-											anchors.right: parent.right
 											anchors.top:parent.top
-											anchors.topMargin: -5
+											anchors.horizontalCenter: parent.right
 											visible: UtilsCpp.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
 											icon: 'secure_on'
-											iconSize:20
+											iconSize: parent.height/2
 										}
 									}
 									Text{

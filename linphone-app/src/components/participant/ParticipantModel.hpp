@@ -39,8 +39,8 @@ public:
     ParticipantModel (std::shared_ptr<linphone::Participant> linphoneParticipant, QObject *parent = nullptr);
 	
 	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT)
-	Q_PROPERTY(QString sipAddress MEMBER mSipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
-	Q_PROPERTY(bool adminStatus MEMBER mAdminStatus READ getAdminStatus WRITE setAdminStatus NOTIFY adminStatusChanged)
+	Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
+	Q_PROPERTY(bool adminStatus READ getAdminStatus WRITE setAdminStatus NOTIFY adminStatusChanged)
     Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT)
     Q_PROPERTY(bool focus READ isFocus CONSTANT)
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)

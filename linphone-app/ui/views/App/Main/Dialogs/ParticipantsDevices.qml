@@ -72,12 +72,11 @@ DialogPlus {
 											 ):''
 						Icon{
 							property int securityLevel : modelData.securityLevel
-							anchors.right: parent.right
 							anchors.top:parent.top
-							anchors.topMargin: -5
+							anchors.horizontalCenter: parent.right
 							visible: modelData && securityLevel !== 1
 							icon: modelData?(securityLevel === 2?'secure_level_1': securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'):'secure_level_unsafe'
-							iconSize:15
+							iconSize: parent.height/2
 							Timer{// Workaround : no security events are send when device's security change.
 									onTriggered: parent.securityLevel = modelData.securityLevel
 									repeat:true

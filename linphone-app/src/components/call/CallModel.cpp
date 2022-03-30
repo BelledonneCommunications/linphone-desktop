@@ -625,6 +625,10 @@ void CallModel::setPausedByUser (bool status) {
 }
 
 // -----------------------------------------------------------------------------
+bool CallModel::getRemoteVideoEnabled () const {
+	shared_ptr<const linphone::CallParams> params = mCall->getRemoteParams();
+	return params && params->videoEnabled();
+}
 
 bool CallModel::getVideoEnabled () const {
 	shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();

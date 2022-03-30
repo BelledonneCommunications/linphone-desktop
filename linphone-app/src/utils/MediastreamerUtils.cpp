@@ -64,9 +64,22 @@ void SimpleCaptureGraph::init() {
 	if (!playbackVolumeFilter) {
 		playbackVolumeFilter = ms_factory_create_filter(msFactory, MS_VOLUME_ID);
 	}
+	if(!resamplerFilter)
+		resamplerFilter = ms_factory_create_filter(msFactory, MS_RESAMPLE_ID);
+	int captureRate, playbackRate, captureChannels, playbackChannels;
+	ms_filter_call_method(audioCapture,MS_FILTER_GET_SAMPLE_RATE,&captureRate);
+	ms_filter_call_method(audioSink,MS_FILTER_GET_SAMPLE_RATE,&playbackRate);
+	ms_filter_call_method(audioCapture,MS_FILTER_GET_NCHANNELS,&captureChannels);
+	ms_filter_call_method(audioSink,MS_FILTER_GET_NCHANNELS,&playbackChannels);
+	
+	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_SAMPLE_RATE,&captureRate);
+	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_OUTPUT_SAMPLE_RATE,&playbackRate);
+	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_NCHANNELS,&captureChannels);
+	ms_filter_call_method(resamplerFilter,MS_FILTER_SET_OUTPUT_NCHANNELS,&playbackChannels);
 
 	ms_filter_link(audioCapture, 0, captureVolumeFilter, 0);
-	ms_filter_link(captureVolumeFilter, 0, playbackVolumeFilter, 0);
+	ms_filter_link(captureVolumeFilter, 0, resamplerFilter, 0);
+	ms_filter_link(resamplerFilter, 0, playbackVolumeFilter, 0);
 	ms_filter_link(playbackVolumeFilter, 0, audioSink, 0);
 
 	//Mute playback
@@ -99,14 +112,18 @@ void SimpleCaptureGraph::destroy() {
 	
 	if (audioSink)
 		ms_filter_unlink(playbackVolumeFilter, 0, audioSink, 0);
-	if (captureVolumeFilter && playbackVolumeFilter)
-		ms_filter_unlink(captureVolumeFilter, 0, playbackVolumeFilter, 0);
+	if (captureVolumeFilter && resamplerFilter)
+		ms_filter_unlink(captureVolumeFilter, 0, resamplerFilter, 0);
+	if (resamplerFilter && playbackVolumeFilter)
+		ms_filter_unlink(resamplerFilter, 0, playbackVolumeFilter, 0);
 	if (audioCapture)
 		ms_filter_unlink(audioCapture, 0, captureVolumeFilter, 0);
 	if (playbackVolumeFilter)
 		ms_filter_destroy(playbackVolumeFilter);
 	if (captureVolumeFilter)
 		ms_filter_destroy(captureVolumeFilter);
+	if (resamplerFilter)
+		ms_filter_destroy(resamplerFilter);
 	if (audioSink)
 		ms_filter_destroy(audioSink);
 	if (audioCapture)
@@ -117,6 +134,7 @@ void SimpleCaptureGraph::destroy() {
 	ticker = nullptr;
 	playbackVolumeFilter = nullptr;
 	captureVolumeFilter = nullptr;
+	resamplerFilter = nullptr;
 	audioSink = nullptr;
 	audioCapture = nullptr;
 }

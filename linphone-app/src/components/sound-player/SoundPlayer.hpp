@@ -42,6 +42,7 @@ class SoundPlayer : public QObject {
 	Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged)
 	Q_PROPERTY(PlaybackState playbackState READ getPlaybackState WRITE setPlaybackState NOTIFY playbackStateChanged)
 	Q_PROPERTY(int duration READ getDuration NOTIFY sourceChanged)
+	Q_PROPERTY(bool isRinger MEMBER mIsRinger)
 	
 public:
 	enum PlaybackState {
@@ -92,6 +93,7 @@ private:
 	
 	QString mSource;
 	PlaybackState mPlaybackState = StoppedState;
+	bool mIsRinger = false;
 	
 	bool mForceClose = false;
 	QMutex mForceCloseMutex;

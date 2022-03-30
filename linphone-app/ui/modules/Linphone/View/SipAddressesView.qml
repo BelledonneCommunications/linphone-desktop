@@ -133,10 +133,9 @@ ScrollableListView {
 												 (sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({ sipAddress : sipAddressesView.interpretableSipAddress}) : true)
 
 										icon: 'secure_on'
-										iconSize:15
-										anchors.right:parent.right
+										iconSize: parent.height/2
 										anchors.top:parent.top
-										anchors.topMargin: -3
+										anchors.horizontalCenter: parent.right
 									}
 								}
 							}
@@ -304,10 +303,9 @@ ScrollableListView {
 										 (sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler(sipAddressEntry.entry) : true)
 
 								icon: 'secure_on'
-								iconSize:15
-								anchors.right:parent.right
+								iconSize: parent.height/2
 								anchors.top:parent.top
-								anchors.topMargin: -3
+								anchors.horizontalCenter: parent.right
 							}
 						}
 					}

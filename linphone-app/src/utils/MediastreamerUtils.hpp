@@ -91,6 +91,7 @@ namespace MediastreamerUtils {
 		MSFilter *audioCapture = nullptr;
 		MSFilter *captureVolumeFilter = nullptr;
 		MSFilter *playbackVolumeFilter = nullptr;
+		MSFilter *resamplerFilter = nullptr;
 		MSTicker *ticker = nullptr;
 		MSSndCard *playbackCard = nullptr;
 		MSSndCard *captureCard = nullptr;
