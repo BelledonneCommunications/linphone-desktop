@@ -144,7 +144,7 @@ TabContainer {
 			title: qsTr('assistantTitle')
 			
 			width: parent.width
-			
+			visible: SettingsModel.useWebview() || SettingsModel.developerSettingsEnabled
 			FormLine {
 				FormGroup {
 					label: 'Registration URL'
@@ -155,6 +155,7 @@ TabContainer {
 						onEditingFinished: SettingsModel.assistantRegistrationUrl = text
 					}
 				}
+				visible: SettingsModel.useWebview()
 			}
 			
 			FormLine {
@@ -167,6 +168,7 @@ TabContainer {
 						onEditingFinished: SettingsModel.assistantLoginUrl = text
 					}
 				}
+				visible: SettingsModel.useWebview()
 			}
 			
 			FormLine {

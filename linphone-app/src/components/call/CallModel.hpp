@@ -132,6 +132,7 @@ public:
 	Q_INVOKABLE bool transferTo (const QString &sipAddress);
 	Q_INVOKABLE bool transferToAnother (const QString &peerAddress);
 	
+	Q_INVOKABLE bool getRemoteVideoEnabled () const;
 	Q_INVOKABLE void acceptVideoRequest ();
 	Q_INVOKABLE void rejectVideoRequest ();
 	

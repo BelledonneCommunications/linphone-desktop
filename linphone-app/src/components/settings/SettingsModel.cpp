@@ -350,9 +350,7 @@ void SettingsModel::setCaptureDevice (const QString &device) {
 		CoreManager::getInstance()->getCore()->setCaptureDevice(devId);
 		CoreManager::getInstance()->getCore()->setInputAudioDevice(*audioDevice);
 		emit captureDeviceChanged(device);
-		if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
-			createCaptureGraph();
-		}
+		createCaptureGraph();
 	}else
 		qWarning() << "Cannot set Capture device. The ID cannot be matched with an existant device : " << device;
 }
@@ -376,9 +374,7 @@ void SettingsModel::setPlaybackDevice (const QString &device) {
 		CoreManager::getInstance()->getCore()->setPlaybackDevice(devId);
 		CoreManager::getInstance()->getCore()->setOutputAudioDevice(*audioDevice);
 		emit playbackDeviceChanged(device);
-		if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
-			createCaptureGraph();
-		}
+		createCaptureGraph();
 	}else
 		qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }

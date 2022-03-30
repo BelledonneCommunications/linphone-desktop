@@ -19,7 +19,10 @@ ApplicationWindow {
 	
 	title: qsTr('settingsTitle')
 	
-	onClosing: SettingsModel.settingsWindowClosing()
+	onClosing: {
+		SettingsModel.settingsWindowClosing()
+		tabBar.setCurrentIndex(0)
+	}
 	
 	// ---------------------------------------------------------------------------
 	
