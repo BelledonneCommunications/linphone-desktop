@@ -17,7 +17,7 @@ ColumnLayout {
 									   descriptionText: qsTr('removeContactDescription'),
 								   }, function (status) {
 									   if (status) {
-										   ContactsListModel.removeContact(contact)
+										   ContactsListModel.remove(contact)
 									   }
 								   })
 	}
@@ -109,7 +109,7 @@ ColumnLayout {
 							PresenceLevel {
 								Layout.preferredHeight: ContactsStyle.contact.presenceLevelSize
 								Layout.preferredWidth: ContactsStyle.contact.presenceLevelSize
-								level: $contact.presenceLevel
+								level: modelData.presenceLevel
 							}
 							
 							Text {
@@ -117,7 +117,7 @@ ColumnLayout {
 								color: ContactsStyle.contact.presence.color
 								elide: Text.ElideRight
 								font.pointSize: ContactsStyle.contact.presence.pointSize
-								text: Presence.getPresenceStatusAsString($contact.presenceStatus)
+								text: Presence.getPresenceStatusAsString(modelData.presenceStatus)
 							}
 						}
 					}
@@ -189,7 +189,7 @@ ColumnLayout {
 									verticalCenter: parent.verticalCenter
 								}
 								
-								onClicked: _removeContact($contact)
+								onClicked: _removeContact(modelData)
 							}
 						}
 					}
@@ -223,7 +223,7 @@ ColumnLayout {
 							relativeTo: loader
 							relativeY: loader.height
 							
-							sipAddresses: $contact.vcard.sipAddresses
+							sipAddresses: modelData.vcard.sipAddresses
 							
 							onSipAddressClicked: actions.handlers[index](sipAddress)
 						}
@@ -250,7 +250,7 @@ ColumnLayout {
 							anchors.fill: parent
 							
 							onClicked: window.setView('ContactEdit', {
-														  sipAddress: $contact.vcard.sipAddresses[0]
+														  sipAddress: modelData.vcard.sipAddresses[0]
 													  })
 						}
 						
@@ -269,8 +269,8 @@ ColumnLayout {
 								Avatar {
 									anchors.centerIn: parent
 									
-									image: $contact.vcard.avatar
-									username: $contact.vcard.username
+									image: modelData.vcard.avatar
+									username: modelData.vcard.username
 									
 									height: ContactsStyle.contact.avatarSize
 									width: ContactsStyle.contact.avatarSize
@@ -289,7 +289,7 @@ ColumnLayout {
 									pointSize: ContactsStyle.contact.username.pointSize
 								}
 								
-								text: $contact.vcard.username
+								text: modelData.vcard.username
 								verticalAlignment: Text.AlignVCenter
 							}
 							

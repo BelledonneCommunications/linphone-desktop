@@ -29,29 +29,27 @@
 #include <QString>
 #include <QAbstractListModel>
 
+#include "app/proxyModel/ProxyListModel.hpp"
+
 class ContentModel;
 class ChatMessageModel;
 
-class ContentListModel : public QAbstractListModel {
+class ContentListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
 	ContentListModel (ChatMessageModel * message);
 	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
 	int count();
 	
-	virtual QHash<int, QByteArray> roleNames () const override;
-	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	std::shared_ptr<ContentModel> add(std::shared_ptr<linphone::Content> content);
+	QSharedPointer<ContentModel> add(std::shared_ptr<linphone::Content> content);
 	void addFile(const QString& path);
 	Q_INVOKABLE void remove(ContentModel * model);
 	
 	void clear();
 	void removeDownloadedFiles();
 	
-	std::shared_ptr<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);// Return the contentModel by checking Content, or if it is the same file.
-	QList<std::shared_ptr<ContentModel>> getContents();
+	QSharedPointer<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);// Return the contentModel by checking Content, or if it is the same file.
 	
 	void updateContent(std::shared_ptr<linphone::Content> oldContent, std::shared_ptr<linphone::Content> newContent);
 	void updateContents(ChatMessageModel * messageModel);
@@ -63,10 +61,7 @@ signals:
 	void contentsChanged();
 	
 private:
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	
-	QList<std::shared_ptr<ContentModel>> mList;
 	ChatMessageModel * mParent;
 	
 };

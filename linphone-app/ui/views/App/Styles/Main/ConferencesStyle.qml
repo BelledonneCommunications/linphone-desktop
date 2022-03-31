@@ -43,6 +43,10 @@ QtObject {
 			property color color: ColorsList.add(sectionName+'_conference_border', 'f').color
 			property int width: 1
 		}
+		property QtObject selectedBorder: QtObject{
+			property color color: ColorsList.add(sectionName+'_conference_selected_border', 'm').color	
+			property int width: 2
+		}
 		
 		property QtObject indicator: QtObject {
 			property color color: ColorsList.add(sectionName+'_conference_indicator', 'i').color

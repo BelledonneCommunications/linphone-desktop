@@ -24,9 +24,10 @@
 #include <linphone++/linphone.hh>
 #include <QDateTime>
 #include <QObject>
+#include <QSharedPointer>
 
 class ParticipantListModel;
-class ConferenceSchedulerModel;
+class ConferenceSchedulerHandler;
 
 class ConferenceInfoModel : public QObject {
 	Q_OBJECT
@@ -45,7 +46,7 @@ public:
 	
 	//Q_PROPERTY(participants READ getParticipants WRITE setParticipants NOTIFY participantsChanged)
 	
-	static std::shared_ptr<ConferenceInfoModel> create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
+	static QSharedPointer<ConferenceInfoModel> create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	ConferenceInfoModel (QObject * parent = nullptr);
 	ConferenceInfoModel (std::shared_ptr<linphone::ConferenceInfo> conferenceInfo, QObject * parent = nullptr);
 	~ConferenceInfoModel ();
@@ -96,12 +97,13 @@ signals:
 	
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;
-	std::shared_ptr<ConferenceSchedulerModel> mConferenceSchedulerModel = nullptr;
-	std::weak_ptr<ConferenceInfoModel> mSelf;	// For Linphone listener
+	std::shared_ptr<ConferenceSchedulerHandler> mConferenceSchedulerHandler = nullptr;
+	
+	QWeakPointer<ConferenceInfoModel> mSelf;	// For Linphone listener
 	bool mIsScheduled = true;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<ConferenceInfoModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ConferenceInfoModel>)
 Q_DECLARE_METATYPE(ConferenceInfoModel*)
 
 #endif

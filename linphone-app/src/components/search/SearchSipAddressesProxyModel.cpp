@@ -42,7 +42,7 @@ SearchSipAddressesProxyModel::SearchSipAddressesProxyModel (QObject *parent) : Q
 // -----------------------------------------------------------------------------
 
 SearchSipAddressesModel * SearchSipAddressesProxyModel::getModel(){
-	return dynamic_cast<SearchSipAddressesModel*>(sourceModel());
+	return qobject_cast<SearchSipAddressesModel*>(sourceModel());
 }
 
 void SearchSipAddressesProxyModel::setFilter (const QString &pattern){

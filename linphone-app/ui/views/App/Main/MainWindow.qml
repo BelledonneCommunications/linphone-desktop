@@ -308,7 +308,7 @@ ApplicationWindow {
 							iconSize: MainWindowStyle.menu.conferences.iconSize
 							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor : MainWindowStyle.menu.conferences.color
 							name: 'MES CONFERENCES'
-							visible: SettingsModel.conferencesEnabled
+							visible: SettingsModel.conferenceEnabled
 							
 							onSelected: {
 								timeline.model.unselectAll()

@@ -27,7 +27,7 @@ SipAddressObserver::SipAddressObserver (const QString &peerAddress, const QStrin
   mLocalAddress = localAddress;
 }
 
-void SipAddressObserver::setContact (ContactModel *contact) {
+void SipAddressObserver::setContact (QSharedPointer<ContactModel> contact) {
   if (contact == mContact)
     return;
 

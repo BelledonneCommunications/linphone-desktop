@@ -13,7 +13,7 @@ import App.Styles 1.0
 
 ColumnLayout {
 	id: container
-	
+	property int filterMode: ConferenceInfoProxyModel.ConferenceType.Scheduled
 	spacing: 0
 	
 	// ---------------------------------------------------------------------------
@@ -28,7 +28,7 @@ ColumnLayout {
 		Text{
 			anchors.verticalCenter: parent.center
 			anchors.fill: parent
-			
+			verticalAlignment: Qt.AlignCenter
 			anchors.leftMargin: 40
 			
 			text: 'Mes conférences'
@@ -54,6 +54,10 @@ ColumnLayout {
 					'PROGRAMMEES',
 					'INVITATIONS'
 				]
+				
+				onClicked: {
+					mainItem.filterMode = (button === 0 ? ConferenceInfoProxyModel.ConferenceType.Ended : button === 1 ?ConferenceInfoProxyModel.ConferenceType.Scheduled : ConferenceInfoProxyModel.ConferenceType.Invitations);
+				}
 			}
 		}
 	}
@@ -79,7 +83,10 @@ ColumnLayout {
 				property: 'date'
 			}
 			
-			model: ConferenceInfoProxyModel{}
+			model: ConferenceInfoProxyModel{
+				id: conferencesProxyModel
+				
+			}
 			
 			// -----------------------------------------------------------------------
 			// Heading.
@@ -141,7 +148,7 @@ ColumnLayout {
 					id: calendarGrid
 					//anchors.fill: parent
 					cellWidth: (container.width-20)/2
-					cellHeight: 112
+					cellHeight: 100
 					model: modelData
 					height: cellHeight * ( (count+1) /2)
 					width: container.width - 20
@@ -151,7 +158,8 @@ ColumnLayout {
 						height: calendarGrid.cellHeight -10
 						radius: 6
 						color: ConferencesStyle.conference.backgroundColor.normal
-						
+						border.color: calendarMessage.containsMouse ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
+						border.width: ConferencesStyle.conference.selectedBorder.width
 						ChatCalendarMessage{
 							id: calendarMessage
 							conferenceInfoModel: modelData

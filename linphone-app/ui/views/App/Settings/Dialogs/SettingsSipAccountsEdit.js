@@ -51,6 +51,7 @@ function initForm (account) {
 
   route.text = config.route
   conferenceUri.text = config.conferenceUri
+  videoConferenceUri.text = config.videoConferenceUri
   contactParams.text = config.contactParams
   avpfInterval.text = config.avpfInterval
   registerEnabled.checked = config.registerEnabled
@@ -71,7 +72,7 @@ function initForm (account) {
 }
 
 function formIsValid () {
-  return dialog._sipAddressOk && dialog._serverAddressOk && dialog._routeOk && dialog._conferenceUriOk
+  return dialog._sipAddressOk && dialog._serverAddressOk && dialog._routeOk && dialog._conferenceUriOk && dialog._videoConferenceUriOk
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +85,7 @@ function validAccount (account) {
 		transport: transport.currentText,
 		route: route.text,
 		conferenceUri: conferenceUri.text,
+		videoConferenceUri: videoConferenceUri.text,
 		contactParams: contactParams.text,
 		avpfInterval: avpfInterval.text,
 		registerEnabled: registerEnabled.checked,
@@ -111,6 +113,10 @@ function handleRouteChanged (route) {
 }
 function handleConferenceUriChanged (uri) {
   dialog._conferenceUriOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)	
+}
+
+function handleVideoConferenceUriChanged (uri) {
+  dialog._videoConferenceUriOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)	
 }
 
 function handleServerAddressChanged (address) {

@@ -26,6 +26,7 @@ Loader{
 	property int maxWidth : parent.width
 	property int fitHeight: active && item ? item.fitHeight + ChatCalendarMessageStyle.heightMargin*2 : 0
 	property int fitWidth: active && item ? Math.max(item.fitWidth, maxWidth/2)  + ChatCalendarMessageStyle.widthMargin*2 : 0
+	property bool containsMouse: false
 	width: parent.width
 	height: fitHeight
 	
@@ -45,9 +46,9 @@ Loader{
 		
 		clip: false
 		
-		cursorShape: Qt.ArrowCursor
 		hoverEnabled: true
 		onClicked: CallsListModel.launchVideoCall(mainItem.conferenceInfoModel.uri, '', 0)
+		onHoveredChanged: mainItem.containsMouse = loadedItem.containsMouse
 		
 		ColumnLayout{
 			id: layout
@@ -59,6 +60,7 @@ Loader{
 				Layout.fillWidth: true
 				Layout.preferredWidth: parent.width	// Need this because fillWidth is not enough...
 				Layout.preferredHeight: ChatCalendarMessageStyle.schedule.iconSize
+				Layout.topMargin: 5
 				spacing: 10
 				RowLayout {
 					id: scheduleRow
@@ -93,7 +95,7 @@ Loader{
 					Layout.fillHeight: true
 					Layout.minimumWidth: implicitWidth
 					Layout.preferredWidth: implicitWidth
-					Layout.rightMargin: 10
+					Layout.rightMargin: 15
 					verticalAlignment: Qt.AlignVCenter
 					color: ChatCalendarMessageStyle.schedule.color
 					elide: Text.ElideRight
@@ -105,7 +107,6 @@ Loader{
 				id: title
 				Layout.fillWidth: true
 				Layout.minimumWidth: implicitWidth
-				Layout.topMargin: 10
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignRight
 				color: ChatCalendarMessageStyle.subject.color
@@ -118,6 +119,7 @@ Loader{
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				Layout.leftMargin: 5
+				Layout.rightMargin: 15
 				
 				spacing: ChatCalendarMessageStyle.participants.spacing
 				
@@ -135,6 +137,13 @@ Loader{
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 					text: mainItem.conferenceInfoModel.displayNamesToString
+				}	
+				ActionButton{
+					Layout.preferredHeight: iconSize
+					Layout.preferredWidth: height
+					isCustom: true
+					colorSet: ChatCalendarMessageStyle.gotoButton
+					backgroundRadius: width/2
 				}
 			}
 		}

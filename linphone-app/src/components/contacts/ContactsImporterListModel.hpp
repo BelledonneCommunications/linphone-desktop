@@ -23,7 +23,7 @@
 
 #include <memory>
 
-#include <QAbstractListModel>
+#include "app/proxyModel/ProxyListModel.hpp"
 
 // =============================================================================
 
@@ -32,23 +32,15 @@ class PluginsModel;
 
 // Store all connectors
 
-class ContactsImporterListModel : public QAbstractListModel {
-
-	Q_OBJECT;
+class ContactsImporterListModel : public ProxyListModel {
+	Q_OBJECT
 
 public:
 	ContactsImporterListModel (QObject *parent = Q_NULLPTR);
 
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
+	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
-	QHash<int, QByteArray> roleNames () const override;
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-
-	ContactsImporterModel *findContactsImporterModelFromId (const int &id) const;
-	QList<PluginsModel*> getList();
+	QSharedPointer<ContactsImporterModel> findContactsImporterModelFromId (const int &id) const;
 
 	Q_INVOKABLE ContactsImporterModel *createContactsImporter(QVariantMap data);
 	Q_INVOKABLE ContactsImporterModel *addContactsImporter (QVariantMap data, int id=-1);
@@ -57,14 +49,13 @@ public:
 //-----------------------------------------------------------------------------------
 
 signals:
-	void contactsImporterAdded (ContactsImporterModel *contact);
-	void contactsImporterRemoved (const ContactsImporterModel *contact);
-	void contactsImporterUpdated (ContactsImporterModel *contact);
+	void contactsImporterAdded (QSharedPointer<ContactsImporterModel>);
+	void contactsImporterRemoved (QSharedPointer<ContactsImporterModel>);
+	void contactsImporterUpdated (QSharedPointer<ContactsImporterModel>);
 
 private:
-	void addContactsImporter (ContactsImporterModel *contactsImporter);
+	void addContactsImporter (QSharedPointer<ContactsImporterModel> contactsImporter);
 	
-	QList<PluginsModel *> mList;
 	int mMaxContactsImporterId;	// Used to ensure unicity on ID when creating a connector
 };
 

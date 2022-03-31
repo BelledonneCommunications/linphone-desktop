@@ -40,6 +40,7 @@ class AccountSettingsModel : public QObject {
 	Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
 	
 	Q_PROPERTY(QString conferenceURI READ getConferenceURI NOTIFY conferenceURIChanged)
+	Q_PROPERTY(QString videoConferenceURI READ getVideoConferenceURI NOTIFY videoConferenceURIChanged)
 	
 	// Default info.
 	Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY primaryDisplayNameChanged)
@@ -70,6 +71,7 @@ public:
 	
 	Q_INVOKABLE QVariantMap getAccountDescription (const std::shared_ptr<linphone::Account> &account);
 	QString getConferenceURI() const;
+	QString getVideoConferenceURI() const;
 	
 	Q_INVOKABLE void setDefaultAccount (const std::shared_ptr<linphone::Account> &account = nullptr);
 	Q_INVOKABLE void setDefaultAccountFromSipAddress (const QString &sipAddress);
@@ -95,14 +97,13 @@ signals:
 	void fullSipAddressChanged();
 	void registrationStateChanged();
 	void conferenceURIChanged();
+	void videoConferenceURIChanged();
 	
 	void primaryDisplayNameChanged();
 	void primaryUsernameChanged();
 	void primarySipAddressChanged();
 	
 	void accountsChanged();
-	
-	
 	
 	void accountSettingsUpdated ();
 	void defaultAccountChanged();

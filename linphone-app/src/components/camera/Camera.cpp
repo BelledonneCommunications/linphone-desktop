@@ -64,16 +64,6 @@ void Camera::resetWindowId() {
 		CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
 }
 
-class SafeFramebuffer : public QQuickFramebufferObject::Renderer{
-public:
-	SafeFramebuffer(){}
-	QOpenGLFramebufferObject *createFramebufferObject (const QSize &size) override{
-		return new QOpenGLFramebufferObject(size);
-	}	
-	void render () override{}
-	void synchronize (QQuickFramebufferObject *item) override{}
-};
-
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
 	if(mIsPreview){

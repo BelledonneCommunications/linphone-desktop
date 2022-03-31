@@ -31,7 +31,7 @@
 
 using namespace std;
 
-ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstractListModel(parent) {
+ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : ProxyListModel(parent) {
   // Init contacts with linphone friends list.
 	mMaxContactsImporterId = -1;
 	QQmlEngine *engine = App::getInstance()->getEngine();
@@ -53,10 +53,10 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 					QString pluginID =  Utils::coreStringToAppString(config->getString(section, *keyName, ""));
 					PluginDataAPI* data = static_cast<PluginDataAPI*>(PluginsManager::createInstance(pluginID));
 					if(data) {
-						ContactsImporterModel * model = new ContactsImporterModel(data, this);
+						auto model = QSharedPointer<ContactsImporterModel>::create(data, this);
 	// See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
 	// The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
-						engine->setObjectOwnership(model, QQmlEngine::CppOwnership);
+						engine->setObjectOwnership(model.get(), QQmlEngine::CppOwnership);
 						model->setIdentity(id);
 						model->loadConfiguration();// Read the configuration contacts inside the plugin
 						addContactsImporter(model);
@@ -64,37 +64,10 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : QAbstra
 				}
 			}
 		}
-		
 	}
 }
 
 // GUI methods
-
-int ContactsImporterListModel::rowCount (const QModelIndex &) const {
-	return mList.count();
-}
-
-QHash<int, QByteArray> ContactsImporterListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$contactsImporter";
-	return roles;
-}
-
-QVariant ContactsImporterListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-
-	if (!index.isValid() || row < 0 || row >= mList.count())
-		return QVariant();
-
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mList[row]);
-
-	return QVariant();
-}
-
-bool ContactsImporterListModel::removeRow (int row, const QModelIndex &parent) {
-	return removeRows(row, 1, parent);
-}
 
 bool ContactsImporterListModel::removeRows (int row, int count, const QModelIndex &parent) {
 	int limit = row + count - 1;
@@ -105,9 +78,7 @@ bool ContactsImporterListModel::removeRows (int row, int count, const QModelInde
 	beginRemoveRows(parent, row, limit);
 
 	for (int i = 0; i < count; ++i) {
-		ContactsImporterModel *contactsImporter = dynamic_cast<ContactsImporterModel*>(mList.takeAt(row));
-		emit contactsImporterRemoved(contactsImporter);
-		contactsImporter->deleteLater();
+		emit contactsImporterRemoved(mList.takeAt(row).objectCast<ContactsImporterModel>());
 	}
 
 	endRemoveRows();
@@ -117,27 +88,23 @@ bool ContactsImporterListModel::removeRows (int row, int count, const QModelInde
 
 // -----------------------------------------------------------------------------
 
-ContactsImporterModel *ContactsImporterListModel::findContactsImporterModelFromId (const int &id) const {
-	auto it = find_if(mList.begin(), mList.end(), [id](PluginsModel *contactsImporterModel) {
-		return contactsImporterModel->getIdentity() == id;
+QSharedPointer<ContactsImporterModel> ContactsImporterListModel::findContactsImporterModelFromId (const int &id) const {
+	auto it = find_if(mList.begin(), mList.end(), [id](QSharedPointer<QObject> contactsImporterModel) {
+		return contactsImporterModel.objectCast<ContactsImporterModel>()->getIdentity() == id;
 	});
-	return it != mList.end() ? dynamic_cast<ContactsImporterModel*>(*it) : nullptr;
-}
-
-QList<PluginsModel*> ContactsImporterListModel::getList(){
-	return mList;
+	return it != mList.end() ? it->objectCast<ContactsImporterModel>() : nullptr;
 }
 
 // -----------------------------------------------------------------------------
 
 ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVariantMap data){
-	ContactsImporterModel *contactsImporter = nullptr;
+	QSharedPointer<ContactsImporterModel> contactsImporter = nullptr;
 	if( data.contains("pluginID")){
 		PluginDataAPI * dataInstance = static_cast<PluginDataAPI*>(PluginsManager::createInstance(data["pluginID"].toString()));
 		if(dataInstance) {
 // get default values
-			contactsImporter = new ContactsImporterModel(dataInstance, this);
-			App::getInstance()->getEngine()->setObjectOwnership(contactsImporter, QQmlEngine::CppOwnership);
+			contactsImporter = QSharedPointer<ContactsImporterModel>::create(dataInstance, this);
+			App::getInstance()->getEngine()->setObjectOwnership(contactsImporter.get(), QQmlEngine::CppOwnership);
 			QVariantMap newData = ContactsImporterPluginsManager::getDefaultValues(data["pluginID"].toString());// Start with defaults from plugin
 			QVariantMap InstanceFields = contactsImporter->getFields();
 			for(auto field = InstanceFields.begin() ; field != InstanceFields.end() ; ++field)// Insert or Update with the defaults of an instance
@@ -147,64 +114,64 @@ ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVarian
 			contactsImporter->setIdentity(++mMaxContactsImporterId);
 			contactsImporter->setFields(newData);
 		
-			int row = mList.count();
-		
-			beginInsertRows(QModelIndex(), row, row);
 			addContactsImporter(contactsImporter);
-			endInsertRows();
 			emit layoutChanged();
 		
 			emit contactsImporterAdded(contactsImporter);
 		}
 	}
 	
-	return contactsImporter;
+	return contactsImporter.get();
 
 }
-ContactsImporterModel *ContactsImporterListModel::addContactsImporter (QVariantMap data, int pId) {
-	ContactsImporterModel *contactsImporter = findContactsImporterModelFromId(pId);
+ContactsImporterModel* ContactsImporterListModel::addContactsImporter (QVariantMap data, int pId) {
+	auto contactsImporter = findContactsImporterModelFromId(pId);
 	if (contactsImporter) {
 		contactsImporter->setFields(data);
-		return contactsImporter;
+		return contactsImporter.get();
 	}else
 		return createContactsImporter(data);
 }
 
 void ContactsImporterListModel::removeContactsImporter (ContactsImporterModel *contactsImporter) {
-	int index = mList.indexOf(contactsImporter);
-	if (index >=0){
-		if( contactsImporter->getIdentity() >=0 ){// Remove from configuration
-			int id = contactsImporter->getIdentity();
-			string section = Utils::appStringToCoreString(PluginsManager::gPluginsConfigSection+"_"+QString::number(id)+"_"+QString::number(PluginDataAPI::CONTACTS));
-			CoreManager::getInstance()->getCore()->getConfig()->cleanSection(section);
-			if( id == mMaxContactsImporterId)// Decrease mMaxContactsImporterId in a safe way
-				--mMaxContactsImporterId;
-		}
-		removeRow(index);
+	int index = 0;
+	for(auto importer : mList){
+		if( importer.get() == contactsImporter){
+			if( contactsImporter->getIdentity() >=0 ){// Remove from configuration
+				int id = contactsImporter->getIdentity();
+				string section = Utils::appStringToCoreString(PluginsManager::gPluginsConfigSection+"_"+QString::number(id)+"_"+QString::number(PluginDataAPI::CONTACTS));
+				CoreManager::getInstance()->getCore()->getConfig()->cleanSection(section);
+				if( id == mMaxContactsImporterId)// Decrease mMaxContactsImporterId in a safe way
+					--mMaxContactsImporterId;
+			}
+			removeRow(index);
+			return;
+		}else
+			++index;
 	}
 }
 
 void ContactsImporterListModel::importContacts(const int &pId){
 	if( pId >=0) {
-		ContactsImporterModel *contactsImporter = findContactsImporterModelFromId(pId);
+		auto contactsImporter = findContactsImporterModelFromId(pId);
 		if( contactsImporter)
 			contactsImporter->importContacts();
 	}else	// Import from all current connectors
 		for(auto importer : mList)
-			dynamic_cast<ContactsImporterModel*>(importer)->importContacts();
+			qobject_cast<ContactsImporterModel*>(importer.get())->importContacts();
 }
 
 // -----------------------------------------------------------------------------
 
-void ContactsImporterListModel::addContactsImporter (ContactsImporterModel *contactsImporter) {
+void ContactsImporterListModel::addContactsImporter (QSharedPointer<ContactsImporterModel> contactsImporter) {
 	// Connect all update signals
-	QObject::connect(contactsImporter, &ContactsImporterModel::fieldsChanged, this, [this, contactsImporter]() {
+	QObject::connect(contactsImporter.get(), &ContactsImporterModel::fieldsChanged, this, [this, contactsImporter]() {
 		emit contactsImporterUpdated(contactsImporter);
 	});
-	QObject::connect(contactsImporter, &ContactsImporterModel::identityChanged, this, [this, contactsImporter]() {
+	QObject::connect(contactsImporter.get(), &ContactsImporterModel::identityChanged, this, [this, contactsImporter]() {
 		emit contactsImporterUpdated(contactsImporter);
 	});
-	mList << contactsImporter;
+	add(contactsImporter);
 }
 //-----------------------------------------------------------------------------------
 

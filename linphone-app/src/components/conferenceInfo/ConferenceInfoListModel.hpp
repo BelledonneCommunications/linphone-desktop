@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2021-2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -22,33 +22,20 @@
 #define _CONFERENCE_INFO_LIST_MODEL_H_
 
 #include <linphone++/linphone.hh>
-#include <QAbstractListModel>
+#include "app/proxyModel/ProxyListModel.hpp"
 #include <QDate>
 
 // =============================================================================
 
 class ConferenceInfoModel;
 
-class ConferenceInfoListModel : public QAbstractListModel {
+class ConferenceInfoListModel : public ProxyListModel {
   Q_OBJECT
 
 public:
   ConferenceInfoListModel (QObject *parent = Q_NULLPTR);
 
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
   ConferenceInfoModel* getAt(const int& index) const;
-  void add(std::shared_ptr<ConferenceInfoModel> conferenceInfoModel);
-
-private:
-  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-
-  QList<std::shared_ptr<ConferenceInfoModel>> mList;
-  //QMap<QDate, QList<ConferenceInfoModel*>> mMappedList;
-
 };
 Q_DECLARE_METATYPE(QList<ConferenceInfoModel*>*)
 #endif

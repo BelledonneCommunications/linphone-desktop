@@ -30,12 +30,54 @@
 using namespace std;
 
 ConferenceInfoProxyModel::ConferenceInfoProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
+	mEntryTypeFilter = ConferenceType::Scheduled;
 	setSourceModel(new ConferenceInfoMapModel());
 	sort(0, Qt::DescendingOrder);
 }
 
+ConferenceInfoProxyModel::ConferenceInfoProxyModel (ConferenceInfoListModel * list, QObject *parent) : QSortFilterProxyModel(parent) {
+	mEntryTypeFilter = ConferenceType::Scheduled;
+	setSourceModel(list);
+	sort(0, Qt::DescendingOrder);
+}
+
+int ConferenceInfoProxyModel::getConferenceInfoFilter () {
+	return mEntryTypeFilter;
+}
+
+void ConferenceInfoProxyModel::setConferenceInfoFilter (int filterMode) {
+	if (getConferenceInfoFilter() != filterMode) {
+		mEntryTypeFilter = filterMode;
+		invalidate();
+		emit conferenceInfoFilterChanged(filterMode);
+	}
+}
+
 bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
 	return true;
+/*
+	bool show = false;
+	QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
+	const ConferenceInfoListModel* ics = sourceModel()->data(index).value<ConferenceInfoListModel*>();
+		
+		
+	if( mEntryTypeFilter == ConferenceType::Ended && ics->eventModel.value<ChatCallModel*>() != nullptr)
+			show = true;
+		else if( mEntryTypeFilter == ChatRoomModel::EntryType::MessageEntry && eventModel.value<ChatMessageModel*>() != nullptr)
+			show = true;
+		else if( mEntryTypeFilter == ChatRoomModel::EntryType::NoticeEntry && eventModel.value<ChatNoticeModel*>() != nullptr)
+			show = true;
+	}
+	if( show && mFilterText != ""){
+		QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+		auto eventModel = sourceModel()->data(index);
+		ChatMessageModel * chatModel = eventModel.value<ChatMessageModel*>();
+		if( chatModel){
+			QRegularExpression search(QRegularExpression::escape(mFilterText), QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
+			show = chatModel->mContent.contains(search);
+		}
+	}
+	return show;*/
 }
 
 bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -48,4 +90,8 @@ bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIn
 QVariant ConferenceInfoProxyModel::getAt(int row){
 	QModelIndex sourceIndex = mapToSource(this->index(row, 0));
 	return sourceModel()->data(sourceIndex);
+}
+
+void ConferenceInfoProxyModel::add(QSharedPointer<ConferenceInfoModel> conferenceInfoModel){
+	qobject_cast<ConferenceInfoListModel*>(sourceModel())->add(conferenceInfoModel);
 }

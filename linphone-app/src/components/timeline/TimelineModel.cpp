@@ -22,6 +22,7 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
+#include "components/chat-room/ChatRoomListener.hpp"
 #include "utils/Utils.hpp"
 #include "app/App.hpp"
 
@@ -34,14 +35,40 @@
 #include <qqmlapplicationengine.h>
 #include <QTimer>
 
+void TimelineModel::connectTo(ChatRoomListener * listener){
+	connect(listener, &ChatRoomListener::isComposingReceived, this, &TimelineModel::onIsComposingReceived);
+	connect(listener, &ChatRoomListener::messageReceived, this, &TimelineModel::onMessageReceived);
+	connect(listener, &ChatRoomListener::newEvent, this, &TimelineModel::onNewEvent);
+	connect(listener, &ChatRoomListener::chatMessageReceived, this, &TimelineModel::onChatMessageReceived);
+	connect(listener, &ChatRoomListener::chatMessageSending, this, &TimelineModel::onChatMessageSending);
+	connect(listener, &ChatRoomListener::chatMessageSent, this, &TimelineModel::onChatMessageSent);
+	connect(listener, &ChatRoomListener::participantAdded, this, &TimelineModel::onParticipantAdded);
+	connect(listener, &ChatRoomListener::participantRemoved, this, &TimelineModel::onParticipantRemoved);
+	connect(listener, &ChatRoomListener::participantAdminStatusChanged, this, &TimelineModel::onParticipantAdminStatusChanged);
+	connect(listener, &ChatRoomListener::stateChanged, this, &TimelineModel::onStateChanged);
+	connect(listener, &ChatRoomListener::securityEvent, this, &TimelineModel::onSecurityEvent);
+	connect(listener, &ChatRoomListener::subjectChanged, this, &TimelineModel::onSubjectChanged);
+	connect(listener, &ChatRoomListener::undecryptableMessageReceived, this, &TimelineModel::onUndecryptableMessageReceived);
+	connect(listener, &ChatRoomListener::participantDeviceAdded, this, &TimelineModel::onParticipantDeviceAdded);
+	connect(listener, &ChatRoomListener::participantDeviceRemoved, this, &TimelineModel::onParticipantDeviceRemoved);
+	connect(listener, &ChatRoomListener::conferenceJoined, this, &TimelineModel::onConferenceJoined);
+	connect(listener, &ChatRoomListener::conferenceLeft, this, &TimelineModel::onConferenceLeft);
+	connect(listener, &ChatRoomListener::ephemeralEvent, this, &TimelineModel::onEphemeralEvent);
+	connect(listener, &ChatRoomListener::ephemeralMessageTimerStarted, this, &TimelineModel::onEphemeralMessageTimerStarted);
+	connect(listener, &ChatRoomListener::ephemeralMessageDeleted, this, &TimelineModel::onEphemeralMessageDeleted);
+	connect(listener, &ChatRoomListener::conferenceAddressGeneration, this, &TimelineModel::onConferenceAddressGeneration);
+	connect(listener, &ChatRoomListener::participantRegistrationSubscriptionRequested, this, &TimelineModel::onParticipantRegistrationSubscriptionRequested);
+	connect(listener, &ChatRoomListener::participantRegistrationUnsubscriptionRequested, this, &TimelineModel::onParticipantRegistrationUnsubscriptionRequested);
+	connect(listener, &ChatRoomListener::chatMessageShouldBeStored, this, &TimelineModel::onChatMessageShouldBeStored);
+	connect(listener, &ChatRoomListener::chatMessageParticipantImdnStateChanged, this, &TimelineModel::onChatMessageParticipantImdnStateChanged);
+}
 
 // =============================================================================
-std::shared_ptr<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent){
+QSharedPointer<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent){
 	if((!chatRoom || chatRoom->getState() != linphone::ChatRoom::State::Terminated)  && (!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) ) {
-		std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom, parent);
+		QSharedPointer<TimelineModel> model = QSharedPointer<TimelineModel>::create(chatRoom, parent);
 		if(model && model->getChatRoomModel()){
-			model->mSelf = model;
-			chatRoom->addListener(model);
+			
 			// Get Max updatetime from chat room and last call event
 			auto timelineChatRoom = model->getChatRoomModel();
 			std::shared_ptr<linphone::CallLog> lastCall = nullptr;
@@ -84,6 +111,11 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 		CoreManager::getInstance()->handleChatRoomCreated(mChatRoomModel);
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
+	}
+	if(chatRoom){
+		mChatRoomListener = std::make_shared<ChatRoomListener>(this);
+		connectTo(mChatRoomListener.get());
+		chatRoom->addListener(mChatRoomListener);
 	}
 	mSelected = false;
 }
@@ -132,7 +164,7 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", isReadOnly:" << mChatRoomModel->isReadOnly()
 				<< ", state:" << mChatRoomModel->getState();
 		}else
-			mChatRoomModel->resetEntries();// Cleanup leaving chat room
+			mChatRoomModel->resetData();// Cleanup leaving chat room
 		emit selectedChanged(mSelected);
 	}
 }
@@ -146,6 +178,13 @@ void TimelineModel::onDefaultAccountChanged(){
 	if( mSelected && !mChatRoomModel->isCurrentAccount())
 		setSelected(false);
 }
+
+void TimelineModel::disconnectChatRoomListener(){
+	if( mChatRoomModel && mChatRoomListener){
+		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
+	}
+}
+
 //----------------------------------------------------------
 //------				CHAT ROOM HANDLERS
 //----------------------------------------------------------

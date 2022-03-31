@@ -30,20 +30,21 @@
 ChatCallModel::ChatCallModel ( std::shared_ptr<linphone::CallLog> callLog, const bool& isStart, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::CallEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mCallLog = callLog;
+	mIsStart = isStart;
 	if(isStart){
 		mTimestamp = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
-		setIsStart(true);
 	}else{
 		mTimestamp = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
-		setIsStart(false);
 	}
+	mIsOutgoing = (mCallLog->getDir() == linphone::Call::Dir::Outgoing);
+	mStatus = (LinphoneEnums::fromLinphone(mCallLog->getStatus()));
 }
 
 ChatCallModel::~ChatCallModel(){
 }
 
-std::shared_ptr<ChatCallModel> ChatCallModel::create(std::shared_ptr<linphone::CallLog> callLog, const bool& isStart,  QObject * parent){
-	auto model = std::make_shared<ChatCallModel>(callLog, isStart, parent);
+QSharedPointer<ChatCallModel> ChatCallModel::create(std::shared_ptr<linphone::CallLog> callLog, const bool& isStart,  QObject * parent){
+	auto model = QSharedPointer<ChatCallModel>::create(callLog, isStart, parent);
 	if(model ){
 		model->update();
 		model->mSelf = model;

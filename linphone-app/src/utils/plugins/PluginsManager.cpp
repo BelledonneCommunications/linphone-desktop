@@ -115,20 +115,22 @@ QJsonDocument PluginsManager::getJson(const QString &pluginIdentity){
 	}
 	return doc;
 }
-QList<PluginsModel*> PluginsManager::getImporterModels(const QStringList &capabilities){
-	QList<PluginsModel*> models;
+
+QList<QSharedPointer<PluginsModel>> PluginsManager::getImporterModels(const QStringList &capabilities){
+	QList<QSharedPointer<PluginsModel>> models;
 	for(int i = 0 ; i < capabilities.size() ; ++i){
 		if( capabilities[i] == "CONTACTS")
-			models += CoreManager::getInstance()->getContactsImporterListModel()->getList();
+			models << CoreManager::getInstance()->getContactsImporterListModel()->getSharedList<PluginsModel>();
 	}
 	return models;
 }
+
 void PluginsManager::openNewPlugin(const QString &pTitle){
 
 	QString fileName = QFileDialog::getOpenFileName(nullptr, pTitle);
 	QString pluginIdentity;
 	QStringList capabilities;
-	QList<PluginsModel*> modelsToReset;
+	QList<QSharedPointer<PluginsModel>> modelsToReset;
 	int doCopy = QMessageBox::Yes;
 	bool cannotRemovePlugin = false;
 	//QVersionNumber pluginVersion, apiVersion = LinphonePlugin::gPluginVersion;
@@ -155,7 +157,7 @@ void PluginsManager::openNewPlugin(const QString &pTitle){
 					doCopy = QMessageBox::question(nullptr, pTitle, "The plugin already exists. Do you want to overwrite it?\n"+oldPlugins.join('\n'), QMessageBox::Yes, QMessageBox::No);
 					if( doCopy == QMessageBox::Yes){
 						if(gPluginsMap.contains(pluginIdentity)){
-							auto importers = CoreManager::getInstance()->getContactsImporterListModel()->getList();
+							auto importers = CoreManager::getInstance()->getContactsImporterListModel()->getSharedList<PluginsModel>();
 							for(auto importer : importers){
 								QJsonObject pluginMetaData(importer->getDataAPI()->getPluginLoader()->metaData());
 								if( pluginMetaData.contains("ID") && pluginMetaData["ID"].toString() == pluginIdentity){

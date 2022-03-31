@@ -31,7 +31,6 @@
 #include "components/calls/CallsListModel.hpp"
 #include "components/chat/ChatModel.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
-#include "components/chat-room/ChatRoomListModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contacts/ContactsImporterListModel.hpp"
@@ -94,7 +93,6 @@ CoreManager::~CoreManager(){
 void CoreManager::initCoreManager(){
 	mCallsListModel = new CallsListModel(this);
 	mChatModel = new ChatModel(this);
-	mChatRoomListModel = new ChatRoomListModel(this);
 	mContactsListModel = new ContactsListModel(this);
 	mContactsImporterListModel = new ContactsImporterListModel(this);
 	mAccountSettingsModel = new AccountSettingsModel(this);
@@ -295,7 +293,7 @@ void CoreManager::updateUserAgent(){
 	forceRefreshRegisters(); 	// After setting a new device name, REGISTER need to take account it.
 }
 
-void CoreManager::handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel){
+void CoreManager::handleChatRoomCreated(const QSharedPointer<ChatRoomModel> &chatRoomModel){
 	emit chatRoomModelCreated(chatRoomModel);
 }
 

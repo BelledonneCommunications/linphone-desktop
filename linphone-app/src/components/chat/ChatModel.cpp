@@ -40,10 +40,10 @@
 
 ChatModel::ChatModel(QObject * parent ) : QObject(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
-	mContents = std::make_shared<ContentListModel>(nullptr);
+	mContents = QSharedPointer<ContentListModel>::create(nullptr);
 }
 
-std::shared_ptr<ContentListModel> ChatModel::getContentListModel() const {
+QSharedPointer<ContentListModel> ChatModel::getContentListModel() const {
 	return mContents;
 }
 

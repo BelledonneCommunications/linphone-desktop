@@ -69,6 +69,7 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::fullSipAddressChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::registrationStateChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::conferenceURIChanged);
+	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::videoConferenceURIChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primaryDisplayNameChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primaryUsernameChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primarySipAddressChanged);
@@ -157,6 +158,8 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 	else
 		map["route"] = "";
 	map["conferenceUri"] = Utils::coreStringToAppString(accountParams->getConferenceFactoryUri());
+	auto address = accountParams->getAudioVideoConferenceFactoryAddress();
+	map["videoConferenceUri"] = address ? Utils::coreStringToAppString(address->asString()) : "";
 	map["contactParams"] = Utils::coreStringToAppString(accountParams->getContactParameters());
 	map["avpfInterval"] = accountParams->getAvpfRrInterval();
 	map["registerEnabled"] = accountParams->registerEnabled();
@@ -196,6 +199,17 @@ QString AccountSettingsModel::getConferenceURI() const{
 	shared_ptr<linphone::Account> account = core->getDefaultAccount();
 	return account ? Utils::coreStringToAppString(account->getParams()->getConferenceFactoryUri()) : "";
 }
+
+QString AccountSettingsModel::getVideoConferenceURI() const{
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	shared_ptr<linphone::Account> account = core->getDefaultAccount();
+	if(account) {
+		auto address = account->getParams()->getAudioVideoConferenceFactoryAddress();		
+		return address ? Utils::coreStringToAppString(address->asString()) : "";
+	}else
+		return "";
+}
+
 
 void AccountSettingsModel::setDefaultAccount (const shared_ptr<linphone::Account> &account) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
@@ -302,9 +316,13 @@ bool AccountSettingsModel::addOrUpdateAccount(
 		routes.push_back(Utils::interpretUrl(data["route"].toString()));
 		accountParams->setRoutesAddresses(routes);
 	}
-	QString conferenceURI = data["conferenceUri"].toString();
-	if(!conferenceURI.isEmpty())
-		accountParams->setConferenceFactoryUri(Utils::appStringToCoreString(conferenceURI));
+	QString txt = data["conferenceUri"].toString();
+	if(!txt.isEmpty())
+		accountParams->setConferenceFactoryUri(Utils::appStringToCoreString(txt));
+	txt = data["videoConferenceUri"].toString();
+	if(!txt.isEmpty())
+		accountParams->setAudioVideoConferenceFactoryAddress(Utils::interpretUrl(txt));
+		
 	if(data.contains("contactParams"))
 		accountParams->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));
 	if(data.contains("avpfInterval"))

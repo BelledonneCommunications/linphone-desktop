@@ -18,15 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ConferenceSchedulerModel.hpp"
+#include "ConferenceSchedulerHandler.hpp"
 
 #include <QQmlApplicationEngine>
 #include "app/App.hpp"
 #include "components/core/CoreManager.hpp"
 
 // =============================================================================
-std::shared_ptr<ConferenceSchedulerModel> ConferenceSchedulerModel::create( QObject *parent){
-	std::shared_ptr<ConferenceSchedulerModel> model = std::make_shared<ConferenceSchedulerModel>(parent);
+std::shared_ptr<ConferenceSchedulerHandler> ConferenceSchedulerHandler::create( QObject *parent){
+	std::shared_ptr<ConferenceSchedulerHandler> model = std::make_shared<ConferenceSchedulerHandler>(parent);
 	if(model){
 		model->mSelf = model;
 		model->mConferenceScheduler->addListener(model);
@@ -35,21 +35,21 @@ std::shared_ptr<ConferenceSchedulerModel> ConferenceSchedulerModel::create( QObj
 	return nullptr;
 }
 
-ConferenceSchedulerModel::ConferenceSchedulerModel (QObject * parent) : QObject(parent){
+ConferenceSchedulerHandler::ConferenceSchedulerHandler (QObject * parent) : QObject(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mConferenceScheduler = CoreManager::getInstance()->getCore()->createConferenceScheduler();
 }
 
-ConferenceSchedulerModel::~ConferenceSchedulerModel () {
+ConferenceSchedulerHandler::~ConferenceSchedulerHandler () {
 }
 
-std::shared_ptr<linphone::ConferenceScheduler> ConferenceSchedulerModel::getConferenceScheduler(){
+std::shared_ptr<linphone::ConferenceScheduler> ConferenceSchedulerHandler::getConferenceScheduler(){
 	return mConferenceScheduler;
 }
 
-void ConferenceSchedulerModel::onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) {
+void ConferenceSchedulerHandler::onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) {
 	emit stateChanged(state);
-	qWarning() << "ConferenceSchedulerModel::onStateChanged : " << (int)state;
+	qWarning() << "ConferenceSchedulerHandler::onStateChanged : " << (int)state;
 	if( state == linphone::ConferenceSchedulerState::Ready) {
 		std::shared_ptr<linphone::ChatRoomParams> params = CoreManager::getInstance()->getCore()->createDefaultChatRoomParams();
 		params->setBackend(linphone::ChatRoomBackend::Basic);
@@ -57,6 +57,6 @@ void ConferenceSchedulerModel::onStateChanged(const std::shared_ptr<linphone::Co
 	}
 }
 
-void ConferenceSchedulerModel::onInvitationsSent(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
+void ConferenceSchedulerHandler::onInvitationsSent(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
 	emit invitationsSent(failedInvitations);
 }

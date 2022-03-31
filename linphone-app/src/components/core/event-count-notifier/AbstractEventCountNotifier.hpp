@@ -21,7 +21,7 @@
 #ifndef ABSTRACT_EVENT_COUNT_NOTIFIER_H_
 #define ABSTRACT_EVENT_COUNT_NOTIFIER_H_
 
-#include <memory>
+#include <QSharedPointer>
 
 #include <QHash>
 #include <QObject>
@@ -73,7 +73,7 @@ private:
 	
 	void internalnotifyEventCount ();
 	
-	void handleChatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
+	void handleChatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel);
 	void handleHistoryModelCreated (HistoryModel *historyModel);
 	
 	QHash<ConferenceId, int> mMissedCalls;

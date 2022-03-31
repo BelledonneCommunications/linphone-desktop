@@ -45,7 +45,7 @@
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
-#include "components/conferenceScheduler/ConferenceSchedulerModel.hpp"
+#include "components/conferenceScheduler/ConferenceSchedulerHandler.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
@@ -73,8 +73,8 @@ using namespace std;
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-std::shared_ptr<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo){
-	std::shared_ptr<ConferenceInfoModel> model = std::make_shared<ConferenceInfoModel>(conferenceInfo);
+QSharedPointer<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo){
+	QSharedPointer<ConferenceInfoModel> model = QSharedPointer<ConferenceInfoModel>::create(conferenceInfo);
 	if(model){
 		model->mSelf = model;
 		 //chatRoom->addListener(model);
@@ -113,9 +113,7 @@ QDateTime ConferenceInfoModel::getDateTime() const{
 }
 
 int ConferenceInfoModel::getDuration() const{
-	int duration = mConferenceInfo->getDuration();
-	qWarning() << "Duration: " << duration;
-	return duration;
+	return mConferenceInfo->getDuration();
 }
 
 QDateTime ConferenceInfoModel::getEndDateTime() const{
@@ -203,10 +201,10 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();// and with " << conferenceInfo->getConferenceInfo()->getParticipants().size();
 	
 	if( true || isScheduled()){
-		mConferenceSchedulerModel = ConferenceSchedulerModel::create(this);
-		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
+		mConferenceSchedulerHandler = ConferenceSchedulerHandler::create(this);
+		connect(mConferenceSchedulerHandler.get(), &ConferenceSchedulerHandler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
 		
-		mConferenceSchedulerModel->getConferenceScheduler()->setInfo(mConferenceInfo);
+		mConferenceSchedulerHandler->getConferenceScheduler()->setInfo(mConferenceInfo);
 	}else{
 		auto conferenceParameters = core->createConferenceParams(nullptr);
 		conferenceParameters->enableAudio(true);
@@ -235,6 +233,6 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 
 
 void ConferenceInfoModel::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
-	mConferenceSchedulerModel->getConferenceScheduler()->removeListener(mConferenceSchedulerModel);
+	mConferenceSchedulerHandler->getConferenceScheduler()->removeListener(mConferenceSchedulerHandler);
 	emit invitationsSent();
 }

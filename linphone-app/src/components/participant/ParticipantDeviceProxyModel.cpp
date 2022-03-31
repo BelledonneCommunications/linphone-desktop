@@ -39,9 +39,10 @@ bool ParticipantDeviceProxyModel::filterAcceptsRow (
 ) const {
 	Q_UNUSED(sourceRow)
 	Q_UNUSED(sourceParent)
-  //const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  //const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
-	return true;
+	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
+	const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
+	
+	return device && (isShowMe() || !device->isMe());
 }
 
 bool ParticipantDeviceProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -63,11 +64,15 @@ CallModel * ParticipantDeviceProxyModel::getCallModel() const{
 }
 
 int ParticipantDeviceProxyModel::getCount() const{
-	ParticipantDeviceListModel* devices = dynamic_cast<ParticipantDeviceListModel*>(sourceModel());
+	ParticipantDeviceListModel* devices = qobject_cast<ParticipantDeviceListModel*>(sourceModel());
 	if(devices)
 		return devices->rowCount(); 
 	else
 		return 0;
+}
+
+bool ParticipantDeviceProxyModel::isShowMe() const{
+	return mShowMe;
 }
 	
 void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
@@ -83,4 +88,11 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::countChanged);
 	setSourceModel(sourceModel);
 	emit countChanged();
+}
+
+void ParticipantDeviceProxyModel::setShowMe(const bool& show){
+	if( mShowMe != show) {
+		mShowMe = show;
+		emit showMeChanged();
+	}
 }

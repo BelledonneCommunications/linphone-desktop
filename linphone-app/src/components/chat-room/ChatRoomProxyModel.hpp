@@ -146,7 +146,7 @@ private:
 	
 	QString mFilterText;
 	
-	std::shared_ptr<ChatRoomModel> mChatRoomModel;
+	QSharedPointer<ChatRoomModel> mChatRoomModel;
 	
 	static constexpr int EntriesChunkSize = 50;
 };

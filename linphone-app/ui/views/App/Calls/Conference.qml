@@ -120,8 +120,8 @@ Rectangle {
 					width: grid.cellWidth
 					
 					Column {
-						readonly property string sipAddress: $call.peerAddress
-						property var _sipAddressObserver : SipAddressesModel.getSipAddressObserver($call.peerAddress, $call.localAddress)
+						readonly property string sipAddress: modelData.peerAddress
+						property var _sipAddressObserver : SipAddressesModel.getSipAddressObserver(modelData.peerAddress, modelData.localAddress)
 						
 						anchors {
 							fill: parent
@@ -148,7 +148,7 @@ Rectangle {
 															)
 							
 							anchors.horizontalCenter: parent.horizontalCenter
-							call: $call
+							call: modelData
 							onCallChanged: if(!call) conference.conferenceModel.invalidate()
 							
 							height: size
@@ -164,7 +164,7 @@ Rectangle {
 								height: CallStyle.header.busyIndicator.height
 								width: CallStyle.header.busyIndicator.width
 								
-								visible: $call && $call.status === CallModel.CallStatusOutgoing
+								visible: modelData && modelData.status === CallModel.CallStatusOutgoing
 							}
 						}
 					}
@@ -176,18 +176,18 @@ Rectangle {
 							leftMargin: ConferenceStyle.grid.spacing
 							bottomMargin: ConferenceStyle.grid.spacing
 						}
-						enabled:!$call.speakerMuted
+						enabled:!modelData.speakerMuted
 						
 						Timer {
 							interval: 50
 							repeat: true
 							running: true
-							onTriggered: parent.value = $call.speakerVu
+							onTriggered: parent.value = modelData.speakerVu
 						}
 					}
 					MouseArea{
 						anchors.fill:parent
-						onClicked:$call.toggleSpeakerMute()
+						onClicked:modelData.toggleSpeakerMute()
 					}
 				}
 			}

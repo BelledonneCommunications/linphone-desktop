@@ -71,11 +71,6 @@ signals:
   void addressRemoved(QString sipAddress);
   
 private:
-  /*
-  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;*/
-
-  //std::shared_ptr<ParticipantListModel> mParticipantListModel;
   ChatRoomModel *mChatRoomModel;
   bool mShowMe = true;
 };

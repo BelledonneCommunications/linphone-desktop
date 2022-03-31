@@ -36,7 +36,6 @@ class AccountSettingsModel;
 class CallsListModel;
 class ChatModel;
 class ChatRoomModel;
-class ChatRoomListModel;
 class ContactsListModel;
 class ContactsImporterListModel;
 class CoreHandlers;
@@ -72,12 +71,6 @@ public:
 		return mHandlers;
 	}
 	
-	//std::shared_ptr<ChatRoomModel> getChatRoomModel (const QString &peerAddress, const QString &localAddress, const bool &isSecure);
-	//std::shared_ptr<ChatRoomModel> getChatRoomModel (ChatRoomModel * data);// Get the shared pointer. This can be done becuase of unicity of ChatRoomModel
-	//std::shared_ptr<ChatRoomModel> getChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create = true);
-	//bool chatRoomModelExists (const QString &sipAddress, const QString &localAddress, const bool &isSecure);
-	//bool chatRoomModelExists (std::shared_ptr<linphone::ChatRoom> chatRoom);
-	
 	HistoryModel* getHistoryModel();
 	RecorderManager* getRecorderManager();
 	
@@ -101,12 +94,6 @@ public:
 		Q_CHECK_PTR(mCallsListModel);
 		return mCallsListModel;
 	}
-	/* Timelines
-  ChatRoomListModel *getChatRoomListModel () const {
-	Q_CHECK_PTR(mChatRoomListModel);
-	return mChatRoomListModel;
-  }*/
-	
 	
 	ContactsListModel *getContactsListModel () const {
 		Q_CHECK_PTR(mContactsListModel);
@@ -184,12 +171,12 @@ public slots:
 	void stopIterate();
 	void setLastRemoteProvisioningState(const linphone::ConfiguringState& state);
 	void createLinphoneCore (const QString &configPath);// In order to delay creation
-	void handleChatRoomCreated(const std::shared_ptr<ChatRoomModel> &chatRoomModel);
+	void handleChatRoomCreated(const QSharedPointer<ChatRoomModel> &chatRoomModel);
 	
 signals:
 	void coreManagerInitialized ();
 	
-	void chatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
+	void chatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel);
 	void historyModelCreated (HistoryModel *historyModel);
 	void recorderManagerCreated(RecorderManager *recorderModel);
 	
@@ -219,7 +206,7 @@ private:
 	static QString getDownloadUrl ();
 	
 	std::shared_ptr<linphone::Core> mCore;
-	std::shared_ptr<CoreHandlers> mHandlers;
+	std::shared_ptr<CoreHandlers> mHandlers;	// It is used for handling linphone. Keep it to shared_ptr.
 	
 	bool mStarted = false;
 	linphone::ConfiguringState mLastRemoteProvisioningState;
@@ -228,7 +215,6 @@ private:
 	ContactsListModel *mContactsListModel = nullptr;
 	ContactsImporterListModel *mContactsImporterListModel = nullptr;
 	TimelineListModel *mTimelineListModel = nullptr;
-	ChatRoomListModel *mChatRoomListModel = nullptr;
 	ChatModel *mChatModel = nullptr;
 	
 	SipAddressesModel *mSipAddressesModel = nullptr;
@@ -236,10 +222,7 @@ private:
 	AccountSettingsModel *mAccountSettingsModel = nullptr;
 	
 	EventCountNotifier *mEventCountNotifier = nullptr;
-	
-	//QHash<QPair<bool, QPair<QString, QString> >, std::weak_ptr<ChatRoomModel>> mChatRoomModels;
-	//QHash<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>> mChatRoomModels;
-	//QList<QPair<std::shared_ptr<linphone::ChatRoom>, std::weak_ptr<ChatRoomModel>>> mChatRoomModels;
+
 	HistoryModel * mHistoryModel = nullptr;
 	LdapListModel *mLdapListModel = nullptr;
 	RecorderManager* mRecorderManager = nullptr;

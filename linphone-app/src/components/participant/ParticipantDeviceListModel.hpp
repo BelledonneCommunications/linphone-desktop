@@ -55,13 +55,11 @@ public slots:
 	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
-	void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onConferenceStateChanged(linphone::Conference::State newState);
 
 signals:
 	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void countChanged();
-	void participantDeviceMediaAvailabilityChanged();
 	
 private:
 	bool removeRow (int row, const QModelIndex &parent = QModelIndex());

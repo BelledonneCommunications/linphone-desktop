@@ -45,7 +45,7 @@ ParticipantModel::ParticipantModel (shared_ptr<linphone::Participant> linphonePa
 // -----------------------------------------------------------------------------
 
 ContactModel *ParticipantModel::getContactModel() const{
-	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(getSipAddress());
+	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(getSipAddress()).get();
 }
 
 int ParticipantModel::getSecurityLevel() const{

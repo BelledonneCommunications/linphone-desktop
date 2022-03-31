@@ -48,7 +48,7 @@ std::shared_ptr<linphone::Address> SearchResultModel::getAddress() const{
 }
 
 ContactModel * SearchResultModel::getContactModel() const{
-	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(getAddressStringUriOnly());
+	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(getAddressStringUriOnly()).get();
 }
 
 

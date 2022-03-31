@@ -42,7 +42,6 @@ ParticipantImdnStateListModel::ParticipantImdnStateListModel (std::shared_ptr<li
 		for(auto imdn : imdns){
 			if(imdn->getParticipant()){
 				auto deviceModel = std::make_shared<ParticipantImdnStateModel>(imdn);
-			//connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 				mList << deviceModel;
 			}
 		}

@@ -100,7 +100,7 @@ int AbstractEventCountNotifier::getMissedCallCountFromLocal(const QString &local
 }
 // -----------------------------------------------------------------------------
 
-void AbstractEventCountNotifier::handleChatRoomModelCreated (const shared_ptr<ChatRoomModel> &chatRoomModel) {
+void AbstractEventCountNotifier::handleChatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel) {
   ChatRoomModel *chatRoomModelPtr = chatRoomModel.get();
   QObject::connect(
     chatRoomModelPtr, &ChatRoomModel::messageCountReset,

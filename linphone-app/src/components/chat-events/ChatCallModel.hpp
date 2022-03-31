@@ -31,7 +31,7 @@ class ChatCallModel : public ChatEvent  {
 	Q_OBJECT
 	
 public:
-	static std::shared_ptr<ChatCallModel> create(std::shared_ptr<linphone::CallLog> chatLog, const bool& isStart, QObject * parent = nullptr);// Call it instead constructor
+	static QSharedPointer<ChatCallModel> create(std::shared_ptr<linphone::CallLog> chatLog, const bool& isStart, QObject * parent = nullptr);// Call it instead constructor
 	ChatCallModel (std::shared_ptr<linphone::CallLog> eventLog, const bool& isStart, QObject * parent = nullptr);
 	virtual ~ChatCallModel();
 	
@@ -62,8 +62,8 @@ signals:
 	
 private:
 	std::shared_ptr<linphone::CallLog> mCallLog;
-	std::weak_ptr<ChatCallModel> mSelf;	// Used to pass to functions that need a shared_ptr
+	QWeakPointer<ChatCallModel> mSelf;	// Used to pass to functions that need a shared_ptr
 };
-Q_DECLARE_METATYPE(std::shared_ptr<ChatCallModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ChatCallModel>)
 Q_DECLARE_METATYPE(ChatCallModel*)
 #endif

@@ -126,6 +126,9 @@ set(SOURCES
 	src/app/providers/ImageProvider.cpp
 	src/app/providers/ExternalImageProvider.cpp
 	src/app/providers/ThumbnailProvider.cpp
+	src/app/proxyModel/ProxyListModel.cpp
+	#src/app/proxyModel/ProxyMapModel.cpp
+	#src/app/proxyModel/ProxyModel.cpp
 	src/app/translator/DefaultTranslator.cpp
 	src/components/assistant/AssistantModel.cpp
 	src/components/authentication/AuthenticationNotifier.cpp
@@ -138,10 +141,11 @@ set(SOURCES
 	src/components/chat/ChatModel.cpp
 	src/components/chat-events/ChatCallModel.cpp
 	src/components/chat-events/ChatEvent.cpp
+	src/components/chat-events/ChatMessageListener.cpp
 	src/components/chat-events/ChatMessageModel.cpp
 	src/components/chat-events/ChatNoticeModel.cpp
+	src/components/chat-room/ChatRoomListener.cpp
 	src/components/chat-room/ChatRoomModel.cpp
-	src/components/chat-room/ChatRoomListModel.cpp
 	src/components/chat-room/ChatRoomProxyModel.cpp
 	src/components/codecs/AbstractCodecsModel.cpp
 	src/components/codecs/AudioCodecsModel.cpp
@@ -154,7 +158,7 @@ set(SOURCES
 	src/components/conferenceInfo/ConferenceInfoListModel.cpp
 	src/components/conferenceInfo/ConferenceInfoMapModel.cpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.cpp
-	src/components/conferenceScheduler/ConferenceSchedulerModel.cpp
+	src/components/conferenceScheduler/ConferenceSchedulerHandler.cpp
 	src/components/contact/ContactModel.cpp
 	src/components/contact/VcardModel.cpp
 	src/components/contacts/ContactsImporterModel.cpp
@@ -243,6 +247,9 @@ set(HEADERS
 	src/app/providers/ImageProvider.hpp
 	src/app/providers/ExternalImageProvider.hpp
 	src/app/providers/ThumbnailProvider.hpp
+	src/app/proxyModel/ProxyListModel.hpp
+	#src/app/proxyModel/ProxyMapModel.hpp
+	#src/app/proxyModel/ProxyModel.hpp
 	src/app/single-application/SingleApplication.hpp
 	src/app/translator/DefaultTranslator.hpp
 	src/components/assistant/AssistantModel.hpp
@@ -256,10 +263,11 @@ set(HEADERS
 	src/components/chat/ChatModel.hpp
 	src/components/chat-events/ChatCallModel.hpp
 	src/components/chat-events/ChatEvent.hpp
+	src/components/chat-events/ChatMessageListener.hpp
 	src/components/chat-events/ChatMessageModel.hpp
 	src/components/chat-events/ChatNoticeModel.hpp
+	src/components/chat-room/ChatRoomListener.hpp
 	src/components/chat-room/ChatRoomModel.hpp
-	src/components/chat-room/ChatRoomListModel.hpp
 	src/components/chat-room/ChatRoomProxyModel.hpp
 	src/components/codecs/AbstractCodecsModel.hpp
 	src/components/codecs/AudioCodecsModel.hpp
@@ -273,7 +281,7 @@ set(HEADERS
 	src/components/conferenceInfo/ConferenceInfoListModel.hpp
 	src/components/conferenceInfo/ConferenceInfoMapModel.hpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.hpp
-	src/components/conferenceScheduler/ConferenceSchedulerModel.hpp
+	src/components/conferenceScheduler/ConferenceSchedulerHandler.hpp
 	src/components/contact/ContactModel.hpp
 	src/components/contact/VcardModel.hpp
 	src/components/contacts/ContactsImporterModel.hpp

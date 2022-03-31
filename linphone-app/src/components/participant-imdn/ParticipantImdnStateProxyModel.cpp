@@ -39,8 +39,6 @@ bool ParticipantImdnStateProxyModel::filterAcceptsRow (
 ) const {
 	Q_UNUSED(sourceRow)
 	Q_UNUSED(sourceParent)
-  //const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  //const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
 	return true;
 }
 

@@ -22,10 +22,10 @@
 #define CALLS_LIST_MODEL_H_
 
 #include <linphone++/linphone.hh>
-#include <QAbstractListModel>
 
 #include "components/call/CallModel.hpp"
 #include "utils/LinphoneEnums.hpp"
+#include "app/proxyModel/ProxyListModel.hpp"
 
 // =============================================================================
 
@@ -34,16 +34,12 @@ class CoreHandlers;
 class ConferenceModel;
 class ConferenceInfoModel;
 
-class CallsListModel : public QAbstractListModel {
+class CallsListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
 	CallsListModel (QObject *parent = Q_NULLPTR);
 	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	
-	QHash<int, QByteArray> roleNames () const override;
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	CallModel *findCallModelFromPeerAddress (const QString &peerAddress) const;
 	
 	void askForTransfer (CallModel *callModel);
@@ -79,8 +75,6 @@ signals:
 	void callMissed (CallModel *callModel);
 	
 private:
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 	
@@ -89,7 +83,6 @@ private:
 	void removeCall (const std::shared_ptr<linphone::Call> &call);
 	void removeCallCb (CallModel *callModel);
 	
-	QList<CallModel *> mList;
 	QList<std::shared_ptr<ConferenceModel>> mConferences;
 	
 	std::shared_ptr<CoreHandlers> mCoreHandlers;

@@ -31,50 +31,25 @@
 
 // =============================================================================
 
-ContentListModel::ContentListModel (ChatMessageModel * message) : QAbstractListModel(message) {
+ContentListModel::ContentListModel (ChatMessageModel * message) : ProxyListModel(message) {
 	mParent = message;
 	if(message){
 		std::list<std::shared_ptr<linphone::Content>> contents = message->getChatMessage()->getContents() ;
 		for(auto content : contents){
-			auto contentModel = std::make_shared<ContentModel>(content, message);
+			auto contentModel = QSharedPointer<ContentModel>::create(content, message);
 			connect(this, &ContentListModel::updateTransferDataRequested, contentModel.get(), &ContentModel::updateTransferData);
 			mList << contentModel;
 		}
 	}
 }
 
-int ContentListModel::rowCount (const QModelIndex &index) const{
-	return mList.count();
-}
-
 int ContentListModel::count(){
 	return mList.count();
 }
 
-QHash<int, QByteArray> ContentListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "modelData";
-	return roles;
-}
-
-QVariant ContentListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mList.count())
-		return QVariant();
-	
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mList[row].get());
-	
-	return QVariant();
-}
-
-std::shared_ptr<ContentModel> ContentListModel::add(std::shared_ptr<linphone::Content> content){
-	int row = mList.count();
-	auto contentModel = std::make_shared<ContentModel>(content, mParent);
-	beginInsertRows(QModelIndex(), row, row);
-	mList << contentModel;
-	endInsertRows();
+QSharedPointer<ContentModel> ContentListModel::add(std::shared_ptr<linphone::Content> content){
+	auto contentModel = QSharedPointer<ContentModel>::create(content, mParent);
+	ProxyListModel::add(contentModel);
 	emit contentsChanged();
 	return contentModel;
 }
@@ -120,64 +95,44 @@ void ContentListModel::remove(ContentModel * model){
 	}
 }
 
-bool ContentListModel::removeRow (int row, const QModelIndex &parent){
-	return removeRows(row, 1, parent);
-}
-
-bool ContentListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	
-	if (row < 0 || count < 0 || limit >= mList.count())
-		return false;
-	
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i)
-		mList.takeAt(row);
-	
-	endRemoveRows();
-	
-	return true;
-}
-
 void ContentListModel::clear(){
 // Delete thumbnails
 	for(auto contentModel : mList){
-		contentModel->removeThumbnail();
+		contentModel.objectCast<ContentModel>()->removeThumbnail();
 	}
-	beginResetModel();
-	mList.clear();
-	endResetModel();
+	resetData();
 }
 
 void ContentListModel::removeDownloadedFiles(){
-	for(auto contentModel : mList){
+	for(auto model : mList){
+		auto contentModel = model.objectCast<ContentModel>();
 		contentModel->removeDownloadedFile();
 		contentModel->removeThumbnail();
 	}
 }
 
-std::shared_ptr<ContentModel> ContentListModel::getContentModel(std::shared_ptr<linphone::Content> content){
-	for(auto c : mList)
+QSharedPointer<ContentModel> ContentListModel::getContentModel(std::shared_ptr<linphone::Content> content){
+	for(auto item : mList){
+		auto c = item.objectCast<ContentModel>();
 		if(c->getContent() == content)
 			return c;
+	}
 	if(content->isFileTransfer() || content->isFile() || content->isFileEncrypted()){
-		for(auto c : mList)// Content object can be different for file (like while data transfer)
+		for(auto item : mList){// Content object can be different for file (like while data transfer)
+			auto c = item.objectCast<ContentModel>();
 			if(c->getContent()->getFilePath() == content->getFilePath())
 				return c;
+		}
 	}
 	return nullptr;
-}
-
-QList<std::shared_ptr<ContentModel>> ContentListModel::getContents(){
-	return mList;
 }
 
 void ContentListModel::updateContent(std::shared_ptr<linphone::Content> oldContent, std::shared_ptr<linphone::Content> newContent){
 	int row = 0;
 	for(auto content = mList.begin() ; content != mList.end() ; ++content, ++row){
-		if( (*content)->getContent() == oldContent){
-			mList.replace(row, std::make_shared<ContentModel>(newContent, (*content)->getChatMessageModel()));
+		auto contentModel = content->objectCast<ContentModel>();
+		if( contentModel->getContent() == oldContent){
+			mList.replace(row, QSharedPointer<ContentModel>::create(newContent, contentModel->getChatMessageModel()));
 			emit dataChanged(index(row,0), index(row,0));
 			return;
 		}
@@ -190,15 +145,15 @@ void ContentListModel::updateContents(ChatMessageModel * messageModel){
 	beginResetModel();
 	for(auto content : contents){
 		if( count >= mList.size()){// New content
-			mList.insert(count, std::make_shared<ContentModel>(content, messageModel));
-		}else if(mList.at(count)->getContent() != content){	// This content is not at its place
+			mList.insert(count, QSharedPointer<ContentModel>::create(content, messageModel));
+		}else if(mList.at(count).objectCast<ContentModel>()->getContent() != content){	// This content is not at its place
 			int c = count + 1;
-			while( c < mList.size() && mList.at(c)->getContent() != content)
+			while( c < mList.size() && mList.at(c).objectCast<ContentModel>()->getContent() != content)
 				++c;
 			if( c < mList.size()){// Found => swap position
 				mList.swap(count, c);
 			}else{// content is new
-				mList.insert(count, std::make_shared<ContentModel>(content, messageModel));	
+				mList.insert(count, QSharedPointer<ContentModel>::create(content, messageModel));	
 			}
 		}
 		++count;
@@ -214,5 +169,5 @@ void ContentListModel::updateAllTransferData(){
 
 void ContentListModel::downloaded(){
 	for(auto content : mList)
-		content->createThumbnail();
+		content.objectCast<ContentModel>()->createThumbnail();
 }

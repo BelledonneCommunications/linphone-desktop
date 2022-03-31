@@ -28,6 +28,8 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
+#include <QSharedPointer>
+
 class ContentListModel;
 
 class ChatModel : public QObject{
@@ -36,13 +38,13 @@ public:
 	ChatModel(QObject * parent = nullptr);
 	
 // Getters
-	std::shared_ptr<ContentListModel> getContentListModel() const;
+	QSharedPointer<ContentListModel> getContentListModel() const;
 	
 // Tools
 	Q_INVOKABLE void clear();
 	
 private:
-	std::shared_ptr<ContentListModel> mContents;
+	QSharedPointer<ContentListModel> mContents;
 };
 
 #endif

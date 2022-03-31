@@ -23,55 +23,48 @@
 
 #include <memory>
 
-#include <QAbstractListModel>
+#include "app/proxyModel/ProxyListModel.hpp"
 
 // =============================================================================
 
 namespace linphone {
-  class FriendList;
+	class FriendList;
 }
 
 class ContactModel;
 class VcardModel;
 
-class ContactsListModel : public QAbstractListModel {
-  friend class SipAddressesModel;
-
-  Q_OBJECT;
-
+class ContactsListModel : public ProxyListModel {
+	friend class SipAddressesModel;
+	
+	Q_OBJECT;
+	
 public:
-  ContactsListModel (QObject *parent = Q_NULLPTR);
-
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-
-  ContactModel *findContactModelFromSipAddress (const QString &sipAddress) const;
-  ContactModel *findContactModelFromUsername (const QString &username) const;
-
-  Q_INVOKABLE ContactModel *addContact (VcardModel *vcardModel);
-  Q_INVOKABLE void removeContact (ContactModel *contact);
-
-  Q_INVOKABLE void cleanAvatars ();
-
+	ContactsListModel (QObject *parent = Q_NULLPTR);
+	
+	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
+	
+	QSharedPointer<ContactModel> findContactModelFromSipAddress (const QString &sipAddress) const;
+	QSharedPointer<ContactModel> findContactModelFromUsername (const QString &username) const;
+	
+	Q_INVOKABLE ContactModel *addContact (VcardModel *vcardModel);
+	Q_INVOKABLE void removeContact (ContactModel *contact);
+	
+	Q_INVOKABLE void cleanAvatars ();
+	
 signals:
-  void contactAdded (ContactModel *contact);
-  void contactRemoved (const ContactModel *contact);
-  void contactUpdated (ContactModel *contact);
-
-  void sipAddressAdded (ContactModel *contact, const QString &sipAddress);
-  void sipAddressRemoved (ContactModel *contact, const QString &sipAddress);
-
+	void contactAdded (QSharedPointer<ContactModel>);
+	void contactRemoved (QSharedPointer<ContactModel>);
+	void contactUpdated (QSharedPointer<ContactModel>);
+	
+	void sipAddressAdded (QSharedPointer<ContactModel>, const QString &sipAddress);
+	void sipAddressRemoved (QSharedPointer<ContactModel>, const QString &sipAddress);
+	
 private:
-  void addContact (ContactModel *contact);
-
-  QList<ContactModel *> mList;
-  QMap<QString, ContactModel*>	mOptimizedSearch;
-  std::shared_ptr<linphone::FriendList> mLinphoneFriends;
+	void addContact (QSharedPointer<ContactModel> contact);
+	
+	QMap<QString, QSharedPointer<ContactModel>>	mOptimizedSearch;
+	std::shared_ptr<linphone::FriendList> mLinphoneFriends;
 };
 
 #endif // CONTACTS_LIST_MODEL_H_

@@ -18,34 +18,33 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CHAT_ROOM_LIST_MODEL_H_
-#define _CHAT_ROOM_LIST_MODEL_H_
+#ifndef _CONFERENCE_INFO_MAP_MODEL_H_
+#define _CONFERENCE_INFO_MAP_MODEL_H_
 
 #include <linphone++/linphone.hh>
 #include <QAbstractListModel>
+#include <QDate>
 
 // =============================================================================
 
-class ChatRoomModel;
+class ConferenceInfoProxyModel;
 
-class ChatRoomListModel : public QAbstractListModel {
-  Q_OBJECT;
+class ConferenceInfoMapModel : public QAbstractListModel {
+  Q_OBJECT
 
 public:
-  ChatRoomListModel (QObject *parent = Q_NULLPTR);
+  ConferenceInfoMapModel (QObject *parent = Q_NULLPTR);
 
   int rowCount (const QModelIndex &index = QModelIndex()) const override;
 
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
+  
+  Q_INVOKABLE void setConferenceInfoFilter (int filterMode);
 
 private:
-  bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-  bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-
-  QList<ChatRoomModel *> mList;
+  QMap<QDate, ConferenceInfoProxyModel*> mMappedList;
 
 };
-
-#endif // _CHAT_ROOM_LIST_MODEL_H_
+Q_DECLARE_METATYPE(ConferenceInfoMapModel*)
+#endif

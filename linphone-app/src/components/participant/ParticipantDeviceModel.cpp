@@ -33,13 +33,34 @@ ParticipantDeviceModel::ParticipantDeviceModel (std::shared_ptr<linphone::Partic
 	mParticipantDevice = device;
 	mCall = nullptr;
 }
-
+/*
 ParticipantDeviceModel::ParticipantDeviceModel (CallModel * call, const bool& isMe, QObject *parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mIsMe = isMe;
 	mCall = call;
-	connect(call, &CallModel::statusChanged, this, &ParticipantDeviceModel::videoEnabledChanged);
+	if( call)
+		connect(call, &CallModel::statusChanged, this, &ParticipantDeviceModel::videoEnabledChanged);
+}*/
+
+std::shared_ptr<ParticipantDeviceModel> ParticipantDeviceModel::create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe, QObject *parent){
+	std::shared_ptr<ParticipantDeviceModel> model = std::make_shared<ParticipantDeviceModel>(device, isMe, parent);
+	if(model){
+		model->mSelf = model;
+		if(device)
+			device->addListener(model);
+		return model;
+	}
+	return nullptr;
 }
+/*
+std::shared_ptr<ParticipantDeviceModel> ParticipantDeviceModel::create(CallModel * call, const bool& isMe, QObject *parent){
+	std::shared_ptr<ParticipantDeviceModel> model = std::make_shared<ParticipantDeviceModel>(call, isMe, parent);
+	if(model){
+		model->mSelf = model;
+		return model;
+	}
+	return nullptr;
+}*/
 
 // -----------------------------------------------------------------------------
 
@@ -81,4 +102,19 @@ bool ParticipantDeviceModel::isMe() const{
 void ParticipantDeviceModel::onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device){
 	if(!device || mParticipantDevice && mParticipantDevice->getAddress()->weakEqual(device))
 		emit securityLevelChanged();
+}
+
+//--------------------------------------------------------------------
+void ParticipantDeviceModel::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
+}
+void ParticipantDeviceModel::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted) {
+}
+void ParticipantDeviceModel::onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
+}
+void ParticipantDeviceModel::onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
+}
+void ParticipantDeviceModel::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {
+}
+void ParticipantDeviceModel::onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType) {
+	emit videoEnabledChanged();
 }

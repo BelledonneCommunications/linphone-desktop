@@ -119,7 +119,7 @@ QString CallModel::getFullLocalAddress () const {
 
 ContactModel *CallModel::getContactModel() const{
 	QString cleanedAddress = mCall ? Utils::cleanSipAddress(Utils::coreStringToAppString(mCall->getRemoteAddress()->asString())) : "";
-	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(cleanedAddress);
+	return CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(cleanedAddress).get();
 }
 
 ChatRoomModel * CallModel::getChatRoomModel() const{
@@ -791,7 +791,7 @@ void CallModel::callEnded(){
 			auto chatRoom = core->searchChatRoom(params, mCall->getCallLog()->getLocalAddress()
 												 , mCall->getRemoteAddress()
 												 , participants);
-			std::shared_ptr<ChatRoomModel> chatRoomModel= CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false);
+			QSharedPointer<ChatRoomModel> chatRoomModel= CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false);
 			if(chatRoomModel)
 				chatRoomModel->callEnded(mCall);
 		}

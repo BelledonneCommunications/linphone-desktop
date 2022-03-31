@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
+#include <QSharedPointer>
 
 #include "components/chat-events/ChatMessageModel.hpp"
 class ChatMessageModel;
@@ -97,8 +98,8 @@ private:
 	std::shared_ptr<linphone::Content> mContent;
 	ChatMessageModel* mChatMessageModel;
 	ChatMessageModel::AppDataManager mAppData;	// Used if there is no Chat Message model set.
-	std::shared_ptr<ConferenceInfoModel> mConferenceInfoModel;
+	QSharedPointer<ConferenceInfoModel> mConferenceInfoModel;
 };
-Q_DECLARE_METATYPE(std::shared_ptr<ContentModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ContentModel>)
 
 #endif

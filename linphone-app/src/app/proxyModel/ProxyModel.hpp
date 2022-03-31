@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,58 +18,46 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONFERENCE_INFO_PROXY_MODEL_H_
-#define CONFERENCE_INFO_PROXY_MODEL_H_
+#ifndef PROXY_MODEL_H_
+#define PROXY_MODEL_H_
 
 #include <QSortFilterProxyModel>
-#include <QSharedPointer>
-
-#include "ConferenceInfoModel.hpp"
+#include <memory>
 
 // =============================================================================
 
-class QWindow;
-class ConferenceInfoListModel;
-
-class ConferenceInfoProxyModel : public QSortFilterProxyModel {
-	class ChatRoomModelFilter;
+class ProxyModel : public QSortFilterProxyModel {
 	Q_OBJECT
 	
 public:
-
-	Q_PROPERTY(int conferenceInfoFilter READ getConferenceInfoFilter WRITE setConferenceInfoFilter NOTIFY conferenceInfoFilterChanged)
+	Q_PROPERTY(int filterMode READ getFilterMode WRITE setFilterMode SIGNAL filterModeChanged)
+	Q_PROPERTY(QAbstractItemModel * model READ getModel WRITE setModel SIGNAL modelChanged)
 	
-	enum ConferenceType {
-		Ended,
-		Scheduled,
-		Invitations
-	};
-	Q_ENUM(ConferenceType)
+	ProxyModel (QObject *parent = Q_NULLPTR);
+	ProxyModel (QAbstractItemModel * list, const int& defaultFilterMode, QObject *parent = Q_NULLPTR);
 	
-	ConferenceInfoProxyModel (QObject *parent = Q_NULLPTR);
-	ConferenceInfoProxyModel (ConferenceInfoListModel * list, QObject *parent = Q_NULLPTR);
-	
-	int getConferenceInfoFilter ();
-	Q_INVOKABLE void setConferenceInfoFilter (int filterMode);
+	int getFilterMode () const;
+	void setFilterMode (int filterMode);
 	
 	Q_INVOKABLE QVariant getAt(int row);
+	QAbstractItemModel *getModel();
+	void setModel(QAbstractItemModel * model);
 	
-	void add(QSharedPointer<ConferenceInfoModel> conferenceInfoModel);
+	//void add(std::shared_ptr<QObject> model);
+public slots:
+	void add(std::shared_ptr<QAbstractItemModel> model);
 	
 signals:
-	void conferenceInfoFilterChanged(int);
+	void filterModeChanged(int);
+	void modelChanged();
+	void added(std::shared_ptr<QAbstractItemModel> model);
 		
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
 private:
-	
-	ConferenceInfoModel *getConferenceInfoModel() const;
-	void setConferenceInfoModel (ConferenceInfoModel *conferenceInfoModel);
-	
-	int mEntryTypeFilter;
-	QSharedPointer<ConferenceInfoModel> mConferenceInfoModel;
+	int mFilterMode;
 };
 
 #endif

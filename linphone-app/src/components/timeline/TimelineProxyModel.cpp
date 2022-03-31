@@ -47,12 +47,12 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 	connect(model, &TimelineListModel::countChanged, this, &TimelineProxyModel::countChanged);
 
 	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultAccountChanged, this, [this]() {
-		dynamic_cast<TimelineListModel*>(sourceModel())->update();
+		qobject_cast<TimelineListModel*>(sourceModel())->update();
 		invalidate();
 		//updateCurrentSelection();
 	});
 	QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
-		dynamic_cast<TimelineListModel*>(sourceModel())->reset();
+		qobject_cast<TimelineListModel*>(sourceModel())->reset();
 		invalidate();// Invalidate and reload GUI if the model has been reset
 		//updateCurrentSelection();
 	});
@@ -63,12 +63,8 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 
 // -----------------------------------------------------------------------------
 
-int TimelineProxyModel::getCount() const{
-	return dynamic_cast<TimelineListModel*>(sourceModel())->getCount();
-}
-
 void TimelineProxyModel::unselectAll(){
-	dynamic_cast<TimelineListModel*>(sourceModel())->selectAll(false);
+	qobject_cast<TimelineListModel*>(sourceModel())->selectAll(false);
 }
 
 void TimelineProxyModel::setFilterFlags(const int& filterFlags){

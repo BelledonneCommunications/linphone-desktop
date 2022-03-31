@@ -130,7 +130,7 @@ ListView {
 		// -------------------------------------------------------------------------
 		
 		function useColorStatus () {
-			return calls.currentIndex === index && $call && $call.status !== CallModel.CallStatusEnded
+			return calls.currentIndex === index && modelData && modelData.status !== CallModel.CallStatusEnded
 		}
 		
 		// -------------------------------------------------------------------------
@@ -150,13 +150,13 @@ ListView {
 			return params ? 'call_sign_' + params.string : ''
 		}
 		
-		entry: $call
+		entry: modelData
 		
 		width: calls.width
 		
 		onClicked: {
-			if ($call.status !== CallModel.CallStatusEnded) {
-				Logic.updateSelectedCall($call, index)
+			if (modelData.status !== CallModel.CallStatusEnded) {
+				Logic.updateSelectedCall(modelData, index)
 			}
 		}
 		
@@ -167,9 +167,9 @@ ListView {
 			
 			readonly property int callId: index
 			
-			readonly property var call: $call
+			readonly property var call: modelData
 			readonly property var callControls: _callControls
-			readonly property var params: Logic.getParams($call)
+			readonly property var params: Logic.getParams(modelData)
 			
 			anchors.centerIn: parent
 			sourceComponent: params ? params.component : null
@@ -177,7 +177,7 @@ ListView {
 		
 		SequentialAnimation on color {
 			loops: CallsStyle.entry.endCallAnimation.loops
-			running: !$call || $call.status === CallModel.CallStatusEnded
+			running: !modelData || modelData.status === CallModel.CallStatusEnded
 			
 			ColorAnimation {
 				duration: CallsStyle.entry.endCallAnimation.duration

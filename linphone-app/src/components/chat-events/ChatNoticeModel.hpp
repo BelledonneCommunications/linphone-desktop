@@ -38,8 +38,8 @@ public:
 	};
 	Q_ENUM(NoticeType);
 	
-	static std::shared_ptr<ChatNoticeModel> create(std::shared_ptr<linphone::EventLog> eventLog, QObject * parent = nullptr);// Call it instead constructor
-	static std::shared_ptr<ChatNoticeModel> create(NoticeType noticeType, const QDateTime& timestamp,const QString& txt, QObject * parent = nullptr);
+	static QSharedPointer<ChatNoticeModel> create(std::shared_ptr<linphone::EventLog> eventLog, QObject * parent = nullptr);// Call it instead constructor
+	static QSharedPointer<ChatNoticeModel> create(NoticeType noticeType, const QDateTime& timestamp,const QString& txt, QObject * parent = nullptr);
 	ChatNoticeModel (std::shared_ptr<linphone::EventLog> eventLog, QObject * parent = nullptr);
 	ChatNoticeModel (NoticeType noticeType, const QDateTime& timestamp, const QString& txt, QObject * parent = nullptr);
 	virtual ~ChatNoticeModel();
@@ -70,10 +70,10 @@ signals:
 	
 private:
 	std::shared_ptr<linphone::EventLog> mEventLog;
-	std::weak_ptr<ChatNoticeModel> mSelf;	// Used to pass to functions that need a shared_ptr
+	QWeakPointer<ChatNoticeModel> mSelf;	// Used to pass to functions that need a shared_ptr
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<ChatNoticeModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ChatNoticeModel>)
 Q_DECLARE_METATYPE(ChatNoticeModel*)
 
 #endif

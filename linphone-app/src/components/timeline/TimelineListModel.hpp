@@ -22,49 +22,44 @@
 #define TIMELINE_LIST_MODEL_H_
 
 #include <QSortFilterProxyModel>
+#include <QSharedPointer>
+
+#include "app/proxyModel/ProxyListModel.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
+
 
 class TimelineModel;
 // =============================================================================
 
-class TimelineListModel : public QAbstractListModel {
+class TimelineListModel : public ProxyListModel {
   Q_OBJECT
 public:
 	
 	Q_PROPERTY(int selectedCount MEMBER mSelectedCount WRITE setSelectedCount NOTIFY selectedCountChanged)
-	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+	Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
     
     TimelineListModel (QObject *parent = Q_NULLPTR);
     
     void reset();
 	void selectAll(const bool& selected);
 	TimelineModel * getAt(const int& index);
-	std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
+	QSharedPointer<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
 	//std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::Conference> chatRoom, const bool &create);
 	Q_INVOKABLE QVariantList getLastChatRooms(const int& maxCount) const;
-	std::shared_ptr<ChatRoomModel> getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
-	std::shared_ptr<ChatRoomModel> getChatRoomModel(ChatRoomModel * chatRoom);
-	int getCount() const;
+	QSharedPointer<ChatRoomModel> getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
+	QSharedPointer<ChatRoomModel> getChatRoomModel(ChatRoomModel * chatRoom);
   
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-  
-	QHash<int, QByteArray> roleNames () const override;
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-  
-	void add (std::shared_ptr<TimelineModel> timeline);	// Use to add a timeline that is not in Linphone list (like empty chat rooms that were hide by configuration)
-// Remove a chatroom
-	Q_INVOKABLE void remove (TimelineModel *importer);
-	void remove(std::shared_ptr<TimelineModel> model);
-	
+	void add (QSharedPointer<TimelineModel> timeline);	// Use to add a timeline that is not in Linphone list (like empty chat rooms that were hide by configuration)
+
 	Q_INVOKABLE void select(ChatRoomModel * chatRoomModel);
-	int mSelectedCount;
+	void setSelectedCount(int selectedCount);
 	
+	int mSelectedCount;
 	bool mAutoSelectAfterCreation = false;// Request to select the next chat room after creation
 	
-	void setSelectedCount(int selectedCount);
 public slots:
 	void update();
-	void removeChatRoomModel(std::shared_ptr<ChatRoomModel> model);
+	void removeChatRoomModel(QSharedPointer<ChatRoomModel> model);
 	void onSelectedHasChanged(bool selected);
 	void onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
 	void onCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) ;
@@ -80,12 +75,9 @@ signals:
 	void updated();
 
 private:
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
+	virtual bool removeRows (int row, int count, const QModelIndex &parent) override;
 	
 	void updateTimelines();
-
-	QList<std::shared_ptr<TimelineModel>> mTimelines;
 };
 
 #endif // TIMELINE_LIST_MODEL_H_

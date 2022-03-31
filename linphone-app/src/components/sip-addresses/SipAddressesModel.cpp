@@ -45,7 +45,7 @@ using namespace std;
 static inline QVariantMap buildVariantMap (const SipAddressesModel::SipAddressEntry &sipAddressEntry) {
 	return QVariantMap{
 		{ "sipAddress", sipAddressEntry.sipAddress },
-		{ "contactModel", QVariant::fromValue(sipAddressEntry.contact) },
+		{ "contactModel", QVariant::fromValue(sipAddressEntry.contact.get()) },
 		{ "presenceStatus", sipAddressEntry.presenceStatus },
 		{ "__localToConferenceEntry", QVariant::fromValue(&sipAddressEntry.localAddressToConferenceEntry) }
 	};
@@ -120,7 +120,7 @@ QVariantMap SipAddressesModel::find (const QString &sipAddress) const {
 ContactModel *SipAddressesModel::mapSipAddressToContact (const QString &sipAddress) const {
 	QString cleanedAddress = Utils::cleanSipAddress(sipAddress);
 	auto it = mPeerAddressToSipAddressEntry.find(cleanedAddress);
-	return it == mPeerAddressToSipAddressEntry.end() ? nullptr : it->contact;
+	return it == mPeerAddressToSipAddressEntry.end() ? nullptr : it->contact.get();
 }
 
 // -----------------------------------------------------------------------------
@@ -268,7 +268,7 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
 
 // -----------------------------------------------------------------------------
 
-void SipAddressesModel::handleChatRoomModelCreated (const shared_ptr<ChatRoomModel> &chatRoomModel) {
+void SipAddressesModel::handleChatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel) {
 	ChatRoomModel *ptr = chatRoomModel.get();
 	
 	QObject::connect(ptr, &ChatRoomModel::allEntriesRemoved, this, [this, ptr] {
@@ -289,30 +289,30 @@ void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
 		handleAllCallCountReset();
 	});
 }
-void SipAddressesModel::handleContactAdded (ContactModel *contact) {
+void SipAddressesModel::handleContactAdded (QSharedPointer<ContactModel> contact) {
 	for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses()) {
 		addOrUpdateSipAddress(sipAddress.toString(), contact);
 	}
 }
 
-void SipAddressesModel::handleContactRemoved (const ContactModel *contact) {
+void SipAddressesModel::handleContactRemoved (QSharedPointer<ContactModel> contact) {
 	for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses())
 		removeContactOfSipAddress(sipAddress.toString());
 }
 
-void SipAddressesModel::handleSipAddressAdded (ContactModel *contact, const QString &sipAddress) {
+void SipAddressesModel::handleSipAddressAdded (QSharedPointer<ContactModel> contact, const QString &sipAddress) {
 	ContactModel *mappedContact = mapSipAddressToContact(sipAddress);
 	if (mappedContact) {
-		qWarning() << "Unable to map sip address" << sipAddress << "to" << contact << "- already used by" << mappedContact;
+		qWarning() << "Unable to map sip address" << sipAddress << "to" << contact.get() << "- already used by" << mappedContact;
 		return;
 	}
 	addOrUpdateSipAddress(sipAddress, contact);
 }
 
-void SipAddressesModel::handleSipAddressRemoved (ContactModel *contact, const QString &sipAddress) {
+void SipAddressesModel::handleSipAddressRemoved (QSharedPointer<ContactModel> contact, const QString &sipAddress) {
 	ContactModel *mappedContact = mapSipAddressToContact(sipAddress);
-	if (contact != mappedContact) {
-		qWarning() << "Unable to remove sip address" << sipAddress << "of" << contact << "- already used by" << mappedContact;
+	if (contact.get() != mappedContact) {
+		qWarning() << "Unable to remove sip address" << sipAddress << "of" << contact.get() << "- already used by" << mappedContact;
 		return;
 	}
 	
@@ -467,7 +467,7 @@ void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::Cha
 }
 // -----------------------------------------------------------------------------
 
-void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, ContactModel *contact) {
+void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, QSharedPointer<ContactModel> contact) {
 	const QString &sipAddress = sipAddressEntry.sipAddress;
 	
 	sipAddressEntry.contact = contact;
@@ -547,10 +547,10 @@ void SipAddressesModel::removeContactOfSipAddress (const QString &sipAddress) {
 	}
 	
 	// Try to map other contact on this sip address.
-	ContactModel *contactModel = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(sipAddress);
+	auto contactModel = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(sipAddress);
 	updateObservers(sipAddress, contactModel);
 	
-	qInfo() << QStringLiteral("Map new contact on sip address: `%1`.").arg(sipAddress) << contactModel;
+	qInfo() << QStringLiteral("Map new contact on sip address: `%1`.").arg(sipAddress) << contactModel.get();
 	addOrUpdateSipAddress(*it, contactModel);
 	
 	int row = mRefs.indexOf(&(*it));
@@ -630,7 +630,7 @@ void SipAddressesModel::initSipAddressesFromCalls () {
 
 void SipAddressesModel::initSipAddressesFromContacts () {
 	for (auto &contact : CoreManager::getInstance()->getContactsListModel()->mList)
-		handleContactAdded(contact);
+		handleContactAdded(contact.objectCast<ContactModel>());
 }
 
 void SipAddressesModel::initRefs () {
@@ -640,7 +640,7 @@ void SipAddressesModel::initRefs () {
 
 // -----------------------------------------------------------------------------
 
-void SipAddressesModel::updateObservers (const QString &sipAddress, ContactModel *contact) {
+void SipAddressesModel::updateObservers (const QString &sipAddress, QSharedPointer<ContactModel> contact) {
 	for (auto &observer : mObservers.values(sipAddress))
 		observer->setContact(contact);
 }

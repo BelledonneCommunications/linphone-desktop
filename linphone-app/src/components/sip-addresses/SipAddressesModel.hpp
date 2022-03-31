@@ -23,6 +23,7 @@
 
 #include <QAbstractListModel>
 #include <QDateTime>
+#include <QSharedPointer>
 
 #include "SipAddressObserver.hpp"
 
@@ -47,7 +48,7 @@ public:
 
   struct SipAddressEntry {
     QString sipAddress;
-    ContactModel *contact;
+    QSharedPointer<ContactModel> contact;
     Presence::PresenceStatus presenceStatus;
     QHash<QString, ConferenceEntry> localAddressToConferenceEntry;
   };
@@ -96,14 +97,14 @@ private:
 
   // ---------------------------------------------------------------------------
 
-  void handleChatRoomModelCreated (const std::shared_ptr<ChatRoomModel> &chatRoomModel);
+  void handleChatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel);
   void handleHistoryModelCreated (HistoryModel *historyModel) ;
 
-  void handleContactAdded (ContactModel *contact);
-  void handleContactRemoved (const ContactModel *contact);
+  void handleContactAdded (QSharedPointer<ContactModel> contact);
+  void handleContactRemoved (QSharedPointer<ContactModel> contact);
 
-  void handleSipAddressAdded (ContactModel *contact, const QString &sipAddress);
-  void handleSipAddressRemoved (ContactModel *contact, const QString &sipAddress);
+  void handleSipAddressAdded (QSharedPointer<ContactModel> contact, const QString &sipAddress);
+  void handleSipAddressRemoved (QSharedPointer<ContactModel> contact, const QString &sipAddress);
 
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
@@ -122,7 +123,7 @@ private:
 
   // A sip address exists in this list if a contact is linked to it, or a call, or a message.
 
-  void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, ContactModel *contact);
+  void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, QSharedPointer<ContactModel> contact);
   void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::Call> &call);
   void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::ChatMessage> &message);
 
@@ -144,7 +145,7 @@ private:
 
   void initRefs ();
 
-  void updateObservers (const QString &sipAddress, ContactModel *contact);
+  void updateObservers (const QString &sipAddress, QSharedPointer<ContactModel> contact);
   void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus);
   void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount, int missedCallCount);
 

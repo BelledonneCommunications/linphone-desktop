@@ -484,7 +484,7 @@ QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& ad
 		std::shared_ptr<linphone::Address> cleanAddress = address->clone();
 		cleanAddress->clean();
 		QString qtAddress = Utils::coreStringToAppString(cleanAddress->asStringUriOnly());
-		ContactModel * model = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(qtAddress);
+		auto model = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(qtAddress);
 		if(model && model->getVcardModel())
 			displayName = model->getVcardModel()->getUsername();
 		else{

@@ -607,14 +607,14 @@ void App::registerTypes () {
 	qRegisterMetaType<ChatRoomModel::EntryType>();
 	qRegisterMetaType<shared_ptr<linphone::SearchResult>>();
 	qRegisterMetaType<std::list<std::shared_ptr<linphone::SearchResult> > >();
-	qRegisterMetaType<std::shared_ptr<ChatMessageModel>>();
-	qRegisterMetaType<std::shared_ptr<ChatRoomModel>>();
-	qRegisterMetaType<std::shared_ptr<ParticipantListModel>>();
-	qRegisterMetaType<std::shared_ptr<ParticipantDeviceModel>>();
-	qRegisterMetaType<std::shared_ptr<ChatMessageModel>>();
-	qRegisterMetaType<std::shared_ptr<ChatNoticeModel>>();
-	qRegisterMetaType<std::shared_ptr<ChatCallModel>>();
-	qRegisterMetaType<std::shared_ptr<ConferenceInfoModel>>();
+	qRegisterMetaType<QSharedPointer<ChatMessageModel>>();
+	qRegisterMetaType<QSharedPointer<ChatRoomModel>>();
+	qRegisterMetaType<QSharedPointer<ParticipantListModel>>();
+	qRegisterMetaType<QSharedPointer<ParticipantDeviceModel>>();
+	qRegisterMetaType<QSharedPointer<ChatMessageModel>>();
+	qRegisterMetaType<QSharedPointer<ChatNoticeModel>>();
+	qRegisterMetaType<QSharedPointer<ChatCallModel>>();
+	qRegisterMetaType<QSharedPointer<ConferenceInfoModel>>();
 	//qRegisterMetaType<std::shared_ptr<ChatEvent>>();
 	LinphoneEnums::registerMetaTypes();
 	

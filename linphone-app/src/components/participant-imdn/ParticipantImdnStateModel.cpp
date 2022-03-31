@@ -32,8 +32,8 @@
 
 ParticipantImdnStateModel::ParticipantImdnStateModel (const std::shared_ptr<const linphone::ParticipantImdnState> imdn, QObject * parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
-	setState(LinphoneEnums::fromLinphone(imdn->getState()));
-	setStateChangeTime(QDateTime::fromSecsSinceEpoch(imdn->getStateChangeTime())) ;
+	mState = (LinphoneEnums::fromLinphone(imdn->getState()));
+	mStateChangeTime = (QDateTime::fromSecsSinceEpoch(imdn->getStateChangeTime())) ;
 	auto participant = imdn->getParticipant();
 	if(participant)
 		mAddress = imdn->getParticipant()->getAddress()->clone();

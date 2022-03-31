@@ -31,6 +31,7 @@
 ChatNoticeModel::ChatNoticeModel ( std::shared_ptr<linphone::EventLog> eventLog, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::NoticeEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mEventLog = eventLog;
+	setEventLogType(LinphoneEnums::fromLinphone(mEventLog->getType()));
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(eventLog->getCreationTime() * 1000);
 }
 
@@ -45,8 +46,8 @@ ChatNoticeModel::ChatNoticeModel ( NoticeType noticeType, const QDateTime& times
 ChatNoticeModel::~ChatNoticeModel(){
 }
 
-std::shared_ptr<ChatNoticeModel> ChatNoticeModel::create(std::shared_ptr<linphone::EventLog> eventLog, QObject * parent){
-	auto model = std::make_shared<ChatNoticeModel>(eventLog, parent);
+QSharedPointer<ChatNoticeModel> ChatNoticeModel::create(std::shared_ptr<linphone::EventLog> eventLog, QObject * parent){
+	auto model = QSharedPointer<ChatNoticeModel>::create(eventLog, parent);
 	if(model && model->update()){
 		model->mSelf = model;
 		return model;
@@ -54,8 +55,8 @@ std::shared_ptr<ChatNoticeModel> ChatNoticeModel::create(std::shared_ptr<linphon
 		return nullptr;
 }
 
-std::shared_ptr<ChatNoticeModel> ChatNoticeModel::create(NoticeType noticeType, const QDateTime& timestamp, const QString& txt, QObject * parent){
-	auto model = std::make_shared<ChatNoticeModel>(noticeType, timestamp, txt, parent);
+QSharedPointer<ChatNoticeModel> ChatNoticeModel::create(NoticeType noticeType, const QDateTime& timestamp, const QString& txt, QObject * parent){
+	auto model = QSharedPointer<ChatNoticeModel>::create(noticeType, timestamp, txt, parent);
 	if(model ){
 		model->mSelf = model;
 		return model;

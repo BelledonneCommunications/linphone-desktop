@@ -17,6 +17,7 @@ DialogPlus {
 	property bool _serverAddressOk: false
 	property bool _routeOk: true
 	property bool _conferenceUriOk: true
+	property bool _videoConferenceUriOk: true
 	
 	buttons: [
 		TextButtonA {
@@ -140,6 +141,22 @@ DialogPlus {
 							error: dialog._conferenceUriOk ? '' : qsTr("invalidConferenceURI")
 							
 							onTextChanged: Logic.handleConferenceUriChanged(text)
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
+							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
+						}
+					}
+				}
+				FormLine {
+					FormGroup {
+						
+						label: 'Video Conference URI'
+						
+						TextField {
+							id: videoConferenceUri
+							//: "invalid conference URI" : Error text about conference URI
+							error: dialog._videoConferenceUriOk ? '' : qsTr("invalidConferenceURI")
+							
+							onTextChanged: Logic.handleVideoConferenceUriChanged(text)
 							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}

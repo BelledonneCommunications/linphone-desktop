@@ -164,6 +164,7 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 	mMutex.lock();
 	
 	fprintf(stdout, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
+	fflush(stdout);
 	if( level == BCTBX_LOG_FATAL)
 		QMessageBox::critical(nullptr, "Linphone will crash", msg); // Print an error message before sending msg to bctoolbox
 	bctbx_log(Constants::QtDomain, level, "QT: %s%s", contextStr, localMsg.constData());

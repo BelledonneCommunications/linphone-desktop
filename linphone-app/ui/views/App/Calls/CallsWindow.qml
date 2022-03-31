@@ -249,7 +249,7 @@ Window {
 				id: middlePane
 				anchors.fill: parent
 				sourceComponent: Logic.getContent()
-				onSourceComponentChanged: {console.log(sourceComponent); rightPaned.childAItem.update()}// Force update when loading a new Content. It's just to be sure
+				onSourceComponentChanged: {rightPaned.childAItem.update()}// Force update when loading a new Content. It's just to be sure
 			}
 			
 			childB: Loader {

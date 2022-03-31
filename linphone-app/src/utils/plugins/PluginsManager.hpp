@@ -6,6 +6,7 @@
 
 #include <QObject>
 #include <QVariantList>
+#include <memory>
 
 // =============================================================================
 
@@ -14,6 +15,7 @@ class PluginDataAPI;
 class QPluginLoader;
 
 class PluginsModel : public QObject{
+Q_OBJECT
 public:
 	PluginsModel(QObject *parent = nullptr) : QObject(parent){}
 	virtual ~PluginsModel(){}
@@ -38,7 +40,7 @@ public:
 
 
 
-	QList<PluginsModel*> getImporterModels(const QStringList &capabilities);
+	QList<QSharedPointer<PluginsModel>> getImporterModels(const QStringList &capabilities);
 	static QMap<QString, QString> gPluginsMap;	// Map between Identity and plugin path
 	static QString gPluginsConfigSection;	// The root name of the plugin's section in configuration file
 };

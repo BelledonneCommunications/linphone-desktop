@@ -44,41 +44,17 @@ public:
 #include "components/participant-imdn/ParticipantImdnStateListModel.hpp"
 
 class ChatMessageModel;
+class ChatMessageListener;
 class ParticipantImdnStateProxyModel;
 class ParticipantImdnStateListModel;
 class ContentModel;
 class ContentListModel;
 class ContentProxyModel;
 
-class ChatMessageListener : public QObject, public linphone::ChatMessageListener {
-Q_OBJECT
-public:
-	ChatMessageListener(ChatMessageModel * model, QObject * parent = nullptr);
-	virtual ~ChatMessageListener(){}
-	
-	virtual void onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer) override;
-	virtual void onFileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size, const std::shared_ptr<linphone::Buffer> & buffer) override;
-	virtual std::shared_ptr<linphone::Buffer> onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size) override;
-	virtual void onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &, size_t offset, size_t) override;
-	virtual void onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) override;
-	virtual void onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state) override;
-	virtual void onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> & message) override;
-	virtual void onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message) override;
-signals:
-	void fileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer);
-	void fileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size, const std::shared_ptr<linphone::Buffer> & buffer);
-	std::shared_ptr<linphone::Buffer> fileTransferSend (const std::shared_ptr<linphone::ChatMessage> &,const std::shared_ptr<linphone::Content> &,size_t,size_t);
-	void fileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &, size_t offset, size_t);
-	void msgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state);
-	void participantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state);
-	void ephemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> & message);
-	void ephemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message);
-};
-
 class ChatMessageModel : public ChatEvent {
 	Q_OBJECT
 public:
-	static std::shared_ptr<ChatMessageModel> create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);// Call it instead constructor
+	static QSharedPointer<ChatMessageModel> create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);// Call it instead constructor
 	ChatMessageModel (std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);
 	virtual ~ChatMessageModel();
 	
@@ -119,7 +95,7 @@ public:
 	
 	
 	std::shared_ptr<linphone::ChatMessage> getChatMessage();
-	std::shared_ptr<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);
+	QSharedPointer<ContentModel> getContentModel(std::shared_ptr<linphone::Content> content);
 	
 	//----------------------------------------------------------------------------
 	
@@ -135,9 +111,9 @@ public:
 	LinphoneEnums::ChatMessageState getState() const;
 	bool isOutgoing() const;
 	Q_INVOKABLE ParticipantImdnStateProxyModel * getProxyImdnStates();
-	std::shared_ptr<ParticipantImdnStateListModel> getParticipantImdnStates() const;
+	QSharedPointer<ParticipantImdnStateListModel> getParticipantImdnStates() const;
 	Q_INVOKABLE ContentProxyModel * getContentsProxy();
-	std::shared_ptr<ContentListModel> getContents() const;
+	QSharedPointer<ContentListModel> getContents() const;
 	
 	bool isReply() const;
 	ChatMessageModel * getReplyChatMessageModel() const;
@@ -184,15 +160,16 @@ signals:
 	
 	
 private:
-	std::shared_ptr<ContentModel> mFileTransfertContent;
+	void connectTo(ChatMessageListener * listener);
+
 	std::shared_ptr<linphone::ChatMessage> mChatMessage;
-	std::shared_ptr<ParticipantImdnStateListModel> mParticipantImdnStateListModel;
-	std::shared_ptr<ChatMessageListener> mChatMessageListener;
-	std::shared_ptr<ContentListModel> mContentListModel;
+	std::shared_ptr<ChatMessageListener> mChatMessageListener;	// This is passed to linpĥone object and must be in shared_ptr
 	
-	std::shared_ptr<ChatMessageModel> mReplyChatMessageModel;
+	QSharedPointer<ContentListModel> mContentListModel;
+	QSharedPointer<ContentModel> mFileTransfertContent;
+	QSharedPointer<ParticipantImdnStateListModel> mParticipantImdnStateListModel;
+	QSharedPointer<ChatMessageModel> mReplyChatMessageModel;
 };
 Q_DECLARE_METATYPE(ChatMessageModel*)
-Q_DECLARE_METATYPE(std::shared_ptr<ChatMessageModel>)
-Q_DECLARE_METATYPE(ChatMessageListener*)
+Q_DECLARE_METATYPE(QSharedPointer<ChatMessageModel>)
 #endif

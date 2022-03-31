@@ -30,12 +30,16 @@
 
 class CallModel;
 
-class ParticipantDeviceModel : public QObject {
+class ParticipantDeviceModel : public QObject, public linphone::ParticipantDeviceListener {
     Q_OBJECT
 
+	
 public:
     ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
-    ParticipantDeviceModel (CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
+    //ParticipantDeviceModel (CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
+    
+    static std::shared_ptr<ParticipantDeviceModel> create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
+    //static std::shared_ptr<ParticipantDeviceModel> create(CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
 	
 	Q_PROPERTY(QString name READ getName CONSTANT)
 	Q_PROPERTY(QString address READ getAddress CONSTANT)
@@ -54,6 +58,14 @@ public:
 	std::shared_ptr<linphone::ParticipantDevice>  getDevice();
 	
 	//void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) override;
+	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted) override;
+	virtual void onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) override;
+	virtual void onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) override;
+	virtual void onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) override;
+			
+	
+	virtual void onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType) override;
 	
 public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
@@ -67,7 +79,7 @@ private:
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
     CallModel * mCall;
-	
+	std::weak_ptr<ParticipantDeviceModel> mSelf;
 };
 
 //Q_DECLARE_METATYPE(ParticipantModel *);

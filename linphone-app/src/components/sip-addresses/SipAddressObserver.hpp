@@ -23,6 +23,8 @@
 
 #include "components/presence/Presence.hpp"
 
+#include <QSharedPointer>
+
 // =============================================================================
 
 class ContactModel;
@@ -50,7 +52,7 @@ public:
 	int securityLevel = 1;
 
 signals:
-	void contactChanged (ContactModel *contact);
+	void contactChanged (QSharedPointer<ContactModel>);
 	void presenceStatusChanged (const Presence::PresenceStatus &presenceStatus);
 	void unreadMessageCountChanged (int unreadMessageCount);
 
@@ -66,10 +68,10 @@ private:
 	// ---------------------------------------------------------------------------
 
 	ContactModel *getContact () const {
-		return mContact;
+		return mContact.get();
 	}
 
-	void setContact (ContactModel *contact);
+	void setContact (QSharedPointer<ContactModel> contact);
 
 	// ---------------------------------------------------------------------------
 
@@ -90,7 +92,7 @@ private:
 	QString mPeerAddress;
 	QString mLocalAddress;
 
-	ContactModel *mContact = nullptr;
+	QSharedPointer<ContactModel> mContact;
 	Presence::PresenceStatus mPresenceStatus = Presence::PresenceStatus::Offline;
 	int mUnreadMessageCount = 0;
 };

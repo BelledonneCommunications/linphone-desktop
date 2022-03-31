@@ -34,6 +34,8 @@
 #include <QUrlQuery>
 #include <QImageReader>
 
+#include "ChatMessageListener.hpp"
+
 #include "app/App.hpp"
 #include "app/paths/Paths.hpp"
 #include "components/contact/ContactModel.hpp"
@@ -52,53 +54,20 @@
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
 
+
+void ChatMessageModel::connectTo(ChatMessageListener * listener){
+	connect(listener, &ChatMessageListener::fileTransferRecv, this, &ChatMessageModel::onFileTransferRecv);
+	connect(listener, &ChatMessageListener::fileTransferSendChunk, this, &ChatMessageModel::onFileTransferSendChunk);
+	connect(listener, &ChatMessageListener::fileTransferSend, this, &ChatMessageModel::onFileTransferSend);
+	connect(listener, &ChatMessageListener::fileTransferProgressIndication, this, &ChatMessageModel::onFileTransferProgressIndication);
+	connect(listener, &ChatMessageListener::msgStateChanged, this, &ChatMessageModel::onMsgStateChanged);
+	connect(listener, &ChatMessageListener::participantImdnStateChanged, this, &ChatMessageModel::onParticipantImdnStateChanged);
+	connect(listener, &ChatMessageListener::ephemeralMessageTimerStarted, this, &ChatMessageModel::onEphemeralMessageTimerStarted);
+	connect(listener, &ChatMessageListener::ephemeralMessageDeleted, this, &ChatMessageModel::onEphemeralMessageDeleted);
+	connect(listener, &ChatMessageListener::participantImdnStateChanged, this->getParticipantImdnStates().get(), &ParticipantImdnStateListModel::onParticipantImdnStateChanged);
+}
 // =============================================================================
 
-
-
-// =============================================================================
-ChatMessageListener::ChatMessageListener(ChatMessageModel * model, QObject* parent) : QObject(parent){
-	connect(this, &ChatMessageListener::fileTransferRecv, model, &ChatMessageModel::onFileTransferRecv);
-	connect(this, &ChatMessageListener::fileTransferSendChunk, model, &ChatMessageModel::onFileTransferSendChunk);
-	connect(this, &ChatMessageListener::fileTransferSend, model, &ChatMessageModel::onFileTransferSend);
-	connect(this, &ChatMessageListener::fileTransferProgressIndication, model, &ChatMessageModel::onFileTransferProgressIndication);
-	connect(this, &ChatMessageListener::msgStateChanged, model, &ChatMessageModel::onMsgStateChanged);
-	connect(this, &ChatMessageListener::participantImdnStateChanged, model, &ChatMessageModel::onParticipantImdnStateChanged);
-	connect(this, &ChatMessageListener::ephemeralMessageTimerStarted, model, &ChatMessageModel::onEphemeralMessageTimerStarted);
-	connect(this, &ChatMessageListener::ephemeralMessageDeleted, model, &ChatMessageModel::onEphemeralMessageDeleted);
-	connect(this, &ChatMessageListener::participantImdnStateChanged, model->getParticipantImdnStates().get(), &ParticipantImdnStateListModel::onParticipantImdnStateChanged);
-}
-
-
-
-void ChatMessageListener::onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer){
-	emit fileTransferRecv(message, content, buffer);
-}
-void ChatMessageListener::onFileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size, const std::shared_ptr<linphone::Buffer> & buffer){
-	emit fileTransferSendChunk(message, content, offset, size, buffer);
-}
-std::shared_ptr<linphone::Buffer> ChatMessageListener::onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size) {
-	emit fileTransferSend(message, content, offset, size);
-	return nullptr;
-}
-void ChatMessageListener::onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t total){
-	emit fileTransferProgressIndication(message, content, offset, total);
-}
-void ChatMessageListener::onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state){
-	emit msgStateChanged(message, state);
-}
-void ChatMessageListener::onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
-	emit participantImdnStateChanged(message, state);
-}
-void ChatMessageListener::onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> & message){
-	emit ephemeralMessageTimerStarted(message);
-}
-void ChatMessageListener::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message){
-	emit ephemeralMessageDeleted(message);
-}
-
-
-// =============================================================================
 ChatMessageModel::AppDataManager::AppDataManager(const QString& appdata){
 	if(!appdata.isEmpty()){
 		for(QString pair : appdata.split(';')){
@@ -121,8 +90,9 @@ QString ChatMessageModel::AppDataManager::toString(){
 ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::MessageEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it
 	if(chatMessage){
-		mParticipantImdnStateListModel = std::make_shared<ParticipantImdnStateListModel>(chatMessage);
-		mChatMessageListener = std::make_shared<ChatMessageListener>(this, parent);
+		mParticipantImdnStateListModel = QSharedPointer<ParticipantImdnStateListModel>::create(chatMessage);
+		mChatMessageListener = std::make_shared<ChatMessageListener>(parent);
+		connectTo(mChatMessageListener.get());
 		mChatMessage = chatMessage;
 		mChatMessage->addListener(mChatMessageListener);
 		if( mChatMessage->isReply()){
@@ -130,7 +100,7 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 			if( replyMessage)// Reply message could be inexistant (for example : when locally deleted)
 				mReplyChatMessageModel = create(replyMessage, parent);
 		}
-		connect(this, &ChatMessageModel::remove, dynamic_cast<ChatRoomModel*>(parent), &ChatRoomModel::removeEntry);
+		connect(this, &ChatMessageModel::remove, qobject_cast<ChatRoomModel*>(parent), &ChatRoomModel::removeEntry);
 	
 		std::list<std::shared_ptr<linphone::Content>> contents = chatMessage->getContents();
 		QString txt;
@@ -144,22 +114,23 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 	
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessage->getTime() * 1000);
 
-	mContentListModel = std::make_shared<ContentListModel>(this);
+	mContentListModel = QSharedPointer<ContentListModel>::create(this);
 }
 
 ChatMessageModel::~ChatMessageModel(){
 	if(mChatMessage)
 		mChatMessage->removeListener(mChatMessageListener);
 }
-std::shared_ptr<ChatMessageModel> ChatMessageModel::create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent){
-	auto model = std::make_shared<ChatMessageModel>(chatMessage, parent);
+QSharedPointer<ChatMessageModel> ChatMessageModel::create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent){
+	auto model = QSharedPointer<ChatMessageModel>::create(chatMessage, parent);
 	return model;
 }
 
 std::shared_ptr<linphone::ChatMessage> ChatMessageModel::getChatMessage(){
 	return mChatMessage;
 }
-std::shared_ptr<ContentModel> ChatMessageModel::getContentModel(std::shared_ptr<linphone::Content> content){
+
+QSharedPointer<ContentModel> ChatMessageModel::getContentModel(std::shared_ptr<linphone::Content> content){
 	return mContentListModel->getContentModel(content);
 }
 
@@ -189,7 +160,7 @@ QString ChatMessageModel::getToSipAddress() const{
 }
 
 ContactModel * ChatMessageModel::getContactModel() const{
-	return mChatMessage ? CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asString())) : nullptr;
+	return mChatMessage ? CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asString())).get() : nullptr;
 }
 
 bool ChatMessageModel::isEphemeral() const{
@@ -219,7 +190,7 @@ ParticipantImdnStateProxyModel * ChatMessageModel::getProxyImdnStates(){
 	return proxy;
 }
 
-std::shared_ptr<ParticipantImdnStateListModel> ChatMessageModel::getParticipantImdnStates() const{
+QSharedPointer<ParticipantImdnStateListModel> ChatMessageModel::getParticipantImdnStates() const{
 	return mParticipantImdnStateListModel;
 }
 
@@ -227,7 +198,7 @@ ContentProxyModel * ChatMessageModel::getContentsProxy(){
 	return new ContentProxyModel(this);
 }
 
-std::shared_ptr<ContentListModel> ChatMessageModel::getContents() const{
+QSharedPointer<ContentListModel> ChatMessageModel::getContents() const{
 	return mContentListModel;
 }
 
@@ -320,7 +291,7 @@ void ChatMessageModel::onFileTransferProgressIndication (const std::shared_ptr<l
 		if (total == offset && mChatMessage && !mChatMessage->isOutgoing()) {
 			mContentListModel->downloaded();
 			bool allAreDownloaded = true;
-			for(auto content : mContentListModel->getContents())
+			for(auto content : mContentListModel->getSharedList<ContentModel>())
 				allAreDownloaded &= content->mWasDownloaded;
 			setWasDownloaded(allAreDownloaded);
 			App::getInstance()->getNotifier()->notifyReceivedFileMessage(message, content);

@@ -51,7 +51,7 @@ void ContentProxyModel::setContentListModel(ContentListModel * model){
 }
 
 void ContentProxyModel::addFile(const QString& path){
-	ContentListModel* model = dynamic_cast<ContentListModel*>(sourceModel());
+	ContentListModel* model = qobject_cast<ContentListModel*>(sourceModel());
 	model->addFile(path);
 }
 
@@ -89,9 +89,9 @@ bool ContentProxyModel::lessThan (const QModelIndex &left, const QModelIndex &ri
 			);
 }
 void ContentProxyModel::remove(ContentModel * model){
-	dynamic_cast<ContentListModel*>(sourceModel())->remove(model);
+	qobject_cast<ContentListModel*>(sourceModel())->remove(model);
 }
 
 void ContentProxyModel::clear(){
-	dynamic_cast<ContentListModel*>(sourceModel())->clear();
+	qobject_cast<ContentListModel*>(sourceModel())->clear();
 }

@@ -32,7 +32,7 @@ class QMutex;
 class CoreHandlers :
 		public QObject,
 		public linphone::CoreListener {
-	Q_OBJECT;
+	Q_OBJECT
 	
 public:
 	CoreHandlers (CoreManager *coreManager);
@@ -157,13 +157,6 @@ private:
 	void onNotifyPresenceReceived (
 			const std::shared_ptr<linphone::Core> &core,
 			const std::shared_ptr<linphone::Friend> &linphoneFriend
-			) override;
-
-	void onRegistrationStateChanged (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::ProxyConfig> &proxyConfig,
-			linphone::RegistrationState state,
-			const std::string &message
 			) override;
 	
 	void onTransferStateChanged (

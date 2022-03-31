@@ -35,6 +35,7 @@ using namespace std;
 
 LdapModel::LdapModel (std::shared_ptr<linphone::Ldap> ldap, QObject *parent ) : QObject(parent){
 	mLdap = ldap;
+	mIsValid = false;
 	if(mLdap)
 		mLdapParams = ldap->getParams()->clone();
 	else{

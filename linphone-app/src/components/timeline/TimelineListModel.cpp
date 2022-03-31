@@ -38,7 +38,7 @@
 
 // =============================================================================
 
-TimelineListModel::TimelineListModel (QObject *parent) : QAbstractListModel(parent) {
+TimelineListModel::TimelineListModel (QObject *parent) : ProxyListModel(parent) {
 	mSelectedCount = 0;
 	CoreHandlers* coreHandlers= CoreManager::getInstance()->getHandlers().get();
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
@@ -55,10 +55,6 @@ TimelineListModel::TimelineListModel (QObject *parent) : QAbstractListModel(pare
 
 // -----------------------------------------------------------------------------
 
-TimelineModel * TimelineListModel::getAt(const int& index){
-	return mTimelines[index].get();
-}
-
 void TimelineListModel::reset(){
 	updateTimelines ();
 }
@@ -68,54 +64,25 @@ void TimelineListModel::update(){
 }
 
 void TimelineListModel::selectAll(const bool& selected){
-	for(auto it = mTimelines.begin() ; it != mTimelines.end() ; ++it)
-		(*it)->setSelected(selected);
-}
-int TimelineListModel::rowCount (const QModelIndex &) const {
-	return mTimelines.count();
-}
-
-QHash<int, QByteArray> TimelineListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$timelines";
-	return roles;
-}
-
-QVariant TimelineListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mTimelines.count())
-		return QVariant();
-	
-	if (role == Qt::DisplayRole)// && !mTimelines[row]->getChatRoomModel()->mDeleteChatRoom)
-		return QVariant::fromValue(mTimelines[row].get());
-	
-	return QVariant();
+	for(auto it = mList.begin() ; it != mList.end() ; ++it)
+		it->objectCast<TimelineModel>()->setSelected(selected);
 }
 
 // -----------------------------------------------------------------------------
-
-
-
-// -----------------------------------------------------------------------------
-
-bool TimelineListModel::removeRow (int row, const QModelIndex &parent) {
-	return removeRows(row, 1, parent);
-}
 
 bool TimelineListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	QVector<std::shared_ptr<TimelineModel> > oldTimelines;
+	QVector<QSharedPointer<TimelineModel> > oldTimelines;
 	oldTimelines.reserve(count);
 	int limit = row + count - 1;
 	
-	if (row < 0 || count < 0 || limit >= mTimelines.count())
+	if (row < 0 || count < 0 || limit >= mList.count())
 		return false;
 	
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i){
-		auto timeline = mTimelines.takeAt(row);
-		timeline->getChatRoomModel()->getChatRoom()->removeListener(timeline);
+		auto timeline = mList.takeAt(row).objectCast<TimelineModel>();
+		timeline->disconnectChatRoomListener();
 		oldTimelines.push_back(timeline);
 	}
 	
@@ -131,15 +98,16 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 
 // -----------------------------------------------------------------------------
 
-std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create){
+QSharedPointer<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create){
 	if(chatRoom){
-		for(auto it = mTimelines.begin() ; it != mTimelines.end() ; ++it){
-			if( (*it)->getChatRoomModel()->getChatRoom() == chatRoom){
-				return *it;
+		for(auto it = mList.begin() ; it != mList.end() ; ++it){
+			auto timeline = it->objectCast<TimelineModel>();
+			if( timeline->getChatRoomModel()->getChatRoom() == chatRoom){
+				return timeline;
 			}
 		}
 		if(create){
-			std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
+			QSharedPointer<TimelineModel> model = TimelineModel::create(chatRoom);
 			if(model){
 			//std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
@@ -155,7 +123,7 @@ std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<li
 /*
 std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<linphone::Conference> conference, const bool &create){
 	if(chatRoom){
-		for(auto it = mTimelines.begin() ; it != mTimelines.end() ; ++it){
+		for(auto it = mList.begin() ; it != mList.end() ; ++it){
 			if( (*it)->isConference() && (*it)->getConferenceModel()->getConference() == conference){
 				return *it;
 			}
@@ -178,8 +146,8 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	QDateTime currentDateTime = QDateTime::currentDateTime();
 	bool doTest = true;
 	
-	for(auto timeline : mTimelines){
-		auto chatRoom = timeline->getChatRoomModel();
+	for(auto timeline : mList){
+		auto chatRoom = timeline.objectCast<TimelineModel>()->getChatRoomModel();
 		if(chatRoom && chatRoom->isCurrentAccount() && chatRoom->isOneToOne() && !chatRoom->haveEncryption()) {
 			sortedData.insert(chatRoom->mLastUpdateTime.secsTo(currentDateTime),chatRoom);
 		}
@@ -200,14 +168,15 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	return contacts;
 }
 
-std::shared_ptr<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create){
+QSharedPointer<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool& create){
 	if(chatRoom ){
-		for(auto timeline : mTimelines){
-			if(timeline->mChatRoomModel->getChatRoom() == chatRoom)
-				return timeline->mChatRoomModel;
+		for(auto timeline : mList){
+			auto model = timeline.objectCast<TimelineModel>()->mChatRoomModel;
+			if(model->getChatRoom() == chatRoom)
+				return model;
 		}
 		if(create){
-			std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
+			QSharedPointer<TimelineModel> model = TimelineModel::create(chatRoom);
 			if(model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
@@ -221,16 +190,13 @@ std::shared_ptr<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_p
 	return nullptr;
 }
 
-std::shared_ptr<ChatRoomModel> TimelineListModel::getChatRoomModel(ChatRoomModel * chatRoom){
-	for(auto timeline : mTimelines){
-		if(timeline->mChatRoomModel.get() == chatRoom)
-			return timeline->mChatRoomModel;
+QSharedPointer<ChatRoomModel> TimelineListModel::getChatRoomModel(ChatRoomModel * chatRoom){
+	for(auto timeline : mList){
+		auto model = timeline.objectCast<TimelineModel>()->mChatRoomModel;
+		if(model == chatRoom)
+			return model;
 	}
 	return nullptr;
-}
-
-int TimelineListModel::getCount() const{
-	return mTimelines.size();
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -247,9 +213,9 @@ void TimelineListModel::onSelectedHasChanged(bool selected){
 	if(selected) {
 		if(mSelectedCount >= 1){// We have more selection than wanted : count select first and unselect after : the final signal will be send only on limit
 			setSelectedCount(mSelectedCount+1);// It will not send a change signal
-			for(auto it = mTimelines.begin() ; it != mTimelines.end() ; ++it)
+			for(auto it = mList.begin() ; it != mList.end() ; ++it)
 				if(it->get() != sender())
-					(*it)->setSelected(false);
+					it->objectCast<TimelineModel>()->setSelected(false);
 		}else
 			setSelectedCount(mSelectedCount+1);
 		emit selectedChanged(qobject_cast<TimelineModel*>(sender()));
@@ -270,11 +236,11 @@ void TimelineListModel::updateTimelines () {
 	}); 
 	
 //Remove no more chat rooms
-	auto itTimeline = mTimelines.begin();
-	while(itTimeline != mTimelines.end()) {
+	auto itTimeline = mList.begin();
+	while(itTimeline != mList.end()) {
 		auto itDbTimeline = allChatRooms.begin();
 		if(*itTimeline) {
-			auto chatRoomModel = (*itTimeline)->getChatRoomModel();
+			auto chatRoomModel = itTimeline->objectCast<TimelineModel>()->getChatRoomModel();
 			if(chatRoomModel) {
 				auto timeline = chatRoomModel->getChatRoom();
 				if( timeline ) {
@@ -288,14 +254,14 @@ void TimelineListModel::updateTimelines () {
 		}else
 			itDbTimeline = allChatRooms.end();
 		if( itDbTimeline == allChatRooms.end()){
-			int index = itTimeline - mTimelines.begin();
+			int index = itTimeline - mList.begin();
 			if(index>0){
 				--itTimeline;
 				removeRow(index);
 				++itTimeline;
 			}else{
 				removeRow(0);
-				itTimeline = mTimelines.begin();
+				itTimeline = mList.begin();
 			}
 		}else
 			++itTimeline;
@@ -308,7 +274,7 @@ void TimelineListModel::updateTimelines () {
 		auto haveTimeline = getTimeline(dbChatRoom, false);
 		if(!haveTimeline && dbChatRoom){// Create a new Timeline if needed
 			
-			std::shared_ptr<TimelineModel> model = TimelineModel::create(dbChatRoom, callLogs);
+			QSharedPointer<TimelineModel> model = TimelineModel::create(dbChatRoom, callLogs);
 			if( model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
@@ -319,29 +285,19 @@ void TimelineListModel::updateTimelines () {
 	CoreManager::getInstance()->updateUnreadMessageCount();
 }
 
-void TimelineListModel::add (std::shared_ptr<TimelineModel> timeline){
+void TimelineListModel::add (QSharedPointer<TimelineModel> timeline){
 	connect(timeline->getChatRoomModel(), &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
-	int row = mTimelines.count();
-	beginInsertRows(QModelIndex(), row, row);
-	mTimelines << timeline;
-	endInsertRows();
+	ProxyListModel::add(timeline);
 	emit layoutChanged();
 	emit countChanged();
 }
 
-void TimelineListModel::remove (TimelineModel* model) {
-}
-void TimelineListModel::remove(std::shared_ptr<TimelineModel> model){
-	int index = mTimelines.indexOf(model);
-	if (index >=0){
-		removeRow(index);
-	}
-}
-void TimelineListModel::removeChatRoomModel(std::shared_ptr<ChatRoomModel> model){
+void TimelineListModel::removeChatRoomModel(QSharedPointer<ChatRoomModel> model){
 	if(!model || (model->getChatRoom()->isEmpty() && (model->isReadOnly() || !model->isGroupEnabled()))){
-		auto itTimeline = mTimelines.begin();
-		while(itTimeline != mTimelines.end()) {
-			if((*itTimeline)->mChatRoomModel == model){
+		auto itTimeline = mList.begin();
+		while(itTimeline != mList.end()) {
+			auto timeline = itTimeline->objectCast<TimelineModel>();
+			if(timeline->mChatRoomModel == model){
 				if(model)
 					model->deleteChatRoom();
 				remove(*itTimeline);
@@ -364,7 +320,7 @@ void TimelineListModel::select(ChatRoomModel * chatRoomModel){
 void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state){
 	if( state == linphone::ChatRoom::State::Created
 			&& !getTimeline(chatRoom, false)){// Create a new Timeline if needed
-		std::shared_ptr<TimelineModel> model = TimelineModel::create(chatRoom);
+		QSharedPointer<TimelineModel> model = TimelineModel::create(chatRoom);
 		if(model){
 			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
@@ -399,8 +355,6 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		bool createSecureChatRoom = false;
 		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
 		
-		
-		
 		if( settingsModel->getSecureChatEnabled() && 
 			(!settingsModel->getStandardChatEnabled() || (settingsModel->getStandardChatEnabled() && isEncrypted))
 			){
@@ -413,7 +367,8 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 											 , nullptr//callLog->getRemoteAddress()
 											 , participants);
 		if(chatRoom){
-			for(auto timeline : mTimelines){
+			for(auto item : mList){
+				auto timeline = item.objectCast<TimelineModel>();
 				if( chatRoom == timeline->mChatRoomModel->getChatRoom()){
 					found = true;
 					if(isOutgoing)// If outgoing, we switch to this chat room

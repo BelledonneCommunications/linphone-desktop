@@ -152,6 +152,7 @@ Rectangle {
 					property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 						id: participantDevices
 						callModel: conference.callModel
+						showMe: true
 					}
 					/*
 					property ListModel defaultList : ListModel{}
@@ -201,7 +202,7 @@ Rectangle {
 							Loader {
 								anchors.centerIn: parent
 								
-								active: avatarCell.currentDevice && (!avatarCell.currentDevice.videoEnabled || conference._fullscreen)
+								active: avatarCell.currentDevice && !avatarCell.currentDevice.isMe && (!avatarCell.currentDevice.videoEnabled || conference._fullscreen)
 								sourceComponent: avatar
 							}
 							Loader {
@@ -217,19 +218,19 @@ Rectangle {
 								onT_fullscreenChanged: console.log("_fullscreen changed: " +t_fullscreen+ " ["+index+"]")
 								onTCallModelChanged: console.log("CallModel changed: " +tCallModel+ " ["+index+"]")
 								
-								active: !resetActive && avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
+								active: !resetActive //avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
 								onActiveChanged: {console.log("Active Changed: "+active+ " ["+index+"]")
 									if(!active && resetActive){
 										resetActive = false
 										active = true
 									}
 								}
-								
-								sourceComponent: avatarCell.currentDevice ? 
-																		avatarCell.currentDevice.isMe ? ( true ?  cameraPreview : null )
-																			:  camera
-																	 : null
-								onSourceComponentChanged: console.log("SourceComponent Changed: "+sourceComponent+ " ["+index+"]")
+								property int cameraMode: avatarCell.currentDevice ? 
+																		avatarCell.currentDevice.isMe ? 1
+																			:  2
+																	 : 0
+								sourceComponent: cameraMode == 1 ? cameraPreview : cameraMode == 2 ? camera : null
+								onSourceComponentChanged: console.log("SourceComponent Changed: "+cameraMode+ " ["+index+"]")
 																	 
 								
 								Component {
@@ -252,7 +253,7 @@ Rectangle {
 									
 									Camera {
 										anchors.fill: parent
-										//call: incall.call
+										//participantDeviceModel: avatarCell.currentDevice
 										isPreview: true
 										onRequestNewRenderer: {cameraLoader.resetActive = true}
 										
@@ -260,6 +261,10 @@ Rectangle {
 										Component.onDestruction: console.log("Preview destroyed"+ " ["+index+"]")
 									}
 								}
+							}
+							Rectangle{
+								anchors.fill: parent
+								color: avatarCell.currentDevice.isMe ? '#09FF0000' : '#0900FF00'
 							}
 						}
 						MouseArea{

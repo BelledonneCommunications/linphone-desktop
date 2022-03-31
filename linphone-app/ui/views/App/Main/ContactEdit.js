@@ -80,7 +80,7 @@ function removeContact () {
     if (status) {
       window.unlockView()
       window.setView('Contacts')
-      Linphone.ContactsListModel.removeContact(_contact)
+      Linphone.ContactsListModel.remove(_contact)
     }
   })
 }

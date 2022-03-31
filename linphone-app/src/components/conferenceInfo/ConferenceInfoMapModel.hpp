@@ -27,7 +27,7 @@
 
 // =============================================================================
 
-class ConferenceInfoListModel;
+class ConferenceInfoProxyModel;
 
 class ConferenceInfoMapModel : public QAbstractListModel {
   Q_OBJECT
@@ -39,9 +39,11 @@ public:
 
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+  
+  Q_INVOKABLE void setConferenceInfoFilter (int filterMode);
 
 private:
-  QMap<QDate, ConferenceInfoListModel*> mMappedList;
+  QMap<QDate, ConferenceInfoProxyModel*> mMappedList;
 
 };
 Q_DECLARE_METATYPE(ConferenceInfoMapModel*)

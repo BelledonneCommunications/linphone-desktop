@@ -49,9 +49,9 @@ namespace {
 constexpr int DelayBeforeRemoveCall = 3000;
 }
 
-static inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linphone::Call> &call) {
-	auto it = find_if(list.begin(), list.end(), [call](CallModel *callModel) {
-			return call == callModel->getCall();
+static inline int findCallIndex (QList<QSharedPointer<QObject>> &list, const shared_ptr<linphone::Call> &call) {
+	auto it = find_if(list.begin(), list.end(), [call](QSharedPointer<QObject> callModel) {
+			return call == callModel.objectCast<CallModel>()->getCall();
 });
 	
 	Q_ASSERT(it != list.end());
@@ -59,13 +59,13 @@ static inline int findCallIndex (QList<CallModel *> &list, const shared_ptr<linp
 	return int(distance(list.begin(), it));
 }
 
-static inline int findCallIndex (QList<CallModel *> &list, const CallModel &callModel) {
+static inline int findCallIndex (QList<QSharedPointer<QObject>> &list, const CallModel &callModel) {
 	return ::findCallIndex(list, callModel.getCall());
 }
 
 // -----------------------------------------------------------------------------
 
-CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
+CallsListModel::CallsListModel (QObject *parent) : ProxyListModel(parent) {
 	mCoreHandlers = CoreManager::getInstance()->getHandlers();
 	QObject::connect(
 				mCoreHandlers.get(), &CoreHandlers::callStateChanged,
@@ -73,34 +73,12 @@ CallsListModel::CallsListModel (QObject *parent) : QAbstractListModel(parent) {
 				);
 }
 
-int CallsListModel::rowCount (const QModelIndex &) const {
-	return mList.count();
-}
-
-QHash<int, QByteArray> CallsListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$call";
-	return roles;
-}
-
-QVariant CallsListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mList.count())
-		return QVariant();
-	
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mList[row]);
-	
-	return QVariant();
-}
-
 CallModel *CallsListModel::findCallModelFromPeerAddress (const QString &peerAddress) const {
 	std::shared_ptr<linphone::Address> address = Utils::interpretUrl(peerAddress);
-	auto it = find_if(mList.begin(), mList.end(), [address](CallModel *callModel) {
-			return callModel->getRemoteAddress()->weakEqual(address);
+	auto it = find_if(mList.begin(), mList.end(), [address](QSharedPointer<QObject> callModel) {
+			return callModel.objectCast<CallModel>()->getRemoteAddress()->weakEqual(address);
 	});
-	return it != mList.end() ? *it : nullptr;
+	return it != mList.end() ? it->objectCast<CallModel>().get() : nullptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -310,7 +288,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	std::shared_ptr<linphone::ChatRoom> chatRoom;
 	QList< std::shared_ptr<linphone::Address>> admins;
-	std::shared_ptr<TimelineModel> timeline;
+	QSharedPointer<TimelineModel> timeline;
 	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 	QString localAddressStr = (localAddress ? Utils::coreStringToAppString(localAddress->asStringUriOnly()) : "local");
 	qInfo() << "ChatRoom creation of " << subject << " at " << securityLevel << " security, from " << localAddressStr << " and with " << participants;
@@ -386,7 +364,6 @@ QVariantMap CallsListModel::createConference(ConferenceInfoModel * conferenceInf
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	std::shared_ptr<linphone::Conference> conference;
 	QList< std::shared_ptr<linphone::Address>> admins;
-	std::shared_ptr<TimelineModel> timeline;
 	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 	qInfo() << "Conference creation of " << conferenceInfo->getSubject() << " at " << securityLevel << " security";// and with " << conferenceInfo->getConferenceInfo()->getParticipants().size();
 	auto conferenceScheduler = core->createConferenceScheduler();
@@ -487,26 +464,6 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 	}
 }
 
-bool CallsListModel::removeRow (int row, const QModelIndex &parent) {
-	return removeRows(row, 1, parent);
-}
-
-bool CallsListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	
-	if (row < 0 || count < 0 || limit >= mList.count())
-		return false;
-	
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i)
-		mList.takeAt(row)->deleteLater();
-	
-	endRemoveRows();
-	
-	return true;
-}
-
 // -----------------------------------------------------------------------------
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
@@ -521,21 +478,11 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 		}
 	}
 	
-	CallModel *callModel = new CallModel(call);
+	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(call);
 	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
-	App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
+	App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
 	
-	// This connection is (only) useful for `CallsListProxyModel`.
-	QObject::connect(callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
-		int id = findCallIndex(mList, *callModel);
-		emit dataChanged(index(id, 0), index(id, 0));
-	});
-	
-	int row = mList.count();
-	
-	beginInsertRows(QModelIndex(), row, row);
-	mList << callModel;
-	endInsertRows();
+	add(callModel);
 	emit layoutChanged();
 }
 
@@ -546,21 +493,18 @@ void CallsListModel::addDummyCall () {
 			App::smartShowWindow(callsWindow);
 	}
 	
-	CallModel *callModel = new CallModel(nullptr);
+	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(nullptr);
 	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
-	App::getInstance()->getEngine()->setObjectOwnership(callModel, QQmlEngine::CppOwnership);
+	App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
 	
 	// This connection is (only) useful for `CallsListProxyModel`.
-	QObject::connect(callModel, &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
+	QObject::connect(callModel.get(), &CallModel::isInConferenceChanged, this, [this, callModel](bool) {
 		int id = findCallIndex(mList, *callModel);
 		emit dataChanged(index(id, 0), index(id, 0));
 	});
 	
-	int row = mList.count();
 	
-	beginInsertRows(QModelIndex(), row, row);
-	mList << callModel;
-	endInsertRows();
+	add(callModel);
 	emit layoutChanged();
 }
 
@@ -582,9 +526,5 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
 }
 
 void CallsListModel::removeCallCb (CallModel *callModel) {
-	qInfo() << QStringLiteral("Removing call:") << callModel;
-	
-	int index = mList.indexOf(callModel);
-	if (index == -1 || !removeRow(index))
-		qWarning() << QStringLiteral("Unable to remove call:") << callModel;
+	remove(callModel);
 }

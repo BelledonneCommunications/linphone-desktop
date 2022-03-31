@@ -18,22 +18,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONFERENCE_SCHEDULER_MODEL_H_
-#define CONFERENCE_SCHEDULER_MODEL_H_
+#ifndef CONFERENCE_SCHEDULER_HANDLER_H_
+#define CONFERENCE_SCHEDULER_HANDLER_H_
 
 #include <linphone++/linphone.hh>
 #include <QDateTime>
 #include <QObject>
 
-class ConferenceSchedulerModel : public QObject
+class ConferenceSchedulerHandler : public QObject
 								, public linphone::ConferenceSchedulerListener
 {
 	Q_OBJECT
 	
 public:
-	static std::shared_ptr<ConferenceSchedulerModel> create(QObject *parent = Q_NULLPTR);
-	ConferenceSchedulerModel (QObject * parent = nullptr);
-	~ConferenceSchedulerModel ();
+	static std::shared_ptr<ConferenceSchedulerHandler> create(QObject *parent = Q_NULLPTR);
+	ConferenceSchedulerHandler (QObject * parent = nullptr);
+	~ConferenceSchedulerHandler ();
 	std::shared_ptr<linphone::ConferenceScheduler> getConferenceScheduler();
 	
 	virtual void onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) override;
@@ -45,10 +45,10 @@ signals:
 
 private:
 	std::shared_ptr<linphone::ConferenceScheduler> mConferenceScheduler;
-	std::weak_ptr<ConferenceSchedulerModel> mSelf;		// Used for Linphone Listener
+	std::weak_ptr<ConferenceSchedulerHandler> mSelf;		// Used for Linphone Listener
 	
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<ConferenceSchedulerModel>)
+Q_DECLARE_METATYPE(std::shared_ptr<ConferenceSchedulerHandler>)
 
 #endif

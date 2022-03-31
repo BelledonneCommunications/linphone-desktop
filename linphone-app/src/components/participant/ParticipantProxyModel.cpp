@@ -46,12 +46,12 @@ ChatRoomModel *ParticipantProxyModel::getChatRoomModel() const{
 }
 
 ParticipantListModel * ParticipantProxyModel::getParticipantListModel() const{
-	return dynamic_cast<ParticipantListModel*>(sourceModel());
+	return qobject_cast<ParticipantListModel*>(sourceModel());
 }
 
 QStringList ParticipantProxyModel::getSipAddresses() const{
 	QStringList participants;
-	ParticipantListModel * list = dynamic_cast<ParticipantListModel*>(sourceModel());
+	ParticipantListModel * list = qobject_cast<ParticipantListModel*>(sourceModel());
 	for(int i = 0 ; i < list->rowCount() ; ++i)
 		participants << list->getAt(i)->getSipAddress();
 	return participants;
@@ -59,14 +59,14 @@ QStringList ParticipantProxyModel::getSipAddresses() const{
 
 QVariantList ParticipantProxyModel::getParticipants() const{
 	QVariantList participants;
-	ParticipantListModel * list = dynamic_cast<ParticipantListModel*>(sourceModel());
+	ParticipantListModel * list = qobject_cast<ParticipantListModel*>(sourceModel());
 	for(int i = 0 ; i < list->rowCount() ; ++i)
 		participants << QVariant::fromValue(list->getAt(i));
 	return participants;
 }
 
 int ParticipantProxyModel::getCount() const{
-	return dynamic_cast<ParticipantListModel*>(sourceModel())->rowCount();
+	return qobject_cast<ParticipantListModel*>(sourceModel())->rowCount();
 }
 
 bool ParticipantProxyModel::getShowMe() const{
@@ -102,7 +102,7 @@ void ParticipantProxyModel::setShowMe(const bool& show){
 }
 
 void ParticipantProxyModel::addAddress(const QString& address){
-	ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
+	ParticipantListModel * participantsModel = qobject_cast<ParticipantListModel*>(sourceModel());
 	if(!participantsModel->contains(address)){
 		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
 		participant->setSipAddress(address);
@@ -122,7 +122,7 @@ void ParticipantProxyModel::removeModel(ParticipantModel * participant){
 		QString sipAddress =  participant->getSipAddress();
 		if(mChatRoomModel && mChatRoomModel->getChatRoom() && participant->getParticipant() )
 			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());	// Remove already added
-		ParticipantListModel * participantsModel = dynamic_cast<ParticipantListModel*>(sourceModel());
+		ParticipantListModel * participantsModel = qobject_cast<ParticipantListModel*>(sourceModel());
 		participantsModel->remove(participant);
 		emit countChanged();
 		emit addressRemoved(sipAddress);

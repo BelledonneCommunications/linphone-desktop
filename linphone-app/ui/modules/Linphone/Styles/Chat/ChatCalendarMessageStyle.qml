@@ -8,7 +8,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName : 'ChatCalendarMessage'
-	property int heightMargin:  5
+	property int heightMargin:  0
 	property int widthMargin:  5
 	property int minWidth: 300
 		
@@ -39,7 +39,7 @@ QtObject {
 		
 		property QtObject schedule: QtObject {
 			property int spacing: 0
-			property int pointSize: Units.dp * 10
+			property int pointSize: Units.dp * 9
 			property string icon : 'schedule_custom'
 			property int iconSize: 30
 			property color color: ColorsList.add(sectionName+'_schedule', 'j').color
@@ -51,15 +51,27 @@ QtObject {
 		}
 		property QtObject participants: QtObject {
 			property int spacing: 5
-			property int pointSize: Units.dp * 10
+			property int pointSize: Units.dp * 9
 			property string icon : 'calendar_participants_custom'
 			property int iconSize: 30
 			property color color: ColorsList.add(sectionName+'_participants', 'j').color
 		}
 		
+		property QtObject gotoButton: QtObject{
+			property int iconSize: 20
+			property string name : 'goto'
+			property string icon : 'transfer_custom'
+			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 's_n_b_bg').color
+			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_h', icon, 's_h_b_bg').color
+			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_p', icon, 's_p_b_bg').color
+			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_n', icon, 's_n_b_fg').color
+			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 's_h_b_fg').color
+			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 's_p_b_fg').color
+		}
+		
 		property QtObject organizer: QtObject {
 			property color color: ColorsList.add(sectionName+'_conference_organizer', 'j').color
-			property int pointSize: Units.dp * 10
+			property int pointSize: Units.dp * 9
 			property int width: 220
 		}
 	
