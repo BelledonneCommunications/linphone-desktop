@@ -45,7 +45,7 @@ public:
 	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
 	virtual void onParticipantDeviceLeft(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
 	virtual void onParticipantDeviceJoined(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
-	virtual void onParticipantDeviceMediaChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
+	virtual void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
 	virtual void onStateChanged(const std::shared_ptr<linphone::Conference> & conference, linphone::Conference::State newState) override;
 	virtual void onSubjectChanged(const std::shared_ptr<linphone::Conference> & conference, const std::string & subject) override;
 	virtual void onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::AudioDevice> & audioDevice) override;
@@ -56,7 +56,7 @@ signals:
 	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
-	void participantDeviceMediaChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void participantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void conferenceStateChanged(linphone::Conference::State newState);
 
 private:

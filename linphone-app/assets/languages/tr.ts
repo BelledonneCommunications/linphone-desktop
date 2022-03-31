@@ -1566,7 +1566,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Toplantı tabanlı konuşma odası oluşturmak için hesap ayarlarınızda toplantı URI&apos;si belirlemelisiniz.</translation>
     </message>
     <message>
         <source>newConferenceTitle</source>
@@ -1607,7 +1607,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Yönetici</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>

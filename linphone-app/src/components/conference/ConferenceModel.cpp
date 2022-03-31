@@ -88,9 +88,9 @@ void ConferenceModel::onParticipantDeviceJoined(const std::shared_ptr<linphone::
 	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceJoined(participantDevice);
 }
-void ConferenceModel::onParticipantDeviceMediaChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "ConferenceModel::onParticipantDeviceMediaChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << conference->getMe()->getDevices().size();
-	emit participantDeviceMediaChanged(participantDevice);
+void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "ConferenceModel::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << conference->getMe()->getDevices().size();
+	emit participantDeviceMediaAvailabilityChanged(participantDevice);
 }
 void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference> & conference, linphone::Conference::State newState){
 	emit conferenceStateChanged(newState);

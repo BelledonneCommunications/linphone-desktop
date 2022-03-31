@@ -69,7 +69,7 @@ enum EventLogType {
 	EventLogTypeConferenceParticipantUnsetAdmin = int(linphone::EventLog::Type::ConferenceParticipantUnsetAdmin),
 	EventLogTypeConferenceParticipantDeviceAdded = int(linphone::EventLog::Type::ConferenceParticipantDeviceAdded),
 	EventLogTypeConferenceParticipantDeviceRemoved = int(linphone::EventLog::Type::ConferenceParticipantDeviceRemoved),
-	//EventLogTypeConferenceParticipantDeviceMediaChanged = int(linphone::EventLog::Type::ConferenceParticipantDeviceMediaChanged),
+	EventLogTypeConferenceParticipantDeviceMediaAvailabilityChanged = int(linphone::EventLog::Type::ConferenceParticipantDeviceMediaAvailabilityChanged),
 	EventLogTypeConferenceSubjectChanged= int(linphone::EventLog::Type::ConferenceSubjectChanged),
 	EventLogTypeConferenceAvailableMediaChanged = int(linphone::EventLog::Type::ConferenceAvailableMediaChanged),
 	EventLogTypeConferenceSecurityEvent = int(linphone::EventLog::Type::ConferenceSecurityEvent),

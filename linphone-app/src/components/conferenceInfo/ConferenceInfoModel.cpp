@@ -208,7 +208,7 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 		
 		mConferenceSchedulerModel->getConferenceScheduler()->setInfo(mConferenceInfo);
 	}else{
-		auto conferenceParameters = core->createConferenceParams();
+		auto conferenceParameters = core->createConferenceParams(nullptr);
 		conferenceParameters->enableAudio(true);
 		conferenceParameters->enableVideo(true);
 		conferenceParameters->setDescription(mConferenceInfo->getDescription());
