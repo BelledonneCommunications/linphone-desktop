@@ -244,7 +244,10 @@ void TimelineListModel::updateTimelines () {
 
 // Clean terminated chat rooms.
 	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
-		return chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
+		bool toRemove = chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
+		if( toRemove)
+			chatRoom->markAsRead();
+		return toRemove;
 	}); 
 	
 //Remove no more chat rooms
@@ -294,6 +297,7 @@ void TimelineListModel::updateTimelines () {
 			}
 		}
 	}
+	CoreManager::getInstance()->updateUnreadMessageCount();
 }
 
 void TimelineListModel::add (std::shared_ptr<TimelineModel> timeline){
@@ -349,8 +353,11 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 		}
 	}else if(state == linphone::ChatRoom::State::Deleted || state == linphone::ChatRoom::State::Terminated){
 		auto timeline = getTimeline(chatRoom, false);
-		if(timeline)
+		if(timeline) {
+			if(timeline->getChatRoomModel())
+				timeline->getChatRoomModel()->resetMessageCount();
 			remove(timeline);
+		}
 	}
 }
 
