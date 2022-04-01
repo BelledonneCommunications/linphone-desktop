@@ -83,7 +83,7 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	if( mChatRoomModel ){
 		CoreManager::getInstance()->handleChatRoomCreated(mChatRoomModel);
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
-		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultProxyChanged, this, &TimelineModel::onDefaultProxyChanged);
+		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
 	}
 	mSelected = false;
 }
@@ -142,8 +142,8 @@ void TimelineModel::updateUnreadCount(){
 		mChatRoomModel->resetMessageCount();// The reset will appear when the chat room has "mark as read enabled", that means that we should have read messages when going out.
 	}
 }
-void TimelineModel::onDefaultProxyChanged(){
-	if( mSelected && !mChatRoomModel->isCurrentProxy())
+void TimelineModel::onDefaultAccountChanged(){
+	if( mSelected && !mChatRoomModel->isCurrentAccount())
 		setSelected(false);
 }
 //----------------------------------------------------------

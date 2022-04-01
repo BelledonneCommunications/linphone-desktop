@@ -46,7 +46,7 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 	connect(model, &TimelineListModel::selectedChanged, this, &TimelineProxyModel::selectedChanged);
 	connect(model, &TimelineListModel::countChanged, this, &TimelineProxyModel::countChanged);
 
-	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultProxyChanged, this, [this]() {
+	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultAccountChanged, this, [this]() {
 		dynamic_cast<TimelineListModel*>(sourceModel())->update();
 		invalidate();
 		//updateCurrentSelection();
@@ -117,7 +117,7 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 			//|| timeline->getChatRoomModel()->getFullPeerAddress().contains(search); not enough significant?
 	}
 	if(show)
-		show = timeline->getChatRoomModel()->isCurrentProxy();
+		show = timeline->getChatRoomModel()->isCurrentAccount();
 	return show;
 }
 

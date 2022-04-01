@@ -38,7 +38,7 @@ function deleteAccount (account) {
     descriptionText: qsTr('deleteAccountDescription'),
   }, function (status) {
     if (status) {
-      Linphone.AccountSettingsModel.removeProxyConfig(account.proxyConfig)
+      Linphone.AccountSettingsModel.removeAccount(account.account)
     }
   })
 }

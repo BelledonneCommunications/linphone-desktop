@@ -84,7 +84,7 @@ Notification {
 		anchors.fill: parent
 		
 		onClicked: notification._close(function () {
-			AccountSettingsModel.setDefaultProxyConfigFromSipAddress(notification.localAddress)
+			AccountSettingsModel.setDefaultAccountFromSipAddress(notification.localAddress)
 			notification.timelineModel.selected = true
 			console.log("Load conversation from notification")
 			notification.notificationData.window.setView('Conversation', {

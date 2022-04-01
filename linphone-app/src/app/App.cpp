@@ -600,7 +600,7 @@ static inline void registerSharedToolType (const char *name) {
 void App::registerTypes () {
 	qInfo() << QStringLiteral("Registering types...");
 	
-	qRegisterMetaType<shared_ptr<linphone::ProxyConfig>>();
+	qRegisterMetaType<shared_ptr<linphone::Account>>();
 	qRegisterMetaType<ChatRoomModel::EntryType>();
 	qRegisterMetaType<shared_ptr<linphone::SearchResult>>();
 	qRegisterMetaType<std::list<std::shared_ptr<linphone::SearchResult> > >();

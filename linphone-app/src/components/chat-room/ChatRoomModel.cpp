@@ -519,7 +519,7 @@ bool ChatRoomModel::isMeAdmin() const{
 	return mChatRoom->getMe()->isAdmin();
 }
 
-bool ChatRoomModel::isCurrentProxy() const{
+bool ChatRoomModel::isCurrentAccount() const{
 	return mChatRoom->getLocalAddress()->weakEqual(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress());
 }
 
@@ -1264,7 +1264,7 @@ void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> 
 }
 
 void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
-	if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnd ){
+	if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnded ){
 		setMissedCallsCount(mMissedCallsCount+1);
 	}else if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated ){
 		emit fullPeerAddressChanged();

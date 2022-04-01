@@ -82,3 +82,27 @@ linphone::RecorderState LinphoneEnums::toLinphone(const LinphoneEnums::RecorderS
 LinphoneEnums::RecorderState LinphoneEnums::fromLinphone(const linphone::RecorderState& data){
 	return static_cast<LinphoneEnums::RecorderState>(data);
 }
+
+linphone::TransportType LinphoneEnums::toLinphone(const LinphoneEnums::TransportType& type){
+	return static_cast<linphone::TransportType>(type);
+}
+LinphoneEnums::TransportType LinphoneEnums::fromLinphone(const linphone::TransportType& type){
+	return static_cast<LinphoneEnums::TransportType>(type);
+}
+QString LinphoneEnums::toString(const LinphoneEnums::TransportType& type){
+	switch(type) {
+	case TransportTypeTcp: return "TCP";
+	case TransportTypeUdp: return "UDP";
+	case TransportTypeTls: return "TLS";
+	case TransportTypeDtls: return "DTLS";
+	}
+}
+void LinphoneEnums::fromString(const QString& transportType, LinphoneEnums::TransportType *transport){
+	if (transportType.toUpper() == QLatin1String("TCP"))
+		*transport = TransportTypeTcp;
+	if (transportType.toUpper() == QLatin1String("UDP"))
+		*transport = TransportTypeUdp;
+	if (transportType.toUpper() == QLatin1String("TLS"))
+		*transport = TransportTypeTls;
+	*transport = TransportTypeDtls;
+}

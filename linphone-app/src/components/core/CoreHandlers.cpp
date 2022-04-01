@@ -49,6 +49,15 @@ CoreHandlers::~CoreHandlers () {
 }
 
 // -----------------------------------------------------------------------------
+void CoreHandlers::onAccountRegistrationStateChanged (
+		const shared_ptr<linphone::Core> &,
+		const shared_ptr<linphone::Account> &account,
+		linphone::RegistrationState state,
+		const string &
+		) {
+	emit registrationStateChanged(account, state);
+}
+
 void CoreHandlers::onAuthenticationRequested (
 		const shared_ptr<linphone::Core> & core,
 		const shared_ptr<linphone::AuthInfo> &authInfo,
@@ -56,17 +65,17 @@ void CoreHandlers::onAuthenticationRequested (
 		) {
 	Q_UNUSED(method)
 	if( authInfo ) {
-		auto configList = core->getProxyConfigList();
-		auto config = configList.begin() ;
+		auto accounts = core->getAccountList();
+		auto itAccount = accounts.begin() ;
 		std::string username = authInfo->getUsername();
 		std::string domain = authInfo->getDomain();
-		while(config != configList.end()) {
-			auto contact = (*config)->getContact();
-			if( contact && contact->getUsername() == username && (*config)->getContact()->getDomain() == domain) {
-				emit authenticationRequested(authInfo);// Send authentification request only if a proxy still exists
+		while(itAccount != accounts.end()) {
+			auto contact = (*itAccount)->getParams()->getIdentityAddress();
+			if( contact && contact->getUsername() == username && contact->getDomain() == domain) {
+				emit authenticationRequested(authInfo);// Send authentification request only if an account still exists
 				return;
 			}else
-				++config;
+				++itAccount;
 		}
 	}
 }
@@ -243,15 +252,6 @@ void CoreHandlers::onNotifyPresenceReceived (
 	if (linphoneFriend->getVcard() && linphoneFriend->dataExists("contact-model"))
 		linphoneFriend->getData<ContactModel>("contact-model").refreshPresence();
 	emit presenceStatusReceived(linphoneFriend);
-}
-
-void CoreHandlers::onRegistrationStateChanged (
-		const shared_ptr<linphone::Core> &,
-		const shared_ptr<linphone::ProxyConfig> &proxyConfig,
-		linphone::RegistrationState state,
-		const string &
-		) {
-	emit registrationStateChanged(proxyConfig, state);
 }
 
 void CoreHandlers::onTransferStateChanged (

@@ -1212,8 +1212,8 @@ void SettingsModel::configureRlsUri () {
 
 	// Set rls uri if necessary.
 	const string domain = getRlsUriDomain();
-	for (const auto &proxyConfig : CoreManager::getInstance()->getCore()->getProxyConfigList())
-		if (proxyConfig->getDomain() == domain) {
+	for (const auto &account : CoreManager::getInstance()->getCore()->getAccountList())
+		if (account->getParams()->getDomain() == domain) {
 			mConfig->setString("sip", "rls_uri", Constants::DefaultRlsUri);
 			return;
 		}
@@ -1221,21 +1221,23 @@ void SettingsModel::configureRlsUri () {
 	mConfig->setString("sip", "rls_uri", "");
 }
 
-void SettingsModel::configureRlsUri (const shared_ptr<const linphone::ProxyConfig> &proxyConfig) {
+void SettingsModel::configureRlsUri (const std::string& domain) {
 	if (!getRlsUriEnabled()) {
 		mConfig->setString("sip", "rls_uri", "");
 		return;
 	}
 
-	const string domain = getRlsUriDomain();
-	if (proxyConfig->getDomain() == domain) {
+	const string currentDomain = getRlsUriDomain();
+	if (domain == currentDomain) {
 		mConfig->setString("sip", "rls_uri", Constants::DefaultRlsUri);
 		return;
 	}
 
 	mConfig->setString("sip", "rls_uri", "");
 }
-
+void SettingsModel::configureRlsUri (const shared_ptr<const linphone::Account> &account) {
+	configureRlsUri(account->getParams()->getDomain());
+}
 //------------------------------------------------------------------------------
 
 bool SettingsModel::tunnelAvailable() const{

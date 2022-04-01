@@ -57,7 +57,7 @@ AssistantAbstractView {
 							console.log("[CreateAccount] Username : " +result.username);
 							console.log("[CreateAccount] Registrar : " +result.registrar_address);
 							console.log("[CreateAccount] Domain : " +result.domain);
-							if (Linphone.AccountSettingsModel.addOrUpdateProxyConfig( {
+							if (Linphone.AccountSettingsModel.addOrUpdateAccount( {
 																						 sipAddress: result.sip,
 																						 serverAddress: result.registrar_address,
 																						 configFilename: view.configFilename
@@ -65,7 +65,7 @@ AssistantAbstractView {
 								
 								console.log("[CreateAccount] Account created")
 								view.status = 1
-								Linphone.AccountSettingsModel.setDefaultProxyConfigFromSipAddress("sip:"+result.sip)
+								Linphone.AccountSettingsModel.setDefaultAccountFromSipAddress("sip:"+result.sip)
 							} else {
 								console.error("[CreateAccount] Cannot create account. Check logs.")
 								view.status = -1

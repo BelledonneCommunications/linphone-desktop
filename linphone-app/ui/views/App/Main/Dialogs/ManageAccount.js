@@ -22,12 +22,12 @@
 // =============================================================================
 
 function getItemIcon (data) {
-  var proxyConfig = data.proxyConfig
-  if (!proxyConfig) {
+  var account = data.account
+  if (!account) {
     return ''
   }
 
-  var description = AccountSettingsModel.getProxyConfigDescription(proxyConfig)
+  var description = AccountSettingsModel.getAccountDescription(account)
   return description.registerEnabled && description.registrationState !== AccountSettingsModel.RegistrationStateRegistered
     ? 'generic_error'
     : ''

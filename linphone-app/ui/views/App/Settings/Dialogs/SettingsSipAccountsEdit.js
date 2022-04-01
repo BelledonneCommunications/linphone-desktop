@@ -27,16 +27,16 @@
 
 // =============================================================================
 
-var proxyConfig
+var gAccount
 
 function initForm (account) {
   var AccountSettingsModel = Linphone.AccountSettingsModel
 
-  proxyConfig = account
-    ? account.proxyConfig
-    : AccountSettingsModel.createProxyConfig()
+  gAccount = account
+    ? account.account
+    : AccountSettingsModel.createAccount()
 
-  var config = AccountSettingsModel.getProxyConfigDescription(proxyConfig)
+  var config = AccountSettingsModel.getAccountDescription(gAccount)
 
   sipAddress.text = config.sipAddress
   serverAddress.text = config.serverAddress
@@ -76,7 +76,7 @@ function formIsValid () {
 
 // -----------------------------------------------------------------------------
 
-function validProxyConfig (proxyConfig) {
+function validAccount (account) {
 	var data = {
 		sipAddress: sipAddress.text,
 		serverAddress: serverAddress.text,
@@ -96,8 +96,8 @@ function validProxyConfig (proxyConfig) {
 		turnPassword: turnPassword.text
 	  }
 	  
-  if (proxyConfig && Linphone.AccountSettingsModel.addOrUpdateProxyConfig(proxyConfig, data)
-		|| !proxyConfig && Linphone.AccountSettingsModel.addOrUpdateProxyConfig(data)) {
+  if (gAccount && Linphone.AccountSettingsModel.addOrUpdateAccount(gAccount, data)
+		|| !account && Linphone.AccountSettingsModel.addOrUpdateAccount(data)) {
     dialog.exit(1)
   } else {
     // TODO: Display errors on the form (if necessary).

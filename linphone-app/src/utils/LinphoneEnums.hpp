@@ -60,8 +60,8 @@ enum EventLogType {
 	EventLogTypeNone = int(linphone::EventLog::Type::None),
 	EventLogTypeConferenceCreated = int(linphone::EventLog::Type::ConferenceCreated),
 	EventLogTypeConferenceTerminated = int(linphone::EventLog::Type::ConferenceTerminated),
-	EventLogTypeConferenceCallStart = int(linphone::EventLog::Type::ConferenceCallStart),
-	EventLogTypeConferenceCallEnd = int(linphone::EventLog::Type::ConferenceCallEnd),
+	EventLogTypeConferenceCallStarted = int(linphone::EventLog::Type::ConferenceCallStarted),
+	EventLogTypeConferenceCallEnded = int(linphone::EventLog::Type::ConferenceCallEnded),
 	EventLogTypeConferenceChatMessage = int(linphone::EventLog::Type::ConferenceChatMessage),
 	EventLogTypeConferenceParticipantAdded = int(linphone::EventLog::Type::ConferenceParticipantAdded),
 	EventLogTypeConferenceParticipantRemoved = int(linphone::EventLog::Type::ConferenceParticipantRemoved),
@@ -69,7 +69,7 @@ enum EventLogType {
 	EventLogTypeConferenceParticipantUnsetAdmin = int(linphone::EventLog::Type::ConferenceParticipantUnsetAdmin),
 	EventLogTypeConferenceParticipantDeviceAdded = int(linphone::EventLog::Type::ConferenceParticipantDeviceAdded),
 	EventLogTypeConferenceParticipantDeviceRemoved = int(linphone::EventLog::Type::ConferenceParticipantDeviceRemoved),
-	EventLogTypeConferenceParticipantDeviceMediaChanged = int(linphone::EventLog::Type::ConferenceParticipantDeviceMediaChanged),
+	//EventLogTypeConferenceParticipantDeviceMediaChanged = int(linphone::EventLog::Type::ConferenceParticipantDeviceMediaChanged),
 	EventLogTypeConferenceSubjectChanged= int(linphone::EventLog::Type::ConferenceSubjectChanged),
 	EventLogTypeConferenceAvailableMediaChanged = int(linphone::EventLog::Type::ConferenceAvailableMediaChanged),
 	EventLogTypeConferenceSecurityEvent = int(linphone::EventLog::Type::ConferenceSecurityEvent),
@@ -131,6 +131,19 @@ Q_ENUM_NS(RecorderState)
 
 linphone::RecorderState toLinphone(const LinphoneEnums::RecorderState& state);
 LinphoneEnums::RecorderState fromLinphone(const linphone::RecorderState& state);
+
+enum TransportType{
+		TransportTypeDtls = int(linphone::TransportType::Dtls),
+		TransportTypeTcp = int(linphone::TransportType::Tcp),
+		TransportTypeTls = int(linphone::TransportType::Tls),
+		TransportTypeUdp = int(linphone::TransportType::Udp)
+};
+Q_ENUM_NS(TransportType)
+
+linphone::TransportType toLinphone(const LinphoneEnums::TransportType& type);
+LinphoneEnums::TransportType fromLinphone(const linphone::TransportType& type);
+QString toString(const LinphoneEnums::TransportType& type);
+void fromString(const QString& transportType, LinphoneEnums::TransportType *transport);
 }
 
 Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)

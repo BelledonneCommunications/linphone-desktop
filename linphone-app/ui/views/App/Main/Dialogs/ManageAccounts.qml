@@ -96,10 +96,10 @@ DialogPlus {
 
               onClicked: {
                 container.currentIndex = index
-                if(flattenedModel.proxyConfig)
-                    AccountSettingsModel.setDefaultProxyConfig(flattenedModel.proxyConfig)
+                if(flattenedModel.account)
+                    AccountSettingsModel.setDefaultAccount(flattenedModel.account)
                 else
-                    AccountSettingsModel.setDefaultProxyConfig()
+                    AccountSettingsModel.setDefaultAccount()
               }
 
               MessageCounter {

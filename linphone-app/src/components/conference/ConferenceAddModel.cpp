@@ -148,7 +148,7 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 void ConferenceHelperModel::ConferenceAddModel::update () {
   shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
   if(!conference){
-    auto parameters = mConferenceHelperModel->mCore->createConferenceParams();
+    auto parameters = mConferenceHelperModel->mCore->createConferenceParams(conference);
     parameters->enableVideo(false);// Video is not yet fully supported by the application in conference
     conference = mConferenceHelperModel->mCore->createConferenceWithParams(parameters);
   }

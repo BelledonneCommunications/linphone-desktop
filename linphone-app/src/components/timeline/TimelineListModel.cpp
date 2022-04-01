@@ -161,7 +161,7 @@ QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	
 	for(auto timeline : mTimelines){
 		auto chatRoom = timeline->getChatRoomModel();
-		if(chatRoom && chatRoom->isCurrentProxy() && chatRoom->isOneToOne() && !chatRoom->haveEncryption()) {
+		if(chatRoom && chatRoom->isCurrentAccount() && chatRoom->isOneToOne() && !chatRoom->haveEncryption()) {
 			sortedData.insert(chatRoom->mLastUpdateTime.secsTo(currentDateTime),chatRoom);
 		}
 	}

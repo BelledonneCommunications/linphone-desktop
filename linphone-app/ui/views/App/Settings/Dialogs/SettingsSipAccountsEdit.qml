@@ -28,7 +28,7 @@ DialogPlus {
 			enabled: Logic.formIsValid()
 			text: qsTr('confirm')
 			
-			onClicked: Logic.validProxyConfig(dialog.account ? dialog.account.proxyConfig : null)
+			onClicked: Logic.validAccount(dialog.account ? dialog.account.account : null)
 		}
 	]
 	

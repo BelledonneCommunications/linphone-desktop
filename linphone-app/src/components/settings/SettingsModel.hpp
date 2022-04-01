@@ -474,7 +474,8 @@ public:
 	void setRlsUriEnabled (bool status);
 	
 	void configureRlsUri ();
-	void configureRlsUri (const std::shared_ptr<const linphone::ProxyConfig> &proxyConfig);
+	void configureRlsUri (const std::string& domain);
+	void configureRlsUri (const std::shared_ptr<const linphone::Account> &account);
 	
 	Q_INVOKABLE bool tunnelAvailable() const;
 	Q_INVOKABLE TunnelModel * getTunnel() const;

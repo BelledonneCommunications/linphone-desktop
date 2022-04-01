@@ -219,7 +219,7 @@ void CoreManager::cleanLogs () const {
 
 void CoreManager::setDatabasesPaths () {
 	SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
-	SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());
+	linphone_core_set_call_logs_database_path(mCore->cPtr(), Paths::getCallHistoryFilePath().c_str());// Setting the message database let SDK to migrate data
 	if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
 		linphone_core_set_chat_database_path(mCore->cPtr(), Paths::getMessageHistoryFilePath().c_str());// Setting the message database let SDK to migrate data
 		QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
@@ -313,15 +313,6 @@ void CoreManager::migrate () {
 	qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
 			   .arg(rcVersion).arg(Constants::RcVersionCurrent);
 	
-	// Add message_expires param on old proxy configs.
-	/*
-  for (const auto &proxyConfig : mCore->getProxyConfigList()) {
-	if (proxyConfig->getDomain() == Constants::LinphoneDomain) {
-	  proxyConfig->setContactParameters(Constants::DefaultContactParameters);
-	  proxyConfig->setExpires(Constants::DefaultExpires);
-	  proxyConfig->done();
-	}
-  }*/
 	bool setlimeServerUrl = false;
 	for(const auto &account : mCore->getAccountList()){
 		auto params = account->getParams();

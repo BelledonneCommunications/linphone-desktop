@@ -119,7 +119,6 @@ public:
 		
 		return connection;
 	}
-	static linphone::TransportType stringToTransportType (const QString &transport);
 	static std::shared_ptr<linphone::Address> interpretUrl(const QString& address);
 	
 	

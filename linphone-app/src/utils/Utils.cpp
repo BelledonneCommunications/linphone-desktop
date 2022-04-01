@@ -41,17 +41,6 @@ constexpr int SafeFilePathLimit = 100;
 
 }
 
-linphone::TransportType Utils::stringToTransportType (const QString &transport) {
-	if (transport == QLatin1String("TCP"))
-		return linphone::TransportType::Tcp;
-	if (transport == QLatin1String("UDP"))
-		return linphone::TransportType::Udp;
-	if (transport == QLatin1String("TLS"))
-		return linphone::TransportType::Tls;
-	
-	return linphone::TransportType::Dtls;
-}
-
 std::shared_ptr<linphone::Address> Utils::interpretUrl(const QString& address){
 	return CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address));
 }
@@ -151,11 +140,11 @@ QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
 }
 std::shared_ptr<linphone::Address> Utils::getMatchingLocalAddress(std::shared_ptr<linphone::Address> p_localAddress){
 	QVector<std::shared_ptr<linphone::Address> > addresses;
-	// Get default proxy
+	// Get default account
 	addresses.push_back(CoreManager::getInstance()->getCore()->createPrimaryContactParsed());
-	auto proxyList = CoreManager::getInstance()->getCore()->getProxyConfigList();
-	foreach(auto proxy, proxyList)
-		addresses.push_back(proxy->getIdentityAddress()->clone());
+	auto accounts = CoreManager::getInstance()->getCore()->getAccountList();
+	foreach(auto account, accounts)
+		addresses.push_back(account->getParams()->getIdentityAddress()->clone());
 	foreach(auto address, addresses){
 		if( address->getUsername() == p_localAddress->getUsername() && address->getDomain() == p_localAddress->getDomain())
 			return address;

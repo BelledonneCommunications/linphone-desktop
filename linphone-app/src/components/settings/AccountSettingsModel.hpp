@@ -31,113 +31,115 @@
 // =============================================================================
 
 class AccountSettingsModel : public QObject {
-  Q_OBJECT
-
-  // Selected proxy config.
-  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
-  Q_PROPERTY(QString sipAddress READ getUsedSipAddressAsStringUriOnly NOTIFY sipAddressChanged)
-  Q_PROPERTY(QString fullSipAddress READ getUsedSipAddressAsString NOTIFY fullSipAddressChanged)
-  Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
-  
-  Q_PROPERTY(QString conferenceURI READ getConferenceURI NOTIFY conferenceURIChanged)
-
-  // Default info.
-  Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY primaryDisplayNameChanged)
-  Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY primaryUsernameChanged)
-  Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY primarySipAddressChanged)
-
-  Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountsChanged)
-
+	Q_OBJECT
+	
+	// Selected account.
+	Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
+	Q_PROPERTY(QString sipAddress READ getUsedSipAddressAsStringUriOnly NOTIFY sipAddressChanged)
+	Q_PROPERTY(QString fullSipAddress READ getUsedSipAddressAsString NOTIFY fullSipAddressChanged)
+	Q_PROPERTY(RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
+	
+	Q_PROPERTY(QString conferenceURI READ getConferenceURI NOTIFY conferenceURIChanged)
+	
+	// Default info.
+	Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY primaryDisplayNameChanged)
+	Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY primaryUsernameChanged)
+	Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY primarySipAddressChanged)
+	
+	Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountsChanged)
+	
 public:
-  enum RegistrationState {
-    RegistrationStateRegistered,
-    RegistrationStateNotRegistered,
-    RegistrationStateInProgress,
-    RegistrationStateNoProxy,
-  };
-  Q_ENUM(RegistrationState);
-
-  AccountSettingsModel (QObject *parent = Q_NULLPTR);
-
-  std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
-  void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
-
-  QString getUsedSipAddressAsStringUriOnly () const;
-  QString getUsedSipAddressAsString () const;
-
-  bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
-
-  Q_INVOKABLE QVariantMap getProxyConfigDescription (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
-  QString getConferenceURI() const;
-
-  Q_INVOKABLE void setDefaultProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig = nullptr);
-  Q_INVOKABLE void setDefaultProxyConfigFromSipAddress (const QString &sipAddress);
-
-  Q_INVOKABLE bool addOrUpdateProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig, const QVariantMap &data);
-  Q_INVOKABLE bool addOrUpdateProxyConfig (const QVariantMap &data);// Create default proxy config and apply data
-  Q_INVOKABLE void removeProxyConfig (const std::shared_ptr<linphone::ProxyConfig> &proxyConfig);
-
-  Q_INVOKABLE std::shared_ptr<linphone::ProxyConfig> createProxyConfig (const QString& assistantFile);
-
-  Q_INVOKABLE void addAuthInfo (
-    const std::shared_ptr<linphone::AuthInfo> &authInfo,
-    const QString &password,
-    const QString &userId
-  );
-
-  Q_INVOKABLE void eraseAllPasswords ();
-
+	enum RegistrationState {
+		RegistrationStateRegistered,
+		RegistrationStateNotRegistered,
+		RegistrationStateInProgress,
+		RegistrationStateNoAccount,
+	};
+	Q_ENUM(RegistrationState);
+	
+	AccountSettingsModel (QObject *parent = Q_NULLPTR);
+	
+	std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
+	void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
+	
+	QString getUsedSipAddressAsStringUriOnly () const;
+	QString getUsedSipAddressAsString () const;
+	
+	// Update account with parameters or add a new one in core.
+	bool addOrUpdateAccount (std::shared_ptr<linphone::Account> account, const std::shared_ptr<linphone::AccountParams>& accountParams);
+	
+	Q_INVOKABLE QVariantMap getAccountDescription (const std::shared_ptr<linphone::Account> &account);
+	QString getConferenceURI() const;
+	
+	Q_INVOKABLE void setDefaultAccount (const std::shared_ptr<linphone::Account> &account = nullptr);
+	Q_INVOKABLE void setDefaultAccountFromSipAddress (const QString &sipAddress);
+	
+	Q_INVOKABLE bool addOrUpdateAccount (const std::shared_ptr<linphone::Account> &account, const QVariantMap &data);
+	Q_INVOKABLE bool addOrUpdateAccount (const QVariantMap &data);// Create default account and apply data
+	Q_INVOKABLE void removeAccount (const std::shared_ptr<linphone::Account> &account);
+	
+	Q_INVOKABLE std::shared_ptr<linphone::Account> createAccount (const QString& assistantFile);
+	
+	Q_INVOKABLE void addAuthInfo (
+			const std::shared_ptr<linphone::AuthInfo> &authInfo,
+			const QString &password,
+			const QString &userId
+			);
+	
+	Q_INVOKABLE void eraseAllPasswords ();
+	
 signals:
-  
-  void usernameChanged();
-  void sipAddressChanged();
-  void fullSipAddressChanged();
-  void registrationStateChanged();
-  void conferenceURIChanged();
-  
-  void primaryDisplayNameChanged();
-  void primaryUsernameChanged();
-  void primarySipAddressChanged();
-  
-  void accountsChanged();
-  
-  
-  
-  void accountSettingsUpdated ();
-  void defaultProxyChanged();
-  void publishPresenceChanged();
-  void defaultRegistrationChanged();
-
+	
+	void usernameChanged();
+	void sipAddressChanged();
+	void fullSipAddressChanged();
+	void registrationStateChanged();
+	void conferenceURIChanged();
+	
+	void primaryDisplayNameChanged();
+	void primaryUsernameChanged();
+	void primarySipAddressChanged();
+	
+	void accountsChanged();
+	
+	
+	
+	void accountSettingsUpdated ();
+	void defaultAccountChanged();
+	void publishPresenceChanged();
+	void defaultRegistrationChanged();
+	
 private:
-  QString getUsername () const;
-  void setUsername (const QString &username);
-
-  RegistrationState getRegistrationState () const;
-
-  // ---------------------------------------------------------------------------
-
-  QString getPrimaryUsername () const;
-  void setPrimaryUsername (const QString &username);
-
-  QString getPrimaryDisplayName () const;
-  void setPrimaryDisplayName (const QString &displayName);
-
-  QString getPrimarySipAddress () const;
-
-  // ---------------------------------------------------------------------------
-
-  QVariantList getAccounts () const;
-
-  // ---------------------------------------------------------------------------
-
-  void handleRegistrationStateChanged (
-    const std::shared_ptr<linphone::ProxyConfig> &proxyConfig,
-    linphone::RegistrationState state
-  );
-  
-  QVector<std::shared_ptr<linphone::ProxyConfig> > mRemovingProxies;
+	QString getUsername () const;
+	void setUsername (const QString &username);
+	
+	RegistrationState getRegistrationState () const;
+	
+	// ---------------------------------------------------------------------------
+	
+	QString getPrimaryUsername () const;
+	void setPrimaryUsername (const QString &username);
+	
+	QString getPrimaryDisplayName () const;
+	void setPrimaryDisplayName (const QString &displayName);
+	
+	QString getPrimarySipAddress () const;
+	
+	// ---------------------------------------------------------------------------
+	
+	QVariantList getAccounts () const;
+	
+	// ---------------------------------------------------------------------------
+	
+	void handleRegistrationStateChanged (
+			const std::shared_ptr<linphone::Account> &account,
+			linphone::RegistrationState state
+			);
+	
+	QVector<std::shared_ptr<linphone::Account> > mRemovingAccounts;
+	std::shared_ptr<linphone::Account> mSelectedAccount;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<linphone::ProxyConfig>);
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::Account>);
 
 #endif // ACCOUNT_SETTINGS_MODEL_H_

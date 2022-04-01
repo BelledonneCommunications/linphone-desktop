@@ -117,7 +117,7 @@ static void cliJoinConferenceAs (QHash<QString, QString> &args) {
 				Utils::appStringToCoreString(fromSipAddress)
 				);
 	if (!currentSipAddress->weakEqual(askedSipAddress)) {
-		qWarning() << QStringLiteral("Guest sip address `%1` doesn't match with default proxy config.")
+		qWarning() << QStringLiteral("Guest sip address `%1` doesn't match with default account.")
 					  .arg(fromSipAddress);
 		return;
 	}
@@ -139,14 +139,14 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 
 		address->clean();
 
-		shared_ptr<linphone::ProxyConfig> proxyConfig = core->getDefaultProxyConfig();
-		if (!proxyConfig) {
-			qWarning() << QStringLiteral("Not connected to a proxy config");
+		shared_ptr<linphone::Account> account = core->getDefaultAccount();
+		if (!account) {
+			qWarning() << QStringLiteral("Not connected to an account");
 			return;
 		}
-		if (!proxyConfig->getIdentityAddress()->weakEqual(address)) {
+		if (!account->getParams()->getIdentityAddress()->weakEqual(address)) {
 			qWarning() << QStringLiteral("Received different sip address from identity : `%1 != %2`.")
-						  .arg(Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString()))
+						  .arg(Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString()))
 						  .arg(Utils::coreStringToAppString(address->asString()));
 			return;
 		}
@@ -181,7 +181,7 @@ static void cliInitiateConference (QHash<QString, QString> &args) {
 	}
 
 	qInfo() << QStringLiteral("Create conference with id: `%1`.").arg(id);
-	auto confParameters = core->createConferenceParams();
+	auto confParameters = core->createConferenceParams(conference);
 	confParameters->enableVideo(false);// Video is not yet fully supported by the application in conference
 	conference = core->createConferenceWithParams(confParameters);
 	conference->setId(Utils::appStringToCoreString(id));

@@ -192,7 +192,7 @@ public:
 	bool isConference() const;
 	bool isOneToOne() const;
 	bool isMeAdmin() const;
-	bool isCurrentProxy() const;						// Return true if this chat room is Me() is the current proxy
+	bool isCurrentAccount() const;						// Return true if this chat room is Me() is the current account
 	bool canHandleParticipants() const;
 	bool getIsRemoteComposing () const;
 	bool isEntriesLoading() const;
