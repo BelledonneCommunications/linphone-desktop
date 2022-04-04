@@ -97,10 +97,13 @@ DialogPlus {
 						MouseArea{
 									anchors.fill:contactDescription
 									onClicked: {
-										mainHeader.window.attachVirtualWindow(Qt.resolvedUrl('InfoEncryption.qml')
+										if(participantDevices.count == 0 )
+											mainHeader.window.attachVirtualWindow(Qt.resolvedUrl('InfoEncryption.qml')
 																   ,{securityLevel : mainHeader.securityLevel
 																   , addressToCall : mainHeader.addressToCall}
 																   )
+										else
+											participantDevices.visible = !participantDevices.visible
 									}
 								}						
 					}
