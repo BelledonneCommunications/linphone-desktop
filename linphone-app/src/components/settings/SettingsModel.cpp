@@ -1471,6 +1471,10 @@ void SettingsModel::setLogsEmail (const QString &email) {
 	emit logsEmailChanged(email);
 }
 
+bool SettingsModel::isLdapAvailable(){
+	return CoreManager::getInstance()->getCore()->ldapAvailable();
+}
+
 // ---------------------------------------------------------------------------
 
 QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config) {

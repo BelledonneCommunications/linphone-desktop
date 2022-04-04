@@ -15,21 +15,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Device name can be changed from settings.
 - New event on new messages in chat and a shortcut to go to the end of chat if last message is not shown.
 - Shortcut in Reply to message's origin.
-- Based on Linphone SDK 5.1
+- Allow redirected downloads (bzip2/OpenH264)
+- Auto-download message files, editable in settings (10Mb as default)
 - 64bits application on Windows
+- Based on Linphone SDK 5.1
 
 ### Fixed
 - Simplify filtering timelines with 2 modes (minimal or exhaustive) and on 3 kind of search : security level, simple/group chats, ephemerals.
 - Sort timelines by taken account of unread events in chat rooms.
 - Fix systemTrayIcon that could be cloned on each restart.
+- Fix thumbnails display in notification.
 - Fix errors on Action-Buttons on restart.
 - Enable G729 on public builds.
-- Take account of return key on Numpad
+- Take account of return key on Numpad.
 - Huge messages are better shown and with less flickering.
+- High CPU consumption on idle state.
+- Hide deleted/terminated chat rooms.
 - Adapt UserAgent with device name.
 - Video freeze on network change.
+- Support OpenGL 4.1 and GLSL 4.10.
+- Fix some glitches on Apple M1.
+- Audio errors in settings when using different audio format between input and output.
 - Set default log size to 50MB
+- Reduce ICE candidates on Windows.
+- Show logs in console on Windows.
 - Crash on the smart search bar.
+
 
 ## 4.3.2
 

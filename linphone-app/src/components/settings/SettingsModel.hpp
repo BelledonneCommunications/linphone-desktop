@@ -536,6 +536,8 @@ public:
 	QString getLogsEmail () const;
 	void setLogsEmail (const QString &email);
 	
+	Q_INVOKABLE bool isLdapAvailable();
+	
 	// ---------------------------------------------------------------------------
 	
 	static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);

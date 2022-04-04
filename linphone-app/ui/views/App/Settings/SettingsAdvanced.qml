@@ -111,6 +111,7 @@ TabContainer {
 			width: parent.width
 			addButton:true
 			onAddButtonClicked:ldapSection.add()
+			visible: SettingsModel.isLdapAvailable() || SettingsModel.developerSettingsEnabled
 			SettingsLdap{
 				id:ldapSection
 				width: parent.width

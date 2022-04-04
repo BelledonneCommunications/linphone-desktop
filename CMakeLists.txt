@@ -104,6 +104,7 @@ option(ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
 option(ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" YES)
 option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" NO)
 option(ENABLE_VIDEO "Enable Video support." YES)
+option(ENABLE_LDAP "Enable LDAP support." YES)
 
 option(ENABLE_DAEMON "Enable the linphone daemon interface." NO)
 option(ENABLE_CONSOLE_UI "Turn on or off compilation of console interface." NO)
@@ -138,7 +139,7 @@ list(APPEND APP_OPTIONS "-DENABLE_DAEMON=${ENABLE_DAEMON}")
 list(APPEND APP_OPTIONS "-DENABLE_CONSOLE_UI=${ENABLE_CONSOLE_UI}")
 list(APPEND APP_OPTIONS "-DENABLE_VIDEO=${ENABLE_VIDEO}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_LICENSE=${ENABLE_APP_LICENSE}")
-list(APPEND APP_OPTIONS "-DENABLE_LDAP=YES")
+list(APPEND APP_OPTIONS "-DENABLE_LDAP=${ENABLE_LDAP}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_WEBVIEW=${ENABLE_APP_WEBVIEW}")
 
 
