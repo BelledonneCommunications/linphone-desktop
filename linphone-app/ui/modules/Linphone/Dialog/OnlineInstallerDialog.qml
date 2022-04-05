@@ -89,7 +89,7 @@ DialogPlus {
 
       to: target.totalBytes
       value: target.readBytes
-      indeterminate : true
+      indeterminate : target.totalBytes == 0
 
       background: Rectangle {
         color: OnlineInstallerDialogStyle.column.bar.background.color
