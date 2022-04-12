@@ -24,6 +24,7 @@
 #include "components/presence/Presence.hpp"
 #include "utils/LinphoneEnums.hpp"
 
+#include <QSharedPointer>
 // =============================================================================
 
 class VcardModel;
@@ -35,15 +36,16 @@ class ContactModel : public QObject {
   friend class SipAddressesProxyModel;
   friend class SipAddressesSorter;
 
-  Q_OBJECT;
+  Q_OBJECT
 
-  Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
-  Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel NOTIFY presenceLevelChanged);
-  Q_PROPERTY(VcardModel * vcard READ getVcardModel WRITE setVcardModel NOTIFY contactUpdated);
+  Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)
+  Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel NOTIFY presenceLevelChanged)
+  Q_PROPERTY(VcardModel * vcard READ getVcardModel WRITE setVcardModel NOTIFY contactUpdated)
 
 public:
-  ContactModel (QObject *parent, std::shared_ptr<linphone::Friend> linphoneFriend);
-  ContactModel (QObject *parent, VcardModel *vcardModel);
+  ContactModel ( std::shared_ptr<linphone::Friend> linphoneFriend, QObject * parent = nullptr);
+  ContactModel (VcardModel *vcardModel, QObject * parent = nullptr);
+  virtual ~ContactModel();
 
   void refreshPresence ();
 

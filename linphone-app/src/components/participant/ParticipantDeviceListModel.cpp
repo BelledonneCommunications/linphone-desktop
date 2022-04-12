@@ -30,7 +30,7 @@
 
 // =============================================================================
 
-ParticipantDeviceListModel::ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent) : QAbstractListModel(parent) {
+ParticipantDeviceListModel::ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent) : ProxyListModel(parent) {
 	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = participant->getDevices() ;
 	auto previewModel = ParticipantDeviceModel::create(nullptr, true);
 	mList << previewModel;
@@ -41,7 +41,7 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (std::shared_ptr<linphone
 	}
 }
 
-ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, QObject *parent) : QAbstractListModel(parent) {
+ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, QObject *parent) : ProxyListModel(parent) {
 	if(callModel && callModel->isConference()) {
 		mCallModel = callModel;
 		auto conferenceModel = callModel->getConferenceModel();
@@ -67,16 +67,6 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, Q
 		connect(conferenceModel.get(), &ConferenceModel::participantDeviceRemoved, this, &ParticipantDeviceListModel::onParticipantDeviceRemoved);
 		connect(conferenceModel.get(), &ConferenceModel::conferenceStateChanged, this, &ParticipantDeviceListModel::onConferenceStateChanged);
 	}
-}
-
-int ParticipantDeviceListModel::rowCount (const QModelIndex &index) const{
-	qWarning() << "rowCount: " << mList.count();
-	return mList.count();
-}
-
-int ParticipantDeviceListModel::count(){
-	qWarning() << "count: " << mList.count();
-	return mList.count();
 }
 
 void ParticipantDeviceListModel::updateDevices(std::shared_ptr<linphone::Participant> participant){
@@ -127,44 +117,6 @@ void ParticipantDeviceListModel::updateDevices(const std::list<std::shared_ptr<l
 	*/
 }
 
-QHash<int, QByteArray> ParticipantDeviceListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$participantDevice";
-	return roles;
-}
-
-QVariant ParticipantDeviceListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mList.count())
-		return QVariant();
-	
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mList[row].get());
-	
-	return QVariant();
-}
-
-bool ParticipantDeviceListModel::removeRow (int row, const QModelIndex &parent){
-	return removeRows(row, 1, parent);
-}
-
-bool ParticipantDeviceListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	
-	if (row < 0 || count < 0 || limit >= mList.count())
-		return false;
-	
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i)
-		mList.takeAt(row);
-	
-	endRemoveRows();
-	
-	return true;
-}
-
 void ParticipantDeviceListModel::onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device){
 	emit securityLevelChanged(device);
 }
@@ -177,14 +129,9 @@ void ParticipantDeviceListModel::onParticipantDeviceAdded(const std::shared_ptr<
 	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = conferenceModel->getConference()->getParticipantDeviceList();
 	for(auto realParticipantDevice : devices){
 		if( realParticipantDevice == participantDevice){
-			int row = mList.count();
 			auto deviceModel = ParticipantDeviceModel::create(realParticipantDevice, false);
 			connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
-			beginInsertRows(QModelIndex(), row, row);
-			mList << deviceModel;
-			endInsertRows();
-			emit countChanged();
-			//emit layoutChanged();
+			add(deviceModel);
 			return;
 		}
 	}
@@ -195,10 +142,8 @@ void ParticipantDeviceListModel::onParticipantDeviceRemoved(const std::shared_pt
 	qWarning() << "Removing participant";
 	int row = 0;
 	for(auto device : mList){
-		if( device->getDevice() == participantDevice){
+		if( device.objectCast<ParticipantDeviceModel>()->getDevice() == participantDevice){
 			removeRow(row);
-			emit countChanged();
-			//emit layoutChanged();
 			return;
 		}
 		++row;

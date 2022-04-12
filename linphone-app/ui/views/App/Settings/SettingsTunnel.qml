@@ -189,18 +189,18 @@ TabContainer {
 			delegate: 
 				Form {
 				//: 'Server' : Title form to set a server
-				title: qsTr('serverTitle')+' : '+modelData.host+(view.tunnelModel.dualModeEnabled?' / '+modelData.host2:'')
+				title: qsTr('serverTitle')+' : '+$modelData.host+(view.tunnelModel.dualModeEnabled?' / '+$modelData.host2:'')
 				width: view.width
 				removeButton: SettingsModel.developerSettingsEnabled
-				onRemoveButtonClicked: {view.tunnelModel.removeTunnelConfig(modelData)}
+				onRemoveButtonClicked: {view.tunnelModel.removeTunnelConfig($modelData)}
 				
 				FormLine {
 					FormGroup {
 						//: 'Hostname' : Field title on form to set hostname.
 						label: qsTr('serverHostname')
 						TextField {
-							text: modelData.host
-							onEditingFinished: modelData.host = text
+							text: $modelData.host
+							onEditingFinished: $modelData.host = text
 						}
 					}
 				}
@@ -209,8 +209,8 @@ TabContainer {
 						//: 'Port' : Field title on form to set port.
 						label: qsTr('serverPort')
 						NumericField {
-							text: modelData.port
-							onEditingFinished: modelData.port = text
+							text: $modelData.port
+							onEditingFinished: $modelData.port = text
 							maxValue: 65535
 						}
 					}
@@ -221,8 +221,8 @@ TabContainer {
 						//: 'Dual hostname URL' : Field title on form to set the second hostname for dual configuration.
 						label: qsTr('serverDualHostname')
 						TextField {
-							text: modelData.host2
-							onEditingFinished: modelData.host2 = text
+							text: $modelData.host2
+							onEditingFinished: $modelData.host2 = text
 						}
 					}
 				}
@@ -232,8 +232,8 @@ TabContainer {
 						//: 'Dual port' : Field title on form to set the second port for the dual configuration.
 						label: qsTr('serverDualPort')
 						NumericField {
-							text: modelData.port2
-							onEditingFinished: modelData.port2 = text
+							text: $modelData.port2
+							onEditingFinished: $modelData.port2 = text
 							maxValue: 65535
 						}
 					}
@@ -245,8 +245,8 @@ TabContainer {
 						//: 'Remote UDP mirror port' : Field title on form to set the remote UDP mirror port.
 						label: qsTr('serverRemoteUDPMirrorPort')
 						NumericField {
-							text: modelData.remoteUdpMirrorPort
-							onEditingFinished: modelData.remoteUdpMirrorPort = text
+							text: $modelData.remoteUdpMirrorPort
+							onEditingFinished: $modelData.remoteUdpMirrorPort = text
 							maxValue: 65535
 						}
 					}
@@ -257,8 +257,8 @@ TabContainer {
 						//: 'Delay' : Field title on form to set the delay of the tunnel.
 						label: qsTr('serverDelay')
 						NumericField {
-							text: modelData.delay
-							onEditingFinished: modelData.delay = text
+							text: $modelData.delay
+							onEditingFinished: $modelData.delay = text
 						}
 					}
 				}

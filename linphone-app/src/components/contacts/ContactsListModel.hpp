@@ -41,6 +41,7 @@ class ContactsListModel : public ProxyListModel {
 	
 public:
 	ContactsListModel (QObject *parent = Q_NULLPTR);
+	virtual ~ContactsListModel();
 	
 	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
 	

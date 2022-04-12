@@ -105,7 +105,7 @@ Item {
 				delegate: 
 					ChatContent{
 						maxWidth: container.width
-						contentModel: modelData
+						contentModel: $modelData
 						onFitWidthChanged:{
 							rectangle.updateWidth()			
 						}

@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common.Styles 1.0
 
 // =============================================================================
+// modelData : {placeholder, text}
 
 RowLayout {
   id: form

@@ -236,7 +236,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 App::~App () {
 	qInfo() << QStringLiteral("Destroying app...");
 	if( mEngine )
-		mEngine->deleteLater();// Let to Qt the time to delete its data
+		delete mEngine;
+	processEvents(QEventLoop::AllEvents);	// Process all needed events on engine deletion.
 	if( mParser)
 		delete mParser;
 }
@@ -352,7 +353,7 @@ void App::initContentApp () {
 	
 	
 	// Init engine content.
-	mEngine = new QQmlApplicationEngine();
+	mEngine = new QQmlApplicationEngine(this);
 	
 	// Provide `+custom` folders for custom components and `5.9` for old components.
 	{

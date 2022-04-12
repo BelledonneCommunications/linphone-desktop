@@ -123,7 +123,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	mChatRoom = chatRoom;
 	mChatRoomListener = std::make_shared<ChatRoomListener>(parent);
 	connectTo(mChatRoomListener.get());
-	mChatRoom->addListener(mChatRoomListener);	
+	mChatRoom->addListener(mChatRoomListener);
 	
 	// Get messages.
 	mList.clear();
@@ -478,7 +478,7 @@ QString ChatRoomModel::getParticipantAddress(){
 	}else{
 		auto participants = getParticipants();
 		if(participants->getCount() > 1)
-			return participants->getAt(1)->getSipAddress();
+			return participants->getAt(1).objectCast<ParticipantModel>()->getSipAddress();
 		else
 			return "";
 	}	
@@ -565,7 +565,7 @@ void ChatRoomModel::enableMarkAsRead(const bool& enable){
 void ChatRoomModel::setReply(ChatMessageModel * model){
 	if(model != mReplyModel.get()){
 		if( model && model->getChatMessage() )
-			mReplyModel = ChatMessageModel::create(model->getChatMessage(), this);
+			mReplyModel = ChatMessageModel::create(model->getChatMessage());
 		else
 			mReplyModel = nullptr;
 		emit replyChanged();
@@ -747,19 +747,19 @@ public:
 			itEntries = entries.begin();
 		for(; itEntries !=  entries.end() ; ++itEntries){
 			if( (*itEntries).mType== ChatRoomModel::EntryType::MessageEntry)
-				*resultEntries << ChatMessageModel::create(std::dynamic_pointer_cast<linphone::ChatMessage>(itEntries->mObject), chatRoomModel);
+				*resultEntries << ChatMessageModel::create(std::dynamic_pointer_cast<linphone::ChatMessage>(itEntries->mObject));
 			else if( (*itEntries).mType == ChatRoomModel::EntryType::CallEntry) {
-				auto entry = ChatCallModel::create(std::dynamic_pointer_cast<linphone::CallLog>(itEntries->mObject), true, chatRoomModel);
+				auto entry = ChatCallModel::create(std::dynamic_pointer_cast<linphone::CallLog>(itEntries->mObject), true);
 				if(entry) {
 					*resultEntries << entry;
 					if (entry->mStatus == LinphoneEnums::CallStatusSuccess) {
-						entry = ChatCallModel::create(entry->getCallLog(), false, chatRoomModel);
+						entry = ChatCallModel::create(entry->getCallLog(), false);
 						if(entry)
 							*resultEntries << entry;
 					}
 				}
 			}else{
-				auto entry = ChatNoticeModel::create(std::dynamic_pointer_cast<linphone::EventLog>(itEntries->mObject), chatRoomModel);
+				auto entry = ChatNoticeModel::create(std::dynamic_pointer_cast<linphone::EventLog>(itEntries->mObject));
 				if(entry) {
 					*resultEntries << entry;
 				}
@@ -946,6 +946,7 @@ int ChatRoomModel::loadMoreEntries(){
 				prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
 		}
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
+		
 		if(entries.size() >0){
 			beginInsertRows(QModelIndex(), 0, entries.size()-1);
 			for(auto entry : entries)
@@ -979,14 +980,14 @@ void ChatRoomModel::callEnded(std::shared_ptr<linphone::Call> call){
 
 void ChatRoomModel::insertCall (const std::shared_ptr<linphone::CallLog> &callLog) {
 	if(mIsInitialized){
-		QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true, this);
+		QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true);
 		if(model){
 			int row = mList.count();
 			beginInsertRows(QModelIndex(), row, row);
 			mList << model;
 			endInsertRows();
 			if (callLog->getStatus() == linphone::Call::Status::Success) {
-				model = ChatCallModel::create(callLog, false, this);
+				model = ChatCallModel::create(callLog, false);
 				if(model)
 					add(model);
 			}
@@ -999,11 +1000,11 @@ void ChatRoomModel::insertCalls (const QList<std::shared_ptr<linphone::CallLog> 
 	if(mIsInitialized){
 		QList<QSharedPointer<QObject> > entries;
 		for(auto callLog : calls) {
-			QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true, this);
+			QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true);
 			if(model){
 				entries << model;
 				if (callLog->getStatus() == linphone::Call::Status::Success) {
-					model = ChatCallModel::create(callLog, false, this);
+					model = ChatCallModel::create(callLog, false);
 					if(model){
 						entries << model;
 					}
@@ -1019,8 +1020,9 @@ void ChatRoomModel::insertCalls (const QList<std::shared_ptr<linphone::CallLog> 
 
 void ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message) {
 	if(mIsInitialized){
-		QSharedPointer<ChatMessageModel> model = ChatMessageModel::create(message, this);
+		QSharedPointer<ChatMessageModel> model = ChatMessageModel::create(message);
 		if(model){
+			connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 			add(model);
 		}
@@ -1031,9 +1033,11 @@ void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMe
 	if(mIsInitialized){
 		QList<QSharedPointer<QObject> > entries;
 		for(auto message : messages) {
-			QSharedPointer<ChatMessageModel> model = ChatMessageModel::create(message, this);
-			if(model)
+			QSharedPointer<ChatMessageModel> model = ChatMessageModel::create(message);
+			if(model){
+				connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 				entries << model;
+			}
 		}
 		if(entries.size() > 0){
 			prepend(entries);
@@ -1045,7 +1049,7 @@ void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMe
 
 void ChatRoomModel::insertNotice (const std::shared_ptr<linphone::EventLog> &eventLog) {
 	if(mIsInitialized){
-		QSharedPointer<ChatNoticeModel> model = ChatNoticeModel::create(eventLog, this);
+		QSharedPointer<ChatNoticeModel> model = ChatNoticeModel::create(eventLog);
 		if(model)
 			add(model);
 	}
@@ -1055,7 +1059,7 @@ void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLo
 	if(mIsInitialized){
 		QList<QSharedPointer<QObject> > entries;
 		for(auto eventLog : eventLogs) {
-			QSharedPointer<ChatNoticeModel> model = ChatNoticeModel::create(eventLog, this);
+			QSharedPointer<ChatNoticeModel> model = ChatNoticeModel::create(eventLog);
 			if(model) {
 				entries << model;
 			}

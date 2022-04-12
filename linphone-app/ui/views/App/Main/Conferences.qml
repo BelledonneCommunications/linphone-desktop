@@ -149,7 +149,7 @@ ColumnLayout {
 					//anchors.fill: parent
 					cellWidth: (container.width-20)/2
 					cellHeight: 100
-					model: modelData
+					model: $modelData
 					height: cellHeight * ( (count+1) /2)
 					width: container.width - 20
 					delegate:Rectangle {
@@ -162,7 +162,7 @@ ColumnLayout {
 						border.width: ConferencesStyle.conference.selectedBorder.width
 						ChatCalendarMessage{
 							id: calendarMessage
-							conferenceInfoModel: modelData
+							conferenceInfoModel: $modelData
 							width: calendarGrid.cellWidth
 							maxWidth: calendarGrid.cellWidth
 						}

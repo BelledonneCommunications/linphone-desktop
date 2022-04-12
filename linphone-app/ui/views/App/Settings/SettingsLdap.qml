@@ -73,7 +73,7 @@ Column {
 					colorSet: SettingsAdvancedStyle.cancel
 					scale:SettingsAdvancedStyle.lists.iconScale
 					onClicked:{
-						LdapListModel.remove(modelData)
+						LdapListModel.remove($modelData)
 					}
 					visible:hoveringRow.containsMouse
 				}

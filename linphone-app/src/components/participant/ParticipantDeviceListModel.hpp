@@ -27,30 +27,23 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QAbstractListModel>
+#include "app/proxyModel/ProxyListModel.hpp"
 
 class CallModel;
 class ParticipantDeviceModel;
 
-class ParticipantDeviceListModel : public QAbstractListModel {
+class ParticipantDeviceListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
 	ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent = nullptr);
 	ParticipantDeviceListModel (CallModel * callModel, QObject *parent = nullptr);
 	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	int count();
-	
 	void updateDevices(std::shared_ptr<linphone::Participant> participant);
 	void updateDevices(const std::list<std::shared_ptr<linphone::ParticipantDevice>>& devices, const bool& isMe);
 	
-	virtual QHash<int, QByteArray> roleNames () const override;
-	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-		
 public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
-	
 	void onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
@@ -59,13 +52,8 @@ public slots:
 
 signals:
 	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);
-	void countChanged();
 	
 private:
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	
-	QList<std::shared_ptr<ParticipantDeviceModel>> mList;
 	CallModel * mCallModel = nullptr;
 	
 };

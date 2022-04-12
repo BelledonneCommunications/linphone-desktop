@@ -53,7 +53,7 @@ ContactsImporterListModel::ContactsImporterListModel (QObject *parent) : ProxyLi
 					QString pluginID =  Utils::coreStringToAppString(config->getString(section, *keyName, ""));
 					PluginDataAPI* data = static_cast<PluginDataAPI*>(PluginsManager::createInstance(pluginID));
 					if(data) {
-						auto model = QSharedPointer<ContactsImporterModel>::create(data, this);
+						auto model = QSharedPointer<ContactsImporterModel>::create(data);
 	// See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
 	// The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
 						engine->setObjectOwnership(model.get(), QQmlEngine::CppOwnership);
@@ -103,7 +103,7 @@ ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVarian
 		PluginDataAPI * dataInstance = static_cast<PluginDataAPI*>(PluginsManager::createInstance(data["pluginID"].toString()));
 		if(dataInstance) {
 // get default values
-			contactsImporter = QSharedPointer<ContactsImporterModel>::create(dataInstance, this);
+			contactsImporter = QSharedPointer<ContactsImporterModel>::create(dataInstance);
 			App::getInstance()->getEngine()->setObjectOwnership(contactsImporter.get(), QQmlEngine::CppOwnership);
 			QVariantMap newData = ContactsImporterPluginsManager::getDefaultValues(data["pluginID"].toString());// Start with defaults from plugin
 			QVariantMap InstanceFields = contactsImporter->getFields();

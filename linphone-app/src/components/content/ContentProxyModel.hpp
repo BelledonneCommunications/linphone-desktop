@@ -38,7 +38,9 @@ class ContentProxyModel : public QSortFilterProxyModel {
 	
 public:
 	ContentProxyModel (QObject *parent = nullptr);	
-	Q_PROPERTY(ChatMessageModel * chatMessageModel WRITE setChatMessageModel NOTIFY chatMessageModelChanged)
+	Q_PROPERTY(ChatMessageModel * chatMessageModel READ getChatMessageModel WRITE setChatMessageModel NOTIFY chatMessageModelChanged)
+	
+	ChatMessageModel * getChatMessageModel() const;
 	
 	void setChatMessageModel(ChatMessageModel * message);
 	Q_INVOKABLE void setContentListModel(ContentListModel * model);

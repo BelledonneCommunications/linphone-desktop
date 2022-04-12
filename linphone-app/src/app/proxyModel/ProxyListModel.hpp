@@ -31,13 +31,23 @@ class ProxyListModel : public QAbstractListModel {
 	Q_OBJECT
 	
 public:
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	ProxyListModel (QObject *parent = Q_NULLPTR);
+	virtual ~ProxyListModel();
 	
 	virtual int rowCount (const QModelIndex &index = QModelIndex()) const override;
+	Q_INVOKABLE int getCount() const;
 	
 	virtual QHash<int, QByteArray> roleNames () const override;
 	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	
 	QSharedPointer<QObject> getAt(const int& index) const;
+	template <class T>
+	QSharedPointer<T> getAt(const int& index) const{
+		return getAt(index).objectCast<T>();
+	}
+	
+	QSharedPointer<QObject> get(QObject * itemToGet, int * index = nullptr) const;
 	
 	template <class T>
 	QList<QSharedPointer<T>> getSharedList(){
@@ -78,6 +88,9 @@ public:
 	
 	
 	Q_INVOKABLE virtual void resetData();
+	
+signals:
+	void countChanged();
 	
 protected:
 	QList<QSharedPointer<QObject>> mList;

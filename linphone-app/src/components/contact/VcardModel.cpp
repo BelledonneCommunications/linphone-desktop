@@ -92,7 +92,7 @@ static void removeBelcardPhoto (const shared_ptr<belcard::BelCard> &belcard, boo
 
 // -----------------------------------------------------------------------------
 
-VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard, bool isReadOnly) {
+VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard, bool isReadOnly) : QObject(nullptr) {
 	Q_CHECK_PTR(vcard);
 	mVcard = vcard;
 	mIsReadOnly = isReadOnly;

@@ -25,14 +25,15 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QAbstractListModel>
 #include <memory> 
 #include <QQmlPropertyMap>
+#include <QSharedPointer>
 
 #include "ColorModel.hpp"
+#include "app/proxyModel/ProxyListModel.hpp"
 
 #define ADD_COLOR(COLOR, VALUE, DESCRIPTION) \
-	color = std::make_shared<ColorModel>(COLOR, VALUE, DESCRIPTION); \
+	color = QSharedPointer<ColorModel>::create(COLOR, VALUE, DESCRIPTION); \
 	add(color);
 
 #define ADD_COLOR_WITH_LINK(COLOR, VALUE, DESCRIPTION, LINK) \
@@ -40,17 +41,17 @@
 	
 // Alpha is in percent.
 #define ADD_COLOR_WITH_ALPHA(COLOR, ALPHA, DESCRIPTION) \
-	color = std::make_shared<ColorModel>(COLOR + QString::number(ALPHA), mData[COLOR].value<ColorModel*>()->getColor().name(), DESCRIPTION); \
+	color = QSharedPointer<ColorModel>::create(COLOR + QString::number(ALPHA), mData[COLOR].value<ColorModel*>()->getColor().name(), DESCRIPTION); \
 	color->setAlpha(ALPHA * 255 / 100); \
 	add(color);
 	
 	
 class ColorModel;
 
-class ColorListModel : public QAbstractListModel {
+class ColorListModel : public ProxyListModel {
 	Q_OBJECT
 	void init() {
-		std::shared_ptr<ColorModel> color;
+		QSharedPointer<ColorModel> color;
 		ADD_COLOR("a", "transparent", "Generic transparent color.")
 		// Primary color for hovered items.
 		ADD_COLOR("b", "#D64D00", "Primary color for hovered items.")
@@ -304,11 +305,8 @@ public:
 	ColorListModel (QObject *parent = nullptr);
 	void initKeywords();
 	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	
 	virtual QHash<int, QByteArray> roleNames () const override;
 	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	ColorModel *getAt(const int& index);
 	
 	void useConfig (const std::shared_ptr<linphone::Config> &config);
 	
@@ -342,12 +340,8 @@ signals:
 	void colorChanged();
 	
 private:
-	void add(std::shared_ptr<ColorModel> imdn);
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
+	void add(QSharedPointer<ColorModel> imdn);
 	QString buildDescription(QString description);	// return a description from id by splitting '_'
-	
-	QList<std::shared_ptr<ColorModel>> mList;
 	
 	QStringList getColorNames () const;
 	
@@ -359,6 +353,6 @@ private:
 	
 };
 #undef ADD_COLOR
-Q_DECLARE_METATYPE(std::shared_ptr<ColorListModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ColorListModel>)
 
 #endif 

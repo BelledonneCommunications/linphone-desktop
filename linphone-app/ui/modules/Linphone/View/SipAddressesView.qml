@@ -208,7 +208,7 @@ ScrollableListView {
 	delegate: Rectangle {
 		id: sipAddressEntry
 		
-		property var entry: modelData
+		property var entry: $modelData
 		
 		color: SipAddressesViewStyle.entry.color.normal
 		height: SipAddressesViewStyle.entry.height
@@ -245,11 +245,11 @@ ScrollableListView {
 					Layout.fillWidth: true
 					showContactAddress: sipAddressesView.showContactAddress
 					
-					entry: modelData
+					entry: $modelData
 					
 					MouseArea {
 						anchors.fill: parent
-						onClicked: sipAddressesView.entryClicked(modelData, index)
+						onClicked: sipAddressesView.entryClicked($modelData, index)
 					}
 				}
 				
@@ -291,15 +291,15 @@ ScrollableListView {
 						ActionButton {
 							isCustom: true
 							backgroundRadius: 90
-							colorSet: modelData.colorSet
-							tooltipText:modelData.tooltipText?modelData.tooltipText:''
-							visible: modelData.visible
-							onClicked: {// Do not use modelData on functions : Qt bug
+							colorSet: $modelData.colorSet
+							tooltipText:$modelData.tooltipText?$modelData.tooltipText:''
+							visible: $modelData.visible
+							onClicked: {// Do not use $modelData on functions : Qt bug
 								sipAddressesView.actions[index].handler(sipAddressEntry.entry)
 							}
 							Icon{
-								visible: modelData.secure>0 && 
-								// Do not use modelData on functions : Qt bug
+								visible: $modelData.secure>0 && 
+								// Do not use $modelData on functions : Qt bug
 										 (sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler(sipAddressEntry.entry) : true)
 								icon: 'secure_on'
 								iconSize: parent.height/2

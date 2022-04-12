@@ -25,15 +25,27 @@
 // =============================================================================
 
 ProxyListModel::ProxyListModel (QObject *parent) : QAbstractListModel(parent) {
+	connect(this, &ProxyListModel::rowsInserted, this, &ProxyListModel::countChanged);
+	connect(this, &ProxyListModel::rowsRemoved, this, &ProxyListModel::countChanged);
+}
+
+ProxyListModel::~ProxyListModel(){
+	beginResetModel();
+	mList.clear();
+	endResetModel();
 }
 
 int ProxyListModel::rowCount (const QModelIndex &) const {
 	return mList.count();
 }
 
+int ProxyListModel::getCount() const{
+	return rowCount();
+}
+
 QHash<int, QByteArray> ProxyListModel::roleNames () const {
 	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "modelData";
+	roles[Qt::DisplayRole] = "$modelData";
 	return roles;
 }
 
@@ -51,6 +63,18 @@ QVariant ProxyListModel::data (const QModelIndex &index, int role) const {
 
 QSharedPointer<QObject> ProxyListModel::getAt(const int& index) const{
 	return mList[index];
+}
+
+QSharedPointer<QObject> ProxyListModel::get(QObject * itemToGet, int * index) const{
+	int row = 0;
+	for(auto item : mList)
+		if( item.get() == itemToGet){
+			if( index )
+				*index = row;
+			return item;
+		}else
+			++row;
+	return nullptr;
 }
 
 // -----------------------------------------------------------------------------

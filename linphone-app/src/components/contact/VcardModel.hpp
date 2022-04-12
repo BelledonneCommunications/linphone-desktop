@@ -34,7 +34,7 @@ namespace linphone {
 class VcardModel : public QObject {
   friend class ContactModel; // Grant access to `mVcard`.
 
-  Q_OBJECT;
+  Q_OBJECT
 
   Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY vcardUpdated);
   Q_PROPERTY(QString avatar READ getAvatar WRITE setAvatar NOTIFY vcardUpdated);

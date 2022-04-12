@@ -31,7 +31,7 @@
 
 // =============================================================================
 
-ContentListModel::ContentListModel (ChatMessageModel * message) : ProxyListModel(message) {
+ContentListModel::ContentListModel (ChatMessageModel * message, QObject* parent) : ProxyListModel(parent) {
 	mParent = message;
 	if(message){
 		std::list<std::shared_ptr<linphone::Content>> contents = message->getChatMessage()->getContents() ;

@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
+#include <QSharedPointer>
 
 class ContactModel;
 class ParticipantDeviceProxyModel;
@@ -66,7 +67,7 @@ public:
 	
 	std::shared_ptr<linphone::Participant>  getParticipant();
 	Q_INVOKABLE ParticipantDeviceProxyModel * getProxyDevices();
-	std::shared_ptr<ParticipantDeviceListModel> getParticipantDevices();
+	QSharedPointer<ParticipantDeviceListModel> getParticipantDevices();
     //linphone::ChatRoomSecurityLevel getSecurityLevel() const;
     //std::shared_ptr<linphone::ParticipantDevice> findDevice(const std::shared_ptr<const linphone::Address> & address) const;
 	
@@ -95,7 +96,7 @@ signals:
 private:
 
     std::shared_ptr<linphone::Participant> mParticipant;
-	std::shared_ptr<ParticipantDeviceListModel> mParticipantDevices;
+	QSharedPointer<ParticipantDeviceListModel> mParticipantDevices;
 	
 // Variables when Linphone Participant has not been created
 	QString mSipAddress;
@@ -103,6 +104,6 @@ private:
 };
 
 //Q_DECLARE_METATYPE(ParticipantModel *);
-Q_DECLARE_METATYPE(std::shared_ptr<ParticipantModel>);
+Q_DECLARE_METATYPE(QSharedPointer<ParticipantModel>);
 
 #endif // PARTICIPANT_MODEL_H_

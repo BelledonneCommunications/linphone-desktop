@@ -82,7 +82,6 @@ ListView {
 				
 				Repeater {
 					model: params ? params.actions : []
-					
 					DropDownStaticMenuEntry {
 						entryName: modelData.name
 						Component.onCompleted: if( menu.maxWidth < implicitWidth ) menu.maxWidth = implicitWidth
@@ -130,7 +129,7 @@ ListView {
 		// -------------------------------------------------------------------------
 		
 		function useColorStatus () {
-			return calls.currentIndex === index && modelData && modelData.status !== CallModel.CallStatusEnded
+			return calls.currentIndex === index && $modelData && $modelData.status !== CallModel.CallStatusEnded
 		}
 		
 		// -------------------------------------------------------------------------
@@ -150,13 +149,13 @@ ListView {
 			return params ? 'call_sign_' + params.string : ''
 		}
 		
-		entry: modelData
+		entry: $modelData
 		
 		width: calls.width
 		
 		onClicked: {
-			if (modelData.status !== CallModel.CallStatusEnded) {
-				Logic.updateSelectedCall(modelData, index)
+			if ($modelData.status !== CallModel.CallStatusEnded) {
+				Logic.updateSelectedCall($modelData, index)
 			}
 		}
 		
@@ -167,9 +166,9 @@ ListView {
 			
 			readonly property int callId: index
 			
-			readonly property var call: modelData
+			readonly property var call: $modelData
 			readonly property var callControls: _callControls
-			readonly property var params: Logic.getParams(modelData)
+			readonly property var params: Logic.getParams($modelData)
 			
 			anchors.centerIn: parent
 			sourceComponent: params ? params.component : null
@@ -177,7 +176,7 @@ ListView {
 		
 		SequentialAnimation on color {
 			loops: CallsStyle.entry.endCallAnimation.loops
-			running: !modelData || modelData.status === CallModel.CallStatusEnded
+			running: !$modelData || $modelData.status === CallModel.CallStatusEnded
 			
 			ColorAnimation {
 				duration: CallsStyle.entry.endCallAnimation.duration

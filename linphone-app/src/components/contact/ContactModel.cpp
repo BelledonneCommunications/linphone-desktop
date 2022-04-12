@@ -29,7 +29,7 @@
 
 using namespace std;
 
-ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linphoneFriend) : QObject(parent) {
+ContactModel::ContactModel (shared_ptr<linphone::Friend> linphoneFriend, QObject * parent) : QObject(parent) {
   Q_CHECK_PTR(linphoneFriend);
 
   mLinphoneFriend = linphoneFriend;
@@ -38,7 +38,7 @@ ContactModel::ContactModel (QObject *parent, shared_ptr<linphone::Friend> linpho
   setVcardModelInternal(new VcardModel(linphoneFriend->getVcard()));
 }
 
-ContactModel::ContactModel (QObject *parent, VcardModel *vcardModel) : QObject(parent) {
+ContactModel::ContactModel (VcardModel *vcardModel, QObject * parent) : QObject(parent) {
   Q_CHECK_PTR(vcardModel);
   Q_CHECK_PTR(vcardModel->mVcard);
   Q_ASSERT(!vcardModel->mIsReadOnly);
@@ -50,6 +50,10 @@ ContactModel::ContactModel (QObject *parent, VcardModel *vcardModel) : QObject(p
   setVcardModelInternal(vcardModel);
 }
 
+ContactModel::~ContactModel(){
+	mVcardModel = nullptr;
+	mLinphoneFriend = nullptr;
+}
 // -----------------------------------------------------------------------------
 
 void ContactModel::refreshPresence () {

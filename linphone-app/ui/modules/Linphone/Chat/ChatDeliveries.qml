@@ -56,7 +56,7 @@ Loader{
 		delegate:Text{
 			height: ChatStyle.composingText.height-5
 			width: GridView.width
-			text: deliveryLayout.getText(modelData.state, modelData.displayName, UtilsCpp.toDateTimeString(modelData.stateChangeTime))
+			text: deliveryLayout.getText($modelData.state, $modelData.displayName, UtilsCpp.toDateTimeString($modelData.stateChangeTime))
 			color: ChatStyle.entry.event.text.color
 			font.pointSize: Units.dp * 8
 			elide: Text.ElideMiddle

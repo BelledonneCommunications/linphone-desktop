@@ -172,7 +172,7 @@ Rectangle {
 						onCurrentDeviceChanged: console.log("currentDevice changed: " +currentDevice +", me:"+currentDevice.isMe+" ["+index+"]")
 						color: /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */'#AAAAAAAA'
 						//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
-						//color:  modelData.color ? modelData.color : ''
+						//color:  $modelData.color ? $modelData.color : ''
 						radius: grid.radius
 						height: grid.cellHeight - 5
 						width: grid.cellWidth - 5

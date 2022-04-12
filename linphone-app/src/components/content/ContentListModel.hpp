@@ -27,7 +27,6 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QAbstractListModel>
 
 #include "app/proxyModel/ProxyListModel.hpp"
 
@@ -38,7 +37,7 @@ class ContentListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
-	ContentListModel (ChatMessageModel * message);
+	ContentListModel (ChatMessageModel * message, QObject * parent = nullptr);
 	
 	int count();
 	

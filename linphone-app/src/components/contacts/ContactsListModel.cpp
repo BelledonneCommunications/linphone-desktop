@@ -50,13 +50,23 @@ ContactsListModel::ContactsListModel (QObject *parent) : ProxyListModel(parent) 
 	// Init contacts with linphone friends list.
 	QQmlEngine *engine = App::getInstance()->getEngine();
 	for (const auto &linphoneFriend : mLinphoneFriends->getFriends()) {
-		auto contact = QSharedPointer<ContactModel>::create(this, linphoneFriend);
+		auto contact = QSharedPointer<ContactModel>::create(linphoneFriend);
 		
 		// See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
 		// The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
 		engine->setObjectOwnership(contact.get(), QQmlEngine::CppOwnership);
 		
 		addContact(contact);
+	}
+}
+
+ContactsListModel::~ContactsListModel(){
+	if(rowCount()>0) {
+		beginResetModel();
+		mOptimizedSearch.clear();
+		mList.clear();
+		mLinphoneFriends = nullptr;
+		endResetModel();
 	}
 }
 
@@ -116,7 +126,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 		return contact.get();
 	}
 	
-	contact = QSharedPointer<ContactModel>::create(this, vcardModel);
+	contact = QSharedPointer<ContactModel>::create(vcardModel);
 	App::getInstance()->getEngine()->setObjectOwnership(contact.get(), QQmlEngine::CppOwnership);
 	
 	if (mLinphoneFriends->addFriend(contact->mLinphoneFriend) != linphone::FriendList::Status::OK) {
@@ -147,8 +157,8 @@ void ContactsListModel::cleanAvatars () {
 	qInfo() << QStringLiteral("Delete all avatars.");
 	
 	for (const auto &item : mList) {
-		auto contact = qobject_cast<ContactModel*>(item.get());
-		VcardModel *vcardModel = contact->cloneVcardModel();
+		auto contact = item.objectCast<ContactModel>();
+		VcardModel* vcardModel = contact->cloneVcardModel();
 		vcardModel->setAvatar(QString(""));
 		contact->setVcardModel(vcardModel);
 	}
@@ -168,7 +178,7 @@ void ContactsListModel::addContact (QSharedPointer<ContactModel> contact) {
 		mOptimizedSearch.remove(sipAddress);
 		emit sipAddressRemoved(contact, sipAddress);
 	});
-	add(contact);
+	add<ContactModel>(contact);
 	for(auto address : contact->getVcardModel()->getSipAddresses()){
 		mOptimizedSearch[address.toString()] = contact;
 	}

@@ -43,7 +43,7 @@ namespace {
 
 // =============================================================================
 
-ImageListModel::ImageListModel ( QObject *parent) : QAbstractListModel(parent), mData(this) {
+ImageListModel::ImageListModel ( QObject *parent) : ProxyListModel(parent), mData(this) {
 // Get all internals
 	QString path = ":/assets/images/";
 	QStringList filters;
@@ -51,57 +51,19 @@ ImageListModel::ImageListModel ( QObject *parent) : QAbstractListModel(parent), 
 	
 	QFileInfoList  files = QDir(path).entryInfoList(filters, QDir::Files , QDir::Name);
 	for(QFileInfo file : files){
-		std::shared_ptr<ImageModel> model = std::make_shared<ImageModel>(file.completeBaseName(), path+file.fileName(), "");
+		QSharedPointer<ImageModel> model = QSharedPointer<ImageModel>::create(file.completeBaseName(), path+file.fileName(), "");
 		add(model);
 	}
 	mData.insert("areReadOnlyImages", QVariant::fromValue(true));
 }
 
-int ImageListModel::rowCount (const QModelIndex &index) const{
-	return mList.count();
-}
-
-QHash<int, QByteArray> ImageListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$image";
-	return roles;
-}
-
-QVariant ImageListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mList.count())
-		return QVariant();
-	return QVariant::fromValue(mList[row].get());
-}
-
-void ImageListModel::add(std::shared_ptr<ImageModel> image){
-	int row = mList.count();
-	beginInsertRows(QModelIndex(), row, row);
+void ImageListModel::add(QSharedPointer<ImageModel> image){
 	setProperty(image->getId().toStdString().c_str(), QVariant::fromValue(image.get()));
-	
 	mData.insert(image->getId(), QVariant::fromValue(image.get()));
-	mList << image;
 	
-	endInsertRows();
+	ProxyListModel::add(image);
+	
 	emit layoutChanged();
-}
-
-bool ImageListModel::removeRow (int row, const QModelIndex &parent){
-	return removeRows(row, 1, parent);
-}
-
-bool ImageListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	if (row < 0 || count < 0 || limit >= mList.count())
-		return false;
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i)
-		mList.takeAt(row);
-	
-	endRemoveRows();
-	return true;
 }
 
 void ImageListModel::useConfig (const std::shared_ptr<linphone::Config> &config) {
@@ -134,9 +96,11 @@ const QQmlPropertyMap * ImageListModel::getQmlData() const{
 }
 
 ImageModel * ImageListModel::getImageModel(const QString& id){
-	for(auto image : mList)
+	for(auto item : mList) {
+		auto image = item.objectCast<ImageModel>();
 		if(image->getId() == id)
 			return image.get();
+	}
 	return nullptr;	
 }
 
@@ -144,7 +108,8 @@ ImageModel * ImageListModel::getImageModel(const QString& id){
 void ImageListModel::overrideImages (const std::shared_ptr<linphone::Config> &config) {
   if (!config)
     return;
-	for(auto image : mList){
+	for(auto item : mList){
+		auto image = item.objectCast<ImageModel>();
 		QString id = image->getId();
 		const std::string pathValue = config->getString(ImagesSection, id.toStdString(), "");
 		if(!pathValue.empty()){

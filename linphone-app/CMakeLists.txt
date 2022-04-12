@@ -88,6 +88,21 @@ if(ENABLE_BUILD_VERBOSE)
 	message("LINPHONECXX : ${LINPHONECXX_INCLUDE_DIRS} => ${LINPHONECXX_LIBRARIES}")
 endif()
 # Build configuration
+
+#############################
+#Sanitizer
+if(ENABLE_SANITIZER)
+	set(sanitize_flags "-fsanitize=address,undefined -fno-omit-frame-pointer -fno-optimize-sibling-calls")
+	set(sanitize_linker_flags "-fsanitize=address,undefined")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${sanitize_flags}")
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${sanitize_flags}")
+	
+	set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${sanitize_linker_flags}")
+	set(CMAKE_MODULE_LINKER_FLAGS "${CMAKE_MODULE_LINKER_FLAGS} ${sanitize_linker_flags}")
+	set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${sanitize_linker_flags}")
+endif()
+#############################
+
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -DQT_NO_DEBUG")
 set(CMAKE_CXX_FLAGS_RELWITHDEBINFO "${CMAKE_CXX_FLAGS_RELWITHDEBINFO} -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG")
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_DECLARATIVE_DEBUG" )
@@ -194,6 +209,7 @@ set(SOURCES
 	src/components/participant/ParticipantModel.cpp
 	src/components/participant/ParticipantListModel.cpp
 	src/components/participant/ParticipantProxyModel.cpp
+	src/components/participant/ParticipantDeviceListener.cpp
 	src/components/participant/ParticipantDeviceModel.cpp
 	src/components/participant/ParticipantDeviceListModel.cpp
 	src/components/participant/ParticipantDeviceProxyModel.cpp
@@ -318,6 +334,7 @@ set(HEADERS
 	src/components/participant/ParticipantModel.hpp
 	src/components/participant/ParticipantListModel.hpp
 	src/components/participant/ParticipantProxyModel.hpp
+	src/components/participant/ParticipantDeviceListener.hpp
 	src/components/participant/ParticipantDeviceModel.hpp
 	src/components/participant/ParticipantDeviceListModel.hpp
 	src/components/participant/ParticipantDeviceProxyModel.hpp

@@ -128,7 +128,7 @@ ScrollableListView {
 									Icon{
 										visible: modelData.secure>0 &&
 											(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$sipAddress}) : true)
-										icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+										icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
 										iconSize:parent.height/2
 										anchors.top:parent.top
 										anchors.horizontalCenter: parent.right
@@ -239,9 +239,9 @@ ScrollableListView {
 					showContactAddress: sipAddressesView.showContactAddress
 					//: '(Admin)' : One word for Admin(istrator)
 					//~ Context Little Header in one word for a column in participant
-					statusText : showAdminStatus && modelData.adminStatus ? qsTr('participantsAdminHeader') : ''
+					statusText : showAdminStatus && $modelData.adminStatus ? qsTr('participantsAdminHeader') : ''
 					
-					entry:  modelData
+					entry:  $modelData
 					
 					onAvatarClicked: sipAddressesView.entryClicked(parent.entry, index, contactView)
 					
@@ -250,7 +250,7 @@ ScrollableListView {
 						anchors.horizontalCenter: parent.horizontalCenter
 						width:15
 						height:15
-						running: sipAddressesView.showInvitingIndicator && modelData.inviting
+						running: sipAddressesView.showInvitingIndicator && $modelData.inviting
 					}
 				}
 				
@@ -272,9 +272,9 @@ ScrollableListView {
 						visible: sipAddressesView.showSwitch
 						
 						enabled:true
-						checked: modelData.adminStatus
+						checked: $modelData.adminStatus
 						onClicked: {
-							modelData.adminStatus = !checked
+							$modelData.adminStatus = !checked
 						}
 					}
 					
@@ -286,7 +286,7 @@ ScrollableListView {
 							backgroundRadius: 90
 							colorSet: modelData.colorSet
 							anchors.verticalCenter: parent.verticalCenter
-							tooltipText:modelData.tooltipText?modelData.tooltipText:''
+							tooltipText: modelData.tooltipText? modelData.tooltipText:''
 							visible: sipAddressesView.actions[index].visible
 							onClicked: {
 								sipAddressesView.actions[index].handler(contactView.entry)
@@ -294,7 +294,7 @@ ScrollableListView {
 							Icon{
 								visible: modelData.secure>0 &&
 									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$sipAddress}) : true)
-								icon:modelData.secure === 2?'secure_level_2':'secure_level_1'
+								icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
 								iconSize: parent.height/2
 								anchors.top:parent.top
 								anchors.horizontalCenter: parent.right

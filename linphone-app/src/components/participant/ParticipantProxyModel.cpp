@@ -53,7 +53,7 @@ QStringList ParticipantProxyModel::getSipAddresses() const{
 	QStringList participants;
 	ParticipantListModel * list = qobject_cast<ParticipantListModel*>(sourceModel());
 	for(int i = 0 ; i < list->rowCount() ; ++i)
-		participants << list->getAt(i)->getSipAddress();
+		participants << list->getAt<ParticipantModel>(i)->getSipAddress();
 	return participants;
 }
 
@@ -83,7 +83,7 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 			setSourceModel(participants);
 			emit participantListModelChanged();
 			for(int i = 0 ; i < participants->getCount() ; ++i)
-				emit addressAdded(participants->getAt(i)->getSipAddress());
+				emit addressAdded(participants->getAt<ParticipantModel>(i)->getSipAddress());
 		}else {
 			setSourceModel(new ParticipantListModel(nullptr, this));
 			emit participantListModelChanged();
@@ -104,7 +104,7 @@ void ParticipantProxyModel::setShowMe(const bool& show){
 void ParticipantProxyModel::addAddress(const QString& address){
 	ParticipantListModel * participantsModel = qobject_cast<ParticipantListModel*>(sourceModel());
 	if(!participantsModel->contains(address)){
-		std::shared_ptr<ParticipantModel> participant = std::make_shared<ParticipantModel>(nullptr);
+		QSharedPointer<ParticipantModel> participant = QSharedPointer<ParticipantModel>::create(nullptr);
 		participant->setSipAddress(address);
 		participantsModel->add(participant);
 		if(mChatRoomModel && mChatRoomModel->getChatRoom()){// Invite and wait for its creation

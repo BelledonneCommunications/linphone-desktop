@@ -27,22 +27,18 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QAbstractListModel>
+
+#include "app/proxyModel/ProxyListModel.hpp"
 
 class ParticipantImdnStateModel;
 
-class ParticipantImdnStateListModel : public QAbstractListModel {
+class ParticipantImdnStateListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
 	ParticipantImdnStateListModel (std::shared_ptr<linphone::ChatMessage> message, QObject *parent = nullptr);
 	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	
-	virtual QHash<int, QByteArray> roleNames () const override;
-	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	
-	std::shared_ptr<ParticipantImdnStateModel> getImdnState(const std::shared_ptr<const linphone::ParticipantImdnState> & state);
+	QSharedPointer<ParticipantImdnStateModel> getImdnState(const std::shared_ptr<const linphone::ParticipantImdnState> & state);
 	
 	void updateState(const std::shared_ptr<const linphone::ParticipantImdnState> & state);
 		
@@ -51,17 +47,8 @@ public slots:
 
 signals:
 	void imdnStateChanged();
-	void countChanged();
-	
-private:
-	void add(std::shared_ptr<ParticipantImdnStateModel> imdn);
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	
-	QList<std::shared_ptr<ParticipantImdnStateModel>> mList;
-	
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<ParticipantImdnStateListModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ParticipantImdnStateListModel>)
 
 #endif 

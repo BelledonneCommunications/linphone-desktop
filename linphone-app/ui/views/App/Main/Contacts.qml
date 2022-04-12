@@ -109,7 +109,7 @@ ColumnLayout {
 							PresenceLevel {
 								Layout.preferredHeight: ContactsStyle.contact.presenceLevelSize
 								Layout.preferredWidth: ContactsStyle.contact.presenceLevelSize
-								level: modelData.presenceLevel
+								level: $modelData.presenceLevel
 							}
 							
 							Text {
@@ -117,7 +117,7 @@ ColumnLayout {
 								color: ContactsStyle.contact.presence.color
 								elide: Text.ElideRight
 								font.pointSize: ContactsStyle.contact.presence.pointSize
-								text: Presence.getPresenceStatusAsString(modelData.presenceStatus)
+								text: Presence.getPresenceStatusAsString($modelData.presenceStatus)
 							}
 						}
 					}
@@ -189,7 +189,7 @@ ColumnLayout {
 									verticalCenter: parent.verticalCenter
 								}
 								
-								onClicked: _removeContact(modelData)
+								onClicked: _removeContact($modelData)
 							}
 						}
 					}
@@ -199,6 +199,7 @@ ColumnLayout {
 					Repeater {
 						id: actions
 						property ChatRoomModel lastChatRoom
+						property ContactModel contactModel: $modelData
 						
 						Connections{
 							target: lastChatRoom
@@ -222,8 +223,7 @@ ColumnLayout {
 						SipAddressesMenu {
 							relativeTo: loader
 							relativeY: loader.height
-							
-							sipAddresses: modelData.vcard.sipAddresses
+							sipAddresses: actions.contactModel.vcard.sipAddresses
 							
 							onSipAddressClicked: actions.handlers[index](sipAddress)
 						}
@@ -250,7 +250,7 @@ ColumnLayout {
 							anchors.fill: parent
 							
 							onClicked: window.setView('ContactEdit', {
-														  sipAddress: modelData.vcard.sipAddresses[0]
+														  sipAddress: $modelData.vcard.sipAddresses[0]
 													  })
 						}
 						
@@ -269,8 +269,8 @@ ColumnLayout {
 								Avatar {
 									anchors.centerIn: parent
 									
-									image: modelData.vcard.avatar
-									username: modelData.vcard.username
+									image: $modelData.vcard.avatar
+									username: $modelData.vcard.username
 									
 									height: ContactsStyle.contact.avatarSize
 									width: ContactsStyle.contact.avatarSize
@@ -289,7 +289,7 @@ ColumnLayout {
 									pointSize: ContactsStyle.contact.username.pointSize
 								}
 								
-								text: modelData.vcard.username
+								text: $modelData.vcard.username
 								verticalAlignment: Text.AlignVCenter
 							}
 							

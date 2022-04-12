@@ -19,11 +19,21 @@
  */
 
 #include "ParticipantDeviceModel.hpp"
+#include "ParticipantDeviceListener.hpp"
 
 #include <QQmlApplicationEngine>
 #include "app/App.hpp"
 #include "utils/Utils.hpp"
 #include "components/Components.hpp"
+
+void ParticipantDeviceModel::connectTo(ParticipantDeviceListener * listener){
+	connect(listener, &ParticipantDeviceListener::isSpeakingChanged, this, &ParticipantDeviceModel::onIsSpeakingChanged);
+	connect(listener, &ParticipantDeviceListener::isMuted, this, &ParticipantDeviceModel::onIsMuted);
+	connect(listener, &ParticipantDeviceListener::conferenceJoined, this, &ParticipantDeviceModel::onConferenceJoined);
+	connect(listener, &ParticipantDeviceListener::conferenceLeft, this, &ParticipantDeviceModel::onConferenceLeft);
+	connect(listener, &ParticipantDeviceListener::streamCapabilityChanged, this, &ParticipantDeviceModel::onStreamCapabilityChanged);
+	connect(listener, &ParticipantDeviceListener::streamAvailabilityChanged, this, &ParticipantDeviceModel::onStreamAvailabilityChanged);
+}
 
 // =============================================================================
 
@@ -31,6 +41,9 @@ ParticipantDeviceModel::ParticipantDeviceModel (std::shared_ptr<linphone::Partic
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mIsMe = isMe;
 	mParticipantDevice = device;
+	mParticipantDeviceListener = std::make_shared<ParticipantDeviceListener>(nullptr);
+	if( device)
+		device->addListener(mParticipantDeviceListener);
 	mCall = nullptr;
 }
 /*
@@ -42,12 +55,15 @@ ParticipantDeviceModel::ParticipantDeviceModel (CallModel * call, const bool& is
 		connect(call, &CallModel::statusChanged, this, &ParticipantDeviceModel::videoEnabledChanged);
 }*/
 
-std::shared_ptr<ParticipantDeviceModel> ParticipantDeviceModel::create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe, QObject *parent){
-	std::shared_ptr<ParticipantDeviceModel> model = std::make_shared<ParticipantDeviceModel>(device, isMe, parent);
+ParticipantDeviceModel::~ParticipantDeviceModel(){
+	if( mParticipantDevice)
+		mParticipantDevice->removeListener(mParticipantDeviceListener);
+}
+
+QSharedPointer<ParticipantDeviceModel> ParticipantDeviceModel::create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe, QObject *parent){
+	QSharedPointer<ParticipantDeviceModel> model = QSharedPointer<ParticipantDeviceModel>::create(device, isMe, parent);
 	if(model){
 		model->mSelf = model;
-		if(device)
-			device->addListener(model);
 		return model;
 	}
 	return nullptr;

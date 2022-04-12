@@ -50,11 +50,11 @@ Item{
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.verticalCenterOffset: 7
 				//anchors.horizontalCenter: parent.horizontalCenter
-				thumbnail: modelData.thumbnail
-				name: modelData.name
+				thumbnail: $modelData.thumbnail
+				name: $modelData.name
 				animationScale: 1.1
 				onClickOnFile: {
-					modelData.openFile()
+					$modelData.openFile()
 				}
 				ActionButton{
 					anchors.bottom: parent.top
@@ -66,7 +66,7 @@ Item{
 					colorSet: ChatFilePreviewStyle.filePreview.removeButton
 					z: parent.z+1
 					onClicked:{
-						contents.remove(modelData)
+						contents.remove($modelData)
 					}
 				}
 		}

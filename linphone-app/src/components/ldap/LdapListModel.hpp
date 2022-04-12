@@ -21,15 +21,16 @@
 #ifndef LDAP_LIST_MODEL_H_
 #define LDAP_LIST_MODEL_H_
 
-#include <QAbstractListModel>
+
 #include <QDateTime>
 
 #include "LdapModel.hpp"
+#include "app/proxyModel/ProxyListModel.hpp"
 // =============================================================================
 
 class CoreHandlers;
 
-class LdapListModel : public QAbstractListModel {
+class LdapListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
@@ -37,11 +38,6 @@ public:
 	LdapListModel (QObject *parent = Q_NULLPTR);
 	
 	void reset();
-	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	
-	QHash<int, QByteArray> roleNames () const override;
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 	
 // Enable the Server and save it if it is valid
 	Q_INVOKABLE void enable(int id, bool status);
@@ -54,14 +50,9 @@ signals:
 	void indexChanged();
 	
 private:
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	
 	// ---------------------------------------------------------------------------
 	
 	void initLdap ();
-	
-	QList<LdapModel*> mServers;
 };
 
 #endif // LDAP_LIST_MODEL_H_

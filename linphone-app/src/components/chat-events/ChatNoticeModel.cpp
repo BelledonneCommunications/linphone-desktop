@@ -31,6 +31,7 @@
 ChatNoticeModel::ChatNoticeModel ( std::shared_ptr<linphone::EventLog> eventLog, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::NoticeEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mEventLog = eventLog;
+	mEventLogType = LinphoneEnums::EventLogType::EventLogTypeNone;
 	setEventLogType(LinphoneEnums::fromLinphone(mEventLog->getType()));
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(eventLog->getCreationTime() * 1000);
 }

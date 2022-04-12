@@ -41,7 +41,7 @@ constexpr char ColorsSection[] = "ui_colors";
 
 // =============================================================================
 
-ColorListModel::ColorListModel ( QObject *parent) : QAbstractListModel(parent) {
+ColorListModel::ColorListModel ( QObject *parent) : ProxyListModel(parent) {
 	initKeywords();
 	init();	
 }
@@ -68,15 +68,11 @@ void ColorListModel::initKeywords(){
 	mKeywordsMap["fg"] = "foreground";
 }
 
-int ColorListModel::rowCount (const QModelIndex &index) const{
-	return mList.count();
-}
-
 QHash<int, QByteArray> ColorListModel::roleNames () const {
 	QHash<int, QByteArray> roles;
 	roles[Qt::DisplayRole] = "$color";
 	roles[Qt::UserRole] = "id";
-	roles[Qt::UserRole+1] = "modelData";
+	roles[Qt::UserRole+1] = "$modelData";
 	return roles;
 }
 
@@ -87,30 +83,16 @@ QVariant ColorListModel::data (const QModelIndex &index, int role) const {
 		return QVariant();
 	
 	if (role >= Qt::UserRole)
-		return mList[row]->getName();
+		return mList[row].objectCast<ColorModel>()->getName();
 	return QVariant::fromValue(mList[row].get());
-	
-	//return QVariant();
 }
 
-ColorModel *ColorListModel::getAt(const int& index){
-	return mList[index].get();
-}
-
-void ColorListModel::add(std::shared_ptr<ColorModel> color){
-	int row = mList.count();
-	
+void ColorListModel::add(QSharedPointer<ColorModel> color){
 	connect(color.get(), &ColorModel::uiColorChanged, this, &ColorListModel::handleUiColorChanged);
-	
-	beginInsertRows(QModelIndex(), row, row);
 	setProperty(color->getName().toStdString().c_str(), QVariant::fromValue(color.get()));
 	
-	
-	
 	mData.insert(color->getName(), QVariant::fromValue(color.get()));
-	mList << color;
-	
-	endInsertRows();
+	ProxyListModel::add(color);
 	emit layoutChanged();
 }
 
@@ -138,7 +120,7 @@ ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QStri
 			}
 			addLink(id, idLink);
 		}
-		auto colorShared = std::make_shared<ColorModel>(id, colorValue, description);
+		auto colorShared = QSharedPointer<ColorModel>::create(id, colorValue, description);
 		add(colorShared);
 		color = colorShared.get();
 		emit colorChanged();
@@ -182,23 +164,6 @@ void ColorListModel::updateLink(const QString& id, const QString& newLink){
 		ColorModel * idModel = getColor(id);
 		idModel->setColor(linkModel->getColor());
 	}
-}
-
-bool ColorListModel::removeRow (int row, const QModelIndex &parent){
-	return removeRows(row, 1, parent);
-}
-
-bool ColorListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	if (row < 0 || count < 0 || limit >= mList.count())
-		return false;
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i)
-		mList.takeAt(row);
-	
-	endRemoveRows();
-	return true;
 }
 
 void ColorListModel::useConfig (const std::shared_ptr<linphone::Config> &config) {
@@ -273,7 +238,8 @@ void ColorListModel::overrideColors (const std::shared_ptr<linphone::Config> &co
 			bool haveColor = false;
 			QString qtConfigId = QString::fromStdString(configId);
 			QString colorName = QString::fromStdString(colorsConfig->getString(ColorsSection, configId, ""));
-			for(auto color : mList){
+			for(auto item : mList){
+			auto color = item.objectCast<ColorModel>();
 				QString name = color->getName();
 				if( name == qtConfigId) {
 					color->setColor(QColor(colorName));
@@ -284,16 +250,7 @@ void ColorListModel::overrideColors (const std::shared_ptr<linphone::Config> &co
 				add(qtConfigId, "", "Added from Configuration", colorName);
 			}
 		}
-	}  
-	
-	/*
-	for(auto color : mList){
-		QString name = color->getName();
-		const std::string colorValue = config->getString(ColorsSection, name.toStdString(), "");
-		if(!colorValue.empty()){
-			color->setColor(QColor(QString::fromStdString(colorValue)));
-		}
-	}*/
+	}
 }
 
 std::shared_ptr<linphone::Config> ColorListModel::getConfigColors(const QString filename){
@@ -304,7 +261,8 @@ std::shared_ptr<linphone::Config> ColorListModel::getConfigColors(const QString 
 		links.push_back((link.key()+";"+QString::number(link.value())).toStdString());
 	}
 	config->setStringList(ColorsSection, "ColorLinks", links);
-	for(auto color : mList){
+	for(auto item : mList){
+		auto color = item.objectCast<ColorModel>();
 		config->setString(ColorsSection, color->getName().toStdString(), color->getColor().name(QColor::HexArgb).toStdString());
 	}
 	return config;

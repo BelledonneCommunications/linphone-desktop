@@ -113,7 +113,17 @@ AppController::AppController (int &argc, char *argv[]) {
 
 AppController::~AppController () {
 	try{
+		if(mApp)
+			delete mApp;
+	}
+	catch(...){
+	}
+}
+
+void AppController::stopApp(){
+	try{
 		delete mApp;
+		mApp = nullptr;
 	}
 	catch(...){
 	}

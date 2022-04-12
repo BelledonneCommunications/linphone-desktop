@@ -100,8 +100,6 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 			if( replyMessage)// Reply message could be inexistant (for example : when locally deleted)
 				mReplyChatMessageModel = create(replyMessage, parent);
 		}
-		connect(this, &ChatMessageModel::remove, qobject_cast<ChatRoomModel*>(parent), &ChatRoomModel::removeEntry);
-	
 		std::list<std::shared_ptr<linphone::Content>> contents = chatMessage->getContents();
 		QString txt;
 		for(auto content : contents){

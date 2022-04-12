@@ -151,8 +151,8 @@ TabContainer {
 						disableLineTitle:true
 						FormTableLine {
 							id:importerLine
-							property var fields : modelData.fields
-							property int identity : modelData.identity
+							property var fields : $modelData.fields
+							property int identity : $modelData.identity
 							property var pluginDescription : ContactsImporterPluginsManager.getContactsImporterPluginDescription(fields["pluginID"]) // Plugin definition
 							
 							FormTableEntry {
@@ -163,7 +163,7 @@ TabContainer {
 										isCustom: true
 										backgroundRadius: 90
 										colorSet: SettingsAdvancedStyle.cancel
-										onClicked:ContactsImporterListModel.removeContactsImporter(modelData)
+										onClicked:ContactsImporterListModel.removeContactsImporter($modelData)
 									}
 									Text{
 										height:parent.height
@@ -188,7 +188,7 @@ TabContainer {
 								model:importerLine.pluginDescription['fields']
 								delegate: FormTableEntry {
 									Loader{
-										sourceComponent: (modelData['type']==0 ? textComponent:textFieldComponent)
+										sourceComponent: ($modelData['type']==0 ? textComponent:textFieldComponent)
 										active:true
 										width:parent.width
 										Component{
@@ -197,7 +197,7 @@ TabContainer {
 												color: FormTableStyle.entry.text.color
 												elide: Text.ElideRight
 												horizontalAlignment: Text.AlignHCenter
-												text: importerLine.fields[modelData['fieldId']]?importerLine.fields[modelData['fieldId']]:''
+												text: importerLine.fields[$modelData['fieldId']]?importerLine.fields[$modelData['fieldId']]:''
 												height: FormTableStyle.entry.height
 												width: parent.width
 												font {
@@ -211,13 +211,13 @@ TabContainer {
 											TextField {
 												readOnly: false
 												width:parent.width
-												placeholderText : modelData['placeholder']
-												text: importerLine.fields[modelData['fieldId']]?importerLine.fields[modelData['fieldId']]:''
-												echoMode: (modelData['hiddenText']?TextInput.Password:TextInput.Normal)
+												placeholderText : $modelData['placeholder']
+												text: importerLine.fields[$modelData['fieldId']]?importerLine.fields[$modelData['fieldId']]:''
+												echoMode: ($modelData['hiddenText']?TextInput.Password:TextInput.Normal)
 												onEditingFinished:{
-													importerLine.fields[modelData['fieldId']] = text
+													importerLine.fields[$modelData['fieldId']] = text
 												}
-												Component.onCompleted: importerLine.fields[modelData['fieldId']] = text
+												Component.onCompleted: importerLine.fields[$modelData['fieldId']] = text
 											}
 										}
 									}
@@ -225,7 +225,7 @@ TabContainer {
 							}// Repeater : Fields
 							FormTableEntry {
 								Switch {
-									checked: modelData.fields["enabled"]>0
+									checked: $modelData.fields["enabled"]>0
 									onClicked: {
 										checked = !checked
 										importerLine.fields["enabled"] = (checked?1:0)
@@ -258,7 +258,7 @@ TabContainer {
 										pointSize: SettingsAdvancedStyle.info.pointSize
 									}
 									Connections{
-										target:modelData
+										target:$modelData
 										onStatusMessage:{contactsImporterStatus.isError=false;contactsImporterStatus.text=message;}
 										onErrorMessage:{contactsImporterStatus.isError=true;contactsImporterStatus.text=message;}
 									}

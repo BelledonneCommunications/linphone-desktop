@@ -39,7 +39,7 @@ public:
 	Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
     
     TimelineListModel (QObject *parent = Q_NULLPTR);
-    
+    virtual ~TimelineListModel();
     void reset();
 	void selectAll(const bool& selected);
 	TimelineModel * getAt(const int& index);

@@ -27,18 +27,21 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
+#include <QSharedPointer>
 
 class CallModel;
+class ParticipantDeviceListener;
 
-class ParticipantDeviceModel : public QObject, public linphone::ParticipantDeviceListener {
+class ParticipantDeviceModel : public QObject {
     Q_OBJECT
 
 	
 public:
     ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
+    virtual ~ParticipantDeviceModel();
     //ParticipantDeviceModel (CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
     
-    static std::shared_ptr<ParticipantDeviceModel> create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
+    static QSharedPointer<ParticipantDeviceModel> create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
     //static std::shared_ptr<ParticipantDeviceModel> create(CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
 	
 	Q_PROPERTY(QString name READ getName CONSTANT)
@@ -58,15 +61,14 @@ public:
 	std::shared_ptr<linphone::ParticipantDevice>  getDevice();
 	
 	//void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
-	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) override;
-	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted) override;
-	virtual void onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) override;
-	virtual void onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) override;
-	virtual void onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) override;
-			
+	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
+	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted);
+	virtual void onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice);
+	virtual void onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice);
+	virtual void onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType);
+	virtual void onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType);
 	
-	virtual void onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType) override;
-	
+	void connectTo(ParticipantDeviceListener * listener);
 public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 signals:
@@ -78,11 +80,11 @@ private:
 	bool mIsMe = false;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
+    std::shared_ptr<ParticipantDeviceListener> mParticipantDeviceListener;	// This is passed to linpĥone object and must be in shared_ptr
+    
     CallModel * mCall;
-	std::weak_ptr<ParticipantDeviceModel> mSelf;
+	QWeakPointer<ParticipantDeviceModel> mSelf;
 };
-
-//Q_DECLARE_METATYPE(ParticipantModel *);
-Q_DECLARE_METATYPE(std::shared_ptr<ParticipantDeviceModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ParticipantDeviceModel>)
 
 #endif // PARTICIPANT_MODEL_H_

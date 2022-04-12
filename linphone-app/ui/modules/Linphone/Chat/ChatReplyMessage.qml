@@ -141,10 +141,10 @@ Item {
 				//height: contentHeight
 				
 				delegate: ChatContent{
-					contentModel: modelData
+					contentModel: $modelData
 					textColor: ChatReplyMessageStyle.replyArea.foregroundColor
-					textFont.pointSize: Units.dp * (customFont.pointSize + ChatReplyMessageStyle.replyArea.pointSizeOffset)
-					textFont.weight: Font.Light
+					//textFont.pointSize: Units.dp * (customFont.pointSize + ChatReplyMessageStyle.replyArea.pointSizeOffset)
+					//textFont.weight: Font.Light
 					onFitWidthChanged:{
 						replyMessage.updateWidth()			
 					}

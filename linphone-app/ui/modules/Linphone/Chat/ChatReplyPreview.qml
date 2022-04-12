@@ -91,8 +91,8 @@ Rectangle{
 				height: contentHeight
 				
 				delegate: ChatContent{
-					contentModel: modelData
-					textFont.pointSize: Units.dp * (SettingsModel.textMessageFont.pointSize - 2)
+					contentModel: $modelData
+					//textFont.pointSize: Units.dp * (SettingsModel.textMessageFont.pointSize - 2)
 					Rectangle{
 							anchors.left: parent.left
 							anchors.right: parent.right

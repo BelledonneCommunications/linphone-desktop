@@ -33,7 +33,7 @@
 
 using namespace std;
 
-LdapListModel::LdapListModel (QObject *parent) : QAbstractListModel(parent) {
+LdapListModel::LdapListModel (QObject *parent) : ProxyListModel(parent) {
   initLdap();
 }
 
@@ -41,53 +41,6 @@ LdapListModel::LdapListModel (QObject *parent) : QAbstractListModel(parent) {
 void LdapListModel::reset(){
   resetInternalData();
   initLdap();
-}
-int LdapListModel::rowCount (const QModelIndex &) const {
-  return mServers.count();
-}
-
-QHash<int, QByteArray> LdapListModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$ldapServer";
-  return roles;
-}
-
-QVariant LdapListModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (!index.isValid() || row < 0 || row >= mServers.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return QVariant::fromValue(mServers[row]);
-
-  return QVariant();
-}
-
-// -----------------------------------------------------------------------------
-
-
-
-// -----------------------------------------------------------------------------
-
-bool LdapListModel::removeRow (int row, const QModelIndex &parent) {
-  return removeRows(row, 1, parent);
-}
-
-bool LdapListModel::removeRows (int row, int count, const QModelIndex &parent) {
-  int limit = row + count - 1;
-
-  if (row < 0 || count < 0 || limit >= mServers.count())
-    return false;
-
-  beginRemoveRows(parent, row, limit);
-
-  for (int i = 0; i < count; ++i)
-    mServers.takeAt(row)->deleteLater();
-
-  endRemoveRows();
-
-  return true;
 }
 
 
@@ -97,37 +50,36 @@ void LdapListModel::initLdap () {
 	CoreManager *coreManager = CoreManager::getInstance();
 	auto ldapList = coreManager->getCore()->getLdapList();
 	for(auto ldap : ldapList){
-		mServers.append(new LdapModel(ldap));
+		ProxyListModel::add(QSharedPointer<LdapModel>::create(ldap));
 	}
 }
 
 // Save if valid
 void LdapListModel::enable(int id, bool status){
-	if( mServers[id]->isValid()){
-		QVariantMap config = mServers[id]->getConfig();
+	auto item = getAt<LdapModel>(id);
+	if( item->isValid()){
+		QVariantMap config = item->getConfig();
 		config["enable"] = status;
-		mServers[id]->setConfig(config);
-		mServers[id]->save();
+		item->setConfig(config);
+		item->save();
 	}
 	emit dataChanged(index(id, 0), index(id, 0));
 }
 
 // Create a new LdapModel and put it in the list
 void LdapListModel::add(){
-	int row = mServers.count();
-	beginInsertRows(QModelIndex(), row, row);
-	auto ldap= new LdapModel(nullptr);
-	connect(ldap, &LdapModel::indexChanged, this, &LdapListModel::indexChanged);
+	auto ldap= QSharedPointer<LdapModel>::create(nullptr);
+	connect(ldap.get(), &LdapModel::indexChanged, this, &LdapListModel::indexChanged);
 	ldap->init();
-	mServers << ldap;
-	endInsertRows();
+	ProxyListModel::add(ldap);
 	emit layoutChanged();
 }
 
 void LdapListModel::remove (LdapModel *ldap) {
-	int index = mServers.indexOf(ldap);
-	if (index >=0){
-		ldap->unsave();
+	int index;
+	auto item = get(ldap, &index);
+	if(item){
+		item.objectCast<LdapModel>()->unsave();
 		removeRow(index);
 	}
 }

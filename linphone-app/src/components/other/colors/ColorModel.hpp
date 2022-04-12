@@ -63,6 +63,6 @@ private:
 	QString mLinkedToImage;
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<ColorModel>);
+Q_DECLARE_METATYPE(QSharedPointer<ColorModel>);
 
 #endif

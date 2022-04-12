@@ -121,7 +121,8 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 }
 
 TimelineModel::~TimelineModel(){
-	//mChatRoomModel->getChatRoom()->removeListener(mChatRoomModel);
+	if( mChatRoomModel->getChatRoom())
+		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
 }
 
 QString TimelineModel::getFullPeerAddress() const{
@@ -163,6 +164,9 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
 				<< ", isReadOnly:" << mChatRoomModel->isReadOnly()
 				<< ", state:" << mChatRoomModel->getState();
+				QQmlEngine *engine = App::getInstance()->getEngine();
+				engine->clearComponentCache();
+				QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
 		}else
 			mChatRoomModel->resetData();// Cleanup leaving chat room
 		emit selectedChanged(mSelected);

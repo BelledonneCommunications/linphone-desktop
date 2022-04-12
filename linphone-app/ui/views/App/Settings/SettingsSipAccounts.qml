@@ -81,7 +81,7 @@ TabContainer {
 			FormTable {
 				legendLineWidth: SettingsWindowStyle.sipAccounts.legendLineWidth
 				
-				titles: [
+				titles: ['',
 					qsTr('editHeader'),
 					qsTr('deleteHeader')
 				]

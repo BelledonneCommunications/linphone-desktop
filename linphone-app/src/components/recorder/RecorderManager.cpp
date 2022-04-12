@@ -49,7 +49,7 @@ RecorderModel* RecorderManager::getVocalRecorder(){
 		params->setVideoCodec("");
 		auto recorder = core->createRecorder(params);
 		if(recorder)
-			mVocalRecorder = RecorderModel::create(recorder, this);
+			mVocalRecorder = RecorderModel::create(recorder, nullptr);
 		emit haveVocalRecorderChanged();
 	}
 	return mVocalRecorder.get();

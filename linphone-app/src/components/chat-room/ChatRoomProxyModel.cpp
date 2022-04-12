@@ -335,11 +335,14 @@ void ChatRoomProxyModel::handleIsRemoteComposingChanged () {
 	emit isRemoteComposingChanged();
 }
 
-void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &) {
+void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
 	
 	QWindow *window = getParentWindow(this);
-	if (window && window->isActive() && mChatRoomModel)
-		mChatRoomModel->resetMessageCount();
+	if (mChatRoomModel){
+		if(window && window->isActive())
+			mChatRoomModel->resetMessageCount();
+		//else if( message->getFromAddress()->weakEqual(CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress()))
+	}
 }
 
 void ChatRoomProxyModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &) {

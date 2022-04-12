@@ -25,25 +25,20 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QAbstractListModel>
-#include <memory> 
 #include <QQmlPropertyMap>
+#include <QSharedPointer>
 
 #include "ImageModel.hpp"
+#include "app/proxyModel/ProxyListModel.hpp"
 	
 class ImageModel;
 
-class ImageListModel : public QAbstractListModel {
+class ImageListModel : public ProxyListModel {
 	Q_OBJECT
 public:
 	
 	ImageListModel (QObject *parent = nullptr);
-	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	
-	virtual QHash<int, QByteArray> roleNames () const override;
-	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	
+		
 	void useConfig (const std::shared_ptr<linphone::Config> &config);
 	
 	Q_INVOKABLE QString getIds();
@@ -54,11 +49,7 @@ public:
 	ImageModel * getImageModel(const QString& id);
 				
 private:
-	void add(std::shared_ptr<ImageModel> imdn);
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	
-	QList<std::shared_ptr<ImageModel>> mList;
+	void add(QSharedPointer<ImageModel> imdn);
 	
 	void overrideImages (const std::shared_ptr<linphone::Config> &config);
 	
@@ -68,6 +59,6 @@ private:
 	bool mAreReadOnlyImages = true;
 	
 };
-Q_DECLARE_METATYPE(std::shared_ptr<ImageListModel>)
+Q_DECLARE_METATYPE(QSharedPointer<ImageListModel>)
 
 #endif 

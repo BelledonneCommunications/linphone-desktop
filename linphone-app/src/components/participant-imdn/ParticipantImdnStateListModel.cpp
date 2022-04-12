@@ -31,7 +31,7 @@
 
 // =============================================================================
 
-ParticipantImdnStateListModel::ParticipantImdnStateListModel (std::shared_ptr<linphone::ChatMessage> message, QObject *parent) : QAbstractListModel(parent) {
+ParticipantImdnStateListModel::ParticipantImdnStateListModel (std::shared_ptr<linphone::ChatMessage> message, QObject *parent) : ProxyListModel(parent) {
 	QVector<linphone::ChatMessage::State> states;
 	states.push_back(linphone::ChatMessage::State::Delivered);
 	states.push_back(linphone::ChatMessage::State::DeliveredToUser);
@@ -41,78 +41,28 @@ ParticipantImdnStateListModel::ParticipantImdnStateListModel (std::shared_ptr<li
 		std::list<std::shared_ptr<linphone::ParticipantImdnState>> imdns = message->getParticipantsByImdnState(states[i]);
 		for(auto imdn : imdns){
 			if(imdn->getParticipant()){
-				auto deviceModel = std::make_shared<ParticipantImdnStateModel>(imdn);
+				auto deviceModel = QSharedPointer<ParticipantImdnStateModel>::create(imdn);
 				mList << deviceModel;
 			}
 		}
 	}
 }
-
-int ParticipantImdnStateListModel::rowCount (const QModelIndex &index) const{
-	return mList.count();
-}
-
-QHash<int, QByteArray> ParticipantImdnStateListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$participantImdn";
-	return roles;
-}
-
-QVariant ParticipantImdnStateListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mList.count())
-		return QVariant();
-	
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mList[row].get());
-	
-	return QVariant();
-}
-
-void ParticipantImdnStateListModel::add(std::shared_ptr<ParticipantImdnStateModel> imdn){
-	int row = mList.count();
-	beginInsertRows(QModelIndex(), row, row);
-	mList << imdn;
-	endInsertRows();
-	emit countChanged();
-	emit layoutChanged();
-}
-
-bool ParticipantImdnStateListModel::removeRow (int row, const QModelIndex &parent){
-	return removeRows(row, 1, parent);
-}
-
-bool ParticipantImdnStateListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	if (row < 0 || count < 0 || limit >= mList.count())
-		return false;
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i)
-		mList.takeAt(row);
-	
-	endRemoveRows();
-	emit countChanged();
-	return true;
-}
-
 //--------------------------------------------------------------------------------
 
-std::shared_ptr<ParticipantImdnStateModel> ParticipantImdnStateListModel::getImdnState(const std::shared_ptr<const linphone::ParticipantImdnState> & state){
-	std::shared_ptr<ParticipantImdnStateModel> imdn;
+QSharedPointer<ParticipantImdnStateModel> ParticipantImdnStateListModel::getImdnState(const std::shared_ptr<const linphone::ParticipantImdnState> & state){
+	QSharedPointer<ParticipantImdnStateModel> imdn;
 	auto participant = state->getParticipant();
 	auto it = mList.begin();
 	if( participant){
 		auto imdnAddress = state->getParticipant()->getAddress();
-		while(it != mList.end() && !(*it)->getAddress()->equal(imdnAddress))
+		while(it != mList.end() && !it->objectCast<ParticipantImdnStateModel>()->getAddress()->equal(imdnAddress))
 			++it;
 	}else
 		it = mList.end();
 	if(it != mList.end())
-		imdn = *it;
+		imdn = it->objectCast<ParticipantImdnStateModel>();
 	else{// Create the new one
-		imdn = std::make_shared<ParticipantImdnStateModel>(state);
+		imdn = QSharedPointer<ParticipantImdnStateModel>::create(state);
 		add(imdn);
 	}
 	return imdn;

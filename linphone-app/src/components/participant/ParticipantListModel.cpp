@@ -31,7 +31,7 @@
 
 // =============================================================================
 
-ParticipantListModel::ParticipantListModel (ChatRoomModel * chatRoomModel, QObject *parent) : QAbstractListModel(parent) {
+ParticipantListModel::ParticipantListModel (ChatRoomModel * chatRoomModel, QObject *parent) : ProxyListModel(parent) {
 	if( chatRoomModel) {
 		mChatRoomModel = chatRoomModel;//CoreManager::getInstance()->getChatRoomModel(chatRoomModel);
 		
@@ -52,35 +52,28 @@ ParticipantListModel::ParticipantListModel (ChatRoomModel * chatRoomModel, QObje
 	}
 }
 ParticipantListModel::~ParticipantListModel(){
-	mParticipants.clear();
+	mList.clear();
 	mChatRoomModel = nullptr;
 }
 
 // -----------------------------------------------------------------------------
 
-ParticipantModel * ParticipantListModel::getAt(const int& index){
-	return mParticipants[index].get();
-}
-
 ChatRoomModel *ParticipantListModel::getChatRoomModel() const{
 	return mChatRoomModel;
 }
 
-int ParticipantListModel::getCount() const{
-	return mParticipants.size();
-}
-
 std::list<std::shared_ptr<linphone::Address>> ParticipantListModel::getParticipants()const{
 	std::list<std::shared_ptr<linphone::Address>> participants;
-	for(auto participant : mParticipants){
-		participants.push_back(Utils::interpretUrl(participant->getSipAddress()));
+	for(auto participant : mList){
+		participants.push_back(Utils::interpretUrl(participant.objectCast<ParticipantModel>()->getSipAddress()));
 	}
 	return participants;
 }
 
 QString ParticipantListModel::addressesToString()const{
 	QStringList txt;
-	for(auto participant : mParticipants){
+	for(auto item : mList){
+		auto participant = item.objectCast<ParticipantModel>();
 		if( participant->getParticipant())// is Participant. We test it because this participant is not accepted by chat room yet.
 			txt << Utils::coreStringToAppString(participant->getParticipant()->getAddress()->asStringUriOnly());
 	}
@@ -90,8 +83,8 @@ QString ParticipantListModel::addressesToString()const{
 
 QString ParticipantListModel::displayNamesToString()const{
 	QStringList txt;
-	for(auto participant : mParticipants){
-		auto p = participant->getParticipant();
+	for(auto participant : mList){
+		auto p = participant.objectCast<ParticipantModel>()->getParticipant();
 		if(p){
 			QString displayName = Utils::getDisplayName(p->getAddress());
 			if(displayName != "")
@@ -104,10 +97,11 @@ QString ParticipantListModel::displayNamesToString()const{
 
 QString ParticipantListModel::usernamesToString()const{
 	QStringList txt;
-	for(auto participant : mParticipants){
-		std::string username = participant->getParticipant()->getAddress()->getDisplayName();
+	for(auto item : mList){
+		auto participant = item.objectCast<ParticipantModel>()->getParticipant();
+		std::string username = participant->getAddress()->getDisplayName();
 		if(username == "")
-			username = participant->getParticipant()->getAddress()->getUsername();
+			username = participant->getAddress()->getUsername();
 		txt << Utils::coreStringToAppString(username);
 	}
 	txt.removeFirst();// Remove me
@@ -117,61 +111,10 @@ QString ParticipantListModel::usernamesToString()const{
 bool ParticipantListModel::contains(const QString& address) const{
 	auto testAddress = Utils::interpretUrl(address);
 	bool exists = false;
-	for(auto itParticipant = mParticipants.begin() ; !exists && itParticipant != mParticipants.end() ; ++itParticipant)
-		exists = testAddress->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress() ));
+	for(auto itParticipant = mList.begin() ; !exists && itParticipant != mList.end() ; ++itParticipant)
+		exists = testAddress->weakEqual(Utils::interpretUrl(itParticipant->objectCast<ParticipantModel>()->getSipAddress() ));
 	return exists;
 }
-
-//----------------------------------------------------------------------------
-int ParticipantListModel::rowCount (const QModelIndex &) const {
-	return mParticipants.count();
-}
-
-QHash<int, QByteArray> ParticipantListModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$participant";
-	return roles;
-}
-
-QVariant ParticipantListModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mParticipants.count())
-		return QVariant();
-	
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mParticipants[row].get());
-	
-	return QVariant();
-}
-
-// -----------------------------------------------------------------------------
-
-
-
-// -----------------------------------------------------------------------------
-
-bool ParticipantListModel::removeRow (int row, const QModelIndex &parent) {
-	return removeRows(row, 1, parent);
-}
-
-bool ParticipantListModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	
-	if (row < 0 || count < 0 || limit >= mParticipants.count())
-		return false;
-	
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i){
-		mParticipants.takeAt(row);
-	}
-	
-	endRemoveRows();
-	emit countChanged();
-	return true;
-}
-
 
 // -----------------------------------------------------------------------------
 
@@ -183,21 +126,21 @@ void ParticipantListModel::updateParticipants () {
 		dbParticipants.push_front(me);
 		
 		//Remove left participants
-		//for(auto participant : mParticipants){
-		auto itParticipant = mParticipants.begin();
-		while(itParticipant != mParticipants.end()) {
+		//for(auto participant : mList){
+		auto itParticipant = mList.begin();
+		while(itParticipant != mList.end()) {
 			auto itDbParticipant = dbParticipants.begin();
 			while(itDbParticipant != dbParticipants.end() 
-				  && ((*itParticipant)->getParticipant() &&  !(*itDbParticipant)->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())
-					  || !(*itParticipant)->getParticipant() && !(*itDbParticipant)->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress()))
+				  && (itParticipant->objectCast<ParticipantModel>()->getParticipant() &&  !(*itDbParticipant)->getAddress()->weakEqual(itParticipant->objectCast<ParticipantModel>()->getParticipant()->getAddress())
+					  || !itParticipant->objectCast<ParticipantModel>()->getParticipant() && !(*itDbParticipant)->getAddress()->weakEqual(Utils::interpretUrl(itParticipant->objectCast<ParticipantModel>()->getSipAddress()))
 					  )
 				  ){
 				++itDbParticipant;
 			}
 			if( itDbParticipant == dbParticipants.end()){
-				int row = itParticipant - mParticipants.begin();
+				int row = itParticipant - mList.begin();
 				beginRemoveRows(QModelIndex(), row, row);
-				itParticipant = mParticipants.erase(itParticipant);
+				itParticipant = mList.erase(itParticipant);
 				endRemoveRows();
 				changed = true;
 			}else
@@ -205,26 +148,23 @@ void ParticipantListModel::updateParticipants () {
 		}
 		// Add new
 		for(auto dbParticipant : dbParticipants){
-			auto itParticipant = mParticipants.begin();			
-			while(itParticipant != mParticipants.end() && ( (*itParticipant)->getParticipant() && !dbParticipant->getAddress()->weakEqual((*itParticipant)->getParticipant()->getAddress())
-															|| (!(*itParticipant)->getParticipant() && !dbParticipant->getAddress()->weakEqual(Utils::interpretUrl((*itParticipant)->getSipAddress())))
+			auto itParticipant = mList.begin();			
+			while(itParticipant != mList.end() && ( itParticipant->objectCast<ParticipantModel>()->getParticipant() && !dbParticipant->getAddress()->weakEqual(itParticipant->objectCast<ParticipantModel>()->getParticipant()->getAddress())
+															|| (!itParticipant->objectCast<ParticipantModel>()->getParticipant() && !dbParticipant->getAddress()->weakEqual(Utils::interpretUrl(itParticipant->objectCast<ParticipantModel>()->getSipAddress())))
 															)
 				  ){
 				
 				++itParticipant;
 			}
-			if( itParticipant == mParticipants.end()){
-				auto participant = std::make_shared<ParticipantModel>(dbParticipant);
+			if( itParticipant == mList.end()){
+				auto participant = QSharedPointer<ParticipantModel>::create(dbParticipant);
 				connect(this, &ParticipantListModel::deviceSecurityLevelChanged, participant.get(), &ParticipantModel::onDeviceSecurityLevelChanged);
 				connect(this, &ParticipantListModel::securityLevelChanged, participant.get(), &ParticipantModel::onSecurityLevelChanged);
 				connect(participant.get(),&ParticipantModel::updateAdminStatus, this, &ParticipantListModel::setAdminStatus);
-				int row = mParticipants.count();
-				beginInsertRows(QModelIndex(), row, row);
-				mParticipants << participant;
-				endInsertRows();
+				add(participant);
 				changed = true;
-			}else if(!(*itParticipant)->getParticipant() || (*itParticipant)->getParticipant() != dbParticipant){
-				(*itParticipant)->setParticipant(dbParticipant);
+			}else if(!itParticipant->objectCast<ParticipantModel>()->getParticipant() || itParticipant->objectCast<ParticipantModel>()->getParticipant() != dbParticipant){
+				itParticipant->objectCast<ParticipantModel>()->setParticipant(dbParticipant);
 				changed = true;
 			}
 		}
@@ -236,26 +176,23 @@ void ParticipantListModel::updateParticipants () {
 	}
 }
 
-void ParticipantListModel::add (std::shared_ptr<ParticipantModel> participant){
-	int row = mParticipants.count();
+void ParticipantListModel::add (QSharedPointer<ParticipantModel> participant){
+	int row = mList.count();
 	connect(this, &ParticipantListModel::deviceSecurityLevelChanged, participant.get(), &ParticipantModel::onDeviceSecurityLevelChanged);
 	connect(this, &ParticipantListModel::securityLevelChanged, participant.get(), &ParticipantModel::onSecurityLevelChanged);
 	connect(participant.get(),&ParticipantModel::updateAdminStatus, this, &ParticipantListModel::setAdminStatus);
-	beginInsertRows(QModelIndex(), row, row);
-	mParticipants << participant;
-	endInsertRows();
+	ProxyListModel::add(participant);
 	emit layoutChanged();
 	emit participantsChanged();
-	emit countChanged();
 }
 
 void ParticipantListModel::remove (ParticipantModel *model) {
 	QString address = model->getSipAddress();
 	int index = 0;
 	bool found = false;
-	auto itParticipant = mParticipants.begin() ;
-	while(!found && itParticipant != mParticipants.end()){
-		if( (*itParticipant)->getSipAddress() == address)
+	auto itParticipant = mList.begin() ;
+	while(!found && itParticipant != mList.end()){
+		if( itParticipant->objectCast<ParticipantModel>()->getSipAddress() == address)
 			found = true;
 		else{
 			++itParticipant;
@@ -263,23 +200,20 @@ void ParticipantListModel::remove (ParticipantModel *model) {
 		}
 	}
 	if(found) {
-		beginRemoveRows(QModelIndex(), index, index);
-		mParticipants.erase(itParticipant);
-		endRemoveRows();
+		removeRow(index);
 		emit participantsChanged();
-		emit countChanged();
 	}
 }
 
-const std::shared_ptr<ParticipantModel> ParticipantListModel::getParticipant(const std::shared_ptr<const linphone::Address>& address) const{
+const QSharedPointer<ParticipantModel> ParticipantListModel::getParticipant(const std::shared_ptr<const linphone::Address>& address) const{
 	if(address){
-		auto itParticipant = std::find_if(mParticipants.begin(), mParticipants.end(), [address] (const std::shared_ptr<ParticipantModel>& participant){		
-			return participant->getParticipant()->getAddress()->weakEqual(address);
+		auto itParticipant = std::find_if(mList.begin(), mList.end(), [address] (const QSharedPointer<QObject>& participant){		
+			return participant.objectCast<ParticipantModel>()->getParticipant()->getAddress()->weakEqual(address);
 		});
-		if( itParticipant == mParticipants.end())
+		if( itParticipant == mList.end())
 			return nullptr;
 		else
-			return *itParticipant;
+			return itParticipant->objectCast<ParticipantModel>();
 	}else
 		return nullptr;
 }

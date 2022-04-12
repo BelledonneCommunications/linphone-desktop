@@ -53,6 +53,8 @@ TimelineListModel::TimelineListModel (QObject *parent) : ProxyListModel(parent) 
 	updateTimelines ();
 }
 
+TimelineListModel::~TimelineListModel(){
+}
 // -----------------------------------------------------------------------------
 
 void TimelineListModel::reset(){

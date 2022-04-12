@@ -36,6 +36,10 @@ ContentProxyModel::ContentProxyModel (QObject * parent) : QSortFilterProxyModel(
 	setContentListModel(CoreManager::getInstance()->getChatModel()->getContentListModel().get());
 }
 
+ChatMessageModel * ContentProxyModel::getChatMessageModel() const{
+	return nullptr;
+}
+
 void ContentProxyModel::setChatMessageModel(ChatMessageModel * message){
 	if(message){
 		setSourceModel(message->getContents().get());

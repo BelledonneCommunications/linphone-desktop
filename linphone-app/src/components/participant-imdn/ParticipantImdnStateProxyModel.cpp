@@ -51,7 +51,7 @@ bool ParticipantImdnStateProxyModel::lessThan (const QModelIndex &left, const QM
 }
 //---------------------------------------------------------------------------------
 int ParticipantImdnStateProxyModel::getCount(){
-	return rowCount();
+	return sourceModel() ? sourceModel()->rowCount() : 0;
 }
 
 ChatMessageModel * ParticipantImdnStateProxyModel::getChatMessageModel(){

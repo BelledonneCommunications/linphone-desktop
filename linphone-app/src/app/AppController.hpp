@@ -34,7 +34,7 @@ public:
     Q_CHECK_PTR(mApp);
     return mApp;
   }
-
+  void stopApp();
 private:
   App *mApp = nullptr;
 };

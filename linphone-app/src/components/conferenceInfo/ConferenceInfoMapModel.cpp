@@ -64,7 +64,7 @@ int ConferenceInfoMapModel::rowCount (const QModelIndex &) const {
 
 QHash<int, QByteArray> ConferenceInfoMapModel::roleNames () const {
 	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "modelData";
+	roles[Qt::DisplayRole] = "$modelData";
 	roles[Qt::DisplayRole + 1] = "date";
 	return roles;
 }
