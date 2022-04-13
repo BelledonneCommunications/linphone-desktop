@@ -1836,7 +1836,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>calibratingEchoCancellationDone</source>
         <translatorcomment>%1 is a placeholder for the number of ms obtained by the calibration. ms = milliseconds</translatorcomment>
-        <translation>Calibrated to -%1ms</translation>
+        <translation>Calibrated to %1ms</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>

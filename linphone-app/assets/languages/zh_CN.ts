@@ -1822,7 +1822,7 @@
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation>校准至 -%1ms</translation>
+        <translation>校准至 %1ms</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>

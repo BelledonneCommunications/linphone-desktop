@@ -1844,7 +1844,7 @@
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation>Откалиброван на -%1 мс</translation>
+        <translation>Откалиброван на %1 мс</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>

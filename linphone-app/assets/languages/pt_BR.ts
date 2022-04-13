@@ -1833,7 +1833,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation>Calibrado para -%1ms</translation>
+        <translation>Calibrado para %1ms</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
