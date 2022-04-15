@@ -23,7 +23,7 @@
 
 #include <memory>
 
-#include <QAbstractListModel>
+#include "app/proxyModel/ProxyAbstractListModel.hpp"
 
 // =============================================================================
 
@@ -31,18 +31,13 @@ namespace linphone {
   class PayloadType;
 }
 
-class AbstractCodecsModel : public QAbstractListModel {
-  Q_OBJECT;
+class AbstractCodecsModel : public ProxyAbstractListModel<QVariantMap> {
+  Q_OBJECT
 
-  Q_PROPERTY(QString codecsFolder READ getCodecsFolder CONSTANT);
+  Q_PROPERTY(QString codecsFolder READ getCodecsFolder CONSTANT)
 
 public:
   AbstractCodecsModel (QObject *parent = Q_NULLPTR);
-
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
   Q_INVOKABLE void enableCodec (int id, bool status);
   Q_INVOKABLE void moveCodec (int source, int destination);
@@ -74,8 +69,6 @@ protected:
   virtual void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) = 0;
 
   static QString getCodecsFolder ();
-
-  QList<QVariantMap> mCodecs;
 };
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::PayloadType>);

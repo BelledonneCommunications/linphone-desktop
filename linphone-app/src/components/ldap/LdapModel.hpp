@@ -21,7 +21,7 @@
 #ifndef LDAP_MODEL_H_
 #define LDAP_MODEL_H_
 
-#include <QAbstractListModel>
+#include <QObject>
 #include <QDateTime>
 
 #include <linphone++/linphone.hh>

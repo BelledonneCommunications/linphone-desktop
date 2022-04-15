@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -46,11 +46,11 @@ using namespace std;
 
 // -----------------------------------------------------------------------------
 
-SearchSipAddressesModel::SearchSipAddressesModel (QObject *parent) : QAbstractListModel(parent) {
+SearchSipAddressesModel::SearchSipAddressesModel (QObject *parent) : ProxyListModel(parent) {
 	
 	mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
-	mSearch = std::make_shared<SearchHandler>(this);
-	QObject::connect(mSearch.get(), &SearchHandler::searchReceived, this, &SearchSipAddressesModel::searchReceived, Qt::QueuedConnection);
+	mSearch = std::make_shared<SearchListener>(this);
+	QObject::connect(mSearch.get(), &SearchListener::searchReceived, this, &SearchSipAddressesModel::searchReceived, Qt::QueuedConnection);
 	mMagicSearch->addListener(mSearch);
 	
 }
@@ -61,67 +61,23 @@ SearchSipAddressesModel::~SearchSipAddressesModel(){
 
 // -----------------------------------------------------------------------------
 
-int SearchSipAddressesModel::rowCount (const QModelIndex &) const {
-	return mAddresses.count();
-}
-
-QHash<int, QByteArray> SearchSipAddressesModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$sipAddress";
-	return roles;
-}
-
-QVariant SearchSipAddressesModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mAddresses.count())
-		return QVariant();
-	
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(mAddresses[row].get());
-	
-	return QVariant();
-}
-
-// -----------------------------------------------------------------------------
-
-bool SearchSipAddressesModel::removeRow (int row, const QModelIndex &parent) {
-	return removeRows(row, 1, parent);
-}
-
-bool SearchSipAddressesModel::removeRows (int row, int count, const QModelIndex &parent) {
-	int limit = row + count - 1;
-	
-	if (row < 0 || count < 0 || limit >= mAddresses.count())
-		return false;
-	
-	beginRemoveRows(parent, row, limit);
-	
-	for (int i = 0; i < count; ++i)
-		mAddresses.removeAt(row);
-	
-	endRemoveRows();
-	
-	return true;
-}
-
 void SearchSipAddressesModel::setFilter(const QString& filter){
 	mMagicSearch->getContactListFromFilterAsync(filter.toStdString(),"");
 	//searchReceived(mMagicSearch->getContactListFromFilter(Utils::appStringToCoreString(filter),""));	// Just to show how to use sync method
 }
 
 void SearchSipAddressesModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
-	QList<std::shared_ptr<SearchResultModel> > addresses;
+	QList<QSharedPointer<QObject> > addresses;
 	for(auto it = results.begin() ; it != results.end() ; ++it){
 		auto linphoneFriend = (*it)->getFriend();
 		auto address = (*it)->getAddress();
 		if( linphoneFriend || address)
-			addresses << std::make_shared<SearchResultModel>(linphoneFriend,address );
+			addresses << QSharedPointer<SearchResultModel>::create(linphoneFriend,address );
 	}
 	beginResetModel();
-	mAddresses.clear();
-	mAddresses = addresses;
-	if(mAddresses.size() > 0 )// remove self
-		mAddresses.pop_back();
+	mList.clear();
+	mList = addresses;
+	if(mList.size() > 0 )// remove self
+		mList.pop_back();
 	endResetModel();
 }

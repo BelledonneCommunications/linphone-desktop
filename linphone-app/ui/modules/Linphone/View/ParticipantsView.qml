@@ -127,7 +127,7 @@ ScrollableListView {
 																					   })
 									Icon{
 										visible: modelData.secure>0 &&
-											(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$sipAddress}) : true)
+											(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$modelData}) : true)
 										icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
 										iconSize:parent.height/2
 										anchors.top:parent.top
@@ -293,7 +293,7 @@ ScrollableListView {
 							}
 							Icon{
 								visible: modelData.secure>0 &&
-									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$sipAddress}) : true)
+									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$modelData}) : true)
 								icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
 								iconSize: parent.height/2
 								anchors.top:parent.top

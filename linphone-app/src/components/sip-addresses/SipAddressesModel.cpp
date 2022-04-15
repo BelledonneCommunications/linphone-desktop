@@ -88,7 +88,7 @@ int SipAddressesModel::rowCount (const QModelIndex &) const {
 
 QHash<int, QByteArray> SipAddressesModel::roleNames () const {
 	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$sipAddress";
+	roles[Qt::DisplayRole] = "$modelData";
 	return roles;
 }
 

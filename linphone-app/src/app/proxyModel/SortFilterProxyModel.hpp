@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -17,15 +17,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "SearchHandler.hpp"
 
-#include "linphone/api/c-search-result.h"
+#ifndef SORT_FILTER_PROXY_MODEL_H_
+#define SORT_FILTER_PROXY_MODEL_H_
 
-// =============================================================================
+#include <QSortFilterProxyModel>
 
-SearchHandler::SearchHandler(QObject * parent) : QObject(parent){
-}
+class SortFilterProxyModel : public QSortFilterProxyModel {
+	Q_OBJECT
+public:
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+	Q_PROPERTY(int filterType READ getFilterType WRITE setFilterType NOTIFY filterTypeChanged)
+	
+	SortFilterProxyModel(QObject * parent = nullptr);
+	
+	virtual int getCount() const;
+	virtual int getFilterType () const;
+	
+	virtual void setFilterType (int filterType);
+	
+	Q_INVOKABLE void remove(int index, int count = 1);
 
-void SearchHandler::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> & magicSearch){
-	emit searchReceived(magicSearch->getLastSearch());
-}
+signals:
+	void countChanged();
+	void filterTypeChanged(int filterType);
+	
+protected:
+	int mFilterType;
+};
+
+#endif

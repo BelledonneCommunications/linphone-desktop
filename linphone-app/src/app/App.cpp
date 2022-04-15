@@ -237,6 +237,7 @@ App::~App () {
 	qInfo() << QStringLiteral("Destroying app...");
 	if( mEngine )
 		delete mEngine;
+	CoreManager::uninit();
 	processEvents(QEventLoop::AllEvents);	// Process all needed events on engine deletion.
 	if( mParser)
 		delete mParser;

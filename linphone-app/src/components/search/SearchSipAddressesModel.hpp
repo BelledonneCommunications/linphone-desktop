@@ -21,45 +21,35 @@
 #ifndef SEARCH_SIP_ADDRESSES_MODEL_H_
 #define SEARCH_SIP_ADDRESSES_MODEL_H_
 
-#include <QAbstractListModel>
 #include <QDateTime>
 #include <list>
 
 #include <linphone++/linphone.hh>
 
-#include "SearchHandler.hpp"
+#include "SearchListener.hpp"
+#include "app/proxyModel/ProxyListModel.hpp"
 
 // =============================================================================
 
 class SearchResultModel;
 
-class SearchSipAddressesModel : public QAbstractListModel {
+class SearchSipAddressesModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
 	SearchSipAddressesModel (QObject *parent = Q_NULLPTR);
 	~SearchSipAddressesModel();
 	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
- 
-	QHash<int, QByteArray> roleNames () const override;
-	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	
 	Q_INVOKABLE void setFilter (const QString &pattern);
 	
-	QList<std::shared_ptr<SearchResultModel> > mAddresses;
+	//QList<std::shared_ptr<SearchResultModel> > mAddresses;
 	// And instance of Magic search
 	std::shared_ptr<linphone::MagicSearch> mMagicSearch;
 	// Callback when searching
-	std::shared_ptr<SearchHandler> mSearch;
+	std::shared_ptr<SearchListener> mSearch;
 	
 public slots:
 	void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
-	
-private:
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	
 };
 
 Q_DECLARE_METATYPE(SearchSipAddressesModel *);

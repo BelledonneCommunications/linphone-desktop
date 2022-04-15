@@ -25,40 +25,29 @@
 #include <QSharedPointer>
 
 #include "ConferenceInfoModel.hpp"
+#include "app/proxyModel/SortFilterAbstractProxyModel.hpp"
+
 
 // =============================================================================
 
 class QWindow;
-class ConferenceInfoListModel;
+class ConferenceInfoMapModel;
 
-class ConferenceInfoProxyModel : public QSortFilterProxyModel {
+
+class ConferenceInfoProxyModel : public SortFilterAbstractProxyModel<ConferenceInfoMapModel> {
 	class ChatRoomModelFilter;
 	Q_OBJECT
 	
 public:
-
-	Q_PROPERTY(int conferenceInfoFilter READ getConferenceInfoFilter WRITE setConferenceInfoFilter NOTIFY conferenceInfoFilterChanged)
-	
 	enum ConferenceType {
 		Ended,
 		Scheduled,
 		Invitations
 	};
 	Q_ENUM(ConferenceType)
-	
+
 	ConferenceInfoProxyModel (QObject *parent = Q_NULLPTR);
-	ConferenceInfoProxyModel (ConferenceInfoListModel * list, QObject *parent = Q_NULLPTR);
-	
-	int getConferenceInfoFilter ();
-	Q_INVOKABLE void setConferenceInfoFilter (int filterMode);
-	
-	Q_INVOKABLE QVariant getAt(int row);
-	
-	void add(QSharedPointer<ConferenceInfoModel> conferenceInfoModel);
-	
-signals:
-	void conferenceInfoFilterChanged(int);
-		
+			
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
@@ -68,7 +57,7 @@ private:
 	ConferenceInfoModel *getConferenceInfoModel() const;
 	void setConferenceInfoModel (ConferenceInfoModel *conferenceInfoModel);
 	
-	int mEntryTypeFilter;
+	
 	QSharedPointer<ConferenceInfoModel> mConferenceInfoModel;
 };
 

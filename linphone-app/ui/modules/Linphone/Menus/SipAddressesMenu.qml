@@ -38,7 +38,7 @@ Item {
     model.clear()
 
     sipAddresses.forEach(function (sipAddress) {
-      model.append({ $sipAddress: sipAddress })
+      model.append({ $modelData: sipAddress })
     })
   }
 
@@ -97,7 +97,7 @@ Item {
           elide: Text.ElideRight
           font.pointSize: SipAddressesMenuStyle.entry.text.pointSize
           height: parent.height
-          text: $sipAddress
+          text: $modelData
           verticalAlignment: Text.AlignVCenter
         }
 
@@ -109,9 +109,9 @@ Item {
           onClicked: {
             menu.close()
             if( menu.callback)
-				menu.callback($sipAddress)
+				menu.callback($modelData)
 			else
-				sipAddressesMenu.sipAddressClicked($sipAddress)
+				sipAddressesMenu.sipAddressClicked($modelData)
           }
         }
       }

@@ -478,7 +478,7 @@ QString ChatRoomModel::getParticipantAddress(){
 	}else{
 		auto participants = getParticipants();
 		if(participants->getCount() > 1)
-			return participants->getAt(1).objectCast<ParticipantModel>()->getSipAddress();
+			return participants->getAt<ParticipantModel>(1)->getSipAddress();
 		else
 			return "";
 	}	

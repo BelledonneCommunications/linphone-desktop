@@ -75,9 +75,11 @@ int main (int argc, char *argv[]) {
 		ret = app->exec();
 	} while (ret == App::RestartCode);
 	controller.stopApp();	// Stopping app before core to let time to GUI to process needed items from linphone.
-	auto core = CoreManager::getInstance()->getCore();
-	if(core && core->getGlobalState() == linphone::GlobalState::On)
-		core->stop();
+	if( CoreManager::getInstance()){
+		auto core = CoreManager::getInstance()->getCore();
+		if(core && core->getGlobalState() == linphone::GlobalState::On)
+			core->stop();
+	}
 	cleanStream();
 	return ret;
 }

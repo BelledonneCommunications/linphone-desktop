@@ -27,7 +27,7 @@
 #include <QSharedPointer>
 
 class ParticipantListModel;
-class ConferenceSchedulerHandler;
+class ConferenceScheduler;
 
 class ConferenceInfoModel : public QObject {
 	Q_OBJECT
@@ -97,9 +97,8 @@ signals:
 	
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;
-	std::shared_ptr<ConferenceSchedulerHandler> mConferenceSchedulerHandler = nullptr;
+	QSharedPointer<ConferenceScheduler> mConferenceScheduler= nullptr;
 	
-	QWeakPointer<ConferenceInfoModel> mSelf;	// For Linphone listener
 	bool mIsScheduled = true;
 };
 

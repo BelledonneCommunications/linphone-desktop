@@ -183,6 +183,8 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(true);
+	params->setVideoDirection(linphone::MediaDirection::SendRecv);
+	params->setConferenceVideoLayout(linphone::ConferenceLayout::Grid);
 	params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);

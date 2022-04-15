@@ -12,10 +12,10 @@ import App.Styles 1.0
 // =============================================================================
 
 ColumnLayout {
-	id: container
-	property int filterMode: ConferenceInfoProxyModel.ConferenceType.Scheduled
+	id: mainItem
+	property int filterType: -1
 	spacing: 0
-	
+	Component.onCompleted: filterType = ConferenceInfoProxyModel.Scheduled
 	// ---------------------------------------------------------------------------
 	// Title
 	// ---------------------------------------------------------------------------
@@ -26,9 +26,9 @@ ColumnLayout {
 		
 		color: ConferencesStyle.bar.backgroundColor
 		Text{
-			anchors.verticalCenter: parent.center
 			anchors.fill: parent
-			verticalAlignment: Qt.AlignCenter
+			verticalAlignment: Qt.AlignVCenter
+			
 			anchors.leftMargin: 40
 			
 			text: 'Mes conférences'
@@ -54,9 +54,10 @@ ColumnLayout {
 					'PROGRAMMEES',
 					'INVITATIONS'
 				]
-				
+				selectedButton: mainItem.filterType
 				onClicked: {
-					mainItem.filterMode = (button === 0 ? ConferenceInfoProxyModel.ConferenceType.Ended : button === 1 ?ConferenceInfoProxyModel.ConferenceType.Scheduled : ConferenceInfoProxyModel.ConferenceType.Invitations);
+					mainItem.filterType = (button === 0 ? ConferenceInfoProxyModel.Ended : button === 1 ?ConferenceInfoProxyModel.Scheduled : ConferenceInfoProxyModel.Invitations);
+					//mainItem.filterType = button
 				}
 			}
 		}
@@ -80,12 +81,12 @@ ColumnLayout {
 			section {
 				criteria: ViewSection.FullString
 				delegate: sectionHeading
-				property: 'date'
+				property: '$modelKey'
 			}
 			
 			model: ConferenceInfoProxyModel{
 				id: conferencesProxyModel
-				
+				filterType: mainItem.filterType
 			}
 			
 			// -----------------------------------------------------------------------
@@ -147,17 +148,18 @@ ColumnLayout {
 				GridView{
 					id: calendarGrid
 					//anchors.fill: parent
-					cellWidth: (container.width-20)/2
+					cellWidth: (mainItem.width-20)/2
 					cellHeight: 100
 					model: $modelData
 					height: cellHeight * ( (count+1) /2)
-					width: container.width - 20
+					width: mainItem.width - 20
 					delegate:Rectangle {
 						id: entry
 						width: calendarGrid.cellWidth -10
 						height: calendarGrid.cellHeight -10
 						radius: 6
-						color: ConferencesStyle.conference.backgroundColor.normal
+						color: mainItem.filterType == ConferenceInfoProxyModel.Ended ? ConferencesStyle.conference.backgroundColor.ended
+								: ConferencesStyle.conference.backgroundColor.scheduled
 						border.color: calendarMessage.containsMouse ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
 						border.width: ConferencesStyle.conference.selectedBorder.width
 						ChatCalendarMessage{
@@ -165,6 +167,9 @@ ColumnLayout {
 							conferenceInfoModel: $modelData
 							width: calendarGrid.cellWidth
 							maxWidth: calendarGrid.cellWidth
+							gotoButtonMode: mainItem.filterType == ConferenceInfoProxyModel.Scheduled ? 1 
+													: mainItem.filterType == ConferenceInfoProxyModel.Ended ? -1
+														: 0
 						}
 					}
 				}

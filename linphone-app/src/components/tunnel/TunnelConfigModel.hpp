@@ -70,6 +70,6 @@ private:
 	
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<TunnelConfigModel>)
+Q_DECLARE_METATYPE(QSharedPointer<TunnelConfigModel>)
 
 #endif // TUNNEL_CONFIG_MODEL

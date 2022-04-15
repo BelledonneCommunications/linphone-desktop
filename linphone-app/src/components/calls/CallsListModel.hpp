@@ -31,7 +31,6 @@
 
 class ChatRoomModel;
 class CoreHandlers;
-class ConferenceModel;
 class ConferenceInfoModel;
 
 class CallsListModel : public ProxyListModel {
@@ -82,8 +81,6 @@ private:
 	void addDummyCall ();
 	void removeCall (const std::shared_ptr<linphone::Call> &call);
 	void removeCallCb (CallModel *callModel);
-	
-	QList<std::shared_ptr<ConferenceModel>> mConferences;
 	
 	std::shared_ptr<CoreHandlers> mCoreHandlers;
 };

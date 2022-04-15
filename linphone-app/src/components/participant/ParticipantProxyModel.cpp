@@ -61,7 +61,7 @@ QVariantList ParticipantProxyModel::getParticipants() const{
 	QVariantList participants;
 	ParticipantListModel * list = qobject_cast<ParticipantListModel*>(sourceModel());
 	for(int i = 0 ; i < list->rowCount() ; ++i)
-		participants << QVariant::fromValue(list->getAt(i));
+		participants << QVariant::fromValue(list->getAt<ParticipantModel>(i));
 	return participants;
 }
 

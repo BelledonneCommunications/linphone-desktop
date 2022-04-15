@@ -27,26 +27,24 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QSortFilterProxyModel>
+#include "app/proxyModel/SortFilterProxyModel.hpp"
 
 class ParticipantDeviceListModel;
 class ParticipantDeviceModel;
 class ParticipantModel;
 class CallModel;
 
-class ParticipantDeviceProxyModel : public QSortFilterProxyModel {
+class ParticipantDeviceProxyModel : public SortFilterProxyModel {
 	Q_OBJECT
 	
 public:
 	Q_PROPERTY(CallModel * callModel READ getCallModel WRITE setCallModel NOTIFY callModelChanged)
-	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	Q_PROPERTY(bool showMe READ isShowMe WRITE setShowMe NOTIFY showMeChanged)
 	
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
 	
 	Q_INVOKABLE ParticipantDeviceModel* getAt(int row);
 	CallModel * getCallModel() const;
-	Q_INVOKABLE int getCount() const;
 	bool isShowMe() const;
 	
 	
@@ -54,16 +52,18 @@ public:
 	void setParticipant(ParticipantModel * participant);
 	void setShowMe(const bool& show);
 	
+public slots:
+	void onCountChanged();
+		
 signals:
 	void callModelChanged();
-	void countChanged();
 	void showMeChanged();
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
-	std::shared_ptr<ParticipantDeviceListModel> mDevices;
+	QSharedPointer<ParticipantDeviceListModel> mDevices;
 	CallModel * mCallModel;
 	bool mShowMe = false;
 };

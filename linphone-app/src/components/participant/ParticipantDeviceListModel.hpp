@@ -42,13 +42,23 @@ public:
 	void updateDevices(std::shared_ptr<linphone::Participant> participant);
 	void updateDevices(const std::list<std::shared_ptr<linphone::ParticipantDevice>>& devices, const bool& isMe);
 	
+	bool add(std::shared_ptr<linphone::ParticipantDevice> deviceToAdd);
+	bool remove(std::shared_ptr<const linphone::ParticipantDevice> deviceToAdd);
+	QSharedPointer<ParticipantDeviceModel> get(std::shared_ptr<const linphone::ParticipantDevice> deviceToGet, int * index = nullptr);
+	
+	bool isMe(std::shared_ptr<linphone::ParticipantDevice> device)const;
+	bool isMeAlone() const;
+	
 public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	void onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant);
+	void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
 	void onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onConferenceStateChanged(linphone::Conference::State newState);
+	void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 
 signals:
 	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);

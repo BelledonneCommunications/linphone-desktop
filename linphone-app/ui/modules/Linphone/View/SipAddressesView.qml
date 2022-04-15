@@ -284,21 +284,20 @@ ScrollableListView {
 						active: sipAddressesView.showSwitch	// Resolve a random Qt crash from using indicator on switch. This way, switch is not loaded.
 						// https://bugreports.qt.io/browse/QTBUG-82285.
 					}
-					
 					Repeater {
 						model: sipAddressesView.actions
 						
 						ActionButton {
 							isCustom: true
 							backgroundRadius: 90
-							colorSet: $modelData.colorSet
+							colorSet: sipAddressesView.actions[index].colorSet
 							tooltipText:$modelData.tooltipText?$modelData.tooltipText:''
-							visible: $modelData.visible
+							visible: sipAddressesView.actions[index].visible
 							onClicked: {// Do not use $modelData on functions : Qt bug
 								sipAddressesView.actions[index].handler(sipAddressEntry.entry)
 							}
 							Icon{
-								visible: $modelData.secure>0 && 
+								visible: sipAddressesView.actions[index].secure>0 && 
 								// Do not use $modelData on functions : Qt bug
 										 (sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler(sipAddressEntry.entry) : true)
 								icon: 'secure_on'

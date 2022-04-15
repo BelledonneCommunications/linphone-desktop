@@ -22,8 +22,9 @@
 #define CALL_MODEL_H_
 
 #include <QObject>
+#include <QSharedPointer>
 #include <linphone++/linphone.hh>
-#include "../search/SearchHandler.hpp"
+#include "../search/SearchListener.hpp"
 
 // =============================================================================
 class ConferenceModel;
@@ -40,6 +41,7 @@ class CallModel : public QObject {
 	
 	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT )
 	Q_PROPERTY(ChatRoomModel * chatRoomModel READ getChatRoomModel CONSTANT)
+	Q_PROPERTY(ConferenceModel * conferenceModel READ getConferenceModel NOTIFY conferenceModelChanged)
 	
 	Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged)
@@ -112,7 +114,8 @@ public:
 	
 	ContactModel *getContactModel() const;
 	ChatRoomModel * getChatRoomModel() const;
-	std::shared_ptr<ConferenceModel> getConferenceModel();
+	Q_INVOKABLE ConferenceModel* getConferenceModel();
+	QSharedPointer<ConferenceModel> getConferenceSharedModel();
 	
 	bool isInConference () const {
 		return mIsInConference;
@@ -174,6 +177,7 @@ public slots:
 signals:
 	void callErrorChanged (const QString &callError);
 	void isInConferenceChanged (bool status);
+	void conferenceModelChanged();
 	void speakerMutedChanged (bool status);
 	void microMutedChanged (bool status);
 	void recordingChanged (bool status);
@@ -270,9 +274,9 @@ private:
 	
 	QVariantList mAudioStats;
 	QVariantList mVideoStats;
-	std::shared_ptr<SearchHandler> mSearch;
+	std::shared_ptr<SearchListener> mSearch;
 	QString mTransferAddress;
-	std::shared_ptr<ConferenceModel> mConferenceModel;
+	QSharedPointer<ConferenceModel> mConferenceModel;
 };
 
 #endif // CALL_MODEL_H_

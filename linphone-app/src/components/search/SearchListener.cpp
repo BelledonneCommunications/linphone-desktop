@@ -17,28 +17,15 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+#include "SearchListener.hpp"
 
-#ifndef _CONFERENCE_INFO_MAP_MODEL_H_
-#define _CONFERENCE_INFO_MAP_MODEL_H_
-
-#include <linphone++/linphone.hh>
-#include <QDate>
-
-#include "app/proxyModel/ProxyAbstractMapModel.hpp"
-#include "app/proxyModel/SortFilterAbstractProxyModel.hpp"
-
-class ConferenceInfoListModel;
+#include "linphone/api/c-search-result.h"
 
 // =============================================================================
 
-class ConferenceInfoMapModel : public ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ConferenceInfoListModel>*>  {
-	Q_OBJECT
-	
-public:
-	ConferenceInfoMapModel (QObject *parent = Q_NULLPTR);
-signals:
-	void filterTypeChanged(int filterType);
-	
-};
-Q_DECLARE_METATYPE(ConferenceInfoMapModel*)
-#endif
+SearchListener::SearchListener(QObject * parent) : QObject(parent){
+}
+
+void SearchListener::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> & magicSearch){
+	emit searchReceived(magicSearch->getLastSearch());
+}

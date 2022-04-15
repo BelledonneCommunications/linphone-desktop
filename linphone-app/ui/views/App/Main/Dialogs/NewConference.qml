@@ -107,9 +107,18 @@ DialogPlus {
 				conferenceInfoModel.isScheduled = scheduledSwitch.checked
 				if( scheduledSwitch.checked){
 					var startDateTime = new Date()
-					startDateTime.setDate(dateField.getDate())
-					startDateTime.setTime(timeField.getTime())
-					conferenceInfoModel.dateTime = startDateTime	
+					var d = dateField.getDate()
+					var t = timeField.getTime()
+					console.log("A " +startDateTime)
+					startDateTime.setFullYear(d.getFullYear(), d.getMonth(), d.getDate())
+					console.log("B " +startDateTime)
+					startDateTime.setHours(t.getHours())
+					console.log("C " +startDateTime)
+					startDateTime.setMinutes(t.getMinutes())
+					console.log("D " +startDateTime)
+					startDateTime.setSeconds(0)
+					console.log("E " +startDateTime)
+					conferenceInfoModel.dateTime = startDateTime
 					conferenceInfoModel.duration = durationField.text
 				}
 				conferenceInfoModel.subject = subject.text

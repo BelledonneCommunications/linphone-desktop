@@ -139,7 +139,7 @@ void VideoCodecsModel::updateCodecs (list<shared_ptr<linphone::PayloadType>> &co
 }
 
 void VideoCodecsModel::load () {
-  mCodecs.clear();
+  resetData();
 
   shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 

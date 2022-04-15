@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,33 +18,21 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CONFERENCE_INFO_MAP_MODEL_H_
-#define _CONFERENCE_INFO_MAP_MODEL_H_
+#ifndef SEARCH_LISTENER_H_
+#define SEARCH_LISTENER_H_
 
+#include <QObject>
 #include <linphone++/linphone.hh>
-#include <QAbstractListModel>
-#include <QDate>
 
+#include <list>
 // =============================================================================
-
-class ConferenceInfoProxyModel;
-
-class ConferenceInfoMapModel : public QAbstractListModel {
-  Q_OBJECT
-
+class SearchListener : public QObject, public linphone::MagicSearchListener{
+Q_OBJECT
 public:
-  ConferenceInfoMapModel (QObject *parent = Q_NULLPTR);
-
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-  
-  Q_INVOKABLE void setConferenceInfoFilter (int filterMode);
-
-private:
-  QMap<QDate, ConferenceInfoProxyModel*> mMappedList;
-
+	SearchListener(QObject * parent = nullptr);
+	virtual void onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> & magicSearch);
+signals:
+	void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> );
 };
-Q_DECLARE_METATYPE(ConferenceInfoMapModel*)
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::SearchResult>);
 #endif

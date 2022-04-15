@@ -27,6 +27,9 @@ Loader{
 	property int fitHeight: active && item ? item.fitHeight + ChatCalendarMessageStyle.heightMargin*2 : 0
 	property int fitWidth: active && item ? Math.max(item.fitWidth, maxWidth/2)  + ChatCalendarMessageStyle.widthMargin*2 : 0
 	property bool containsMouse: false
+	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
+	property bool isExpanded : false
+	
 	width: parent.width
 	height: fitHeight
 	
@@ -35,7 +38,7 @@ Loader{
 	
 	sourceComponent: MouseArea{
 		id: loadedItem
-		property int fitHeight: layout.fitHeight
+		property int fitHeight: layout.fitHeight + ChatCalendarMessageStyle.heightMargin
 		property int fitWidth: layout.fitWidth
 		
 		anchors.fill: parent
@@ -139,12 +142,39 @@ Loader{
 					text: mainItem.conferenceInfoModel.displayNamesToString
 				}	
 				ActionButton{
+					visible: mainItem.gotoButtonMode >= 0
 					Layout.preferredHeight: iconSize
 					Layout.preferredWidth: height
 					isCustom: true
-					colorSet: ChatCalendarMessageStyle.gotoButton
+					colorSet: mainItem.gotoButtonMode == 0 ? ChatCalendarMessageStyle.gotoButton : ChatCalendarMessageStyle.infoButton
 					backgroundRadius: width/2
+					onClicked: mainItem.isExpanded = !mainItem.isExpanded
 				}
+			}
+			Text{
+				id: descriptionTitle
+				visible: mainItem.isExpanded
+				Layout.fillWidth: true
+				Layout.minimumWidth: implicitWidth
+				Layout.leftMargin: 10
+				color: ChatCalendarMessageStyle.subject.color
+				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
+				font.weight: Font.Bold
+				
+				text: 'Description :'
+			}
+			Text{
+				id: description
+				visible: mainItem.isExpanded
+				Layout.fillWidth: true
+				Layout.minimumWidth: implicitWidth
+				Layout.leftMargin: 10
+				color: ChatCalendarMessageStyle.description.color
+				font.pointSize: ChatCalendarMessageStyle.description.pointSize
+				//font.weight: Font.Bold
+				elide: Text.ElideRight
+				maximumLineCount: 100
+				text: mainItem.conferenceInfoModel.description
 			}
 		}
 	}

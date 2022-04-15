@@ -52,7 +52,7 @@ ConferenceHelperModel::ConferenceHelperModel (QObject *parent) : QSortFilterProx
 
 QHash<int, QByteArray> ConferenceHelperModel::roleNames () const {
   QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$sipAddress";
+  roles[Qt::DisplayRole] = "$modelData";
   return roles;
 }
 

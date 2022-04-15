@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2021-2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -18,24 +18,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CONFERENCE_INFO_LIST_MODEL_H_
-#define _CONFERENCE_INFO_LIST_MODEL_H_
+#include "ConferenceSchedulerListener.hpp"
 
-#include <linphone++/linphone.hh>
-#include "app/proxyModel/ProxyListModel.hpp"
-#include <QDate>
+#include <QQmlApplicationEngine>
+#include "app/App.hpp"
+#include "components/core/CoreManager.hpp"
 
 // =============================================================================
 
-class ConferenceInfoModel;
+ConferenceSchedulerListener::ConferenceSchedulerListener () : QObject(nullptr){
+}
 
-class ConferenceInfoListModel : public ProxyListModel {
-  Q_OBJECT
+ConferenceSchedulerListener::~ConferenceSchedulerListener () {
+}
 
-public:
-  ConferenceInfoListModel (QObject *parent = Q_NULLPTR);
 
- // ConferenceInfoModel* getAt(const int& index) const;
-};
-Q_DECLARE_METATYPE(QList<ConferenceInfoModel*>*)
-#endif
+void ConferenceSchedulerListener::onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) {
+	emit stateChanged(state);
+}
+
+void ConferenceSchedulerListener::onInvitationsSent(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
+	emit invitationsSent(failedInvitations);
+}

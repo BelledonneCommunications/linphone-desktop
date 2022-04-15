@@ -37,13 +37,7 @@
 
 using namespace std;
 
-ConferenceProxyModel::ConferenceProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-  QObject::connect(this, &ConferenceProxyModel::rowsRemoved, [this] { // Warning : called before model remove its items
-    emit countChanged(rowCount());
-  });
-  QObject::connect(this, &ConferenceProxyModel::rowsInserted, [this] {
-    emit countChanged(rowCount());
-  });
+ConferenceProxyModel::ConferenceProxyModel (QObject *parent) : SortFilterProxyModel(parent) {
   setSourceModel(CoreManager::getInstance()->getCallsListModel());
   emit conferenceChanged();
 

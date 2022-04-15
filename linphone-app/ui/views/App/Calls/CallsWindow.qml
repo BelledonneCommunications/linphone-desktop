@@ -31,6 +31,7 @@ Window {
 													  });
 	
 	readonly property bool chatIsOpened: !rightPaned.isClosed()
+	readonly property bool callsIsOpened: !mainPaned.isClosed()
 	
 	
 	// ---------------------------------------------------------------------------
@@ -76,6 +77,7 @@ Window {
 	// ---------------------------------------------------------------------------
 	
 	Paned {
+		id: mainPaned
 		anchors.fill: parent
 		defaultChildAWidth: CallsWindowStyle.callsList.defaultWidth
 		maximumLeftLimit: CallsWindowStyle.callsList.maximumWidth
@@ -86,6 +88,7 @@ Window {
 		// -------------------------------------------------------------------------
 		
 		childA: Rectangle {
+			id: leftPaned
 			anchors.fill: parent
 			color: CallsWindowStyle.callsList.color
 			
@@ -139,6 +142,16 @@ Window {
 								Logic.openConferenceManager()
 							}
 						}
+					}
+					ActionButton {
+						anchors.right: parent.right
+						anchors.rightMargin: 15
+						anchors.verticalCenter: parent.verticalCenter
+						isCustom: true
+						backgroundRadius: 4
+						colorSet: CallsWindowStyle.callsList.closeButton
+						
+						onClicked: mainPaned.close()
 					}
 				}
 				
@@ -240,6 +253,8 @@ Window {
 				id: videoConference
 				VideoConference {
 					callModel: window.call
+					listCallsOpened: window.callsIsOpened
+					onOpenListCallsRequest: mainPaned.open()
 				}
 			}
 			

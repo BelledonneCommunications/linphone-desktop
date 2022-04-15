@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,21 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SEARCH_HANDLER_H_
-#define SEARCH_HANDLER_H_
+#ifndef SORT_FILTER_ABSTRACT_PROXY_MODEL_H_
+#define SORT_FILTER_ABSTRACT_PROXY_MODEL_H_
 
-#include <QObject>
-#include <linphone++/linphone.hh>
+#include "SortFilterProxyModel.hpp"
 
-#include <list>
-// =============================================================================
-class SearchHandler : public QObject, public linphone::MagicSearchListener{
-Q_OBJECT
+template <class T>
+class SortFilterAbstractProxyModel : public SortFilterProxyModel {
 public:
-	SearchHandler(QObject * parent = nullptr);
-	virtual void onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> & magicSearch);
-signals:
-	void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> );
+	SortFilterAbstractProxyModel(T * model, QObject * parent = nullptr) : SortFilterProxyModel(parent){
+		setSourceModel(model);
+		sort(0, Qt::DescendingOrder);
+	}
+	
+	template <class X>
+	void add(QSharedPointer<X> x){
+		qobject_cast<T*>(sourceModel())->add(x);
+	}
 };
-Q_DECLARE_METATYPE(std::shared_ptr<linphone::SearchResult>);
-#endif // SEARCH_HANDLER_H_
+
+
+#endif

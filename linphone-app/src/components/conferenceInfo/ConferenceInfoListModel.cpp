@@ -38,14 +38,14 @@
 ConferenceInfoListModel::ConferenceInfoListModel (QObject *parent) : ProxyListModel(parent) {
 	//auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
 	//for(auto conferenceInfo : conferenceInfos){
-//		auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
-//		mList << conferenceInfoModel;
+		//auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
+		//mList << conferenceInfoModel;
 		//mMappedList[conferenceInfoModel->getDateTime().date()].push_back(conferenceInfoModel.get());
-//	}
+	//}
 }
-
+/*
 ConferenceInfoModel* ConferenceInfoListModel::getAt(const int& index) const {
 	return ProxyListModel::getAt(index).objectCast<ConferenceInfoModel>().get();
 }
-
+*/
 // -----------------------------------------------------------------------------

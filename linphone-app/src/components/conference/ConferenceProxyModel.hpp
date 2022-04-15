@@ -21,16 +21,14 @@
 #ifndef CONFERENCE_PROXY_MODEL_H_
 #define CONFERENCE_PROXY_MODEL_H_
 
-#include <QSortFilterProxyModel>
+#include "app/proxyModel/SortFilterProxyModel.hpp"
 
 // =============================================================================
 
 class CallModel;
 
-class ConferenceProxyModel : public QSortFilterProxyModel {
-	Q_OBJECT;
-	
-	Q_PROPERTY(int count READ getCount NOTIFY countChanged);
+class ConferenceProxyModel : public SortFilterProxyModel {
+	Q_OBJECT
 	
 	Q_PROPERTY(bool microMuted READ getMicroMuted WRITE setMicroMuted NOTIFY microMutedChanged);
 	Q_PROPERTY(float microVu READ getMicroVu CONSTANT);
@@ -53,17 +51,11 @@ protected:
 	Q_INVOKABLE void leave ();
 	
 signals:
-	void countChanged (int count);
-	
 	void microMutedChanged (bool status);
 	void recordingChanged (bool status);
 	void conferenceChanged ();
 	
 private:
-	int getCount () const {
-		return rowCount();
-	}
-	
 	bool getMicroMuted () const;
 	void setMicroMuted (bool status);
 	float getMicroVu () const;

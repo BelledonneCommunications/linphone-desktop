@@ -35,10 +35,11 @@
 #include "ConferenceInfoProxyModel.hpp"
 #include "ConferenceInfoListModel.hpp"
 #include "ConferenceInfoModel.hpp"
+#include "ConferenceInfoProxyListModel.hpp"
 
 // =============================================================================
 
-ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : QAbstractListModel(parent) {
+ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ConferenceInfoListModel>*>(parent) {
 	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
 	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	for(auto conferenceInfo : conferenceInfos){
@@ -51,43 +52,16 @@ ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : QAbstractList
 		if(haveMe){
 			auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
 			QDate t = conferenceInfoModel->getDateTime().date();
-			if( !mMappedList.contains(t))
-				mMappedList[t] = new ConferenceInfoProxyModel(new ConferenceInfoListModel(), this);
+			if( !mMappedList.contains(t)){
+				//auto proxy = new SortFilterAbstractProxyModel<ConferenceInfoListModel>(new ConferenceInfoListModel(), this);
+				auto proxy = new ConferenceInfoProxyListModel(this);
+				connect(this, &ConferenceInfoMapModel::filterTypeChanged, proxy, &ConferenceInfoProxyListModel::setFilterType);
+				mMappedList[t] = proxy;
+			}
+				//mMappedList[t] = new ConferenceInfoProxyModel(new ConferenceInfoListModel(), this);
 			mMappedList[t]->add(conferenceInfoModel);
 		}
 	}
 }
 
-int ConferenceInfoMapModel::rowCount (const QModelIndex &) const {
-	return mMappedList.size();
-}
-
-QHash<int, QByteArray> ConferenceInfoMapModel::roleNames () const {
-	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "$modelData";
-	roles[Qt::DisplayRole + 1] = "date";
-	return roles;
-}
-
-QVariant ConferenceInfoMapModel::data (const QModelIndex &index, int role) const {
-	int row = index.row();
-	
-	if (!index.isValid() || row < 0 || row >= mMappedList.size())
-		return QVariant();
-	auto it = mMappedList.begin() + row;
-	
-	if (role == Qt::DisplayRole)
-		return QVariant::fromValue(*it);
-	else if( role == Qt::DisplayRole+1)
-		return QVariant::fromValue(it.key());
-	
-	return QVariant();
-}
-
 // -----------------------------------------------------------------------------
-
-void ConferenceInfoMapModel::setConferenceInfoFilter (int filterMode){
-	for(auto list : mMappedList){
-		list->setConferenceInfoFilter(filterMode);
-	}
-}

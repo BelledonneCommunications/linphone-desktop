@@ -54,7 +54,7 @@ int ConferenceHelperModel::ConferenceAddModel::rowCount (const QModelIndex &) co
 
 QHash<int, QByteArray> ConferenceHelperModel::ConferenceAddModel::roleNames () const {
   QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$sipAddress";
+  roles[Qt::DisplayRole] = "$modelData";
   return roles;
 }
 

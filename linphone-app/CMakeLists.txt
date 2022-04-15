@@ -142,6 +142,7 @@ set(SOURCES
 	src/app/providers/ExternalImageProvider.cpp
 	src/app/providers/ThumbnailProvider.cpp
 	src/app/proxyModel/ProxyListModel.cpp
+	src/app/proxyModel/SortFilterProxyModel.cpp
 	#src/app/proxyModel/ProxyMapModel.cpp
 	#src/app/proxyModel/ProxyModel.cpp
 	src/app/translator/DefaultTranslator.cpp
@@ -167,13 +168,16 @@ set(SOURCES
 	src/components/codecs/VideoCodecsModel.cpp
 	src/components/conference/ConferenceAddModel.cpp
 	src/components/conference/ConferenceHelperModel.cpp
+	src/components/conference/ConferenceListener.cpp
 	src/components/conference/ConferenceModel.cpp
 	src/components/conference/ConferenceProxyModel.cpp
 	src/components/conferenceInfo/ConferenceInfoModel.cpp
 	src/components/conferenceInfo/ConferenceInfoListModel.cpp
 	src/components/conferenceInfo/ConferenceInfoMapModel.cpp
+	src/components/conferenceInfo/ConferenceInfoProxyListModel.cpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.cpp
-	src/components/conferenceScheduler/ConferenceSchedulerHandler.cpp
+	src/components/conferenceScheduler/ConferenceScheduler.cpp
+	src/components/conferenceScheduler/ConferenceSchedulerListener.cpp
 	src/components/contact/ContactModel.cpp
 	src/components/contact/VcardModel.cpp
 	src/components/contacts/ContactsImporterModel.cpp
@@ -220,7 +224,7 @@ set(SOURCES
 	src/components/presence/Presence.cpp
 	src/components/recorder/RecorderManager.cpp
 	src/components/recorder/RecorderModel.cpp
-	src/components/search/SearchHandler.cpp
+	src/components/search/SearchListener.cpp
 	src/components/search/SearchResultModel.cpp
 	src/components/search/SearchSipAddressesModel.cpp
 	src/components/search/SearchSipAddressesProxyModel.cpp
@@ -263,7 +267,12 @@ set(HEADERS
 	src/app/providers/ImageProvider.hpp
 	src/app/providers/ExternalImageProvider.hpp
 	src/app/providers/ThumbnailProvider.hpp
+	src/app/proxyModel/ProxyAbstractListModel.hpp
+	src/app/proxyModel/ProxyAbstractMapModel.hpp
+	src/app/proxyModel/ProxyAbstractObject.hpp
 	src/app/proxyModel/ProxyListModel.hpp
+	src/app/proxyModel/SortFilterAbstractProxyModel.hpp
+	src/app/proxyModel/SortFilterProxyModel.hpp
 	#src/app/proxyModel/ProxyMapModel.hpp
 	#src/app/proxyModel/ProxyModel.hpp
 	src/app/single-application/SingleApplication.hpp
@@ -291,13 +300,16 @@ set(HEADERS
 	src/components/Components.hpp
 	src/components/conference/ConferenceAddModel.hpp
 	src/components/conference/ConferenceHelperModel.hpp
+	src/components/conference/ConferenceListener.hpp
 	src/components/conference/ConferenceModel.hpp
 	src/components/conference/ConferenceProxyModel.hpp
 	src/components/conferenceInfo/ConferenceInfoModel.hpp
 	src/components/conferenceInfo/ConferenceInfoListModel.hpp
 	src/components/conferenceInfo/ConferenceInfoMapModel.hpp
+	src/components/conferenceInfo/ConferenceInfoProxyListModel.hpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.hpp
-	src/components/conferenceScheduler/ConferenceSchedulerHandler.hpp
+	src/components/conferenceScheduler/ConferenceScheduler.hpp
+	src/components/conferenceScheduler/ConferenceSchedulerListener.hpp
 	src/components/contact/ContactModel.hpp
 	src/components/contact/VcardModel.hpp
 	src/components/contacts/ContactsImporterModel.hpp
@@ -345,7 +357,7 @@ set(HEADERS
 	src/components/presence/Presence.hpp
 	src/components/recorder/RecorderManager.hpp
 	src/components/recorder/RecorderModel.hpp
-	src/components/search/SearchHandler.hpp
+	src/components/search/SearchListener.hpp
 	src/components/search/SearchResultModel.hpp
 	src/components/search/SearchSipAddressesModel.hpp
 	src/components/search/SearchSipAddressesProxyModel.hpp

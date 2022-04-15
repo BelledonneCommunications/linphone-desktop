@@ -84,6 +84,10 @@ QString ParticipantDeviceModel::getName() const{
 	return mParticipantDevice ? Utils::coreStringToAppString(mParticipantDevice->getName()) : "NoName";
 }
 
+QString ParticipantDeviceModel::getDisplayName() const{
+	return mParticipantDevice ? Utils::getDisplayName(mParticipantDevice->getAddress()) : "";
+}
+
 int ParticipantDeviceModel::getSecurityLevel() const{
 	if( mParticipantDevice) {
 		int security =  (int)mParticipantDevice->getSecurityLevel();
@@ -106,9 +110,9 @@ std::shared_ptr<linphone::ParticipantDevice>  ParticipantDeviceModel::getDevice(
 }
 
 bool ParticipantDeviceModel::isVideoEnabled() const{
-	if(mParticipantDevice)
-		qWarning() << "VideoEnabled: " << (int)mParticipantDevice->getStreamAvailability(linphone::StreamType::Video);
-	return mParticipantDevice && mParticipantDevice->getStreamAvailability(linphone::StreamType::Video);
+	bool enabled = mParticipantDevice && mParticipantDevice->getStreamAvailability(linphone::StreamType::Video) || isMe();// && mCall && mCall->getVideoEnabled();
+	qWarning() << "VideoEnabled: " << enabled;
+	return enabled;
 }
 
 bool ParticipantDeviceModel::isMe() const{
@@ -130,6 +134,7 @@ void ParticipantDeviceModel::onConferenceJoined(const std::shared_ptr<linphone::
 void ParticipantDeviceModel::onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
 }
 void ParticipantDeviceModel::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {
+	emit videoEnabledChanged();
 }
 void ParticipantDeviceModel::onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType) {
 	emit videoEnabledChanged();

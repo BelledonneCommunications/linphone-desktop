@@ -49,6 +49,11 @@ QtObject {
 			property int pointSize: Units.dp * 11
 			property color color: ColorsList.add(sectionName+'_subject', 'j').color
 		}
+		property QtObject description: QtObject {
+			property int spacing: 5
+			property int pointSize: Units.dp * 9
+			property color color: ColorsList.add(sectionName+'_description', 'j').color
+		}
 		property QtObject participants: QtObject {
 			property int spacing: 5
 			property int pointSize: Units.dp * 9
@@ -67,6 +72,17 @@ QtObject {
 			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_n', icon, 's_n_b_fg').color
 			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 's_h_b_fg').color
 			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 's_p_b_fg').color
+		}
+		property QtObject infoButton: QtObject{
+			property int iconSize: 35
+			property string name : 'info'
+			property string icon : 'menu_info_custom'
+			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 'me_n_b_bg').color
+			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_h', icon, 'me_h_b_bg').color
+			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_p', icon, 'me_p_b_bg').color
+			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_n', icon, 'me_n_b_fg').color
+			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 'me_h_b_fg').color
+			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 'me_p_b_fg').color
 		}
 		
 		property QtObject organizer: QtObject {

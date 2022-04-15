@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,27 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef _CONFERENCE_INFO_MAP_MODEL_H_
-#define _CONFERENCE_INFO_MAP_MODEL_H_
+#ifndef CONFERENCE_INFO_PROXY_LIST_MODEL_H_
+#define CONFERENCE_INFO_PROXY_LIST_MODEL_H_
 
-#include <linphone++/linphone.hh>
-#include <QDate>
+#include <QSortFilterProxyModel>
+#include <QSharedPointer>
 
-#include "app/proxyModel/ProxyAbstractMapModel.hpp"
+#include "ConferenceInfoModel.hpp"
 #include "app/proxyModel/SortFilterAbstractProxyModel.hpp"
 
-class ConferenceInfoListModel;
 
 // =============================================================================
 
-class ConferenceInfoMapModel : public ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ConferenceInfoListModel>*>  {
+class QWindow;
+class ConferenceInfoListModel;
+
+
+class ConferenceInfoProxyListModel : public SortFilterAbstractProxyModel<ConferenceInfoListModel> {
 	Q_OBJECT
 	
 public:
-	ConferenceInfoMapModel (QObject *parent = Q_NULLPTR);
-signals:
-	void filterTypeChanged(int filterType);
-	
+	ConferenceInfoProxyListModel (QObject *parent = Q_NULLPTR);
+			
+protected:
+	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 };
-Q_DECLARE_METATYPE(ConferenceInfoMapModel*)
+
 #endif

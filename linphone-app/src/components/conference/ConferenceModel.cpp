@@ -19,6 +19,7 @@
  */
 
 #include "ConferenceModel.hpp"
+#include "ConferenceListener.hpp"
 
 #include <QQmlApplicationEngine>
 #include <QDesktopServices>
@@ -35,71 +36,88 @@
 #include "utils/Constants.hpp"
 #include "components/Components.hpp"
 
+void ConferenceModel::connectTo(ConferenceListener * listener){
+	connect(listener, &ConferenceListener::participantAdded, this, &ConferenceModel::onParticipantAdded);
+	connect(listener, &ConferenceListener::participantRemoved, this, &ConferenceModel::onParticipantRemoved);
+	connect(listener, &ConferenceListener::participantDeviceAdded, this, &ConferenceModel::onParticipantDeviceAdded);
+	connect(listener, &ConferenceListener::participantDeviceRemoved, this, &ConferenceModel::onParticipantDeviceRemoved);
+	connect(listener, &ConferenceListener::participantDeviceLeft, this, &ConferenceModel::onParticipantDeviceLeft);
+	connect(listener, &ConferenceListener::participantDeviceJoined, this, &ConferenceModel::onParticipantDeviceJoined);
+	connect(listener, &ConferenceListener::participantDeviceMediaAvailabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaAvailabilityChanged);
+	connect(listener, &ConferenceListener::conferenceStateChanged, this, &ConferenceModel::onConferenceStateChanged);
+	connect(listener, &ConferenceListener::subjectChanged, this, &ConferenceModel::onSubjectChanged);
+}
+
 // =============================================================================
-std::shared_ptr<ConferenceModel> ConferenceModel::create(std::shared_ptr<linphone::Conference> conference, QObject *parent){
-	std::shared_ptr<ConferenceModel> model = std::make_shared<ConferenceModel>(conference, parent);
-	if(model){
-		model->mSelf = model;
-		conference->addListener(model);
-		return model;
-	}
-	return nullptr;
+
+QSharedPointer<ConferenceModel> ConferenceModel::create(std::shared_ptr<linphone::Conference> conference, QObject *parent){
+	return QSharedPointer<ConferenceModel>::create(conference, parent);
 }
 
 ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conference, QObject *parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mConference = conference;
+	mConferenceListener = std::make_shared<ConferenceListener>();
+	connectTo(mConferenceListener.get());
+	mConference->addListener(mConferenceListener);
 }
 
 ConferenceModel::~ConferenceModel(){
-	//mChatRoomModel->getChatRoom()->removeListener(mChatRoomModel);
+	mConference->removeListener(mConferenceListener);
 }
 
 std::shared_ptr<linphone::Conference> ConferenceModel::getConference()const{
 	return mConference;
 }
 
+QString ConferenceModel::getSubject() const{
+	return QString::fromStdString(mConference->getSubject());
+}
+
+QDateTime ConferenceModel::getStartDate() const{
+	return QDateTime::fromSecsSinceEpoch(mConference->getStartTime());
+}
+
+qint64 ConferenceModel::getElapsedSeconds() const {
+	return getStartDate().secsTo(QDateTime::currentDateTime());
+}
+
 //-----------------------------------------------------------------------------------------------------------------------
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
-void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "onParticipantAdded is not yet implemented.";
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+void ConferenceModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
+	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	emit participantAdded(participant);
 }
-void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "onParticipantRemoved is not yet implemented.";
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+void ConferenceModel::onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant){
+	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	emit participantRemoved(participant);
 }
-void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceAdded(participantDevice);
 }
-void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
 }
-void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
-}
-void ConferenceModel::onParticipantDeviceLeft(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+void ConferenceModel::onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceLeft(participantDevice);
 }
-void ConferenceModel::onParticipantDeviceJoined(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+void ConferenceModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceJoined(participantDevice);
 }
-void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "ConferenceModel::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << conference->getMe()->getDevices().size();
+void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qWarning() << "ConferenceModel::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
 }
-void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference> & conference, linphone::Conference::State newState){
+void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newState){
 	emit conferenceStateChanged(newState);
 }
-void ConferenceModel::onSubjectChanged(const std::shared_ptr<linphone::Conference> & conference, const std::string & subject){
-	qWarning() << "onSubjectChanged is not yet implemented.";
-}
-void ConferenceModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::AudioDevice> & audioDevice){
-	qWarning() << "onAudioDeviceChanged is not yet implemented.";
+void ConferenceModel::onSubjectChanged(const std::string& string){
+	emit subjectChanged();
 }
 	
 	

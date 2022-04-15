@@ -27,36 +27,23 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
-#include <QAbstractListModel>
+#include "app/proxyModel/ProxyListModel.hpp"
 
 class TunnelConfigModel;
 
-class TunnelConfigListModel : public QAbstractListModel {
+class TunnelConfigListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
 	TunnelConfigListModel (std::shared_ptr<linphone::Tunnel> tunnel, QObject *parent = nullptr);
-	
-	int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	int count();
 	
 	void updateTunnelConfigs(std::shared_ptr<linphone::Tunnel> tunnel);
 	bool apply(std::shared_ptr<linphone::Tunnel> tunnel);
 	void addTunnelConfig();
 	void removeTunnelConfig(std::shared_ptr<linphone::Tunnel> tunnel, TunnelConfigModel * model);
 	
-	virtual QHash<int, QByteArray> roleNames () const override;
-	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	
-	
-private:
-	bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	
-	QList<std::shared_ptr<TunnelConfigModel>> mList;
-	
 };
 
-Q_DECLARE_METATYPE(std::shared_ptr<TunnelConfigListModel>)
+Q_DECLARE_METATYPE(QSharedPointer<TunnelConfigListModel>)
 
 #endif // TUNNEL_CONFIG_LIST_MODEL_H_

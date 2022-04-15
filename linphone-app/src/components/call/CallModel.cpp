@@ -80,7 +80,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	
 	// Update fields and make a search to know to who the call belong
 	mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
-	mSearch = std::make_shared<SearchHandler>(this);
+	mSearch = std::make_shared<SearchListener>(this);
 	QObject::connect(mSearch.get(), SIGNAL(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> )), this, SLOT(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>>)));
 	mMagicSearch->addListener(mSearch);
 	
@@ -161,9 +161,15 @@ ChatRoomModel * CallModel::getChatRoomModel() const{
 		return nullptr;
 }
 
-std::shared_ptr<ConferenceModel> CallModel::getConferenceModel(){
-	if(mCall->getConference() && !mConferenceModel)
+ConferenceModel * CallModel::getConferenceModel(){
+	return getConferenceSharedModel().get();
+}
+
+QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
+	if(mCall->getConference() && !mConferenceModel){
 		mConferenceModel = ConferenceModel::create(mCall->getConference());	
+		emit conferenceModelChanged();
+	}
 	return mConferenceModel;
 }
 

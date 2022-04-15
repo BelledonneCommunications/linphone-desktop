@@ -66,6 +66,7 @@ void Camera::resetWindowId() {
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
+	bool useDefaultWindow = false;
 	if(mIsPreview){
 		renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
 		if(renderer)
@@ -74,7 +75,6 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 		if(renderer)
 			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 	}else{
-		bool useDefaultWindow = false;
 		if(mCallModel){
 			auto call = mCallModel->getCall();
 			if(call){
@@ -92,6 +92,7 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 				renderer = (QQuickFramebufferObject::Renderer *)participantDevice->getNativeVideoWindowId();
 				if(renderer)
 					participantDevice->setNativeVideoWindowId(NULL);// Reset
+				qWarning() << "Trying to create new window ID for " << participantDevice->getName().c_str() << ", addr=" << participantDevice->getAddress()->asString().c_str();
 				renderer = (QQuickFramebufferObject::Renderer *) participantDevice->createNativeVideoWindowId();
 				if(renderer)
 					participantDevice->setNativeVideoWindowId(renderer);

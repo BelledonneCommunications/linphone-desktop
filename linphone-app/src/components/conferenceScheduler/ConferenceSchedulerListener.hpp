@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2021-2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,23 +18,19 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONFERENCE_SCHEDULER_HANDLER_H_
-#define CONFERENCE_SCHEDULER_HANDLER_H_
+#ifndef CONFERENCE_SCHEDULER_LISTENER_H_
+#define CONFERENCE_SCHEDULER_LISTENER_H_
 
 #include <linphone++/linphone.hh>
 #include <QDateTime>
 #include <QObject>
 
-class ConferenceSchedulerHandler : public QObject
-								, public linphone::ConferenceSchedulerListener
-{
+class ConferenceSchedulerListener : public QObject, public linphone::ConferenceSchedulerListener {
 	Q_OBJECT
 	
 public:
-	static std::shared_ptr<ConferenceSchedulerHandler> create(QObject *parent = Q_NULLPTR);
-	ConferenceSchedulerHandler (QObject * parent = nullptr);
-	~ConferenceSchedulerHandler ();
-	std::shared_ptr<linphone::ConferenceScheduler> getConferenceScheduler();
+	ConferenceSchedulerListener();
+	virtual ~ConferenceSchedulerListener();
 	
 	virtual void onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) override;
 	virtual void onInvitationsSent(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) override;
@@ -42,13 +38,6 @@ public:
 signals:
 	void stateChanged(linphone::ConferenceSchedulerState state);
 	void invitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
-
-private:
-	std::shared_ptr<linphone::ConferenceScheduler> mConferenceScheduler;
-	std::weak_ptr<ConferenceSchedulerHandler> mSelf;		// Used for Linphone Listener
-	
 };
-
-Q_DECLARE_METATYPE(std::shared_ptr<ConferenceSchedulerHandler>)
 
 #endif

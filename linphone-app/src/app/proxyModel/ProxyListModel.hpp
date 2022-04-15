@@ -22,12 +22,12 @@
 #define _PROXY_LIST_MODEL_H_
 
 
-#include <QAbstractListModel>
+#include "ProxyAbstractListModel.hpp"
 #include <QSharedPointer>
 
 // =============================================================================
 
-class ProxyListModel : public QAbstractListModel {
+class ProxyListModel : public ProxyAbstractListModel<QSharedPointer<QObject>> {
 	Q_OBJECT
 	
 public:
@@ -35,16 +35,9 @@ public:
 	ProxyListModel (QObject *parent = Q_NULLPTR);
 	virtual ~ProxyListModel();
 	
-	virtual int rowCount (const QModelIndex &index = QModelIndex()) const override;
-	Q_INVOKABLE int getCount() const;
-	
-	virtual QHash<int, QByteArray> roleNames () const override;
-	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	
-	QSharedPointer<QObject> getAt(const int& index) const;
 	template <class T>
 	QSharedPointer<T> getAt(const int& index) const{
-		return getAt(index).objectCast<T>();
+		return ProxyAbstractListModel<QSharedPointer<QObject>>::getAt(index).objectCast<T>();
 	}
 	
 	QSharedPointer<QObject> get(QObject * itemToGet, int * index = nullptr) const;
@@ -57,20 +50,24 @@ public:
 		return newList;
 	}
 // Add functions
-	virtual void add(QSharedPointer<QObject> item);
+	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override{
+		int row = index.row();
+		if (!index.isValid() || row < 0 || row >= mList.count())
+			return QVariant();
+		if (role == Qt::DisplayRole)
+			return QVariant::fromValue(mList[row].get());
+		return QVariant();
+	}
 	template <class T>
 	void add(QSharedPointer<T> item){
-		add(item.template objectCast<QObject>());
+		ProxyAbstractListModel<QSharedPointer<QObject>>::add(item.template objectCast<QObject>());
 	}
-	//virtual void add(QList<QSharedPointer<QObject>> item);
 	
-	virtual void prepend(QSharedPointer<QObject> item);
 	template <class T>
 	void prepend(QSharedPointer<T> item){
-		prepend(item.template objectCast<QObject>());
+		ProxyAbstractListModel<QSharedPointer<QObject>>::prepend(item.template objectCast<QObject>());
 	}
 	
-	virtual void prepend(QList<QSharedPointer<QObject>> items);
 	template <class T>
 	void prepend(QList<QSharedPointer<T>> items){
 		beginInsertRows(QModelIndex(), 0, items.size()-1);
@@ -78,23 +75,24 @@ public:
 		mList = items;
 		endInsertRows();
 	}
-
-// Remove functions
-	Q_INVOKABLE virtual bool remove(QObject *itemToRemove) ;
-	virtual bool remove(QSharedPointer<QObject> itemToRemove) ;
 	
-	virtual bool removeRow (int row, const QModelIndex &parent = QModelIndex());
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	
-	
-	Q_INVOKABLE virtual void resetData();
-	
-signals:
-	void countChanged();
-	
-protected:
-	QList<QSharedPointer<QObject>> mList;
-	
+	virtual bool remove(QObject *itemToRemove) override{
+		bool removed = false;
+		qInfo() << QStringLiteral("Removing ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
+		int index = 0;
+		for(auto item : mList)
+			if( item == itemToRemove) {
+				removed = removeRow(index);
+				break;
+			}else
+				++index;
+		if( !removed)
+			qWarning() << QStringLiteral("Unable to remove ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
+		return removed;
+	}
+	virtual bool remove(QSharedPointer<QObject> itemToRemove){
+		return remove(itemToRemove.get());
+	}
 };
 
 #endif

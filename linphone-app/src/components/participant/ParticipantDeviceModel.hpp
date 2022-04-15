@@ -44,6 +44,7 @@ public:
     static QSharedPointer<ParticipantDeviceModel> create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
     //static std::shared_ptr<ParticipantDeviceModel> create(CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
 	
+	Q_PROPERTY(QString displayName READ getDisplayName CONSTANT)
 	Q_PROPERTY(QString name READ getName CONSTANT)
 	Q_PROPERTY(QString address READ getAddress CONSTANT)
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
@@ -52,6 +53,7 @@ public:
 	Q_PROPERTY(bool isMe READ isMe CONSTANT)
   
 	QString getName() const;
+	QString getDisplayName() const;
     QString getAddress() const;
 	int getSecurityLevel() const;
 	time_t getTimeOfJoining() const;

@@ -18,14 +18,14 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ConferenceInfoProxyModel.hpp"
+#include "ConferenceInfoProxyListModel.hpp"
 
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
 
 #include "ConferenceInfoListModel.hpp"
 #include "ConferenceInfoMapModel.hpp"
-#include "ConferenceInfoProxyListModel.hpp"
+
 
 // =============================================================================
 
@@ -33,24 +33,26 @@ using namespace std;
 
 //---------------------------------------------------------------------------------------------
 
-ConferenceInfoProxyModel::ConferenceInfoProxyModel (QObject *parent) : SortFilterAbstractProxyModel<ConferenceInfoMapModel>(new ConferenceInfoMapModel(parent), parent) {
-	setFilterType((int)Scheduled);
-	connect(this, &ConferenceInfoProxyModel::filterTypeChanged, qobject_cast<ConferenceInfoMapModel*>(sourceModel()), &ConferenceInfoMapModel::filterTypeChanged);
+ConferenceInfoProxyListModel::ConferenceInfoProxyListModel (QObject *parent) : SortFilterAbstractProxyModel<ConferenceInfoListModel>(new ConferenceInfoListModel(parent), parent) {
+	//setFilterType(0);
+	//connect(this, &ConferenceInfoProxyListModel::filterTypeChanged, qobject_cast<ConferenceInfoListModel*>(sourceModel()), &ConferenceInfoListModel::filterTypeChanged);
 }
 
-bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-	QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
-	const ConferenceInfoMapModel* ics = sourceModel()->data(index).value<ConferenceInfoMapModel*>();
-	if(ics){
-		int r = ics->rowCount();
-		return r > 0;
-	}
-	const ConferenceInfoProxyListModel* listModel = sourceModel()->data(index).value<ConferenceInfoProxyListModel*>();
+bool ConferenceInfoProxyListModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+	auto listModel = qobject_cast<ConferenceInfoListModel*>(sourceModel());
 	if(listModel){
-		int r = listModel->rowCount();
-		return r > 0;
+		QModelIndex index = listModel->index(sourceRow, 0, QModelIndex());
+		const ConferenceInfoModel* ics = sourceModel()->data(index).value<ConferenceInfoModel*>();
+		if(ics){
+			QDateTime currentDateTime = QDateTime::currentDateTime();
+			if( mFilterType == 0){
+				return ics->getEndDateTime() < currentDateTime;
+			}else if( mFilterType == 1){
+				return ics->getDateTime() >= currentDateTime;
+			}
+		}
 	}
-	return false;
+	return true;
 /*
 	bool show = false;
 	QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
@@ -76,7 +78,7 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 	return show;*/
 }
 
-bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+bool ConferenceInfoProxyListModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	return true;
 /*
   const ConferenceInfoListModel* deviceA = sourceModel()->data(left).value<ConferenceInfoListModel*>();

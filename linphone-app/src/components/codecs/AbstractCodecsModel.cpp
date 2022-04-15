@@ -34,36 +34,14 @@ static inline shared_ptr<linphone::PayloadType> getCodecFromMap (const QVariantM
 
 // -----------------------------------------------------------------------------
 
-AbstractCodecsModel::AbstractCodecsModel (QObject *parent) : QAbstractListModel(parent) {}
-
-int AbstractCodecsModel::rowCount (const QModelIndex &) const {
-  return mCodecs.count();
-}
-
-QHash<int, QByteArray> AbstractCodecsModel::roleNames () const {
-  QHash<int, QByteArray> roles;
-  roles[Qt::DisplayRole] = "$codec";
-  return roles;
-}
-
-QVariant AbstractCodecsModel::data (const QModelIndex &index, int role) const {
-  int row = index.row();
-
-  if (!index.isValid() || row < 0 || row >= mCodecs.count())
-    return QVariant();
-
-  if (role == Qt::DisplayRole)
-    return mCodecs[row];
-
-  return QVariant();
-}
+AbstractCodecsModel::AbstractCodecsModel (QObject *parent) : ProxyAbstractListModel<QVariantMap>(parent) {}
 
 // -----------------------------------------------------------------------------
 
 void AbstractCodecsModel::enableCodec (int id, bool status) {
-  Q_ASSERT(id >= 0 && id < mCodecs.count());
+  Q_ASSERT(id >= 0 && id < mList.count());
 
-  QVariantMap &map = mCodecs[id];
+  QVariantMap &map = mList[id];
   shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
   if (codec) {
     codec->enable(status);
@@ -77,9 +55,9 @@ void AbstractCodecsModel::moveCodec (int source, int destination) {
 }
 
 void AbstractCodecsModel::setBitrate (int id, int bitrate) {
-  Q_ASSERT(id >= 0 && id < mCodecs.count());
+  Q_ASSERT(id >= 0 && id < mList.count());
 
-  QVariantMap &map = mCodecs[id];
+  QVariantMap &map = mList[id];
   shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
   if (codec) {
     codec->setNormalBitrate(bitrate);
@@ -89,9 +67,9 @@ void AbstractCodecsModel::setBitrate (int id, int bitrate) {
 }
 
 void AbstractCodecsModel::setRecvFmtp (int id, const QString &recvFmtp) {
-  Q_ASSERT(id >= 0 && id < mCodecs.count());
+  Q_ASSERT(id >= 0 && id < mList.count());
 
-  QVariantMap &map = mCodecs[id];
+  QVariantMap &map = mList[id];
   shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
   if (codec) {
     codec->setRecvFmtp(Utils::appStringToCoreString(recvFmtp));
@@ -114,7 +92,7 @@ bool AbstractCodecsModel::moveRows (
   int limit = sourceRow + count - 1;
 
   {
-    int nCodecs = mCodecs.count();
+    int nCodecs = mList.count();
     if (
       sourceRow < 0 ||
       destinationChild < 0 ||
@@ -132,16 +110,16 @@ bool AbstractCodecsModel::moveRows (
   if (destinationChild > sourceRow) {
     --destinationChild;
     for (int i = sourceRow; i <= limit; ++i) {
-      mCodecs.move(sourceRow, destinationChild + i - sourceRow);
+      mList.move(sourceRow, destinationChild + i - sourceRow);
     }
   } else {
     for (int i = sourceRow; i <= limit; ++i)
-      mCodecs.move(sourceRow + i - sourceRow, destinationChild + i - sourceRow);
+      mList.move(sourceRow + i - sourceRow, destinationChild + i - sourceRow);
   }
 
   // Update linphone codecs list.
   list<shared_ptr<linphone::PayloadType>> codecs;
-  for (const auto &map : mCodecs) {
+  for (const auto &map : mList) {
     // Do not update downloadable codecs.
     shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
     if (codec)
@@ -172,7 +150,7 @@ void AbstractCodecsModel::addCodec (shared_ptr<linphone::PayloadType> &codec) {
   map["recvFmtp"] = Utils::coreStringToAppString(codec->getRecvFmtp());
   map["__codec"] = QVariant::fromValue(codec);
 
-  mCodecs << map;
+  mList << map;
 }
 
 void AbstractCodecsModel::addDownloadableCodec (
@@ -188,11 +166,11 @@ void AbstractCodecsModel::addDownloadableCodec (
   map["installName"] = installName;
   map["mime"] = mime;
 
-  mCodecs << map;
+  mList << map;
 }
 
 QVariantMap AbstractCodecsModel::getCodecInfo (const QString &mime) const {
-  for (const auto &codec : mCodecs)
+  for (const auto &codec : mList)
     if (codec.value("mime") == mime)
       return codec;
   return QVariantMap();
