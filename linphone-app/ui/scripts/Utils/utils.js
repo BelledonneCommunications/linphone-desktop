@@ -693,3 +693,11 @@ function write (fileName, text) {
   request.open('PUT', getUriFromSystemPath(fileName), false)
   request.send(text)
 }
+
+function computeAvatarSize (container, maxSize) {
+  var height = container.height
+  var width = container.width
+
+  var size = height < maxSize && height > 0 ? height : maxSize
+  return size < width ? size : width
+}

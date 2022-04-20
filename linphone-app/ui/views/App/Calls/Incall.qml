@@ -12,6 +12,7 @@ import UtilsCpp 1.0
 import App.Styles 1.0
 
 import 'Incall.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -239,7 +240,7 @@ Rectangle {
 				
 				IncallAvatar {
 					call: incall.call
-					height: Logic.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
+					height: Utils.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
 					width: height
 				}
 			}

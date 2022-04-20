@@ -29,15 +29,12 @@ Window {
 														  videoEnabled: false, 
 														  chatRoomModel:null
 													  });
-	
+	property ConferenceInfoModel conferenceInfoModel
 	readonly property bool chatIsOpened: !rightPaned.isClosed()
 	readonly property bool callsIsOpened: !mainPaned.isClosed()
 	
 	
 	// ---------------------------------------------------------------------------
-	function openConference(){
-		middlePane.sourceComponent = videoConference
-	}
 	
 	function openChat () {
 		rightPaned.open()
@@ -250,6 +247,12 @@ Window {
 			}
 			
 			Component {
+				id: waitingRoom
+				WaitingRoom{
+					conferenceInfoModel: window.conferenceInfoModel
+				}
+			}
+			Component {
 				id: videoConference
 				VideoConference {
 					callModel: window.call
@@ -263,8 +266,13 @@ Window {
 			childA: Loader {
 				id: middlePane
 				anchors.fill: parent
-				sourceComponent: Logic.getContent()
-				onSourceComponentChanged: {rightPaned.childAItem.update()}// Force update when loading a new Content. It's just to be sure
+				sourceComponent: Logic.getContent(calls.selectedCall, window.conferenceInfoModel)
+				onSourceComponentChanged: {
+					if( sourceComponent == waitingRoom)
+						mainPaned.close()
+					rightPaned.childAItem.update()
+				}// Force update when loading a new Content. It's just to be sure
+				active: calls.selectedCall || window.conferenceInfoModel
 			}
 			
 			childB: Loader {
@@ -283,6 +291,7 @@ Window {
 		target: CallsListModel
 		onCallTransferAsked: Logic.handleCallTransferAsked(callModel)
 		onCallAttendedTransferAsked: Logic.handleCallAttendedTransferAsked(callModel)
+		onCallConferenceAsked: {console.log('Openning : '+conferenceInfoModel);Logic.openWaitingRoom(conferenceInfoModel)}
 		onRowsRemoved: Logic.tryToCloseWindow()
 	}
 }

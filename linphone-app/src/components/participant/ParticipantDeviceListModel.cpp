@@ -34,8 +34,9 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (std::shared_ptr<linphone
 	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = participant->getDevices() ;
 	//auto previewModel = ParticipantDeviceModel::create(nullptr, true);
 	//mList << previewModel;
+	mCallModel = nullptr;
 	for(auto device : devices){
-		auto deviceModel = ParticipantDeviceModel::create(device, isMe(device));
+		auto deviceModel = ParticipantDeviceModel::create(mCallModel, device, isMe(device));
 		connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 		mList << deviceModel;
 	}
@@ -49,7 +50,7 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, Q
 		//mList << previewModel;
 		std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = conferenceModel->getConference()->getParticipantDeviceList();
 		for(auto device : devices){
-			auto deviceModel = ParticipantDeviceModel::create(device, isMe(device));
+			auto deviceModel = ParticipantDeviceModel::create(mCallModel, device, isMe(device));
 			connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 			mList << deviceModel;
 		}
@@ -70,6 +71,7 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, Q
 		connect(conferenceModel.get(), &ConferenceModel::participantDeviceJoined, this, &ParticipantDeviceListModel::onParticipantDeviceJoined);
 		connect(conferenceModel.get(), &ConferenceModel::participantDeviceLeft, this, &ParticipantDeviceListModel::onParticipantDeviceLeft);
 		connect(conferenceModel.get(), &ConferenceModel::conferenceStateChanged, this, &ParticipantDeviceListModel::onConferenceStateChanged);
+		connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaCapabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaCapabilityChanged);
 		connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaAvailabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged);
 	}
 }
@@ -82,7 +84,7 @@ void ParticipantDeviceListModel::updateDevices(std::shared_ptr<linphone::Partici
 	mList.clear();
 	//mList << previewModel;
 	for(auto device : devices){
-		auto deviceModel = ParticipantDeviceModel::create(device, isMe(device));
+		auto deviceModel = ParticipantDeviceModel::create(mCallModel, device, isMe(device));
 		connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 		mList << deviceModel;
 	}
@@ -131,7 +133,7 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 		}
 	}
 	
-	auto deviceModel = ParticipantDeviceModel::create(deviceToAdd, isMe(deviceToAdd));
+	auto deviceModel = ParticipantDeviceModel::create(mCallModel, deviceToAdd, isMe(deviceToAdd));
 	connect(this, &ParticipantDeviceListModel::securityLevelChanged, deviceModel.get(), &ParticipantDeviceModel::onSecurityLevelChanged);
 	ProxyListModel::add<ParticipantDeviceModel>(deviceModel);
 	qWarning() << "Device added. Count=" << mList.count();
@@ -189,12 +191,14 @@ void ParticipantDeviceListModel::onSecurityLevelChanged(std::shared_ptr<const li
 	emit securityLevelChanged(device);
 }
 
-
 //----------------------------------------------------------------------------------------------------------
-void ParticipantDeviceListModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
+void ParticipantDeviceListModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){	
 	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = participant->getDevices() ;
-	for(auto device : devices)
-		add(device);
+	if(devices.size() == 0)
+		qWarning() << "Participant has no device. It will not be added : " << participant->getAddress()->asString().c_str();
+	else
+		for(auto device : devices)
+			add(device);
 }
 
 void ParticipantDeviceListModel::onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant){
@@ -275,8 +279,25 @@ void ParticipantDeviceListModel::onConferenceStateChanged(linphone::Conference::
 	}
 }
 
-void ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+void ParticipantDeviceListModel::onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	auto device = get(participantDevice);
 	if(device)
 		emit device->videoEnabledChanged();
+	else
+		onParticipantDeviceAdded(participantDevice);
+	device = get(participantDevice);
+	if( device && device->isMe()){	// Capability change for me. Update all videos.
+		for(auto item : mList) {
+			auto device = item.objectCast<ParticipantDeviceModel>();
+			device->updateVideoEnabled();
+		}
+	}
+}
+
+void ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	auto device = get(participantDevice);
+	if(device)
+		device->updateVideoEnabled();
+	else
+		onParticipantDeviceAdded(participantDevice);
 }

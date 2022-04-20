@@ -92,11 +92,7 @@ Column {
       cursorShape: Qt.ArrowCursor
 
       property bool held: false
-
-      anchors {
-        left: parent.left
-        right: parent.right
-      }
+		width: view.width
 
       drag {
         axis: Drag.YAxis

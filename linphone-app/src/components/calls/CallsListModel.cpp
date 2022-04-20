@@ -168,7 +168,7 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 		CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 }
 
-void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress, const bool& autoSelectAfterCreation) const {
+void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress, const bool& autoSelectAfterCreation, QVariantMap options) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = autoSelectAfterCreation;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	if (!core->videoSupported()) {
@@ -182,9 +182,14 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 		return;
 	
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	params->enableVideo(true);
-	params->setVideoDirection(linphone::MediaDirection::SendRecv);
-	params->setConferenceVideoLayout(linphone::ConferenceLayout::Grid);
+	bool enableVideo = options.contains("video") ? options["video"].toBool() : true;
+	params->enableVideo(enableVideo);
+	if( enableVideo ){
+		params->setVideoDirection(linphone::MediaDirection::SendRecv);
+		params->setConferenceVideoLayout(linphone::ConferenceLayout::Grid);
+	}
+	params->enableMic(options.contains("micro") ? options["micro"].toBool() : true);
+	params->enableAudio(options.contains("audio") ? options["audio"].toBool() : true);	// ???
 	params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
@@ -373,6 +378,11 @@ QVariantMap CallsListModel::createConference(ConferenceInfoModel * conferenceInf
 	return result;
 }
 
+void CallsListModel::prepareConferenceCall(ConferenceInfoModel * model){
+	auto app = App::getInstance();
+	app->smartShowWindow(app->getCallsWindow());
+	emit callConferenceAsked(model);
+}
 
 // -----------------------------------------------------------------------------
 

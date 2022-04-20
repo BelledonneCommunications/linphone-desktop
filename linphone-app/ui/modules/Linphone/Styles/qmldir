@@ -9,6 +9,8 @@ singleton AccountStatusStyle                   1.0 Account/AccountStatusStyle.qm
 singleton CardBlockStyle                       1.0 Blocks/CardBlockStyle.qml
 singleton RequestBlockStyle                    1.0 Blocks/RequestBlockStyle.qml
 
+singleton CameraViewStyle                      1.0 Camera/CameraViewStyle.qml
+
 singleton ChatStyle                            1.0 Chat/ChatStyle.qml
 singleton ChatAudioMessageStyle                1.0 Chat/ChatAudioMessageStyle.qml
 singleton ChatAudioPreviewStyle                1.0 Chat/ChatAudioPreviewStyle.qml

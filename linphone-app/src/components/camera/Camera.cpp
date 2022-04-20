@@ -38,8 +38,12 @@ namespace {
 constexpr int MaxFps = 30;
 }
 
+QMutex Camera::mPreviewCounterMutex;
+int Camera::mPreviewCounter;
+
 // =============================================================================
 Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
+	
 	// The fbo content must be y-mirrored because the ms rendering is y-inverted.
 	setMirrorVertically(true);
 	
@@ -55,11 +59,18 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 	mRefreshTimer->start();
 }
 
+Camera::~Camera(){
+	if(mIsPreview)
+		deactivatePreview();
+}
+
 void Camera::resetWindowId() {
 	if(mIsPreview)
 		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);
 	else if( mCallModel && mCallModel->getCall())
 		mCallModel->getCall()->setNativeVideoWindowId(NULL);
+	else if(mParticipantDeviceModel)
+		mParticipantDeviceModel->getDevice()->setNativeVideoWindowId(NULL);
 	else
 		CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
 }
@@ -143,6 +154,10 @@ void Camera::setCallModel (CallModel *callModel) {
 void Camera::setIsPreview (bool status) {
 	if (mIsPreview != status) {
 		mIsPreview = status;
+		if(mIsPreview)
+			activatePreview();
+		else
+			deactivatePreview();
 		update();
 		
 		emit isPreviewChanged(status);
@@ -154,5 +169,23 @@ if (mParticipantDeviceModel != participantDeviceModel) {
 		mParticipantDeviceModel = participantDeviceModel;
 		update();
 		emit participantDeviceModelChanged(mParticipantDeviceModel);
+	}
+}
+
+void Camera::activatePreview(){
+	mPreviewCounterMutex.lock();
+	if (++mPreviewCounter == 1)
+		CoreManager::getInstance()->getCore()->enableVideoPreview(true);
+	mPreviewCounterMutex.unlock();
+}
+
+void Camera::deactivatePreview(){
+	auto core = CoreManager::getInstance()->getCore();
+	if(core){
+		mPreviewCounterMutex.lock();
+		if (--mPreviewCounter == 0)
+			core->enableVideoPreview(false);
+		mPreviewCounterMutex.unlock();
+		core->setNativePreviewWindowId(NULL);
 	}
 }

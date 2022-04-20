@@ -37,11 +37,11 @@ class ParticipantDeviceModel : public QObject {
 
 	
 public:
-    ParticipantDeviceModel (std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
+    ParticipantDeviceModel (CallModel * callModel, std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
     virtual ~ParticipantDeviceModel();
     //ParticipantDeviceModel (CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
     
-    static QSharedPointer<ParticipantDeviceModel> create(std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
+    static QSharedPointer<ParticipantDeviceModel> create(CallModel* callModel, std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
     //static std::shared_ptr<ParticipantDeviceModel> create(CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
 	
 	Q_PROPERTY(QString displayName READ getDisplayName CONSTANT)
@@ -71,8 +71,11 @@ public:
 	virtual void onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType);
 	
 	void connectTo(ParticipantDeviceListener * listener);
+	void updateVideoEnabled();
+	
 public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	void onCallStatusChanged();
 signals:
 	void securityLevelChanged();
 	void videoEnabledChanged();
@@ -80,6 +83,7 @@ signals:
 private:
 
 	bool mIsMe = false;
+	bool mIsVideoEnabled;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
     std::shared_ptr<ParticipantDeviceListener> mParticipantDeviceListener;	// This is passed to linpĥone object and must be in shared_ptr

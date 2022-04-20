@@ -53,6 +53,7 @@ public:
 	virtual void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	virtual void onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & device);
+	virtual void onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onConferenceStateChanged(linphone::Conference::State newState);
 	virtual void onSubjectChanged(const std::string& subject);
@@ -65,6 +66,7 @@ signals:
 	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void participantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void conferenceStateChanged(linphone::Conference::State newState);
 	void subjectChanged();

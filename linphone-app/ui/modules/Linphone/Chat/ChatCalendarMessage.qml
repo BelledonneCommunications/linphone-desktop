@@ -50,7 +50,7 @@ Loader{
 		clip: false
 		
 		hoverEnabled: true
-		onClicked: CallsListModel.launchVideoCall(mainItem.conferenceInfoModel.uri, '', 0)
+		onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
 		onHoveredChanged: mainItem.containsMouse = loadedItem.containsMouse
 		
 		ColumnLayout{

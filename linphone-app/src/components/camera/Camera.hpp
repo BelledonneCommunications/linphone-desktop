@@ -25,11 +25,12 @@
 
 #include <QQuickFramebufferObject>
 #include <mediastreamer2/msogl.h>
+#include <QMutex>
 
 // =============================================================================
 
 namespace linphone {
-  class Call;
+	class Call;
 }
 
 class CallModel;
@@ -37,40 +38,46 @@ class ParticipantDeviceModel;
 // -----------------------------------------------------------------------------
 
 class Camera : public QQuickFramebufferObject {
-
-  Q_OBJECT;
-
-  Q_PROPERTY(CallModel * call READ getCallModel WRITE setCallModel NOTIFY callChanged);
-  Q_PROPERTY(ParticipantDeviceModel * participantDeviceModel READ getParticipantDeviceModel WRITE setParticipantDeviceModel NOTIFY participantDeviceModelChanged)
-  Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
-
+	Q_OBJECT
+	
+	Q_PROPERTY(CallModel * call READ getCallModel WRITE setCallModel NOTIFY callChanged);
+	Q_PROPERTY(ParticipantDeviceModel * participantDeviceModel READ getParticipantDeviceModel WRITE setParticipantDeviceModel NOTIFY participantDeviceModelChanged)
+	Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
+	
 public:
-  Camera (QQuickItem *parent = Q_NULLPTR);
-
-  QQuickFramebufferObject::Renderer *createRenderer () const override;
-  
-  Q_INVOKABLE void resetWindowId();
-
+	Camera (QQuickItem *parent = Q_NULLPTR);
+	virtual ~Camera();
+	
+	QQuickFramebufferObject::Renderer *createRenderer () const override;
+	
+	Q_INVOKABLE void resetWindowId();
+	
+	static QMutex mPreviewCounterMutex;
+	static int mPreviewCounter;
+	
 signals:
-  void callChanged (CallModel *callModel);
-  void isPreviewChanged (bool isPreview);
-  void participantDeviceModelChanged(ParticipantDeviceModel *participantDeviceModel);
-  void requestNewRenderer();
-
+	void callChanged (CallModel *callModel);
+	void isPreviewChanged (bool isPreview);
+	void participantDeviceModelChanged(ParticipantDeviceModel *participantDeviceModel);
+	void requestNewRenderer();
+	
 private:
-  CallModel *getCallModel () const;
-  bool getIsPreview () const;
-  ParticipantDeviceModel * getParticipantDeviceModel() const;
-  
-  void setCallModel (CallModel *callModel);
-  void setIsPreview (bool status);
-  void setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel);
-
-  bool mIsPreview = false;
-  CallModel *mCallModel = nullptr;
-  ParticipantDeviceModel *mParticipantDeviceModel = nullptr;
-
-  QTimer *mRefreshTimer = nullptr;
+	CallModel *getCallModel () const;
+	bool getIsPreview () const;
+	ParticipantDeviceModel * getParticipantDeviceModel() const;
+	
+	void setCallModel (CallModel *callModel);
+	void setIsPreview (bool status);
+	void setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel);
+	
+	void activatePreview();
+	void deactivatePreview();
+	
+	bool mIsPreview = false;
+	CallModel *mCallModel = nullptr;
+	ParticipantDeviceModel *mParticipantDeviceModel = nullptr;
+	
+	QTimer *mRefreshTimer = nullptr;
 };
 
 #endif // CAMERA_H_

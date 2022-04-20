@@ -49,7 +49,7 @@ Rectangle {
 		// Conference info.
 		// -------------------------------------------------------------------------
 		RowLayout{
-// Aux features
+			// Aux features
 			Layout.topMargin: 10
 			Layout.leftMargin: 25
 			Layout.rightMargin: 25
@@ -68,7 +68,7 @@ Rectangle {
 				colorSet: VideoConferenceStyle.buttons.dialpad
 				onClicked: telKeypad.visible = !telKeypad.visible
 			}
-// Title
+			// Title
 			Text{
 				Timer{
 					id: elapsedTimeRefresher
@@ -84,7 +84,7 @@ Rectangle {
 				color: VideoConferenceStyle.title.color
 				font.pointSize: VideoConferenceStyle.title.pointSize
 			}
-// Mode buttons
+			// Mode buttons
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
@@ -111,7 +111,7 @@ Rectangle {
 		// -------------------------------------------------------------------------
 		// Contacts visual.
 		// -------------------------------------------------------------------------
-			
+		
 		MouseArea{
 			id: mainGrid
 			Layout.fillHeight: true
@@ -121,12 +121,12 @@ Rectangle {
 			Layout.topMargin: 15
 			Layout.bottomMargin: 20
 			onClicked: {
-						if(!conference.callModel)
-						grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)})
-						}
-						/*
+				if(!conference.callModel)
+					grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
+									  +Math.floor(Math.random()*255).toString(16)
+									  +Math.floor(Math.random()*255).toString(16)})
+			}
+			/*
 			ParticipantDeviceProxyModel{
 				id: participantDevices
 				callModel: conference.callModel
@@ -134,16 +134,19 @@ Rectangle {
 			Mosaic {
 				id: grid
 				anchors.fill: parent
-				
+				//anchors.centerIn: parent
+				//width: parent.width
+				//height: parent.height
+				squaredDisplay: true
 				
 				property int radius : 8
 				function setTestMode(){
 					grid.clear()
 					gridModel.model = gridModel.defaultList
 					for(var i = 0 ; i < 5 ; ++i)
-							grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-											+Math.floor(Math.random()*255).toString(16)
-											+Math.floor(Math.random()*255).toString(16)})
+						grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
+										  +Math.floor(Math.random()*255).toString(16)
+										  +Math.floor(Math.random()*255).toString(16)})
 					console.log("Setting test mode : count=" + gridModel.defaultList.count)
 				}
 				function setParticipantDevicesMode(){
@@ -178,136 +181,17 @@ Rectangle {
 						color: /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */'#AAAAAAAA'
 						//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
 						//color:  $modelData.color ? $modelData.color : ''
-						radius: 50//grid.radius
+						radius: grid.radius
 						height: grid.cellHeight - 5
 						width: grid.cellWidth - 5
 						Component.onCompleted: console.log("Completed: ["+index+"] " +(currentDevice?currentDevice.peerAddress+", isMe:"+currentDevice.isMe : '') )
 						
-							Rectangle{
-							id: showArea
+						CameraView{
 							anchors.fill: parent
-							radius: 50
-							visible:false
-							color: 'red'
+							currentDevice: avatarCell.currentDevice
+							hideCamera: callModel.pausedByUser
+							onCloseRequested: grid.remove( index)
 						}
-			
-						Item {
-							id: container
-							anchors.fill: parent
-							//anchors.margins: CallStyle.container.margins
-							//visible: conference.callModel 
-							visible: false
-							//Layout.fillWidth: true
-							//Layout.fillHeight: true
-							//Layout.margins: CallStyle.container.margins
-							
-							Component {
-								id: avatar
-								
-								IncallAvatar {
-									//call: gridModel.participantDevices.get(index).call
-									participantDeviceModel: avatarCell.currentDevice
-									height: Logic.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
-									width: height
-									Component.onCompleted: console.log("Avatar completed"+ " ["+index+"]")
-									Component.onDestruction: console.log("Avatar destroyed"+ " ["+index+"]")
-								}
-							}
-							Loader {
-								anchors.centerIn: parent
-								
-								active: avatarCell.currentDevice && !avatarCell.currentDevice.isMe && (!avatarCell.currentDevice.videoEnabled || conference._fullscreen)
-								sourceComponent: avatar
-							}
-							Loader {
-								id: cameraLoader
-								
-								//anchors.centerIn: parent
-								anchors.fill: parent
-								property bool isVideoEnabled : avatarCell.currentDevice && avatarCell.currentDevice.videoEnabled
-								property bool t_fullscreen: conference._fullscreen
-								property bool tCallModel: conference.callModel
-								property bool resetActive: false
-								onIsVideoEnabledChanged: console.log("Video is enabled : " +isVideoEnabled + " ["+index+"]")
-								onT_fullscreenChanged: console.log("_fullscreen changed: " +t_fullscreen+ " ["+index+"]")
-								onTCallModelChanged: console.log("CallModel changed: " +tCallModel+ " ["+index+"]")
-								
-								active: !resetActive && avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
-
-								property int cameraMode: isVideoEnabled ? 
-																		avatarCell.currentDevice.isMe ? 1
-																			:  2
-																	 : 0
-								sourceComponent: cameraMode == 1 ? cameraPreview : cameraMode == 2 ? camera : null
-								onSourceComponentChanged: console.log("SourceComponent Changed: "+cameraMode+ " ["+index+"]")
-																	 
-								
-								Component {
-									id: camera
-									
-									Camera {
-										//call: grid.get(modelIndex).call
-										participantDeviceModel: avatarCell.currentDevice
-										//height: container.height
-										//width: container.width
-										anchors.fill: parent
-										onRequestNewRenderer: {cameraLoader.resetActive = true; cameraLoader.resetActive = false}
-										
-										Component.onCompleted: console.log("Camera completed"+ " ["+index+"]")
-										Component.onDestruction: console.log("Camera destroyed"+ " ["+index+"]")
-										Text{
-											anchors.right: parent.right
-											anchors.left: parent.left
-											anchors.bottom: parent.bottom
-											anchors.margins: 10
-											elide: Text.ElideRight
-											maximumLineCount: 1
-											text: avatarCell.currentDevice.displayName
-											color: 'white'
-										}
-									}
-								}
-								Component {
-									id: cameraPreview
-									
-									Camera {
-										anchors.fill: parent
-										//participantDeviceModel: avatarCell.currentDevice
-										isPreview: true
-										onRequestNewRenderer: {cameraLoader.resetActive = true; cameraLoader.resetActive = false}
-										
-										Component.onCompleted: console.log("Preview completed"+ " ["+index+"]")
-										Component.onDestruction: console.log("Preview destroyed"+ " ["+index+"]")
-										ActionButton{
-											anchors.right: parent.right
-											anchors.top: parent.top
-											anchors.rightMargin: 15
-											anchors.topMargin: 15
-											isCustom: true
-											colorSet: VideoConferenceStyle.buttons.closePreview
-											onClicked: grid.remove( index)
-										}
-									}
-								}
-							}
-						}
-						
-						OpacityMask{
-							anchors.fill: parent
-							source: container
-							maskSource: showArea
-							invert:false
-				
-							visible: conference.callModel 
-//							rotation: 180
-						}
-						
-						/*
-						MouseArea{
-							anchors.fill: parent
-							onClicked: {grid.remove( index)}
-						}
-						*/
 					}
 				}
 			}
@@ -320,7 +204,7 @@ Rectangle {
 			Layout.bottomMargin: 40
 			Layout.leftMargin: 25
 			Layout.rightMargin: 25
-// Security
+			// Security
 			ActionButton{
 				//Layout.preferredHeight: VideoConferenceStyle.buttons.buttonSize
 				//Layout.preferredWidth: VideoConferenceStyle.buttons.buttonSize
@@ -336,7 +220,7 @@ Rectangle {
 			Item{
 				Layout.fillWidth: true
 			}
-// Action buttons			
+			// Action buttons			
 			RowLayout{
 				Layout.alignment: Qt.AlignCenter
 				spacing: 30
@@ -416,7 +300,7 @@ Rectangle {
 			Item{
 				Layout.fillWidth: true
 			}
-// Panel buttons			
+			// Panel buttons			
 			RowLayout{
 				ActionButton{
 					isCustom: true
@@ -444,13 +328,13 @@ Rectangle {
 						running: true
 						triggeredOnStart: true
 						onTriggered: {
-									// Note: `quality` is in the [0, 5] interval and -1.
-									var quality = callModel.quality
-									if(quality >= 0)
-										callQuality.percentageDisplayed = quality * 100 / 5
-									else
-										callQuality.percentageDisplayed = 0
-							}						
+							// Note: `quality` is in the [0, 5] interval and -1.
+							var quality = callModel.quality
+							if(quality >= 0)
+								callQuality.percentageDisplayed = quality * 100 / 5
+							else
+								callQuality.percentageDisplayed = 0
+						}						
 					}
 					
 					CallStatistics {

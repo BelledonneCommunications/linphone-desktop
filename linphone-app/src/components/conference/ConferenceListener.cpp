@@ -42,51 +42,54 @@ ConferenceListener::~ConferenceListener(){
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceListener::onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "onParticipantAdded";
+	qDebug() << "onParticipantAdded";
 	emit participantAdded(participant);
 }
 void ConferenceListener::onParticipantRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "onParticipantRemoved";
+	qDebug() << "onParticipantRemoved";
 	emit participantRemoved(participant);
 }
 void ConferenceListener::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "onParticipantDeviceAdded";
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+	qDebug() << "onParticipantDeviceAdded";
+	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceAdded(participantDevice);
 }
 void ConferenceListener::onParticipantDeviceRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "onParticipantDeviceRemoved";
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+	qDebug() << "onParticipantDeviceRemoved";
+	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
 }
 void ConferenceListener::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "onParticipantAdminStatusChanged";
+	qDebug() << "onParticipantAdminStatusChanged";
 }
 void ConferenceListener::onParticipantDeviceLeft(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "onParticipantDeviceLeft";
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+	qDebug() << "onParticipantDeviceLeft";
+	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceLeft(participantDevice);
 }
 void ConferenceListener::onParticipantDeviceJoined(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "onParticipantDeviceJoined";
-	qWarning() << "Me devices : " << conference->getMe()->getDevices().size();
+	qDebug() << "onParticipantDeviceJoined";
+	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceJoined(participantDevice);
 }
+void ConferenceListener::onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qDebug() << "onParticipantDeviceMediaCapabilityChanged: "  << (int)participantDevice->getStreamCapability(linphone::StreamType::Video) << ". Device: " << participantDevice->getAddress()->asString().c_str();
+	emit participantDeviceMediaCapabilityChanged(participantDevice);
+}
 void ConferenceListener::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "onParticipantDeviceMediaAvailabilityChanged";
-	qWarning() << "ConferenceListener::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << conference->getMe()->getDevices().size();
+	qDebug() << "onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
 }
 void ConferenceListener::onStateChanged(const std::shared_ptr<linphone::Conference> & conference, linphone::Conference::State newState){
-	qWarning() << "onStateChanged";
+	qDebug() << "onStateChanged";
 	emit conferenceStateChanged(newState);
 }
 void ConferenceListener::onSubjectChanged(const std::shared_ptr<linphone::Conference> & conference, const std::string & subject){
-	qWarning() << "onSubjectChanged";
+	qDebug() << "onSubjectChanged";
 	emit subjectChanged(subject);
 }
 void ConferenceListener::onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::AudioDevice> & audioDevice){
-	qWarning() << "onAudioDeviceChanged is not yet implemented.";
+	qDebug() << "onAudioDeviceChanged is not yet implemented.";
 }
 	
 	

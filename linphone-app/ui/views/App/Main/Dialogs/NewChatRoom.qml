@@ -216,13 +216,13 @@ DialogPlus {
 										Layout.preferredHeight: 50
 										Layout.preferredWidth: 50
 										Layout.alignment: Qt.AlignCenter
-										username: $modelData.username
-										image:$modelData.avatar
+										username: modelData.username
+										image:modelData.avatar
 										Icon{
 											property int securityLevel : 2
 											anchors.top:parent.top
 											anchors.horizontalCenter: parent.right
-											visible: UtilsCpp.hasCapability($modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
+											visible: UtilsCpp.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
 											icon: 'secure_on'
 											iconSize: parent.height/2
 										}
@@ -233,7 +233,7 @@ DialogPlus {
 										Layout.alignment: Qt.AlignVCenter | Qt.AlignTop
 										maximumLineCount: 5
 										wrapMode:Text.Wrap
-										text: $modelData.username
+										text: modelData.username
 										verticalAlignment: Text.AlignTop
 										horizontalAlignment: Text.AlignHCenter
 										
@@ -251,11 +251,11 @@ DialogPlus {
 									anchors.topMargin: -5
 									color:'white'
 									opacity: 0.5
-									visible: smartSearchBar.isIgnored($modelData.sipAddress)
+									visible: smartSearchBar.isIgnored(modelData.sipAddress)
 									Connections{// Workaround for refreshing data on events
 										target:lastContacts
 										onReloadCountChanged: {
-											mask.visible=smartSearchBar.isIgnored($modelData.sipAddress) 
+											mask.visible=smartSearchBar.isIgnored(modelData.sipAddress) 
 										}
 									}
 								}
@@ -263,8 +263,8 @@ DialogPlus {
 									anchors.fill:parent
 									visible:!mask.visible
 									onClicked: {
-										selectedParticipants.addAddress($modelData.sipAddress)
-										smartSearchBar.addAddressToIgnore($modelData.sipAddress);
+										selectedParticipants.addAddress(modelData.sipAddress)
+										smartSearchBar.addAddressToIgnore(modelData.sipAddress);
 										++lastContacts.reloadCount
 									}
 								}

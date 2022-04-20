@@ -331,6 +331,10 @@ void CoreManager::migrate () {
 				newParams->enableCpimInBasicChatRoom(true);
 				qInfo() << "Migrating " << accountIdentity << " for version 3. enable Cpim in basic chat rooms";
 			}
+			if( rcVersion < 4){
+				newParams->enableRtpBundle(true);
+				qInfo() << "Migrating " << accountIdentity << " for version 4. enable RTP bundle mode";
+			}
 			account->setParams(newParams);
 		}
 	}

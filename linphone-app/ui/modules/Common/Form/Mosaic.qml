@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.15
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 import QtQml.Models 2.12
@@ -12,6 +12,7 @@ ColumnLayout{
 	property alias delegateModel: grid.model
 	property alias cellHeight: grid.cellHeight
 	property alias cellWidth: grid.cellWidth
+	property bool squaredDisplay: false
 	
 	function appendItem(item){
 		console.log("Adding "+item)
@@ -77,31 +78,41 @@ ColumnLayout{
 		}
 	}
 	
-	
-	
+	/*
+	Item{// Spacer
+		Layout.fillWidth: true
+		Layout.fillHeight: true
+	}*/
 	GridView{
 		id: grid
 		
 		property int itemCount: model.count ? model.count :( model.length ? model.length : 0)
-		property int columns: getColumnCount(itemCount)
-		property int rows: getRowCount(itemCount)
+		property int columns: 1
+		property int rows: 1
 		
+		function updateLayout(){
+			columns = getColumnCount(itemCount)
+			rows = getRowCount(itemCount)
+		}
 		function getColumnCount(itemCount){
 			return itemCount > 0 ? Math.sqrt(itemCount-1) + 1  : 1
 		}
 		function getRowCount(itemCount){
 			return columns > 1 ? (itemCount-1) / columns + 1 : 1
 		}
-		
-		cellWidth: (mainLayout.width - 5 ) / columns
-		cellHeight: (mainLayout.height - 5 ) / rows 
+		property int computedWidth: (mainLayout.width - 5 ) / columns
+		property int computedHeight: (mainLayout.height - 5 ) / rows 
+		cellWidth: ( squaredDisplay ? Math.min(computedWidth, computedHeight) : computedWidth)
+		cellHeight: ( squaredDisplay ? Math.min(computedWidth, computedHeight) : computedHeight) 
 		
 		function isLayoutWillChanged(){
 			return columns !== getColumnCount(itemCount+1) || rows !== getRowCount(itemCount+1)
 		}
 		
-		Layout.fillHeight: true
-		Layout.fillWidth: true
+		//Layout.fillHeight: true
+		//Layout.fillWidth: true
+		Layout.preferredWidth: cellWidth * columns
+		Layout.preferredHeight: cellHeight * rows
 		Layout.alignment: Qt.AlignCenter
 		
 		interactive: false
@@ -131,6 +142,7 @@ ColumnLayout{
 				}
 			}
 		}
+		
 		add: Transition {
 			SequentialAnimation {
 				ScriptAction {
@@ -144,6 +156,7 @@ ColumnLayout{
 				}
 			}
 		}
+		
 		addDisplaced: defaultTransition
 		displaced: defaultTransition
 		move: defaultTransition
@@ -164,9 +177,21 @@ ColumnLayout{
 		removeDisplaced: defaultTransition
 		populate:defaultTransition
 		
-		onItemCountChanged: console.log("Mosaic "+model+" itemCount: " +itemCount +" => " + (model.count ? " count="+model.count :( model.length ? " length":" no" )))
+		Timer{	// if cell sizes change while adding/removing an item the animation will not end at the right position.
+			id: updateLayoutDelay
+			interval: mainLayout.maxTransitionTime
+			onTriggered: grid.updateLayout()
+		}
+		onItemCountChanged: {
+			updateLayoutDelay.restart()
+			console.log("Mosaic "+model+" itemCount: " +itemCount +" => " + (model.count ? " count="+model.count :( model.length ? " length":" no" )))
+		}
 		
-	}
+	}/*
+	Item{// Spacer
+		Layout.fillWidth: true
+		Layout.fillHeight: true
+	}*/
 	/*
 	ListView{
 		id: bottomRowList

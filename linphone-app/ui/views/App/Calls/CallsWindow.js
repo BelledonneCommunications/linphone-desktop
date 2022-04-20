@@ -58,13 +58,22 @@ function openConferenceManager (params, exitHandler) {
 	window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ConferenceManager.qml'), params, exitHandler)
 }
 
+function openWaitingRoom(model){
+	if(window.conferenceInfoModel)
+		window.conferenceInfoModel = null;
+	window.conferenceInfoModel = model
+	console.log('set : '+window.conferenceInfoModel)
+}
+
 // -----------------------------------------------------------------------------
 // Used to get Component based from Call Status
-function getContent () {
-	var call = window.call
+function getContent (call, conferenceInfoModel) {
+	console.log('getContent call')
 	if (call == null) {
-		//return conference
-		return videoConference
+		if(conferenceInfoModel)
+			return waitingRoom
+		else
+			return videoConference
 	}
 	
 	var status = call.status
@@ -84,8 +93,13 @@ function getContent () {
 	if (status === CallModel.CallStatusEnded) {
 		return endedCall
 	}
+	
 	if(call.isConference)
 		return videoConference
+		
+	if(!call && window.conferenceInfoModel)
+		return waitingRoom;
+		
 	return incall
 }
 

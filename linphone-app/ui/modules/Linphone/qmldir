@@ -13,6 +13,10 @@ RequestBlock        1.0 Blocks/RequestBlock.qml
 
 Calls               1.0 Calls/Calls.qml
 CallStatistics      1.0 Calls/CallStatistics.qml
+IncallAvatar        1.0 Calls/IncallAvatar.qml
+
+CameraItem          1.0 Camera/CameraItem.qml
+CameraView          1.0 Camera/CameraView.qml
 
 Chat                1.0 Chat/Chat.qml
 ChatAudioMessage    1.0 Chat/ChatAudioMessage.qml

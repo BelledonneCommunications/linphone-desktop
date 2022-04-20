@@ -9,6 +9,7 @@ module App.Styles
 singleton CallFullscreenStyle                            1.0 Calls/CallFullscreenStyle.qml
 singleton CallStyle                                      1.0 Calls/CallStyle.qml
 singleton CallsWindowStyle                               1.0 Calls/CallsWindowStyle.qml
+singleton WaitingRoomStyle                               1.0 Calls/WaitingRoomStyle.qml
 singleton ConferenceStyle                                1.0 Calls/ConferenceStyle.qml
 singleton VideoConferenceStyle                           1.0 Calls/VideoConferenceStyle.qml
 

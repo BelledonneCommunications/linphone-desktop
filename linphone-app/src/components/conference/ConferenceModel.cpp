@@ -43,6 +43,7 @@ void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::participantDeviceRemoved, this, &ConferenceModel::onParticipantDeviceRemoved);
 	connect(listener, &ConferenceListener::participantDeviceLeft, this, &ConferenceModel::onParticipantDeviceLeft);
 	connect(listener, &ConferenceListener::participantDeviceJoined, this, &ConferenceModel::onParticipantDeviceJoined);
+	connect(listener, &ConferenceListener::participantDeviceMediaCapabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaCapabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaAvailabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaAvailabilityChanged);
 	connect(listener, &ConferenceListener::conferenceStateChanged, this, &ConferenceModel::onConferenceStateChanged);
 	connect(listener, &ConferenceListener::subjectChanged, this, &ConferenceModel::onSubjectChanged);
@@ -86,31 +87,35 @@ qint64 ConferenceModel::getElapsedSeconds() const {
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantAdded(participant);
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantRemoved(participant);
 }
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceAdded(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceLeft(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceJoined(participantDevice);
 }
+void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	qDebug() << "ConferenceModel::onParticipantDeviceMediaCapabilityChanged: "  << (int)participantDevice->getStreamCapability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();
+	emit participantDeviceMediaCapabilityChanged(participantDevice);
+}
 void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qWarning() << "ConferenceModel::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "ConferenceModel::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
 }
 void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newState){

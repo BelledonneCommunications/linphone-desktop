@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg90"
+   sodipodi:docname="conference_layout_grid.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview92"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     width="80px"
+     inkscape:zoom="5.20625"
+     inkscape:cx="15.270108"
+     inkscape:cy="18.631453"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg90" />
+  <defs
+     id="defs62">
+    <rect
+       id="7d73pidfgb"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="2.766" />
+    <rect
+       id="yz4p2363vc"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="1" />
+    <rect
+       id="0ixe1p4o1e"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="2.766" />
+    <rect
+       id="gqqj4bqr3f"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="1" />
+    <rect
+       id="ei3bofohqh"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="2.766" />
+    <rect
+       id="fw8jktzkci"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="1" />
+    <rect
+       id="5kuxk18otk"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="2.766" />
+    <rect
+       id="j81y1lwafl"
+       x="0"
+       y="0"
+       width="9.5240002"
+       height="5.533"
+       rx="1" />
+    <filter
+       x="-0.062998739"
+       y="-0.10844027"
+       width="1.1259975"
+       height="1.2168805"
+       filterUnits="objectBoundingBox"
+       id="1w3vu8nnia">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset10" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur12" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix14" />
+      <feMerge
+         id="feMerge20">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode16" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode18" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.062998739"
+       y="-0.10844027"
+       width="1.1259975"
+       height="1.2168805"
+       filterUnits="objectBoundingBox"
+       id="46vopj45hd">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset23" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur25" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix27" />
+      <feMerge
+         id="feMerge33">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode29" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode31" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.062998739"
+       y="-0.10844027"
+       width="1.1259975"
+       height="1.2168805"
+       filterUnits="objectBoundingBox"
+       id="jnauojodeg">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset36" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur38" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix40" />
+      <feMerge
+         id="feMerge46">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode42" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode44" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.062998739"
+       y="-0.10844027"
+       width="1.1259975"
+       height="1.2168805"
+       filterUnits="objectBoundingBox"
+       id="kc22z3ksgj">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset49" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur51" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix53" />
+      <feMerge
+         id="feMerge59">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode55" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode57" />
+      </feMerge>
+    </filter>
+  </defs>
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g88"
+     transform="matrix(1.9811369,0,0,1.9721192,-0.6226868,-0.42639723)">
+    <g
+       filter="url(#1w3vu8nnia)"
+       transform="translate(20.476,20.455)"
+       id="g68">
+      <use
+         fill="#000000"
+         xlink:href="#7d73pidfgb"
+         id="use64"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#000000"
+         xlink:href="#yz4p2363vc"
+         id="use66"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#46vopj45hd)"
+       transform="translate(20.476,14)"
+       id="g74">
+      <use
+         fill="#000000"
+         xlink:href="#0ixe1p4o1e"
+         id="use70"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#000000"
+         xlink:href="#gqqj4bqr3f"
+         id="use72"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#jnauojodeg)"
+       transform="translate(10,20.455)"
+       id="g80">
+      <use
+         fill="#000000"
+         xlink:href="#ei3bofohqh"
+         id="use76"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#000000"
+         xlink:href="#fw8jktzkci"
+         id="use78"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#kc22z3ksgj)"
+       transform="translate(10,14)"
+       id="g86">
+      <use
+         fill="#000000"
+         xlink:href="#5kuxk18otk"
+         id="use82"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#000000"
+         xlink:href="#j81y1lwafl"
+         id="use84"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+  </g>
+</svg>

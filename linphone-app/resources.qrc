@@ -53,6 +53,7 @@
 		<file>assets/images/close_custom.svg</file>
 		<file>assets/images/collapsed_custom.svg</file>
 		<file>assets/images/conference_custom.svg</file>
+		<file>assets/images/conference_layout_grid_custom.svg</file>
 		<file>assets/images/contact_add_custom.svg</file>
 		<file>assets/images/contact_card_photo_custom.svg</file>
 		<file>assets/images/contact_custom.svg</file>
@@ -287,6 +288,9 @@
 		<file>ui/modules/Linphone/Calls/Calls.qml</file>
 		<file>ui/modules/Linphone/Calls/CallStatistics.qml</file>
 		<file>ui/modules/Linphone/Calls/ConferenceControls.qml</file>
+		<file>ui/modules/Linphone/Calls/IncallAvatar.qml</file>
+		<file>ui/modules/Linphone/Camera/CameraItem.qml</file>
+		<file>ui/modules/Linphone/Camera/CameraView.qml</file>
 		<file>ui/modules/Linphone/Chat/Chat.js</file>
 		<file>ui/modules/Linphone/Chat/Chat.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatContent.qml</file>
@@ -341,6 +345,7 @@
 		<file>ui/modules/Linphone/Styles/Calls/CallsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Calls/CallStatisticsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Calls/ConferenceControlsStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Camera/CameraViewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatAudioMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatAudioPreviewStyle.qml</file>
@@ -391,12 +396,12 @@
 		<file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
 		<file>ui/views/App/Calls/Dialogs/MultimediaParameters.qml</file>
 		<file>ui/views/App/Calls/EndedCall.qml</file>
-		<file>ui/views/App/Calls/IncallAvatar.qml</file>
 		<file>ui/views/App/Calls/IncallFullscreenWindow.qml</file>
 		<file>ui/views/App/Calls/Incall.js</file>
 		<file>ui/views/App/Calls/Incall.qml</file>
 		<file>ui/views/App/Calls/IncomingCall.qml</file>
 		<file>ui/views/App/Calls/OutgoingCall.qml</file>
+		<file>ui/views/App/Calls/WaitingRoom.qml</file>
 		<file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
 		<file>ui/views/App/Main/Assistant/ActivateAppSipAccountWithEmail.qml</file>
 		<file>ui/views/App/Main/Assistant/ActivateAppSipAccountWithPhoneNumber.qml</file>
@@ -459,6 +464,7 @@
 		<file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/VideoConferenceStyle.qml</file>
+		<file>ui/views/App/Styles/Calls/WaitingRoomStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallSipAddressStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>

@@ -46,7 +46,7 @@ public:
 	
 	Q_INVOKABLE void launchAudioCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const QHash<QString, QString> &headers = {}) const;
 	Q_INVOKABLE void launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers = {}, const QString& prepareTransfertAddress = "") const;
-	Q_INVOKABLE void launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const bool& autoSelectAfterCreation = true) const;
+	Q_INVOKABLE void launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const bool& autoSelectAfterCreation = true, QVariantMap options = QVariantMap()) const;
 	Q_INVOKABLE ChatRoomModel* launchSecureChat (const QString &sipAddress) const;
 	Q_INVOKABLE QVariantMap launchChat(const QString &sipAddress, const int& securityLevel) const;
 	Q_INVOKABLE ChatRoomModel* createChat (const QString &participantAddress) const;
@@ -57,6 +57,7 @@ public:
 	Q_INVOKABLE QVariantMap createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const;
 	//Q_INVOKABLE QVariantMap createConference(const QString& subject, const int& securityLevel, const QVariantList& participants, const int& inviteMode, const bool& selectAfterCreation);
 	Q_INVOKABLE QVariantMap createConference(ConferenceInfoModel * conferenceInfo, const int& securityLevel, const int& inviteMode, const bool& selectAfterCreation);
+	Q_INVOKABLE void prepareConferenceCall(ConferenceInfoModel * model);
 	
 	
 	Q_INVOKABLE int getRunningCallsNumber () const;
@@ -70,8 +71,10 @@ signals:
 	void callRunning (int index, CallModel *callModel);
 	void callTransferAsked (CallModel *callModel);
 	void callAttendedTransferAsked (CallModel *callModel);
+	void callConferenceAsked(ConferenceInfoModel * conferenceInfoModel);
 	
 	void callMissed (CallModel *callModel);
+	
 	
 private:
 	

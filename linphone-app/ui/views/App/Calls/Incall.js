@@ -28,13 +28,7 @@
 
 // =============================================================================
 
-function computeAvatarSize (container, maxSize) {
-  var height = container.height
-  var width = container.width
 
-  var size = height < maxSize && height > 0 ? height : maxSize
-  return size < width ? size : width
-}
 
 function handleCallStatisticsClosed () {
   // Prevent many clicks on call statistics button.
