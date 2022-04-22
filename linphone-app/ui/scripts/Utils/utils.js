@@ -513,6 +513,14 @@ function formatElapsedTime (seconds) {
 	return (h === 0 ? '' : h + ':') + m + ':' + s
 }
 
+function buildDate(date, time){
+	var dateTime = new Date()
+	dateTime.setFullYear(date.getFullYear(), date.getMonth(), date.getDate())
+	dateTime.setHours(time.getHours())
+	dateTime.setMinutes(time.getMinutes())
+	dateTime.setSeconds(time.getSeconds())
+	return dateTime
+}
 // -----------------------------------------------------------------------------
 
 function formatSize (size) {

@@ -26,7 +26,7 @@ Rectangle {
 	property ConferenceModel conferenceModel: callModel && callModel.getConferenceModel()
 	property var _fullscreen: null
 	property bool listCallsOpened: true
-	
+		
 	signal openListCallsRequest()
 	// ---------------------------------------------------------------------------
 	
@@ -41,128 +41,175 @@ Rectangle {
 	}
 	
 	// ---------------------------------------------------------------------------
-	ColumnLayout {
+	Rectangle{
+		MouseArea{
+			anchors.fill: parent
+		}
 		anchors.fill: parent
-		spacing: 0
-		
-		// -------------------------------------------------------------------------
-		// Conference info.
-		// -------------------------------------------------------------------------
-		RowLayout{
-			// Aux features
-			Layout.topMargin: 10
-			Layout.leftMargin: 25
-			Layout.rightMargin: 25
+		visible: callModel.pausedByUser
+		color: VideoConferenceStyle.pauseArea.backgroundColor
+		z: 1
+		ColumnLayout{
+			anchors.fill: parent
 			spacing: 10
-			ActionButton{
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.callsList
-				visible: !listCallsOpened
-				onClicked: openListCallsRequest()
-			}
-			ActionButton{
-				id: keypadButton
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.dialpad
-				onClicked: telKeypad.visible = !telKeypad.visible
-			}
-			// Title
-			Text{
-				Timer{
-					id: elapsedTimeRefresher
-					running: true
-					interval: 1000
-					repeat: true
-					onTriggered: parent.elaspedTime = ' - ' +Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
-				}
-				property string elaspedTime
-				horizontalAlignment: Qt.AlignHCenter
+			Item{
 				Layout.fillWidth: true
-				text: conferenceModel.subject+ elaspedTime
-				color: VideoConferenceStyle.title.color
-				font.pointSize: VideoConferenceStyle.title.pointSize
-			}
-			// Mode buttons
-			ActionButton{
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.screenSharing
+				Layout.fillHeight: true
 			}
 			ActionButton{
+				Layout.alignment: Qt.AlignCenter
 				isCustom: true
+				colorSet: VideoConferenceStyle.pauseArea.play
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.recordOff
+				onClicked: callModel.pausedByUser = !callModel.pausedByUser
 			}
-			ActionButton{
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.screenshot
+			Text{
+				Layout.alignment: Qt.AlignCenter
+				text: 'Vous êtes actuellement en dehors de la conférence.'
+				font.pointSize: VideoConferenceStyle.pauseArea.title.pointSize
+				font.weight: VideoConferenceStyle.pauseArea.title.weight
+				color: VideoConferenceStyle.pauseArea.title.color
 			}
-			ActionButton{
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.fullscreen
+			Text{
+				Layout.alignment: Qt.AlignCenter
+				text: 'Cliquez sur le bouton "play" pour la rejoindre.'
+				font.pointSize: VideoConferenceStyle.pauseArea.description.pointSize
+				font.weight: VideoConferenceStyle.pauseArea.description.weight
+				color: VideoConferenceStyle.pauseArea.description.color
 			}
-			
+			Item{
+				Layout.fillWidth: true
+				Layout.preferredHeight: 140
+			}
+		}
+	}
+	
+	// -------------------------------------------------------------------------
+	// Conference info.
+	// -------------------------------------------------------------------------
+	RowLayout{
+		id: featuresRow
+		// Aux features
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.right: parent.right
+		
+		anchors.topMargin: 10
+		anchors.leftMargin: 25
+		anchors.rightMargin: 25
+		spacing: 10
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.callsList
+			visible: !listCallsOpened
+			onClicked: openListCallsRequest()
+		}
+		ActionButton{
+			id: keypadButton
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.dialpad
+			onClicked: telKeypad.visible = !telKeypad.visible
+		}
+		// Title
+		Text{
+			Timer{
+				id: elapsedTimeRefresher
+				running: true
+				interval: 1000
+				repeat: true
+				onTriggered: if(conferenceModel) parent.elaspedTime = ' - ' +Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
+			}
+			property string elaspedTime
+			horizontalAlignment: Qt.AlignHCenter
+			Layout.fillWidth: true
+			text: conferenceModel ? conferenceModel.subject+ elaspedTime : ''
+			color: VideoConferenceStyle.title.color
+			font.pointSize: VideoConferenceStyle.title.pointSize
+		}
+		// Mode buttons
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.screenSharing
+			visible: false	//TODO
+		}
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.recordOff
+			visible: false	//TODO
+		}
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.screenshot
+			visible: false	//TODO
+		}
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.fullscreen
+			visible: false	//TODO
 		}
 		
-		// -------------------------------------------------------------------------
-		// Contacts visual.
-		// -------------------------------------------------------------------------
+	}
+	
+	// -------------------------------------------------------------------------
+	// Contacts visual.
+	// -------------------------------------------------------------------------
+	
+	MouseArea{
+		id: mainGrid
+		anchors.top: featuresRow.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: actionsButtons.top
 		
-		MouseArea{
-			id: mainGrid
-			Layout.fillHeight: true
-			Layout.fillWidth: true
-			Layout.leftMargin: 70
-			Layout.rightMargin: 70
-			Layout.topMargin: 15
-			Layout.bottomMargin: 20
-			onClicked: {
-				if(!conference.callModel)
-					grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-									  +Math.floor(Math.random()*255).toString(16)
-									  +Math.floor(Math.random()*255).toString(16)})
-			}
-			/*
+		anchors.leftMargin: 70
+		anchors.rightMargin: 70
+		anchors.topMargin: 15
+		anchors.bottomMargin: 20
+		onClicked: {
+			if(!conference.callModel)
+				grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
+								  +Math.floor(Math.random()*255).toString(16)
+								  +Math.floor(Math.random()*255).toString(16)})
+		}
+		/*
 			ParticipantDeviceProxyModel{
 				id: participantDevices
 				callModel: conference.callModel
 			}*/
-			Mosaic {
-				id: grid
-				anchors.fill: parent
-				//anchors.centerIn: parent
-				//width: parent.width
-				//height: parent.height
-				squaredDisplay: true
-				
-				property int radius : 8
-				function setTestMode(){
-					grid.clear()
-					gridModel.model = gridModel.defaultList
-					for(var i = 0 ; i < 5 ; ++i)
-						grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-										  +Math.floor(Math.random()*255).toString(16)
-										  +Math.floor(Math.random()*255).toString(16)})
-					console.log("Setting test mode : count=" + gridModel.defaultList.count)
+		Mosaic {
+			id: grid
+			anchors.fill: parent
+			squaredDisplay: true
+			
+			function setTestMode(){
+				grid.clear()
+				gridModel.model = gridModel.defaultList
+				for(var i = 0 ; i < 5 ; ++i)
+					grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
+									  +Math.floor(Math.random()*255).toString(16)
+									  +Math.floor(Math.random()*255).toString(16)})
+				console.log("Setting test mode : count=" + gridModel.defaultList.count)
+			}
+			function setParticipantDevicesMode(){
+				console.log("Setting participant mode : count=" + gridModel.participantDevices.count)
+				grid.clear()
+				gridModel.model = gridModel.participantDevices
+			}
+			
+			delegateModel: DelegateModel{
+				id: gridModel
+				property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
+					id: participantDevices
+					callModel: conference.callModel
+					showMe: true
 				}
-				function setParticipantDevicesMode(){
-					console.log("Setting participant mode : count=" + gridModel.participantDevices.count)
-					grid.clear()
-					gridModel.model = gridModel.participantDevices
-				}
-				
-				delegateModel: DelegateModel{
-					id: gridModel
-					property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
-						id: participantDevices
-						callModel: conference.callModel
-						showMe: true
-					}
-					/*
+				/*
 					property ListModel defaultList : ListModel{}
 					Component.onCompleted: {
 						if( conference.callModel ){
@@ -172,190 +219,197 @@ Rectangle {
 					}
 					model: defaultList
 					*/
-					model: participantDevices
-					onCountChanged: {console.log("Delegate count = "+count+"/"+participantDevices.count)}
-					delegate: Rectangle{
-						id: avatarCell
-						property ParticipantDeviceModel currentDevice: gridModel.participantDevices.getAt(index)
-						onCurrentDeviceChanged: console.log("currentDevice changed: " +currentDevice + (currentDevice?", me:"+currentDevice.isMe:'')+" ["+index+"]")
-						color: /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */'#AAAAAAAA'
-						//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
-						//color:  $modelData.color ? $modelData.color : ''
-						radius: grid.radius
-						height: grid.cellHeight - 5
-						width: grid.cellWidth - 5
-						Component.onCompleted: console.log("Completed: ["+index+"] " +(currentDevice?currentDevice.peerAddress+", isMe:"+currentDevice.isMe : '') )
-						
-						CameraView{
-							anchors.fill: parent
-							currentDevice: avatarCell.currentDevice
-							hideCamera: callModel.pausedByUser
-							onCloseRequested: grid.remove( index)
-						}
+				model: participantDevices
+				onCountChanged: {console.log("Delegate count = "+count+"/"+participantDevices.count)}
+				delegate: Item{
+					id: avatarCell
+					property ParticipantDeviceModel currentDevice: gridModel.participantDevices.getAt(index)
+					onCurrentDeviceChanged: console.log("currentDevice changed: " +currentDevice + (currentDevice?", me:"+currentDevice.isMe:'')+" ["+index+"]")
+					//color: 'black' /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */
+					//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
+					//color:  $modelData.color ? $modelData.color : ''
+					height: grid.cellHeight - 10
+					width: grid.cellWidth - 10
+					Component.onCompleted: console.log("Completed: ["+index+"] " +(currentDevice?currentDevice.peerAddress+", isMe:"+currentDevice.isMe : '') )
+					
+					CameraView{
+						anchors.fill: parent
+						currentDevice: avatarCell.currentDevice
+						isPaused: callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused //callModel.pausedByUser
+						onCloseRequested: grid.remove( index)
+						color: 'black'
 					}
 				}
 			}
 		}
-		// -------------------------------------------------------------------------
-		// Action Buttons.
-		// -------------------------------------------------------------------------
+		
+		
+	}
+	// -------------------------------------------------------------------------
+	// Action Buttons.
+	// -------------------------------------------------------------------------
+	
+	// Security
+	ActionButton{
+		visible: false	// TODO
+		anchors.left: parent.left
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: 30
+		anchors.leftMargin: 25
+		height: VideoConferenceStyle.buttons.secure.buttonSize
+		width: height
+		isCustom: true
+		iconIsCustom: false
+		backgroundRadius: width/2
+		colorSet: VideoConferenceStyle.buttons.secure
+		
+		icon: 'secure_level_1'
+	}
+	// Action buttons			
+	RowLayout{
+		id: actionsButtons
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: 30
+		height: 60
+		spacing: 30
+		z: 2
 		RowLayout{
-			Layout.fillWidth: true
-			Layout.bottomMargin: 40
-			Layout.leftMargin: 25
-			Layout.rightMargin: 25
-			// Security
-			ActionButton{
-				//Layout.preferredHeight: VideoConferenceStyle.buttons.buttonSize
-				//Layout.preferredWidth: VideoConferenceStyle.buttons.buttonSize
-				height: VideoConferenceStyle.buttons.secure.buttonSize
-				width: height
-				isCustom: true
-				iconIsCustom: false
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.secure
+			spacing: 10
+			Row {
+				spacing: 2
+				visible: SettingsModel.muteMicrophoneEnabled
+				property bool microMuted: callModel.microMuted
 				
-				icon: 'secure_level_1'
-			}
-			Item{
-				Layout.fillWidth: true
-			}
-			// Action buttons			
-			RowLayout{
-				Layout.alignment: Qt.AlignCenter
-				spacing: 30
-				RowLayout{
-					spacing: 10
-					Row {
-						spacing: 2
-						visible: SettingsModel.muteMicrophoneEnabled
-						property bool microMuted: callModel.microMuted
-						
-						VuMeter {
-							enabled: !parent.microMuted
-							Timer {
-								interval: 50
-								repeat: true
-								running: parent.enabled
-								
-								onTriggered: parent.value = callModel.microVu
-							}
-						}
-						ActionSwitch {
-							id: micro
-							isCustom: true
-							backgroundRadius: 90
-							colorSet: parent.microMuted ? VideoConferenceStyle.buttons.microOff : VideoConferenceStyle.buttons.microOn
-							onClicked: callModel.microMuted = !parent.microMuted
-						}
-					}
-					Row {
-						spacing: 2
-						property bool speakerMuted: callModel.speakerMuted
-						VuMeter {
-							enabled: !parent.speakerMuted
-							Timer {
-								interval: 50
-								repeat: true
-								running: parent.enabled
-								onTriggered: parent.value = callModel.speakerVu
-							}
-						}
-						ActionSwitch {
-							id: speaker
-							isCustom: true
-							backgroundRadius: 90
-							colorSet: parent.speakerMuted  ? VideoConferenceStyle.buttons.speakerOff : VideoConferenceStyle.buttons.speakerOn
-							onClicked: callModel.speakerMuted = !parent.speakerMuted
-						}
-					}
-					ActionSwitch {
-						id: camera
-						isCustom: true
-						backgroundRadius: 90
-						colorSet: callModel && callModel.videoEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
-						updating: callModel.videoEnabled && callModel.updating
-						onClicked: if(callModel) callModel.videoEnabled = !callModel.videoEnabled
-					}
-				}
-				RowLayout{
-					spacing: 10
-					ActionButton{
-						isCustom: true
-						backgroundRadius: width/2
-						visible: SettingsModel.callPauseEnabled
-						updating: callModel.updating
-						colorSet: callModel.pausedByUser ? VideoConferenceStyle.buttons.play : VideoConferenceStyle.buttons.pause
-						onClicked: callModel.pausedByUser = !callModel.pausedByUser
-					}
-					ActionButton{
-						isCustom: true
-						backgroundRadius: width/2
-						colorSet: VideoConferenceStyle.buttons.hangup
-						
-						onClicked: callModel.terminate()
-					}
-				}
-			}
-			Item{
-				Layout.fillWidth: true
-			}
-			// Panel buttons			
-			RowLayout{
-				ActionButton{
-					isCustom: true
-					backgroundRadius: width/2
-					colorSet: VideoConferenceStyle.buttons.chat
-					visible: false	// TODO for next version
-				}
-				ActionButton{
-					isCustom: true
-					backgroundRadius: width/2
-					colorSet: VideoConferenceStyle.buttons.participants
-				}
-				ActionButton {
-					id: callQuality
-					
-					isCustom: true
-					backgroundRadius: 4
-					colorSet: VideoConferenceStyle.buttons.callQuality
-					percentageDisplayed: 0
-					
-					onClicked: {console.log("opening stats");Logic.openCallStatistics();console.log("Stats should be opened")}
+				VuMeter {
+					enabled: !parent.microMuted
 					Timer {
-						interval: 500
+						interval: 50
 						repeat: true
-						running: true
-						triggeredOnStart: true
-						onTriggered: {
-							// Note: `quality` is in the [0, 5] interval and -1.
-							var quality = callModel.quality
-							if(quality >= 0)
-								callQuality.percentageDisplayed = quality * 100 / 5
-							else
-								callQuality.percentageDisplayed = 0
-						}						
-					}
-					
-					CallStatistics {
-						id: callStatistics
+						running: parent.enabled
 						
-						call: callModel
-						width: conference.width
-						relativeTo: keypadButton
-						relativeY: CallStyle.header.stats.relativeY
-						onClosed: Logic.handleCallStatisticsClosed()
-						onOpened: console.log("Stats Opened: " +call+", " +width +", "+relativeY)
+						onTriggered: parent.value = callModel.microVu
 					}
 				}
-				ActionButton{
+				ActionSwitch {
+					id: micro
 					isCustom: true
-					backgroundRadius: width/2
-					colorSet: VideoConferenceStyle.buttons.options
+					backgroundRadius: 90
+					colorSet: parent.microMuted ? VideoConferenceStyle.buttons.microOff : VideoConferenceStyle.buttons.microOn
+					onClicked: callModel.microMuted = !parent.microMuted
 				}
+			}
+			Row {
+				spacing: 2
+				property bool speakerMuted: callModel.speakerMuted
+				VuMeter {
+					enabled: !parent.speakerMuted
+					Timer {
+						interval: 50
+						repeat: true
+						running: parent.enabled
+						onTriggered: parent.value = callModel.speakerVu
+					}
+				}
+				ActionSwitch {
+					id: speaker
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: parent.speakerMuted  ? VideoConferenceStyle.buttons.speakerOff : VideoConferenceStyle.buttons.speakerOn
+					onClicked: callModel.speakerMuted = !parent.speakerMuted
+				}
+			}
+			ActionSwitch {
+				id: camera
+				isCustom: true
+				backgroundRadius: 90
+				colorSet: callModel && callModel.videoEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
+				updating: callModel.videoEnabled && callModel.updating
+				onClicked: if(callModel) callModel.videoEnabled = !callModel.videoEnabled
+			}
+		}
+		RowLayout{
+			spacing: 10
+			ActionButton{
+				isCustom: true
+				backgroundRadius: width/2
+				visible: SettingsModel.callPauseEnabled
+				updating: callModel.updating
+				colorSet: callModel.pausedByUser ? VideoConferenceStyle.buttons.play : VideoConferenceStyle.buttons.pause
+				onClicked: callModel.pausedByUser = !callModel.pausedByUser
+			}
+			ActionButton{
+				isCustom: true
+				backgroundRadius: width/2
+				colorSet: VideoConferenceStyle.buttons.hangup
+				
+				onClicked: callModel.terminate()
 			}
 		}
 	}
+	
+	// Panel buttons			
+	RowLayout{
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: 30
+		anchors.rightMargin: 25
+		height: 60
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.chat
+			visible: false	// TODO for next version
+		}
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.participants
+			visible: false	// TODO
+		}
+		ActionButton {
+			id: callQuality
+			
+			isCustom: true
+			backgroundRadius: 4
+			colorSet: VideoConferenceStyle.buttons.callQuality
+			percentageDisplayed: 0
+			
+			onClicked: {console.log("opening stats");Logic.openCallStatistics();console.log("Stats should be opened")}
+			Timer {
+				interval: 500
+				repeat: true
+				running: true
+				triggeredOnStart: true
+				onTriggered: {
+					// Note: `quality` is in the [0, 5] interval and -1.
+					var quality = callModel.quality
+					if(quality >= 0)
+						callQuality.percentageDisplayed = quality * 100 / 5
+					else
+						callQuality.percentageDisplayed = 0
+				}						
+			}
+			
+			CallStatistics {
+				id: callStatistics
+				
+				call: callModel
+				width: conference.width
+				relativeTo: keypadButton
+				relativeY: CallStyle.header.stats.relativeY
+				onClosed: Logic.handleCallStatisticsClosed()
+				onOpened: console.log("Stats Opened: " +call+", " +width +", "+relativeY)
+			}
+		}
+		ActionButton{
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.options
+			visible: false //TODO
+		}
+	}
+	
 	// ---------------------------------------------------------------------------
 	// TelKeypad.
 	// ---------------------------------------------------------------------------

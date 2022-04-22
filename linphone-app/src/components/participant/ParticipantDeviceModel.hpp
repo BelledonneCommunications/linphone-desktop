@@ -51,6 +51,9 @@ public:
 	Q_PROPERTY(time_t timeOfJoining READ getTimeOfJoining CONSTANT)
 	Q_PROPERTY(bool videoEnabled READ isVideoEnabled NOTIFY videoEnabledChanged)
 	Q_PROPERTY(bool isMe READ isMe CONSTANT)
+	Q_PROPERTY(bool isPaused READ getPaused WRITE setPaused NOTIFY isPausedChanged)
+	Q_PROPERTY(bool isSpeaking READ getIsSpeaking WRITE setIsSpeaking NOTIFY isSpeakingChanged)
+	Q_PROPERTY(bool isMuted READ getIsMuted NOTIFY isMutedChanged)
   
 	QString getName() const;
 	QString getDisplayName() const;
@@ -59,8 +62,14 @@ public:
 	time_t getTimeOfJoining() const;
 	bool isVideoEnabled() const;
 	bool isMe() const;
+	bool getPaused() const;
+	bool getIsSpeaking() const;
+	bool getIsMuted() const;
 	
 	std::shared_ptr<linphone::ParticipantDevice>  getDevice();
+	
+	void setPaused(bool paused);
+	void setIsSpeaking(bool speaking);
 	
 	//void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
@@ -79,11 +88,16 @@ public slots:
 signals:
 	void securityLevelChanged();
 	void videoEnabledChanged();
+	void isPausedChanged();
+	void isSpeakingChanged();
+	void isMutedChanged();
 
 private:
 
 	bool mIsMe = false;
 	bool mIsVideoEnabled;
+	bool mIsPaused = false;
+	bool mIsSpeaking = false;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
     std::shared_ptr<ParticipantDeviceListener> mParticipantDeviceListener;	// This is passed to linpĥone object and must be in shared_ptr

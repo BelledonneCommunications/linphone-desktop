@@ -63,6 +63,7 @@ public:
 	Q_INVOKABLE QString displayNamesToString()const;
 	QString getUri() const;
 	bool isScheduled() const;
+	Q_INVOKABLE QVariantList getParticipants() const;
 	
 	void setDateTime(const QDateTime& dateTime);
 	void setDuration(const int& duration);

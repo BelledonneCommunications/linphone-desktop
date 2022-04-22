@@ -13,6 +13,7 @@ import Units 1.0
 import UtilsCpp 1.0
 import ColorsList 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 // =============================================================================
 
 DialogPlus {
@@ -34,12 +35,13 @@ DialogPlus {
 			Layout.alignment: Qt.AlignLeft
 			Layout.leftMargin: 15
 			spacing:4
+			visible: false	// TODO
 			Text {
 				Layout.fillWidth: true
 				//: 'Would you like to encrypt your conference?' : Ask about setting the conference as secured.
 				text:qsTr('askEncryption')
 				color: NewConferenceStyle.askEncryptionColor
-				font.pointSize: Units.dp * 11
+				font.pointSize: NewConferenceStyle.titles.pointSize
 				font.weight: Font.DemiBold
 			}
 			Item{
@@ -106,18 +108,8 @@ DialogPlus {
 			onClicked: {
 				conferenceInfoModel.isScheduled = scheduledSwitch.checked
 				if( scheduledSwitch.checked){
-					var startDateTime = new Date()
-					var d = dateField.getDate()
-					var t = timeField.getTime()
-					console.log("A " +startDateTime)
-					startDateTime.setFullYear(d.getFullYear(), d.getMonth(), d.getDate())
-					console.log("B " +startDateTime)
-					startDateTime.setHours(t.getHours())
-					console.log("C " +startDateTime)
-					startDateTime.setMinutes(t.getMinutes())
-					console.log("D " +startDateTime)
+					var startDateTime = Utils.buidDate(dateField.getDate(), timeField.getTime())
 					startDateTime.setSeconds(0)
-					console.log("E " +startDateTime)
 					conferenceInfoModel.dateTime = startDateTime
 					conferenceInfoModel.duration = durationField.text
 				}
@@ -130,7 +122,7 @@ DialogPlus {
 				//App.smartShowWindow(callsWindow)
 				//callsWindow.openConference()
 				//CallsListModel.createConference(conferenceInfoModel, secureSwitch.checked, getInviteMode(), false )
-				conferenceInfoModel.createConference(secureSwitch.checked, getInviteMode())
+				conferenceInfoModel.createConference(false && secureSwitch.checked, getInviteMode())	// TODO remove false when Encryption is ready to use
 			}
 			TooltipArea{
 				visible: AccountSettingsModel.conferenceURI == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
@@ -183,9 +175,9 @@ DialogPlus {
 					textFormat: Text.RichText
 					//: 'Subject' : Label of a text field about the subject of the chat room
 					text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
-					color: NewConferenceStyle.subjectTitleColor
-					font.pointSize: Units.dp * 11
-					font.weight: Font.DemiBold
+					color: NewConferenceStyle.titles.textColor
+					font.pointSize: NewConferenceStyle.titles.pointSize
+					font.weight: NewConferenceStyle.titles.weight
 				}
 				TextField {
 					id:subject
@@ -230,9 +222,9 @@ DialogPlus {
 							Layout.rightMargin: 15
 							//: 'Would you like to schedule your conference?' : Ask about setting the conference as scheduled.
 							text: 'Souhaitez-vous programmer cette conférence pour plus tard ?'
-							color: NewConferenceStyle.askEncryptionColor
-							font.pointSize: Units.dp * 10
-							font.weight: Font.DemiBold
+							color: NewConferenceStyle.titles.textColor
+							font.pointSize: NewConferenceStyle.titles.pointSize
+							font.weight: NewConferenceStyle.titles.weight
 							wrapMode: Text.WordWrap
 						}
 					}
@@ -249,11 +241,12 @@ DialogPlus {
 						
 						
 						
-						Text{text: 'Date*'; Layout.preferredWidth: parent.cellWidth}
-						Text{text: 'Heure de début*'; Layout.preferredWidth: parent.cellWidth}
-						Text{text: 'Durée'; Layout.preferredWidth: parent.cellWidth}
-						Text{text: 'Fuseau horaire'; Layout.preferredWidth: parent.cellWidth}
+						Text{textFormat: Text.RichText; text: 'Date'+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						Text{textFormat: Text.RichText; text: 'Heure de début'+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						Text{textFormat: Text.RichText; text: 'Durée'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						Text{textFormat: Text.RichText; text: 'Fuseau horaire'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						TextField{id: dateField; Layout.preferredWidth: parent.cellWidth
+							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getDate(){
 								return Date.fromLocaleDateString(scheduleForm.locale, text,'yyyy/MM/dd')
 							}
@@ -276,6 +269,7 @@ DialogPlus {
 							}
 						} 
 						TextField{id: timeField; Layout.preferredWidth: parent.cellWidth
+							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getTime(){
 								return Date.fromLocaleTimeString(scheduleForm.locale, timeField.text, 'hh:mm')
 							}
@@ -300,14 +294,14 @@ DialogPlus {
 								}
 							}
 						}
-						NumericField{id: durationField; text: '1200'; Layout.preferredWidth: parent.cellWidth}
-						TextField{ text: 'Paris'; readOnly: true; Layout.preferredWidth: parent.cellWidth}
+						NumericField{id: durationField; text: '1200'; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize}
+						TextField{ text: 'Paris'; readOnly: true; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize}
 						function updateDateTime(){
-								var storedDate = new Date()
+								var storedDate
 								if( dateField.text != '' && timeField.text != ''){
-									storedDate.setDate(dateField.getDate())
-									storedDate.setTime(timeField.getTime() )
-								}
+									storedDate = Utils.buildDate(dateField.getDate(), timeField.getTime() )
+								}else
+									storedDate = new Date()
 								var currentDate = new Date()
 								if(currentDate >= storedDate){
 									var nextStoredDate = UtilsCpp.addMinutes(new Date(), 1)
@@ -337,16 +331,16 @@ DialogPlus {
 					textFormat: Text.RichText
 					//: 'Add a description' : Label of a text field about the description of the conference
 					text : 'Ajouter une description'
-					color: NewConferenceStyle.subjectTitleColor
-					font.pointSize: Units.dp * 10
-					font.weight: Font.DemiBold
+					color: NewConferenceStyle.titles.textColor
+					font.pointSize: NewConferenceStyle.titles.pointSize
+					font.weight: NewConferenceStyle.titles.weight
 				}
 				TextAreaField {
 					id: description
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					//: 'Description' : Placeholder in a form about setting a description
-					//placeholderText : 'Description'
+					placeholderText : 'Description'
 					text: ''
 					Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 					TooltipArea{
@@ -372,7 +366,7 @@ DialogPlus {
 				}
 				CheckBoxText {
 					id: inviteEmailCheckBox
-					
+					visible: false	// TODO
 					text: 'Envoyer l\'invitation via mon adresse mail'
 					width: parent.width
 					

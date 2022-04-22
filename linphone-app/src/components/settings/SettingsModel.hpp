@@ -332,6 +332,8 @@ public:
 	bool getShowVideoCodecs () const;
 	void setShowVideoCodecs (bool status);
 	
+	void updateCameraMode();
+	
 	// Chat & calls. -------------------------------------------------------------
 	
 	bool getAutoAnswerStatus () const;

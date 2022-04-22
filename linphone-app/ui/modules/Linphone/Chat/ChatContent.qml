@@ -43,6 +43,9 @@ Column{
 		contentModel: mainItem.contentModel
 		width: parent.width
 		maxWidth: mainItem.maxWidth
+		gotoButtonMode: 1
+		onExpandToggle: isExpanded=!isExpanded
+		height: fitHeight
 	}
 	ChatAudioMessage{
 		id: audioMessage

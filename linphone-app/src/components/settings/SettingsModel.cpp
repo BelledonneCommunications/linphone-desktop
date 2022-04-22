@@ -556,6 +556,12 @@ void SettingsModel::setShowVideoCodecs (bool status) {
 }
 
 // =============================================================================
+void SettingsModel::updateCameraMode(){
+	auto mode = mConfig->getString("video", "main_display_mode", "BlackBars");	
+	mConfig->setString("video", "main_display_mode", mode);
+	mConfig->setString("video", "other_display_mode", mode);
+}
+// =============================================================================
 // Chat & calls.
 // =============================================================================
 

@@ -20,6 +20,8 @@
 
 #include "ParticipantDeviceListener.hpp"
 
+#include <QDebug>
+
 // =============================================================================
 
 ParticipantDeviceListener::ParticipantDeviceListener(QObject *parent) : QObject(parent) {
@@ -27,10 +29,12 @@ ParticipantDeviceListener::ParticipantDeviceListener(QObject *parent) : QObject(
 
 //--------------------------------------------------------------------
 void ParticipantDeviceListener::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
+	qWarning() << "onIsSpeakingChanged " << isSpeaking;
 	emit isSpeakingChanged(participantDevice, isSpeaking);
 }
 
 void ParticipantDeviceListener::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMutedVar) {
+	qWarning() << "onIsMuted " << isMutedVar << " vs " << participantDevice->getIsMuted();
 	emit isMuted(participantDevice, isMutedVar);
 }
 

@@ -41,9 +41,11 @@ ParticipantDeviceModel::ParticipantDeviceModel (CallModel * callModel, std::shar
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mIsMe = isMe;
 	mParticipantDevice = device;
-	mParticipantDeviceListener = std::make_shared<ParticipantDeviceListener>(nullptr);
-	if( device)
+	if( device) {
+		mParticipantDeviceListener = std::make_shared<ParticipantDeviceListener>(nullptr);
+		connectTo(mParticipantDeviceListener.get());
 		device->addListener(mParticipantDeviceListener);
+	}
 	mCall = callModel;
 	if(mCall)
 		connect(mCall, &CallModel::statusChanged, this, &ParticipantDeviceModel::onCallStatusChanged);
@@ -109,12 +111,38 @@ QString ParticipantDeviceModel::getAddress() const{
 		: "";
 }
 
+bool ParticipantDeviceModel::getPaused() const{
+	return mIsPaused;
+}
+
+bool ParticipantDeviceModel::getIsSpeaking() const{
+	return mIsSpeaking;
+}
+
+bool ParticipantDeviceModel::getIsMuted() const{
+	return mParticipantDevice ? mParticipantDevice->getIsMuted() : false;
+}
+
 std::shared_ptr<linphone::ParticipantDevice>  ParticipantDeviceModel::getDevice(){
 	return mParticipantDevice;
 }
 
 bool ParticipantDeviceModel::isVideoEnabled() const{
 	return mIsVideoEnabled;
+}
+
+void ParticipantDeviceModel::setPaused(bool paused){
+	if(mIsPaused != paused){
+		mIsPaused = paused;
+		emit isPausedChanged();
+	}
+}
+
+void ParticipantDeviceModel::setIsSpeaking(bool speaking){
+	if(mIsSpeaking != speaking){
+		mIsSpeaking = speaking;
+		emit isSpeakingChanged();
+	}
 }
 
 void ParticipantDeviceModel::updateVideoEnabled(){
@@ -147,8 +175,10 @@ void ParticipantDeviceModel::onCallStatusChanged(){
 
 //--------------------------------------------------------------------
 void ParticipantDeviceModel::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
+	setIsSpeaking(isSpeaking);
 }
 void ParticipantDeviceModel::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted) {
+	emit isMutedChanged();
 }
 void ParticipantDeviceModel::onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
 	updateVideoEnabled();

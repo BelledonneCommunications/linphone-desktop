@@ -182,17 +182,21 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 		return;
 	
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	bool enableVideo = options.contains("video") ? options["video"].toBool() : true;
-	params->enableVideo(enableVideo);
-	if( enableVideo ){
-		params->setVideoDirection(linphone::MediaDirection::SendRecv);
-		params->setConferenceVideoLayout(linphone::ConferenceLayout::Grid);
-	}
+	
+	
+	params->setConferenceVideoLayout(linphone::ConferenceLayout::Grid);
 	params->enableMic(options.contains("micro") ? options["micro"].toBool() : true);
-	params->enableAudio(options.contains("audio") ? options["audio"].toBool() : true);	// ???
+	
+	bool enableVideo = options.contains("video") ? options["video"].toBool() : true;
+	bool enableSpeaker = options.contains("audio") ? options["audio"].toBool() : true;
+	params->enableVideo(enableVideo);
 	params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
-	CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
+	
+	auto call = core->inviteAddressWithParams(address, params);
+	call->setSpeakerMuted(!enableSpeaker);
+	qWarning() << "Launch Video call camera: " << enableVideo << " speaker:" << enableSpeaker << ", micro:" << params->micEnabled();
+	CallModel::prepareTransfert(call, prepareTransfertAddress);
 }
 
 ChatRoomModel* CallsListModel::launchSecureChat (const QString &sipAddress) const {

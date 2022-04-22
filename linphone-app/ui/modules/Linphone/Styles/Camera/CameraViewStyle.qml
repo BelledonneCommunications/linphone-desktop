@@ -19,6 +19,12 @@ QtObject {
 		property int weight: Font.Bold
 	}
 	
+	property QtObject border: QtObject {
+		property color color: ColorsList.add(sectionName+'_border', 'b').color
+		property int width: 2
+	}
+	
+	
 	//------------------------------------------------------------------------------
 	property QtObject closePreview: QtObject {
 		property int iconSize: 40
@@ -32,5 +38,24 @@ QtObject {
 		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'me_p_b_inv_fg').color
 	}
 	//------------------------------------------------------------------------------
-	
+	property QtObject pauseView: QtObject{
+		property color backgroundColor : ColorsList.add(sectionName+'_pauseView_bg_n', 'l').color
+		property QtObject button: QtObject {
+			property int iconSize: 80
+			property string icon : 'pause_custom'
+			property string name : 'pause'
+			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg', icon, 's_n_b_bg').color
+			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg', icon, 's_n_b_fg').color
+		}
+	}
+	property QtObject isMuted: QtObject{
+		property color backgroundColor : ColorsList.add(sectionName+'_isMuted_bg', 'l').color
+		property QtObject button: QtObject {
+			property int iconSize: 40
+			property string icon : 'micro_off_custom'
+			property string name : 'isMuted'
+			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg', icon, 's_d_b_bg').color
+			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg', icon, 's_d_b_fg').color
+		}
+	}
 }

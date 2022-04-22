@@ -31,6 +31,7 @@ DialogPlus {
 			anchors.centerIn: parent
 			height: parent.height
 			width: height
+			showCloseButton: false
 		}
 	}
 	

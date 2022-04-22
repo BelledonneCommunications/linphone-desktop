@@ -186,7 +186,7 @@ ScrollableListView {
 						}
 						
 						icon: sipAddressesView.headerButtonIcon
-						iconSize: SipAddressesViewStyle.header.iconSize
+						iconSize: parent.height
 						
 						visible: icon.length > 0
 					}

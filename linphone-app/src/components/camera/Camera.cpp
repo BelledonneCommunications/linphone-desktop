@@ -43,7 +43,7 @@ int Camera::mPreviewCounter;
 
 // =============================================================================
 Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
-	
+	setTextureFollowsItemSize(true);
 	// The fbo content must be y-mirrored because the ms rendering is y-inverted.
 	setMirrorVertically(true);
 	

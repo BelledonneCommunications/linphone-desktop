@@ -1,4 +1,4 @@
-import QtQuick 2.15
+import QtQuick 2.12
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.0
 import QtQml.Models 2.12
@@ -85,7 +85,7 @@ ColumnLayout{
 	}*/
 	GridView{
 		id: grid
-		
+		property int margin: 10
 		property int itemCount: model.count ? model.count :( model.length ? model.length : 0)
 		property int columns: 1
 		property int rows: 1
@@ -100,8 +100,8 @@ ColumnLayout{
 		function getRowCount(itemCount){
 			return columns > 1 ? (itemCount-1) / columns + 1 : 1
 		}
-		property int computedWidth: (mainLayout.width - 5 ) / columns
-		property int computedHeight: (mainLayout.height - 5 ) / rows 
+		property int computedWidth: (mainLayout.width - grid.margin ) / columns
+		property int computedHeight: (mainLayout.height - grid.margin ) / rows 
 		cellWidth: ( squaredDisplay ? Math.min(computedWidth, computedHeight) : computedWidth)
 		cellHeight: ( squaredDisplay ? Math.min(computedWidth, computedHeight) : computedHeight) 
 		

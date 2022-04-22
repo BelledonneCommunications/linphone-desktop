@@ -47,7 +47,7 @@ Item{
 			FileView{
 				height:mainListView.height-ChatFilePreviewStyle.filePreview.heightMargins
 				width: height * ChatFilePreviewStyle.filePreview.format
-				anchors.verticalCenter: parent.verticalCenter
+				anchors.verticalCenter: ScrollableListView.contentItem.verticalCenter
 				anchors.verticalCenterOffset: 7
 				//anchors.horizontalCenter: parent.horizontalCenter
 				thumbnail: $modelData.thumbnail

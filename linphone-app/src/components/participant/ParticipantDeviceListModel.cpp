@@ -227,6 +227,13 @@ void ParticipantDeviceListModel::onParticipantDeviceRemoved(const std::shared_pt
 }
 
 void ParticipantDeviceListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	for(auto item : mList) {
+		auto device = item.objectCast<ParticipantDeviceModel>();
+		if(device->getDevice() == participantDevice) {
+			device->setPaused(false);
+			return;
+		}
+	}
 	onParticipantDeviceAdded(participantDevice);
 	/*
 	for(auto item : mList) {
@@ -242,7 +249,7 @@ void ParticipantDeviceListModel::onParticipantDeviceLeft(const std::shared_ptr<c
 	for(auto item : mList) {
 		auto device = item.objectCast<ParticipantDeviceModel>();
 		if(device->getDevice() == participantDevice) {
-			emit device->videoEnabledChanged();
+			device->setPaused(true);
 			return;
 		}
 	}

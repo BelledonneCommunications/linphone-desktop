@@ -147,6 +147,17 @@ bool ConferenceInfoModel::isScheduled() const{
 	return mIsScheduled;
 }
 
+QVariantList ConferenceInfoModel::getParticipants() const{
+	QVariantList addresses;
+	for(auto item : mConferenceInfo->getParticipants()){
+		QVariantMap participant;
+		participant["displayName"] = Utils::getDisplayName(item);
+		participant["address"] = QString::fromStdString(item->asStringUriOnly());
+		addresses << participant;
+	}
+	return addresses;
+}
+
 //------------------------------------------------------------------------------------------------
 
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){

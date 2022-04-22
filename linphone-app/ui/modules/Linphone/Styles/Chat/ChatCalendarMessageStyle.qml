@@ -8,7 +8,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName : 'ChatCalendarMessage'
-	property int heightMargin:  0
+	property int topMargin:  0
 	property int widthMargin:  5
 	property int minWidth: 300
 		
@@ -21,6 +21,7 @@ QtObject {
 		property int presenceLevelSize: 12
 		property int rightMargin: 25
 		property int spacing: 15
+		property int lineHeight: 20
 		
 		property QtObject backgroundColor: QtObject {
 			property color normal: ColorsList.add(sectionName+'_conference_bg_n', 'conference_bg').color

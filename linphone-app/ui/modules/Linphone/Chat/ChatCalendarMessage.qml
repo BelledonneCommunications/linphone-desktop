@@ -22,30 +22,33 @@ import 'Message.js' as Logic
 Loader{
 	id: mainItem
 	property ContentModel contentModel
-	property ConferenceInfoModel conferenceInfoModel: contentModel && active ? contentModel.conferenceInfoModel : null
+	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
 	property int maxWidth : parent.width
-	property int fitHeight: active && item ? item.fitHeight + ChatCalendarMessageStyle.heightMargin*2 : 0
+	property int fitHeight: active && item ? item.fitHeight + ChatCalendarMessageStyle.topMargin+ChatCalendarMessageStyle.bottomMargin + (isExpanded? 200 : 0): 0
 	property int fitWidth: active && item ? Math.max(item.fitWidth, maxWidth/2)  + ChatCalendarMessageStyle.widthMargin*2 : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
 	property bool isExpanded : false
 	
+	signal expandToggle()
+	
 	width: parent.width
-	height: fitHeight
+	height: parent.height
 	
 	property font customFont : SettingsModel.textMessageFont
-	active: (mainItem.contentModel && mainItem.contentModel.isIcalendar()) || (!mainItem.contentModel && mainItem.conferenceInfoModel)
+	active: mainItem.conferenceInfoModel
+	// (mainItem.contentModel && mainItem.contentModel.isIcalendar()) || (!mainItem.contentModel && mainItem.conferenceInfoModel)
 	
 	sourceComponent: MouseArea{
 		id: loadedItem
-		property int fitHeight: layout.fitHeight + ChatCalendarMessageStyle.heightMargin
+		property int fitHeight: layout.fitHeight + ChatCalendarMessageStyle.topMargin+ChatCalendarMessageStyle.bottomMargin
 		property int fitWidth: layout.fitWidth
 		
 		anchors.fill: parent
 		anchors.leftMargin: ChatCalendarMessageStyle.widthMargin
 		anchors.rightMargin: ChatCalendarMessageStyle.widthMargin
-		anchors.topMargin: ChatCalendarMessageStyle.heightMargin
-		anchors.bottomMargin: ChatCalendarMessageStyle.heightMargin
+		anchors.topMargin: ChatCalendarMessageStyle.topMargin
+		anchors.bottomMargin: ChatCalendarMessageStyle.bottomMargin
 		
 		clip: false
 		
@@ -62,13 +65,13 @@ Loader{
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.preferredWidth: parent.width	// Need this because fillWidth is not enough...
-				Layout.preferredHeight: ChatCalendarMessageStyle.schedule.iconSize
+				Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
 				Layout.topMargin: 5
 				spacing: 10
 				RowLayout {
 					id: scheduleRow
 					Layout.fillWidth: true
-					Layout.preferredHeight: ChatCalendarMessageStyle.schedule.iconSize
+					Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
 					Layout.leftMargin: 5
 					spacing: ChatCalendarMessageStyle.schedule.spacing
 					
@@ -87,18 +90,15 @@ Loader{
 						elide: Text.ElideRight
 						font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
 						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTime, 'hh:mm')
-							+' - ' +Qt.formatDateTime(mainItem.conferenceInfoModel.endDateTime, 'hh:mm')
+							  +' - ' +Qt.formatDateTime(mainItem.conferenceInfoModel.endDateTime, 'hh:mm')
 					}
 				}
-				Item{
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-				}
 				Text{
-					Layout.fillHeight: true
-					Layout.minimumWidth: implicitWidth
-					Layout.preferredWidth: implicitWidth
+					Layout.fillWidth: true
+					//Layout.minimumWidth: implicitWidth
+					//Layout.preferredWidth: implicitWidth
 					Layout.rightMargin: 15
+					horizontalAlignment: Qt.AlignRight
 					verticalAlignment: Qt.AlignVCenter
 					color: ChatCalendarMessageStyle.schedule.color
 					elide: Text.ElideRight
@@ -109,7 +109,7 @@ Loader{
 			Text{
 				id: title
 				Layout.fillWidth: true
-				Layout.minimumWidth: implicitWidth
+				//Layout.preferredHeight: 
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignRight
 				color: ChatCalendarMessageStyle.subject.color
@@ -120,7 +120,7 @@ Loader{
 			RowLayout {
 				id: participantsRow
 				Layout.fillWidth: true
-				Layout.fillHeight: true
+				Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
 				Layout.leftMargin: 5
 				Layout.rightMargin: 15
 				
@@ -148,33 +148,67 @@ Loader{
 					isCustom: true
 					colorSet: mainItem.gotoButtonMode == 0 ? ChatCalendarMessageStyle.gotoButton : ChatCalendarMessageStyle.infoButton
 					backgroundRadius: width/2
-					onClicked: mainItem.isExpanded = !mainItem.isExpanded
+					onClicked: mainItem.expandToggle()
 				}
 			}
-			Text{
-				id: descriptionTitle
-				visible: mainItem.isExpanded
+			ColumnLayout{
+				id: expandedDescription
 				Layout.fillWidth: true
-				Layout.minimumWidth: implicitWidth
-				Layout.leftMargin: 10
-				color: ChatCalendarMessageStyle.subject.color
-				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
-				font.weight: Font.Bold
-				
-				text: 'Description :'
-			}
-			Text{
-				id: description
+				Layout.fillHeight: true
 				visible: mainItem.isExpanded
-				Layout.fillWidth: true
-				Layout.minimumWidth: implicitWidth
-				Layout.leftMargin: 10
-				color: ChatCalendarMessageStyle.description.color
-				font.pointSize: ChatCalendarMessageStyle.description.pointSize
-				//font.weight: Font.Bold
-				elide: Text.ElideRight
-				maximumLineCount: 100
-				text: mainItem.conferenceInfoModel.description
+				ScrollableListView{
+					id: expandedParticipantsList
+					Layout.fillWidth: true
+					Layout.minimumHeight: Math.min( count * ChatCalendarMessageStyle.lineHeight, parent.height/2)
+					Layout.leftMargin: 10
+					spacing: 0
+					visible: mainItem.isExpanded
+					onVisibleChanged: model= mainItem.conferenceInfoModel.getParticipants()
+					
+					delegate: Row{
+						spacing: 5
+						width: expandedParticipantsList.width
+						height: ChatCalendarMessageStyle.lineHeight
+						Text{text: modelData.displayName
+							color: ChatCalendarMessageStyle.description.color
+							font.pointSize: ChatCalendarMessageStyle.description.pointSize
+							elide: Text.ElideRight
+							wrapMode: TextEdit.WordWrap
+						}
+						Text{text: '('+modelData.address+')'
+							color: ChatCalendarMessageStyle.description.color
+							font.pointSize: ChatCalendarMessageStyle.description.pointSize
+							elide: Text.ElideRight
+							wrapMode: TextEdit.WordWrap
+						}
+					}
+				}
+				Text{
+					id: descriptionTitle
+					Layout.fillWidth: true
+					Layout.leftMargin: 10
+					color: ChatCalendarMessageStyle.subject.color
+					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
+					font.weight: Font.Bold
+					
+					text: 'Description :'
+				}
+				TextAreaField{
+					id: description
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					Layout.leftMargin: 10
+					color: 'transparent'
+					readOnly: true
+					textColor: ChatCalendarMessageStyle.description.color
+					font.pointSize: ChatCalendarMessageStyle.description.pointSize
+					border.width: 0
+					//font.weight: Font.Bold				
+					//elide: Text.ElideRight
+					//wrapMode: TextEdit.WordWrap
+					
+					text: mainItem.conferenceInfoModel.description
+				}
 			}
 		}
 	}

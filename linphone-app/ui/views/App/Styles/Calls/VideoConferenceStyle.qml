@@ -1,5 +1,6 @@
 pragma Singleton
 import QtQml 2.2
+import QtQuick 2.7
 
 import Units 1.0
 import ColorsList 1.0
@@ -29,6 +30,32 @@ QtObject {
 				property int weight: Font.Bold
 			}
 		}
+	}
+	property QtObject pauseArea: QtObject {
+		property color backgroundColor: ColorsList.add(sectionName+'_paused_bg', 'l50').color
+		property QtObject title: QtObject{
+			property color color: ColorsList.add(sectionName+'_paused_title', 'q').color
+			property int pointSize: Units.dp * 12
+			property int weight: Font.Bold
+		}
+		property QtObject description: QtObject{
+			property color color: ColorsList.add(sectionName+'_paused_description', 'q').color
+			property int pointSize: Units.dp * 9
+			property int weight: Font.Medium
+		}
+		property QtObject play: QtObject {
+				property int iconSize: 240
+				property string icon : 'play_custom'
+				property string name : 'paused_play'
+				property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 's_p_b_bg').color
+				property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 's_h_b_bg').color
+				property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 's_n_b_bg').color
+				property color backgroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 's_p_b_bg').color
+				property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 's_p_b_fg').color
+				property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 's_h_b_fg').color
+				property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 's_n_b_fg').color
+				property color foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 's_p_b_fg').color
+			}
 	}
 	property QtObject actionArea: QtObject {
 		property int height: 100

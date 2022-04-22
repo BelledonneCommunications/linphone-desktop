@@ -20,8 +20,9 @@ Item {
 	property bool isPreview: !container.currentDevice || container.currentDevice.isMe
 	property bool isFullscreen: false
 	property bool hideCamera: false //callModel.pausedByUser
-	property bool showCloseButton: true
-	signal closeRequested()
+	property bool isPaused: false
+	
+	property bool isVideoEnabled: !container.currentDevice || (container.currentDevice && container.currentDevice.videoEnabled)
 	
 	function resetActive(){
 		resetTimer.resetActive()
@@ -43,17 +44,13 @@ Item {
 	}
 	Loader {
 		id: cameraLoader
-		
-		property bool isVideoEnabled: !container.currentDevice || (container.currentDevice && container.currentDevice.videoEnabled)
 		property bool resetActive: false
 		
-		property int cameraMode: isVideoEnabled ?  container.isPreview ? 1 : 2 : 0
-		onCameraModeChanged: console.log(cameraMode)
 		
 		anchors.fill: parent
 		
-		active: !resetActive && isVideoEnabled //avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
-		sourceComponent: cameraMode == 1 ? cameraPreview : cameraMode == 2 ? camera : null		
+		active: !resetActive && container.isVideoEnabled //avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
+		sourceComponent: container.isVideoEnabled && !container.isPaused? camera : null		
 		
 		Timer{
 			id: resetTimer
@@ -75,65 +72,13 @@ Item {
 			Camera {
 				participantDeviceModel: container.currentDevice
 				anchors.fill: parent
+				isPreview: container.isPreview
+				
 				onRequestNewRenderer: {resetTimer.resetActive()}
 				Component.onDestruction: {resetWindowId()}
 				Component.onCompleted: console.log("Completed Camera")
-				Text{
-					id: username
-					anchors.right: parent.right
-					anchors.left: parent.left
-					anchors.bottom: parent.bottom
-					anchors.margins: 10
-					elide: Text.ElideRight
-					maximumLineCount: 1
-					text: container.currentDevice.displayName
-					font.pointSize: CameraViewStyle.contactDescription.pointSize
-					font.weight: CameraViewStyle.contactDescription.weight
-					color: CameraViewStyle.contactDescription.color
-				}/*
-			DropShadow {
-				anchors.fill: username
-				source: username
-				verticalOffset: 2
-				color: "#80000000"
-				radius: 1
-				samples: 3
-			}*/
-				Glow {
-					anchors.fill: username
-					//spread: 1
-					radius: 12
-					samples: 25
-					color: "#80000000"
-					source: username
-				}
+				
 			}
-		}
-		
-		Component {
-			id: cameraPreview
-			Camera {
-				anchors.fill: parent
-				isPreview: true
-				onRequestNewRenderer: {resetTimer.resetActive()}
-				Component.onDestruction: {resetWindowId();}
-				Component.onCompleted: console.log("Completed Preview")
-				Rectangle{
-					anchors.fill: parent
-					color: 'black'
-					visible: container.hideCamera
-				}
-				ActionButton{
-					visible: container.showCloseButton
-					anchors.right: parent.right
-					anchors.top: parent.top
-					anchors.rightMargin: 15
-					anchors.topMargin: 15
-					isCustom: true
-					colorSet: CameraViewStyle.closePreview
-					onClicked: container.closeRequested()
-				}
-			}
-		}
+		}		
 	}
 }

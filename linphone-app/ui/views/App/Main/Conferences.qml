@@ -147,29 +147,35 @@ ColumnLayout {
 						}
 				GridView{
 					id: calendarGrid
-					//anchors.fill: parent
-					cellWidth: (mainItem.width-20)/2
-					cellHeight: 100
+					property bool expanded : false					//anchors.fill: parent
+					cellWidth: width/2
+					cellHeight: expanded ? 300 : 100
 					model: $modelData
 					height: cellHeight * ( (count+1) /2)
 					width: mainItem.width - 20
 					delegate:Rectangle {
 						id: entry
-						width: calendarGrid.cellWidth -10
-						height: calendarGrid.cellHeight -10
+						
+						width: calendarGrid.cellWidth-10
+						height: calendarGrid.cellHeight-10
 						radius: 6
 						color: mainItem.filterType == ConferenceInfoProxyModel.Ended ? ConferencesStyle.conference.backgroundColor.ended
 								: ConferencesStyle.conference.backgroundColor.scheduled
-						border.color: calendarMessage.containsMouse ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
+						border.color: calendarMessage.containsMouse || calendarMessage.isExpanded ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
 						border.width: ConferencesStyle.conference.selectedBorder.width
 						ChatCalendarMessage{
 							id: calendarMessage
+							anchors.centerIn: parent
+							width: parent.width
+							height: parent.height
 							conferenceInfoModel: $modelData
-							width: calendarGrid.cellWidth
-							maxWidth: calendarGrid.cellWidth
+							//width: calendarGrid.cellWidth
+							//maxWidth: calendarGrid.cellWidth
 							gotoButtonMode: mainItem.filterType == ConferenceInfoProxyModel.Scheduled ? 1 
 													: mainItem.filterType == ConferenceInfoProxyModel.Ended ? -1
 														: 0
+							onExpandToggle: calendarGrid.expanded = !calendarGrid.expanded
+							isExpanded: calendarGrid.expanded
 						}
 					}
 				}

@@ -27,7 +27,7 @@ Rectangle {
 	property bool cameraIsReady : false
 	property bool previewIsReady : false
 	
-	property var call
+	property CallModel call
 	
 	property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
 	

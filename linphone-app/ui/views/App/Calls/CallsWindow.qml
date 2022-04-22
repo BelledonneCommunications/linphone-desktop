@@ -17,7 +17,9 @@ Window {
 	// ---------------------------------------------------------------------------
 	
 	// `{}` is a workaround to avoid `TypeError: Cannot read property...` when calls list is empty
-	readonly property var call: ( calls.selectedCall?calls.selectedCall:{
+	readonly property CallModel call: calls.selectedCall
+	/*
+	?calls.selectedCall:{
 														  callError: '',
 														  isOutgoing: true,
 														  recording: false,
@@ -29,6 +31,7 @@ Window {
 														  videoEnabled: false, 
 														  chatRoomModel:null
 													  });
+													  */
 	property ConferenceInfoModel conferenceInfoModel
 	readonly property bool chatIsOpened: !rightPaned.isClosed()
 	readonly property bool callsIsOpened: !mainPaned.isClosed()
@@ -44,14 +47,14 @@ Window {
 		rightPaned.close()
 	}
 	
-	function conferenceManagerResult(exitValue){
+	function endOfProcess(exitValue){
 		window.detachVirtualWindow();
 		if(exitValue == 0 && calls.count == 0)
 			close();
 	}
 	
 	function openConferenceManager (params) {
-		Logic.openConferenceManager(params, conferenceManagerResult)
+		Logic.openConferenceManager(params, endOfProcess)
 	}
 	
 	function setHeight (height) {
@@ -250,6 +253,7 @@ Window {
 				id: waitingRoom
 				WaitingRoom{
 					conferenceInfoModel: window.conferenceInfoModel
+					onCancel: endOfProcess(0)
 				}
 			}
 			Component {
@@ -266,13 +270,13 @@ Window {
 			childA: Loader {
 				id: middlePane
 				anchors.fill: parent
-				sourceComponent: Logic.getContent(calls.selectedCall, window.conferenceInfoModel)
+				sourceComponent: Logic.getContent(window.call, window.conferenceInfoModel)
 				onSourceComponentChanged: {
 					if( sourceComponent == waitingRoom)
 						mainPaned.close()
 					rightPaned.childAItem.update()
 				}// Force update when loading a new Content. It's just to be sure
-				active: calls.selectedCall || window.conferenceInfoModel
+				active: window.call || window.conferenceInfoModel
 			}
 			
 			childB: Loader {
@@ -291,7 +295,7 @@ Window {
 		target: CallsListModel
 		onCallTransferAsked: Logic.handleCallTransferAsked(callModel)
 		onCallAttendedTransferAsked: Logic.handleCallAttendedTransferAsked(callModel)
-		onCallConferenceAsked: {console.log('Openning : '+conferenceInfoModel);Logic.openWaitingRoom(conferenceInfoModel)}
+		onCallConferenceAsked: Logic.openWaitingRoom(conferenceInfoModel)
 		onRowsRemoved: Logic.tryToCloseWindow()
 	}
 }

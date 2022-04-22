@@ -191,10 +191,11 @@ ScrollableListView {
 						}
 						
 						icon: sipAddressesView.headerButtonIcon
-						iconSize: SipAddressesViewStyle.header.iconSize
+						iconSize: parent.height
 						overwriteColor: sipAddressesView.headerButtonOverwriteColor
 						
 						visible: icon.length > 0
+						
 					}
 				}
 			}

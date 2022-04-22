@@ -965,6 +965,7 @@ void App::setAutoStart (bool enabled) {
 void App::openAppAfterInit (bool mustBeIconified) {
 	qInfo() << QStringLiteral("Open " APPLICATION_NAME " app.");
 	auto coreManager = CoreManager::getInstance();
+	coreManager->getSettingsModel()->updateCameraMode();
 	// Create other windows.
 	mCallsWindow = createSubWindow(mEngine, Constants::QmlViewCallsWindow);
 	mSettingsWindow = createSubWindow(mEngine, Constants::QmlViewSettingsWindow);

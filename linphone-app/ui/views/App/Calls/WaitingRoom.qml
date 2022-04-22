@@ -11,8 +11,12 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
+	id: mainItem
 	color: WaitingRoomStyle.backgroundColor
 	property ConferenceInfoModel conferenceInfoModel
+	
+	signal cancel()
+	
 	ColumnLayout {
 		anchors.fill: parent
 		Text{
@@ -35,42 +39,6 @@ Rectangle {
 				width : height
 			}
 		}
-		/*
-		Loader{
-			id: previewLoader
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			sourceComponent: Item{
-				anchors.top:parent.top
-				anchors.bottom: parent.bottom
-				width : height
-			
-				Rectangle{
-					id: showArea
-					anchors.fill: parent
-					radius: 10
-					visible:false
-					color: 'red'
-				}
-				CameraPreview {
-					id: preview
-					anchors.fill: parent
-					onRequestNewRenderer: {previewLoader.active = false; previewLoader.active = true}
-					visible: false
-				}
-				
-				OpacityMask{
-					anchors.fill: preview
-					source: preview
-					maskSource: showArea
-		
-					visible: true
-					rotation: 180
-					
-				}
-			}
-			active: true
-		}*/
 		// -------------------------------------------------------------------------
 		// Action Buttons.
 		// -------------------------------------------------------------------------
@@ -137,7 +105,7 @@ Rectangle {
 			TextButtonA {
 				text: 'CANCEL'
 				
-				onClicked: console.log('cancel')
+				onClicked: mainItem.cancel()
 			}
 			TextButtonB {
 				text: 'DEMARRER'
@@ -146,51 +114,6 @@ Rectangle {
 			}
 		}
 		
-		/*
-		GridLayout {
-			columns: parent.width < CallStyle.actionArea.lowWidth && call.videoEnabled ? 1 : 2
-			rowSpacing: ActionBarStyle.spacing
-			
-			anchors {
-				left: parent.left
-				leftMargin: CallStyle.actionArea.leftButtonsGroupMargin
-				verticalCenter: parent.verticalCenter
-			}
-			
-			ActionSwitch {
-				isCustom: true
-				backgroundRadius: 90
-				colorSet: enabled ? CallStyle.buttons.microOn : CallStyle.buttons.microOff
-				enabled: !call.microMuted
-				
-				onClicked: call.microMuted = enabled
-			}
-		}
-		
-		Item {
-			anchors.centerIn: parent
-			height: CallStyle.actionArea.userVideo.height
-			width: CallStyle.actionArea.userVideo.width
-			
-			visible: call.videoEnabled
-		}
-		
-		ActionBar {
-			anchors {
-				right: parent.right
-				rightMargin: CallStyle.actionArea.rightButtonsGroupMargin
-				verticalCenter: parent.verticalCenter
-			}
-			iconSize: CallStyle.actionArea.iconSize
-			
-			ActionButton {
-				isCustom: true
-				backgroundRadius: 90
-				colorSet: CallStyle.buttons.hangup
-				
-				onClicked: call.terminate()
-			}
-		}
-		*/
 	}
+	
 }

@@ -14,11 +14,11 @@ ListView {
 	
 	// ---------------------------------------------------------------------------
 	
-	readonly property var selectedCall: calls._selectedCall
+	readonly property CallModel selectedCall: calls._selectedCall
 	
 	property var conferenceModel
 	
-	property var _selectedCall
+	property CallModel _selectedCall: null
 	
 	// ---------------------------------------------------------------------------
 	

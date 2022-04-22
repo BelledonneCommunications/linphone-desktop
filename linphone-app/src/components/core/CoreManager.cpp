@@ -343,7 +343,6 @@ void CoreManager::migrate () {
 		mCore->enableLimeX3Dh(true);
 	}
 	
-	
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 

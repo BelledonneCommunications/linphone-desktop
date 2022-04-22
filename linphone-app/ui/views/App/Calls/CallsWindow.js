@@ -73,7 +73,7 @@ function getContent (call, conferenceInfoModel) {
 		if(conferenceInfoModel)
 			return waitingRoom
 		else
-			return videoConference
+			return null
 	}
 	
 	var status = call.status
@@ -96,9 +96,6 @@ function getContent (call, conferenceInfoModel) {
 	
 	if(call.isConference)
 		return videoConference
-		
-	if(!call && window.conferenceInfoModel)
-		return waitingRoom;
 		
 	return incall
 }

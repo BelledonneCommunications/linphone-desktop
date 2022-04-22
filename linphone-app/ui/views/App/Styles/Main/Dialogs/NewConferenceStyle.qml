@@ -17,6 +17,17 @@ QtObject {
 	property color addressesAdminColor: ColorsList.add(sectionName+'_addresses_admin', 'g').color
 	property color requiredColor: ColorsList.add(sectionName+'_required_text', 'g').color
 	
+	property QtObject titles: QtObject{
+		property color textColor: ColorsList.add(sectionName+'_schedule_titles', 'g').color
+		property int weight: Font.DemiBold
+		property real pointSize: Units.dp * 10
+	}
+	property QtObject fields: QtObject{
+		property color textColor: ColorsList.add(sectionName+'_schedule_fields', 'g').color
+		property int weight: Font.Medium
+		property real pointSize: Units.dp * 9
+	}
+	
 	
 	property QtObject addParticipant: QtObject {
 		property int iconSize: 30

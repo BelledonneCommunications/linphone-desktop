@@ -9,8 +9,12 @@ import Common.Styles 1.0
 Rectangle {
 	
 	property alias text: textArea.text
+	property alias placeholderText: textArea.placeholderText
 	readonly property alias length: textArea.length
 	property alias boundsBehavior: flickable.boundsBehavior
+	property alias font: textArea.font
+	property alias textColor: textArea.color
+	property alias readOnly: textArea.readOnly
 	
 	height: TextAreaFieldStyle.background.height
 	width: TextAreaFieldStyle.background.width

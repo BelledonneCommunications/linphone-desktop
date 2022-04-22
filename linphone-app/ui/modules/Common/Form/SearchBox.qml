@@ -77,6 +77,7 @@ Item {
 			
 			icon: 'search_custom'
 			overwriteColor: SearchBoxStyle.iconColor
+			iconSize: height
 			readOnly: !searchBox.enabled
 			width: parent.width
 			

@@ -16,8 +16,8 @@ QtObject {
 	property QtObject callsList: QtObject {
 		property color color: ColorsList.add(sectionName+'_list_bg', 'q').color
 		property int defaultWidth: 250
-		property int maximumWidth: 250
-		property int minimumWidth: 110
+		property int maximumWidth: 300
+		property int minimumWidth: 200
 		
 		property QtObject header: QtObject {
 			property color color1: ColorsList.add(sectionName+'_list_header_a', 'q').color
