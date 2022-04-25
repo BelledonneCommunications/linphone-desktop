@@ -117,7 +117,7 @@ job-debian9-makefile-clang-package:
        - $PACKAGE_LINUX
        - $DEPLOY_LINUX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DLINPHONE_BUILDER_SIGNING_PASSPHRASE=$GPG_SIGNING_PASS -DENABLE_G729=ON
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DLINPHONE_BUILDER_SIGNING_PASSPHRASE=$GPG_SIGNING_PASS -DENABLE_G729=ON -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$LINUX_PLATFORM/$APP_FOLDER
     CMAKE_GENERATOR: Unix Makefiles
     CC: clang
     CXX: clang++
@@ -142,7 +142,7 @@ job-debian9-makefile-clang-package:
     - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
   artifacts:
     paths:
-      - build/OUTPUT/Packages/*.AppImage
+      - build/OUTPUT/*
     expire_in: 1 week
 
 #################################################
@@ -159,7 +159,8 @@ job-debian9-makefile-clang-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
+    - rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
 
 
 job-debian9-makefile-clang-plugins-deploy:
@@ -171,7 +172,7 @@ job-debian9-makefile-clang-plugins-deploy:
      variables:
        - $DEPLOY_PLUGINS
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/plugins/
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
 
 #################################################
 # Debug

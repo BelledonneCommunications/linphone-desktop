@@ -96,7 +96,7 @@ job-macosx-makefile-package:
        - $PACKAGE_MACOSX
        - $DEPLOY_MACOSX
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$MACOS_PLATFORM/$APP_FOLDER
   extends: job-macosx-makefile
   script:
     - *build_all_script
@@ -142,7 +142,8 @@ job-macosx-makefile-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_MACOSX
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+    - rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
 
 
 job-macosx-makefile-plugins-deploy:
@@ -154,5 +155,5 @@ job-macosx-makefile-plugins-deploy:
      variables:
        - $DEPLOY_PLUGINS
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.dylib $DEPLOY_SERVER:$MACOSX_UPLOAD_DIRECTORY/plugins
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.dylib $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER/plugins
 

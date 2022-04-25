@@ -289,7 +289,7 @@ void ParticipantDeviceListModel::onConferenceStateChanged(linphone::Conference::
 void ParticipantDeviceListModel::onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	auto device = get(participantDevice);
 	if(device)
-		emit device->videoEnabledChanged();
+		device->updateVideoEnabled();
 	else
 		onParticipantDeviceAdded(participantDevice);
 	device = get(participantDevice);

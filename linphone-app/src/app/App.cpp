@@ -1058,6 +1058,6 @@ void App::checkForUpdate() {
 void App::checkForUpdates(bool force) {
 	if(force || CoreManager::getInstance()->getSettingsModel()->isCheckForUpdateEnabled())
 		CoreManager::getInstance()->getCore()->checkForUpdate(
-					Utils::appStringToCoreString(getStrippedApplicationVersion())
+					Utils::appStringToCoreString(applicationVersion())
 					);
 }

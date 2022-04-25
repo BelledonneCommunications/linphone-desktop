@@ -29,8 +29,6 @@
 #include <QtWebView>
 #endif
 
-#include "gitversion.h"
-
 #include "AppController.hpp"
 
 #include "components/other/desktop-tools/DesktopTools.hpp"
@@ -53,7 +51,7 @@ AppController::AppController (int &argc, char *argv[]) {
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
-	QCoreApplication::setApplicationVersion(LINPHONE_QT_GIT_VERSION);
+	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
 #ifdef ENABLE_APP_WEBVIEW
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
 	mApp = new App(argc, argv);

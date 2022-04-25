@@ -114,6 +114,8 @@ option(ENABLE_APP_LICENSE "Enable the license in packages." YES)
 #Webview is not fully supported because of deployments. Used for subscription.
 option(ENABLE_APP_WEBVIEW "Enable webviews." NO)
 
+option(LINPHONE_SDK_MAKE_RELEASE_FILE_URL "Make a RELEASE file that work along check_version and use this URL" "")
+
 
 
 if(WIN32 OR APPLE)
@@ -141,6 +143,9 @@ list(APPEND APP_OPTIONS "-DENABLE_VIDEO=${ENABLE_VIDEO}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_LICENSE=${ENABLE_APP_LICENSE}")
 list(APPEND APP_OPTIONS "-DENABLE_LDAP=${ENABLE_LDAP}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_WEBVIEW=${ENABLE_APP_WEBVIEW}")
+
+list(APPEND APP_OPTIONS "-DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=${LINPHONE_SDK_MAKE_RELEASE_FILE_URL}")
+
 
 
 	
