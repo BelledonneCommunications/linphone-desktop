@@ -108,6 +108,7 @@ Rectangle {
 						
 						call: incall.call
 						width: container.width
+						height: container.height
 						
 						relativeTo: callQuality
 						relativeY: CallStyle.header.stats.relativeY

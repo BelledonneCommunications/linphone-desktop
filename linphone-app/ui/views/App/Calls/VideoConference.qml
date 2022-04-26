@@ -26,7 +26,7 @@ Rectangle {
 	property ConferenceModel conferenceModel: callModel && callModel.getConferenceModel()
 	property var _fullscreen: null
 	property bool listCallsOpened: true
-		
+	
 	signal openListCallsRequest()
 	// ---------------------------------------------------------------------------
 	
@@ -224,15 +224,23 @@ Rectangle {
 				delegate: Item{
 					id: avatarCell
 					property ParticipantDeviceModel currentDevice: gridModel.participantDevices.getAt(index)
-					onCurrentDeviceChanged: console.log("currentDevice changed: " +currentDevice + (currentDevice?", me:"+currentDevice.isMe:'')+" ["+index+"]")
+					onCurrentDeviceChanged: {
+						console.log("currentDevice changed: " +currentDevice+"/"+cameraView.currentDevice + (currentDevice?", me:"+currentDevice.isMe:'')+" ["+index+"]")
+						if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
+						
+					}
 					//color: 'black' /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */
 					//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
 					//color:  $modelData.color ? $modelData.color : ''
 					height: grid.cellHeight - 10
 					width: grid.cellWidth - 10
-					Component.onCompleted: console.log("Completed: ["+index+"] " +(currentDevice?currentDevice.peerAddress+", isMe:"+currentDevice.isMe : '') )
+					Component.onCompleted: {
+						console.log("Completed: ["+index+"] " +(currentDevice?currentDevice.peerAddress+", isMe:"+currentDevice.isMe : '') )
+					}
 					
 					CameraView{
+						id: cameraView
+						enabled: index >=0
 						anchors.fill: parent
 						currentDevice: avatarCell.currentDevice
 						isPaused: callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused //callModel.pausedByUser
@@ -375,7 +383,7 @@ Rectangle {
 			colorSet: VideoConferenceStyle.buttons.callQuality
 			percentageDisplayed: 0
 			
-			onClicked: {console.log("opening stats");Logic.openCallStatistics();console.log("Stats should be opened")}
+			onClicked: {Logic.openCallStatistics();}
 			Timer {
 				interval: 500
 				repeat: true
@@ -390,17 +398,6 @@ Rectangle {
 						callQuality.percentageDisplayed = 0
 				}						
 			}
-			
-			CallStatistics {
-				id: callStatistics
-				
-				call: callModel
-				width: conference.width
-				relativeTo: keypadButton
-				relativeY: CallStyle.header.stats.relativeY
-				onClosed: Logic.handleCallStatisticsClosed()
-				onOpened: console.log("Stats Opened: " +call+", " +width +", "+relativeY)
-			}
 		}
 		ActionButton{
 			isCustom: true
@@ -413,7 +410,17 @@ Rectangle {
 	// ---------------------------------------------------------------------------
 	// TelKeypad.
 	// ---------------------------------------------------------------------------
-	
+	CallStatistics {
+		id: callStatistics
+		
+		call: conference.callModel
+		width: conference.width - 20
+		height: conference.height * 2/3
+		relativeTo: conference
+		relativeY: CallStyle.header.stats.relativeY
+		relativeX: 10
+		onClosed: Logic.handleCallStatisticsClosed()
+	}
 	TelKeypad {
 		id: telKeypad
 		

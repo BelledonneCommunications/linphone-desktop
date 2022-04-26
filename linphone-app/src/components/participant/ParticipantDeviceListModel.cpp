@@ -128,7 +128,7 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 		auto deviceModel = item.objectCast<ParticipantDeviceModel>();
 		if(deviceModel->getDevice() == deviceToAdd) {
 			qWarning() << "Device already exist. Send video update event";
-			emit deviceModel->videoEnabledChanged();
+			deviceModel->updateVideoEnabled();
 			return false;
 		}
 	}
@@ -142,8 +142,10 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 
 bool ParticipantDeviceListModel::remove(std::shared_ptr<const linphone::ParticipantDevice> deviceToRemove){
 	int row = 0;
-	for(auto device : mList){
-		if( device.objectCast<ParticipantDeviceModel>()->getDevice() == deviceToRemove){
+	for(auto item : mList){
+		auto device = item.objectCast<ParticipantDeviceModel>();
+		if( device->getDevice() == deviceToRemove){
+			device->setIsLeft(true);
 			removeRow(row);
 			return true;
 		}else
@@ -292,6 +294,7 @@ void ParticipantDeviceListModel::onParticipantDeviceMediaCapabilityChanged(const
 		device->updateVideoEnabled();
 	else
 		onParticipantDeviceAdded(participantDevice);
+		
 	device = get(participantDevice);
 	if( device && device->isMe()){	// Capability change for me. Update all videos.
 		for(auto item : mList) {

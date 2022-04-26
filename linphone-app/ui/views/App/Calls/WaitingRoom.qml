@@ -17,6 +17,12 @@ Rectangle {
 	
 	signal cancel()
 	
+	function close(){
+		loader.active = false
+	}
+	function open(){
+	}
+	
 	ColumnLayout {
 		anchors.fill: parent
 		Text{
@@ -28,9 +34,12 @@ Rectangle {
 			font.pointSize:  WaitingRoomStyle.title.pointSize
 			horizontalAlignment: Qt.AlignCenter
 		}
-		Item{
+		Loader{
+			id: loader
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+		sourceComponent: Component{
+			
 			CameraView{
 				id: previewLoader
 				showCloseButton: false
@@ -38,6 +47,7 @@ Rectangle {
 				height: parent.height
 				width : height
 			}
+		}
 		}
 		// -------------------------------------------------------------------------
 		// Action Buttons.
@@ -105,12 +115,15 @@ Rectangle {
 			TextButtonA {
 				text: 'CANCEL'
 				
-				onClicked: mainItem.cancel()
+				onClicked: {
+						mainItem.close()
+						mainItem.cancel()
+						}
 			}
 			TextButtonB {
 				text: 'DEMARRER'
 		
-				onClicked: CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0, {video: camera.cameraEnabled, micro:!micro.microMuted, audio:!speaker.speakerMuted})
+				onClicked: {mainItem.close(); CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0, {video: camera.cameraEnabled, micro:!micro.microMuted, audio:!speaker.speakerMuted}) }
 			}
 		}
 		

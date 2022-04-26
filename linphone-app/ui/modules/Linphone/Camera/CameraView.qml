@@ -13,6 +13,7 @@ Item{
 	property alias currentDevice: camera.currentDevice
 	property alias hideCamera: camera.hideCamera
 	property alias isPaused: camera.isPaused
+	property alias isPreview: camera.isPreview
 	property bool showCloseButton: true
 	property color color : CameraViewStyle.backgroundColor
 	signal closeRequested()

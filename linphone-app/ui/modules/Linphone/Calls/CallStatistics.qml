@@ -11,14 +11,12 @@ Popup {
   id: callStatistics
 
   property var call
-
   // ---------------------------------------------------------------------------
 
   Rectangle {
     color: CallStatisticsStyle.color
-    height: CallStatisticsStyle.height
+    height: callStatistics.height
     width: callStatistics.width
-
     Row {
       anchors {
         fill: parent

@@ -62,6 +62,8 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 Camera::~Camera(){
 	if(mIsPreview)
 		deactivatePreview();
+//	else
+	//	resetWindowId();
 }
 
 void Camera::resetWindowId() {
@@ -69,9 +71,10 @@ void Camera::resetWindowId() {
 		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);
 	else if( mCallModel && mCallModel->getCall())
 		mCallModel->getCall()->setNativeVideoWindowId(NULL);
-	else if(mParticipantDeviceModel)
-		mParticipantDeviceModel->getDevice()->setNativeVideoWindowId(NULL);
-	else
+	else if(mParticipantDeviceModel){
+		if(mParticipantDeviceModel->getDevice())
+			mParticipantDeviceModel->getDevice()->setNativeVideoWindowId(NULL);
+	}else
 		CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
 }
 

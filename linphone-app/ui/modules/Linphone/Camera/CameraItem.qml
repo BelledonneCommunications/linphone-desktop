@@ -22,7 +22,7 @@ Item {
 	property bool hideCamera: false //callModel.pausedByUser
 	property bool isPaused: false
 	
-	property bool isVideoEnabled: !container.currentDevice || (container.currentDevice && container.currentDevice.videoEnabled)
+	property bool isVideoEnabled: enabled && (!container.currentDevice || (container.currentDevice && container.currentDevice.videoEnabled))
 	
 	function resetActive(){
 		resetTimer.resetActive()
@@ -49,7 +49,7 @@ Item {
 		
 		anchors.fill: parent
 		
-		active: !resetActive && container.isVideoEnabled //avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
+		active: container.enabled && !resetActive && container.isVideoEnabled //avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
 		sourceComponent: container.isVideoEnabled && !container.isPaused? camera : null		
 		
 		Timer{
@@ -75,8 +75,8 @@ Item {
 				isPreview: container.isPreview
 				
 				onRequestNewRenderer: {resetTimer.resetActive()}
-				Component.onDestruction: {resetWindowId()}
-				Component.onCompleted: console.log("Completed Camera")
+				Component.onDestruction: {resetWindowId(); console.log("Destroyed Camera [" + isPreview + "] : " + camera)}
+				Component.onCompleted: console.log("Completed Camera [" + isPreview + "] : " + camera)
 				
 			}
 		}		

@@ -146,16 +146,21 @@ void ParticipantDeviceModel::setIsSpeaking(bool speaking){
 }
 
 void ParticipantDeviceModel::updateVideoEnabled(){
-	bool enabled = mParticipantDevice && mParticipantDevice->getStreamAvailability(linphone::StreamType::Video) && 
+	bool enabled = !mIsLeft && (mParticipantDevice && mParticipantDevice->getStreamAvailability(linphone::StreamType::Video) && 
 		(	mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendRecv
 			|| mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendOnly
 		)
-	 || isMe();
+	 || isMe());
 	if( mIsVideoEnabled != enabled && mCall && mCall->getCall()->getState() ==  linphone::Call::State::StreamsRunning) {
 		qWarning() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str() : "") << ", me=" << isMe() << ", CallState=" << (mCall ? (int)mCall->getCall()->getState() : -1);
 		mIsVideoEnabled = enabled;
 		emit videoEnabledChanged();
 	}
+}
+
+void ParticipantDeviceModel::setIsLeft(bool left) {
+	mIsLeft = left;
+	updateVideoEnabled();
 }
 
 bool ParticipantDeviceModel::isMe() const{

@@ -8,7 +8,7 @@ import Utils 1.0
 
 Item {
   id: wrapper
-
+  
   // Optionnal parameters, set the position of popup relative to this item.
   property var relativeTo
   property int relativeX: 0
@@ -70,8 +70,8 @@ Item {
   Controls.Popup {
     id: popup
 
-    height: wrapper._content.height
-    width: wrapper._content.width
+    height: wrapper.height
+    width: wrapper.width
 
     background: Rectangle {
       color: PopupStyle.backgroundColor
