@@ -39,10 +39,12 @@ void ParticipantDeviceListener::onIsMuted(const std::shared_ptr<linphone::Partic
 }
 
 void ParticipantDeviceListener::onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
+	qWarning() << "onConferenceJoined: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
 	emit conferenceJoined(participantDevice);
 }
 
 void ParticipantDeviceListener::onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
+	qWarning() << "onConferenceLeft: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
 	emit conferenceLeft(participantDevice);
 }
 void ParticipantDeviceListener::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {
