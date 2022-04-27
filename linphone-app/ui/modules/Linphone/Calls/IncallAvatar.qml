@@ -10,18 +10,17 @@ import App.Styles 1.0
 // =============================================================================
 
 Avatar {
+	id: mainItem
   property var call
   property var participantDeviceModel
-
   readonly property var _sipAddressObserver: call ? SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
 												: participantDeviceModel ? SipAddressesModel.getSipAddressObserver(participantDeviceModel.address, '')
 													: null
   readonly property var _username: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
+  property bool isPaused: (call && (call.status === CallModel.CallStatusPaused)) || (participantDeviceModel && participantDeviceModel.isPaused)
 
   backgroundColor: CallStyle.container.avatar.backgroundColor
-  foregroundColor: call && call.status === CallModel.CallStatusPaused
-    ? CallStyle.container.pause.color
-    : 'transparent'
+  foregroundColor: mainItem.isPaused ? CallStyle.container.pause.color : 'transparent'
 
   image: {
 		if (_sipAddressObserver) {
@@ -31,8 +30,8 @@ Avatar {
 			return null;
   }
 
-  username: call && (call.status === CallModel.CallStatusPaused) || !_username? '' : _username
-
+  username: (mainItem.isPaused || !_username) ? '' : _username
+onUsernameChanged: console.log(username)
   Text {
     anchors.fill: parent
     color: CallStyle.container.pause.text.color
@@ -45,6 +44,6 @@ Avatar {
 
     text: '&#10073;&#10073;'
     textFormat: Text.RichText
-    visible: call && (call.status === CallModel.CallStatusPaused) || false
+    visible: mainItem.isPaused 
   }
 }

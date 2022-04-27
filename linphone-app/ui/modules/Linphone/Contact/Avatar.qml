@@ -20,7 +20,6 @@ Item {
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
   
   //onPresenceLevelChanged: console.log(Presence.getPresenceLevelIconName(presenceLevel)+' => '+username)
-
   // ---------------------------------------------------------------------------
 
   function isLoaded () {
@@ -29,9 +28,8 @@ Item {
 
   function _computeInitials () {
     var result = username.match(_initialsRegex)
-
     if (!result) {
-      return ''
+      return username.length > 0 ? username.charAt(0).toUpperCase() : ''
     }
 
     return result[1].charAt(0).toUpperCase() + (

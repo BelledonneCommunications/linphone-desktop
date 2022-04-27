@@ -31,6 +31,12 @@ ColumnLayout {
 			
 			anchors.leftMargin: 40
 			
+			color: ConferencesStyle.bar.text.color
+			font {
+				bold: true
+				pointSize: ConferencesStyle.bar.text.pointSize
+			}
+			
 			text: 'Mes conférences'
 		}
 	}

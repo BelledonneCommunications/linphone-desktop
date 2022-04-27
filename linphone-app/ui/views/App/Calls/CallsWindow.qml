@@ -33,6 +33,7 @@ Window {
 													  });
 													  */
 	property ConferenceInfoModel conferenceInfoModel
+	
 	readonly property bool chatIsOpened: !rightPaned.isClosed()
 	readonly property bool callsIsOpened: !mainPaned.isClosed()
 	
@@ -70,7 +71,6 @@ Window {
 	title: qsTr('callsTitle')
 	
 	// ---------------------------------------------------------------------------
-	
 	onClosing: Logic.handleClosing(close)
 	onDetachedVirtualWindow: Logic.tryToCloseWindow()
 	
@@ -254,6 +254,7 @@ Window {
 				WaitingRoom{
 					conferenceInfoModel: window.conferenceInfoModel
 					onCancel: endOfProcess(0)
+					enabled: window.visible
 				}
 			}
 			Component {
@@ -262,6 +263,7 @@ Window {
 					callModel: window.call
 					listCallsOpened: window.callsIsOpened
 					onOpenListCallsRequest: mainPaned.open()
+					enabled: window.visible
 				}
 			}
 			

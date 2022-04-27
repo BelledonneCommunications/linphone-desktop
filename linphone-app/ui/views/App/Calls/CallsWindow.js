@@ -44,7 +44,6 @@ function handleClosing (close) {
 									   window.close()
 								   }
 							   })
-	
 	close.accepted = false
 }
 

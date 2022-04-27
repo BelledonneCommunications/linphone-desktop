@@ -20,6 +20,11 @@ QtObject {
 		property int height: 60
 		property int leftMargin: 18
 		property int rightMargin: 18
+		
+		property QtObject text: QtObject {
+			property int pointSize: Units.dp * 11
+			property color color: ColorsList.add(sectionName+'_bar_text', 'j').color
+		}
 	}
 	
 	property QtObject conference: QtObject {

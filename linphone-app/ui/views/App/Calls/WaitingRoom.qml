@@ -18,7 +18,7 @@ Rectangle {
 	signal cancel()
 	
 	function close(){
-		loader.active = false
+		previewLoader.enabled = false
 	}
 	function open(){
 	}
@@ -34,12 +34,11 @@ Rectangle {
 			font.pointSize:  WaitingRoomStyle.title.pointSize
 			horizontalAlignment: Qt.AlignCenter
 		}
-		Loader{
+		
+		Item{
 			id: loader
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-		sourceComponent: Component{
-			
 			CameraView{
 				id: previewLoader
 				showCloseButton: false
@@ -47,7 +46,6 @@ Rectangle {
 				height: parent.height
 				width : height
 			}
-		}
 		}
 		// -------------------------------------------------------------------------
 		// Action Buttons.

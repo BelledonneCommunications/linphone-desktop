@@ -21,9 +21,7 @@ Item {
 	property bool isFullscreen: false
 	property bool hideCamera: false //callModel.pausedByUser
 	property bool isPaused: false
-	
 	property bool isVideoEnabled: enabled && (!container.currentDevice || (container.currentDevice && container.currentDevice.videoEnabled))
-	
 	function resetActive(){
 		resetTimer.resetActive()
 	}

@@ -48,7 +48,7 @@ Item{
 	CameraItem{
 		id: camera
 		anchors.fill: parent
-		visible: false
+		visible: true
 	}
 	OpacityMask{
 		id: renderedCamera
