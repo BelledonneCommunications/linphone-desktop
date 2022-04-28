@@ -77,6 +77,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	mCallModel = callModel;
 	auto sourceModel = new ParticipantDeviceListModel(mCallModel);
 	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::onCountChanged);
+	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::participantSpeaking);
 	setSourceModel(sourceModel);
 	emit countChanged();
 }
@@ -85,6 +86,7 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	setFilterType(0);
 	auto sourceModel = participant->getParticipantDevices().get();
 	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::countChanged);
+	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::participantSpeaking);
 	setSourceModel(sourceModel);
 	emit countChanged();
 }

@@ -58,11 +58,18 @@ ColumnLayout {
 				texts: [
 					'TERMINEES',
 					'PROGRAMMEES',
-					'INVITATIONS'
+					'INVITATIONS',
+					'TEST'
 				]
 				selectedButton: mainItem.filterType
 				onClicked: {
-					mainItem.filterType = (button === 0 ? ConferenceInfoProxyModel.Ended : button === 1 ?ConferenceInfoProxyModel.Scheduled : ConferenceInfoProxyModel.Invitations);
+					if(button <= 2)
+						mainItem.filterType = (button === 0 ? ConferenceInfoProxyModel.Ended : button === 1 ?ConferenceInfoProxyModel.Scheduled : ConferenceInfoProxyModel.Invitations);
+					else {
+						window.detachVirtualWindow()
+						window.attachVirtualWindow(Qt.resolvedUrl('../Calls/VideoConferenceMenu.qml'))
+					}
+					
 					//mainItem.filterType = button
 				}
 			}

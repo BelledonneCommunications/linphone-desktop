@@ -1,0 +1,636 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="49.365002"
+   viewBox="0 0 80 49.365002"
+   version="1.1"
+   id="svg195"
+   sodipodi:docname="conference_layout_grid.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview197"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="8.0031631"
+     inkscape:cx="47.16885"
+     inkscape:cy="30.362995"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg195" />
+  <defs
+     id="defs137">
+    <rect
+       id="b"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="c"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="e"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="f"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="h"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="i"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="k"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="l"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="n"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="o"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="q"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="r"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="t"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="u"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="w"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="x"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <rect
+       id="z"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="4.8390002" />
+    <rect
+       id="A"
+       x="0"
+       y="0"
+       width="17"
+       height="9.677"
+       rx="1" />
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="a">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset20" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur22" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix24" />
+      <feMerge
+         id="feMerge30">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode26" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode28" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="d">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset33" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur35" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix37" />
+      <feMerge
+         id="feMerge43">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode39" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode41" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="g">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset46" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur48" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix50" />
+      <feMerge
+         id="feMerge56">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode52" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode54" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="j">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset59" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur61" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix63" />
+      <feMerge
+         id="feMerge69">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode65" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode67" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="m">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset72" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur74" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix76" />
+      <feMerge
+         id="feMerge82">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode78" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode80" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="p">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset85" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur87" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix89" />
+      <feMerge
+         id="feMerge95">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode91" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode93" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="s">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset98" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur100" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix102" />
+      <feMerge
+         id="feMerge108">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode104" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode106" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="v">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset111" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur113" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix115" />
+      <feMerge
+         id="feMerge121">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode117" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode119" />
+      </feMerge>
+    </filter>
+    <filter
+       x="-0.035294118"
+       y="-0.062002686"
+       width="1.0705882"
+       height="1.1240054"
+       filterUnits="objectBoundingBox"
+       id="y">
+      <feOffset
+         in="SourceAlpha"
+         result="shadowOffsetOuter1"
+         id="feOffset124" />
+      <feGaussianBlur
+         stdDeviation=".25"
+         in="shadowOffsetOuter1"
+         result="shadowBlurOuter1"
+         id="feGaussianBlur126" />
+      <feColorMatrix
+         values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"
+         in="shadowBlurOuter1"
+         result="shadowMatrixOuter1"
+         id="feColorMatrix128" />
+      <feMerge
+         id="feMerge134">
+        <feMergeNode
+           in="shadowMatrixOuter1"
+           id="feMergeNode130" />
+        <feMergeNode
+           in="SourceGraphic"
+           id="feMergeNode132" />
+      </feMerge>
+    </filter>
+  </defs>
+  <g
+     fill="none"
+     fill-rule="evenodd"
+     id="g193"
+     transform="matrix(1.4536228,0,0,1.4763592,-0.02305047,-0.08712252)">
+    <g
+       filter="url(#a)"
+       transform="translate(37,12)"
+       id="g143">
+      <use
+         fill="#6b7a86"
+         xlink:href="#b"
+         id="use139"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#c"
+         id="use141"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#d)"
+       transform="translate(37,1.355)"
+       id="g149">
+      <use
+         fill="#6b7a86"
+         xlink:href="#e"
+         id="use145"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#f"
+         id="use147"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#g)"
+       transform="translate(37,22.645)"
+       id="g155">
+      <use
+         fill="#6b7a86"
+         xlink:href="#h"
+         id="use151"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#i"
+         id="use153"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#j)"
+       transform="translate(19,12)"
+       id="g161">
+      <use
+         fill="#6b7a86"
+         xlink:href="#k"
+         id="use157"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#l"
+         id="use159"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#m)"
+       transform="translate(19,1.355)"
+       id="g167">
+      <use
+         fill="#6b7a86"
+         xlink:href="#n"
+         id="use163"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#o"
+         id="use165"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#p)"
+       transform="translate(19,22.645)"
+       id="g173">
+      <use
+         fill="#6b7a86"
+         xlink:href="#q"
+         id="use169"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#r"
+         id="use171"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#s)"
+       transform="translate(1,12)"
+       id="g179">
+      <use
+         fill="#6b7a86"
+         xlink:href="#t"
+         id="use175"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#u"
+         id="use177"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#v)"
+       transform="translate(1,1.355)"
+       id="g185">
+      <use
+         fill="#6b7a86"
+         xlink:href="#w"
+         id="use181"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#x"
+         id="use183"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+    <g
+       filter="url(#y)"
+       transform="translate(1,22.645)"
+       id="g191">
+      <use
+         fill="#6b7a86"
+         xlink:href="#z"
+         id="use187"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+      <use
+         fill="#6b7a86"
+         xlink:href="#A"
+         id="use189"
+         x="0"
+         y="0"
+         width="100%"
+         height="100%" />
+    </g>
+  </g>
+</svg>

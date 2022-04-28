@@ -45,6 +45,7 @@ void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::participantDeviceJoined, this, &ConferenceModel::onParticipantDeviceJoined);
 	connect(listener, &ConferenceListener::participantDeviceMediaCapabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaCapabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaAvailabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaAvailabilityChanged);
+	connect(listener, &ConferenceListener::participantDeviceIsSpeakingChanged, this, &ConferenceModel::onParticipantDeviceIsSpeakingChanged);
 	connect(listener, &ConferenceListener::conferenceStateChanged, this, &ConferenceModel::onConferenceStateChanged);
 	connect(listener, &ConferenceListener::subjectChanged, this, &ConferenceModel::onSubjectChanged);
 }
@@ -117,6 +118,9 @@ void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(const std::share
 void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "ConferenceModel::onParticipantDeviceMediaAvailabilityChanged: "  << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
+}
+void ConferenceModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking){
+	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
 }
 void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newState){
 	emit conferenceStateChanged(newState);

@@ -112,6 +112,15 @@ Q_ENUM_NS(CallStatus)
 linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus& capability);
 LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status& capability);
 
+enum ConferenceLayout {
+	ConferenceLayoutGrid = int(linphone::ConferenceLayout::Grid),
+	ConferenceLayoutActiveSpeaker = int(linphone::ConferenceLayout::ActiveSpeaker),
+};
+Q_ENUM_NS(ConferenceLayout)
+
+linphone::ConferenceLayout toLinphone(const LinphoneEnums::ConferenceLayout& layout);
+LinphoneEnums::ConferenceLayout fromLinphone(const linphone::ConferenceLayout& layout);
+
 enum TunnelMode {
 		TunnelModeDisable = int(linphone::Tunnel::Mode::Disable),
 		TunnelModeEnable= int(linphone::Tunnel::Mode::Enable),

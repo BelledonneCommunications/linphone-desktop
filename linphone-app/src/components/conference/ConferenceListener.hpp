@@ -44,6 +44,7 @@ public:
 	virtual void onParticipantDeviceJoined(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
 	virtual void onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
 	virtual void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
+	virtual void onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking) override;
 	virtual void onStateChanged(const std::shared_ptr<linphone::Conference> & conference, linphone::Conference::State newState) override;
 	virtual void onSubjectChanged(const std::shared_ptr<linphone::Conference> & conference, const std::string & subject) override;
 	virtual void onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::AudioDevice> & audioDevice) override;
@@ -58,6 +59,7 @@ signals:
 	void participantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void participantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
 	void conferenceStateChanged(linphone::Conference::State newState);
 	void subjectChanged(const std::string & subject);
 };

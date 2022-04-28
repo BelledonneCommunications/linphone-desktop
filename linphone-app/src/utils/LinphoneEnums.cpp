@@ -69,6 +69,14 @@ LinphoneEnums::CallStatus LinphoneEnums::fromLinphone(const linphone::Call::Stat
 	return static_cast<LinphoneEnums::CallStatus>(data); 
 }
 
+linphone::ConferenceLayout LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceLayout& layout){
+	return static_cast<linphone::ConferenceLayout>(layout);
+}
+
+LinphoneEnums::ConferenceLayout LinphoneEnums::fromLinphone(const linphone::ConferenceLayout& layout){
+	return static_cast<LinphoneEnums::ConferenceLayout>(layout); 
+}
+
 linphone::Tunnel::Mode LinphoneEnums::toLinphone(const LinphoneEnums::TunnelMode& data){
 	return static_cast<linphone::Tunnel::Mode>(data);
 }

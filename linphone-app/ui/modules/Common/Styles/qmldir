@@ -14,8 +14,10 @@ singleton CheckBoxTextStyle         1.0 Form/CheckBoxTextStyle.qml
 singleton ComboBoxStyle             1.0 Form/ComboBoxStyle.qml
 singleton DroppableTextAreaStyle    1.0 Form/DroppableTextAreaStyle.qml
 singleton ListFormStyle             1.0 Form/ListFormStyle.qml
+singleton RadioButtonStyle          1.0 Form/RadioButtonStyle.qml
 singleton SearchBoxStyle            1.0 Form/SearchBoxStyle.qml
 singleton SliderStyle               1.0 Form/SliderStyle.qml
+singleton StackViewStyle            1.0 Form/StackViewStyle.qml
 singleton SwitchStyle               1.0 Form/SwitchStyle.qml
 singleton CommonItemDelegateStyle   1.0 Form/CommonItemDelegateStyle.qml
 singleton TransparentTextInputStyle 1.0 Form/TransparentTextInputStyle.qml

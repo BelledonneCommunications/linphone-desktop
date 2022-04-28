@@ -58,6 +58,7 @@ public slots:
 signals:
 	void callModelChanged();
 	void showMeChanged();
+	void participantSpeaking(ParticipantDeviceModel * speakingDevice);
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;

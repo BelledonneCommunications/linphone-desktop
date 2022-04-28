@@ -26,6 +26,8 @@
 #include <linphone++/linphone.hh>
 #include "../search/SearchListener.hpp"
 
+#include "utils/LinphoneEnums.hpp"
+
 // =============================================================================
 class ConferenceModel;
 class ContactModel;
@@ -78,6 +80,8 @@ class CallModel : public QObject {
 	Q_PROPERTY(QString securedString READ getSecuredString NOTIFY securityUpdated)
 	
 	Q_PROPERTY(QString transferAddress READ getTransferAddress WRITE setTransferAddress NOTIFY transferAddressChanged)
+	
+	Q_PROPERTY(LinphoneEnums::ConferenceLayout conferenceVideoLayout READ getConferenceVideoLayout WRITE changeConferenceVideoLayout NOTIFY conferenceVideoLayoutChanged)
 	
 	
 	
@@ -163,6 +167,10 @@ public:
 	
 	std::shared_ptr<linphone::Address> getRemoteAddress()const;
 	
+	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
+	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);	// Make a call request
+	void setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);		// Called from call state changed ater the new layout has been set.
+	
 	static constexpr int DtmfSoundDelay = 200;
 	
 	std::shared_ptr<linphone::Call> mCall;
@@ -192,6 +200,8 @@ signals:
 	
 	void fullPeerAddressChanged();
 	void transferAddressChanged (const QString &transferAddress);
+	
+	void conferenceVideoLayoutChanged();
 	
 public:
 	void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
@@ -265,6 +275,7 @@ private:
 	bool mPausedByRemote = false;
 	bool mPausedByUser = false;
 	bool mRecording = false;
+	LinphoneEnums::ConferenceLayout mConferenceVideoLayout;
 	
 	bool mWasConnected = false;
 	

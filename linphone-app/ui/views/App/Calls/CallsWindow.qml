@@ -261,9 +261,9 @@ Window {
 				id: videoConference
 				VideoConference {
 					callModel: window.call
+					enabled: window.visible
 					listCallsOpened: window.callsIsOpened
 					onOpenListCallsRequest: mainPaned.open()
-					enabled: window.visible
 				}
 			}
 			

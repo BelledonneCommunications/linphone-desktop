@@ -50,12 +50,11 @@ constexpr char AutoAnswerObjectName[] = "auto-answer-timer";
 }
 
 CallModel::CallModel (shared_ptr<linphone::Call> call){
-	
 	mCall = call;
 	if(mCall)
 		mCall->setData("call-model", *this);
-	
 	updateIsInConference();
+	mConferenceVideoLayout = LinphoneEnums::fromLinphone(call->getParams()->getConferenceVideoLayout());
 	
 	CoreManager *coreManager = CoreManager::getInstance();
 	
@@ -403,6 +402,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 				mWasConnected = true;
 			}
 			mPausedByRemote = false;
+			setConferenceVideoLayout(LinphoneEnums::fromLinphone(call->getParams()->getConferenceVideoLayout()));
 			break;
 		}
 		case linphone::Call::State::Connected:
@@ -839,6 +839,24 @@ void CallModel::prepareTransfert(shared_ptr<linphone::Call> call, const QString&
 std::shared_ptr<linphone::Address> CallModel::getRemoteAddress()const{
 	return mRemoteAddress;
 }
+
+LinphoneEnums::ConferenceLayout CallModel::getConferenceVideoLayout() const{
+	return LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout());
+}
+
+void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){
+	shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(mCall);
+	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
+	mCall->update(params);
+}
+
+void CallModel::setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){
+	if( mConferenceVideoLayout != layout){
+		mConferenceVideoLayout = layout;
+		emit conferenceVideoLayoutChanged();
+	}
+}
+
 // -----------------------------------------------------------------------------
 
 CallModel::CallEncryption CallModel::getEncryption () const {

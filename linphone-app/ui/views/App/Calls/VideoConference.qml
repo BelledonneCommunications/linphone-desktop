@@ -8,6 +8,7 @@ import Common.Styles 1.0
 import Linphone 1.0
 import LinphoneUtils 1.0
 
+import LinphoneEnums 1.0
 import UtilsCpp 1.0
 
 import App.Styles 1.0
@@ -168,7 +169,7 @@ Rectangle {
 		anchors.bottom: actionsButtons.top
 		
 		anchors.leftMargin: 70
-		anchors.rightMargin: 70
+		anchors.rightMargin: rightMenu.visible ? 70 : 15
 		anchors.topMargin: 15
 		anchors.bottomMargin: 20
 		onClicked: {
@@ -177,81 +178,37 @@ Rectangle {
 								  +Math.floor(Math.random()*255).toString(16)
 								  +Math.floor(Math.random()*255).toString(16)})
 		}
-		/*
-			ParticipantDeviceProxyModel{
-				id: participantDevices
+		Component{
+			id: gridComponent
+			VideoConferenceGrid{
+				id: grid
 				callModel: conference.callModel
-			}*/
-		Mosaic {
-			id: grid
-			anchors.fill: parent
-			squaredDisplay: true
-			
-			function setTestMode(){
-				grid.clear()
-				gridModel.model = gridModel.defaultList
-				for(var i = 0 ; i < 5 ; ++i)
-					grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-									  +Math.floor(Math.random()*255).toString(16)
-									  +Math.floor(Math.random()*255).toString(16)})
-				console.log("Setting test mode : count=" + gridModel.defaultList.count)
-			}
-			function setParticipantDevicesMode(){
-				console.log("Setting participant mode : count=" + gridModel.participantDevices.count)
-				grid.clear()
-				gridModel.model = gridModel.participantDevices
-			}
-			
-			delegateModel: DelegateModel{
-				id: gridModel
-				property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
-					id: participantDevices
-					callModel: conference.callModel
-					showMe: true
-				}
-				/*
-					property ListModel defaultList : ListModel{}
-					Component.onCompleted: {
-						if( conference.callModel ){
-							grid.clear()
-							gridModel.model = participantDevices
-						}
-					}
-					model: defaultList
-					*/
-				model: participantDevices
-				onCountChanged: {console.log("Delegate count = "+count+"/"+participantDevices.count)}
-				delegate: Item{
-					id: avatarCell
-					property ParticipantDeviceModel currentDevice: gridModel.participantDevices.getAt(index)
-					onCurrentDeviceChanged: {
-						console.log("currentDevice changed: " +currentDevice+"/"+cameraView.currentDevice + (currentDevice?", me:"+currentDevice.isMe:'')+" ["+index+"]")
-						if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
-						
-					}
-					//color: 'black' /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */
-					//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
-					//color:  $modelData.color ? $modelData.color : ''
-					height: grid.cellHeight - 10
-					width: grid.cellWidth - 10
-					Component.onCompleted: {
-						console.log("Completed: ["+index+"] " +(currentDevice?currentDevice.peerAddress+", isMe:"+currentDevice.isMe : '') )
-					}
-					
-					CameraView{
-						id: cameraView
-						enabled: index >=0
-						anchors.fill: parent
-						currentDevice: avatarCell.currentDevice
-						isPaused: callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused //callModel.pausedByUser
-						onCloseRequested: grid.remove( index)
-						color: 'black'
-					}
-				}
 			}
 		}
-		
-		
+		Component{
+			id: activeSpeakerComponent
+			VideoConferenceActiveSpeaker{
+				id: activeSpeaker
+				callModel: conference.callModel
+			}
+		}
+		RowLayout{
+			anchors.fill: parent
+			Loader{
+				Layout.fillHeight: true
+				Layout.fillWidth: true	
+				sourceComponent: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? gridComponent : activeSpeakerComponent
+				onSourceComponentChanged: console.log(conference.callModel.conferenceVideoLayout)
+				active: conference.callModel
+			}
+			VideoConferenceMenu{
+				id: rightMenu
+				Layout.fillHeight: true
+				Layout.preferredWidth: 400
+				callModel: conference.callModel
+				onClose: rightMenu.visible = !rightMenu.visible
+			}
+		}
 	}
 	// -------------------------------------------------------------------------
 	// Action Buttons.
@@ -403,7 +360,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.options
-			visible: false //TODO
+			onClicked: rightMenu.visible = !rightMenu.visible
 		}
 	}
 	

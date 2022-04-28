@@ -22,6 +22,7 @@ Item {
 	property bool hideCamera: false //callModel.pausedByUser
 	property bool isPaused: false
 	property bool isVideoEnabled: enabled && (!container.currentDevice || (container.currentDevice && container.currentDevice.videoEnabled))
+	onCurrentDeviceChanged: resetActive()
 	function resetActive(){
 		resetTimer.resetActive()
 	}

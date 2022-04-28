@@ -27,8 +27,10 @@ ListForm                1.0 Form/ListForm.qml
 ListItemSelector        1.0 Form/ListItemSelector.qml
 Mosaic                  1.0 Form/Mosaic.qml
 MouseArea               1.0 Form/MouseArea.qml
+RadioButton             1.0 Form/RadioButton.qml
 SearchBox               1.0 Form/SearchBox.qml
 Slider                  1.0 Form/Slider.qml
+StackView               1.0 Form/StackView.qml
 StaticListForm          1.0 Form/StaticListForm.qml
 Switch                  1.0 Form/Switch.qml
 TransparentTextInput    1.0 Form/TransparentTextInput.qml

@@ -13,6 +13,7 @@
 		<file>assets/images/admin_selected_custom.svg</file>
 		<file>assets/images/attachment_custom.svg</file>
 		<file>assets/images/auto_answer_custom.svg</file>
+		<file>assets/images/back_custom.svg</file>
 		<file>assets/images/burger_menu_custom.svg</file>
 		<file>assets/images/calendar_participants_custom.svg</file>
 		<file>assets/images/call_accept_custom.svg</file>
@@ -54,6 +55,8 @@
 		<file>assets/images/collapsed_custom.svg</file>
 		<file>assets/images/conference_custom.svg</file>
 		<file>assets/images/conference_layout_grid_custom.svg</file>
+		<file>assets/images/conference_layout_grid.svg</file>
+		<file>assets/images/conference_layout_active_speaker.svg</file>
 		<file>assets/images/contact_add_custom.svg</file>
 		<file>assets/images/contact_card_photo_custom.svg</file>
 		<file>assets/images/contact_custom.svg</file>
@@ -197,8 +200,10 @@
 		<file>ui/modules/Common/Form/Placements/FormTableLine.qml</file>
 		<file>ui/modules/Common/Form/Placements/FormTable.qml</file>
 		<file>ui/modules/Common/Form/Placements/FormVGroup.qml</file>
+		<file>ui/modules/Common/Form/RadioButton.qml</file>
 		<file>ui/modules/Common/Form/SearchBox.qml</file>
 		<file>ui/modules/Common/Form/Slider.qml</file>
+		<file>ui/modules/Common/Form/StackView.qml</file>
 		<file>ui/modules/Common/Form/StaticListForm.qml</file>
 		<file>ui/modules/Common/Form/Switch.qml</file>
 		<file>ui/modules/Common/Form/Tab/TabBar.qml</file>
@@ -251,8 +256,10 @@
 		<file>ui/modules/Common/Styles/Form/Placements/FormTableLineStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Placements/FormTableStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Placements/FormVGroupStyle.qml</file>
+		<file>ui/modules/Common/Styles/Form/RadioButtonStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/SearchBoxStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/SliderStyle.qml</file>
+		<file>ui/modules/Common/Styles/Form/StackViewStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/SwitchStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Tab/TabButtonStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
@@ -391,6 +398,9 @@
 		<file>ui/views/App/Calls/CallsWindow.qml</file>
 		<file>ui/views/App/Calls/Conference.qml</file>
 		<file>ui/views/App/Calls/VideoConference.qml</file>
+		<file>ui/views/App/Calls/VideoConferenceActiveSpeaker.qml</file>
+		<file>ui/views/App/Calls/VideoConferenceGrid.qml</file>
+		<file>ui/views/App/Calls/VideoConferenceMenu.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallTransfer.qml</file>
 		<file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
@@ -464,6 +474,7 @@
 		<file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/VideoConferenceStyle.qml</file>
+		<file>ui/views/App/Styles/Calls/VideoConferenceMenuStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/WaitingRoomStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallSipAddressStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>

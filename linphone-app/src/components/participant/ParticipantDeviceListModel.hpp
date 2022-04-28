@@ -60,9 +60,12 @@ public slots:
 	void onConferenceStateChanged(linphone::Conference::State newState);
 	void onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
+	void onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool isSpeaking);
+	void onParticipantDeviceSpeaking();
 
 signals:
 	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);
+	void participantSpeaking(ParticipantDeviceModel *speakingDevice);
 	
 private:
 	CallModel * mCallModel = nullptr;

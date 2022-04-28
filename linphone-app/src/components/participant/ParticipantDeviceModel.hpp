@@ -81,7 +81,6 @@ public:
 	
 	void connectTo(ParticipantDeviceListener * listener);
 	void updateVideoEnabled();
-	void setIsLeft(bool left);
 	
 public slots:
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
@@ -99,7 +98,6 @@ private:
 	bool mIsVideoEnabled;
 	bool mIsPaused = false;
 	bool mIsSpeaking = false;
-	bool mIsLeft = false;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
     std::shared_ptr<ParticipantDeviceListener> mParticipantDeviceListener;	// This is passed to linpĥone object and must be in shared_ptr
