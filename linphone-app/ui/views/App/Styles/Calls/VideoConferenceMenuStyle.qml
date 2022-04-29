@@ -33,16 +33,16 @@ QtObject {
 	}
 	
 	property QtObject modeIcons: QtObject{
-		property string gridIcon: 'conference_layout_grid'
-		property string activeSpeakerIcon: 'conference_layout_active_speaker'
-		property int width: 80
-		property int height: 50
+		property string gridIcon: 'conference_layout_grid_custom'
+		property string activeSpeakerIcon: 'conference_layout_active_speaker_custom'
+		property int width: 40
+		property int height: 40
 	}
 	property QtObject settingsIcons: QtObject{
 		property string gridIcon: 'conference_layout_grid_custom'
-		property string activeSpeakerIcon: 'conference_layout_active_speaker'
-		property int width: 50
-		property int height: 50
+		property string activeSpeakerIcon: 'conference_layout_active_speaker_custom'
+		property int width: 40
+		property int height: 40
 	}
 	
 	//------------------------------------------------------------------------------

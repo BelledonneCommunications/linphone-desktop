@@ -66,7 +66,7 @@ protected:
 	
 	QSharedPointer<ParticipantDeviceListModel> mDevices;
 	CallModel * mCallModel;
-	bool mShowMe = false;
+	bool mShowMe = true;
 };
 
 #endif

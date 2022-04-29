@@ -43,6 +43,7 @@ class Camera : public QQuickFramebufferObject {
 	Q_PROPERTY(CallModel * call READ getCallModel WRITE setCallModel NOTIFY callChanged);
 	Q_PROPERTY(ParticipantDeviceModel * participantDeviceModel READ getParticipantDeviceModel WRITE setParticipantDeviceModel NOTIFY participantDeviceModelChanged)
 	Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
+	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged);
 	
 public:
 	Camera (QQuickItem *parent = Q_NULLPTR);
@@ -55,25 +56,32 @@ public:
 	static QMutex mPreviewCounterMutex;
 	static int mPreviewCounter;
 	
+	void isReady();
+	void isNotReady();
+	
 signals:
 	void callChanged (CallModel *callModel);
 	void isPreviewChanged (bool isPreview);
+	void isReadyChanged();
 	void participantDeviceModelChanged(ParticipantDeviceModel *participantDeviceModel);
 	void requestNewRenderer();
 	
 private:
 	CallModel *getCallModel () const;
 	bool getIsPreview () const;
+	bool getIsReady () const;
 	ParticipantDeviceModel * getParticipantDeviceModel() const;
 	
 	void setCallModel (CallModel *callModel);
 	void setIsPreview (bool status);
+	void setIsReady(bool status);
 	void setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel);
 	
 	void activatePreview();
 	void deactivatePreview();
 	
 	bool mIsPreview = false;
+	bool mIsReady = false;
 	CallModel *mCallModel = nullptr;
 	ParticipantDeviceModel *mParticipantDeviceModel = nullptr;
 	

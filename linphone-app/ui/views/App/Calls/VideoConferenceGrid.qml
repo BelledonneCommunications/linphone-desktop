@@ -22,6 +22,7 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 Mosaic {
 	id: grid
 	property alias callModel: participantDevices.callModel
+	property int participantCount: gridModel.count
 	anchors.fill: parent
 	squaredDisplay: true
 	
@@ -71,9 +72,9 @@ Mosaic {
 				enabled: index >=0
 				anchors.fill: parent
 				currentDevice: avatarCell.currentDevice
-				isPaused: callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused //callModel.pausedByUser
+				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused //callModel.pausedByUser
 				onCloseRequested: grid.remove( index)
-				color: 'black'
+				//color: 'black'
 			}
 		}
 	}

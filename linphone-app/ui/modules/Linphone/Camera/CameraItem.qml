@@ -17,34 +17,21 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 Item {
 	id: container
 	property ParticipantDeviceModel currentDevice
-	property bool isPreview: !container.currentDevice || container.currentDevice.isMe
+	property CallModel callModel
+	property bool isPreview: !callModel && ( !container.currentDevice || container.currentDevice.isMe)
 	property bool isFullscreen: false
 	property bool hideCamera: false //callModel.pausedByUser
 	property bool isPaused: false
 	property bool isVideoEnabled: enabled && (!container.currentDevice || (container.currentDevice && container.currentDevice.videoEnabled))
+	property bool isReady: cameraLoader.item && cameraLoader.item.isReady
 	onCurrentDeviceChanged: resetActive()
 	function resetActive(){
 		resetTimer.resetActive()
 	}
-	Component {
-		id: avatar
-		
-		IncallAvatar {
-			participantDeviceModel: container.currentDevice
-			height: Utils.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
-			width: height
-		}
-	}
-	Loader {
-		anchors.centerIn: parent
-		
-		active: container.currentDevice && !container.currentDevice.isMe && (!container.currentDevice.videoEnabled || container.isFullscreen)
-		sourceComponent: avatar
-	}
+	
 	Loader {
 		id: cameraLoader
 		property bool resetActive: false
-		
 		
 		anchors.fill: parent
 		
@@ -70,13 +57,13 @@ Item {
 			id: camera
 			Camera {
 				participantDeviceModel: container.currentDevice
+				call: container.callModel
 				anchors.fill: parent
 				isPreview: container.isPreview
 				
 				onRequestNewRenderer: {resetTimer.resetActive()}
 				Component.onDestruction: {resetWindowId(); console.log("Destroyed Camera [" + isPreview + "] : " + camera)}
 				Component.onCompleted: console.log("Completed Camera [" + isPreview + "] : " + camera)
-				
 			}
 		}		
 	}

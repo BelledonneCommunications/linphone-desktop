@@ -85,7 +85,9 @@ Rectangle{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				Repeater{
-					model: [{text: 'Modifier la mise en page', icon: VideoConferenceMenuStyle.settingsIcons.gridIcon, nextPage:layoutMenu}
+					model: [{text: 'Modifier la mise en page'
+						, icon: (mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
+						, nextPage:layoutMenu}
 					]				
 					delegate:
 						Borders{

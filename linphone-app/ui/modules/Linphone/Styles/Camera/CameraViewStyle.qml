@@ -10,8 +10,10 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'CameraView'
-	property color backgroundColor: ColorsList.add(sectionName+'_description', '', '', '#798791').color
-	property int radius : 8
+	property color outBackgroundColor: ColorsList.add(sectionName+'_out_bg', 'conference_out_avatar_bg').color
+	property color inAvatarBackgroundColor: ColorsList.add(sectionName+'_in_bg', 'conference_bg').color
+	
+	property int radius : 10
 	
 	property QtObject contactDescription: QtObject {
 		property color color: ColorsList.add(sectionName+'_username', 'q').color

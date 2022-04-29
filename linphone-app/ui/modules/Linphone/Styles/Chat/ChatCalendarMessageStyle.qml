@@ -24,7 +24,7 @@ QtObject {
 		property int lineHeight: 20
 		
 		property QtObject backgroundColor: QtObject {
-			property color normal: ColorsList.add(sectionName+'_conference_bg_n', 'conference_bg').color
+			property color normal: ColorsList.add(sectionName+'_conference_bg_n', 'conference_entry_bg').color
 			property color hovered: ColorsList.add(sectionName+'_conference_bg_h', 'g10').color
 		}
 		

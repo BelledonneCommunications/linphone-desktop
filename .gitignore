@@ -13,6 +13,7 @@ WORK
 OUTPUT
 Makefile
 CMakeLists.txt.user
+build*
 build-*-Debug
 build-*-Default
 prepare.conf.user

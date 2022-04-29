@@ -168,8 +168,6 @@ Rectangle {
 		anchors.right: parent.right
 		anchors.bottom: actionsButtons.top
 		
-		anchors.leftMargin: 70
-		anchors.rightMargin: rightMenu.visible ? 70 : 15
 		anchors.topMargin: 15
 		anchors.bottomMargin: 20
 		onClicked: {
@@ -178,10 +176,13 @@ Rectangle {
 								  +Math.floor(Math.random()*255).toString(16)
 								  +Math.floor(Math.random()*255).toString(16)})
 		}
+		
 		Component{
 			id: gridComponent
 			VideoConferenceGrid{
 				id: grid
+				anchors.leftMargin: 70
+				anchors.rightMargin: rightMenu.visible ? 15 : 70
 				callModel: conference.callModel
 			}
 		}
@@ -190,22 +191,43 @@ Rectangle {
 			VideoConferenceActiveSpeaker{
 				id: activeSpeaker
 				callModel: conference.callModel
+				isRightReducedLayout: rightMenu.visible
+				isLeftReducedLayout: conference.listCallsOpened
 			}
 		}
 		RowLayout{
 			anchors.fill: parent
 			Loader{
+				id: conferenceLayout
 				Layout.fillHeight: true
-				Layout.fillWidth: true	
+				Layout.fillWidth: true
 				sourceComponent: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? gridComponent : activeSpeakerComponent
 				onSourceComponentChanged: console.log(conference.callModel.conferenceVideoLayout)
 				active: conference.callModel
+				ColumnLayout {
+					anchors.fill: parent
+					visible: !conference.callModel || !conferenceLayout.item || conferenceLayout.item.participantCount == 0
+					BusyIndicator{
+						Layout.preferredHeight: 50
+						Layout.preferredWidth: 50
+						Layout.alignment: Qt.AlignCenter
+						running: parent.visible
+						color: VideoConferenceStyle.buzyColor
+					}
+					Text{
+						Layout.alignment: Qt.AlignCenter
+						text: "Video conference is not ready. Please Wait..."
+						color: VideoConferenceStyle.buzyColor
+					}
+				}
 			}
 			VideoConferenceMenu{
 				id: rightMenu
 				Layout.fillHeight: true
 				Layout.preferredWidth: 400
+				Layout.rightMargin: 30
 				callModel: conference.callModel
+				visible: false
 				onClose: rightMenu.visible = !rightMenu.visible
 			}
 		}

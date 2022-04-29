@@ -184,7 +184,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	
 	
-	params->setConferenceVideoLayout(linphone::ConferenceLayout::Grid);
+	params->setConferenceVideoLayout(options.contains("layout") ? LinphoneEnums::toLinphone((LinphoneEnums::ConferenceLayout)options["layout"].toInt()) : linphone::ConferenceLayout::Grid);
 	params->enableMic(options.contains("micro") ? options["micro"].toBool() : true);
 	
 	bool enableVideo = options.contains("video") ? options["video"].toBool() : true;

@@ -80,8 +80,9 @@ void Camera::resetWindowId() {
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
-	bool useDefaultWindow = false;
+	bool useDefaultWindow = true;
 	if(mIsPreview){
+		qWarning() << "Setting Camera to Preview";
 		renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
 		if(renderer)
 			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
@@ -92,17 +93,19 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 		if(mCallModel){
 			auto call = mCallModel->getCall();
 			if(call){
+				qWarning() << "Setting Camera to CallModel";
 				renderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
 				if(renderer)
 					call->setNativeVideoWindowId(NULL);// Reset
 				renderer = (QQuickFramebufferObject::Renderer *) call->createNativeVideoWindowId();
 				if(renderer)
 					call->setNativeVideoWindowId(renderer);
-			}else
-				useDefaultWindow = true;
+				useDefaultWindow = false;
+			}
 		}else if( mParticipantDeviceModel){
 			auto participantDevice = mParticipantDeviceModel->getDevice();
 			if(participantDevice){
+				qWarning() << "Setting Camera to Participant Device";
 				renderer = (QQuickFramebufferObject::Renderer *)participantDevice->getNativeVideoWindowId();
 				if(renderer)
 					participantDevice->setNativeVideoWindowId(NULL);// Reset
@@ -110,10 +113,11 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 				renderer = (QQuickFramebufferObject::Renderer *) participantDevice->createNativeVideoWindowId();
 				if(renderer)
 					participantDevice->setNativeVideoWindowId(renderer);
-			}else
-				useDefaultWindow = true;
+				useDefaultWindow = false;
+			}
 		}
 		if(useDefaultWindow){
+			qWarning() << "Setting Camera to Defaul tWindow";
 			renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
 			if(renderer)
 				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
@@ -123,10 +127,13 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 		}
 	}
 	if( !renderer){
+		QTimer::singleShot(1, this, &Camera::isNotReady);// Workaround for const createRenderer
 		qWarning() << "Camera stream couldn't start for Rendering. Retrying in 1s";
 		renderer = new CameraDummy();
 		QTimer::singleShot(1000, this, &Camera::requestNewRenderer);
 		
+	}else{
+		QTimer::singleShot(1, this, &Camera::isReady);// Workaround for const createRenderer
 	}
 	return renderer;
 }
@@ -139,6 +146,10 @@ CallModel *Camera::getCallModel () const {
 
 bool Camera::getIsPreview () const {
 	return mIsPreview;
+}
+
+bool Camera::getIsReady () const {
+	return mIsReady;
 }
 
 ParticipantDeviceModel * Camera::getParticipantDeviceModel() const{
@@ -167,12 +178,26 @@ void Camera::setIsPreview (bool status) {
 	}
 }
 
+void Camera::setIsReady(bool status) {
+	if (mIsReady != status) {
+		mIsReady = status;
+		emit isReadyChanged();
+	}
+}
+
 void Camera::setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel){
 if (mParticipantDeviceModel != participantDeviceModel) {
 		mParticipantDeviceModel = participantDeviceModel;
 		update();
 		emit participantDeviceModelChanged(mParticipantDeviceModel);
 	}
+}
+
+void Camera::isReady(){
+	setIsReady(true);
+}
+void Camera::isNotReady(){
+	setIsReady(false);
 }
 
 void Camera::activatePreview(){

@@ -2,20 +2,25 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.12
 
+import App.Styles 1.0
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 Item{
 	id: mainItem
 	property alias currentDevice: camera.currentDevice
+	property alias callModel: camera.callModel
 	property alias hideCamera: camera.hideCamera
 	property alias isPaused: camera.isPaused
 	property alias isPreview: camera.isPreview
+	property alias isFullscreen: camera.isFullscreen
 	property bool showCloseButton: true
-	property color color : CameraViewStyle.backgroundColor
+	property color color : CameraViewStyle.outBackgroundColor
 	signal closeRequested()
 	
 	MouseArea{
@@ -36,10 +41,27 @@ Item{
         color: mainItem.color
         anchors.fill: parent
         radius: CameraViewStyle.radius
+        Component {
+			id: avatar
+			
+			IncallAvatar {
+				participantDeviceModel: mainItem.currentDevice
+				height: Utils.computeAvatarSize(mainItem, CallStyle.container.avatar.maxSize)
+				width: height
+				backgroundColor: CameraViewStyle.inAvatarBackgroundColor
+			}
+		}
+		Loader {
+			anchors.centerIn: parent
+			
+			active:  mainItem.currentDevice && !camera.isReady //&& !mainItem.currentDevice.isMe && (!mainItem.currentDevice.videoEnabled || mainItem.isFullscreen)
+			sourceComponent: avatar
+		}
     }
-	
+    
 	Rectangle{
 		id: showArea
+		
 		anchors.fill: parent
 		radius: CameraViewStyle.radius
 		visible: false
@@ -47,14 +69,15 @@ Item{
 	}
 	CameraItem{
 		id: camera
+		anchors.centerIn: parent
 		anchors.fill: parent
-		visible: true
+		visible: false
 	}
 	OpacityMask{
 		id: renderedCamera
 		anchors.fill: parent
 		source: camera
-		maskSource: backgroundArea
+		maskSource: showArea
 		invert:false
 		visible: true
 		
@@ -99,7 +122,7 @@ Item{
 	}
 	Text{
 		id: username
-		visible: mainItem.currentDevice		
+		visible: mainItem.currentDevice
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
@@ -132,8 +155,8 @@ Item{
 		visible: mainItem.showCloseButton && camera.isPreview
 		anchors.right: parent.right
 		anchors.top: parent.top
-		anchors.rightMargin: 15
-		anchors.topMargin: 15
+		anchors.rightMargin: 5
+		anchors.topMargin: 5
 		isCustom: true
 		colorSet: CameraViewStyle.closePreview
 		onClicked: mainItem.closeRequested()

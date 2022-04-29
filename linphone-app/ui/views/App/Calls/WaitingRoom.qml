@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.12
 
 import Common 1.0
 import Linphone 1.0
+import LinphoneEnums 1.0
 
 import Common.Styles 1.0
 import App.Styles 1.0
@@ -93,9 +94,15 @@ Rectangle {
 				}
 				RowLayout{
 					ActionButton{
+						id: layoutChoice
+						property int selectedLayout: LinphoneEnums.ConferenceLayoutGrid
 						isCustom: true
 						backgroundRadius: width/2
-						colorSet: WaitingRoomStyle.buttons.gridLayout
+						colorSet: selectedLayout == LinphoneEnums.ConferenceLayoutGrid ? WaitingRoomStyle.buttons.gridLayout : WaitingRoomStyle.buttons.activeSpeakerLayout
+						onClicked: if( selectedLayout == LinphoneEnums.ConferenceLayoutGrid ) 
+										selectedLayout = LinphoneEnums.ConferenceLayoutActiveSpeaker
+									else
+										selectedLayout = LinphoneEnums.ConferenceLayoutGrid
 						/*
 						colorSet: callModel.pausedByUser ? WaitingRoomStyle.buttons.play : WaitingRoomStyle.buttons.pause
 						onClicked: callModel.pausedByUser = !callModel.pausedByUser
@@ -121,7 +128,7 @@ Rectangle {
 			TextButtonB {
 				text: 'DEMARRER'
 		
-				onClicked: {mainItem.close(); CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0, {video: camera.cameraEnabled, micro:!micro.microMuted, audio:!speaker.speakerMuted}) }
+				onClicked: {mainItem.close(); CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0, {video: camera.cameraEnabled, micro:!micro.microMuted, audio:!speaker.speakerMuted, layout: layoutChoice.selectedLayout}) }
 			}
 		}
 		

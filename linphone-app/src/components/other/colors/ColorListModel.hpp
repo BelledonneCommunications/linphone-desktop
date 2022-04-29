@@ -113,7 +113,10 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("event_in", "#96C11F", "Event colors that are incoming")
 		ADD_COLOR("event_out", "#18A7AF", "Event colors that are outgoing")
 		
-		ADD_COLOR("conference_bg", "#D0D8DE", "Conferences : Background entry")
+		ADD_COLOR("conference_entry_bg", "#D0D8DE", "Conferences : Background entry")
+		ADD_COLOR("conference_out_avatar_bg", "#A1A1A1", "Conferences: Background avatar")
+		ADD_COLOR("conference_bg", "#798791", "Conferences: Background")
+		
 
 // Standard actions
 //

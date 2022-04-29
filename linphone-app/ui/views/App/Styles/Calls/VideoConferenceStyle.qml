@@ -9,7 +9,8 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'VideoConference'
-	property color backgroundColor: ColorsList.add(sectionName+'_description', '', '', '#798791').color
+	property color backgroundColor: ColorsList.add(sectionName+'_description', 'conference_bg').color
+	property color buzyColor: ColorsList.add(sectionName+'_indicator', 'i').color
 	
 	property QtObject title: QtObject {
 		property color color: ColorsList.add(sectionName+'_title', 'q').color

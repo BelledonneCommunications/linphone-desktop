@@ -95,6 +95,7 @@ void ParticipantDeviceProxyModel::setShowMe(const bool& show){
 	if( mShowMe != show) {
 		mShowMe = show;
 		emit showMeChanged();
+		invalidate();
 	}
 }
 
