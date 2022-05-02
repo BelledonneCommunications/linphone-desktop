@@ -52,8 +52,8 @@ std::shared_ptr<linphone::ConferenceScheduler> ConferenceScheduler::getConferenc
 }
 
 void ConferenceScheduler::onStateChanged(linphone::ConferenceSchedulerState state) {
-	emit stateChanged(state);
 	qWarning() << "ConferenceScheduler::onStateChanged : " << (int)state;
+	emit stateChanged(state);
 	if( state == linphone::ConferenceSchedulerState::Ready) {
 		std::shared_ptr<linphone::ChatRoomParams> params = CoreManager::getInstance()->getCore()->createDefaultChatRoomParams();
 		params->setBackend(linphone::ChatRoomBackend::Basic);
@@ -62,5 +62,6 @@ void ConferenceScheduler::onStateChanged(linphone::ConferenceSchedulerState stat
 }
 
 void ConferenceScheduler::onInvitationsSent( const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
+	qWarning() << "ConferenceScheduler::onInvitationsSent";
 	emit invitationsSent(failedInvitations);
 }

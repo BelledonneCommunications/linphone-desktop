@@ -108,9 +108,10 @@ QString LinphoneEnums::toString(const LinphoneEnums::TransportType& type){
 void LinphoneEnums::fromString(const QString& transportType, LinphoneEnums::TransportType *transport){
 	if (transportType.toUpper() == QLatin1String("TCP"))
 		*transport = TransportTypeTcp;
-	if (transportType.toUpper() == QLatin1String("UDP"))
+	else if (transportType.toUpper() == QLatin1String("UDP"))
 		*transport = TransportTypeUdp;
-	if (transportType.toUpper() == QLatin1String("TLS"))
+	else if (transportType.toUpper() == QLatin1String("TLS"))
 		*transport = TransportTypeTls;
-	*transport = TransportTypeDtls;
+	else
+		*transport = TransportTypeDtls;
 }

@@ -19,7 +19,13 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 DialogPlus {
 	id: conferenceManager
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{
-		onConferenceCreated: console.log("Conference has been created.")
+		onConferenceCreated: {
+			console.log("Conference has been created.")
+			creationStatus.icon = 'led_green'
+		}
+		onConferenceCreationFailed:{ console.log("Conference failed.")
+			creationStatus.icon = 'led_red'
+		}
 		onInvitationsSent: {
 						console.log("Conference => invitations sent. Check in log for invite states.")
 						exit(1)
@@ -106,9 +112,10 @@ DialogPlus {
 			}
 			
 			onClicked: {
+				creationStatus.icon = 'led_orange'
 				conferenceInfoModel.isScheduled = scheduledSwitch.checked
 				if( scheduledSwitch.checked){
-					var startDateTime = Utils.buidDate(dateField.getDate(), timeField.getTime())
+					var startDateTime = Utils.buildDate(dateField.getDate(), timeField.getTime())
 					startDateTime.setSeconds(0)
 					conferenceInfoModel.dateTime = startDateTime
 					conferenceInfoModel.duration = durationField.text
@@ -143,7 +150,13 @@ DialogPlus {
 				}
 			}
 		}
-		
+		, Icon{
+			id: creationStatus
+			height: 10
+			width: 10
+			visible: icon != ''
+			icon: ''
+		}
 	]
 	
 	buttonsAlignment: Qt.AlignRight

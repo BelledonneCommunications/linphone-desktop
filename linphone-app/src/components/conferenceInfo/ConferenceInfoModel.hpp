@@ -79,7 +79,7 @@ public:
 
 // SCHEDULER
 	
-	//virtual void onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) override;
+	virtual void onStateChanged(linphone::ConferenceSchedulerState state);
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 	
 	
@@ -94,6 +94,7 @@ signals:
 	void isScheduledChanged();
 	
 	void conferenceCreated();
+	void conferenceCreationFailed();
 	void invitationsSent();
 	
 private:

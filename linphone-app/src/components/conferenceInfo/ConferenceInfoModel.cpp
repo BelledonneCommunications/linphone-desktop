@@ -209,6 +209,7 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 	if( true || isScheduled()){
 		mConferenceScheduler = ConferenceScheduler::create();
 		connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
+		connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
 		mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
 	}else{
 		auto conferenceParameters = core->createConferenceParams(nullptr);
@@ -236,7 +237,14 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 
 //-------------------------------------------------------------------------------------------------
 
-
+void ConferenceInfoModel::onStateChanged(linphone::ConferenceSchedulerState state){
+	qWarning() << "ConferenceInfoModel::onStateChanged: " << (int) state;
+	if( state == linphone::ConferenceSchedulerState::Ready)
+		emit conferenceCreated();
+	else if( state == linphone::ConferenceSchedulerState::Error)
+		emit conferenceCreationFailed();
+}
 void ConferenceInfoModel::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
+	qWarning() << "ConferenceInfoModel::onInvitationsSent";
 	emit invitationsSent();
 }
