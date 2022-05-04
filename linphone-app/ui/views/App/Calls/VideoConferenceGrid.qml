@@ -45,7 +45,8 @@ Mosaic {
 		id: gridModel
 		property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: participantDevices
-			//callModel: conference.callModel
+			property bool cameraEnabled: callModel && callModel.cameraEnabled
+			onCameraEnabledChanged: showMe = cameraEnabled	// Do it on changed to ignore hard bindings (that can be override)
 			showMe: true
 		}
 		model: participantDevices
@@ -72,8 +73,10 @@ Mosaic {
 				enabled: index >=0
 				anchors.fill: parent
 				currentDevice: avatarCell.currentDevice
+				callModel: participantDevices.callModel
+				isCameraFromDevice: true
 				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused //callModel.pausedByUser
-				onCloseRequested: grid.remove( index)
+				onCloseRequested: participantDevices.showMe = false //grid.remove( index)
 				//color: 'black'
 			}
 		}

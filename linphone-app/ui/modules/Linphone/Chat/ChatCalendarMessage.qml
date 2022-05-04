@@ -25,7 +25,8 @@ Loader{
 	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
 	property int maxWidth : parent.width
 	property int fitHeight: active && item ? item.fitHeight + ChatCalendarMessageStyle.topMargin+ChatCalendarMessageStyle.bottomMargin + (isExpanded? 200 : 0): 0
-	property int fitWidth: active && item ? Math.max(item.fitWidth, maxWidth/2)  + ChatCalendarMessageStyle.widthMargin*2 : 0
+	//property int fitWidth: active && item ? Math.max(item.fitWidth, maxWidth/2)  + ChatCalendarMessageStyle.widthMargin*2 : 0
+	property int fitWidth: active && item ? maxWidth/2  + ChatCalendarMessageStyle.widthMargin*2 : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
 	property bool isExpanded : false
@@ -54,7 +55,7 @@ Loader{
 		
 		hoverEnabled: true
 		onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
-		onHoveredChanged: mainItem.containsMouse = loadedItem.containsMouse
+		onHoveredChanged: mainItem.containsMouse = loadedItem.containsMouse		
 		
 		ColumnLayout{
 			id: layout
@@ -112,6 +113,7 @@ Loader{
 				//Layout.preferredHeight: 
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignRight
+				elide: Text.ElideRight
 				color: ChatCalendarMessageStyle.subject.color
 				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 				font.weight: Font.Bold
@@ -135,7 +137,6 @@ Loader{
 				Text {
 					id: participantsList
 					Layout.fillWidth: true
-					Layout.minimumWidth: implicitWidth
 					color: ChatCalendarMessageStyle.participants.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.participants.pointSize

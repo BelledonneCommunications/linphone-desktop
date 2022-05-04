@@ -32,11 +32,14 @@ Item {
 			id: allDevices
 			showMe: true
 			onParticipantSpeaking: cameraView.currentDevice = speakingDevice
+			property bool cameraEnabled: callModel && callModel.cameraEnabled
+			onCameraEnabledChanged: showMe = cameraEnabled	// Do it on changed to ignore hard bindings (that can be override)
 		}
 	
 	CameraView{
 		id: cameraView
 		callModel: mainItem.callModel
+		isCameraFromDevice: false
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
@@ -70,6 +73,8 @@ Item {
 					width: miniViews.width - 6
 					enabled: index >=0
 					currentDevice: modelData
+					callModel: mainItem.callModel
+					isCameraFromDevice: true
 					isPaused: mainItem.callModel.pausedByUser || currentDevice && currentDevice.isPaused //callModel.pausedByUser
 					onCloseRequested: mainItem.showMe = false
 					//color: 'black'

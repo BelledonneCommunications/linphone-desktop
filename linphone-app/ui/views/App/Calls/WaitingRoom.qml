@@ -15,7 +15,7 @@ Rectangle {
 	id: mainItem
 	color: WaitingRoomStyle.backgroundColor
 	property ConferenceInfoModel conferenceInfoModel
-	
+
 	signal cancel()
 	
 	function close(){
@@ -88,21 +88,20 @@ Rectangle {
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: cameraEnabled  ? WaitingRoomStyle.buttons.cameraOn : WaitingRoomStyle.buttons.cameraOff
+						enabled: modeChoice.selectedMode != 2
 						//updating: cameraEnabled && callModel.updating
 						onClicked: cameraEnabled = !cameraEnabled
 					}
 				}
 				RowLayout{
 					ActionButton{
-						id: layoutChoice
-						property int selectedLayout: LinphoneEnums.ConferenceLayoutGrid
+						id: modeChoice
+						property int selectedMode: 0
 						isCustom: true
 						backgroundRadius: width/2
-						colorSet: selectedLayout == LinphoneEnums.ConferenceLayoutGrid ? WaitingRoomStyle.buttons.gridLayout : WaitingRoomStyle.buttons.activeSpeakerLayout
-						onClicked: if( selectedLayout == LinphoneEnums.ConferenceLayoutGrid ) 
-										selectedLayout = LinphoneEnums.ConferenceLayoutActiveSpeaker
-									else
-										selectedLayout = LinphoneEnums.ConferenceLayoutGrid
+						colorSet: selectedMode == 0 ? WaitingRoomStyle.buttons.gridLayout :
+															selectedMode == 1 ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
+						onClicked: selectedMode = (selectedMode + 1) % 3
 						/*
 						colorSet: callModel.pausedByUser ? WaitingRoomStyle.buttons.play : WaitingRoomStyle.buttons.pause
 						onClicked: callModel.pausedByUser = !callModel.pausedByUser
@@ -128,7 +127,12 @@ Rectangle {
 			TextButtonB {
 				text: 'DEMARRER'
 		
-				onClicked: {mainItem.close(); CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0, {video: camera.cameraEnabled, micro:!micro.microMuted, audio:!speaker.speakerMuted, layout: layoutChoice.selectedLayout}) }
+				onClicked: {mainItem.close(); CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
+																			 {	video: modeChoice.selectedMode != 2
+																				, camera: camera.cameraEnabled
+																				, micro: !micro.microMuted
+																				, audio: !speaker.speakerMuted
+																				, layout: (modeChoice.selectedMode % 2)}) }
 			}
 		}
 		

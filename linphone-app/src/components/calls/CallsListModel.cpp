@@ -183,19 +183,22 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	
-	
-	params->setConferenceVideoLayout(options.contains("layout") ? LinphoneEnums::toLinphone((LinphoneEnums::ConferenceLayout)options["layout"].toInt()) : linphone::ConferenceLayout::Grid);
-	params->enableMic(options.contains("micro") ? options["micro"].toBool() : true);
-	
+	auto layout = options.contains("layout") ? LinphoneEnums::toLinphone((LinphoneEnums::ConferenceLayout)options["layout"].toInt()) : linphone::ConferenceLayout::Grid;
+	bool enableMicro =options.contains("micro") ? options["micro"].toBool() : true;
 	bool enableVideo = options.contains("video") ? options["video"].toBool() : true;
+	bool enableCamera = options.contains("camera") ? options["camera"].toBool() : true;
 	bool enableSpeaker = options.contains("audio") ? options["audio"].toBool() : true;
+
+	params->setConferenceVideoLayout(layout);
+	params->enableMic(enableMicro);
 	params->enableVideo(enableVideo);
+	params->setVideoDirection(enableCamera ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
 	params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	
 	auto call = core->inviteAddressWithParams(address, params);
 	call->setSpeakerMuted(!enableSpeaker);
-	qWarning() << "Launch Video call camera: " << enableVideo << " speaker:" << enableSpeaker << ", micro:" << params->micEnabled();
+	qWarning() << "Launch " << (enableVideo ? "video" : "audio") << " call; camera: " << enableCamera<< " speaker:" << enableSpeaker << ", micro:" << params->micEnabled() << ", layout:" << (int)layout;
 	CallModel::prepareTransfert(call, prepareTransfertAddress);
 }
 

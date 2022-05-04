@@ -201,7 +201,7 @@ Rectangle {
 				id: conferenceLayout
 				Layout.fillHeight: true
 				Layout.fillWidth: true
-				sourceComponent: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? gridComponent : activeSpeakerComponent
+				sourceComponent: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
 				onSourceComponentChanged: console.log(conference.callModel.conferenceVideoLayout)
 				active: conference.callModel
 				ColumnLayout {
@@ -310,9 +310,10 @@ Rectangle {
 				id: camera
 				isCustom: true
 				backgroundRadius: 90
-				colorSet: callModel && callModel.videoEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
+				colorSet: callModel && callModel.cameraEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating
-				onClicked: if(callModel) callModel.videoEnabled = !callModel.videoEnabled
+				enabled: callModel.videoEnabled
+				onClicked: if(callModel) callModel.cameraEnabled = !callModel.cameraEnabled
 			}
 		}
 		RowLayout{

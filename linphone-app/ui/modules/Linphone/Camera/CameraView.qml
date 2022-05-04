@@ -19,6 +19,7 @@ Item{
 	property alias isPaused: camera.isPaused
 	property alias isPreview: camera.isPreview
 	property alias isFullscreen: camera.isFullscreen
+	property alias isCameraFromDevice: camera.isCameraFromDevice
 	property bool showCloseButton: true
 	property color color : CameraViewStyle.outBackgroundColor
 	signal closeRequested()
@@ -152,7 +153,7 @@ Item{
 		source: username
 	}
 	ActionButton{
-		visible: mainItem.showCloseButton && camera.isPreview
+		visible: mainItem.showCloseButton && camera.isPreview && mainItem.callModel && mainItem.callModel.videoEnabled
 		anchors.right: parent.right
 		anchors.top: parent.top
 		anchors.rightMargin: 5
@@ -177,6 +178,25 @@ Item{
 			icon: CameraViewStyle.isMuted.button.icon
 			overwriteColor: CameraViewStyle.isMuted.button.foregroundNormalColor
 			iconSize: CameraViewStyle.isMuted.button.iconSize
+		}
+	}
+
+	Rectangle{
+		visible: (mainItem.callModel && !mainItem.callModel.videoEnabled) ||
+				 (mainItem.currentDevice && !mainItem.currentDevice.videoEnabled)
+		anchors.right: parent.right
+		anchors.top: parent.top
+		anchors.rightMargin: 15
+		anchors.topMargin: 15
+		height: CameraViewStyle.isAudioOnly.button.iconSize
+		width: height
+		radius: width/2
+		color: CameraViewStyle.isAudioOnly.button.backgroundNormalColor
+		Icon{
+			anchors.centerIn: parent
+			icon: CameraViewStyle.isAudioOnly.button.icon
+			overwriteColor: CameraViewStyle.isAudioOnly.button.foregroundNormalColor
+			iconSize: CameraViewStyle.isAudioOnly.button.iconSize
 		}
 	}
 	

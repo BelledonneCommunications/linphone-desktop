@@ -66,6 +66,7 @@ class CallModel : public QObject {
 	
 	Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged)
 	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged)
+	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE setCameraEnabled NOTIFY statusChanged)
 	Q_PROPERTY(bool updating READ getUpdating NOTIFY statusChanged)
 	
 	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged)
@@ -188,6 +189,7 @@ signals:
 	void conferenceModelChanged();
 	void speakerMutedChanged (bool status);
 	void microMutedChanged (bool status);
+	void cameraEnabledChanged();
 	void recordingChanged (bool status);
 	void statsUpdated ();
 	void statusChanged (CallStatus status);
@@ -234,6 +236,9 @@ public:
 	
 	bool getMicroMuted () const;
 	void setMicroMuted (bool status);
+
+	bool getCameraEnabled () const;
+	void setCameraEnabled (bool status);
 	
 	bool getPausedByUser () const;
 	void setPausedByUser (bool status);

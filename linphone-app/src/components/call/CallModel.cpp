@@ -643,6 +643,36 @@ void CallModel::setMicroMuted (bool status) {
 
 // -----------------------------------------------------------------------------
 
+bool CallModel::getCameraEnabled () const{
+	return mCall && (((int)mCall->getCurrentParams()->getVideoDirection() & (int)linphone::MediaDirection::SendOnly) == (int)linphone::MediaDirection::SendOnly);
+}
+
+void CallModel::setCameraEnabled (bool status){
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	if (!core->videoSupported()) {
+		qWarning() << QStringLiteral("Unable to update video call property. (Video not supported.)");
+		return;
+	}
+	if(mCall) {
+		switch (mCall->getState()) {
+			case linphone::Call::State::Connected:
+			case linphone::Call::State::StreamsRunning:
+				break;
+			default: {
+				qWarning() << "Cannot set Camera mode because of call status : " << (int)mCall->getState() << " is not in {" <<(int)linphone::Call::State::Connected << ", " <<(int)linphone::Call::State::StreamsRunning << "}";
+				return;
+			}
+		}
+		if (status == getCameraEnabled())
+			return;
+
+		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
+		params->setVideoDirection(status ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
+		mCall->update(params);
+	}
+}
+// -----------------------------------------------------------------------------
+
 bool CallModel::getPausedByUser () const {
 	return mPausedByUser;
 }
@@ -678,7 +708,9 @@ bool CallModel::getRemoteVideoEnabled () const {
 bool CallModel::getVideoEnabled () const {
 	if(mCall){
 		shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
-		return params && params->videoEnabled() && getStatus() == CallStatusConnected && mCall->getState() == linphone::Call::State::StreamsRunning;
+		bool t = params && params->videoEnabled();// && getStatus() == CallStatusConnected && mCall->getState() == linphone::Call::State::StreamsRunning;
+		qWarning() << t << " => " << (params && params->videoEnabled()) << ", " << (int)getStatus() << ", " << (int)mCall->getState();
+		return t;
 	}else
 		return true;
 }
@@ -847,6 +879,7 @@ LinphoneEnums::ConferenceLayout CallModel::getConferenceVideoLayout() const{
 void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){
 	shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(mCall);
 	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
+	params->enableVideo(true);
 	mCall->update(params);
 }
 

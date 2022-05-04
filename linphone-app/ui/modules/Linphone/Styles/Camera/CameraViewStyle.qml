@@ -60,4 +60,14 @@ QtObject {
 			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg', icon, 's_d_b_fg').color
 		}
 	}
+	property QtObject isAudioOnly: QtObject{
+		property color backgroundColor : ColorsList.add(sectionName+'_isAudioOnly_bg', 'l').color
+		property QtObject button: QtObject {
+			property int iconSize: 40
+			property string icon : 'conference_audio_only_custom'
+			property string name : 'isAudioOnly'
+			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg', icon, 's_d_b_bg').color
+			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg', icon, 's_d_b_fg').color
+		}
+	}
 }

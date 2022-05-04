@@ -86,7 +86,9 @@ Rectangle{
 				Layout.fillWidth: true
 				Repeater{
 					model: [{text: 'Modifier la mise en page'
-						, icon: (mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
+						, icon: (mainItem.callModel.videoEnabled ?
+										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
+									: VideoConferenceMenuStyle.settingsIcons.audioOnlyIcon)
 						, nextPage:layoutMenu}
 					]				
 					delegate:
@@ -147,6 +149,7 @@ Rectangle{
 				Repeater{
 					model: [{text: 'Mode mosaïque', icon: VideoConferenceMenuStyle.modeIcons.gridIcon, value:LinphoneEnums.ConferenceLayoutGrid}
 						, {text: 'Mode présentateur', icon: VideoConferenceMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker}
+						, {text: 'Mode audio', icon: VideoConferenceMenuStyle.modeIcons.audioOnlyIcon, value:2}
 					]				
 					delegate:
 						Borders{
@@ -164,9 +167,13 @@ Rectangle{
 								Layout.preferredHeight: contentItem.implicitHeight
 								Layout.alignment: Qt.AlignVCenter
 								ButtonGroup.group: modeGroup					
-								checked: mainItem.callModel ? modelData.value == mainItem.callModel.conferenceVideoLayout : false
+								checked: mainItem.callModel ? (mainItem.callModel.videoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
+															|| (!mainItem.callModel.videoEnabled && modelData.value == 2)
+															: false
+								onCheckedChanged: console.log(mainItem.callModel ? mainItem.callModel.videoEnabled +","+mainItem.callModel.conferenceVideoLayout  : '')
 								text: modelData.text
-								onClicked: mainItem.callModel.conferenceVideoLayout = modelData.value
+								onClicked: if(modelData.value == 2) mainItem.callModel.videoEnabled = false
+											else mainItem.callModel.conferenceVideoLayout = modelData.value
 							}
 							Icon{
 								id: layoutIcon							
