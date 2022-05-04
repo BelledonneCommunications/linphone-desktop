@@ -43,6 +43,7 @@ int Camera::mPreviewCounter;
 
 // =============================================================================
 Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
+	updateWindowIdLocation();
 	setTextureFollowsItemSize(true);
 	// The fbo content must be y-mirrored because the ms rendering is y-inverted.
 	setMirrorVertically(true);
@@ -60,71 +61,108 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 }
 
 Camera::~Camera(){
+	qWarning() << "Camera destructor" << this;
 	if(mIsPreview)
 		deactivatePreview();
-//	else
-	//	resetWindowId();
+	setWindowIdLocation(None);
 }
 
-void Camera::resetWindowId() {
-	if(mIsPreview)
-		CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);
-	else if( mCallModel && mCallModel->getCall())
-		mCallModel->getCall()->setNativeVideoWindowId(NULL);
-	else if(mParticipantDeviceModel){
-		if(mParticipantDeviceModel->getDevice())
-			mParticipantDeviceModel->getDevice()->setNativeVideoWindowId(NULL);
-	}else
-		CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
+void Camera::resetWindowId() const{
+	if(mIsWindowIdSet){
+		QQuickFramebufferObject::Renderer * oldRenderer = NULL;
+		if(mWindowIdLocation == CorePreview){
+			oldRenderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
+			if(oldRenderer)
+				CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);
+		}else if( mWindowIdLocation == Call){
+			if(mCallModel){
+				auto call = mCallModel->getCall();
+				if( call ){
+					oldRenderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
+					if(oldRenderer)
+						call->setNativeVideoWindowId(NULL);
+				}
+			}
+		}else if(mWindowIdLocation == Device){
+			if(mParticipantDeviceModel){
+				auto device = mParticipantDeviceModel->getDevice();
+				if( device ){
+					oldRenderer = (QQuickFramebufferObject::Renderer *)device->getNativeVideoWindowId();
+					if(oldRenderer)
+						mParticipantDeviceModel->getDevice()->setNativeVideoWindowId(NULL);
+				}
+			}
+		}else if( mWindowIdLocation == Core){
+			oldRenderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+			if(oldRenderer)
+				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
+		}
+		qWarning() << "Removed " << oldRenderer << " at " << mWindowIdLocation << " for " << this;
+		mIsWindowIdSet = false;
+	}
 }
 
-QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
-	QQuickFramebufferObject::Renderer * renderer = NULL;
+void Camera::setWindowIdLocation(const WindowIdLocation& location){
+	if( mWindowIdLocation != location){
+		resetWindowId();// Location change: Reset old window ID.
+		mWindowIdLocation = location;
+	}
+}
+void Camera::updateWindowIdLocation(){
 	bool useDefaultWindow = true;
-	if(mIsPreview){
-		qWarning() << "Setting Camera to Preview";
-		renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
-		if(renderer)
-			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);// Reset
-		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->createNativePreviewWindowId();
-		if(renderer)
-			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
-	}else{
+	if(mIsPreview)
+		setWindowIdLocation( WindowIdLocation::CorePreview);
+	else{
 		if(mCallModel){
 			auto call = mCallModel->getCall();
 			if(call){
-				qWarning() << "Setting Camera to CallModel";
-				renderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
-				if(renderer)
-					call->setNativeVideoWindowId(NULL);// Reset
-				renderer = (QQuickFramebufferObject::Renderer *) call->createNativeVideoWindowId();
-				if(renderer)
-					call->setNativeVideoWindowId(renderer);
+				setWindowIdLocation( WindowIdLocation::Call);
 				useDefaultWindow = false;
 			}
 		}else if( mParticipantDeviceModel){
 			auto participantDevice = mParticipantDeviceModel->getDevice();
 			if(participantDevice){
-				qWarning() << "Setting Camera to Participant Device";
-				renderer = (QQuickFramebufferObject::Renderer *)participantDevice->getNativeVideoWindowId();
-				if(renderer)
-					participantDevice->setNativeVideoWindowId(NULL);// Reset
-				qWarning() << "Trying to create new window ID for " << participantDevice->getName().c_str() << ", addr=" << participantDevice->getAddress()->asString().c_str();
-				renderer = (QQuickFramebufferObject::Renderer *) participantDevice->createNativeVideoWindowId();
-				if(renderer)
-					participantDevice->setNativeVideoWindowId(renderer);
+				setWindowIdLocation(WindowIdLocation::Device);
 				useDefaultWindow = false;
 			}
 		}
 		if(useDefaultWindow){
-			qWarning() << "Setting Camera to Defaul tWindow";
-			renderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
-			if(renderer)
-				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
-			renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->createNativeVideoWindowId();
-			if(renderer)
-				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
+			setWindowIdLocation(WindowIdLocation::Core);
 		}
+	}
+}
+
+QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
+	resetWindowId();
+
+	QQuickFramebufferObject::Renderer * renderer = NULL;
+	if(mWindowIdLocation == CorePreview){
+		qWarning() << "Setting Camera to Preview";
+		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->createNativePreviewWindowId();
+		if(renderer)
+			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
+	}else if(mWindowIdLocation == Call){
+			auto call = mCallModel->getCall();
+			if(call){
+				qWarning() << "Setting Camera to CallModel";
+				renderer = (QQuickFramebufferObject::Renderer *) call->createNativeVideoWindowId();
+				if(renderer)
+					call->setNativeVideoWindowId(renderer);
+			}
+	}else if( mWindowIdLocation == Device) {
+		auto participantDevice = mParticipantDeviceModel->getDevice();
+		if(participantDevice){
+			qWarning() << "Setting Camera to Participant Device";
+			qWarning() << "Trying to create new window ID for " << participantDevice->getName().c_str() << ", addr=" << participantDevice->getAddress()->asString().c_str();
+			renderer = (QQuickFramebufferObject::Renderer *) participantDevice->createNativeVideoWindowId();
+			if(renderer)
+				participantDevice->setNativeVideoWindowId(renderer);
+		}
+	}else if( mWindowIdLocation == Core){
+		qWarning() << "Setting Camera to Default Window";
+		renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->createNativeVideoWindowId();
+		if(renderer)
+			CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
 	}
 	if( !renderer){
 		QTimer::singleShot(1, this, &Camera::isNotReady);// Workaround for const createRenderer
@@ -133,6 +171,8 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 		QTimer::singleShot(1000, this, &Camera::requestNewRenderer);
 		
 	}else{
+		mIsWindowIdSet = true;
+		qWarning() << "Added " << renderer << " at " << mWindowIdLocation << " for " << this;
 		QTimer::singleShot(1, this, &Camera::isReady);// Workaround for const createRenderer
 	}
 	return renderer;
@@ -159,6 +199,7 @@ ParticipantDeviceModel * Camera::getParticipantDeviceModel() const{
 void Camera::setCallModel (CallModel *callModel) {
 	if (mCallModel != callModel) {
 		mCallModel = callModel;
+		updateWindowIdLocation();
 		update();
 		
 		emit callChanged(mCallModel);
@@ -172,6 +213,7 @@ void Camera::setIsPreview (bool status) {
 			activatePreview();
 		else
 			deactivatePreview();
+		updateWindowIdLocation();
 		update();
 		
 		emit isPreviewChanged(status);
@@ -188,6 +230,7 @@ void Camera::setIsReady(bool status) {
 void Camera::setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel){
 if (mParticipantDeviceModel != participantDeviceModel) {
 		mParticipantDeviceModel = participantDeviceModel;
+		updateWindowIdLocation();
 		update();
 		emit participantDeviceModelChanged(mParticipantDeviceModel);
 	}
@@ -214,6 +257,5 @@ void Camera::deactivatePreview(){
 		if (--mPreviewCounter == 0)
 			core->enableVideoPreview(false);
 		mPreviewCounterMutex.unlock();
-		core->setNativePreviewWindowId(NULL);
 	}
 }

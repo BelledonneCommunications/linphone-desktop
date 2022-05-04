@@ -220,7 +220,7 @@ Rectangle {
 					colorSet: CallStyle.buttons.fullscreen
 					visible: incall.call.videoEnabled
 					
-					onClicked: Logic.showFullscreen(contactDescription.mapToGlobal(0,0))
+					onClicked: Logic.showFullscreen(window, incall, 'IncallFullscreenWindow.qml', contactDescription.mapToGlobal(0,0))
 				}
 			}
 		}

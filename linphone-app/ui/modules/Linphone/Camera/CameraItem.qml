@@ -78,7 +78,7 @@ Item {
 				isPreview: container.isPreview
 				
 				onRequestNewRenderer: {resetTimer.resetActive()}
-				Component.onDestruction: {resetWindowId(); console.log("Destroyed Camera [" + isPreview + "] : " + camera)}
+				Component.onDestruction: {/*resetWindowId();*/ console.log("Destroyed Camera [" + isPreview + "] : " + camera)}
 				Component.onCompleted: console.log("Completed Camera [" + isPreview + "] : " + camera)
 			}
 		}		

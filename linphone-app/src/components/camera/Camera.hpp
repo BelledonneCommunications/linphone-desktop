@@ -44,6 +44,14 @@ class Camera : public QQuickFramebufferObject {
 	Q_PROPERTY(ParticipantDeviceModel * participantDeviceModel READ getParticipantDeviceModel WRITE setParticipantDeviceModel NOTIFY participantDeviceModelChanged)
 	Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
 	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged);
+
+	typedef enum{
+		None = -1,
+		CorePreview = 0,
+		Call,
+		Device,
+		Core
+	}WindowIdLocation;
 	
 public:
 	Camera (QQuickItem *parent = Q_NULLPTR);
@@ -51,7 +59,7 @@ public:
 	
 	QQuickFramebufferObject::Renderer *createRenderer () const override;
 	
-	Q_INVOKABLE void resetWindowId();
+	Q_INVOKABLE void resetWindowId() const;	// const to be used from createRenderer()
 	
 	static QMutex mPreviewCounterMutex;
 	static int mPreviewCounter;
@@ -76,14 +84,19 @@ private:
 	void setIsPreview (bool status);
 	void setIsReady(bool status);
 	void setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel);
+	void setWindowIdLocation(const WindowIdLocation& location);
 	
 	void activatePreview();
 	void deactivatePreview();
+	void updateWindowIdLocation();
 	
 	bool mIsPreview = false;
 	bool mIsReady = false;
 	CallModel *mCallModel = nullptr;
 	ParticipantDeviceModel *mParticipantDeviceModel = nullptr;
+
+	WindowIdLocation mWindowIdLocation = None;
+	mutable bool mIsWindowIdSet = false;
 	
 	QTimer *mRefreshTimer = nullptr;
 };

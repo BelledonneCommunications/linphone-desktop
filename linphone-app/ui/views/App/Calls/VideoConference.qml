@@ -25,7 +25,12 @@ Rectangle {
 	
 	property CallModel callModel
 	property ConferenceModel conferenceModel: callModel && callModel.getConferenceModel()
+	property bool cameraIsReady : false
+	property bool previewIsReady : false
+	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
 	property var _fullscreen: null
+	on_FullscreenChanged: if( !_fullscreen) isFullScreen = false
+
 	property bool listCallsOpened: true
 	
 	signal openListCallsRequest()
@@ -115,6 +120,7 @@ Rectangle {
 		}
 		// Title
 		Text{
+			id: title
 			Timer{
 				id: elapsedTimeRefresher
 				running: true
@@ -152,7 +158,8 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.fullscreen
-			visible: false	//TODO
+			visible: conference.callModel.videoEnabled
+			onClicked: Logic.showFullscreen(window, conference, 'VideoConferenceFullscreen.qml', title.mapToGlobal(0,0))
 		}
 		
 	}
@@ -184,6 +191,7 @@ Rectangle {
 				anchors.leftMargin: 70
 				anchors.rightMargin: rightMenu.visible ? 15 : 70
 				callModel: conference.callModel
+				isFullScreen: conference.isFullScreen
 			}
 		}
 		Component{
@@ -193,6 +201,7 @@ Rectangle {
 				callModel: conference.callModel
 				isRightReducedLayout: rightMenu.visible
 				isLeftReducedLayout: conference.listCallsOpened
+				isFullScreen: conference.isFullScreen
 			}
 		}
 		RowLayout{

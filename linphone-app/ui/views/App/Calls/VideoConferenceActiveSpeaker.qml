@@ -24,6 +24,7 @@ Item {
 	property alias callModel: allDevices.callModel
 	property bool isRightReducedLayout: false
 	property bool isLeftReducedLayout: false
+	property bool isFullScreen: false
 	property alias showMe : allDevices.showMe
 	property int participantCount: allDevices.count
 	
@@ -39,11 +40,13 @@ Item {
 	CameraView{
 		id: cameraView
 		callModel: mainItem.callModel
+		enabled: !mainItem.isFullScreen
 		isCameraFromDevice: false
+		isPreview: false
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
-		isPaused: callModel.pausedByUser || currentDevice && currentDevice.isPaused //callModel.pausedByUser
+		isPaused: (callModel && callModel.pausedByUser) || (currentDevice && currentDevice.isPaused) //callModel.pausedByUser
 		showCloseButton: false
 		color: 'black'
 	}
@@ -71,7 +74,7 @@ Item {
 					anchors.centerIn: parent
 					height: miniViews.cellHeight - 6
 					width: miniViews.width - 6
-					enabled: index >=0
+					enabled: index >=0 && !mainItem.isFullScreen
 					currentDevice: modelData
 					callModel: mainItem.callModel
 					isCameraFromDevice: true

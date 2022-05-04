@@ -400,6 +400,7 @@
 		<file>ui/views/App/Calls/Conference.qml</file>
 		<file>ui/views/App/Calls/VideoConference.qml</file>
 		<file>ui/views/App/Calls/VideoConferenceActiveSpeaker.qml</file>
+		<file>ui/views/App/Calls/VideoConferenceFullscreen.qml</file>
 		<file>ui/views/App/Calls/VideoConferenceGrid.qml</file>
 		<file>ui/views/App/Calls/VideoConferenceMenu.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>

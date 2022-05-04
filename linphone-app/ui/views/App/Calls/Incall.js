@@ -123,27 +123,28 @@ function openMediaParameters (window, incall) {
     call: incall.call
   })
 }
-
-function showFullscreen (position) {
-  incall.isFullScreen = true
-  if (incall._fullscreen) {
-    incall._fullscreen.raise()
+// callerId = incall, qmlFile = 'IncallFullscreenWindow.qml'
+// callerId need to have : _fullscreen and isFullScreen
+function showFullscreen (window, callerId, qmlFile, position) {
+  callerId.isFullScreen = true
+  if (callerId._fullscreen) {
+	callerId._fullscreen.raise()
     return
   }
   DesktopTools.DesktopTools.screenSaverStatus = false
   var parameters = {
-	  caller: incall,
+	  caller: callerId,
 	  x:position.x,
 	  y:position.y,
 	  width:window.width,
 	  height:window.height,
 	  window:window
 	}
-  incall._fullscreen = Utils.openWindow(Qt.resolvedUrl('IncallFullscreenWindow.qml'), parameters.window, {
+  callerId._fullscreen = Utils.openWindow(Qt.resolvedUrl(qmlFile), parameters.window, {
 	properties: parameters
   }, true)
-  if(incall._fullscreen) {
-	incall._fullscreen.cameraIsReady = Qt.binding(function(){ return !incall.cameraIsReady})
-	incall._fullscreen.previewIsReady = Qt.binding(function(){ return !incall.previewIsReady})
+  if(callerId._fullscreen) {
+	callerId._fullscreen.cameraIsReady = Qt.binding(function(){ return !callerId.cameraIsReady})
+	callerId._fullscreen.previewIsReady = Qt.binding(function(){ return !callerId.previewIsReady})
   }
 }
