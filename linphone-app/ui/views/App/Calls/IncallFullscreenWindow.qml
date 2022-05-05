@@ -261,17 +261,17 @@ Window {
 					
 					ActionButton {
 						id: recordingSwitch
-						property bool recording : call && call.recording
+						toggled: call && call.recording
 						isCustom: true
 						backgroundRadius: 90
-						colorSet: recording ? CallFullscreenStyle.buttons.recordOn : CallFullscreenStyle.buttons.recordOff
+						colorSet: CallFullscreenStyle.buttons.record
 						visible: SettingsModel.callRecorderEnabled
-						
-						onClicked: !recording
+
+						onClicked: !toggled
 								   ? call.startRecording()
 								   : call.stopRecording()
 						
-						tooltipText: !recordingSwitch.recording
+						tooltipText: !toggled
 								  ? qsTr('startRecordingLabel')
 								  : qsTr('stopRecordingLabel')
 					}

@@ -142,17 +142,30 @@ Rectangle {
 			colorSet: VideoConferenceStyle.buttons.screenSharing
 			visible: false	//TODO
 		}
-		ActionButton{
+		ActionButton {
+			id: recordingSwitch
 			isCustom: true
 			backgroundRadius: width/2
-			colorSet: VideoConferenceStyle.buttons.recordOff
-			visible: false	//TODO
+			colorSet: VideoConferenceStyle.buttons.record
+			property CallModel callModel: conference.callModel
+			onCallModelChanged: if(!callModel) callModel.stopRecording()
+			visible: SettingsModel.callRecorderEnabled && callModel
+			toggled: callModel.recording
+
+			onClicked: {
+				return !toggled
+						? callModel.startRecording()
+						: callModel.stopRecording()
+			}
+			tooltipText: !toggled ? 'Start Recording' : 'Stop Recording'
 		}
 		ActionButton{
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.screenshot
-			visible: false	//TODO
+			visible: conference.callModel.snapshotEnabled
+			onClicked: conference.callModel.takeSnapshot()
+			tooltipText:'take Snapshot'
 		}
 		ActionButton{
 			isCustom: true

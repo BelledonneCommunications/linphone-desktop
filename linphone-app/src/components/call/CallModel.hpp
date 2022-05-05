@@ -70,6 +70,8 @@ class CallModel : public QObject {
 	Q_PROPERTY(bool updating READ getUpdating NOTIFY statusChanged)
 	
 	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged)
+
+	Q_PROPERTY(bool snapshotEnabled READ getSnapshotEnabled NOTIFY snapshotEnabledChanged)	// Grid doesn't enable snapshot
 	
 	Q_PROPERTY(QVariantList audioStats READ getAudioStats NOTIFY statsUpdated)
 	Q_PROPERTY(QVariantList videoStats READ getVideoStats NOTIFY statsUpdated)
@@ -191,6 +193,7 @@ signals:
 	void microMutedChanged (bool status);
 	void cameraEnabledChanged();
 	void recordingChanged (bool status);
+	void snapshotEnabledChanged();
 	void statsUpdated ();
 	void statusChanged (CallStatus status);
 	void videoRequested ();
@@ -204,6 +207,7 @@ signals:
 	void transferAddressChanged (const QString &transferAddress);
 	
 	void conferenceVideoLayoutChanged();
+
 	
 public:
 	void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
@@ -249,6 +253,7 @@ public:
 	bool getUpdating () const;
 	
 	bool getRecording () const;
+	bool getSnapshotEnabled() const;
 	
 	CallEncryption getEncryption () const;
 	bool isSecured () const;

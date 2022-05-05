@@ -193,23 +193,17 @@ Rectangle {
 					
 					isCustom: true
 					backgroundRadius: 90
-					colorSet: incall.call.recording ? CallStyle.buttons.recordOn : CallStyle.buttons.recordOff
+					colorSet: CallStyle.buttons.record
 					visible: SettingsModel.callRecorderEnabled
+					toggled: incall.call.recording
 					
 					onClicked: {
 						var call = incall.call
-						return !incall.call.recording
+						return !toggled
 								? call.startRecording()
 								: call.stopRecording()
 					}
-					
-					onVisibleChanged: {
-						if (!visible) {
-							call.stopRecording()
-						}
-					}
-					
-					tooltipText: !incall.call.recording
+					tooltipText: !toggled
 							  ? qsTr('startRecordingLabel')
 							  : qsTr('stopRecordingLabel')
 				}

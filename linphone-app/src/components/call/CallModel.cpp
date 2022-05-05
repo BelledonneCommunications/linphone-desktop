@@ -769,6 +769,10 @@ bool CallModel::getRecording () const {
 	return mRecording;
 }
 
+bool CallModel::getSnapshotEnabled() const{
+	return getVideoEnabled() &&  getConferenceVideoLayout() != LinphoneEnums::ConferenceLayout::ConferenceLayoutGrid;
+}
+
 // -----------------------------------------------------------------------------
 
 void CallModel::sendDtmf (const QString &dtmf) {
@@ -891,6 +895,7 @@ void CallModel::setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout)
 	if( mConferenceVideoLayout != layout){
 		mConferenceVideoLayout = layout;
 		emit conferenceVideoLayoutChanged();
+		emit snapshotEnabledChanged();
 	}
 }
 
