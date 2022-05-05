@@ -1446,6 +1446,13 @@
     </message>
 </context>
 <context>
+    <name>MultimediaParametersDialog</name>
+    <message>
+        <source>ok</source>
+        <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
     <name>NewChatRoom</name>
     <message>
         <source>cancelButton</source>

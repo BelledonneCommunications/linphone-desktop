@@ -1446,6 +1446,13 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>MultimediaParametersDialog</name>
+    <message>
+        <source>ok</source>
+        <translation type="unfinished">Rendben</translation>
+    </message>
+</context>
+<context>
     <name>NewChatRoom</name>
     <message>
         <source>cancelButton</source>

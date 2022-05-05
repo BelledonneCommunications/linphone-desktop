@@ -6,47 +6,54 @@ import Common.Styles 1.0
 // =============================================================================
 
 Controls.Slider {
-  id: slider
+	id: slider
+	property alias backgroundImplicitHeight: backgroundItem.implicitHeight
+	property alias backgroundImplicitWidth: backgroundItem.implicitWidth
 
-  background: Rectangle {
-    color: SliderStyle.background.color
+	property alias handleImplicitHeight: handleItem.implicitHeight
+	property alias handleImplicitWidth: handleItem.implicitWidth
 
-    x: slider.leftPadding
-    y: slider.topPadding + slider.availableHeight / 2 - height / 2
+	background: Rectangle {
+		id: backgroundItem
+		color: SliderStyle.background.color
 
-    implicitHeight: SliderStyle.background.height
-    implicitWidth: SliderStyle.background.width
+		x: slider.leftPadding
+		y: slider.topPadding + slider.availableHeight / 2 - height / 2
 
-    height: implicitHeight
-    width: slider.availableWidth
+		implicitHeight: SliderStyle.background.height
+		implicitWidth: SliderStyle.background.width
 
-    radius: SliderStyle.background.radius
+		height: implicitHeight
+		width: slider.availableWidth
 
-    Rectangle {
-      color: SliderStyle.background.content.color
+		radius: SliderStyle.background.radius
 
-      height: parent.height
-      width: slider.visualPosition * parent.width
+		Rectangle {
+			color: SliderStyle.background.content.color
 
-      radius: SliderStyle.background.content.radius
-    }
-  }
+			height: parent.height
+			width: slider.visualPosition * parent.width
 
-  handle: Rectangle {
-    border.color: slider.pressed
-      ? SliderStyle.handle.border.color.pressed
-      : SliderStyle.handle.border.color.normal
+			radius: SliderStyle.background.content.radius
+		}
+	}
 
-    color: slider.pressed
-      ? SliderStyle.handle.color.pressed
-      : SliderStyle.handle.color.normal
+	handle: Rectangle {
+		id: handleItem
+		border.color: slider.pressed
+					  ? SliderStyle.handle.border.color.pressed
+					  : SliderStyle.handle.border.color.normal
 
-    x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
-    y: slider.topPadding + slider.availableHeight / 2 - height / 2
+		color: slider.pressed
+			   ? SliderStyle.handle.color.pressed
+			   : SliderStyle.handle.color.normal
 
-    implicitWidth: SliderStyle.handle.width
-    implicitHeight: SliderStyle.handle.height
+		x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
+		y: slider.topPadding + slider.availableHeight / 2 - height / 2
 
-    radius: SliderStyle.handle.radius
-  }
+		implicitWidth: SliderStyle.handle.width
+		implicitHeight: SliderStyle.handle.height
+
+		radius: SliderStyle.handle.radius
+	}
 }

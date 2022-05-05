@@ -43,6 +43,7 @@ QtObject {
 		property string gridIcon: 'conference_layout_grid_custom'
 		property string activeSpeakerIcon: 'conference_layout_active_speaker_custom'
 		property string audioOnlyIcon: 'conference_audio_only_custom'
+		property string mediaIcon: 'micro_on_custom'
 		property int width: 40
 		property int height: 40
 	}

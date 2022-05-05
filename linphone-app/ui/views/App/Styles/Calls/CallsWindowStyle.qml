@@ -6,7 +6,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'CallsWindow'
-	property int minimumHeight: 480
+	property int minimumHeight: 640
 	property int minimumWidth: 960
 	
 	property QtObject call: QtObject {

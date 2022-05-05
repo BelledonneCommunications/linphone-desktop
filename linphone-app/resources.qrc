@@ -329,6 +329,7 @@
 		<file>ui/modules/Linphone/Contact/Contact.qml</file>
 		<file>ui/modules/Linphone/Dialog/OnlineInstallerDialog.qml</file>
 		<file>ui/modules/Linphone/Dialog/SipAddressDialog.qml</file>
+		<file>ui/modules/Linphone/Dialog/MultimediaParametersDialog.qml</file>
 		<file>ui/modules/Linphone/File/FileView.qml</file>
 		<file>ui/modules/Linphone/History/History.qml</file>
 		<file>ui/modules/Linphone/History/History.js</file>
@@ -366,6 +367,7 @@
 		<file>ui/modules/Linphone/Styles/Contact/ContactDescriptionStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Contact/ContactMessageCounterStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Contact/ContactStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Dialog/MultimediaParametersDialogStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Dialog/OnlineInstallerDialogStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Dialog/SipAddressDialogStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/History/HistoryStyle.qml</file>

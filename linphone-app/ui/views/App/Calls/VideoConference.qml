@@ -392,6 +392,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.options
+			toggled: rightMenu.visible
 			onClicked: rightMenu.visible = !rightMenu.visible
 		}
 	}

@@ -71,7 +71,7 @@ TabContainer {
 						width: parent.width
 						enabled: !SettingsModel.isInCall
 						
-						Component.onCompleted: value = SettingsModel.playbackGain
+						value: SettingsModel.playbackGain
 						onPositionChanged: SettingsModel.playbackGain = position
 						
 						ToolTip {
@@ -107,7 +107,7 @@ TabContainer {
 						width: parent.width
 						enabled: !SettingsModel.isInCall
 						
-						Component.onCompleted: value = SettingsModel.captureGain
+						value: SettingsModel.captureGain
 						onPositionChanged: SettingsModel.captureGain = position
 						
 						ToolTip {

@@ -31,6 +31,7 @@ singleton ContactDescriptionStyle              1.0 Contact/ContactDescriptionSty
 singleton ContactMessageCounterStyle           1.0 Contact/ContactMessageCounterStyle.qml
 singleton ContactStyle                         1.0 Contact/ContactStyle.qml
 
+singleton MultimediaParametersDialogStyle      1.0 Dialog/MultimediaParametersDialogStyle.qml
 singleton OnlineInstallerDialogStyle           1.0 Dialog/OnlineInstallerDialogStyle.qml
 singleton SipAddressDialogStyle                1.0 Dialog/SipAddressDialogStyle.qml
 

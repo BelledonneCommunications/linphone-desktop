@@ -269,8 +269,12 @@ public:
 	void setDeviceName(const QString& deviceName);
 
 	// Audio. --------------------------------------------------------------------
-	
+
+	Q_INVOKABLE void startCaptureGraph();
+	Q_INVOKABLE void stopCaptureGraph();
+	Q_INVOKABLE void resetCaptureGraph();
 	void createCaptureGraph();
+	void deleteCaptureGraph();
 	bool getCaptureGraphRunning();
 	void accessAudioSettings();
 	void closeAudioSettings();
@@ -725,6 +729,7 @@ signals:
 private:
 	int mCurrentSettingsTab = 0;
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
+	int mCaptureGraphListenerCount = 0;
 	
 	std::shared_ptr<linphone::Config> mConfig;
 };

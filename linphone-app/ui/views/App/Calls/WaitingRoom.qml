@@ -35,17 +35,46 @@ Rectangle {
 			font.pointSize:  WaitingRoomStyle.title.pointSize
 			horizontalAlignment: Qt.AlignCenter
 		}
-		
-		Item{
+		RowLayout{
 			id: loader
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			CameraView{
-				id: previewLoader
-				showCloseButton: false
-				anchors.centerIn: parent
-				height: parent.height
-				width : height
+			Item{
+				Layout.fillHeight: true
+				Layout.fillWidth: true
+				CameraView{
+					id: previewLoader
+					showCloseButton: false
+					anchors.centerIn: parent
+					height: Math.min( parent.height, parent.width)
+					width : height
+					ActionButton{
+						anchors.top: parent.top
+						anchors.right: parent.right
+						anchors.topMargin: 10
+						anchors.rightMargin: 10
+						isCustom: true
+						backgroundRadius: width/2
+						colorSet: WaitingRoomStyle.buttons.options
+						toggled: mediaMenu.visible
+						onClicked: mediaMenu.visible = !mediaMenu.visible
+					}
+				}
+			}
+			MultimediaParametersDialog{
+				id: mediaMenu
+				Layout.fillHeight: true
+				Layout.leftMargin: 10
+				Layout.rightMargin: 10
+				Layout.minimumHeight: fitHeight
+				Layout.minimumWidth: fitWidth
+				radius: 8
+				flat: true
+				showMargins: true
+				fixedSize: false
+				onExitStatus: visible = false
+				visible: false
+				title: 'Régler les périphériques'
 			}
 		}
 		// -------------------------------------------------------------------------
@@ -53,7 +82,8 @@ Rectangle {
 		// -------------------------------------------------------------------------
 		RowLayout{
 			Layout.fillWidth: true
-			Layout.bottomMargin: 40
+			Layout.topMargin: 25
+			Layout.bottomMargin: 25
 			Layout.leftMargin: 25
 			Layout.rightMargin: 25
 			Item{

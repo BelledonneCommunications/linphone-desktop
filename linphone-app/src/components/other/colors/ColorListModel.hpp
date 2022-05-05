@@ -218,11 +218,13 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("me_d_b_inv_bg", "transparent", "[M] Menu disabled button : inverse background")
 		ADD_COLOR("me_h_b_inv_bg", "transparent", "[M] Menu hovered button : inverse background")
 		ADD_COLOR("me_p_b_inv_bg", "transparent", "[M] Menu pressed button : inverse background")
+		ADD_COLOR("me_c_b_inv_bg", "#FF5E00", "[M] Menu checked button : inverse background")
 		
 		ADD_COLOR("me_n_b_inv_fg", "white", "[M] Menu normal button : inverse foreground")
 		ADD_COLOR("me_d_b_inv_fg", "#80FFFFFF", "[M] Menu disabled button : inverse foreground")
 		ADD_COLOR("me_h_b_inv_fg", "#B0FFFFFF", "[M] Menu hovered button : inverse foreground")
-		ADD_COLOR("me_p_b_inv_fg", "white", "[M] Menu pressed button : inverse foreground")		
+		ADD_COLOR("me_p_b_inv_fg", "white", "[M] Menu pressed button : inverse foreground")
+		ADD_COLOR("me_c_b_inv_fg", "white", "[M] Menu checked button : inverse foreground")
 //-------------------------------------	
 // Wave Play
 		ADD_COLOR_WITH_LINK("w_n_b_bg", "", "[M] Wave play normal button : background", "ma_n_b_bg")

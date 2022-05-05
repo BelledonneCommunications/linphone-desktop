@@ -197,7 +197,7 @@ Window {
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.fullscreen
+				colorSet: VideoConferenceStyle.buttons.stopFullscreen
 				onClicked: window.exit()
 			}
 

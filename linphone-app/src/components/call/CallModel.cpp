@@ -229,10 +229,12 @@ float CallModel::getSpeakerVolumeGain () const {
 
 void CallModel::setSpeakerVolumeGain (float volume) {
 	Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
+	float oldGain = getSpeakerVolumeGain();
 	if( mCall && mCall->getSpeakerVolumeGain() >= 0)
 		mCall->setSpeakerVolumeGain(volume);
 	else
 		CoreManager::getInstance()->getSettingsModel()->setPlaybackGain(volume);
+	if( (int)(oldGain * 1000) != (int)(volume*1000))
 	emit speakerVolumeGainChanged(getSpeakerVolumeGain());
 }
 
@@ -245,11 +247,13 @@ float CallModel::getMicroVolumeGain () const {
 
 void CallModel::setMicroVolumeGain (float volume) {
 	Q_ASSERT(volume >= 0.0f && volume <= 1.0f);
+	float oldGain = getMicroVolumeGain();
 	if(mCall && mCall->getMicrophoneVolumeGain() >= 0)
 		mCall->setMicrophoneVolumeGain(volume);
 	else
 		CoreManager::getInstance()->getSettingsModel()->setCaptureGain(volume);
-	emit microVolumeGainChanged(getMicroVolumeGain());
+	if( (int)(oldGain * 1000) != (int)(volume*1000))
+		emit microVolumeGainChanged(getMicroVolumeGain());
 }
 
 // -----------------------------------------------------------------------------

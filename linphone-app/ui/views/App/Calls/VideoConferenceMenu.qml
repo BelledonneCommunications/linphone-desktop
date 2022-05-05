@@ -52,7 +52,7 @@ Rectangle{
 				}
 				Text{
 					id: title
-					text: contentsStack.currentItem.objectName == 'settingsMenu' ? 'Paramètres' : 'Modifier la mise en page'
+					text: 'Paramètres'
 					Layout.fillWidth: true
 					Layout.preferredHeight: implicitHeight
 					horizontalAlignment: Qt.AlignCenter
@@ -77,6 +77,7 @@ Rectangle{
 			initialItem: settingsMenuComponent
 			Layout.fillHeight: true
 			Layout.fillWidth: true
+			onPopEnterChanged: if(nViews <= 1 ) title.text = 'Paramètres'
 		}
 		Component{
 			id: settingsMenuComponent
@@ -85,7 +86,12 @@ Rectangle{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				Repeater{
-					model: [{text: 'Modifier la mise en page'
+					model: [
+						{text: 'Régler les périphériques'
+						, icon: VideoConferenceMenuStyle.settingsIcons.mediaIcon
+						, nextPage:mediaMenu},
+
+						{text: 'Modifier la mise en page'
 						, icon: (mainItem.callModel.videoEnabled ?
 										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
 									: VideoConferenceMenuStyle.settingsIcons.audioOnlyIcon)
@@ -131,9 +137,34 @@ Rectangle{
 						}
 						MouseArea{
 							anchors.fill: parent
-							onClicked: contentsStack.push(modelData.nextPage)
+							onClicked: {
+								title.text = modelData.text
+								contentsStack.push(modelData.nextPage)
+							}
 						}
 					}
+				}
+				Item{// Spacer
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+				}
+			}
+		}
+		Component{
+			id: mediaMenu
+			ColumnLayout{
+				Layout.fillHeight: true
+				Layout.fillWidth: true
+				MultimediaParametersDialog{
+					Layout.fillHeight: true
+					Layout.fillWidth: true
+					Layout.minimumHeight: fitHeight
+					call: conference.callModel
+					flat: true
+					showMargins: true
+					expandHeight: false
+					fixedSize: false
+					onExitStatus: contentsStack.pop()
 				}
 				Item{// Spacer
 					Layout.fillWidth: true

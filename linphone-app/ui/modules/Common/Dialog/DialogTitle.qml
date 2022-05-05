@@ -16,9 +16,10 @@ Item {
 	property alias text: title.text
 	property bool showBar : text != ''
 	property bool showCloseCross: showBar
+	property bool flat: false
 	signal close()
 	
-	height: 30
+	height: showBar || showCloseCross ? (flat ? 60 : 30) : 0
 	
 	Rectangle{
 		anchors.fill:parent
@@ -26,7 +27,7 @@ Item {
 			GradientStop { position: 0.0; color: DialogStyle.title.lowGradient }
 			GradientStop { position: 1.0; color: DialogStyle.title.highGradient }
 		}
-		visible:showBar
+		visible:showBar && !flat
 	}
 	Text {
 		id: title
@@ -39,7 +40,8 @@ Item {
 		
 		color: DialogStyle.description.color
 		//font.pointSize: DialogStyle.description.pointSize
-		font.pointSize: Units.dp * 10
+		font.pointSize: !flat ? Units.dp * 10 : Units.dp * 14
+		font.weight: !flat ? Font.Normal : Font.Bold
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
 		wrapMode: Text.WordWrap

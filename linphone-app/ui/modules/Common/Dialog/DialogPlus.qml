@@ -15,7 +15,8 @@ Rectangle {
   property alias title : titleBar.text	//Optionnal. Show a title bar with a close button.
   property alias descriptionText: description.text // Optionnal.
   property int buttonsAlignment : Qt.AlignLeft  
-  property bool flat : false	// Remove margins
+  property bool flat : false
+  property bool showMargins: !flat
   property bool expandHeight: flat
   property alias showCloseCross : titleBar.showCloseCross
   
@@ -51,7 +52,7 @@ Rectangle {
   color: DialogStyle.color
 
   layer {
-    enabled: true
+	enabled: !dialog.flat
     effect: PopupShadow {}
   }
 
@@ -71,6 +72,7 @@ Rectangle {
 	DialogTitle{
 		id:titleBar
 		//Layout.fillHeight: dialog.contentIsEmpty
+		flat: dialog.flat
 		showCloseCross:dialog.showCloseCross
 		Layout.fillWidth: true
 		onClose: exitStatus(0)
@@ -89,8 +91,8 @@ Rectangle {
 
 	  Layout.fillHeight: (expandHeight ? true : !dialog.contentIsEmpty)
       Layout.fillWidth: true
-	  Layout.leftMargin: (flat ? 0 : DialogStyle.content.leftMargin)
-	  Layout.rightMargin: (flat ? 0 : DialogStyle.content.rightMargin)
+	  Layout.leftMargin: (showMargins ? DialogStyle.content.leftMargin : 0)
+	  Layout.rightMargin: (showMargins ? DialogStyle.content.rightMargin : 0)
     }
 
     RowLayout {

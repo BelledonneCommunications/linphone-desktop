@@ -234,19 +234,34 @@ void SettingsModel::setDeviceName(const QString& deviceName){
 // Audio.
 // =============================================================================
 
+void SettingsModel::resetCaptureGraph() {
+	deleteCaptureGraph();
+	createCaptureGraph();
+}
 void SettingsModel::createCaptureGraph() {
-	if (mSimpleCaptureGraph)  {
-		delete mSimpleCaptureGraph;
-		mSimpleCaptureGraph = nullptr;
-	}
-	if (!mSimpleCaptureGraph) {
-		mSimpleCaptureGraph =
+	mSimpleCaptureGraph =
 			new MediastreamerUtils::SimpleCaptureGraph(Utils::appStringToCoreString(getCaptureDevice()), Utils::appStringToCoreString(getPlaybackDevice()));
-	}
 	mSimpleCaptureGraph->start();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
 }
-
+void SettingsModel::startCaptureGraph(){
+	if(!mSimpleCaptureGraph)
+		createCaptureGraph();
+	++mCaptureGraphListenerCount;
+}
+void SettingsModel::stopCaptureGraph(){
+	if(--mCaptureGraphListenerCount == 0)
+		deleteCaptureGraph();
+}
+void SettingsModel::deleteCaptureGraph(){
+	if (mSimpleCaptureGraph) {
+		if (mSimpleCaptureGraph->isRunning()) {
+			mSimpleCaptureGraph->stop();
+		}
+		delete mSimpleCaptureGraph;
+		mSimpleCaptureGraph = nullptr;
+	}
+}
 //Force a call on the 'detect' method of all audio filters, updating new or removed devices
 void SettingsModel::accessAudioSettings() {	
 	CoreManager::getInstance()->getCore()->reloadSoundDevices();
@@ -256,19 +271,13 @@ void SettingsModel::accessAudioSettings() {
 	emit captureDeviceChanged(getCaptureDevice());
 	emit ringerDeviceChanged(getRingerDevice());
 
-	if (!getIsInCall()) {
-		createCaptureGraph();
-	}
+	//if (!getIsInCall()) {
+		startCaptureGraph();
+	//}
 }
 
 void SettingsModel::closeAudioSettings() {
-	if (mSimpleCaptureGraph) {
-		if (mSimpleCaptureGraph->isRunning()) {
-			mSimpleCaptureGraph->stop();
-		}
-		delete mSimpleCaptureGraph;
-		mSimpleCaptureGraph = nullptr;
-	}
+	stopCaptureGraph();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
 }
 
@@ -291,10 +300,13 @@ float SettingsModel::getPlaybackGain() const {
 }
 
 void SettingsModel::setPlaybackGain(float gain) {
+	float oldGain = getPlaybackGain();
 	CoreManager::getInstance()->getCore()->setPlaybackGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setPlaybackGain(gain);
 	}
+	if((int)(oldGain*1000) != (int)(gain*1000))
+		emit playbackGainChanged(gain);
 }
 
 float SettingsModel::getCaptureGain() const {
@@ -303,10 +315,13 @@ float SettingsModel::getCaptureGain() const {
 }
 
 void SettingsModel::setCaptureGain(float gain) {
+	float oldGain = getCaptureGain();
 	CoreManager::getInstance()->getCore()->setMicGainDb(MediastreamerUtils::linearToDb(gain));
 	if (mSimpleCaptureGraph && mSimpleCaptureGraph->isRunning()) {
 		mSimpleCaptureGraph->setCaptureGain(gain);
 	}
+	if((int)(oldGain *1000) != (int)(gain *1000))
+		emit captureGainChanged(gain);
 }
 
 QStringList SettingsModel::getCaptureDevices () const {
@@ -350,7 +365,7 @@ void SettingsModel::setCaptureDevice (const QString &device) {
 		CoreManager::getInstance()->getCore()->setCaptureDevice(devId);
 		CoreManager::getInstance()->getCore()->setInputAudioDevice(*audioDevice);
 		emit captureDeviceChanged(device);
-		createCaptureGraph();
+		resetCaptureGraph();
 	}else
 		qWarning() << "Cannot set Capture device. The ID cannot be matched with an existant device : " << device;
 }
@@ -374,7 +389,7 @@ void SettingsModel::setPlaybackDevice (const QString &device) {
 		CoreManager::getInstance()->getCore()->setPlaybackDevice(devId);
 		CoreManager::getInstance()->getCore()->setOutputAudioDevice(*audioDevice);
 		emit playbackDeviceChanged(device);
-		createCaptureGraph();
+		resetCaptureGraph();
 	}else
 		qWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }
