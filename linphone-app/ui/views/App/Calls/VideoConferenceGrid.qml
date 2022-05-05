@@ -22,9 +22,8 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 Mosaic {
 	id: grid
 	property alias callModel: participantDevices.callModel
-	property bool isFullScreen: false
+	property bool cameraEnabled: true
 	property int participantCount: gridModel.count
-	anchors.fill: parent
 	squaredDisplay: true
 	
 	function setTestMode(){
@@ -71,7 +70,7 @@ Mosaic {
 			
 			CameraView{
 				id: cameraView
-				enabled: index >=0 && !grid.isFullScreen
+				enabled: index >=0 && grid.cameraEnabled
 				anchors.fill: parent
 				currentDevice: avatarCell.currentDevice
 				callModel: participantDevices.callModel

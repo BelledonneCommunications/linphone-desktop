@@ -27,7 +27,7 @@ Window {
 
 	property alias callModel: conference.callModel
 	property var caller
-	property bool hideButtons: !hideButtonsTimer.running
+	property bool hideButtons: !hideButtonsTimer.realRunning
 	property bool cameraIsReady : false
 	property bool previewIsReady : false
 
@@ -68,7 +68,7 @@ Window {
 		property CallModel callModel
 		property ConferenceModel conferenceModel: callModel && callModel.getConferenceModel()
 		property var _fullscreen: null
-		property bool listCallsOpened: true
+		property bool listCallsOpened: false
 
 		signal openListCallsRequest()
 		// ---------------------------------------------------------------------------
@@ -143,6 +143,7 @@ Window {
 			spacing: 10
 
 			visible: !window.hideButtons
+			height: visible? undefined : 0
 			/*
 			ActionButton{
 				isCustom: true
@@ -157,8 +158,6 @@ Window {
 				backgroundRadius: width/2
 				colorSet: VideoConferenceStyle.buttons.dialpad
 				onClicked: telKeypad.visible = !telKeypad.visible
-
-				visible: !window.hideButtons
 			}
 			// Title
 			Text{
@@ -215,8 +214,8 @@ Window {
 			anchors.right: parent.right
 			anchors.bottom: actionsButtons.top
 
-			anchors.topMargin: 15
-			anchors.bottomMargin: 20
+			anchors.topMargin: window.hideButtons ? 0 : 15
+			anchors.bottomMargin: window.hideButtons ? 0 : 20
 			onClicked: {
 				if(!conference.callModel)
 					grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
@@ -228,9 +227,10 @@ Window {
 				id: gridComponent
 				VideoConferenceGrid{
 					id: grid
-					anchors.leftMargin: 70
-					anchors.rightMargin: rightMenu.visible ? 15 : 70
+					Layout.leftMargin: window.hideButtons ? 15 : 70
+					Layout.rightMargin: rightMenu.visible ? 15 : 70
 					callModel: conference.callModel
+					onWidthChanged: console.log("Width: "+width)
 				}
 			}
 			Component{
@@ -304,8 +304,8 @@ Window {
 			id: actionsButtons
 			anchors.horizontalCenter: parent.horizontalCenter
 			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 30
-			height: 60
+			anchors.bottomMargin: visible ? 30 : 0
+			height:  visible ? 60 : 0
 			spacing: 30
 			z: 2
 			visible: !window.hideButtons
@@ -388,9 +388,9 @@ Window {
 		RowLayout{
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 30
+			anchors.bottomMargin: visible ? 30 : 0
 			anchors.rightMargin: 25
-			height: 60
+			height: visible ? 60 : 0
 			visible: !window.hideButtons
 			ActionButton{
 				isCustom: true
@@ -460,11 +460,19 @@ Window {
 	MouseArea{
 		Timer {
 			id: hideButtonsTimer
+			property bool realRunning : true
 
 			interval: 5000
 			running: true
-
-			onTriggered: {console.log("hideButtons");}
+			triggeredOnStart: true
+			onTriggered: {if(realRunning != running) realRunning = running}
+			function startTimer(){
+				restart();
+			}
+			function stopTimer(){
+				stop();
+				realRunning = false;
+			}
 		}
 
 		anchors.fill: parent
@@ -472,11 +480,11 @@ Window {
 		propagateComposedEvents: true
 		cursorShape: Qt.ArrowCursor
 
-		onEntered: hideButtonsTimer.start()
-		onExited: hideButtonsTimer.stop()
+		onEntered: hideButtonsTimer.startTimer()
+		onExited: hideButtonsTimer.stopTimer()
 
 		onPositionChanged: {
-			hideButtonsTimer.restart()
+			hideButtonsTimer.startTimer()
 		}
 	}
 }

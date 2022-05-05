@@ -188,10 +188,10 @@ Rectangle {
 			id: gridComponent
 			VideoConferenceGrid{
 				id: grid
-				anchors.leftMargin: 70
-				anchors.rightMargin: rightMenu.visible ? 15 : 70
+				Layout.leftMargin: 70
+				Layout.rightMargin: rightMenu.visible ? 15 : 70
 				callModel: conference.callModel
-				isFullScreen: conference.isFullScreen
+				cameraEnabled: !conference.isFullScreen
 			}
 		}
 		Component{
@@ -201,7 +201,7 @@ Rectangle {
 				callModel: conference.callModel
 				isRightReducedLayout: rightMenu.visible
 				isLeftReducedLayout: conference.listCallsOpened
-				isFullScreen: conference.isFullScreen
+				cameraEnabled: !conference.isFullScreen
 			}
 		}
 		RowLayout{

@@ -24,11 +24,10 @@ Item {
 	property alias callModel: allDevices.callModel
 	property bool isRightReducedLayout: false
 	property bool isLeftReducedLayout: false
-	property bool isFullScreen: false
+	property bool cameraEnabled: true
 	property alias showMe : allDevices.showMe
 	property int participantCount: allDevices.count
-	
-	anchors.fill: parent
+
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
 			showMe: true
@@ -40,7 +39,7 @@ Item {
 	CameraView{
 		id: cameraView
 		callModel: mainItem.callModel
-		enabled: !mainItem.isFullScreen
+		enabled: mainItem.cameraEnabled
 		isCameraFromDevice: false
 		isPreview: false
 		anchors.fill: parent
@@ -74,7 +73,7 @@ Item {
 					anchors.centerIn: parent
 					height: miniViews.cellHeight - 6
 					width: miniViews.width - 6
-					enabled: index >=0 && !mainItem.isFullScreen
+					enabled: index >=0 && mainItem.cameraEnabled
 					currentDevice: modelData
 					callModel: mainItem.callModel
 					isCameraFromDevice: true
