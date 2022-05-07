@@ -1189,7 +1189,7 @@ void ChatRoomModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom>
 	if( e != events.end() )
 		insertNotice(*e);
 	updateLastUpdateTime();
-	emit participantAdded(chatRoom, eventLog);
+	emit participantAdded(eventLog);
 	emit fullPeerAddressChanged();
 }
 
@@ -1199,7 +1199,7 @@ void ChatRoomModel::onParticipantRemoved(const std::shared_ptr<linphone::ChatRoo
 	if( e != events.end() )
 		insertNotice(*e);
 	updateLastUpdateTime();
-	emit participantRemoved(chatRoom, eventLog);
+	emit participantRemoved(eventLog);
 	emit fullPeerAddressChanged();
 }
 
@@ -1209,7 +1209,7 @@ void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linpho
 	if( e != events.end() )
 		insertNotice(*e);
 	updateLastUpdateTime();
-	emit participantAdminStatusChanged(chatRoom, eventLog);
+	emit participantAdminStatusChanged(eventLog);
 	emit isMeAdminChanged();	// It is not the case all the time but calling getters is not a heavy request
 }
 
@@ -1242,12 +1242,12 @@ void ChatRoomModel::onUndecryptableMessageReceived(const std::shared_ptr<linphon
 
 void ChatRoomModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	updateLastUpdateTime();
-	emit participantDeviceAdded(chatRoom, eventLog);
+	emit participantDeviceAdded(eventLog);
 }
 
 void ChatRoomModel::onParticipantDeviceRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	updateLastUpdateTime();
-	emit participantDeviceRemoved(chatRoom, eventLog);	
+	emit participantDeviceRemoved(eventLog);
 }
 
 void ChatRoomModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
@@ -1264,7 +1264,7 @@ void ChatRoomModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom>
 	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());	// Update message count. In the case of joining conference, the conference id was not valid thus, the missing count was not about the chat room but a global one.
 	updateLastUpdateTime();
 	emit usernameChanged();
-	emit conferenceJoined(chatRoom, eventLog);
+	emit conferenceJoined(eventLog);
 	emit isReadOnlyChanged();
 }
 
@@ -1281,7 +1281,7 @@ void ChatRoomModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> &
 				insertNotice(*e);
 		}
 		updateLastUpdateTime();
-		emit conferenceLeft(chatRoom, eventLog);
+		emit conferenceLeft(eventLog);
 		emit isReadOnlyChanged();
 	}
 }
@@ -1308,11 +1308,11 @@ void ChatRoomModel::onConferenceAddressGeneration(const std::shared_ptr<linphone
 
 void ChatRoomModel::onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){
 	updateLastUpdateTime();
-	emit participantRegistrationSubscriptionRequested(chatRoom, participantAddress);
+	emit participantRegistrationSubscriptionRequested(participantAddress);
 }
 
 void ChatRoomModel::onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){
-	emit participantRegistrationUnsubscriptionRequested(chatRoom, participantAddress);
+	emit participantRegistrationUnsubscriptionRequested(participantAddress);
 }
 
 void ChatRoomModel::onChatMessageShouldBeStored(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){

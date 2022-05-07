@@ -66,7 +66,7 @@ Window {
 		id: conference
 
 		property CallModel callModel
-		property ConferenceModel conferenceModel: callModel && callModel.getConferenceModel()
+		property ConferenceModel conferenceModel: callModel && callModel.conferenceModel
 		property var _fullscreen: null
 		property bool listCallsOpened: false
 
@@ -287,6 +287,7 @@ Window {
 					Layout.preferredWidth: 400
 					Layout.rightMargin: 30
 					callModel: conference.callModel
+					conferenceModel: conference.conferenceModel
 					visible: false
 					onClose: rightMenu.visible = !rightMenu.visible
 				}

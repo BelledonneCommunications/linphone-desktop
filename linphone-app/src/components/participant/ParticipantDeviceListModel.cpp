@@ -176,7 +176,7 @@ QSharedPointer<ParticipantDeviceModel> ParticipantDeviceListModel::get(std::shar
 
 bool ParticipantDeviceListModel::isMe(std::shared_ptr<linphone::ParticipantDevice> deviceToCheck)const{
 	if(mCallModel){
-		auto devices = mCallModel->getConferenceModel()->getConference()->getMe()->getDevices();
+		auto devices = mCallModel->getConferenceSharedModel()->getConference()->getMe()->getDevices();
 		auto deviceToCheckAddress = deviceToCheck->getAddress();
 		for(auto device : devices){
 			if(deviceToCheckAddress == device->getAddress())

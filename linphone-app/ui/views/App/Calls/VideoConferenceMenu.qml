@@ -24,6 +24,10 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 Rectangle{
 	id: mainItem
 	property CallModel callModel
+	property ConferenceModel conferenceModel: callModel.conferenceModel
+	property ParticipantModel me: conferenceModel.localParticipant
+	property bool isMeAdmin: me && me.adminStatus
+	onIsMeAdminChanged: console.log("Is admin : " +isMeAdmin)
 	signal close()
 	
 	height: 500
@@ -95,8 +99,12 @@ Rectangle{
 						, icon: (mainItem.callModel.videoEnabled ?
 										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
 									: VideoConferenceMenuStyle.settingsIcons.audioOnlyIcon)
-						, nextPage:layoutMenu}
-					]				
+						, nextPage:layoutMenu},
+
+						{text: mainItem.isMeAdmin ? 'Inviter des participants' : 'Participants'
+						, icon: VideoConferenceMenuStyle.settingsIcons.participantsIcon
+						, nextPage:participantsMenu}
+					]
 					delegate:
 						Borders{
 						bottomColor: VideoConferenceMenuStyle.list.border.color
@@ -150,6 +158,7 @@ Rectangle{
 				}
 			}
 		}
+//-----------------------------------------------------------------------------------------------------------------------------
 		Component{
 			id: mediaMenu
 			ColumnLayout{
@@ -172,6 +181,7 @@ Rectangle{
 				}
 			}
 		}
+//-----------------------------------------------------------------------------------------------------------------------------
 		Component{
 			id: layoutMenu
 			ColumnLayout{
@@ -217,6 +227,24 @@ Rectangle{
 							}
 						}
 					}
+				}
+				Item{// Spacer
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+				}
+			}
+		}
+//-----------------------------------------------------------------------------------------------------------------------------
+		Component{
+			id: participantsMenu
+			ColumnLayout{
+				Layout.fillHeight: true
+				Layout.fillWidth: true
+				ParticipantsListView{
+					Layout.fillHeight: true
+					Layout.fillWidth: true
+					//Layout.minimumHeight: fitHeight
+					conferenceModel: mainItem.conferenceModel
 				}
 				Item{// Spacer
 					Layout.fillWidth: true

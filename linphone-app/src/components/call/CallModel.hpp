@@ -121,7 +121,7 @@ public:
 	
 	ContactModel *getContactModel() const;
 	ChatRoomModel * getChatRoomModel() const;
-	Q_INVOKABLE ConferenceModel* getConferenceModel();
+	ConferenceModel* getConferenceModel();
 	QSharedPointer<ConferenceModel> getConferenceSharedModel();
 	
 	bool isInConference () const {

@@ -23,6 +23,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/conference/ConferenceModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "ParticipantListModel.hpp"
@@ -36,13 +37,16 @@
 // -----------------------------------------------------------------------------
 
 ParticipantProxyModel::ParticipantProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-	mChatRoomModel = nullptr;
 }
 
 // -----------------------------------------------------------------------------
 
 ChatRoomModel *ParticipantProxyModel::getChatRoomModel() const{
 	return mChatRoomModel;
+}
+
+ConferenceModel *ParticipantProxyModel::getConferenceModel() const{
+	return mConferenceModel;
 }
 
 ParticipantListModel * ParticipantProxyModel::getParticipantListModel() const{
@@ -61,7 +65,7 @@ QVariantList ParticipantProxyModel::getParticipants() const{
 	QVariantList participants;
 	ParticipantListModel * list = qobject_cast<ParticipantListModel*>(sourceModel());
 	for(int i = 0 ; i < list->rowCount() ; ++i)
-		participants << QVariant::fromValue(list->getAt<ParticipantModel>(i));
+		participants << QVariant::fromValue(list->getAt<ParticipantModel>(i).get());
 	return participants;
 }
 
@@ -84,12 +88,30 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 			emit participantListModelChanged();
 			for(int i = 0 ; i < participants->getCount() ; ++i)
 				emit addressAdded(participants->getAt<ParticipantModel>(i)->getSipAddress());
-		}else {
-			setSourceModel(new ParticipantListModel(nullptr, this));
+		}else if(!sourceModel()){
+			setSourceModel(new ParticipantListModel((ChatRoomModel*)nullptr, this));
 			emit participantListModelChanged();
 		}
 		sort(0);
 		emit chatRoomModelChanged();
+	}
+}
+
+void ParticipantProxyModel::setConferenceModel(ConferenceModel * conferenceModel){
+	if(!mConferenceModel || mConferenceModel != conferenceModel){
+		mConferenceModel = conferenceModel;
+		if(mConferenceModel) {
+			auto participants = mConferenceModel->getParticipants();
+			setSourceModel(participants);
+			emit participantListModelChanged();
+			for(int i = 0 ; i < participants->getCount() ; ++i)
+				emit addressAdded(participants->getAt<ParticipantModel>(i)->getSipAddress());
+		}else if(!sourceModel()){
+			setSourceModel(new ParticipantListModel((ConferenceModel*)nullptr, this));
+			emit participantListModelChanged();
+		}
+		sort(0);
+		emit conferenceModelChanged();
 	}
 }
 
@@ -120,8 +142,11 @@ void ParticipantProxyModel::addAddress(const QString& address){
 void ParticipantProxyModel::removeModel(ParticipantModel * participant){
 	if(participant) {
 		QString sipAddress =  participant->getSipAddress();
-		if(mChatRoomModel && mChatRoomModel->getChatRoom() && participant->getParticipant() )
-			mChatRoomModel->getChatRoom()->removeParticipant(participant->getParticipant());	// Remove already added
+		auto dbParticipant = participant->getParticipant();
+		if(mChatRoomModel && dbParticipant && mChatRoomModel->getChatRoom())
+			mChatRoomModel->getChatRoom()->removeParticipant(dbParticipant);	// Remove already added
+		if( mConferenceModel && dbParticipant && mConferenceModel->getConference())
+			mConferenceModel->getConference()->removeParticipant(dbParticipant );
 		ParticipantListModel * participantsModel = qobject_cast<ParticipantListModel*>(sourceModel());
 		participantsModel->remove(participant);
 		emit countChanged();

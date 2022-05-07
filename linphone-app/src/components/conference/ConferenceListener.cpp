@@ -42,7 +42,7 @@ ConferenceListener::~ConferenceListener(){
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceListener::onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
-	qDebug() << "onParticipantAdded";
+	qDebug() << "onParticipantAdded: " << participant->getAddress()->asString().c_str();
 	emit participantAdded(participant);
 }
 void ConferenceListener::onParticipantRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
@@ -61,6 +61,7 @@ void ConferenceListener::onParticipantDeviceRemoved(const std::shared_ptr<linpho
 }
 void ConferenceListener::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
 	qDebug() << "onParticipantAdminStatusChanged";
+	emit participantAdminStatusChanged(participant);
 }
 void ConferenceListener::onParticipantDeviceLeft(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "onParticipantDeviceLeft";

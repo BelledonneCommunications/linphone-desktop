@@ -266,16 +266,16 @@ signals:
 	
 // Chat Room listener callbacks	
 	
-	void securityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
-	void participantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
-	void participantRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
-	void participantDeviceAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
-	void participantDeviceRemoved(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
-	void participantAdminStatusChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
-	void participantRegistrationSubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress);
-	void participantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress);
-	void conferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
-	void conferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void securityEvent(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void participantAdded(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void participantRemoved(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void participantDeviceAdded(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void participantDeviceRemoved(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void participantAdminStatusChanged(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void participantRegistrationSubscriptionRequested(const std::shared_ptr<const linphone::Address> & participantAddress);
+	void participantRegistrationUnsubscriptionRequested(const std::shared_ptr<const linphone::Address> & participantAddress);
+	void conferenceJoined(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void conferenceLeft(const std::shared_ptr<const linphone::EventLog> & eventLog);
 	
 private:
 

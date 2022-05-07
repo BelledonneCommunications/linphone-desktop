@@ -65,7 +65,8 @@ bool ParticipantModel::getInviting() const{
 }
 
 bool ParticipantModel::isMe() const{
-	return CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(Utils::interpretUrl(getSipAddress()));
+	QString sipAddress = getSipAddress();
+	return !sipAddress.isEmpty() ?  CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(Utils::interpretUrl(sipAddress)) : false;
 }
 
 QString ParticipantModel::getSipAddress() const{

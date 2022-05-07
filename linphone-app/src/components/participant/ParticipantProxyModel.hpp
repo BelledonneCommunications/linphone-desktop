@@ -27,6 +27,7 @@
 class ParticipantModel;
 class ChatRoomModel;
 class ParticipantListModel;
+class ConferenceModel;
 // =============================================================================
 
 class QWindow;
@@ -40,6 +41,7 @@ public:
   ParticipantProxyModel ( QObject *parent = Q_NULLPTR);
   
   Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
+  Q_PROPERTY(ConferenceModel* conferenceModel READ getConferenceModel WRITE setConferenceModel NOTIFY conferenceModelChanged)
   Q_PROPERTY(ParticipantListModel * participantListModel READ getParticipantListModel NOTIFY participantListModelChanged)
   Q_PROPERTY(int count READ getCount NOTIFY countChanged)
   Q_PROPERTY(bool showMe READ getShowMe WRITE setShowMe NOTIFY showMeChanged)
@@ -48,6 +50,7 @@ public:
   bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
   
   ChatRoomModel *getChatRoomModel() const;
+  ConferenceModel *getConferenceModel() const;
   ParticipantListModel * getParticipantListModel() const;
   Q_INVOKABLE QStringList getSipAddresses() const;
   Q_INVOKABLE QVariantList getParticipants() const;
@@ -55,6 +58,7 @@ public:
   bool getShowMe() const;
   
   void setChatRoomModel(ChatRoomModel * chatRoomModel);
+  void setConferenceModel(ConferenceModel * conferenceModel);
   void setShowMe(const bool& show);
   
   Q_INVOKABLE void addAddress(const QString& address);
@@ -64,6 +68,7 @@ public:
   
 signals:
   void chatRoomModelChanged();
+  void conferenceModelChanged();
   void participantListModelChanged();
   void countChanged();
   void showMeChanged();
@@ -71,7 +76,8 @@ signals:
   void addressRemoved(QString sipAddress);
   
 private:
-  ChatRoomModel *mChatRoomModel;
+  ChatRoomModel *mChatRoomModel = nullptr;
+  ConferenceModel *mConferenceModel = nullptr;
   bool mShowMe = true;
 };
 

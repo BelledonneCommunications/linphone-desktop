@@ -52,20 +52,24 @@ void SearchSipAddressesProxyModel::setFilter (const QString &pattern){
 
 void SearchSipAddressesProxyModel::addAddressToIgnore(const QString& address){
 	std::shared_ptr<linphone::Address> a = Utils::interpretUrl(address);
-	mResultsToIgnore[Utils::coreStringToAppString(a->asStringUriOnly())] = true;
-	invalidate();
+	if(a) {
+		mResultsToIgnore[Utils::coreStringToAppString(a->asStringUriOnly())] = true;
+		invalidate();
+	}
 }
 
 void SearchSipAddressesProxyModel::removeAddressToIgnore(const QString& address){
 	std::shared_ptr<linphone::Address> a = Utils::interpretUrl(address);
-	mResultsToIgnore.remove(Utils::coreStringToAppString(a->asStringUriOnly()));
-	invalidate();
+	if( a){
+		mResultsToIgnore.remove(Utils::coreStringToAppString(a->asStringUriOnly()));
+		invalidate();
+	}
 }
 
 bool SearchSipAddressesProxyModel::isIgnored(const QString& address) const{
 	if(address != ""){
 		std::shared_ptr<linphone::Address> a = Utils::interpretUrl(address);
-		return mResultsToIgnore.contains(Utils::coreStringToAppString(a->asStringUriOnly()));
+		return a ? mResultsToIgnore.contains(Utils::coreStringToAppString(a->asStringUriOnly())) : false;
 	}
 	return false;
 }

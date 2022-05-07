@@ -28,7 +28,10 @@
 #include <QDateTime>
 #include <QString>
 
+#include "components/participant/ParticipantModel.hpp"
+
 class ConferenceListener;
+class ParticipantListModel;
 
 class ConferenceModel : public QObject{
 	Q_OBJECT
@@ -36,19 +39,26 @@ public:
 
 	Q_PROPERTY(QString subject READ getSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QDateTime startDate READ getStartDate CONSTANT)
+	Q_PROPERTY(ParticipantListModel* participants READ getParticipants CONSTANT)
+	Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
+
 
 	static QSharedPointer<ConferenceModel> create(std::shared_ptr<linphone::Conference> chatRoom, QObject *parent = Q_NULLPTR);
 	ConferenceModel(std::shared_ptr<linphone::Conference> content, QObject *parent = Q_NULLPTR);
 	virtual ~ConferenceModel();
+	bool updateLocalParticipant();	// true if changed
 	
 	std::shared_ptr<linphone::Conference> getConference()const;
 	
 	QString getSubject() const;
 	QDateTime getStartDate() const;
 	Q_INVOKABLE qint64 getElapsedSeconds() const;
+	Q_INVOKABLE ParticipantModel* getLocalParticipant() const;
+	ParticipantListModel* getParticipants() const;
 
 	virtual void onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	virtual void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
+	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	virtual void onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	virtual void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	virtual void onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & device);
@@ -61,8 +71,10 @@ public:
 //---------------------------------------------------------------------------
 	
 signals:
+	void localParticipantChanged();
 	void participantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
+	void participantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
@@ -78,6 +90,9 @@ private:
 	
 	std::shared_ptr<linphone::Conference> mConference;
 	std::shared_ptr<ConferenceListener> mConferenceListener;
+
+	QSharedPointer<ParticipantModel> mLocalParticipant;
+	QSharedPointer<ParticipantListModel> mParticipantListModel;
 };
 Q_DECLARE_METATYPE(QSharedPointer<ConferenceModel>)
 

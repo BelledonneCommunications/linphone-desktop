@@ -39,6 +39,7 @@
 void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::participantAdded, this, &ConferenceModel::onParticipantAdded);
 	connect(listener, &ConferenceListener::participantRemoved, this, &ConferenceModel::onParticipantRemoved);
+	connect(listener, &ConferenceListener::participantAdminStatusChanged, this, &ConferenceModel::onParticipantAdminStatusChanged);
 	connect(listener, &ConferenceListener::participantDeviceAdded, this, &ConferenceModel::onParticipantDeviceAdded);
 	connect(listener, &ConferenceListener::participantDeviceRemoved, this, &ConferenceModel::onParticipantDeviceRemoved);
 	connect(listener, &ConferenceListener::participantDeviceLeft, this, &ConferenceModel::onParticipantDeviceLeft);
@@ -59,6 +60,8 @@ QSharedPointer<ConferenceModel> ConferenceModel::create(std::shared_ptr<linphone
 ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conference, QObject *parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mConference = conference;
+	//updateLocalParticipant();
+	mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
 	mConferenceListener = std::make_shared<ConferenceListener>();
 	connectTo(mConferenceListener.get());
 	mConference->addListener(mConferenceListener);
@@ -66,6 +69,21 @@ ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conferen
 
 ConferenceModel::~ConferenceModel(){
 	mConference->removeListener(mConferenceListener);
+}
+
+bool ConferenceModel::updateLocalParticipant(){
+	bool changed = false;
+	// First try to use findParticipant
+	auto localParticipant = mConference->findParticipant(mConference->getCall()->getCallLog()->getLocalAddress());
+	// Me is not in participants, use Me().
+	if( !localParticipant)
+		localParticipant = mConference->getMe();
+	if( localParticipant){
+		mLocalParticipant = QSharedPointer<ParticipantModel>::create(localParticipant);
+		qWarning() << "Is Admin: " << localParticipant->isAdmin() << " " << mLocalParticipant->getAdminStatus();
+		changed = true;
+	}
+	return changed;
 }
 
 std::shared_ptr<linphone::Conference> ConferenceModel::getConference()const{
@@ -84,17 +102,40 @@ qint64 ConferenceModel::getElapsedSeconds() const {
 	return getStartDate().secsTo(QDateTime::currentDateTime());
 }
 
+ParticipantModel* ConferenceModel::getLocalParticipant() const{
+	if( mLocalParticipant) {
+		qWarning() << "LocalParticipant admin : " << mLocalParticipant->getAdminStatus() << " " << (mLocalParticipant->getParticipant() ? mLocalParticipant->getParticipant()->isAdmin() : -1);
+	}else
+		qWarning() << "NULL";
+	return mLocalParticipant.get();
+}
+
+ParticipantListModel* ConferenceModel::getParticipants() const{
+	return mParticipantListModel.get();
+}
+
 //-----------------------------------------------------------------------------------------------------------------------
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
-	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
+	qDebug() << "Added call, participant count: " << mConference->getParticipantList().size();
+	if(!mLocalParticipant){
+		if(updateLocalParticipant())
+			emit localParticipantChanged();
+	}
 	emit participantAdded(participant);
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant){
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantRemoved(participant);
 }
+void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant){
+	qWarning() << "onParticipantAdminStatusChanged: " << participant->getAddress()->asString().c_str();
+	if(participant == mLocalParticipant->getParticipant())
+		emit mLocalParticipant->adminStatusChanged();
+	emit participantAdminStatusChanged(participant);
+}
+
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceAdded(participantDevice);

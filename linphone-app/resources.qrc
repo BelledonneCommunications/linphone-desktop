@@ -381,13 +381,15 @@
 		<file>ui/modules/Linphone/Styles/qmldir</file>
 		<file>ui/modules/Linphone/Styles/TelKeypad/TelKeypadStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
-		<file>ui/modules/Linphone/Styles/View/SipAddressesViewStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/View/ParticipantsListViewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/View/ParticipantsViewStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/View/SipAddressesViewStyle.qml</file>
 		<file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
 		<file>ui/modules/Linphone/TelKeypad/TelKeypad.js</file>
 		<file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
 		<file>ui/modules/Linphone/Timeline/Timeline.js</file>
 		<file>ui/modules/Linphone/Timeline/Timeline.qml</file>
+		<file>ui/modules/Linphone/View/ParticipantsListView.qml</file>
 		<file>ui/modules/Linphone/View/ParticipantsView.qml</file>
 		<file>ui/modules/Linphone/View/SipAddressesView.qml</file>
 		<file>ui/scripts/LinphoneUtils/linphone-utils.js</file>

@@ -52,6 +52,7 @@ TelKeypad                     1.0 TelKeypad/TelKeypad.qml
 
 Timeline                      1.0 Timeline/Timeline.qml
 
+ParticipantsListView          1.0 View/ParticipantsListView.qml
+ParticipantsView              1.0 View/ParticipantsView.qml
 SipAddressesView              1.0 View/SipAddressesView.qml
 
-ParticipantsView              1.0 View/ParticipantsView.qml

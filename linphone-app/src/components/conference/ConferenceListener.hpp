@@ -37,9 +37,9 @@ public:
 // LINPHONE LISTENERS
 	virtual void onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
 	virtual void onParticipantRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
+	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
 	virtual void onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice) override;
 	virtual void onParticipantDeviceRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice) override;
-	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
 	virtual void onParticipantDeviceLeft(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
 	virtual void onParticipantDeviceJoined(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
 	virtual void onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device) override;
@@ -53,6 +53,7 @@ public:
 signals:
 	void participantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
+	void participantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);

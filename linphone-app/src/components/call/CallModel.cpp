@@ -161,7 +161,7 @@ ChatRoomModel * CallModel::getChatRoomModel() const{
 }
 
 ConferenceModel * CallModel::getConferenceModel(){
-	return getConferenceSharedModel().get();
+	return mConferenceModel.get();
 }
 
 QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){

@@ -24,7 +24,7 @@ Rectangle {
 	id: conference
 	
 	property CallModel callModel
-	property ConferenceModel conferenceModel: callModel && callModel.getConferenceModel()
+	property ConferenceModel conferenceModel: callModel && callModel.conferenceModel
 	property bool cameraIsReady : false
 	property bool previewIsReady : false
 	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
@@ -249,6 +249,7 @@ Rectangle {
 				Layout.preferredWidth: 400
 				Layout.rightMargin: 30
 				callModel: conference.callModel
+				conferenceModel: conference.conferenceModel
 				visible: false
 				onClose: rightMenu.visible = !rightMenu.visible
 			}

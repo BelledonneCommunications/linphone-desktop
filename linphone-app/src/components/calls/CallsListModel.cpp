@@ -323,6 +323,8 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 		}
 		if( address)
 			chatRoomParticipants.push_back( address );
+		else
+			qWarning() << "Failed to add participant to conference, bad address : " << (participant ? participant->getSipAddress() : p.toString());
 	}
 	params->enableEncryption(securityLevel>0);
 	
