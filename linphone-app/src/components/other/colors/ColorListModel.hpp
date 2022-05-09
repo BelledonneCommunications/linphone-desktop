@@ -87,6 +87,7 @@ class ColorListModel : public ProxyListModel {
 		
 		ADD_COLOR("s", "#96be64", "Security")
 		
+		
 		ADD_COLOR("t", "#C2C2C2", "Title Header")
 		ADD_COLOR("u", "#D2D2D2", "Menu border (message)")
 		ADD_COLOR("v", "#E7E7E7", "Menu pressed (message)")
@@ -116,6 +117,11 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("conference_entry_bg", "#D0D8DE", "Conferences : Background entry")
 		ADD_COLOR("conference_out_avatar_bg", "#A1A1A1", "Conferences: Background avatar")
 		ADD_COLOR("conference_bg", "#798791", "Conferences: Background")
+		
+		ADD_COLOR("validation", "#96C11F", "Background for validation on buttons")
+		ADD_COLOR("validation_h", "#7B9D1B", "Hovered background for validation on buttons")
+		
+		ADD_COLOR("readonly_fg", "#B1B1B1", "Chat text area Readonly foreground")
 		
 
 // Standard actions

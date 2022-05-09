@@ -237,9 +237,20 @@ ScrollableListView {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					showContactAddress: sipAddressesView.showContactAddress
+					function getStatus(){
+						var count = 0;
+						var txt = ''
+						if( $modelData.adminStatus) {
 					//: '(Admin)' : One word for Admin(istrator)
 					//~ Context Little Header in one word for a column in participant
-					statusText : showAdminStatus && $modelData.adminStatus ? qsTr('participantsAdminHeader') : ''
+							txt += qsTr('participantsAdminHeader')
+							++count
+						}
+						if( $modelData.isMe)
+							txt += (count++ > 0 ? ' - ' : '') + 'Me'
+						return txt
+					}
+					statusText : showAdminStatus ? getStatus()  : ''
 					
 					entry:  $modelData
 					

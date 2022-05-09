@@ -30,6 +30,7 @@ void LinphoneEnums::registerMetaTypes(){
 	qRegisterMetaType<LinphoneEnums::EventLogType>();
 	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
 	qRegisterMetaType<LinphoneEnums::CallStatus>();
+	qRegisterMetaType<LinphoneEnums::ConferenceLayout>();
 	qRegisterMetaType<LinphoneEnums::TunnelMode>();
 	qRegisterMetaType<LinphoneEnums::RecorderState>();
 }

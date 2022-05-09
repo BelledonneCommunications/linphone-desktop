@@ -28,6 +28,7 @@ singleton FileChooserButtonStyle    1.0 Form/Buttons/FileChooserButtonStyle.qml
 singleton SmallButtonStyle          1.0 Form/Buttons/SmallButtonStyle.qml
 singleton TextButtonAStyle          1.0 Form/Buttons/TextButtonAStyle.qml
 singleton TextButtonBStyle          1.0 Form/Buttons/TextButtonBStyle.qml
+singleton TextButtonCStyle          1.0 Form/Buttons/TextButtonCStyle.qml
 
 singleton NumericFieldStyle         1.0 Form/Fields/NumericFieldStyle.qml
 singleton TextAreaFieldStyle        1.0 Form/Fields/TextAreaFieldStyle.qml

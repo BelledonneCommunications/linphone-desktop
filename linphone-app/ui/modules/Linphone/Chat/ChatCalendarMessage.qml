@@ -193,6 +193,7 @@ Loader{
 					font.weight: Font.Bold
 					
 					text: 'Description :'
+					visible: description.text != ''
 				}
 				TextAreaField{
 					id: description
@@ -204,11 +205,66 @@ Loader{
 					textColor: ChatCalendarMessageStyle.description.color
 					font.pointSize: ChatCalendarMessageStyle.description.pointSize
 					border.width: 0
+					visible: description.text != ''
+					
 					//font.weight: Font.Bold				
 					//elide: Text.ElideRight
 					//wrapMode: TextEdit.WordWrap
 					
 					text: mainItem.conferenceInfoModel.description
+				}
+				Text{
+					id: linkTitle
+					Layout.fillWidth: true
+					Layout.leftMargin: 10
+					color: ChatCalendarMessageStyle.subject.color
+					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
+					font.weight: Font.Bold
+					
+					text: 'Lien de la conférence'
+				}
+				RowLayout{
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					Layout.leftMargin: 10
+					Layout.rightMargin: 60
+					spacing: 10
+					TextField{
+						id: uriField
+						readOnly: true
+						Layout.fillWidth: true
+						textFieldStyle: TextFieldStyle.flatInverse
+						text: mainItem.conferenceInfoModel.uri
+						
+					}
+					ActionButton{
+						iconSize: uriField.height
+						isCustom: true
+						colorSet: ChatCalendarMessageStyle.copyLinkButton
+						backgroundRadius: width/2
+					}
+				}
+				RowLayout{
+					Layout.fillWidth: true
+					Layout.topMargin: 10
+					Layout.rightMargin: 10
+					spacing: 10
+					Item{
+						Layout.fillWidth: true
+					}
+					TextButtonC{
+						text: 'REJOINDRE'
+					}
+					ActionButton{
+						isCustom: true
+						colorSet: ChatCalendarMessageStyle.editButton
+						backgroundRadius: width/2
+					}
+					ActionButton{
+						isCustom: true
+						colorSet: ChatCalendarMessageStyle.deleteButton
+						backgroundRadius: width/2
+					}
 				}
 			}
 		}

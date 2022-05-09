@@ -22,6 +22,7 @@ ColumnLayout {
 
 	property ParticipantModel me: conferenceModel && conferenceModel.localParticipant
 
+	property int count: selectedParticipants.count
 	property bool isAdmin : (chatRoomModel && chatRoomModel.isMeAdmin && !chatRoomModel.isReadOnly) || (me && me.adminStatus)
 	property bool canHandleParticipants : isAdmin && ( (chatRoomModel && chatRoomModel.canHandleParticipants) || conferenceModel)
 	property bool haveEncryption: chatRoomModel && chatRoomModel.haveEncryption
@@ -70,7 +71,7 @@ ColumnLayout {
 		Layout.bottomMargin: 5
 
 		//readOnly: toAddView.count >= conferenceManager.maxParticipants
-		textFieldStyle: TextFieldStyle.normal
+		textFieldStyle: TextFieldStyle.unbordered
 
 		ColumnLayout{
 			anchors.fill:parent
@@ -134,8 +135,7 @@ ColumnLayout {
 					conferenceModel: mainLayout.conferenceModel
 					onAddressAdded: smartSearchBar.addAddressToIgnore(sipAddress)
 					onAddressRemoved: smartSearchBar.removeAddressToIgnore(sipAddress)
-					showMe: mainLayout.isAdmin
-
+					showMe: true
 				}
 
 				onEntryClicked: {

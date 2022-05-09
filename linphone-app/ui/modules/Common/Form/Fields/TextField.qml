@@ -70,7 +70,7 @@ Controls.TextField {
     }
   }
 
-  color: textFieldStyle.text.color
+  color: textField.readOnly ? textFieldStyle.text.readOnly : textFieldStyle.text.normal
   font.pointSize: textFieldStyle.text.pointSize
   rightPadding: textFieldStyle.text.rightPadding + toolsContainer.width
   selectByMouse: true

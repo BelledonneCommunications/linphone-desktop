@@ -86,7 +86,7 @@ public:
 	Q_PROPERTY(bool canBeEphemeral READ canBeEphemeral NOTIFY canBeEphemeralChanged)
 	Q_PROPERTY(bool markAsReadEnabled READ markAsReadEnabled WRITE enableMarkAsRead NOTIFY markAsReadEnabledChanged)
 	
-	Q_PROPERTY(ParticipantListModel* participants READ getParticipants CONSTANT)
+	Q_PROPERTY(ParticipantListModel* participants READ getParticipantListModel CONSTANT)
 	
 	Q_PROPERTY(ChatMessageModel * reply READ getReply WRITE setReply NOTIFY replyChanged)
 	
@@ -133,7 +133,8 @@ public:
 	bool getIsRemoteComposing () const;
 	bool isEntriesLoading() const;
 	bool isBasic() const;
-	ParticipantListModel* getParticipants() const;
+	ParticipantListModel* getParticipantListModel() const;
+	std::list<std::shared_ptr<linphone::Participant>> getParticipants() const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
 	QString getParticipantAddress();	// return peerAddress if not secure else return the first participant SIP address.

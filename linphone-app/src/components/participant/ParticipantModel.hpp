@@ -42,6 +42,7 @@ public:
 	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT)
 	Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
 	Q_PROPERTY(bool adminStatus READ getAdminStatus WRITE setAdminStatus NOTIFY adminStatusChanged)
+	Q_PROPERTY(bool isMe READ isMe CONSTANT)
     Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT)
     Q_PROPERTY(bool focus READ isFocus CONSTANT)
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)

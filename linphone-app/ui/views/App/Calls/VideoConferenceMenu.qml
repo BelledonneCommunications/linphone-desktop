@@ -40,7 +40,7 @@ Rectangle{
 // HEADER
 		Borders{
 			Layout.fillWidth: true
-			Layout.preferredHeight: Math.max(VideoConferenceMenuStyle.header.height, title.implicitHeight+20)
+			Layout.preferredHeight: Math.max(VideoConferenceMenuStyle.header.height, titleMenu.implicitHeight+20)
 			bottomColor: VideoConferenceMenuStyle.list.border.color
 			bottomWidth: VideoConferenceMenuStyle.list.border.width
 			RowLayout{
@@ -55,8 +55,8 @@ Rectangle{
 					visible: contentsStack.nViews > 1
 				}
 				Text{
-					id: title
-					text: 'Paramètres'
+					id: titleMenu
+					text: contentsStack.currentItem.title //'Paramètres'
 					Layout.fillWidth: true
 					Layout.preferredHeight: implicitHeight
 					horizontalAlignment: Qt.AlignCenter
@@ -81,27 +81,37 @@ Rectangle{
 			initialItem: settingsMenuComponent
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			onPopEnterChanged: if(nViews <= 1 ) title.text = 'Paramètres'
+			//onPopEnterChanged: if(nViews <= 1 ) title.text = 'Paramètres'
 		}
 		Component{
 			id: settingsMenuComponent
 			ColumnLayout{
 				property string objectName: 'settingsMenu'
+				property string title: 'Paramètres'
 				Layout.fillHeight: true
 				Layout.fillWidth: true
+				
+// List of title texts in order to allow bindings between all components
+				property var menuTitles: [
+					'Régler les périphériques'
+					, 'Modifier la mise en page'
+					, mainItem.isMeAdmin ? 'Inviter des participants' : 'Participants'
+				
+				]
+				
 				Repeater{
 					model: [
-						{text: 'Régler les périphériques'
-						, icon: VideoConferenceMenuStyle.settingsIcons.mediaIcon
+						{titleIndex: 0
+						,icon: VideoConferenceMenuStyle.settingsIcons.mediaIcon
 						, nextPage:mediaMenu},
 
-						{text: 'Modifier la mise en page'
+						{titleIndex: 1
 						, icon: (mainItem.callModel.videoEnabled ?
 										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
 									: VideoConferenceMenuStyle.settingsIcons.audioOnlyIcon)
 						, nextPage:layoutMenu},
 
-						{text: mainItem.isMeAdmin ? 'Inviter des participants' : 'Participants'
+						{ titleIndex: 2
 						, icon: VideoConferenceMenuStyle.settingsIcons.participantsIcon
 						, nextPage:participantsMenu}
 					]
@@ -130,7 +140,7 @@ Rectangle{
 								wrapMode: Text.WordWrap
 								elide: Text.ElideRight
 		
-								text: modelData.text
+								text: menuTitles[modelData.titleIndex]
 								font.pointSize: VideoConferenceMenuStyle.list.pointSize
 								color: VideoConferenceMenuStyle.list.color
 							}
@@ -146,8 +156,7 @@ Rectangle{
 						MouseArea{
 							anchors.fill: parent
 							onClicked: {
-								title.text = modelData.text
-								contentsStack.push(modelData.nextPage)
+								contentsStack.push(modelData.nextPage, {title:Qt.binding(function() { return settingsDescription.text})})
 							}
 						}
 					}
@@ -162,6 +171,7 @@ Rectangle{
 		Component{
 			id: mediaMenu
 			ColumnLayout{
+				property string title
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				MultimediaParametersDialog{
@@ -185,6 +195,7 @@ Rectangle{
 		Component{
 			id: layoutMenu
 			ColumnLayout{
+				property string title
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				Repeater{
@@ -238,13 +249,21 @@ Rectangle{
 		Component{
 			id: participantsMenu
 			ColumnLayout{
+				property string title
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				ParticipantsListView{
 					Layout.fillHeight: true
 					Layout.fillWidth: true
+					Layout.leftMargin: 10
+					Layout.rightMargin: 10
 					//Layout.minimumHeight: fitHeight
 					conferenceModel: mainItem.conferenceModel
+					isAdmin: mainItem.isMeAdmin
+					Text{					
+						text: 'Vous êtes actuellement seul dans cette conférence'
+						visible: parent.count
+					}
 				}
 				Item{// Spacer
 					Layout.fillWidth: true

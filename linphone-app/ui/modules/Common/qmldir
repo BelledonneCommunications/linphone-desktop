@@ -39,6 +39,7 @@ ExclusiveButtons        1.0 Form/Buttons/ExclusiveButtons.qml
 FileChooserButton       1.0 Form/Buttons/FileChooserButton.qml
 TextButtonA             1.0 Form/Buttons/TextButtonA.qml
 TextButtonB             1.0 Form/Buttons/TextButtonB.qml
+TextButtonC             1.0 Form/Buttons/TextButtonC.qml
 
 HexField                1.0 Form/Fields/HexField.qml
 NumericField            1.0 Form/Fields/NumericField.qml

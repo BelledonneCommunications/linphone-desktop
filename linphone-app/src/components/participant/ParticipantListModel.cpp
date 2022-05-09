@@ -62,7 +62,8 @@ ParticipantListModel::ParticipantListModel (ConferenceModel * conferenceModel, Q
 		connect(mConferenceModel, &ConferenceModel::participantAdded, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdded));
 		connect(mConferenceModel, &ConferenceModel::participantRemoved, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantRemoved));
 		connect(mConferenceModel, &ConferenceModel::participantAdminStatusChanged, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdminStatusChanged));
-
+		
+		connect(mConferenceModel, &ConferenceModel::conferenceStateChanged, this, &ParticipantListModel::onStateChanged);
 		//connect(mConferenceModel, &ConferenceModel::participantDeviceAdded, this, &ParticipantListModel::onParticipantDeviceAdded);
 		//connect(mConferenceModel, &ConferenceModel::participantDeviceRemoved, this, &ParticipantListModel::onParticipantDeviceRemoved);
 
@@ -147,7 +148,8 @@ bool ParticipantListModel::contains(const QString& address) const{
 void ParticipantListModel::updateParticipants () {
 	if( mChatRoomModel || mConferenceModel) {
 		bool changed = false;
-		auto dbParticipants = (mChatRoomModel ? mChatRoomModel->getChatRoom()->getParticipants() : mConferenceModel->getConference()->getParticipantList());
+		auto dbParticipants = (mChatRoomModel ? mChatRoomModel->getParticipants() : mConferenceModel->getParticipantList());
+		/*
 		std::shared_ptr<linphone::Participant> me;
 		if( mChatRoomModel )
 			me = mChatRoomModel->getChatRoom()->getMe();
@@ -155,7 +157,7 @@ void ParticipantListModel::updateParticipants () {
 			me = mConferenceModel->getLocalParticipant()->getParticipant();
 		if(me)
 			dbParticipants.push_front(me);
-		
+		*/
 		//Remove left participants
 		//for(auto participant : mList){
 		auto itParticipant = mList.begin();
@@ -358,4 +360,12 @@ void ParticipantListModel::onParticipantDeviceRemoved(const std::shared_ptr<cons
 void ParticipantListModel::onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<const linphone::Address> & participantAddress){
 }
 void ParticipantListModel::onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<const linphone::Address> & participantAddress){
+}
+
+void ParticipantListModel::onStateChanged(){
+	if(mConferenceModel){
+		if(mConferenceModel->getConference()->getState() == linphone::Conference::State::Created){
+			updateParticipants();
+		}
+	}
 }

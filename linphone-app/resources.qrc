@@ -92,6 +92,8 @@
 		<file>assets/images/home_custom.svg</file>
 		<file>assets/images/home_invite_friends.svg</file>
 		<file>assets/images/home_use_linphone.svg</file>
+		<file>assets/images/ics_copy_custom.svg</file>
+		<file>assets/images/ics_edit_custom.svg</file>
 		<file>assets/images/incoming_call_custom.svg</file>
 		<file>assets/images/led_green.svg</file>
 		<file>assets/images/led_orange.svg</file>
@@ -174,6 +176,7 @@
 		<file>ui/modules/Common/Form/Buttons/SmallButton.qml</file>
 		<file>ui/modules/Common/Form/Buttons/TextButtonA.qml</file>
 		<file>ui/modules/Common/Form/Buttons/TextButtonB.qml</file>
+		<file>ui/modules/Common/Form/Buttons/TextButtonC.qml</file>
 		<file>ui/modules/Common/Form/CheckBoxText.qml</file>
 		<file>ui/modules/Common/Form/ComboBox.js</file>
 		<file>ui/modules/Common/Form/ComboBox.qml</file>
@@ -243,6 +246,7 @@
 		<file>ui/modules/Common/Styles/Form/Buttons/SmallButtonStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Buttons/TextButtonAStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Buttons/TextButtonBStyle.qml</file>
+		<file>ui/modules/Common/Styles/Form/Buttons/TextButtonCStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/CheckBoxTextStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/ComboBoxStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/CommonItemDelegateStyle.qml</file>

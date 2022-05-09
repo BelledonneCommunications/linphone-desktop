@@ -110,15 +110,22 @@ ParticipantModel* ConferenceModel::getLocalParticipant() const{
 	return mLocalParticipant.get();
 }
 
-ParticipantListModel* ConferenceModel::getParticipants() const{
+ParticipantListModel* ConferenceModel::getParticipantListModel() const{
 	return mParticipantListModel.get();
 }
 
+std::list<std::shared_ptr<linphone::Participant>> ConferenceModel::getParticipantList()const{
+	auto participantList = mConference->getParticipantList();
+	auto me = mConference->getMe();
+	if( me )
+		participantList.push_front(me);
+	return participantList;
+}
 //-----------------------------------------------------------------------------------------------------------------------
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
-	qDebug() << "Added call, participant count: " << mConference->getParticipantList().size();
+	qDebug() << "Added call, participant count: " << getParticipantList().size();
 	if(!mLocalParticipant){
 		if(updateLocalParticipant())
 			emit localParticipantChanged();

@@ -114,7 +114,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
 }
 
 void ConferenceHelperModel::ConferenceAddModel::addParticipants(ChatRoomModel * model){
-	auto participants = model->getChatRoom()->getParticipants();
+	auto participants = model->getParticipants();
 	for( auto participant : participants){
 		if(participant){
 			addToConference(Utils::coreStringToAppString(participant->getAddress()->asString()));

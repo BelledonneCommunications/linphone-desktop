@@ -39,7 +39,7 @@ public:
 
 	Q_PROPERTY(QString subject READ getSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QDateTime startDate READ getStartDate CONSTANT)
-	Q_PROPERTY(ParticipantListModel* participants READ getParticipants CONSTANT)
+	Q_PROPERTY(ParticipantListModel* participants READ getParticipantListModel CONSTANT)
 	Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 
 
@@ -54,7 +54,8 @@ public:
 	QDateTime getStartDate() const;
 	Q_INVOKABLE qint64 getElapsedSeconds() const;
 	Q_INVOKABLE ParticipantModel* getLocalParticipant() const;
-	ParticipantListModel* getParticipants() const;
+	ParticipantListModel* getParticipantListModel() const;
+	std::list<std::shared_ptr<linphone::Participant>> getParticipantList() const;	// SDK exclude me. We want to get ALL participants.
 
 	virtual void onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	virtual void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant);

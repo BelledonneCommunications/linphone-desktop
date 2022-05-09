@@ -82,6 +82,7 @@ public slots:
 	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::EventLog> & eventLog);
 	void onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<const linphone::Address> & participantAddress);
 	void onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<const linphone::Address> & participantAddress);
+	void onStateChanged();
 	
 signals:
 	void securityLevelChanged();

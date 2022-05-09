@@ -1758,6 +1758,20 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>ParticipantsListView</name>
+    <message>
+        <source>participantList</source>
+        <extracomment>&apos;Participant list&apos;</extracomment>
+        <translation type="unfinished">Participant list</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation type="unfinished">Admin</translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+</context>
+<context>
     <name>ParticipantsView</name>
     <message>
         <source>participantsAdminHeader</source>

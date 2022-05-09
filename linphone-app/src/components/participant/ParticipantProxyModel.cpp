@@ -70,7 +70,8 @@ QVariantList ParticipantProxyModel::getParticipants() const{
 }
 
 int ParticipantProxyModel::getCount() const{
-	return qobject_cast<ParticipantListModel*>(sourceModel())->rowCount();
+	auto model = getParticipantListModel();
+	return model ? model->rowCount() : 0;
 }
 
 bool ParticipantProxyModel::getShowMe() const{
@@ -83,7 +84,7 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 	if(!mChatRoomModel || mChatRoomModel != chatRoomModel){
 		mChatRoomModel = chatRoomModel;
 		if(mChatRoomModel) {
-			auto participants = mChatRoomModel->getParticipants();
+			auto participants = mChatRoomModel->getParticipantListModel();
 			setSourceModel(participants);
 			emit participantListModelChanged();
 			for(int i = 0 ; i < participants->getCount() ; ++i)
@@ -101,7 +102,7 @@ void ParticipantProxyModel::setConferenceModel(ConferenceModel * conferenceModel
 	if(!mConferenceModel || mConferenceModel != conferenceModel){
 		mConferenceModel = conferenceModel;
 		if(mConferenceModel) {
-			auto participants = mConferenceModel->getParticipants();
+			auto participants = mConferenceModel->getParticipantListModel();
 			setSourceModel(participants);
 			emit participantListModelChanged();
 			for(int i = 0 ; i < participants->getCount() ; ++i)
@@ -131,6 +132,16 @@ void ParticipantProxyModel::addAddress(const QString& address){
 		participantsModel->add(participant);
 		if(mChatRoomModel && mChatRoomModel->getChatRoom()){// Invite and wait for its creation
 			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
+			connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
+			participant->startInvitation();
+		}
+		if( mConferenceModel && mConferenceModel->getConference()){
+			//mConferenceModel->getConference()->addParticipant(Utils::interpretUrl(address));
+			std::list<std::shared_ptr<linphone::Address>> addressesToInvite;
+			addressesToInvite.push_back(Utils::interpretUrl(address));
+			auto callParameters = CoreManager::getInstance()->getCore()->createCallParams(mConferenceModel->getConference()->getCall());
+			
+			mConferenceModel->getConference()->inviteParticipants(addressesToInvite, callParameters);
 			connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
 			participant->startInvitation();
 		}
