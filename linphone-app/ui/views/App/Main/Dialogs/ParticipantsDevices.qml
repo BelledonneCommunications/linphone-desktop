@@ -19,7 +19,6 @@ import '../Conversation.js' as Logic
 DialogPlus {
 	id:dialog
 	buttons: []
-	flat : true
 	//: 'Conversation's devices' : Title of window that show all devices
 	title: qsTr('conversationDevicesTitle')
 	showCloseCross:true

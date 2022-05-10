@@ -34,7 +34,7 @@ DialogPlus {
       }
     }
   ]
-
+  
   buttonsAlignment: Qt.AlignCenter
   descriptionText: qsTr('conferenceManagerDescription')
 

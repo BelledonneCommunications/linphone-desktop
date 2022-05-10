@@ -38,6 +38,7 @@ singleton SipAddressDialogStyle                1.0 Dialog/SipAddressDialogStyle.
 singleton HistoryStyle                         1.0 History/HistoryStyle.qml
 
 singleton SipAddressesMenuStyle                1.0 Menus/SipAddressesMenuStyle.qml
+singleton VideoConferenceMenuStyle             1.0 Menus/VideoConferenceMenuStyle.qml
 
 singleton MessageCounterStyle                  1.0 Misc/MessageCounterStyle.qml
 

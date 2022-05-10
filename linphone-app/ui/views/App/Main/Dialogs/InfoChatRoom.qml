@@ -44,7 +44,6 @@ DialogPlus {
 			}
 		}
 	]
-	flat : true
 	showCloseCross: true
 	//: "Group information" : Popup title.
 	//~ This popup display data about the current chat room

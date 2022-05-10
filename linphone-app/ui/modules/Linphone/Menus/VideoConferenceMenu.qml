@@ -6,6 +6,7 @@ import QtQuick.Controls 2.12
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
+import Linphone.Styles 1.0
 import LinphoneUtils 1.0
 
 import LinphoneEnums 1.0
@@ -13,11 +14,6 @@ import LinphoneEnums 1.0
 import UtilsCpp 1.0
 
 import App.Styles 1.0
-
-
-// Temp
-import 'Incall.js' as Logic
-import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 

@@ -39,7 +39,6 @@ DialogPlus {
 			}
 		}
 	]
-	flat : true
 	//: 'End-to-end encrypted' Popup title about encryption information.
 	title: qsTr('infoEncryptionTitle')
 	showCloseCross:false

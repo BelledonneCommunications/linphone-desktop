@@ -16,9 +16,11 @@ Rectangle {
   property alias descriptionText: description.text // Optionnal.
   property int buttonsAlignment : Qt.AlignLeft  
   property bool flat : false
+	
   property bool showMargins: !flat
   property bool expandHeight: flat
   property alias showCloseCross : titleBar.showCloseCross
+  property alias showTitleBar: titleBar.showBar
   
   property int buttonsLeftMargin :(buttonsAlignment & Qt.AlignLeft )== Qt.AlignLeft
         ? DialogStyle.buttons.leftMargin
@@ -91,6 +93,7 @@ Rectangle {
 
 	  Layout.fillHeight: (expandHeight ? true : !dialog.contentIsEmpty)
       Layout.fillWidth: true
+      Layout.topMargin: (showMargins ? DialogStyle.content.topMargin : 0)
 	  Layout.leftMargin: (showMargins ? DialogStyle.content.leftMargin : 0)
 	  Layout.rightMargin: (showMargins ? DialogStyle.content.rightMargin : 0)
     }

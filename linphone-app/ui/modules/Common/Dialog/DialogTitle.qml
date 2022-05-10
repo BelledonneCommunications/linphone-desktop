@@ -19,7 +19,7 @@ Item {
 	property bool flat: false
 	signal close()
 	
-	height: showBar || showCloseCross ? (flat ? 60 : 30) : 0
+	height: showBar || showCloseCross ? (flat && text != '' ? 60 : 30) : 0
 	
 	Rectangle{
 		anchors.fill:parent
@@ -27,7 +27,7 @@ Item {
 			GradientStop { position: 0.0; color: DialogStyle.title.lowGradient }
 			GradientStop { position: 1.0; color: DialogStyle.title.highGradient }
 		}
-		visible:showBar && !flat
+		visible: showBar && !flat
 	}
 	Text {
 		id: title

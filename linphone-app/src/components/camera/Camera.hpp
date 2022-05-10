@@ -89,6 +89,7 @@ private:
 	void activatePreview();
 	void deactivatePreview();
 	void updateWindowIdLocation();
+	void removeParticipantDeviceModel();
 	
 	bool mIsPreview = false;
 	bool mIsReady = false;

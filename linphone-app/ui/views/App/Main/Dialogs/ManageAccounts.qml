@@ -21,7 +21,8 @@ DialogPlus {
 
   buttonsAlignment: Qt.AlignCenter
   objectName: '__manageAccounts'
-
+  flat: true
+  showMargins: true
   height: SettingsModel.rlsUriEnabled ? ManageAccountsStyle.height : ManageAccountsStyle.heightWithoutPresence
   width: ManageAccountsStyle.width
 

@@ -12,7 +12,6 @@ singleton CallsWindowStyle                               1.0 Calls/CallsWindowSt
 singleton WaitingRoomStyle                               1.0 Calls/WaitingRoomStyle.qml
 singleton ConferenceStyle                                1.0 Calls/ConferenceStyle.qml
 singleton VideoConferenceStyle                           1.0 Calls/VideoConferenceStyle.qml
-singleton VideoConferenceMenuStyle                           1.0 Calls/VideoConferenceMenuStyle.qml
 
 singleton CallSipAddressStyle                            1.0 Calls/Dialogs/CallSipAddressStyle.qml
 singleton CallTransferStyle                              1.0 Calls/Dialogs/CallTransferStyle.qml

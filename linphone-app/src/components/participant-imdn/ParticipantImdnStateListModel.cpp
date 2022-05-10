@@ -37,6 +37,11 @@ ParticipantImdnStateListModel::ParticipantImdnStateListModel (std::shared_ptr<li
 	states.push_back(linphone::ChatMessage::State::DeliveredToUser);
 	states.push_back(linphone::ChatMessage::State::Displayed);
 	states.push_back(linphone::ChatMessage::State::NotDelivered);
+	states.push_back(linphone::ChatMessage::State::Idle);
+	states.push_back(linphone::ChatMessage::State::InProgress);
+	states.push_back(linphone::ChatMessage::State::FileTransferError);
+	states.push_back(linphone::ChatMessage::State::FileTransferDone);
+	states.push_back(linphone::ChatMessage::State::FileTransferInProgress);
 	for(int i = 0 ; i < states.size() ; ++i){
 		std::list<std::shared_ptr<linphone::ParticipantImdnState>> imdns = message->getParticipantsByImdnState(states[i]);
 		for(auto imdn : imdns){

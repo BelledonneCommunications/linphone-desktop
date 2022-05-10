@@ -19,6 +19,9 @@ DialogPlus {
 	property bool _conferenceUriOk: true
 	property bool _videoConferenceUriOk: true
 	
+	flat: true
+	showMargins: true
+	
 	buttons: [
 		TextButtonA {
 			text: qsTr('cancel')

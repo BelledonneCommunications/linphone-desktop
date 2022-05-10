@@ -19,6 +19,10 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 DialogPlus {
 	id: conferenceManager
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{
+		property bool isNew: true
+	}
+	Connections{
+		target: conferenceInfoModel
 		onConferenceCreated: {
 			console.log("Conference has been created.")
 			creationStatus.icon = 'led_green'
@@ -103,7 +107,7 @@ DialogPlus {
 		TextButtonB {
 			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
 			//: 'Launch' : Start button
-			text: qsTr('startButton')
+			text: conferenceInfoModel.isNew ? qsTr('startButton') : 'Mettre à jour'
 			capitalization: Font.AllUppercase
 			
 			function getInviteMode(){
@@ -162,7 +166,7 @@ DialogPlus {
 	buttonsAlignment: Qt.AlignRight
 	buttonsLeftMargin: 15
 	//: 'Start a video conference' : Title of a popup about creation of a video conference
-	title:qsTr('newConferenceTitle')
+	title: conferenceInfoModel.isNew ? qsTr('newConferenceTitle') : 'Changer la conférence'
 	
 	height: window.height - 100
 	width: window.width - 100

@@ -41,6 +41,7 @@ FileView                      1.0 File/FileView.qml
 History                       1.0 History/History.qml
 
 SipAddressesMenu              1.0 Menus/SipAddressesMenu.qml
+VideoConferenceMenu           1.0 Menus/VideoConferenceMenu.qml
 
 MessageCounter                1.0 Misc/MessageCounter.qml
 

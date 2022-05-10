@@ -132,6 +132,10 @@ void Camera::updateWindowIdLocation(){
 	}
 }
 
+void Camera::removeParticipantDeviceModel(){
+	mParticipantDeviceModel = nullptr;
+}
+
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	resetWindowId();
 
@@ -229,7 +233,10 @@ void Camera::setIsReady(bool status) {
 
 void Camera::setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel){
 if (mParticipantDeviceModel != participantDeviceModel) {
+		if( mParticipantDeviceModel)
+			disconnect(mParticipantDeviceModel, &QObject::destroyed, this, &Camera::removeParticipantDeviceModel);
 		mParticipantDeviceModel = participantDeviceModel;
+		connect(mParticipantDeviceModel, &QObject::destroyed, this, &Camera::removeParticipantDeviceModel);
 		updateWindowIdLocation();
 		update();
 		emit participantDeviceModelChanged(mParticipantDeviceModel);

@@ -259,6 +259,11 @@ Loader{
 						isCustom: true
 						colorSet: ChatCalendarMessageStyle.editButton
 						backgroundRadius: width/2
+						onClicked: {
+							window.detachVirtualWindow()
+							window.attachVirtualWindow(Qt.resolvedUrl('../../../views/App/Main/Dialogs/NewConference.qml')
+													   ,{conferenceInfoModel: mainItem.conferenceInfoModel})
+						}
 					}
 					ActionButton{
 						isCustom: true
