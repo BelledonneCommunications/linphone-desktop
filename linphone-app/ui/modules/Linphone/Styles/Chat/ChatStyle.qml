@@ -83,11 +83,6 @@ QtObject {
 			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+replyPreviewObject.name+'_'+name+'_f_p', icon, 'l_p_b_fg').color
 		}
 	}
-	property QtObject messageBanner: QtObject {
-		property color color: ColorsList.add(sectionName+'_message_banner', '', 'Background of message banner', '#9ecd1d').color
-		property color textColor: ColorsList.add(sectionName+'_message_banner_text', 'q', 'Text of message banner').color
-		property int pointSize: Units.dp * 9
-	}
 	property QtObject ephemeralTimer: QtObject{
 		property string icon: 'timer_custom'
 		property int iconSize : 25

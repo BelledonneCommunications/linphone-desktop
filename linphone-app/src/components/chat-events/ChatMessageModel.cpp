@@ -192,10 +192,6 @@ QSharedPointer<ParticipantImdnStateListModel> ChatMessageModel::getParticipantIm
 	return mParticipantImdnStateListModel;
 }
 
-ContentProxyModel * ChatMessageModel::getContentsProxy(){
-	return new ContentProxyModel(this);
-}
-
 QSharedPointer<ContentListModel> ChatMessageModel::getContents() const{
 	return mContentListModel;
 }

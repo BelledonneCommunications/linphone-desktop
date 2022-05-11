@@ -11,6 +11,7 @@ import App.Styles 1.0
 import ColorsList 1.0
 
 import 'MainWindow.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -226,7 +227,7 @@ ApplicationWindow {
 						//onClicked: Logic.openConferenceManager()
 						onClicked: {
 							window.detachVirtualWindow()
-							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/NewConference.qml')
+							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
 													   ,{})
 						}
 					}

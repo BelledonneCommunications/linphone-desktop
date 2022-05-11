@@ -120,6 +120,7 @@ AppController::~AppController () {
 
 void AppController::stopApp(){
 	try{
+		mApp->stop();
 		delete mApp;
 		mApp = nullptr;
 	}

@@ -91,6 +91,7 @@ CoreManager::~CoreManager(){
 // -----------------------------------------------------------------------------
 
 void CoreManager::initCoreManager(){
+	qInfo() << "Init CoreManager";
 	mCallsListModel = new CallsListModel(this);
 	mChatModel = new ChatModel(this);
 	mContactsListModel = new ContactsListModel(this);
@@ -144,20 +145,13 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
 
 void CoreManager::uninit () {
 	if (mInstance) {
-		connect(mInstance, &QObject::destroyed, []()mutable{
-			mInstance = nullptr;
-			qInfo() << "Core is correctly destroyed";
-		});
-		QObject::connect(mInstance->getHandlers().get(), &CoreHandlers::coreStopped, mInstance, &QObject::deleteLater); // Delete data only when the core is Off
-		
 		mInstance->lockVideoRender();// Stop do iterations. We have to protect GUI.
-		mInstance->mCore->stop();
+		mInstance->mCore->stop();// This is a synchronized stop.
 		mInstance->unlockVideoRender();
-		QTest::qWaitFor([&]() {return mInstance == nullptr;},10000);
-		if( mInstance){
-			qWarning() << "Core couldn't destroy in time. It may lead to have multiple session of Core";
-			mInstance = nullptr;
-		}
+		if( mInstance->mCore->getGlobalState() != linphone::GlobalState::Off)
+			qWarning() << "Core is not off after stopping it. It may result to have multiple core instance.";
+		delete mInstance;
+		mInstance = nullptr;
 	}
 }
 

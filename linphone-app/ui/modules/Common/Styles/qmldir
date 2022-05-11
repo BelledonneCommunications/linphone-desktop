@@ -53,6 +53,7 @@ singleton MenuItemStyle             1.0 Menus/MenuItemStyle.qml
 singleton MenuStyle                 1.0 Menus/MenuStyle.qml
 
 singleton ForceScrollBarStyle       1.0 Misc/ForceScrollBarStyle.qml
+singleton MessageBannerStyle        1.0 Misc/MessageBannerStyle.qml
 singleton PanedStyle                1.0 Misc/PanedStyle.qml
 
 singleton DatePickerStyle           1.0 Picker/DatePickerStyle.qml

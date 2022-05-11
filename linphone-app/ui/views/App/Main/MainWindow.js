@@ -77,7 +77,7 @@ function setView (view, props, callback) {
     apply(view, props, false, callback)
     return
   }
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: lockedInfo.descriptionText,
   }, function (status) {
     if (status) {

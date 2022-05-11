@@ -23,7 +23,7 @@
 
 .import Linphone 1.0 as Linphone
 
-.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
+.import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -46,5 +46,5 @@ function hideVideoPreview () {
 }
 
 function handleCodecDownloadRequested (codecInfo) {
-  LinphoneUtils.openCodecOnlineInstallerDialog(window, codecInfo)
+  Utils.openCodecOnlineInstallerDialog(window, codecInfo)
 }

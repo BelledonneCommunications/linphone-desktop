@@ -1,7 +1,6 @@
 import QtQuick 2.7
 
 import Linphone 1.0
-import LinphoneUtils 1.0
 
 import UtilsCpp 1.0
 
@@ -13,12 +12,14 @@ Avatar {
 	id: mainItem
   property var call
   property var participantDeviceModel
-  readonly property var _sipAddressObserver: call ? SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
+  property var _sipAddressObserver: call ? SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
 												: participantDeviceModel ? SipAddressesModel.getSipAddressObserver(participantDeviceModel.address, '')
 													: null
-  readonly property var _username: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
-  property bool isPaused: (call && (call.status === CallModel.CallStatusPaused)) || (participantDeviceModel && participantDeviceModel.isPaused)
+   property var _username: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
+  property bool isPaused: (call && (call.status === CallModel.CallStatusPaused)) || (participantDeviceModel && participantDeviceModel.isPaused) || false
 
+  Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
+  
   backgroundColor: CallStyle.container.avatar.backgroundColor
   foregroundColor: mainItem.isPaused ? CallStyle.container.pause.color : 'transparent'
 

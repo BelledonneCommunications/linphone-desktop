@@ -21,8 +21,8 @@ Rectangle {
 	property alias proxyModel: chat.model	// ChatRoomProxyModel
 	property alias tryingToLoadMoreEntries : chat.tryToLoadMoreEntries
 	
-	property string noticeBannerText : ''	// When set, show a banner with text and hide after some time
-	onNoticeBannerTextChanged: if(noticeBannerText!='') messageBlock.state = "showed"
+	property alias noticeBannerText : messageBlock.noticeBannerText	// When set, show a banner with text and hide after some time
+	
 	
 	// ---------------------------------------------------------------------------
 	
@@ -380,66 +380,15 @@ Rectangle {
 			ColumnLayout{
 				anchors.fill: parent				
 				spacing: 0
-				Rectangle{
+				MessageBanner{
 					id: messageBlock
 					onHeightChanged: height = Layout.preferredHeight
-					Layout.preferredHeight: visible && opacity > 0 ? 32 : 0
 					Layout.fillWidth: true
+					Layout.preferredHeight: fitHeight
 					Layout.leftMargin: ChatStyle.entry.leftMargin
 					Layout.rightMargin: ChatStyle.entry.rightMargin
-					color: ChatStyle.messageBanner.color
-					radius: 10
-					state: "hidden"
-					Timer{
-						id: hideNoticeBanner
-						interval: 4000
-						repeat: false
-						onTriggered: messageBlock.state = "hidden"
-					}
-					RowLayout{
-						anchors.centerIn: parent
-						spacing: 5
-						Icon{
-							icon: ChatStyle.copyTextIcon
-							overwriteColor: ChatStyle.messageBanner.textColor
-							iconSize: 20
-						}
-						Text{
-							Layout.fillHeight: true
-							Layout.fillWidth: true
-							text: container.noticeBannerText
-							font {
-								pointSize: ChatStyle.messageBanner.pointSize
-							}
-							color: ChatStyle.messageBanner.textColor
-						}
-					}
-					states: [
-						State {
-							name: "hidden"
-							PropertyChanges { target: messageBlock; opacity: 0 }
-						},
-						State {
-							name: "showed"
-							PropertyChanges { target: messageBlock; opacity: 1 }
-						}
-					]
-					transitions: [
-						Transition {
-							from: "*"; to: "showed"
-							SequentialAnimation{
-								NumberAnimation{ properties: "opacity"; easing.type: Easing.OutBounce; duration: 500 }
-								ScriptAction{ script: hideNoticeBanner.start()}	
-							}
-						},
-						Transition {
-							SequentialAnimation{
-								NumberAnimation{ properties: "opacity"; duration: 1000 }
-								ScriptAction{ script: container.noticeBannerText = '' }
-							}
-						}
-					]
-				}// MessageBlock
+					noticeBannerText: ''
+				}
 				ChatMessagePreview{
 						id: chatMessagePreview
 						Layout.fillWidth: true

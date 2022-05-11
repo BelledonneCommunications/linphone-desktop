@@ -39,6 +39,9 @@ TunnelModel::TunnelModel (shared_ptr<linphone::Tunnel> tunnel, QObject *parent) 
 	}
 }
 
+TunnelModel::~TunnelModel(){
+}
+
 // -----------------------------------------------------------------------------
 
 QString TunnelModel::getDomain() const{

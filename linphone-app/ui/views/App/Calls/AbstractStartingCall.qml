@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 
 import UtilsCpp 1.0
 
@@ -18,6 +17,7 @@ Rectangle {
 	property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call.fullPeerAddress, call.fullLocalAddress)
 	property alias showKeypad :telKeypadButton.visible
 	
+	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	// ---------------------------------------------------------------------------
 	
 	color: CallStyle.backgroundColor
@@ -44,7 +44,7 @@ Rectangle {
 				height: CallStyle.header.contactDescription.height
 				horizontalTextAlignment: Text.AlignHCenter
 				sipAddress: call.peerAddress
-				username: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
+				username: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
 				width: contentWidth
 			}
 			
@@ -84,7 +84,7 @@ Rectangle {
 				
 				anchors.centerIn: parent
 				backgroundColor: CallStyle.container.avatar.backgroundColor
-				image: _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
+				image: _sipAddressObserver && _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
 				username: contactDescription.username
 				
 				height: _computeAvatarSize()

@@ -235,14 +235,19 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 
 App::~App () {
 	qInfo() << QStringLiteral("Destroying app...");
-	if( mEngine )
+}
+
+void App::stop(){
+	qInfo() << QStringLiteral("Stopping app...");
+	if( mEngine ){
 		delete mEngine;
+		processEvents(QEventLoop::AllEvents);
+	}
 	CoreManager::uninit();
 	processEvents(QEventLoop::AllEvents);	// Process all needed events on engine deletion.
 	if( mParser)
 		delete mParser;
 }
-
 // -----------------------------------------------------------------------------
 
 QStringList App::cleanParserKeys(QCommandLineParser * parser, QStringList keys){
@@ -406,7 +411,6 @@ void App::initContentApp () {
 	
 	// Enable notifications.
 	mNotifier = new Notifier(mEngine);
-	
 	// Load main view.
 	qInfo() << QStringLiteral("Loading main view...");
 	mEngine->load(QUrl(Constants::QmlViewMainWindow));

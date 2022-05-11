@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 
 import UtilsCpp 1.0
 
@@ -130,6 +129,7 @@ Rectangle {
 						
 						spacing: ConferenceStyle.grid.cell.spacing
 						
+						Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 						ContactDescription {
 							id: contactDescription
 							
@@ -138,7 +138,7 @@ Rectangle {
 							
 							horizontalTextAlignment: Text.AlignHCenter
 							sipAddress: parent.sipAddress
-							username: UtilsCpp.getDisplayName(parent._sipAddressObserver.peerAddress)
+							username: parent._sipAddressObserver ? UtilsCpp.getDisplayName(parent._sipAddressObserver.peerAddress) : ''
 						}
 						IncallAvatar {
 							

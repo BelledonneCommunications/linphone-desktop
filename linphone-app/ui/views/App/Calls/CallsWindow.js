@@ -36,7 +36,7 @@ function handleClosing (close) {
 		return
 	}
 	
-	window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+	window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
 								   descriptionText: qsTr('acceptClosingDescription')
 							   }, function (status) {
 								   if (status) {

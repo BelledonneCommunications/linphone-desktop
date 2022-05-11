@@ -28,7 +28,7 @@
 // =============================================================================
 
 function cleanAvatars () {
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('cleanAvatarsDescription'),
   }, function (status) {
     if (status) {
@@ -62,7 +62,7 @@ function setLocale (locale) {
   App.configLocale = locale
 
   window.detachVirtualWindow()
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('setLocaleDescription'),
   }, function (status) {
     if (status) {

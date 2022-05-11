@@ -24,13 +24,12 @@
 .import Linphone 1.0 as Linphone
 .import UtilsCpp 1.0 as UtilsCpp
 
-.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
 function removeAllEntries () {
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('removeAllEntriesDescription'),
   }, function (status) {
     if (status) {

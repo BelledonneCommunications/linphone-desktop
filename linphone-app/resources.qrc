@@ -229,6 +229,7 @@
 		<file>ui/modules/Common/Menus/Menu.qml</file>
 		<file>ui/modules/Common/Misc/Borders.qml</file>
 		<file>ui/modules/Common/Misc/ForceScrollBar.qml</file>
+		<file>ui/modules/Common/Misc/MessageBanner.qml</file>
 		<file>ui/modules/Common/Misc/Paned.qml</file>
 		<file>ui/modules/Common/Picker/DatePicker.qml</file>
 		<file>ui/modules/Common/Picker/TimePicker.qml</file>
@@ -276,6 +277,7 @@
 		<file>ui/modules/Common/Styles/Menus/MenuItemStyle.qml</file>
 		<file>ui/modules/Common/Styles/Menus/MenuStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/ForceScrollBarStyle.qml</file>
+		<file>ui/modules/Common/Styles/Misc/MessageBannerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/PanedStyle.qml</file>
 		<file>ui/modules/Common/Styles/Picker/DatePickerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Picker/TimePickerStyle.qml</file>
@@ -398,12 +400,11 @@
 		<file>ui/modules/Linphone/View/ParticipantsListView.qml</file>
 		<file>ui/modules/Linphone/View/ParticipantsView.qml</file>
 		<file>ui/modules/Linphone/View/SipAddressesView.qml</file>
-		<file>ui/scripts/LinphoneUtils/linphone-utils.js</file>
-		<file>ui/scripts/LinphoneUtils/qmldir</file>
 		<file>ui/scripts/Utils/port-tools.js</file>
 		<file>ui/scripts/Utils/qmldir</file>
 		<file>ui/scripts/Utils/uri-tools.js</file>
 		<file>ui/scripts/Utils/utils.js</file>
+		<file>ui/views/App/qmldir</file>
 		<file>ui/views/App/Calls/AbstractStartingCall.qml</file>
 		<file>ui/views/App/Calls/CallsWindow.js</file>
 		<file>ui/views/App/Calls/CallsWindow.qml</file>
@@ -424,6 +425,7 @@
 		<file>ui/views/App/Calls/OutgoingCall.qml</file>
 		<file>ui/views/App/Calls/WaitingRoom.qml</file>
 		<file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
+		<file>ui/views/App/Dialog/NewConference.qml</file>
 		<file>ui/views/App/Main/Assistant/ActivateAppSipAccountWithEmail.qml</file>
 		<file>ui/views/App/Main/Assistant/ActivateAppSipAccountWithPhoneNumber.qml</file>
 		<file>ui/views/App/Main/Assistant/AssistantAbstractView.qml</file>
@@ -452,7 +454,6 @@
 		<file>ui/views/App/Main/Dialogs/ManageAccount.js</file>
 		<file>ui/views/App/Main/Dialogs/ManageAccounts.qml</file>
 		<file>ui/views/App/Main/Dialogs/NewChatRoom.qml</file>
-		<file>ui/views/App/Main/Dialogs/NewConference.qml</file>
 		<file>ui/views/App/Main/Dialogs/ParticipantsDevices.qml</file>
 		<file>ui/views/App/Main/Home.qml</file>
 		<file>ui/views/App/Main/HistoryView.qml</file>
@@ -490,6 +491,7 @@
 		<file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/MultimediaParametersStyle.qml</file>
+		<file>ui/views/App/Styles/Dialog/NewConferenceStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/ActivateAppSipAccountWithEmailStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/ActivateAppSipAccountWithPhoneNumberStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>
@@ -507,7 +509,6 @@
 		<file>ui/views/App/Styles/Main/Dialogs/InfoChatRoomStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/InfoEncryptionStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/NewChatRoomStyle.qml</file>
-		<file>ui/views/App/Styles/Main/Dialogs/NewConferenceStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/ManageAccountsStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Dialogs/ParticipantsDevicesStyle.qml</file>
 		<file>ui/views/App/Styles/Main/HomeStyle.qml</file>

@@ -26,8 +26,6 @@
 .import Linphone 1.0 as Linphone
 .import UtilsCpp 1.0 as UtilsCpp
 
-.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
-
 // =============================================================================
 
 function initView () {

@@ -33,6 +33,9 @@
 TunnelConfigProxyModel::TunnelConfigProxyModel (QObject *parent) : QSortFilterProxyModel(parent){
 }
 
+TunnelConfigProxyModel::~TunnelConfigProxyModel() {
+}
+
 bool TunnelConfigProxyModel::filterAcceptsRow (
   int sourceRow,
   const QModelIndex &sourceParent

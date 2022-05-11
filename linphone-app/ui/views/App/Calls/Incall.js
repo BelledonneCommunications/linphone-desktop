@@ -90,7 +90,7 @@ function handleVideoRequested (call) {
   call.statusChanged.connect(endedHandler)
 console.log("D")
   // Ask video to user.
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('acceptVideoDescription'),
   }, function (status) {
     //Utils.clearTimeout(timeout)	

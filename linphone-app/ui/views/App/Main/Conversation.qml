@@ -36,7 +36,7 @@ ColumnLayout  {
 	
 	property int securityLevel : chatRoomModel ? chatRoomModel.securityLevel : 1
 	
-	readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
+	property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
 	property bool haveMoreThanOneParticipants: chatRoomModel ? chatRoomModel.participants.count > 2 : false
 	property bool haveLessThanMinParticipantsForCall: chatRoomModel ? chatRoomModel.participants.count <= 5 : false
 	
@@ -57,6 +57,7 @@ ColumnLayout  {
 	spacing: 0
 	clip:false
 	
+	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	// ---------------------------------------------------------------------------
 	// Contact bar.
 	// ---------------------------------------------------------------------------
@@ -88,7 +89,7 @@ ColumnLayout  {
 				presenceLevel: chatRoomModel.presenceStatus
 				
 				//username: Logic.getUsername()
-				username: chatRoomModel?chatRoomModel.username:UtilsCpp.getDisplayName(conversation._sipAddressObserver.peerAddress)
+				username: chatRoomModel?chatRoomModel.username:( conversation._sipAddressObserver ? UtilsCpp.getDisplayName(conversation._sipAddressObserver.peerAddress) : '')
 				visible: !groupChat.visible				
 			}
 			
@@ -308,7 +309,7 @@ ColumnLayout  {
 					ActionButton {
 						isCustom: true
 						backgroundRadius: 4
-						colorSet: conversation._sipAddressObserver.contact ? ConversationStyle.bar.actions.edit.viewContact : ConversationStyle.bar.actions.edit.addContact
+						colorSet: conversation._sipAddressObserver && conversation._sipAddressObserver.contact ? ConversationStyle.bar.actions.edit.viewContact : ConversationStyle.bar.actions.edit.addContact
 						visible: SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
 						
 						onClicked: window.setView('ContactEdit', {

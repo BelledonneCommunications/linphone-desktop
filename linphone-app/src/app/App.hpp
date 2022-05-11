@@ -56,6 +56,7 @@ public:
   App (int &argc, char *argv[]);
   ~App ();
 
+  void stop();
   void initContentApp ();
   QStringList cleanParserKeys(QCommandLineParser * parser, QStringList keys);// Get all options from parser and remove the selected keys. Return the result that can be passed to parser process.
   void processArguments(QHash<QString,QString> args);

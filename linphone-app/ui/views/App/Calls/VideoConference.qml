@@ -6,7 +6,6 @@ import QtGraphicalEffects 1.12
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 
 import LinphoneEnums 1.0
 import UtilsCpp 1.0
@@ -376,7 +375,13 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.participants
-			visible: false	// TODO
+			toggled: rightMenu.visible && rightMenu.isParticipantsMenu
+			onClicked: {
+					if(toggled)
+						rightMenu.visible = false
+					else
+						rightMenu.showParticipantsMenu()
+				}
 		}
 		ActionButton {
 			id: callQuality

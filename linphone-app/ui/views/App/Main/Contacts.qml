@@ -13,7 +13,7 @@ import App.Styles 1.0
 
 ColumnLayout {
 	function _removeContact (contact) {
-		window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+		window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
 									   descriptionText: qsTr('removeContactDescription'),
 								   }, function (status) {
 									   if (status) {

@@ -18,6 +18,10 @@ singleton CallTransferStyle                              1.0 Calls/Dialogs/CallT
 singleton ConferenceManagerStyle                         1.0 Calls/Dialogs/ConferenceManagerStyle.qml
 singleton MultimediaParametersStyle                      1.0 Calls/Dialogs/MultimediaParametersStyle.qml
 
+# Dialog Window ------------------------------------------------------------------
+
+singleton NewConferenceStyle                             1.0 Dialog/NewConferenceStyle.qml
+
 # Main Window ------------------------------------------------------------------
 
 singleton ActivateAppSipAccountWithEmailStyle            1.0 Main/Assistant/ActivateAppSipAccountWithEmailStyle.qml
@@ -44,7 +48,6 @@ singleton InfoChatRoomStyle                              1.0 Main/Dialogs/InfoCh
 singleton InfoEncryptionStyle                            1.0 Main/Dialogs/InfoEncryptionStyle.qml
 singleton ManageAccountsStyle                            1.0 Main/Dialogs/ManageAccountsStyle.qml
 singleton NewChatRoomStyle                               1.0 Main/Dialogs/NewChatRoomStyle.qml
-singleton NewConferenceStyle                             1.0 Main/Dialogs/NewConferenceStyle.qml
 singleton ParticipantsDevicesStyle                       1.0 Main/Dialogs/ParticipantsDevicesStyle.qml
 
 

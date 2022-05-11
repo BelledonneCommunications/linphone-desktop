@@ -22,6 +22,7 @@
 
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 
 #include "ConferenceInfoListModel.hpp"
 #include "ConferenceInfoMapModel.hpp"
@@ -34,8 +35,17 @@ using namespace std;
 //---------------------------------------------------------------------------------------------
 
 ConferenceInfoProxyModel::ConferenceInfoProxyModel (QObject *parent) : SortFilterAbstractProxyModel<ConferenceInfoMapModel>(new ConferenceInfoMapModel(parent), parent) {
-	setFilterType((int)Scheduled);
+	connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::primarySipAddressChanged, this, &ConferenceInfoProxyModel::update);
 	connect(this, &ConferenceInfoProxyModel::filterTypeChanged, qobject_cast<ConferenceInfoMapModel*>(sourceModel()), &ConferenceInfoMapModel::filterTypeChanged);
+	setFilterType((int)Scheduled);
+}
+
+void ConferenceInfoProxyModel::update(){
+	int oldFilter = getFilterType();
+	SortFilterAbstractProxyModel<ConferenceInfoMapModel>::update(new ConferenceInfoMapModel(parent()));
+	setFilterType(oldFilter+1);
+	connect(this, &ConferenceInfoProxyModel::filterTypeChanged, qobject_cast<ConferenceInfoMapModel*>(sourceModel()), &ConferenceInfoMapModel::filterTypeChanged);
+	setFilterType(oldFilter);
 }
 
 bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {

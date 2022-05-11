@@ -7,7 +7,6 @@ import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
-import LinphoneUtils 1.0
 
 import LinphoneEnums 1.0
 
@@ -24,12 +23,26 @@ Rectangle{
 	property ParticipantModel me: conferenceModel.localParticipant
 	property bool isMeAdmin: me && me.adminStatus
 	onIsMeAdminChanged: console.log("Is admin : " +isMeAdmin)
+	property bool isParticipantsMenu: false
 	signal close()
 	
 	height: 500
 	width: 400
 	color: "white"
 	radius: VideoConferenceMenuStyle.radius
+	
+	// List of title texts in order to allow bindings between all components
+	property var menuTitles: [
+		'Régler les périphériques'
+		, 'Modifier la mise en page'
+		, mainItem.isMeAdmin ? 'Inviter des participants' : 'Participants'
+	]
+	
+	function showParticipantsMenu(){
+		contentsStack.push(participantsMenu, {title:Qt.binding(function() { return mainItem.menuTitles[2]})})
+		visible = true
+	}
+	
 	ButtonGroup{id: modeGroup}
 	ColumnLayout{
 		anchors.fill: parent
@@ -87,13 +100,7 @@ Rectangle{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				
-// List of title texts in order to allow bindings between all components
-				property var menuTitles: [
-					'Régler les périphériques'
-					, 'Modifier la mise en page'
-					, mainItem.isMeAdmin ? 'Inviter des participants' : 'Participants'
-				
-				]
+
 				
 				Repeater{
 					model: [
@@ -136,7 +143,7 @@ Rectangle{
 								wrapMode: Text.WordWrap
 								elide: Text.ElideRight
 		
-								text: menuTitles[modelData.titleIndex]
+								text: mainItem.menuTitles[modelData.titleIndex]
 								font.pointSize: VideoConferenceMenuStyle.list.pointSize
 								color: VideoConferenceMenuStyle.list.color
 							}
@@ -265,6 +272,8 @@ Rectangle{
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 				}
+				Component.onCompleted: mainItem.isParticipantsMenu = true
+				Component.onDestruction: mainItem.isParticipantsMenu = false
 			}
 		}
 	}

@@ -41,8 +41,16 @@ var SCHEME_REGEX = new RegExp('^[^:]+:')
 // QML helpers.
 // =============================================================================
 
-function buildDialogUri (component) {
+function buildCommonDialogUri (component) {
   return 'qrc:/ui/modules/Common/Dialog/' + component + '.qml'
+}
+
+function buildLinphoneDialogUri (component) {
+  return 'qrc:/ui/modules/Linphone/Dialog/' + component + '.qml'
+}
+
+function buildAppDialogUri (component) {
+  return 'qrc:/ui/views/App/Dialog/' + component + '.qml'
 }
 
 // -----------------------------------------------------------------------------
@@ -708,4 +716,35 @@ function computeAvatarSize (container, maxSize) {
 
   var size = height < maxSize && height > 0 ? height : maxSize
   return size < width ? size : width
+}
+
+// -----------------------------------------------------------------------------
+
+function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
+  var VideoCodecsModel = Linphone.VideoCodecsModel
+  window.attachVirtualWindow(buildLinphoneDialogUri('ConfirmDialog'), {
+    descriptionText: qsTr('downloadCodecDescription')
+      .replace('%1', codecInfo.mime)
+      .replace('%2', codecInfo.encoderDescription)
+  }, function (status) {
+    if (status) {
+      window.attachVirtualWindow(buildCommonDialogUri('OnlineInstallerDialog'), {
+        downloadUrl: codecInfo.downloadUrl,
+        extract: true,
+        installFolder: VideoCodecsModel.codecsFolder,
+        installName: codecInfo.installName,
+        mime: codecInfo.mime
+      }, function (status) {
+        if (status) {
+          VideoCodecsModel.reload()
+        }
+        if (cb) {
+          cb(window)
+        }
+      })
+    }
+    else if (cb) {
+      cb(window)
+    }
+  })
 }

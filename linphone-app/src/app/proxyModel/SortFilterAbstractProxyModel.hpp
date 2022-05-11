@@ -27,6 +27,10 @@ template <class T>
 class SortFilterAbstractProxyModel : public SortFilterProxyModel {
 public:
 	SortFilterAbstractProxyModel(T * model, QObject * parent = nullptr) : SortFilterProxyModel(parent){
+		update(model);
+	}
+	
+	void update(T* model){
 		setSourceModel(model);
 		sort(0, Qt::DescendingOrder);
 	}

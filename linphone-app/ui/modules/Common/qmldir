@@ -82,6 +82,7 @@ MenuItem                1.0 Menus/MenuItem.qml
 
 Borders                 1.0 Misc/Borders.qml
 ForceScrollBar          1.0 Misc/ForceScrollBar.qml
+MessageBanner           1.0 Misc/MessageBanner.qml
 Paned                   1.0 Misc/Paned.qml
 
 DatePicker              1.0 Picker/DatePicker.qml

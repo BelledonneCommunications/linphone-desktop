@@ -38,6 +38,7 @@ class TunnelModel : public QObject {
 
 public:
     TunnelModel (std::shared_ptr<linphone::Tunnel> linphoneTunnel, QObject *parent = nullptr);
+    virtual ~TunnelModel();
 
 
 	Q_PROPERTY(QString domain READ getDomain WRITE setDomain NOTIFY domainChanged)

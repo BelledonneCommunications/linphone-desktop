@@ -4,7 +4,6 @@ import QtQuick.Controls 2.3
 
 import Common 1.0
 import Linphone 1.0
-//import LinphoneUtils 1.0
 import LinphoneEnums 1.0
 
 import App.Styles 1.0
@@ -21,6 +20,7 @@ DialogPlus {
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{
 		property bool isNew: true
 	}
+	onConferenceInfoModelChanged: if( conferenceInfoModel && !conferenceInfoModel.isNew) selectedParticipants.setAddresses(conferenceInfoModel)
 	Connections{
 		target: conferenceInfoModel
 		onConferenceCreated: {
@@ -484,7 +484,7 @@ DialogPlus {
 								anchors.fill: parent
 								
 								showContactAddress:false
-								showSwitch : true
+								showSwitch : conferenceInfoModel.isNew
 								showSeparator: false
 								isSelectable: false
 								showInvitingIndicator: false
@@ -512,7 +512,6 @@ DialogPlus {
 								model: ParticipantProxyModel {
 									id:selectedParticipants
 									chatRoomModel:null
-									
 								}
 								onEntryClicked: actions[0].handler(entry)
 							}

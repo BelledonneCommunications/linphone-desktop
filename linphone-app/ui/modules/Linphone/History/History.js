@@ -25,8 +25,6 @@
 
 .import Linphone 1.0 as Linphone
 
-.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
-
 // =============================================================================
 
 function initView () {

@@ -5,7 +5,6 @@ import Common 1.0
 import Linphone 1.0
 import Utils 1.0
 import UtilsCpp 1.0
-import LinphoneUtils 1.0
 import LinphoneEnums 1.0
 
 import App.Styles 1.0
@@ -149,6 +148,7 @@ DialogPlus {
 					
 					interactive: false
 					model: $modelData.getProxyDevices()
+					Component.onDestruction: {model=null}// Need to set it to null because of not calling destructor if not.
 					
 					delegate: Rectangle{
 						id:mainRectangle

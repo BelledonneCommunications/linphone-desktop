@@ -5,7 +5,6 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 import Utils 1.0
 import UtilsCpp 1.0
 
@@ -34,6 +33,8 @@ Rectangle {
 	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
 	property var _fullscreen: null
 	on_FullscreenChanged: if( !_fullscreen) isFullScreen = false
+	
+	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	// ---------------------------------------------------------------------------
 	
 	color: CallStyle.backgroundColor
@@ -143,7 +144,7 @@ Rectangle {
 				
 				anchors.centerIn: parent
 				horizontalTextAlignment: Text.AlignHCenter
-				sipAddress: _sipAddressObserver.peerAddress
+				sipAddress: _sipAddressObserver && _sipAddressObserver.peerAddress
 				username: UtilsCpp.getDisplayName(sipAddress)
 				
 				height: parent.height

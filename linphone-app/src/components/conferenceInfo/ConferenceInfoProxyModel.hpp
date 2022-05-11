@@ -47,6 +47,8 @@ public:
 	Q_ENUM(ConferenceType)
 
 	ConferenceInfoProxyModel (QObject *parent = Q_NULLPTR);
+	
+	Q_INVOKABLE void update();
 			
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;

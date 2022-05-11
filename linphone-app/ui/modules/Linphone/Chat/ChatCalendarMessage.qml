@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Clipboard 1.0
+import App 1.0
 import Common 1.0
 import Linphone 1.0
 
@@ -16,6 +17,7 @@ import LinphoneEnums 1.0
 import ColorsList 1.0
 
 import 'Message.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -32,6 +34,7 @@ Loader{
 	property bool isExpanded : false
 	
 	signal expandToggle()
+	signal conferenceUriCopied()
 	
 	width: parent.width
 	height: parent.height
@@ -242,6 +245,10 @@ Loader{
 						isCustom: true
 						colorSet: ChatCalendarMessageStyle.copyLinkButton
 						backgroundRadius: width/2
+						onClicked: {
+								Clipboard.text = uriField.text
+								mainItem.conferenceUriCopied()
+							}
 					}
 				}
 				RowLayout{
@@ -254,6 +261,7 @@ Loader{
 					}
 					TextButtonC{
 						text: 'REJOINDRE'
+						onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
 					}
 					ActionButton{
 						isCustom: true
@@ -261,7 +269,7 @@ Loader{
 						backgroundRadius: width/2
 						onClicked: {
 							window.detachVirtualWindow()
-							window.attachVirtualWindow(Qt.resolvedUrl('../../../views/App/Main/Dialogs/NewConference.qml')
+							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
 													   ,{conferenceInfoModel: mainItem.conferenceInfoModel})
 						}
 					}

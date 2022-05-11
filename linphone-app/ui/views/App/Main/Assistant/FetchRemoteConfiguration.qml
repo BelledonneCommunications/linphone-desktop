@@ -25,7 +25,7 @@ Item{
 			onRemoteProvisioningChanged: {
 				requestBlock.stop('')
 				window.detachVirtualWindow()
-				window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+				window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
 											   descriptionText: qsTr('remoteProvisioningUpdateDescription'),
 										   }, function (status) {
 											   if (status) {

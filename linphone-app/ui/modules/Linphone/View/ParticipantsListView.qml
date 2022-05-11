@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
-//import LinphoneUtils 1.0
 import LinphoneEnums 1.0
 
 import App.Styles 1.0
@@ -29,7 +28,6 @@ ColumnLayout {
 	onIsAdminChanged: console.log("participantsListView is admin : "+isAdmin)
 	onCanHandleParticipantsChanged: console.log("CanHandleParticipants:"+canHandleParticipants)
 	spacing: ParticipantsListViewStyle.mainLayout.spacing
-	Component.onCompleted: console.log("participantsListView : " +isAdmin +", "+canHandleParticipants +", " +chatRoomModel+", "+conferenceModel + ", "+conferenceModel.localParticipant +", " +conferenceModel.localParticipant.adminStatus)
 
 	SmartSearchBar {
 		id: smartSearchBar

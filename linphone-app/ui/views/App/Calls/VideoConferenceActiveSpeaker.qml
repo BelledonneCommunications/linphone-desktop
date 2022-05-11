@@ -6,7 +6,6 @@ import QtGraphicalEffects 1.12
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 
 import UtilsCpp 1.0
 

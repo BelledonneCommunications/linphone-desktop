@@ -183,7 +183,7 @@ TabContainer {
 			id: view
 			property TunnelModel tunnelModel : SettingsModel.getTunnel()
 			property TunnelConfigProxyModel tunnelConfigProxyModel: tunnelModel.getTunnelProxyConfigs()
-			
+			Component.onDestruction: {tunnelConfigProxyModel=null}// Need to set it to null because of not calling destructor if not.
 			width: parent.width	
 			model: tunnelConfigProxyModel
 			delegate: 

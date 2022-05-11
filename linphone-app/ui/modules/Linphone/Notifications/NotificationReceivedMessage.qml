@@ -49,6 +49,7 @@ Notification {
 								securityLevel: chatRoomModel.securityLevel,
 								auxDataToShow: '- ' + chatRoomModel.subject+' -'
 							})
+				Component.onDestruction: sipObserver=null// Need to set it to null because of not calling destructor if not.
 			}
 			
 			Rectangle {

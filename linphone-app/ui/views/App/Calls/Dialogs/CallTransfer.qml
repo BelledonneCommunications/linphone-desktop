@@ -48,6 +48,7 @@ DialogPlus {
 			Layout.fillWidth: true
 			
 			entry: SipAddressesModel.getSipAddressObserver(call ? call.fullPeerAddress : '', call ? call.fullLocalAddress : '')
+			Component.onDestruction: entry=null// Need to set it to null because of not calling destructor if not.
 		}
 		
 		// -------------------------------------------------------------------------

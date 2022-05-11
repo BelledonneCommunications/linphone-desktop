@@ -112,7 +112,6 @@ public:
 	bool isOutgoing() const;
 	Q_INVOKABLE ParticipantImdnStateProxyModel * getProxyImdnStates();
 	QSharedPointer<ParticipantImdnStateListModel> getParticipantImdnStates() const;
-	Q_INVOKABLE ContentProxyModel * getContentsProxy();
 	QSharedPointer<ContentListModel> getContents() const;
 	
 	bool isReply() const;

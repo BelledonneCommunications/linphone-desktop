@@ -34,7 +34,7 @@ function editAccount (account) {
 }
 
 function deleteAccount (account) {
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('deleteAccountDescription'),
   }, function (status) {
     if (status) {
@@ -44,7 +44,7 @@ function deleteAccount (account) {
 }
 
 function eraseAllPasswords () {
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('eraseAllPasswordsDescription'),
   }, function (status) {
     if (status) {

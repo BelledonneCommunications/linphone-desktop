@@ -2,7 +2,7 @@ import QtQuick 2.7
 
 import Common 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
+import Utils 1.0
 
 import App.Styles 1.0
 
@@ -69,7 +69,7 @@ AssistantAbstractView {
         }
         var codecInfo = VideoCodecsModel.getCodecInfo('H264')
         if (codecInfo.downloadUrl) {
-          LinphoneUtils.openCodecOnlineInstallerDialog(window, codecInfo, quitToHome)
+          Utils.openCodecOnlineInstallerDialog(window, codecInfo, quitToHome)
         } else {
           quitToHome(window)
         }

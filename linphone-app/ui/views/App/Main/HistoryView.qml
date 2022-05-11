@@ -17,13 +17,13 @@ ColumnLayout  {
 	property string peerAddress
 	property string fullPeerAddress
 	
-	readonly property var _sipAddressObserver: peerAddress?SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), ''):null
+	property var _sipAddressObserver: peerAddress?SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), ''):null
 	
 	
 	// ---------------------------------------------------------------------------
 	
 	spacing: 0
-	
+	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	// ---------------------------------------------------------------------------
 	// Contact bar.
 	// ---------------------------------------------------------------------------
@@ -50,17 +50,13 @@ ColumnLayout  {
 				Layout.preferredHeight: HistoryViewStyle.bar.avatarSize
 				Layout.preferredWidth: HistoryViewStyle.bar.avatarSize
 				
-				image: peerAddress ? 
-									(historyView._sipAddressObserver.contact
-											? historyView._sipAddressObserver.contact
-											 : null)
-									 :null
+				image: peerAddress && historyView._sipAddressObserver && historyView._sipAddressObserver.contact? historyView._sipAddressObserver.contact.avatar : null
 				
 				presenceLevel: historyView._sipAddressObserver?Presence.getPresenceLevel(
 																	historyView._sipAddressObserver.presenceStatus
 																	):null
 				
-				username: peerAddress? UtilsCpp.getDisplayName(historyView._sipAddressObserver.peerAddress):null
+				username: peerAddress && historyView._sipAddressObserver? UtilsCpp.getDisplayName(historyView._sipAddressObserver.peerAddress):null
 				visible:peerAddress
 			}
 			

@@ -28,57 +28,59 @@ class ParticipantModel;
 class ChatRoomModel;
 class ParticipantListModel;
 class ConferenceModel;
+class ConferenceInfoModel;
 // =============================================================================
 
 class QWindow;
 
 class ParticipantProxyModel : public QSortFilterProxyModel {
-
-  Q_OBJECT
-
-
+	
+	Q_OBJECT
+	
+	
 public:
-  ParticipantProxyModel ( QObject *parent = Q_NULLPTR);
-  
-  Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
-  Q_PROPERTY(ConferenceModel* conferenceModel READ getConferenceModel WRITE setConferenceModel NOTIFY conferenceModelChanged)
-  Q_PROPERTY(ParticipantListModel * participantListModel READ getParticipantListModel NOTIFY participantListModelChanged)
-  Q_PROPERTY(int count READ getCount NOTIFY countChanged)
-  Q_PROPERTY(bool showMe READ getShowMe WRITE setShowMe NOTIFY showMeChanged)
-
-  bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-  bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
-  
-  ChatRoomModel *getChatRoomModel() const;
-  ConferenceModel *getConferenceModel() const;
-  ParticipantListModel * getParticipantListModel() const;
-  Q_INVOKABLE QStringList getSipAddresses() const;
-  Q_INVOKABLE QVariantList getParticipants() const;
-  Q_INVOKABLE int getCount() const;
-  bool getShowMe() const;
-  
-  void setChatRoomModel(ChatRoomModel * chatRoomModel);
-  void setConferenceModel(ConferenceModel * conferenceModel);
-  void setShowMe(const bool& show);
-  
-  Q_INVOKABLE void addAddress(const QString& address);
-  Q_INVOKABLE void removeModel(ParticipantModel * participant);
-  
-  
-  
+	ParticipantProxyModel ( QObject *parent = Q_NULLPTR);
+	
+	Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
+	Q_PROPERTY(ConferenceModel* conferenceModel READ getConferenceModel WRITE setConferenceModel NOTIFY conferenceModelChanged)
+	Q_PROPERTY(ParticipantListModel * participantListModel READ getParticipantListModel NOTIFY participantListModelChanged)
+	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+	Q_PROPERTY(bool showMe READ getShowMe WRITE setShowMe NOTIFY showMeChanged)
+	
+	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	
+	ChatRoomModel *getChatRoomModel() const;
+	ConferenceModel *getConferenceModel() const;
+	ParticipantListModel * getParticipantListModel() const;
+	Q_INVOKABLE QStringList getSipAddresses() const;
+	Q_INVOKABLE QVariantList getParticipants() const;
+	Q_INVOKABLE int getCount() const;
+	bool getShowMe() const;
+	
+	void setChatRoomModel(ChatRoomModel * chatRoomModel);
+	void setConferenceModel(ConferenceModel * conferenceModel);
+	void setShowMe(const bool& show);
+	
+	Q_INVOKABLE void addAddress(const QString& address);
+	Q_INVOKABLE void removeModel(ParticipantModel * participant);
+	Q_INVOKABLE void setAddresses(ConferenceInfoModel * conferenceInfoModel);
+	
+	
+	
 signals:
-  void chatRoomModelChanged();
-  void conferenceModelChanged();
-  void participantListModelChanged();
-  void countChanged();
-  void showMeChanged();
-  void addressAdded(QString sipAddress);
-  void addressRemoved(QString sipAddress);
-  
+	void chatRoomModelChanged();
+	void conferenceModelChanged();
+	void participantListModelChanged();
+	void countChanged();
+	void showMeChanged();
+	void addressAdded(QString sipAddress);
+	void addressRemoved(QString sipAddress);
+	
 private:
-  ChatRoomModel *mChatRoomModel = nullptr;
-  ConferenceModel *mConferenceModel = nullptr;
-  bool mShowMe = true;
+	ChatRoomModel *mChatRoomModel = nullptr;  
+	ConferenceModel *mConferenceModel = nullptr;
+	bool mShowMe = true;
 };
 
 #endif // PARTICIPANT_PROXY_MODEL_H_

@@ -2,7 +2,6 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Linphone 1.0
-import LinphoneUtils 1.0
 import Utils 1.0
 import UtilsCpp 1.0
 
@@ -20,6 +19,8 @@ Rectangle {
 
   property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver(call ? call.fullPeerAddress : '', call ? call.fullLocalAddress : '')
 
+
+  Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
   // ---------------------------------------------------------------------------
 
   color: CallStyle.backgroundColor
@@ -39,8 +40,8 @@ Rectangle {
       Layout.preferredHeight: CallStyle.header.contactDescription.height
 
       horizontalTextAlignment: Text.AlignHCenter
-      sipAddress: _sipAddressObserver.peerAddress
-      username: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
+      sipAddress: _sipAddressObserver && _sipAddressObserver.peerAddress
+      username: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
     }
 
     Text {
@@ -66,7 +67,7 @@ Rectangle {
       Avatar {
         anchors.centerIn: parent
         backgroundColor: CallStyle.container.avatar.backgroundColor
-        image: _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
+        image: _sipAddressObserver && _sipAddressObserver.contact && _sipAddressObserver.contact.vcard.avatar
         username: contactDescription.username
 
         height: Utils.computeAvatarSize(container, CallStyle.container.avatar.maxSize)

@@ -25,7 +25,6 @@
 .import UtilsCpp 1.0 as UtilsCpp
 
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
-.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 
 // =============================================================================
 
@@ -74,7 +73,7 @@ function editContact () {
 }
 
 function removeContact () {
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('removeContactDescription'),
   }, function (status) {
     if (status) {

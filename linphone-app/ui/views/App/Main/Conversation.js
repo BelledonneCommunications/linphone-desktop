@@ -24,13 +24,12 @@
 .import Linphone 1.0 as Linphone
 .import UtilsCpp 1.0 as UtilsCpp
 
-.import 'qrc:/ui/scripts/LinphoneUtils/linphone-utils.js' as LinphoneUtils
 .import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
 function removeAllEntries () {
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('removeAllEntriesDescription'),
   }, function (status) {
     if (status) {
@@ -40,12 +39,12 @@ function removeAllEntries () {
 }
 
 function getAvatar () {
-  var contact = conversation._sipAddressObserver.contact
+  var contact = conversation._sipAddressObserver ? conversation._sipAddressObserver.contact : null
   return contact ? contact.vcard.avatar : ''
 }
 
 function getEditTooltipText() {
-    return conversation._sipAddressObserver.contact ? qsTr('tooltipContactEdit') : qsTr('tooltipContactAdd')
+    return conversation._sipAddressObserver && conversation._sipAddressObserver.contact ? qsTr('tooltipContactEdit') : qsTr('tooltipContactAdd')
 }
 
 function updateChatFilter (button) {

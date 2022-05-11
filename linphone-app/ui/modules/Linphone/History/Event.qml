@@ -2,7 +2,6 @@ import QtQuick 2.7
 
 import Common 1.0
 import Linphone 1.0
-import LinphoneUtils 1.0
 import LinphoneEnums 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
@@ -14,9 +13,10 @@ Row {
 	id: mainItem
 	signal entryClicked(var entry)
 	
-	readonly property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver($historyEntry.sipAddress, '')
+	property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver($historyEntry.sipAddress, '')
 	property QtObject iconData
 	property string translation
+	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	Component.onCompleted: {
 		if ($historyEntry.status == LinphoneEnums.CallStatusSuccess) {
 			if(!$historyEntry.isStart){
@@ -166,7 +166,7 @@ Row {
 			pointSize: HistoryStyle.entry.event.text.pointSize
 		}
 		height: parent.height
-		text: UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
+		text: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
 		verticalAlignment: Text.AlignVCenter
 		MouseArea{
 			anchors.fill:parent

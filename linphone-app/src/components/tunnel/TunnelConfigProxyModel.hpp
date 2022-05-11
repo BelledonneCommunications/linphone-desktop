@@ -37,6 +37,7 @@ class TunnelConfigProxyModel : public QSortFilterProxyModel {
 	
 public:
 	TunnelConfigProxyModel (QObject *parent = nullptr);
+	virtual ~TunnelConfigProxyModel();
 	
 	void setTunnel(TunnelModel * tunnel);
 	

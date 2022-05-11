@@ -34,7 +34,7 @@ function editLdap (ldap) {
 }
 
 function cleanLogs () {
-  window.attachVirtualWindow(Utils.buildDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('cleanLogsDescription'),
   }, function (status) {
     if (status) {

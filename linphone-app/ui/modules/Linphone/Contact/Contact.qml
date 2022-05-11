@@ -3,7 +3,6 @@ import QtQuick.Layouts 1.3
 import QtGraphicalEffects 1.12
 
 import Linphone 1.0
-import LinphoneUtils 1.0
 import Linphone.Styles 1.0
 import Common 1.0
 

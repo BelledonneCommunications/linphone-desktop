@@ -24,6 +24,7 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "components/conference/ConferenceModel.hpp"
+#include "components/conferenceInfo/ConferenceInfoModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "ParticipantListModel.hpp"
@@ -37,6 +38,7 @@
 // -----------------------------------------------------------------------------
 
 ParticipantProxyModel::ParticipantProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
+	setSourceModel(new ParticipantListModel((ConferenceModel*)nullptr, this));
 }
 
 // -----------------------------------------------------------------------------
@@ -114,6 +116,12 @@ void ParticipantProxyModel::setConferenceModel(ConferenceModel * conferenceModel
 		sort(0);
 		emit conferenceModelChanged();
 	}
+}
+
+void ParticipantProxyModel::setAddresses(ConferenceInfoModel * conferenceInfoModel){
+	if(conferenceInfoModel && conferenceInfoModel->getConferenceInfo())
+		for(auto address : conferenceInfoModel->getConferenceInfo()->getParticipants())
+			addAddress(QString::fromStdString(address->asString()));
 }
 
 void ParticipantProxyModel::setShowMe(const bool& show){
