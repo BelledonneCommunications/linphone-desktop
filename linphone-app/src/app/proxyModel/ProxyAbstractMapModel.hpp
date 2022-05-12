@@ -101,7 +101,7 @@ public:
 		return true;
 	}
 	*/
-	virtual void resetData(){
+	virtual void resetData() override{
 		beginResetModel();
 		mMappedList.clear();
 		endResetModel();
