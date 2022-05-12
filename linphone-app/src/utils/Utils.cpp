@@ -527,3 +527,11 @@ bool Utils::isMe(const QString& address){
 bool Utils::isMe(const std::shared_ptr<const linphone::Address>& address){
 	return address ? CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(address) : false;
 }
+
+bool Utils::isAnimatedImage(const QString& path){
+	QFileInfo info(path);
+	if( !info.exists())
+		return false;
+	QImageReader reader(path);
+	return reader.supportsAnimation() && reader.imageCount() > 1;
+}

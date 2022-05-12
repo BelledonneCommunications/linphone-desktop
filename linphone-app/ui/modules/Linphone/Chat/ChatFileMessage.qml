@@ -9,6 +9,7 @@ import Linphone.Styles 1.0
 import Utils 1.0
 import Units 1.0
 import ColorsList 1.0
+import UtilsCpp 1.0
 
 // =============================================================================
 // TODO : into Loader
@@ -51,7 +52,7 @@ Row {
 				property string thumbnail :  mainRow.contentModel ? mainRow.contentModel.thumbnail : ''
 				color: 'transparent'
 				
-				height: ChatStyle.entry.message.file.height
+				height: thumbnail ? ChatStyle.entry.message.file.heightWithThumbnail : ChatStyle.entry.message.file.height
 				width: mainRow.width
 				
 				radius: ChatStyle.entry.message.radius
@@ -77,8 +78,20 @@ Row {
 							mipmap: SettingsModel.mipmapEnabled
 							source: mainRow.contentModel.thumbnail
 							fillMode: Image.PreserveAspectFit
-							sourceSize.width: 100
-							sourceSize.height: 100
+							//sourceSize.width: 200
+							//sourceSize.height: 100
+						}
+					}
+					Component {
+						id: animatedImage
+						
+						AnimatedImage {
+							id: animatedImageSource
+							mipmap: SettingsModel.mipmapEnabled
+							source: 'file:/'+mainRow.contentModel.filePath
+							fillMode: Image.PreserveAspectFit
+							//width: 200
+							//height: 100
 						}
 					}
 					
@@ -105,9 +118,13 @@ Row {
 						id: thumbnailProvider
 						
 						Layout.fillHeight: true
-						Layout.preferredWidth: parent.height
+						Layout.preferredWidth: parent.height*4/3
 						
-						sourceComponent: (mainRow.contentModel ? (mainRow.contentModel.thumbnail ? thumbnailImage : extension ): undefined)
+						sourceComponent: (mainRow.contentModel ? 
+							(mainRow.contentModel.wasDownloaded && UtilsCpp.isAnimatedImage(mainRow.contentModel.filePath) 
+								? animatedImage
+							:  (mainRow.contentModel.thumbnail ? thumbnailImage : extension )
+							) : undefined)
 						
 						ScaleAnimator {
 							id: thumbnailProviderAnimator

@@ -183,6 +183,7 @@ QtObject {
 			
 			property QtObject file: QtObject {
 				property int height: 64
+				property int heightWithThumbnail: 200
 				property int iconSize: 18
 				property int margins: 8
 				property int spacing: 8
