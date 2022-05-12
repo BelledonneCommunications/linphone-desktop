@@ -47,11 +47,11 @@ Loader{
 				//: 'Read by %1 - %2' Little message to indicate the state of a message
 				//~ Context %1 is someone, %2 is a date/time. The state that the message has been read.
 				return qsTr('deliveryDisplayed').arg(displayName).arg(stateChangeTime)
-			else if(state == LinphoneEnums.ChatMessageStateNotDelivered)
+			else// if(state == LinphoneEnums.ChatMessageStateNotDelivered)
 				//: "%1 have nothing received" Little message to indicate the state of a message
 				//~ Context %1 is someone. The state is that the message hasn't been delivered.
 				return qsTr('deliveryNotDelivered').arg(displayName)
-			else return ''
+			//else return ''
 		}
 		delegate:Text{
 			height: ChatStyle.composingText.height-5

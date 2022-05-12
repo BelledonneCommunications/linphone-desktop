@@ -17,10 +17,11 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 DialogPlus {
 	id: conferenceManager
-	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{
-		property bool isNew: true
-	}
-	onConferenceInfoModelChanged: if( conferenceInfoModel && !conferenceInfoModel.isNew) selectedParticipants.setAddresses(conferenceInfoModel)
+	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
+	onIsNewChanged: console.log("Is New:"+isNew+", "+conferenceInfoModel + ", " + (conferenceInfoModel? conferenceInfoModel.uri : 'noUri'))
+	Component.onCompleted: console.log("Completed: Is New:"+isNew+", "+conferenceInfoModel + ", " + (conferenceInfoModel? conferenceInfoModel.uri : 'noUri'))
+	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
+	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
 	Connections{
 		target: conferenceInfoModel
 		onConferenceCreated: {
@@ -107,7 +108,7 @@ DialogPlus {
 		TextButtonB {
 			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
 			//: 'Launch' : Start button
-			text: conferenceInfoModel.isNew ? qsTr('startButton') : 'Mettre à jour'
+			text: conferenceManager.isNew ? qsTr('startButton') : 'Mettre à jour'
 			capitalization: Font.AllUppercase
 			
 			function getInviteMode(){
@@ -166,7 +167,7 @@ DialogPlus {
 	buttonsAlignment: Qt.AlignRight
 	buttonsLeftMargin: 15
 	//: 'Start a video conference' : Title of a popup about creation of a video conference
-	title: conferenceInfoModel.isNew ? qsTr('newConferenceTitle') : 'Changer la conférence'
+	title: conferenceManager.isNew ? qsTr('newConferenceTitle') : 'Changer la conférence'
 	
 	height: window.height - 100
 	width: window.width - 100
@@ -227,7 +228,7 @@ DialogPlus {
 							Layout.alignment: Qt.AlignVCenter
 							width:50
 							enabled: true
-							checked: true
+							checked: conferenceInfoModel.isScheduled
 							
 							onClicked: {
 								checked = !checked
@@ -254,7 +255,7 @@ DialogPlus {
 						property var locale: Qt.locale()
 						property date currentDate: new Date()
 						property int cellWidth: (parent.width-15)/columns
-						Component.onCompleted: scheduleForm.updateDateTime()
+						//Component.onCompleted: scheduleForm.updateDateTime()
 						
 						
 						
@@ -270,6 +271,7 @@ DialogPlus {
 							function setDate(date){
 								text = date.toLocaleDateString(scheduleForm.locale, 'yyyy/MM/dd')
 							}
+							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleDateString(scheduleForm.locale, 'yyyy/MM/dd') : ''
 							MouseArea{
 								anchors.fill: parent
 								onClicked: {
@@ -293,6 +295,7 @@ DialogPlus {
 							function setTime(date){
 								text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
 							}
+							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
 							MouseArea{
 								anchors.top: parent.top
 								anchors.bottom: parent.bottom
@@ -311,8 +314,21 @@ DialogPlus {
 								}
 							}
 						}
-						NumericField{id: durationField; text: '1200'; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize}
-						TextField{ text: 'Paris'; readOnly: true; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize}
+						NumericField{id: durationField; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
+							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.duration : '1200'
+						}
+						ComboBox{
+							Layout.preferredWidth: parent.cellWidth; 
+							//color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
+							currentIndex: model.defaultIndex
+							model: TimeZoneProxyModel{}
+							onActivated: console.log("activated : " +index)
+							textRole: "displayText"
+							selectionWidth: 500
+							rootItem: conferenceManager
+						}
+						//TextField{ text: 'Paris'; readOnly: true; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize}
+						
 						function updateDateTime(){
 								var storedDate
 								if( dateField.text != '' && timeField.text != ''){
@@ -327,11 +343,13 @@ DialogPlus {
 								}
 						}
 						Timer{
-							running: scheduleForm.visible
+							running: scheduleForm.visible && conferenceManager.isNew
 							repeat: true
 							interval: 1000
+							triggeredOnStart: true
 							onTriggered: {
-								scheduleForm.updateDateTime()
+								if(conferenceManager.isNew)
+									scheduleForm.updateDateTime()
 							}
 						}
 					}
@@ -358,7 +376,7 @@ DialogPlus {
 					Layout.fillHeight: true
 					//: 'Description' : Placeholder in a form about setting a description
 					placeholderText : 'Description'
-					text: ''
+					text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.description : ''
 					Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 					TooltipArea{
 						//: 'This description will describe the conference' : Explanation about the description of the conference
@@ -484,7 +502,7 @@ DialogPlus {
 								anchors.fill: parent
 								
 								showContactAddress:false
-								showSwitch : conferenceInfoModel.isNew
+								showSwitch : conferenceManager.isNew
 								showSeparator: false
 								isSelectable: false
 								showInvitingIndicator: false

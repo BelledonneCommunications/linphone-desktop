@@ -209,6 +209,9 @@ set(SOURCES
 	src/components/other/images/ImageListModel.cpp
 	src/components/other/images/ImageProxyModel.cpp
 	src/components/other/text-to-speech/TextToSpeech.cpp
+	src/components/other/timeZone/TimeZoneModel.cpp
+	src/components/other/timeZone/TimeZoneListModel.cpp
+	src/components/other/timeZone/TimeZoneProxyModel.cpp
 	src/components/other/units/Units.cpp
 	src/components/participant/ParticipantModel.cpp
 	src/components/participant/ParticipantListModel.cpp
@@ -342,6 +345,9 @@ set(HEADERS
 	src/components/other/images/ImageProxyModel.hpp
 	src/components/other/desktop-tools/DesktopTools.hpp
 	src/components/other/text-to-speech/TextToSpeech.hpp
+	src/components/other/timeZone/TimeZoneModel.hpp
+	src/components/other/timeZone/TimeZoneListModel.hpp
+	src/components/other/timeZone/TimeZoneProxyModel.hpp
 	src/components/other/units/Units.hpp
 	src/components/participant/ParticipantModel.hpp
 	src/components/participant/ParticipantListModel.hpp

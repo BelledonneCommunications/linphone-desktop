@@ -215,7 +215,7 @@ QString ChatMessageModel::getForwardInfo() const{
 QString ChatMessageModel::getForwardInfoDisplayName() const{
 	QString forwardInfo = getForwardInfo();
 	auto forwardAddress = Utils::interpretUrl(forwardInfo);
-	if(!forwardAddress || CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(forwardAddress))
+	if(!forwardAddress || Utils::isMe(forwardAddress))
 		return "";// myself
 	else
 		return Utils::getDisplayName(forwardInfo);

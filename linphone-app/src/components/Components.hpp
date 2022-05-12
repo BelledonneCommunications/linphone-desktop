@@ -101,6 +101,9 @@
 #include "other/images/ImageListModel.hpp"
 #include "other/images/ImageProxyModel.hpp"
 #include "other/text-to-speech/TextToSpeech.hpp"
+#include "other/timeZone/TimeZoneModel.hpp"
+#include "other/timeZone/TimeZoneListModel.hpp"
+#include "other/timeZone/TimeZoneProxyModel.hpp"
 #include "other/units/Units.hpp"
 
 #endif // COMPONENTS_H_

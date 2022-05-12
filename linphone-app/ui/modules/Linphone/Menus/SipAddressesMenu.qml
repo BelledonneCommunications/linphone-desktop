@@ -75,7 +75,7 @@ Item {
 
       delegate: Rectangle {
         height: menu.entryHeight
-        width: parent.width
+        width: list.width
 
         color: mouseArea.pressed
           ? SipAddressesMenuStyle.entry.color.pressed

@@ -26,6 +26,8 @@
 #include "ConferenceInfoListModel.hpp"
 #include "ConferenceInfoMapModel.hpp"
 
+#include "utils/Utils.hpp"
+
 
 // =============================================================================
 
@@ -48,8 +50,11 @@ bool ConferenceInfoProxyListModel::filterAcceptsRow (int sourceRow, const QModel
 			if( mFilterType == 0){
 				return ics->getEndDateTime() < currentDateTime;
 			}else if( mFilterType == 1){
-				return ics->getDateTime() >= currentDateTime;
-			}
+				return ics->getEndDateTime() >= currentDateTime;
+			}else if( mFilterType == 2){
+				return !Utils::isMe(ics->getOrganizer());
+			}else
+				return mFilterType == -1;
 		}
 	}
 	return true;

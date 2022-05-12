@@ -59,6 +59,7 @@ public:
 	Q_INVOKABLE static QString toDateString(QDateTime date);
 	Q_INVOKABLE static QString getDisplayName(const QString& address);
 	Q_INVOKABLE static QString toString(const LinphoneEnums::TunnelMode& mode);
+	Q_INVOKABLE static bool isMe(const QString& address);
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {
@@ -128,6 +129,9 @@ public:
 	static QString getDisplayName(const std::shared_ptr<const linphone::Address>& address);	// Get the displayname from addres in this order : Friends, Contact, Display address, Username address
 	static std::shared_ptr<linphone::Config> getConfigIfExists (const QString& configPath);
 	static QString computeUserAgent(const std::shared_ptr<linphone::Config>& config);
+	
+	static bool isMe(const std::shared_ptr<const linphone::Address>& address);
+	
 };
 
 #endif // UTILS_H_

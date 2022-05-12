@@ -435,7 +435,7 @@ bool ChatRoomModel::isMeAdmin() const{
 }
 
 bool ChatRoomModel::isCurrentAccount() const{
-	return mChatRoom->getLocalAddress()->weakEqual(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress());
+	return Utils::isMe(mChatRoom->getLocalAddress());
 }
 
 bool ChatRoomModel::canHandleParticipants() const{

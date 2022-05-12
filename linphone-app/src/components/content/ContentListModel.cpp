@@ -151,7 +151,7 @@ void ContentListModel::updateContents(ChatMessageModel * messageModel){
 			while( c < mList.size() && mList.at(c).objectCast<ContentModel>()->getContent() != content)
 				++c;
 			if( c < mList.size()){// Found => swap position
-				mList.swap(count, c);
+				mList.swapItemsAt(count, c);
 			}else{// content is new
 				mList.insert(count, QSharedPointer<ContentModel>::create(content, messageModel));	
 			}

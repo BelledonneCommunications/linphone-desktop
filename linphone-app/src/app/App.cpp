@@ -645,7 +645,7 @@ void App::registerTypes () {
 	registerType<SipAddressesProxyModel>("SipAddressesProxyModel");
 	registerType<SearchSipAddressesModel>("SearchSipAddressesModel");
 	registerType<SearchSipAddressesProxyModel>("SearchSipAddressesProxyModel");
-	
+	registerType<TimeZoneProxyModel>("TimeZoneProxyModel");
 	
 	registerType<ColorProxyModel>("ColorProxyModel");
 	registerType<ImageColorsProxyModel>("ImageColorsProxyModel");

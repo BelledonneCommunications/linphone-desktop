@@ -80,6 +80,9 @@ QSharedPointer<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<
 ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	//App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
+	mConferenceInfo->setDateTime(QDateTime::currentMSecsSinceEpoch() / 1000 + 60);
+	mConferenceInfo->setDuration(1200);
+	mIsScheduled = true;
 	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
 	accountAddress->clean();
 	mConferenceInfo->setOrganizer(accountAddress);
@@ -89,6 +92,8 @@ ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceIn
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	
 	mConferenceInfo = conferenceInfo;
+	//mIsScheduled = getDateTime() >= QDateTime::currentDateTime();
+	mIsScheduled  = true;
 }
 
 ConferenceInfoModel::~ConferenceInfoModel () {
@@ -140,7 +145,8 @@ QString ConferenceInfoModel::displayNamesToString()const{
 }
 
 QString ConferenceInfoModel::getUri() const{
-	return QString::fromStdString(mConferenceInfo->getUri()->asString());
+	auto address = mConferenceInfo->getUri();
+	return address->isValid() && !address->getDomain().empty() ? QString::fromStdString(address->asString()) : "";
 }
 
 bool ConferenceInfoModel::isScheduled() const{

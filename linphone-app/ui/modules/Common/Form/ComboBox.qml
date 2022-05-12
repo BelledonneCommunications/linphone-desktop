@@ -10,88 +10,126 @@ import 'ComboBox.js' as Logic
 // =============================================================================
 
 Controls.ComboBox {
-  id: comboBox
-
-  // ---------------------------------------------------------------------------
-
-  property var iconRole
-  property bool haveBorder: true
-  property bool haveMargin: true
-  property color backgroundColor: ComboBoxStyle.background.color.normal
-
-  // ---------------------------------------------------------------------------
-
-  background: Rectangle {
-    border {
-      color: ComboBoxStyle.background.border.color
-      width: comboBox.haveBorder ? ComboBoxStyle.background.border.width : 0
-    }
-
-    color: comboBox.enabled
-      ? comboBox.backgroundColor
-      : ComboBoxStyle.background.color.readOnly
-
-    radius: ComboBoxStyle.background.radius
-
-    implicitHeight: ComboBoxStyle.background.height
-    implicitWidth: ComboBoxStyle.background.width
-  }
-
-  // ---------------------------------------------------------------------------
-
-  contentItem: Item {
-    height: comboBox.height
-    width: comboBox.width
-
-    RowLayout {
-      anchors {
-        fill: parent
-        leftMargin: comboBox.haveMargin ? ComboBoxStyle.contentItem.leftMargin : 0
-      }
-
-      spacing: ComboBoxStyle.contentItem.spacing
-
-      Icon {
-        icon: Logic.getSelectedEntryIcon()
-        iconSize: ComboBoxStyle.contentItem.iconSize
-
-        visible: icon.length > 0
-      }
-
-      Text {
-        Layout.fillWidth: true
-
-        color: ComboBoxStyle.contentItem.text.color
-        elide: Text.ElideRight
-
-        font.pointSize: ComboBoxStyle.contentItem.text.pointSize
-        rightPadding: comboBox.indicator.width + comboBox.spacing
-
-        text: Logic.getSelectedEntryText()
-      }
-    }
-  }
-
-  // ---------------------------------------------------------------------------
-
-  indicator: Icon {
-    icon: ComboBoxStyle.indicator.dropDown.icon
-    iconSize: ComboBoxStyle.indicator.dropDown.iconSize
-    overwriteColor: ComboBoxStyle.indicator.dropDown.color
-
-    x: comboBox.width - width - comboBox.rightPadding
-    y: comboBox.topPadding + (comboBox.availableHeight - height) / 2
-  }
-
-  // ---------------------------------------------------------------------------
-
-  delegate: CommonItemDelegate {
-    id: item
-
-    container: comboBox
-    flattenedModel: comboBox.textRole.length &&
-      (typeof modelData !== 'undefined' ? modelData : model)
-    itemIcon: Logic.getItemIcon(item)
-    width: comboBox.width
-  }
+	id: comboBox
+	
+	// ---------------------------------------------------------------------------
+	
+	property var iconRole
+	property bool haveBorder: true
+	property bool haveMargin: true
+	property color backgroundColor: ComboBoxStyle.background.color.normal
+	property color foregroundColor: ComboBoxStyle.contentItem.text.color
+	
+	property var rootItem 
+	property int yPopup: rootItem ? -mapToItem(rootItem,x,y).y : height + 1
+	property int maxPopupHeight : rootItem ? rootItem.height : 400
+		
+	property int selectionWidth: width
+	
+	clip: true
+	// ---------------------------------------------------------------------------
+	
+	background: Rectangle {
+		border {
+			color: ComboBoxStyle.background.border.color
+			width: comboBox.haveBorder ? ComboBoxStyle.background.border.width : 0
+		}
+		
+		color: comboBox.enabled
+			   ? comboBox.backgroundColor
+			   : ComboBoxStyle.background.color.readOnly
+		
+		radius: ComboBoxStyle.background.radius
+		
+		implicitHeight: ComboBoxStyle.background.height
+		implicitWidth: ComboBoxStyle.background.width
+	}
+	
+	// ---------------------------------------------------------------------------
+	
+	contentItem: Item {
+		height: comboBox.height
+		width: comboBox.selectionWidth
+		clip: true
+		RowLayout {
+			anchors {
+				fill: parent
+				leftMargin: comboBox.haveMargin ? ComboBoxStyle.contentItem.leftMargin : 0
+			}
+			
+			spacing: ComboBoxStyle.contentItem.spacing
+			
+			Icon {
+				icon: Logic.getSelectedEntryIcon()
+				iconSize: ComboBoxStyle.contentItem.iconSize
+				
+				visible: icon.length > 0
+			}
+			
+			Text {
+				Layout.fillWidth: true
+				
+				color: comboBox.foregroundColor
+				elide: Text.ElideRight
+				
+				font.pointSize: ComboBoxStyle.contentItem.text.pointSize
+				rightPadding: comboBox.indicator.width + comboBox.spacing
+				
+				text: Logic.getSelectedEntryText()
+			}
+		}
+	}
+	
+	// ---------------------------------------------------------------------------
+	
+	indicator: Icon {
+		icon: ComboBoxStyle.indicator.dropDown.icon
+		iconSize: ComboBoxStyle.indicator.dropDown.iconSize
+		overwriteColor: ComboBoxStyle.indicator.dropDown.color
+		
+		x: comboBox.width - width - comboBox.rightPadding
+		y: comboBox.topPadding + (comboBox.availableHeight - height) / 2
+	}
+	
+	// ---------------------------------------------------------------------------
+	/*
+	delegate: CommonItemDelegate {
+		id: item
+		clip: true
+		container: comboBox
+		flattenedModel: comboBox.textRole.length &&
+						(typeof modelData !== 'undefined' ? modelData : model)
+		itemIcon: Logic.getItemIcon(item)
+		width: comboBox.selectionWidth
+		onWidthChanged: console.log(width)
+	}*/
+	popup: Controls.Popup{
+		y: comboBox.yPopup
+		width: comboBox.selectionWidth
+		//height: comboBox.maxPopupHeight
+		//height: contentItem.contentHeight
+		implicitHeight: contentItem.contentHeight
+		topPadding: 0
+		bottomPadding: 0
+		leftPadding: 0
+		rightPadding: 0
+		contentItem: ListItemSelector{
+			//implicitHeight: contentHeight
+			model: comboBox.popup.visible ? comboBox.model : null
+			currentIndex: comboBox.highlightedIndex
+			textRole: comboBox.textRole
+			onActivated: {comboBox.activated(index);comboBox.currentIndex = index;comboBox.popup.close()}
+			/*
+			delegate: CommonItemDelegate {
+				id: item
+				clip: true
+				container: comboBox
+				flattenedModel: comboBox.textRole.length &&
+								(typeof modelData !== 'undefined' ? modelData : model)
+				itemIcon: Logic.getItemIcon(item)
+				width: comboBox.selectionWidth
+				onWidthChanged: console.log(width)
+			}*/
+		}
+	}
 }

@@ -39,7 +39,6 @@ LdapListModel::LdapListModel (QObject *parent) : ProxyListModel(parent) {
 
 // -----------------------------------------------------------------------------
 void LdapListModel::reset(){
-  resetInternalData();
   initLdap();
 }
 
@@ -49,6 +48,7 @@ void LdapListModel::reset(){
 void LdapListModel::initLdap () {
 	CoreManager *coreManager = CoreManager::getInstance();
 	auto ldapList = coreManager->getCore()->getLdapList();
+	resetData();
 	for(auto ldap : ldapList){
 		ProxyListModel::add(QSharedPointer<LdapModel>::create(ldap));
 	}

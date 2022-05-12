@@ -12,8 +12,10 @@ AssistantAbstractView {
   property alias phoneNumberError: phoneNumber.error
 
   function setCountryCode (index) {
-    var model = country.model
-    assistantModel.countryCode = model.data(model.index(index, 0)).countryCode
+	if(index>=0){
+		var model = country.model
+		assistantModel.countryCode = model.data(model.index(index, 0),"countryCode")
+	}
   }
 
   title: qsTr('createAppSipAccountTitle').replace('%1', Qt.application.name.toUpperCase())
