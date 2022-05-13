@@ -138,10 +138,10 @@ DialogPlus {
 						//: 'You need to fill a subject.' : Tooltip to warn a user on missing field.
 						txt ='- ' + qsTr('missingSubject') + '\n'
 					if( selectedParticipants.count < conferenceManager.minParticipants)
-						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the chat creation.
+						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the conference creation.
 						txt += '- ' + qsTr('missingParticipants', '', conferenceManager.minParticipants).arg(conferenceManager.minParticipants) + '\n'
 					if( AccountSettingsModel.conferenceURI == '')
-						//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missong in its configuration.
+						//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
 						txt += '- ' + qsTr('missingConferenceURI') + '\n'
 					return txt;
 				}
@@ -185,7 +185,7 @@ DialogPlus {
 				
 				Text{
 					textFormat: Text.RichText
-					//: 'Subject' : Label of a text field about the subject of the chat room
+					//: 'Subject' : Label of a text field about the subject of the conference
 					text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
 					color: NewConferenceStyle.titles.textColor
 					font.pointSize: NewConferenceStyle.titles.pointSize
@@ -199,8 +199,8 @@ DialogPlus {
 					text: conferenceInfoModel && conferenceInfoModel.subject || ''
 					Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 					TooltipArea{
-						//: 'Current subject of the Chat Room. It cannot be empty'
-						//~ Tooltip Explanation about the subject of the chat room
+						//: 'Current subject of the Conference. It cannot be empty'
+						//~ Tooltip Explanation about the subject of the Conference
 						text : qsTr('subjectTooltip')
 					}
 				}
@@ -250,14 +250,23 @@ DialogPlus {
 						property date currentDate: new Date()
 						property int cellWidth: (parent.width-15)/columns
 						
-						//: 'Date' : Date lebel.
-						Text{textFormat: Text.RichText; text: qsTr('newConferenceDate')+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						
+						Text{textFormat: Text.RichText; 
+							//: 'Date' : Date label.
+							text: qsTr('newConferenceDate')+'<span style="color:red">*</span>'
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						Text{textFormat: Text.RichText
 						//: 'Time' : Time label.
-						Text{textFormat: Text.RichText; text: qsTr('newConferenceTimeTitle')+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+							text: qsTr('newConferenceTimeTitle')+'<span style="color:red">*</span>'
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						Text{textFormat: Text.RichText
 						//: 'Duration' : Duration label.
-						Text{textFormat: Text.RichText; text: qsTr('newConferenceDurationTitle'); Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+							text: qsTr('newConferenceDurationTitle')
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						Text{textFormat: Text.RichText
 						//: 'Timezone' : Timezone label.
-						Text{textFormat: Text.RichText; text: qsTr('newConferenceTimezoneTitle'); Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+							text: qsTr('newConferenceTimezoneTitle')
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						TextField{id: dateField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getDate(){
@@ -437,7 +446,7 @@ DialogPlus {
 							maxMenuHeight: MainWindowStyle.searchBox.maxHeight
 							//: 'Select participants' : Placeholder for a search on participant to add them in selection.
 							placeholderText: qsTr('participantSelectionPlaceholder')
-							//: 'Search in your contacts or add a custom one to the chat room.'
+							//: 'Search in your contacts or add a custom one to the conference.'
 							tooltipText: qsTr('participantSelectionTooltip')
 							
 							actions:[{

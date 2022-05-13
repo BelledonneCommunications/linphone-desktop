@@ -495,6 +495,29 @@ Server URL not configured.</translation>
     </message>
 </context>
 <context>
+    <name>ChatCalendarMessage</name>
+    <message>
+        <source>icsOrganizer</source>
+        <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
+        <translation>Organizer</translation>
+    </message>
+    <message>
+        <source>icsDescription</source>
+        <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>icsconferenceAddressTitle</source>
+        <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
+        <translation>Conference address</translation>
+    </message>
+    <message>
+        <source>icsJoinButton</source>
+        <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
+        <translation>Join</translation>
+    </message>
+</context>
+<context>
     <name>ChatDeliveries</name>
     <message>
         <source>deliveryDelivered</source>
@@ -519,6 +542,12 @@ Server URL not configured.</translation>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
         <translation>%1 did not receive the message</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryError</source>
+        <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
+        <translation>Error while sending to %1</translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
 <context>
@@ -715,6 +744,31 @@ Server URL not configured.</translation>
     <message>
         <source>confirm</source>
         <translation>START</translation>
+    </message>
+</context>
+<context>
+    <name>Conferences</name>
+    <message>
+        <source>conferencesTitle</source>
+        <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
+        <translation>Conferences</translation>
+    </message>
+    <message>
+        <source>conferencesEndedFilter</source>
+        <extracomment>&apos;Finished&apos; : Filter conferences on end status.
+----------
+&apos;Invitations&apos; : Filter conferences on invited conferences (where we are not the organizer).</extracomment>
+        <translation>Finished</translation>
+    </message>
+    <message>
+        <source>conferencesScheduledFilter</source>
+        <extracomment>&apos;Scheduled&apos; : Filter conferences on scheduled status.</extracomment>
+        <translation>Scheduled</translation>
+    </message>
+    <message>
+        <source>conferencesCopiedURL</source>
+        <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
+        <translation>Conference URL has been copied</translation>
     </message>
 </context>
 <context>
@@ -1391,6 +1445,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
         <translation>Open Home</translation>
     </message>
+    <message>
+        <source>mainWindowConferencesTitle</source>
+        <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
+        <translation>Conferences</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1448,17 +1507,15 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>MultimediaParameters</name>
-    <message>
-        <source>ok</source>
-        <translation>OK</translation>
-    </message>
-</context>
-<context>
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>Ok</translation>
+    </message>
+    <message>
+        <source>menuMultimedia</source>
+        <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
+        <translation>Multimedia parameters</translation>
     </message>
 </context>
 <context>
@@ -1555,83 +1612,143 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished">CANCEL</translation>
-    </message>
-    <message>
-        <source>startButton</source>
-        <extracomment>&apos;Launch&apos; : Start button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>CANCEL</translation>
     </message>
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished">You need to fill a subject.</translation>
+        <translation>You need to fill a subject.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
-        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
-        <translation type="unfinished">
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the conference creation.</extracomment>
+        <translation>
             <numerusform>You need at least %1 participant.</numerusform>
             <numerusform>You need at least %1 participants.</numerusform>
         </translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
-        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished">You need to set the conference URI in your account settings to create a conference based chat room.</translation>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
+        <translation>You need to set the conference URI in your account settings to create a conference based chat room.</translation>
     </message>
     <message>
         <source>newConferenceTitle</source>
         <extracomment>&apos;Start a video conference&apos; : Title of a popup about creation of a video conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Start a video conference</translation>
     </message>
     <message>
         <source>subjectLabel</source>
-        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
-        <translation type="unfinished">Subject</translation>
+        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
+        <translation>Subject</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">Give a subject</translation>
+        <translation>Give a subject</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
-        <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished">Current subject of the Chat Room. It cannot be empty.</translation>
-        <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
+        <extracomment>&apos;Current subject of the Conference. It cannot be empty&apos;</extracomment>
+        <translation>Current subject of the Conference. It cannot be empty.</translation>
+        <extra-Tooltip>Explanation about the subject of the Conference</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your conference?&apos; : Ask about setting the conference as secured.</extracomment>
-        <translation type="unfinished">Would you like to encrypt your chat?</translation>
+        <translation>Would you like to encrypt your conference?</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished">Select participants</translation>
+        <translation>Select participants</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
-        <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation type="unfinished">Search in your contacts or add a custom one to the chat room.</translation>
+        <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
+        <translation>Search in your contacts or add a custom one to the conference.</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Admin</translation>
+        <translation>Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished">Remove this participant from the selection</translation>
+        <translation>Remove this participant from the selection</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished">Required</translation>
+        <translation>Required</translation>
+    </message>
+    <message>
+        <source>launchButton</source>
+        <extracomment>&apos;Launch&apos; : Launch button</extracomment>
+        <translation>Launch</translation>
+    </message>
+    <message>
+        <source>updateButton</source>
+        <extracomment>&apos;Update&apos; : Update button</extracomment>
+        <translation>Update</translation>
+    </message>
+    <message>
+        <source>updateConferenceTitle</source>
+        <extracomment>&apos;Update the conference&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
+        <translation>Update the conference</translation>
+    </message>
+    <message>
+        <source>newConferenceScheduleTitle</source>
+        <extracomment>&apos;Would you like to schedule your conference?&apos; : Ask about setting the conference as scheduled.</extracomment>
+        <translation>Would you like to schedule your conference?</translation>
+    </message>
+    <message>
+        <source>newConferenceDate</source>
+        <extracomment>&apos;Date&apos; : Date label.</extracomment>
+        <translation>Date</translation>
+    </message>
+    <message>
+        <source>newConferenceTimeTitle</source>
+        <extracomment>&apos;Time&apos; : Time label.</extracomment>
+        <translation>Time</translation>
+    </message>
+    <message>
+        <source>newConferenceDurationTitle</source>
+        <extracomment>&apos;Duration&apos; : Duration label.</extracomment>
+        <translation>Duration</translation>
+    </message>
+    <message>
+        <source>newConferenceTimezoneTitle</source>
+        <extracomment>&apos;Timezone&apos; : Timezone label.</extracomment>
+        <translation>Timezone</translation>
+    </message>
+    <message>
+        <source>newConferenceDescriptionTitle</source>
+        <extracomment>&apos;Add a description&apos; : Label of a text field about the description of the conference</extracomment>
+        <translation>Add a description</translation>
+    </message>
+    <message>
+        <source>newConferenceDescriptionPlaceholder</source>
+        <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>newConferenceDescriptionTooltip</source>
+        <extracomment>&apos;This description will describe the conference&apos; : Explanation about the description of the conference</extracomment>
+        <translation>This description will describe the conference</translation>
+    </message>
+    <message>
+        <source>newConferenceSendLinphoneInviteLabel</source>
+        <extracomment>&apos;Send invite via Linphone&apos; : Label for checkbox for sending invitations with Linphone.</extracomment>
+        <translation>Send invite via Linphone</translation>
+    </message>
+    <message>
+        <source>newConferenceSendEmailInviteLabel</source>
+        <extracomment>&apos;Send invite via Email&apos; : Label for checkbox for sending invitations with mailer.</extracomment>
+        <translation>Send invite via Email</translation>
     </message>
 </context>
 <context>
@@ -1762,13 +1879,29 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished">Participant list</translation>
+        <translation>Participant list</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Admin</translation>
+        <translation>Admin</translation>
         <extra-one>word for admin status</extra-one>
+    </message>
+    <message>
+        <source>addParticipantPlaceholder</source>
+        <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
+        <translation>Add participants</translation>
+    </message>
+    <message>
+        <source>addParticipantTooltip</source>
+        <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
+        <translation>Search participants in your contact list in order to invite them into the chat room.</translation>
+        <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantsListRemoveTooltip</source>
+        <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
+        <translation>Remove this participant from the list</translation>
     </message>
 </context>
 <context>
@@ -1778,6 +1911,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
         <translation>(Admin)</translation>
         <extra-Context>Little Header in one word for a column in participant</extra-Context>
+    </message>
+    <message>
+        <source>participantsMe</source>
+        <extracomment>&apos;Me&apos; : One word for myself.</extracomment>
+        <translation>Me</translation>
     </message>
 </context>
 <context>
@@ -2465,6 +2603,16 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
         <translation>Device name</translation>
     </message>
+    <message>
+        <source>webviewRegistrationUrlLabel</source>
+        <extracomment>&apos;Registration URL&apos; : Label for registration URL.</extracomment>
+        <translation>Registration URL</translation>
+    </message>
+    <message>
+        <source>webviewLoginUrlLabel</source>
+        <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
+        <translation>Login URL</translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
@@ -3088,6 +3236,133 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
         <translation>To enable it in a commercial project, please contact us.</translation>
+    </message>
+</context>
+<context>
+    <name>VideoConference</name>
+    <message>
+        <source>videoConferencePauseWarning</source>
+        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
+        <translation>You are currently out of the conference.</translation>
+    </message>
+    <message>
+        <source>videoConferencePauseHint</source>
+        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
+        <translation>Click on play button to join it back.</translation>
+    </message>
+    <message>
+        <source>videoConferenceStartRecordTooltip</source>
+        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
+        <translation>Start recording</translation>
+    </message>
+    <message>
+        <source>videoConferenceStopRecordTooltip</source>
+        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
+        <translation>Stop Recording</translation>
+    </message>
+    <message>
+        <source>videoConferenceSnapshotTooltip</source>
+        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
+        <translation>Take Snapshot&apos;</translation>
+    </message>
+    <message>
+        <source>videoConferenceWaitMessage</source>
+        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <translation>Video conference is not ready. Please Wait…</translation>
+    </message>
+</context>
+<context>
+    <name>VideoConferenceFullscreen</name>
+    <message>
+        <source>videoConferencePauseWarning</source>
+        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
+        <translation>You are currently out of the conference.</translation>
+    </message>
+    <message>
+        <source>videoConferencePauseHint</source>
+        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
+        <translation>Click on play button to join it back.</translation>
+    </message>
+    <message>
+        <source>videoConferenceStartRecordTooltip</source>
+        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
+        <translation>Start recording</translation>
+    </message>
+    <message>
+        <source>videoConferenceStopRecordTooltip</source>
+        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
+        <translation>Stop Recording</translation>
+    </message>
+    <message>
+        <source>videoConferenceSnapshotTooltip</source>
+        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
+        <translation>Take Snapshot</translation>
+    </message>
+    <message>
+        <source>videoConferenceWaitMessage</source>
+        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <translation>Video conference is not ready. Please Wait…</translation>
+    </message>
+</context>
+<context>
+    <name>VideoConferenceMenu</name>
+    <message>
+        <source>conferenceMenuMultimedia</source>
+        <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
+        <translation>Multimedia parameters</translation>
+    </message>
+    <message>
+        <source>conferenceMenuLayout</source>
+        <extracomment>&apos;Change layout&apos; : Menu title to change the conference layout.</extracomment>
+        <translation>Change layout</translation>
+    </message>
+    <message>
+        <source>conferenceMenuInvite</source>
+        <extracomment>&apos;Invite participants&apos; : Menu title to invite participants in admin mode.</extracomment>
+        <translation>Invite participants</translation>
+    </message>
+    <message>
+        <source>conferenceMenuParticipants</source>
+        <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
+        <translation>Participants list</translation>
+    </message>
+    <message>
+        <source>conferenceMenuTitle</source>
+        <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
+        <translation>Settings</translation>
+    </message>
+    <message>
+        <source>conferenceMenuGridLayout</source>
+        <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
+        <translation>Mosaic mode</translation>
+    </message>
+    <message>
+        <source>conferenceMenuActiveSpeakerLayout</source>
+        <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
+        <translation>Active speaker mode</translation>
+    </message>
+    <message>
+        <source>conferenceMenuAudioLayout</source>
+        <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
+        <translation>Audio only mode</translation>
+    </message>
+    <message>
+        <source>conferenceMenuParticipantsAlone</source>
+        <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
+        <translation>You are currently alone in this conference</translation>
+    </message>
+</context>
+<context>
+    <name>WaitingRoom</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
+        <translation>Start</translation>
     </message>
 </context>
 <context>
@@ -4009,7 +4284,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>linphone-utils</name>
+    <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
         <translation>Do you want to download %1 (%2)?</translation>

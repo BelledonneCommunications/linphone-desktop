@@ -494,6 +494,29 @@
     </message>
 </context>
 <context>
+    <name>ChatCalendarMessage</name>
+    <message>
+        <source>icsOrganizer</source>
+        <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icsDescription</source>
+        <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icsconferenceAddressTitle</source>
+        <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icsJoinButton</source>
+        <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ChatDeliveries</name>
     <message>
         <source>deliveryDelivered</source>
@@ -518,6 +541,12 @@
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
         <translation>%1 没有收到消息</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
+    </message>
+    <message>
+        <source>deliveryError</source>
+        <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
+        <translation type="unfinished"></translation>
+        <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
 <context>
@@ -710,6 +739,31 @@
     <message>
         <source>confirm</source>
         <translation>开始</translation>
+    </message>
+</context>
+<context>
+    <name>Conferences</name>
+    <message>
+        <source>conferencesTitle</source>
+        <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferencesEndedFilter</source>
+        <extracomment>&apos;Finished&apos; : Filter conferences on end status.
+----------
+&apos;Invitations&apos; : Filter conferences on invited conferences (where we are not the organizer).</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferencesScheduledFilter</source>
+        <extracomment>&apos;Scheduled&apos; : Filter conferences on scheduled status.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferencesCopiedURL</source>
+        <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1382,6 +1436,11 @@
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
         <translation>开放主页</translation>
     </message>
+    <message>
+        <source>mainWindowConferencesTitle</source>
+        <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -1439,17 +1498,15 @@
     </message>
 </context>
 <context>
-    <name>MultimediaParameters</name>
-    <message>
-        <source>ok</source>
-        <translation>好</translation>
-    </message>
-</context>
-<context>
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
         <translation type="unfinished">好</translation>
+    </message>
+    <message>
+        <source>menuMultimedia</source>
+        <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1553,25 +1610,20 @@
         <translation type="unfinished">取消</translation>
     </message>
     <message>
-        <source>startButton</source>
-        <extracomment>&apos;Launch&apos; : Start button</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
         <translation type="unfinished">你需要填写一个主题。</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
-        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the conference creation.</extracomment>
         <translation type="unfinished">
             <numerusform>你需要至少%1成员</numerusform>
         </translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
-        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
+        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
         <translation type="unfinished">您需要在帐户设置中设置会议 URI 以创建基于会议的聊天室。</translation>
     </message>
     <message>
@@ -1581,7 +1633,7 @@
     </message>
     <message>
         <source>subjectLabel</source>
-        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
+        <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
         <translation type="unfinished">主题</translation>
     </message>
     <message>
@@ -1591,9 +1643,9 @@
     </message>
     <message>
         <source>subjectTooltip</source>
-        <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
+        <extracomment>&apos;Current subject of the Conference. It cannot be empty&apos;</extracomment>
         <translation type="unfinished">聊天室的当前主题。 它不能为空。</translation>
-        <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
+        <extra-Tooltip>Explanation about the subject of the Conference</extra-Tooltip>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
@@ -1602,7 +1654,7 @@
     </message>
     <message>
         <source>participantSelectionTooltip</source>
-        <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
+        <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
         <translation type="unfinished">搜索您的联系人或向聊天室添加自定义联系人。</translation>
     </message>
     <message>
@@ -1621,6 +1673,71 @@
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
         <translation type="unfinished">要求</translation>
+    </message>
+    <message>
+        <source>launchButton</source>
+        <extracomment>&apos;Launch&apos; : Launch button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>updateButton</source>
+        <extracomment>&apos;Update&apos; : Update button</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>updateConferenceTitle</source>
+        <extracomment>&apos;Update the conference&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceScheduleTitle</source>
+        <extracomment>&apos;Would you like to schedule your conference?&apos; : Ask about setting the conference as scheduled.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceDate</source>
+        <extracomment>&apos;Date&apos; : Date label.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceTimeTitle</source>
+        <extracomment>&apos;Time&apos; : Time label.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceDurationTitle</source>
+        <extracomment>&apos;Duration&apos; : Duration label.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceTimezoneTitle</source>
+        <extracomment>&apos;Timezone&apos; : Timezone label.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceDescriptionTitle</source>
+        <extracomment>&apos;Add a description&apos; : Label of a text field about the description of the conference</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceDescriptionPlaceholder</source>
+        <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceDescriptionTooltip</source>
+        <extracomment>&apos;This description will describe the conference&apos; : Explanation about the description of the conference</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceSendLinphoneInviteLabel</source>
+        <extracomment>&apos;Send invite via Linphone&apos; : Label for checkbox for sending invitations with Linphone.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceSendEmailInviteLabel</source>
+        <extracomment>&apos;Send invite via Email&apos; : Label for checkbox for sending invitations with mailer.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1746,12 +1863,47 @@
     </message>
 </context>
 <context>
+    <name>ParticipantsListView</name>
+    <message>
+        <source>addParticipantPlaceholder</source>
+        <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
+        <translation type="unfinished">添加成员</translation>
+    </message>
+    <message>
+        <source>addParticipantTooltip</source>
+        <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
+        <translation type="unfinished">在您的联系人列表中搜索成员来邀请他们进入聊天室。</translation>
+        <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
+    </message>
+    <message>
+        <source>participantList</source>
+        <extracomment>&apos;Participant list&apos;</extracomment>
+        <translation type="unfinished">成员列表</translation>
+    </message>
+    <message>
+        <source>adminStatus</source>
+        <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
+        <translation type="unfinished">管理员</translation>
+        <extra-one>word for admin status</extra-one>
+    </message>
+    <message>
+        <source>participantsListRemoveTooltip</source>
+        <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParticipantsView</name>
     <message>
         <source>participantsAdminHeader</source>
         <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
         <translation>（管理员）</translation>
         <extra-Context>Little Header in one word for a column in participant</extra-Context>
+    </message>
+    <message>
+        <source>participantsMe</source>
+        <extracomment>&apos;Me&apos; : One word for myself.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2416,6 +2568,16 @@
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>webviewRegistrationUrlLabel</source>
+        <extracomment>&apos;Registration URL&apos; : Label for registration URL.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>webviewLoginUrlLabel</source>
+        <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsSipAccountsEdit</name>
@@ -3038,6 +3200,133 @@
     <message>
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VideoConference</name>
+    <message>
+        <source>videoConferencePauseWarning</source>
+        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferencePauseHint</source>
+        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceStartRecordTooltip</source>
+        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceStopRecordTooltip</source>
+        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceSnapshotTooltip</source>
+        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceWaitMessage</source>
+        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VideoConferenceFullscreen</name>
+    <message>
+        <source>videoConferencePauseWarning</source>
+        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferencePauseHint</source>
+        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceStartRecordTooltip</source>
+        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceStopRecordTooltip</source>
+        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceSnapshotTooltip</source>
+        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>videoConferenceWaitMessage</source>
+        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>VideoConferenceMenu</name>
+    <message>
+        <source>conferenceMenuMultimedia</source>
+        <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuLayout</source>
+        <extracomment>&apos;Change layout&apos; : Menu title to change the conference layout.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuInvite</source>
+        <extracomment>&apos;Invite participants&apos; : Menu title to invite participants in admin mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuParticipants</source>
+        <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuTitle</source>
+        <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuGridLayout</source>
+        <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuActiveSpeakerLayout</source>
+        <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuAudioLayout</source>
+        <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conferenceMenuParticipantsAlone</source>
+        <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>WaitingRoom</name>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3960,10 +4249,10 @@
     </message>
 </context>
 <context>
-    <name>linphone-utils</name>
+    <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation>是否要下载 %1 (%2)？</translation>
+        <translation type="unfinished">是否要下载 %1 (%2)？</translation>
     </message>
 </context>
 </TS>

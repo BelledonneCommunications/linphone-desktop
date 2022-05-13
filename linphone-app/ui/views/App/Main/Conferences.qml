@@ -60,8 +60,10 @@ Item{
 					texts: [
 					//: 'Finished' : Filter conferences on end status.
 						qsTr('conferencesEndedFilter'),
-					//: 'Scheduled' : Filter conferences on scheduled status.	
+					
+					//: 'Scheduled' : Filter conferences on scheduled status.
 						qsTr('conferencesScheduledFilter'),
+					
 					//: 'Invitations' : Filter conferences on invited conferences (where we are not the organizer).
 						qsTr('conferencesEndedFilter'),
 					]

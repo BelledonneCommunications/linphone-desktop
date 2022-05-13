@@ -169,7 +169,7 @@ Rectangle {
 			colorSet: VideoConferenceStyle.buttons.screenshot
 			visible: conference.callModel.snapshotEnabled
 			onClicked: conference.callModel.takeSnapshot()
-			//: 'take Snapshot' : Tooltip for takking snapshot.
+			//: 'Take Snapshot' : Tooltip for takking snapshot.
 			tooltipText: qsTr('videoConferenceSnapshotTooltip')
 		}
 		ActionButton{
