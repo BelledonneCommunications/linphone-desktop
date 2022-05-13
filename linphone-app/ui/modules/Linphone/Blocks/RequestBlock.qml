@@ -31,7 +31,6 @@ Column {
 	
 	// ----------------------------------------------------------------------------
 	
-	//height: errorBlock.implicitHeight + busy.height// RequestBlockStyle.height
 	TextEdit {
 		id: errorBlock
 		readOnly: true
@@ -58,7 +57,6 @@ Column {
 		id: busy
 		anchors {
 			horizontalCenter: parent.horizontalCenter
-			//top: parent.top
 		}
 		
 		height: visible ? RequestBlockStyle.loadingIndicator.height : 0

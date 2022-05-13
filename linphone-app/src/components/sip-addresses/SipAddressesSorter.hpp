@@ -34,7 +34,6 @@ class SipAddressesSorter : public QObject{
 public:
 	SipAddressesSorter (QObject *parent = Q_NULLPTR);
 	
-	//static bool lessThan( const QString& filter, const QVariantMap &left, const QVariantMap &right);
 	static bool lessThan (const QString& filter, const SearchResultModel *left, const SearchResultModel *right);
 	
 private:

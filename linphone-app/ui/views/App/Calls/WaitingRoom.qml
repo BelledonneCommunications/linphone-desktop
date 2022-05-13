@@ -74,7 +74,6 @@ Rectangle {
 				fixedSize: false
 				onExitStatus: visible = false
 				visible: false
-				title: 'Régler les périphériques'
 			}
 		}
 		// -------------------------------------------------------------------------
@@ -119,7 +118,6 @@ Rectangle {
 						backgroundRadius: 90
 						colorSet: cameraEnabled  ? WaitingRoomStyle.buttons.cameraOn : WaitingRoomStyle.buttons.cameraOff
 						enabled: modeChoice.selectedMode != 2
-						//updating: cameraEnabled && callModel.updating
 						onClicked: cameraEnabled = !cameraEnabled
 					}
 				}
@@ -132,10 +130,6 @@ Rectangle {
 						colorSet: selectedMode == 0 ? WaitingRoomStyle.buttons.gridLayout :
 															selectedMode == 1 ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
 						onClicked: selectedMode = (selectedMode + 1) % 3
-						/*
-						colorSet: callModel.pausedByUser ? WaitingRoomStyle.buttons.play : WaitingRoomStyle.buttons.pause
-						onClicked: callModel.pausedByUser = !callModel.pausedByUser
-						*/
 					}
 				}
 			}
@@ -147,7 +141,9 @@ Rectangle {
 			Layout.alignment: Qt.AlignCenter
 			Layout.bottomMargin: 15
 			TextButtonA {
-				text: 'CANCEL'
+				//: 'Cancel' : Cancel button.
+				text: qsTr('cancelButton')
+				capitalization: Font.AllUppercase
 				
 				onClicked: {
 						mainItem.close()
@@ -155,7 +151,9 @@ Rectangle {
 						}
 			}
 			TextButtonB {
-				text: 'DEMARRER'
+				//: 'Start' : Button label for starting the conference.
+				text: qsTr('startButton')
+				capitalization: Font.AllUppercase
 		
 				onClicked: {mainItem.close(); CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
 																			 {	video: modeChoice.selectedMode != 2

@@ -107,14 +107,17 @@ Window {
 				}
 				Text{
 					Layout.alignment: Qt.AlignCenter
-					text: 'Vous êtes actuellement en dehors de la conférence.'
+					
+					//: 'You are currently out of the conference.' : Pause message in video conference.
+					text: qsTr('videoConferencePauseWarning')
 					font.pointSize: VideoConferenceStyle.pauseArea.title.pointSize
 					font.weight: VideoConferenceStyle.pauseArea.title.weight
 					color: VideoConferenceStyle.pauseArea.title.color
 				}
 				Text{
 					Layout.alignment: Qt.AlignCenter
-					text: 'Cliquez sur le bouton "play" pour la rejoindre.'
+					//: 'Click on play button to join it back.' : Explain what to do when being in pause in conference.
+					text: qsTr('videoConferencePauseHint')
 					font.pointSize: VideoConferenceStyle.pauseArea.description.pointSize
 					font.weight: VideoConferenceStyle.pauseArea.description.weight
 					color: VideoConferenceStyle.pauseArea.description.color
@@ -143,14 +146,7 @@ Window {
 
 			visible: !window.hideButtons
 			height: visible? undefined : 0
-			/*
-			ActionButton{
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.callsList
-				visible: !listCallsOpened && !window.hideButtons
-				onClicked: openListCallsRequest()
-			}*/
+			
 			ActionButton{
 				id: keypadButton
 				isCustom: true
@@ -196,7 +192,10 @@ Window {
 							? callModel.startRecording()
 							: callModel.stopRecording()
 				}
-				tooltipText: !toggled? 'Start Recording' : 'Stop Recording'
+				//: 'Start recording' : Tootltip when straing record.
+				tooltipText: !toggled ? qsTr('videoConferenceStartRecordTooltip')
+				//: 'Stop Recording' : Tooltip when stopping record.
+					: qsTr('videoConferenceStopRecordTooltip')
 			}
 			ActionButton{
 				isCustom: true
@@ -204,7 +203,8 @@ Window {
 				colorSet: VideoConferenceStyle.buttons.screenshot
 				visible: conference.callModel.snapshotEnabled
 				onClicked: conference.callModel.takeSnapshot()
-				tooltipText:'take Snapshot'
+				//: 'take Snapshot' : Tooltip for takking snapshot.
+				tooltipText: qsTr('videoConferenceSnapshotTooltip')
 			}
 			ActionButton{
 				isCustom: true
@@ -275,7 +275,8 @@ Window {
 						}
 						Text{
 							Layout.alignment: Qt.AlignCenter
-							text: "Video conference is not ready. Please Wait..."
+							//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
+							text: qsTr('videoConferenceWaitMessage')
 							color: VideoConferenceStyle.buzyColor
 						}
 					}

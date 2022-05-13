@@ -11,6 +11,7 @@ Button {
 
   property alias backgroundColor: background.color
   property alias radius: background.radius
+  property int capitalization
 
   background: Rectangle {
     id: background
@@ -28,6 +29,7 @@ Button {
     color: SmallButtonStyle.text.color
     font.pointSize: SmallButtonStyle.text.pointSize
     font.weight: Font.Bold
+    font.capitalization: button.capitalization
     horizontalAlignment: Text.AlignHCenter
     text: button.text
     verticalAlignment: Text.AlignVCenter

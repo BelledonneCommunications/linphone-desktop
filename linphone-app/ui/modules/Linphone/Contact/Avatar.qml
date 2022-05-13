@@ -19,7 +19,6 @@ Item {
 
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
   
-  //onPresenceLevelChanged: console.log(Presence.getPresenceLevelIconName(presenceLevel)+' => '+username)
   // ---------------------------------------------------------------------------
 
   function isLoaded () {

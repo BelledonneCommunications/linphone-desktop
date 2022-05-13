@@ -402,7 +402,6 @@ DialogPlus {
 					textFormat: Text.RichText
 					//: 'Required' : Word relative to a star to explain that it is a requirement (Field form)
 					text : '<span style="color:red">*</span> '+qsTr('requiredField')
-					//font.weight: Font.DemiBold
 					color: NewChatRoomStyle.requiredColor
 					font.pointSize: Units.dp * 8
 				}

@@ -53,7 +53,6 @@ TextEdit {
 	textFormat: Text.RichText // To supports links and imgs.
 	wrapMode: TextEdit.Wrap
 	
-	//onCursorRectangleChanged: if(!readOnly) Logic.ensureVisible(cursorRectangle)
 	onLinkActivated: Qt.openUrlExternally(link)
 	onSelectedTextChanged:{
 							if(selectedText != '') lastTextSelected = selectedText

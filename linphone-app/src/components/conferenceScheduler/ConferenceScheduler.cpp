@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -52,7 +52,7 @@ std::shared_ptr<linphone::ConferenceScheduler> ConferenceScheduler::getConferenc
 }
 
 void ConferenceScheduler::onStateChanged(linphone::ConferenceSchedulerState state) {
-	qWarning() << "ConferenceScheduler::onStateChanged : " << (int)state;
+	qDebug() << "ConferenceScheduler::onStateChanged : " << (int)state;
 	emit stateChanged(state);
 	if( state == linphone::ConferenceSchedulerState::Ready) {
 		std::shared_ptr<linphone::ChatRoomParams> params = CoreManager::getInstance()->getCore()->createDefaultChatRoomParams();
@@ -62,6 +62,6 @@ void ConferenceScheduler::onStateChanged(linphone::ConferenceSchedulerState stat
 }
 
 void ConferenceScheduler::onInvitationsSent( const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
-	qWarning() << "ConferenceScheduler::onInvitationsSent";
+	qDebug() << "ConferenceScheduler::onInvitationsSent";
 	emit invitationsSent(failedInvitations);
 }

@@ -628,7 +628,6 @@ void App::registerTypes () {
 	registerType<AuthenticationNotifier>("AuthenticationNotifier");
 	registerType<CallsListProxyModel>("CallsListProxyModel");
 	registerType<Camera>("Camera");
-	registerType<CameraPreview>("CameraPreview");
 	registerType<ChatRoomProxyModel>("ChatRoomProxyModel");
 	registerType<ConferenceHelperModel>("ConferenceHelperModel");
 	registerType<ConferenceProxyModel>("ConferenceProxyModel");
@@ -673,7 +672,6 @@ void App::registerTypes () {
 	registerUncreatableType<ImageModel>("ImageModel");
 	registerUncreatableType<ConferenceHelperModel::ConferenceAddModel>("ConferenceAddModel");
 	registerUncreatableType<ConferenceModel>("ConferenceModel");
-	registerUncreatableType<ConferenceInfoListModel>("ConferenceInfoListModel");
 	registerUncreatableType<ContactModel>("ContactModel");
 	registerUncreatableType<ContactsImporterModel>("ContactsImporterModel");
 	registerUncreatableType<ContentModel>("ContentModel");

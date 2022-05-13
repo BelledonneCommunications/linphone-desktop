@@ -129,7 +129,6 @@ Item {
 			anchors.bottom:parent.bottom
 			anchors.rightMargin : 5
 			visible:$chatEntry.isEphemeral
-			//onVisibleChanged:  container.updateHeight()
 			Text{
 				id: ephemeralText
 				anchors.bottom: parent.bottom	

@@ -285,8 +285,6 @@ private:
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 	void handleCallCreated(const std::shared_ptr<linphone::Call> &call);// Count an event call
 	void handlePresenceStatusReceived(std::shared_ptr<linphone::Friend> contact);
-	//void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
-	//void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
 	
 	std::shared_ptr<linphone::ChatRoom> mChatRoom;
 	std::shared_ptr<ChatRoomListener> mChatRoomListener;	// This need to be a shared_ptr because of adding it to linphone

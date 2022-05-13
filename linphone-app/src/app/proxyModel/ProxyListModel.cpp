@@ -43,20 +43,3 @@ QSharedPointer<QObject> ProxyListModel::get(QObject * itemToGet, int * index) co
 }
 
 // -----------------------------------------------------------------------------
-/*
-bool ProxyListModel::remove(QObject *itemToRemove) {
-	bool removed = false;
-	qInfo() << QStringLiteral("Removing ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
-	int index = 0;
-	for(auto item : mList)
-		if( item.get() == itemToRemove) {
-			removed = removeRow(index);
-			break;
-		}else
-			++index;
-	if( !removed)
-		qWarning() << QStringLiteral("Unable to remove ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
-	return removed;
-}*/
-
-// -----------------------------------------------------------------------------

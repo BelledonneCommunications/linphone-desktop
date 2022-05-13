@@ -42,7 +42,6 @@ public:
 	
 	Q_INVOKABLE void setFilter (const QString &pattern);
 	
-	//QList<std::shared_ptr<SearchResultModel> > mAddresses;
 	// And instance of Magic search
 	std::shared_ptr<linphone::MagicSearch> mMagicSearch;
 	// Callback when searching

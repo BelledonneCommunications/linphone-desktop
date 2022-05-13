@@ -239,6 +239,7 @@ bool SipAddressesModel::sipAddressIsValid (const QString &sipAddress) {
 	shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipAddress));
 	return address && !address->getUsername().empty();
 }
+
 // Return at most : sip:username@domain
 QString SipAddressesModel::cleanSipAddress (const QString &sipAddress) {
 	return Utils::cleanSipAddress(sipAddress);
@@ -289,6 +290,7 @@ void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
 		handleAllCallCountReset();
 	});
 }
+
 void SipAddressesModel::handleContactAdded (QSharedPointer<ContactModel> contact) {
 	for (const auto &sipAddress : contact->getVcardModel()->getSipAddresses()) {
 		addOrUpdateSipAddress(sipAddress.toString(), contact);
@@ -412,6 +414,7 @@ void SipAddressesModel::handleLastEntryRemoved (ChatRoomModel *chatRoomModel) {
 	it2->timestamp = map["timestamp"].toDateTime();
 	emit dataChanged(index(row, 0), index(row, 0));
 }
+
 void SipAddressesModel::handleAllCallCountReset () {
 	for( auto peer = mPeerAddressToSipAddressEntry.begin() ; peer != mPeerAddressToSipAddressEntry.end() ; ++peer){
 		for( auto local = peer->localAddressToConferenceEntry.begin() ; local != peer->localAddressToConferenceEntry.end() ; ++local){
@@ -422,6 +425,7 @@ void SipAddressesModel::handleAllCallCountReset () {
 		emit dataChanged(index(row, 0), index(row, 0));
 	}
 }
+
 void SipAddressesModel::handleMessageCountReset (ChatRoomModel *chatRoomModel) {
 	const QString &peerAddress = Utils::cleanSipAddress(chatRoomModel->getPeerAddress());
 	auto it = mPeerAddressToSipAddressEntry.find(peerAddress);

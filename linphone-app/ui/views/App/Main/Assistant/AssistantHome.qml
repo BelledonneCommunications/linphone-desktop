@@ -39,7 +39,6 @@ ColumnLayout {
 			Text {
 				height: AssistantHomeStyle.info.title.height
 				Layout.fillWidth: true
-				//width: parent.width
 				
 				color: AssistantHomeStyle.info.title.color
 				elide: Text.ElideRight

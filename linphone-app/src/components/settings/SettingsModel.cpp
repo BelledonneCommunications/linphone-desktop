@@ -60,17 +60,19 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 
 	configureRlsUri();
 }
+
 SettingsModel::~SettingsModel()
 {
-	if(mSimpleCaptureGraph )
-	{
+	if(mSimpleCaptureGraph ) {
 		delete mSimpleCaptureGraph;
 		mSimpleCaptureGraph = nullptr;
 	}
 }
+
 void SettingsModel::settingsWindowClosing(void) {
 	onSettingsTabChanged(-1);
 }
+
 //Provides tabbar per-tab setup/teardown mechanism for specific settings views
 void SettingsModel::onSettingsTabChanged(int idx) {
 	int prevIdx = mCurrentSettingsTab;

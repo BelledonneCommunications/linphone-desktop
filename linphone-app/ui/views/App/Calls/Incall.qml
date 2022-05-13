@@ -258,9 +258,7 @@ Rectangle {
 						width: container.width
 						Component.onDestruction: {
 							resetWindowId()
-							console.log("Camera incall destroyed")
 						}
-						Component.onCompleted: console.log("Camera incall completed")
 					}
 					
 				}
@@ -405,9 +403,7 @@ Rectangle {
 						isPreview: true
 						Component.onDestruction: {
 							resetWindowId()
-							 console.log("Camera preview incall destroyed")
 						}
-						Component.onCompleted: console.log("Camera preview incall completed")
 					}
 				}
 			}

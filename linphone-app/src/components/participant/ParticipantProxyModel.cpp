@@ -144,7 +144,6 @@ void ParticipantProxyModel::addAddress(const QString& address){
 			participant->startInvitation();
 		}
 		if( mConferenceModel && mConferenceModel->getConference()){
-			//mConferenceModel->getConference()->addParticipant(Utils::interpretUrl(address));
 			std::list<std::shared_ptr<linphone::Address>> addressesToInvite;
 			addressesToInvite.push_back(Utils::interpretUrl(address));
 			auto callParameters = CoreManager::getInstance()->getCore()->createCallParams(mConferenceModel->getConference()->getCall());
@@ -182,8 +181,6 @@ bool ParticipantProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &
 		const ParticipantModel* a = sourceModel()->data(sourceModel()->index(sourceRow, 0, sourceParent)).value<ParticipantModel*>();
 		return !a->isMe();
 	}
-	//const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-	//return true;
 }
 
 bool ParticipantProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {

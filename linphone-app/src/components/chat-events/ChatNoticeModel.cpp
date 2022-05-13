@@ -50,7 +50,6 @@ ChatNoticeModel::~ChatNoticeModel(){
 QSharedPointer<ChatNoticeModel> ChatNoticeModel::create(std::shared_ptr<linphone::EventLog> eventLog, QObject * parent){
 	auto model = QSharedPointer<ChatNoticeModel>::create(eventLog, parent);
 	if(model && model->update()){
-		model->mSelf = model;
 		return model;
 	}else
 		return nullptr;
@@ -59,7 +58,6 @@ QSharedPointer<ChatNoticeModel> ChatNoticeModel::create(std::shared_ptr<linphone
 QSharedPointer<ChatNoticeModel> ChatNoticeModel::create(NoticeType noticeType, const QDateTime& timestamp, const QString& txt, QObject * parent){
 	auto model = QSharedPointer<ChatNoticeModel>::create(noticeType, timestamp, txt, parent);
 	if(model ){
-		model->mSelf = model;
 		return model;
 	}else
 		return nullptr;

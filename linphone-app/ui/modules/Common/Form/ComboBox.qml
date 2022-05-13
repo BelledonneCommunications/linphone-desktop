@@ -23,7 +23,7 @@ Controls.ComboBox {
 	property var rootItem 
 	property int yPopup: rootItem ? -mapToItem(rootItem,x,y).y : height + 1
 	property int maxPopupHeight : rootItem ? rootItem.height : 400
-		
+	
 	property int selectionWidth: width
 	
 	clip: true
@@ -92,44 +92,19 @@ Controls.ComboBox {
 	}
 	
 	// ---------------------------------------------------------------------------
-	/*
-	delegate: CommonItemDelegate {
-		id: item
-		clip: true
-		container: comboBox
-		flattenedModel: comboBox.textRole.length &&
-						(typeof modelData !== 'undefined' ? modelData : model)
-		itemIcon: Logic.getItemIcon(item)
-		width: comboBox.selectionWidth
-		onWidthChanged: console.log(width)
-	}*/
 	popup: Controls.Popup{
 		y: comboBox.yPopup
 		width: comboBox.selectionWidth
-		//height: comboBox.maxPopupHeight
-		//height: contentItem.contentHeight
 		implicitHeight: contentItem.contentHeight
 		topPadding: 0
 		bottomPadding: 0
 		leftPadding: 0
 		rightPadding: 0
 		contentItem: ListItemSelector{
-			//implicitHeight: contentHeight
 			model: comboBox.popup.visible ? comboBox.model : null
 			currentIndex: comboBox.highlightedIndex
 			textRole: comboBox.textRole
 			onActivated: {comboBox.activated(index);comboBox.currentIndex = index;comboBox.popup.close()}
-			/*
-			delegate: CommonItemDelegate {
-				id: item
-				clip: true
-				container: comboBox
-				flattenedModel: comboBox.textRole.length &&
-								(typeof modelData !== 'undefined' ? modelData : model)
-				itemIcon: Logic.getItemIcon(item)
-				width: comboBox.selectionWidth
-				onWidthChanged: console.log(width)
-			}*/
 		}
 	}
 }

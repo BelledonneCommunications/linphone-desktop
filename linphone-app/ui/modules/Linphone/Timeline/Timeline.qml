@@ -27,7 +27,6 @@ Rectangle {
 	
 	// ---------------------------------------------------------------------------
 	
-	//signal entrySelected (string entry)
 	signal entrySelected (TimelineModel entry)
 	signal entryClicked(TimelineModel entry)
 	signal showHistoryRequest()
@@ -64,7 +63,6 @@ Rectangle {
 			Layout.alignment: Qt.AlignTop
 			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
 			visible: showHistoryButton || showFiltersButtons
-			//visible:view.count > 0 || timeline.isFilterVisible || timeline.model.filterFlags > 0 || CoreManager.eventCount > 0
 			
 			MouseArea{// no more showing history
 				id:showHistory
@@ -405,7 +403,6 @@ Rectangle {
 					preventStealing: false
 					onClicked: {
 						if(mouse.button == Qt.LeftButton){
-							//if($modelData.selected || !view.updateSelectionModels)// Update selection
 							timeline.entryClicked($modelData)
 							if(view){
 								if(view.updateSelectionModels)

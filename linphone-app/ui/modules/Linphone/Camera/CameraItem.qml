@@ -20,7 +20,7 @@ Item {
 	property CallModel callModel
 	property bool isPreview: !callModel || !container.currentDevice || container.currentDevice.isMe
 	property bool isFullscreen: false
-	property bool hideCamera: false //callModel.pausedByUser
+	property bool hideCamera: false
 	property bool isPaused: false
 	property bool isVideoEnabled: enabled
 									&& (!callModel || callModel.videoEnabled)
@@ -31,14 +31,8 @@ Item {
 	property bool b: container.currentDevice && container.currentDevice.videoEnabled
 	property bool c: container.currentDevice && container.currentDevice.isMe
 	property bool d : callModel && callModel.cameraEnabled
-	onAChanged: console.log("A: " + a + ", " +callModel)
-	onBChanged: console.log("B: " + b + ", " +container.currentDevice)
-	onCChanged: console.log("C: " + c + ", " +container.currentDevice)
-	onDChanged: console.log("D: " + d + ", " +callModel)
-	onIsVideoEnabledChanged: console.log('VideoIsEnabled: '+isVideoEnabled)
-
-	//onIsVideoEnabledChanged: console.log(callModel.videoEnabled + ","+container.currentDevice.videoEnabled+','+container.currentDevice.isMe+','+callModel.cameraEnabled)
 	property bool isReady: cameraLoader.item && cameraLoader.item.isReady
+	
 	onCurrentDeviceChanged: resetActive()
 	function resetActive(){
 		resetTimer.resetActive()
@@ -50,7 +44,7 @@ Item {
 		
 		anchors.fill: parent
 		
-		active: container.enabled && !resetActive && container.isVideoEnabled //avatarCell.currentDevice && (avatarCell.currentDevice.videoEnabled && !conference._fullscreen)
+		active: container.enabled && !resetActive && container.isVideoEnabled
 		sourceComponent: container.isVideoEnabled && !container.isPaused? camera : null		
 		
 		Timer{
@@ -77,8 +71,6 @@ Item {
 				isPreview: container.isPreview
 				
 				onRequestNewRenderer: {resetTimer.resetActive()}
-				Component.onDestruction: {/*resetWindowId();*/ console.log("Destroyed Camera [" + isPreview + "] : " + camera)}
-				Component.onCompleted: console.log("Completed Camera [" + isPreview + "] : " + camera)
 			}
 		}		
 	}

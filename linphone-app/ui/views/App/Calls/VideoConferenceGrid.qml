@@ -24,22 +24,7 @@ Mosaic {
 	property bool cameraEnabled: true
 	property int participantCount: gridModel.count
 	squaredDisplay: true
-	
-	function setTestMode(){
-		grid.clear()
-		gridModel.model = gridModel.defaultList
-		for(var i = 0 ; i < 5 ; ++i)
-			grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-							  +Math.floor(Math.random()*255).toString(16)
-							  +Math.floor(Math.random()*255).toString(16)})
-		console.log("Setting test mode : count=" + gridModel.defaultList.count)
-	}
-	function setParticipantDevicesMode(){
-		console.log("Setting participant mode : count=" + gridModel.participantDevices.count)
-		grid.clear()
-		gridModel.model = gridModel.participantDevices
-	}
-	
+
 	delegateModel: DelegateModel{
 		id: gridModel
 		property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
@@ -49,23 +34,15 @@ Mosaic {
 			showMe: true
 		}
 		model: participantDevices
-		onCountChanged: {console.log("Delegate count = "+count+"/"+participantDevices.count)}
 		delegate: Item{
 			id: avatarCell
 			property ParticipantDeviceModel currentDevice: gridModel.participantDevices.getAt(index)
 			onCurrentDeviceChanged: {
-				console.log("currentDevice changed: " +currentDevice+"/"+cameraView.currentDevice + (currentDevice?", me:"+currentDevice.isMe:'')+" ["+index+"]")
 				if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
-				
 			}
-			//color: 'black' /*!conference.callModel && gridModel.defaultList.get(index).color ? gridModel.defaultList.get(index).color : */
-			//color: gridModel.model.get(index) && gridModel.model.get(index).color ? gridModel.model.get(index).color : ''	// modelIndex is a custom index because by Mosaic modelisation, it is not accessible.
-			//color:  $modelData.color ? $modelData.color : ''
+			
 			height: grid.cellHeight - 10
 			width: grid.cellWidth - 10
-			Component.onCompleted: {
-				console.log("Completed: ["+index+"] " +(currentDevice?currentDevice.peerAddress+", isMe:"+currentDevice.isMe : '') )
-			}
 			
 			CameraView{
 				id: cameraView
@@ -74,9 +51,8 @@ Mosaic {
 				currentDevice: avatarCell.currentDevice
 				callModel: participantDevices.callModel
 				isCameraFromDevice: true
-				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused //callModel.pausedByUser
-				onCloseRequested: participantDevices.showMe = false //grid.remove( index)
-				//color: 'black'
+				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused
+				onCloseRequested: participantDevices.showMe = false
 			}
 		}
 	}

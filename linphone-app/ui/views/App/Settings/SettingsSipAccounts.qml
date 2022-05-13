@@ -147,7 +147,8 @@ TabContainer {
 			visible: SettingsModel.useWebview() || SettingsModel.developerSettingsEnabled
 			FormLine {
 				FormGroup {
-					label: 'Registration URL'
+					//: 'Registration URL' : Label for registration URL.
+					label: qsTr('webviewRegistrationUrlLabel')
 					
 					TextField {
 						text: SettingsModel.assistantRegistrationUrl
@@ -160,7 +161,8 @@ TabContainer {
 			
 			FormLine {
 				FormGroup {
-					label: 'Login URL'
+					//: 'Login URL' : Label for login URL.
+					label: qsTr('webviewLoginUrlLabel')
 					
 					TextField {
 						text: SettingsModel.assistantLoginUrl

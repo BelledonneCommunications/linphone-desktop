@@ -15,27 +15,17 @@ ColumnLayout{
 	property bool squaredDisplay: false
 	
 	function appendItem(item){
-		console.log("Adding "+item)
 		mainLayout.delegateModel.model.append(item)
-	/*
-		if( bottomRowList.model.count < grid.columns - 1)
-			bottomRowList.model.append(item)
-		else
-			while(bottomRowList.model.count > 0 && tryToAdd(bottomRowList.model.get(0))){
-				bottomRowList.model.remove(0,1)
-			}*/
 	}
 	
 	function add(item){
 		if( !grid.isLayoutWillChanged() || !transitionningTimer.running)
-			//grid.model.append(item)
 			appendItem(item)
 		else
 			bufferModels.append(item)
 	}
 	
 	function remove(index){
-		console.log("Removing at "+index)
 		if(mainLayout.delegateModel.model.count > index)
 			mainLayout.delegateModel.model.remove( index, 1)
 	}
@@ -78,11 +68,6 @@ ColumnLayout{
 		}
 	}
 	
-	/*
-	Item{// Spacer
-		Layout.fillWidth: true
-		Layout.fillHeight: true
-	}*/
 	GridView{
 		id: grid
 		property int margin: 10
@@ -109,27 +94,14 @@ ColumnLayout{
 			return columns !== getColumnCount(itemCount+1) || rows !== getRowCount(itemCount+1)
 		}
 		
-		//Layout.fillHeight: true
-		//Layout.fillWidth: true
 		Layout.preferredWidth: cellWidth * columns
 		Layout.preferredHeight: cellHeight * rows
 		Layout.alignment: Qt.AlignCenter
 		
 		interactive: false
 		model: DelegateModel{}
-		/*
-		model: ListModel{}
-		//delegate: internalComponent
-		delegate: Component{
-			Loader{
-				property int modelIndex: index
-				height: grid.cellHeight-5
-				width: grid.cellWidth-5
-				sourceComponent: mainLayout.delegate
-			}
-		}*/
 		
-//-------------------				ANIMATIONS
+		//-------------------				ANIMATIONS
 		property Transition defaultTransition: Transition {
 			SequentialAnimation {
 				ScriptAction {
@@ -184,41 +156,6 @@ ColumnLayout{
 		}
 		onItemCountChanged: {
 			updateLayoutDelay.restart()
-			console.log("Mosaic "+model+" itemCount: " +itemCount +" => " + (model.count ? " count="+model.count :( model.length ? " length":" no" )))
 		}
-		
-	}/*
-	Item{// Spacer
-		Layout.fillWidth: true
-		Layout.fillHeight: true
-	}*/
-	/*
-	ListView{
-		id: bottomRowList
-		Layout.preferredWidth: grid.cellWidth * model.count
-		Layout.preferredHeight: grid.cellHeight
-		Layout.alignment: Qt.AlignCenter
-		orientation: Qt.Horizontal
-		model: ListModel{}
-		
-		delegate: Component{
-			Loader{
-				property int modelIndex: index
-				height: grid.cellHeight - 5
-				width: grid.cellWidth - 5
-				sourceComponent: mainLayout.delegate
-			}
-		}*/
-		/*
-		delegate:Rectangle{
-			width: grid.cellWidth
-			height: grid.cellHeight
-			onWidthChanged: console.log(width)
-			onHeightChanged: console.log(height)
-			color: '#'+ Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)
-										+Math.floor(Math.random()*255).toString(16)
-		}*/
-	//}
-	
+	}
 }

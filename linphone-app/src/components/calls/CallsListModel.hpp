@@ -55,8 +55,6 @@ public:
 	
 	QVariantMap createChatRoom(const QString& subject, const int& securityLevel, std::shared_ptr<linphone::Address> localAddress, const QVariantList& participants, const bool& selectAfterCreation) const;
 	Q_INVOKABLE QVariantMap createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const;
-	//Q_INVOKABLE QVariantMap createConference(const QString& subject, const int& securityLevel, const QVariantList& participants, const int& inviteMode, const bool& selectAfterCreation);
-	Q_INVOKABLE QVariantMap createConference(ConferenceInfoModel * conferenceInfo, const int& securityLevel, const int& inviteMode, const bool& selectAfterCreation);
 	Q_INVOKABLE void prepareConferenceCall(ConferenceInfoModel * model);
 	
 	

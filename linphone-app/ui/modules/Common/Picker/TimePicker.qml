@@ -56,10 +56,8 @@ Item{
 		
 		path: Path {
 			id: outPath
-			//property int xStep: middleMinSize * Math.sin(2 * Math.PI / outer.count)
 			property int yStep: middleMinSize * Math.cos(2 * Math.PI / outer.count) 
 			
-			//startX:  xStep + mainItem.width/2; startY: yStep + mainItem.height/2
 			startX: mainItem.centerPosition
 			startY: mainItem.centerPosition - outPath.yStep 
 			PathArc {
@@ -111,8 +109,7 @@ Item{
 		
 		path: Path {
 			id: innerPath
-			//property int xStep: middleMinSize * Math.sin(2 * Math.PI / inner.count)
-			property int yStep: middleMinSize  * Math.cos(2 * Math.PI / inner.count) 
+			property int yStep: middleMinSize  * Math.cos(2 * Math.PI / inner.count)
 			startX: mainItem.centerPosition; startY: mainItem.centerPosition - innerPath.yStep
 			PathArc {
 				x: mainItem.centerPosition; y: mainItem.centerPosition + innerPath.yStep

@@ -25,8 +25,6 @@ ColumnLayout {
 	property bool isAdmin : (chatRoomModel && chatRoomModel.isMeAdmin && !chatRoomModel.isReadOnly) || (me && me.adminStatus)
 	property bool canHandleParticipants : isAdmin && ( (chatRoomModel && chatRoomModel.canHandleParticipants) || conferenceModel)
 	property bool haveEncryption: chatRoomModel && chatRoomModel.haveEncryption
-	onIsAdminChanged: console.log("participantsListView is admin : "+isAdmin)
-	onCanHandleParticipantsChanged: console.log("CanHandleParticipants:"+canHandleParticipants)
 	spacing: ParticipantsListViewStyle.mainLayout.spacing
 
 	SmartSearchBar {
@@ -41,10 +39,10 @@ ColumnLayout {
 
 		maxMenuHeight: MainWindowStyle.searchBox.maxHeight
 		//: 'Add Participants' : Placeholder in a search bar for adding participant to the chat room
-		placeholderText: 'addParticipantPlaceholder'
+		placeholderText: qsTr('addParticipantPlaceholder')
 		//: 'Search participants in your contact list in order to invite them into the chat room.'
 		//~ Tooltip Explanation for inviting the selected participants into chat room
-		tooltipText: 'addParticipantTooltip'
+		tooltipText: qsTr('addParticipantTooltip')
 		actions:[{
 				colorSet: ParticipantsListViewStyle.addParticipant,
 				secure: mainLayout.haveEncryption,
@@ -68,7 +66,6 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.bottomMargin: 5
 
-		//readOnly: toAddView.count >= conferenceManager.maxParticipants
 		textFieldStyle: TextFieldStyle.unbordered
 
 		ColumnLayout{
@@ -103,7 +100,6 @@ ColumnLayout {
 				id: participantView
 				Layout.fillHeight: true
 				Layout.fillWidth: true
-				//anchors.fill: parent
 
 				showContactAddress:false
 				showSwitch : mainLayout.isAdmin
@@ -117,10 +113,10 @@ ColumnLayout {
 												  colorSet: ParticipantsListViewStyle.removeParticipant,
 												  secure:0,
 												  visible:true,
-												  tooltipText: 'Remove this participant from the selection',
+												  //: 'Remove this participant from the list' : Tootltip to explain that the action will lead to remove the participant.
+												  tooltipText: qsTr('participantsListRemoveTooltip'),
 												  handler: function (entry) {
 													  selectedParticipants.removeModel(entry)
-													  //							++lastContacts.reloadCount
 												  }
 											  }]
 										   : []

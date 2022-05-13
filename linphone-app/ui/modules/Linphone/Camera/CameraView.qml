@@ -55,7 +55,7 @@ Item{
 		Loader {
 			anchors.centerIn: parent
 			
-			active:  mainItem.currentDevice && !camera.isReady //&& !mainItem.currentDevice.isMe && (!mainItem.currentDevice.videoEnabled || mainItem.isFullscreen)
+			active:  mainItem.currentDevice && !camera.isReady
 			sourceComponent: avatar
 		}
     }
@@ -135,15 +135,6 @@ Item{
 		font.weight: CameraViewStyle.contactDescription.weight
 		color: CameraViewStyle.contactDescription.color
 	}
-	/*
-			DropShadow {
-				anchors.fill: username
-				source: username
-				verticalOffset: 2
-				color: "#80000000"
-				radius: 1
-				samples: 3
-			}*/
 	Glow {
 		anchors.fill: username
 		//spread: 1

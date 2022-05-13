@@ -144,8 +144,6 @@ Item {
 				delegate: ChatContent{
 					contentModel: $modelData
 					textColor: ChatReplyMessageStyle.replyArea.foregroundColor
-					//textFont.pointSize: Units.dp * (customFont.pointSize + ChatReplyMessageStyle.replyArea.pointSizeOffset)
-					//textFont.weight: Font.Light
 					onFitWidthChanged:{
 						replyMessage.updateWidth()			
 					}

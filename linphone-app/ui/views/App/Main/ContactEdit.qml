@@ -241,7 +241,6 @@ ColumnLayout  {
 		sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
 		
 		function vewConversation(chatRoomModel){
-			console.log("Load conversation from contact edit")
 			window.setView('Conversation', {
 								chatRoomModel:chatRoomModel
 							}, function(){

@@ -66,7 +66,6 @@ function handleStatusChanged (status) {
 }
 
 function handleVideoRequested (call) {
-  console.log("handleVideoRequested")
   if (window.virtualWindowVisible || !Linphone.SettingsModel.videoSupported) {
     call.rejectVideoRequest()
     return
@@ -95,9 +94,7 @@ console.log("D")
   }, function (status) {
     //Utils.clearTimeout(timeout)	
     call.statusChanged.disconnect(endedHandler)
-	console.log("E: "+status)
     if (status) {
-		console.log("TOTO")
       call.acceptVideoRequest()
     } else {
       call.rejectVideoRequest()
@@ -119,7 +116,7 @@ function openCallStatistics () {
 }
 
 function openMediaParameters (window, incall) {
-  window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/MultimediaParameters.qml'), {
+  window.attachVirtualWindow(Utils.buildLinphoneDialogUri('MultimediaParametersDialog'), {
     call: incall.call
   })
 }

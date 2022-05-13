@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -180,27 +180,25 @@ bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
 // -----------------------------------------------------------------------------
 
 QString ChatRoomProxyModel::getPeerAddress () const {
-	return mChatRoomModel ? mChatRoomModel->getPeerAddress() : mPeerAddress;//QString("");
+	return mChatRoomModel ? mChatRoomModel->getPeerAddress() : mPeerAddress;
 }
 
 void ChatRoomProxyModel::setPeerAddress (const QString &peerAddress) {
 	mPeerAddress = peerAddress;
 	emit peerAddressChanged(mPeerAddress);
-	//reload();
 }
 
 QString ChatRoomProxyModel::getLocalAddress () const {
-	return mChatRoomModel ? mChatRoomModel->getLocalAddress() : mLocalAddress;//QString("");
+	return mChatRoomModel ? mChatRoomModel->getLocalAddress() : mLocalAddress;
 }
 
 void ChatRoomProxyModel::setLocalAddress (const QString &localAddress) {
 	mLocalAddress = localAddress;
 	emit localAddressChanged(mLocalAddress);
-	//reload();
 }
 
 QString ChatRoomProxyModel::getFullPeerAddress () const {
-	return mChatRoomModel ? mChatRoomModel->getFullPeerAddress() : mFullPeerAddress;//QString("");
+	return mChatRoomModel ? mChatRoomModel->getFullPeerAddress() : mFullPeerAddress;
 }
 
 void ChatRoomProxyModel::setFullPeerAddress (const QString &peerAddress) {
@@ -209,7 +207,7 @@ void ChatRoomProxyModel::setFullPeerAddress (const QString &peerAddress) {
 }
 
 QString ChatRoomProxyModel::getFullLocalAddress () const {
-	return mChatRoomModel ? mChatRoomModel->getFullLocalAddress() : mFullLocalAddress;//QString("");
+	return mChatRoomModel ? mChatRoomModel->getFullLocalAddress() : mFullLocalAddress;
 }
 
 void ChatRoomProxyModel::setFullLocalAddress (const QString &localAddress) {
@@ -268,7 +266,6 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 			mChatRoomModel->initEntries();// This way, we don't load huge chat rooms (that lead to freeze GUI)
 		}
 	}
-	//invalidate();
 }
 
 void ChatRoomProxyModel::resetMessageCount(){
@@ -341,7 +338,6 @@ void ChatRoomProxyModel::handleMessageReceived (const shared_ptr<linphone::ChatM
 	if (mChatRoomModel){
 		if(window && window->isActive())
 			mChatRoomModel->resetMessageCount();
-		//else if( message->getFromAddress()->weakEqual(CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress()))
 	}
 }
 

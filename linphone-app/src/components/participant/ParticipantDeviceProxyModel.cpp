@@ -40,14 +40,9 @@ bool ParticipantDeviceProxyModel::filterAcceptsRow (
 	Q_UNUSED(sourceRow)
 	Q_UNUSED(sourceParent)
 	auto listModel = qobject_cast<ParticipantDeviceListModel*>(sourceModel());
-	/*
-	if(mFilterType == 1 && listModel->rowCount() <= 2){
-		return sourceRow == 0;
-	}else{*/
-		const QModelIndex index = listModel->index(sourceRow, 0, sourceParent);
-		const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
-		return device && (isShowMe() || !device->isMe());
-	//}
+	const QModelIndex index = listModel->index(sourceRow, 0, sourceParent);
+	const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
+	return device && (isShowMe() || !device->isMe());
 }
 
 bool ParticipantDeviceProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -100,8 +95,4 @@ void ParticipantDeviceProxyModel::setShowMe(const bool& show){
 }
 
 void ParticipantDeviceProxyModel::onCountChanged(){
-	auto listModel = qobject_cast<ParticipantDeviceListModel*>(sourceModel());
-	if(mFilterType == 1 || mFilterType == 2){
-		//if( listModel->getCount()
-		}
 }

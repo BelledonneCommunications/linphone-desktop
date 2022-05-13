@@ -34,11 +34,11 @@ ConferenceSchedulerListener::~ConferenceSchedulerListener () {
 
 
 void ConferenceSchedulerListener::onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) {
-	qWarning() << "ConferenceSchedulerListener::onStateChanged" << (int) state;
+	qDebug() << "ConferenceSchedulerListener::onStateChanged" << (int) state;
 	emit stateChanged(state);
 }
 
 void ConferenceSchedulerListener::onInvitationsSent(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
-	qWarning() << "ConferenceSchedulerListener::onInvitationsSent";
+	qDebug() << "ConferenceSchedulerListener::onInvitationsSent";
 	emit invitationsSent(failedInvitations);
 }

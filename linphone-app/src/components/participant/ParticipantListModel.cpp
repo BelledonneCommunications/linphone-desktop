@@ -34,20 +34,15 @@
 
 ParticipantListModel::ParticipantListModel (ChatRoomModel * chatRoomModel, QObject *parent) : ProxyListModel(parent) {
 	if( chatRoomModel) {
-		mChatRoomModel = chatRoomModel;//CoreManager::getInstance()->getChatRoomModel(chatRoomModel);
+		mChatRoomModel = chatRoomModel;
 		
 		connect(mChatRoomModel, &ChatRoomModel::securityEvent, this, &ParticipantListModel::onSecurityEvent);
-		
 		connect(mChatRoomModel, &ChatRoomModel::conferenceJoined, this, &ParticipantListModel::onConferenceJoined);
-		
 		connect(mChatRoomModel, &ChatRoomModel::participantAdded, this, QOverload<const std::shared_ptr<const linphone::EventLog> &>::of(&ParticipantListModel::onParticipantAdded));
 		connect(mChatRoomModel, &ChatRoomModel::participantRemoved, this, QOverload<const std::shared_ptr<const linphone::EventLog> &>::of(&ParticipantListModel::onParticipantRemoved));
 		connect(mChatRoomModel, &ChatRoomModel::participantAdminStatusChanged, this, QOverload<const std::shared_ptr<const linphone::EventLog> &>::of(&ParticipantListModel::onParticipantAdminStatusChanged));
-
 		connect(mChatRoomModel, &ChatRoomModel::participantDeviceAdded, this, &ParticipantListModel::onParticipantDeviceAdded);
 		connect(mChatRoomModel, &ChatRoomModel::participantDeviceRemoved, this, &ParticipantListModel::onParticipantDeviceRemoved);
-		
-
 		connect(mChatRoomModel, &ChatRoomModel::participantRegistrationSubscriptionRequested, this, &ParticipantListModel::onParticipantRegistrationSubscriptionRequested);
 		connect(mChatRoomModel, &ChatRoomModel::participantRegistrationUnsubscriptionRequested, this, &ParticipantListModel::onParticipantRegistrationUnsubscriptionRequested);
 		
@@ -57,16 +52,12 @@ ParticipantListModel::ParticipantListModel (ChatRoomModel * chatRoomModel, QObje
 
 ParticipantListModel::ParticipantListModel (ConferenceModel * conferenceModel, QObject *parent) : ProxyListModel(parent) {
 	if( conferenceModel) {
-		mConferenceModel = conferenceModel;//CoreManager::getInstance()->getChatRoomModel(chatRoomModel);
+		mConferenceModel = conferenceModel;
 
 		connect(mConferenceModel, &ConferenceModel::participantAdded, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdded));
 		connect(mConferenceModel, &ConferenceModel::participantRemoved, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantRemoved));
 		connect(mConferenceModel, &ConferenceModel::participantAdminStatusChanged, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdminStatusChanged));
-		
 		connect(mConferenceModel, &ConferenceModel::conferenceStateChanged, this, &ParticipantListModel::onStateChanged);
-		//connect(mConferenceModel, &ConferenceModel::participantDeviceAdded, this, &ParticipantListModel::onParticipantDeviceAdded);
-		//connect(mConferenceModel, &ConferenceModel::participantDeviceRemoved, this, &ParticipantListModel::onParticipantDeviceRemoved);
-
 
 		updateParticipants();
 	}
@@ -149,17 +140,7 @@ void ParticipantListModel::updateParticipants () {
 	if( mChatRoomModel || mConferenceModel) {
 		bool changed = false;
 		auto dbParticipants = (mChatRoomModel ? mChatRoomModel->getParticipants() : mConferenceModel->getParticipantList());
-		/*
-		std::shared_ptr<linphone::Participant> me;
-		if( mChatRoomModel )
-			me = mChatRoomModel->getChatRoom()->getMe();
-		else if( mConferenceModel->getLocalParticipant())
-			me = mConferenceModel->getLocalParticipant()->getParticipant();
-		if(me)
-			dbParticipants.push_front(me);
-		*/
 		//Remove left participants
-		//for(auto participant : mList){
 		auto itParticipant = mList.begin();
 		while(itParticipant != mList.end()) {
 			auto itDbParticipant = dbParticipants.begin();
@@ -303,17 +284,17 @@ void ParticipantListModel::onConferenceJoined(){
 }
 
 void ParticipantListModel::onParticipantAdded(const std::shared_ptr<const linphone::EventLog> & eventLog){
-	qWarning() << "onParticipantAdded event: " << eventLog->getParticipantAddress()->asString().c_str();
+	qDebug() << "onParticipantAdded event: " << eventLog->getParticipantAddress()->asString().c_str();
 	add(eventLog->getParticipantAddress());
 }
 
 void ParticipantListModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "onParticipantAdded part: " << participant->getAddress()->asString().c_str();
+	qDebug() << "onParticipantAdded part: " << participant->getAddress()->asString().c_str();
 	add(participant);
 }
 
 void ParticipantListModel::onParticipantAdded(const std::shared_ptr<const linphone::Address>& address){
-	qWarning() << "onParticipantAdded addr: " << address->asString().c_str();
+	qDebug() << "onParticipantAdded addr: " << address->asString().c_str();
 	add(address);
 }
 

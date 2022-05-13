@@ -38,12 +38,8 @@ class ChatRoomProxyModel : public QSortFilterProxyModel {
 	Q_PROPERTY(QString localAddress READ getLocalAddress WRITE setLocalAddress NOTIFY localAddressChanged)
 	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress WRITE setFullPeerAddress NOTIFY fullPeerAddressChanged)
 	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged)
-	//Q_PROPERTY(int isSecure READ isSecure WRITE setIsSecure NOTIFY isSecureChanged)
 	Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
-	//Q_PROPERTY(bool isSecure MEMBER mIsSecure NOTIFY isSecureChanged)
-	//Q_PROPERTY(bool isRemoteComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
 	Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
-	//Q_PROPERTY(bool isSecure READ getIsSecure NOTIFY isSecureChanged)
 	Q_PROPERTY(QString cachedText READ getCachedText)
 	
 	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
@@ -54,6 +50,7 @@ public:
 	
 	int getEntryTypeFilter ();
 	Q_INVOKABLE void setEntryTypeFilter (int type);
+	Q_INVOKABLE void setFilterText(const QString& text);
 	
 	Q_INVOKABLE QString getDisplayNameComposers()const;
 	Q_INVOKABLE QVariant getAt(int row);
@@ -66,14 +63,9 @@ public:
 	Q_INVOKABLE void removeRow (int index);
 	
 	Q_INVOKABLE void sendMessage (const QString &message);
-	
 	Q_INVOKABLE void forwardMessage(ChatMessageModel * model);
-	
 	Q_INVOKABLE void compose (const QString& text);
-	
 	Q_INVOKABLE void resetMessageCount();
-	
-	Q_INVOKABLE void setFilterText(const QString& text);
 	
 	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index in displayed list (-1 if not found)
 	
@@ -115,9 +107,6 @@ private:
 	
 	bool markAsReadEnabled() const;
 	void enableMarkAsRead(const bool& enable);
-	
-	//bool isSecure () const;
-	//void setIsSecure (const int &secure);
 	
 	ChatRoomModel *getChatRoomModel() const;
 	void setChatRoomModel (ChatRoomModel *chatRoomModel);

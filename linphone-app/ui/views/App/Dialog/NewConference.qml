@@ -18,21 +18,15 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 DialogPlus {
 	id: conferenceManager
 	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
-	onIsNewChanged: console.log("Is New:"+isNew+", "+conferenceInfoModel + ", " + (conferenceInfoModel? conferenceInfoModel.uri : 'noUri'))
-	Component.onCompleted: console.log("Completed: Is New:"+isNew+", "+conferenceInfoModel + ", " + (conferenceInfoModel? conferenceInfoModel.uri : 'noUri'))
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
 	Connections{
 		target: conferenceInfoModel
 		onConferenceCreated: {
-			console.log("Conference has been created.")
 			creationStatus.icon = 'led_green'
 		}
-		onConferenceCreationFailed:{ console.log("Conference failed.")
-			creationStatus.icon = 'led_red'
-		}
+		onConferenceCreationFailed:{ creationStatus.icon = 'led_red' }
 		onInvitationsSent: {
-						console.log("Conference => invitations sent. Check in log for invite states.")
 						exit(1)
 					}
 	}
@@ -107,12 +101,13 @@ DialogPlus {
 		},
 		TextButtonB {
 			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
-			//: 'Launch' : Start button
-			text: conferenceManager.isNew ? qsTr('startButton') : 'Mettre à jour'
+			//: 'Launch' : Launch button
+			text: conferenceManager.isNew ? qsTr('launchButton') 
+			//: 'Update' : Update button
+				: qsTr('updateButton')
 			capitalization: Font.AllUppercase
 			
 			function getInviteMode(){
-				//return inviteAppAccountCheckBox.checked ? LinphoneEnums::
 				return 0;
 			}
 			
@@ -131,10 +126,6 @@ DialogPlus {
 				
 				
 				conferenceInfoModel.setParticipants(selectedParticipants.participantListModel)
-				//var callsWindow = App.getCallsWindow()
-				//App.smartShowWindow(callsWindow)
-				//callsWindow.openConference()
-				//CallsListModel.createConference(conferenceInfoModel, secureSwitch.checked, getInviteMode(), false )
 				conferenceInfoModel.createConference(false && secureSwitch.checked, getInviteMode())	// TODO remove false when Encryption is ready to use
 			}
 			TooltipArea{
@@ -168,7 +159,9 @@ DialogPlus {
 	buttonsAlignment: Qt.AlignRight
 	buttonsLeftMargin: 15
 	//: 'Start a video conference' : Title of a popup about creation of a video conference
-	title: conferenceManager.isNew ? qsTr('newConferenceTitle') : 'Changer la conférence'
+	title: conferenceManager.isNew ? qsTr('newConferenceTitle') 
+	//: 'Update the conference' : Title of a popup about updating configuration of a video conference.
+		: qsTr('updateConferenceTitle')
 	
 	height: window.height - 100
 	width: window.width - 100
@@ -240,7 +233,7 @@ DialogPlus {
 							Layout.fillWidth: true
 							Layout.rightMargin: 15
 							//: 'Would you like to schedule your conference?' : Ask about setting the conference as scheduled.
-							text: 'Souhaitez-vous programmer cette conférence pour plus tard ?'
+							text: qsTr('newConferenceScheduleTitle')
 							color: NewConferenceStyle.titles.textColor
 							font.pointSize: NewConferenceStyle.titles.pointSize
 							font.weight: NewConferenceStyle.titles.weight
@@ -256,14 +249,15 @@ DialogPlus {
 						property var locale: Qt.locale()
 						property date currentDate: new Date()
 						property int cellWidth: (parent.width-15)/columns
-						//Component.onCompleted: scheduleForm.updateDateTime()
 						
-						
-						
-						Text{textFormat: Text.RichText; text: 'Date'+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
-						Text{textFormat: Text.RichText; text: 'Heure de début'+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
-						Text{textFormat: Text.RichText; text: 'Durée'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
-						Text{textFormat: Text.RichText; text: 'Fuseau horaire'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						//: 'Date' : Date lebel.
+						Text{textFormat: Text.RichText; text: qsTr('newConferenceDate')+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						//: 'Time' : Time label.
+						Text{textFormat: Text.RichText; text: qsTr('newConferenceTimeTitle')+'<span style="color:red">*</span>'; Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						//: 'Duration' : Duration label.
+						Text{textFormat: Text.RichText; text: qsTr('newConferenceDurationTitle'); Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+						//: 'Timezone' : Timezone label.
+						Text{textFormat: Text.RichText; text: qsTr('newConferenceTimezoneTitle'); Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						TextField{id: dateField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getDate(){
@@ -320,16 +314,13 @@ DialogPlus {
 						}
 						ComboBox{
 							id: timeZoneField
-							Layout.preferredWidth: parent.cellWidth; 
-							//color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
+							Layout.preferredWidth: parent.cellWidth;
 							currentIndex: conferenceManager.conferenceInfoModel ? model.getIndex(conferenceManager.conferenceInfoModel.timeZoneModel) : -1
 							model: TimeZoneProxyModel{}
-							onActivated: console.log("activated : " +index)
 							textRole: "displayText"
 							selectionWidth: 500
 							rootItem: conferenceManager
 						}
-						//TextField{ text: 'Paris'; readOnly: true; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize}
 						
 						function updateDateTime(){
 								var storedDate
@@ -367,7 +358,7 @@ DialogPlus {
 					Layout.preferredHeight: 20
 					textFormat: Text.RichText
 					//: 'Add a description' : Label of a text field about the description of the conference
-					text : 'Ajouter une description'
+					text : qsTr('newConferenceDescriptionTitle')
 					color: NewConferenceStyle.titles.textColor
 					font.pointSize: NewConferenceStyle.titles.pointSize
 					font.weight: NewConferenceStyle.titles.weight
@@ -377,39 +368,31 @@ DialogPlus {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					//: 'Description' : Placeholder in a form about setting a description
-					placeholderText : 'Description'
+					placeholderText : qsTr('newConferenceDescriptionPlaceholder')
 					text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.description : ''
 					Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 					TooltipArea{
 						//: 'This description will describe the conference' : Explanation about the description of the conference
-						text : 'This description will describe the conference'
+						text : qsTr('newConferenceDescriptionTooltip')
 					}
 				}
 			}
 			ColumnLayout{
 				Layout.fillWidth: true
-				//Layout.preferredHeight: 60
 				spacing: 5
 				CheckBoxText {
 					id: inviteAppAccountCheckBox
-					
-					text: 'Envoyer l\'invitation via mon compte Linphone'
+					//: 'Send invite via Linphone' : Label for checkbox for sending invitations with Linphone.
+					text: qsTr('newConferenceSendLinphoneInviteLabel')
 					width: parent.width
 					checked: true
-					
-					onClicked: {
-						console.log('Send invite with Linphone account: ' + checked)
-					}
 				}
 				CheckBoxText {
 					id: inviteEmailCheckBox
 					visible: false	// TODO
-					text: 'Envoyer l\'invitation via mon adresse mail'
+					//: 'Send invite via Email' : Label for checkbox for sending invitations with mailer.
+					text: qsTr('newConferenceSendEmailInviteLabel')
 					width: parent.width
-					
-					onClicked: {
-						console.log('Send invite with email: ' + checked)
-					}
 				}
 			}
 		}
@@ -430,8 +413,6 @@ DialogPlus {
 		// See and remove selected addresses.
 		// -------------------------------------------------------------------------
 			initialItem: ColumnLayout{
-				//anchors.fill: parent	
-			
 				Rectangle{
 					Layout.fillHeight: true
 					Layout.fillWidth: true
@@ -546,7 +527,6 @@ DialogPlus {
 						textFormat: Text.RichText
 						//: 'Required' : Word relative to a star to explain that it is a requirement (Field form)
 						text : '<span style="color:red">*</span> '+qsTr('requiredField')
-						//font.weight: Font.DemiBold
 						color: NewConferenceStyle.requiredColor
 						font.pointSize: Units.dp * 8
 					}

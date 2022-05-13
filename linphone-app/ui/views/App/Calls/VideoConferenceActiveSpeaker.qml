@@ -56,11 +56,9 @@ Item {
 		anchors.rightMargin: 30
 		anchors.topMargin: 30
 		anchors.bottomMargin: 30
-		//property int maxShowedCount: 4
 		property int cellHeight: 150
 		
 		width: 16 * cellHeight / 9
-		onCountChanged: {console.log("Delegate count = "+count+"/"+mainItem.participantDevices.count)}
 		model: mainItem.participantDevices
 		spacing: 15
 		verticalLayoutDirection: ItemView.BottomToTop
@@ -76,9 +74,8 @@ Item {
 					currentDevice: modelData
 					callModel: mainItem.callModel
 					isCameraFromDevice: true
-					isPaused: mainItem.callModel.pausedByUser || currentDevice && currentDevice.isPaused //callModel.pausedByUser
+					isPaused: mainItem.callModel.pausedByUser || currentDevice && currentDevice.isPaused
 					onCloseRequested: mainItem.showMe = false
-					//color: 'black'
 				}
 			}
 	}

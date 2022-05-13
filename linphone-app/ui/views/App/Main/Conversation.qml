@@ -454,7 +454,6 @@ ColumnLayout  {
 			anchors.left: filterButtons.right
 			anchors.leftMargin: 50
 			anchors.verticalCenter: parent.verticalCenter
-			//anchors.horizontalCenter: parent.horizontalCenter
 			running: chatArea.tryingToLoadMoreEntries
 		}
 			

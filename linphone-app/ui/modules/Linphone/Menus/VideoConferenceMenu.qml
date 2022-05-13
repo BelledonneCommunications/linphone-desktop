@@ -22,7 +22,6 @@ Rectangle{
 	property ConferenceModel conferenceModel: callModel.conferenceModel
 	property ParticipantModel me: conferenceModel.localParticipant
 	property bool isMeAdmin: me && me.adminStatus
-	onIsMeAdminChanged: console.log("Is admin : " +isMeAdmin)
 	property bool isParticipantsMenu: false
 	signal close()
 	
@@ -33,9 +32,14 @@ Rectangle{
 	
 	// List of title texts in order to allow bindings between all components
 	property var menuTitles: [
-		'Régler les périphériques'
-		, 'Modifier la mise en page'
-		, mainItem.isMeAdmin ? 'Inviter des participants' : 'Participants'
+	//: 'Multimedia parameters' : Menu title to show multimedia devices configuration.
+		qsTr('conferenceMenuMultimedia'),
+	//: 'Change layout' : Menu title to change the conference layout.
+		qsTr('conferenceMenuLayout'),
+		//: 'Invite participants' : Menu title to invite participants in admin mode.
+		mainItem.isMeAdmin ? qsTr('conferenceMenuInvite')
+		//: 'Participants list' : Menu title to show participants in non-admin mode.
+			: qsTr('conferenceMenuParticipants')
 	]
 	
 	function showParticipantsMenu(){
@@ -55,8 +59,6 @@ Rectangle{
 			RowLayout{
 				anchors.fill: parent
 				ActionButton{
-					//Layout.minimumHeight: VideoConferenceMenuStyle.buttons.back.iconSize
-					//Layout.minimumWidth: VideoConferenceMenuStyle.buttons.back.iconSize
 					backgroundRadius: width/2
 					isCustom: true
 					colorSet: VideoConferenceMenuStyle.buttons.back
@@ -65,7 +67,7 @@ Rectangle{
 				}
 				Text{
 					id: titleMenu
-					text: contentsStack.currentItem.title //'Paramètres'
+					text: contentsStack.currentItem.title
 					Layout.fillWidth: true
 					Layout.preferredHeight: implicitHeight
 					horizontalAlignment: Qt.AlignCenter
@@ -90,17 +92,15 @@ Rectangle{
 			initialItem: settingsMenuComponent
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			//onPopEnterChanged: if(nViews <= 1 ) title.text = 'Paramètres'
 		}
 		Component{
 			id: settingsMenuComponent
 			ColumnLayout{
 				property string objectName: 'settingsMenu'
-				property string title: 'Paramètres'
+				//: 'Settings' : Main menu title for settings.
+				property string title: qsTr('conferenceMenuTitle')
 				Layout.fillHeight: true
 				Layout.fillWidth: true
-				
-
 				
 				Repeater{
 					model: [
@@ -186,6 +186,7 @@ Rectangle{
 					showMargins: true
 					expandHeight: false
 					fixedSize: false
+					showTitleBar: false
 					onExitStatus: contentsStack.pop()
 				}
 				Item{// Spacer
@@ -202,9 +203,12 @@ Rectangle{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				Repeater{
-					model: [{text: 'Mode mosaïque', icon: VideoConferenceMenuStyle.modeIcons.gridIcon, value:LinphoneEnums.ConferenceLayoutGrid}
-						, {text: 'Mode présentateur', icon: VideoConferenceMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker}
-						, {text: 'Mode audio', icon: VideoConferenceMenuStyle.modeIcons.audioOnlyIcon, value:2}
+				//: 'Mosaic mode' : Grid layout for video conference.
+					model: [{text: qsTr('conferenceMenuGridLayout'), icon: VideoConferenceMenuStyle.modeIcons.gridIcon, value:LinphoneEnums.ConferenceLayoutGrid}
+				//: 'Active speaker mode' : Active speaker layout for video conference.
+						, {text: qsTr('conferenceMenuActiveSpeakerLayout'), icon: VideoConferenceMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker}
+				//: 'Audio only mode' : Audio only layout for video conference.
+						, {text: qsTr('conferenceMenuAudioLayout'), icon: VideoConferenceMenuStyle.modeIcons.audioOnlyIcon, value:2}
 					]				
 					delegate:
 						Borders{
@@ -225,7 +229,6 @@ Rectangle{
 								checked: mainItem.callModel ? (mainItem.callModel.videoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
 															|| (!mainItem.callModel.videoEnabled && modelData.value == 2)
 															: false
-								onCheckedChanged: console.log(mainItem.callModel ? mainItem.callModel.videoEnabled +","+mainItem.callModel.conferenceVideoLayout  : '')
 								text: modelData.text
 								onClicked: if(modelData.value == 2) mainItem.callModel.videoEnabled = false
 											else mainItem.callModel.conferenceVideoLayout = modelData.value
@@ -260,11 +263,11 @@ Rectangle{
 					Layout.fillWidth: true
 					Layout.leftMargin: 10
 					Layout.rightMargin: 10
-					//Layout.minimumHeight: fitHeight
 					conferenceModel: mainItem.conferenceModel
 					isAdmin: mainItem.isMeAdmin
-					Text{					
-						text: 'Vous êtes actuellement seul dans cette conférence'
+					Text{
+					//: 'Your are currently alone in this conference' : Message to warn the user when there is no other participant.
+						text: qsTr('conferenceMenuParticipantsAlone')
 						visible: parent.count
 					}
 				}

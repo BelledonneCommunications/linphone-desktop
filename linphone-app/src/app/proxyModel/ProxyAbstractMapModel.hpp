@@ -46,6 +46,7 @@ public:
 		roles[Qt::DisplayRole+1] = "$modelKey";
 		return roles;
 	}
+	
 	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override{
 		int row = index.row();
 		auto it = mMappedList.begin() + row;
@@ -57,50 +58,6 @@ public:
 		return QVariant();
 	}
 	
-	/*
-	virtual Y getAt(const int& index) const{
-		
-		mList.
-		return mList[index];
-	}*/
-	
-// Add functions
-/*
-	virtual void add(T item){
-		int row = mList.count();
-		beginInsertRows(QModelIndex(), row, row);
-		mList << item;
-		endInsertRows();
-	}
-	
-	virtual void prepend(T item){
-		beginInsertRows(QModelIndex(), 0, 0);
-		mList.prepend(item);
-		endInsertRows();
-	}
-	
-	virtual void prepend(QList<T> items){
-		beginInsertRows(QModelIndex(), 0, items.size()-1);
-		items << mList;
-		mList = items;
-		endInsertRows();
-	}
-	
-// Remove functions
-	virtual bool removeRow (int row, const QModelIndex &parent = QModelIndex()){
-		return removeRows(row, 1, parent);
-	}
-	virtual bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override{
-		int limit = row + count - 1;
-		if (row < 0 || count < 0 || limit >= mList.count())
-			return false;
-		beginRemoveRows(parent, row, limit);
-		for (int i = 0; i < count; ++i)
-			mList.takeAt(row);
-		endRemoveRows();
-		return true;
-	}
-	*/
 	virtual void resetData() override{
 		beginResetModel();
 		mMappedList.clear();

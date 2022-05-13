@@ -60,7 +60,6 @@ QSharedPointer<ConferenceModel> ConferenceModel::create(std::shared_ptr<linphone
 ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conference, QObject *parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mConference = conference;
-	//updateLocalParticipant();
 	mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
 	mConferenceListener = std::make_shared<ConferenceListener>();
 	connectTo(mConferenceListener.get());
@@ -80,7 +79,7 @@ bool ConferenceModel::updateLocalParticipant(){
 		localParticipant = mConference->getMe();
 	if( localParticipant){
 		mLocalParticipant = QSharedPointer<ParticipantModel>::create(localParticipant);
-		qWarning() << "Is Admin: " << localParticipant->isAdmin() << " " << mLocalParticipant->getAdminStatus();
+		qDebug() << "Is Admin: " << localParticipant->isAdmin() << " " << mLocalParticipant->getAdminStatus();
 		changed = true;
 	}
 	return changed;
@@ -104,9 +103,9 @@ qint64 ConferenceModel::getElapsedSeconds() const {
 
 ParticipantModel* ConferenceModel::getLocalParticipant() const{
 	if( mLocalParticipant) {
-		qWarning() << "LocalParticipant admin : " << mLocalParticipant->getAdminStatus() << " " << (mLocalParticipant->getParticipant() ? mLocalParticipant->getParticipant()->isAdmin() : -1);
+		qDebug() << "LocalParticipant admin : " << mLocalParticipant->getAdminStatus() << " " << (mLocalParticipant->getParticipant() ? mLocalParticipant->getParticipant()->isAdmin() : -1);
 	}else
-		qWarning() << "NULL";
+		qDebug() << "No LocalParticipant";
 	return mLocalParticipant.get();
 }
 
@@ -137,7 +136,7 @@ void ConferenceModel::onParticipantRemoved(const std::shared_ptr<const linphone:
 	emit participantRemoved(participant);
 }
 void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant){
-	qWarning() << "onParticipantAdminStatusChanged: " << participant->getAddress()->asString().c_str();
+	qDebug() << "onParticipantAdminStatusChanged: " << participant->getAddress()->asString().c_str();
 	if(participant == mLocalParticipant->getParticipant())
 		emit mLocalParticipant->adminStatusChanged();
 	emit participantAdminStatusChanged(participant);

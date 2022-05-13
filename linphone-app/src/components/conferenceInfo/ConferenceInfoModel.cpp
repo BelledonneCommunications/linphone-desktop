@@ -78,8 +78,8 @@ QSharedPointer<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<
 	return QSharedPointer<ConferenceInfoModel>::create(conferenceInfo);
 }
 
+// Callable from QML
 ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
-	//App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mTimeZone = QTimeZone::systemTimeZone();
 	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
 	QDateTime currentDateTime = QDateTime::currentDateTime();
@@ -92,6 +92,7 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	mConferenceInfo->setOrganizer(accountAddress);
 }
 
+// Callable from C++
 ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceInfo> conferenceInfo, QObject * parent) : QObject(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mTimeZone = QTimeZone::systemTimeZone();
@@ -105,7 +106,6 @@ ConferenceInfoModel::~ConferenceInfoModel () {
 std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::getConferenceInfo(){
 	return mConferenceInfo;
 }
-
 
 //------------------------------------------------------------------------------------------------
 
@@ -231,14 +231,14 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
-	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();// and with " << conferenceInfo->getConferenceInfo()->getParticipants().size();
+	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();
 	
 	if( true || isScheduled()){
 		mConferenceScheduler = ConferenceScheduler::create();
 		connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
 		connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
 		mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
-	}else{
+	}else{// TODO?
 		auto conferenceParameters = core->createConferenceParams(nullptr);
 		conferenceParameters->enableAudio(true);
 		conferenceParameters->enableVideo(true);
@@ -247,18 +247,7 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 		conferenceParameters->setStartTime(mConferenceInfo->getDateTime());
 		conferenceParameters->setEndTime(mConferenceInfo->getDateTime() + (mConferenceInfo->getDuration() * 60));
 		conferenceParameters->enableLocalParticipant(true);
-		//conferenceParameters->enableOneParticipantConference(true);
-		/*
-		if(true) {//Remote
-			conferenceParameters->setConferenceFactoryUri(core->getDefaultAccount()->getContactAddress()->asStringUriOnly());
-		}else
-			conferenceParameters->setConferenceFactoryUri(nullptr);
-			*/
 		conference = core->createConferenceWithParams(conferenceParameters);
-		
-		//auto parameters = CoreManager::getInstance()->getCore()->createCallParams(nullptr);
-		//parameters->enableVideo(true);
-		//conference->inviteParticipants(mConferenceInfo->getParticipants(), parameters);
 	}
 }
 

@@ -36,7 +36,6 @@ class ParticipantDeviceListener : public QObject, public linphone::ParticipantDe
 public:
     ParticipantDeviceListener (QObject *parent = nullptr);
     
-	//void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) override;
 	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted) override;
 	virtual void onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) override;

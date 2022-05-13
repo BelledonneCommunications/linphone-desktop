@@ -24,7 +24,6 @@
 #include "components/core/CoreManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 
-#include "ConferenceInfoListModel.hpp"
 #include "ConferenceInfoMapModel.hpp"
 #include "ConferenceInfoProxyListModel.hpp"
 
@@ -61,46 +60,8 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 		return r > 0;
 	}
 	return false;
-/*
-	bool show = false;
-	QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
-	const ConferenceInfoListModel* ics = sourceModel()->data(index).value<ConferenceInfoListModel*>();
-		
-		
-	if( mEntryTypeFilter == ConferenceType::Ended && ics->eventModel.value<ChatCallModel*>() != nullptr)
-			show = true;
-		else if( mEntryTypeFilter == ChatRoomModel::EntryType::MessageEntry && eventModel.value<ChatMessageModel*>() != nullptr)
-			show = true;
-		else if( mEntryTypeFilter == ChatRoomModel::EntryType::NoticeEntry && eventModel.value<ChatNoticeModel*>() != nullptr)
-			show = true;
-	}
-	if( show && mFilterText != ""){
-		QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-		auto eventModel = sourceModel()->data(index);
-		ChatMessageModel * chatModel = eventModel.value<ChatMessageModel*>();
-		if( chatModel){
-			QRegularExpression search(QRegularExpression::escape(mFilterText), QRegularExpression::CaseInsensitiveOption | QRegularExpression::UseUnicodePropertiesOption);
-			show = chatModel->mContent.contains(search);
-		}
-	}
-	return show;*/
 }
 
 bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	return true;
-/*
-  const ConferenceInfoListModel* deviceA = sourceModel()->data(left).value<ConferenceInfoListModel*>();
-  const ConferenceInfoListModel* deviceB = sourceModel()->data(right).value<ConferenceInfoListModel*>();
-
-  return deviceA->getAt<ConferenceInfoModel>(0)->getDateTime() < deviceB->getAt<ConferenceInfoModel>(0)->getDateTime();
-  */
 }
-/*
-QVariant ConferenceInfoProxyModel::getAt(int row){
-	QModelIndex sourceIndex = mapToSource(this->index(row, 0));
-	return sourceModel()->data(sourceIndex);
-}
-
-void ConferenceInfoProxyModel::add(QSharedPointer<ConferenceInfoModel> conferenceInfoModel){
-	qobject_cast<ConferenceInfoListModel*>(sourceModel())->add(conferenceInfoModel);
-}*/

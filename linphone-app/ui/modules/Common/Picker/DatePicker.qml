@@ -43,8 +43,6 @@ Item{
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		//Layout.fillWidth: true
-		//Layout.fillHeight: true
 		
 		property int maxYears: 5	// Max years to be requested.
 		

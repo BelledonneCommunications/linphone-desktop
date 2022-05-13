@@ -52,6 +52,7 @@ public:
 	void add(const std::shared_ptr<const linphone::Participant> & participant);
 	void add(const std::shared_ptr<const linphone::Address> & participantAddress);
 	void updateParticipants();	// Update list from Chat Room
+
 // Remove a chatroom
 	Q_INVOKABLE void remove (ParticipantModel *importer);
 	Q_INVOKABLE ChatRoomModel* getChatRoomModel() const;

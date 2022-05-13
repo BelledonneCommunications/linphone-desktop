@@ -13,11 +13,9 @@ ScrollableListViewField {
 	property alias model: view.model
 	property alias textRole: view.textRole
 	property alias contentHeight: view.contentHeight
-	//property alias implicitHeight: view.implicitHeight
-	//implicitHeight: view.implicitHeight
 	
 	signal activated (int index)
-	color: 'red'
+	
 	radius: 0
 	ScrollableListView {
 		id: view

@@ -39,7 +39,6 @@ Item {
 		}
 		
 		color: DialogStyle.description.color
-		//font.pointSize: DialogStyle.description.pointSize
 		font.pointSize: !flat ? Units.dp * 10 : Units.dp * 14
 		font.weight: !flat ? Font.Normal : Font.Bold
 		horizontalAlignment: Text.AlignHCenter

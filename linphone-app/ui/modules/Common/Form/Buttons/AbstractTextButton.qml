@@ -67,8 +67,8 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  height: button.contentItem.implicitHeight + 25//AbstractTextButtonStyle.background.height
-  width: button.contentItem.implicitWidth +60 //AbstractTextButtonStyle.background.width
+  height: button.contentItem.implicitHeight + 25
+  width: button.contentItem.implicitWidth + 60
 
   // ---------------------------------------------------------------------------
 
@@ -91,7 +91,6 @@ Item {
         capitalization: button.capitalization
       }
 		wrapMode: Text.WordWrap
-      //elide: Text.ElideRight
       horizontalAlignment: Text.AlignHCenter
       text: button.text
       verticalAlignment: Text.AlignVCenter

@@ -41,9 +41,9 @@ public:
 	
 	Q_INVOKABLE QVariant getAt(int row);
 	QAbstractItemModel *getModel();
+	
 	void setModel(QAbstractItemModel * model);
 	
-	//void add(std::shared_ptr<QObject> model);
 public slots:
 	void add(std::shared_ptr<QAbstractItemModel> model);
 	

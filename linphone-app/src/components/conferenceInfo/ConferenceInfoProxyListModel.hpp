@@ -31,10 +31,10 @@
 // =============================================================================
 
 class QWindow;
-class ConferenceInfoListModel;
+class ProxyListModel;
 
 
-class ConferenceInfoProxyListModel : public SortFilterAbstractProxyModel<ConferenceInfoListModel> {
+class ConferenceInfoProxyListModel : public SortFilterAbstractProxyModel<ProxyListModel> {
 	Q_OBJECT
 	
 public:

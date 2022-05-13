@@ -101,12 +101,6 @@ QSharedPointer<ContactModel> ContactsListModel::findContactModelFromSipAddress (
 		return mOptimizedSearch[sipAddress];
 	else
 		return nullptr;
-	/*
-  auto it = find_if(mList.begin(), mList.end(), [&sipAddress](ContactModel *contactModel) {
-	return contactModel->getVcardModel()->getSipAddresses().contains(sipAddress);
-  });
-  return it != mList.end() ? *it : nullptr;
-  */
 }
 
 QSharedPointer<ContactModel> ContactsListModel::findContactModelFromUsername (const QString &username) const {

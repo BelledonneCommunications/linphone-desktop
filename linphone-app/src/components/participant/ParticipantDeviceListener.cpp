@@ -29,22 +29,22 @@ ParticipantDeviceListener::ParticipantDeviceListener(QObject *parent) : QObject(
 
 //--------------------------------------------------------------------
 void ParticipantDeviceListener::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
-	qWarning() << "onIsSpeakingChanged " << isSpeaking;
+	qDebug() << "onIsSpeakingChanged " << isSpeaking;
 	emit isSpeakingChanged(participantDevice, isSpeaking);
 }
 
 void ParticipantDeviceListener::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMutedVar) {
-	qWarning() << "onIsMuted " << isMutedVar << " vs " << participantDevice->getIsMuted();
+	qDebug() << "onIsMuted " << isMutedVar << " vs " << participantDevice->getIsMuted();
 	emit isMuted(participantDevice, isMutedVar);
 }
 
 void ParticipantDeviceListener::onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
-	qWarning() << "onConferenceJoined: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
+	qDebug() << "onConferenceJoined: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
 	emit conferenceJoined(participantDevice);
 }
 
 void ParticipantDeviceListener::onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
-	qWarning() << "onConferenceLeft: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
+	qDebug() << "onConferenceLeft: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
 	emit conferenceLeft(participantDevice);
 }
 void ParticipantDeviceListener::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {

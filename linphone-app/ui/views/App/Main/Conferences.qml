@@ -38,8 +38,8 @@ Item{
 					bold: true
 					pointSize: ConferencesStyle.bar.text.pointSize
 				}
-				
-				text: 'Mes conférences'
+				//: 'Conferences' : Conference list title.
+				text: qsTr('conferencesTitle')
 			}
 		}
 		Rectangle {
@@ -58,21 +58,18 @@ Item{
 				
 				ExclusiveButtons {
 					texts: [
-						'TERMINEES',
-						'PROGRAMMEES',
-						'INVITATIONS',
-						'TEST'
+					//: 'Finished' : Filter conferences on end status.
+						qsTr('conferencesEndedFilter'),
+					//: 'Scheduled' : Filter conferences on scheduled status.	
+						qsTr('conferencesScheduledFilter'),
+					//: 'Invitations' : Filter conferences on invited conferences (where we are not the organizer).
+						qsTr('conferencesEndedFilter'),
 					]
+					capitalization: Font.AllUppercase
 					selectedButton: mainItem.filterType
 					onClicked: {
 						if(button <= 2)
 							mainItem.filterType = (button === 0 ? ConferenceInfoProxyModel.Ended : button === 1 ?ConferenceInfoProxyModel.Scheduled : ConferenceInfoProxyModel.Invitations);
-						else {
-							window.detachVirtualWindow()
-							window.attachVirtualWindow(Qt.resolvedUrl('../Calls/VideoConferenceMenu.qml'))
-						}
-						
-						//mainItem.filterType = button
 					}
 				}
 			}
@@ -184,19 +181,17 @@ Item{
 								width: parent.width
 								height: parent.height
 								conferenceInfoModel: $modelData
-								//width: calendarGrid.cellWidth
-								//maxWidth: calendarGrid.cellWidth
 								gotoButtonMode: mainItem.filterType == ConferenceInfoProxyModel.Scheduled ? 1 
 																										  : mainItem.filterType == ConferenceInfoProxyModel.Ended ? -1
 																																								  : 0
 								onExpandToggle: calendarGrid.expanded = !calendarGrid.expanded
 								isExpanded: calendarGrid.expanded
-								onConferenceUriCopied: messageBanner.noticeBannerText = 'Conference URL has been copied'
+								//: 'Conference URL has been copied' : Message text in a banner to warn the user that the µURL have been copied to the clipboard.
+								onConferenceUriCopied: messageBanner.noticeBannerText = qsTr('conferencesCopiedURL')
 							}
 						}
 					}
 				}
-				
 			}
 		}
 	}

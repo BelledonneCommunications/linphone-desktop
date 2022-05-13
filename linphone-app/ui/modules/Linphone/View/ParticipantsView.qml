@@ -21,7 +21,6 @@ ScrollableListView {
 	
 	property string genSipAddress
 	
-	// Optional parameters.chatRoomModel.isMeAdmin
 	property string headerButtonDescription
 	property string headerButtonIcon
 	property var headerButtonAction
@@ -247,7 +246,8 @@ ScrollableListView {
 							++count
 						}
 						if( $modelData.isMe)
-							txt += (count++ > 0 ? ' - ' : '') + 'Me'
+						//: 'Me' : One word for myself.
+							txt += (count++ > 0 ? ' - ' : '') + qsTr('participantsMe')
 						return txt
 					}
 					statusText : showAdminStatus ? getStatus()  : ''
@@ -277,7 +277,6 @@ ScrollableListView {
 					Switch{
 						anchors.verticalCenter: parent.verticalCenter
 						width:50
-						//Layout.preferredWidth: 50
 						indicatorStyle: SwitchStyle.aux
 						
 						visible: sipAddressesView.showSwitch

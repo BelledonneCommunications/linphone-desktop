@@ -430,7 +430,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 			break;
 			
 		case linphone::Call::State::UpdatedByRemote:
-			qWarning() << "UpdatedByRemote :" << (mCall ? mCall->getCurrentParams()->videoEnabled() + QString(" ")+mCall->getRemoteParams()->videoEnabled() : " call NULL");
+			qDebug() << "UpdatedByRemote : " << (mCall ? QString( "Video enabled ? CurrentParams:") + mCall->getCurrentParams()->videoEnabled() + QString(", RemoteParams:")+mCall->getRemoteParams()->videoEnabled() : " call NULL");
 			if (mCall && !mCall->getCurrentParams()->videoEnabled() && mCall->getRemoteParams()->videoEnabled()) {
 				mCall->deferUpdate();
 				emit videoRequested();
@@ -448,6 +448,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 		case linphone::Call::State::Updating:
 		case linphone::Call::State::EarlyUpdatedByRemote:
 		case linphone::Call::State::EarlyUpdating:
+		case linphone::Call::State::PushIncomingReceived:
 			break;
 	}
 	
@@ -712,9 +713,7 @@ bool CallModel::getRemoteVideoEnabled () const {
 bool CallModel::getVideoEnabled () const {
 	if(mCall){
 		shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
-		bool t = params && params->videoEnabled();// && getStatus() == CallStatusConnected && mCall->getState() == linphone::Call::State::StreamsRunning;
-		qWarning() << t << " => " << (params && params->videoEnabled()) << ", " << (int)getStatus() << ", " << (int)mCall->getState();
-		return t;
+		return params && params->videoEnabled();
 	}else
 		return true;
 }

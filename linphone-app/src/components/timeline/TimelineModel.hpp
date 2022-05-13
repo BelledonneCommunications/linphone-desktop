@@ -46,11 +46,6 @@ public:
 	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress NOTIFY fullLocalAddressChanged)
 	Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel CONSTANT)
 	
-// Contact
-	//Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
-	//Q_PROPERTY(QString username READ getUsername NOTIFY usernameChanged)
-	//Q_PROPERTY(QString avatar READ getAvatar NOTIFY avatarChanged)
-	//Q_PROPERTY(int presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)
 	Q_PROPERTY(bool selected MEMBER mSelected WRITE setSelected NOTIFY selectedChanged)
 	
 	
@@ -99,7 +94,6 @@ public:
 public slots:
 	void updateUnreadCount();
 	void onDefaultAccountChanged();
-	//void chatRoomDeleted();
 	
 signals:
 	void fullPeerAddressChanged();

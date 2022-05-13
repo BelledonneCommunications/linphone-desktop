@@ -16,7 +16,6 @@ singleton VideoConferenceStyle                           1.0 Calls/VideoConferen
 singleton CallSipAddressStyle                            1.0 Calls/Dialogs/CallSipAddressStyle.qml
 singleton CallTransferStyle                              1.0 Calls/Dialogs/CallTransferStyle.qml
 singleton ConferenceManagerStyle                         1.0 Calls/Dialogs/ConferenceManagerStyle.qml
-singleton MultimediaParametersStyle                      1.0 Calls/Dialogs/MultimediaParametersStyle.qml
 
 # Dialog Window ------------------------------------------------------------------
 

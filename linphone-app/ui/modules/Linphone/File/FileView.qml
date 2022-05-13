@@ -60,8 +60,6 @@ Item {
 		id: thumbnailProvider
 		
 		anchors.fill: parent
-		//Layout.fillHeight: true
-		//Layout.preferredWidth: parent.height
 		
 		sourceComponent: (mainItem.active ? (mainItem.thumbnail ? thumbnailImage : extension ): undefined)
 		
@@ -90,7 +88,7 @@ Item {
 							thumbnailProviderAnimator.running = false
 						}
 						
-						mainItem.z = 999//Constants.zPopup
+						mainItem.z = Constants.zPopup
 						thumbnailProviderAnimator.to = mainItem.animationScale
 						thumbnailProviderAnimator.running = true
 					}

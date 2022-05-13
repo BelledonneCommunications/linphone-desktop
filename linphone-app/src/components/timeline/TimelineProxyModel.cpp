@@ -49,12 +49,10 @@ TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel
 	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultAccountChanged, this, [this]() {
 		qobject_cast<TimelineListModel*>(sourceModel())->update();
 		invalidate();
-		//updateCurrentSelection();
 	});
 	QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
 		qobject_cast<TimelineListModel*>(sourceModel())->reset();
 		invalidate();// Invalidate and reload GUI if the model has been reset
-		//updateCurrentSelection();
 	});
 
 	setSourceModel(model);

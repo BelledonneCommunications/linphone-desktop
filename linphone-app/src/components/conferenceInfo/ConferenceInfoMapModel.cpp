@@ -33,13 +33,12 @@
 #include "utils/Utils.hpp"
 
 #include "ConferenceInfoProxyModel.hpp"
-#include "ConferenceInfoListModel.hpp"
 #include "ConferenceInfoModel.hpp"
 #include "ConferenceInfoProxyListModel.hpp"
 
 // =============================================================================
 
-ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ConferenceInfoListModel>*>(parent) {
+ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ProxyListModel>*>(parent) {
 	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
 	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	for(auto conferenceInfo : conferenceInfos){

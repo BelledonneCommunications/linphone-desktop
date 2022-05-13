@@ -90,37 +90,6 @@ Row {
 			translation = 'unknownCallEvent'
 		}
 	}
-	/*
-	property string _type: {
-		var status = $historyEntry.status
-		
-		if (status === HistoryModel.CallStatusSuccess) {
-			if (!$historyEntry.isStart) {
-				return 'ended_call'
-			}
-			return $historyEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
-		}
-		if (status === HistoryModel.CallStatusDeclined) {
-			return $historyEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
-		}
-		if (status === HistoryModel.CallStatusMissed) {
-			return $historyEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
-		}
-		if (status === HistoryModel.CallStatusAborted) {
-			return $historyEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
-		}
-		if (status === HistoryModel.CallStatusEarlyAborted) {
-			return $historyEntry.isOutgoing ? 'missed_outgoing_call' : 'missed_incoming_call'
-		}
-		if (status === HistoryModel.CallStatusAcceptedElsewhere) {
-			return $historyEntry.isOutgoing ? 'outgoing_call' : 'incoming_call'
-		}
-		if (status === HistoryModel.CallStatusDeclinedElsewhere) {
-			return $historyEntry.isOutgoing ? 'declined_outgoing_call' : 'declined_incoming_call'
-		}
-		
-		return 'unknown_call_event'
-	}*/
 	
 	height: HistoryStyle.entry.lineHeight
 	spacing: HistoryStyle.entry.message.extraContent.spacing
@@ -174,7 +143,6 @@ Row {
 		}
 	}
 	ActionButton {
-		//height: HistoryStyle.entry.lineHeight
 		isCustom: true
 		backgroundRadius: 8
 		colorSet: HistoryStyle.entry.deleteAction

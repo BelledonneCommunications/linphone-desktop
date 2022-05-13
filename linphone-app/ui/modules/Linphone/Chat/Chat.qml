@@ -441,7 +441,6 @@ Rectangle {
 							if(proxyModel.chatRoomModel) {
 								proxyModel.sendMessage(text)
 							}else{
-								console.log("Peer : " +proxyModel.peerAddress+ "/"+chat.model.peerAddress)
 								proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
 								proxyModel.sendMessage(text)
 							}

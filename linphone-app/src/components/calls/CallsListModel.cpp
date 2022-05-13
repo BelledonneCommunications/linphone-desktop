@@ -198,7 +198,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	
 	auto call = core->inviteAddressWithParams(address, params);
 	call->setSpeakerMuted(!enableSpeaker);
-	qWarning() << "Launch " << (enableVideo ? "video" : "audio") << " call; camera: " << enableCamera<< " speaker:" << enableSpeaker << ", micro:" << params->micEnabled() << ", layout:" << (int)layout;
+	qInfo() << "Launch " << (enableVideo ? "video" : "audio") << " call; camera: " << enableCamera<< " speaker:" << enableSpeaker << ", micro:" << params->micEnabled() << ", layout:" << (int)layout;
 	CallModel::prepareTransfert(call, prepareTransfertAddress);
 }
 
@@ -372,18 +372,6 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 		qWarning() << "Chat room cannot be created";
 	result["created"] = (chatRoom != nullptr);
 	
-	return result;
-}
-QVariantMap CallsListModel::createConference(ConferenceInfoModel * conferenceInfo, const int& securityLevel, const int& inviteMode, const bool& selectAfterCreation) {
-	QVariantMap result;
-	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = selectAfterCreation;
-	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	std::shared_ptr<linphone::Conference> conference;
-	QList< std::shared_ptr<linphone::Address>> admins;
-	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
-	qInfo() << "Conference creation of " << conferenceInfo->getSubject() << " at " << securityLevel << " security";// and with " << conferenceInfo->getConferenceInfo()->getParticipants().size();
-	auto conferenceScheduler = core->createConferenceScheduler();
-	conferenceScheduler->setInfo(conferenceInfo->getConferenceInfo());
 	return result;
 }
 

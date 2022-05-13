@@ -70,7 +70,6 @@ signals:
 	
 private:
 	std::shared_ptr<linphone::EventLog> mEventLog;
-	QWeakPointer<ChatNoticeModel> mSelf;	// Used to pass to functions that need a shared_ptr
 };
 
 Q_DECLARE_METATYPE(QSharedPointer<ChatNoticeModel>)

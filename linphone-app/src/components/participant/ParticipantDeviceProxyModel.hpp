@@ -27,6 +27,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QString>
+#include <QSharedPointer>
 #include "app/proxyModel/SortFilterProxyModel.hpp"
 
 class ParticipantDeviceListModel;

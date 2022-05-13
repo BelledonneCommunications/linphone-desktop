@@ -62,7 +62,6 @@ signals:
 	
 private:
 	std::shared_ptr<linphone::CallLog> mCallLog;
-	QWeakPointer<ChatCallModel> mSelf;	// Used to pass to functions that need a shared_ptr
 };
 Q_DECLARE_METATYPE(QSharedPointer<ChatCallModel>)
 Q_DECLARE_METATYPE(ChatCallModel*)

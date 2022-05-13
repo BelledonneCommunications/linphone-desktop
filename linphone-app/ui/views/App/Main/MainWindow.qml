@@ -208,7 +208,6 @@ ApplicationWindow {
 						//: 'Start a chat room' : Tooltip to illustrate a button
 						tooltipText : qsTr('newChatRoom')
 						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
-						//autoIcon: true
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/NewChatRoom.qml')
@@ -222,9 +221,6 @@ ApplicationWindow {
 						colorSet: MainWindowStyle.buttons.newConference
 						visible: SettingsModel.conferenceEnabled
 						tooltipText:qsTr('newConferenceButton')
-						//autoIcon: true
-						
-						//onClicked: Logic.openConferenceManager()
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
@@ -243,11 +239,8 @@ ApplicationWindow {
 						MainWindowMenuBar {
 							id: menuBar
 						}
-						
 					}
-					
 				}
-				
 			}
 
 			// -----------------------------------------------------------------------
@@ -308,7 +301,8 @@ ApplicationWindow {
 							icon: MainWindowStyle.menu.conferences.icon
 							iconSize: MainWindowStyle.menu.conferences.iconSize
 							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor : MainWindowStyle.menu.conferences.color
-							name: 'MES CONFERENCES'
+							//: 'Conferences' : Conference title for main window.
+							name: qsTr('mainWindowConferencesTitle').toUpperCase()
 							visible: SettingsModel.conferenceEnabled
 							
 							onSelected: {
@@ -325,7 +319,6 @@ ApplicationWindow {
 								icon: MainWindowStyle.menu.direction.icon
 								overwriteColor: conferencesEntry.overwriteColor
 								iconSize: MainWindowStyle.menu.direction.iconSize
-								
 							}
 						}
 					}
@@ -388,7 +381,6 @@ ApplicationWindow {
 		target: UrlHandlers
 		
 		onSip: {
-		console.log("Change conversation from url handler")
 			 window.setView('Conversation', {
 								  peerAddress: sipAddress,
 								  localAddress: AccountSettingsModel.sipAddress,

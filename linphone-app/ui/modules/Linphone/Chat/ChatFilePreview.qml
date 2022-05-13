@@ -49,7 +49,6 @@ Item{
 				width: height * ChatFilePreviewStyle.filePreview.format
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.verticalCenterOffset: 7
-				//anchors.horizontalCenter: parent.horizontalCenter
 				thumbnail: $modelData.thumbnail
 				name: $modelData.name
 				animationScale: 1.1

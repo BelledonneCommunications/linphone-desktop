@@ -53,7 +53,6 @@ public:
 	ContactModel *getContactModel() const;
     QString getSipAddress() const;
     QDateTime getCreationTime() const;
-    //std::list<std::shared_ptr<linphone::ParticipantDevice>> getDevices() const;
     bool getAdminStatus() const;
     bool isFocus() const;
 	int getSecurityLevel() const;
@@ -69,8 +68,6 @@ public:
 	std::shared_ptr<linphone::Participant>  getParticipant();
 	Q_INVOKABLE ParticipantDeviceProxyModel * getProxyDevices();
 	QSharedPointer<ParticipantDeviceListModel> getParticipantDevices();
-    //linphone::ChatRoomSecurityLevel getSecurityLevel() const;
-    //std::shared_ptr<linphone::ParticipantDevice> findDevice(const std::shared_ptr<const linphone::Address> & address) const;
 	
 	void startInvitation(const int& secondes = 30);	// Start a timer to remove the model if the invitation didn't ended after some time
 	
@@ -91,9 +88,6 @@ signals:
 	
 	void invitationTimeout(ParticipantModel* model);
 	
-//    void contactUpdated ();
-
-
 private:
 
     std::shared_ptr<linphone::Participant> mParticipant;
@@ -104,7 +98,6 @@ private:
 	bool mAdminStatus;
 };
 
-//Q_DECLARE_METATYPE(ParticipantModel *);
 Q_DECLARE_METATYPE(QSharedPointer<ParticipantModel>);
 
 #endif // PARTICIPANT_MODEL_H_

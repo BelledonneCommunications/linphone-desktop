@@ -52,14 +52,6 @@ ParticipantDeviceModel::ParticipantDeviceModel (CallModel * callModel, std::shar
 	mIsVideoEnabled = false;
 	updateVideoEnabled();
 }
-/*
-ParticipantDeviceModel::ParticipantDeviceModel (CallModel * call, const bool& isMe, QObject *parent) : QObject(parent) {
-	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
-	mIsMe = isMe;
-	mCall = call;
-	if( call)
-		connect(call, &CallModel::statusChanged, this, &ParticipantDeviceModel::videoEnabledChanged);
-}*/
 
 ParticipantDeviceModel::~ParticipantDeviceModel(){
 	if( mParticipantDevice)
@@ -74,15 +66,6 @@ QSharedPointer<ParticipantDeviceModel> ParticipantDeviceModel::create(CallModel 
 	}
 	return nullptr;
 }
-/*
-std::shared_ptr<ParticipantDeviceModel> ParticipantDeviceModel::create(CallModel * call, const bool& isMe, QObject *parent){
-	std::shared_ptr<ParticipantDeviceModel> model = std::make_shared<ParticipantDeviceModel>(call, isMe, parent);
-	if(model){
-		model->mSelf = model;
-		return model;
-	}
-	return nullptr;
-}*/
 
 // -----------------------------------------------------------------------------
 

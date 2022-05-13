@@ -44,7 +44,6 @@ public:
 	void selectAll(const bool& selected);
 	TimelineModel * getAt(const int& index);
 	QSharedPointer<TimelineModel> getTimeline(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
-	//std::shared_ptr<TimelineModel> getTimeline(std::shared_ptr<linphone::Conference> chatRoom, const bool &create);
 	Q_INVOKABLE QVariantList getLastChatRooms(const int& maxCount) const;
 	QSharedPointer<ChatRoomModel> getChatRoomModel(std::shared_ptr<linphone::ChatRoom> chatRoom, const bool &create);
 	QSharedPointer<ChatRoomModel> getChatRoomModel(ChatRoomModel * chatRoom);
@@ -64,9 +63,6 @@ public slots:
 	void onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
 	void onCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) ;
 	void onCallCreated(const std::shared_ptr<linphone::Call> &call);
-	//void onConferenceLeft();
-	
-	
 	
 signals:
 	void countChanged();

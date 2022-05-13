@@ -125,7 +125,6 @@ DialogPlus {
 					Layout.preferredHeight: implicitHeight
 					Layout.rightMargin: InfoChatRoomStyle.results.header.rightMargin
 					Layout.alignment: Qt.AlignRight | Qt.AlignBottom
-					//Layout.topMargin: InfoChatRoomStyle.results.topMargin
 					//: 'Admin' : Admin(istrator)
 					//~ one word for admin status
 					text : qsTr('adminStatus')
@@ -141,7 +140,6 @@ DialogPlus {
 					id: participantView
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					//anchors.fill: parent
 					
 					showContactAddress:false
 					showSwitch : dialog.adminMode

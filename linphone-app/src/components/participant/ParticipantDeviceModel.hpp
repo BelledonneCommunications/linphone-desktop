@@ -39,10 +39,8 @@ class ParticipantDeviceModel : public QObject {
 public:
     ParticipantDeviceModel (CallModel * callModel, std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
     virtual ~ParticipantDeviceModel();
-    //ParticipantDeviceModel (CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
     
     static QSharedPointer<ParticipantDeviceModel> create(CallModel* callModel, std::shared_ptr<linphone::ParticipantDevice> device, const bool& isMe = false, QObject *parent = nullptr);
-    //static std::shared_ptr<ParticipantDeviceModel> create(CallModel * call, const bool& isMe = true, QObject *parent = nullptr);
 	
 	Q_PROPERTY(QString displayName READ getDisplayName CONSTANT)
 	Q_PROPERTY(QString name READ getName CONSTANT)
@@ -71,7 +69,6 @@ public:
 	void setPaused(bool paused);
 	void setIsSpeaking(bool speaking);
 	
-	//void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
 	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted);
 	virtual void onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice);

@@ -105,8 +105,6 @@ Row {
 							mipmap: SettingsModel.mipmapEnabled
 							source: 'file:/'+mainRow.contentModel.filePath
 							fillMode: Image.PreserveAspectFit
-							//width: 200
-							//height: 100
 						}
 					}
 					
@@ -292,9 +290,6 @@ Row {
 					
 					anchors.fill: parent
 					visible: true
-					//downloadButton.visible || ((rectangle.isUploaded || rectangle.isRead) && !isOutgoing) || isOutgoing
-					//onVisibleChanged: console.log("Mouse of "+mainRow.contentModel.name+" / "+downloadButton.visible
-						//				+"/"+rectangle.isUploaded +"/"+rectangle.isRead)
 					
 					onClicked: {
 						if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {

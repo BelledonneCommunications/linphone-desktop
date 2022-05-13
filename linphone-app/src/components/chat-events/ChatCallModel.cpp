@@ -47,7 +47,6 @@ QSharedPointer<ChatCallModel> ChatCallModel::create(std::shared_ptr<linphone::Ca
 	auto model = QSharedPointer<ChatCallModel>::create(callLog, isStart, parent);
 	if(model ){
 		model->update();
-		model->mSelf = model;
 		return model;
 	}else
 		return nullptr;

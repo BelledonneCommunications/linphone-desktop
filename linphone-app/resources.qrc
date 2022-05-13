@@ -416,7 +416,6 @@
 		<file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallTransfer.qml</file>
 		<file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
-		<file>ui/views/App/Calls/Dialogs/MultimediaParameters.qml</file>
 		<file>ui/views/App/Calls/EndedCall.qml</file>
 		<file>ui/views/App/Calls/IncallFullscreenWindow.qml</file>
 		<file>ui/views/App/Calls/Incall.js</file>
@@ -490,7 +489,6 @@
 		<file>ui/views/App/Styles/Calls/Dialogs/CallSipAddressStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/ConferenceManagerStyle.qml</file>
-		<file>ui/views/App/Styles/Calls/Dialogs/MultimediaParametersStyle.qml</file>
 		<file>ui/views/App/Styles/Dialog/NewConferenceStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/ActivateAppSipAccountWithEmailStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/ActivateAppSipAccountWithPhoneNumberStyle.qml</file>

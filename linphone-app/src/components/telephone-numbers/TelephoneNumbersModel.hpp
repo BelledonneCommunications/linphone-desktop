@@ -27,22 +27,22 @@
 // =============================================================================
 
 class TelephoneNumbersModel : public QAbstractListModel {
-  Q_OBJECT;
-
-  Q_PROPERTY(int defaultIndex READ getDefaultIndex CONSTANT);
-
+	Q_OBJECT
+	
+	Q_PROPERTY(int defaultIndex READ getDefaultIndex CONSTANT)
+	
 public:
-  TelephoneNumbersModel (QObject *parent = Q_NULLPTR);
-
-  int rowCount (const QModelIndex &index = QModelIndex()) const override;
-
-  QHash<int, QByteArray> roleNames () const override;
-  QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
+	TelephoneNumbersModel (QObject *parent = Q_NULLPTR);
+	
+	int rowCount (const QModelIndex &index = QModelIndex()) const override;
+	
+	QHash<int, QByteArray> roleNames () const override;
+	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	
 private:
-  int getDefaultIndex () const;
-
-  static const QList<QPair<QLocale::Country, QString>> mCountryCodes;
+	int getDefaultIndex () const;
+	
+	static const QList<QPair<QLocale::Country, QString>> mCountryCodes;
 };
 
 #endif // ifndef TELEPHONE_NUMBERS_MODEL_H_

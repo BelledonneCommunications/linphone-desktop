@@ -25,13 +25,12 @@
 #include <QDate>
 
 #include "app/proxyModel/ProxyAbstractMapModel.hpp"
+#include "app/proxyModel/ProxyListModel.hpp"
 #include "app/proxyModel/SortFilterAbstractProxyModel.hpp"
-
-class ConferenceInfoListModel;
 
 // =============================================================================
 
-class ConferenceInfoMapModel : public ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ConferenceInfoListModel>*>  {
+class ConferenceInfoMapModel : public ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ProxyListModel>*>  {
 	Q_OBJECT
 	
 public:

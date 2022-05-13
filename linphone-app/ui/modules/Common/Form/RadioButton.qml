@@ -20,8 +20,6 @@ Control.RadioButton{
 	indicator: Rectangle {
 		height: fontMetrics.height - 5 
 		width: height
-		//onHeightChanged: height = fontMetrics.height - 5
-		//onWidthChanged: width = fontMetrics.height - 5
 		x: parent.leftPadding
 		y: parent.height / 2 - height / 2
 		radius: width/2

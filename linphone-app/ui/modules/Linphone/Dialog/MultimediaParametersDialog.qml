@@ -43,6 +43,8 @@ DialogPlus {
 	Component.onDestruction: SettingsModel.stopCaptureGraph()
 	onCallChanged: !call && exit(0)
 
+	//: 'Multimedia parameters' : Menu title to show multimedia devices configuration.
+	title: qsTr('menuMultimedia')
 	// ---------------------------------------------------------------------------
 
 	Column {

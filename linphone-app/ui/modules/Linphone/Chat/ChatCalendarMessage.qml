@@ -27,7 +27,6 @@ Loader{
 	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
 	property int maxWidth : parent.width
 	property int fitHeight: active && item ? item.fitHeight + ChatCalendarMessageStyle.topMargin+ChatCalendarMessageStyle.bottomMargin + (isExpanded? 200 : 0): 0
-	//property int fitWidth: active && item ? Math.max(item.fitWidth, maxWidth/2)  + ChatCalendarMessageStyle.widthMargin*2 : 0
 	property int fitWidth: active && item ? maxWidth/2  + ChatCalendarMessageStyle.widthMargin*2 : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
@@ -41,7 +40,6 @@ Loader{
 	
 	property font customFont : SettingsModel.textMessageFont
 	active: mainItem.conferenceInfoModel
-	// (mainItem.contentModel && mainItem.contentModel.isIcalendar()) || (!mainItem.contentModel && mainItem.conferenceInfoModel)
 	
 	sourceComponent: MouseArea{
 		id: loadedItem
@@ -99,21 +97,19 @@ Loader{
 				}
 				Text{
 					Layout.fillWidth: true
-					//Layout.minimumWidth: implicitWidth
-					//Layout.preferredWidth: implicitWidth
 					Layout.rightMargin: 15
 					horizontalAlignment: Qt.AlignRight
 					verticalAlignment: Qt.AlignVCenter
 					color: ChatCalendarMessageStyle.schedule.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
-					text: 'Organisateur : ' +UtilsCpp.getDisplayName(mainItem.conferenceInfoModel.organizer)
+					//: 'Organizer' : Label Title for the organizer.
+					text: qsTr('icsOrganizer') +' : ' +UtilsCpp.getDisplayName(mainItem.conferenceInfoModel.organizer)
 				}
 			}
 			Text{
 				id: title
 				Layout.fillWidth: true
-				//Layout.preferredHeight: 
 				Layout.leftMargin: 10
 				Layout.alignment: Qt.AlignRight
 				elide: Text.ElideRight
@@ -198,8 +194,8 @@ Loader{
 					color: ChatCalendarMessageStyle.subject.color
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
-					
-					text: 'Description :'
+					//: 'Description' : Title for the conference description.
+					text: qsTr('icsDescription')
 					visible: description.text != ''
 				}
 				TextAreaField{
@@ -215,10 +211,6 @@ Loader{
 					border.width: 0
 					visible: description.text != ''
 					
-					//font.weight: Font.Bold				
-					//elide: Text.ElideRight
-					//wrapMode: TextEdit.WordWrap
-					
 					text: mainItem.conferenceInfoModel.description
 				}
 				Item{
@@ -233,7 +225,8 @@ Loader{
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
 					
-					text: 'Lien de la conférence'
+					//: 'Conference address' : Title for the conference address.
+					text: qsTr('icsconferenceAddressTitle')
 				}
 				RowLayout{
 					Layout.fillWidth: true
@@ -269,7 +262,8 @@ Loader{
 						Layout.fillWidth: true
 					}
 					TextButtonC{
-						text: 'REJOINDRE'
+						//: 'Join' : Action button to join the conference.
+						text: qsTr('icsJoinButton').toUpperCase()
 						onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
 					}
 					ActionButton{

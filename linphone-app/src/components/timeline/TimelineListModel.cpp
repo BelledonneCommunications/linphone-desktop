@@ -111,37 +111,16 @@ QSharedPointer<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<lin
 		if(create){
 			QSharedPointer<TimelineModel> model = TimelineModel::create(chatRoom);
 			if(model){
-			//std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 				add(model);
-			//connect(model.get(), SIGNAL(conferenceLeft()), this, SLOT(selectedHasChanged(bool)));
 				return model;
 			}
 		}
 	}
 	return nullptr;
 }
-/*
-std::shared_ptr<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<linphone::Conference> conference, const bool &create){
-	if(chatRoom){
-		for(auto it = mList.begin() ; it != mList.end() ; ++it){
-			if( (*it)->isConference() && (*it)->getConferenceModel()->getConference() == conference){
-				return *it;
-			}
-		}
-		if(create){
-			std::shared_ptr<TimelineModel> model = TimelineModel::create(conference);
-			//std::shared_ptr<TimelineModel> model = std::make_shared<TimelineModel>(chatRoom);
-			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-			//connect(model->getConferenceModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
-			add(model);
-			return model;
-		}
-	}
-	return nullptr;
-}
-*/
+
 QVariantList TimelineListModel::getLastChatRooms(const int& maxCount) const{
 	QVariantList contacts;
 	QMultiMap<qint64, ChatRoomModel*> sortedData;
@@ -182,8 +161,6 @@ QSharedPointer<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_pt
 			if(model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
-				
-				//connect(model.get(), SIGNAL(conferenceLeft()), this, SLOT(selectedHasChanged(bool)));
 				add(model);
 				return model->mChatRoomModel;
 			}
@@ -388,8 +365,3 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		}
 	}
 }
-
-/*
-void TimelineListModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> &chatRoom, , const std::shared_ptr<const linphone::EventLog> & eventLog){
-	remove(getTimeline(chatRoom, false).get());
-}*/

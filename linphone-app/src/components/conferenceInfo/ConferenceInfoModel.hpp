@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -45,9 +45,7 @@ public:
 	Q_PROPERTY(QString displayNamesToString READ displayNamesToString NOTIFY participantsChanged)
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
-	
-	//Q_PROPERTY(participants READ getParticipants WRITE setParticipants NOTIFY participantsChanged)
-	
+		
 	static QSharedPointer<ConferenceInfoModel> create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	ConferenceInfoModel (QObject * parent = nullptr);
 	ConferenceInfoModel (std::shared_ptr<linphone::ConferenceInfo> conferenceInfo, QObject * parent = nullptr);

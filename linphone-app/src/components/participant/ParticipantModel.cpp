@@ -76,7 +76,6 @@ QDateTime ParticipantModel::getCreationTime() const{
     return (mParticipant ? QDateTime::fromSecsSinceEpoch(mParticipant->getCreationTime()) : QDateTime::currentDateTime());
 }
 
-//std::list<std::shared_ptr<linphone::ParticipantDevice>> ParticipantModel::getDevices() const;
 bool ParticipantModel::getAdminStatus() const{
     return (mParticipant ? mParticipant->isAdmin() : mAdminStatus);
 }
