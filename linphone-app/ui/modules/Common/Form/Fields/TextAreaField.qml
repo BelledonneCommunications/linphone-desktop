@@ -7,7 +7,7 @@ import Common.Styles 1.0
 // =============================================================================
 
 Rectangle {
-	
+	id: mainItem
 	property alias text: textArea.text
 	property alias placeholderText: textArea.placeholderText
 	readonly property alias length: textArea.length
@@ -15,6 +15,7 @@ Rectangle {
 	property alias font: textArea.font
 	property alias textColor: textArea.color
 	property alias readOnly: textArea.readOnly
+	property int padding: TextAreaFieldStyle.text.padding
 	
 	height: TextAreaFieldStyle.background.height
 	width: TextAreaFieldStyle.background.width
@@ -50,10 +51,10 @@ Rectangle {
 			wrapMode: TextArea.Wrap
 			height: flickable.height
 			
-			bottomPadding: TextAreaFieldStyle.text.padding
-			leftPadding: TextAreaFieldStyle.text.padding
-			rightPadding: TextAreaFieldStyle.text.padding + Number(scrollBar.visible) * scrollBar.width
-			topPadding: TextAreaFieldStyle.text.padding
+			bottomPadding: mainItem.padding
+			leftPadding: mainItem.padding
+			rightPadding: mainItem.padding + Number(scrollBar.visible) * scrollBar.width
+			topPadding: mainItem.padding
 		}
 	}
 }

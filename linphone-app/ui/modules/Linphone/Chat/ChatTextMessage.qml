@@ -34,7 +34,7 @@ TextEdit {
 	height: fitHeight
 	width: parent.width
 	visible: contentModel && contentModel.isText()
-	clip: true
+	clip: false
 	padding: ChatStyle.entry.message.padding
 	textMargin: 0
 	readOnly: true

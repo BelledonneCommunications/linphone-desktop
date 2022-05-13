@@ -118,6 +118,7 @@ Item {
 				anchors.topMargin: 3
 				anchors.leftMargin: 5
 				interactive: false
+				clip: false
 				
 				function updateWidth(){
 					var maxWidth = 0

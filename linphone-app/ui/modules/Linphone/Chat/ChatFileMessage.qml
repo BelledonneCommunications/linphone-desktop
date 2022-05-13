@@ -19,9 +19,13 @@ Row {
 	property ChatMessageModel chatMessageModel: contentModel && contentModel.chatMessageModel
 	property ContentModel contentModel
 	property bool isOutgoing : chatMessageModel && ( chatMessageModel.isOutgoing  || chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
-	property int fitWidth: visible ? Math.max(fileName.implicitWidth + 5 + thumbnailProvider.width + 3*ChatStyle.entry.message.file.margins
+	property int fitWidth: visible ? Math.max( (fileName.visible ? fileName.implicitWidth : 0)
+												 + thumbnailProvider.width + 3*ChatStyle.entry.message.file.margins
 											  , Math.max(ChatStyle.entry.message.file.width, ChatStyle.entry.message.outgoing.areaSize)) : 0
 	property int fitHeight: visible ? rectangle.height : 0
+	
+	property bool isAnimatedImage : mainRow.contentModel && mainRow.contentModel.wasDownloaded && UtilsCpp.isAnimatedImage(mainRow.contentModel.filePath)
+	property bool haveThumbnail: mainRow.contentModel && mainRow.contentModel.thumbnail
 	
 	signal copyAllDone()
 	signal copySelectionDone()
@@ -52,7 +56,7 @@ Row {
 				property string thumbnail :  mainRow.contentModel ? mainRow.contentModel.thumbnail : ''
 				color: 'transparent'
 				
-				height: thumbnail ? ChatStyle.entry.message.file.heightWithThumbnail : ChatStyle.entry.message.file.height
+				height: mainRow.isAnimatedImage ? ChatStyle.entry.message.file.heightbetter : ChatStyle.entry.message.file.height
 				width: mainRow.width
 				
 				radius: ChatStyle.entry.message.radius
@@ -75,11 +79,21 @@ Row {
 						
 						Image {
 							id: thumbnailImageSource
+							property real scaleAnimatorTo : ChatStyle.entry.message.file.animation.thumbnailTo
 							mipmap: SettingsModel.mipmapEnabled
 							source: mainRow.contentModel.thumbnail
 							fillMode: Image.PreserveAspectFit
-							//sourceSize.width: 200
-							//sourceSize.height: 100
+							Loader{
+								anchors.fill: parent
+								sourceComponent: Image{// Better quality on zoom
+									mipmap: SettingsModel.mipmapEnabled
+									source:'file:/'+mainRow.contentModel.filePath
+									fillMode: Image.PreserveAspectFit
+									visible: status == Image.Ready
+								}
+								asynchronous: true
+								active: thumbnailProvider.state == 'hovered'
+							}
 						}
 					}
 					Component {
@@ -87,6 +101,7 @@ Row {
 						
 						AnimatedImage {
 							id: animatedImageSource
+							property real scaleAnimatorTo : ChatStyle.entry.message.file.animation.to
 							mipmap: SettingsModel.mipmapEnabled
 							source: 'file:/'+mainRow.contentModel.filePath
 							fillMode: Image.PreserveAspectFit
@@ -99,6 +114,7 @@ Row {
 						id: extension
 						
 						Rectangle {
+							property real scaleAnimatorTo : ChatStyle.entry.message.file.animation.to
 							color: ChatStyle.entry.message.file.extension.background.color
 							
 							Text {
@@ -120,10 +136,11 @@ Row {
 						Layout.fillHeight: true
 						Layout.preferredWidth: parent.height*4/3
 						
+						
+						
 						sourceComponent: (mainRow.contentModel ? 
-							(mainRow.contentModel.wasDownloaded && UtilsCpp.isAnimatedImage(mainRow.contentModel.filePath) 
-								? animatedImage
-							:  (mainRow.contentModel.thumbnail ? thumbnailImage : extension )
+							(mainRow.isAnimatedImage ? animatedImage
+							:  (mainRow.haveThumbnail ? thumbnailImage : extension )
 							) : undefined)
 						
 						ScaleAnimator {
@@ -152,7 +169,7 @@ Row {
 										}
 										
 										thumbnailProvider.z = Constants.zPopup
-										thumbnailProviderAnimator.to = ChatStyle.entry.message.file.animation.to
+										thumbnailProviderAnimator.to = thumbnailProvider.item.scaleAnimatorTo
 										thumbnailProviderAnimator.running = true
 									}
 								}
@@ -203,14 +220,15 @@ Row {
 								}
 								
 								text: (mainRow.contentModel ? mainRow.contentModel.name : '')
-								width: parent.width
+								width: visible ? parent.width : 0
+								visible: mainRow.contentModel && !mainRow.isAnimatedImage && !mainRow.haveThumbnail
 							}
 							
 							ProgressBar {
 								id: progressBar
 								
 								height: ChatStyle.entry.message.file.status.bar.height
-								width: parent.width
+								width: visible ? parent.width : 0
 								
 								to: (mainRow.contentModel ? mainRow.contentModel.fileSize : 0)
 								value: mainRow.contentModel ? mainRow.contentModel.fileOffset || to : to

@@ -26,7 +26,6 @@ Rectangle{
 	radius: 10
 	state: chatRoomModel && chatRoomModel.reply ? 'showed' : 'hidden'
 	// Remove bottom corners				
-	clip: false
 	function hide(){
 		state = 'hidden'
 	}
@@ -74,7 +73,6 @@ Rectangle{
 			id: replyPreviewTextArea
 			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < messageContentsList.height}
 			boundsBehavior: Flickable.StopAtBounds
-			clip: true
 			contentHeight: messageContentsList.height
 			contentWidth: width - ScrollBar.vertical.width
 			flickableDirection: Flickable.VerticalFlick 

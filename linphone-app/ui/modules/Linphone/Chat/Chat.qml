@@ -31,6 +31,7 @@ Rectangle {
 	// ---------------------------------------------------------------------------
 	
 	color: ChatStyle.color
+	clip: true
 	
 	function positionViewAtIndex(index){
 		chat.bindToEnd = false
@@ -76,7 +77,7 @@ Rectangle {
 			
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			
+			clip: false
 			highlightFollowsCurrentItem: false
 			// Use moving event => this is a user action.
 			onIsMovingChanged:{
@@ -122,7 +123,7 @@ Rectangle {
 				Item {
 					implicitHeight: container.height + ChatStyle.sectionHeading.bottomMargin
 					width: parent.width
-					
+					clip: false
 					Borders {
 						id: container
 						
@@ -188,6 +189,7 @@ Rectangle {
 				
 				color: ChatStyle.color
 				implicitHeight: layout.height + ChatStyle.entry.bottomMargin
+				clip: false
 				
 				// ---------------------------------------------------------------------
 				
@@ -198,6 +200,7 @@ Rectangle {
 					hoverEnabled: true
 					implicitHeight: layout.height
 					width: parent.width + parent.anchors.rightMargin
+					clip: false
 					acceptedButtons: Qt.NoButton
 					ColumnLayout{
 						id: layout
@@ -264,6 +267,7 @@ Rectangle {
 								property int remainingIndex : loaderIndex % ((chat.remainingLoadersCount) / chat.syncLoaderBatch) != 0	// Check loader index to remaining loader.
 								onRemainingIndexChanged: if( remainingIndex == 0 && asynchronous) asynchronous = false
 								asynchronous: true
+								z:1
 							
 								onStatusChanged:	if( status == Loader.Ready) {
 														remainingIndex = -1	// overwrite to remove signal changed. That way, there is no more binding loops.
@@ -315,6 +319,7 @@ Rectangle {
 			footer: Item{
 				implicitHeight: composersItem.implicitHeight
 				width: parent.width
+				clip: false
 				Text {
 					id: composersItem
 					property var composers : container.proxyModel.chatRoomModel ? container.proxyModel.chatRoomModel.composers : undefined
@@ -376,7 +381,6 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: textAreaBorders.height + chatMessagePreview.height+messageBlock.height
 			color: ChatStyle.sendArea.backgroundBorder.color
-			clip: true
 			ColumnLayout{
 				anchors.fill: parent				
 				spacing: 0

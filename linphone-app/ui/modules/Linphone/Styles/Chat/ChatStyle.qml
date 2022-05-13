@@ -182,12 +182,12 @@ QtObject {
 			}
 			
 			property QtObject file: QtObject {
-				property int height: 64
-				property int heightWithThumbnail: 200
+				property int height: 80
+				property int heightbetter: 200
 				property int iconSize: 18
 				property int margins: 8
 				property int spacing: 8
-				property int width: 250
+				property int width: 100
 				property QtObject download: QtObject{
 					property string icon: 'download_custom'
 					property int iconSize: 30
@@ -196,8 +196,9 @@ QtObject {
 				}
 				
 				property QtObject animation: QtObject {
-					property int duration: 200
-					property real to: 1.5
+					property int duration: 300
+					property real to: 1.7
+					property real thumbnailTo: 2
 				}
 				
 				property QtObject extension: QtObject {

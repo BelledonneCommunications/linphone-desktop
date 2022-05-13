@@ -37,7 +37,7 @@ Column{
 	spacing: 0
 	
 	property bool isOutgoing : contentModel && contentModel.chatMessageModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
-	
+	z: message.visible ? 0 : 1
 	ChatCalendarMessage{
 		id: calendarMessage
 		contentModel: mainItem.contentModel
@@ -46,16 +46,19 @@ Column{
 		gotoButtonMode: 1
 		onExpandToggle: isExpanded=!isExpanded
 		height: fitHeight
+		z: 1
 	}
 	ChatAudioMessage{
 		id: audioMessage
 		contentModel: mainItem.contentModel
 		visible: contentModel
+		z: 1
 	}
 	ChatFileMessage{
 		id: fileMessage
 		contentModel: mainItem.contentModel
 		width: parent.width
+		z: 2
 	}
 	ChatTextMessage {
 		id: message

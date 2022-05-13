@@ -56,7 +56,7 @@ Item {
 		}
 		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
 		radius: ChatStyle.entry.message.radius
-		
+		clip: false
 		width: (
 				   ephemeralTimerRow.visible && dataWidth < ephemeralTimerRow.width + 2*ChatStyle.entry.message.padding
 				   ? ephemeralTimerRow.width + 2*ChatStyle.entry.message.padding
@@ -82,6 +82,7 @@ Item {
 			}
 			ChatReplyMessage{
 				id: replyMessage
+				z: 1
 				mainChatMessageModel: $chatEntry
 				visible: $chatEntry.isReply
 				maxWidth: container.width
@@ -96,6 +97,7 @@ Item {
 				anchors.right: parent.right
 				visible: count > 0
 				spacing: 0
+				clip: false
 				model: ContentProxyModel{
 					chatMessageModel: $chatEntry
 				}
