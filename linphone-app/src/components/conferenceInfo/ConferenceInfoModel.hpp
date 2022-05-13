@@ -25,16 +25,18 @@
 #include <QDateTime>
 #include <QObject>
 #include <QSharedPointer>
+#include <QTimeZone>
 
 class ParticipantListModel;
 class ConferenceScheduler;
+class TimeZoneModel;
 
 class ConferenceInfoModel : public QObject {
 	Q_OBJECT
 	
 public:
-
-	Q_PROPERTY(QDateTime dateTime READ getDateTime WRITE setDateTime NOTIFY dateTimeChanged)
+	Q_PROPERTY(TimeZoneModel * timeZoneModel READ getTimeZoneModel WRITE setTimeZoneModel NOTIFY timeZoneModelChanged)
+	Q_PROPERTY(QDateTime dateTime READ getDateTimeSystem WRITE setDateTime NOTIFY dateTimeChanged)
 	Q_PROPERTY(int duration READ getDuration WRITE setDuration NOTIFY durationChanged)
 	Q_PROPERTY(QDateTime endDateTime READ getEndDateTime NOTIFY dateTimeChanged)
 	Q_PROPERTY(QString organizer READ getOrganizer WRITE setOrganizer NOTIFY organizerChanged)
@@ -54,7 +56,8 @@ public:
 	
 //-------------------------------
 
-	QDateTime getDateTime() const;
+	QDateTime getDateTimeUtc() const;
+	QDateTime getDateTimeSystem() const;
 	int getDuration() const;
 	QDateTime getEndDateTime() const;
 	QString getOrganizer() const;	
@@ -64,6 +67,7 @@ public:
 	QString getUri() const;
 	bool isScheduled() const;
 	Q_INVOKABLE QVariantList getParticipants() const;
+	Q_INVOKABLE TimeZoneModel* getTimeZoneModel() const;
 	
 	void setDateTime(const QDateTime& dateTime);
 	void setDuration(const int& duration);
@@ -73,6 +77,7 @@ public:
 	void setIsScheduled(const bool& on);
 	
 	Q_INVOKABLE void setParticipants(ParticipantListModel * participants);
+	Q_INVOKABLE void setTimeZoneModel(TimeZoneModel * model);
 	
 // Tools
 	Q_INVOKABLE void createConference(const int& securityLevel, const int& inviteMode);
@@ -84,6 +89,7 @@ public:
 	
 	
 signals:
+	void timeZoneModelChanged();
 	void dateTimeChanged();
 	void durationChanged();
 	void organizerChanged();
@@ -100,6 +106,7 @@ signals:
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;
 	QSharedPointer<ConferenceScheduler> mConferenceScheduler= nullptr;
+	QTimeZone mTimeZone;
 	
 	bool mIsScheduled = true;
 };

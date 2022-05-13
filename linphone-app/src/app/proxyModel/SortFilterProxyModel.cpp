@@ -34,6 +34,11 @@ int SortFilterProxyModel::getFilterType () const{
 	return mFilterType;
 }
 
+QVariant SortFilterProxyModel::getAt(const int& atIndex) const {
+	auto modelIndex = index(atIndex,0);
+	return sourceModel()->data(mapToSource(modelIndex), 0);
+}
+
 void SortFilterProxyModel::setFilterType (int filterType) {
 	if (getFilterType() != filterType) {
 		mFilterType = filterType;

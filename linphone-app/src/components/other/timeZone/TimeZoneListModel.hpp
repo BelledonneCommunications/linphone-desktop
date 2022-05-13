@@ -33,7 +33,7 @@ public:
 	TimeZoneListModel (QObject *parent = Q_NULLPTR);
 	
 	void initTimeZones();
-	int getDefaultIndex () const;
+	int get(const QTimeZone& timeZone = QTimeZone::systemTimeZone())const;
 	
 	QHash<int, QByteArray> roleNames () const override;
 	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;

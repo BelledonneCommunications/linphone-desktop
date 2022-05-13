@@ -26,17 +26,12 @@
 
 // -----------------------------------------------------------------------------
 
-TimeZoneProxyModel::TimeZoneProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
+TimeZoneProxyModel::TimeZoneProxyModel (QObject *parent) : SortFilterProxyModel(parent) {
 	setSourceModel(new TimeZoneListModel(parent));
 	sort(0);
 }
 
 // -----------------------------------------------------------------------------
-
-bool TimeZoneProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
-  const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
-  return true;
-}
 
 bool TimeZoneProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
 	auto test = sourceModel()->data(left);
@@ -45,18 +40,15 @@ bool TimeZoneProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
     auto timeA = a->getStandardTimeOffset();
     auto timeB = b->getStandardTimeOffset();
 
-/*
-	const QVariantMap mapA = sourceModel()->data(left).value<QVariantMap>();
-	const QVariantMap mapB = sourceModel()->data(right).value<QVariantMap>();
-    const TimeZoneModel* a = mapA["timeZoneModel"].value<TimeZoneModel*>();
-    const TimeZoneModel* b = mapB["timeZoneModel"].value<TimeZoneModel*>();
-    auto timeA = a->getStandardTimeOffset();
-    auto timeB = b->getStandardTimeOffset();
-    */
-  
 	return timeA < timeB || (timeA == timeB && a->getCountryName() < b->getCountryName());
 }
 
-int TimeZoneProxyModel::getDefaultIndex() const{
-	return mapFromSource(sourceModel()->index(qobject_cast<TimeZoneListModel*>(sourceModel())->getDefaultIndex(), 0)).row();
+int TimeZoneProxyModel::getIndex(TimeZoneModel * model) const{
+	auto listModel = qobject_cast<TimeZoneListModel*>(sourceModel());
+	int index = 0;
+	if(model)
+		index = listModel->get(model->getTimeZone());
+	else
+		index = listModel->get();
+	return mapFromSource(sourceModel()->index(index, 0)).row();
 }

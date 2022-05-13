@@ -21,20 +21,21 @@
 #ifndef TIME_ZONE_PROXY_MODEL_H_
 #define TIME_ZONE_PROXY_MODEL_H_
 
-#include <QSortFilterProxyModel>
+#include "app/proxyModel/SortFilterProxyModel.hpp"
 
 // =============================================================================
 
-class TimeZoneProxyModel : public QSortFilterProxyModel {
+class TimeZoneModel;
+
+class TimeZoneProxyModel : public SortFilterProxyModel {
 	Q_OBJECT
 public:
 	TimeZoneProxyModel (QObject *parent = Q_NULLPTR);
-	Q_PROPERTY(int defaultIndex READ getDefaultIndex CONSTANT)
+	Q_PROPERTY(int defaultIndex READ getIndex CONSTANT)
 	
-	int getDefaultIndex() const;
+	Q_INVOKABLE int getIndex(TimeZoneModel * model = nullptr) const;
 	
 protected:
-	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 };
 

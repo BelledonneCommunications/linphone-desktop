@@ -125,7 +125,7 @@ Loader{
 			RowLayout {
 				id: participantsRow
 				Layout.fillWidth: true
-				Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
+				Layout.preferredHeight: ChatCalendarMessageStyle.participants.iconSize
 				Layout.leftMargin: 5
 				Layout.rightMargin: 15
 				
@@ -152,6 +152,7 @@ Loader{
 					isCustom: true
 					colorSet: mainItem.gotoButtonMode == 0 ? ChatCalendarMessageStyle.gotoButton : ChatCalendarMessageStyle.infoButton
 					backgroundRadius: width/2
+					toggled: mainItem.isExpanded
 					onClicked: mainItem.expandToggle()
 				}
 			}
@@ -159,11 +160,13 @@ Loader{
 				id: expandedDescription
 				Layout.fillWidth: true
 				Layout.fillHeight: true
+				Layout.topMargin: 5
 				visible: mainItem.isExpanded
+				spacing: 0
 				ScrollableListView{
 					id: expandedParticipantsList
 					Layout.fillWidth: true
-					Layout.minimumHeight: Math.min( count * ChatCalendarMessageStyle.lineHeight, parent.height/2)
+					Layout.minimumHeight: Math.min( count * ChatCalendarMessageStyle.lineHeight, parent.height/(descriptionTitle.visible?3:2))
 					Layout.leftMargin: 10
 					spacing: 0
 					visible: mainItem.isExpanded
@@ -191,6 +194,7 @@ Loader{
 					id: descriptionTitle
 					Layout.fillWidth: true
 					Layout.leftMargin: 10
+					Layout.topMargin: 5
 					color: ChatCalendarMessageStyle.subject.color
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
@@ -203,6 +207,7 @@ Loader{
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Layout.leftMargin: 10
+					padding: 0
 					color: 'transparent'
 					readOnly: true
 					textColor: ChatCalendarMessageStyle.description.color
@@ -215,6 +220,10 @@ Loader{
 					//wrapMode: TextEdit.WordWrap
 					
 					text: mainItem.conferenceInfoModel.description
+				}
+				Item{
+					Layout.fillHeight: true
+					Layout.fillWidth: true
 				}
 				Text{
 					id: linkTitle

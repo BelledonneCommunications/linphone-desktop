@@ -49,6 +49,7 @@
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/notifier/Notifier.hpp"
+#include "components/other/timeZone/TimeZoneModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/participant/ParticipantModel.hpp"
@@ -79,8 +80,11 @@ QSharedPointer<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<
 
 ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	//App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
+	mTimeZone = QTimeZone::systemTimeZone();
 	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
-	mConferenceInfo->setDateTime(QDateTime::currentMSecsSinceEpoch() / 1000 + 60);
+	QDateTime currentDateTime = QDateTime::currentDateTime();
+	QDateTime utc = currentDateTime.addSecs( -mTimeZone.offsetFromUtc(currentDateTime));
+	mConferenceInfo->setDateTime(utc.toMSecsSinceEpoch() / 1000);
 	mConferenceInfo->setDuration(1200);
 	mIsScheduled = true;
 	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
@@ -90,9 +94,8 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 
 ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceInfo> conferenceInfo, QObject * parent) : QObject(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
-	
+	mTimeZone = QTimeZone::systemTimeZone();
 	mConferenceInfo = conferenceInfo;
-	//mIsScheduled = getDateTime() >= QDateTime::currentDateTime();
 	mIsScheduled  = true;
 }
 
@@ -107,8 +110,14 @@ std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::getConferenceInfo
 //------------------------------------------------------------------------------------------------
 
 
-QDateTime ConferenceInfoModel::getDateTime() const{
+QDateTime ConferenceInfoModel::getDateTimeUtc() const{
 	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000);
+}
+
+QDateTime ConferenceInfoModel::getDateTimeSystem() const{
+	QDateTime utc = getDateTimeUtc();
+	QDateTime system = utc.addSecs(mTimeZone.offsetFromUtc(utc));
+	return system;
 }
 
 int ConferenceInfoModel::getDuration() const{
@@ -116,7 +125,7 @@ int ConferenceInfoModel::getDuration() const{
 }
 
 QDateTime ConferenceInfoModel::getEndDateTime() const{
-	return getDateTime().addSecs(getDuration()*60);
+	return getDateTimeUtc().addSecs(getDuration()*60);
 }
 
 QString ConferenceInfoModel::getOrganizer() const{
@@ -140,7 +149,6 @@ QString ConferenceInfoModel::displayNamesToString()const{
 				txt << displayName;
 		}
 	}
-	//txt.removeFirst();// Remove me
 	return txt.join(", ");
 }
 
@@ -164,11 +172,17 @@ QVariantList ConferenceInfoModel::getParticipants() const{
 	return addresses;
 }
 
-//------------------------------------------------------------------------------------------------
+TimeZoneModel* ConferenceInfoModel::getTimeZoneModel() const{
+	TimeZoneModel * model = new TimeZoneModel(mTimeZone);
+	App::getInstance()->getEngine()->setObjectOwnership(model, QQmlEngine::JavaScriptOwnership);
+	return model;
+}
 
+//------------------------------------------------------------------------------------------------
+// Convert into UTC with TimeZone
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){
-	mConferenceInfo->setDateTime(dateTime.toMSecsSinceEpoch() / 1000);
-	qWarning() << "Set DateTime: " << mConferenceInfo->getDateTime() << " from " << dateTime.toMSecsSinceEpoch() / 1000;
+	QDateTime utc = dateTime.addSecs( -mTimeZone.offsetFromUtc(dateTime));
+	mConferenceInfo->setDateTime(utc.toMSecsSinceEpoch() / 1000);
 	emit dateTimeChanged();
 }
 
@@ -195,6 +209,13 @@ void ConferenceInfoModel::setDescription(const QString& description){
 
 void ConferenceInfoModel::setParticipants(ParticipantListModel * participants){
 	mConferenceInfo->setParticipants(participants->getParticipants());
+}
+
+void ConferenceInfoModel::setTimeZoneModel(TimeZoneModel * model){
+	if( mTimeZone != model->getTimeZone()){
+		mTimeZone = model->getTimeZone();
+		emit timeZoneModelChanged();
+	}
 }
 
 void ConferenceInfoModel::setIsScheduled(const bool& on){
@@ -244,13 +265,13 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 //-------------------------------------------------------------------------------------------------
 
 void ConferenceInfoModel::onStateChanged(linphone::ConferenceSchedulerState state){
-	qWarning() << "ConferenceInfoModel::onStateChanged: " << (int) state;
+	qDebug() << "ConferenceInfoModel::onStateChanged: " << (int) state;
 	if( state == linphone::ConferenceSchedulerState::Ready)
 		emit conferenceCreated();
 	else if( state == linphone::ConferenceSchedulerState::Error)
 		emit conferenceCreationFailed();
 }
 void ConferenceInfoModel::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
-	qWarning() << "ConferenceInfoModel::onInvitationsSent";
+	qDebug() << "ConferenceInfoModel::onInvitationsSent";
 	emit invitationsSent();
 }

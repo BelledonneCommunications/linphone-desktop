@@ -51,15 +51,13 @@ ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstract
 			}) != participants.end());
 		if(haveMe){
 			auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
-			QDate t = conferenceInfoModel->getDateTime().date();
-			if( !mMappedList.contains(t)){
-				//auto proxy = new SortFilterAbstractProxyModel<ConferenceInfoListModel>(new ConferenceInfoListModel(), this);
+			QDate conferenceDateTimeSystem = conferenceInfoModel->getDateTimeSystem().date();
+			if( !mMappedList.contains(conferenceDateTimeSystem)){
 				auto proxy = new ConferenceInfoProxyListModel(this);
 				connect(this, &ConferenceInfoMapModel::filterTypeChanged, proxy, &ConferenceInfoProxyListModel::setFilterType);
-				mMappedList[t] = proxy;
+				mMappedList[conferenceDateTimeSystem] = proxy;
 			}
-				//mMappedList[t] = new ConferenceInfoProxyModel(new ConferenceInfoListModel(), this);
-			mMappedList[t]->add(conferenceInfoModel);
+			mMappedList[conferenceDateTimeSystem]->add(conferenceInfoModel);
 		}
 	}
 }

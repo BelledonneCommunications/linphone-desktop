@@ -72,11 +72,10 @@ QVariant TimeZoneListModel::data (const QModelIndex &index, int role) const {
 	return QVariant();
 }
 
-int TimeZoneListModel::getDefaultIndex () const {
-	auto defaultTimezone = QTimeZone::systemTimeZone();
+int TimeZoneListModel::get (const QTimeZone& timeZone) const {
 	const auto it = find_if(
-				mList.cbegin(), mList.cend(), [&defaultTimezone](QSharedPointer<QObject> item) {
-		return item.objectCast<TimeZoneModel>()->getTimeZone() == defaultTimezone;
+				mList.cbegin(), mList.cend(), [&timeZone](QSharedPointer<QObject> item) {
+		return item.objectCast<TimeZoneModel>()->getTimeZone() == timeZone;
 	}
 	);
 	return it != mList.cend() ? int(distance(mList.cbegin(), it)) : 0;

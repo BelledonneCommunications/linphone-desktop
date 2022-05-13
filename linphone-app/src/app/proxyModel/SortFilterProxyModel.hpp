@@ -33,10 +33,12 @@ public:
 	
 	virtual int getCount() const;
 	virtual int getFilterType () const;
+	Q_INVOKABLE QVariant getAt(const int& index) const;
 	
 	virtual void setFilterType (int filterType);
 	
 	Q_INVOKABLE void remove(int index, int count = 1);
+	
 
 signals:
 	void countChanged();

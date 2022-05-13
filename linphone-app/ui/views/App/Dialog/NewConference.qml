@@ -122,6 +122,7 @@ DialogPlus {
 				if( scheduledSwitch.checked){
 					var startDateTime = Utils.buildDate(dateField.getDate(), timeField.getTime())
 					startDateTime.setSeconds(0)
+					conferenceInfoModel.timeZoneModel = timeZoneField.model.getAt(timeZoneField.currentIndex)
 					conferenceInfoModel.dateTime = startDateTime
 					conferenceInfoModel.duration = durationField.text
 				}
@@ -318,9 +319,10 @@ DialogPlus {
 							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.duration : '1200'
 						}
 						ComboBox{
+							id: timeZoneField
 							Layout.preferredWidth: parent.cellWidth; 
 							//color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
-							currentIndex: model.defaultIndex
+							currentIndex: conferenceManager.conferenceInfoModel ? model.getIndex(conferenceManager.conferenceInfoModel.timeZoneModel) : -1
 							model: TimeZoneProxyModel{}
 							onActivated: console.log("activated : " +index)
 							textRole: "displayText"

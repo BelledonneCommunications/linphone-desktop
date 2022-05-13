@@ -164,9 +164,9 @@ Item{
 						id: calendarGrid
 						property bool expanded : false					//anchors.fill: parent
 						cellWidth: width/2
-						cellHeight: expanded ? 300 : 100
+						cellHeight: expanded ? 450 : 100
 						model: $modelData
-						height: cellHeight * ( (count+1) /2)
+						height: cellHeight * Math.floor( (count+1) / 2)
 						width: mainItem.width - 20
 						delegate:Rectangle {
 							id: entry
