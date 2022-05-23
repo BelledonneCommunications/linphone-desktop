@@ -38,13 +38,13 @@
 
 // =============================================================================
 
-ContentModel::ContentModel(ChatMessageModel* chatModel) : mAppData(""){
+ContentModel::ContentModel(ChatMessageModel* chatModel) : mAppData(chatModel ? QString::fromStdString(chatModel->getChatMessage()->getAppdata()) : ""){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mChatMessageModel = chatModel;
 	mWasDownloaded = false;
 	mFileOffset = 0;
 }
-ContentModel::ContentModel(std::shared_ptr<linphone::Content> content, ChatMessageModel* chatModel) : mAppData(""){
+ContentModel::ContentModel(std::shared_ptr<linphone::Content> content, ChatMessageModel* chatModel) : mAppData(chatModel ? QString::fromStdString(chatModel->getChatMessage()->getAppdata()) : ""){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mChatMessageModel = chatModel;
 	mWasDownloaded = false;

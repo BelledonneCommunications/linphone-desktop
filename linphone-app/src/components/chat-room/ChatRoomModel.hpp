@@ -252,7 +252,7 @@ public:
 	
 	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
 	void insertCalls (const QList<std::shared_ptr<linphone::CallLog> > &calls);
-	void insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
+	std::shared_ptr<ChatMessageModel> insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
 	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
 	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
 	void insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs);

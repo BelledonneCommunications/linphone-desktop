@@ -34,7 +34,7 @@ public:
 	ChatRoomModel::EntryType mType;
 	
 	virtual QDateTime  getTimestamp() const;
-	virtual void setTimestamp(const QDateTime& timestamp);
+	virtual void setTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime());
 	
 	virtual void deleteEvent();
 	

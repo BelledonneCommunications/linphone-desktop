@@ -149,12 +149,13 @@ public:
 	//----------------------------------------------------------------------------
 	
 	void setWasDownloaded(bool wasDownloaded);
+	virtual void setTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime()) override;
 	
 	//----------------------------------------------------------------------------	
 	
 	Q_INVOKABLE void resendMessage ();
 	
-	virtual void deleteEvent();
+	virtual void deleteEvent() override;
 	void updateFileTransferInformation();
 	//		Linphone callbacks  
 	void onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer) ;

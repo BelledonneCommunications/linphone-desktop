@@ -151,7 +151,7 @@ public:
 #ifdef Q_PROCESSOR_X86_64
 	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1.0-linux64.5.so.bz2";
 #else
-	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1-0-linux32.5.so.bz2";
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1.0-linux32.5.so.bz2";
 #endif // ifdef Q_PROCESSOR_X86_64
 #elif defined(Q_OS_WIN)
 	static constexpr char LibraryExtension[] = "dll";
