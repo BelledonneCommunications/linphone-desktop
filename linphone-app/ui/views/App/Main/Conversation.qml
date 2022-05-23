@@ -126,7 +126,7 @@ ColumnLayout  {
 							Layout.topMargin: 15
 							Layout.preferredHeight: implicitHeight
 							Layout.alignment: Qt.AlignBottom
-							visible:chatRoomModel.isMeAdmin && !usernameEdit.visible
+							visible:chatRoomModel.isMeAdmin && !usernameEdit.visible && !chatRoomModel.isOneToOne
 							
 							Icon{
 								id:adminIcon
@@ -154,7 +154,7 @@ ColumnLayout  {
 							visible: !usernameEdit.visible 
 							contactDescriptionStyle: ConversationStyle.bar.contactDescription
 							username: avatar.username
-							usernameClickable: chatRoomModel.isMeAdmin
+							usernameClickable: chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
 							participants: if(chatRoomModel) {
 											if(chatRoomModel.groupEnabled) {
 												return chatRoomModel.participants.displayNamesToString;
@@ -188,7 +188,7 @@ ColumnLayout  {
 						Item{
 							Layout.fillHeight: true
 							Layout.fillWidth: true
-							visible: chatRoomModel.isMeAdmin
+							visible: chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
 						}
 					}
 					Icon{
