@@ -2644,6 +2644,21 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Show a minimal version of what to display in timeline.&apos; :</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>versionCheckTypeRelease</source>
+        <extracomment>&apos;Release&apos; : Keyword for an option to check the release version</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>versionCheckTypeCustom</source>
+        <extracomment>&apos;Custom&apos; : Keyword for an option to check the custom version</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>versionCheckTypeNightly</source>
+        <extracomment>&apos;Nightly&apos; : Keyword for an option to check the nightly version</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

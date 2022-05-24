@@ -242,7 +242,7 @@ TabContainer {
 				FormGroup {
 					//: 'Check for updates' : Label switch for enabling check for updates
 					label: qsTr('checkForUpdateLabel')
-					
+					maxWidth: 3*parent.width/2
 					RowLayout{
 						Switch {
 							checked: SettingsModel.checkForUpdateEnabled
@@ -254,6 +254,23 @@ TabContainer {
 							text: SettingsModel.versionCheckUrl
 							
 							onEditingFinished: SettingsModel.versionCheckUrl = text
+						}
+						ComboBox{
+							Layout.preferredWidth: fitWidth
+							Layout.leftMargin: 10
+							//: 'Release' : Keyword for an option to check the release version
+							model: [qsTr('versionCheckTypeRelease'),
+							//: 'Nightly' : Keyword for an option to check the nightly version
+									 qsTr('versionCheckTypeNightly'),
+							//: 'Custom' : Keyword for an option to check the custom version
+									 qsTr('versionCheckTypeCustom')]
+							visible: SettingsModel.haveVersionNightlyUrl()
+							currentIndex: SettingsModel.versionCheckType == SettingsModel.VersionCheckType_Release ? 0
+											: SettingsModel.versionCheckType == SettingsModel.VersionCheckType_Nightly ? 1
+											: 2
+							onActivated: SettingsModel.versionCheckType = ( currentIndex == 0 ? SettingsModel.VersionCheckType_Release 
+																			: currentIndex == 1 ? SettingsModel.VersionCheckType_Nightly
+																			: SettingsModel.VersionCheckType_Custom)
 						}
 					}
 				}

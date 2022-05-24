@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Based on LinphoneSDK 5.1.34
 - Add Sanitizer build.
+- Version types selection for version checker.
 
 ### Fixed
 - Order messages from receiving time.

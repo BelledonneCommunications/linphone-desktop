@@ -18,6 +18,8 @@ Controls.ComboBox {
   property bool haveBorder: true
   property bool haveMargin: true
   property color backgroundColor: ComboBoxStyle.background.color.normal
+  
+  property int fitWidth: contentItem.fitWidth + ComboBoxStyle.indicator.dropDown.iconSize
 
   // ---------------------------------------------------------------------------
 
@@ -40,10 +42,12 @@ Controls.ComboBox {
   // ---------------------------------------------------------------------------
 
   contentItem: Item {
+    property int fitWidth: contentText.implicitWidth + ComboBoxStyle.contentItem.iconSize + contentLayout.anchors.leftMargin
     height: comboBox.height
     width: comboBox.width
 
     RowLayout {
+      id: contentLayout
       anchors {
         fill: parent
         leftMargin: comboBox.haveMargin ? ComboBoxStyle.contentItem.leftMargin : 0
@@ -59,6 +63,7 @@ Controls.ComboBox {
       }
 
       Text {
+        id: contentText
         Layout.fillWidth: true
 
         color: ComboBoxStyle.contentItem.text.color

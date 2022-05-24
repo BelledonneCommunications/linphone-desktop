@@ -475,7 +475,6 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation>
             <numerusform>%1 yazıyor…</numerusform>
-            <numerusform>%1 yazıyor…</numerusform>
         </translation>
     </message>
     <message>
@@ -1040,14 +1039,12 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation>
             <numerusform>%1 dakika</numerusform>
-            <numerusform>%1 dakika</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
-            <numerusform>%1 saat</numerusform>
             <numerusform>%1 saat</numerusform>
         </translation>
     </message>
@@ -1056,14 +1053,12 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation>
             <numerusform>%1 gün</numerusform>
-            <numerusform>%1 gün</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation>
-            <numerusform>%1 hafta</numerusform>
             <numerusform>%1 hafta</numerusform>
         </translation>
     </message>
@@ -1369,7 +1364,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newChatRoom</source>
-        <extracomment>&apos;Open Conference&apos; : Tooltip to illustrate a button</extracomment>
+        <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
         <translation>Konuşma odası başlat</translation>
     </message>
     <message>
@@ -1471,7 +1466,6 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
         <translation>
-            <numerusform>En az %1 katılımcınız olmalı.</numerusform>
             <numerusform>En az %1 katılımcınız olmalı.</numerusform>
         </translation>
     </message>
@@ -1600,7 +1594,6 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>unreadMessageNotice</source>
         <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
         <translation>
-            <numerusform>%1 okunmamış ileti</numerusform>
             <numerusform>%1 okunmamış ileti</numerusform>
         </translation>
     </message>
@@ -2639,7 +2632,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mipmapTooltip2</source>
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bu özellik, resmin ölçeklenirken veya dönüştürülürken mipmap süzgecini kullanıp kullanmayacağını barındırır. {2?}</translation>
     </message>
     <message>
         <source>minimalTimelineFilterLabel</source>
@@ -2650,6 +2643,21 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>minimalTimelineFilterTooltip</source>
         <extracomment>&apos;Show a minimal version of what to display in timeline.&apos; :</extracomment>
         <translation>Zaman çizelgesinde sunulacakların kısa sürümünü göster.</translation>
+    </message>
+    <message>
+        <source>versionCheckTypeRelease</source>
+        <extracomment>&apos;Release&apos; : Keyword for an option to check the release version</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>versionCheckTypeCustom</source>
+        <extracomment>&apos;Custom&apos; : Keyword for an option to check the custom version</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>versionCheckTypeNightly</source>
+        <extracomment>&apos;Nightly&apos; : Keyword for an option to check the nightly version</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
