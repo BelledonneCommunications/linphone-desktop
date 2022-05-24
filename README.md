@@ -40,6 +40,7 @@ You will need the tools :
 - `git`
 
 For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.12 or newer_). `C++11` support is required!
+Qt6 is not yet supported.
 
 ### Set your environment
 
@@ -49,8 +50,8 @@ For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.12 o
 
 2. You have to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5, and the `PATH` to the Qt5 `bin`. Example:
 
-        Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake"
-        PATH="~/Qt/5.12.5/gcc_64/bin/:$PATH"
+        Qt5_DIR="~/Qt/5.15.2/gcc_64/lib/cmake"
+        PATH="~/Qt/5.15.2/gcc_64/bin/:$PATH"
 
 Note: If you have the third party tool `qtchooser` installed : 
         eval "$(qtchooser -print-env)"
@@ -154,8 +155,8 @@ Before you install packages with Brew, you may have to change directories permis
 
 ## Specific instructions for the Windows platform
 
-64-bit version is not fully supported at this moment by Linphone Desktop and wasn't tested.
 If a build for 64bits is needed, replace all `mingw32` by `mingw64`, `i686` by `x86_64`, `-A Win32` by `-A x64` or simply remove it.
+The project support Visual Studio 2017 and 2019.
 
 1. Install main tools:
   - `MinGW/MSYS2` : [download](https://www.msys2.org/)
@@ -164,9 +165,9 @@ If a build for 64bits is needed, replace all `mingw32` by `mingw64`, `i686` by `
       - `pacman -Sy --needed base-devel mingw-w64-i686-toolchain`
       - `pacman -S python3-pip` in `MSYS2 MSYS` console
       - `python3 -m pip install pystache six` in `cmd`
-    - In this order, add `C:\msys64\`, `C:\msys64\usr\bin` and `C:\msys64\mingw32\bin` in your PATH (the last one is needed by cmake to know where gcc is) to the PATH environement variable from windows advanced settings.
+    - In this order, add `C:\msys64\mingw32\bin`, `C:\msys64\usr\bin` and `C:\msys64\` to the PATH environement variable from windows advanced settings.
     
-When building the SDK, it will install automatically from MSYS2 : `perl`, `yasm`, `gawk`, `bzip2`, `nasm, `sed`, `patch`, `pkg-config`, `gettext`, `glib2` and `intltool` (if needed)
+When building the SDK, it will install automatically from MSYS2 : `perl`, `yasm`, `gawk`, `bzip2`, `nasm`, `sed`, `patch`, `pkg-config`, `gettext`, `glib2` and `intltool` (if needed)
 
   - `git` : use MSYS2 : `pacman -S git` or [download](https://git-scm.com/download/win)
   
@@ -175,9 +176,9 @@ When building the SDK, it will install automatically from MSYS2 : `perl`, `yasm`
     - Under "Installation details". Go to "Desktop C++ Development" and add "SDK Windows 8.1 and SDK UCRT"
     - Individual component: Windows 8.1 SDK
 
-2. Ensure that you have downloaded the `Qt msvc2015 version` or `Qt msvc2017 version` (32-bit). 
+2. Ensure that you have downloaded the `Qt msvcXXXX version` where `XXXX` match your MSVC generator.
 
-3. Or open a Command line with Visual Studio `Developer Command Prompt for VS 2017` and call qtenv2.bat that is in your qt binaries eg: `C:\Qt\<version>\msvc2017\bin\qtenv2.bat`
+3. Or open a Command line with Visual Studio `Developer Command Prompt for VS 2017` (for 32-bits)/`x64 Native Tools Command Prompt VS 2017` (for 64-bits) and call qtenv2.bat that is in your qt binaries eg: `C:\Qt\<version>\msvcXXXX\bin\qtenv2.bat`
 
 4. Build as usual with adding `-A Win32` to `cmake ..` (General Steps) :
   - `cmake .. -DCMAKE_BUILD_PARALLEL_LEVEL=10 -DCMAKE_BUILD_TYPE=RelWithDebInfo -A Win32`

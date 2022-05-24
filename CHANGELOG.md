@@ -4,10 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 4.4.2 - [undefined]
+## 4.5 - [undefined]
 
 ### Added
-- Based on LinphoneSDK 5.1.34
+- Video conference.
+
+### Fixed
+- Crash on exit.
+- Memory stability.
+
+## 4.4.2 - 2022-05-25
+
+### Added
+- Based on LinphoneSDK 5.1.36
 - Add Sanitizer build.
 - Version types selection for version checker.
 
