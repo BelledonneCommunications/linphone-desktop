@@ -239,7 +239,7 @@ void ChatMessageModel::setTimestamp(const QDateTime& timestamp) {
 	auto timeT = timestamp.toMSecsSinceEpoch();
 	auto appData = AppDataManager(QString::fromStdString(getChatMessage()->getAppdata()));
 	if(appData.mData["timestamp"].toLongLong() != timeT) {
-		appData.mData["timestamp"] = timeT;
+		appData.mData["timestamp"] = QString::number(timeT);
 		getChatMessage()->setAppdata(appData.toString().toStdString());
 	}
 }
