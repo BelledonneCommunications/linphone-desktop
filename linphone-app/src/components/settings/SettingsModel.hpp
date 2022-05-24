@@ -192,6 +192,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool exitOnClose READ getExitOnClose WRITE setExitOnClose NOTIFY exitOnCloseChanged)
 	Q_PROPERTY(bool checkForUpdateEnabled READ isCheckForUpdateEnabled WRITE setCheckForUpdateEnabled NOTIFY checkForUpdateEnabledChanged)
 	Q_PROPERTY(QString versionCheckUrl READ getVersionCheckUrl WRITE setVersionCheckUrl NOTIFY versionCheckUrlChanged)
+	Q_PROPERTY(VersionCheckType versionCheckType READ getVersionCheckType WRITE setVersionCheckType NOTIFY versionCheckTypeChanged)
 	
 	Q_PROPERTY(bool showLocalSipAccount READ getShowLocalSipAccount CONSTANT)
 	Q_PROPERTY(bool showStartChatButton READ getShowStartChatButton CONSTANT)
@@ -219,6 +220,13 @@ public:
 		MediaEncryptionZrtp = int(linphone::MediaEncryption::ZRTP)
 	};
 	Q_ENUM(MediaEncryption)
+	
+	enum VersionCheckType {
+		VersionCheckType_Release,
+		VersionCheckType_Nightly,
+		VersionCheckType_Custom
+	};
+	Q_ENUM(VersionCheckType);
 	
 	
 	SettingsModel (QObject *parent = Q_NULLPTR);
@@ -515,6 +523,10 @@ public:
 	QString getVersionCheckUrl() const;
 	void setVersionCheckUrl(const QString& url);
 	
+	VersionCheckType getVersionCheckType() const;
+	void setVersionCheckType(const VersionCheckType& type);
+	Q_INVOKABLE bool haveVersionNightlyUrl()const;
+	
 	
 	Q_INVOKABLE bool getShowLocalSipAccount () const;
 	Q_INVOKABLE bool getShowStartChatButton () const;
@@ -712,6 +724,7 @@ signals:
 	
 	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();
+	void versionCheckTypeChanged();
 	
 	// Advanced. -----------------------------------------------------------------
 	

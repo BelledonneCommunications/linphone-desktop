@@ -4,7 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 4.4.1 - [undefined]
+
+## 4.4.2 - [undefined]
+
+### Added
+- Based on LinphoneSDK 5.1.34
+- Add Sanitizer build.
+- Version types selection for version checker.
+
+### Fixed
+- Order messages from receiving time.
+- Fix H264 download URL on Linux.
+- Hide Admin status in One-to-one chats.
+
+## 4.4.1 - 2022-04-06
 
 ### Fixed
 - Fix codec downloading on Windows and popup progress bar.

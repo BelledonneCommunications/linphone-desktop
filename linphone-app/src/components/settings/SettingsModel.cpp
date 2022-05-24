@@ -1384,13 +1384,42 @@ void SettingsModel::setCheckForUpdateEnabled(bool enable){
 }
 
 QString SettingsModel::getVersionCheckUrl() const{
-	return Utils::coreStringToAppString(mConfig->getString("misc", "version_check_url_root", Constants::VersionCheckUrl));
+	return Utils::coreStringToAppString(mConfig->getString("misc", "version_check_url_root", Constants::VersionCheckReleaseUrl));
 }
 
 void SettingsModel::setVersionCheckUrl(const QString& url){
-	mConfig->setString("misc", "version_check_url_root", Utils::appStringToCoreString(url));
-	emit versionCheckUrlChanged();
+	if( url != getVersionCheckUrl()){
+		mConfig->setString("misc", "version_check_url_root", Utils::appStringToCoreString(url));
+		if( url == Constants::VersionCheckReleaseUrl)
+			setVersionCheckType(VersionCheckType_Release);
+		else if( url == Constants::VersionCheckNightlyUrl)
+			setVersionCheckType(VersionCheckType_Nightly);
+		else
+			setVersionCheckType(VersionCheckType_Custom);
+		emit versionCheckUrlChanged();
+	}
 }
+
+SettingsModel::VersionCheckType SettingsModel::getVersionCheckType() const{
+	return (SettingsModel::VersionCheckType) mConfig->getInt(UiSection, "version_check_type", (int)VersionCheckType_Release);
+}
+
+void SettingsModel::setVersionCheckType(const VersionCheckType& type){
+	if( type != getVersionCheckType()){
+		mConfig->setInt(UiSection, "version_check_type", (int)type);
+		switch(type){
+			case VersionCheckType_Release : setVersionCheckUrl(Constants::VersionCheckReleaseUrl); break;
+			case VersionCheckType_Nightly : setVersionCheckUrl(Constants::VersionCheckNightlyUrl);break;
+			case VersionCheckType_Custom : break;// Do not override URL
+		}
+		emit versionCheckTypeChanged();
+	}
+}
+
+bool SettingsModel::haveVersionNightlyUrl()const{
+	return QString(Constants::VersionCheckNightlyUrl) != "";
+}
+
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getShowLocalSipAccount()const{

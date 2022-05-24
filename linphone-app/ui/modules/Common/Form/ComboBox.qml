@@ -25,6 +25,7 @@ Controls.ComboBox {
 	property int maxPopupHeight : rootItem ? rootItem.height : 400
 	
 	property int selectionWidth: width
+	property int fitWidth: contentItem.fitWidth + ComboBoxStyle.indicator.dropDown.iconSize
 	
 	clip: true
 	// ---------------------------------------------------------------------------
@@ -48,6 +49,7 @@ Controls.ComboBox {
 	// ---------------------------------------------------------------------------
 	
 	contentItem: Item {
+		property int fitWidth: contentText.implicitWidth + ComboBoxStyle.contentItem.iconSize + contentLayout.anchors.leftMargin
 		height: comboBox.height
 		width: comboBox.selectionWidth
 		clip: true
@@ -67,6 +69,7 @@ Controls.ComboBox {
 			}
 			
 			Text {
+				id: contentText
 				Layout.fillWidth: true
 				
 				color: comboBox.foregroundColor
