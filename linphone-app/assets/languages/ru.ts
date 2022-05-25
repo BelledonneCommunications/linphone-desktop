@@ -21,7 +21,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>АКТИВИРОВАТЬ</translation>
+        <translation>ИСПОЛЬЗОВАТЬ АККАУНТ</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -36,7 +36,7 @@
     </message>
     <message>
         <source>confirmAction</source>
-        <translation>АКТИВИРОВАТЬ</translation>
+        <translation>ИСПОЛЬЗОВАТЬ АККАУНТ</translation>
     </message>
     <message>
         <source>activationSteps</source>
@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation>укажите конфигурационный файл %1</translation>
+        <translation>укажите конфигурационный файл %1 для использования</translation>
     </message>
     <message>
         <source>applicationDescription</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation>запускать свёрнутой в область уведомлений, не показывать основной инфтерфейс</translation>
+        <translation>запускать свёрнутым в область уведомлений, не показывать основной интерфейс</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
@@ -75,7 +75,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>показывает меню помощи в использовании %1 из командной строки</translation>
+        <translation>показывает меню помощи в использовании %1 из командной строки CLI</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -91,7 +91,7 @@
     </message>
     <message>
         <source>settings</source>
-        <translation>Настройки</translation>
+        <translation>Предпочтения</translation>
     </message>
     <message>
         <source>about</source>
@@ -111,7 +111,7 @@
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation>SIP-адреса</translation>
+        <translation>SIP-адрес</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
@@ -145,7 +145,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>Этот ассистент поможет вам настроить и использовать ваш аккаунт %1.</translation>
+        <translation>Этот ассистент поможет вам настроить и использовать ваш sip аккаунт.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
@@ -165,11 +165,11 @@
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation>Слишком короткое! (мин. %1 символов)</translation>
+        <translation>Слишком короткое! (минимум %1 символов)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation>Слишком длинное! (макс. %1 символов)</translation>
+        <translation>Слишком длинное! (максимум %1 символов)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
@@ -181,11 +181,11 @@
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation>Слишком короткий! (мин. %1 символов)</translation>
+        <translation>Слишком короткий! (минимум %1 символов)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation>Слишком длинный! (макс. %1 символов)</translation>
+        <translation>Слишком длинный! (максимум %1 символов)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
@@ -355,7 +355,7 @@
     </message>
     <message>
         <source>callErrorDeclined</source>
-        <translation>Удалённая сторона отклонила вызов.</translation>
+        <translation>Удалённая сторона отклонила звонок.</translation>
     </message>
     <message>
         <source>callErrorNotFound</source>
@@ -367,7 +367,7 @@
     </message>
     <message>
         <source>callErrorNotAcceptable</source>
-        <translation>Удалённая сторона не может принять вызов.</translation>
+        <translation>Удалённая сторона не может принять звонок.</translation>
     </message>
     <message>
         <source>callStatsReceivedFramerate</source>
@@ -386,7 +386,7 @@
     </message>
     <message>
         <source>callSipAddressDescription</source>
-        <translation>Начать новый вызов.</translation>
+        <translation>Начать новый звонок.</translation>
     </message>
 </context>
 <context>
@@ -408,39 +408,39 @@
     </message>
     <message>
         <source>callTransferDescription</source>
-        <translation>Хотите перенаправить этот вызов?</translation>
+        <translation>Хотите перенаправить этот звонок?</translation>
     </message>
 </context>
 <context>
     <name>Calls</name>
     <message>
         <source>acceptAudioCall</source>
-        <translation>ПРИНЯТЬ АУДИО ВЫЗОВ</translation>
+        <translation>ПРИНЯТЬ АУДИО ЗВОНОК</translation>
     </message>
     <message>
         <source>acceptVideoCall</source>
-        <translation>ПРИНЯТЬ ВИДЕО ВЫЗОВ</translation>
+        <translation>ПРИНЯТЬ ВИДЕО ЗВОНОК</translation>
     </message>
     <message>
         <source>terminateCall</source>
-        <translation>ЗАВЕРШИТЬ ВЫЗОВ</translation>
+        <translation>ЗАВЕРШИТЬ ЗВОНОК</translation>
     </message>
     <message>
         <source>resumeCall</source>
-        <translation>ПРОДОЛЖИТЬ ВЫЗОВ</translation>
+        <translation>ПРОДОЛЖИТЬ ЗВОНОК</translation>
     </message>
     <message>
         <source>transferCall</source>
-        <translation>ПЕРНАПРАВИТЬ ВЫЗОВ</translation>
+        <translation>ПЕРЕНАПРАВИТЬ ЗВОНОК</translation>
     </message>
     <message>
         <source>callPause</source>
-        <translation>ПРИОСТАНОВИТЬ ВЫЗОВ</translation>
+        <translation>ПРИОСТАНОВИТЬ ЗВОНОК</translation>
     </message>
     <message>
         <source>attendedTransferComplete</source>
         <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
-        <translation>ПОЛНЫЙ ПЕРЕВОД С УЧАСТИЕМ</translation>
+        <translation>ЗВОНОК ПЕРЕВОДА С УЧАСТИЕМ ЗАВЕРШЁН</translation>
     </message>
     <message>
         <source>attendedTransferCall</source>
@@ -456,7 +456,7 @@
     </message>
     <message>
         <source>acceptClosingDescription</source>
-        <translation>Вы уверены, что хотите завершить все вызовы?</translation>
+        <translation>Вы уверены, что хотите завершить все звонки?</translation>
     </message>
 </context>
 <context>
@@ -500,22 +500,22 @@
     <message>
         <source>icsOrganizer</source>
         <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Организатор</translation>
     </message>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Описание</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Адрес конференции</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Присоединиться</translation>
     </message>
 </context>
 <context>
@@ -547,7 +547,7 @@
     <message>
         <source>deliveryError</source>
         <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка при отправке на %1</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
@@ -676,7 +676,7 @@
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>Начать вызов SIP адреса.</translation>
+        <translation>Начать звонок на SIP адрес.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
@@ -688,11 +688,11 @@
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation>Присоединитесь к конференции по sip-адресу. Если вы не подключены к конфигурации прокси, см. join-conference-as.</translation>
+        <translation>Присоединитесь к конференции по sip-адресу. Если вы не подключены к конфигурации прокси, см. join-conference.</translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
-        <translation>Завершить определённый вызов, все вызовы или текущий вызов.</translation>
+        <translation>Завершить определённый звонок, все звонки или текущий звонок.</translation>
     </message>
 </context>
 <context>
@@ -756,24 +756,24 @@
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Конференции</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
         <extracomment>&apos;Finished&apos; : Filter conferences on end status.
 ----------
 &apos;Invitations&apos; : Filter conferences on invited conferences (where we are not the organizer).</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Оконченная</translation>
     </message>
     <message>
         <source>conferencesScheduledFilter</source>
         <extracomment>&apos;Scheduled&apos; : Filter conferences on scheduled status.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Запланированная</translation>
     </message>
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL конференции скопирован</translation>
     </message>
 </context>
 <context>
@@ -868,7 +868,7 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать чат на основе конференции.</translation>
+        <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать чат-комнату на основе конференции.</translation>
     </message>
 </context>
 <context>
@@ -896,7 +896,7 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать чат на основе конференции.</translation>
+        <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать чат-комнату на основе конференции.</translation>
     </message>
 </context>
 <context>
@@ -907,7 +907,7 @@
     </message>
     <message>
         <source>displayCalls</source>
-        <translation>ВЫЗОВЫ</translation>
+        <translation>ЗВОНКИ</translation>
     </message>
     <message>
         <source>displayMessages</source>
@@ -953,7 +953,7 @@
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation>Обзвон всех участников чата</translation>
+        <translation>Обзвон всех участников чат-комнаты</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
@@ -1095,7 +1095,7 @@
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Недолговечное сообщение поддерживается только в чате конференции!</translation>
+        <translation>Недолговечное сообщение поддерживается только в конференции, основанной на чат-комнате!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1144,31 +1144,31 @@
     <name>Event</name>
     <message>
         <source>incomingCall</source>
-        <translation>Входящий вызов</translation>
+        <translation>Входящий звонок</translation>
     </message>
     <message>
         <source>outgoingCall</source>
-        <translation>Исходящий вызов</translation>
+        <translation>Исходящий звонок</translation>
     </message>
     <message>
         <source>declinedIncomingCall</source>
-        <translation>Отклонённый входящий вызов</translation>
+        <translation>Отклонённый входящий звонок</translation>
     </message>
     <message>
         <source>declinedOutgoingCall</source>
-        <translation>Отклонённый исходящий вызов</translation>
+        <translation>Отклонённый исходящий звонок</translation>
     </message>
     <message>
         <source>endedCall</source>
-        <translation>Завершённый вызов</translation>
+        <translation>Завершённый звонок</translation>
     </message>
     <message>
         <source>missedIncomingCall</source>
-        <translation>Пропущенный входящий вызов</translation>
+        <translation>Пропущенный входящий звонок</translation>
     </message>
     <message>
         <source>missedOutgoingCall</source>
-        <translation>Пропущенный исходящий вызов</translation>
+        <translation>Пропущенный исходящий звонок</translation>
     </message>
 </context>
 <context>
@@ -1234,7 +1234,7 @@
     </message>
     <message>
         <source>inviteTitle</source>
-        <translation>ПРИГЛАСИТЕ ДРУЗЕЙ</translation>
+        <translation>ПРИГЛАСИТЬ ДРУЗЕЙ</translation>
     </message>
     <message>
         <source>accountAssistantDescription</source>
@@ -1269,11 +1269,11 @@
     </message>
     <message>
         <source>securedStringFormat</source>
-        <translation>Вызов сшифрован с: %1.</translation>
+        <translation>Звонок зашифрован с: %1.</translation>
     </message>
     <message>
         <source>callNotSecured</source>
-        <translation>Вызов не зашифрован.</translation>
+        <translation>Звонок не зашифрован.</translation>
     </message>
     <message>
         <source>takeSnapshotLabel</source>
@@ -1323,7 +1323,7 @@
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation>Найдите участников в своём списке контактов, чтобы пригласить их в чат.</translation>
+        <translation>Найдите участников в своём списке контактов, чтобы пригласить их в чат-комнату.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
@@ -1433,7 +1433,7 @@
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>Используйте умную поисковую строку, чтобы сразу начать аудио или видео вызов, отправить сообщение или добавить новый контакт. Просто введите SIP адрес или имя пользователя вашего контакта.</translation>
+        <translation>Используйте умную поисковую строку, чтобы сразу начать аудио или видео звонок, отправить сообщение или добавить новый контакт. Просто введите SIP адрес или имя пользователя вашего контакта.</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
@@ -1442,7 +1442,7 @@
     <message>
         <source>newChatRoom</source>
         <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
-        <translation>Начать комнату-чат</translation>
+        <translation>Начать чат-комнату</translation>
     </message>
     <message>
         <source>hideTimeline</source>
@@ -1462,7 +1462,7 @@
     <message>
         <source>mainWindowConferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Конференции</translation>
     </message>
 </context>
 <context>
@@ -1493,11 +1493,11 @@
     </message>
     <message>
         <source>about</source>
-        <translation>О</translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation>Уйти</translation>
+        <translation>Выйти</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
@@ -1524,12 +1524,12 @@
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>menuMultimedia</source>
         <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Параметры мультимедиа</translation>
     </message>
 </context>
 <context>
@@ -1561,12 +1561,12 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать комнату-чат на основе конференции.</translation>
+        <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать конференцию, основанную на чат-комнате.</translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
         <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
-        <translation>Начать комнату-чат</translation>
+        <translation>Начать чат-комнату</translation>
     </message>
     <message>
         <source>askEncryption</source>
@@ -1581,7 +1581,7 @@
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
-        <translation>Текущая тема комнаты-чата. Она не может быть пустой.</translation>
+        <translation>Текущая тема чат-комнаты. Она не может быть пустой.</translation>
         <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
     </message>
     <message>
@@ -1592,7 +1592,7 @@
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation>Найти в своих контактах или добавить пользовательскую в комнату-чат.</translation>
+        <translation>Найти в своих контактах или добавить своё в чат-комнату.</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -1627,17 +1627,17 @@
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished">ОТМЕНА</translation>
+        <translation>ОТМЕНА</translation>
     </message>
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished">Вам нужно заполнить тему.</translation>
+        <translation>Вам нужно заполнить тему.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the conference creation.</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Вам нужен как минимум %1 участник.</numerusform>
             <numerusform>Вам нужно как минимум %1 участника.</numerusform>
             <numerusform>Вам нужно как минимум %1 участников.</numerusform>
@@ -1646,125 +1646,125 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать конференцию, основанную на чат-комнате.</translation>
     </message>
     <message>
         <source>newConferenceTitle</source>
         <extracomment>&apos;Start a video conference&apos; : Title of a popup about creation of a video conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Начать видеоконференцию</translation>
     </message>
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
-        <translation type="unfinished">Тема</translation>
+        <translation>Тема</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">Задайте тему</translation>
+        <translation>Задайте тему</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Conference. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished">Текущая тема комнаты-чата. Она не может быть пустой.</translation>
+        <translation>Текущая тема конференции. Она не может быть пустой.</translation>
         <extra-Tooltip>Explanation about the subject of the Conference</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your conference?&apos; : Ask about setting the conference as secured.</extracomment>
-        <translation type="unfinished">Хотите зашифровать свой чат?</translation>
+        <translation>Хотите зашифровать свою конференцию?</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished">Выберите участников</translation>
+        <translation>Выберите участников</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
-        <translation type="unfinished">Найти в своих контактах или добавить пользовательскую в комнату-чат.</translation>
+        <translation>Найти в своих контактах или добавить своё в конференцию.</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Администратор</translation>
+        <translation>Администратор</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished">Удалить этого участника из подборки</translation>
+        <translation>Удалить этого участника из подборки</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished">Требуемый</translation>
+        <translation>Требуемый</translation>
     </message>
     <message>
         <source>launchButton</source>
         <extracomment>&apos;Launch&apos; : Launch button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Запуск</translation>
     </message>
     <message>
         <source>updateButton</source>
         <extracomment>&apos;Update&apos; : Update button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Обновить</translation>
     </message>
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the conference&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Обновить конференцию</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your conference?&apos; : Ask about setting the conference as scheduled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите запланировать конференцию?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
         <extracomment>&apos;Date&apos; : Date label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Дата</translation>
     </message>
     <message>
         <source>newConferenceTimeTitle</source>
         <extracomment>&apos;Time&apos; : Time label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Время</translation>
     </message>
     <message>
         <source>newConferenceDurationTitle</source>
         <extracomment>&apos;Duration&apos; : Duration label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Продолжительность</translation>
     </message>
     <message>
         <source>newConferenceTimezoneTitle</source>
         <extracomment>&apos;Timezone&apos; : Timezone label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Часовой пояс</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTitle</source>
         <extracomment>&apos;Add a description&apos; : Label of a text field about the description of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Добавить описание</translation>
     </message>
     <message>
         <source>newConferenceDescriptionPlaceholder</source>
         <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Описание</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the conference&apos; : Explanation about the description of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Это описание будет описывать конференцию</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
         <extracomment>&apos;Send invite via Linphone&apos; : Label for checkbox for sending invitations with Linphone.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Отправить приглашение через Linphone</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
         <extracomment>&apos;Send invite via Email&apos; : Label for checkbox for sending invitations with mailer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Отправить приглашение через электронную почту</translation>
     </message>
 </context>
 <context>
@@ -1896,29 +1896,29 @@
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished">Добавить участников</translation>
+        <translation>Добавить участников</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished">Найдите участников в своём списке контактов, чтобы пригласить их в чат.</translation>
+        <translation>Найдите участников в своём списке контактов, чтобы пригласить их в чат-комнату.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished">Список участников</translation>
+        <translation>Список участников</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Администратор</translation>
+        <translation>Администратор</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>participantsListRemoveTooltip</source>
         <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить этого участника из списка</translation>
     </message>
 </context>
 <context>
@@ -1932,7 +1932,7 @@
     <message>
         <source>participantsMe</source>
         <extracomment>&apos;Me&apos; : One word for myself.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Я</translation>
     </message>
 </context>
 <context>
@@ -2065,11 +2065,11 @@
     </message>
     <message>
         <source>showAudioCodecsLabel</source>
-        <translation>Показать Аудио кодаки</translation>
+        <translation>Показать аудио кодеки</translation>
     </message>
     <message>
         <source>playbackGainLabel</source>
-        <translation>Усил воспроизведения</translation>
+        <translation>Усиление воспроизведения</translation>
     </message>
     <message>
         <source>captureGainLabel</source>
@@ -2081,7 +2081,7 @@
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
-        <translation>Звуковой вызов в процессе: некоторые настройки недоступны.</translation>
+        <translation>Аудио звонок в процессе: некоторые настройки недоступны.</translation>
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
@@ -2144,7 +2144,7 @@
     </message>
     <message>
         <source>autoAnswerLabel</source>
-        <translation>Принимать вызов автоматически</translation>
+        <translation>Принимать звонок автоматически</translation>
     </message>
     <message>
         <source>autoAnswerDelayLabel</source>
@@ -2152,7 +2152,7 @@
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation>Принимать вызов автоматически (с видео)</translation>
+        <translation>Принимать звонок автоматически (с видео)</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
@@ -2188,7 +2188,7 @@
     </message>
     <message>
         <source>outgoingCallsEnabledLabel</source>
-        <translation>Включение исходящих вызовов</translation>
+        <translation>Включение исходящих звонков</translation>
     </message>
     <message>
         <source>showTelKeypadAutomaticallyLabel</source>
@@ -2204,7 +2204,7 @@
     </message>
     <message>
         <source>callPauseEnabledLabel</source>
-        <translation>Вызов поставлен на паузу</translation>
+        <translation>Звонок поставлен на паузу</translation>
     </message>
     <message>
         <source>encryptionMandatoryLabel</source>
@@ -2213,7 +2213,7 @@
     <message>
         <source>hideEmptyChatRoomsLabel</source>
         <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
-        <translation>Скрыть пустые комнаты-чаты</translation>
+        <translation>Скрыть пустые чат-комнаты</translation>
     </message>
     <message>
         <source>waitRegistrationForCallLabel</source>
@@ -2600,12 +2600,12 @@
     <message>
         <source>webviewRegistrationUrlLabel</source>
         <extracomment>&apos;Registration URL&apos; : Label for registration URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL регистрации</translation>
     </message>
     <message>
         <source>webviewLoginUrlLabel</source>
         <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL логина</translation>
     </message>
 </context>
 <context>
@@ -2985,7 +2985,7 @@
     </message>
     <message>
         <source>showVideoCodecsLabel</source>
-        <translation>Показать Видео кодаки</translation>
+        <translation>Показать видео кодеки</translation>
     </message>
     <message>
         <source>videoSettingsInCallWarning</source>
@@ -3252,32 +3252,32 @@
     <message>
         <source>videoConferencePauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Сейчас вы вне конференции.</translation>
     </message>
     <message>
         <source>videoConferencePauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите на кнопку воспроизведения, чтобы присоединиться к ней обратно.</translation>
     </message>
     <message>
         <source>videoConferenceStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Начать запись</translation>
     </message>
     <message>
         <source>videoConferenceStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Остановить запись</translation>
     </message>
     <message>
         <source>videoConferenceSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Сделать скриншот</translation>
     </message>
     <message>
         <source>videoConferenceWaitMessage</source>
         <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Видеоконференция не готова. Пожалуйста, подождите…</translation>
     </message>
 </context>
 <context>
@@ -3285,32 +3285,32 @@
     <message>
         <source>videoConferencePauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Сейчас вы вне конференции.</translation>
     </message>
     <message>
         <source>videoConferencePauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите на кнопку воспроизведения, чтобы присоединиться к ней обратно.</translation>
     </message>
     <message>
         <source>videoConferenceStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Начать запись</translation>
     </message>
     <message>
         <source>videoConferenceStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Остановить запись</translation>
     </message>
     <message>
         <source>videoConferenceSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Сделать скриншот</translation>
     </message>
     <message>
         <source>videoConferenceWaitMessage</source>
         <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Видеоконференция не готова. Пожалуйста, подождите…</translation>
     </message>
 </context>
 <context>
@@ -3318,47 +3318,47 @@
     <message>
         <source>conferenceMenuMultimedia</source>
         <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Параметры мультимедиа</translation>
     </message>
     <message>
         <source>conferenceMenuLayout</source>
         <extracomment>&apos;Change layout&apos; : Menu title to change the conference layout.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Изменить макет</translation>
     </message>
     <message>
         <source>conferenceMenuInvite</source>
         <extracomment>&apos;Invite participants&apos; : Menu title to invite participants in admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Пригласить участников</translation>
     </message>
     <message>
         <source>conferenceMenuParticipants</source>
         <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Список участников</translation>
     </message>
     <message>
         <source>conferenceMenuTitle</source>
         <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>conferenceMenuGridLayout</source>
         <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Мозаичный режим</translation>
     </message>
     <message>
         <source>conferenceMenuActiveSpeakerLayout</source>
         <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Активизировать режим динамика</translation>
     </message>
     <message>
         <source>conferenceMenuAudioLayout</source>
         <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Режим только аудио</translation>
     </message>
     <message>
         <source>conferenceMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Сейчас вы одни на этой конференции</translation>
     </message>
 </context>
 <context>
@@ -3366,12 +3366,12 @@
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished">ОТМЕНА</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Начать</translation>
     </message>
 </context>
 <context>
@@ -4296,7 +4296,7 @@
     <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished">Хотите загрузить %1 (%2)?</translation>
+        <translation>Вы хотите загрузить %1 (%2)?</translation>
     </message>
 </context>
 </TS>
