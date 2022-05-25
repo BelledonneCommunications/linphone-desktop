@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Order messages from receiving time.
 - Fix H264 download URL on Linux.
 - Hide Admin status in One-to-one chats.
+- Encryption wasn't enabled after creating an account with lime url without having to restart the application.
 
 ## 4.4.1 - 2022-04-06
 

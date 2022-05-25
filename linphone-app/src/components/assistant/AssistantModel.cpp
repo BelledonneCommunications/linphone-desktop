@@ -414,11 +414,11 @@ void AssistantModel::setConfigFilename (const QString &configFilename) {
 
   QString configPath = Utils::coreStringToAppString(Paths::getAssistantConfigDirPath()) + configFilename;
   qInfo() << QStringLiteral("Set config on assistant: `%1`.").arg(configPath);
-
-  CoreManager::getInstance()->getCore()->getConfig()->loadFromXmlFile(
+  auto core = CoreManager::getInstance()->getCore();
+  core->getConfig()->loadFromXmlFile(
     Utils::appStringToCoreString(configPath)
   );
-
+  core->enableLimeX3Dh(core->getLimeX3DhServerUrl() != "");
   emit configFilenameChanged(configFilename);
 }
 

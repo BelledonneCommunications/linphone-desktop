@@ -376,6 +376,7 @@ shared_ptr<linphone::ProxyConfig> AccountSettingsModel::createProxyConfig (const
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	qInfo() << QStringLiteral("Set config on assistant: `%1`.").arg(assistantFile);
 	core->getConfig()->loadFromXmlFile(Paths::getAssistantConfigDirPath() + assistantFile.toStdString());
+	core->enableLimeX3Dh(core->getLimeX3DhServerUrl() != "");
 	return core->createProxyConfig();
 }
 
