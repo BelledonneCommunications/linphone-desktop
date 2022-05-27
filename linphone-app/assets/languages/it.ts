@@ -10,7 +10,7 @@
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aiutaci a tradurre %1</translation>
     </message>
 </context>
 <context>
@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>activationSteps</source>
-        <translation>per attivare il tuo account segui le istruzioni cliccando sul link: %1.</translation>
+        <translation>Per attivare il tuo account segui le istruzioni cliccando sul link: %1.</translation>
     </message>
 </context>
 <context>
@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>A free (libre) SIP video-phone.</translation>
+        <translation>Un video-telefono SIP libero.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -115,7 +115,7 @@
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca aggiornamenti</translation>
     </message>
 </context>
 <context>
@@ -154,7 +154,7 @@
     <message>
         <source>homeCgu</source>
         <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Accetto %2le condizioni di utilizzo e %4la politica sulla privacy%5 di %1</translation>
     </message>
 </context>
 <context>
@@ -481,17 +481,17 @@ URL del server non configurato.</translation>
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Copiato negli appunti</translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Selezione copiata negli appunti</translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Scegli dove inoltrare il messaggio</translation>
     </message>
 </context>
 <context>
@@ -504,17 +504,17 @@ URL del server non configurato.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo conferenza</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Partecipa</translation>
     </message>
 </context>
 <context>
@@ -546,7 +546,7 @@ URL del server non configurato.</translation>
     <message>
         <source>deliveryError</source>
         <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Errore durante l&apos;invio a %1</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
@@ -555,7 +555,7 @@ URL del server non configurato.</translation>
     <message>
         <source>Forwarded</source>
         <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inoltrato</translation>
     </message>
 </context>
 <context>
@@ -592,12 +592,12 @@ URL del server non configurato.</translation>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inoltra</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rispondi</translation>
     </message>
 </context>
 <context>
@@ -636,7 +636,7 @@ URL del server non configurato.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rispondi</translation>
     </message>
 </context>
 <context>
@@ -644,7 +644,7 @@ URL del server non configurato.</translation>
     <message>
         <source>titleReply</source>
         <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rispondi a %1</translation>
     </message>
 </context>
 <context>
@@ -687,7 +687,7 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Termina una chiamata specifica, tutte le chiamate o la chiamata corrente.</translation>
     </message>
 </context>
 <context>
@@ -751,24 +751,24 @@ URL del server non configurato.</translation>
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conferenze</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
         <extracomment>&apos;Finished&apos; : Filter conferences on end status.
 ----------
 &apos;Invitations&apos; : Filter conferences on invited conferences (where we are not the organizer).</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Terminate</translation>
     </message>
     <message>
         <source>conferencesScheduledFilter</source>
         <extracomment>&apos;Scheduled&apos; : Filter conferences on scheduled status.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Schedulate</translation>
     </message>
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;URL della conferenze è stato copiato</translation>
     </message>
 </context>
 <context>
@@ -863,7 +863,7 @@ URL del server non configurato.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Per creare una chat di gruppo è necessario impostare la URI del gruppo nelle impostazioni del tuo account.</translation>
     </message>
 </context>
 <context>
@@ -891,7 +891,7 @@ URL del server non configurato.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Per creare una chat di gruppo è necessario impostare la URI del gruppo nelle impostazioni del tuo account.</translation>
     </message>
 </context>
 <context>
@@ -927,13 +927,13 @@ URL del server non configurato.</translation>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Amministratore</translation>
         <extra-Context>One word title for describing the current admin status</extra-Context>
     </message>
     <message>
         <source>conversationMenuGroupInformations</source>
         <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni gruppo</translation>
     </message>
     <message>
         <source>conversationMenuDevices</source>
@@ -943,17 +943,17 @@ URL del server non configurato.</translation>
     <message>
         <source>conversationMenuEphemeral</source>
         <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi effimeri</translation>
     </message>
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chiama tutti i partecipanti del gruppo</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca nei messaggi</translation>
     </message>
     <message>
         <source>conversationMenuDelete</source>
@@ -1070,38 +1070,38 @@ URL del server non configurato.</translation>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;cancel&apos; : button text for cancelling operation</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;start&apos; : button text to start ephemeral mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>INIZIA</translation>
     </message>
     <message>
         <source>ephemeralTitle</source>
         <extracomment>&quot;Ephemeral messages&quot; : Popup title for ephemerals</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi effimeri</translation>
     </message>
     <message>
         <source>ephemeralText</source>
         <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>I nuovi messaggi verranno cancellati in entrambe le parti una volta letti dal tuo contatto. Imposta un timeout.</translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>I messaggi effimeri sono supportati solo nelle chat di gruppo!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
         <source>disabled</source>
         <extracomment>&apos;Disabled&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Disabilitato</translation>
     </message>
     <message numerus="yes">
         <source>nMinute</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 minuto</numerusform>
             <numerusform>%1 minuti</numerusform>
         </translation>
@@ -1109,7 +1109,7 @@ URL del server non configurato.</translation>
     <message numerus="yes">
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 ora</numerusform>
             <numerusform>%1 ore</numerusform>
         </translation>
@@ -1117,7 +1117,7 @@ URL del server non configurato.</translation>
     <message numerus="yes">
         <source>nDay</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 giorno</numerusform>
             <numerusform>%1 giorni</numerusform>
         </translation>
@@ -1125,7 +1125,7 @@ URL del server non configurato.</translation>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 settimana</numerusform>
             <numerusform>%1 settimane</numerusform>
         </translation>
@@ -1187,26 +1187,26 @@ URL del server non configurato.</translation>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;ultima configurazione remota è fallita</translation>
     </message>
 </context>
 <context>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished">Sei sicuro di voler cancellare questa cronologia?</translation>
+        <translation>Sei sicuro di voler cancellare questa cronologia?</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished">Modifica contatto</translation>
+        <translation>Modifica contatto</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished">Aggiungi contatto</translation>
+        <translation>Aggiungi contatto</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished">Cancella cronologia</translation>
+        <translation>Cancella cronologia</translation>
     </message>
 </context>
 <context>
@@ -1299,39 +1299,39 @@ URL del server non configurato.</translation>
     <message>
         <source>quitGroupButton</source>
         <extracomment>&apos;Exit group&apos; : Button label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Esci dal gruppo</translation>
     </message>
     <message>
         <source>ok</source>
         <extracomment>&apos;OK&apos; : Button label</extracomment>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi partecipanti</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca partecipanti dalla tua lista contatti per invitarli nella chat di gruppo.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lista partecipanti</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Amministratore</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>chatRoomDetailsTitle</source>
         <extracomment>&quot;Group information&quot; : Popup title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Informazioni gruppo</translation>
         <extra-This>popup display data about the current chat room</extra-This>
     </message>
 </context>
@@ -1340,22 +1340,22 @@ URL del server non configurato.</translation>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;CANCEL&apos; : button text for cancelling operation</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>callButton</source>
         <extracomment>&apos;CALL&apos; : Button that lead to a call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>CHIAMA</translation>
     </message>
     <message>
         <source>okButton</source>
         <extracomment>&apos;OK&apos; : Button that validate the popup to be redirected to the device list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>infoEncryptionTitle</source>
         <extracomment>&apos;End-to-end encrypted&apos; Popup title about encryption information.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Crittografia end-to-end</translation>
     </message>
     <message>
         <source>encryptionExplanation</source>
@@ -1366,7 +1366,7 @@ URL del server non configurato.</translation>
     <message>
         <source>encryptionProcessExplanation</source>
         <extracomment>&quot;To do so, call the contact and follow the authentification process.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Per farlo, chiama il contatto e segui il processo di autenticazione.</translation>
         <extra-Context>Explanation process</extra-Context>
     </message>
 </context>
@@ -1433,22 +1433,22 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newChatRoom</source>
         <extracomment>&apos;Start a chat room&apos; : Tooltip to illustrate a button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Crea una chat di gruppo</translation>
     </message>
     <message>
         <source>hideTimeline</source>
         <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi Timeline</translation>
     </message>
     <message>
         <source>openTimeline</source>
         <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apri Timeline</translation>
     </message>
     <message>
         <source>openHome</source>
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Apri Home</translation>
     </message>
     <message>
         <source>mainWindowConferencesTitle</source>
@@ -1473,7 +1473,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Controlla aggiornamenti</translation>
     </message>
 </context>
 <context>
@@ -1493,7 +1493,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Controlla aggiornamenti</translation>
     </message>
 </context>
 <context>
@@ -1515,12 +1515,12 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>menuMultimedia</source>
         <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Parametri multimediali</translation>
     </message>
 </context>
 <context>
@@ -1528,12 +1528,12 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Launch&apos; : Start button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>AVVIA</translation>
     </message>
     <message>
         <source>missingSubject</source>
@@ -1556,12 +1556,12 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newChatRoomTitle</source>
         <extracomment>&apos;Start a chat room&apos; : Title of a popup about creation of a chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Avvia una chat di gruppo</translation>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your chat?&apos; : Ask about setting the chat room as secured.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi criptare la tua chat?</translation>
     </message>
     <message>
         <source>subjectLabel</source>
@@ -1841,11 +1841,11 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation>Estrazione di %1...</translation>
+        <translation>Estrazione di %1…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>Download %1...</translation>
+        <translation>Download %1…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
@@ -1964,7 +1964,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsAdvanced</name>
     <message>
         <source>logsTitle</source>
-        <translation>Logs</translation>
+        <translation>Log</translation>
     </message>
     <message>
         <source>logsFolderLabel</source>
@@ -2013,7 +2013,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactsTitle</source>
-        <translation type="unfinished">Contatti</translation>
+        <translation>Connettore Rubrica</translation>
     </message>
     <message>
         <source>noPlugin</source>
@@ -2033,7 +2033,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>captureDeviceLabel</source>
-        <translation>Dispositivo di acquisizione </translation>
+        <translation>Dispositivo di acquisizione</translation>
     </message>
     <message>
         <source>ringerDeviceLabel</source>
@@ -2240,7 +2240,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsLdapEdit</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>confirm</source>
@@ -2248,7 +2248,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">Nome visualizzato (facoltativo)</translation>
+        <translation>Nome visualizzato</translation>
     </message>
     <message>
         <source>displayNameTooltip</source>
@@ -2276,7 +2276,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished">Password</translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>useTLSLabel</source>
@@ -2648,15 +2648,15 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation>Indirizzo SIP non valido</translation>
+        <translation>Indirizzo SIP non valido.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
-        <translation>Indirizzo del server non valido</translation>
+        <translation>Indirizzo del server non valido.</translation>
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation>Instradamento non valido</translation>
+        <translation>Instradamento non valido.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
@@ -2722,7 +2722,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancel</source>
         <extracomment>&apos;Cancel&apos; : Button to cancel the action.</extracomment>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>setHTTPProxy</source>
@@ -3035,7 +3035,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SipAddressDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>contactsSearchPlaceholder</source>
@@ -3149,7 +3149,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>quitWarning</source>
-        <translation>Your account has been created but has not been validated yet. Are you sure you want to quit this view?</translation>
+        <translation>Il tuo account è stato creato ma non è ancora stato validato. Sei sicuro di voler uscire da questa schermata?</translation>
     </message>
     <message>
         <source>passwordRecovery</source>
@@ -4284,7 +4284,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished">Vuoi scaricare %1 (%2)?</translation>
+        <translation>Vuoi scaricare %1 (%2)?</translation>
     </message>
 </context>
 </TS>
