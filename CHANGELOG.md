@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on exit.
 - Memory stability.
 
+## 4.4.3 - 2022-05-30
+
+### Fixed
+- Crash on searchs with special characters
+- Update SDK to 5.1.38
+
 ## 4.4.2 - 2022-05-25
 
 ### Added
