@@ -1360,7 +1360,7 @@ URL del server non configurato.</translation>
     <message>
         <source>encryptionExplanation</source>
         <extracomment>&quot;Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>I messaggi istantanei sono criptati end-to-end. Autenticando i partecipanti è possibile aumentare il livello di sicurezza di una conversazione.</translation>
         <extra-Context>Explanation of Encryption</extra-Context>
     </message>
     <message>
@@ -1453,7 +1453,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mainWindowConferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conferenze</translation>
     </message>
 </context>
 <context>
@@ -1538,20 +1538,20 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Devi compilare l&apos;oggetto.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>è richiesto almeno %1 partecipante.</numerusform>
+            <numerusform>Sono richiesti almeno %1 partecipanti.</numerusform>
         </translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Per creare una chat di gruppo è necessario impostare la URI del gruppo nelle impostazioni del tuo account.</translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
@@ -1566,50 +1566,50 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Oggetto</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Chat Room. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Oggetto attuale della Chat di Gruppo. Non può essere vuoto.</translation>
         <extra-Tooltip>Explanation about the subject of the chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona partecipanti</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca tra i tuoi contatti o aggiungine uno alla chat di gruppo.</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Amministratore</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elimina questo partecipante dalla selezione</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Obbligatorio</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci un oggetto</translation>
     </message>
     <message>
         <source>LastContactsTitle</source>
         <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Contatti recenti</translation>
     </message>
 </context>
 <context>
@@ -1617,143 +1617,143 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ANNULLA</translation>
     </message>
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Devi compilare l&apos;oggetto.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the conference creation.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>è richiesto almeno %1 partecipante.</numerusform>
+            <numerusform>Sono richiesti almeno %1 partecipanti.</numerusform>
         </translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Per creare una chat di gruppo è necessario impostare la URI del gruppo nelle impostazioni del tuo account.</translation>
     </message>
     <message>
         <source>newConferenceTitle</source>
         <extracomment>&apos;Start a video conference&apos; : Title of a popup about creation of a video conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inizia una videoconferenza</translation>
     </message>
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Oggetto</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci un oggetto</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Conference. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Oggetto attuale della Conferenza. Non può essere vuoto.</translation>
         <extra-Tooltip>Explanation about the subject of the Conference</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your conference?&apos; : Ask about setting the conference as secured.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi criptare la conferenza?</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona partecipanti</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca tra i tuoi contatti o inseriscine uno nella conferenza.</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Amministratore</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi questo partecipante dalla selezione</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Obbligatorio</translation>
     </message>
     <message>
         <source>launchButton</source>
         <extracomment>&apos;Launch&apos; : Launch button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lancia</translation>
     </message>
     <message>
         <source>updateButton</source>
         <extracomment>&apos;Update&apos; : Update button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna</translation>
     </message>
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the conference&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiorna la conferenza</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your conference?&apos; : Ask about setting the conference as scheduled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi pianificare la tua conferenza?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
         <extracomment>&apos;Date&apos; : Date label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Data</translation>
     </message>
     <message>
         <source>newConferenceTimeTitle</source>
         <extracomment>&apos;Time&apos; : Time label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ora</translation>
     </message>
     <message>
         <source>newConferenceDurationTitle</source>
         <extracomment>&apos;Duration&apos; : Duration label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Durata</translation>
     </message>
     <message>
         <source>newConferenceTimezoneTitle</source>
         <extracomment>&apos;Timezone&apos; : Timezone label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fuso orario</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTitle</source>
         <extracomment>&apos;Add a description&apos; : Label of a text field about the description of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi una descrizione</translation>
     </message>
     <message>
         <source>newConferenceDescriptionPlaceholder</source>
         <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the conference&apos; : Explanation about the description of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La descrizione descriverà la conferenza</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
         <extracomment>&apos;Send invite via Linphone&apos; : Label for checkbox for sending invitations with Linphone.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Invita tramite Linphone</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
         <extracomment>&apos;Send invite via Email&apos; : Label for checkbox for sending invitations with mailer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Invita tramite Email</translation>
     </message>
 </context>
 <context>
@@ -1761,37 +1761,37 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceCreatedEvent</source>
         <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sei entrato nel gruppo</translation>
     </message>
     <message>
         <source>conferenceCreatedTerminated</source>
         <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hai abbandonato il gruppo</translation>
     </message>
     <message>
         <source>conferenceParticipantAddedEvent</source>
         <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 si è aggiunto</translation>
     </message>
     <message>
         <source>conferenceParticipantRemovedEvent</source>
         <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 ha abbandonato</translation>
     </message>
     <message>
         <source>conferenceParticipantSetAdminEvent</source>
         <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ora %1 è un amministratore</translation>
     </message>
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
         <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 non è più un amministratore</translation>
     </message>
     <message>
         <source>conferenceSecurityEvent</source>
         <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Livello di sicurezza ridotto da %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
