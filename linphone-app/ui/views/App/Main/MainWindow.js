@@ -116,7 +116,7 @@ function updateSelectedEntry (view, props) {
   } else if (view === 'Contacts') {
     item.contactsEntry.select()
   } else if (view === 'Conferences') {
-    item.contactsEntry.select()
+    item.conferencesEntry.select()
   }
 }
 

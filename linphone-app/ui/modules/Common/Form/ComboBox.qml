@@ -54,6 +54,7 @@ Controls.ComboBox {
 		width: comboBox.selectionWidth
 		clip: true
 		RowLayout {
+			id: contentLayout
 			anchors {
 				fill: parent
 				leftMargin: comboBox.haveMargin ? ComboBoxStyle.contentItem.leftMargin : 0

@@ -72,6 +72,8 @@ ApplicationWindow {
 		sourceComponent: ColumnLayout {
 			// Workaround to get these properties in `MainWindow.js`.
 			readonly property alias contactsEntry: contactsEntry
+			readonly property alias conferencesEntry: conferencesEntry
+			
 			readonly property alias contentLoader: contentLoader
 			//readonly property alias conferencesEntry: conferencesEntry
 			readonly property alias menu: menu

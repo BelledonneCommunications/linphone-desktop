@@ -42,7 +42,7 @@ Notification {
 				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)		
 				showAuxData: !chatRoomModel.isOneToOne
 				entry: ({
-								sipAddress: sipObserver.peerAddress,
+								sipAddress: sipObserver ? sipObserver.peerAddress : '',
 								contactModel: sipObserver.contact,
 								isOneToOne: chatRoomModel.isOneToOne,
 								haveEncryption: chatRoomModel.haveEncryption,
