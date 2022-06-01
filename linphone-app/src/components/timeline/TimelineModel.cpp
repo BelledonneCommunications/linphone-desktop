@@ -166,7 +166,6 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", state:" << mChatRoomModel->getState();
 				QQmlEngine *engine = App::getInstance()->getEngine();
 				engine->clearComponentCache();
-				QCoreApplication::sendPostedEvents(0, QEvent::DeferredDelete);
 		}else
 			mChatRoomModel->resetData();// Cleanup leaving chat room
 		emit selectedChanged(mSelected);
