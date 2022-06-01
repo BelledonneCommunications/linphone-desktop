@@ -13,6 +13,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on exit.
 - Memory stability.
 
+## 4.4.4 - 2022-06-01
+
+### Fixed
+- Revert ordering messages from receiving time.
+- Some crashes on Wasapi.
+- Update SDK to 5.1.41
+
 ## 4.4.3 - 2022-05-30
 
 ### Fixed

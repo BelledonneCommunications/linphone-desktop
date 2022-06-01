@@ -1277,11 +1277,8 @@ void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatR
 void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
 	auto message = eventLog->getChatMessage();
 	if(message){
-		auto messageModel = insertMessageAtEnd(message);
-		if(messageModel){
-			messageModel->setTimestamp();
-			updateLastUpdateTime();
-		}
+		insertMessageAtEnd(message);
+		updateLastUpdateTime();
 		emit messageReceived(message);
 	}
 }
