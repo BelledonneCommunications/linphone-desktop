@@ -206,9 +206,10 @@ void TimelineListModel::updateTimelines () {
 	CoreManager *coreManager = CoreManager::getInstance();
 	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
 
-// Clean terminated chat rooms.
+// Clean terminated chat rooms and conferences from timeline.
 	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
-		bool toRemove = chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
+		bool toRemove = chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted
+			|| (chatRoom->getConferenceAddress() && chatRoom->getHistoryEventsSize() == 0);
 		if( toRemove)
 			chatRoom->markAsRead();
 		return toRemove;
@@ -278,7 +279,7 @@ void TimelineListModel::removeChatRoomModel(QSharedPointer<ChatRoomModel> model)
 			auto timeline = itTimeline->objectCast<TimelineModel>();
 			if(timeline->mChatRoomModel == model){
 				if(model)
-					model->deleteChatRoom();
+					model->markAsToDelete();
 				remove(*itTimeline);
 				return;
 			}else

@@ -586,7 +586,7 @@ ChatMessageModel * ChatRoomModel::getReply()const{
 
 //------------------------------------------------------------------------------------------------
 
-void ChatRoomModel::deleteChatRoom(){
+void ChatRoomModel::markAsToDelete(){
 	mDeleteChatRoom = true;
 }
 
@@ -864,7 +864,8 @@ void ChatRoomModel::initEntries(){
 			// callhistory is sorted from newest to oldest
 			int count = 0;
 			for (auto callLog = callHistory.begin() ; count < mFirstLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
-				prepareEntries << EntrySorterHelper((*callLog)->getStartDate(), CallEntry, *callLog);
+				if(!(*callLog)->wasConference())
+					prepareEntries << EntrySorterHelper((*callLog)->getStartDate(), CallEntry, *callLog);
 			}
 		}
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);

@@ -160,8 +160,7 @@ public:
 	void clearFilesToSend();
 
 // Tools
-	
-	void deleteChatRoom();
+	void markAsToDelete();
 	Q_INVOKABLE void leaveChatRoom ();
 	Q_INVOKABLE void updateParticipants(const QVariantList& participants);		
 	void sendMessage (const QString &message);
