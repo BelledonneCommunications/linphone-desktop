@@ -339,8 +339,14 @@ Rectangle {
 				//: 'Search in the list' : ths is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('timelineSearchPlaceholderText')
 				
-				onTextChanged: timeline.model.filterText = text
+				onTextChanged: searchDelay.restart()
 				font.pointSize: TimelineStyle.searchField.pointSize
+				Timer{
+					id: searchDelay
+					interval: 600
+					repeat: false
+					onTriggered: timeline.model.filterText = searchBar.text
+				}
 			}
 			
 		}
