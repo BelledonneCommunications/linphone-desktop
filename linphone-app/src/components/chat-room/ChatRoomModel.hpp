@@ -134,7 +134,7 @@ public:
 	bool isEntriesLoading() const;
 	bool isBasic() const;
 	ParticipantListModel* getParticipantListModel() const;
-	std::list<std::shared_ptr<linphone::Participant>> getParticipants() const;
+	std::list<std::shared_ptr<linphone::Participant>> getParticipants(const bool& withMe = true) const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
 	QString getParticipantAddress();	// return peerAddress if not secure else return the first participant SIP address.
@@ -161,6 +161,7 @@ public:
 
 // Tools
 	void markAsToDelete();
+	Q_INVOKABLE void deleteChatRoom();
 	Q_INVOKABLE void leaveChatRoom ();
 	Q_INVOKABLE void updateParticipants(const QVariantList& participants);		
 	void sendMessage (const QString &message);

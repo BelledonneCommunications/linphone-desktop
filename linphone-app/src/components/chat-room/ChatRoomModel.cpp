@@ -155,7 +155,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	if(mChatRoom){
 		mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
 		connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ChatRoomModel::fullPeerAddressChanged);
-		auto participants = getParticipants();
+		auto participants = getParticipants(false);
 		for(auto participant : participants){
 			auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((participant)->getAddress()->asString()));
 			if(contact) {
@@ -347,8 +347,9 @@ QString ChatRoomModel::getUsername () const {
 }
 
 QString ChatRoomModel::getAvatar () const {
+	qWarning() << getUsername() << " *> " << mChatRoom->getNbParticipants();
 	if( mChatRoom && mChatRoom->getNbParticipants() == 1){
-		auto participants = getParticipants();	
+		auto participants = getParticipants(false);	
 		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
 		if(contact)
 			return contact->getVcardModel()->getAvatar();
@@ -358,7 +359,7 @@ QString ChatRoomModel::getAvatar () const {
 
 int ChatRoomModel::getPresenceStatus() const {
 	if( mChatRoom && mChatRoom->getNbParticipants() == 1 && !isGroupEnabled()){
-		auto participants = getParticipants();	
+		auto participants = getParticipants(false);
 		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
 		if(contact) {
 			return contact->getPresenceLevel();
@@ -373,11 +374,13 @@ ParticipantListModel* ChatRoomModel::getParticipantListModel() const{
 	return mParticipantListModel.get();
 }
 
-std::list<std::shared_ptr<linphone::Participant>> ChatRoomModel::getParticipants() const{
+std::list<std::shared_ptr<linphone::Participant>> ChatRoomModel::getParticipants(const bool& withMe) const{
 	auto participantList = mChatRoom->getParticipants();
-	auto me = mChatRoom->getMe();
-	if( me )
-		participantList.push_front(me);
+	if(withMe) {
+		auto me = mChatRoom->getMe();
+		if( me )
+			participantList.push_front(me);
+	}
 	return participantList;
 }
 
@@ -588,6 +591,10 @@ ChatMessageModel * ChatRoomModel::getReply()const{
 
 void ChatRoomModel::markAsToDelete(){
 	mDeleteChatRoom = true;
+}
+
+void ChatRoomModel::deleteChatRoom(){
+	CoreManager::getInstance()->getCore()->deleteChatRoom(mChatRoom);
 }
 
 void ChatRoomModel::leaveChatRoom (){
@@ -1121,7 +1128,7 @@ void ChatRoomModel::handlePresenceStatusReceived(std::shared_ptr<linphone::Frien
 			//cleanContactAddress->clean();
 			canUpdatePresence = mChatRoom->getLocalAddress()->weakEqual(*itContactAddress);
 			if(!canUpdatePresence && !isGroupEnabled() && mChatRoom->getNbParticipants() == 1){
-				auto participants = getParticipants();	
+				auto participants = getParticipants(false);
 				auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
 				if(contact){
 					auto friendsAddresses = contact->getVcardModel()->getSipAddresses();

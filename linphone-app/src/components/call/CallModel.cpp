@@ -50,6 +50,7 @@ constexpr char AutoAnswerObjectName[] = "auto-answer-timer";
 }
 
 CallModel::CallModel (shared_ptr<linphone::Call> call){
+	connect(this, &CallModel::callIdChanged, this, &CallModel::chatRoomModelChanged);// When the call Id change, the chat room change.
 	mCall = call;
 	if(mCall)
 		mCall->setData("call-model", *this);
@@ -407,6 +408,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 			}
 			mPausedByRemote = false;
 			setConferenceVideoLayout(LinphoneEnums::fromLinphone(call->getParams()->getConferenceVideoLayout()));
+			setCallId(QString::fromStdString(mCall->getCallLog()->getCallId()));
 			break;
 		}
 		case linphone::Call::State::Connected:
@@ -592,6 +594,13 @@ void CallModel::setCallErrorFromReason (linphone::Reason reason) {
 		qInfo() << QStringLiteral("Call terminated with error (%1):").arg(mCallError) << this;
 	
 	emit callErrorChanged(mCallError);
+}
+
+void CallModel::setCallId(const QString& callId){
+	if(callId != mCallId){
+		mCallId = callId;
+		emit callIdChanged();
+	}
 }
 
 // -----------------------------------------------------------------------------

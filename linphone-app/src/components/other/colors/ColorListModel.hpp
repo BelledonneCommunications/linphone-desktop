@@ -124,14 +124,14 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("readonly_fg", "#B1B1B1", "Chat text area Readonly foreground")
 		
 
-// Standard actions
-//
 // Keywords: 'mKeywordsMap'
 //		s=standard, ma=main, l=list, sc=screen, me=menu
 //		n=normal, d=disabled, h=hovered, p=pressed, u=updating, c=checked
 //		b=button
 //		inv=inverse
 //		bg=background, fg=foreground
+
+// Standard actions : 
 		ADD_COLOR("s_n_b_bg", "#96A5B1", "[M] Standard normal button : background")
 		ADD_COLOR("s_d_b_bg", "#D0D8DE", "[M] Standard disabled button : background")
 		ADD_COLOR("s_h_b_bg", "#4B5964", "[M] Standard hovered button : background")
@@ -154,7 +154,7 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("s_p_b_inv_fg", "black", "Standard pressed button : inverse foreground")
 		*/
 //----------------------------
-// Main Actions
+// Main Actions : like home button 
 		ADD_COLOR("ma_n_b_bg", "#FF5E00", "[M] Main normal button : background")
 		ADD_COLOR("ma_d_b_bg", "#FFCEB2", "[M] Main disabled button : background")
 		ADD_COLOR("ma_h_b_bg", "#4B5964", "[M] Main hovered button : background")
@@ -165,7 +165,7 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("ma_h_b_fg", "white", "[M] Main hovered button : foreground")
 		ADD_COLOR("ma_p_b_fg", "white", "[M] Main pressed button : foreground")
 //-------------------------------------
-// Accept Actions
+// Accept Actions : like accepting a call 
 		ADD_COLOR("a_n_b_bg", "#9ECD1D", "[M] Accept normal button : background")
 		ADD_COLOR("a_d_b_bg", "#809ECD1D", "[M] Accept disabled button : background")
 		ADD_COLOR("a_h_b_bg", "#7D9F21", "[M] Accept hovered button : background")
@@ -176,7 +176,7 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("a_h_b_fg", "white", "[M] Accept hovered button : foreground")
 		ADD_COLOR("a_p_b_fg", "white", "[M] Accept pressed button : foreground")
 //-------------------------------------
-// Reject Actions
+// Reject Actions : like rejecting a call
 		ADD_COLOR("r_n_b_bg", "#FF5E00", "[M] Reject normal button : background")
 		ADD_COLOR("r_d_b_bg", "#80FF5E00", "[M] Reject disabled button : background")
 		ADD_COLOR("r_h_b_bg", "#DC4100", "[M] Reject hovered button : background")
@@ -187,38 +187,32 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("r_h_b_fg", "white", "[M] Reject hovered button : foreground")
 		ADD_COLOR("r_p_b_fg", "white", "[M] Reject pressed button : foreground")
 //-------------------------------------
-// List Actions
+// List Actions : like dot menu in chat
 		ADD_COLOR("l_n_b_bg", "transparent", "[M] List normal button : background")
 		ADD_COLOR("l_d_b_bg", "transparent", "[M] List disabled button : background")
 		ADD_COLOR("l_h_b_bg", "transparent", "[M] List hovered button : background")
 		ADD_COLOR("l_p_b_bg", "transparent", "[M] List pressed button : background")
+		ADD_COLOR_WITH_LINK("l_u_b_bg", "", "[M] List updating button : background", "l_p_b_bg")
 		
-		ADD_COLOR("l_n_b_fg", "#96A5B1", "[M] List normal button : foreground")
+		ADD_COLOR("l_n_b_fg", "#4B5964", "[M] List normal button : foreground")
 		ADD_COLOR("l_d_b_fg", "#8096A5B1", "[M] List disabled button : foreground")
-		ADD_COLOR("l_h_b_fg", "#4B5964", "[M] List hovered button : foreground")
+		ADD_COLOR("l_h_b_fg", "#96A5B1", "[M] List hovered button : foreground")
 		ADD_COLOR("l_p_b_fg", "#FF5E00", "[M] List pressed button : foreground")
-//-------------------------------------
-// Screen Actions
-		ADD_COLOR("sc_n_b_bg", "#E8E8E8", "[M] Screen normal button : background")
-		ADD_COLOR("sc_d_b_bg", "#80E8E8E8", "[M] Screen disabled button : background")
-		ADD_COLOR("sc_h_b_bg", "#E8E8E8", "[M] Screen hovered button : background")
-		ADD_COLOR("sc_p_b_bg", "#FF5E00", "[M] Screen pressed button : background")
-		
-		ADD_COLOR("sc_n_b_fg", "#6B7A86", "[M] Screen normal button : foreground")
-		ADD_COLOR("sc_d_b_fg", "#806B7A86", "[M] Screen disabled button : foreground")
-		ADD_COLOR("sc_h_b_fg", "#FF5E00", "[M] Screen hovered button : foreground")
-		ADD_COLOR("sc_p_b_fg", "white", "[M] Screen pressed button : foreground")
+		ADD_COLOR_WITH_LINK("l_u_b_fg", "", "[M] List updating button : foreground", "l_p_b_fg")
+
 //-------------------------------------		
 // Menu Actions
 		ADD_COLOR("me_n_b_bg", "transparent", "[M] Menu normal button : background")
 		ADD_COLOR("me_d_b_bg", "transparent", "[M] Menu disabled button : background")
 		ADD_COLOR("me_h_b_bg", "transparent", "[M] Menu hovered button : background")
 		ADD_COLOR("me_p_b_bg", "transparent", "[M] Menu pressed button : background")
+		ADD_COLOR_WITH_LINK("me_u_b_bg", "", "[M] Menu updating button : background", "me_p_b_bg")
 		
 		ADD_COLOR("me_n_b_fg", "#96A5B1", "[M] Menu normal button : foreground")
 		ADD_COLOR("me_d_b_fg", "#8096A5B1", "[M] Menu disabled button : foreground")
 		ADD_COLOR("me_h_b_fg", "#4B5964", "[M] Menu hovered button : foreground")
 		ADD_COLOR("me_p_b_fg", "#FF5E00", "[M] Menu pressed button : foreground")
+		ADD_COLOR_WITH_LINK("me_u_b_fg", "", "[M] Menu updating button : background", "me_p_b_fg")
 // Inverse
 		ADD_COLOR("me_n_b_inv_bg", "transparent", "[M] Menu normal button : inverse background")
 		ADD_COLOR("me_d_b_inv_bg", "transparent", "[M] Menu disabled button : inverse background")
@@ -243,6 +237,17 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR_WITH_LINK("w_h_b_fg", "", "[M] Wave play hovered button : foreground", "ma_h_b_fg")
 		ADD_COLOR_WITH_LINK("w_p_b_fg", "", "[M] Wave play pressed button : foreground", "ma_p_b_fg")
 		
+// Wave Record
+		ADD_COLOR("wr_n_b_bg", "transparent", "[M] Wave record normal button : background")
+		ADD_COLOR("wr_d_b_bg", "transparent", "[M] Wave record disabled button : background")
+		ADD_COLOR("wr_h_b_bg", "transparent", "[M] Wave record hovered button : background")
+		ADD_COLOR("wr_p_b_bg", "transparent", "[M] Wave record pressed button : background")
+		
+		ADD_COLOR("wr_n_b_fg", "#96A5B1", "[M] Wave record normal button : foreground")
+		ADD_COLOR("wr_d_b_fg", "#96A5B1", "[M] Wave record disabled button : foreground")
+		ADD_COLOR("wr_h_b_fg", "#4B5964", "[M] Wave record hovered button : foreground")
+		ADD_COLOR("wr_p_b_fg", "#FF5E00", "[M] Wave record pressed button : foreground")
+				
 //--------------------------------------------------------------------------------------------------------------------
 /*		
 		ADD_COLOR("m_b_bg_h", "#4B5964", "Main color for hovered buttons(background)")

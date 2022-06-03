@@ -42,11 +42,12 @@ class CallModel : public QObject {
 	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress CONSTANT)
 	
 	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT )
-	Q_PROPERTY(ChatRoomModel * chatRoomModel READ getChatRoomModel CONSTANT)
+	Q_PROPERTY(ChatRoomModel * chatRoomModel READ getChatRoomModel NOTIFY chatRoomModelChanged)
 	Q_PROPERTY(ConferenceModel * conferenceModel READ getConferenceModel NOTIFY conferenceModelChanged)
 	
 	Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged)
+	Q_PROPERTY(QString callId MEMBER mCallId WRITE setCallId NOTIFY callIdChanged)
 	
 	Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT)
 	
@@ -187,8 +188,10 @@ public slots:
 	
 signals:
 	void callErrorChanged (const QString &callError);
+	void callIdChanged();
 	void isInConferenceChanged (bool status);
 	void conferenceModelChanged();
+	void chatRoomModelChanged();
 	void speakerMutedChanged (bool status);
 	void microMutedChanged (bool status);
 	void cameraEnabledChanged();
@@ -229,6 +232,8 @@ public:
 	
 	QString getCallError () const;
 	void setCallErrorFromReason (linphone::Reason reason);
+	
+	void setCallId(const QString& callId);
 	
 	int getDuration () const;
 	float getQuality () const;
@@ -292,6 +297,7 @@ private:
 	bool mNotifyCameraFirstFrameReceived = true;
 	
 	QString mCallError;
+	QString mCallId;
 	
 	QVariantList mAudioStats;
 	QVariantList mVideoStats;

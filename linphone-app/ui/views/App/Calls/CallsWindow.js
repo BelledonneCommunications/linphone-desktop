@@ -67,7 +67,6 @@ function openWaitingRoom(model){
 // -----------------------------------------------------------------------------
 // Used to get Component based from Call Status
 function getContent (call, conferenceInfoModel) {
-	console.log('getContent call')
 	if (call == null) {
 		if(conferenceInfoModel)
 			return waitingRoom

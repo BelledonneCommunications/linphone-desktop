@@ -81,6 +81,7 @@ Item {
 	// ---------------------------------------------------------------------------
 	
 	signal clicked(real x, real y)
+	signal pressed(real x, real y)
 	
 	// ---------------------------------------------------------------------------
 		
@@ -212,6 +213,7 @@ Item {
 			}
 		hoverEnabled: !wrappedButton.updating//|| wrappedButton.autoIcon
 		onClicked: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.clicked(pressX, pressY)
+		onPressed: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.pressed(pressX, pressY)
 		Rectangle{
 			id: foregroundColor
 			anchors.fill:parent

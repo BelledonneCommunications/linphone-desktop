@@ -97,7 +97,7 @@ QtObject {
 			}
 		}
 	}
-	property QtObject auxRed : QtObject{
+	property QtObject auxError : QtObject{
 		property int leftMargin: 10
 		property int rightMargin: 10
 		
@@ -116,10 +116,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_auxRed_text_h', 'error').color
-				property color normal: ColorsList.add(sectionName+'_auxRed_text_n', 'error').color
-				property color pressed: ColorsList.add(sectionName+'_auxRed_text_p', 'error').color
-				property color disabled: ColorsList.add(sectionName+'_auxRed_text_d', 'l50').color
+				property color hovered: ColorsList.add(sectionName+'_auxError_text_h', 'error').color
+				property color normal: ColorsList.add(sectionName+'_auxError_text_n', 'error').color
+				property color pressed: ColorsList.add(sectionName+'_auxError_text_p', 'error').color
+				property color disabled: ColorsList.add(sectionName+'_auxError_text_d', 'l50').color
 			}
 		}
 	}
@@ -146,6 +146,32 @@ QtObject {
 				property color normal: ColorsList.add(sectionName+'_aux2_text_n', 'j').color
 				property color pressed: ColorsList.add(sectionName+'_aux2_text_p', 'm').color
 				property color disabled: ColorsList.add(sectionName+'_aux2_text_d', 'l50').color
+			}
+		}
+	}
+	property QtObject aux2Error : QtObject{
+		property int leftMargin: 10
+		property int rightMargin: 10
+		
+		property QtObject background: QtObject {
+			property int height: 50
+			
+			property QtObject color: QtObject {
+				property color hovered: ColorsList.add(sectionName+'_aux2Error_bg_h', 'w').color
+				property color normal: ColorsList.add(sectionName+'_aux2Error_bg_n', 'w').color
+				property color pressed: ColorsList.add(sectionName+'_aux2Error_bg_p', 'v').color
+			}
+		}
+		
+		property QtObject text: QtObject {
+			property int pointSize: Units.dp * 11
+			property int weight : Font.Normal
+			
+			property QtObject color: QtObject {
+				property color hovered: ColorsList.add(sectionName+'_aux2Error_text_h', 'error').color
+				property color normal: ColorsList.add(sectionName+'_aux2Error_text_n', 'error').color
+				property color pressed: ColorsList.add(sectionName+'_aux2Error_text_p', 'error').color
+				property color disabled: ColorsList.add(sectionName+'_aux2Error_text_d', 'l50').color
 			}
 		}
 	}

@@ -23,14 +23,14 @@ Rectangle {
 	property bool showContactAddress : true
 	property bool showAuxData : false
 	
-	// A entry from `SipAddressesModel` or an `SipAddressObserver`.
+	// An entry from `SipAddressesModel`, an `SipAddressObserver` or a ChatRoomModel
 	property var entry
 	
 	// entry should have these functions : presenceStatus, sipAddress, username, avatar (image)
 	
-	property string username: (entry != undefined ?(entry.contactModel != undefined ? entry.contactModel.vcard.username
-																			:entry.username != undefined ?entry.username:
-																										   UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+	property string username: (entry != undefined ?( entry.username != undefined ?entry.username
+														: entry.contactModel != undefined ? entry.contactModel.vcard.username
+																			: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
 											):'')
 	signal avatarClicked(var mouse)
 	// ---------------------------------------------------------------------------
@@ -53,8 +53,9 @@ Rectangle {
 			Layout.preferredWidth: ContactStyle.contentHeight
 			
 			//image: _contact && _contact.vcard.avatar
-			image: entry?(entry.contactModel	? entry.contactModel.vcard.avatar
-												: entry.avatar ? entry.avatar : '')
+			image: entry?(entry.avatar ? entry.avatar
+									: entry.contactModel ? entry.contactModel.vcard.avatar
+														: '')
 						:''
 			presenceLevel: entry?(entry.contactModel ? (entry.contactModel.presenceStatus >= 0 ? Presence.getPresenceLevel(entry.contactModel.presenceStatus) : -1)
 													 : (entry.presenceStatus >= 0 ? Presence.getPresenceLevel(entry.presenceStatus) : -1)

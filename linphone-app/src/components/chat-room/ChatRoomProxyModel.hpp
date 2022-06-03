@@ -61,6 +61,7 @@ public:
 	
 	Q_INVOKABLE void removeAllEntries ();
 	Q_INVOKABLE void removeRow (int index);
+	Q_INVOKABLE void deleteChatRoom();
 	
 	Q_INVOKABLE void sendMessage (const QString &message);
 	Q_INVOKABLE void forwardMessage(ChatMessageModel * model);

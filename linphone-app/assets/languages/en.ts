@@ -955,6 +955,11 @@ Server URL not configured.</translation>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
         <translation>Search messages</translation>
     </message>
+    <message>
+        <source>conversationMenuDelete</source>
+        <extracomment>&apos;Delete&apos; : Item menu to delete the chat</extracomment>
+        <translation>Delete</translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>

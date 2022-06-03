@@ -110,7 +110,7 @@ Item {
 			iconMenu: MenuItemStyle.deleteEntry.icon
 			iconSizeMenu: MenuItemStyle.deleteEntry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
-			menuItemStyle : MenuItemStyle.auxRed
+			menuItemStyle : MenuItemStyle.auxError
 			onTriggered: container.removeEntryRequested()
 		}
 	}

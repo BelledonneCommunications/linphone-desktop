@@ -17,7 +17,7 @@ Window {
 	// ---------------------------------------------------------------------------
 	
 	// `{}` is a workaround to avoid `TypeError: Cannot read property...` when calls list is empty
-	readonly property CallModel call: calls.selectedCall
+	property CallModel call: calls.selectedCall
 	/*
 	?calls.selectedCall:{
 														  callError: '',
@@ -219,6 +219,7 @@ Window {
 				id: chat
 				
 				Chat {
+					anchors.fill: parent
 					proxyModel: ChatRoomProxyModel {
 						Component.onCompleted: {
 							if (chatRoomModel
@@ -283,7 +284,7 @@ Window {
 			
 			childB: Loader {
 				anchors.fill: parent
-				sourceComponent: window.call && window.call.peerAddress && window.call.localAddress ? chat : null
+				sourceComponent: window.call && window.call.chatRoomModel ? chat : null
 			}
 		}
 	}

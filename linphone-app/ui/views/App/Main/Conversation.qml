@@ -124,11 +124,11 @@ ColumnLayout  {
 					spacing:0
 					
 					ColumnLayout{
-					
+						
 						property int maximumContentWidth: contactBar.width
-															-(avatar.visible?avatar.width:0)-(groupChat.visible?groupChat.width:0)
-															-actionBar.width - (secureIcon.visible?secureIcon.width :0)
-															-3*ConversationStyle.bar.spacing 
+														  -(avatar.visible?avatar.width:0)-(groupChat.visible?groupChat.width:0)
+														  -actionBar.width - (secureIcon.visible?secureIcon.width :0)
+														  -3*ConversationStyle.bar.spacing 
 						Layout.fillHeight: true
 						Layout.minimumWidth: 20
 						Layout.maximumWidth: maximumContentWidth
@@ -168,14 +168,14 @@ ColumnLayout  {
 							username: avatar.username
 							usernameClickable: chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
 							participants: if(chatRoomModel) {
-											if(chatRoomModel.groupEnabled) {
-												return chatRoomModel.participants.displayNamesToString;
-											}else if(chatRoomModel.isSecure()) {
-												return chatRoomModel.participants.addressesToString;
-											}else
-												return ''
-										}else
-											return ''
+											  if(chatRoomModel.groupEnabled) {
+												  return chatRoomModel.participants.displayNamesToString;
+											  }else if(chatRoomModel.isSecure()) {
+												  return chatRoomModel.participants.addressesToString;
+											  }else
+												  return ''
+										  }else
+											  return ''
 							sipAddress: {
 								if(chatRoomModel) {
 									if(chatRoomModel.groupEnabled) {
@@ -191,11 +191,11 @@ ColumnLayout  {
 								
 							}
 							onUsernameClicked: {
-													if(!conversation.isReadOnly) {
-														usernameEdit.visible = !usernameEdit.visible
-														usernameEdit.forceActiveFocus()
-													}
-												}
+								if(!conversation.isReadOnly) {
+									usernameEdit.visible = !usernameEdit.visible
+									usernameEdit.forceActiveFocus()
+								}
+							}
 						}
 						Item{
 							Layout.fillHeight: true
@@ -294,10 +294,10 @@ ColumnLayout  {
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 1)
 						Icon{
-								icon:'secure_level_1'
-								iconSize: parent.height/2
-								anchors.top:parent.top
-								anchors.horizontalCenter: parent.right
+							icon:'secure_level_1'
+							iconSize: parent.height/2
+							anchors.top:parent.top
+							anchors.horizontalCenter: parent.right
 						}
 					}
 					
@@ -331,26 +331,19 @@ ColumnLayout  {
 					}
 					
 					ActionButton {
-						isCustom: true
-						backgroundRadius: 4
-						colorSet: 	ConversationStyle.bar.actions.del.deleteHistory
-						iconSize: ConversationStyle.bar.actions.del.iconSize
-						
-						onClicked: Logic.removeAllEntries()
-						
-						TooltipArea {
-							text: qsTr('cleanHistory')
-						}
-					}
-					ActionButton {
 						id:dotButton
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: 	ConversationStyle.bar.actions.openMenu
-						visible: conversationMenu.showGroupInfo || conversationMenu.showDevices || conversationMenu.showEphemerals
-												
-						onClicked: {
-							conversationMenu.open()
+						visible: true //conversationMenu.showGroupInfo || conversationMenu.showDevices || conversationMenu.showEphemerals
+						toggled: conversationMenu.opened
+						
+						onPressed: {// Bug : Not working : Menu is still closed before pressing on button (even with closePolicy)
+							if( conversationMenu.opened ) {
+								conversationMenu.close()
+							}else {
+								conversationMenu.open()
+							}
 						}
 						
 					}
@@ -421,6 +414,28 @@ ColumnLayout  {
 													   ,{chatRoomModel:chatRoomModel})
 						}
 					}
+					Rectangle{
+						id: separator3
+						height:1
+						width:parent.width
+						color: ConversationStyle.menu.separatorColor
+						visible: deleteMenuItem.visible && (groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible)
+					}
+					MenuItem{
+						id: deleteMenuItem
+						//: 'Delete' : Item menu to delete the chat
+						text: qsTr('conversationMenuDelete')
+						iconMenu: MenuItemStyle.deleteEntry.icon
+						iconSizeMenu: 40
+						menuItemStyle : MenuItemStyle.aux2Error
+						visible: true
+						onTriggered: {
+							Logic.removeAllEntries()
+						}
+						TooltipArea {
+							text: qsTr('cleanHistory')
+						}
+					}
 				}
 			}
 		}
@@ -468,7 +483,7 @@ ColumnLayout  {
 			anchors.verticalCenter: parent.verticalCenter
 			running: chatArea.tryingToLoadMoreEntries
 		}
-			
+		
 		// -------------------------------------------------------------------------
 		// Search.
 		// -------------------------------------------------------------------------
@@ -529,8 +544,8 @@ ColumnLayout  {
 					interval: 500
 					running: false
 					onTriggered: if( searchView.visible){
-						chatRoomProxyModel.filterText = searchBar.text
-					}
+									 chatRoomProxyModel.filterText = searchBar.text
+								 }
 				}
 			}
 			

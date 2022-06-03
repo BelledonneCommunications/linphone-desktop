@@ -57,6 +57,9 @@ Item {
     property var callback
 
     parent: sipAddressesMenu.parent
+    
+	relativeTo: sipAddressesMenu.parent
+	relativeY: sipAddressesMenu.parent.height
 
     entryHeight: SipAddressesMenuStyle.entry.height
     maxMenuHeight: SipAddressesMenuStyle.maxHeight
