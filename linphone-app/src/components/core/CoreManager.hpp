@@ -172,6 +172,8 @@ public:
 	int getMissedCallCount(const QString &peerAddress, const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
 	int getMissedCallCountFromLocal(const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
 	
+	int getUnreadChatMessage(const std::shared_ptr<const linphone::Address>& accountAddress = nullptr)const;
+	
 	static bool isInstanciated(){return mInstance!=nullptr;}
 	
 	Q_INVOKABLE bool isLastRemoteProvisioningGood();

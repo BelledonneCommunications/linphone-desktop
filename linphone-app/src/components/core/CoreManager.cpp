@@ -17,6 +17,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
+ 
+ // VisualC++: Windows doesn't have to rewrite min max or else building std::max will fail
+#define NOMINMAX
 
 #include <QCoreApplication>
 #include <QDir>
@@ -373,6 +376,31 @@ int CoreManager::getMissedCallCount(const QString &peerAddress, const QString &l
 }
 int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
 	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCountFromLocal(localAddress) : 0;
+}
+int CoreManager::getUnreadChatMessage(const std::shared_ptr<const linphone::Address>& accountAddress)const{
+// Workaround : getUnreadMessagesCount(à doesn't check the sate of chat room so they can be left and still count in unread message (for example because of a bug on ack timeout). Remove these counts from the unread count.
+	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = mCore->getChatRooms();
+	std::list<std::shared_ptr<linphone::Account>> accountsList;
+	int unreadChatMessageCount;
+	if( accountAddress)
+		unreadChatMessageCount = mCore->getUnreadChatMessageCountFromLocal(accountAddress);
+	else {
+		accountsList = mCore->getAccountList();
+		unreadChatMessageCount = mCore->getUnreadChatMessageCountFromActiveLocals();
+	}
+	for(auto chatRoom : allChatRooms){
+		auto account = accountsList.begin();
+		if(!accountAddress){
+			while(account != accountsList.end() && !(*account)->getParams()->getIdentityAddress()->weakEqual(chatRoom->getLocalAddress()))
+				++account;
+		}
+		if( ((!accountAddress && account != accountsList.end()) || (accountAddress && accountAddress->weakEqual(chatRoom->getLocalAddress()) ))
+				&& (chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted))
+			unreadChatMessageCount -= chatRoom->getUnreadMessagesCount();
+	}
+	unreadChatMessageCount = std::max(0,unreadChatMessageCount);
+	
+	return unreadChatMessageCount;
 }
 
 // -----------------------------------------------------------------------------

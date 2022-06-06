@@ -67,8 +67,9 @@ AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObje
 // -----------------------------------------------------------------------------
 
 void AbstractEventCountNotifier::updateUnreadMessageCount () {
-  mUnreadMessageCount = CoreManager::getInstance()->getCore()->getUnreadChatMessageCountFromActiveLocals();
-  internalnotifyEventCount();
+	auto core = CoreManager::getInstance()->getCore();
+	mUnreadMessageCount = CoreManager::getInstance()->getUnreadChatMessage();
+	internalnotifyEventCount();
 }
 
 void AbstractEventCountNotifier::internalnotifyEventCount () {

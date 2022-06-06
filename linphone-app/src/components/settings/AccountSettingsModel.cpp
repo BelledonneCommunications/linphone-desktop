@@ -478,9 +478,12 @@ QVariantList AccountSettingsModel::getAccounts () const {
 	
 	if(CoreManager::getInstance()->getSettingsModel()->getShowLocalSipAccount()) {
 		QVariantMap account;
-		account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
-		account["fullSipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
-		account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed());
+		auto address = core->createPrimaryContactParsed();
+		int unreadChatMessageCount = CoreManager::getInstance()->getUnreadChatMessage(address);
+		
+		account["sipAddress"] = Utils::coreStringToAppString(address->asStringUriOnly());
+		account["fullSipAddress"] = Utils::coreStringToAppString(address->asString());
+		account["unreadMessageCount"] = unreadChatMessageCount;
 		account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());
 		account["proxyConfig"].setValue(nullptr);
 		accounts << account;
@@ -488,10 +491,13 @@ QVariantList AccountSettingsModel::getAccounts () const {
 	
 	for (const auto &proxyConfig : core->getProxyConfigList()) {
 		QVariantMap account;
-		account["sipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asStringUriOnly());
-		account["fullSipAddress"] = Utils::coreStringToAppString(proxyConfig->getIdentityAddress()->asString());
+		
+		auto proxyAddress = proxyConfig->getIdentityAddress();
+		int unreadChatMessageCount = CoreManager::getInstance()->getUnreadChatMessage(proxyAddress);
+		account["sipAddress"] = Utils::coreStringToAppString(proxyAddress->asStringUriOnly());
+		account["fullSipAddress"] = Utils::coreStringToAppString(proxyAddress->asString());
 		account["proxyConfig"].setValue(proxyConfig);
-		account["unreadMessageCount"] = proxyConfig->getUnreadChatMessageCount();
+		account["unreadMessageCount"] = unreadChatMessageCount;
 		account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());
 		accounts << account;
 	}
