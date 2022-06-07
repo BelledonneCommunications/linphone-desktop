@@ -442,5 +442,6 @@ Rectangle {
 		
 		call: callModel
 		visible: SettingsModel.showTelKeypadAutomatically
+		y: 50
 	}
 }

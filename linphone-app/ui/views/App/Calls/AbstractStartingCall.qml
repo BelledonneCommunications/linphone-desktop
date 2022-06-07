@@ -127,5 +127,6 @@ Rectangle {
 		
 		call: parent.call
 		visible: SettingsModel.showTelKeypadAutomatically
+		y: 50
 	}
 }

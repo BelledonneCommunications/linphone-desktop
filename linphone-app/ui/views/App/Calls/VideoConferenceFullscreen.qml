@@ -470,6 +470,7 @@ Window {
 		
 		call: callModel
 		visible: SettingsModel.showTelKeypadAutomatically
+		y: 50
 	}
 	MouseArea{
 		Timer {

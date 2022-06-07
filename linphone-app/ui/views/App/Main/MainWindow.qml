@@ -381,7 +381,6 @@ ApplicationWindow {
 						id: telKeypad
 						onSendDtmf: smartSearchBar.text = smartSearchBar.previousText+dtmf
 						onVisibleChanged: if(!visible) smartSearchBar.previousText = ''	// this is a way to reset search text
-						//call: incall.call
 						visible: SettingsModel.showTelKeypadAutomatically
 					}
 				}

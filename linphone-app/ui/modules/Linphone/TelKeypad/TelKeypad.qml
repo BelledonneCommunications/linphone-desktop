@@ -27,6 +27,7 @@ Rectangle {
 	height: TelKeypadStyle.height
 	width: TelKeypadStyle.width
 	radius:TelKeypadStyle.radius+1.0 // +1 for avoid mixing color with border slection (some pixels can be print after the line)
+	onVisibleChanged: if(visible) telKeypad.forceActiveFocus()
 
 	// ---------------------------------------------------------------------------
 	MouseArea{

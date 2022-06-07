@@ -523,5 +523,6 @@ Window {
 		
 		call: window.call
 		visible: false
+		y: 50
 	}
 }

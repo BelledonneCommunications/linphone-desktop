@@ -467,5 +467,6 @@ Rectangle {
 		
 		call: incall.call
 		visible: SettingsModel.showTelKeypadAutomatically
+		y: 50
 	}
 }

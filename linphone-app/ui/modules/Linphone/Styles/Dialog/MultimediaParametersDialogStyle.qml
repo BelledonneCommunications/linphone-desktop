@@ -5,7 +5,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'MultimediaParamsDialog'
-	property int height: 312
+	property int height: 350
 	property int width: 450
 	
 	property QtObject column: QtObject {
