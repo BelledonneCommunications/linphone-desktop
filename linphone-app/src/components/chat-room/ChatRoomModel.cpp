@@ -347,7 +347,6 @@ QString ChatRoomModel::getUsername () const {
 }
 
 QString ChatRoomModel::getAvatar () const {
-	qWarning() << getUsername() << " *> " << mChatRoom->getNbParticipants();
 	if( mChatRoom && mChatRoom->getNbParticipants() == 1){
 		auto participants = getParticipants(false);	
 		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));

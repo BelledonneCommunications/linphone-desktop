@@ -200,9 +200,16 @@ ApplicationWindow {
 						onLaunchSecureChat: CallsListModel.launchChat( sipAddress,1 )
 						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress, '')
 					}
-					
+					ActionButton {
+						isCustom: true
+						backgroundRadius: 90
+						colorSet: MainWindowStyle.buttons.telKeyad
+						onClicked: telKeypad.visible = !telKeypad.visible
+						toggled: telKeypad.visible
+					}
 					
 					ActionButton {
+						Layout.leftMargin: 30
 						isCustom: true
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newChatGroup
@@ -355,16 +362,28 @@ ApplicationWindow {
 				}
 				
 				// Main content.
-				Loader {
-					id: contentLoader
-					
-					objectName: '__contentLoader'
-					
+				Item{
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					
-					source: 'Home.qml'
-					Component.onCompleted: if (AccountSettingsModel.accounts.length < 2) source= 'Assistant.qml' // default proxy = 1. Do not use this set diretly in source because of bindings that will override next setSource
+					Loader {
+						id: contentLoader
+						
+						objectName: '__contentLoader'
+						
+						anchors.fill: parent
+						
+						source: 'Home.qml'
+						Component.onCompleted: if (AccountSettingsModel.accounts.length < 2) source= 'Assistant.qml' // default proxy = 1. Do not use this set diretly in source because of bindings that will override next setSource
+					}
+					TelKeypad {
+						anchors.right: parent.right
+						anchors.top: parent.top
+						id: telKeypad
+						onSendDtmf: smartSearchBar.text = smartSearchBar.previousText+dtmf
+						onVisibleChanged: if(!visible) smartSearchBar.previousText = ''	// this is a way to reset search text
+						//call: incall.call
+						visible: SettingsModel.showTelKeypadAutomatically
+					}
 				}
 			}
 		}

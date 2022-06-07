@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 79.999999 80.000001"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="tel_keypad_voicemail_custom.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.9879093"
+     inkscape:cx="9.3062596"
+     inkscape:cy="-4.5273695"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="g8" />
+  <defs
+     id="defs5">
+    <filter
+       id="filter_1"
+       x="-0.03898874"
+       y="-0.091859534"
+       width="1.0779775"
+       height="1.1837191">
+      <feColorMatrix
+         in="SourceGraphic"
+         type="matrix"
+         values="0 0 0 0 0.26666668 0 0 0 0 0.26666668 0 0 0 0 0.26666668 0 0 0 1 0"
+         color-interpolation-filters="sRGB"
+         id="feColorMatrix2" />
+    </filter>
+  </defs>
+  <g
+     id="g8"
+     transform="matrix(2.1639767,0,0,2.3524531,2.1443087,22.334821)"
+     filter="url(#filter_1)">
+    <path
+       d="m 14.117735,6.7224585 c 0,3.7680535 -3.101687,6.8228875 -6.9275349,6.8228875 -3.8254088,0 -6.92757212,-3.054834 -6.92757212,-6.8228875 0,-3.768531 3.10216332,-6.8233829 6.92757212,-6.8233829 3.8258479,0 6.9275349,3.0548519 6.9275349,6.8233829 z m 18.296228,0 c 0,3.7680535 -3.102617,6.8228875 -6.927507,6.8228875 -3.82638,0 -6.928069,-3.054834 -6.928069,-6.8228875 0,-3.768531 3.101689,-6.8233829 6.928069,-6.8233829 3.82489,0 6.927507,3.0548519 6.927507,6.8233829 z M 7.1902001,13.544887 H 25.486363 Z"
+       id="messagerie-icon"
+       fill="none"
+       fill-rule="evenodd"
+       stroke="#fffffe"
+       stroke-width="2"
+       stroke-linecap="round"
+       stroke-linejoin="round"
+       style="stroke-width:2.50708;stroke-dasharray:none" />
+  </g>
+</svg>

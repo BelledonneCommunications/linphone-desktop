@@ -82,6 +82,7 @@ Item {
 	
 	signal clicked(real x, real y)
 	signal pressed(real x, real y)
+	signal released(real x, real y)
 	
 	// ---------------------------------------------------------------------------
 		
@@ -121,8 +122,8 @@ Item {
 	function getBackgroundColor(){
 		var defaultColor = 'transparent'
 		if(isCustom){
-			if(wrappedButton.icon == '')
-				return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
+			//if(wrappedButton.icon == '')
+				//return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
 				return getColor(wrappedButton.colorSet.backgroundUpdatingColor, defaultColor, 'backgroundUpdatingColor')
 			if (!useStates)
@@ -138,8 +139,8 @@ Item {
 	function getForegroundColor(){
 		var defaultColor = 'black'
 		if(isCustom){
-			if(wrappedButton.icon == '')
-				return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
+			//if(wrappedButton.icon == '')
+				//return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
 				return getColor(wrappedButton.colorSet.foregroundUpdatingColor, defaultColor, 'foregroundUpdatingColor')
 			if (!useStates)
@@ -155,8 +156,8 @@ Item {
 	function getBackgroundHiddenPartColor(){
 		var defaultColor = 'transparent'
 		if(isCustom){
-			if(wrappedButton.icon == '')
-				return getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor')
+			//if(wrappedButton.icon == '')
+				//return getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
 				return getColor(wrappedButton.colorSet.backgroundHiddenPartUpdatingColor, defaultColor, 'backgroundHiddenPartUpdatingColor')
 			if (!useStates)
@@ -172,8 +173,8 @@ Item {
 	function getForegroundHiddenPartColor(){
 	var defaultColor = '#80FFFFFF'
 		if(isCustom){
-			if(wrappedButton.icon == '')
-				return getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor')
+			//if(wrappedButton.icon == '')
+				//return getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
 				return getColor(wrappedButton.colorSet.foregroundHiddenPartUpdatingColor, defaultColor, 'foregroundHiddenPartUpdatingColor')
 			if (!useStates)
@@ -214,6 +215,8 @@ Item {
 		hoverEnabled: !wrappedButton.updating//|| wrappedButton.autoIcon
 		onClicked: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.clicked(pressX, pressY)
 		onPressed: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.pressed(pressX, pressY)
+		onReleased: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.released(pressX, pressY)
+		
 		Rectangle{
 			id: foregroundColor
 			anchors.fill:parent

@@ -123,6 +123,9 @@ class ColorListModel : public ProxyListModel {
 		
 		ADD_COLOR("readonly_fg", "#B1B1B1", "Chat text area Readonly foreground")
 		
+		ADD_COLOR("telkeypad_bg", "#4D5B66", "Background for phone keypad")
+		ADD_COLOR("telkeypad_fg", "#E4E4E4", "Foreground for phone keypad")
+		ADD_COLOR("telkeypad_h", "#B1B1B1", "Foreground for phone keypad")
 
 // Keywords: 'mKeywordsMap'
 //		s=standard, ma=main, l=list, sc=screen, me=menu
