@@ -958,7 +958,7 @@ URL del server non configurato.</translation>
     <message>
         <source>conversationMenuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete the chat</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elimina</translation>
     </message>
 </context>
 <context>
@@ -1796,29 +1796,29 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>I messaggi effimeri sono stati abilitati: %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageDisabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>I messaggi effimeri sono stati disabilitati</translation>
     </message>
     <message>
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo oggetto: %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
         <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>I messaggi effimeri sono stati aggiornati: %1</translation>
     </message>
     <message numerus="yes">
         <source>unreadMessageNotice</source>
         <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 messaggio non letto</numerusform>
+            <numerusform>%1 messaggi non letti</numerusform>
         </translation>
     </message>
 </context>
@@ -1884,29 +1884,29 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi partecipanti</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cerca partecipanti nella tua rubrica per invitarli nella chat di gruppo.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lista partecipanti</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Amministratore</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>participantsListRemoveTooltip</source>
         <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi questo partecipante dalla lista</translation>
     </message>
 </context>
 <context>
@@ -1914,13 +1914,13 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantsAdminHeader</source>
         <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>(Amministratore)</translation>
         <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
     <message>
         <source>participantsMe</source>
         <extracomment>&apos;Me&apos; : One word for myself.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Me</translation>
     </message>
 </context>
 <context>
@@ -1947,17 +1947,17 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
         <extracomment>&apos;Enable&apos; : One word for button action to enable tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abilita</translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeDisable</source>
         <extracomment>&apos;Disable&apos; : One word for button action to disable tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Disabilita</translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeAuto</source>
         <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatico</translation>
     </message>
 </context>
 <context>
@@ -2018,7 +2018,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>noPlugin</source>
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nessun Plugin da caricare</translation>
     </message>
 </context>
 <context>
@@ -2073,23 +2073,23 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Calibrazione</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationInProgress</source>
-        <translation type="unfinished"></translation>
+        <translation>...calibrazione in corso…</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation type="unfinished"></translation>
+        <translation>Calibrato a %1ms</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>Calibrazione fallita</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
-        <translation type="unfinished"></translation>
+        <translation>Echo non rilevato</translation>
     </message>
 </context>
 <context>
@@ -2201,7 +2201,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>hideEmptyChatRoomsLabel</source>
         <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi chat vuote</translation>
     </message>
     <message>
         <source>waitRegistrationForCallLabel</source>
@@ -2211,29 +2211,29 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>chatNotificationsEnabledLabel</source>
         <extracomment>&apos;Enable notifications&apos;: settings label for enabling notifications.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abilita notifiche</translation>
     </message>
     <message>
         <source>AutoDownload</source>
         <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Download automatico</translation>
     </message>
     <message>
         <source>autoDownloadNever</source>
         <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mai</translation>
     </message>
     <message>
         <source>autoDownloadAlways</source>
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sempre</translation>
     </message>
 </context>
 <context>
     <name>SettingsLdap</name>
     <message>
         <source>newServer</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuovo server</translation>
     </message>
 </context>
 <context>
@@ -2244,7 +2244,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Conferma</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
