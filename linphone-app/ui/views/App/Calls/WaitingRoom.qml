@@ -5,9 +5,13 @@ import QtGraphicalEffects 1.12
 import Common 1.0
 import Linphone 1.0
 import LinphoneEnums 1.0
+import UtilsCpp 1.0
 
 import Common.Styles 1.0
 import App.Styles 1.0
+
+
+
 
 // =============================================================================
 
@@ -15,25 +19,59 @@ Rectangle {
 	id: mainItem
 	color: WaitingRoomStyle.backgroundColor
 	property ConferenceInfoModel conferenceInfoModel
-
+	property CallModel callModel	// Store the call for processing calling.
+	property bool previewLoaderEnabled: true
+	property var _sipAddressObserver: callModel ? SipAddressesModel.getSipAddressObserver(callModel.fullPeerAddress, callModel.fullLocalAddress) : undefined
+	
 	signal cancel()
 	
 	function close(){
-		previewLoader.enabled = false
+		mainItem.previewLoaderEnabled = false// Need it to close camera.
 	}
 	function open(){
+		mainItem.previewLoaderEnabled = true
 	}
+	
+	//onCallModelChanged: callModel ? contentsStack.replace(callingComponent) : contentsStack.replace(cameraComponent)
+	onCallModelChanged: contentsStack.flipped = !!callModel
+	
+	Component.onDestruction: {mainItem.previewLoaderEnabled = false;_sipAddressObserver=null}// Need to set it to null because of not calling destructor if not.
 	
 	ColumnLayout {
 		anchors.fill: parent
-		Text{
-			Layout.alignment: Qt.AlignCenter
+		RowLayout{
 			Layout.preferredHeight: 60
+			Layout.alignment: Qt.AlignCenter
 			Layout.topMargin: 15
-			text: conferenceInfoModel.subject
-			color: WaitingRoomStyle.title.color
-			font.pointSize:  WaitingRoomStyle.title.pointSize
-			horizontalAlignment: Qt.AlignCenter
+			spacing: 20
+			Text{
+				Layout.preferredHeight: 60
+				Layout.alignment: Qt.AlignCenter
+				text: mainItem.conferenceInfoModel ? mainItem.conferenceInfoModel.subject 
+												   : (mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : '')
+				color: WaitingRoomStyle.title.color
+				font.pointSize:  WaitingRoomStyle.title.pointSize
+				horizontalAlignment: Qt.AlignHCenter
+				verticalAlignment: Qt.AlignVCenter
+			}
+			BusyIndicator {
+				Layout.alignment: Qt.AlignCenter
+				Layout.preferredHeight: WaitingRoomStyle.header.busyIndicator.height
+				Layout.preferredWidth: WaitingRoomStyle.header.busyIndicator.width
+				color: WaitingRoomStyle.header.busyIndicator.color
+				visible: mainItem.callModel && mainItem.callModel.isOutgoing
+			}
+		}
+		Text {
+			Layout.fillWidth: true
+			horizontalAlignment: Qt.AlignHCenter
+			verticalAlignment: Qt.AlignVCenter
+				
+			color: WaitingRoomStyle.callError.color
+			font.pointSize: WaitingRoomStyle.callError.pointSize
+			width: parent.width
+			visible: mainItem.callModel && mainItem.callModel.callError
+			text: mainItem.callModel && mainItem.callModel.callError ? mainItem.callModel.callError : ''
 		}
 		RowLayout{
 			id: loader
@@ -42,22 +80,58 @@ Rectangle {
 			Item{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
-				CameraView{
-					id: previewLoader
-					showCloseButton: false
+				
+				Flipable{
+					id: contentsStack
 					anchors.centerIn: parent
-					height: Math.min( parent.height, parent.width)
+					height: Math.min( loader.height, loader.width)
 					width : height
-					ActionButton{
-						anchors.top: parent.top
-						anchors.right: parent.right
-						anchors.topMargin: 10
-						anchors.rightMargin: 10
-						isCustom: true
-						backgroundRadius: width/2
-						colorSet: WaitingRoomStyle.buttons.options
-						toggled: mediaMenu.visible
-						onClicked: mediaMenu.visible = !mediaMenu.visible
+					property bool flipped: false
+					
+					transform: Rotation {
+						id: rotation
+						origin.x: contentsStack.width/2
+						origin.y: contentsStack.height/2
+						axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
+						angle: 0    // the default angle
+					}
+					
+					states: State {
+						name: "back"
+						PropertyChanges { target: rotation; angle: 180 }
+						when: contentsStack.flipped
+					}
+					
+					transitions: Transition {
+						NumberAnimation { target: rotation; property: "angle"; duration: 500 }
+					}
+					
+					front: CameraView{
+						id: previewLoader
+						showCloseButton: false
+						enabled: mainItem.previewLoaderEnabled
+						height: Math.min( loader.height, loader.width)
+						width : height
+						ActionButton{
+							anchors.top: parent.top
+							anchors.right: parent.right
+							anchors.topMargin: 10
+							anchors.rightMargin: 10
+							isCustom: true
+							backgroundRadius: width/2
+							colorSet: WaitingRoomStyle.buttons.options
+							toggled: mediaMenu.visible
+							onClicked: mediaMenu.visible = !mediaMenu.visible
+						}
+					}
+					back: Avatar {
+						id: avatar
+						height: Math.min( loader.height, loader.width)
+						width : height
+						backgroundColor: WaitingRoomStyle.avatar.backgroundColor
+						image: mainItem._sipAddressObserver && _sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
+						username: mainItem.conferenceInfoModel ? mainItem.conferenceInfoModel.subject 
+															   : (mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : '')
 					}
 				}
 			}
@@ -85,6 +159,7 @@ Rectangle {
 			Layout.bottomMargin: 25
 			Layout.leftMargin: 25
 			Layout.rightMargin: 25
+			enabled: !mainItem.callModel
 			Item{
 				Layout.fillWidth: true
 			}
@@ -128,7 +203,7 @@ Rectangle {
 						isCustom: true
 						backgroundRadius: width/2
 						colorSet: selectedMode == 0 ? WaitingRoomStyle.buttons.gridLayout :
-															selectedMode == 1 ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
+													  selectedMode == 1 ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
 						onClicked: selectedMode = (selectedMode + 1) % 3
 					}
 				}
@@ -146,21 +221,24 @@ Rectangle {
 				capitalization: Font.AllUppercase
 				
 				onClicked: {
-						mainItem.close()
-						mainItem.cancel()
-						}
+					mainItem.close()
+					if(mainItem.callModel)
+						callModel.terminate()
+					mainItem.cancel()
+				}
 			}
 			TextButtonB {
 				//: 'Start' : Button label for starting the conference.
 				text: qsTr('startButton')
 				capitalization: Font.AllUppercase
-		
-				onClicked: {mainItem.close(); CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
-																			 {	video: modeChoice.selectedMode != 2
-																				, camera: camera.cameraEnabled
-																				, micro: !micro.microMuted
-																				, audio: !speaker.speakerMuted
-																				, layout: (modeChoice.selectedMode % 2)}) }
+				enabled: !mainItem.callModel
+				
+				onClicked: {CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
+														   {	video: modeChoice.selectedMode != 2
+															   , camera: camera.cameraEnabled
+															   , micro: !micro.microMuted
+															   , audio: !speaker.speakerMuted
+															   , layout: (modeChoice.selectedMode % 2)}) }
 			}
 		}
 		

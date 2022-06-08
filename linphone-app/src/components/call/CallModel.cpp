@@ -28,6 +28,7 @@
 #include "components/calls/CallsListModel.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
 #include "components/conference/ConferenceModel.hpp"
+#include "components/conferenceInfo/ConferenceInfoModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/core/CoreHandlers.hpp"
@@ -87,7 +88,11 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	if(mCall) {
 		mRemoteAddress = mCall->getRemoteAddress()->clone();
 		if(mCall->getConference())
-			mConferenceModel = ConferenceModel::create(mCall->getConference());	
+			mConferenceModel = ConferenceModel::create(mCall->getConference());
+		auto conferenceInfo = CoreManager::getInstance()->getCore()->findConferenceInformationFromUri(getConferenceAddress());
+		if(	conferenceInfo ){
+			mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
+		}
 	}
 	mMagicSearch->getContactListFromFilterAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain());
 }
@@ -114,6 +119,20 @@ QString CallModel::getFullPeerAddress () const {
 
 QString CallModel::getFullLocalAddress () const {
 	return mCall ? Utils::coreStringToAppString(mCall->getCallLog()->getLocalAddress()->asString()) : "";
+}
+
+std::shared_ptr<linphone::Address> CallModel::getConferenceAddress () const{
+	std::shared_ptr<linphone::Address> conferenceAddress;
+	if(mCall){
+		auto remoteContact = mCall->getRemoteContact();
+		
+		if (mCall->getDir() == linphone::Call::Dir::Incoming){
+			if( remoteContact != "" )
+				conferenceAddress = CoreManager::getInstance()->getCore()->interpretUrl(remoteContact);
+		}else
+			conferenceAddress = mCall->getRemoteAddress()->clone();
+	}	
+	return conferenceAddress;
 }
 // -----------------------------------------------------------------------------
 
@@ -163,6 +182,10 @@ ChatRoomModel * CallModel::getChatRoomModel() const{
 
 ConferenceModel * CallModel::getConferenceModel(){
 	return mConferenceModel.get();
+}
+
+ConferenceInfoModel * CallModel::getConferenceInfoModel(){
+	return mConferenceInfoModel.get();
 }
 
 QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
@@ -682,6 +705,7 @@ void CallModel::setCameraEnabled (bool status){
 
 		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
 		params->setVideoDirection(status ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
+		params->enableVideo(true);
 		mCall->update(params);
 	}
 }

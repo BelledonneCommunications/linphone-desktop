@@ -41,14 +41,14 @@ Notification {
 				//entry: notification.fullPeerAddress? SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress): notification.timelineModel.getChatRoomModel()
 				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)		
 				showAuxData: !chatRoomModel.isOneToOne
-				entry: ({
-								sipAddress: sipObserver ? sipObserver.peerAddress : '',
+				entry: sipObserver ? ({
+								sipAddress: sipObserver.peerAddress,
 								contactModel: sipObserver.contact,
 								isOneToOne: chatRoomModel.isOneToOne,
 								haveEncryption: chatRoomModel.haveEncryption,
 								securityLevel: chatRoomModel.securityLevel,
 								auxDataToShow: '- ' + chatRoomModel.subject+' -'
-							})
+							}): undefined
 				Component.onDestruction: sipObserver=null// Need to set it to null because of not calling destructor if not.
 			}
 			

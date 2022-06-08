@@ -61,7 +61,6 @@ function openWaitingRoom(model){
 	if(window.conferenceInfoModel)
 		window.conferenceInfoModel = null;
 	window.conferenceInfoModel = model
-	console.log('set : '+window.conferenceInfoModel)
 }
 
 // -----------------------------------------------------------------------------
@@ -78,18 +77,13 @@ function getContent (call, conferenceInfoModel) {
 	if (status == null) {
 		return calls.conferenceModel.count > 0 ? conference : null
 	}
-	
 	var CallModel = Linphone.CallModel
 	if (status === CallModel.CallStatusIncoming) {
 		return incomingCall
 	}
-	
-	if (status === CallModel.CallStatusOutgoing) {
-		return outgoingCall
-	}
-	
-	if (status === CallModel.CallStatusEnded) {
-		return endedCall
+	window.conferenceInfoModel = call.conferenceInfoModel;
+	if (status === CallModel.CallStatusOutgoing || status === CallModel.CallStatusEnded) {
+		return waitingRoom
 	}
 	
 	if(call.isConference)

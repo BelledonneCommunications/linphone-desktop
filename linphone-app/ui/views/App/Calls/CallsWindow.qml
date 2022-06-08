@@ -192,25 +192,9 @@ Window {
 			}
 			
 			Component {
-				id: outgoingCall
-				
-				OutgoingCall {
-					call: window.call
-				}
-			}
-			
-			Component {
 				id: incall
 				
 				Incall {
-					call: window.call
-				}
-			}
-			
-			Component {
-				id: endedCall
-				
-				EndedCall {
 					call: window.call
 				}
 			}
@@ -256,6 +240,7 @@ Window {
 					conferenceInfoModel: window.conferenceInfoModel
 					onCancel: endOfProcess(0)
 					enabled: window.visible
+					callModel: window.call
 				}
 			}
 			Component {

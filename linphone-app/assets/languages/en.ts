@@ -755,9 +755,7 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
-        <extracomment>&apos;Finished&apos; : Filter conferences on end status.
-----------
-&apos;Invitations&apos; : Filter conferences on invited conferences (where we are not the organizer).</extracomment>
+        <extracomment>&apos;Finished&apos; : Filter conferences on end status.</extracomment>
         <translation>Finished</translation>
     </message>
     <message>
@@ -769,6 +767,11 @@ Server URL not configured.</translation>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
         <translation>Conference URL has been copied</translation>
+    </message>
+    <message>
+        <source>conferencesInvitedFilter</source>
+        <extracomment>&apos;Invitations&apos; : Filter conferences on invited conferences (where we are not the organizer).</extracomment>
+        <translation>Invitations</translation>
     </message>
 </context>
 <context>

@@ -53,7 +53,10 @@ static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linph
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = true;
-	dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
+	if(callLog->wasConference()) {
+		dest["title"] = QString::fromStdString(callLog->getConferenceInfo()->getSubject());
+	}else
+		dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
 }
 
 static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
@@ -62,7 +65,11 @@ static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphon
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = false;
-	dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
+	if(callLog->wasConference()) {
+		dest["title"] = QString::fromStdString(callLog->getConferenceInfo()->getSubject());
+	}else
+		dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
+	
 }
 
 // -----------------------------------------------------------------------------

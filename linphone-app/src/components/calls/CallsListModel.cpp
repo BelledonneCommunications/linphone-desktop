@@ -202,36 +202,6 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	CallModel::prepareTransfert(call, prepareTransfertAddress);
 }
 
-ChatRoomModel* CallsListModel::launchSecureChat (const QString &sipAddress) const {
-	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
-	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
-	if (!address)
-		return nullptr;
-	
-	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
-	std::list <shared_ptr<linphone::Address> > participants;
-	std::shared_ptr<const linphone::Address> localAddress;
-	participants.push_back(address);
-	params->enableEncryption(true);
-	
-	params->setSubject("Dummy Subject");
-	params->enableEncryption(true);
-	
-	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
-	if( chatRoom != nullptr){
-		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
-		timelineList->update();
-		auto timeline = timelineList->getTimeline(chatRoom, false);
-		if(!timeline){
-			timeline = timelineList->getTimeline(chatRoom, true);
-			timelineList->add(timeline);
-		}
-		return timeline->getChatRoomModel();
-	}
-	return nullptr;
-}
-
 QVariantMap CallsListModel::launchChat(const QString &sipAddress, const int& securityLevel) const{
 	QVariantList participants;
 	participants << sipAddress;
@@ -252,6 +222,7 @@ ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) co
 	
 	params->setBackend(linphone::ChatRoomBackend::Basic);
 	
+	qInfo() << "Create ChatRoom with " <<participantAddress;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
 	
 	if( chatRoom != nullptr){
@@ -287,7 +258,19 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	params->enableEncryption(true);
 	params->enableGroup(true);
 	
+	qInfo() << "Create secure ChatRoom: " << subject << ", from " << QString::fromStdString(localAddress->asString()) << " and with " <<participantAddress;;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
+// Still needed?
+//	if( chatRoom != nullptr){
+//		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
+//		timelineList->update();
+//		auto timeline = timelineList->getTimeline(chatRoom, false);
+//		if(!timeline){
+//			timeline = timelineList->getTimeline(chatRoom, true);
+//			timelineList->add(timeline);
+//		}
+//		return timeline->getChatRoomModel();
+//	}
 	return chatRoom != nullptr;
 }
 
@@ -305,7 +288,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	QSharedPointer<TimelineModel> timeline;
 	auto timelineList = CoreManager::getInstance()->getTimelineListModel();
 	QString localAddressStr = (localAddress ? Utils::coreStringToAppString(localAddress->asStringUriOnly()) : "local");
-	qInfo() << "ChatRoom creation of " << subject << " at " << securityLevel << " security, from " << localAddressStr << " and with " << participants;
+	qInfo() << "Create ChatRoom: " << subject << " at " << securityLevel << " security, from " << localAddressStr << " and with " << participants;
 	
 	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
 	std::list <shared_ptr<linphone::Address> > chatRoomParticipants;

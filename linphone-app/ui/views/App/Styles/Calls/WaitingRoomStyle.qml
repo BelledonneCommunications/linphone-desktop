@@ -125,6 +125,21 @@ QtObject {
 		}
 	}
 	*/
+	property QtObject callError: QtObject {
+		property color color: ColorsList.add(sectionName+'_action_error', 'i').color
+		property int pointSize: Units.dp * 12
+	}
+	property QtObject header: QtObject {
+		property QtObject busyIndicator: QtObject {
+			property color color: ColorsList.add(sectionName+'_header_busy', 'i').color
+			property int height: 30
+			property int width: 30
+		}
+	}
+	property QtObject avatar: QtObject {
+			property color backgroundColor: ColorsList.add(sectionName+'_container_avatar_bg', 'n').color
+			property int maxSize: 300
+	}
 	// Button colors	
 	property QtObject buttons: QtObject {
 	property QtObject microOn: QtObject {

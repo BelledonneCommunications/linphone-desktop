@@ -410,11 +410,9 @@ Rectangle {
 					onClicked: {
 						if(mouse.button == Qt.LeftButton){
 							timeline.entryClicked($modelData)
-							if(view){
-								if(view.updateSelectionModels)
-									$modelData.selected = true
-								view.currentIndex = index;
-							}
+							if(view.updateSelectionModels)
+								$modelData.selected = true
+							view.currentIndex = index;
 						}else{
 							contactTooltip.show()
 						}

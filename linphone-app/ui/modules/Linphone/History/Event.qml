@@ -13,7 +13,7 @@ Row {
 	id: mainItem
 	signal entryClicked(var entry)
 	
-	property var _sipAddressObserver: SipAddressesModel.getSipAddressObserver($historyEntry.sipAddress, '')
+	property var _sipAddressObserver: $historyEntry.sipAddress ? SipAddressesModel.getSipAddressObserver($historyEntry.sipAddress, '') : $historyEntry.title
 	property QtObject iconData
 	property string translation
 	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
@@ -135,7 +135,7 @@ Row {
 			pointSize: HistoryStyle.entry.event.text.pointSize
 		}
 		height: parent.height
-		text: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
+		text: _sipAddressObserver ? ( $historyEntry.sipAddress ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : _sipAddressObserver) : ''
 		verticalAlignment: Text.AlignVCenter
 		MouseArea{
 			anchors.fill:parent

@@ -65,7 +65,7 @@ Item{
 						qsTr('conferencesScheduledFilter'),
 					
 					//: 'Invitations' : Filter conferences on invited conferences (where we are not the organizer).
-						qsTr('conferencesEndedFilter'),
+						qsTr('conferencesInvitedFilter'),
 					]
 					capitalization: Font.AllUppercase
 					selectedButton: mainItem.filterType

@@ -47,7 +47,6 @@ public:
 	Q_INVOKABLE void launchAudioCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const QHash<QString, QString> &headers = {}) const;
 	Q_INVOKABLE void launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers = {}, const QString& prepareTransfertAddress = "") const;
 	Q_INVOKABLE void launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const bool& autoSelectAfterCreation = true, QVariantMap options = QVariantMap()) const;
-	Q_INVOKABLE ChatRoomModel* launchSecureChat (const QString &sipAddress) const;
 	Q_INVOKABLE QVariantMap launchChat(const QString &sipAddress, const int& securityLevel) const;
 	Q_INVOKABLE ChatRoomModel* createChat (const QString &participantAddress) const;
 	Q_INVOKABLE ChatRoomModel* createChat (const CallModel * ) const;
@@ -63,7 +62,7 @@ public:
 	Q_INVOKABLE void terminateAllCalls () const;
 	Q_INVOKABLE void terminateCall (const QString& sipAddress) const;
 	
-	static std::list<std::shared_ptr<linphone::CallLog>> getCallHistory(const QString& peerAddress, const QString& localAddress);	
+	static std::list<std::shared_ptr<linphone::CallLog>> getCallHistory(const QString& peerAddress, const QString& localAddress);
 		
 signals:
 	void callRunning (int index, CallModel *callModel);

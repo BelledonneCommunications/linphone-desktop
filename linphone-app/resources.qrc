@@ -417,12 +417,10 @@
 		<file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallTransfer.qml</file>
 		<file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
-		<file>ui/views/App/Calls/EndedCall.qml</file>
 		<file>ui/views/App/Calls/IncallFullscreenWindow.qml</file>
 		<file>ui/views/App/Calls/Incall.js</file>
 		<file>ui/views/App/Calls/Incall.qml</file>
 		<file>ui/views/App/Calls/IncomingCall.qml</file>
-		<file>ui/views/App/Calls/OutgoingCall.qml</file>
 		<file>ui/views/App/Calls/WaitingRoom.qml</file>
 		<file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
 		<file>ui/views/App/Dialog/NewConference.qml</file>

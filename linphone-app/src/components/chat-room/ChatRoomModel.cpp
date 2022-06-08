@@ -187,8 +187,10 @@ ChatRoomModel::~ChatRoomModel () {
 				for(auto p : participants)
 					participantsAddress.push_back(p->getAddress()->clone());
 				auto internalChatRoom = CoreManager::getInstance()->getCore()->searchChatRoom(mChatRoom->getCurrentParams(), mChatRoom->getLocalAddress(), mChatRoom->getPeerAddress(), participantsAddress);
-				if( internalChatRoom)
+				if( internalChatRoom) {
+					qInfo() << "Deleting ChatRoom : " << getSubject() << ",  address=" << getFullPeerAddress();
 					CoreManager::getInstance()->getCore()->deleteChatRoom(internalChatRoom);
+				}
 			}
 		}
 	}
@@ -258,6 +260,7 @@ void ChatRoomModel::removeAllEntries () {
 		if(haveLogs)
 			emit CoreManager::getInstance()->callLogsCountChanged();
 	}
+	deleteChatRoom();
 	endResetModel();
 	emit allEntriesRemoved(mSelf.lock());
 	emit focused();// Removing all entries is like having focus. Don't wait asynchronous events.
@@ -593,6 +596,7 @@ void ChatRoomModel::markAsToDelete(){
 }
 
 void ChatRoomModel::deleteChatRoom(){
+	qInfo() << "Deleting ChatRoom : " << getSubject() << ",  address=" << getFullPeerAddress();
 	CoreManager::getInstance()->getCore()->deleteChatRoom(mChatRoom);
 }
 
