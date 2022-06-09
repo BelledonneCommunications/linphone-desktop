@@ -3170,6 +3170,10 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>phoneNumberLabel</source>
         <translation>Telefonnummer</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Navn til visning (valgfrit)</translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
@@ -3180,6 +3184,10 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>passwordLabel</source>
         <translation>Kodeord</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Navn til visning (valgfrit)</translation>
     </message>
 </context>
 <context>

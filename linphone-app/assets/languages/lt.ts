@@ -3182,6 +3182,10 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>phoneNumberLabel</source>
         <translation>Telefono numeris</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Rodomas vardas (nebūtina)</translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
@@ -3192,6 +3196,10 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>passwordLabel</source>
         <translation>Slaptažodis</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Rodomas vardas (nebūtina)</translation>
     </message>
 </context>
 <context>

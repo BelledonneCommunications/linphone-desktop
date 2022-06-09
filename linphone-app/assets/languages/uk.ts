@@ -3182,6 +3182,10 @@
         <source>phoneNumberLabel</source>
         <translation>Номер телефону</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Показуване ім&apos;я (не обов&apos;язково)</translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
@@ -3192,6 +3196,10 @@
     <message>
         <source>passwordLabel</source>
         <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Показуване ім&apos;я (не обов&apos;язково)</translation>
     </message>
 </context>
 <context>

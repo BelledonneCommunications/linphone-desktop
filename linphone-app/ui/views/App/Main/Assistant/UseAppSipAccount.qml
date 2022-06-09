@@ -88,7 +88,7 @@ AssistantAbstractView {
 		
 		function setCountryCode (index) {
 			var model = telephoneNumbersModel
-			assistantModel.countryCode = index !== -1 ? model.data(model.index(index, 0)).countryCode : ''
+			assistantModel.countryCode = index !== -1 ? model.data(model.index(index, 0)).countryCode || '' : ''
 		}
 		
 		configFilename: 'use-app-sip-account.rc'

@@ -3158,6 +3158,10 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>phoneNumberLabel</source>
         <translation>Telefonszám</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
@@ -3168,6 +3172,10 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>passwordLabel</source>
         <translation>Jelszó</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

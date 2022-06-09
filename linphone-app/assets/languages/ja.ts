@@ -3158,6 +3158,10 @@
         <source>phoneNumberLabel</source>
         <translation>電話番号</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">表示名(オプション)</translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
@@ -3168,6 +3172,10 @@
     <message>
         <source>passwordLabel</source>
         <translation>パスワード</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">表示名(オプション)</translation>
     </message>
 </context>
 <context>

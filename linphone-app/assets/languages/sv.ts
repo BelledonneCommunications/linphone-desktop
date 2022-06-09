@@ -3170,6 +3170,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>phoneNumberLabel</source>
         <translation>Telefonnummer</translation>
     </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Visningsnamn (valfritt)</translation>
+    </message>
 </context>
 <context>
     <name>UseAppSipAccountWithUsername</name>
@@ -3180,6 +3184,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>passwordLabel</source>
         <translation>Lösenord</translation>
+    </message>
+    <message>
+        <source>displayNameLabel</source>
+        <translation type="unfinished">Visningsnamn (valfritt)</translation>
     </message>
 </context>
 <context>
