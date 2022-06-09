@@ -21,7 +21,7 @@ Item{
 	property alias isFullscreen: camera.isFullscreen
 	property alias isCameraFromDevice: camera.isCameraFromDevice
 	property bool showCloseButton: true
-	property bool showActiveSpeaker: true
+	property bool showActiveSpeakerOverlay: true
 	property color color : CameraViewStyle.outBackgroundColor
 	signal closeRequested()
 	
@@ -36,7 +36,7 @@ Item{
         spread: 0.9
         color: CameraViewStyle.border.color
         cornerRadius: backgroundArea.radius + glowRadius
-        visible: mainItem.showActiveSpeaker && mainItem.currentDevice && mainItem.currentDevice.isSpeaking
+        visible: mainItem.showActiveSpeakerOverlay && mainItem.currentDevice && mainItem.currentDevice.isSpeaking
     }
 	Rectangle {
         id: backgroundArea

@@ -29,7 +29,6 @@ ParticipantDeviceListener::ParticipantDeviceListener(QObject *parent) : QObject(
 
 //--------------------------------------------------------------------
 void ParticipantDeviceListener::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
-	qDebug() << "onIsSpeakingChanged " << isSpeaking;
 	emit isSpeakingChanged(participantDevice, isSpeaking);
 }
 

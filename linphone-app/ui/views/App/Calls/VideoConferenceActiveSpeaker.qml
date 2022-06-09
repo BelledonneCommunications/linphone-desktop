@@ -46,7 +46,7 @@ Item {
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
 		isPaused: (callModel && callModel.pausedByUser) || (currentDevice && currentDevice.isPaused) //callModel.pausedByUser
 		showCloseButton: false
-		showActiveSpeaker: false	// This is an active speaker. We don't need to show the indicator.
+		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
 		color: 'black'
 	}
 	ScrollableListView{

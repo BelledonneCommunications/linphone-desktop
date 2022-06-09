@@ -33,7 +33,7 @@ Item {
 	property bool d : callModel && callModel.cameraEnabled
 	property bool isReady: cameraLoader.item && cameraLoader.item.isReady
 	
-	onCurrentDeviceChanged: resetActive()
+	onCurrentDeviceChanged: {if(container.isCameraFromDevice) resetActive()}
 	function resetActive(){
 		resetTimer.resetActive()
 	}
