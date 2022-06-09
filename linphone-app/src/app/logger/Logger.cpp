@@ -209,3 +209,19 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 	
 	mInstance->enable(SettingsModel::getLogsEnabled(config));
 }
+
+QString Logger::getLogText()const{
+	QDir path = QString::fromStdString(linphone::Core::getLogCollectionPath());
+	QString prefix = QString::fromStdString(linphone::Core::getLogCollectionPrefix());
+	auto files = path.entryInfoList(QStringList(prefix+"*.log"), QDir::Files | QDir::NoSymLinks | QDir::Readable, QDir::Time);
+    QString result;
+	for(auto fileInfo : files){
+		QFile file(fileInfo.filePath());
+		if (file.open(QIODevice::ReadOnly)) {
+			QByteArray arr = file.readAll();
+			result += QString::fromLatin1(arr);
+			file.close();
+		}
+	}
+    return result;
+}

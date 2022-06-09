@@ -543,6 +543,8 @@ public:
 	
 	void accessAdvancedSettings();
 	
+	Q_INVOKABLE QString getLogText()const;
+	
 	QString getLogsFolder () const;
 	void setLogsFolder (const QString &folder);
 	

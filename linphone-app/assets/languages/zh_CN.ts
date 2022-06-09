@@ -2011,6 +2011,10 @@
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
         <translation>没有插件可加载</translation>
     </message>
+    <message>
+        <source>viewlogs</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

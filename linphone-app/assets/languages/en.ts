@@ -2023,6 +2023,10 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
         <translation>No Plugins to load</translation>
     </message>
+    <message>
+        <source>viewlogs</source>
+        <translation>VIEW</translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>

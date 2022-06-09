@@ -43,8 +43,9 @@ public:
   }
 
   void enable (bool status);
+  QString getLogText()const;
 
-  static void init (const std::shared_ptr<linphone::Config> &config);
+  static void init (const std::shared_ptr<linphone::Config> &config);  
 
   static Logger *getInstance () {
     return mInstance;

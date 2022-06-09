@@ -16,7 +16,9 @@ import 'SettingsAdvanced.js' as Logic
 // =============================================================================
 
 TabContainer {
+	id: mainItem
 	color: "#00000000"
+	signal showLogs()
 	Column {
 		id: column
 		spacing: SettingsWindowStyle.forms.spacing
@@ -71,6 +73,14 @@ TabContainer {
 		Row {
 			anchors.right: parent.right
 			spacing: SettingsAdvancedStyle.buttons.spacing
+			
+			TextButtonB {
+				text: qsTr('viewlogs')
+				
+				onClicked: {
+					mainItem.showLogs()
+				}
+			}
 			
 			TextButtonB {
 				text: qsTr('cleanLogs')

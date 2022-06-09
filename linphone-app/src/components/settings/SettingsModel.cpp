@@ -1462,6 +1462,10 @@ void SettingsModel::accessAdvancedSettings() {
 
 //------------------------------------------------------------------------------
 
+QString SettingsModel::getLogText()const{
+	return Logger::getInstance()->getLogText();
+}
+
 QString SettingsModel::getLogsFolder () const {
 	return getLogsFolder(mConfig);
 }
