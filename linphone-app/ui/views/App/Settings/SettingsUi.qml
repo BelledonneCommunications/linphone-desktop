@@ -268,8 +268,8 @@ TabContainer {
 							currentIndex: SettingsModel.versionCheckType == SettingsModel.VersionCheckType_Release ? 0
 											: SettingsModel.versionCheckType == SettingsModel.VersionCheckType_Nightly ? 1
 											: 2
-							onActivated: SettingsModel.versionCheckType = ( currentIndex == 0 ? SettingsModel.VersionCheckType_Release 
-																			: currentIndex == 1 ? SettingsModel.VersionCheckType_Nightly
+							onActivated: SettingsModel.versionCheckType = ( index == 0 ? SettingsModel.VersionCheckType_Release 
+																			: index == 1 ? SettingsModel.VersionCheckType_Nightly
 																			: SettingsModel.VersionCheckType_Custom)
 						}
 					}
