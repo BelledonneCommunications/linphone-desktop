@@ -73,15 +73,22 @@ Item {
 					
 				visible: droppableTextArea.enabled
 				
-				onClicked: fileDialog.open()
-				
-				FileDialog {
-					id: fileDialog
-					
-					folder: shortcuts.home
-					title: qsTr('fileChooserTitle')
-					
-					onAccepted: _emitFiles(fileDialog.fileUrls)
+				onClicked: fileDialogLoader.active=true
+				Loader{// Qt display warnings on open this FileDialog. A loader is used to avoid printing warnings each time a chat is shown.
+					id: fileDialogLoader
+					active: false
+					sourceComponent: Component{
+						FileDialog {
+							id: fileDialog
+							
+							folder: shortcuts.home
+							title: qsTr('fileChooserTitle')
+							
+							onAccepted: {_emitFiles(fileDialog.fileUrls);fileDialogLoader.active = false}
+							onRejected: fileDialogLoader.active = false
+							Component.onCompleted: fileDialog.open()
+						}
+					}
 				}
 				tooltipText: droppableTextArea.dropEnabled
 							 ? qsTr('attachmentTooltip')

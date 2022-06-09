@@ -19,8 +19,8 @@ Rectangle{
 	property ChatRoomModel chatRoomModel
 	property int maxHeight : parent.maxHeight
 	Layout.preferredHeight: visible ? Math.min(messageContentsList.height + replyPreviewHeaderArea.implicitHeight + 15, replyPreviewBlock.maxHeight) : 0
-	property int leftMargin: textArea.textLeftMargin
-	property int rightMargin: textArea.textRightMargin
+	property int leftMargin: 10
+	property int rightMargin: 10
 	
 	color: ChatStyle.replyPreview.backgroundColor
 	radius: 10

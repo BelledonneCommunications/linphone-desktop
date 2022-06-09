@@ -19,6 +19,8 @@ ColumnLayout{
 	property int fitHeight: (replyPreview.visible ? replyPreview.height + replySeparator.height: 0 ) 
 							+ (audioPreview.visible ? audioPreview.height + audioSeparator.height: 0)
 							+ (filesPreview.visible ? filesPreview.height + filesSeparator.height: 0)
+	property alias replyRightMargin: replyPreview.rightMargin
+	property alias replyLeftMargin: replyPreview.leftMargin
 	spacing: 0
 	Layout.preferredHeight: fitHeight
 	Layout.maximumHeight: fitHeight> maxHeight ? maxHeight : fitHeight	// ?? just using maxHeight doesn't work.

@@ -32,7 +32,6 @@ Avatar {
   }
 
   username: (mainItem.isPaused || !_username) ? '' : _username
-onUsernameChanged: console.log(username)
   Text {
     anchors.fill: parent
     color: CallStyle.container.pause.text.color

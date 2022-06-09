@@ -174,7 +174,7 @@ DialogPlus {
 					Timer {
 						interval: 50
 						repeat: true
-						running: SettingsModel.captureGraphRunning || call
+						running: SettingsModel.captureGraphRunning || call || false
 
 						onTriggered: call ? parent.value = call.microVu : parent.value = SettingsModel.getMicVolume()
 					}

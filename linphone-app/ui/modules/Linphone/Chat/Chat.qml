@@ -399,7 +399,8 @@ Rectangle {
 						Layout.leftMargin: ChatStyle.sendArea.backgroundBorder.width
 						maxHeight: container.height - textAreaBorders.height
 						replyChatRoomModel: proxyModel.chatRoomModel
-						
+						replyRightMargin: textArea.textRightMargin
+						replyLeftMargin: textArea.textLeftMargin
 				}
 				// -------------------------------------------------------------------------
 				// Send area.
