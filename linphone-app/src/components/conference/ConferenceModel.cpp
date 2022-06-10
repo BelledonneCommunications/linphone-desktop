@@ -77,10 +77,11 @@ bool ConferenceModel::updateLocalParticipant(){
 	// Me is not in participants, use Me().
 	if( !localParticipant)
 		localParticipant = mConference->getMe();
-	if( localParticipant){
+	if( localParticipant && (!mLocalParticipant || mLocalParticipant->getParticipant() != localParticipant) ) {
 		mLocalParticipant = QSharedPointer<ParticipantModel>::create(localParticipant);
 		qDebug() << "Is Admin: " << localParticipant->isAdmin() << " " << mLocalParticipant->getAdminStatus();
 		changed = true;
+		emit localParticipantChanged();
 	}
 	return changed;
 }
@@ -125,10 +126,7 @@ std::list<std::shared_ptr<linphone::Participant>> ConferenceModel::getParticipan
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
 	qDebug() << "Added call, participant count: " << getParticipantList().size();
-	if(!mLocalParticipant){
-		if(updateLocalParticipant())
-			emit localParticipantChanged();
-	}
+	updateLocalParticipant();
 	emit participantAdded(participant);
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant){
@@ -137,13 +135,14 @@ void ConferenceModel::onParticipantRemoved(const std::shared_ptr<const linphone:
 }
 void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant){
 	qDebug() << "onParticipantAdminStatusChanged: " << participant->getAddress()->asString().c_str();
-	if(participant == mLocalParticipant->getParticipant())
+	if(mLocalParticipant && participant == mLocalParticipant->getParticipant())
 		emit mLocalParticipant->adminStatusChanged();
 	emit participantAdminStatusChanged(participant);
 }
 
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
+	updateLocalParticipant();
 	emit participantDeviceAdded(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){

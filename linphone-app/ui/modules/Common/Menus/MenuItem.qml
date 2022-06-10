@@ -18,6 +18,7 @@ Controls.MenuItem {
 	property alias iconOverwriteColorMenu: iconArea.overwriteColor
 	property alias iconLayoutDirection : rowArea.layoutDirection
 	property var menuItemStyle : MenuItemStyle.normal
+	onMenuItemStyleChanged: if(!menuItemStyle) menuItemStyle = MenuItemStyle.normal
 	
 	property alias textWeight : rowText.font.bold
 	property int offsetTopMargin : 0

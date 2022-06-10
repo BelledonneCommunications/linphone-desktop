@@ -144,13 +144,17 @@ void ParticipantProxyModel::addAddress(const QString& address){
 			participant->startInvitation();
 		}
 		if( mConferenceModel && mConferenceModel->getConference()){
+			auto addressToInvite = Utils::interpretUrl(address);
+			mConferenceModel->getConference()->addParticipant(addressToInvite);
+		/*
 			std::list<std::shared_ptr<linphone::Address>> addressesToInvite;
-			addressesToInvite.push_back(Utils::interpretUrl(address));
+			addressesToInvite.push_back(addressToInvite);
 			auto callParameters = CoreManager::getInstance()->getCore()->createCallParams(mConferenceModel->getConference()->getCall());
+			mConferenceModel->getConference()->inviteParticipants(addressesToInvite, callParameters);*/
 			
-			mConferenceModel->getConference()->inviteParticipants(addressesToInvite, callParameters);
 			connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
 			participant->startInvitation();
+			
 		}
 		emit countChanged();
 		emit addressAdded(address);

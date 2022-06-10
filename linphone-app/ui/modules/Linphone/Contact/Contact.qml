@@ -14,6 +14,9 @@ Rectangle {
 	id: item
 	
 	// ---------------------------------------------------------------------------
+	// An entry from `SipAddressesModel`, an `SipAddressObserver` or a ChatRoomModel
+	property var entry
+	// entry should have these functions : presenceStatus, sipAddress, username, avatar (image)
 	
 	property alias sipAddressColor: description.sipAddressColor
 	property alias usernameColor: description.usernameColor
@@ -23,15 +26,11 @@ Rectangle {
 	property bool showContactAddress : true
 	property bool showAuxData : false
 	
-	// An entry from `SipAddressesModel`, an `SipAddressObserver` or a ChatRoomModel
-	property var entry
-	
-	// entry should have these functions : presenceStatus, sipAddress, username, avatar (image)
-	
-	property string username: (entry != undefined ?( entry.username != undefined ?entry.username
-														: entry.contactModel != undefined ? entry.contactModel.vcard.username
-																			: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
-											):'')
+	property string username: (entry != undefined	? ( entry.conferenceInfoModel && entry.conferenceInfoModel.subject ? entry.conferenceInfoModel.subject
+																	: entry.username != undefined	? entry.username
+																									: entry.contactModel != undefined	? entry.contactModel.vcard.username
+																																		: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+													): '')
 	signal avatarClicked(var mouse)
 	// ---------------------------------------------------------------------------
 	
@@ -64,7 +63,13 @@ Rectangle {
 			
 			//username: UtilsCpp.getDisplayName(entry.sipAddress || entry.peerAddress )
 			
-			username : entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne ? '' : item.username
+			username : entry!=undefined 
+						? entry.conferenceInfoModel
+							? UtilsCpp.getDisplayName(entry.conferenceInfoModel.organizer)
+							: entry.isOneToOne!=undefined && !entry.isOneToOne
+								? ''
+								: item.username
+						: item.username
 						
 
 			visible:!groupChat.visible
@@ -122,7 +127,9 @@ Rectangle {
 						&& (item.showAuxData
 							? entry.auxDataToShow || ''
 							: (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
-								? entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+								? entry.conferenceInfoModel
+									? entry.conferenceInfoModel.organizer
+									: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
 								: '')
 						) || ''
 			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne && entry.participants ? entry.participants.addressesToString : ''

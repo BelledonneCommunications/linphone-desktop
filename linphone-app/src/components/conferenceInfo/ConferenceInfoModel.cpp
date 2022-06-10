@@ -233,19 +233,19 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 	static std::shared_ptr<linphone::Conference> conference;
 	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();
 	
-	if( true || isScheduled()){
+	if( isScheduled()){
 		mConferenceScheduler = ConferenceScheduler::create();
 		connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
 		connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
 		mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
-	}else{// TODO?
+	}else{
 		auto conferenceParameters = core->createConferenceParams(nullptr);
 		conferenceParameters->enableAudio(true);
 		conferenceParameters->enableVideo(true);
 		conferenceParameters->setDescription(mConferenceInfo->getDescription());
 		conferenceParameters->setSubject(mConferenceInfo->getSubject());
-		conferenceParameters->setStartTime(mConferenceInfo->getDateTime());
-		conferenceParameters->setEndTime(mConferenceInfo->getDateTime() + (mConferenceInfo->getDuration() * 60));
+		conferenceParameters->setStartTime(0);
+		conferenceParameters->setEndTime(0);
 		conferenceParameters->enableLocalParticipant(true);
 		conference = core->createConferenceWithParams(conferenceParameters);
 	}

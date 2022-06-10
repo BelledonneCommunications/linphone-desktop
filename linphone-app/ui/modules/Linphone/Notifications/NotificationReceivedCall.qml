@@ -33,11 +33,14 @@ Notification {
 			
 			Contact {
 				Layout.fillWidth: true
+				/*
 				property var peerAddress: notification.call ? notification.call.fullPeerAddress : ''
 				onPeerAddressChanged: {
 					entry=SipAddressesModel.getSipAddressObserver(peerAddress, notification.call ? notification.call.fullLocalAddress : '')
 				}
 				entry: SipAddressesModel.getSipAddressObserver(peerAddress, notification.call ? notification.call.fullLocalAddress : '')
+				*/
+				entry: notification.call
 				Component.onDestruction: entry=null// Need to set it to null because of not calling destructor if not.
 			}
 			
