@@ -144,6 +144,7 @@ job-macosx-makefile-deploy:
   script:
     - rsync -rlv --ignore-existing build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
     - rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
+    - rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
 
 
 job-macosx-makefile-plugins-deploy:
