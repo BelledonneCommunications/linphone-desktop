@@ -414,7 +414,13 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 		return;
 	
 	updateIsInConference();
-	
+	if(!mConferenceInfoModel){// Check if conferenceInfo has been set.
+		auto conferenceInfo = CoreManager::getInstance()->getCore()->findConferenceInformationFromUri(getConferenceAddress());
+		if(	conferenceInfo ){
+				mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
+				emit conferenceInfoModelChanged();
+		}
+	}
 	switch (state) {
 		case linphone::Call::State::Error:
 		case linphone::Call::State::End:

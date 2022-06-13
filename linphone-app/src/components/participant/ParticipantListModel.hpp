@@ -76,6 +76,9 @@ public slots:
 	void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
 	void onParticipantRemoved(const std::shared_ptr<const linphone::EventLog> & eventLog);
 	void onParticipantRemoved(const std::shared_ptr<const linphone::Address>& address);
+	void onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & device);
+	void onParticipantDeviceJoined(const std::shared_ptr<const linphone::EventLog> & eventLog);
+	void onParticipantDeviceJoined(const std::shared_ptr<const linphone::Address>& address);
 	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::EventLog> & eventLog);
 	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Address>& address );

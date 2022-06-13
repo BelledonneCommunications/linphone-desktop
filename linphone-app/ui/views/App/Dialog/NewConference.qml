@@ -20,12 +20,13 @@ DialogPlus {
 	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
+	property int creationState: 0
 	Connections{
 		target: conferenceInfoModel
 		onConferenceCreated: {
-			creationStatus.icon = 'led_green'
+			conferenceManager.creationState = 2
 		}
-		onConferenceCreationFailed:{ creationStatus.icon = 'led_red' }
+		onConferenceCreationFailed:{ conferenceManager.creationState = -1 }
 		onInvitationsSent: {
 						exit(1)
 					}
@@ -100,7 +101,7 @@ DialogPlus {
 			onClicked: exit(0)
 		},
 		TextButtonB {
-			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
+			enabled: conferenceManager.creationState != 1 && selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
 			//: 'Launch' : Launch button
 			text: conferenceManager.isNew ? qsTr('launchButton') 
 			//: 'Update' : Update button
@@ -112,7 +113,7 @@ DialogPlus {
 			}
 			
 			onClicked: {
-				creationStatus.icon = 'led_orange'
+				conferenceManager.creationState = 1
 				conferenceInfoModel.isScheduled = scheduledSwitch.checked
 				if( scheduledSwitch.checked){
 					var startDateTime = Utils.buildDate(dateField.getDate(), timeField.getTime())
@@ -149,10 +150,13 @@ DialogPlus {
 		}
 		, Icon{
 			id: creationStatus
-			height: 10
-			width: 10
+			height: 15
+			width: 15
 			visible: icon != ''
-			icon: ''
+			icon: conferenceManager.creationState==2	? 'led_green' 
+														: conferenceManager.creationState==-1	? 'led_red'
+																								: conferenceManager.creationState==1	? 'led_orange' 
+																																		: ''
 		}
 	]
 	
@@ -404,6 +408,10 @@ DialogPlus {
 					text: qsTr('newConferenceSendEmailInviteLabel')
 					width: parent.width
 				}
+			}
+			Item{
+				Layout.fillHeight: true
+				Layout.fillWidth: true
 			}
 		}
 		

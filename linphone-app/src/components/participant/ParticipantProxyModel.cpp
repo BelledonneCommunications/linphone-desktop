@@ -87,12 +87,15 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 		mChatRoomModel = chatRoomModel;
 		if(mChatRoomModel) {
 			auto participants = mChatRoomModel->getParticipantListModel();
+			connect(participants, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
 			setSourceModel(participants);
 			emit participantListModelChanged();
 			for(int i = 0 ; i < participants->getCount() ; ++i)
 				emit addressAdded(participants->getAt<ParticipantModel>(i)->getSipAddress());
 		}else if(!sourceModel()){
-			setSourceModel(new ParticipantListModel((ChatRoomModel*)nullptr, this));
+			auto model = new ParticipantListModel((ChatRoomModel*)nullptr, this); 
+			connect(model, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
+			setSourceModel(model);
 			emit participantListModelChanged();
 		}
 		sort(0);
@@ -105,12 +108,15 @@ void ParticipantProxyModel::setConferenceModel(ConferenceModel * conferenceModel
 		mConferenceModel = conferenceModel;
 		if(mConferenceModel) {
 			auto participants = mConferenceModel->getParticipantListModel();
+			connect(participants, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
 			setSourceModel(participants);
 			emit participantListModelChanged();
 			for(int i = 0 ; i < participants->getCount() ; ++i)
 				emit addressAdded(participants->getAt<ParticipantModel>(i)->getSipAddress());
 		}else if(!sourceModel()){
-			setSourceModel(new ParticipantListModel((ConferenceModel*)nullptr, this));
+			auto model = new ParticipantListModel((ConferenceModel*)nullptr, this); 
+			connect(model, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
+			setSourceModel(model);
 			emit participantListModelChanged();
 		}
 		sort(0);
@@ -145,7 +151,19 @@ void ParticipantProxyModel::addAddress(const QString& address){
 		}
 		if( mConferenceModel && mConferenceModel->getConference()){
 			auto addressToInvite = Utils::interpretUrl(address);
-			mConferenceModel->getConference()->addParticipant(addressToInvite);
+			std::list<std::shared_ptr<linphone::Call>> runningCallsToAdd;			
+			auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
+			auto haveCall = std::find_if(currentCalls.begin(), currentCalls.end(), [addressToInvite](const std::shared_ptr<linphone::Call>& call){
+				return call->getRemoteAddress()->weakEqual(addressToInvite);
+			});
+			if( haveCall == currentCalls.end())
+				mConferenceModel->getConference()->addParticipant(addressToInvite);
+			else{
+				runningCallsToAdd.push_back(*haveCall);
+				mConferenceModel->getConference()->addParticipants(runningCallsToAdd);
+			}
+			
+			
 		/*
 			std::list<std::shared_ptr<linphone::Address>> addressesToInvite;
 			addressesToInvite.push_back(addressToInvite);

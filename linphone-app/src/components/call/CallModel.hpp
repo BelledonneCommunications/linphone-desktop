@@ -45,7 +45,7 @@ class CallModel : public QObject {
 	Q_PROPERTY(ContactModel *contactModel READ getContactModel CONSTANT )
 	Q_PROPERTY(ChatRoomModel * chatRoomModel READ getChatRoomModel NOTIFY chatRoomModelChanged)
 	Q_PROPERTY(ConferenceModel * conferenceModel READ getConferenceModel NOTIFY conferenceModelChanged)
-	Q_PROPERTY(ConferenceInfoModel * conferenceInfoModel READ getConferenceInfoModel NOTIFY conferenceModelInfoChanged)
+	Q_PROPERTY(ConferenceInfoModel * conferenceInfoModel READ getConferenceInfoModel NOTIFY conferenceInfoModelChanged)
 	
 	Q_PROPERTY(CallStatus status READ getStatus NOTIFY statusChanged)
 	Q_PROPERTY(QString callError READ getCallError NOTIFY callErrorChanged)
@@ -195,7 +195,7 @@ signals:
 	void callIdChanged();
 	void isInConferenceChanged (bool status);
 	void conferenceModelChanged();
-	void conferenceModelInfoChanged();
+	void conferenceInfoModelChanged();
 	void chatRoomModelChanged();
 	void speakerMutedChanged (bool status);
 	void microMutedChanged (bool status);

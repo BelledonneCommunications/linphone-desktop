@@ -55,9 +55,11 @@ ParticipantListModel::ParticipantListModel (ConferenceModel * conferenceModel, Q
 		mConferenceModel = conferenceModel;
 
 		connect(mConferenceModel, &ConferenceModel::participantAdded, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdded));
+		connect(mConferenceModel, &ConferenceModel::participantDeviceJoined, this, QOverload<const std::shared_ptr<const linphone::ParticipantDevice> &>::of(&ParticipantListModel::onParticipantDeviceJoined));
 		connect(mConferenceModel, &ConferenceModel::participantRemoved, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantRemoved));
 		connect(mConferenceModel, &ConferenceModel::participantAdminStatusChanged, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdminStatusChanged));
 		connect(mConferenceModel, &ConferenceModel::conferenceStateChanged, this, &ParticipantListModel::onStateChanged);
+		
 
 		updateParticipants();
 	}
@@ -163,11 +165,14 @@ void ParticipantListModel::updateParticipants () {
 		// Add new
 		for(auto dbParticipant : dbParticipants){
 			auto itParticipant = mList.begin();			
-			while(itParticipant != mList.end() && ( itParticipant->objectCast<ParticipantModel>()->getParticipant() && !dbParticipant->getAddress()->weakEqual(itParticipant->objectCast<ParticipantModel>()->getParticipant()->getAddress())
-															|| (!itParticipant->objectCast<ParticipantModel>()->getParticipant() && !dbParticipant->getAddress()->weakEqual(Utils::interpretUrl(itParticipant->objectCast<ParticipantModel>()->getSipAddress())))
-															)
+			while(itParticipant != mList.end() 
+					&& (( itParticipant->objectCast<ParticipantModel>()->getParticipant() 
+						&& !dbParticipant->getAddress()->weakEqual(itParticipant->objectCast<ParticipantModel>()->getParticipant()->getAddress()) )
+						
+						|| (!itParticipant->objectCast<ParticipantModel>()->getParticipant() 
+							&& !dbParticipant->getAddress()->weakEqual(Utils::interpretUrl(itParticipant->objectCast<ParticipantModel>()->getSipAddress()))
+						))
 				  ){
-				
 				++itParticipant;
 			}
 			if( itParticipant == mList.end()){
@@ -201,9 +206,7 @@ void ParticipantListModel::add (QSharedPointer<ParticipantModel> participant){
 }
 
 void ParticipantListModel::add(const std::shared_ptr<const linphone::Participant> & participant){
-	auto unconstParticipant = (mChatRoomModel ? mChatRoomModel->getChatRoom()->findParticipant(participant->getAddress()) : mConferenceModel->getConference()->findParticipant(participant->getAddress()));
-	if( unconstParticipant)
-		add(QSharedPointer<ParticipantModel>::create(unconstParticipant));
+	updateParticipants();
 }
 
 void ParticipantListModel::add(const std::shared_ptr<const linphone::Address> & participantAddress){
@@ -312,6 +315,21 @@ void ParticipantListModel::onParticipantRemoved(const std::shared_ptr<const linp
 	auto participant = getParticipant(address);
 	if(participant)
 		remove(participant.get());
+}
+
+void ParticipantListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::EventLog> & eventLog){
+	qDebug() << "onParticipantDeviceJoined event: " << eventLog->getParticipantAddress()->asString().c_str();
+	updateParticipants();
+}
+
+void ParticipantListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & device){
+	qDebug() << "onParticipantDeviceJoined part: " << device->getAddress()->asString().c_str();
+	updateParticipants();
+}
+
+void ParticipantListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::Address>& address){
+	qDebug() << "onParticipantDeviceJoined addr: " << address->asString().c_str();
+	updateParticipants();
 }
 
 

@@ -268,7 +268,7 @@ Rectangle{
 					Text{
 					//: 'Your are currently alone in this conference' : Message to warn the user when there is no other participant.
 						text: qsTr('conferenceMenuParticipantsAlone')
-						visible: parent.count
+						visible: parent.count <= 1
 					}
 				}
 				Item{// Spacer
