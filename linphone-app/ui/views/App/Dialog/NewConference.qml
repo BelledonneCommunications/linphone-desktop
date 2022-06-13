@@ -362,6 +362,7 @@ DialogPlus {
 				Layout.fillHeight: true
 				Layout.rightMargin: 15
 				spacing:5
+				visible: scheduledSwitch.checked
 				Text{
 					Layout.fillWidth: true
 					Layout.preferredHeight: 20

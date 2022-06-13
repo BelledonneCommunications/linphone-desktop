@@ -3369,7 +3369,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ANNULLA</translation>
     </message>
     <message>
         <source>startButton</source>

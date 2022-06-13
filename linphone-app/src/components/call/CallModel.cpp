@@ -501,10 +501,9 @@ void CallModel::accept (bool withVideo) {
 		params->enableVideo(withVideo);
 		setRecordFile(params);
 		auto localAddress = mCall->getCallLog()->getLocalAddress();
-		std::list<std::shared_ptr<linphone::ProxyConfig>> proxies = core->getProxyConfigList() ;
-		for(auto proxy : proxies){
-			if(proxy->getIdentityAddress()->weakEqual(localAddress)) {
-				params->setProxyConfig(proxy);
+		for(auto account : core->getAccountList()){
+			if( account->getParams()->getIdentityAddress()->weakEqual(localAddress)){
+				params->setAccount(account);
 				break;
 			}
 		}

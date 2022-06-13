@@ -221,6 +221,18 @@ void ConferenceInfoModel::setTimeZoneModel(TimeZoneModel * model){
 void ConferenceInfoModel::setIsScheduled(const bool& on){
 	if( mIsScheduled != on){
 		mIsScheduled = on;
+		if(!mIsScheduled){
+			mConferenceInfo->setDateTime(0);
+			mConferenceInfo->setDuration(0);
+		}else{
+			mTimeZone = QTimeZone::systemTimeZone();
+			QDateTime currentDateTime = QDateTime::currentDateTime();
+			QDateTime utc = currentDateTime.addSecs( -mTimeZone.offsetFromUtc(currentDateTime));
+			mConferenceInfo->setDateTime(utc.toMSecsSinceEpoch() / 1000);
+			mConferenceInfo->setDuration(1200);
+		}
+		emit dateTimeChanged();
+		emit durationChanged();
 		emit isScheduledChanged();
 	}
 }
@@ -232,23 +244,15 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
 	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();
+	qInfo() << "Participants:";
+	for(auto p : mConferenceInfo->getParticipants())
+		qInfo() << "\t" << p->asString().c_str();
 	
-	if( isScheduled()){
-		mConferenceScheduler = ConferenceScheduler::create();
-		connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
-		connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
-		mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
-	}else{
-		auto conferenceParameters = core->createConferenceParams(nullptr);
-		conferenceParameters->enableAudio(true);
-		conferenceParameters->enableVideo(true);
-		conferenceParameters->setDescription(mConferenceInfo->getDescription());
-		conferenceParameters->setSubject(mConferenceInfo->getSubject());
-		conferenceParameters->setStartTime(0);
-		conferenceParameters->setEndTime(0);
-		conferenceParameters->enableLocalParticipant(true);
-		conference = core->createConferenceWithParams(conferenceParameters);
-	}
+	
+	mConferenceScheduler = ConferenceScheduler::create();
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
+	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
 }
 
 //-------------------------------------------------------------------------------------------------

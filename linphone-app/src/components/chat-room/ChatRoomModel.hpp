@@ -173,6 +173,7 @@ public:
 	void callEnded(std::shared_ptr<linphone::Call> call);
 	void updateNewMessageNotice(const int& count);
 	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index. -1 if not found.
+	static bool isTerminated(const std::shared_ptr<linphone::ChatRoom>& chatRoom);
 	
 	QDateTime mLastUpdateTime;
 	int mUnreadMessagesCount = 0;

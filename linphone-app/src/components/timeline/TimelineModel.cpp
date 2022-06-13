@@ -150,7 +150,7 @@ ChatRoomModel *TimelineModel::getChatRoomModel() const{
 }
 
 void TimelineModel::setSelected(const bool& selected){
-	if(selected != mSelected){
+	if(mChatRoomModel && selected != mSelected){
 		mSelected = selected;
 		if(mSelected){
 			qInfo() << "Chat room selected : Subject :" << mChatRoomModel->getSubject()

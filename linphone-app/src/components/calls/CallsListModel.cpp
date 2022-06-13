@@ -323,11 +323,16 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			chatRoom = core->searchChatRoom(params, localAddress
 											, nullptr
 											, chatRoomParticipants);
+			if(chatRoom && ChatRoomModel::isTerminated(chatRoom))
+				chatRoom = nullptr;
 			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
+			
 			if(!chatRoom)
 				chatRoom = core->searchChatRoom(params, localAddress
 												, nullptr
 												, chatRoomParticipants);
+				if(chatRoom && ChatRoomModel::isTerminated(chatRoom))
+					chatRoom = nullptr;
 		}else
 			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
 		if( !chatRoom) {

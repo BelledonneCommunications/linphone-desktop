@@ -38,6 +38,8 @@ QSharedPointer<ConferenceScheduler> ConferenceScheduler::create( QObject *parent
 ConferenceScheduler::ConferenceScheduler (QObject * parent) : QObject(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mConferenceScheduler = CoreManager::getInstance()->getCore()->createConferenceScheduler();
+	qDebug() << "Create Scheduler with this account : " << CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress()->asString().c_str();
+	mConferenceScheduler->setAccount(CoreManager::getInstance()->getCore()->getDefaultAccount());
 	mConferenceSchedulerListener = std::make_shared<ConferenceSchedulerListener>();
 	connectTo(mConferenceSchedulerListener.get());
 	mConferenceScheduler->addListener(mConferenceSchedulerListener);

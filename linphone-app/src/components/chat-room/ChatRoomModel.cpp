@@ -849,6 +849,10 @@ int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
 	return -1;
 }
 
+bool ChatRoomModel::isTerminated(const std::shared_ptr<linphone::ChatRoom>& chatRoom){
+	return chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
+}
+
 void ChatRoomModel::initEntries(){
 	if( mList.size() > mLastEntriesStep)
 		resetData();
