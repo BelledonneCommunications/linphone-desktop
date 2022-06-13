@@ -109,7 +109,8 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& 
 		iterator.next();
 		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
 	}
-	params->setAccount(core->getDefaultAccount());
+	if(core->getDefaultAccount())
+		params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	shared_ptr<linphone::Account> currentAccount = core->getDefaultAccount();
 	if(currentAccount){
@@ -146,7 +147,8 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 		iterator.next();
 		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()), Utils::appStringToCoreString(iterator.value()));
 	}
-	params->setAccount(core->getDefaultAccount());
+	if(core->getDefaultAccount())
+		params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	shared_ptr<linphone::Account> currentAccount = core->getDefaultAccount();
 	params->setMediaEncryption(LinphoneEnums::toLinphone(encryption));
@@ -193,7 +195,8 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	params->enableMic(enableMicro);
 	params->enableVideo(enableVideo);
 	params->setVideoDirection(enableCamera ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
-	params->setAccount(core->getDefaultAccount());
+	if(core->getDefaultAccount())
+		params->setAccount(core->getDefaultAccount());
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	
 	auto call = core->inviteAddressWithParams(address, params);
