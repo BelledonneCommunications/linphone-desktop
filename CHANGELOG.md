@@ -11,10 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Video conference.
 - Log viewer.
 - Option to set the display name in "using an account" tab of assistant.
+- Long pressed buttons.
+- Phone dialpad on main window.
 
 ### Fixed
 - Crash on exit.
+- Crash when using no account.
 - Memory stability.
+- Show display name of the caller if it exists instead of call logs.
 
 ## 4.4.4 - 2022-06-01
 
