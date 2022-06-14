@@ -107,7 +107,6 @@ Item{
 		color: CameraViewStyle.pauseView.backgroundColor
 		radius: CameraViewStyle.radius
 		visible: mainItem.isPaused
-		onVisibleChanged: console.log(visible)
 		Rectangle{
 			anchors.centerIn: parent
 			height: CameraViewStyle.pauseView.button.iconSize
@@ -156,7 +155,6 @@ Item{
 	}
 	Rectangle{
 		visible: mainItem.currentDevice && mainItem.currentDevice.isMuted
-		onVisibleChanged: console.log(visible)
 		anchors.left: parent.left
 		anchors.top: parent.top
 		anchors.leftMargin: 15

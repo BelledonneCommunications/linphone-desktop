@@ -20,7 +20,7 @@ Rectangle {
 	color: WaitingRoomStyle.backgroundColor
 	property ConferenceInfoModel conferenceInfoModel
 	property CallModel callModel	// Store the call for processing calling.
-	property bool previewLoaderEnabled: true
+	property bool previewLoaderEnabled: callModel ? callModel.videoEnabled : true
 	property var _sipAddressObserver: callModel ? SipAddressesModel.getSipAddressObserver(callModel.fullPeerAddress, callModel.fullLocalAddress) : undefined
 	
 	signal cancel()
@@ -29,7 +29,7 @@ Rectangle {
 		mainItem.previewLoaderEnabled = false// Need it to close camera.
 	}
 	function open(){
-		mainItem.previewLoaderEnabled = true
+		mainItem.previewLoaderEnabled = callModel ? callModel.videoEnabled : true
 	}
 	
 	//onCallModelChanged: callModel ? contentsStack.replace(callingComponent) : contentsStack.replace(cameraComponent)
