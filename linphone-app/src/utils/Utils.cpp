@@ -495,16 +495,21 @@ QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& ad
 		if(model && model->getVcardModel())
 			displayName = model->getVcardModel()->getUsername();
 		else{
-			auto callHistory = CoreManager::getInstance()->getCore()->getCallLogs();
-			auto callLog = std::find_if(callHistory.begin(), callHistory.end(), [address](std::shared_ptr<linphone::CallLog>& cl){
-					return cl->getRemoteAddress()->weakEqual(address);
-		});
-			if(callLog != callHistory.end())
-				displayName = QString::fromStdString((*callLog)->getRemoteAddress()->getDisplayName());
-			if(displayName == "")
-				displayName = QString::fromStdString(address->getDisplayName());
-			if(displayName == "")
-				displayName = Utils::coreStringToAppString(address->getUsername());
+			// Try to get display from full address
+			displayName = QString::fromStdString(address->getDisplayName());
+			if( displayName == ""){
+				// Try to get display name from logs
+				auto callHistory = CoreManager::getInstance()->getCore()->getCallLogs();
+				auto callLog = std::find_if(callHistory.begin(), callHistory.end(), [address](std::shared_ptr<linphone::CallLog>& cl){
+						return cl->getRemoteAddress()->weakEqual(address);
+				});
+				if(callLog != callHistory.end())
+					displayName = QString::fromStdString((*callLog)->getRemoteAddress()->getDisplayName());
+				if(displayName == "")
+					displayName = QString::fromStdString(address->getDisplayName());
+				if(displayName == "")
+					displayName = Utils::coreStringToAppString(address->getUsername());
+			}
 		}
 	}
 	return displayName;

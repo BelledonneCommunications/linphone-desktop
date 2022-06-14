@@ -718,7 +718,7 @@ void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>
 		}else{
 			if((*it)->getAddress()->weakEqual(mRemoteAddress)){
 				std::string newDisplayName = (*it)->getAddress()->getDisplayName();
-				if(!newDisplayName.empty())// Override only if there is one
+				if( ((*it)->getSourceFlags() & (int) linphone::MagicSearchSource::CallLogs) == 0 || newDisplayName.empty())
 					setRemoteDisplayName(newDisplayName);
 				found = true;
 			}
