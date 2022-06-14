@@ -37,10 +37,17 @@ Item {
 		backgroundRadius: width/2
 		isCustom: true
 		property bool doNotSend: false
-		Timer{
-			id: longPress
-			interval: 500
-			onTriggered: {	if(actionButton.doNotSend){
+		
+		onPressed: {actionButton.doNotSend = false}
+		onReleased: {	if(actionButton.doNotSend)
+							actionButton.doNotSend = false
+						else {
+							actionButton.doNotSend = true;
+							button.sendDtmf(button.text)
+						}
+					}
+		onLongPressed:{
+							if(actionButton.doNotSend){
 								actionButton.doNotSend = false
 							}else{
 								if( button.auxSymbol != '' && actionButton.hovered) {
@@ -48,15 +55,6 @@ Item {
 									button.sendDtmf(button.auxSymbol)
 								}
 							}
-						}
-		}
-		onPressed: {actionButton.doNotSend = false;longPress.start()}
-		onReleased: {	if(actionButton.doNotSend)
-							actionButton.doNotSend = false
-						else {
-							actionButton.doNotSend = true;
-							button.sendDtmf(button.text)
-						}
 					}
 		
 		ColumnLayout {

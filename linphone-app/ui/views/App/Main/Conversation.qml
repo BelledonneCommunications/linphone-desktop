@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
+import Clipboard 1.0
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
@@ -337,7 +338,7 @@ ColumnLayout  {
 						colorSet: 	ConversationStyle.bar.actions.openMenu
 						visible: true //conversationMenu.showGroupInfo || conversationMenu.showDevices || conversationMenu.showEphemerals
 						toggled: conversationMenu.opened
-						
+						longPressedTimeout: 3000
 						onPressed: {// Bug : Not working : Menu is still closed before pressing on button (even with closePolicy)
 							if( conversationMenu.opened ) {
 								conversationMenu.close()
@@ -345,6 +346,21 @@ ColumnLayout  {
 								conversationMenu.open()
 							}
 						}
+						property string debugData: 'Chat room ID:\n'+chatRoomModel.getFullPeerAddress()
+													+'\nLocal account:\n'+chatRoomModel.getFullLocalAddress()
+						onLongPressed:{
+											if( SettingsModel.logsEnabled){
+												conversationMenu.close()
+												window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+													descriptionText: debugData,
+													showButtonOnly: 1,
+													buttonTexts: ['', 'COPY'],
+													height:320,
+												}, function (status) {
+													Clipboard.text = debugData
+												})
+												}
+									}
 						
 					}
 				}

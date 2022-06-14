@@ -44,6 +44,8 @@ Item {
 	property int iconWidth: colorSet.iconWidth ? colorSet.iconWidth : 0
 	readonly property alias hovered: button.hovered
 	property alias text: button.text
+	property alias longPressedTimeout: longPressedTimeout.interval	// default: 500ms
+
 	// Tooltip aliases
 	property alias tooltipText : tooltip.text
 	property alias tooltipIsClickable : tooltip.isClickable
@@ -83,7 +85,7 @@ Item {
 	signal clicked(real x, real y)
 	signal pressed(real x, real y)
 	signal released(real x, real y)
-	
+	signal longPressed()
 	// ---------------------------------------------------------------------------
 		
 	function _getIcon () {
@@ -193,6 +195,7 @@ Item {
 	height: fitHeight
 	width: fitWidth
 	
+	
 	Button {
 		id: button
 		
@@ -213,9 +216,27 @@ Item {
 				}
 			}
 		hoverEnabled: !wrappedButton.updating//|| wrappedButton.autoIcon
-		onClicked: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.clicked(pressX, pressY)
-		onPressed: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.pressed(pressX, pressY)
-		onReleased: !wrappedButton.updating && wrappedButton.enabled && wrappedButton.released(pressX, pressY)
+		onClicked: {
+						longPressedTimeout.stop()
+						if(!wrappedButton.updating && wrappedButton.enabled) wrappedButton.clicked(pressX, pressY)
+					}
+		onPressed: if(!wrappedButton.updating && wrappedButton.enabled){
+						longPressedTimeout.restart()
+						wrappedButton.pressed(pressX, pressY)
+					}
+		onReleased: {
+						longPressedTimeout.stop()
+						if(!wrappedButton.updating && wrappedButton.enabled)
+							wrappedButton.released(pressX, pressY)
+					}
+		onHoveredChanged: if(!hovered) longPressedTimeout.stop()
+		
+		Timer{
+			id: longPressedTimeout
+			interval: 500
+			repeat: false
+			onTriggered: if(!wrappedButton.updating && wrappedButton.enabled) wrappedButton.longPressed()
+		}
 		
 		Rectangle{
 			id: foregroundColor
