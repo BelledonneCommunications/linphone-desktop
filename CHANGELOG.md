@@ -19,9 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 4.4.6 - 2022-06-14
 
-###Fixed
-- Crash when using no account.
+### Fixed
+- Url version check and selection synchronisation.
 - Show display name of the caller if it exists instead of call logs.
+- Display terminated rooms.
 
 ## 4.4.5 - 2022-06-06
 
