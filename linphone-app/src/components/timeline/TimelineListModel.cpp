@@ -244,7 +244,7 @@ void TimelineListModel::updateTimelines () {
 
 // Clean terminated chat rooms.
 	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
-		return chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
+		return chatRoom->getConferenceAddress() && chatRoom->getHistoryEventsSize() == 0;
 	}); 
 	
 //Remove no more chat rooms
