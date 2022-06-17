@@ -78,6 +78,7 @@ public:
 	void removeDownloadedFile();
 	
 	Q_INVOKABLE void downloadFile();
+	Q_INVOKABLE void cancelDownloadFile();
 	Q_INVOKABLE void openFile (bool showDirectory = false);
 	
 	

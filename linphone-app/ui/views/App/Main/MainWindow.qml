@@ -206,8 +206,7 @@ ApplicationWindow {
 						colorSet: MainWindowStyle.buttons.telKeyad
 						onClicked: telKeypad.visible = !telKeypad.visible
 						toggled: telKeypad.visible
-					}
-					
+					}					
 					ActionButton {
 						Layout.leftMargin: 30
 						isCustom: true

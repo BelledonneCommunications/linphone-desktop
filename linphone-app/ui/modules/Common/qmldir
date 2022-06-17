@@ -70,6 +70,7 @@ Icon                    1.0 Image/Icon.qml
 RoundedImage            1.0 Image/RoundedImage.qml
 
 MediaProgressBar        1.0 Indicators/MediaProgressBar.qml
+RoundProgressBar        1.0 Indicators/RoundProgressBar.qml
 VuMeter                 1.0 Indicators/VuMeter.qml
 
 ApplicationMenu         1.0 Menus/ApplicationMenu.qml

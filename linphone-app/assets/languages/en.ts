@@ -551,6 +551,19 @@ Server URL not configured.</translation>
     </message>
 </context>
 <context>
+    <name>ChatFileMessage</name>
+    <message>
+        <source>fileTransferCancel</source>
+        <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>fileTransferDownload</source>
+        <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
+        <translation>Download</translation>
+    </message>
+</context>
+<context>
     <name>ChatForwardMessage</name>
     <message>
         <source>Forwarded</source>

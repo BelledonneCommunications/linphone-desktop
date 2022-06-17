@@ -50,6 +50,7 @@ Row {
 			readonly property bool isUploaded: chatMessageModel && chatMessageModel.state == LinphoneEnums.ChatMessageStateDelivered
 			readonly property bool isDelivered: chatMessageModel && chatMessageModel.state == LinphoneEnums.ChatMessageStateDeliveredToUser
 			readonly property bool isRead: chatMessageModel && chatMessageModel.state == LinphoneEnums.ChatMessageStateDisplayed
+			readonly property bool isTransferring: chatMessageModel && (chatMessageModel.state == LinphoneEnums.ChatMessageStateFileTransferInProgress || chatMessageModel.state == LinphoneEnums.ChatMessageStateInProgress )
 			
 			property string thumbnail :  mainRow.contentModel ? mainRow.contentModel.thumbnail : ''
 			color: 'transparent'
@@ -137,14 +138,31 @@ Row {
 								anchors.bottom: parent.bottom
 								anchors.horizontalCenter: parent.horizontalCenter
 								anchors.bottomMargin: ChatStyle.entry.message.file.spacing
-								width: parent.width - ChatStyle.entry.message.file.spacing
+								width: parent.width - 2*ChatStyle.entry.message.file.spacing
 								color: ChatStyle.entry.message.file.extension.text.color
 								font.bold: true
 								font.pointSize: ChatStyle.entry.message.file.extension.text.pointSize
-								elide: Text.ElideRight
+								clip: true
 								text: (mainRow.contentModel?Utils.getExtension(mainRow.contentModel.name).toUpperCase():'')
 								horizontalAlignment: Text.AlignHCenter
 								verticalAlignment: Text.AlignVCenter
+							}
+							RoundProgressBar {
+								id: progressBar
+								anchors.centerIn: parent
+								property int fileSize: mainRow.contentModel ? mainRow.contentModel.fileSize : 0
+								to: 100
+								value: mainRow.contentModel ? (fileSize>0 ? Math.floor(100 * mainRow.contentModel.fileOffset / fileSize) : 0) : to
+								visible: rectangle.isTransferring && value != 0
+								/* Change format? Current is %
+								text: if(mainRow.contentModel){
+											var fileSize = Utils.formatSize(mainRow.contentModel.fileSize)
+											return progressBar.visible
+														? Utils.formatSize(mainRow.contentModel.fileOffset) + '/' + fileSize
+														: fileSize
+										}else
+											return ''
+								*/
 							}
 						}
 						Text {
@@ -166,15 +184,20 @@ Row {
 							Layout.fillWidth: true
 							Layout.fillHeight: true
 							Layout.preferredHeight: visible ? ChatStyle.entry.message.file.download.height : 0
-							text: mainRow.contentModel ? 'Download ('+Utils.formatSize(mainRow.contentModel.fileSize)+')' : ''
+							//: 'Cancel' : Message link to cancel a transfer (upload/download)
+							text: mainRow.contentModel ? rectangle.isTransferring ? qsTr('fileTransferCancel')
+							//: 'Download' : Message link to download a file
+																				: qsTr('fileTransferDownload') +' ('+Utils.formatSize(mainRow.contentModel.fileSize)+')'
+														: ''
 							font.underline: true
 							font.pointSize: ChatStyle.entry.message.file.download.pointSize
 							color:ChatStyle.entry.message.file.extension.text.color
-							visible: !progressBar.visible && (mainRow.contentModel? !mainRow.contentModel.wasDownloaded : false)
+							visible: (mainRow.contentModel? (!mainItem.isOutgoing && !mainRow.contentModel.wasDownloaded) || rectangle.isTransferring  : false)
 							horizontalAlignment: Qt.AlignCenter
 							verticalAlignment: Qt.AlignCenter
 						}
 					}
+					
 				}
 			}
 			Loader {
@@ -237,65 +260,8 @@ Row {
 					}
 				]
 			}
-			
-			// ---------------------------------------------------------------------
-			// Upload or file status.
-			// ---------------------------------------------------------------------
-			Item{
-				anchors.left: thumbnailProvider.right
-				anchors.right: parent.right
-				anchors.bottom: thumbnailProvider.bottom
-				anchors.top: thumbnailProvider.top
-				anchors.leftMargin: ChatStyle.entry.message.file.spacing
-				
-				Column {
-					anchors.fill: parent
-					
-					spacing: ChatStyle.entry.message.file.status.spacing
-					
-					ProgressBar {
-						id: progressBar
-						
-						height: ChatStyle.entry.message.file.status.bar.height
-						width: visible ? parent.width : 0
-						
-						to: (mainRow.contentModel ? mainRow.contentModel.fileSize : 0)
-						value: mainRow.contentModel ? mainRow.contentModel.fileOffset || to : to
-						visible: value != to
-						background: Rectangle {
-							color: ChatStyle.entry.message.file.status.bar.background.color
-							radius: ChatStyle.entry.message.file.status.bar.radius
-						}
-						
-						contentItem: Item {
-							Rectangle {
-								color: ChatStyle.entry.message.file.status.bar.contentItem.color
-								height: parent.height
-								width: progressBar.visualPosition * parent.width
-								
-								radius: ChatStyle.entry.message.file.status.bar.radius
-							}
-						}
-					}
-					/*
-							Text {
-								visible: progressBar.value != progressBar.to
-								color: fileName.color
-								elide: Text.ElideRight
-								font.pointSize: fileName.font.pointSize
-								text: {
-									if(mainRow.contentModel){
-										var fileSize = Utils.formatSize(mainRow.contentModel.fileSize)
-										return progressBar.visible
-												? Utils.formatSize(mainRow.contentModel.fileOffset) + '/' + fileSize
-												: fileSize
-									}else
-										return ''
-								}
-							}*/
-				}
-			}
 		}
+		
 		
 		MouseArea {
 			function handleMouseMove (mouse) {
@@ -308,7 +274,9 @@ Row {
 			visible: true
 			
 			onClicked: {
-				if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
+				if(rectangle.isTransferring)
+					mainRow.contentModel.cancelDownloadFile()
+				else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
 					mainRow.contentModel.openFile()
 				} else if (mainRow.contentModel && mainRow.contentModel.wasDownloaded) {
 					mainRow.contentModel.openFile(true)// Show directory

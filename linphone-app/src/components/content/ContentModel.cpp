@@ -234,10 +234,11 @@ void ContentModel::downloadFile(){
 		case LinphoneEnums::ChatMessageStateDisplayed:
 		case LinphoneEnums::ChatMessageStateFileTransferDone:
 			break;
-			
+		case LinphoneEnums::ChatMessageStateFileTransferInProgress:
+			return;
 		default:
 			qWarning() << QStringLiteral("Wrong message state when requesting downloading, state=%1.").arg(mChatMessageModel->getState());
-	}  
+	}
 	bool soFarSoGood;
 	QString filename = getName();//mFileTransfertContent->getName();
 	const QString safeFilePath = Utils::getSafeFilePath(
@@ -261,6 +262,15 @@ void ContentModel::downloadFile(){
 			qWarning() << QStringLiteral("Unable to download file of entry %1.").arg(filename);
 	}
 }
+void ContentModel::cancelDownloadFile(){
+	if(mChatMessageModel && mChatMessageModel->getChatMessage()) {
+		if(mChatMessageModel->isOutgoing() ){
+			mChatMessageModel->deleteEvent();// Uploading is cancelling : Delete event to have clean history.
+			emit mChatMessageModel->remove(mChatMessageModel);
+		}else
+			mChatMessageModel->getChatMessage()->cancelFileTransfer();
+	}
+}
 
 void ContentModel::openFile (bool showDirectory) {
 	if (mChatMessageModel && ((!mWasDownloaded && !mChatMessageModel->isOutgoing()) || mContent->getFilePath() == "")) {
@@ -268,9 +278,13 @@ void ContentModel::openFile (bool showDirectory) {
 	}else{
 		QFileInfo info( Utils::coreStringToAppString(mContent->getFilePath()));
 		showDirectory = showDirectory || !info.exists();
-		QDesktopServices::openUrl(
+		if(!QDesktopServices::openUrl(
 					QUrl(QStringLiteral("file:///%1").arg(showDirectory ? info.absolutePath() : info.absoluteFilePath()))
+					) && !showDirectory){
+					QDesktopServices::openUrl(
+						QUrl(QStringLiteral("file:///%1").arg(info.absolutePath()))
 					);
+		}
 	}
 }
 

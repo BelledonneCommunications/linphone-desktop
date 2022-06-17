@@ -218,6 +218,7 @@
 		<file>ui/modules/Common/Image/Icon.qml</file>
 		<file>ui/modules/Common/Image/RoundedImage.qml</file>
 		<file>ui/modules/Common/Indicators/MediaProgressBar.qml</file>
+		<file>ui/modules/Common/Indicators/RoundProgressBar.qml</file>
 		<file>ui/modules/Common/Indicators/VuMeter.qml</file>
 		<file>ui/modules/Common/Menus/ApplicationMenuEntry.qml</file>
 		<file>ui/modules/Common/Menus/ApplicationMenu.qml</file>
@@ -270,6 +271,7 @@
 		<file>ui/modules/Common/Styles/Form/Tab/TabContainerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/TransparentTextInputStyle.qml</file>
 		<file>ui/modules/Common/Styles/Indicators/MediaProgressBarStyle.qml</file>
+		<file>ui/modules/Common/Styles/Indicators/RoundProgressBarStyle.qml</file>
 		<file>ui/modules/Common/Styles/Indicators/VuMeterStyle.qml</file>
 		<file>ui/modules/Common/Styles/Menus/ApplicationMenuStyle.qml</file>
 		<file>ui/modules/Common/Styles/Menus/DropDownStaticMenuStyle.qml</file>
