@@ -84,9 +84,9 @@ QtObject {
 			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg').color
 		}
 		property QtObject telKeyad: QtObject {
-			property int iconSize: 16
+			property int iconSize: 40
 			property string name : 'telKeypad'
-			property string icon : 'tel_keypad_custom'
+			property string icon : 'dialpad_custom'
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'l_n_b_bg').color
 			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'l_h_b_bg').color
 			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'l_p_b_bg').color

@@ -100,7 +100,7 @@ QtObject {
 	property QtObject copyLinkButton: QtObject{
 		property int iconSize: 20
 		property string name : 'copy'
-		property string icon : 'ics_copy_custom'
+		property string icon : 'menu_copy_text_custom'
 		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 's_n_b_bg').color
 		property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_h', icon, 's_h_b_bg').color
 		property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_p', icon, 's_p_b_bg').color

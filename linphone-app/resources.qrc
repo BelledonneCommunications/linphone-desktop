@@ -56,7 +56,6 @@
 		<file>assets/images/conference_custom.svg</file>
 		<file>assets/images/conference_audio_only_custom.svg</file>
 		<file>assets/images/conference_layout_grid_custom.svg</file>
-		<file>assets/images/conference_layout_grid.svg</file>
 		<file>assets/images/conference_layout_active_speaker_custom.svg</file>
 		<file>assets/images/contact_add_custom.svg</file>
 		<file>assets/images/contact_card_photo_custom.svg</file>
@@ -64,7 +63,6 @@
 		<file>assets/images/contact_delete_custom.svg</file>
 		<file>assets/images/contact_edit_custom.svg</file>
 		<file>assets/images/contact_view_custom.svg</file>
-		<file>assets/images/copy_custom.svg</file>
 		<file>assets/images/current_account_status_online.svg</file>
 		<file>assets/images/current_account_status_offline.svg</file>
 		<file>assets/images/current_account_status_dnd.svg</file>
@@ -80,6 +78,8 @@
 		<file>assets/images/expanded_custom.svg</file>
 		<file>assets/images/file_custom.svg</file>
 		<file>assets/images/file_sign.svg</file>
+		<file>assets/images/file_extension_custom.svg</file>
+		<file>assets/images/file_unknown_custom.svg</file>
 		<file>assets/images/filter_custom.svg</file>
 		<file>assets/images/filter_params_custom.svg</file>
 		<file>assets/images/folder_custom.svg</file>
@@ -92,7 +92,6 @@
 		<file>assets/images/home_custom.svg</file>
 		<file>assets/images/home_invite_friends.svg</file>
 		<file>assets/images/home_use_linphone.svg</file>
-		<file>assets/images/ics_copy_custom.svg</file>
 		<file>assets/images/ics_edit_custom.svg</file>
 		<file>assets/images/incoming_call_custom.svg</file>
 		<file>assets/images/led_green.svg</file>
@@ -151,7 +150,6 @@
 		<file>assets/images/speaker_on_custom.svg</file>
 		<file>assets/images/stop_fullscreen_custom.svg</file>
 		<file>assets/images/timer_custom.svg</file>
-		<file>assets/images/tel_keypad_custom.svg</file>
 		<file>assets/images/tel_keypad_voicemail_custom.svg</file>
 		<file>assets/images/tooltip_arrow_bottom_custom.svg</file>
 		<file>assets/images/tooltip_arrow_left_custom.svg</file>

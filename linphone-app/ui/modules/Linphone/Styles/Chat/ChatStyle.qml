@@ -9,7 +9,7 @@ import ColorsList 1.0
 QtObject {
 	property string sectionName : 'Chat'
 	property color color: ColorsList.add(sectionName, 'q').color
-	property string copyTextIcon : 'copy_custom'
+	property string copyTextIcon : 'menu_copy_text_custom'
 	property int rightButtonMargin: 15
 	property int rightButtonSize: 30
 	property int rightButtonLMargin: 10
@@ -188,8 +188,15 @@ QtObject {
 				property int margins: 8
 				property int spacing: 8
 				property int width: 100
+				
+				property QtObject name: QtObject{
+					property int pointSize: Units.dp * 7
+				}
+				
 				property QtObject download: QtObject{
 					property string icon: 'download_custom'
+					property int height: 20
+					property int pointSize: Units.dp * 8
 					property int iconSize: 30
 					property color outgoingColor: ColorsList.addImageColor(sectionName+'_download_out', icon, 'g').color
 					property color incomingColor: ColorsList.addImageColor(sectionName+'_download_in', icon, 'q').color
@@ -202,12 +209,18 @@ QtObject {
 				}
 				
 				property QtObject extension: QtObject {
+					property string icon:  'file_extension_custom'
+					property string unknownIcon:  'file_unknown_custom'
+					property int iconSize: 60
+					property int radius: 5
+					
 					property QtObject background: QtObject {
-						property color color: ColorsList.add(sectionName+'_file_extension_bg', 'l50').color
+						property color color: ColorsList.add(sectionName+'_file_extension_bg', 'q').color
 					}
 					
 					property QtObject text: QtObject {
-						property color color: ColorsList.add(sectionName+'_file_extension_text', 'q').color
+						property color color: ColorsList.add(sectionName+'_file_extension_text', 'd').color
+						property int pointSize: Units.dp * 9
 					}
 				}
 				
@@ -231,7 +244,7 @@ QtObject {
 			
 			property QtObject images: QtObject {
 				property int height: 48
-			}
+			}	
 			
 			property QtObject incoming: QtObject {
 				property color backgroundColor: ColorsList.add(sectionName+'_incoming_bg', 'o').color

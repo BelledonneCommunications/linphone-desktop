@@ -3,16 +3,19 @@
    width="80"
    height="80"
    viewBox="0 0 80 80"
+   fill="none"
    version="1.1"
-   id="svg26"
+   id="svg14"
    sodipodi:docname="conference_layout_grid_custom.svg"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs18" />
   <sodipodi:namedview
-     id="namedview28"
+     id="namedview16"
      pagecolor="#ffffff"
      bordercolor="#666666"
      borderopacity="1.0"
@@ -20,109 +23,67 @@
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
      showgrid="false"
-     width="80px"
-     inkscape:zoom="5.6283784"
-     inkscape:cx="74"
-     inkscape:cy="74.088835"
+     inkscape:zoom="6.6693026"
+     inkscape:cx="16.193597"
+     inkscape:cy="45.881859"
      inkscape:window-width="1920"
-     inkscape:window-height="1163"
-     inkscape:window-x="0"
+     inkscape:window-height="1043"
+     inkscape:window-x="1920"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg26" />
-  <defs
-     id="defs10">
-    <rect
-       id="nrceunfdkb"
-       x="0"
-       y="0"
-       width="27"
-       height="33"
-       rx="5" />
-    <rect
-       id="xmkteln59d"
-       x="0"
-       y="0"
-       width="27"
-       height="33"
-       rx="5" />
-    <rect
-       id="bdnudj63cf"
-       x="0"
-       y="0"
-       width="27"
-       height="33"
-       rx="5" />
-    <rect
-       id="0qs35dlrmh"
-       x="0"
-       y="0"
-       width="27"
-       height="33"
-       rx="5" />
-    <path
-       id="rdfobamz0a"
-       d="M 0,0 H 27 V 33 H 0 Z" />
-    <path
-       id="4g0468k0zc"
-       d="M 0,0 H 27 V 33 H 0 Z" />
-    <path
-       id="g1ydbc0vje"
-       d="M 0,0 H 27 V 33 H 0 Z" />
-    <path
-       id="bcq9c9r9xg"
-       d="M 0,0 H 27 V 33 H 0 Z" />
-  </defs>
-  <g
-     fill="none"
-     fill-rule="evenodd"
-     id="g24"
-     transform="matrix(0.59895046,0,0,0.70984408,-4.4527707,-12.683919)">
-    <rect
-       stroke="#000000"
-       stroke-width="4"
-       x="2"
-       y="2"
-       width="23"
-       height="29"
-       rx="5"
-       transform="translate(76,39)"
-       id="rect12" />
-    <rect
-       stroke="#000000"
-       stroke-width="4"
-       x="2"
-       y="2"
-       width="23"
-       height="29"
-       rx="5"
-       transform="translate(45,39)"
-       id="rect14" />
-    <g
-       id="g18">
-      <rect
-         stroke="#000000"
-         stroke-width="4"
-         x="2"
-         y="2"
-         width="23"
-         height="29"
-         rx="5"
-         transform="translate(45,76)"
-         id="rect16" />
-    </g>
-    <g
-       id="g22">
-      <rect
-         stroke="#000000"
-         stroke-width="4"
-         x="2"
-         y="2"
-         width="23"
-         height="29"
-         rx="5"
-         transform="translate(76,76)"
-         id="rect20" />
-    </g>
-  </g>
+     inkscape:current-layer="svg14" />
+  <rect
+     x="53.11911"
+     y="43.957817"
+     width="14.330026"
+     height="11.445411"
+     rx="2"
+     stroke="#4b5964"
+     id="rect2"
+     style="stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
+  <rect
+     x="11"
+     y="24"
+     width="14.33"
+     height="11.445411"
+     stroke="#4b5964"
+     id="rect4"
+     style="stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none"
+     rx="2" />
+  <rect
+     x="53.11911"
+     y="24"
+     width="14.330026"
+     height="11.445411"
+     rx="2"
+     stroke="#4b5964"
+     id="rect6"
+     style="stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
+  <rect
+     x="11"
+     y="43.957817"
+     width="14.330026"
+     height="11.445411"
+     rx="2"
+     stroke="#4b5964"
+     id="rect8"
+     style="stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
+  <rect
+     x="32.059555"
+     y="43.957817"
+     width="14.330026"
+     height="11.445411"
+     rx="2"
+     stroke="#4b5964"
+     id="rect10"
+     style="stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
+  <rect
+     x="32.059555"
+     y="24"
+     width="14.330026"
+     height="11.445411"
+     rx="2"
+     stroke="#4b5964"
+     id="rect12"
+     style="stroke:#000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none" />
 </svg>

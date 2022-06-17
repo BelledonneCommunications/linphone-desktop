@@ -69,7 +69,7 @@ QtObject {
 		}
 		property QtObject copy: QtObject {
 			property int iconSize: 30
-			property string icon : 'copy_custom'
+			property string icon : 'menu_copy_text_custom'
 			property string name : 'copy'
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'l_n_b_bg').color
 			property color backgroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_d', icon, 'l_d_b_bg').color
