@@ -515,6 +515,11 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>icsDuration</source>
+        <extracomment>&apos;Duration&apos; : label for duration</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatDeliveries</name>
@@ -4301,6 +4306,55 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>downloadCodecDescription</source>
         <translation type="unfinished">Szeretné letölteni a(z) %1 (%2)?</translation>
+    </message>
+    <message numerus="yes">
+        <source>formatYears</source>
+        <extracomment>&apos;year&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatMonths</source>
+        <extracomment>&apos;month&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatWeeks</source>
+        <extracomment>&apos;week&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatDays</source>
+        <extracomment>&apos;day&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatHours</source>
+        <extracomment>&apos;hour&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatMinutes</source>
+        <extracomment>&apos;minute&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatSeconds</source>
+        <extracomment>&apos;second&apos;</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 </TS>

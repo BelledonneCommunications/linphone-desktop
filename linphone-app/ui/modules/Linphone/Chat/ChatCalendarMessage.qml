@@ -92,7 +92,9 @@ Loader{
 						elide: Text.ElideRight
 						font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
 						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTime, 'hh:mm')
-							  +' - ' +Qt.formatDateTime(mainItem.conferenceInfoModel.endDateTime, 'hh:mm')
+								//: 'Duration' : label for duration
+								+ (mainItem.conferenceInfoModel.duration > 0 ? ' ('+qsTr('icsDuration')+' ' +Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
+																			: '')
 					}
 				}
 				Text{

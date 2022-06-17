@@ -516,6 +516,11 @@ Server URL not configured.</translation>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation>Join</translation>
     </message>
+    <message>
+        <source>icsDuration</source>
+        <extracomment>&apos;Duration&apos; : label for duration</extracomment>
+        <translation>Duration</translation>
+    </message>
 </context>
 <context>
     <name>ChatDeliveries</name>
@@ -4336,6 +4341,62 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>downloadCodecDescription</source>
         <translation>Do you want to download %1 (%2)?</translation>
+    </message>
+    <message numerus="yes">
+        <source>formatYears</source>
+        <extracomment>&apos;year&apos;</extracomment>
+        <translation>
+            <numerusform>year</numerusform>
+            <numerusform>years</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatMonths</source>
+        <extracomment>&apos;month&apos;</extracomment>
+        <translation>
+            <numerusform>month</numerusform>
+            <numerusform>months</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatWeeks</source>
+        <extracomment>&apos;week&apos;</extracomment>
+        <translation>
+            <numerusform>week</numerusform>
+            <numerusform>weeks</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatDays</source>
+        <extracomment>&apos;day&apos;</extracomment>
+        <translation>
+            <numerusform>day</numerusform>
+            <numerusform>days</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatHours</source>
+        <extracomment>&apos;hour&apos;</extracomment>
+        <translation>
+            <numerusform>hour</numerusform>
+            <numerusform>hours</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatMinutes</source>
+        <extracomment>&apos;minute&apos;</extracomment>
+        <translation>
+            <numerusform>minute</numerusform>
+            <numerusform>minutes</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>formatSeconds</source>
+        <extracomment>&apos;second&apos;</extracomment>
+        <translation>
+            <numerusform>second</numerusform>
+            <numerusform>seconds</numerusform>
+        </translation>
     </message>
 </context>
 </TS>

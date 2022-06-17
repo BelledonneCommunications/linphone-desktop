@@ -521,6 +521,38 @@ function formatElapsedTime (seconds) {
 	return (h === 0 ? '' : h + ':') + m + ':' + s
 }
 
+function formatDuration (seconds) {
+  seconds = parseInt(seconds, 10)
+//s,	m,	h,		d,		W,		M,			Y
+//1,	60,	3600,	86400,	604800,	2592000,	31104000
+	var y = Math.floor(seconds / 31104000)
+	if(y > 0)
+	//: 'year'
+		return y+ ' '+qsTr('formatYears', '', y)
+	var M = Math.floor(seconds / 2592000)
+	if(M > 0)
+		//: 'month'
+		return M+' '+qsTr('formatMonths', '', M)
+	var w = Math.floor(seconds / 604800)
+	if(w>0)
+		//: 'week'
+		return w+' '+qsTr('formatWeeks', '', w)
+	var d = Math.floor(seconds / 86400)
+	if(d>0)
+		//: 'day'
+		return d+' '+qsTr('formatDays', '', d)
+	var h = Math.floor(seconds / 3600)
+	var m = Math.floor((seconds - h * 3600) / 60)
+	var s = seconds - h * 3600 - m * 60
+	
+	//: 'hour'
+	return  (h > 0 ? h + qsTr('formatHours', '', h): '')
+	//: 'minute'
+			+ (m > 0 ? (h > 0 ? ', ' : '') + m + qsTr('formatMinutes', '', m): '')
+	//: 'second'
+			+ (s > 0 ? (h> 0 || m > 0 ? ', ' : '') +s + qsTr('formatSeconds', '', s): '')
+}
+
 function buildDate(date, time){
 	var dateTime = new Date()
 	dateTime.setFullYear(date.getFullYear(), date.getMonth(), date.getDate())
