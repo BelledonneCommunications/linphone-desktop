@@ -38,7 +38,7 @@ Column{
 	
 	property bool isOutgoing : contentModel && contentModel.chatMessageModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
 	z: message.visible ? 0 : 1
-	ChatCalendarMessage{
+	ChatConferenceInvitationMessage{
 		id: calendarMessage
 		contentModel: mainItem.contentModel
 		width: parent.width

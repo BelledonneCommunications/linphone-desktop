@@ -65,6 +65,7 @@ public:
 	QString getUri() const;
 	bool isScheduled() const;
 	Q_INVOKABLE QVariantList getParticipants() const;
+	Q_INVOKABLE int getParticipantCount()const;
 	Q_INVOKABLE TimeZoneModel* getTimeZoneModel() const;
 	
 	void setDateTime(const QDateTime& dateTime);

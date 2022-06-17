@@ -516,10 +516,36 @@ Server URL not configured.</translation>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation>Join</translation>
     </message>
+</context>
+<context>
+    <name>ChatConferenceInvitationMessage</name>
     <message>
-        <source>icsDuration</source>
-        <extracomment>&apos;Duration&apos; : label for duration</extracomment>
-        <translation>Duration</translation>
+        <source>icsDescription</source>
+        <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>icsconferenceAddressTitle</source>
+        <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
+        <translation>Conference address</translation>
+    </message>
+    <message>
+        <source>icsJoinButton</source>
+        <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
+        <translation>Join</translation>
+    </message>
+    <message>
+        <source>icsMeetingInvite</source>
+        <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
+        <translation>Meeting invite</translation>
+    </message>
+    <message numerus="yes">
+        <source>icsParticipants</source>
+        <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
+        <translation>
+            <numerusform>%1 participant</numerusform>
+            <numerusform>%1 participants</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -4344,58 +4370,58 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatYears</source>
-        <extracomment>&apos;year&apos;</extracomment>
+        <extracomment>&apos;%1 year&apos;</extracomment>
         <translation>
-            <numerusform>year</numerusform>
-            <numerusform>years</numerusform>
+            <numerusform>%1 year</numerusform>
+            <numerusform>%1 years</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMonths</source>
-        <extracomment>&apos;month&apos;</extracomment>
+        <extracomment>&apos;%1 month&apos;</extracomment>
         <translation>
-            <numerusform>month</numerusform>
-            <numerusform>months</numerusform>
+            <numerusform>%1 month</numerusform>
+            <numerusform>%1 months</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatWeeks</source>
-        <extracomment>&apos;week&apos;</extracomment>
+        <extracomment>&apos;%1 week&apos;</extracomment>
         <translation>
-            <numerusform>week</numerusform>
-            <numerusform>weeks</numerusform>
+            <numerusform>%1 week</numerusform>
+            <numerusform>%1 weeks</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
-        <extracomment>&apos;day&apos;</extracomment>
+        <extracomment>&apos;%1 day&apos;</extracomment>
         <translation>
-            <numerusform>day</numerusform>
-            <numerusform>days</numerusform>
+            <numerusform>%1 day</numerusform>
+            <numerusform>%1 days</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
-        <extracomment>&apos;hour&apos;</extracomment>
+        <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation>
-            <numerusform>hour</numerusform>
-            <numerusform>hours</numerusform>
+            <numerusform>%1 hour</numerusform>
+            <numerusform>%1 hours</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
-        <extracomment>&apos;minute&apos;</extracomment>
+        <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation>
-            <numerusform>minute</numerusform>
-            <numerusform>minutes</numerusform>
+            <numerusform>%1 minute</numerusform>
+            <numerusform>%1 minutes</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatSeconds</source>
-        <extracomment>&apos;second&apos;</extracomment>
+        <extracomment>&apos;%1 second&apos;</extracomment>
         <translation>
-            <numerusform>second</numerusform>
-            <numerusform>seconds</numerusform>
+            <numerusform>%1 second</numerusform>
+            <numerusform>%1 seconds</numerusform>
         </translation>
     </message>
 </context>

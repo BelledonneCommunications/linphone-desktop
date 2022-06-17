@@ -527,30 +527,30 @@ function formatDuration (seconds) {
 //1,	60,	3600,	86400,	604800,	2592000,	31104000
 	var y = Math.floor(seconds / 31104000)
 	if(y > 0)
-	//: 'year'
-		return y+ ' '+qsTr('formatYears', '', y)
+	//: '%1 year'
+		return qsTr('formatYears', '', y).arg(y)
 	var M = Math.floor(seconds / 2592000)
 	if(M > 0)
-		//: 'month'
-		return M+' '+qsTr('formatMonths', '', M)
+		//: '%1 month'
+		return qsTr('formatMonths', '', M).arg(M)
 	var w = Math.floor(seconds / 604800)
 	if(w>0)
-		//: 'week'
-		return w+' '+qsTr('formatWeeks', '', w)
+		//: '%1 week'
+		return qsTr('formatWeeks', '', w).arg(w)
 	var d = Math.floor(seconds / 86400)
 	if(d>0)
-		//: 'day'
-		return d+' '+qsTr('formatDays', '', d)
+		//: '%1 day'
+		return qsTr('formatDays', '', d).arg(d)
 	var h = Math.floor(seconds / 3600)
 	var m = Math.floor((seconds - h * 3600) / 60)
 	var s = seconds - h * 3600 - m * 60
 	
-	//: 'hour'
-	return  (h > 0 ? h + qsTr('formatHours', '', h): '')
-	//: 'minute'
-			+ (m > 0 ? (h > 0 ? ', ' : '') + m + qsTr('formatMinutes', '', m): '')
-	//: 'second'
-			+ (s > 0 ? (h> 0 || m > 0 ? ', ' : '') +s + qsTr('formatSeconds', '', s): '')
+	//: '%1 hour'
+	return  (h > 0 ? qsTr('formatHours', '', h).arg(h): '')
+	//: '%1 minute'
+			+ (m > 0 ? (h > 0 ? ', ' : '') +qsTr('formatMinutes', '', m).arg(m): '')
+	//: '%1 second'
+			+ (s > 0 ? (h> 0 || m > 0 ? ', ' : '') +qsTr('formatSeconds', '', s).arg(s): '')
 }
 
 function buildDate(date, time){

@@ -39,9 +39,15 @@ QtObject {
 		property color color: ColorsList.add(sectionName+'_conference_indicator', 'i').color
 		property int width: 5
 	}
-	
+	property QtObject calendar: QtObject {
+		property int spacing: 5
+		property int pointSize: Units.dp * 9
+		property string icon : 'calendar_custom'
+		property int iconSize: 30
+		property color color: ColorsList.add(sectionName+'_schedule', 'j').color
+	}
 	property QtObject schedule: QtObject {
-		property int spacing: 0
+		property int spacing: 5
 		property int pointSize: Units.dp * 9
 		property string icon : 'schedule_custom'
 		property int iconSize: 30

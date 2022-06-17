@@ -92,8 +92,7 @@ Loader{
 						elide: Text.ElideRight
 						font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
 						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTime, 'hh:mm')
-								//: 'Duration' : label for duration
-								+ (mainItem.conferenceInfoModel.duration > 0 ? ' ('+qsTr('icsDuration')+' ' +Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
+								+ (mainItem.conferenceInfoModel.duration > 0 ? ' (' +Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
 																			: '')
 					}
 				}
@@ -272,6 +271,7 @@ Loader{
 						isCustom: true
 						colorSet: ChatCalendarMessageStyle.editButton
 						backgroundRadius: width/2
+						visible: UtilsCpp.isMe(mainItem.conferenceInfoModel.organizer)
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')

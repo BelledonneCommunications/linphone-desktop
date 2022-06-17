@@ -15,6 +15,7 @@
 		<file>assets/images/auto_answer_custom.svg</file>
 		<file>assets/images/back_custom.svg</file>
 		<file>assets/images/burger_menu_custom.svg</file>
+		<file>assets/images/calendar_custom.svg</file>
 		<file>assets/images/calendar_participants_custom.svg</file>
 		<file>assets/images/call_accept_custom.svg</file>
 		<file>assets/images/call_chat_secure_custom.svg</file>
@@ -314,6 +315,7 @@
 		<file>ui/modules/Linphone/Chat/ChatAudioMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatAudioPreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatCalendarMessage.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatConferenceInvitationMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatFileMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatFilePreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatForwardMessage.qml</file>

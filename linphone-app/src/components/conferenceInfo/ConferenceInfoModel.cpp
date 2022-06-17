@@ -172,6 +172,10 @@ QVariantList ConferenceInfoModel::getParticipants() const{
 	return addresses;
 }
 
+int ConferenceInfoModel::getParticipantCount()const{
+	return mConferenceInfo->getParticipants().size();
+}
+
 TimeZoneModel* ConferenceInfoModel::getTimeZoneModel() const{
 	TimeZoneModel * model = new TimeZoneModel(mTimeZone);
 	App::getInstance()->getEngine()->setObjectOwnership(model, QQmlEngine::JavaScriptOwnership);

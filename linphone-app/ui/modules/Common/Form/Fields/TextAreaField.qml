@@ -16,6 +16,7 @@ Rectangle {
 	property alias textColor: textArea.color
 	property alias readOnly: textArea.readOnly
 	property int padding: TextAreaFieldStyle.text.padding
+	property alias implicitHeight: flickable.contentHeight
 	
 	height: TextAreaFieldStyle.background.height
 	width: TextAreaFieldStyle.background.width

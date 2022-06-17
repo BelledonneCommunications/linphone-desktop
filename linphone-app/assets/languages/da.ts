@@ -516,10 +516,36 @@ Server url ikke konfigureret.</translation>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>ChatConferenceInvitationMessage</name>
     <message>
-        <source>icsDuration</source>
-        <extracomment>&apos;Duration&apos; : label for duration</extracomment>
+        <source>icsDescription</source>
+        <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icsconferenceAddressTitle</source>
+        <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icsJoinButton</source>
+        <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>icsMeetingInvite</source>
+        <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>icsParticipants</source>
+        <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -4321,7 +4347,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatYears</source>
-        <extracomment>&apos;year&apos;</extracomment>
+        <extracomment>&apos;%1 year&apos;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4329,7 +4355,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatMonths</source>
-        <extracomment>&apos;month&apos;</extracomment>
+        <extracomment>&apos;%1 month&apos;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4337,7 +4363,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatWeeks</source>
-        <extracomment>&apos;week&apos;</extracomment>
+        <extracomment>&apos;%1 week&apos;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4345,7 +4371,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatDays</source>
-        <extracomment>&apos;day&apos;</extracomment>
+        <extracomment>&apos;%1 day&apos;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4353,7 +4379,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatHours</source>
-        <extracomment>&apos;hour&apos;</extracomment>
+        <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4361,7 +4387,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
-        <extracomment>&apos;minute&apos;</extracomment>
+        <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
@@ -4369,7 +4395,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>formatSeconds</source>
-        <extracomment>&apos;second&apos;</extracomment>
+        <extracomment>&apos;%1 second&apos;</extracomment>
         <translation type="unfinished">
             <numerusform></numerusform>
             <numerusform></numerusform>
