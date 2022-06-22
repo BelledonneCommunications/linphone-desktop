@@ -1,6 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.2
-import QtQuick.Shapes 1.15
+import QtQuick.Shapes 1.12
 
 import Units 1.0
 
