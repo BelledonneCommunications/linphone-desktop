@@ -61,7 +61,3 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 	}
 	return false;
 }
-
-bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-	return true;
-}

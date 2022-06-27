@@ -59,5 +59,7 @@ bool ConferenceInfoProxyListModel::filterAcceptsRow (int sourceRow, const QModel
 }
 
 bool ConferenceInfoProxyListModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-	return true;
+	const ConferenceInfoModel* a = sourceModel()->data(left).value<ConferenceInfoModel*>();
+	const ConferenceInfoModel* b = sourceModel()->data(right).value<ConferenceInfoModel*>();
+	return a->getDateTimeUtc() < b->getDateTimeUtc();
 }
