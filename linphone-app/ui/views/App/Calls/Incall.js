@@ -52,12 +52,11 @@ function handleCameraFirstFrameReceived (width, height) {
   window.setHeight(window.height + diff)
 }
 
-function handleStatusChanged (status) {
+function handleStatusChanged (status, isFullscreen) {
   if (status === Linphone.CallModel.CallStatusEnded) {
-    var fullscreen = incall._fullscreen
-    if (fullscreen) {
+    if (isFullscreen) {
       // Timeout => Avoid dead lock on mac.
-      Utils.setTimeout(window, 0, fullscreen.exit)
+      Utils.setTimeout(window, 0, isFullscreen.exit)
     }
 
     telKeypad.visible = false

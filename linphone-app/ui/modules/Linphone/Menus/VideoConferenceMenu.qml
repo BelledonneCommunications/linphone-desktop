@@ -20,7 +20,7 @@ Rectangle{
 	id: mainItem
 	property CallModel callModel
 	property ConferenceModel conferenceModel: callModel.conferenceModel
-	property ParticipantModel me: conferenceModel.localParticipant
+	property ParticipantModel me: conferenceModel ? conferenceModel.localParticipant : null
 	property bool isMeAdmin: me && me.adminStatus
 	property bool isParticipantsMenu: false
 	signal close()
@@ -109,7 +109,7 @@ Rectangle{
 						, nextPage:mediaMenu},
 
 						{titleIndex: 1
-						, icon: (mainItem.callModel.videoEnabled ?
+						, icon: (mainItem.callModel && mainItem.callModel.videoEnabled ?
 										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
 									: VideoConferenceMenuStyle.settingsIcons.audioOnlyIcon)
 						, nextPage:layoutMenu},

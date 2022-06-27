@@ -61,7 +61,7 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 }
 
 Camera::~Camera(){
-	qDebug() << "Camera destructor" << this;
+	qDebug() << "[Camera] Camera destructor" << this;
 	if(mIsPreview)
 		deactivatePreview();
 	setWindowIdLocation(None);
@@ -97,7 +97,7 @@ void Camera::resetWindowId() const{
 			if(oldRenderer)
 				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
 		}
-		qDebug() << "Removed " << oldRenderer << " at " << mWindowIdLocation << " for " << this;
+		qDebug() << "[Camera] Removed " << oldRenderer << " at " << mWindowIdLocation << " for " << this;
 		mIsWindowIdSet = false;
 	}
 }
@@ -141,14 +141,14 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 
 	QQuickFramebufferObject::Renderer * renderer = NULL;
 	if(mWindowIdLocation == CorePreview){
-		qDebug() << "Setting Camera to Preview";
+		qDebug() << "[Camera] Setting Camera to Preview";
 		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->createNativePreviewWindowId();
 		if(renderer)
 			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 	}else if(mWindowIdLocation == Call){
 			auto call = mCallModel->getCall();
 			if(call){
-				qDebug() << "Setting Camera to CallModel";
+				qDebug() << "[Camera] Setting Camera to CallModel";
 				renderer = (QQuickFramebufferObject::Renderer *) call->createNativeVideoWindowId();
 				if(renderer)
 					call->setNativeVideoWindowId(renderer);
@@ -156,27 +156,27 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	}else if( mWindowIdLocation == Device) {
 		auto participantDevice = mParticipantDeviceModel->getDevice();
 		if(participantDevice){
-			qDebug() << "Setting Camera to Participant Device";
-			qDebug() << "Trying to create new window ID for " << participantDevice->getName().c_str() << ", addr=" << participantDevice->getAddress()->asString().c_str();
+			qDebug() << "[Camera] Setting Camera to Participant Device";
+			qDebug() << "[Camera] Trying to create new window ID for " << participantDevice->getName().c_str() << ", addr=" << participantDevice->getAddress()->asString().c_str();
 			renderer = (QQuickFramebufferObject::Renderer *) participantDevice->createNativeVideoWindowId();
 			if(renderer)
 				participantDevice->setNativeVideoWindowId(renderer);
 		}
 	}else if( mWindowIdLocation == Core){
-		qDebug() << "Setting Camera to Default Window";
+		qDebug() << "[Camera] Setting Camera to Default Window";
 		renderer = (QQuickFramebufferObject::Renderer *) CoreManager::getInstance()->getCore()->createNativeVideoWindowId();
 		if(renderer)
 			CoreManager::getInstance()->getCore()->setNativeVideoWindowId(renderer);
 	}
 	if( !renderer){
 		QTimer::singleShot(1, this, &Camera::isNotReady);// Workaround for const createRenderer
-		qWarning() << "Camera stream couldn't start for Rendering. Retrying in 1s";
+		qWarning() << "[Camera] Stream couldn't start for Rendering. Retrying in 1s";
 		renderer = new CameraDummy();
 		QTimer::singleShot(1000, this, &Camera::requestNewRenderer);
 		
 	}else{
 		mIsWindowIdSet = true;
-		qDebug() << "Added " << renderer << " at " << mWindowIdLocation << " for " << this;
+		qDebug() << "[Camera] Added " << renderer << " at " << mWindowIdLocation << " for " << this;
 		QTimer::singleShot(1, this, &Camera::isReady);// Workaround for const createRenderer
 	}
 	return renderer;

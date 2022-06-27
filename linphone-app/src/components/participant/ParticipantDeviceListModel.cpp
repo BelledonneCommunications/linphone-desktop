@@ -245,13 +245,12 @@ void ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged(con
 }
 
 void ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking){
-	if( isSpeaking){
-		auto device = get(participantDevice);
-		if( device)
-			emit participantSpeaking(device.get());
-	}
+	auto device = get(participantDevice);
+	if( device)
+		emit participantSpeaking(device.get());
 }
 
 void ParticipantDeviceListModel::onParticipantDeviceSpeaking(){
-	emit participantSpeaking(qobject_cast<ParticipantDeviceModel*>(sender()));
+	auto deviceModel = qobject_cast<ParticipantDeviceModel*>(sender());
+	emit participantSpeaking(deviceModel);
 }

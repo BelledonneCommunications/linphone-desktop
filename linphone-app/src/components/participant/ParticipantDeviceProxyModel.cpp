@@ -59,6 +59,13 @@ ParticipantDeviceModel *ParticipantDeviceProxyModel::getAt(int row){
 	return sourceModel()->data(sourceIndex).value<ParticipantDeviceModel *>();
 }
 
+ParticipantDeviceModel* ParticipantDeviceProxyModel::getLastActiveSpeaking(){
+	if( mActiveSpeakers.size() == 0)
+		return nullptr;
+	else
+		return mActiveSpeakers.first();
+}
+
 CallModel * ParticipantDeviceProxyModel::getCallModel() const{
 	return mCallModel;
 }
@@ -72,7 +79,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	mCallModel = callModel;
 	auto sourceModel = new ParticipantDeviceListModel(mCallModel);
 	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::onCountChanged);
-	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::participantSpeaking);
+	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::onParticipantSpeaking);
 	setSourceModel(sourceModel);
 	emit countChanged();
 }
@@ -81,7 +88,7 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	setFilterType(0);
 	auto sourceModel = participant->getParticipantDevices().get();
 	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::countChanged);
-	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::participantSpeaking);
+	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::onParticipantSpeaking);
 	setSourceModel(sourceModel);
 	emit countChanged();
 }
@@ -95,4 +102,14 @@ void ParticipantDeviceProxyModel::setShowMe(const bool& show){
 }
 
 void ParticipantDeviceProxyModel::onCountChanged(){
+}
+
+void ParticipantDeviceProxyModel::onParticipantSpeaking(ParticipantDeviceModel * speakingDevice){
+	bool changed = (mActiveSpeakers.removeAll(speakingDevice) > 0);
+	if( speakingDevice->getIsSpeaking()) {
+		mActiveSpeakers.push_front(speakingDevice);
+		changed = true;
+	}
+	if(changed)
+		emit participantSpeaking(speakingDevice);
 }

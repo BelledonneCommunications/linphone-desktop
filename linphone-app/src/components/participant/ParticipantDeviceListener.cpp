@@ -47,9 +47,11 @@ void ParticipantDeviceListener::onConferenceLeft(const std::shared_ptr<linphone:
 	emit conferenceLeft(participantDevice);
 }
 void ParticipantDeviceListener::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {
+	qDebug() << "onStreamCapabilityChanged: " << participantDevice->getAddress()->asString().c_str() << " " << (int)direction << " / " << (int)streamType;
 	emit streamCapabilityChanged(participantDevice, direction, streamType);
 }
 
 void ParticipantDeviceListener::onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType) {
+	qDebug() << "onStreamAvailabilityChanged: " << participantDevice->getAddress()->asString().c_str() << " " << available<< " / " << (int)streamType;
 	emit streamAvailabilityChanged(participantDevice, available, streamType);
 }

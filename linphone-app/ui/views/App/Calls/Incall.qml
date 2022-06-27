@@ -46,7 +46,7 @@ Rectangle {
 		target: call
 		
 		onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
-		onStatusChanged: Logic.handleStatusChanged (status)
+		onStatusChanged: Logic.handleStatusChanged (status, incall._fullscreen)
 		onVideoRequested: Logic.handleVideoRequested(call)
 	}
 	

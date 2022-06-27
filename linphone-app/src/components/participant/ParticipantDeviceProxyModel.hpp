@@ -45,6 +45,7 @@ public:
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
 	
 	Q_INVOKABLE ParticipantDeviceModel* getAt(int row);
+	Q_INVOKABLE ParticipantDeviceModel* getLastActiveSpeaking();
 	CallModel * getCallModel() const;
 	bool isShowMe() const;
 	
@@ -55,6 +56,7 @@ public:
 	
 public slots:
 	void onCountChanged();
+	void onParticipantSpeaking(ParticipantDeviceModel * speakingDevice);
 		
 signals:
 	void callModelChanged();
@@ -68,6 +70,7 @@ protected:
 	QSharedPointer<ParticipantDeviceListModel> mDevices;
 	CallModel * mCallModel;
 	bool mShowMe = true;
+	QList<ParticipantDeviceModel*> mActiveSpeakers;// First item is last speaker
 };
 
 #endif

@@ -30,7 +30,11 @@ Item {
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
 			showMe: true
-			onParticipantSpeaking: cameraView.currentDevice = speakingDevice
+			onParticipantSpeaking: {
+				var device = getLastActiveSpeaking()
+				if(device)	// Get 
+					cameraView.currentDevice = device
+			}
 			property bool cameraEnabled: callModel && callModel.cameraEnabled
 			onCameraEnabledChanged: showMe = cameraEnabled	// Do it on changed to ignore hard bindings (that can be override)
 		}

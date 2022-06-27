@@ -81,14 +81,14 @@ Window {
 			target: callModel
 
 			onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
-			onStatusChanged: Logic.handleStatusChanged (status)
+			onStatusChanged: Logic.handleStatusChanged (status, conference._fullscreen)
 			onVideoRequested: Logic.handleVideoRequested(callModel)
 		}
 
 		// ---------------------------------------------------------------------------
 		Rectangle{
 			anchors.fill: parent
-			visible: callModel.pausedByUser
+			visible: callModel && callModel.pausedByUser
 			color: VideoConferenceStyle.pauseArea.backgroundColor
 			z: 1
 			ColumnLayout{
@@ -103,7 +103,7 @@ Window {
 					isCustom: true
 					colorSet: VideoConferenceStyle.pauseArea.play
 					backgroundRadius: width/2
-					onClicked: callModel.pausedByUser = !callModel.pausedByUser
+					onClicked: if(callModel) callModel.pausedByUser = !callModel.pausedByUser
 				}
 				Text{
 					Layout.alignment: Qt.AlignCenter
@@ -183,9 +183,9 @@ Window {
 				backgroundRadius: width/2
 				colorSet: VideoConferenceStyle.buttons.record
 				property CallModel callModel: conference.callModel
-				onCallModelChanged: if(!callModel) callModel.stopRecording()
+				onCallModelChanged: if(callModel) callModel.stopRecording()
 				visible: SettingsModel.callRecorderEnabled && callModel
-				toggled: callModel.recording
+				toggled: callModel && callModel.recording
 
 				onClicked: {
 					return !toggled
@@ -201,8 +201,8 @@ Window {
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: VideoConferenceStyle.buttons.screenshot
-				visible: conference.callModel.snapshotEnabled
-				onClicked: conference.callModel.takeSnapshot()
+				visible: conference.callModel && conference.callModel.snapshotEnabled
+				onClicked: conference.callModel && conference.callModel.takeSnapshot()
 				//: 'Take Snapshot' : Tooltip for takking snapshot.
 				tooltipText: qsTr('videoConferenceSnapshotTooltip')
 			}
@@ -260,7 +260,7 @@ Window {
 					id: conferenceLayout
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					sourceComponent: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
+					sourceComponent: conference.callModel ? (conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent) : null
 					onSourceComponentChanged: console.log(conference.callModel.conferenceVideoLayout)
 					active: conference.callModel
 					ColumnLayout {
@@ -328,7 +328,7 @@ Window {
 				Row {
 					spacing: 2
 					visible: SettingsModel.muteMicrophoneEnabled
-					property bool microMuted: callModel.microMuted
+					property bool microMuted: callModel && callModel.microMuted
 
 					VuMeter {
 						enabled: !parent.microMuted
@@ -337,7 +337,7 @@ Window {
 							repeat: true
 							running: parent.enabled
 
-							onTriggered: parent.value = callModel.microVu
+							onTriggered: if(callModel) parent.value = callModel.microVu
 						}
 					}
 					ActionSwitch {
@@ -345,12 +345,12 @@ Window {
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: parent.microMuted ? VideoConferenceStyle.buttons.microOff : VideoConferenceStyle.buttons.microOn
-						onClicked: callModel.microMuted = !parent.microMuted
+						onClicked: if(callModel) callModel.microMuted = !parent.microMuted
 					}
 				}
 				Row {
 					spacing: 2
-					property bool speakerMuted: callModel.speakerMuted
+					property bool speakerMuted: callModel && callModel.speakerMuted
 					VuMeter {
 						enabled: !parent.speakerMuted
 						Timer {
@@ -365,7 +365,7 @@ Window {
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: parent.speakerMuted  ? VideoConferenceStyle.buttons.speakerOff : VideoConferenceStyle.buttons.speakerOn
-						onClicked: callModel.speakerMuted = !parent.speakerMuted
+						onClicked: if(callModel) callModel.speakerMuted = !parent.speakerMuted
 					}
 				}
 				ActionSwitch {
@@ -373,8 +373,8 @@ Window {
 					isCustom: true
 					backgroundRadius: 90
 					colorSet: callModel && callModel.cameraEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
-					updating: callModel.videoEnabled && callModel.updating
-					enabled: callModel.videoEnabled
+					updating: callModel && callModel.videoEnabled && callModel.updating
+					enabled: callModel && callModel.videoEnabled
 					onClicked: if(callModel) callModel.cameraEnabled = !callModel.cameraEnabled
 				}
 			}
@@ -384,16 +384,16 @@ Window {
 					isCustom: true
 					backgroundRadius: width/2
 					visible: SettingsModel.callPauseEnabled
-					updating: callModel.updating
-					colorSet: callModel.pausedByUser ? VideoConferenceStyle.buttons.play : VideoConferenceStyle.buttons.pause
-					onClicked: callModel.pausedByUser = !callModel.pausedByUser
+					updating: callModel && callModel.updating
+					colorSet: callModel && callModel.pausedByUser ? VideoConferenceStyle.buttons.play : VideoConferenceStyle.buttons.pause
+					onClicked: if(callModel) callModel.pausedByUser = !callModel.pausedByUser
 				}
 				ActionButton{
 					isCustom: true
 					backgroundRadius: width/2
 					colorSet: VideoConferenceStyle.buttons.hangup
 
-					onClicked: callModel.terminate()
+					onClicked: if(callModel) callModel.terminate()
 				}
 			}
 		}
@@ -433,12 +433,14 @@ Window {
 					running: true
 					triggeredOnStart: true
 					onTriggered: {
-						// Note: `quality` is in the [0, 5] interval and -1.
-						var quality = callModel.quality
-						if(quality >= 0)
-							callQuality.percentageDisplayed = quality * 100 / 5
-						else
-							callQuality.percentageDisplayed = 0
+						if(callModel) {
+							// Note: `quality` is in the [0, 5] interval and -1.
+							var quality = callModel.quality
+							if(quality >= 0)
+								callQuality.percentageDisplayed = quality * 100 / 5
+							else
+								callQuality.percentageDisplayed = 0
+						}
 					}
 				}
 			}

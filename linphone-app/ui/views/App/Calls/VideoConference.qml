@@ -41,7 +41,7 @@ Rectangle {
 		target: callModel
 		
 		onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
-		onStatusChanged: Logic.handleStatusChanged (status)
+		onStatusChanged: Logic.handleStatusChanged (status, conference._fullscreen)
 		onVideoRequested: Logic.handleVideoRequested(callModel)
 	}
 	
