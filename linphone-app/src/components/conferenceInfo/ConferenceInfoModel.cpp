@@ -111,13 +111,12 @@ std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::getConferenceInfo
 
 
 QDateTime ConferenceInfoModel::getDateTimeUtc() const{
-	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000);
+	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000).toUTC();
 }
 
 QDateTime ConferenceInfoModel::getDateTimeSystem() const{
 	QDateTime utc = getDateTimeUtc();
-	QDateTime system = utc.addSecs(mTimeZone.offsetFromUtc(utc));
-	return system;
+	return utc.addSecs(QTimeZone::systemTimeZone().offsetFromUtc(utc));
 }
 
 int ConferenceInfoModel::getDuration() const{
@@ -183,15 +182,15 @@ TimeZoneModel* ConferenceInfoModel::getTimeZoneModel() const{
 }
 
 //------------------------------------------------------------------------------------------------
-// Convert into UTC with TimeZone
+// Convert into UTC with TimeZone and pass system timezone to conference info
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){
 	QDateTime utc = dateTime.addSecs( -mTimeZone.offsetFromUtc(dateTime));
-	mConferenceInfo->setDateTime(utc.toMSecsSinceEpoch() / 1000);
+	QDateTime system = utc.addSecs(QTimeZone::systemTimeZone().offsetFromUtc(utc));
+	mConferenceInfo->setDateTime(system.toMSecsSinceEpoch() / 1000);
 	emit dateTimeChanged();
 }
 
 void ConferenceInfoModel::setDuration(const int& duration){
-	qWarning() << "Set Duration: " << duration;
 	mConferenceInfo->setDuration(duration);
 	emit durationChanged();
 }

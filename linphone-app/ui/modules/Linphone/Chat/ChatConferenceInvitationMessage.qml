@@ -136,7 +136,7 @@ Loader{
 					color: ChatCalendarMessageStyle.schedule.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.calendar.pointSize
-					text: Qt.formatDate(mainItem.conferenceInfoModel.dateTime, 'yyyy/MM/dd')
+					text: Qt.formatDate(mainItem.conferenceInfoModel.dateTimeUtc, 'yyyy/MM/dd')
 				}
 			}
 			RowLayout {
@@ -162,7 +162,7 @@ Loader{
 					color: ChatCalendarMessageStyle.schedule.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
-					text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTime, 'hh:mm')
+					text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTimeUtc, 'hh:mm')
 						  + (mainItem.conferenceInfoModel.duration > 0 ? ' ('+Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
 																	   : '')
 				}
