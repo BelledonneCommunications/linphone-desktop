@@ -320,18 +320,6 @@ ColumnLayout  {
 					anchors.verticalCenter: parent.verticalCenter
 					
 					ActionButton {
-						isCustom: true
-						backgroundRadius: 4
-						colorSet: conversation._sipAddressObserver && conversation._sipAddressObserver.contact ? ConversationStyle.bar.actions.edit.viewContact : ConversationStyle.bar.actions.edit.addContact
-						visible: SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
-						
-						onClicked: window.setView('ContactEdit', {
-													  sipAddress: conversation.getFullPeerAddress()
-												  })
-						tooltipText: Logic.getEditTooltipText()
-					}
-					
-					ActionButton {
 						id:dotButton
 						isCustom: true
 						backgroundRadius: 90
@@ -374,6 +362,34 @@ ColumnLayout  {
 					property bool showDevices : conversation.securityLevel != 1
 					property bool showEphemerals:  conversation.securityLevel != 1 // && chatRoomModel.isMeAdmin // Uncomment when session mode will be implemented
 					
+					
+					MenuItem{
+						id:contactMenu
+						property bool editMode: conversation._sipAddressObserver && conversation._sipAddressObserver.contact
+						text: editMode ? 
+						//: 'View contact' : Item menu to view the contact in address book
+										qsTr('conversationMenuViewContact')
+						//: 'Add contact' : Item menu to add the contact to address book
+										: qsTr('conversationMenuAddContact')
+						iconMenu: editMode ? MenuItemStyle.contact.view : MenuItemStyle.contact.add
+						iconSizeMenu: 40
+						menuItemStyle : MenuItemStyle.aux2
+						visible: SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
+						onTriggered: {
+							window.setView('ContactEdit', {
+													  sipAddress: conversation.getFullPeerAddress()
+												  })
+						}
+						TooltipArea {
+							text: Logic.getEditTooltipText()
+						}
+					}
+					Rectangle{
+						height:1
+						width:parent.width
+						color: ConversationStyle.menu.separatorColor
+						visible: groupInfoMenu.visible && contactMenu.visible
+					}
 					MenuItem{
 						id:groupInfoMenu
 						//: 'Group information' : Item menu to get information about the chat room
@@ -389,11 +405,10 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
-						id: separator1
 						height:1
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
-						visible: groupInfoMenu.visible && devicesMenuItem.visible
+						visible: groupInfoMenu.visible && (contactMenu.visible || devicesMenuItem.visible)
 					}
 					MenuItem{
 						id: devicesMenuItem
@@ -410,11 +425,10 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
-						id: separator2
 						height:1
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
-						visible: ephemeralMenuItem.visible && (groupInfoMenu.visible || devicesMenuItem.visible)
+						visible: ephemeralMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible)
 					}
 					MenuItem{
 						id: ephemeralMenuItem
@@ -431,11 +445,10 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
-						id: separator3
 						height:1
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
-						visible: deleteMenuItem.visible && (groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible)
+						visible: deleteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible)
 					}
 					MenuItem{
 						id: deleteMenuItem

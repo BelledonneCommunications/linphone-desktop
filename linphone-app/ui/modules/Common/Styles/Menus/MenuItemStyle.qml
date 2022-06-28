@@ -43,6 +43,10 @@ QtObject {
 	property QtObject ephemeral: QtObject {
 		property string icon : 'menu_ephemeral_custom'
 	}
+	property QtObject contact: QtObject {
+		property string add : 'contact_add_custom'
+		property string view : 'contact_view_custom'
+	}
 	
 	
 	property QtObject normal : QtObject{

@@ -1007,6 +1007,16 @@ URL del servidor no configurada.</translation>
         <extracomment>&apos;Delete&apos; : Item menu to delete the chat</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>conversationMenuViewContact</source>
+        <extracomment>&apos;View contact&apos; : Item menu to view the contact in address book</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conversationMenuAddContact</source>
+        <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
