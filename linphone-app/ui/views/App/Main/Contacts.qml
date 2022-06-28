@@ -61,6 +61,7 @@ ColumnLayout {
 			}
 			
 			TextButtonB {
+				addHeight: 15
 				text: qsTr('addContact')
 				onClicked: window.setView('ContactEdit')
 			}

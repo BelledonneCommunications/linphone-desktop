@@ -30,6 +30,10 @@ Item {
   property bool showBorder : false
   
   property alias capitalization : button.capitalization
+  
+  //Additional size around text
+  property int addHeight: 25
+  property int addWidth: 60
 
   signal clicked
 
@@ -67,8 +71,8 @@ Item {
 
   // ---------------------------------------------------------------------------
 
-  height: button.contentItem.implicitHeight + 25
-  width: button.contentItem.implicitWidth + 60
+  height: button.contentItem.implicitHeight + addHeight
+  width: button.contentItem.implicitWidth + addWidth
 
   // ---------------------------------------------------------------------------
 
