@@ -21,6 +21,7 @@ Item {
 	property alias placeholderText: searchField.placeholderText
 	property alias tooltipText : tooltip.text
 	property alias text : searchField.text
+	property alias isMandatory: searchField.isMandatory
 	
 	default property alias _content: menu._content
 	

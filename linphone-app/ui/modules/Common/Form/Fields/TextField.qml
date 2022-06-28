@@ -15,6 +15,7 @@ Controls.TextField {
 
   property alias icon: icon.icon
   property alias iconSize: icon.iconSize
+  property bool isMandatory: false
   property alias overwriteColor: icon.overwriteColor
   property string error: ''
   property var tools
@@ -72,7 +73,7 @@ Controls.TextField {
 
   color: textField.readOnly ? textFieldStyle.text.readOnly : textFieldStyle.text.normal
   font.pointSize: textFieldStyle.text.pointSize
-  rightPadding: textFieldStyle.text.rightPadding + toolsContainer.width
+  rightPadding: textFieldStyle.text.rightPadding + toolsContainer.width + (icon.visible ? icon.iconSize + 10: 0)
   selectByMouse: true
 
   // ---------------------------------------------------------------------------
@@ -82,12 +83,23 @@ Controls.TextField {
 
     anchors {
       right: parent.right
-      rightMargin: parent.rightPadding
+      rightMargin: 10
       verticalCenter: parent.verticalCenter
     }
 
     iconSize: parent.contentHeight
     visible: showWhenEmpty && !parent.text || !showWhenEmpty && parent.text
+    
+    Text{
+		anchors.right: parent.right
+		anchors.top: parent.top
+		anchors.topMargin: 5
+		textFormat: Text.RichText
+		text : '<span style="color:red">*</span>'
+		color: textFieldStyle.background.mandatory.color
+		font.pointSize: textFieldStyle.background.mandatory.pointSize
+		visible: textField.isMandatory
+	}
     MouseArea{
 		anchors.fill:	parent
 		onClicked: textField.iconClicked()

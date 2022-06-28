@@ -451,6 +451,7 @@ DialogPlus {
 							Layout.topMargin: ConferenceManagerStyle.columns.selector.spacing
 							
 							showHeader:false
+							isMandatory: true
 							
 							maxMenuHeight: MainWindowStyle.searchBox.maxHeight
 							//: 'Select participants' : Placeholder for a search on participant to add them in selection.

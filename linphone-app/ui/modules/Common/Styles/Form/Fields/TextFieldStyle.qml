@@ -28,13 +28,17 @@ QtObject {
 				property color normal: ColorsList.add(sectionName+'_n_bg_n', 'q').color
 				property color readOnly: ColorsList.add(sectionName+'_n_bg_readonly', 'e').color
 			}
+			property QtObject mandatory: QtObject{
+				property color color: ColorsList.add(sectionName+'_required_text', 'g').color
+				property real pointSize: Units.dp * 10
+			}
 		}
 		
 		property QtObject text: QtObject {
 			property color normal: ColorsList.add(sectionName+'_n_text', 'd').color
 			property color readOnly: ColorsList.add(sectionName+'_n_text_readonly', 'd').color
 			property int pointSize: Units.dp * 10
-			property int rightPadding: 10
+			property int rightPadding: 5
 		}
 	}
 	property QtObject unbordered : QtObject {
@@ -58,13 +62,17 @@ QtObject {
 				property color normal:  ColorsList.add(sectionName+'_unbordered_bg_n', 'q').color
 				property color readOnly: ColorsList.add(sectionName+'_unbordered_bg_readonly', 'e').color
 			}
+			property QtObject mandatory: QtObject{
+				property color color: ColorsList.add(sectionName+'_unbordered_required_text', 'g').color
+				property real pointSize: Units.dp * 10
+			}
 		}
 		
 		property QtObject text: QtObject {
 			property color normal: ColorsList.add(sectionName+'_unbordered_text', 'd').color
 			property color readOnly: ColorsList.add(sectionName+'_unbordered_text_readonly', 'd').color
 			property int pointSize: Units.dp * 10
-			property int rightPadding: 10
+			property int rightPadding: 5
 		}
 	}
 	property QtObject flat : QtObject {
@@ -88,13 +96,17 @@ QtObject {
 				property color normal: ColorsList.add(sectionName+'_flat_bg_n', 'q').color
 				property color readOnly: ColorsList.add(sectionName+'_flat_bg_readonly', 'e').color
 			}
+			property QtObject mandatory: QtObject{
+				property color color: ColorsList.add(sectionName+'_flat_required_text', 'g').color
+				property real pointSize: Units.dp * 10
+			}
 		}
 		
 		property QtObject text: QtObject {
 			property color normal: ColorsList.add(sectionName+'_flat_text', 'd').color
 			property color readonly: ColorsList.add(sectionName+'_flat_text_readonly', 'd').color
 			property int pointSize: Units.dp * 10
-			property int rightPadding: 10
+			property int rightPadding: 5
 		}
 	}
 	property QtObject flatInverse : QtObject {
@@ -118,13 +130,17 @@ QtObject {
 				property color normal: ColorsList.add(sectionName+'_flat_inv_bg_n', 'q').color
 				property color readOnly: ColorsList.add(sectionName+'_flat_inv_bg_readonly', 'q').color
 			}
+			property QtObject mandatory: QtObject{
+				property color color: ColorsList.add(sectionName+'_flat_inv_required_text', 'g').color
+				property real pointSize: Units.dp * 10
+			}
 		}
 		
 		property QtObject text: QtObject {
 			property color color: ColorsList.add(sectionName+'_flat_inv_text', 'd').color
 			property color readOnly: ColorsList.add(sectionName+'_flat_inv_readonly', 'readonly_fg').color
 			property int pointSize: Units.dp * 10
-			property int rightPadding: 10
+			property int rightPadding: 5
 		}
 	}
 }
