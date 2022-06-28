@@ -57,9 +57,11 @@ void ConferenceScheduler::onStateChanged(linphone::ConferenceSchedulerState stat
 	qDebug() << "ConferenceScheduler::onStateChanged : " << (int)state;
 	emit stateChanged(state);
 	if( state == linphone::ConferenceSchedulerState::Ready) {
-		std::shared_ptr<linphone::ChatRoomParams> params = CoreManager::getInstance()->getCore()->createDefaultChatRoomParams();
-		params->setBackend(linphone::ChatRoomBackend::Basic);
-		mConferenceScheduler->sendInvitations(params);
+		if( (mSendInvite & 1) == 1){
+			std::shared_ptr<linphone::ChatRoomParams> params = CoreManager::getInstance()->getCore()->createDefaultChatRoomParams();
+			params->setBackend(linphone::ChatRoomBackend::Basic);
+			mConferenceScheduler->sendInvitations(params);
+		}
 	}
 }
 

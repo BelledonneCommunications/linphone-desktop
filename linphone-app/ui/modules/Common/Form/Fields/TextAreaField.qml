@@ -39,6 +39,7 @@ Rectangle {
 		
 		ScrollBar.vertical: ForceScrollBar {
 			id: scrollBar
+			policy: flickable.contentHeight > flickable.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
 		}
 		
 		TextArea.flickable: TextArea {

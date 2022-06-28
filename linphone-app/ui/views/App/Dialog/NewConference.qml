@@ -109,19 +109,25 @@ DialogPlus {
 			capitalization: Font.AllUppercase
 			
 			function getInviteMode(){
-				return 0;
+				return scheduledSwitch.checked ? (inviteAppAccountCheckBox.checked ? 1 : 0) + (inviteEmailCheckBox.checked ? 2 : 0)
+												: 0
 			}
 			
 			onClicked: {
+				if( rightStackView.currentItemType !== 0) {
+					rightStackView.currentItemType = 0
+					rightStackView.pop()
+				}
 				conferenceManager.creationState = 1
-				conferenceInfoModel.isScheduled = scheduledSwitch.checked
 				if( scheduledSwitch.checked){
 					var startDateTime = Utils.buildDate(dateField.getDate(), timeField.getTime())
+					conferenceInfoModel.isScheduled = true
 					startDateTime.setSeconds(0)
 					conferenceInfoModel.timeZoneModel = timeZoneField.model.getAt(timeZoneField.currentIndex)
 					conferenceInfoModel.dateTime = startDateTime
-					conferenceInfoModel.duration = durationField.text
-				}
+					conferenceInfoModel.duration = durationField.model[durationField.currentIndex].value
+				}else
+					conferenceInfoModel.isScheduled = false
 				conferenceInfoModel.subject = subject.text
 				conferenceInfoModel.description = description.text
 				
@@ -178,7 +184,8 @@ DialogPlus {
 		spacing: 0
 		ColumnLayout {
 			Layout.fillHeight: true
-			Layout.fillWidth: true
+			//Layout.fillWidth: true
+			Layout.preferredWidth: 3*conferenceManager.width/5
 			Layout.topMargin: 10
 			spacing: 10
 			
@@ -188,6 +195,7 @@ DialogPlus {
 				spacing:5
 				
 				Text{
+					id: subjectTitle
 					textFormat: Text.RichText
 					//: 'Subject' : Label of a text field about the subject of the conference
 					text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
@@ -211,7 +219,9 @@ DialogPlus {
 			}
 			Rectangle{
 				Layout.fillWidth: true
-				Layout.preferredHeight: scheduledSwitch.checked ? 120 : 50
+				//Layout.fillHeight: true
+				Layout.fillHeight: conferenceInfoModel.isScheduled
+				Layout.preferredHeight: scheduledSwitch.checked ? parent.parent.height-subjectTitle.contentHeight-subject.contentHeight-5 : 50
 				Layout.rightMargin: 15
 				color: '#F7F7F7'
 				ColumnLayout{
@@ -249,10 +259,11 @@ DialogPlus {
 						visible: scheduledSwitch.checked
 						Layout.fillWidth: true
 						Layout.fillHeight: true
+						Layout.margins: 10
 						columns: 4
 						property var locale: Qt.locale()
 						property date currentDate: new Date()
-						property int cellWidth: (parent.width-15)/columns
+						property int cellWidth: (parent.width-15-20)/columns
 						
 						
 						Text{textFormat: Text.RichText; 
@@ -280,6 +291,8 @@ DialogPlus {
 								text = date.toLocaleDateString(scheduleForm.locale, 'yyyy/MM/dd')
 							}
 							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleDateString(scheduleForm.locale, 'yyyy/MM/dd') : ''
+							icon: 'drop_down_custom'
+							showWhenEmpty: false
 							MouseArea{
 								anchors.fill: parent
 								onClicked: {
@@ -304,6 +317,14 @@ DialogPlus {
 								text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
 							}
 							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
+							
+							icon: 'drop_down_custom'
+							showWhenEmpty: false
+							onEditingFinished: if(rightStackView.currentItemType === 2) {
+								rightStackView.currentItemType = 0
+								rightStackView.pop()
+							}
+							
 							MouseArea{
 								anchors.top: parent.top
 								anchors.bottom: parent.bottom
@@ -322,9 +343,20 @@ DialogPlus {
 								}
 							}
 						}
-						NumericField{id: durationField; Layout.preferredWidth: parent.cellWidth; color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
-							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.duration : '1200'
+						ComboBox{
+							id: durationField
+							Layout.preferredWidth: parent.cellWidth;
+							currentIndex: conferenceManager.conferenceInfoModel && conferenceManager.conferenceInfoModel.duration >= 1800 ? conferenceManager.conferenceInfoModel.duration / 1800 - 1 : 0
+							model: [{text:Utils.formatDuration(30*60), value:30}
+										,{text:Utils.formatDuration(60*60), value:60}
+										,{text:Utils.formatDuration(120*60), value:120}
+										,{text:Utils.formatDuration(240*60), value:240}
+										]
+							textRole: "text"
+							selectionWidth: 200
+							rootItem: conferenceManager
 						}
+						
 						ComboBox{
 							id: timeZoneField
 							Layout.preferredWidth: parent.cellWidth;
@@ -346,6 +378,7 @@ DialogPlus {
 									var nextStoredDate = UtilsCpp.addMinutes(new Date(), 1)
 									dateField.setDate(nextStoredDate)
 									timeField.setTime(nextStoredDate)
+									if(rightStackView.currentItemType === 2) rightStackView.currentItem.selectedTime = nextStoredDate
 								}
 						}
 						Timer{
@@ -359,59 +392,59 @@ DialogPlus {
 							}
 						}
 					}
-				}
-			}
-			ColumnLayout {
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				Layout.rightMargin: 15
-				spacing:5
-				visible: scheduledSwitch.checked
-				Text{
-					Layout.fillWidth: true
-					Layout.preferredHeight: 20
-					textFormat: Text.RichText
-					//: 'Add a description' : Label of a text field about the description of the conference
-					text : qsTr('newConferenceDescriptionTitle')
-					color: NewConferenceStyle.titles.textColor
-					font.pointSize: NewConferenceStyle.titles.pointSize
-					font.weight: NewConferenceStyle.titles.weight
-				}
-				TextAreaField {
-					id: description
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-					//: 'Description' : Placeholder in a form about setting a description
-					placeholderText : qsTr('newConferenceDescriptionPlaceholder')
-					text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.description : ''
-					Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
-					TooltipArea{
-						//: 'This description will describe the conference' : Explanation about the description of the conference
-						text : qsTr('newConferenceDescriptionTooltip')
+					
+					ColumnLayout {
+						Layout.fillWidth: true
+						Layout.fillHeight: true
+						Layout.bottomMargin: 10
+						Layout.rightMargin: 15
+						Layout.leftMargin: 5
+						spacing:5
+						visible: scheduledSwitch.checked
+						Text{
+							Layout.fillWidth: true
+							Layout.preferredHeight: 20
+							textFormat: Text.RichText
+							//: 'Add a description' : Label of a text field about the description of the conference
+							text : qsTr('newConferenceDescriptionTitle')
+							color: NewConferenceStyle.titles.textColor
+							font.pointSize: NewConferenceStyle.titles.pointSize
+							font.weight: NewConferenceStyle.titles.weight
+						}
+						TextAreaField {
+							id: description
+							Layout.fillWidth: true
+							Layout.fillHeight: true
+							//: 'Description' : Placeholder in a form about setting a description
+							placeholderText : qsTr('newConferenceDescriptionPlaceholder')
+							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.description : ''
+							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
+							TooltipArea{
+								//: 'This description will describe the conference' : Explanation about the description of the conference
+								text : qsTr('newConferenceDescriptionTooltip')
+							}
+						}
+						CheckBoxText {
+							id: inviteAppAccountCheckBox
+							//: 'Send invite via Linphone' : Label for checkbox for sending invitations with Linphone.
+							text: qsTr('newConferenceSendLinphoneInviteLabel')
+							width: parent.width
+							checked: true
+						}
+						CheckBoxText {
+							id: inviteEmailCheckBox
+							visible: false	// TODO
+							//: 'Send invite via Email' : Label for checkbox for sending invitations with mailer.
+							text: qsTr('newConferenceSendEmailInviteLabel')
+							width: parent.width
+						}
 					}
-				}
-			}
-			ColumnLayout{
-				Layout.fillWidth: true
-				spacing: 5
-				CheckBoxText {
-					id: inviteAppAccountCheckBox
-					//: 'Send invite via Linphone' : Label for checkbox for sending invitations with Linphone.
-					text: qsTr('newConferenceSendLinphoneInviteLabel')
-					width: parent.width
-					checked: true
-				}
-				CheckBoxText {
-					id: inviteEmailCheckBox
-					visible: false	// TODO
-					//: 'Send invite via Email' : Label for checkbox for sending invitations with mailer.
-					text: qsTr('newConferenceSendEmailInviteLabel')
-					width: parent.width
-				}
-			}
-			Item{
+				}// ColumnLayout
+				
+			}// Rectangle
+			Item{// Spacer
+				//visible: !scheduledSwitch.checked
 				Layout.fillHeight: true
-				Layout.fillWidth: true
 			}
 		}
 		
@@ -421,10 +454,11 @@ DialogPlus {
 			property int currentItemType: 0
 			
 			Layout.fillHeight: true
-			Layout.fillWidth: true
+			Layout.preferredWidth: 2*conferenceManager.width/5
 			Layout.minimumWidth: 200
 			Layout.topMargin: 10
 			Layout.bottomMargin: 10
+			
 			
 			clip: true
 		// -------------------------------------------------------------------------
@@ -449,6 +483,8 @@ DialogPlus {
 							
 							Layout.fillWidth: true
 							Layout.topMargin: ConferenceManagerStyle.columns.selector.spacing
+							Layout.leftMargin: 5
+							Layout.rightMargin: 5
 							
 							showHeader:false
 							isMandatory: true
@@ -568,6 +604,10 @@ DialogPlus {
 			Component{
 				id: timePicker
 				TimePicker{
+					onNewDate:{
+						if(date != timeField.getTime())
+							timeField.setTime(date)
+					}
 					onClicked: {
 						timeField.setTime(date)
 						rightStackView.currentItemType = 0

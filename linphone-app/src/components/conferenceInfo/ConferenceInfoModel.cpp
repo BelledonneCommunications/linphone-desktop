@@ -84,9 +84,9 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
 	QDateTime currentDateTime = QDateTime::currentDateTime();
 	QDateTime utc = currentDateTime.addSecs( -mTimeZone.offsetFromUtc(currentDateTime));
-	mConferenceInfo->setDateTime(utc.toMSecsSinceEpoch() / 1000);
-	mConferenceInfo->setDuration(1200);
-	mIsScheduled = true;
+	mConferenceInfo->setDateTime(0);
+	mConferenceInfo->setDuration(0);
+	mIsScheduled = false;
 	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
 	accountAddress->clean();
 	mConferenceInfo->setOrganizer(accountAddress);
@@ -97,7 +97,7 @@ ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceIn
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mTimeZone = QTimeZone::systemTimeZone();
 	mConferenceInfo = conferenceInfo;
-	mIsScheduled  = true;
+	mIsScheduled = (mConferenceInfo->getDateTime() != 0 || mConferenceInfo->getDuration() != 0);
 }
 
 ConferenceInfoModel::~ConferenceInfoModel () {
@@ -253,6 +253,7 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 	
 	
 	mConferenceScheduler = ConferenceScheduler::create();
+	mConferenceScheduler->mSendInvite = inviteMode;
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
 	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);

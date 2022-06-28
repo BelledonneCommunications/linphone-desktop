@@ -14,9 +14,19 @@ Item{
 	property int centerPosition: Math.min(height, width)/2
 	property int middleMinSize: centerPosition - border	// Minus border
 	
-	
+	signal newDate(date date)
 	signal clicked(date date)
-		
+	
+	function getDate(){
+		var d = new Date()
+		if(outer.currentItem)
+			d.setHours(outer.currentItem.text)
+		if(inner.currentItem)
+			d.setMinutes(inner.currentItem.text)
+		d.setSeconds(0)
+		return d;
+	}
+	
 	PathView {
 		id: outer
 		model: 24
@@ -134,6 +144,7 @@ Item{
 			font.pointSize: Units.dp * 12
 			font.bold: true
 			text: outer.currentItem.text.length < 2 ? '0' + outer.currentItem.text : outer.currentItem.text
+			onTextChanged: mainItem.newDate(mainItem.getDate())
 		}
 		Text {
 			id: div
@@ -146,17 +157,15 @@ Item{
 			font.pointSize: Units.dp * 12
 			font.bold: true
 			text: inner.currentItem.text.length < 2 ? '0' + inner.currentItem.text : inner.currentItem.text
+			onTextChanged: mainItem.newDate(mainItem.getDate())
 		}
 		
 		
 	}
 	MouseArea {
 		anchors.fill: selectedTimeArea
-		onClicked: { 
-			var d = new Date()
-			d.setHours(outer.currentItem.text)
-			d.setMinutes(inner.currentItem.text)
-			mainItem.clicked(d)
+		onClicked: {
+			mainItem.clicked(mainItem.getDate())
 		}
 	}
 	Component.onCompleted: {
