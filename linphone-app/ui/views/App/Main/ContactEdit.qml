@@ -112,8 +112,8 @@ ColumnLayout  {
 					id: avatar
 					
 					anchors.fill: parent
-					image: _vcard.avatar
-					username: _vcard.username
+					image: _vcard ? _vcard.avatar : ''
+					username: _vcard ? _vcard.username : ''
 					presenceLevel: _contact ? _contact.presenceLevel : -1
 					visible: (isLoaded() && !parent.hovered) || !_edition
 				}
@@ -408,7 +408,7 @@ ColumnLayout  {
 					}
 					
 					TextButtonB {
-						enabled: usernameInput.text.length > 0 && _vcard.sipAddresses.length > 0
+						enabled: usernameInput.text.length > 0 && _vcard && _vcard.sipAddresses.length > 0
 						text: qsTr('save')
 						onClicked: Logic.save()
 					}

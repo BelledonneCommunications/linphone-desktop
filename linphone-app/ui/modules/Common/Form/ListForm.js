@@ -29,9 +29,10 @@ function setData (data) {
   var model = values.model
 
   model.clear()
-  data.forEach(function (data) {
-    model.append({ $value: data, $isInvalid: false })
-  })
+  if(data)
+	data.forEach(function (data) {
+		model.append({ $value: data, $isInvalid: false })
+	})
 }
 
 function setInvalid (index, status) {

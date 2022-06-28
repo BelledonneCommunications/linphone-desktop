@@ -172,7 +172,7 @@ function handleUrlChanged () {
 // -----------------------------------------------------------------------------
 
 function buildAddressFields () {
-
+  if(!contactEdit._vcard) return []
   var address = contactEdit._vcard.address
 
   return [{
