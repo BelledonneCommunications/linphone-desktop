@@ -386,26 +386,23 @@ QtObject {
 			property color foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_c', icon, 'me_c_b_inv_fg').color
 		}
 		property QtObject callQuality: QtObject {
-			property int iconSize: 20
+			property int iconSize: 40
 			property string name : 'quality'
-			property string icon : 'call_quality_custom'
-			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'me_n_b_bg').color
-			property color backgroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_d', icon, 'me_d_b_bg').color
-			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'me_h_b_bg').color
-			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'me_p_b_bg').color
-			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'me_n_b_fg').color
-			property color foregroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_d', icon, 'me_d_b_fg').color
-			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'me_h_b_fg').color
-			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'me_p_b_fg').color
-			
-			property color backgroundHiddenPartNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_bg_n', icon, 'me_n_b_inv_bg').color
-			property color backgroundHiddenPartDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_bg_d', icon, 'me_d_b_inv_bg').color
-			property color backgroundHiddenPartHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_bg_h', icon, 'me_h_b_inv_bg').color
-			property color backgroundHiddenPartPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_bg_p', icon, 'me_p_b_inv_bg').color
-			property color foregroundHiddenPartNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_fg_n', icon, 'me_n_b_inv_fg').color
-			property color foregroundHiddenPartDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_fg_d', icon, 'me_d_b_inv_fg').color
-			property color foregroundHiddenPartHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_fg_h', icon, 'me_h_b_inv_fg').color
-			property color foregroundHiddenPartPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_hidden_fg_p', icon, 'me_p_b_inv_fg').color
+			property string icon_0 : 'call_quality_0_custom'
+			property string icon_1 : 'call_quality_1_custom'
+			property string icon_2 : 'call_quality_2_custom'
+			property string icon_3 : 'call_quality_3_custom'
+			property string icon_4 : 'call_quality_4_custom'
+			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon_2, 'me_n_b_inv_bg').color
+			property color backgroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_d', icon_2, 'me_d_b_inv_bg').color
+			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon_2, 'me_h_b_inv_bg').color
+			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon_2, 'me_p_b_inv_bg').color
+			property color backgroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_c', icon_2, 'me_c_b_inv_bg').color
+			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon_2, 'me_n_b_inv_fg').color
+			property color foregroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_d', icon_2, 'me_d_b_inv_fg').color
+			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon_2, 'me_h_b_inv_fg').color
+			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon_2, 'me_p_b_inv_fg').color
+			property color foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_c', icon_2, 'me_c_b_inv_fg').color
 		}
 		property QtObject options: QtObject {
 			property int iconSize: 40

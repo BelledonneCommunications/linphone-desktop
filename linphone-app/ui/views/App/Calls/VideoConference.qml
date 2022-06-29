@@ -394,11 +394,12 @@ Rectangle {
 			id: callQuality
 			
 			isCustom: true
-			backgroundRadius: 4
+			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.callQuality
-			percentageDisplayed: 0
+			icon: VideoConferenceStyle.buttons.callQuality.icon_0
+			toggled: callStatistics.isOpen
 			
-			onClicked: {Logic.openCallStatistics();}
+			onClicked: callStatistics.isOpen ? callStatistics.close() : callStatistics.open()
 			Timer {
 				interval: 500
 				repeat: true
@@ -407,10 +408,16 @@ Rectangle {
 				onTriggered: {
 					// Note: `quality` is in the [0, 5] interval and -1.
 					var quality = callModel.quality
-					if(quality >= 0)
-						callQuality.percentageDisplayed = quality * 100 / 5
+					if(quality > 4)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_4
+					else if(quality > 3)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_3
+					else if(quality > 2)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_2
+					else if(quality > 1)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_1
 					else
-						callQuality.percentageDisplayed = 0
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_0
 				}						
 			}
 		}
@@ -435,7 +442,6 @@ Rectangle {
 		relativeTo: conference
 		relativeY: CallStyle.header.stats.relativeY
 		relativeX: 10
-		onClosed: Logic.handleCallStatisticsClosed()
 	}
 	TelKeypad {
 		id: telKeypad

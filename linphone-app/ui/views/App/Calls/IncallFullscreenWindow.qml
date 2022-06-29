@@ -149,8 +149,7 @@ Window {
 						isCustom: true
 						backgroundRadius: 4
 						colorSet: CallFullscreenStyle.buttons.callQuality
-						iconSize: CallFullscreenStyle.header.iconSize
-						percentageDisplayed: 0
+						icon: CallStyle.buttons.callQuality.icon_0
 						onClicked: Logic.openCallStatistics()
 						
 						// See: http://www.linphone.org/docs/liblinphone/group__call__misc.html#ga62c7d3d08531b0cc634b797e273a0a73
@@ -163,10 +162,16 @@ Window {
 							onTriggered:  {
 								// Note: `quality` is in the [0, 5] interval and -1.
 								var quality = window.call.quality
-								if(quality >= 0)
-									callQuality.percentageDisplayed = quality * 100 / 5
+								if(quality > 4)
+									callQuality.icon = CallStyle.buttons.callQuality.icon_4
+								else if(quality > 3)
+									callQuality.icon = CallStyle.buttons.callQuality.icon_3
+								else if(quality > 2)
+									callQuality.icon = CallStyle.buttons.callQuality.icon_2
+								else if(quality > 1)
+									callQuality.icon = CallStyle.buttons.callQuality.icon_1
 								else
-									callQuality.percentageDisplayed = 0
+									callQuality.icon = CallStyle.buttons.callQuality.icon_0
 							}
 						}
 						
@@ -187,13 +192,13 @@ Window {
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: CallFullscreenStyle.buttons.telKeyad
-						iconSize: CallFullscreenStyle.header.iconSize
 						
 						onClicked: telKeypad.visible = !telKeypad.visible
 					}
 					
 					ActionButton {
 						id: callSecure
+						anchors.verticalCenter: parent.verticalCenter
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: window.call && window.call.isSecured ? CallFullscreenStyle.buttons.secure : CallFullscreenStyle.buttons.unsecure						

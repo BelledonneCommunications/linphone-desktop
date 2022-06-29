@@ -82,8 +82,7 @@ Rectangle {
 					isCustom: true
 					backgroundRadius: 4
 					colorSet: CallStyle.buttons.callQuality
-					
-					percentageDisplayed: 0
+					icon: CallStyle.buttons.callQuality.icon_0
 					
 					onClicked: Logic.openCallStatistics()
 					
@@ -97,10 +96,16 @@ Rectangle {
 						onTriggered: {
 									// Note: `quality` is in the [0, 5] interval and -1.
 									var quality = call.quality
-									if(quality >= 0)
-										callQuality.percentageDisplayed = quality * 100 / 5
+									if(quality > 4)
+										callQuality.icon = CallStyle.buttons.callQuality.icon_4
+									else if(quality > 3)
+										callQuality.icon = CallStyle.buttons.callQuality.icon_3
+									else if(quality > 2)
+										callQuality.icon = CallStyle.buttons.callQuality.icon_2
+									else if(quality > 1)
+										callQuality.icon = CallStyle.buttons.callQuality.icon_1
 									else
-										callQuality.percentageDisplayed = 0
+										callQuality.icon = CallStyle.buttons.callQuality.icon_0
 							}						
 					}
 					
@@ -127,6 +132,7 @@ Rectangle {
 				}
 				
 				ActionButton {
+					anchors.verticalCenter: parent.verticalCenter
 					id: callSecure
 					isCustom: true
 					backgroundRadius: 90
