@@ -63,15 +63,12 @@ Item{
 					
 					//: 'Scheduled' : Filter conferences on scheduled status.
 						qsTr('conferencesScheduledFilter'),
-					
-					//: 'Invitations' : Filter conferences on invited conferences (where we are not the organizer).
-						qsTr('conferencesInvitedFilter'),
 					]
 					capitalization: Font.AllUppercase
 					selectedButton: mainItem.filterType
 					onClicked: {
-						if(button <= 2)
-							mainItem.filterType = (button === 0 ? ConferenceInfoProxyModel.Ended : button === 1 ?ConferenceInfoProxyModel.Scheduled : ConferenceInfoProxyModel.Invitations);
+						if(button <= 1)
+							mainItem.filterType = (button === 0 ? ConferenceInfoProxyModel.Ended :  ConferenceInfoProxyModel.Scheduled);
 					}
 				}
 			}

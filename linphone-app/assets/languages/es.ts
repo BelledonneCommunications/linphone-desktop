@@ -812,11 +812,6 @@ URL del servidor no configurada.</translation>
         <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>conferencesInvitedFilter</source>
-        <extracomment>&apos;Invitations&apos; : Filter conferences on invited conferences (where we are not the organizer).</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ConfirmDialog</name>

@@ -122,13 +122,15 @@ Loader{
 			RowLayout {
 				id: participantsRow
 				Layout.fillWidth: true
-				Layout.preferredHeight: ChatCalendarMessageStyle.participants.iconSize
+				Layout.fillHeight: true
+				Layout.minimumHeight: mainItem.isExpanded ? expandedParticipantsList.minimumHeight : ChatCalendarMessageStyle.participants.iconSize
 				Layout.leftMargin: 5
 				Layout.rightMargin: 15
 				
 				spacing: ChatCalendarMessageStyle.participants.spacing
 				
 				Icon{
+					Layout.alignment: Qt.AlignTop
 					icon: ChatCalendarMessageStyle.participants.icon
 					iconSize: ChatCalendarMessageStyle.participants.iconSize
 					overwriteColor: ChatCalendarMessageStyle.participants.color
@@ -137,13 +139,44 @@ Loader{
 				Text {
 					id: participantsList
 					Layout.fillWidth: true
+					visible: !mainItem.isExpanded
 					color: ChatCalendarMessageStyle.participants.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 					text: mainItem.conferenceInfoModel.displayNamesToString
-				}	
+				}
+				ScrollableListView{
+					id: expandedParticipantsList
+					property int minimumHeight: Math.min( count * ChatCalendarMessageStyle.lineHeight, layout.height/(descriptionTitle.visible?3:2))
+					Layout.fillWidth: true
+					Layout.minimumHeight: minimumHeight
+					spacing: 0
+					visible: mainItem.isExpanded
+					onVisibleChanged: model= mainItem.conferenceInfoModel.getParticipants()
+					
+					delegate: Row{
+						spacing: 5
+						width: expandedParticipantsList.contentWidth
+						height: ChatCalendarMessageStyle.lineHeight
+						Text{
+							id: displayName
+							text: modelData.displayName
+							color: ChatCalendarMessageStyle.description.color
+							font.pointSize: ChatCalendarMessageStyle.description.pointSize
+							elide: Text.ElideRight
+						}
+						Text{
+							width: expandedParticipantsList.contentWidth - displayName.width - parent.spacing	// parent.width is not enough. Force width
+							text: '('+modelData.address+')'
+							color: ChatCalendarMessageStyle.description.color
+							font.pointSize: ChatCalendarMessageStyle.description.pointSize
+							elide: Text.ElideRight
+						}
+					}
+				}
 				ActionButton{
 					visible: mainItem.gotoButtonMode >= 0
+					Layout.alignment: Qt.AlignTop
 					Layout.preferredHeight: iconSize
 					Layout.preferredWidth: height
 					isCustom: true
@@ -160,33 +193,7 @@ Loader{
 				Layout.topMargin: 5
 				visible: mainItem.isExpanded
 				spacing: 0
-				ScrollableListView{
-					id: expandedParticipantsList
-					Layout.fillWidth: true
-					Layout.minimumHeight: Math.min( count * ChatCalendarMessageStyle.lineHeight, parent.height/(descriptionTitle.visible?3:2))
-					Layout.leftMargin: 10
-					spacing: 0
-					visible: mainItem.isExpanded
-					onVisibleChanged: model= mainItem.conferenceInfoModel.getParticipants()
-					
-					delegate: Row{
-						spacing: 5
-						width: expandedParticipantsList.width
-						height: ChatCalendarMessageStyle.lineHeight
-						Text{text: modelData.displayName
-							color: ChatCalendarMessageStyle.description.color
-							font.pointSize: ChatCalendarMessageStyle.description.pointSize
-							elide: Text.ElideRight
-							wrapMode: TextEdit.WordWrap
-						}
-						Text{text: '('+modelData.address+')'
-							color: ChatCalendarMessageStyle.description.color
-							font.pointSize: ChatCalendarMessageStyle.description.pointSize
-							elide: Text.ElideRight
-							wrapMode: TextEdit.WordWrap
-						}
-					}
-				}
+				
 				Text{
 					id: descriptionTitle
 					Layout.fillWidth: true
