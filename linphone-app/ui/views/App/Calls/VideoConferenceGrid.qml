@@ -53,6 +53,7 @@ Mosaic {
 				isCameraFromDevice: true
 				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				onCloseRequested: participantDevices.showMe = false
+				showCloseButton: participantDevices.count > 1
 			}
 		}
 	}
