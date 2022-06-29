@@ -238,6 +238,7 @@ public:
 	
 	Q_INVOKABLE void onSettingsTabChanged(int idx);
 	Q_INVOKABLE void settingsWindowClosing(void);
+	Q_INVOKABLE void reloadDevices();
 	
 	// Assistant. ----------------------------------------------------------------
 	

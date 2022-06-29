@@ -33,7 +33,10 @@ DialogPlus {
 	]
 
 	buttonsAlignment: Qt.AlignCenter
+	onVisibleChanged: if(visible) {SettingsModel.reloadDevices()}
 	Component.onCompleted: {
+							SettingsModel.stopCaptureGraph()
+							SettingsModel.reloadDevices()
 							SettingsModel.startCaptureGraph()
 							if( fixedSize){
 							   height = fitHeight

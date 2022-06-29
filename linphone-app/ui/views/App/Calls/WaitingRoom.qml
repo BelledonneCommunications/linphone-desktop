@@ -77,6 +77,7 @@ Rectangle {
 			id: loader
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+			property int minSize: Math.min( loader.height, loader.width)
 			Item{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
@@ -84,7 +85,7 @@ Rectangle {
 				Flipable{
 					id: contentsStack
 					anchors.centerIn: parent
-					height: Math.min( loader.height, loader.width)
+					height: loader.minSize
 					width : height
 					property bool flipped: false
 					
@@ -110,7 +111,7 @@ Rectangle {
 						id: previewLoader
 						showCloseButton: false
 						enabled: mainItem.previewLoaderEnabled
-						height: Math.min( loader.height, loader.width)
+						height: loader.minSize
 						width : height
 						ActionButton{
 							anchors.top: parent.top
@@ -153,59 +154,66 @@ Rectangle {
 		// -------------------------------------------------------------------------
 		// Action Buttons.
 		// -------------------------------------------------------------------------
-		RowLayout{
+		Item{
 			Layout.fillWidth: true
 			Layout.topMargin: 25
 			Layout.bottomMargin: 25
 			Layout.leftMargin: 25
 			Layout.rightMargin: 25
 			enabled: !mainItem.callModel
-			Item{
-				Layout.fillWidth: true
-			}
-			// Action buttons			
+			// Action buttons
 			RowLayout{
-				Layout.alignment: Qt.AlignCenter
-				spacing: 30
-				RowLayout{
-					spacing: 10
-					ActionSwitch {
-						id: micro
-						visible: SettingsModel.muteMicrophoneEnabled
-						property bool microMuted: false
-						isCustom: true
-						backgroundRadius: 90
-						colorSet: microMuted ? WaitingRoomStyle.buttons.microOff : WaitingRoomStyle.buttons.microOn
-						onClicked: microMuted = !microMuted
-					}
-					ActionSwitch {
-						id: speaker
-						property bool speakerMuted: false
-						isCustom: true
-						backgroundRadius: 90
-						colorSet: speakerMuted  ? WaitingRoomStyle.buttons.speakerOff : WaitingRoomStyle.buttons.speakerOn
-						onClicked: speakerMuted = !speakerMuted
-					}
-					ActionSwitch {
-						id: camera
-						property bool cameraEnabled: true
-						isCustom: true
-						backgroundRadius: 90
-						colorSet: cameraEnabled  ? WaitingRoomStyle.buttons.cameraOn : WaitingRoomStyle.buttons.cameraOff
-						enabled: modeChoice.selectedMode != 2
-						onClicked: cameraEnabled = !cameraEnabled
+				anchors.centerIn: parent
+				spacing: 10
+				ActionSwitch {
+					id: micro
+					visible: SettingsModel.muteMicrophoneEnabled
+					property bool microMuted: false
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: microMuted ? WaitingRoomStyle.buttons.microOff : WaitingRoomStyle.buttons.microOn
+					onClicked: microMuted = !microMuted
+				}
+				VuMeter {
+					enabled: !micro.microMuted
+					Timer {
+						interval: 50
+						repeat: true
+						running: parent.enabled
+						
+						onTriggered: parent.value = SettingsModel.getMicVolume()
 					}
 				}
-				RowLayout{
-					ActionButton{
-						id: modeChoice
-						property int selectedMode: 0
-						isCustom: true
-						backgroundRadius: width/2
-						colorSet: selectedMode == 0 ? WaitingRoomStyle.buttons.gridLayout :
-													  selectedMode == 1 ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
-						onClicked: selectedMode = (selectedMode + 1) % 3
-					}
+				ActionSwitch {
+					id: speaker
+					property bool speakerMuted: false
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: speakerMuted  ? WaitingRoomStyle.buttons.speakerOff : WaitingRoomStyle.buttons.speakerOn
+					onClicked: speakerMuted = !speakerMuted
+				}
+				ActionSwitch {
+					id: camera
+					property bool cameraEnabled: true
+					isCustom: true
+					backgroundRadius: 90
+					colorSet: cameraEnabled  ? WaitingRoomStyle.buttons.cameraOn : WaitingRoomStyle.buttons.cameraOff
+					enabled: modeChoice.selectedMode != 2
+					onClicked: cameraEnabled = !cameraEnabled
+				}
+			}
+			RowLayout{
+				anchors.centerIn: parent
+				anchors.horizontalCenterOffset: loader.minSize/2 - modeChoice.width/2
+				
+				ActionButton{
+					id: modeChoice
+					property int selectedMode: 0
+					isCustom: true
+					backgroundRadius: width/2
+					colorSet: selectedMode == 0 ? WaitingRoomStyle.buttons.gridLayout :
+												  selectedMode == 1 ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
+					onClicked: selectedMode = (selectedMode + 1) % 3
 				}
 			}
 			Item{

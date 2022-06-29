@@ -73,6 +73,17 @@ void SettingsModel::settingsWindowClosing(void) {
 	onSettingsTabChanged(-1);
 }
 
+void SettingsModel::reloadDevices(){
+	CoreManager::getInstance()->getCore()->reloadSoundDevices();
+	emit captureDevicesChanged(getCaptureDevices());
+	emit playbackDevicesChanged(getPlaybackDevices());
+	emit playbackDeviceChanged(getPlaybackDevice());
+	emit captureDeviceChanged(getCaptureDevice());
+	emit ringerDeviceChanged(getRingerDevice());
+	CoreManager::getInstance()->getCore()->reloadVideoDevices();
+	emit videoDevicesChanged(getVideoDevices());
+}
+
 //Provides tabbar per-tab setup/teardown mechanism for specific settings views
 void SettingsModel::onSettingsTabChanged(int idx) {
 	int prevIdx = mCurrentSettingsTab;
@@ -460,7 +471,7 @@ void SettingsModel::setShowAudioCodecs (bool status) {
 
 //Force a call on the 'detect' method of all video filters, updating new or removed devices
 void SettingsModel::accessVideoSettings() {
-	if(!getIsInCall())// TODO : This is a workaround to a crash when reloading video devices while in call. Spotted on Macos.
+	//if(!getIsInCall())// TODO : This is a workaround to a crash when reloading video devices while in call. Spotted on Macos.
 		CoreManager::getInstance()->getCore()->reloadVideoDevices();
 	emit videoDevicesChanged(getVideoDevices());
 }

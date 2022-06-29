@@ -288,7 +288,7 @@ QtObject {
 		}
 		property QtObject options: QtObject {
 			property int iconSize: 40
-			property string icon : 'options_custom'
+			property string icon : 'menu_vdots_custom'
 			property string name : 'options'
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 's_n_b_bg').color
 			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 's_h_b_bg').color

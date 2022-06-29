@@ -39,6 +39,8 @@
 
 ParticipantProxyModel::ParticipantProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
 	setSourceModel(new ParticipantListModel((ConferenceModel*)nullptr, this));
+	connect(this, &ParticipantProxyModel::chatRoomModelChanged, this, &ParticipantProxyModel::countChanged);
+	connect(this, &ParticipantProxyModel::conferenceModelChanged, this, &ParticipantProxyModel::countChanged);
 }
 
 // -----------------------------------------------------------------------------
