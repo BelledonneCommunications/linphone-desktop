@@ -38,6 +38,7 @@ Window {
 	readonly property bool callsIsOpened: !mainPaned.isClosed()
 	
 	
+	
 	// ---------------------------------------------------------------------------
 	
 	function openChat () {
@@ -82,6 +83,8 @@ Window {
 		defaultChildAWidth: CallsWindowStyle.callsList.defaultWidth
 		maximumLeftLimit: CallsWindowStyle.callsList.maximumWidth
 		minimumLeftLimit: CallsWindowStyle.callsList.minimumWidth
+		
+		hideSplitter: !window.callsIsOpened && middlePane.sourceComponent == videoConference
 		
 		// -------------------------------------------------------------------------
 		// Calls list.
@@ -181,6 +184,8 @@ Window {
 			minimumRightLimit: CallsWindowStyle.chat.minimumWidth
 			resizeAInPriority: true
 			
+			hideSplitter: !middlePane.sourceComponent || middlePane.sourceComponent == videoConference || !rightPane.sourceComponent
+			
 			// -----------------------------------------------------------------------
 			
 			Component {
@@ -268,6 +273,7 @@ Window {
 			}
 			
 			childB: Loader {
+				id: rightPane
 				anchors.fill: parent
 				sourceComponent: window.call && window.call.chatRoomModel ? chat : null
 			}

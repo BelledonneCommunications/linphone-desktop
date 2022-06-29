@@ -34,6 +34,7 @@ Item {
 	property bool resizeAInPriority: false
 	property int closingEdge: Qt.LeftEdge // `LeftEdge` or `RightEdge`.
 	property int defaultChildAWidth
+	property bool hideSplitter: false
 	
 	// User limits: string or int values.
 	// By default: no limits.
@@ -264,12 +265,13 @@ Item {
 		id: handle
 		
 		property int _mouseStart
+		visible: !container.hideSplitter
 		
 		anchors.left: contentA.right
 		cursorShape: Qt.SplitHCursor
 		height: parent.height
 		hoverEnabled: true
-		width: PanedStyle.handle.width
+		width: visible ? PanedStyle.handle.width : 0
 		
 		onDoubleClicked: _inverseClosingState()
 		onMouseXChanged: pressed &&
