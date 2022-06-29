@@ -198,7 +198,7 @@ DialogPlus {
 					RowLayout{
 						Layout.fillWidth: true
 						Layout.fillHeight : true
-						spacing:10
+						spacing:0
 						
 						Repeater{
 							id:lastContacts
@@ -206,8 +206,9 @@ DialogPlus {
 							model:TimelineListModel.getLastChatRooms(5)
 							delegate :
 								Item{
-								Layout.fillHeight: true
-								Layout.preferredWidth: 60
+								//Layout.fillHeight: true
+								Layout.preferredHeight: 60
+								Layout.preferredWidth: 50 + avatar2.height/2
 								ColumnLayout{
 									anchors.fill:parent
 									Avatar{
@@ -247,7 +248,7 @@ DialogPlus {
 								Rectangle{
 									id:mask
 									anchors.fill:parent
-									anchors.topMargin: -5
+									//anchors.topMargin: -5
 									color:'white'
 									opacity: 0.5
 									visible: smartSearchBar.isIgnored(modelData.sipAddress)

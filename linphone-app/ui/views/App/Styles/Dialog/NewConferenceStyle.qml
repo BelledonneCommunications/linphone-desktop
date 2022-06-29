@@ -13,7 +13,7 @@ QtObject {
 	property color subjectTitleColor: ColorsList.add(sectionName+'_subject_title', 'g').color
 	property color recentContactTitleColor: ColorsList.add(sectionName+'_recent_contact_title', 'g').color
 	property color recentContactUsernameColor: ColorsList.add(sectionName+'_recent_contact_username', 'g').color
-	property color addressesBorderColor: ColorsList.add(sectionName+'_addresses_border', 'l').color
+	property color addressesBorderColor: ColorsList.add(sectionName+'_addresses_border', 'border_light').color
 	property color addressesAdminColor: ColorsList.add(sectionName+'_addresses_admin', 'g').color
 	property color requiredColor: ColorsList.add(sectionName+'_required_text', 'g').color
 	

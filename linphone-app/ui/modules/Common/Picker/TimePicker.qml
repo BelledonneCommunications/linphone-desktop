@@ -39,8 +39,8 @@ Item{
 			width: 30 * 1.5
 			height: width
 			radius: width / 2
-			border.color: "darkgray"
-			color: TimePickerStyle.hoursColor
+			border.color: TimePickerStyle.hoursColor
+			border.width: 3
 		}
 		
 		delegate: Item {
@@ -85,7 +85,7 @@ Item{
 	
 	PathView {
 		id: inner
-		model: 6
+		model: 12
 		interactive: false
 		highlightRangeMode:  PathView.NoHighlightRange
 		
@@ -93,8 +93,8 @@ Item{
 			width: 30 * 1.5
 			height: width
 			radius: width / 2
-			border.color: "darkgray"
-			color: TimePickerStyle.minutesColor
+			border.color: TimePickerStyle.minutesColor
+			border.width: 3
 		}
 		
 		delegate: Item {
@@ -107,7 +107,7 @@ Item{
 				anchors.centerIn: parent
 				font.pointSize: Units.dp * 11
 				font.bold: currentItem
-				text: index * 10
+				text: index * 5
 				color: currentItem ? TimePickerStyle.selectedItemColor : TimePickerStyle.unselectedItemColor
 			}
 			
@@ -119,7 +119,7 @@ Item{
 		
 		path: Path {
 			id: innerPath
-			property int yStep: middleMinSize  * Math.cos(2 * Math.PI / inner.count)
+			property int yStep: (middleMinSize - 30 )  * Math.cos(2 * Math.PI / inner.count)
 			startX: mainItem.centerPosition; startY: mainItem.centerPosition - innerPath.yStep
 			PathArc {
 				x: mainItem.centerPosition; y: mainItem.centerPosition + innerPath.yStep

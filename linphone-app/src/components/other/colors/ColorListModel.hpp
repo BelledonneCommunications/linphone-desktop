@@ -307,6 +307,7 @@ class ColorListModel : public ProxyListModel {
 */		
 		
 		ADD_COLOR("border", "black", "Borders")
+		ADD_COLOR("border_light", "#A8A8A8", "Lighter borders")
 		
 		
 		
