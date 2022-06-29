@@ -16,5 +16,6 @@ QtObject {
 		property color pressed:  ColorsList.add(sectionName+'_p', 'i').color
 		property color hovered: ColorsList.add(sectionName+'_h', 'h').color
 		property color normal: ColorsList.add(sectionName+'_n', 'g').color
+		property color selected:  ColorsList.add(sectionName+'_u', 'i').color
 	}
 }

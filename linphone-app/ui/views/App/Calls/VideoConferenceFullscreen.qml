@@ -75,7 +75,7 @@ Window {
 		focus: true
 
 		Keys.onEscapePressed: window.exit()
-		color: VideoConferenceStyle.backgroundColor
+		color: hideButtons ? VideoConferenceStyle.fullBackgroundColor : VideoConferenceStyle.backgroundColor
 
 		Connections {
 			target: callModel
@@ -139,7 +139,7 @@ Window {
 			anchors.left: parent.left
 			anchors.right: parent.right
 
-			anchors.topMargin: 10
+			anchors.topMargin: window.hideButtons ? 0 : 10
 			anchors.leftMargin: 25
 			anchors.rightMargin: 25
 			spacing: 10

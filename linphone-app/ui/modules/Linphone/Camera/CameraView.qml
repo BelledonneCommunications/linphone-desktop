@@ -22,7 +22,7 @@ Item{
 	property alias isCameraFromDevice: camera.isCameraFromDevice
 	property bool showCloseButton: true
 	property bool showActiveSpeakerOverlay: true
-	property color color : CameraViewStyle.outBackgroundColor
+	property color color : camera.isReady ?  CameraViewStyle.cameraBackgroundColor : CameraViewStyle.outBackgroundColor
 	signal closeRequested()
 	
 	MouseArea{

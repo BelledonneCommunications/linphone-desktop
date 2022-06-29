@@ -12,6 +12,7 @@ QtObject {
 	property string sectionName: 'CameraView'
 	property color outBackgroundColor: ColorsList.add(sectionName+'_out_bg', 'conference_out_avatar_bg').color
 	property color inAvatarBackgroundColor: ColorsList.add(sectionName+'_in_bg', 'conference_bg').color
+	property color cameraBackgroundColor: ColorsList.add(sectionName+'_camera_bg', 'fullscreen_conference_bg').color
 	
 	property int radius : 10
 	

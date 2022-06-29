@@ -117,6 +117,7 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("conference_entry_bg", "#D0D8DE", "Conferences : Background entry")
 		ADD_COLOR("conference_out_avatar_bg", "#A1A1A1", "Conferences: Background avatar")
 		ADD_COLOR("conference_bg", "#798791", "Conferences: Background")
+		ADD_COLOR("fullscreen_conference_bg", "black", "Conferences: Fullscreen background")
 		
 		ADD_COLOR("validation", "#96C11F", "Background for validation on buttons")
 		ADD_COLOR("validation_h", "#7B9D1B", "Hovered background for validation on buttons")

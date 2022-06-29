@@ -47,7 +47,11 @@ CheckBox {
 					  : (
 							checkBox.hovered
 							? CheckBoxTextStyle.color.hovered
-							: CheckBoxTextStyle.color.normal
+							: (
+								checkBox.checked
+								? CheckBoxTextStyle.color.selected
+								: CheckBoxTextStyle.color.normal
+							  )
 							)
 		
 		implicitHeight: CheckBoxTextStyle.size
@@ -63,7 +67,11 @@ CheckBox {
 				   ? CheckBoxTextStyle.color.pressed
 				   : (checkBox.hovered
 					  ? CheckBoxTextStyle.color.hovered
-					  : CheckBoxTextStyle.color.normal
+					  : (
+							checkBox.checked
+							? CheckBoxTextStyle.color.selected
+							: CheckBoxTextStyle.color.normal
+							)
 					  )
 			
 			height: parent.height - y * 2
@@ -84,7 +92,11 @@ CheckBox {
 							 ? CheckBoxTextStyle.color.pressed
 							 : (checkBox.hovered
 								? CheckBoxTextStyle.color.hovered
-								: CheckBoxTextStyle.color.normal
+								: (
+									checkBox.checked
+									? CheckBoxTextStyle.color.selected
+									: CheckBoxTextStyle.color.normal
+								  )
 								)
 				strokeWidth: 2
 				fillColor: 'transparent'
