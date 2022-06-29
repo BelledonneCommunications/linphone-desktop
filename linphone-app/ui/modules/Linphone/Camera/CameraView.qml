@@ -155,9 +155,9 @@ Item{
 	}
 	Rectangle{
 		visible: mainItem.currentDevice && mainItem.currentDevice.isMuted
-		anchors.left: parent.left
+		anchors.right: parent.right
 		anchors.top: parent.top
-		anchors.leftMargin: 15
+		anchors.rightMargin: 15
 		anchors.topMargin: 15
 		height: CameraViewStyle.isMuted.button.iconSize
 		width: height
@@ -170,25 +170,4 @@ Item{
 			iconSize: CameraViewStyle.isMuted.button.iconSize
 		}
 	}
-
-	Rectangle{
-		visible: (mainItem.callModel && !mainItem.callModel.videoEnabled) ||
-				 (mainItem.currentDevice && !mainItem.currentDevice.videoEnabled)
-		anchors.right: parent.right
-		anchors.top: parent.top
-		anchors.rightMargin: 15
-		anchors.topMargin: 15
-		height: CameraViewStyle.isAudioOnly.button.iconSize
-		width: height
-		radius: width/2
-		color: CameraViewStyle.isAudioOnly.button.backgroundNormalColor
-		Icon{
-			anchors.centerIn: parent
-			icon: CameraViewStyle.isAudioOnly.button.icon
-			overwriteColor: CameraViewStyle.isAudioOnly.button.foregroundNormalColor
-			iconSize: CameraViewStyle.isAudioOnly.button.iconSize
-		}
-	}
-	
-	
 }
