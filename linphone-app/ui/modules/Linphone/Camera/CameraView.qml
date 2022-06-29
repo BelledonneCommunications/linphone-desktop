@@ -48,7 +48,7 @@ Item{
 			
 			IncallAvatar {
 				participantDeviceModel: mainItem.currentDevice
-				height: Utils.computeAvatarSize(mainItem, CallStyle.container.avatar.maxSize)
+				height: Utils.computeAvatarSize(backgroundArea, CallStyle.container.avatar.maxSize)
 				width: height
 				backgroundColor: CameraViewStyle.inAvatarBackgroundColor
 			}
