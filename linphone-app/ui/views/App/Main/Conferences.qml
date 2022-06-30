@@ -180,8 +180,7 @@ Item{
 								width: parent.width
 								height: parent.height
 								conferenceInfoModel: $modelData
-								gotoButtonMode: mainItem.filterType == ConferenceInfoProxyModel.Scheduled ? 1 
-																										  : mainItem.filterType == ConferenceInfoProxyModel.Ended ? -1
+								gotoButtonMode: mainItem.filterType == ConferenceInfoProxyModel.Scheduled || mainItem.filterType == ConferenceInfoProxyModel.Ended? 1
 																																								  : 0
 								onExpandToggle: calendarGrid.expanded = !calendarGrid.expanded
 								isExpanded: calendarGrid.expanded

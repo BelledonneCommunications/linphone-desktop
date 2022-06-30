@@ -585,10 +585,42 @@ void SettingsModel::setShowVideoCodecs (bool status) {
 
 // =============================================================================
 void SettingsModel::updateCameraMode(){
-	auto mode = mConfig->getString("video", "main_display_mode", "BlackBars");	
+	auto mode = mConfig->getString("video", "main_display_mode", "OccupyAllSpace");	
 	mConfig->setString("video", "main_display_mode", mode);
 	mConfig->setString("video", "other_display_mode", mode);
 }
+
+SettingsModel::CameraMode SettingsModel::getCameraMode() const{
+	auto mode = mConfig->getString("video", "main_display_mode", "OccupyAllSpace");	
+	if( mode == "Hybrid")
+		return CameraMode::CameraMode_Hybrid;
+	else if( mode == "BlackBars")
+		return CameraMode::CameraMode_BlackBars;
+	else
+		return CameraMode::CameraMode_OccupyAllSpace;
+}
+
+void SettingsModel::setCameraMode(CameraMode mode){
+	std::string modeToSet;
+	switch(mode){
+		case CameraMode::CameraMode_Hybrid : modeToSet = "Hybrid";break;
+		case CameraMode::CameraMode_BlackBars: modeToSet = "BlackBars";break;
+		default: modeToSet = "OccupyAllSpace";
+	}
+	mConfig->setString("video", "main_display_mode", modeToSet);
+	mConfig->setString("video", "other_display_mode", modeToSet);
+	emit cameraModeChanged();
+}
+
+LinphoneEnums::ConferenceLayout SettingsModel::getVideoConferenceLayout() const{
+	return (LinphoneEnums::ConferenceLayout) mConfig->getInt(UiSection, "video_conference_layout", (int)LinphoneEnums::ConferenceLayoutActiveSpeaker);
+}
+
+void SettingsModel::setVideoConferenceLayout(LinphoneEnums::ConferenceLayout layout){
+	mConfig->setInt(UiSection, "video_conference_layout", (int)layout);
+	emit videoConferenceLayoutChanged();
+}
+
 // =============================================================================
 // Chat & calls.
 // =============================================================================

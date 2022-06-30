@@ -20,7 +20,7 @@ Item{
 	property alias isPreview: camera.isPreview
 	property alias isFullscreen: camera.isFullscreen
 	property alias isCameraFromDevice: camera.isCameraFromDevice
-	property bool showCloseButton: true
+	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true
 	property color color : camera.isReady ?  CameraViewStyle.cameraBackgroundColor : CameraViewStyle.outBackgroundColor
 	signal closeRequested()

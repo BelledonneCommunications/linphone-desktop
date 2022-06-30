@@ -29,6 +29,7 @@
 
 #include "components/core/CoreHandlers.hpp"
 #include "components/contacts/ContactsImporterModel.hpp"
+#include "utils/LinphoneEnums.hpp"
 
 // =============================================================================
 class TunnelModel;
@@ -94,6 +95,10 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool videoSupported READ getVideoSupported CONSTANT)
 	
 	Q_PROPERTY(bool showVideoCodecs READ getShowVideoCodecs WRITE setShowVideoCodecs NOTIFY showVideoCodecsChanged)
+	
+	Q_PROPERTY(CameraMode cameraMode READ getCameraMode WRITE setCameraMode NOTIFY cameraModeChanged)
+	Q_PROPERTY(LinphoneEnums::ConferenceLayout videoConferenceLayout READ getVideoConferenceLayout WRITE setVideoConferenceLayout NOTIFY videoConferenceLayoutChanged)
+	
 	
 	// Chat & calls. -------------------------------------------------------------
 	
@@ -228,6 +233,13 @@ public:
 	};
 	Q_ENUM(VersionCheckType);
 	
+	enum CameraMode{
+		CameraMode_Hybrid = 0,
+		CameraMode_OccupyAllSpace = 1, 
+		CameraMode_BlackBars = 2
+	};
+	Q_ENUM(CameraMode);
+	
 	
 	SettingsModel (QObject *parent = Q_NULLPTR);
 	virtual ~SettingsModel ();
@@ -346,6 +358,12 @@ public:
 	void setShowVideoCodecs (bool status);
 	
 	void updateCameraMode();
+	CameraMode getCameraMode() const;
+	void setCameraMode(CameraMode mode);
+	
+	LinphoneEnums::ConferenceLayout getVideoConferenceLayout() const;
+	void setVideoConferenceLayout(LinphoneEnums::ConferenceLayout layout);
+	
 	
 	// Chat & calls. -------------------------------------------------------------
 	
@@ -638,6 +656,9 @@ signals:
 	void videoDefinitionChanged (const QVariantMap &definition);
 	
 	void showVideoCodecsChanged (bool status);
+	
+	void cameraModeChanged();
+	void videoConferenceLayoutChanged();
 	
 	// Chat & calls. -------------------------------------------------------------
 	

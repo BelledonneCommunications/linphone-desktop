@@ -208,11 +208,11 @@ Rectangle {
 				
 				ActionButton{
 					id: modeChoice
-					property int selectedMode: 0
+					property int selectedMode: SettingsModel.videoConferenceLayout
 					isCustom: true
 					backgroundRadius: width/2
-					colorSet: selectedMode == 0 ? WaitingRoomStyle.buttons.gridLayout :
-												  selectedMode == 1 ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
+					colorSet: selectedMode == LinphoneEnums.ConferenceLayoutGrid ? WaitingRoomStyle.buttons.gridLayout :
+												  selectedMode == LinphoneEnums.ConferenceLayoutActiveSpeaker ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
 					onClicked: selectedMode = (selectedMode + 1) % 3
 				}
 			}
