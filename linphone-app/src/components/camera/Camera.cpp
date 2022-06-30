@@ -68,16 +68,17 @@ Camera::~Camera(){
 }
 
 void Camera::resetWindowId() const{
-	if(mIsWindowIdSet){
+	auto core = CoreManager::getInstance()->getCore();
+	if(core && mIsWindowIdSet){
 		QQuickFramebufferObject::Renderer * oldRenderer = NULL;
 		if(mWindowIdLocation == CorePreview){
-			oldRenderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativePreviewWindowId();
+			oldRenderer = (QQuickFramebufferObject::Renderer *)core->getNativePreviewWindowId();
 			if(oldRenderer)
-				CoreManager::getInstance()->getCore()->setNativePreviewWindowId(NULL);
+				core->setNativePreviewWindowId(NULL);
 		}else if( mWindowIdLocation == Call){
 			if(mCallModel){
 				auto call = mCallModel->getCall();
-				if( call ){
+				if( call && call->getState() != linphone::Call::State::End && call->getState() != linphone::Call::State::Released){
 					oldRenderer = (QQuickFramebufferObject::Renderer *) call->getNativeVideoWindowId();
 					if(oldRenderer)
 						call->setNativeVideoWindowId(NULL);
@@ -93,9 +94,9 @@ void Camera::resetWindowId() const{
 				}
 			}
 		}else if( mWindowIdLocation == Core){
-			oldRenderer = (QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->getNativeVideoWindowId();
+			oldRenderer = (QQuickFramebufferObject::Renderer *)core->getNativeVideoWindowId();
 			if(oldRenderer)
-				CoreManager::getInstance()->getCore()->setNativeVideoWindowId(NULL);
+				core->setNativeVideoWindowId(NULL);
 		}
 		qDebug() << "[Camera] Removed " << oldRenderer << " at " << mWindowIdLocation << " for " << this;
 		mIsWindowIdSet = false;
