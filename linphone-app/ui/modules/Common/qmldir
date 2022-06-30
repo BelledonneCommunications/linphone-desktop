@@ -93,6 +93,8 @@ DesktopPopup            1.0 Popup/DesktopPopup.qml
 Popup                   1.0 Popup/Popup.qml
 PopupShadow             1.0 Popup/PopupShadow.qml
 
+Text                    1.0 Text/Text.qml
+
 TooltipArea             1.0 Tooltip/TooltipArea.qml
 
 ToolTip             	1.0 Tooltip/Tooltip.qml

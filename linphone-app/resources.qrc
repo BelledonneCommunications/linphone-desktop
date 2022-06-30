@@ -291,6 +291,7 @@
 		<file>ui/modules/Common/Styles/qmldir</file>
 		<file>ui/modules/Common/Styles/Tooltip/TooltipStyle.qml</file>
 		<file>ui/modules/Common/Styles/Window/WindowStyle.qml</file>
+		<file>ui/modules/Common/Text/Text.qml</file>
 		<file>ui/modules/Common/Tooltip/TooltipArea.qml</file>
 		<file>ui/modules/Common/Tooltip/Tooltip.qml</file>
 		<file>ui/modules/Common/View/ScrollableListView.qml</file>

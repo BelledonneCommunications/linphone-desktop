@@ -53,6 +53,11 @@ QtObject {
 		property int iconSize: 30
 		property color color: ColorsList.add(sectionName+'_schedule', 'j').color
 	}
+	property QtObject type: QtObject {
+		property int spacing: 5
+		property int pointSize: Units.dp * 10
+		property color color: ColorsList.add(sectionName+'_subject', 'j').color
+	}
 	property QtObject subject: QtObject {
 		property int spacing: 5
 		property int pointSize: Units.dp * 11
@@ -67,7 +72,7 @@ QtObject {
 		property int spacing: 5
 		property int pointSize: Units.dp * 9
 		property string icon : 'calendar_participants_custom'
-		property int iconSize: 30
+		property int iconSize: 25
 		property color color: ColorsList.add(sectionName+'_participants', 'j').color
 	}
 	
@@ -85,7 +90,7 @@ QtObject {
 		property color foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_c', icon, 's_p_b_fg').color
 	}
 	property QtObject infoButton: QtObject{
-		property int iconSize: 30
+		property int iconSize: 25
 		property string name : 'info'
 		property string icon : 'menu_info_custom'
 		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 'me_n_b_bg').color
@@ -114,6 +119,19 @@ QtObject {
 		property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 's_h_b_fg').color
 		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 's_p_b_fg').color
 	}
+	property QtObject shareButton: QtObject{
+		property int iconSize: 40
+		property string name : 'share'
+		property string icon : 'settings_network_custom'
+		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 'me_n_b_bg').color
+		property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_h', icon, 'me_h_b_bg').color
+		property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_p', icon, 'me_p_b_bg').color
+		property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_n', icon, 'me_n_b_fg').color
+		property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 'me_h_b_fg').color
+		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 'me_p_b_fg').color
+	}
+	
+	
 	property QtObject editButton: QtObject{
 		property int iconSize: 40
 		property string name : 'edit'

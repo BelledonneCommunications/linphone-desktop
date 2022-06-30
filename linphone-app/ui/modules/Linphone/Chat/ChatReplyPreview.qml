@@ -76,7 +76,7 @@ Rectangle{
 			contentHeight: messageContentsList.height
 			contentWidth: width - ScrollBar.vertical.width
 			flickableDirection: Flickable.VerticalFlick 
-			
+			clip: true
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			ListView {
@@ -87,7 +87,7 @@ Rectangle{
 					chatMessageModel: replyPreviewBlock.chatRoomModel && replyPreviewBlock.chatRoomModel.reply
 				}
 				height: contentHeight
-				
+				clip: true
 				delegate: ChatContent{
 					contentModel: $modelData
 					Rectangle{

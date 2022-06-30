@@ -135,7 +135,7 @@ Loader{
 				id: participantsRow
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				Layout.minimumHeight: mainItem.isExpanded ? expandedParticipantsList.minimumHeight : ChatCalendarMessageStyle.lineHeight
+				Layout.minimumHeight: 4 + (mainItem.isExpanded ? expandedParticipantsList.minimumHeight : ChatCalendarMessageStyle.lineHeight)
 				Layout.alignment: Qt.AlignTop
 				Layout.leftMargin: 5
 				Layout.rightMargin: 10
@@ -148,7 +148,8 @@ Loader{
 					Layout.alignment: Qt.AlignTop
 					clip: false
 					Icon{
-						anchors.centerIn: parent	
+						anchors.top: parent.top
+						anchors.horizontalCenter: parent.horizontalCenter
 						icon: ChatCalendarMessageStyle.participants.icon
 						iconSize: ChatCalendarMessageStyle.participants.iconSize
 						overwriteColor: ChatCalendarMessageStyle.participants.color
@@ -159,6 +160,7 @@ Loader{
 					id: participantsList
 					Layout.fillWidth: true
 					Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
+					Layout.topMargin: 4
 					Layout.alignment: Qt.AlignTop
 					visible: !mainItem.isExpanded
 					color: ChatCalendarMessageStyle.participants.color
@@ -170,6 +172,7 @@ Loader{
 					id: expandedParticipantsList
 					property int minimumHeight: Math.min( count * ChatCalendarMessageStyle.lineHeight, layout.height/(descriptionTitle.visible?3:2))
 					Layout.fillWidth: true
+					Layout.topMargin: 4
 					Layout.minimumHeight: minimumHeight
 					Layout.alignment: Qt.AlignTop
 					spacing: 0

@@ -17,6 +17,7 @@ Rectangle {
 	property alias readOnly: textArea.readOnly
 	property int padding: TextAreaFieldStyle.text.padding
 	property alias implicitHeight: flickable.contentHeight
+	property int fitWidth: 0
 	
 	height: TextAreaFieldStyle.background.height
 	width: TextAreaFieldStyle.background.width
@@ -30,7 +31,22 @@ Rectangle {
 		   : TextAreaFieldStyle.background.color.normal
 	
 	radius: TextAreaFieldStyle.background.radius
-	
+// Fit Width computation
+	onTextChanged:{
+		var lines = text.split('\n')
+		var totalWidth = 0
+		for(var index in lines){
+			metrics.text = lines[index]
+			if( totalWidth < metrics.width)
+				totalWidth = metrics.width
+		 }
+		 fitWidth = totalWidth
+	}
+	TextMetrics{
+		id: metrics
+		font: mainItem.font
+	}
+//-----------------------------------
 	Flickable {
 		id: flickable
 		anchors.fill: parent
@@ -39,9 +55,11 @@ Rectangle {
 		
 		ScrollBar.vertical: ForceScrollBar {
 			id: scrollBar
-			policy: flickable.contentHeight > flickable.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
+			//policy: flickable.contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff	// Do not use because of binding loop issues
+			contentSizeTarget: flickable.contentHeight
+			sizeTarget: flickable.height
+			Component.onCompleted: updatePolicy()
 		}
-		
 		TextArea.flickable: TextArea {
 			id: textArea
 			

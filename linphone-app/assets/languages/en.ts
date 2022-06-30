@@ -525,11 +525,6 @@ Server URL not configured.</translation>
         <translation>Description</translation>
     </message>
     <message>
-        <source>icsconferenceAddressTitle</source>
-        <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
-        <translation>Conference address</translation>
-    </message>
-    <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation>Join</translation>

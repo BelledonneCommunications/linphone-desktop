@@ -216,9 +216,9 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("me_p_b_bg", "transparent", "[M] Menu pressed button : background")
 		ADD_COLOR_WITH_LINK("me_u_b_bg", "", "[M] Menu updating button : background", "me_p_b_bg")
 		
-		ADD_COLOR("me_n_b_fg", "#96A5B1", "[M] Menu normal button : foreground")
+		ADD_COLOR("me_n_b_fg", "#4B5964", "[M] Menu normal button : foreground")
 		ADD_COLOR("me_d_b_fg", "#8096A5B1", "[M] Menu disabled button : foreground")
-		ADD_COLOR("me_h_b_fg", "#4B5964", "[M] Menu hovered button : foreground")
+		ADD_COLOR("me_h_b_fg", "#96A5B1", "[M] Menu hovered button : foreground")
 		ADD_COLOR("me_p_b_fg", "#FF5E00", "[M] Menu pressed button : foreground")
 		ADD_COLOR_WITH_LINK("me_u_b_fg", "", "[M] Menu updating button : background", "me_p_b_fg")
 // Inverse

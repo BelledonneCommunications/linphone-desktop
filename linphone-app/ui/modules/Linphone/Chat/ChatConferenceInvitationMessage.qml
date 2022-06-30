@@ -26,8 +26,8 @@ Loader{
 	property ContentModel contentModel
 	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
 	property int maxWidth : parent.width
-	property int fitHeight: active && item ? item.fitHeight + ChatCalendarMessageStyle.topMargin+ChatCalendarMessageStyle.bottomMargin + (isExpanded? 200 : 0): 0
-	property int fitWidth: active && item ? item.fitWidth  + ChatCalendarMessageStyle.widthMargin*2 : 0
+	property int fitHeight: active && item ? item.fitHeight + (isExpanded? 200 : 0): 0
+	property int fitWidth: active && item ? Math.min(maxWidth, item.fitWidth  + ChatCalendarMessageStyle.widthMargin*2) : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
 	property bool isExpanded : false
@@ -60,25 +60,26 @@ Loader{
 		
 		ColumnLayout{
 			id: layout
-			property int fitHeight: Layout.minimumHeight + (description.visible?description.implicitHeight + 5: 0)
-			property int fitWidth: (editButton.visible?editButton.width:0) + copyButton.width + joinButton.width + linkTitle.implicitWidth
+			property int fitHeight: Layout.minimumHeight + (description.visible?description.implicitHeight + 5: 5)
+			property int fitWidth: Math.max(shareButton.width + joinButton.width, description.fitWidth)
 			anchors.fill: parent
 			spacing: 0
 			Text{
 				Layout.fillWidth: true
-				Layout.topMargin: 10
-				Layout.leftMargin: 10
+				Layout.topMargin: 5
+				Layout.leftMargin: 5
 				Layout.alignment: Qt.AlignRight
 				elide: Text.ElideRight
-				color: ChatCalendarMessageStyle.subject.color
-				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
+				color: ChatCalendarMessageStyle.type.color
+				font.pointSize: ChatCalendarMessageStyle.type.pointSize
+				font.weight: Font.Bold
 				//: 'Meeting invite' : ICS title that is an invitation.
-				text: qsTr('icsMeetingInvite') +': ' + UtilsCpp.getDisplayName(mainItem.conferenceInfoModel.organizer)
+				text: qsTr('icsMeetingInvite') +': '// + UtilsCpp.getDisplayName(mainItem.conferenceInfoModel.organizer)
 			}
 			Text{
 				id: title
 				Layout.fillWidth: true
-				Layout.leftMargin: 10
+				Layout.leftMargin: 5
 				Layout.alignment: Qt.AlignRight
 				elide: Text.ElideRight
 				color: ChatCalendarMessageStyle.subject.color
@@ -112,59 +113,59 @@ Loader{
 					text:  qsTr('icsParticipants', '', participantCount).arg(participantCount)
 				}
 			}
-			
-			RowLayout {
-				id: dateRow
+			ColumnLayout{
 				Layout.fillWidth: true
-				Layout.preferredHeight: ChatCalendarMessageStyle.calendar.iconSize
 				Layout.leftMargin: 5
 				Layout.rightMargin: 15
-				
-				spacing: ChatCalendarMessageStyle.calendar.spacing
-				
-				Icon{
-					icon: ChatCalendarMessageStyle.calendar.icon
-					iconSize: ChatCalendarMessageStyle.calendar.iconSize
-					overwriteColor: ChatCalendarMessageStyle.calendar.color
-				}
-				
-				Text {
-					id: conferenceDate
+				spacing: 0
+				RowLayout {
+					id: dateRow
 					Layout.fillWidth: true
-					Layout.minimumWidth: implicitWidth
-					verticalAlignment: Qt.AlignVCenter
-					color: ChatCalendarMessageStyle.schedule.color
-					elide: Text.ElideRight
-					font.pointSize: ChatCalendarMessageStyle.calendar.pointSize
-					text: Qt.formatDate(mainItem.conferenceInfoModel.dateTimeUtc, 'yyyy/MM/dd')
+					Layout.preferredHeight: conferenceDate.implicitHeight
+					spacing: ChatCalendarMessageStyle.calendar.spacing
+					
+					Icon{
+						icon: ChatCalendarMessageStyle.calendar.icon
+						iconSize: ChatCalendarMessageStyle.calendar.iconSize-2
+						overwriteColor: ChatCalendarMessageStyle.calendar.color
+					}
+					
+					Text {
+						id: conferenceDate
+						Layout.fillWidth: true
+						Layout.minimumWidth: implicitWidth
+						verticalAlignment: Qt.AlignVCenter
+						color: ChatCalendarMessageStyle.schedule.color
+						elide: Text.ElideRight
+						font.pointSize: Units.dp * 8
+						text: Qt.formatDate(mainItem.conferenceInfoModel.dateTimeUtc, 'yyyy/MM/dd')
+					}
 				}
-			}
-			RowLayout {
-				id: conferenceTimeRow
-				Layout.fillWidth: true
-				Layout.preferredHeight: ChatCalendarMessageStyle.schedule.iconSize
-				Layout.leftMargin: 5
-				Layout.rightMargin: 15
-				
-				spacing: ChatCalendarMessageStyle.schedule.spacing
-				
-				Icon{
-					icon: ChatCalendarMessageStyle.schedule.icon
-					iconSize: ChatCalendarMessageStyle.schedule.iconSize
-					overwriteColor: ChatCalendarMessageStyle.schedule.color
-				}
-				
-				Text {
-					id: conferenceTime
+				RowLayout {
+					id: conferenceTimeRow
 					Layout.fillWidth: true
-					Layout.minimumWidth: implicitWidth
-					verticalAlignment: Qt.AlignVCenter
-					color: ChatCalendarMessageStyle.schedule.color
-					elide: Text.ElideRight
-					font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
-					text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTimeUtc, 'hh:mm')
-						  + (mainItem.conferenceInfoModel.duration > 0 ? ' ('+Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
-																	   : '')
+					Layout.preferredHeight: conferenceTime.implicitHeight
+					
+					spacing: ChatCalendarMessageStyle.schedule.spacing
+					
+					Icon{
+						icon: ChatCalendarMessageStyle.schedule.icon
+						iconSize: ChatCalendarMessageStyle.schedule.iconSize-2
+						overwriteColor: ChatCalendarMessageStyle.schedule.color
+					}
+					
+					Text {
+						id: conferenceTime
+						Layout.fillWidth: true
+						Layout.minimumWidth: implicitWidth
+						verticalAlignment: Qt.AlignVCenter
+						color: ChatCalendarMessageStyle.schedule.color
+						elide: Text.ElideRight
+						font.pointSize: Units.dp * 8
+						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTimeUtc, 'hh:mm')
+							  + (mainItem.conferenceInfoModel.duration > 0 ? ' ('+Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
+																		   : '')
+					}
 				}
 			}
 			ColumnLayout{
@@ -205,7 +206,7 @@ Loader{
 			Text{
 				id: descriptionTitle
 				Layout.fillWidth: true
-				Layout.leftMargin: 10
+				Layout.leftMargin: 5
 				Layout.topMargin: 5
 				color: ChatCalendarMessageStyle.subject.color
 				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
@@ -218,7 +219,7 @@ Loader{
 				id: description
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				Layout.leftMargin: 10
+				Layout.leftMargin: 5
 				padding: 0
 				color: 'transparent'
 				readOnly: true
@@ -233,39 +234,25 @@ Loader{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 			}
-			Text{
-				id: linkTitle
-				Layout.fillWidth: true
-				Layout.leftMargin: 10
-				color: ChatCalendarMessageStyle.subject.color
-				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
-				font.weight: Font.Bold
-				
-				//: 'Conference address' : Title for the conference address.
-				text: qsTr('icsconferenceAddressTitle')
-			}
 			RowLayout{
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				Layout.leftMargin: 10
-				Layout.rightMargin: 10
+				Layout.topMargin: ChatCalendarMessageStyle.bottomMargin
+				Layout.leftMargin: 5
+				Layout.rightMargin: 5
 				spacing: 10
-				TextField{
-					id: uriField
-					readOnly: true
+				Item{
+					Layout.fillHeight: true
 					Layout.fillWidth: true
-					textFieldStyle: TextFieldStyle.flatInverse
-					text: mainItem.conferenceInfoModel.uri
-					
 				}
 				ActionButton{
-					id: copyButton
-					iconSize: uriField.height
+					id: shareButton
+					iconSize: joinButton.height/2
 					isCustom: true
-					colorSet: ChatCalendarMessageStyle.copyLinkButton
+					colorSet: ChatCalendarMessageStyle.shareButton
 					backgroundRadius: width/2
 					onClicked: {
-						Clipboard.text = uriField.text
+						Clipboard.text = mainItem.conferenceInfoModel.uri
 						mainItem.conferenceUriCopied()
 					}
 				}
@@ -274,18 +261,6 @@ Loader{
 					//: 'Join' : Action button to join the conference.
 					text: qsTr('icsJoinButton').toUpperCase()
 					onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
-				}
-				ActionButton{
-					id: editButton
-					isCustom: true
-					colorSet: ChatCalendarMessageStyle.editButton
-					backgroundRadius: width/2
-					visible: UtilsCpp.isMe(mainItem.conferenceInfoModel.organizer)
-					onClicked: {
-						window.detachVirtualWindow()
-						window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
-												   ,{conferenceInfoModel: mainItem.conferenceInfoModel})
-					}
 				}
 			}
 		}

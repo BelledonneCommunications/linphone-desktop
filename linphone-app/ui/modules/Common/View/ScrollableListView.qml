@@ -39,33 +39,15 @@ ListView {
 	ScrollBar.vertical: ForceScrollBar {
 		id: vScrollBar
 		onPressedChanged: pressed ? view.movementStarted() : view.movementEnded()
-		// ScrollBar.AsNeeded doesn't work. Do it ourself.
-		policy: ScrollBar.AlwaysOff
-		function updatePolicy(){
-			policy = (view.orientation == Qt.Vertical && view.contentHeight > view.height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff)
-		}
-		Timer{// Delay to avoid binding loops
-			id:delayUpdateVPolicy
-			interval:10
-			onTriggered: vScrollBar.updatePolicy()
-		}
-		Component.onCompleted: if(!hideScrollBars) updatePolicy()
+		contentSizeTarget: view.contentHeight
+		sizeTarget: view.height
 	}
 	ScrollBar.horizontal: ForceScrollBar {
 		id: hScrollBar
 		
 		onPressedChanged: pressed ? view.movementStarted() : view.movementEnded()
-		// ScrollBar.AsNeeded doesn't work. Do it ourself.
-		policy: ScrollBar.AlwaysOff
-		function updatePolicy() {
-			policy = (view.orientation == Qt.Horizontal && view.contentWidth > view.width? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff)
-		}
-		Timer{// Delay to avoid binding loops
-			id:delayUpdateHPolicy
-			interval:10
-			onTriggered: hScrollBar.updatePolicy()
-		}
-		Component.onCompleted: if(!hideScrollBars) updatePolicy()
+		contentSizeTarget: view.contentWidth
+		sizeTarget: view.width
 	}
 	// ---------------------------------------------------------------------------
 	boundsMovement: Flickable.StopAtBounds
@@ -77,15 +59,7 @@ ListView {
 	synchronousDrag: true
 	onContentHeightChanged: {
 		cacheBuffer= (view.contentHeight > 0 ? view.contentHeight : 0)
-		if(!hideScrollBars)
-			delayUpdateVPolicy.restart()
 	}
-	onHeightChanged: {
-		if(!hideScrollBars)
-			delayUpdateVPolicy.restart()
-	}
-	onContentWidthChanged: if(!hideScrollBars) delayUpdateHPolicy.restart()
-	onWidthChanged: if(!hideScrollBars) delayUpdateHPolicy.restart()
 	cacheBuffer: height > 0 ? height : 0
 	// ---------------------------------------------------------------------------
 	

@@ -526,11 +526,6 @@ Nesukonfigūruotas serverio url.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>icsconferenceAddressTitle</source>
-        <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation type="unfinished"></translation>
