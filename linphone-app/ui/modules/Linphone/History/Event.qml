@@ -127,6 +127,10 @@ Row {
 		height: parent.height
 		text: mainItem.translation ? qsTr(mainItem.translation) +' - ' : ' - '
 		verticalAlignment: Text.AlignVCenter
+		MouseArea{
+			anchors.fill:parent
+			onClicked: entryClicked($historyEntry)
+		}
 	}
 	Text {
 		color: HistoryStyle.entry.event.text.color
@@ -134,12 +138,16 @@ Row {
 			bold: true
 			pointSize: HistoryStyle.entry.event.text.pointSize
 		}
-		height: parent.height
-		text: _sipAddressObserver ? ( $historyEntry.sipAddress ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : _sipAddressObserver) : ''
+		height: parent.height		
+		text: $historyEntry.title 
+				? $historyEntry.title
+				: _sipAddressObserver 
+					? ( UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress || $historyEntry.sipAddress) || _sipAddressObserver)
+					: ''
 		verticalAlignment: Text.AlignVCenter
 		MouseArea{
 			anchors.fill:parent
-			onClicked:entryClicked($historyEntry)
+			onClicked: entryClicked($historyEntry)
 		}
 	}
 	ActionButton {

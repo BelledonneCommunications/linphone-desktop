@@ -7,6 +7,7 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 
 import 'History.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 

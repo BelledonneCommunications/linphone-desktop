@@ -395,7 +395,7 @@ ColumnLayout  {
 						//: 'Group information' : Item menu to get information about the chat room
 						text: qsTr('conversationMenuGroupInformations')
 						iconMenu: MenuItemStyle.info.icon
-						iconSizeMenu: 40
+						//iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						visible: conversationMenu.showGroupInfo
 						onTriggered: {

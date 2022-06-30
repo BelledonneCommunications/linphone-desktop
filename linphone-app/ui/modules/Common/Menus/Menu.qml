@@ -9,7 +9,7 @@ import Common.Styles 1.0
 Controls.Menu {
 	id: menu
 	property var menuStyle : MenuStyle.normal
-	
+	width: menuStyle.width ? menuStyle.width : parent.width
 	background: Rectangle {
 		implicitWidth: menu.width
 		color: menuStyle.color

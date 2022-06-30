@@ -35,6 +35,7 @@ QtObject {
 		property string icon : 'delete_custom'
 	}
 	property QtObject info: QtObject {
+		property int iconSize: 20
 		property string icon : 'menu_info_custom'
 	}
 	property QtObject devices: QtObject {

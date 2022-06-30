@@ -160,7 +160,7 @@ Item{
 						id: calendarGrid
 						property bool expanded : false					//anchors.fill: parent
 						cellWidth: width/2
-						cellHeight: expanded ? 450 : 100
+						cellHeight: expanded ? 460 : 90
 						model: $modelData
 						height: cellHeight * Math.floor( (count+1) / 2)
 						width: mainItem.width - 20

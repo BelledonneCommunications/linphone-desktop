@@ -85,7 +85,7 @@ QtObject {
 		property color foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_c', icon, 's_p_b_fg').color
 	}
 	property QtObject infoButton: QtObject{
-		property int iconSize: 35
+		property int iconSize: 30
 		property string name : 'info'
 		property string icon : 'menu_info_custom'
 		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 'me_n_b_bg').color
@@ -104,7 +104,7 @@ QtObject {
 		property int width: 220
 	}
 	property QtObject copyLinkButton: QtObject{
-		property int iconSize: 20
+		property int iconSize: 40
 		property string name : 'copy'
 		property string icon : 'menu_copy_text_custom'
 		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 's_n_b_bg').color

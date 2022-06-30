@@ -780,3 +780,11 @@ function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
     }
   })
 }
+
+function printObject(o) {
+  var out = '';
+  for (var p in o) {
+    out += p + ': ' + o[p] + '\n';
+  }
+  return out;
+}

@@ -72,6 +72,8 @@ public:
 	void removeAllEntries ();
 	
 	void resetMessageCount ();
+	
+	Q_INVOKABLE void reload();
 
 signals:
 	void allEntriesRemoved ();

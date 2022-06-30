@@ -53,10 +53,11 @@ static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linph
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = true;
-	if(callLog->wasConference()) {
+	if(callLog->getConferenceInfo())
 		dest["title"] = QString::fromStdString(callLog->getConferenceInfo()->getSubject());
-	}else
-		dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
+	dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
+	dest["callId"] = Utils::coreStringToAppString(callLog->getCallId());
+	dest["wasConference"] = callLog->wasConference();
 }
 
 static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
@@ -65,11 +66,11 @@ static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphon
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = false;
-	if(callLog->wasConference()) {
+	if(callLog->getConferenceInfo())
 		dest["title"] = QString::fromStdString(callLog->getConferenceInfo()->getSubject());
-	}else
-		dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
-	
+	dest["sipAddress"] = Utils::coreStringToAppString(callLog->getRemoteAddress()->asString());
+	dest["callId"] = Utils::coreStringToAppString(callLog->getCallId());
+	dest["wasConference"] = callLog->wasConference();
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +160,11 @@ void HistoryModel::setSipAddresses () {
 	qInfo() << QStringLiteral("HistoryModel loaded in %3 milliseconds.").arg(timer.elapsed());
 	
 }
-
+void HistoryModel::reload(){
+	beginResetModel();
+	setSipAddresses();
+	endResetModel();
+}
 // -----------------------------------------------------------------------------
 
 void HistoryModel::removeEntry (int id) {

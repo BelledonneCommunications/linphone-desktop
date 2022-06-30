@@ -45,6 +45,8 @@ public:
 	
 	Q_INVOKABLE void resetMessageCount();
 	
+	Q_INVOKABLE void reload();
+	
 signals:
 	
 	void moreEntriesLoaded (int n);
@@ -55,8 +57,6 @@ protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	
 private:
-	
-	void reload ();
 	
 	void handleIsActiveChanged (QWindow *window);
 

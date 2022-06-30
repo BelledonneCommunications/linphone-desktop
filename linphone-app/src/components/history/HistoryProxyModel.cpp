@@ -132,7 +132,9 @@ bool HistoryProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) co
 
 void HistoryProxyModel::reload () {
 	mMaxDisplayedEntries = EntriesChunkSize;
-	static_cast<HistoryModelFilter *>(sourceModel())->setSourceModel(CoreManager::getInstance()->getHistoryModel());
+	auto model = CoreManager::getInstance()->getHistoryModel();
+	//model->reload();
+	static_cast<HistoryModelFilter *>(sourceModel())->setSourceModel(model);
 }
 void HistoryProxyModel::resetMessageCount(){
 	auto model = CoreManager::getInstance()->getHistoryModel();
