@@ -181,6 +181,10 @@ TimeZoneModel* ConferenceInfoModel::getTimeZoneModel() const{
 	return model;
 }
 
+QString ConferenceInfoModel::getIcalendarString() const{
+	return Utils::coreStringToAppString(mConferenceInfo->getIcalendarString());
+}
+
 //------------------------------------------------------------------------------------------------
 // Convert into UTC with TimeZone and pass system timezone to conference info
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){

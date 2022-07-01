@@ -493,6 +493,10 @@ Server URL ist nicht konfiguriert.</translation>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
         <translation>Wählen Sie das Ziel der weiterzuleitenden Nachricht</translation>
     </message>
+    <message>
+        <source>conferencesCopiedICS</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatCalendarMessage</name>

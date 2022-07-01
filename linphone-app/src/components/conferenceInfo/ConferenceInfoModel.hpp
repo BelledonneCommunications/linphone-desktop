@@ -68,6 +68,7 @@ public:
 	Q_INVOKABLE QVariantList getParticipants() const;
 	Q_INVOKABLE int getParticipantCount()const;
 	Q_INVOKABLE TimeZoneModel* getTimeZoneModel() const;
+	Q_INVOKABLE QString getIcalendarString() const;
 	
 	void setDateTime(const QDateTime& dateTime);
 	void setDuration(const int& duration);

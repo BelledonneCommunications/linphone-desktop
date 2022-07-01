@@ -492,6 +492,10 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
         <translation>Üzenettovábbítás helye kijelölése</translation>
     </message>
+    <message>
+        <source>conferencesCopiedICS</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatCalendarMessage</name>

@@ -28,6 +28,7 @@ Column{
 	property alias textFont: message.font
 	
 	signal rightClicked()
+	signal conferenceIcsCopied()
 	
 	property int maxWidth
 	height: fitHeight
@@ -47,6 +48,7 @@ Column{
 		onExpandToggle: isExpanded=!isExpanded
 		height: fitHeight
 		z: 1
+		onConferenceIcsCopied:mainItem.conferenceIcsCopied()
 	}
 	ChatAudioMessage{
 		id: audioMessage

@@ -17,6 +17,7 @@ RowLayout {
 	signal replyClicked()
 	signal forwardClicked()
 	signal goToMessage(ChatMessageModel message)
+	signal conferenceIcsCopied()
   
 	implicitHeight: message.height
 	spacing: 0
@@ -68,6 +69,7 @@ RowLayout {
 		onReplyClicked: parent.replyClicked()
 		onForwardClicked: parent.forwardClicked()
 		onGoToMessage: parent.goToMessage(message)
+		onConferenceIcsCopied: parent.conferenceIcsCopied()
 		
 		Layout.fillWidth: true
 		

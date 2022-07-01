@@ -35,6 +35,7 @@ Item {
 	signal replyClicked()
 	signal forwardClicked()
 	signal goToMessage(ChatMessageModel message)
+	signal conferenceIcsCopied()
 	
 	// ---------------------------------------------------------------------------
 	property string lastTextSelected
@@ -113,6 +114,7 @@ Item {
 						}
 						onLastTextSelectedChanged: container.lastTextSelected= lastTextSelected
 						onRightClicked: chatMenu.open()
+						onConferenceIcsCopied: container.conferenceIcsCopied()
 						Rectangle{
 							anchors.left: parent.left
 							anchors.right: parent.right

@@ -20,6 +20,7 @@ Item {
   signal replyClicked()
   signal forwardClicked()
   signal goToMessage(ChatMessageModel message)
+  signal conferenceIcsCopied()
 
   Message {
     id: message
@@ -29,6 +30,7 @@ Item {
 	onReplyClicked: parent.replyClicked()
 	onForwardClicked: parent.forwardClicked()
 	onGoToMessage: parent.goToMessage(message)
+	onConferenceIcsCopied: parent.conferenceIcsCopied()
 	
     anchors {
       left: parent.left

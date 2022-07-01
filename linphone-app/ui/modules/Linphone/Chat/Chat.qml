@@ -311,6 +311,7 @@ Rectangle {
 								onGoToMessage:{
 									container.goToMessage(message)	// sometimes, there is no access to chat id (maybe because of cleaning component while loading new items). Use a global intermediate.
 								}
+								onConferenceIcsCopied: container.noticeBannerText = qsTr('conferencesCopiedICS')
 							}
 						}
 					}

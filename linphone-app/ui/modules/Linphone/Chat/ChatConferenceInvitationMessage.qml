@@ -33,7 +33,7 @@ Loader{
 	property bool isExpanded : false
 	
 	signal expandToggle()
-	signal conferenceUriCopied()
+	signal conferenceIcsCopied()
 	
 	width: parent.width
 	height: parent.height
@@ -252,8 +252,8 @@ Loader{
 					colorSet: ChatCalendarMessageStyle.shareButton
 					backgroundRadius: width/2
 					onClicked: {
-						Clipboard.text = mainItem.conferenceInfoModel.uri
-						mainItem.conferenceUriCopied()
+						Clipboard.text = mainItem.conferenceInfoModel.getIcalendarString()
+						mainItem.conferenceIcsCopied()
 					}
 				}
 				TextButtonC{
