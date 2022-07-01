@@ -367,13 +367,7 @@ ApplicationWindow {
 		target: UrlHandlers
 		
 		onSip: {
-		console.log("Change conversation from url handler")
-			 window.setView('Conversation', {
-								  peerAddress: sipAddress,
-								  localAddress: AccountSettingsModel.sipAddress,
-								  fullPeerAddress: sipAddress,
-								  fullLocalAddress: AccountSettingsModel.fullSipAddress
-							  })
-							 }
+			mainSearchBar.text = sipAddress
+		}
 	}
 }

@@ -28,6 +28,7 @@
 
 UrlHandlers::UrlHandlers (QObject *parent) : QObject(parent) {
   QDesktopServices::setUrlHandler("sip", this, "handleSip");
+  QDesktopServices::setUrlHandler("sips", this, "handleSip");
 }
 
 void UrlHandlers::handleSip (const QUrl &url) {
