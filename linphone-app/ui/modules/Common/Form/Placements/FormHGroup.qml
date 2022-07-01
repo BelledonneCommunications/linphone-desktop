@@ -8,9 +8,11 @@ import Common.Styles 1.0
 
 RowLayout {
   property alias label: label.text
+  property alias labelFont: label.font
 
   default property var _content: null
   property int maxWidth: FormHGroupStyle.content.maxWidth
+  property bool fitLabel : false
   // ---------------------------------------------------------------------------
 
   spacing: FormHGroupStyle.spacing
@@ -19,9 +21,9 @@ RowLayout {
 
   Text {
     id: label
-
+	computeFitWidth: parent.fitLabel
     Layout.preferredHeight: FormHGroupStyle.legend.height
-    Layout.preferredWidth: FormHGroupStyle.legend.width
+    Layout.preferredWidth: fitLabel ? Math.min(label.fitWidth, FormHGroupStyle.legend.width) : FormHGroupStyle.legend.width
 
     color: FormHGroupStyle.legend.color
     elide: Text.ElideRight

@@ -10,7 +10,7 @@ import UtilsCpp 1.0
 import Common.Styles 1.0
 import App.Styles 1.0
 
-
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 
 // =============================================================================
@@ -39,11 +39,18 @@ Rectangle {
 	
 	ColumnLayout {
 		anchors.fill: parent
-		RowLayout{
+		ColumnLayout{
 			Layout.preferredHeight: 60
 			Layout.alignment: Qt.AlignCenter
 			Layout.topMargin: 15
-			spacing: 20
+			spacing: 5
+			BusyIndicator {
+				Layout.alignment: Qt.AlignCenter
+				Layout.preferredHeight: WaitingRoomStyle.header.busyIndicator.height
+				Layout.preferredWidth: WaitingRoomStyle.header.busyIndicator.width
+				color: WaitingRoomStyle.header.busyIndicator.color
+				visible: mainItem.callModel && mainItem.callModel.isOutgoing
+			}
 			Text{
 				Layout.preferredHeight: 60
 				Layout.alignment: Qt.AlignCenter
@@ -53,13 +60,6 @@ Rectangle {
 				font.pointSize:  WaitingRoomStyle.title.pointSize
 				horizontalAlignment: Qt.AlignHCenter
 				verticalAlignment: Qt.AlignVCenter
-			}
-			BusyIndicator {
-				Layout.alignment: Qt.AlignCenter
-				Layout.preferredHeight: WaitingRoomStyle.header.busyIndicator.height
-				Layout.preferredWidth: WaitingRoomStyle.header.busyIndicator.width
-				color: WaitingRoomStyle.header.busyIndicator.color
-				visible: mainItem.callModel && mainItem.callModel.isOutgoing
 			}
 		}
 		Text {
@@ -77,7 +77,12 @@ Rectangle {
 			id: loader
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+			property var previewDefinition: SettingsModel.getCurrentPreviewVideoDefinition()
+			onPreviewDefinitionChanged: console.log(Utils.printObject(previewDefinition))
+			property real cameraRatio: previewDefinition.height > 0 ? previewDefinition.width/previewDefinition.height : 1.0
 			property int minSize: Math.min( loader.height, loader.width)
+			property int cameraHeight: Math.min(Math.min(cameraRatio * minSize, loader.width) / cameraRatio, minSize)
+			property int cameraWidth: cameraRatio * cameraHeight
 			Item{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
@@ -85,8 +90,8 @@ Rectangle {
 				Flipable{
 					id: contentsStack
 					anchors.centerIn: parent
-					height: loader.minSize
-					width : height
+					height: loader.cameraHeight
+					width : loader.cameraWidth
 					property bool flipped: false
 					
 					transform: Rotation {
@@ -111,8 +116,9 @@ Rectangle {
 						id: previewLoader
 						showCloseButton: false
 						enabled: mainItem.previewLoaderEnabled
-						height: loader.minSize
-						width : height
+						height: loader.cameraHeight
+						width : loader.cameraWidth
+						onVideoDefinitionChanged: loader.previewDefinition = SettingsModel.getCurrentPreviewVideoDefinition()
 						ActionButton{
 							anchors.top: parent.top
 							anchors.right: parent.right
@@ -125,12 +131,13 @@ Rectangle {
 							onClicked: mediaMenu.visible = !mediaMenu.visible
 						}
 					}
-					back: Avatar {
+					back: IncallAvatar {
 						id: avatar
-						height: Math.min( loader.height, loader.width)
-						width : height
+						anchors.centerIn: parent
+						height: Utils.computeAvatarSize(loader, CallStyle.container.avatar.maxSize)
+						width: height
 						backgroundColor: WaitingRoomStyle.avatar.backgroundColor
-						image: mainItem._sipAddressObserver && _sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
+						image: mainItem._sipAddressObserver && mainItem._sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
 						username: mainItem.conferenceInfoModel ? mainItem.conferenceInfoModel.subject 
 															   : (mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : '')
 					}
@@ -160,7 +167,6 @@ Rectangle {
 			Layout.bottomMargin: 25
 			Layout.leftMargin: 25
 			Layout.rightMargin: 25
-			enabled: !mainItem.callModel
 			// Action buttons
 			RowLayout{
 				anchors.centerIn: parent
@@ -169,6 +175,7 @@ Rectangle {
 					id: micro
 					visible: SettingsModel.muteMicrophoneEnabled
 					property bool microMuted: false
+					onMicroMutedChanged: if(mainItem.callModel) mainItem.callModel.microMuted = microMuted
 					isCustom: true
 					backgroundRadius: 90
 					colorSet: microMuted ? WaitingRoomStyle.buttons.microOff : WaitingRoomStyle.buttons.microOn
@@ -187,6 +194,7 @@ Rectangle {
 				ActionSwitch {
 					id: speaker
 					property bool speakerMuted: false
+					onSpeakerMutedChanged: if(mainItem.callModel) mainItem.callModel.speakerMuted = speakerMuted
 					isCustom: true
 					backgroundRadius: 90
 					colorSet: speakerMuted  ? WaitingRoomStyle.buttons.speakerOff : WaitingRoomStyle.buttons.speakerOn
@@ -195,6 +203,7 @@ Rectangle {
 				ActionSwitch {
 					id: camera
 					property bool cameraEnabled: true
+					visible: !mainItem.callModel
 					isCustom: true
 					backgroundRadius: 90
 					colorSet: cameraEnabled  ? WaitingRoomStyle.buttons.cameraOn : WaitingRoomStyle.buttons.cameraOff
@@ -204,8 +213,8 @@ Rectangle {
 			}
 			RowLayout{
 				anchors.centerIn: parent
-				anchors.horizontalCenterOffset: loader.minSize/2 - modeChoice.width/2
-				
+				anchors.horizontalCenterOffset: loader.cameraWidth/2 - modeChoice.width/2
+				visible: !mainItem.callModel
 				ActionButton{
 					id: modeChoice
 					property int selectedMode: SettingsModel.videoConferenceLayout
@@ -239,7 +248,7 @@ Rectangle {
 				//: 'Start' : Button label for starting the conference.
 				text: qsTr('startButton')
 				capitalization: Font.AllUppercase
-				enabled: !mainItem.callModel
+				visible: !mainItem.callModel
 				
 				onClicked: {CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
 														   {	video: modeChoice.selectedMode != 2

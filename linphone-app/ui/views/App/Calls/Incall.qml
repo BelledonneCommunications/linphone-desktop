@@ -396,8 +396,8 @@ Rectangle {
 				id: cameraPreviewLoader
 				
 				anchors.centerIn: parent
-				height: CallStyle.actionArea.userVideo.height
-				width: CallStyle.actionArea.userVideo.width
+				height: CallStyle.actionArea.height
+				width: 16*height/9
 				active: incall.width >= CallStyle.actionArea.lowWidth && incall.call.videoEnabled && !isFullScreen
 				sourceComponent: cameraPreview
 				Component {

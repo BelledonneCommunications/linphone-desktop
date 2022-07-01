@@ -744,8 +744,7 @@ function write (fileName, text) {
 
 function computeAvatarSize (container, maxSize) {
   var height = 2*container.height/3
-  var width = 2*container.width/3
-
+  var width = 2*container.width/3	
   var size = height < maxSize && height > 0 ? height : maxSize
   return size < width ? size : width
 }

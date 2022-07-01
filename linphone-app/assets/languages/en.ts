@@ -3059,11 +3059,6 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Video display</translation>
     </message>
     <message>
-        <source>videoModeLabel</source>
-        <extracomment>&apos;Camera mode&apos; : Label to choose a camera mode.</extracomment>
-        <translation>Camera mode</translation>
-    </message>
-    <message>
         <source>videoHybrid</source>
         <extracomment>&apos;Hybrid&apos; : Hybrid mode for camera.</extracomment>
         <translation>Hybrid</translation>
@@ -3092,6 +3087,26 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>videoMosaicLayout</source>
         <extracomment>&apos;Mosaic&apos; : Mosaic layout invideo conference.</extracomment>
         <translation>Mosaic</translation>
+    </message>
+    <message>
+        <source>videoGridModeLabel</source>
+        <extracomment>&apos;Mosaic&apos; : Label to choose a camera mode.</extracomment>
+        <translation>Mosaic</translation>
+    </message>
+    <message>
+        <source>videoActiveSpeakerModeLabel</source>
+        <extracomment>&apos;Active speaker&apos; : Label to choose a camera mode.</extracomment>
+        <translation>Active speaker</translation>
+    </message>
+    <message>
+        <source>videoCallsModeLabel</source>
+        <extracomment>&apos;Calls&apos; : Label to choose a camera mode.</extracomment>
+        <translation>Calls</translation>
+    </message>
+    <message>
+        <source>videoModeLabel</source>
+        <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
+        <translation>Camera modes</translation>
     </message>
 </context>
 <context>

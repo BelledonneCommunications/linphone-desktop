@@ -189,31 +189,90 @@ TabContainer {
 		// Diplay Video.
 		// -------------------------------------------------------------------------
 		
+		
 		Form {
+			id: videoDisplayForm
 			//: 'Video display' : Title for display parameters
 			title: qsTr('videoDisplayTitle')
 			width: parent.width
 			
-			FormLine {
-				FormGroup {
-					//: 'Camera mode' : Label to choose a camera mode.
-					label: qsTr('videoModeLabel')
+			property var cameraModel:
+			//: 'Hybrid' : Hybrid mode for camera.
+				[{displayText:qsTr('videoHybrid')}
+			//: 'Occupy all space' : Camera mode for a centered cropping view.
+				, {displayText:qsTr('videoOccupyAllSpace')}
+			//: 'Black bars' : Camera mode for a fit view with black bars to keep ratio.
+				, {displayText:qsTr('videoBlackBars')}
+			]
+			function getId(index){
+				if(index == 0 )
+					return SettingsModel.CameraMode_Hybrid
+				else if(index == 1)
+					return SettingsModel.CameraMode_OccupyAllSpace
+				else
+					return SettingsModel.CameraMode_BlackBars
+			}
+			Row{
+				property int orientation:  Qt.Horizontal
+				width: parent.width
+				Text{
+					id: videoModeLabel
+					height: parent.height
+					//: 'Camera modes' : Label to choose a camera modes.
+					text: qsTr('videoModeLabel')
+					font: videoGridMode.labelFont
+					horizontalAlignment: Text.AlignRight
+					verticalAlignment: Text.AlignVCenter
 					
-					ComboBox {
-					//: 'Hybrid' : Hybrid mode for camera.
-						model:[{text:qsTr('videoHybrid'), value: SettingsModel.CameraMode_Hybrid}
-						//: 'Occupy all space' : Camera mode for a centered cropping view.
-								, {text:qsTr('videoOccupyAllSpace'), value:SettingsModel.CameraMode_OccupyAllSpace}
-						//: 'Black bars' : Camera mode for a fit view with black bars to keep ratio.
-								,{text:qsTr('videoBlackBars'), value:SettingsModel.CameraMode_BlackBars}
-						]
-						textRole: 'text'
-						currentIndex: SettingsModel.cameraMode == SettingsModel.CameraMode_Hybrid 
-										? 0 
-										: SettingsModel.cameraMode == SettingsModel.CameraMode_OccupyAllSpace 
-											? 1
-											: 2
-						onActivated: SettingsModel.cameraMode = model[index].value
+				}
+				FormLine {
+					spacing: 5
+					width: parent.width-videoModeLabel.implicitWidth
+					FormGroup {
+						id: videoGridMode
+						//: 'Mosaic' : Label to choose a camera mode.
+						label: qsTr('videoGridModeLabel') + ':'
+						fitLabel: true
+						ComboBox {
+							model: videoDisplayForm.cameraModel
+							textRole: 'displayText'
+							currentIndex: SettingsModel.gridCameraMode == SettingsModel.CameraMode_Hybrid 
+									? 0 
+									: SettingsModel.gridCameraMode == SettingsModel.CameraMode_OccupyAllSpace 
+										? 1
+										: 2
+							onActivated: SettingsModel.gridCameraMode = videoDisplayForm.getId(index)
+						}
+					}
+					FormGroup {
+						//: 'Active speaker' : Label to choose a camera mode.
+						label: qsTr('videoActiveSpeakerModeLabel') + ':'
+						fitLabel: true
+						ComboBox {
+							model: videoDisplayForm.cameraModel
+							textRole: 'displayText'
+							currentIndex: SettingsModel.activeSpeakerCameraMode == SettingsModel.CameraMode_Hybrid 
+									? 0 
+									: SettingsModel.activeSpeakerCameraMode == SettingsModel.CameraMode_OccupyAllSpace 
+										? 1
+										: 2
+							onActivated: SettingsModel.activeSpeakerCameraMode = videoDisplayForm.getId(index)
+						}
+					}
+					FormGroup {
+						//: 'Calls' : Label to choose a camera mode.
+						label: qsTr('videoCallsModeLabel') + ':'
+						fitLabel: true
+						ComboBox {
+							model: videoDisplayForm.cameraModel
+							textRole: 'displayText'
+							currentIndex: SettingsModel.callCameraMode == SettingsModel.CameraMode_Hybrid 
+									? 0 
+									: SettingsModel.callCameraMode == SettingsModel.CameraMode_OccupyAllSpace 
+										? 1
+										: 2
+							onActivated: SettingsModel.callCameraMode = videoDisplayForm.getId(index)
+						}
 					}
 				}
 			}
@@ -221,7 +280,7 @@ TabContainer {
 				FormGroup {
 					//: 'Default video layout' : Label to choose the default layout in video conference.
 					label: qsTr('videoLayout')
-					
+					fitLabel: true
 					ComboBox {
 					//: 'Mosaic' : Mosaic layout invideo conference.
 						model:[{text:qsTr('videoMosaicLayout'), value:LinphoneEnums.ConferenceLayoutGrid}

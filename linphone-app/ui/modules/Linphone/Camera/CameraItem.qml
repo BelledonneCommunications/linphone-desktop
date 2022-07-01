@@ -33,6 +33,8 @@ Item {
 	property bool d : callModel && callModel.cameraEnabled
 	property bool isReady: cameraLoader.item && cameraLoader.item.isReady
 	
+	signal videoDefinitionChanged()
+	
 	onCurrentDeviceChanged: {if(container.isCameraFromDevice) resetActive()}
 	function resetActive(){
 		resetTimer.resetActive()
@@ -71,6 +73,7 @@ Item {
 				isPreview: container.isPreview
 				
 				onRequestNewRenderer: {resetTimer.resetActive()}
+				onVideoDefinitionChanged: container.videoDefinitionChanged()
 			}
 		}		
 	}

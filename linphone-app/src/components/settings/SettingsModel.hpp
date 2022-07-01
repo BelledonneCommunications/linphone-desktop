@@ -96,7 +96,9 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(bool showVideoCodecs READ getShowVideoCodecs WRITE setShowVideoCodecs NOTIFY showVideoCodecsChanged)
 	
-	Q_PROPERTY(CameraMode cameraMode READ getCameraMode WRITE setCameraMode NOTIFY cameraModeChanged)
+	Q_PROPERTY(CameraMode gridCameraMode READ getGridCameraMode WRITE setGridCameraMode NOTIFY gridCameraModeChanged)
+	Q_PROPERTY(CameraMode activeSpeakerCameraMode READ getActiveSpeakerCameraMode WRITE setActiveSpeakerCameraMode NOTIFY activeSpeakerCameraModeChanged)
+	Q_PROPERTY(CameraMode callCameraMode READ getCallCameraMode WRITE setCallCameraMode NOTIFY callCameraModeChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceLayout videoConferenceLayout READ getVideoConferenceLayout WRITE setVideoConferenceLayout NOTIFY videoConferenceLayoutChanged)
 	
 	
@@ -239,6 +241,8 @@ public:
 		CameraMode_BlackBars = 2
 	};
 	Q_ENUM(CameraMode);
+	static SettingsModel::CameraMode cameraModefromString(const std::string& mode);
+	static std::string toString(const CameraMode& mode);
 	
 	
 	SettingsModel (QObject *parent = Q_NULLPTR);
@@ -350,6 +354,7 @@ public:
 	QVariantList getSupportedVideoDefinitions () const;
 	
 	QVariantMap getVideoDefinition () const;
+	Q_INVOKABLE QVariantMap getCurrentPreviewVideoDefinition () const;
 	void setVideoDefinition (const QVariantMap &definition);
 	
 	bool getVideoSupported () const;
@@ -359,7 +364,14 @@ public:
 	
 	void updateCameraMode();
 	CameraMode getCameraMode() const;
-	void setCameraMode(CameraMode mode);
+	Q_INVOKABLE void setCameraMode(CameraMode mode);
+	// Custom modes to set default for setCameraMode
+	CameraMode getGridCameraMode() const;
+	void setGridCameraMode(CameraMode mode);
+	CameraMode getActiveSpeakerCameraMode() const;
+	void setActiveSpeakerCameraMode(CameraMode mode);
+	CameraMode getCallCameraMode() const;
+	void setCallCameraMode(CameraMode mode);
 	
 	LinphoneEnums::ConferenceLayout getVideoConferenceLayout() const;
 	void setVideoConferenceLayout(LinphoneEnums::ConferenceLayout layout);
@@ -658,6 +670,9 @@ signals:
 	void showVideoCodecsChanged (bool status);
 	
 	void cameraModeChanged();
+	void gridCameraModeChanged();
+	void activeSpeakerCameraModeChanged();
+	void callCameraModeChanged();
 	void videoConferenceLayoutChanged();
 	
 	// Chat & calls. -------------------------------------------------------------

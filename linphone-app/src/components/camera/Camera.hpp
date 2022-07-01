@@ -26,6 +26,7 @@
 #include <QQuickFramebufferObject>
 #include <mediastreamer2/msogl.h>
 #include <QMutex>
+#include <QTimer>
 
 // =============================================================================
 
@@ -60,6 +61,7 @@ public:
 	QQuickFramebufferObject::Renderer *createRenderer () const override;
 	
 	Q_INVOKABLE void resetWindowId() const;	// const to be used from createRenderer()
+	void checkVideoDefinition();
 	
 	static QMutex mPreviewCounterMutex;
 	static int mPreviewCounter;
@@ -73,6 +75,7 @@ signals:
 	void isReadyChanged();
 	void participantDeviceModelChanged(ParticipantDeviceModel *participantDeviceModel);
 	void requestNewRenderer();
+	void videoDefinitionChanged();
 	
 private:
 	CallModel *getCallModel () const;
@@ -90,6 +93,9 @@ private:
 	void deactivatePreview();
 	void updateWindowIdLocation();
 	void removeParticipantDeviceModel();
+	
+	QVariantMap mLastVideoDefinition;
+	QTimer mLastVideoDefinitionChecker;
 	
 	bool mIsPreview = false;
 	bool mIsReady = false;

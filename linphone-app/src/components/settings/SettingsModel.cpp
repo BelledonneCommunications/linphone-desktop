@@ -560,6 +560,18 @@ QVariantMap SettingsModel::getVideoDefinition () const {
 	return createMapFromVideoDefinition(CoreManager::getInstance()->getCore()->getPreferredVideoDefinition());
 }
 
+QVariantMap SettingsModel::getCurrentPreviewVideoDefinition () const {
+	auto definition = CoreManager::getInstance()->getCore()->getCurrentPreviewVideoDefinition();
+	if(definition)
+		return createMapFromVideoDefinition(definition);
+	else {
+		QVariantMap map;
+		map["width"] = 0;
+		map["height"] = 0;
+		return map;
+	}
+}
+
 void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
 	CoreManager::getInstance()->getCore()->setPreferredVideoDefinition(
 									   definition.value("__definition").value<shared_ptr<const linphone::VideoDefinition>>()->clone()
@@ -590,14 +602,25 @@ void SettingsModel::updateCameraMode(){
 	mConfig->setString("video", "other_display_mode", mode);
 }
 
-SettingsModel::CameraMode SettingsModel::getCameraMode() const{
-	auto mode = mConfig->getString("video", "main_display_mode", "OccupyAllSpace");	
+SettingsModel::CameraMode SettingsModel::cameraModefromString(const std::string& mode){
 	if( mode == "Hybrid")
 		return CameraMode::CameraMode_Hybrid;
 	else if( mode == "BlackBars")
 		return CameraMode::CameraMode_BlackBars;
 	else
 		return CameraMode::CameraMode_OccupyAllSpace;
+}
+std::string SettingsModel::toString(const CameraMode& mode){
+	std::string modeStr;
+	switch(mode){
+		case CameraMode::CameraMode_Hybrid : modeStr = "Hybrid";break;
+		case CameraMode::CameraMode_BlackBars: modeStr = "BlackBars";break;
+		default: modeStr = "OccupyAllSpace";
+	}
+	return modeStr;
+}
+SettingsModel::CameraMode SettingsModel::getCameraMode() const{
+	return cameraModefromString(mConfig->getString("video", "main_display_mode", "OccupyAllSpace"));
 }
 
 void SettingsModel::setCameraMode(CameraMode mode){
@@ -610,6 +633,31 @@ void SettingsModel::setCameraMode(CameraMode mode){
 	mConfig->setString("video", "main_display_mode", modeToSet);
 	mConfig->setString("video", "other_display_mode", modeToSet);
 	emit cameraModeChanged();
+}
+
+SettingsModel::CameraMode SettingsModel::getGridCameraMode() const{
+	return cameraModefromString(mConfig->getString(UiSection, "main_grid_display_mode", "OccupyAllSpace"));
+}
+void SettingsModel::setGridCameraMode(CameraMode mode){
+	auto modeStd = toString(mode);
+	mConfig->setString(UiSection, "main_grid_display_mode", modeStd);
+	emit gridCameraModeChanged();
+}
+SettingsModel::CameraMode SettingsModel::getActiveSpeakerCameraMode() const{
+	return cameraModefromString(mConfig->getString(UiSection, "main_active_speaker_display_mode", "Hybrid"));
+}
+void SettingsModel::setActiveSpeakerCameraMode(CameraMode mode){
+	auto modeStd = toString(mode);
+	mConfig->setString(UiSection, "main_active_speaker_display_mode", modeStd);
+	emit activeSpeakerCameraModeChanged();
+}
+SettingsModel::CameraMode SettingsModel::getCallCameraMode() const{
+	return cameraModefromString(mConfig->getString(UiSection, "main_call_display_mode", "Hybrid"));
+}
+void SettingsModel::setCallCameraMode(CameraMode mode){
+	auto modeStd = toString(mode);
+	mConfig->setString(UiSection, "main_call_display_mode", modeStd);
+	emit callCameraModeChanged();
 }
 
 LinphoneEnums::ConferenceLayout SettingsModel::getVideoConferenceLayout() const{

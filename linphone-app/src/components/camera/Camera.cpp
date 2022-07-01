@@ -26,6 +26,7 @@
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/participant/ParticipantDeviceModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 
 #include "Camera.hpp"
 #include "CameraDummy.hpp"
@@ -58,6 +59,9 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 				);
 	
 	mRefreshTimer->start();
+	
+	mLastVideoDefinitionChecker.setInterval(500);
+	QObject::connect(&mLastVideoDefinitionChecker, &QTimer::timeout, this, &Camera::checkVideoDefinition, Qt::QueuedConnection);
 }
 
 Camera::~Camera(){
@@ -102,11 +106,26 @@ void Camera::resetWindowId() const{
 		mIsWindowIdSet = false;
 	}
 }
+void Camera::checkVideoDefinition(){
+	if( mWindowIdLocation == WindowIdLocation::CorePreview){
+		auto videoDefinition = CoreManager::getInstance()->getSettingsModel()->getCurrentPreviewVideoDefinition();
+		if(videoDefinition["width"] != mLastVideoDefinition["width"] || videoDefinition["height"] != mLastVideoDefinition["height"]){
+			mLastVideoDefinition = videoDefinition;
+			emit videoDefinitionChanged();
+		}
+	}
+}
 
 void Camera::setWindowIdLocation(const WindowIdLocation& location){
 	if( mWindowIdLocation != location){
 		resetWindowId();// Location change: Reset old window ID.
 		mWindowIdLocation = location;
+		if( mWindowIdLocation == WindowIdLocation::CorePreview){
+			mLastVideoDefinition = CoreManager::getInstance()->getSettingsModel()->getCurrentPreviewVideoDefinition();
+			emit videoDefinitionChanged();
+			mLastVideoDefinitionChecker.start();
+		}else
+			mLastVideoDefinitionChecker.stop();
 	}
 }
 void Camera::updateWindowIdLocation(){

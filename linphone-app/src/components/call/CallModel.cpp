@@ -51,18 +51,28 @@ constexpr char AutoAnswerObjectName[] = "auto-answer-timer";
 }
 
 CallModel::CallModel (shared_ptr<linphone::Call> call){
+	CoreManager *coreManager = CoreManager::getInstance();
+	SettingsModel *settings = coreManager->getSettingsModel();
+	
 	connect(this, &CallModel::callIdChanged, this, &CallModel::chatRoomModelChanged);// When the call Id change, the chat room change.
 	mCall = call;
 	if(mCall)
 		mCall->setData("call-model", *this);
 	updateIsInConference();
-	mConferenceVideoLayout = LinphoneEnums::fromLinphone(call->getParams()->getConferenceVideoLayout());
-	
-	CoreManager *coreManager = CoreManager::getInstance();
+	if(mCall) {
+		mConferenceVideoLayout = LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout());
+		if(mCall->getConference()){
+			if( mConferenceVideoLayout == LinphoneEnums::ConferenceLayoutGrid)
+				settings->setCameraMode(settings->getGridCameraMode());
+			else
+				settings->setCameraMode(settings->getActiveSpeakerCameraMode());
+		}else
+			settings->setCameraMode(settings->getCallCameraMode());
+	}
 	
 	// Deal with auto-answer.
 	if (!isOutgoing()) {
-		SettingsModel *settings = coreManager->getSettingsModel();
+		
 		
 		if (settings->getAutoAnswerStatus()) {
 			QTimer *timer = new QTimer(this);
@@ -922,13 +932,26 @@ LinphoneEnums::ConferenceLayout CallModel::getConferenceVideoLayout() const{
 }
 
 void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){
-	shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(mCall);
+	auto coreManager = CoreManager::getInstance();
+	if( layout == LinphoneEnums::ConferenceLayoutGrid)
+		coreManager->getSettingsModel()->setCameraMode(coreManager->getSettingsModel()->getGridCameraMode());
+	else
+		coreManager->getSettingsModel()->setCameraMode(coreManager->getSettingsModel()->getActiveSpeakerCameraMode());
+	shared_ptr<linphone::CallParams> params = coreManager->getCore()->createCallParams(mCall);
 	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
 	params->enableVideo(true);
 	mCall->update(params);
 }
 
 void CallModel::setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){
+	auto settings = CoreManager::getInstance()->getSettingsModel();
+	if(mCall->getConference()){
+			if( layout == LinphoneEnums::ConferenceLayoutGrid)
+				settings->setCameraMode(settings->getGridCameraMode());
+			else
+				settings->setCameraMode(settings->getActiveSpeakerCameraMode());
+		}else
+			settings->setCameraMode(settings->getCallCameraMode());
 	if( mConferenceVideoLayout != layout){
 		mConferenceVideoLayout = layout;
 		emit conferenceVideoLayoutChanged();

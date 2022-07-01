@@ -5,8 +5,9 @@ import Common.Styles 1.0
 // =============================================================================
 
 Row {
+	property int childrenCount: children.length
   property double maxItemWidth: {
-    var n = children.length
+    var n = childrenCount
     var curWidth = width / n - (n - 1) * spacing
     var maxWidth = orientation === Qt.Horizontal
       ? FormHGroupStyle.legend.width + FormHGroupStyle.content.maxWidth + FormHGroupStyle.spacing

@@ -24,6 +24,7 @@ Item{
 	property bool showActiveSpeakerOverlay: true
 	property color color : camera.isReady ?  CameraViewStyle.cameraBackgroundColor : CameraViewStyle.outBackgroundColor
 	signal closeRequested()
+	signal videoDefinitionChanged()
 	
 	MouseArea{
 		anchors.fill: parent
@@ -74,6 +75,7 @@ Item{
 		anchors.centerIn: parent
 		anchors.fill: parent
 		visible: false
+		onVideoDefinitionChanged: mainItem.videoDefinitionChanged()
 	}
 	OpacityMask{
 		id: renderedCamera

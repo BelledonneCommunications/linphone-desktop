@@ -9,6 +9,8 @@ Loader {
   // ---------------------------------------------------------------------------
 
   property string label
+  property var labelFont: item ? item.labelFont : Application.font
+  property bool fitLabel: false
   readonly property int orientation: parent.orientation
 
   default property var _content: null
@@ -27,6 +29,7 @@ Loader {
       _content: loader._content
       label: loader.label
       maxWidth: loader.maxWidth
+      fitLabel: loader.fitLabel
     }
   }
 

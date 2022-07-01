@@ -8,6 +8,7 @@ import Common.Styles 1.0
 
 ColumnLayout {
 	property alias label: label.text
+	property alias labelFont: label.font
 	
 	default property var _content: null
 	property int maxWidth: FormVGroupStyle.content.maxWidth
