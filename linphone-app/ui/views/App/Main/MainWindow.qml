@@ -400,12 +400,7 @@ ApplicationWindow {
 		target: UrlHandlers
 		
 		onSip: {
-			 window.setView('Conversation', {
-								  peerAddress: sipAddress,
-								  localAddress: AccountSettingsModel.sipAddress,
-								  fullPeerAddress: sipAddress,
-								  fullLocalAddress: AccountSettingsModel.fullSipAddress
-							  })
-							 }
+			mainSearchBar.text = sipAddress
+		}
 	}
 }

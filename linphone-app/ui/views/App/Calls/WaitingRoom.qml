@@ -78,7 +78,6 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			property var previewDefinition: SettingsModel.getCurrentPreviewVideoDefinition()
-			onPreviewDefinitionChanged: console.log(Utils.printObject(previewDefinition))
 			property real cameraRatio: previewDefinition.height > 0 ? previewDefinition.width/previewDefinition.height : 1.0
 			property int minSize: Math.min( loader.height, loader.width)
 			property int cameraHeight: Math.min(Math.min(cameraRatio * minSize, loader.width) / cameraRatio, minSize)
