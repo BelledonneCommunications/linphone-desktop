@@ -10,7 +10,7 @@ import 'TelKeypad.js' as Logic
 
 Rectangle {
 	id: telKeypad
-	
+	property bool showHistory: false
 	property var container: parent
 	property var call
 	signal sendDtmf(var dtmf)
@@ -24,7 +24,7 @@ Rectangle {
 		enabled: true
 	}
 	
-	height: TelKeypadStyle.height
+	height: TelKeypadStyle.height + (showHistory ? history.contentHeight : 0)
 	width: TelKeypadStyle.width
 	radius:TelKeypadStyle.radius+1.0 // +1 for avoid mixing color with border slection (some pixels can be print after the line)
 	onVisibleChanged: if(visible) telKeypad.forceActiveFocus()
@@ -33,48 +33,66 @@ Rectangle {
 	MouseArea{
 			anchors.fill:parent
 			onClicked: telKeypad.forceActiveFocus()
-		}
-	GridLayout {
-		id: grid
-		
+	}
+	ColumnLayout {
 		anchors.fill: parent
 		anchors.topMargin: TelKeypadStyle.rowSpacing+5
 		anchors.bottomMargin: TelKeypadStyle.rowSpacing+5
 		anchors.leftMargin: TelKeypadStyle.columnSpacing+5
 		anchors.rightMargin: TelKeypadStyle.columnSpacing+5
 		
-		columns: 4 // Not a style.
-		rows: 4 // Same idea.
+		Text{
+			id: history
+			Layout.preferredWidth: parent.width
+			Layout.preferredHeight: implicitHeight
+			color: 'white'
+			wrapMode: Text.WrapAnywhere
+			horizontalAlignment: Qt.AlignCenter
+			visible: showHistory
+			MouseArea{
+				anchors.fill: parent
+				onClicked: parent.text = ''
+			}
+		}
 		
-		columnSpacing: TelKeypadStyle.columnSpacing
-		rowSpacing: TelKeypadStyle.rowSpacing
-		
-		Repeater {
-			model: [
-				'1', '2', '3', 'A',
-				'4', '5', '6', 'B',
-				'7', '8', '9', 'C',
-				'*', '0', '#', 'D',
-			]
+		GridLayout {
+			id: grid
 			
-			TelKeypadButton {
-				id: telKeypadButton
-				property var _timeout
-				showVoicemail: index === 0
-				auxSymbol: index === 13 ? '+' : ''
+			columns: 4 // Not a style.
+			rows: 4 // Same idea.
+			
+			columnSpacing: TelKeypadStyle.columnSpacing
+			rowSpacing: TelKeypadStyle.rowSpacing
+			
+			Repeater {
+				model: [
+					'1', '2', '3', 'A',
+					'4', '5', '6', 'B',
+					'7', '8', '9', 'C',
+					'*', '0', '#', 'D',
+				]
 				
-				Layout.fillHeight: true
-				Layout.fillWidth: true
-				
-				text: modelData
-				onSendDtmf: {
-					telKeypad.forceActiveFocus()
-					if(telKeypad.call) telKeypad.call.sendDtmf(dtmf) 
-					telKeypad.sendDtmf(dtmf)
-				}
-				Connections{
-					target: telKeypad
-					onKeyPressed: telKeypadButton.activateEvent(event.key)
+				TelKeypadButton {
+					id: telKeypadButton
+					property var _timeout
+					showVoicemail: index === 0
+					auxSymbol: index === 13 ? '+' : ''
+					
+					Layout.fillHeight: true
+					Layout.fillWidth: true
+					
+					text: modelData
+					onSendDtmf: {
+						telKeypad.forceActiveFocus()
+						if(telKeypad.call) telKeypad.call.sendDtmf(dtmf) 
+						telKeypad.sendDtmf(dtmf)
+						if(showHistory)
+							history.text += dtmf
+					}
+					Connections{
+						target: telKeypad
+						onKeyPressed: telKeypadButton.activateEvent(event.key)
+					}
 				}
 			}
 		}

@@ -470,7 +470,7 @@ Rectangle {
 	
 	TelKeypad {
 		id: telKeypad
-		
+		showHistory: true
 		call: incall.call
 		visible: SettingsModel.showTelKeypadAutomatically
 		y: 50

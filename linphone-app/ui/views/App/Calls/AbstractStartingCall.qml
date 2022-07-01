@@ -124,7 +124,7 @@ Rectangle {
 	
 	TelKeypad {
 		id: telKeypad
-		
+		showHistory:true
 		call: parent.call
 		visible: SettingsModel.showTelKeypadAutomatically
 		y: 50

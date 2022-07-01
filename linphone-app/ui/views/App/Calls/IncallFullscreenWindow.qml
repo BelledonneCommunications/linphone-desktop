@@ -525,7 +525,7 @@ Window {
 	
 	TelKeypad {
 		id: telKeypad
-		
+		showHistory:true
 		call: window.call
 		visible: false
 		y: 50
