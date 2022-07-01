@@ -63,3 +63,8 @@ bool ConferenceInfoProxyListModel::lessThan (const QModelIndex &left, const QMod
 	const ConferenceInfoModel* b = sourceModel()->data(right).value<ConferenceInfoModel*>();
 	return a->getDateTimeUtc() < b->getDateTimeUtc();
 }
+
+void ConferenceInfoProxyListModel::onRemoved(){
+	auto model = qobject_cast<ConferenceInfoModel*>(sender());
+	remove<ConferenceInfoModel*>(model);
+}

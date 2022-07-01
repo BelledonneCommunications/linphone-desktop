@@ -58,6 +58,7 @@ signals:
 	void registrationStateChanged (const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state);
 	void ecCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
 	void setLastRemoteProvisioningState(const linphone::ConfiguringState &state);
+	void conferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	
 private:
 	// ---------------------------------------------------------------------------

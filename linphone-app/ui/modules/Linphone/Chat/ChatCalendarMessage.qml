@@ -326,6 +326,9 @@ Loader{
 						isCustom: true
 						colorSet: ChatCalendarMessageStyle.deleteButton
 						backgroundRadius: width/2
+						onClicked: {
+							mainItem.conferenceInfoModel.deleteConferenceInfo()
+						}
 					}
 				}
 			}

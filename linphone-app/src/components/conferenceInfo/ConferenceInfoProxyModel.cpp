@@ -22,6 +22,7 @@
 
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/core/CoreHandlers.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 
 #include "ConferenceInfoMapModel.hpp"
@@ -36,6 +37,7 @@ using namespace std;
 ConferenceInfoProxyModel::ConferenceInfoProxyModel (QObject *parent) : SortFilterAbstractProxyModel<ConferenceInfoMapModel>(new ConferenceInfoMapModel(parent), parent) {
 	connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::primarySipAddressChanged, this, &ConferenceInfoProxyModel::update);
 	connect(this, &ConferenceInfoProxyModel::filterTypeChanged, qobject_cast<ConferenceInfoMapModel*>(sourceModel()), &ConferenceInfoMapModel::filterTypeChanged);
+	connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::conferenceInfoReceived, this, &ConferenceInfoProxyModel::onConferenceInfoReceived);
 	setFilterType((int)Scheduled);
 }
 
@@ -60,4 +62,12 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 		return r > 0;
 	}
 	return false;
+}
+
+void ConferenceInfoProxyModel::onConferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
+	auto realConferenceInfo = ConferenceInfoModel::findConferenceInfo(conferenceInfo);
+	if( realConferenceInfo ){
+		auto model =  qobject_cast<ConferenceInfoMapModel*>(sourceModel());
+		model->add(realConferenceInfo);
+	}
 }

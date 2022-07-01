@@ -52,6 +52,7 @@ public:
 	ConferenceInfoModel (std::shared_ptr<linphone::ConferenceInfo> conferenceInfo, QObject * parent = nullptr);
 	~ConferenceInfoModel ();
 	std::shared_ptr<linphone::ConferenceInfo> getConferenceInfo();
+	static std::shared_ptr<linphone::ConferenceInfo> findConferenceInfo(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	
 //-------------------------------
 
@@ -82,6 +83,7 @@ public:
 	
 // Tools
 	Q_INVOKABLE void createConference(const int& securityLevel, const int& inviteMode);
+	Q_INVOKABLE void deleteConferenceInfo();// Remove completly this conference info from DB
 
 // SCHEDULER
 	
@@ -103,6 +105,7 @@ signals:
 	void conferenceCreated();
 	void conferenceCreationFailed();
 	void invitationsSent();
+	void removed();
 	
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;

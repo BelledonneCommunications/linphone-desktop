@@ -35,6 +35,7 @@ class ConferenceInfoMapModel : public ProxyAbstractMapModel<QDate,SortFilterAbst
 	
 public:
 	ConferenceInfoMapModel (QObject *parent = Q_NULLPTR);
+	void add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents = true);
 signals:
 	void filterTypeChanged(int filterType);
 	

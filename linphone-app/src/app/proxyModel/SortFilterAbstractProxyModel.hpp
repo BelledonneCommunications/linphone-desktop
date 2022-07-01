@@ -39,6 +39,14 @@ public:
 	void add(QSharedPointer<X> x){
 		qobject_cast<T*>(sourceModel())->add(x);
 	}
+	template <class X>
+	void removeShared(QSharedPointer<X> x){
+		qobject_cast<T*>(sourceModel())->remove(x);
+	}
+	template <class X>
+	void remove(X x){
+		qobject_cast<T*>(sourceModel())->remove(x);
+	}
 };
 
 

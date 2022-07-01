@@ -49,6 +49,8 @@ public:
 	ConferenceInfoProxyModel (QObject *parent = Q_NULLPTR);
 	
 	Q_INVOKABLE void update();
+	
+	void onConferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 			
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;

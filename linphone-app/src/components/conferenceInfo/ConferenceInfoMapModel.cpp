@@ -40,9 +40,16 @@
 
 ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ProxyListModel>*>(parent) {
 	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
-	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	for(auto conferenceInfo : conferenceInfos){
-		std::list<std::shared_ptr<linphone::Address>> participants = conferenceInfo->getParticipants();
+		add(conferenceInfo, false);
+	}
+}
+
+// -----------------------------------------------------------------------------
+
+void ConferenceInfoMapModel::add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents){
+	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
+	std::list<std::shared_ptr<linphone::Address>> participants = conferenceInfo->getParticipants();
 		bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
 		if(!haveMe)
 			haveMe = (std::find_if(participants.begin(), participants.end(), [me](const std::shared_ptr<linphone::Address>& address){
@@ -54,11 +61,19 @@ ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstract
 			if( !mMappedList.contains(conferenceDateTimeSystem)){
 				auto proxy = new ConferenceInfoProxyListModel(this);
 				connect(this, &ConferenceInfoMapModel::filterTypeChanged, proxy, &ConferenceInfoProxyListModel::setFilterType);
+				if(sendEvents){
+					int row = 0;
+					auto it = mMappedList.begin();
+					while(it != mMappedList.end() && it.key() < conferenceDateTimeSystem)
+						++it;
+					row = std::distance(it,mMappedList.begin());
+					beginInsertColumns(QModelIndex(), row, row);	
+				}
 				mMappedList[conferenceDateTimeSystem] = proxy;
+				if(sendEvents)
+					endInsertColumns();
 			}
 			mMappedList[conferenceDateTimeSystem]->add(conferenceInfoModel);
+			connect(conferenceInfoModel.get(), &ConferenceInfoModel::removed, qobject_cast<ConferenceInfoProxyListModel*>(mMappedList[conferenceDateTimeSystem]), &ConferenceInfoProxyListModel::onRemoved);
 		}
-	}
 }
-
-// -----------------------------------------------------------------------------

@@ -39,6 +39,8 @@ class ConferenceInfoProxyListModel : public SortFilterAbstractProxyModel<ProxyLi
 	
 public:
 	ConferenceInfoProxyListModel (QObject *parent = Q_NULLPTR);
+	
+	void onRemoved();
 			
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;

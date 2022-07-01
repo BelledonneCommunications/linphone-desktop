@@ -326,5 +326,5 @@ void CoreHandlers::onEcCalibrationResult(
 
 //------------------------------				 CONFERENCE INFO
 void CoreHandlers::onConferenceInfoReceived(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo) {
-	qDebug() << "onConferenceInfoReceived (not implemented)";
+	emit conferenceInfoReceived(conferenceInfo);
 }
