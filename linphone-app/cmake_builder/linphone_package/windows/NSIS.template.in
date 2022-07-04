@@ -906,10 +906,9 @@ SectionEnd
 ; "Program Files" for AllUsers, "My Documents" for JustMe...
 
 Function .onInit
-  FindWindow $0 "gdkWindowToplevel" "@CPACK_PACKAGE_NAME@"
-  FindWindow $1 "Qt5QWindowOwnDCIcon" "@CPACK_PACKAGE_NAME@"
-  StrCmp "$0$1" "00" notRunning
-  MessageBox MB_OK|MB_ICONEXCLAMATION "@CPACK_PACKAGE_NAME@ is running. Please close it first and restart the installation." /SD IDOK
+  FindWindow $0 "" "@CPACK_PACKAGE_NAME@"
+  StrCmp "$0" "0" notRunning
+  MessageBox MB_OK|MB_ICONEXCLAMATION "@CPACK_PACKAGE_NAME@ is running. Please close it first from the application menu and restart the installation." /SD IDOK
   Abort
 
 notRunning:
