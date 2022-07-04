@@ -334,6 +334,15 @@ void ChatMessageModel::onFileTransferProgressIndication (const std::shared_ptr<l
 
 void ChatMessageModel::onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) {
 	updateFileTransferInformation();// On message state, file transfert information Content can be changed
+	if( state == linphone::ChatMessage::State::FileTransferDone) {
+		mContentListModel->updateContents(this);// Avoid having leak contents
+		if( !mWasDownloaded){// Update states
+			bool allAreDownloaded = true;
+			for(auto content : mContentListModel->getContents())
+				allAreDownloaded &= content->mWasDownloaded;
+			setWasDownloaded(allAreDownloaded);
+		}
+	}
 	emit stateChanged();
 }
 void ChatMessageModel::onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
