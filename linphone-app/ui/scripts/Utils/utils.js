@@ -693,3 +693,12 @@ function write (fileName, text) {
   request.open('PUT', getUriFromSystemPath(fileName), false)
   request.send(text)
 }
+
+function printObject(o) {
+  var out = '';
+  for (var p in o) {
+    out += p + ': ' + o[p] + '\n';
+  }
+  return out;
+}
+
