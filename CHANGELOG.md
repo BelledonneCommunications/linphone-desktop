@@ -20,6 +20,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on exit.
 - Crash when using no account.
 - Memory stability.
+
+## 4.4.8 - 2022-07-04
+
+### Fixes
+- Display name are based on friends (coming from local or LDAP server) and caller address only.
+
+## 4.4.7 - 2022-07-01
+
+### Fixes
+- When receiving a SIP URL, copy it in Smart search bar instead of openning conversation.
+- Update SDK to prepare video conference and improve DTLS handshakes.
+
+## 4.4.6 - 2022-06-14
+
+### Fixed
+- Url version check and selection synchronisation.
 - Show display name of the caller if it exists instead of call logs.
 
 ## 4.4.4 - 2022-06-01

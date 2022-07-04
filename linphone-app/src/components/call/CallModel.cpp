@@ -94,7 +94,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	mSearch = std::make_shared<SearchListener>(this);
 	QObject::connect(mSearch.get(), SIGNAL(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> )), this, SLOT(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>>)));
 	mMagicSearch->addListener(mSearch);
-	
+
 	if(mCall) {
 		mRemoteAddress = mCall->getRemoteAddress()->clone();
 		if(mCall->getConference())
@@ -103,8 +103,8 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 		if(	conferenceInfo ){
 			mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
 		}
+		mMagicSearch->getContactsListAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain(), (int)linphone::MagicSearchSource::LdapServers | (int)linphone::MagicSearchSource::Friends, linphone::MagicSearchAggregation::Friend);
 	}
-	mMagicSearch->getContactListFromFilterAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain());
 }
 
 CallModel::~CallModel () {
@@ -851,10 +851,11 @@ void CallModel::toggleSpeakerMute(){
 // -----------------------------------------------------------------------------
 
 // Set remote display name when a search has been done
+// Local Friend > LDAP friend > Address > others
 void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results){
 	bool found = false;
 	for(auto it = results.begin() ; it != results.end() && !found ; ++it){
-		if((*it)->getFriend()){
+		if((*it)->getFriend()){// Local Friend
 			if((*it)->getFriend()->getAddress()->weakEqual(mRemoteAddress)){
 				setRemoteDisplayName((*it)->getFriend()->getName());
 				found = true;
@@ -862,9 +863,16 @@ void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>
 		}else{
 			if((*it)->getAddress()->weakEqual(mRemoteAddress)){
 				std::string newDisplayName = (*it)->getAddress()->getDisplayName();
-				if( ((*it)->getSourceFlags() & (int) linphone::MagicSearchSource::CallLogs) == 0 || newDisplayName.empty())
-					setRemoteDisplayName(newDisplayName);
-				found = true;
+				if(!newDisplayName.empty()){
+				// LDAP friend
+					if( ((*it)->getSourceFlags() & (int) linphone::MagicSearchSource::LdapServers) == (int) linphone::MagicSearchSource::LdapServers){
+						setRemoteDisplayName(newDisplayName);
+						found = true;
+					}else if( Utils::coreStringToAppString(mRemoteAddress->getDisplayName()).isEmpty()){
+						setRemoteDisplayName(newDisplayName);	
+						found = true;
+					}
+				}
 			}
 		}
 	}
