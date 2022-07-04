@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixes
 - Display name are based on friends (coming from local or LDAP server) and caller address only.
+- Running application detection for uninstalling.
 
 ## 4.4.7 - 2022-07-01
 
