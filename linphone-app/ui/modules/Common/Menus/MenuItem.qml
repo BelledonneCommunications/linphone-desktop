@@ -50,7 +50,7 @@ Controls.MenuItem {
 				id: iconArea
 				visible: icon
 				anchors.centerIn: parent
-				iconSize: rowText.contentHeight/rowText.lineCount + 2
+				iconSize: rowText.lineCount > 0 ? rowText.contentHeight/rowText.lineCount + 2 : 0
 				overwriteColor: button.enabled
 								? (button.down
 								   ? menuItemStyle.text.color.pressed
