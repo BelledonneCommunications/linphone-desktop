@@ -17,11 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on exit.
 - Memory stability.
 
-## 4.4.8 - 2022-07-04
+## 4.4.8 - 2022-07-05
 
 ### Fixes
 - Display name are based on friends (coming from local or LDAP server) and caller address only.
 - Running application detection for uninstalling.
+- Premission denied when downloading file in secure chat room (SDK fix).
 
 ## 4.4.7 - 2022-07-01
 
