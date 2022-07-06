@@ -742,9 +742,9 @@ function write (fileName, text) {
   request.send(text)
 }
 
-function computeAvatarSize (container, maxSize) {
-  var height = 2*container.height/3
-  var width = 2*container.width/3	
+function computeAvatarSize (container, maxSize, ratio) {
+  var height = container.height * ratio
+  var width = container.width * ratio
   var size = height < maxSize && height > 0 ? height : maxSize
   return size < width ? size : width
 }

@@ -184,8 +184,7 @@ Window {
 			minimumRightLimit: CallsWindowStyle.chat.minimumWidth
 			resizeAInPriority: true
 			
-			hideSplitter: !middlePane.sourceComponent || middlePane.sourceComponent == videoConference || !rightPane.sourceComponent
-			
+			hideSplitter: !window.chatIsOpened && (!middlePane.sourceComponent || middlePane.sourceComponent == videoConference || !rightPane.sourceComponent)
 			// -----------------------------------------------------------------------
 			
 			Component {

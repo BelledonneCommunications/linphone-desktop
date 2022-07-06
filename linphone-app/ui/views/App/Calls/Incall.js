@@ -86,7 +86,6 @@ function handleVideoRequested (call) {
     }
   }
   call.statusChanged.connect(endedHandler)
-console.log("D")
   // Ask video to user.
   window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('acceptVideoDescription'),

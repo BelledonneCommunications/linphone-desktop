@@ -224,7 +224,7 @@ Window {
 			anchors.top: featuresRow.bottom
 			anchors.left: parent.left
 			anchors.right: parent.right
-			anchors.bottom: actionsButtons.top
+			anchors.bottom: zrtp.top
 
 			anchors.topMargin: window.hideButtons ? 0 : 15
 			anchors.bottomMargin: window.hideButtons ? 0 : 20
@@ -260,7 +260,13 @@ Window {
 					id: conferenceLayout
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					sourceComponent: conference.callModel ? (conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent) : null
+					
+					sourceComponent: conference.callModel 
+										? conference.conferenceModel 
+											? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
+											: activeSpeakerComponent
+										: null
+									
 					onSourceComponentChanged: console.log(conference.callModel.conferenceVideoLayout)
 					active: conference.callModel
 					ColumnLayout {
@@ -296,23 +302,36 @@ Window {
 		// -------------------------------------------------------------------------
 		// Action Buttons.
 		// -------------------------------------------------------------------------
-
-		// Security
+		ZrtpTokenAuthentication {
+			id: zrtp
+			
+			anchors.horizontalCenter: parent.horizontalCenter
+			anchors.margins: CallStyle.container.margins
+			anchors.bottom: actionsButtons.top
+			height: visible ? implicitHeight : 0
+			
+			call: callModel
+			visible: !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
+			z: Constants.zPopup
+		}
+	// Security
 		ActionButton{
-			visible: false	// TODO
+			visible: callModel && !callModel.isConference
 			anchors.left: parent.left
-			anchors.bottom: parent.bottom
-			anchors.bottomMargin: 30
+			anchors.verticalCenter: actionsButtons.verticalCenter
 			anchors.leftMargin: 25
 			height: VideoConferenceStyle.buttons.secure.buttonSize
 			width: height
 			isCustom: true
-			iconIsCustom: false
 			backgroundRadius: width/2
-			colorSet: VideoConferenceStyle.buttons.secure
-
-			icon: 'secure_level_1'
+			
+			colorSet: callModel.isSecured ? VideoConferenceStyle.buttons.secure : VideoConferenceStyle.buttons.unsecure
+						
+			onClicked: zrtp.visible = (callModel.encryption === CallModel.CallEncryptionZrtp)
+						
+			tooltipText: Logic.makeReadableSecuredString(callModel.securedString)
 		}
+		
 		// Action buttons
 		RowLayout{
 			id: actionsButtons
@@ -410,9 +429,18 @@ Window {
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: VideoConferenceStyle.buttons.chat
-				visible: false	// TODO for next version
+				visible: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && callModel && !callModel.isConference
+				toggled: window.chatIsOpened
+				onClicked: {
+							if (window.chatIsOpened) {
+								window.closeChat()
+							} else {
+								window.openChat()
+							}
+						}
 			}
 			ActionButton{
+				visible: callModel && callModel.isConference
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: VideoConferenceStyle.buttons.participants

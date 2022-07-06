@@ -242,7 +242,7 @@ Rectangle {
 				
 				IncallAvatar {
 					call: incall.call
-					height: Utils.computeAvatarSize(container, CallStyle.container.avatar.maxSize)
+					height: Utils.computeAvatarSize(container, CallStyle.container.avatar.maxSize, 2/3)
 					width: height
 				}
 			}

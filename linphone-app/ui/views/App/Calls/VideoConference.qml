@@ -120,21 +120,41 @@ Rectangle {
 			onClicked: telKeypad.visible = !telKeypad.visible
 		}
 		// Title
-		Text{
-			id: title
-			Timer{
-				id: elapsedTimeRefresher
-				running: true
-				interval: 1000
-				repeat: true
-				onTriggered: if(conferenceModel) parent.elaspedTime = ' - ' +Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
-			}
-			property string elaspedTime
-			horizontalAlignment: Qt.AlignHCenter
+		ColumnLayout{
 			Layout.fillWidth: true
-			text: conferenceModel ? conferenceModel.subject+ elaspedTime : ''
-			color: VideoConferenceStyle.title.color
-			font.pointSize: VideoConferenceStyle.title.pointSize
+			Text{
+				id: title
+				Timer{
+					id: elapsedTimeRefresher
+					running: true
+					interval: 1000
+					repeat: true
+					onTriggered: if(conferenceModel) parent.elaspedTime = ' - ' +Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
+								else parent.elaspedTime = Utils.formatElapsedTime(conference.callModel.duration)
+				}
+				property string elaspedTime
+				horizontalAlignment: Qt.AlignHCenter
+				Layout.fillWidth: true
+				text: conferenceModel 
+						? conferenceModel.subject+ elaspedTime
+						: callModel
+							? elaspedTime
+							: ''
+				color: VideoConferenceStyle.title.color
+				font.pointSize: VideoConferenceStyle.title.pointSize
+			}
+			Text{
+				id: address
+				Layout.fillWidth: true
+				horizontalAlignment: Qt.AlignHCenter
+				visible: !conferenceModel && callModel
+				text: !conferenceModel && callModel
+							? callModel.peerAddress
+							: ''
+				color: VideoConferenceStyle.title.color
+				font.pointSize: VideoConferenceStyle.title.addressPointSize
+			}
+			
 		}
 		// Mode buttons
 		ActionButton{
@@ -186,21 +206,15 @@ Rectangle {
 	// Contacts visual.
 	// -------------------------------------------------------------------------
 	
-	MouseArea{
+	Item{
 		id: mainGrid
 		anchors.top: featuresRow.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.bottom: actionsButtons.top
+		anchors.bottom: zrtp.top
 		
 		anchors.topMargin: 15
 		anchors.bottomMargin: 20
-		onClicked: {
-			if(!conference.callModel)
-				grid.add({color:  '#'+ Math.floor(Math.random()*255).toString(16)
-								  +Math.floor(Math.random()*255).toString(16)
-								  +Math.floor(Math.random()*255).toString(16)})
-		}
 		
 		Component{
 			id: gridComponent
@@ -220,6 +234,7 @@ Rectangle {
 				isRightReducedLayout: rightMenu.visible
 				isLeftReducedLayout: conference.listCallsOpened
 				cameraEnabled: !conference.isFullScreen
+				onCameraEnabledChanged: console.log(cameraEnabled)
 			}
 		}
 		RowLayout{
@@ -228,8 +243,10 @@ Rectangle {
 				id: conferenceLayout
 				Layout.fillHeight: true
 				Layout.fillWidth: true
-				sourceComponent: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
-				onSourceComponentChanged: console.log(conference.callModel.conferenceVideoLayout)
+				sourceComponent: conference.conferenceModel 
+									? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
+									: activeSpeakerComponent
+				onSourceComponentChanged: console.log("conferenceLayout: "+conference.callModel.conferenceVideoLayout)
 				active: conference.callModel
 				ColumnLayout {
 					anchors.fill: parent
@@ -261,25 +278,39 @@ Rectangle {
 			}
 		}
 	}
+	
+	ZrtpTokenAuthentication {
+		id: zrtp
+		
+		anchors.horizontalCenter: parent.horizontalCenter
+		anchors.margins: CallStyle.container.margins
+		anchors.bottom: actionsButtons.top
+		height: visible ? implicitHeight : 0
+		
+		call: callModel
+		visible: !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
+		z: Constants.zPopup
+	}
 	// -------------------------------------------------------------------------
 	// Action Buttons.
 	// -------------------------------------------------------------------------
 	
 	// Security
 	ActionButton{
-		visible: false	// TODO
+		visible: callModel && !callModel.isConference
 		anchors.left: parent.left
-		anchors.bottom: parent.bottom
-		anchors.bottomMargin: 30
+		anchors.verticalCenter: actionsButtons.verticalCenter
 		anchors.leftMargin: 25
 		height: VideoConferenceStyle.buttons.secure.buttonSize
 		width: height
 		isCustom: true
-		iconIsCustom: false
 		backgroundRadius: width/2
-		colorSet: VideoConferenceStyle.buttons.secure
 		
-		icon: 'secure_level_1'
+		colorSet: callModel.isSecured ? VideoConferenceStyle.buttons.secure : VideoConferenceStyle.buttons.unsecure
+					
+		onClicked: zrtp.visible = (callModel.encryption === CallModel.CallEncryptionZrtp)
+					
+		tooltipText: Logic.makeReadableSecuredString(callModel.securedString)
 	}
 	// Action buttons			
 	RowLayout{
@@ -342,8 +373,14 @@ Rectangle {
 				colorSet: callModel && callModel.cameraEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating
 				enabled: callModel.videoEnabled
-				onClicked: if(callModel) callModel.cameraEnabled = !callModel.cameraEnabled
+				onClicked: if(callModel){
+							if( callModel.isConference)// Only deactivate camera in conference.
+								callModel.cameraEnabled = !callModel.cameraEnabled
+							else// In one-one, we deactivate all videos.
+								callModel.videoEnabled = !callModel.videoEnabled
+							}
 			}
+			
 		}
 		RowLayout{
 			spacing: 10
@@ -376,9 +413,18 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.chat
-			visible: false	// TODO for next version
+			visible: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && callModel && !callModel.isConference
+			toggled: window.chatIsOpened
+			onClicked: {
+						if (window.chatIsOpened) {
+							window.closeChat()
+						} else {
+							window.openChat()
+						}
+					}
 		}
 		ActionButton{
+			visible: callModel && callModel.isConference
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.participants

@@ -86,6 +86,7 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("r", "#909fab", "Background button normal.")
 		
 		ADD_COLOR("s", "#96be64", "Security")
+		ADD_COLOR("unsecure", "#FF0000", "Unsecure")
 		
 		
 		ADD_COLOR("t", "#C2C2C2", "Title Header")

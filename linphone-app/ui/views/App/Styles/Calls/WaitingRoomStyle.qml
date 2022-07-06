@@ -12,10 +12,17 @@ QtObject {
 	
 	property QtObject title: QtObject {
 		property color color: ColorsList.add(sectionName+'_title', 'q').color
-		property int pointSize: Units.dp * 12
+		property int pointSize: Units.dp * 10
 	}
-	
-	
+	property QtObject elapsedTime: QtObject {
+		property color color: ColorsList.add(sectionName+'_elapsed_time', 'q').color
+		property int pointSize: Units.dp * 10
+	}
+	property QtObject callee: QtObject {
+		property color color: ColorsList.add(sectionName+'_callee', 'q').color
+		property int displayNamePointSize: Units.dp * 10
+		property int addressPointSize: Units.dp * 8
+	}
 	
 	
 	
@@ -132,8 +139,8 @@ QtObject {
 	property QtObject header: QtObject {
 		property QtObject busyIndicator: QtObject {
 			property color color: ColorsList.add(sectionName+'_header_busy', 'i').color
-			property int height: 30
-			property int width: 30
+			property int height: 20
+			property int width: 20
 		}
 	}
 	property QtObject avatar: QtObject {
@@ -264,5 +271,27 @@ QtObject {
 			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 's_p_b_fg').color
 			property color foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_c', icon, 's_p_b_fg').color
 		}
+		property QtObject hangup: QtObject {
+			property int iconSize: 40
+			property string icon : 'hangup_custom'
+			property string name : 'hangup'
+			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'r_n_b_bg').color
+			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'r_h_b_bg').color
+			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'r_p_b_bg').color
+			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'r_n_b_fg').color
+			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'r_h_b_fg').color
+			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'r_p_b_fg').color
+		}
+		property QtObject call: QtObject {
+		property int iconSize: 40
+		property string icon : 'call_accept_custom'
+		property string name : 'call'
+		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'a_n_b_bg').color
+		property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'a_h_b_bg').color
+		property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'a_p_b_bg').color
+		property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'a_n_b_fg').color
+		property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'a_h_b_fg').color
+		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'a_p_b_fg').color
+	}
 	}
 }

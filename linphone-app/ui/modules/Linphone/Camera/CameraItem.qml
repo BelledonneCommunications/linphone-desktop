@@ -22,8 +22,7 @@ Item {
 	property bool isFullscreen: false
 	property bool hideCamera: false
 	property bool isPaused: false
-	property bool isVideoEnabled: enabled
-									&& (!callModel || callModel.videoEnabled)
+	property bool isVideoEnabled: (!callModel || callModel.videoEnabled)
 									&& (!container.currentDevice || callModel && (container.currentDevice
 																			&& (container.currentDevice.videoEnabled || (container.currentDevice.isMe && callModel.cameraEnabled))))
 
@@ -46,7 +45,7 @@ Item {
 		
 		anchors.fill: parent
 		
-		active: container.enabled && !resetActive && container.isVideoEnabled
+		active: !resetActive && container.isVideoEnabled
 		sourceComponent: container.isVideoEnabled && !container.isPaused? camera : null		
 		
 		Timer{

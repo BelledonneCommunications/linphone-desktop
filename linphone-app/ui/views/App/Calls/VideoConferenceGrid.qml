@@ -44,16 +44,19 @@ Mosaic {
 			height: grid.cellHeight - 10
 			width: grid.cellWidth - 10
 			
-			CameraView{
+			Sticker{
 				id: cameraView
-				enabled: index >=0 && grid.cameraEnabled
 				anchors.fill: parent
-				currentDevice: avatarCell.currentDevice
+				
+				cameraEnabled: index >=0 && grid.cameraEnabled
+				currentDevice: gridModel.participantDevices.getAt(index)
 				callModel: participantDevices.callModel
 				isCameraFromDevice: true
 				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused
-				onCloseRequested: participantDevices.showMe = false
-				//showCloseButton: participantDevices.count > 1
+				showCloseButton: false
+				showCustomButton:  false
+				
+				//onCloseRequested: participantDevices.showMe = false
 			}
 		}
 	}

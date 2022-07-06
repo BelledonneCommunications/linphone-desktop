@@ -102,6 +102,7 @@ void ParticipantDeviceProxyModel::setShowMe(const bool& show){
 }
 
 void ParticipantDeviceProxyModel::onCountChanged(){
+	qDebug() << "Count changed : " << getCount();
 }
 
 void ParticipantDeviceProxyModel::onParticipantSpeaking(ParticipantDeviceModel * speakingDevice){

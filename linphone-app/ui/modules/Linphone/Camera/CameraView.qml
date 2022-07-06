@@ -23,6 +23,8 @@ Item{
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true
 	property color color : camera.isReady ?  CameraViewStyle.cameraBackgroundColor : CameraViewStyle.outBackgroundColor
+	property real avatarRatio : 2/3
+	
 	signal closeRequested()
 	signal videoDefinitionChanged()
 	
@@ -49,7 +51,8 @@ Item{
 			
 			IncallAvatar {
 				participantDeviceModel: mainItem.currentDevice
-				height: Utils.computeAvatarSize(backgroundArea, CallStyle.container.avatar.maxSize)
+				call: participantDeviceModel ? undefined : camera.callModel
+				height: Utils.computeAvatarSize(backgroundArea, CallStyle.container.avatar.maxSize, avatarRatio)
 				width: height
 				backgroundColor: CameraViewStyle.inAvatarBackgroundColor
 			}
@@ -57,7 +60,7 @@ Item{
 		Loader {
 			anchors.centerIn: parent
 			
-			active:  mainItem.currentDevice && !camera.isReady
+			active:  (mainItem.callModel || mainItem.currentDevice) && !camera.isReady
 			sourceComponent: avatar
 		}
     }

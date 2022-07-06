@@ -362,6 +362,10 @@
 		<file>ui/modules/Linphone/Presence/PresenceLevel.qml</file>
 		<file>ui/modules/Linphone/qmldir</file>
 		<file>ui/modules/Linphone/SmartSearchBar/SmartSearchBar.qml</file>
+		<file>ui/modules/Linphone/Sticker/AvatarSticker.qml</file>
+		<file>ui/modules/Linphone/Sticker/CameraSticker.qml</file>
+		<file>ui/modules/Linphone/Sticker/DecorationSticker.qml</file>
+		<file>ui/modules/Linphone/Sticker/Sticker.qml</file>
 		<file>ui/modules/Linphone/Styles/Account/AccountStatusStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Blocks/CardBlockStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Blocks/RequestBlockStyle.qml</file>
@@ -395,6 +399,10 @@
 		<file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Notifications/NotificationStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/qmldir</file>
+		<file>ui/modules/Linphone/Styles/Sticker/AvatarStickerStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Sticker/CameraStickerStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Sticker/DecorationStickerStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Sticker/StickerStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/TelKeypad/TelKeypadStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/View/ParticipantsListViewStyle.qml</file>

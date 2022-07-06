@@ -50,6 +50,11 @@ PresenceLevel                 1.0 Presence/PresenceLevel.qml
 
 SmartSearchBar                1.0 SmartSearchBar/SmartSearchBar.qml
 
+AvatarSticker                 1.0 Sticker/AvatarSticker.qml
+CameraSticker                 1.0 Sticker/CameraSticker.qml
+DecorationSticker             1.0 Sticker/DecorationSticker.qml
+Sticker                       1.0 Sticker/Sticker.qml
+
 TelKeypad                     1.0 TelKeypad/TelKeypad.qml
 
 Timeline                      1.0 Timeline/Timeline.qml

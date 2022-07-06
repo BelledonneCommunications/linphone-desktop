@@ -48,6 +48,11 @@ singleton NotificationReceivedFileMessageStyle 1.0 Notifications/NotificationRec
 singleton NotificationReceivedMessageStyle     1.0 Notifications/NotificationReceivedMessageStyle.qml
 singleton NotificationStyle                    1.0 Notifications/NotificationStyle.qml
 
+singleton AvatarStickerStyle                   1.0 Sticker/AvatarStickerStyle.qml
+singleton CameraStickerStyle                   1.0 Sticker/CameraStickerStyle.qml
+singleton DecorationStickerStyle               1.0 Sticker/DecorationStickerStyle.qml
+singleton StickerStyle                         1.0 Sticker/StickerStyle.qml
+
 singleton TelKeypadStyle                       1.0 TelKeypad/TelKeypadStyle.qml
 
 singleton TimelineStyle                        1.0 Timeline/TimelineStyle.qml

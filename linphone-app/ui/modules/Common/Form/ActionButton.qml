@@ -286,7 +286,7 @@ Item {
 		}
 		
 		OpacityMask{
-			anchors.fill: foregroundColor
+			anchors.fill: icon
 			source: foregroundColor
 			maskSource: icon
 
@@ -301,7 +301,7 @@ Item {
 	 
 		OpacityMask{
 			id: mask
-			anchors.fill: foregroundHiddenPartColor
+			anchors.fill: icon
 			source: foregroundHiddenPartColor
 			maskSource: icon
 

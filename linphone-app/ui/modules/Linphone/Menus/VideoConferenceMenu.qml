@@ -106,17 +106,20 @@ Rectangle{
 					model: [
 						{titleIndex: 0
 						,icon: VideoConferenceMenuStyle.settingsIcons.mediaIcon
-						, nextPage:mediaMenu},
-
+						, nextPage:mediaMenu
+						, visible: true},
+						
 						{titleIndex: 1
 						, icon: (mainItem.callModel && mainItem.callModel.videoEnabled ?
 										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
 									: VideoConferenceMenuStyle.settingsIcons.audioOnlyIcon)
-						, nextPage:layoutMenu},
+						, nextPage:layoutMenu
+						, visible: mainItem.callModel && mainItem.callModel.isConference},
 
 						{ titleIndex: 2
 						, icon: VideoConferenceMenuStyle.settingsIcons.participantsIcon
-						, nextPage:participantsMenu}
+						, nextPage:participantsMenu
+						, visible: mainItem.callModel && mainItem.callModel.isConference}
 					]
 					delegate:
 						Borders{
@@ -124,6 +127,7 @@ Rectangle{
 						bottomWidth: VideoConferenceMenuStyle.list.border.width
 						Layout.preferredHeight: Math.max(settingIcon.height, settingsDescription.implicitHeight) + 20
 						Layout.fillWidth: true
+						visible: modelData.visible
 						RowLayout{
 							anchors.fill: parent
 							Icon{
