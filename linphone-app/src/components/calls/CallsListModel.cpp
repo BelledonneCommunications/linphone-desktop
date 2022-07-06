@@ -450,7 +450,7 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 		case linphone::Call::State::Error:{
 			if(call->dataExists("call-model")) {
 				CallModel * model = &call->getData<CallModel>("call-model");
-				model->callEnded();
+				model->endCall();
 			}
 			removeCall(call);
 		} break;
@@ -519,9 +519,13 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
 		qWarning() << QStringLiteral("Unable to find call:") << call.get();
 		return;
 	}
-	
-	QTimer::singleShot(DelayBeforeRemoveCall, this, [this, callModel] {
-		removeCallCb(callModel);
+	QTimer::singleShot( DelayBeforeRemoveCall , this, [this, callModel] {
+		if( callModel->getCallError() != ""){// We got an error, met more time to see it.
+			QTimer::singleShot( DelayBeforeRemoveCall , this, [this, callModel] {
+				removeCallCb(callModel);
+			});
+		}else
+			removeCallCb(callModel);
 	});
 }
 

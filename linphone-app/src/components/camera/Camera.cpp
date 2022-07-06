@@ -197,7 +197,7 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	}else{
 		mIsWindowIdSet = true;
 		qDebug() << "[Camera] Added " << renderer << " at " << mWindowIdLocation << " for " << this;
-		QTimer::singleShot(1, this, &Camera::isReady);// Workaround for const createRenderer
+		QTimer::singleShot(1, this, &Camera::isReady);// Workaround for const createRenderer.
 	}
 	return renderer;
 }

@@ -989,7 +989,7 @@ int ChatRoomModel::loadMoreEntries(){
 //-------------------------------------------------
 //-------------------------------------------------
 
-void ChatRoomModel::callEnded(std::shared_ptr<linphone::Call> call){
+void ChatRoomModel::onCallEnded(std::shared_ptr<linphone::Call> call){
 	if( call->getCallLog()->getStatus() == linphone::Call::Status::Missed)
 		addMissedCallsCount(call);
 	else{

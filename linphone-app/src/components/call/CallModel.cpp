@@ -878,12 +878,12 @@ void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>
 	}
 }
 
-void CallModel::callEnded(){
+void CallModel::endCall(){
 	if(mCall){
 		ChatRoomModel * model = getChatRoomModel();
 		
 		if(model){
-			model->callEnded(mCall);
+			model->onCallEnded(mCall);
 		}else{// No chat rooms have been associated for this call. Search one in current chat room list
 			shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 			std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
@@ -894,7 +894,7 @@ void CallModel::callEnded(){
 												 , participants);
 			QSharedPointer<ChatRoomModel> chatRoomModel= CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false);
 			if(chatRoomModel)
-				chatRoomModel->callEnded(mCall);
+				chatRoomModel->onCallEnded(mCall);
 		}
 	}
 }

@@ -170,7 +170,7 @@ public:
 	Q_INVOKABLE void resetMessageCount ();
 	void initEntries();
 	Q_INVOKABLE int loadMoreEntries();	// return new entries count
-	void callEnded(std::shared_ptr<linphone::Call> call);
+	void onCallEnded(std::shared_ptr<linphone::Call> call);
 	void updateNewMessageNotice(const int& count);
 	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index. -1 if not found.
 	static bool isTerminated(const std::shared_ptr<linphone::ChatRoom>& chatRoom);
