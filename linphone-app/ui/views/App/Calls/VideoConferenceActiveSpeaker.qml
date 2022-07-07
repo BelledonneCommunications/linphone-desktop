@@ -91,10 +91,11 @@ Item {
 		delegate:Item{
 				height: miniViews.cellHeight
 				width: miniViews.width
-				
+				clip:false
 				Sticker{
 					id: miniView
 					anchors.fill: parent
+					anchors.margins: 3
 					
 					cameraEnabled: index >=0 && mainItem.cameraEnabled
 					currentDevice: modelData

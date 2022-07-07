@@ -40,6 +40,10 @@ DecorationSticker{
 	_isPreview: isPreview
 	_showCloseButton: showCloseButton
 	_showActiveSpeakerOverlay: showActiveSpeakerOverlay
+	
+	clip:false
+	radius: CameraStickerStyle.radius
+	
 	_content: Rectangle{
 		anchors.fill: parent
 		color: mainItem.color
@@ -49,7 +53,7 @@ DecorationSticker{
 			id: showArea
 			
 			anchors.fill: parent
-			radius: CameraStickerStyle.radius
+			radius: mainItem.radius
 			visible: false
 			color: 'red'
 		}

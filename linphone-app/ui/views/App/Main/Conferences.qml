@@ -16,6 +16,7 @@ Item{
 		id: mainItem
 		property int filterType: -1
 		spacing: 0
+		onFilterTypeChanged: Qt.callLater( conferenceList.positionViewAtEnd)
 		Component.onCompleted: filterType = ConferenceInfoProxyModel.Scheduled
 		anchors.fill: parent
 		// ---------------------------------------------------------------------------
@@ -84,6 +85,7 @@ Item{
 			color: ConferencesStyle.backgroundColor
 			
 			ScrollableListView {
+				id: conferenceList
 				anchors.fill: parent
 				spacing: 10
 				

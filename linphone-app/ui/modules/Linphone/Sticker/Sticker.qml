@@ -43,6 +43,8 @@ Flipable{
 	signal videoDefinitionChanged()
 	signal customButtonClicked()
 	
+	clip:false
+	
 	transform: Rotation {
 						id: rotation
 						origin.x: mainItem.width/2

@@ -29,6 +29,8 @@ Item{
 	property bool _customButtonToggled: false
 	property alias _customButtonColorSet : customButton.colorSet
 	
+	property int radius
+	
 	signal closeRequested()
 	signal backgroundClicked()
 	signal customButtonClicked()
@@ -43,7 +45,7 @@ Item{
         glowRadius: 4
         spread: 0.9
         color: DecorationStickerStyle.border.color
-        cornerRadius: (content.radius? content.radius : 0) + glowRadius
+        cornerRadius: (mainItem.radius? mainItem.radius : 0) + glowRadius
         visible: mainItem._showActiveSpeakerOverlay && mainItem._currentDevice && mainItem._currentDevice.isSpeaking
     }
     Item{

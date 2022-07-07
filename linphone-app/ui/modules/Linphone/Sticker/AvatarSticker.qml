@@ -38,11 +38,14 @@ DecorationSticker {
 	_isPreview: isPreview
 	_showCloseButton: showCloseButton
 	_showActiveSpeakerOverlay: showActiveSpeakerOverlay
-		
+	
+	clip:false
+	radius: AvatarStickerStyle.radius
+	
 	_content: Rectangle{
 		anchors.fill: parent
 		color: mainItem.color
-		radius: AvatarStickerStyle.radius
+		radius: mainItem.radius
 		IncallAvatar {
 			id: avatar
 			anchors.centerIn: parent
