@@ -46,7 +46,9 @@ Rectangle{
 		contentsStack.push(participantsMenu, {title:Qt.binding(function() { return mainItem.menuTitles[2]})})
 		visible = true
 	}
-	
+	onVisibleChanged: if(!visible && contentsStack.nViews > 1) {
+		contentsStack.pop()
+	}
 	ButtonGroup{id: modeGroup}
 	ColumnLayout{
 		anchors.fill: parent
@@ -273,6 +275,8 @@ Rectangle{
 					//: 'Your are currently alone in this conference' : Message to warn the user when there is no other participant.
 						text: qsTr('conferenceMenuParticipantsAlone')
 						visible: parent.count <= 1
+						font.pointSize: VideoConferenceMenuStyle.list.pointSize
+						color: VideoConferenceMenuStyle.list.color
 					}
 				}
 				Item{// Spacer
