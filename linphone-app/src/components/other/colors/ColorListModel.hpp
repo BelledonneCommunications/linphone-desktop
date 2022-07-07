@@ -115,9 +115,16 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("event_in", "#96C11F", "Event colors that are incoming")
 		ADD_COLOR("event_out", "#18A7AF", "Event colors that are outgoing")
 		
+		ADD_COLOR("avatar_initials_bg", "#AFAFAF", "Avatar : Background for initials")
+		ADD_COLOR("avatar_initials_sticker_bg", "transparent", "Avatar : Sticker background for avatar initials")
+		
 		ADD_COLOR("conference_entry_bg", "#D0D8DE", "Conferences : Background entry")
-		ADD_COLOR("conference_out_avatar_bg", "#A1A1A1", "Conferences: Background avatar")
+		
+		
 		ADD_COLOR("conference_bg", "#798791", "Conferences: Background")
+		ADD_COLOR("conference_avatar_sticker_bg", "#A1A1A1", "Conferences : Background for sticker avatar")
+		ADD_COLOR("conference_avatar_initials_bg", "#798791", "Conferences : Background for avatar initials")
+		
 		ADD_COLOR("fullscreen_conference_bg", "black", "Conferences: Fullscreen background")
 		
 		ADD_COLOR("validation", "#96C11F", "Background for validation on buttons")

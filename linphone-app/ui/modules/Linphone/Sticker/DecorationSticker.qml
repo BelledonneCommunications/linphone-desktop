@@ -17,6 +17,7 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 Item{
 	id: mainItem
 	default property alias _content: content.data
+	property alias speakingOverlayDisplayed: effect.visible
 	
 	property ParticipantDeviceModel _currentDevice
 	property CallModel _callModel

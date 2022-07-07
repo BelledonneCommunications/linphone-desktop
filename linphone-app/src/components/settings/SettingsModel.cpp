@@ -583,7 +583,12 @@ void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
 bool SettingsModel::getVideoSupported () const {
 	return CoreManager::getInstance()->getCore()->videoSupported();
 }
-
+void SettingsModel::setHighMosaicQuality(){
+	mConfig->setString("video", "max_mosaic_size", "");
+}
+void SettingsModel::setLimitedMosaicQuality(){
+	mConfig->setString("video", "max_mosaic_size", "vga");
+}
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getShowVideoCodecs () const {

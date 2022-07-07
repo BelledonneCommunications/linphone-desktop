@@ -52,23 +52,9 @@ Item {
 		showCloseButton: false
 		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
 		showCustomButton:  false
+		avatarStickerBackgroundColor: VideoConferenceStyle.container.avatar.stickerBackgroundColor
+		avatarBackgroundColor: VideoConferenceStyle.container.avatar.backgroundColor
 	}
-	/*
-	CameraView{
-		id: cameraView
-		callModel: mainItem.callModel
-		//enabled: mainItem.cameraEnabled
-		isCameraFromDevice: false
-		isPreview: false
-		anchors.fill: parent
-		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
-		anchors.rightMargin: isRightReducedLayout ? 10 : 140
-		isPaused: (callModel && callModel.pausedByUser) || (currentDevice && currentDevice.isPaused) //callModel.pausedByUser
-		showCloseButton: false
-		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
-		//color: callModel && callModel.isConference ? 'black' : 'transparent'
-		//color: 'black'
-	}*/
 	ScrollableListView{
 		id: miniViews
 		anchors.right: parent.right
@@ -104,7 +90,9 @@ Item {
 					isPaused: mainItem.callModel.pausedByUser || currentDevice && currentDevice.isPaused
 					showCloseButton: false
 					showCustomButton:  false
-					
+					showAvatarBorder: true
+					avatarStickerBackgroundColor: VideoConferenceStyle.container.avatar.stickerBackgroundColor
+					avatarBackgroundColor: VideoConferenceStyle.container.avatar.backgroundColor
 					//onCloseRequested: mainItem.showMe = false
 				}
 			}

@@ -37,8 +37,9 @@ Flipable{
 	property alias image: avatar.image
 	property alias username: avatar.username
 	property alias avatarBackgroundColor: avatar.avatarBackgroundColor
-	property alias avatarOutBackgroundColor: avatar.color
+	property alias avatarStickerBackgroundColor: avatar.color
 	property alias avatarRatio: avatar.avatarRatio
+	property alias showAvatarBorder: avatar.showAvatarBorder
 	
 	signal videoDefinitionChanged()
 	signal customButtonClicked()

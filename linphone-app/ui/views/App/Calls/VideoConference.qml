@@ -117,8 +117,41 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: VideoConferenceStyle.buttons.dialpad
+			toggled: telKeypad.visible
 			onClicked: telKeypad.visible = !telKeypad.visible
 		}
+		ActionButton {
+			id: callQuality
+			
+			isCustom: true
+			backgroundRadius: width/2
+			colorSet: VideoConferenceStyle.buttons.callQuality
+			icon: VideoConferenceStyle.buttons.callQuality.icon_0
+			toggled: callStatistics.isOpen
+			
+			onClicked: callStatistics.isOpen ? callStatistics.close() : callStatistics.open()
+			Timer {
+				interval: 500
+				repeat: true
+				running: true
+				triggeredOnStart: true
+				onTriggered: {
+					// Note: `quality` is in the [0, 5] interval and -1.
+					var quality = callModel.quality
+					if(quality > 4)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_4
+					else if(quality > 3)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_3
+					else if(quality > 2)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_2
+					else if(quality > 1)
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_1
+					else
+						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_0
+				}						
+			}
+		}
+		
 		// Title
 		ColumnLayout{
 			Layout.fillWidth: true
@@ -436,37 +469,7 @@ Rectangle {
 						rightMenu.showParticipantsMenu()
 				}
 		}
-		ActionButton {
-			id: callQuality
-			
-			isCustom: true
-			backgroundRadius: width/2
-			colorSet: VideoConferenceStyle.buttons.callQuality
-			icon: VideoConferenceStyle.buttons.callQuality.icon_0
-			toggled: callStatistics.isOpen
-			
-			onClicked: callStatistics.isOpen ? callStatistics.close() : callStatistics.open()
-			Timer {
-				interval: 500
-				repeat: true
-				running: true
-				triggeredOnStart: true
-				onTriggered: {
-					// Note: `quality` is in the [0, 5] interval and -1.
-					var quality = callModel.quality
-					if(quality > 4)
-						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_4
-					else if(quality > 3)
-						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_3
-					else if(quality > 2)
-						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_2
-					else if(quality > 1)
-						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_1
-					else
-						callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_0
-				}						
-			}
-		}
+		
 		ActionButton{
 			isCustom: true
 			backgroundRadius: width/2

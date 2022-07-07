@@ -144,7 +144,6 @@ QtObject {
 		}
 	}
 	property QtObject avatar: QtObject {
-			property color backgroundColor: ColorsList.add(sectionName+'_container_avatar_bg', 'n').color
 			property int maxSize: 300
 	}
 	// Button colors	

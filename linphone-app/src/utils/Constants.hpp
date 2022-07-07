@@ -63,7 +63,7 @@ public:
 	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
 	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
 	
-	
+	static constexpr int MaxMosaicParticipants = 9;// From 10, the mosaic quality will be limited to avoid useless computations
 	
 	static constexpr char LinphoneBZip2_exe[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
 	static constexpr char LinphoneBZip2_dll[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
@@ -79,6 +79,7 @@ public:
 	Q_PROPERTY(QString PrivatePolicyUrl MEMBER PrivatePolicyUrl CONSTANT)
 	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
 	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
+	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
 	
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";

@@ -113,6 +113,7 @@ constexpr char Constants::PrivatePolicyUrl[];
 constexpr char Constants::ContactUrl[];
 constexpr char Constants::TranslationUrl[];
 
+constexpr int Constants::MaxMosaicParticipants;
 
 constexpr char Constants::LinphoneBZip2_exe[];
 constexpr char Constants::LinphoneBZip2_dll[];

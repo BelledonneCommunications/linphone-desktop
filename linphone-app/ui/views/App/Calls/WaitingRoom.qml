@@ -138,8 +138,7 @@ Rectangle {
 					image: mainItem._sipAddressObserver && mainItem._sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
 					username: mainItem.conferenceInfoModel ? mainItem.conferenceInfoModel.subject 
 															   : (mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : '')
-					avatarRatio: 1
-					avatarBackgroundColor: WaitingRoomStyle.avatar.backgroundColor
+					avatarRatio: 2/3
 					
 					showCustomButton: true
 					customButtonColorSet : WaitingRoomStyle.buttons.options

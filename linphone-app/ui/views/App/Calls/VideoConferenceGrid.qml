@@ -11,7 +11,7 @@ import UtilsCpp 1.0
 
 import App.Styles 1.0
 
-
+import ConstantsCpp 1.0
 // Temp
 import 'Incall.js' as Logic
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -23,7 +23,11 @@ Mosaic {
 	property alias callModel: participantDevices.callModel
 	property bool cameraEnabled: true
 	property int participantCount: gridModel.count
+	
 	squaredDisplay: true
+	
+	// On grid view, we limit the quality if there are enough participants
+	onParticipantCountChanged: participantCount > ConstantsCpp.maxMosaicParticipants ? SettingsModel.setLimitedMosaicQuality() : SettingsModel.setHighMosaicQuality()
 
 	delegateModel: DelegateModel{
 		id: gridModel
@@ -55,6 +59,8 @@ Mosaic {
 				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				showCloseButton: false
 				showCustomButton:  false
+				avatarStickerBackgroundColor: VideoConferenceStyle.container.avatar.stickerBackgroundColor
+				avatarBackgroundColor: VideoConferenceStyle.container.avatar.backgroundColor
 				
 				//onCloseRequested: participantDevices.showMe = false
 			}

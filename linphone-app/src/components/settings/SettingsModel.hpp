@@ -353,6 +353,9 @@ public:
 	
 	QVariantList getSupportedVideoDefinitions () const;
 	
+	Q_INVOKABLE void setHighMosaicQuality();
+	Q_INVOKABLE void setLimitedMosaicQuality();
+	
 	QVariantMap getVideoDefinition () const;
 	Q_INVOKABLE QVariantMap getCurrentPreviewVideoDefinition () const;
 	void setVideoDefinition (const QVariantMap &definition);
