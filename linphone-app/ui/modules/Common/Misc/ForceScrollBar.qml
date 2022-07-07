@@ -12,22 +12,18 @@ ScrollBar {
 	property int contentSizeTarget
 	property int sizeTarget
 	
-	onContentSizeTargetChanged: delayUpdatePolicy.restart()
-	onSizeTargetChanged:  delayUpdatePolicy.restart()
+	onContentSizeTargetChanged: Qt.callLater( scrollBar.updatePolicy)
+	onSizeTargetChanged:  Qt.callLater( scrollBar.updatePolicy)
 	
 	policy: ScrollBar.AlwaysOff
 	function updatePolicy(){
 		policy = contentSizeTarget > sizeTarget ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
 	}
 	function delayPolicy(){
-		delayUpdatePolicy.restart()
+		Qt.callLater( scrollBar.updatePolicy)
 	}
 	Component.onCompleted: updatePolicy()
-	Timer{// Delay to avoid binding loops
-		id:delayUpdatePolicy
-		interval:10
-		onTriggered: scrollBar.updatePolicy()
-	}
+	
 	
 	background: Rectangle {
 		anchors.fill: parent

@@ -55,7 +55,7 @@ Rectangle {
 		
 		ScrollBar.vertical: ForceScrollBar {
 			id: scrollBar
-			//policy: flickable.contentHeight > height ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff	// Do not use because of binding loop issues
+			
 			contentSizeTarget: flickable.contentHeight
 			sizeTarget: flickable.height
 			Component.onCompleted: updatePolicy()

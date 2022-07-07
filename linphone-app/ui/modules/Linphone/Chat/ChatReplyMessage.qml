@@ -133,13 +133,8 @@ Item {
 				model: ContentProxyModel{
 					chatMessageModel: mainItem.chatMessageModel
 				}
-				Timer{// Delay to avoid binding loops
-					id:delayUpdate
-					interval:10
-					onTriggered: replyMessage.height = replyMessage.contentHeight
-				}
-				onContentHeightChanged: delayUpdate.restart()
-				//height: contentHeight
+				
+				onContentHeightChanged: Qt.callLater( function(){replyMessage.height = replyMessage.contentHeight})
 				
 				delegate: ChatContent{
 					contentModel: $modelData
