@@ -61,6 +61,7 @@ public:
 	Q_INVOKABLE static QString toString(const LinphoneEnums::TunnelMode& mode);
 	Q_INVOKABLE static bool isMe(const QString& address);
 	Q_INVOKABLE static bool isAnimatedImage(const QString& path);
+	Q_INVOKABLE static bool isPhoneNumber(const QString& txt);
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {

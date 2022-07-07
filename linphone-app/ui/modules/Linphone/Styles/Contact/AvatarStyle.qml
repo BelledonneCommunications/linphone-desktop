@@ -10,6 +10,8 @@ QtObject {
 	property string sectionName: 'Avatar'
 	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'd').color
 	
+	property string personImage : 'contact_custom'
+	
 	property QtObject initials: QtObject {
 		property color color: ColorsList.add(sectionName+'_initials', 'q').color
 		property int pointSize: Units.dp * 10

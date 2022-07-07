@@ -4,6 +4,9 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
+import Utils 1.0
+import UtilsCpp 1.0
+
 // =============================================================================
 
 Item {
@@ -18,6 +21,8 @@ Item {
   property var image
 
   property var _initialsRegex: /^\s*([^\s\.]+)(?:[\s\.]+([^\s\.]+))?/
+  
+  property bool isPhoneNumber: UtilsCpp.isPhoneNumber(username)
   
   // ---------------------------------------------------------------------------
 
@@ -47,9 +52,16 @@ Item {
     backgroundColor: avatar.backgroundColor
     foregroundColor: avatar.foregroundColor
     source: avatar.image || ''
+    Icon{
+		anchors.fill: parent
+		icon: AvatarStyle.personImage
+		visible: parent.source == '' && avatar.isPhoneNumber
+		overwriteColor: AvatarStyle.initials.color
+    }
   }
 
   Text {
+    id: initialsText
     anchors.centerIn: parent
     color: AvatarStyle.initials.color
     font.pointSize: {
@@ -63,7 +75,7 @@ Item {
     }
 
     text: _computeInitials()
-    visible: roundedImage.status !== Image.Ready
+    visible: roundedImage.status !== Image.Ready && !avatar.isPhoneNumber
   }
 
   PresenceLevel {

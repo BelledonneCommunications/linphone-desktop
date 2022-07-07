@@ -540,3 +540,11 @@ bool Utils::isAnimatedImage(const QString& path){
 	QImageReader reader(path);
 	return reader.supportsAnimation() && reader.imageCount() > 1;
 }
+
+bool Utils::isPhoneNumber(const QString& txt){
+	auto core = CoreManager::getInstance()->getCore();
+	if(!core)
+		return false;
+	auto account = core->getDefaultAccount();
+	return account && account->isPhoneNumber(Utils::appStringToCoreString(txt));
+}
