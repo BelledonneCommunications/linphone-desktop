@@ -62,6 +62,7 @@ signals:
 	void callModelChanged();
 	void showMeChanged();
 	void participantSpeaking(ParticipantDeviceModel * speakingDevice);
+	void conferenceCreated();
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
@@ -70,7 +71,6 @@ protected:
 	QSharedPointer<ParticipantDeviceListModel> mDevices;
 	CallModel * mCallModel;
 	bool mShowMe = true;
-	QList<ParticipantDeviceModel*> mActiveSpeakers;// First item is last speaker
 };
 
 #endif

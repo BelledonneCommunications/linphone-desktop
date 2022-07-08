@@ -71,8 +71,7 @@ public:
 	
 	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
 	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted);
-	virtual void onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice);
-	virtual void onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice);
+	virtual void onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDeviceState state);
 	virtual void onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType);
 	virtual void onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType);
 	

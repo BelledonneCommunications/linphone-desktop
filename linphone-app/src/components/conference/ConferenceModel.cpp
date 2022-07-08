@@ -42,8 +42,6 @@ void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::participantAdminStatusChanged, this, &ConferenceModel::onParticipantAdminStatusChanged);
 	connect(listener, &ConferenceListener::participantDeviceAdded, this, &ConferenceModel::onParticipantDeviceAdded);
 	connect(listener, &ConferenceListener::participantDeviceRemoved, this, &ConferenceModel::onParticipantDeviceRemoved);
-	connect(listener, &ConferenceListener::participantDeviceLeft, this, &ConferenceModel::onParticipantDeviceLeft);
-	connect(listener, &ConferenceListener::participantDeviceJoined, this, &ConferenceModel::onParticipantDeviceJoined);
 	connect(listener, &ConferenceListener::participantDeviceMediaCapabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaCapabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaAvailabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaAvailabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceIsSpeakingChanged, this, &ConferenceModel::onParticipantDeviceIsSpeakingChanged);
@@ -148,14 +146,6 @@ void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<const linph
 void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
-}
-void ConferenceModel::onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
-	emit participantDeviceLeft(participantDevice);
-}
-void ConferenceModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
-	emit participantDeviceJoined(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "ConferenceModel::onParticipantDeviceMediaCapabilityChanged: "  << (int)participantDevice->getStreamCapability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();

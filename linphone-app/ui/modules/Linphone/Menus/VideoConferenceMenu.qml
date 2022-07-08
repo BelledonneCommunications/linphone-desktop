@@ -24,6 +24,7 @@ Rectangle{
 	property bool isMeAdmin: me && me.adminStatus
 	property bool isParticipantsMenu: false
 	signal close()
+	signal layoutChanging(int layoutMode)
 	
 	height: 500
 	width: 400
@@ -231,13 +232,31 @@ Rectangle{
 								Layout.leftMargin: 15
 								Layout.preferredHeight: contentItem.implicitHeight
 								Layout.alignment: Qt.AlignVCenter
-								ButtonGroup.group: modeGroup					
-								checked: mainItem.callModel ? (mainItem.callModel.videoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
+								ButtonGroup.group: modeGroup
+								text: modelData.text
+								
+								// break bind. Radiobutton checked itself without taking care of custom binding. This workaound works as long as we don't really need the binding.
+								Component.onCompleted: checked = mainItem.callModel ? (mainItem.callModel.videoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
 															|| (!mainItem.callModel.videoEnabled && modelData.value == 2)
 															: false
-								text: modelData.text
-								onClicked: if(modelData.value == 2) mainItem.callModel.videoEnabled = false
-											else mainItem.callModel.conferenceVideoLayout = modelData.value
+								Timer{
+									id: changingLayoutDelay
+									interval: 100
+									onTriggered: {if(modelData.value == 2) mainItem.callModel.videoEnabled = false
+												else mainItem.callModel.conferenceVideoLayout = modelData.value
+												mainItem.enabled = true
+											}
+								}
+								onClicked:{
+								// Do changes only if we choose a different layout.
+											if(! ( mainItem.callModel ? (mainItem.callModel.videoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
+															|| (!mainItem.callModel.videoEnabled && modelData.value == 2)
+															: false)){
+												mainItem.enabled = false
+												mainItem.layoutChanging(modelData.value)// Let time to clear cameras
+												changingLayoutDelay.start()
+											}
+										}
 							}
 							Icon{
 								id: layoutIcon							

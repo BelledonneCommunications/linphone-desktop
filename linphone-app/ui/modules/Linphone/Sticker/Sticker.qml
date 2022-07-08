@@ -9,19 +9,21 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+import UtilsCpp 1.0
 
 
 // A sticker display the avatar or its camera view
 
 
 // =============================================================================
-Flipable{
+Item{
 	id: mainItem
 	
-	property bool flipped : cameraEnabled && camera.isReady
+	property bool flipped : deactivateCamera && camera.isReady
 	
 	
 	property bool showCustomButton: false
+	property bool showUsername: true
 	property bool customButtonToggled: false
 	property QtObject customButtonColorSet: StickerStyle.custom
 	
@@ -32,42 +34,55 @@ Flipable{
 	property alias showCloseButton: camera.showCloseButton
 	property alias showActiveSpeakerOverlay: camera.showActiveSpeakerOverlay
 	property alias isCameraFromDevice: camera.isCameraFromDevice
-	property alias cameraEnabled: camera.cameraEnabled
+	property alias deactivateCamera: camera.deactivateCamera
 	
 	property alias image: avatar.image
-	property alias username: avatar.username
 	property alias avatarBackgroundColor: avatar.avatarBackgroundColor
 	property alias avatarStickerBackgroundColor: avatar.color
 	property alias avatarRatio: avatar.avatarRatio
 	property alias showAvatarBorder: avatar.showAvatarBorder
+	property alias avatarUsername: avatar.avatarUsername
+	property alias conferenceInfoModel: avatar.conferenceInfoModel
 	
 	signal videoDefinitionChanged()
 	signal customButtonClicked()
 	
-	clip:false
+	property alias username: avatar.username
 	
-	transform: Rotation {
-						id: rotation
-						origin.x: mainItem.width/2
-						origin.y: mainItem.height/2
-						axis.x: 0; axis.y: 1; axis.z: 0     // set axis.y to 1 to rotate around y-axis
-						angle: 0    // the default angle
-				}
-				
-	states: State {
-		name: "back"
-		PropertyChanges { target: rotation; angle: 180 }
-		when: mainItem.flipped
+	function resetCamera(){
+		camera.resetCamera()
 	}
-	property bool quickTransition : flipped
-	transitions: Transition {
-		SequentialAnimation {
-			NumberAnimation { target: rotation; duration: quickTransition || rotation.angle != 0 ? 0 : 300 }
-			NumberAnimation { target: rotation; property: "angle"; duration: quickTransition ? 200 : 800 }
+	
+	clip:false
+	state: mainItem.flipped ? 'back' : 'front'
+	states: [State {
+			name: "front"
+		}, State {
+			name: "back"
 		}
-	}
-						
-	front: AvatarSticker{
+	]
+	property bool quickTransition : false
+	property alias cameraOpacity: camera.opacity
+	transitions: [Transition {
+			from: 'front'
+			to: 'back'
+			SequentialAnimation {
+				NumberAnimation { target: mainItem; duration: quickTransition ? 0 : 400 }
+				NumberAnimation { target: camera; property: 'opacity'; to:1.0; duration: 100;}
+			}
+		},
+		Transition {
+			from: 'back'
+			to: 'front'
+			SequentialAnimation {
+				NumberAnimation { target: mainItem; duration: 0 }
+				NumberAnimation { target: camera; property: 'opacity'; to:0.0; duration: 100;}
+			}
+		}
+	]
+	
+	
+	AvatarSticker{
 		id: avatar
 		currentDevice: mainItem.currentDevice
 		callModel: mainItem.callModel
@@ -75,6 +90,7 @@ Flipable{
 		isPreview: mainItem.isPreview
 		showCloseButton: mainItem.showCloseButton
 		showActiveSpeakerOverlay: mainItem.showActiveSpeakerOverlay
+		showUsername: mainItem.showUsername
 		
 		showCustomButton: mainItem.showCustomButton
 		customButtonToggled: mainItem.customButtonToggled
@@ -85,10 +101,14 @@ Flipable{
 		
 		onCustomButtonClicked: mainItem.customButtonClicked()
 	}
-	back: CameraSticker{
+	
+	CameraSticker{
 		id: camera
 		height: mainItem.height
 		width: mainItem.width
+		opacity: 0.0
+		username: mainItem.username
+		showUsername: mainItem.showUsername
 		
 		showCustomButton: mainItem.showCustomButton
 		customButtonToggled: mainItem.customButtonToggled

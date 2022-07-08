@@ -135,6 +135,7 @@ ColumnLayout{
 		moveDisplaced: defaultTransition
 		remove: Transition {
 			SequentialAnimation {
+				PropertyAction { target: grid; property: "GridView.delayRemove"; value: true }
 				ScriptAction {
 					script: {
 						mainLayout.startTransition()
@@ -144,6 +145,7 @@ ColumnLayout{
 					NumberAnimation { property: "opacity"; to: 0; duration: mainLayout.maxTransitionTime }
 					NumberAnimation { properties: "x,y"; to: 0; duration: mainLayout.maxTransitionTime }
 				}
+				PropertyAction { target: grid; property: "GridView.delayRemove"; value: false }
 			}
 		}
 		removeDisplaced: defaultTransition

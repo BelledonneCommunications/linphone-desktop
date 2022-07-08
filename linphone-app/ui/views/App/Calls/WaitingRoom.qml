@@ -133,14 +133,19 @@ Rectangle {
 					height: cameraHeight
 					width : cameraWidth
 					
-					
+					deactivateCamera: mainItem.previewLoaderEnabled
 					callModel: mainItem.callModel
+					conferenceInfoModel: mainItem.conferenceInfoModel
+					/*
 					image: mainItem._sipAddressObserver && mainItem._sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
+					
 					username: mainItem.conferenceInfoModel ? mainItem.conferenceInfoModel.subject 
 															   : (mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : '')
+					*/					
 					avatarRatio: 2/3
 					
-					showCustomButton: true
+					showCustomButton: !mainItem.callModel
+					showUsername: false
 					customButtonColorSet : WaitingRoomStyle.buttons.options
 					customButtonToggled: mediaMenu.visible
 					
@@ -198,8 +203,8 @@ Rectangle {
 			Layout.alignment: Qt.AlignCenter
 			Layout.topMargin: 20
 			Layout.bottomMargin: 15
-			//visible: mainItem.conferenceInfoModel
-			visible: false
+			visible: mainItem.conferenceInfoModel
+			
 			spacing: 30
 			TextButtonA {
 				//: 'Cancel' : Cancel button.
@@ -282,7 +287,7 @@ Rectangle {
 					isCustom: true
 					backgroundRadius: width/2
 					colorSet: WaitingRoomStyle.buttons.call
-					visible: !callModel && conferenceInfoModel
+					visible: false &&  !callModel && conferenceInfoModel
 					onClicked: {CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
 														   {	video: modeChoice.selectedMode != 2
 															   , camera: camera.cameraEnabled

@@ -308,6 +308,7 @@ Rectangle {
 				conferenceModel: conference.conferenceModel
 				visible: false
 				onClose: rightMenu.visible = !rightMenu.visible
+				onLayoutChanging: conferenceLayout.item.clearAll(layoutMode)
 			}
 		}
 	}

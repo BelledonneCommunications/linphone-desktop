@@ -37,15 +37,11 @@ void ParticipantDeviceListener::onIsMuted(const std::shared_ptr<linphone::Partic
 	emit isMuted(participantDevice, isMutedVar);
 }
 
-void ParticipantDeviceListener::onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
-	qDebug() << "onConferenceJoined: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
-	emit conferenceJoined(participantDevice);
+void ParticipantDeviceListener::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDeviceState state){
+	qDebug() << "onStateChanged: " << participantDevice->getAddress()->asString().c_str() << " " << (int)state;
+	emit stateChanged(participantDevice, state);
 }
 
-void ParticipantDeviceListener::onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
-	qDebug() << "onConferenceLeft: " << participantDevice->getAddress()->asString().c_str() << " isInConf?[" << participantDevice->isInConference() << "]";
-	emit conferenceLeft(participantDevice);
-}
 void ParticipantDeviceListener::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {
 	qDebug() << "onStreamCapabilityChanged: " << participantDevice->getAddress()->asString().c_str() << " " << (int)direction << " / " << (int)streamType;
 	emit streamCapabilityChanged(participantDevice, direction, streamType);

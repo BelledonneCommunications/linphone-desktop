@@ -60,10 +60,8 @@ ParticipantDeviceModel *ParticipantDeviceProxyModel::getAt(int row){
 }
 
 ParticipantDeviceModel* ParticipantDeviceProxyModel::getLastActiveSpeaking(){
-	if( mActiveSpeakers.size() == 0)
-		return nullptr;
-	else
-		return mActiveSpeakers.first();
+	auto listModel = qobject_cast<ParticipantDeviceListModel*>(sourceModel());
+	return listModel ? listModel->getLastActiveSpeaking() : nullptr;
 }
 
 CallModel * ParticipantDeviceProxyModel::getCallModel() const{
@@ -80,6 +78,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	auto sourceModel = new ParticipantDeviceListModel(mCallModel);
 	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::onCountChanged);
 	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::onParticipantSpeaking);
+	connect(sourceModel, &ParticipantDeviceListModel::conferenceCreated, this, &ParticipantDeviceProxyModel::conferenceCreated);
 	setSourceModel(sourceModel);
 	emit countChanged();
 }
@@ -89,6 +88,7 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	auto sourceModel = participant->getParticipantDevices().get();
 	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::countChanged);
 	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::onParticipantSpeaking);
+	connect(sourceModel, &ParticipantDeviceListModel::conferenceCreated, this, &ParticipantDeviceProxyModel::conferenceCreated);
 	setSourceModel(sourceModel);
 	emit countChanged();
 }
@@ -106,11 +106,5 @@ void ParticipantDeviceProxyModel::onCountChanged(){
 }
 
 void ParticipantDeviceProxyModel::onParticipantSpeaking(ParticipantDeviceModel * speakingDevice){
-	bool changed = (mActiveSpeakers.removeAll(speakingDevice) > 0);
-	if( speakingDevice->getIsSpeaking()) {
-		mActiveSpeakers.push_front(speakingDevice);
-		changed = true;
-	}
-	if(changed)
-		emit participantSpeaking(speakingDevice);
+	emit participantSpeaking(speakingDevice);
 }

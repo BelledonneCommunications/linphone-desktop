@@ -15,7 +15,7 @@ DecorationSticker{
 	id: mainItem
 	property alias currentDevice: camera.currentDevice
 	property alias callModel: camera.callModel
-	property bool cameraEnabled: true
+	property alias deactivateCamera: camera.deactivateCamera
 	property alias hideCamera: camera.hideCamera
 	property alias isPaused: camera.isPaused
 	property alias isPreview: camera.isPreview
@@ -32,7 +32,11 @@ DecorationSticker{
 	
 	signal videoDefinitionChanged()
 	onBackgroundClicked: camera.resetActive()
-	onCameraEnabledChanged: if( cameraEnabled) camera.resetActive()
+	onDeactivateCameraChanged: if( deactivateCamera) camera.resetActive()
+	
+	function resetCamera(){
+		camera.resetActive();
+	}
 	
 	_currentDevice: currentDevice
 	_callModel: callModel
@@ -59,7 +63,6 @@ DecorationSticker{
 		}
 		CameraItem{
 			id: camera
-			currentDevice: mainItem.currentDevice
 			callModel: mainItem.callModel
 			
 			anchors.centerIn: parent

@@ -62,8 +62,6 @@ public:
 	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	virtual void onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	virtual void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
-	virtual void onParticipantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & device);
-	virtual void onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool isSpeaking);
@@ -78,8 +76,6 @@ signals:
 	void participantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
-	void participantDeviceLeft(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
-	void participantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool isSpeaking);

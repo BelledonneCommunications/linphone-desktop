@@ -66,16 +66,6 @@ void ConferenceListener::onParticipantAdminStatusChanged(const std::shared_ptr<l
 	qDebug() << "onParticipantAdminStatusChanged";
 	emit participantAdminStatusChanged(participant);
 }
-void ConferenceListener::onParticipantDeviceLeft(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qDebug() << "onParticipantDeviceLeft";
-	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
-	emit participantDeviceLeft(participantDevice);
-}
-void ConferenceListener::onParticipantDeviceJoined(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
-	qDebug() << "onParticipantDeviceJoined";
-	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
-	emit participantDeviceJoined(participantDevice);
-}
 void ConferenceListener::onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "onParticipantDeviceMediaCapabilityChanged: "  << (int)participantDevice->getStreamCapability(linphone::StreamType::Video) << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaCapabilityChanged(participantDevice);

@@ -29,8 +29,7 @@
 void ParticipantDeviceModel::connectTo(ParticipantDeviceListener * listener){
 	connect(listener, &ParticipantDeviceListener::isSpeakingChanged, this, &ParticipantDeviceModel::onIsSpeakingChanged);
 	connect(listener, &ParticipantDeviceListener::isMuted, this, &ParticipantDeviceModel::onIsMuted);
-	connect(listener, &ParticipantDeviceListener::conferenceJoined, this, &ParticipantDeviceModel::onConferenceJoined);
-	connect(listener, &ParticipantDeviceListener::conferenceLeft, this, &ParticipantDeviceModel::onConferenceLeft);
+	connect(listener, &ParticipantDeviceListener::stateChanged, this, &ParticipantDeviceModel::onStateChanged);
 	connect(listener, &ParticipantDeviceListener::streamCapabilityChanged, this, &ParticipantDeviceModel::onStreamCapabilityChanged);
 	connect(listener, &ParticipantDeviceListener::streamAvailabilityChanged, this, &ParticipantDeviceModel::onStreamAvailabilityChanged);
 }
@@ -163,10 +162,19 @@ void ParticipantDeviceModel::onIsSpeakingChanged(const std::shared_ptr<linphone:
 void ParticipantDeviceModel::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted) {
 	emit isMutedChanged();
 }
-void ParticipantDeviceModel::onConferenceJoined(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
-	updateVideoEnabled();
-}
-void ParticipantDeviceModel::onConferenceLeft(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice) {
+void ParticipantDeviceModel::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDeviceState state){
+	switch(state){
+		case linphone::ParticipantDeviceState::Joining: break;
+		case linphone::ParticipantDeviceState::Present: setPaused(false);break;
+		case linphone::ParticipantDeviceState::Leaving: break;
+		case linphone::ParticipantDeviceState::Left: break;
+		case linphone::ParticipantDeviceState::ScheduledForJoining: break;
+		case linphone::ParticipantDeviceState::ScheduledForLeaving: break;
+		case linphone::ParticipantDeviceState::OnHold: setPaused(true);break;
+		case linphone::ParticipantDeviceState::Alerting: break;
+		case linphone::ParticipantDeviceState::MutedByFocus: break;
+	default:{}
+	}
 	updateVideoEnabled();
 }
 void ParticipantDeviceModel::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {

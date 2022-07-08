@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.12
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
+import LinphoneEnums 1.0
 
 import UtilsCpp 1.0
 
@@ -26,29 +27,41 @@ Item {
 	property bool cameraEnabled: true
 	property alias showMe : allDevices.showMe
 	property int participantCount: callModel.isConference ? allDevices.count : 2
+	onParticipantCountChanged: {console.log("Conf count: " +participantCount);allDevices.updateCurrentDevice()}
 
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
 			callModel: mainItem.callModel
 			showMe: true
-			onParticipantSpeaking: {
+			onParticipantSpeaking: updateCurrentDevice()
+			property bool cameraEnabled: callModel && callModel.cameraEnabled
+			onCameraEnabledChanged: showMe = cameraEnabled	// Do it on changed to ignore hard bindings (that can be override)
+			onConferenceCreated: cameraView.resetCamera()
+			function updateCurrentDevice(){
 				var device = getLastActiveSpeaking()
 				if(device)	// Get 
 					cameraView.currentDevice = device
 			}
-			property bool cameraEnabled: callModel && callModel.cameraEnabled
-			onCameraEnabledChanged: showMe = cameraEnabled	// Do it on changed to ignore hard bindings (that can be override)
 		}
+	
+	function clearAll(layoutMode){
+		if( layoutMode != LinphoneEnums.ConferenceLayoutActiveSpeaker){
+			cameraView.cameraEnabled = false
+			miniViews.model = []
+		}
+	}
+
 	Sticker{
 		id: cameraView
 		callModel: mainItem.callModel
-		cameraEnabled: mainItem.cameraEnabled
+		deactivateCamera: mainItem.cameraEnabled && (!currentDevice || currentDevice.videoEnabled)
 		isCameraFromDevice: false
 		isPreview: false
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
 		isPaused: (callModel && callModel.pausedByUser) || (currentDevice && currentDevice.isPaused) //callModel.pausedByUser
+		quickTransition: true
 		showCloseButton: false
 		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
 		showCustomButton:  false
@@ -83,11 +96,12 @@ Item {
 					anchors.fill: parent
 					anchors.margins: 3
 					
-					cameraEnabled: index >=0 && mainItem.cameraEnabled
+					deactivateCamera: index >=0 && ( (!modelData && mainItem.cameraEnabled) || modelData.videoEnabled)
+					//onCameraEnabledChanged: console.log(username +" => " +modelData.videoEnabled)
 					currentDevice: modelData
-					callModel: mainItem.callModel.isConference ? mainItem.callModel : null
+					callModel: mainItem.callModel
 					isCameraFromDevice:  mainItem.callModel.isConference
-					isPaused: mainItem.callModel.pausedByUser || currentDevice && currentDevice.isPaused
+					isPaused: currentDevice && currentDevice.isPaused
 					showCloseButton: false
 					showCustomButton:  false
 					showAvatarBorder: true

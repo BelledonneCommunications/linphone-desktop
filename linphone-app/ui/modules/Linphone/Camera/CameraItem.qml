@@ -18,11 +18,12 @@ Item {
 	property bool isCameraFromDevice: true
 	property ParticipantDeviceModel currentDevice
 	property CallModel callModel
-	property bool isPreview: !callModel || !container.currentDevice || container.currentDevice.isMe
+	property bool isPreview: (!callModel && !container.currentDevice) || ( container.currentDevice && container.currentDevice.isMe)
 	property bool isFullscreen: false
 	property bool hideCamera: false
 	property bool isPaused: false
-	property bool isVideoEnabled: (!callModel || callModel.videoEnabled)
+	property bool deactivateCamera: true
+	property bool isVideoEnabled: deactivateCamera && (!callModel || callModel.videoEnabled)
 									&& (!container.currentDevice || callModel && (container.currentDevice
 																			&& (container.currentDevice.videoEnabled || (container.currentDevice.isMe && callModel.cameraEnabled))))
 
@@ -35,6 +36,7 @@ Item {
 	signal videoDefinitionChanged()
 	
 	onCurrentDeviceChanged: {if(container.isCameraFromDevice) resetActive()}
+	Component.onDestruction: isVideoEnabled=false
 	function resetActive(){
 		resetTimer.resetActive()
 	}

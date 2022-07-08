@@ -385,7 +385,7 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
-						height:1
+						height:visible ? 1 : 0
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
 						visible: groupInfoMenu.visible && contactMenu.visible
@@ -405,10 +405,10 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
-						height:1
+						height:visible ? 1 : 0
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
-						visible: groupInfoMenu.visible && (contactMenu.visible || devicesMenuItem.visible)
+						visible: devicesMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible)
 					}
 					MenuItem{
 						id: devicesMenuItem
@@ -425,7 +425,7 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
-						height:1
+						height:visible ? 1 : 0
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
 						visible: ephemeralMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible)
@@ -445,7 +445,7 @@ ColumnLayout  {
 						}
 					}
 					Rectangle{
-						height:1
+						height:visible ? 1 : 0
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
 						visible: deleteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible)

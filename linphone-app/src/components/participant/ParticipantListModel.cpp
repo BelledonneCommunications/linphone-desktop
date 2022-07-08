@@ -55,12 +55,10 @@ ParticipantListModel::ParticipantListModel (ConferenceModel * conferenceModel, Q
 		mConferenceModel = conferenceModel;
 
 		connect(mConferenceModel, &ConferenceModel::participantAdded, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdded));
-		connect(mConferenceModel, &ConferenceModel::participantDeviceJoined, this, QOverload<const std::shared_ptr<const linphone::ParticipantDevice> &>::of(&ParticipantListModel::onParticipantDeviceJoined));
 		connect(mConferenceModel, &ConferenceModel::participantRemoved, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantRemoved));
 		connect(mConferenceModel, &ConferenceModel::participantAdminStatusChanged, this, QOverload<const std::shared_ptr<const linphone::Participant> &>::of(&ParticipantListModel::onParticipantAdminStatusChanged));
 		connect(mConferenceModel, &ConferenceModel::conferenceStateChanged, this, &ParticipantListModel::onStateChanged);
 		
-
 		updateParticipants();
 	}
 }
@@ -316,22 +314,6 @@ void ParticipantListModel::onParticipantRemoved(const std::shared_ptr<const linp
 	if(participant)
 		remove(participant.get());
 }
-
-void ParticipantListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::EventLog> & eventLog){
-	qDebug() << "onParticipantDeviceJoined event: " << eventLog->getParticipantAddress()->asString().c_str();
-	updateParticipants();
-}
-
-void ParticipantListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::ParticipantDevice> & device){
-	qDebug() << "onParticipantDeviceJoined part: " << device->getAddress()->asString().c_str();
-	updateParticipants();
-}
-
-void ParticipantListModel::onParticipantDeviceJoined(const std::shared_ptr<const linphone::Address>& address){
-	qDebug() << "onParticipantDeviceJoined addr: " << address->asString().c_str();
-	updateParticipants();
-}
-
 
 void ParticipantListModel::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::EventLog> & eventLog){
 	onParticipantAdminStatusChanged(eventLog->getParticipantAddress());

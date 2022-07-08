@@ -18,6 +18,8 @@ Item{
 	id: mainItem
 	default property alias _content: content.data
 	property alias speakingOverlayDisplayed: effect.visible
+	property alias username: username.text
+	property bool showUsername: true
 	
 	property ParticipantDeviceModel _currentDevice
 	property CallModel _callModel
@@ -76,7 +78,7 @@ Item{
 	}
 	Text{
 		id: username
-		visible: mainItem._currentDevice
+		visible: mainItem.showUsername && mainItem._currentDevice
 		anchors.right: parent.right
 		anchors.left: parent.left
 		anchors.bottom: parent.bottom
@@ -90,6 +92,7 @@ Item{
 	}
 	Glow {
 		anchors.fill: username
+		visible: username.visible
 		//spread: 1
 		radius: 12
 		samples: 25

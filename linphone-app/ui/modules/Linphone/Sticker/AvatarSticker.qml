@@ -18,15 +18,17 @@ DecorationSticker {
 	property ParticipantDeviceModel currentDevice
 	property CallModel callModel
 	property bool isPaused
-	property bool isPreview
+	
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true
 	property real avatarRatio : 2/3
 	property color color : AvatarStickerStyle.stickerBackgroundColor
 	
 	property alias image: avatar.image
-	property alias username: avatar.username
 	property alias avatarBackgroundColor: avatar.backgroundColor
+	property alias avatarUsername: avatar.username
+	property alias conferenceInfoModel: avatar.conferenceInfoModel
+	property alias isPreview: avatar.isPreview
 	property bool showAvatarBorder: false
 	
 	property alias showCustomButton: mainItem._showCustomButton
@@ -39,6 +41,7 @@ DecorationSticker {
 	_isPreview: isPreview
 	_showCloseButton: showCloseButton
 	_showActiveSpeakerOverlay: showActiveSpeakerOverlay
+	username: avatarUsername
 	
 	clip:false
 	radius: AvatarStickerStyle.radius

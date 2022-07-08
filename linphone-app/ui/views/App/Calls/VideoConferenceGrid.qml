@@ -6,6 +6,7 @@ import QtGraphicalEffects 1.12
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
+import LinphoneEnums 1.0
 
 import UtilsCpp 1.0
 
@@ -28,7 +29,12 @@ Mosaic {
 	
 	// On grid view, we limit the quality if there are enough participants
 	onParticipantCountChanged: participantCount > ConstantsCpp.maxMosaicParticipants ? SettingsModel.setLimitedMosaicQuality() : SettingsModel.setHighMosaicQuality()
-
+	function clearAll(layoutMode){
+		if( layoutMode != 2 && layoutMode != LinphoneEnums.ConferenceLayoutGrid){
+			clear()
+			gridModel.model = []
+		}
+	}
 	delegateModel: DelegateModel{
 		id: gridModel
 		property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
@@ -52,7 +58,7 @@ Mosaic {
 				id: cameraView
 				anchors.fill: parent
 				
-				cameraEnabled: index >=0 && grid.cameraEnabled
+				deactivateCamera: index >=0 && grid.cameraEnabled
 				currentDevice: gridModel.participantDevices.getAt(index)
 				callModel: participantDevices.callModel
 				isCameraFromDevice: true
