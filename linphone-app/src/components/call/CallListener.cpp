@@ -23,6 +23,7 @@
 #include <QQmlApplicationEngine>
 
 #include <algorithm>
+#include <QDebug>
 #include "CallModel.hpp"
 
 // =============================================================================

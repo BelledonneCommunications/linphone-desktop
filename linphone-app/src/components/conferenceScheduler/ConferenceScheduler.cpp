@@ -23,6 +23,7 @@
 
 #include <QQmlApplicationEngine>
 #include "app/App.hpp"
+#include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
 
 void ConferenceScheduler::connectTo(ConferenceSchedulerListener * listener){
@@ -57,6 +58,7 @@ void ConferenceScheduler::onStateChanged(linphone::ConferenceSchedulerState stat
 	qDebug() << "ConferenceScheduler::onStateChanged : " << (int)state;
 	emit stateChanged(state);
 	if( state == linphone::ConferenceSchedulerState::Ready) {
+		emit CoreManager::getInstance()->getHandlers()->conferenceInfoReceived(mConferenceScheduler->getInfo());
 		if( (mSendInvite & 1) == 1){
 			std::shared_ptr<linphone::ChatRoomParams> params = CoreManager::getInstance()->getCore()->createDefaultChatRoomParams();
 			params->setBackend(linphone::ChatRoomBackend::Basic);

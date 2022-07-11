@@ -164,6 +164,10 @@ bool ConferenceInfoModel::isScheduled() const{
 	return mIsScheduled;
 }
 
+int ConferenceInfoModel::getInviteMode() const{
+	return mInviteMode;
+}
+
 QVariantList ConferenceInfoModel::getParticipants() const{
 	QVariantList addresses;
 	for(auto item : mConferenceInfo->getParticipants()){
@@ -248,9 +252,16 @@ void ConferenceInfoModel::setIsScheduled(const bool& on){
 	}
 }
 
+void ConferenceInfoModel::setInviteMode(const int& mode){
+	if( mode != mInviteMode){
+		mInviteMode = mode;
+		emit inviteModeChanged();
+	}
+}
+
 //-------------------------------------------------------------------------------------------------
 
-void ConferenceInfoModel::createConference(const int& securityLevel, const int& inviteMode) {
+void ConferenceInfoModel::createConference(const int& securityLevel) {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
@@ -261,7 +272,7 @@ void ConferenceInfoModel::createConference(const int& securityLevel, const int& 
 	
 	
 	mConferenceScheduler = ConferenceScheduler::create();
-	mConferenceScheduler->mSendInvite = inviteMode;
+	mConferenceScheduler->mSendInvite = mInviteMode;
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
 	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);

@@ -69,5 +69,6 @@ void ConferenceInfoProxyModel::onConferenceInfoReceived(const std::shared_ptr<co
 	if( realConferenceInfo ){
 		auto model =  qobject_cast<ConferenceInfoMapModel*>(sourceModel());
 		model->add(realConferenceInfo);
-	}
+	}else
+		qWarning() << "No conferenceInfo have beend found for " << conferenceInfo->getUri()->asString().c_str();
 }

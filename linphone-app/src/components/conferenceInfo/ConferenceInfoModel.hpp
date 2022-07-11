@@ -46,6 +46,7 @@ public:
 	Q_PROPERTY(QString displayNamesToString READ displayNamesToString NOTIFY participantsChanged)
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
+	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
 		
 	static QSharedPointer<ConferenceInfoModel> create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	ConferenceInfoModel (QObject * parent = nullptr);
@@ -66,6 +67,7 @@ public:
 	Q_INVOKABLE QString displayNamesToString()const;
 	QString getUri() const;
 	bool isScheduled() const;
+	int getInviteMode() const;
 	Q_INVOKABLE QVariantList getParticipants() const;
 	Q_INVOKABLE int getParticipantCount()const;
 	Q_INVOKABLE TimeZoneModel* getTimeZoneModel() const;
@@ -77,12 +79,13 @@ public:
 	void setOrganizer(const QString& organizerAddress);
 	void setDescription(const QString& description);
 	void setIsScheduled(const bool& on);
+	void setInviteMode(const int& modes);
 	
 	Q_INVOKABLE void setParticipants(ParticipantListModel * participants);
 	Q_INVOKABLE void setTimeZoneModel(TimeZoneModel * model);
 	
 // Tools
-	Q_INVOKABLE void createConference(const int& securityLevel, const int& inviteMode);
+	Q_INVOKABLE void createConference(const int& securityLevel);
 	Q_INVOKABLE void deleteConferenceInfo();// Remove completly this conference info from DB
 
 // SCHEDULER
@@ -101,6 +104,7 @@ signals:
 	void participantsChanged();
 	void uriChanged();
 	void isScheduledChanged();
+	void inviteModeChanged();
 	
 	void conferenceCreated();
 	void conferenceCreationFailed();
@@ -113,6 +117,7 @@ private:
 	QTimeZone mTimeZone;
 	
 	bool mIsScheduled = true;
+	int mInviteMode = 0;
 };
 
 Q_DECLARE_METATYPE(QSharedPointer<ConferenceInfoModel>)

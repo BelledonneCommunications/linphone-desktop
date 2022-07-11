@@ -21,14 +21,23 @@ DialogPlus {
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
 	property int creationState: 0
+	Timer{
+		id: closeDelay
+		interval: 2000
+		onTriggered: conferenceManager.exit(1)
+	}
 	Connections{
 		target: conferenceInfoModel
 		onConferenceCreated: {
-			conferenceManager.creationState = 2
+			if( conferenceInfoModel.inviteMode == 0 ) {
+				closeDelay.start()
+				conferenceManager.creationState = 2
+			}
 		}
 		onConferenceCreationFailed:{ conferenceManager.creationState = -1 }
 		onInvitationsSent: {
-						exit(1)
+						closeDelay.start()
+						conferenceManager.creationState = 2
 					}
 	}
 	
@@ -133,7 +142,8 @@ DialogPlus {
 				
 				
 				conferenceInfoModel.setParticipants(selectedParticipants.participantListModel)
-				conferenceInfoModel.createConference(false && secureSwitch.checked, getInviteMode())	// TODO remove false when Encryption is ready to use
+				conferenceInfoModel.inviteMode = getInviteMode();
+				conferenceInfoModel.createConference(false && secureSwitch.checked)	// TODO remove false when Encryption is ready to use
 			}
 			TooltipArea{
 				visible: AccountSettingsModel.conferenceURI == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
