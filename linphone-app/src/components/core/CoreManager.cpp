@@ -280,6 +280,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	setDatabasesPaths();
 	setOtherPaths();
 	mCore->enableFriendListSubscription(true);
+	mCore->enableRecordAware(true);
 }
 
 void CoreManager::updateUserAgent(){

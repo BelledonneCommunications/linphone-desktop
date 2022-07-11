@@ -162,6 +162,7 @@ set(SOURCES
 	src/app/translator/DefaultTranslator.cpp
 	src/components/assistant/AssistantModel.cpp
 	src/components/authentication/AuthenticationNotifier.cpp
+	src/components/call/CallListener.cpp
 	src/components/call/CallModel.cpp
 	src/components/calls/CallsListModel.cpp
 	src/components/calls/CallsListProxyModel.cpp
@@ -294,6 +295,7 @@ set(HEADERS
 	src/app/translator/DefaultTranslator.hpp
 	src/components/assistant/AssistantModel.hpp
 	src/components/authentication/AuthenticationNotifier.hpp
+	src/components/call/CallListener.hpp
 	src/components/call/CallModel.hpp
 	src/components/calls/CallsListModel.hpp
 	src/components/calls/CallsListProxyModel.hpp

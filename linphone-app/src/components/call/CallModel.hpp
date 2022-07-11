@@ -29,6 +29,7 @@
 #include "utils/LinphoneEnums.hpp"
 
 // =============================================================================
+class CallListener;
 class ConferenceInfoModel;
 class ConferenceModel;
 class ContactModel;
@@ -73,6 +74,7 @@ class CallModel : public QObject {
 	Q_PROPERTY(bool updating READ getUpdating NOTIFY statusChanged)
 	
 	Q_PROPERTY(bool recording READ getRecording NOTIFY recordingChanged)
+	Q_PROPERTY(bool remoteRecording READ getRemoteRecording NOTIFY remoteRecordingChanged)
 
 	Q_PROPERTY(bool snapshotEnabled READ getSnapshotEnabled NOTIFY snapshotEnabledChanged)	// Grid doesn't enable snapshot
 	
@@ -182,6 +184,7 @@ public:
 	static constexpr int DtmfSoundDelay = 200;
 	
 	std::shared_ptr<linphone::Call> mCall;
+	std::shared_ptr<CallListener> mCallListener;	// This is passed to linpĥone object and must be in shared_ptr
 	std::shared_ptr<linphone::Address> mRemoteAddress;
 	std::shared_ptr<linphone::MagicSearch> mMagicSearch;
 	
@@ -189,6 +192,7 @@ public slots:
 	// Set remote display name when a search has been done
 	void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
 	void endCall();
+	void onRemoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording);
 	
 signals:
 	void callErrorChanged (const QString &callError);
@@ -201,6 +205,7 @@ signals:
 	void microMutedChanged (bool status);
 	void cameraEnabledChanged();
 	void recordingChanged (bool status);
+	void remoteRecordingChanged(bool status);
 	void snapshotEnabledChanged();
 	void statsUpdated ();
 	void statusChanged (CallStatus status);
@@ -215,6 +220,7 @@ signals:
 	void transferAddressChanged (const QString &transferAddress);
 	
 	void conferenceVideoLayoutChanged();
+	
 	
 public:
 	void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
@@ -262,6 +268,7 @@ public:
 	bool getUpdating () const;
 	
 	bool getRecording () const;
+	bool getRemoteRecording() const;
 	bool getSnapshotEnabled() const;
 	
 	CallEncryption getEncryption () const;
@@ -289,6 +296,8 @@ public:
 	static QString generateSavedFilename (const QString &from, const QString &to);
 	
 private:
+	void connectTo(CallListener * listener);
+
 	bool mIsInConference = false;
 	
 	bool mPausedByRemote = false;

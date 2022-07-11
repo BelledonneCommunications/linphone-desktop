@@ -18,7 +18,13 @@ QtObject {
 		property int pointSize: Units.dp * 12
 		property int addressPointSize: Units.dp * 10
 	}
-	
+	property QtObject recordWarning: QtObject{
+		property string icon: 'record_custom'
+		property color iconColor: ColorsList.add(sectionName+'_warning', 'i').color
+		property int iconSize: 30
+		property color color: ColorsList.add(sectionName+'_warning_fg', 'q').color	
+		property int pointSize: Units.dp * 9
+	}
 	property QtObject grid: QtObject {
 		property int spacing: 5
 		

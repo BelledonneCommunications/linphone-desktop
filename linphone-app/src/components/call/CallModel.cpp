@@ -25,6 +25,7 @@
 #include <QTimer>
 
 #include "app/App.hpp"
+#include "CallListener.hpp"
 #include "components/calls/CallsListModel.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
 #include "components/conference/ConferenceModel.hpp"
@@ -49,6 +50,9 @@ using namespace std;
 namespace {
 constexpr char AutoAnswerObjectName[] = "auto-answer-timer";
 }
+void CallModel::connectTo(CallListener * listener){
+	connect(listener, &CallListener::remoteRecording, this, &CallModel::onRemoteRecording);
+}
 
 CallModel::CallModel (shared_ptr<linphone::Call> call){
 	CoreManager *coreManager = CoreManager::getInstance();
@@ -60,6 +64,9 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 		mCall->setData("call-model", *this);
 	updateIsInConference();
 	if(mCall) {
+		mCallListener = std::make_shared<CallListener>();
+		connectTo(mCallListener.get());
+		mCall->addListener(mCallListener);
 		mConferenceVideoLayout = LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout());
 		if(mCall->getConference()){
 			if( mConferenceVideoLayout == LinphoneEnums::ConferenceLayoutGrid)
@@ -70,6 +77,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 			settings->setCameraMode(settings->getCallCameraMode());
 	}
 	
+		
 	// Deal with auto-answer.
 	if (!isOutgoing()) {
 		
@@ -109,8 +117,10 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 
 CallModel::~CallModel () {
 	mMagicSearch->removeListener(mSearch);
-	if(mCall)
+	if(mCall){
+		mCall->removeListener(mCallListener);
 		mCall->unsetData("call-model");
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -897,6 +907,14 @@ void CallModel::endCall(){
 				chatRoomModel->onCallEnded(mCall);
 		}
 	}
+}
+
+bool CallModel::getRemoteRecording() const{
+	return mCall && mCall->getRemoteParams() && mCall->getRemoteParams()->isRecording();
+}
+
+void CallModel::onRemoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording){
+	emit remoteRecordingChanged(recording);
 }
 
 void CallModel::setRemoteDisplayName(const std::string& name){
