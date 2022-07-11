@@ -18,6 +18,8 @@ Item {
 	
 	default property alias _content: popup.contentItem
 	property alias closePolicy : popup.closePolicy
+	property alias backgroundPopup: backgroundPopup.color
+	property bool showShadow : true
 	
 	// ---------------------------------------------------------------------------
 	
@@ -79,12 +81,13 @@ Item {
 		width: wrapper.width
 		
 		background: Rectangle {
+			id: backgroundPopup
 			color: PopupStyle.backgroundColor
 			height: popup.height
 			width: popup.width
 			
 			layer {
-				enabled: true
+				enabled: wrapper.showShadow
 				effect: PopupShadow {}
 			}
 		}

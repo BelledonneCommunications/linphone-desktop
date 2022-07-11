@@ -327,6 +327,8 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR_WITH_ALPHA("g", 20, "")
 		ADD_COLOR_WITH_ALPHA("g", 90, "")
 		ADD_COLOR_WITH_ALPHA("i", 30, "")
+		ADD_COLOR_WITH_ALPHA("j", 50, "")
+		ADD_COLOR_WITH_ALPHA("j", 90, "")
 		ADD_COLOR_WITH_ALPHA("l", 50, "")
 		ADD_COLOR_WITH_ALPHA("l", 80, "")
 		ADD_COLOR_WITH_ALPHA("q", 50, "")

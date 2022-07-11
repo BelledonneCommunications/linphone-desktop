@@ -487,17 +487,14 @@ Rectangle {
 		id: callStatistics
 		
 		call: conference.callModel
-		width: conference.width - 20
-		height: conference.height * 2/3
-		relativeTo: conference
-		relativeY: CallStyle.header.stats.relativeY
-		relativeX: 10
+		width: conference.width
+		height: conference.height
 	}
 	TelKeypad {
 		id: telKeypad
 		showHistory:true
 		call: callModel
 		visible: SettingsModel.showTelKeypadAutomatically
-		y: 50
+		y: 55
 	}
 }
