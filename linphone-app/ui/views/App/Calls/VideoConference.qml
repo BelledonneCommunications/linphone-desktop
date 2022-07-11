@@ -495,6 +495,6 @@ Rectangle {
 		showHistory:true
 		call: callModel
 		visible: SettingsModel.showTelKeypadAutomatically
-		y: 55
+		y: 70
 	}
 }

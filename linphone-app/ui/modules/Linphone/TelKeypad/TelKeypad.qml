@@ -46,6 +46,12 @@ Rectangle {
 			Layout.preferredWidth: parent.width
 			Layout.preferredHeight: implicitHeight
 			color: 'white'
+			
+			font {
+				bold: true
+				pointSize: TelKeypadStyle.button.text.pointSize
+			}
+			
 			wrapMode: Text.WrapAnywhere
 			horizontalAlignment: Qt.AlignCenter
 			visible: showHistory
@@ -57,6 +63,7 @@ Rectangle {
 		
 		GridLayout {
 			id: grid
+			Layout.topMargin: TelKeypadStyle.rowSpacing+5
 			
 			columns: 4 // Not a style.
 			rows: 4 // Same idea.
