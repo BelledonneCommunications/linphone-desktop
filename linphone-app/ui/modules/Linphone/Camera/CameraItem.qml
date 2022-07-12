@@ -22,8 +22,8 @@ Item {
 	property bool isFullscreen: false
 	property bool hideCamera: false
 	property bool isPaused: false
-	property bool deactivateCamera: true
-	property bool isVideoEnabled: deactivateCamera && (!callModel || callModel.videoEnabled)
+	property bool deactivateCamera: false
+	property bool isVideoEnabled: !deactivateCamera && (!callModel || callModel.videoEnabled)
 									&& (!container.currentDevice || callModel && (container.currentDevice
 																			&& (container.currentDevice.videoEnabled || (container.currentDevice.isMe && callModel.cameraEnabled))))
 

@@ -19,7 +19,7 @@ import UtilsCpp 1.0
 Item{
 	id: mainItem
 	
-	property bool flipped : deactivateCamera && camera.isReady
+	property bool flipped : !deactivateCamera && camera.isReady
 	
 	
 	property bool showCustomButton: false

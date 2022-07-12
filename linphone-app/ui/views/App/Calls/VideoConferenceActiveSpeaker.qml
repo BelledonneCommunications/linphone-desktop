@@ -54,7 +54,7 @@ Item {
 	Sticker{
 		id: cameraView
 		callModel: mainItem.callModel
-		deactivateCamera: mainItem.cameraEnabled && (!currentDevice || currentDevice.videoEnabled)
+		deactivateCamera: (callModel && callModel.pausedByUser) || !mainItem.cameraEnabled || (currentDevice && !currentDevice.videoEnabled)
 		isCameraFromDevice: false
 		isPreview: false
 		anchors.fill: parent
@@ -96,8 +96,7 @@ Item {
 					anchors.fill: parent
 					anchors.margins: 3
 					
-					deactivateCamera: index >=0 && ( (!modelData && mainItem.cameraEnabled) || modelData.videoEnabled)
-					//onCameraEnabledChanged: console.log(username +" => " +modelData.videoEnabled)
+					deactivateCamera: index <0 || (!modelData && !mainItem.cameraEnabled) || !modelData.videoEnabled || (callModel && callModel.pausedByUser)
 					currentDevice: modelData
 					callModel: mainItem.callModel
 					isCameraFromDevice:  mainItem.callModel.isConference

@@ -133,7 +133,7 @@ Rectangle {
 					height: cameraHeight
 					width : cameraWidth
 					
-					deactivateCamera: mainItem.previewLoaderEnabled
+					deactivateCamera: !mainItem.previewLoaderEnabled
 					callModel: mainItem.callModel
 					conferenceInfoModel: mainItem.conferenceInfoModel
 					/*

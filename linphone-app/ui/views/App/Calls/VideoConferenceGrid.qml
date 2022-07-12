@@ -58,11 +58,11 @@ Mosaic {
 				id: cameraView
 				anchors.fill: parent
 				
-				deactivateCamera: index >=0 && grid.cameraEnabled
+				deactivateCamera: index <0 || !grid.cameraEnabled || grid.callModel.pausedByUser
 				currentDevice: gridModel.participantDevices.getAt(index)
 				callModel: participantDevices.callModel
 				isCameraFromDevice: true
-				isPaused: grid.callModel.pausedByUser || avatarCell.currentDevice && avatarCell.currentDevice.isPaused
+				isPaused: avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				showCloseButton: false
 				showCustomButton:  false
 				avatarStickerBackgroundColor: VideoConferenceStyle.container.avatar.stickerBackgroundColor
