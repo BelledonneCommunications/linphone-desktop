@@ -65,7 +65,7 @@ void CoreHandlers::onAuthenticationRequested (
 		) {
 	Q_UNUSED(method)
 	if( authInfo ) {
-		auto accounts = core->getAccountList();
+		auto accounts = CoreManager::getInstance()->getAccountList();
 		auto itAccount = accounts.begin() ;
 		std::string username = authInfo->getUsername();
 		std::string domain = authInfo->getDomain();

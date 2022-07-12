@@ -990,7 +990,7 @@ void App::openAppAfterInit (bool mustBeIconified) {
 #endif // ifndef __APPLE__
 	
 	// Display Assistant if it does not exist proxy config.
-	if (coreManager->getCore()->getAccountList().empty())
+	if (coreManager->getAccountList().empty())
 		QMetaObject::invokeMethod(mainWindow, "setView", Q_ARG(QVariant, Constants::AssistantViewName), Q_ARG(QVariant, QString("")), Q_ARG(QVariant, QString("")));
 	
 #ifdef ENABLE_UPDATE_CHECK

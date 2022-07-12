@@ -1331,7 +1331,7 @@ void SettingsModel::configureRlsUri () {
 
 	// Set rls uri if necessary.
 	const string domain = getRlsUriDomain();
-	for (const auto &account : CoreManager::getInstance()->getCore()->getAccountList())
+	for (const auto &account : CoreManager::getInstance()->getAccountList())
 		if (account->getParams()->getDomain() == domain) {
 			mConfig->setString("sip", "rls_uri", Constants::DefaultRlsUri);
 			return;

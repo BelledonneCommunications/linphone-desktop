@@ -147,7 +147,7 @@ std::shared_ptr<linphone::Address> Utils::getMatchingLocalAddress(std::shared_pt
 	QVector<std::shared_ptr<linphone::Address> > addresses;
 	// Get default account
 	addresses.push_back(CoreManager::getInstance()->getCore()->createPrimaryContactParsed());
-	auto accounts = CoreManager::getInstance()->getCore()->getAccountList();
+	auto accounts = CoreManager::getInstance()->getAccountList();
 	foreach(auto account, accounts)
 		addresses.push_back(account->getParams()->getIdentityAddress()->clone());
 	foreach(auto address, addresses){

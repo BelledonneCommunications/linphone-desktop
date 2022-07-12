@@ -112,7 +112,7 @@ bool AccountSettingsModel::addOrUpdateAccount (std::shared_ptr<linphone::Account
 	
 	CoreManager *coreManager = CoreManager::getInstance();
 	shared_ptr<linphone::Core> core = coreManager->getCore();
-	list<shared_ptr<linphone::Account>> accounts = core->getAccountList();
+	list<shared_ptr<linphone::Account>> accounts = coreManager->getAccountList();
 	if(!account)
 		account = core->createAccount(accountParams);
 	if (account->setParams(accountParams) == -1) {
@@ -229,7 +229,7 @@ void AccountSettingsModel::setDefaultAccountFromSipAddress (const QString &sipAd
 		return;
 	}
 	
-	for (const auto &account : core->getAccountList())
+	for (const auto &account : CoreManager::getInstance()->getAccountList())
 		if (account->getParams()->getIdentityAddress()->weakEqual(address)) {
 			setDefaultAccount(account);
 			return;
@@ -241,7 +241,7 @@ void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &a
 	
 	CoreManager *coreManager = CoreManager::getInstance();
 	std::shared_ptr<linphone::Account> newAccount = nullptr;
-	std::list<std::shared_ptr<linphone::Account>> allAccounts = coreManager->getCore()->getAccountList();
+	std::list<std::shared_ptr<linphone::Account>> allAccounts = coreManager->getAccountList();
 	if( account == coreManager->getCore()->getDefaultAccount()){
 		for(auto nextAccount : allAccounts){
 			if( nextAccount != account){
@@ -391,7 +391,7 @@ bool AccountSettingsModel::addOrUpdateAccount (
 	QString sipAddress = data["sipAddress"].toString();
 	shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(sipAddress.toStdString());
 	
-	for (const auto &databaseAccount : CoreManager::getInstance()->getCore()->getAccountList())
+	for (const auto &databaseAccount : CoreManager::getInstance()->getAccountList())
 	  if (databaseAccount->getParams()->getIdentityAddress()->weakEqual(address)) {
 		account = databaseAccount;
 	  }
@@ -513,7 +513,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
 		accounts << account;
 	}
 	
-	for (const auto &account : core->getAccountList()) {
+	for (const auto &account : CoreManager::getInstance()->getAccountList()) {
 		QVariantMap accountMap;
 		accountMap["sipAddress"] = Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asStringUriOnly());
 		accountMap["fullSipAddress"] = Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString());

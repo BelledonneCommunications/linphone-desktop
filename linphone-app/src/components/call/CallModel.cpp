@@ -531,7 +531,7 @@ void CallModel::accept (bool withVideo) {
 		params->enableVideo(withVideo);
 		setRecordFile(params);
 		auto localAddress = mCall->getCallLog()->getLocalAddress();
-		for(auto account : core->getAccountList()){
+		for(auto account : coreManager->getAccountList()){
 			if( account->getParams()->getIdentityAddress()->weakEqual(localAddress)){
 				params->setAccount(account);
 				break;

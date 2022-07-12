@@ -307,7 +307,7 @@ void CoreManager::migrate () {
 			   .arg(rcVersion).arg(Constants::RcVersionCurrent);
 	
 	bool setlimeServerUrl = false;
-	for(const auto &account : mCore->getAccountList()){
+	for(const auto &account : getAccountList()){
 		auto params = account->getParams();
 		if( params->getDomain() == Constants::LinphoneDomain) {
 			auto newParams = params->clone();
@@ -362,6 +362,13 @@ int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
 	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCountFromLocal(localAddress) : 0;
 }
 
+std::list<std::shared_ptr<linphone::Account>> CoreManager::getAccountList()const{
+	std::list<std::shared_ptr<linphone::Account>> accounts;
+	for(auto account : mCore->getAccountList())
+		if( account->getCustomParam("hidden") != "1")
+			accounts.push_back(account);
+	return accounts;
+}
 // -----------------------------------------------------------------------------
 
 void CoreManager::startIterate(){
