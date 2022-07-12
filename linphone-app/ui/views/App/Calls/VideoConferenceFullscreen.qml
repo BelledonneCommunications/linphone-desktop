@@ -300,8 +300,6 @@ Window {
 											? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
 											: activeSpeakerComponent
 										: null
-									
-					onSourceComponentChanged: console.log(conference.callModel.conferenceVideoLayout)
 					active: conference.callModel
 					ColumnLayout {
 						anchors.fill: parent

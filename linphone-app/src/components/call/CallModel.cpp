@@ -119,7 +119,10 @@ CallModel::~CallModel () {
 	mMagicSearch->removeListener(mSearch);
 	if(mCall){
 		mCall->removeListener(mCallListener);
+		mConferenceModel = nullptr;// Ordering deletion.
+		mConferenceInfoModel = nullptr;
 		mCall->unsetData("call-model");
+		mCall = nullptr;
 	}
 }
 
@@ -217,7 +220,8 @@ QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 }
 
 bool CallModel::isConference () const{
-	return mCall->getConference() != nullptr;
+// Check status to avoid crash when requesting a conference on an ended call.
+	return getStatus() != CallStatusEnded && mCall->getConference() != nullptr;
 }
 
 // -----------------------------------------------------------------------------
