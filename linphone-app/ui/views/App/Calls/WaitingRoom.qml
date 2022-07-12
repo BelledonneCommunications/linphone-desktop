@@ -314,11 +314,50 @@ Rectangle {
 				anchors.centerIn: parent
 				anchors.horizontalCenterOffset: contentsStack.cameraWidth/2 - modeChoice.width/2
 				visible: !mainItem.callModel
+				toggled: layoutMenu.visible
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: selectedMode == LinphoneEnums.ConferenceLayoutGrid ? WaitingRoomStyle.buttons.gridLayout :
 											  selectedMode == LinphoneEnums.ConferenceLayoutActiveSpeaker ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
-				onClicked: selectedMode = (selectedMode + 1) % 3
+				onClicked: layoutMenu.visible = true
+				Rectangle{
+					id: layoutMenu
+					anchors.bottom: parent.top
+					anchors.horizontalCenter: parent.horizontalCenter
+					anchors.bottomMargin: 10
+					height: menuLayout.implicitHeight + 10
+					width: parent.width + 10
+					
+					visible: false
+					color: WaitingRoomStyle.menuColor
+					radius: 5
+					
+					ColumnLayout{
+						id: menuLayout
+						anchors.centerIn: parent
+						ActionButton{
+							isCustom: true
+							backgroundRadius: width/2
+							toggled: modeChoice.selectedMode == LinphoneEnums.ConferenceLayoutGrid
+							colorSet: WaitingRoomStyle.buttons.gridLayout
+							onClicked: {modeChoice.selectedMode = LinphoneEnums.ConferenceLayoutGrid ; layoutMenu.visible = false}
+						}
+						ActionButton{
+							isCustom: true
+							backgroundRadius: width/2
+							toggled: modeChoice.selectedMode == LinphoneEnums.ConferenceLayoutActiveSpeaker
+							colorSet: WaitingRoomStyle.buttons.activeSpeakerLayout
+							onClicked: {modeChoice.selectedMode = LinphoneEnums.ConferenceLayoutActiveSpeaker ; layoutMenu.visible = false}
+						}
+						ActionButton{
+							isCustom: true
+							backgroundRadius: width/2
+							toggled: modeChoice.selectedMode == 2
+							colorSet: WaitingRoomStyle.buttons.audioOnly
+							onClicked: {modeChoice.selectedMode = 2 ; layoutMenu.visible = false}
+						}
+					}
+				}
 			}
 		}
 	}
