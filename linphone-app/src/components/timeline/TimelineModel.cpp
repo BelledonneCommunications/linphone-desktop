@@ -38,8 +38,10 @@
 void TimelineModel::connectTo(ChatRoomListener * listener){
 	connect(listener, &ChatRoomListener::isComposingReceived, this, &TimelineModel::onIsComposingReceived);
 	connect(listener, &ChatRoomListener::messageReceived, this, &TimelineModel::onMessageReceived);
+	connect(listener, &ChatRoomListener::messagesReceived, this, &TimelineModel::onMessagesReceived);
 	connect(listener, &ChatRoomListener::newEvent, this, &TimelineModel::onNewEvent);
 	connect(listener, &ChatRoomListener::chatMessageReceived, this, &TimelineModel::onChatMessageReceived);
+	connect(listener, &ChatRoomListener::chatMessagesReceived, this, &TimelineModel::onChatMessagesReceived);
 	connect(listener, &ChatRoomListener::chatMessageSending, this, &TimelineModel::onChatMessageSending);
 	connect(listener, &ChatRoomListener::chatMessageSent, this, &TimelineModel::onChatMessageSent);
 	connect(listener, &ChatRoomListener::participantAdded, this, &TimelineModel::onParticipantAdded);
@@ -195,8 +197,10 @@ void TimelineModel::disconnectChatRoomListener(){
 void TimelineModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing){
 }
 void TimelineModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){}
+void TimelineModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::ChatMessage>> & messages){}
 void TimelineModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
+void TimelineModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::EventLog>> & eventLogs){}
 void TimelineModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}
 void TimelineModel::onParticipantAdded(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){}

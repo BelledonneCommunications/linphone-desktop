@@ -107,6 +107,7 @@ private:
   void handleSipAddressRemoved (QSharedPointer<ContactModel> contact, const QString &sipAddress);
 
   void handleMessageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+  void handleMessagesReceived (const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
   void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
   void handlePresenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 

@@ -1896,6 +1896,11 @@
         <source>newFileMessage</source>
         <translation>Получен новый файл!</translation>
     </message>
+    <message>
+        <source>newChatRoomMessages</source>
+        <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>

@@ -52,7 +52,7 @@ signals:
 	void coreStopped ();
 	void isComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 	void logsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
-	void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);
+	void messagesReceived (const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
 	void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 	void presenceStatusReceived(std::shared_ptr<linphone::Friend> contact);
 	void registrationStateChanged (const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state);
@@ -146,6 +146,12 @@ private:
 			const std::shared_ptr<linphone::Core> &core,
 			const std::shared_ptr<linphone::ChatRoom> &room,
 			const std::shared_ptr<linphone::ChatMessage> &message
+			) override;
+			
+	void onMessagesReceived (
+			const std::shared_ptr<linphone::Core> &core,
+			const std::shared_ptr<linphone::ChatRoom> &room,
+			const std::list<std::shared_ptr<linphone::ChatMessage>> &messages
 			) override;
 	
 	void onNotifyPresenceReceivedForUriOrTel (

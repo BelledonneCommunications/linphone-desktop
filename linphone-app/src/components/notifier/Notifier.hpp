@@ -54,7 +54,7 @@ public:
 		RecordingCompleted
 	};
 	
-	void notifyReceivedMessage (const std::shared_ptr<linphone::ChatMessage> &message);
+	void notifyReceivedMessages (const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
 	void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content);
 	void notifyReceivedCall (const std::shared_ptr<linphone::Call> &call);
 	void notifyNewVersionAvailable (const QString &version, const QString &url);

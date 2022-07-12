@@ -6,3 +6,7 @@ ec_filter=MSWebRTCAEC
 
 [app]
 record_aware=1
+
+[sip]
+chat_messages_aggregation_delay=500
+chat_messages_aggregation=1

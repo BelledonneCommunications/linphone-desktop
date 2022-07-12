@@ -42,8 +42,8 @@ TimelineListModel::TimelineListModel (QObject *parent) : ProxyListModel(parent) 
 	mSelectedCount = 0;
 	CoreHandlers* coreHandlers= CoreManager::getInstance()->getHandlers().get();
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
-	connect(coreHandlers, &CoreHandlers::messageReceived, this, &TimelineListModel::update);
-	connect(coreHandlers, &CoreHandlers::messageReceived, this, &TimelineListModel::updated);
+	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::update);
+	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::updated);
 	
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &TimelineListModel::onCallStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &TimelineListModel::onCallCreated);

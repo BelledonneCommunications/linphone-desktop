@@ -204,33 +204,50 @@ void CoreHandlers::onMessageReceived (
 		const shared_ptr<linphone::ChatRoom> &chatRoom,
 		const shared_ptr<linphone::ChatMessage> &message
 		) {
-	if( !message || message->isOutgoing()  )
-		return;
-	const string contentType = message->getContentType();
+	onMessagesReceived(core, chatRoom, std::list<shared_ptr<linphone::ChatMessage>>{message});
+}
+
+void CoreHandlers::onMessagesReceived (
+		const shared_ptr<linphone::Core> &core,
+		const shared_ptr<linphone::ChatRoom> &chatRoom,
+		const std::list<shared_ptr<linphone::ChatMessage>> &messages
+		) {
+	std::list<shared_ptr<linphone::ChatMessage>> messagesToSignal;
+	std::list<shared_ptr<linphone::ChatMessage>> messagesToNotify;
+	CoreManager *coreManager = CoreManager::getInstance();
+	SettingsModel *settingsModel = coreManager->getSettingsModel();
+	const App *app = App::getInstance();
 	
-	if (contentType == "text/plain" || contentType == "application/vnd.gsma.rcs-ft-http+xml") {
-		emit messageReceived(message);
+	for(auto message : messages){
+		if( !message || message->isOutgoing()  )
+			continue;
+		const string contentType = message->getContentType();
 		
-		// 1. Do not notify if chat is not activated.
-		CoreManager *coreManager = CoreManager::getInstance();
-		SettingsModel *settingsModel = coreManager->getSettingsModel();
-		if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getStandardChatEnabled()
-			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
-			return;
-		
-		// 2. Notify with Notification popup.
-		const App *app = App::getInstance();
-		if (coreManager->getSettingsModel()->getChatNotificationsEnabled() && (!app->hasFocus() || !Utils::isMe(chatRoom->getLocalAddress())))
-			app->getNotifier()->notifyReceivedMessage(message);
-		
-		// 3. Notify with sound.
+		if (contentType == "text/plain" || contentType == "application/vnd.gsma.rcs-ft-http+xml") {
+			messagesToSignal.push_back(message);
+			
+			// 1. Do not notify if chat is not activated.
+			if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getStandardChatEnabled()
+				|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
+				continue;
+			
+			// 2. Notify with Notification popup.
+			if (coreManager->getSettingsModel()->getChatNotificationsEnabled() 
+					&& (!app->hasFocus() || !Utils::isMe(chatRoom->getLocalAddress()))
+					&& !message->isRead())// On aggregation, the list can contains already displayed messages.
+				messagesToNotify.push_back(message);
+		}
+	}
+	if( messagesToSignal.size() > 0)
+		emit messagesReceived(messagesToSignal);
+	if( messagesToNotify.size() > 0)
+		app->getNotifier()->notifyReceivedMessages(messagesToNotify);
+	// 3. Notify with sound.
+	if( messagesToSignal.size() > 0 ||  messagesToNotify.size() > 0) {
 		if (!coreManager->getSettingsModel()->getChatNotificationsEnabled() || !settingsModel->getChatNotificationSoundEnabled())
 			return;
-		
-		if (
-				!app->hasFocus() ||
-				!CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false)
-				)
+	
+		if ( !app->hasFocus() || !CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false) )
 			core->playLocal(Utils::appStringToCoreString(settingsModel->getChatNotificationSoundPath()));
 	}
 }

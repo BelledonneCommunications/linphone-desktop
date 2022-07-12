@@ -26,11 +26,15 @@ Rectangle {
 	property bool showContactAddress : true
 	property bool showAuxData : false
 	
-	property string username: (entry != undefined	? ( entry.conferenceInfoModel && entry.conferenceInfoModel.subject ? entry.conferenceInfoModel.subject
-																	: entry.username != undefined	? entry.username
-																									: entry.contactModel != undefined	? entry.contactModel.vcard.username
-																																		: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
-													): '')
+	property string username: (entry != undefined
+									?  entry.conferenceInfoModel && entry.conferenceInfoModel.subject
+										? entry.conferenceInfoModel.subject
+										: entry.username != undefined
+											? entry.username
+											: entry.contactModel != undefined
+												? entry.contactModel.vcard.username
+												: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+									: '')
 	signal avatarClicked(var mouse)
 	// ---------------------------------------------------------------------------
 	
@@ -71,7 +75,6 @@ Rectangle {
 								: item.username
 						: item.username
 						
-
 			visible:!groupChat.visible
 			Icon {
 				
@@ -125,7 +128,9 @@ Rectangle {
 			
 			sipAddress: (entry && item.showContactAddress
 						&& (item.showAuxData
-							? entry.auxDataToShow || ''
+							? item.subject
+								? '- ' +item.subject +' -'
+								: ''
 							: (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
 								? entry.conferenceInfoModel
 									? entry.conferenceInfoModel.organizer

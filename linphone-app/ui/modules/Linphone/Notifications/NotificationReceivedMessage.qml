@@ -5,6 +5,8 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 
 Notification {
@@ -38,17 +40,9 @@ Notification {
 			Contact {
 				Layout.fillWidth: true
 				property ChatRoomModel chatRoomModel : notification.timelineModel.getChatRoomModel()
-				//entry: notification.fullPeerAddress? SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress): notification.timelineModel.getChatRoomModel()
 				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)		
 				showAuxData: !chatRoomModel.isOneToOne
-				entry: sipObserver ? ({
-								sipAddress: sipObserver.peerAddress,
-								contactModel: sipObserver.contact,
-								isOneToOne: chatRoomModel.isOneToOne,
-								haveEncryption: chatRoomModel.haveEncryption,
-								securityLevel: chatRoomModel.securityLevel,
-								auxDataToShow: '- ' + chatRoomModel.subject+' -'
-							}): undefined
+				entry: chatRoomModel ? chatRoomModel : sipObserver
 				Component.onDestruction: sipObserver=null// Need to set it to null because of not calling destructor if not.
 			}
 			

@@ -40,39 +40,39 @@
 using namespace std;
 
 namespace {
-  constexpr char NotificationsPath[] = "qrc:/ui/modules/Linphone/Notifications/";
-
-  // ---------------------------------------------------------------------------
-  // Notifications QML properties/methods.
-  // ---------------------------------------------------------------------------
-
-  constexpr char NotificationShowMethodName[] = "open";
-
-  constexpr char NotificationPropertyData[] = "notificationData";
-
-  constexpr char NotificationPropertyX[] = "popupX";
-  constexpr char NotificationPropertyY[] = "popupY";
-
-  constexpr char NotificationPropertyWindow[] = "__internalWindow";
-
-  constexpr char NotificationPropertyTimer[] = "__timer";
-
-  // ---------------------------------------------------------------------------
-  // Arbitrary hardcoded values.
-  // ---------------------------------------------------------------------------
-
-  constexpr int NotificationSpacing = 10;
-  constexpr int MaxNotificationsNumber = 5;
+	constexpr char NotificationsPath[] = "qrc:/ui/modules/Linphone/Notifications/";
+	
+	// ---------------------------------------------------------------------------
+	// Notifications QML properties/methods.
+	// ---------------------------------------------------------------------------
+	
+	constexpr char NotificationShowMethodName[] = "open";
+	
+	constexpr char NotificationPropertyData[] = "notificationData";
+	
+	constexpr char NotificationPropertyX[] = "popupX";
+	constexpr char NotificationPropertyY[] = "popupY";
+	
+	constexpr char NotificationPropertyWindow[] = "__internalWindow";
+	
+	constexpr char NotificationPropertyTimer[] = "__timer";
+	
+	// ---------------------------------------------------------------------------
+	// Arbitrary hardcoded values.
+	// ---------------------------------------------------------------------------
+	
+	constexpr int NotificationSpacing = 10;
+	constexpr int MaxNotificationsNumber = 5;
 }
 
 // =============================================================================
 
 template<class T>
 void setProperty (QObject &object, const char *property, const T &value) {
-  if (!object.setProperty(property, QVariant(value))) {
-    qWarning() << QStringLiteral("Unable to set property: `%1`.").arg(property);
-    abort();
-  }
+	if (!object.setProperty(property, QVariant(value))) {
+		qWarning() << QStringLiteral("Unable to set property: `%1`.").arg(property);
+		abort();
+	}
 }
 
 // =============================================================================
@@ -80,12 +80,12 @@ void setProperty (QObject &object, const char *property, const T &value) {
 // =============================================================================
 
 const QHash<int, Notifier::Notification> Notifier::Notifications = {
-  { Notifier::ReceivedMessage, { Notifier::ReceivedMessage, "NotificationReceivedMessage.qml", 10 } },
-  { Notifier::ReceivedFileMessage, { Notifier::ReceivedFileMessage, "NotificationReceivedFileMessage.qml", 10 } },
-  { Notifier::ReceivedCall, { Notifier::ReceivedCall, "NotificationReceivedCall.qml", 30 } },
-  { Notifier::NewVersionAvailable, { Notifier::NewVersionAvailable, "NotificationNewVersionAvailable.qml", 30 } },
-  { Notifier::SnapshotWasTaken, { Notifier::SnapshotWasTaken, "NotificationSnapshotWasTaken.qml", 10 } },
-  { Notifier::RecordingCompleted, { Notifier::RecordingCompleted, "NotificationRecordingCompleted.qml", 10 } }
+	{ Notifier::ReceivedMessage, { Notifier::ReceivedMessage, "NotificationReceivedMessage.qml", 10 } },
+	{ Notifier::ReceivedFileMessage, { Notifier::ReceivedFileMessage, "NotificationReceivedFileMessage.qml", 10 } },
+	{ Notifier::ReceivedCall, { Notifier::ReceivedCall, "NotificationReceivedCall.qml", 30 } },
+	{ Notifier::NewVersionAvailable, { Notifier::NewVersionAvailable, "NotificationNewVersionAvailable.qml", 30 } },
+	{ Notifier::SnapshotWasTaken, { Notifier::SnapshotWasTaken, "NotificationSnapshotWasTaken.qml", 10 } },
+	{ Notifier::RecordingCompleted, { Notifier::RecordingCompleted, "NotificationRecordingCompleted.qml", 10 } }
 };
 
 
@@ -93,29 +93,29 @@ const QHash<int, Notifier::Notification> Notifier::Notifications = {
 // -----------------------------------------------------------------------------
 
 Notifier::Notifier (QObject *parent) : QObject(parent) {
-  const int nComponents = Notifications.size();
-  mComponents = new QQmlComponent *[nComponents];
-
-  QQmlEngine *engine = App::getInstance()->getEngine();
-  for (const auto &key : Notifications.keys()) {
-    QQmlComponent *component = new QQmlComponent(engine, QUrl(NotificationsPath + Notifier::Notifications[key].filename));
-    if (Q_UNLIKELY(component->isError())) {
-      qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(key) << component->errors();
-      abort();
-    }
-    mComponents[key] = component;
-  }
-
-  mMutex = new QMutex();
+	const int nComponents = Notifications.size();
+	mComponents = new QQmlComponent *[nComponents];
+	
+	QQmlEngine *engine = App::getInstance()->getEngine();
+	for (const auto &key : Notifications.keys()) {
+		QQmlComponent *component = new QQmlComponent(engine, QUrl(NotificationsPath + Notifier::Notifications[key].filename));
+		if (Q_UNLIKELY(component->isError())) {
+			qWarning() << QStringLiteral("Errors found in `Notification` component %1:").arg(key) << component->errors();
+			abort();
+		}
+		mComponents[key] = component;
+	}
+	
+	mMutex = new QMutex();
 }
 
 Notifier::~Notifier () {
-  delete mMutex;
-
-  const int nComponents = Notifications.size();
-  for (int i = 0; i < nComponents; ++i)
-    mComponents[i]->deleteLater();
-  delete[] mComponents;
+	delete mMutex;
+	
+	const int nComponents = Notifications.size();
+	for (int i = 0; i < nComponents; ++i)
+		mComponents[i]->deleteLater();
+	delete[] mComponents;
 }
 
 // -----------------------------------------------------------------------------
@@ -152,17 +152,17 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 					for(int i = 0 ; i < allScreens.size() ; ++i){
 						QScreen *screen = allScreens[i];
 						qInfo() << QString("Screen [")+QString::number(i)+"] (hdpi, Geometry, Available, Virtual, AvailableGeometry) :" 
-							<< screen->devicePixelRatio() << screen->geometry() << screen->availableGeometry() << screen->virtualGeometry() << screen->availableVirtualGeometry();
+								<< screen->devicePixelRatio() << screen->geometry() << screen->availableGeometry() << screen->virtualGeometry() << screen->availableVirtualGeometry();
 					}
 				}
 			});
 			view->setScreen(screen);	// Bind the visual root object to the screen
 			view->setProperty("flags", QVariant(Qt::BypassWindowManagerHint | Qt::WindowStaysOnBottomHint | Qt::CustomizeWindowHint | Qt::X11BypassWindowManagerHint));	// Set the visual ghost window
 			view->setSource(QString(NotificationsPath)+Notifier::Notifications[type].filename);
-
+			
 			QQuickWindow *subWindow = view->findChild<QQuickWindow *>("__internalWindow");
 			QObject::connect(subWindow, &QObject::destroyed, view, &QObject::deleteLater);	// When destroying window, detroy visual root object too
-
+			
 			int * screenHeightOffset = &mScreenHeightOffset[screen->name()];	// Access optimization
 			QRect availableGeometry = screen->availableGeometry();
 			int heightOffset = availableGeometry.y() + (availableGeometry.height() - subWindow->height());//*screen->devicePixelRatio(); when using manual scaler
@@ -170,19 +170,19 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 				subWindow->setProperty("showAsTool",true);
 			subWindow->setX(availableGeometry.x()+ (availableGeometry.width()-subWindow->property("width").toInt()));//*screen->devicePixelRatio()); when using manual scaler
 			subWindow->setY(heightOffset-(*screenHeightOffset % heightOffset));
-
+			
 			*screenHeightOffset = (subWindow->height() + *screenHeightOffset) + NotificationSpacing;
 			if (*screenHeightOffset - heightOffset + availableGeometry.y() >= 0)
 				*screenHeightOffset = 0;
-
-//			if(primaryScreen != screen){	//Useful when doing manual scaling jobs. Need to implement scaler in GUI objects
-//				//subwindow->setProperty("xScale", (double)screen->availableVirtualGeometry().width()/availableGeometry.width() );
-//				//subwindow->setProperty("yScale", (double)screen->availableVirtualGeometry().height()/availableGeometry.height());
-//			}
+			
+			//			if(primaryScreen != screen){	//Useful when doing manual scaling jobs. Need to implement scaler in GUI objects
+			//				//subwindow->setProperty("xScale", (double)screen->availableVirtualGeometry().width()/availableGeometry.width() );
+			//				//subwindow->setProperty("yScale", (double)screen->availableVirtualGeometry().height()/availableGeometry.height());
+			//			}
 			wrapperItem = view->findChild<QQuickItem *>("__internalWrapper");
 			::setProperty(*wrapperItem, NotificationPropertyData,data);
 			view->setGeometry(subWindow->geometry());	// Ensure to have sufficient space to both let painter do job without error, and stay behind popup
-
+			
 			if(previousWrapper!=nullptr){	// Link objects in order to propagate events without having to store them
 				QObject::connect(previousWrapper, SIGNAL(deleteNotification(QVariant)), wrapperItem,SLOT(deleteNotificationSlot()));
 				QObject::connect(wrapperItem, SIGNAL(isOpened()), previousWrapper,SLOT(open()));
@@ -190,7 +190,7 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 				QObject::connect(wrapperItem, &QObject::destroyed, previousWrapper, &QObject::deleteLater);
 			}
 			previousWrapper = wrapperItem;	// The last one is used as a point of start when deleting and openning
-
+			
 			view->show();
 		}
 		qInfo() << QStringLiteral("Create notifications:") << wrapperItem;
@@ -203,23 +203,23 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 // -----------------------------------------------------------------------------
 
 void Notifier::showNotification (QObject *notification, int timeout) {
-  // Display notification.
-  QMetaObject::invokeMethod(notification, NotificationShowMethodName, Qt::DirectConnection);
-
-  QTimer *timer = new QTimer(notification);
-  timer->setInterval(timeout);
-  timer->setSingleShot(true);
-  notification->setProperty(NotificationPropertyTimer, QVariant::fromValue(timer));
-
-  // Destroy it after timeout.
-  QObject::connect(timer, &QTimer::timeout, this, [this, notification]() {
-    deleteNotificationOnTimeout(QVariant::fromValue(notification));
-  });
-
-  // Called explicitly (by a click on notification for example)
-  QObject::connect(notification, SIGNAL(deleteNotification(QVariant)), this, SLOT(deleteNotification(QVariant)));
-
-  timer->start();
+	// Display notification.
+	QMetaObject::invokeMethod(notification, NotificationShowMethodName, Qt::DirectConnection);
+	
+	QTimer *timer = new QTimer(notification);
+	timer->setInterval(timeout);
+	timer->setSingleShot(true);
+	notification->setProperty(NotificationPropertyTimer, QVariant::fromValue(timer));
+	
+	// Destroy it after timeout.
+	QObject::connect(timer, &QTimer::timeout, this, [this, notification]() {
+		deleteNotificationOnTimeout(QVariant::fromValue(notification));
+	});
+	
+	// Called explicitly (by a click on notification for example)
+	QObject::connect(notification, SIGNAL(deleteNotification(QVariant)), this, SLOT(deleteNotification(QVariant)));
+	
+	timer->start();
 }
 
 // -----------------------------------------------------------------------------
@@ -235,109 +235,119 @@ void Notifier::deleteNotificationOnTimeout(QVariant notification) {
 }
 
 void Notifier::deleteNotification (QVariant notification) {
-  mMutex->lock();
-
-  QObject *instance = notification.value<QObject *>();
-
-  // Notification marked destroyed.
-  if (instance->property("__valid").isValid()) {
-    mMutex->unlock();
-    return;
-  }
-
-  qInfo() << QStringLiteral("Delete notification:") << instance;
-
-  instance->setProperty("__valid", true);
-  instance->property(NotificationPropertyTimer).value<QTimer *>()->stop();
-
-  mInstancesNumber--;
-  Q_ASSERT(mInstancesNumber >= 0);
-
-  if (mInstancesNumber == 0)
-	mScreenHeightOffset.clear();
-
-  mMutex->unlock();
-
-  instance->deleteLater();
+	mMutex->lock();
+	
+	QObject *instance = notification.value<QObject *>();
+	
+	// Notification marked destroyed.
+	if (instance->property("__valid").isValid()) {
+		mMutex->unlock();
+		return;
+	}
+	
+	qInfo() << QStringLiteral("Delete notification:") << instance;
+	
+	instance->setProperty("__valid", true);
+	instance->property(NotificationPropertyTimer).value<QTimer *>()->stop();
+	
+	mInstancesNumber--;
+	Q_ASSERT(mInstancesNumber >= 0);
+	
+	if (mInstancesNumber == 0)
+		mScreenHeightOffset.clear();
+	
+	mMutex->unlock();
+	
+	instance->deleteLater();
 }
 
 // =============================================================================
 
 #define CREATE_NOTIFICATION(TYPE, DATA) \
-  QObject * notification = createNotification(TYPE, DATA); \
-  if (!notification) \
-    return; \
-  const int timeout = Notifications[TYPE].getTimeout() * 1000; \
-  showNotification(notification, timeout);
+	QObject * notification = createNotification(TYPE, DATA); \
+	if (!notification) \
+	return; \
+	const int timeout = Notifications[TYPE].getTimeout() * 1000; \
+	showNotification(notification, timeout);
 
 // -----------------------------------------------------------------------------
 // Notification functions.
 // -----------------------------------------------------------------------------
 
-void Notifier::notifyReceivedMessage (const shared_ptr<linphone::ChatMessage> &message) {
-  QVariantMap map;
-  QString txt;
-  if(! message->getFileTransferInformation() ){
-	  foreach(auto content, message->getContents()){
-		  if(content->isText())
-			  txt += content->getUtf8Text().c_str();
-	  }
-  }else
-	  txt = tr("newFileMessage");
-  map["message"] = txt;
-  shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
-  map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
-  map["peerAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
-  map["localAddress"] = Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly());
-  map["fullPeerAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asString());
-  map["fullLocalAddress"] = Utils::coreStringToAppString(message->getToAddress()->asString());
-  map["window"].setValue(App::getInstance()->getMainWindow());
-  CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
+void Notifier::notifyReceivedMessages (const list<shared_ptr<linphone::ChatMessage>> &messages) {
+	QVariantMap map;
+	QString txt;
+	if( messages.size() > 0){
+		shared_ptr<linphone::ChatMessage> message = messages.front();
+		
+		if( messages.size() == 1){
+			if(! message->getFileTransferInformation() ){
+				foreach(auto content, message->getContents()){
+					if(content->isText())
+						txt += content->getUtf8Text().c_str();
+				}
+			}else
+				txt = tr("newFileMessage");
+		}else
+		//: 'New messages received!' Notification that warn the user of new messages.
+			txt = tr("newChatRoomMessages");
+		map["message"] = txt;
+		shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+		map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
+		if( messages.size() == 1) {// Display only sender on mono message.
+			map["peerAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asStringUriOnly());
+			map["fullPeerAddress"] = Utils::coreStringToAppString(message->getFromAddress()->asString());
+		}
+		map["localAddress"] = Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly());
+		map["fullLocalAddress"] = Utils::coreStringToAppString(message->getToAddress()->asString());
+		map["window"].setValue(App::getInstance()->getMainWindow());
+		CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
+	}
 }
 
 void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage> &message, const shared_ptr<linphone::Content> &content) {
-  QVariantMap map;
-  shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
-  map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
-  map["fileUri"] = Utils::coreStringToAppString(content->getFilePath());
-  if( Utils::getImage(map["fileUri"].toString()).isNull())
-    map["imageUri"] = "";
-  else
-    map["imageUri"] = map["fileUri"];
-  map["fileSize"] = quint64(content->getSize() + content->getFileSize());
-  CREATE_NOTIFICATION(Notifier::ReceivedFileMessage, map)
+	QVariantMap map;
+	shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+	map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
+	map["fileUri"] = Utils::coreStringToAppString(content->getFilePath());
+	if( Utils::getImage(map["fileUri"].toString()).isNull())
+		map["imageUri"] = "";
+	else
+		map["imageUri"] = map["fileUri"];
+	map["fileSize"] = quint64(content->getSize() + content->getFileSize());
+	CREATE_NOTIFICATION(Notifier::ReceivedFileMessage, map)
 }
 
 void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
-  CallModel *callModel = &call->getData<CallModel>("call-model");
-  QVariantMap map;
-  map["call"].setValue(callModel);
-  CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
-
-  QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
-      if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
-        deleteNotification(QVariant::fromValue(notification));
-    });
-
+	CallModel *callModel = &call->getData<CallModel>("call-model");
+	QVariantMap map;
+	map["call"].setValue(callModel);
+	CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
+			
+			QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
+		if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
+			deleteNotification(QVariant::fromValue(notification));
+	});
+	
 }
 
 void Notifier::notifyNewVersionAvailable (const QString &version, const QString &url) {
-  QVariantMap map;
-  map["message"] = tr("newVersionAvailable").arg(version);
-  map["url"] = url;
-  CREATE_NOTIFICATION(Notifier::NewVersionAvailable, map)
+	QVariantMap map;
+	map["message"] = tr("newVersionAvailable").arg(version);
+	map["url"] = url;
+	CREATE_NOTIFICATION(Notifier::NewVersionAvailable, map)
 }
 
 void Notifier::notifySnapshotWasTaken (const QString &filePath) {
-  QVariantMap map;
-  map["filePath"] = filePath;
-  CREATE_NOTIFICATION(Notifier::SnapshotWasTaken, map)
+	QVariantMap map;
+	map["filePath"] = filePath;
+	CREATE_NOTIFICATION(Notifier::SnapshotWasTaken, map)
 }
 
 void Notifier::notifyRecordingCompleted (const QString &filePath) {
-  QVariantMap map;
-  map["filePath"] = filePath;
-  CREATE_NOTIFICATION(Notifier::RecordingCompleted, map)
+	QVariantMap map;
+	map["filePath"] = filePath;
+	CREATE_NOTIFICATION(Notifier::RecordingCompleted, map)
 }
 
 #undef SHOW_NOTIFICATION

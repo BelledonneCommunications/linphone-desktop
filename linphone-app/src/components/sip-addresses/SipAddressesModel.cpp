@@ -68,7 +68,7 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
 	QObject::connect(contacts, &ContactsListModel::sipAddressRemoved, this, &SipAddressesModel::handleSipAddressRemoved);
 	
 	CoreHandlers *coreHandlers = mCoreHandlers.get();
-	QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &SipAddressesModel::handleMessageReceived);
+	QObject::connect(coreHandlers, &CoreHandlers::messagesReceived, this, &SipAddressesModel::handleMessagesReceived);
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &SipAddressesModel::handleCallStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::presenceReceived, this, &SipAddressesModel::handlePresenceReceived);
 	QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &SipAddressesModel::handleIsComposingChanged);
@@ -324,6 +324,13 @@ void SipAddressesModel::handleSipAddressRemoved (QSharedPointer<ContactModel> co
 void SipAddressesModel::handleMessageReceived (const shared_ptr<linphone::ChatMessage> &message) {
 	const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
 	addOrUpdateSipAddress(peerAddress, message);
+}
+
+void SipAddressesModel::handleMessagesReceived (const std::list<shared_ptr<linphone::ChatMessage>> &messages) {
+	for(auto message: messages){
+		const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
+		addOrUpdateSipAddress(peerAddress, message);
+	}
 }
 
 void SipAddressesModel::handleCallStateChanged (

@@ -1883,6 +1883,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>newFileMessage</source>
         <translation>Ny bilaga mottagen!</translation>
     </message>
+    <message>
+        <source>newChatRoomMessages</source>
+        <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>

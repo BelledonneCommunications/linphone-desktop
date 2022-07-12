@@ -79,8 +79,10 @@ using namespace std;
 void ChatRoomModel::connectTo(ChatRoomListener * listener){
 	connect(listener, &ChatRoomListener::isComposingReceived, this, &ChatRoomModel::onIsComposingReceived);
 	connect(listener, &ChatRoomListener::messageReceived, this, &ChatRoomModel::onMessageReceived);
+	connect(listener, &ChatRoomListener::messagesReceived, this, &ChatRoomModel::onMessagesReceived);
 	connect(listener, &ChatRoomListener::newEvent, this, &ChatRoomModel::onNewEvent);
 	connect(listener, &ChatRoomListener::chatMessageReceived, this, &ChatRoomModel::onChatMessageReceived);
+	connect(listener, &ChatRoomListener::chatMessagesReceived, this, &ChatRoomModel::onChatMessagesReceived);
 	connect(listener, &ChatRoomListener::chatMessageSending, this, &ChatRoomModel::onChatMessageSending);
 	connect(listener, &ChatRoomListener::chatMessageSent, this, &ChatRoomModel::onChatMessageSent);
 	connect(listener, &ChatRoomListener::participantAdded, this, &ChatRoomModel::onParticipantAdded);
@@ -135,11 +137,9 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	timer.start();
 	CoreHandlers *coreHandlers = mCoreHandlers.get();
 	QObject::connect(this, &ChatRoomModel::messageSent, this, &ChatRoomModel::resetMessageCount);
-	//QObject::connect(coreHandlers, &CoreHandlers::messageReceived, this, &ChatRoomModel::handleMessageReceived);
 	QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &ChatRoomModel::handleCallCreated);
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &ChatRoomModel::handleCallStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::presenceStatusReceived, this, &ChatRoomModel::handlePresenceStatusReceived);
-		//QObject::connect(coreHandlers, &CoreHandlers::isComposingChanged, this, &ChatRoomModel::handleIsComposingChanged);
 
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactAdded, this, &ChatRoomModel::fullPeerAddressChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactAdded, this, &ChatRoomModel::avatarChanged);
@@ -150,8 +150,6 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 
 	connect(this, &ChatRoomModel::fullPeerAddressChanged, this, &ChatRoomModel::usernameChanged);
 	
-
-	//QObject::connect(this, &ChatRoomModel::messageCountReset, coreManager, &CoreManager::eventCountChanged  );
 	if(mChatRoom){
 		mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
 		connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ChatRoomModel::fullPeerAddressChanged);
@@ -1176,6 +1174,12 @@ void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> 
 	updateLastUpdateTime();
 }
 
+void ChatRoomModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::ChatMessage>> & messages){
+	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
+	updateLastUpdateTime();
+}
+
+
 void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnded ){
 		setMissedCallsCount(mMissedCallsCount+1);
@@ -1191,6 +1195,17 @@ void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRo
 		insertMessageAtEnd(message);
 		updateLastUpdateTime();
 		emit messageReceived(message);
+	}
+}
+
+void ChatRoomModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::EventLog>> & eventLogs){
+	for(auto eventLog : eventLogs){
+		auto message = eventLog->getChatMessage();
+		if(message){
+			insertMessageAtEnd(message);
+			updateLastUpdateTime();
+			emit messageReceived(message);
+		}
 	}
 }
 
