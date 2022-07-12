@@ -45,7 +45,7 @@ QtObject {
 			property color selectedColor: ColorsList.add(sectionName+'_me_contacts_c', 'me_p_b_inv_fg').color
 		}
 		property QtObject conferences: QtObject {
-			property string icon: 'conference_custom'
+			property string icon: 'meetings_custom'
 			property int iconSize: 50
 			property color color: ColorsList.add(sectionName+'_me_conferences', 'me_n_b_inv_fg').color
 			property color selectedColor: ColorsList.add(sectionName+'_me_conferences_c', 'me_p_b_inv_fg').color

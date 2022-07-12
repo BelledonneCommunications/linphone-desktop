@@ -1504,7 +1504,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mainWindowConferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
-        <translation>Conferences</translation>
+        <translation>Meetings</translation>
     </message>
 </context>
 <context>
