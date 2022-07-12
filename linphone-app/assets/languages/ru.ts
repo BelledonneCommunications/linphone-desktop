@@ -3441,6 +3441,11 @@
         <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
         <translation>Видеоконференция не готова. Пожалуйста, подождите…</translation>
     </message>
+    <message>
+        <source>callWarningRecord</source>
+        <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VideoConferenceMenu</name>

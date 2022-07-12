@@ -154,6 +154,40 @@ Window {
 				colorSet: VideoConferenceStyle.buttons.dialpad
 				onClicked: telKeypad.visible = !telKeypad.visible
 			}
+			ActionButton {
+				id: callQuality
+
+				isCustom: true
+				backgroundRadius: width/2
+				colorSet: VideoConferenceStyle.buttons.callQuality
+				icon: VideoConferenceStyle.buttons.callQuality.icon_0
+				toggled: callStatistics.isOpen
+			
+				onClicked: callStatistics.isOpen ? callStatistics.close() : callStatistics.open()
+			
+				Timer {
+					interval: 500
+					repeat: true
+					running: true
+					triggeredOnStart: true
+					onTriggered: {
+						if(callModel) {
+							// Note: `quality` is in the [0, 5] interval and -1.
+							var quality = callModel.quality
+							if(quality > 4)
+								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_4
+							else if(quality > 3)
+								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_3
+							else if(quality > 2)
+								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_2
+							else if(quality > 1)
+								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_1
+							else
+								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_0
+						}
+					}
+				}
+			}
 			// Title
 			Text{
 				Timer{
@@ -316,7 +350,8 @@ Window {
 		}
 	// Security
 		ActionButton{
-			visible: callModel && !callModel.isConference
+			id: securityButton
+			visible: !window.hideButtons && callModel && !callModel.isConference
 			anchors.left: parent.left
 			anchors.verticalCenter: actionsButtons.verticalCenter
 			anchors.leftMargin: 25
@@ -331,7 +366,32 @@ Window {
 						
 			tooltipText: Logic.makeReadableSecuredString(callModel.securedString)
 		}
-		
+		RowLayout{
+			visible: callModel && callModel.remoteRecording
+			
+			anchors.verticalCenter: !window.hideButtons ? actionsButtons.verticalCenter : undefined
+			anchors.bottom: window.hideButtons ? parent.bottom : undefined
+			anchors.bottomMargin: window.hideButtons ? 20 : 0
+			anchors.left: securityButton.right
+			anchors.leftMargin: 20
+			anchors.right: actionsButtons.left
+			anchors.rightMargin: 10
+			
+			Icon{
+				icon: VideoConferenceStyle.recordWarning.icon
+				iconSize: VideoConferenceStyle.recordWarning.iconSize
+				overwriteColor: VideoConferenceStyle.recordWarning.iconColor
+			}
+			Text{
+				Layout.fillWidth: true
+				//: 'This call is being recorded.' : Warn the user that the remote is currently recording the call.
+				text: qsTr('callWarningRecord')
+				color: VideoConferenceStyle.recordWarning.color
+				font.italic: true
+				font.pointSize: VideoConferenceStyle.recordWarning.pointSize
+				wrapMode: Text.WordWrap
+			}
+		}
 		// Action buttons
 		RowLayout{
 			id: actionsButtons
@@ -425,11 +485,12 @@ Window {
 			anchors.rightMargin: 25
 			height: visible ? 60 : 0
 			visible: !window.hideButtons
+			/* Not available in fullscreen yet.
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: VideoConferenceStyle.buttons.chat
-				visible: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && callModel && !callModel.isConference
+				visible: false && (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && callModel && !callModel.isConference
 				toggled: window.chatIsOpened
 				onClicked: {
 							if (window.chatIsOpened) {
@@ -438,7 +499,7 @@ Window {
 								window.openChat()
 							}
 						}
-			}
+			}*/
 			ActionButton{
 				visible: callModel && callModel.isConference
 				isCustom: true
@@ -452,40 +513,7 @@ Window {
 							rightMenu.showParticipantsMenu()
 					}
 			}
-			ActionButton {
-				id: callQuality
-
-				isCustom: true
-				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.callQuality
-				icon: VideoConferenceStyle.buttons.callQuality.icon_0
-				toggled: callStatistics.isOpen
 			
-				onClicked: callStatistics.isOpen ? callStatistics.close() : callStatistics.open()
-			
-				Timer {
-					interval: 500
-					repeat: true
-					running: true
-					triggeredOnStart: true
-					onTriggered: {
-						if(callModel) {
-							// Note: `quality` is in the [0, 5] interval and -1.
-							var quality = callModel.quality
-							if(quality > 4)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_4
-							else if(quality > 3)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_3
-							else if(quality > 2)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_2
-							else if(quality > 1)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_1
-							else
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_0
-						}
-					}
-				}
-			}
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
@@ -519,18 +547,22 @@ Window {
 	MouseArea{
 		Timer {
 			id: hideButtonsTimer
-			property bool realRunning : true
+			property bool realRunning : false
+			property bool firstUse: true
 
-			interval: 5000
-			running: true
-			triggeredOnStart: true
-			onTriggered: {if(realRunning != running) realRunning = running}
+			interval: firstUse ? 500 : 4000
+			running: false
+			triggeredOnStart: !firstUse
+			onTriggered: {if(!firstUse && realRunning != running) realRunning = running
+							firstUse = false}
 			function startTimer(){
-				restart();
+				if(!firstUse || !running)
+					restart();
 			}
 			function stopTimer(){
-				stop();
-				realRunning = false;
+				stop()
+				realRunning = false
+				hideButtonsTimer.firstUse = false
 			}
 		}
 
