@@ -65,8 +65,8 @@ Mosaic {
 				isPaused: avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				showCloseButton: false
 				showCustomButton:  false
-				avatarStickerBackgroundColor: VideoConferenceStyle.container.avatar.stickerBackgroundColor
-				avatarBackgroundColor: VideoConferenceStyle.container.avatar.backgroundColor
+				avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 				
 				//onCloseRequested: participantDevices.showMe = false
 			}

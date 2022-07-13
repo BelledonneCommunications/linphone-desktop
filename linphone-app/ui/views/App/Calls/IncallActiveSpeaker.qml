@@ -65,8 +65,8 @@ Item {
 		showCloseButton: false
 		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
 		showCustomButton:  false
-		avatarStickerBackgroundColor: VideoConferenceStyle.container.avatar.stickerBackgroundColor
-		avatarBackgroundColor: VideoConferenceStyle.container.avatar.backgroundColor
+		avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+		avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 	}
 	ScrollableListView{
 		id: miniViews
@@ -104,8 +104,8 @@ Item {
 					showCloseButton: false
 					showCustomButton:  false
 					showAvatarBorder: true
-					avatarStickerBackgroundColor: VideoConferenceStyle.container.avatar.stickerBackgroundColor
-					avatarBackgroundColor: VideoConferenceStyle.container.avatar.backgroundColor
+					avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+					avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 					//onCloseRequested: mainItem.showMe = false
 				}
 			}

@@ -1306,10 +1306,6 @@ Server URL not configured.</translation>
         <translation>Your contact would like to turn on video.</translation>
     </message>
     <message>
-        <source>pendingRequestLabel</source>
-        <translation>Please wait, a request is pending.</translation>
-    </message>
-    <message>
         <source>securedStringFormat</source>
         <translation>Call is encrypted with: %1.</translation>
     </message>
@@ -1318,31 +1314,130 @@ Server URL not configured.</translation>
         <translation>Call not encrypted.</translation>
     </message>
     <message>
-        <source>takeSnapshotLabel</source>
-        <translation>Take a snapshot.</translation>
+        <source>incallPauseWarning</source>
+        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
+        <translation>You are currently out of the conference.</translation>
     </message>
     <message>
-        <source>startRecordingLabel</source>
-        <translation>Start recording.</translation>
+        <source>incallPauseHint</source>
+        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
+        <translation>Click on play button to join it back.</translation>
     </message>
     <message>
-        <source>stopRecordingLabel</source>
-        <translation>Stop recording.</translation>
+        <source>incallStartRecordTooltip</source>
+        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
+        <translation>Start recording</translation>
+    </message>
+    <message>
+        <source>incallStopRecordTooltip</source>
+        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
+        <translation>Stop Recording</translation>
+    </message>
+    <message>
+        <source>incallSnapshotTooltip</source>
+        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
+        <translation>Take Snapshot&apos;</translation>
+    </message>
+    <message>
+        <source>incallWaitMessage</source>
+        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <translation>Video conference is not ready. Please Wait…</translation>
+    </message>
+    <message>
+        <source>callWarningRecord</source>
+        <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
+        <translation>This call is being recorded.</translation>
+    </message>
+    <message>
+        <source>incallWaitParticipantMessage</source>
+        <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
+        <translation>Waiting for another participant...</translation>
     </message>
 </context>
 <context>
-    <name>IncallFullscreenWindow</name>
+    <name>IncallFullscreen</name>
     <message>
-        <source>takeSnapshotLabel</source>
-        <translation>Take a snapshot.</translation>
+        <source>incallPauseWarning</source>
+        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
+        <translation>You are currently out of the conference.</translation>
     </message>
     <message>
-        <source>startRecordingLabel</source>
-        <translation>Start recording.</translation>
+        <source>incallPauseHint</source>
+        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
+        <translation>Click on play button to join it back.</translation>
     </message>
     <message>
-        <source>stopRecordingLabel</source>
-        <translation>Stop recording.</translation>
+        <source>incallStartRecordTooltip</source>
+        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
+        <translation>Start recording</translation>
+    </message>
+    <message>
+        <source>incallStopRecordTooltip</source>
+        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
+        <translation>Stop Recording</translation>
+    </message>
+    <message>
+        <source>incallSnapshotTooltip</source>
+        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
+        <translation>Take Snapshot</translation>
+    </message>
+    <message>
+        <source>incallWaitMessage</source>
+        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <translation>Video conference is not ready. Please Wait…</translation>
+    </message>
+    <message>
+        <source>callWarningRecord</source>
+        <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
+        <translation>This call is being recorded.</translation>
+    </message>
+</context>
+<context>
+    <name>IncallMenu</name>
+    <message>
+        <source>incallMenuMultimedia</source>
+        <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
+        <translation>Multimedia parameters</translation>
+    </message>
+    <message>
+        <source>incallMenuLayout</source>
+        <extracomment>&apos;Change layout&apos; : Menu title to change the conference layout.</extracomment>
+        <translation>Change layout</translation>
+    </message>
+    <message>
+        <source>incallMenuInvite</source>
+        <extracomment>&apos;Invite participants&apos; : Menu title to invite participants in admin mode.</extracomment>
+        <translation>Invite participants</translation>
+    </message>
+    <message>
+        <source>incallMenuParticipants</source>
+        <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
+        <translation>Participants list</translation>
+    </message>
+    <message>
+        <source>incallMenuTitle</source>
+        <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
+        <translation>Settings</translation>
+    </message>
+    <message>
+        <source>incallMenuGridLayout</source>
+        <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
+        <translation>Mosaic mode</translation>
+    </message>
+    <message>
+        <source>incallMenuActiveSpeakerLayout</source>
+        <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
+        <translation>Active speaker mode</translation>
+    </message>
+    <message>
+        <source>incallMenuAudioLayout</source>
+        <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
+        <translation>Audio only mode</translation>
+    </message>
+    <message>
+        <source>incallMenuParticipantsAlone</source>
+        <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
+        <translation>You are currently alone in this conference</translation>
     </message>
 </context>
 <context>
@@ -3389,135 +3484,6 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
         <translation>To enable it in a commercial project, please contact us.</translation>
-    </message>
-</context>
-<context>
-    <name>VideoConference</name>
-    <message>
-        <source>videoConferencePauseWarning</source>
-        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>You are currently out of the conference.</translation>
-    </message>
-    <message>
-        <source>videoConferencePauseHint</source>
-        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation>Click on play button to join it back.</translation>
-    </message>
-    <message>
-        <source>videoConferenceStartRecordTooltip</source>
-        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation>Start recording</translation>
-    </message>
-    <message>
-        <source>videoConferenceStopRecordTooltip</source>
-        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation>Stop Recording</translation>
-    </message>
-    <message>
-        <source>videoConferenceSnapshotTooltip</source>
-        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation>Take Snapshot&apos;</translation>
-    </message>
-    <message>
-        <source>videoConferenceWaitMessage</source>
-        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation>Video conference is not ready. Please Wait…</translation>
-    </message>
-    <message>
-        <source>callWarningRecord</source>
-        <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation>This call is being recorded.</translation>
-    </message>
-    <message>
-        <source>videoConferenceWaitParticipantMessage</source>
-        <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
-        <translation>Waiting for another participant...</translation>
-    </message>
-</context>
-<context>
-    <name>VideoConferenceFullscreen</name>
-    <message>
-        <source>videoConferencePauseWarning</source>
-        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>You are currently out of the conference.</translation>
-    </message>
-    <message>
-        <source>videoConferencePauseHint</source>
-        <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation>Click on play button to join it back.</translation>
-    </message>
-    <message>
-        <source>videoConferenceStartRecordTooltip</source>
-        <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation>Start recording</translation>
-    </message>
-    <message>
-        <source>videoConferenceStopRecordTooltip</source>
-        <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation>Stop Recording</translation>
-    </message>
-    <message>
-        <source>videoConferenceSnapshotTooltip</source>
-        <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation>Take Snapshot</translation>
-    </message>
-    <message>
-        <source>videoConferenceWaitMessage</source>
-        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation>Video conference is not ready. Please Wait…</translation>
-    </message>
-    <message>
-        <source>callWarningRecord</source>
-        <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation>This call is being recorded.</translation>
-    </message>
-</context>
-<context>
-    <name>VideoConferenceMenu</name>
-    <message>
-        <source>conferenceMenuMultimedia</source>
-        <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
-        <translation>Multimedia parameters</translation>
-    </message>
-    <message>
-        <source>conferenceMenuLayout</source>
-        <extracomment>&apos;Change layout&apos; : Menu title to change the conference layout.</extracomment>
-        <translation>Change layout</translation>
-    </message>
-    <message>
-        <source>conferenceMenuInvite</source>
-        <extracomment>&apos;Invite participants&apos; : Menu title to invite participants in admin mode.</extracomment>
-        <translation>Invite participants</translation>
-    </message>
-    <message>
-        <source>conferenceMenuParticipants</source>
-        <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
-        <translation>Participants list</translation>
-    </message>
-    <message>
-        <source>conferenceMenuTitle</source>
-        <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
-        <translation>Settings</translation>
-    </message>
-    <message>
-        <source>conferenceMenuGridLayout</source>
-        <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
-        <translation>Mosaic mode</translation>
-    </message>
-    <message>
-        <source>conferenceMenuActiveSpeakerLayout</source>
-        <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
-        <translation>Active speaker mode</translation>
-    </message>
-    <message>
-        <source>conferenceMenuAudioLayout</source>
-        <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
-        <translation>Audio only mode</translation>
-    </message>
-    <message>
-        <source>conferenceMenuParticipantsAlone</source>
-        <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
-        <translation>You are currently alone in this conference</translation>
     </message>
 </context>
 <context>

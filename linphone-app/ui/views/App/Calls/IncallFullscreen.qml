@@ -75,7 +75,7 @@ Window {
 		focus: true
 
 		Keys.onEscapePressed: window.exit()
-		color: hideButtons ? VideoConferenceStyle.fullBackgroundColor : VideoConferenceStyle.backgroundColor
+		color: hideButtons ? IncallStyle.fullBackgroundColor : IncallStyle.backgroundColor
 
 		Connections {
 			target: callModel
@@ -89,7 +89,7 @@ Window {
 		Rectangle{
 			anchors.fill: parent
 			visible: callModel && callModel.pausedByUser
-			color: VideoConferenceStyle.pauseArea.backgroundColor
+			color: IncallStyle.pauseArea.backgroundColor
 			z: 1
 			ColumnLayout{
 				anchors.fill: parent
@@ -101,7 +101,7 @@ Window {
 				ActionButton{
 					Layout.alignment: Qt.AlignCenter
 					isCustom: true
-					colorSet: VideoConferenceStyle.pauseArea.play
+					colorSet: IncallStyle.pauseArea.play
 					backgroundRadius: width/2
 					onClicked: if(callModel) callModel.pausedByUser = !callModel.pausedByUser
 				}
@@ -109,18 +109,18 @@ Window {
 					Layout.alignment: Qt.AlignCenter
 					
 					//: 'You are currently out of the conference.' : Pause message in video conference.
-					text: qsTr('videoConferencePauseWarning')
-					font.pointSize: VideoConferenceStyle.pauseArea.title.pointSize
-					font.weight: VideoConferenceStyle.pauseArea.title.weight
-					color: VideoConferenceStyle.pauseArea.title.color
+					text: qsTr('incallPauseWarning')
+					font.pointSize: IncallStyle.pauseArea.title.pointSize
+					font.weight: IncallStyle.pauseArea.title.weight
+					color: IncallStyle.pauseArea.title.color
 				}
 				Text{
 					Layout.alignment: Qt.AlignCenter
 					//: 'Click on play button to join it back.' : Explain what to do when being in pause in conference.
-					text: qsTr('videoConferencePauseHint')
-					font.pointSize: VideoConferenceStyle.pauseArea.description.pointSize
-					font.weight: VideoConferenceStyle.pauseArea.description.weight
-					color: VideoConferenceStyle.pauseArea.description.color
+					text: qsTr('incallPauseHint')
+					font.pointSize: IncallStyle.pauseArea.description.pointSize
+					font.weight: IncallStyle.pauseArea.description.weight
+					color: IncallStyle.pauseArea.description.color
 				}
 				Item{
 					Layout.fillWidth: true
@@ -151,7 +151,7 @@ Window {
 				id: keypadButton
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.dialpad
+				colorSet: IncallStyle.buttons.dialpad
 				onClicked: telKeypad.visible = !telKeypad.visible
 			}
 			ActionButton {
@@ -159,8 +159,8 @@ Window {
 
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.callQuality
-				icon: VideoConferenceStyle.buttons.callQuality.icon_0
+				colorSet: IncallStyle.buttons.callQuality
+				icon: IncallStyle.buttons.callQuality.icon_0
 				toggled: callStatistics.isOpen
 			
 				onClicked: callStatistics.isOpen ? callStatistics.close() : callStatistics.open()
@@ -175,15 +175,15 @@ Window {
 							// Note: `quality` is in the [0, 5] interval and -1.
 							var quality = callModel.quality
 							if(quality > 4)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_4
+								callQuality.icon = IncallStyle.buttons.callQuality.icon_4
 							else if(quality > 3)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_3
+								callQuality.icon = IncallStyle.buttons.callQuality.icon_3
 							else if(quality > 2)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_2
+								callQuality.icon = IncallStyle.buttons.callQuality.icon_2
 							else if(quality > 1)
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_1
+								callQuality.icon = IncallStyle.buttons.callQuality.icon_1
 							else
-								callQuality.icon = VideoConferenceStyle.buttons.callQuality.icon_0
+								callQuality.icon = IncallStyle.buttons.callQuality.icon_0
 						}
 					}
 				}
@@ -201,21 +201,21 @@ Window {
 				horizontalAlignment: Qt.AlignHCenter
 				Layout.fillWidth: true
 				text: conference.conferenceModel ? conference.conferenceModel.subject+ elaspedTime : ''
-				color: VideoConferenceStyle.title.color
-				font.pointSize: VideoConferenceStyle.title.pointSize
+				color: IncallStyle.title.color
+				font.pointSize: IncallStyle.title.pointSize
 			}
 			// Mode buttons
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.screenSharing
+				colorSet: IncallStyle.buttons.screenSharing
 				visible: false	//TODO
 			}
 			ActionButton {
 				id: recordingSwitch
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.record
+				colorSet: IncallStyle.buttons.record
 				property CallModel callModel: conference.callModel
 				onCallModelChanged: if(callModel) callModel.stopRecording()
 				visible: SettingsModel.callRecorderEnabled && callModel
@@ -227,23 +227,23 @@ Window {
 							: callModel.stopRecording()
 				}
 				//: 'Start recording' : Tootltip when straing record.
-				tooltipText: !toggled ? qsTr('videoConferenceStartRecordTooltip')
+				tooltipText: !toggled ? qsTr('incallStartRecordTooltip')
 				//: 'Stop Recording' : Tooltip when stopping record.
-					: qsTr('videoConferenceStopRecordTooltip')
+					: qsTr('incallStopRecordTooltip')
 			}
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.screenshot
+				colorSet: IncallStyle.buttons.screenshot
 				visible: conference.callModel && conference.callModel.snapshotEnabled
 				onClicked: conference.callModel && conference.callModel.takeSnapshot()
 				//: 'Take Snapshot' : Tooltip for takking snapshot.
-				tooltipText: qsTr('videoConferenceSnapshotTooltip')
+				tooltipText: qsTr('incallSnapshotTooltip')
 			}
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.stopFullscreen
+				colorSet: IncallStyle.buttons.stopFullscreen
 				onClicked: window.exit()
 			}
 
@@ -271,7 +271,7 @@ Window {
 
 			Component{
 				id: gridComponent
-				VideoConferenceGrid{
+				IncallGrid{
 					id: grid
 					Layout.leftMargin: window.hideButtons ? 15 : 70
 					Layout.rightMargin: rightMenu.visible ? 15 : 70
@@ -281,7 +281,7 @@ Window {
 			}
 			Component{
 				id: activeSpeakerComponent
-				VideoConferenceActiveSpeaker{
+				IncallActiveSpeaker{
 					id: activeSpeaker
 					callModel: conference.callModel
 					isRightReducedLayout: rightMenu.visible
@@ -309,17 +309,17 @@ Window {
 							Layout.preferredWidth: 50
 							Layout.alignment: Qt.AlignCenter
 							running: parent.visible
-							color: VideoConferenceStyle.buzyColor
+							color: IncallStyle.buzyColor
 						}
 						Text{
 							Layout.alignment: Qt.AlignCenter
 							//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
-							text: qsTr('videoConferenceWaitMessage')
-							color: VideoConferenceStyle.buzyColor
+							text: qsTr('incallWaitMessage')
+							color: IncallStyle.buzyColor
 						}
 					}
 				}
-				VideoConferenceMenu{
+				IncallMenu{
 					id: rightMenu
 					Layout.fillHeight: true
 					Layout.preferredWidth: 400
@@ -353,12 +353,12 @@ Window {
 			anchors.left: parent.left
 			anchors.verticalCenter: actionsButtons.verticalCenter
 			anchors.leftMargin: 25
-			height: VideoConferenceStyle.buttons.secure.buttonSize
+			height: IncallStyle.buttons.secure.buttonSize
 			width: height
 			isCustom: true
 			backgroundRadius: width/2
 			
-			colorSet: callModel.isSecured ? VideoConferenceStyle.buttons.secure : VideoConferenceStyle.buttons.unsecure
+			colorSet: callModel.isSecured ? IncallStyle.buttons.secure : IncallStyle.buttons.unsecure
 						
 			onClicked: zrtp.visible = (callModel.encryption === CallModel.CallEncryptionZrtp)
 						
@@ -376,17 +376,17 @@ Window {
 			anchors.rightMargin: 10
 			
 			Icon{
-				icon: VideoConferenceStyle.recordWarning.icon
-				iconSize: VideoConferenceStyle.recordWarning.iconSize
-				overwriteColor: VideoConferenceStyle.recordWarning.iconColor
+				icon: IncallStyle.recordWarning.icon
+				iconSize: IncallStyle.recordWarning.iconSize
+				overwriteColor: IncallStyle.recordWarning.iconColor
 			}
 			Text{
 				Layout.fillWidth: true
 				//: 'This call is being recorded.' : Warn the user that the remote is currently recording the call.
 				text: qsTr('callWarningRecord')
-				color: VideoConferenceStyle.recordWarning.color
+				color: IncallStyle.recordWarning.color
 				font.italic: true
-				font.pointSize: VideoConferenceStyle.recordWarning.pointSize
+				font.pointSize: IncallStyle.recordWarning.pointSize
 				wrapMode: Text.WordWrap
 			}
 		}
@@ -421,7 +421,7 @@ Window {
 						id: micro
 						isCustom: true
 						backgroundRadius: 90
-						colorSet: parent.microMuted ? VideoConferenceStyle.buttons.microOff : VideoConferenceStyle.buttons.microOn
+						colorSet: parent.microMuted ? IncallStyle.buttons.microOff : IncallStyle.buttons.microOn
 						onClicked: if(callModel) callModel.microMuted = !parent.microMuted
 					}
 				}
@@ -441,7 +441,7 @@ Window {
 						id: speaker
 						isCustom: true
 						backgroundRadius: 90
-						colorSet: parent.speakerMuted  ? VideoConferenceStyle.buttons.speakerOff : VideoConferenceStyle.buttons.speakerOn
+						colorSet: parent.speakerMuted  ? IncallStyle.buttons.speakerOff : IncallStyle.buttons.speakerOn
 						onClicked: if(callModel) callModel.speakerMuted = !parent.speakerMuted
 					}
 				}
@@ -449,7 +449,7 @@ Window {
 					id: camera
 					isCustom: true
 					backgroundRadius: 90
-					colorSet: callModel && callModel.cameraEnabled  ? VideoConferenceStyle.buttons.cameraOn : VideoConferenceStyle.buttons.cameraOff
+					colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 					updating: callModel && callModel.videoEnabled && callModel.updating
 					enabled: callModel && callModel.videoEnabled
 					onClicked: if(callModel) callModel.cameraEnabled = !callModel.cameraEnabled
@@ -462,13 +462,13 @@ Window {
 					backgroundRadius: width/2
 					visible: SettingsModel.callPauseEnabled
 					updating: callModel && callModel.updating
-					colorSet: callModel && callModel.pausedByUser ? VideoConferenceStyle.buttons.play : VideoConferenceStyle.buttons.pause
+					colorSet: callModel && callModel.pausedByUser ? IncallStyle.buttons.play : IncallStyle.buttons.pause
 					onClicked: if(callModel) callModel.pausedByUser = !callModel.pausedByUser
 				}
 				ActionButton{
 					isCustom: true
 					backgroundRadius: width/2
-					colorSet: VideoConferenceStyle.buttons.hangup
+					colorSet: IncallStyle.buttons.hangup
 
 					onClicked: if(callModel) callModel.terminate()
 				}
@@ -487,7 +487,7 @@ Window {
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.chat
+				colorSet: IncallStyle.buttons.chat
 				visible: false && (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && callModel && !callModel.isConference
 				toggled: window.chatIsOpened
 				onClicked: {
@@ -502,7 +502,7 @@ Window {
 				visible: callModel && callModel.isConference
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.participants
+				colorSet: IncallStyle.buttons.participants
 				toggled: rightMenu.visible && rightMenu.isParticipantsMenu
 				onClicked: {
 						if(toggled)
@@ -515,7 +515,7 @@ Window {
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
-				colorSet: VideoConferenceStyle.buttons.options
+				colorSet: IncallStyle.buttons.options
 				toggled: rightMenu.visible
 				onClicked: rightMenu.visible = !rightMenu.visible
 			}

@@ -118,7 +118,7 @@ function openMediaParameters (window, incall) {
     call: incall.call
   })
 }
-// callerId = incall, qmlFile = 'IncallFullscreenWindow.qml'
+// callerId = incall, qmlFile = 'IncallFullscreen.qml'
 // callerId need to have : _fullscreen and isFullScreen
 function showFullscreen (window, callerId, qmlFile, position) {
   callerId.isFullScreen = true

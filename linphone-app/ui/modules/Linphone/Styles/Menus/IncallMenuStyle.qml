@@ -8,7 +8,7 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-	property string sectionName: 'VideoConferenceMenu'
+	property string sectionName: 'IncallMenu'
 	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'k').color
 	property int radius: 8
 	property QtObject header: QtObject{

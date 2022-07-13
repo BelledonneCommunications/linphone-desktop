@@ -84,7 +84,7 @@ Window {
 		maximumLeftLimit: CallsWindowStyle.callsList.maximumWidth
 		minimumLeftLimit: CallsWindowStyle.callsList.minimumWidth
 		
-		hideSplitter: !window.callsIsOpened && middlePane.sourceComponent == videoConference
+		hideSplitter: !window.callsIsOpened && middlePane.sourceComponent == incall
 		
 		// -------------------------------------------------------------------------
 		// Calls list.
@@ -184,21 +184,13 @@ Window {
 			minimumRightLimit: CallsWindowStyle.chat.minimumWidth
 			resizeAInPriority: true
 			
-			hideSplitter: !window.chatIsOpened && (!middlePane.sourceComponent || middlePane.sourceComponent == videoConference || !rightPane.sourceComponent)
+			hideSplitter: !window.chatIsOpened && (!middlePane.sourceComponent || middlePane.sourceComponent == incall || !rightPane.sourceComponent)
 			// -----------------------------------------------------------------------
 			
 			Component {
 				id: incomingCall
 				
 				IncomingCall {
-					call: window.call
-				}
-			}
-			
-			Component {
-				id: incall
-				
-				Incall {
 					call: window.call
 				}
 			}
@@ -248,8 +240,8 @@ Window {
 				}
 			}
 			Component {
-				id: videoConference
-				VideoConference {
+				id: incall
+				Incall {
 					callModel: window.call
 					enabled: window.visible
 					listCallsOpened: window.callsIsOpened

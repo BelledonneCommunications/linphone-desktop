@@ -8,7 +8,7 @@ import ColorsList 1.0
 // =============================================================================
 
 QtObject {
-	property string sectionName: 'VideoConference'
+	property string sectionName: 'Incall'
 	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'conference_bg').color
 	property color fullBackgroundColor: ColorsList.add(sectionName+'_fullscreen_bg', 'fullscreen_conference_bg').color
 	property color buzyColor: ColorsList.add(sectionName+'_indicator', 'q').color

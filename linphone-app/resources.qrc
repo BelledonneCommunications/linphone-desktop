@@ -350,7 +350,7 @@
 		<file>ui/modules/Linphone/History/History.js</file>
 		<file>ui/modules/Linphone/History/Event.qml</file>
 		<file>ui/modules/Linphone/Menus/SipAddressesMenu.qml</file>
-		<file>ui/modules/Linphone/Menus/VideoConferenceMenu.qml</file>
+		<file>ui/modules/Linphone/Menus/IncallMenu.qml</file>
 		<file>ui/modules/Linphone/Misc/MessageCounter.qml</file>
 		<file>ui/modules/Linphone/Notifications/NotificationBasic.qml</file>
 		<file>ui/modules/Linphone/Notifications/NotificationNewVersionAvailable.qml</file>
@@ -392,7 +392,7 @@
 		<file>ui/modules/Linphone/Styles/Dialog/SipAddressDialogStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/History/HistoryStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Menus/SipAddressesMenuStyle.qml</file>
-		<file>ui/modules/Linphone/Styles/Menus/VideoConferenceMenuStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Menus/IncallMenuStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Misc/MessageCounterStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Notifications/NotificationBasicStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Notifications/NotificationReceivedCallStyle.qml</file>
@@ -426,16 +426,14 @@
 		<file>ui/views/App/Calls/CallsWindow.js</file>
 		<file>ui/views/App/Calls/CallsWindow.qml</file>
 		<file>ui/views/App/Calls/Conference.qml</file>
-		<file>ui/views/App/Calls/VideoConference.qml</file>
-		<file>ui/views/App/Calls/VideoConferenceActiveSpeaker.qml</file>
-		<file>ui/views/App/Calls/VideoConferenceFullscreen.qml</file>
-		<file>ui/views/App/Calls/VideoConferenceGrid.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallSipAddress.qml</file>
 		<file>ui/views/App/Calls/Dialogs/CallTransfer.qml</file>
 		<file>ui/views/App/Calls/Dialogs/ConferenceManager.qml</file>
-		<file>ui/views/App/Calls/IncallFullscreenWindow.qml</file>
 		<file>ui/views/App/Calls/Incall.js</file>
 		<file>ui/views/App/Calls/Incall.qml</file>
+		<file>ui/views/App/Calls/IncallActiveSpeaker.qml</file>
+		<file>ui/views/App/Calls/IncallFullscreen.qml</file>
+		<file>ui/views/App/Calls/IncallGrid.qml</file>
 		<file>ui/views/App/Calls/IncomingCall.qml</file>
 		<file>ui/views/App/Calls/WaitingRoom.qml</file>
 		<file>ui/views/App/Calls/ZrtpTokenAuthentication.qml</file>
@@ -499,7 +497,7 @@
 		<file>ui/views/App/Styles/Calls/CallFullscreenStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/CallsWindowStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/ConferenceStyle.qml</file>
-		<file>ui/views/App/Styles/Calls/VideoConferenceStyle.qml</file>
+		<file>ui/views/App/Styles/Calls/IncallStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/WaitingRoomStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallSipAddressStyle.qml</file>
 		<file>ui/views/App/Styles/Calls/Dialogs/CallTransferStyle.qml</file>

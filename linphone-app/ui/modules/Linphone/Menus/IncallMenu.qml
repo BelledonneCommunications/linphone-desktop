@@ -29,18 +29,18 @@ Rectangle{
 	height: 500
 	width: 400
 	color: "white"
-	radius: VideoConferenceMenuStyle.radius
+	radius: IncallMenuStyle.radius
 	
 	// List of title texts in order to allow bindings between all components
 	property var menuTitles: [
 	//: 'Multimedia parameters' : Menu title to show multimedia devices configuration.
-		qsTr('conferenceMenuMultimedia'),
+		qsTr('incallMenuMultimedia'),
 	//: 'Change layout' : Menu title to change the conference layout.
-		qsTr('conferenceMenuLayout'),
+		qsTr('incallMenuLayout'),
 		//: 'Invite participants' : Menu title to invite participants in admin mode.
-		mainItem.isMeAdmin ? qsTr('conferenceMenuInvite')
+		mainItem.isMeAdmin ? qsTr('incallMenuInvite')
 		//: 'Participants list' : Menu title to show participants in non-admin mode.
-			: qsTr('conferenceMenuParticipants')
+			: qsTr('incallMenuParticipants')
 	]
 	
 	function showParticipantsMenu(){
@@ -56,15 +56,15 @@ Rectangle{
 // HEADER
 		Borders{
 			Layout.fillWidth: true
-			Layout.preferredHeight: Math.max(VideoConferenceMenuStyle.header.height, titleMenu.implicitHeight+20)
-			bottomColor: VideoConferenceMenuStyle.list.border.color
-			bottomWidth: VideoConferenceMenuStyle.list.border.width
+			Layout.preferredHeight: Math.max(IncallMenuStyle.header.height, titleMenu.implicitHeight+20)
+			bottomColor: IncallMenuStyle.list.border.color
+			bottomWidth: IncallMenuStyle.list.border.width
 			RowLayout{
 				anchors.fill: parent
 				ActionButton{
 					backgroundRadius: width/2
 					isCustom: true
-					colorSet: VideoConferenceMenuStyle.buttons.back
+					colorSet: IncallMenuStyle.buttons.back
 					onClicked: contentsStack.pop()
 					visible: contentsStack.nViews > 1
 				}
@@ -74,9 +74,9 @@ Rectangle{
 					Layout.fillWidth: true
 					Layout.preferredHeight: implicitHeight
 					horizontalAlignment: Qt.AlignCenter
-					color: VideoConferenceMenuStyle.header.color
-					font.pointSize: VideoConferenceMenuStyle.header.pointSize
-					font.weight: VideoConferenceMenuStyle.header.weight
+					color: IncallMenuStyle.header.color
+					font.pointSize: IncallMenuStyle.header.pointSize
+					font.weight: IncallMenuStyle.header.weight
 					wrapMode: Text.WordWrap
 					elide: Text.ElideRight
 				}
@@ -84,7 +84,7 @@ Rectangle{
 					Layout.rightMargin: 10
 					backgroundRadius: width/2
 					isCustom: true
-					colorSet: VideoConferenceMenuStyle.buttons.close
+					colorSet: IncallMenuStyle.buttons.close
 					onClicked: mainItem.close()
 				}
 			}
@@ -101,33 +101,33 @@ Rectangle{
 			ColumnLayout{
 				property string objectName: 'settingsMenu'
 				//: 'Settings' : Main menu title for settings.
-				property string title: qsTr('conferenceMenuTitle')
+				property string title: qsTr('incallMenuTitle')
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				
 				Repeater{
 					model: [
 						{titleIndex: 0
-						,icon: VideoConferenceMenuStyle.settingsIcons.mediaIcon
+						,icon: IncallMenuStyle.settingsIcons.mediaIcon
 						, nextPage:mediaMenu
 						, visible: true},
 						
 						{titleIndex: 1
 						, icon: (mainItem.callModel && mainItem.callModel.videoEnabled ?
-										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? VideoConferenceMenuStyle.settingsIcons.gridIcon : VideoConferenceMenuStyle.settingsIcons.activeSpeakerIcon)
-									: VideoConferenceMenuStyle.settingsIcons.audioOnlyIcon)
+										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? IncallMenuStyle.settingsIcons.gridIcon : IncallMenuStyle.settingsIcons.activeSpeakerIcon)
+									: IncallMenuStyle.settingsIcons.audioOnlyIcon)
 						, nextPage:layoutMenu
 						, visible: mainItem.callModel && mainItem.callModel.isConference},
 
 						{ titleIndex: 2
-						, icon: VideoConferenceMenuStyle.settingsIcons.participantsIcon
+						, icon: IncallMenuStyle.settingsIcons.participantsIcon
 						, nextPage:participantsMenu
 						, visible: mainItem.callModel && mainItem.callModel.isConference}
 					]
 					delegate:
 						Borders{
-						bottomColor: VideoConferenceMenuStyle.list.border.color
-						bottomWidth: VideoConferenceMenuStyle.list.border.width
+						bottomColor: IncallMenuStyle.list.border.color
+						bottomWidth: IncallMenuStyle.list.border.width
 						Layout.preferredHeight: Math.max(settingIcon.height, settingsDescription.implicitHeight) + 20
 						Layout.fillWidth: true
 						visible: modelData.visible
@@ -139,9 +139,9 @@ Rectangle{
 								Layout.leftMargin: 15
 								Layout.alignment: Qt.AlignVCenter
 								icon: modelData.icon
-								overwriteColor: VideoConferenceMenuStyle.list.color
-								iconWidth: VideoConferenceMenuStyle.settingsIcons.width
-								iconHeight: VideoConferenceMenuStyle.settingsIcons.height
+								overwriteColor: IncallMenuStyle.list.color
+								iconWidth: IncallMenuStyle.settingsIcons.width
+								iconHeight: IncallMenuStyle.settingsIcons.height
 							}
 							Text{
 								id: settingsDescription
@@ -151,8 +151,8 @@ Rectangle{
 								elide: Text.ElideRight
 		
 								text: mainItem.menuTitles[modelData.titleIndex]
-								font.pointSize: VideoConferenceMenuStyle.list.pointSize
-								color: VideoConferenceMenuStyle.list.color
+								font.pointSize: IncallMenuStyle.list.pointSize
+								color: IncallMenuStyle.list.color
 							}
 							ActionButton{
 								Layout.minimumWidth: iconWidth
@@ -160,7 +160,7 @@ Rectangle{
 								Layout.alignment: Qt.AlignVCenter
 								backgroundRadius: width/2
 								isCustom: true
-								colorSet: VideoConferenceMenuStyle.buttons.next
+								colorSet: IncallMenuStyle.buttons.next
 							}
 						}
 						MouseArea{
@@ -211,16 +211,16 @@ Rectangle{
 				Layout.fillWidth: true
 				Repeater{
 				//: 'Mosaic mode' : Grid layout for video conference.
-					model: [{text: qsTr('conferenceMenuGridLayout'), icon: VideoConferenceMenuStyle.modeIcons.gridIcon, value:LinphoneEnums.ConferenceLayoutGrid}
+					model: [{text: qsTr('incallMenuGridLayout'), icon: IncallMenuStyle.modeIcons.gridIcon, value:LinphoneEnums.ConferenceLayoutGrid}
 				//: 'Active speaker mode' : Active speaker layout for video conference.
-						, {text: qsTr('conferenceMenuActiveSpeakerLayout'), icon: VideoConferenceMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker}
+						, {text: qsTr('incallMenuActiveSpeakerLayout'), icon: IncallMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker}
 				//: 'Audio only mode' : Audio only layout for video conference.
-						, {text: qsTr('conferenceMenuAudioLayout'), icon: VideoConferenceMenuStyle.modeIcons.audioOnlyIcon, value:2}
+						, {text: qsTr('incallMenuAudioLayout'), icon: IncallMenuStyle.modeIcons.audioOnlyIcon, value:2}
 					]				
 					delegate:
 						Borders{
-						bottomColor: VideoConferenceMenuStyle.list.border.color
-						bottomWidth: VideoConferenceMenuStyle.list.border.width
+						bottomColor: IncallMenuStyle.list.border.color
+						bottomWidth: IncallMenuStyle.list.border.width
 						Layout.preferredHeight: Math.max(layoutIcon.height, radio.contentItem.implicitHeight) + 20
 						Layout.fillWidth: true
 						RowLayout{
@@ -264,8 +264,8 @@ Rectangle{
 								Layout.rightMargin: 10
 								Layout.alignment: Qt.AlignVCenter
 								icon: modelData.icon
-								iconWidth: VideoConferenceMenuStyle.modeIcons.width
-								iconHeight: VideoConferenceMenuStyle.modeIcons.height
+								iconWidth: IncallMenuStyle.modeIcons.width
+								iconHeight: IncallMenuStyle.modeIcons.height
 							}
 						}
 					}
@@ -292,10 +292,10 @@ Rectangle{
 					isAdmin: mainItem.isMeAdmin
 					Text{
 					//: 'Your are currently alone in this conference' : Message to warn the user when there is no other participant.
-						text: qsTr('conferenceMenuParticipantsAlone')
+						text: qsTr('incallMenuParticipantsAlone')
 						visible: parent.count <= 1
-						font.pointSize: VideoConferenceMenuStyle.list.pointSize
-						color: VideoConferenceMenuStyle.list.color
+						font.pointSize: IncallMenuStyle.list.pointSize
+						color: IncallMenuStyle.list.color
 					}
 				}
 				Item{// Spacer

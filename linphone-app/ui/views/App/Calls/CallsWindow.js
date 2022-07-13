@@ -87,9 +87,9 @@ function getContent (call, conferenceInfoModel) {
 	}
 	
 	if(call.isConference)
-		return videoConference
+		return incall
 		
-	return videoConference	//incall
+	return incall
 }
 
 // -----------------------------------------------------------------------------
