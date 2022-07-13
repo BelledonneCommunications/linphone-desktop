@@ -35,7 +35,7 @@ ColumnLayout {
 
 		showHeader:false
 
-		visible: mainLayout.isAdmin && mainLayout.canHandleParticipants
+		visible: mainLayout.canHandleParticipants
 
 		maxMenuHeight: MainWindowStyle.searchBox.maxHeight
 		//: 'Add Participants' : Placeholder in a search bar for adding participant to the chat room

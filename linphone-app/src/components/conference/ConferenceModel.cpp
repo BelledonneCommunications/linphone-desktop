@@ -42,6 +42,7 @@ void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::participantAdminStatusChanged, this, &ConferenceModel::onParticipantAdminStatusChanged);
 	connect(listener, &ConferenceListener::participantDeviceAdded, this, &ConferenceModel::onParticipantDeviceAdded);
 	connect(listener, &ConferenceListener::participantDeviceRemoved, this, &ConferenceModel::onParticipantDeviceRemoved);
+	connect(listener, &ConferenceListener::participantDeviceStateChanged, this, &ConferenceModel::onParticipantDeviceStateChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaCapabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaCapabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaAvailabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaAvailabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceIsSpeakingChanged, this, &ConferenceModel::onParticipantDeviceIsSpeakingChanged);
@@ -123,7 +124,7 @@ std::list<std::shared_ptr<linphone::Participant>> ConferenceModel::getParticipan
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
-	qDebug() << "Added call, participant count: " << getParticipantList().size();
+	qDebug() << "Added call, participant count: " << getParticipantList().size() << ". Me devices : " << mConference->getMe()->getDevices().size();
 	updateLocalParticipant();
 	emit participantAdded(participant);
 }
@@ -147,6 +148,13 @@ void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<const lin
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
 }
+
+void ConferenceModel::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDeviceState state){
+	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
+	updateLocalParticipant();
+	emit participantDeviceStateChanged(device, state);
+}
+
 void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "ConferenceModel::onParticipantDeviceMediaCapabilityChanged: "  << (int)participantDevice->getStreamCapability(linphone::StreamType::Video) << ". Me devices : " << mConference->getMe()->getDevices().size();
 	emit participantDeviceMediaCapabilityChanged(participantDevice);
@@ -159,6 +167,7 @@ void ConferenceModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
 }
 void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newState){
+	updateLocalParticipant();
 	emit conferenceStateChanged(newState);
 }
 void ConferenceModel::onSubjectChanged(const std::string& string){
