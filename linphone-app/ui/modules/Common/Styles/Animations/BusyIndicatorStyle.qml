@@ -7,5 +7,5 @@ QtObject {
 	property string sectionName: 'Busy'
 	property color color: ColorsList.add(sectionName+'_indicator', 'i').color
 	property int duration: 1250
-	property int nSpheres: 6
+	property int nSpheres: 8
 }

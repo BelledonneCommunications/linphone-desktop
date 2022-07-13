@@ -134,12 +134,12 @@ QtObject {
 	}
 	*/
 	property QtObject callError: QtObject {
-		property color color: ColorsList.add(sectionName+'_action_error', 'i').color
+		property color color: ColorsList.add(sectionName+'_action_error', 'q').color
 		property int pointSize: Units.dp * 12
 	}
 	property QtObject header: QtObject {
 		property QtObject busyIndicator: QtObject {
-			property color color: ColorsList.add(sectionName+'_header_busy', 'i').color
+			property color color: ColorsList.add(sectionName+'_header_busy', 'q').color
 			property int height: 20
 			property int width: 20
 		}

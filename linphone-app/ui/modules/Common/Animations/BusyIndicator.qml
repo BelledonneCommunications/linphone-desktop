@@ -64,10 +64,11 @@ BusyIndicator {
 				Rectangle {
 					x: item.width / 2 - width / 2
 					y: item.height / 2 - height / 2
+					property real ratio : (3+index) / repeater.count
 					
-					height: item.height / 3
-					width: item.width / 3
-					
+					height: item.height / 3 * ratio
+					width: item.width / 3 * ratio
+					opacity: ratio
 					color: busyIndicator.color
 					radius: (width > height ? width : height) / 2
 					
