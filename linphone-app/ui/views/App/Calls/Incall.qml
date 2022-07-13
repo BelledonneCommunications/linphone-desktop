@@ -162,14 +162,16 @@ Rectangle {
 					running: true
 					interval: 1000
 					repeat: true
-					onTriggered: if(conferenceModel) parent.elaspedTime = ' - ' +Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
+					onTriggered: if(conferenceModel) parent.elaspedTime = Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
 								else parent.elaspedTime = Utils.formatElapsedTime(conference.callModel.duration)
 				}
 				property string elaspedTime
 				horizontalAlignment: Qt.AlignHCenter
 				Layout.fillWidth: true
 				text: conferenceModel 
-						? conferenceModel.subject+ elaspedTime
+						? conferenceModel.subject
+							? conferenceModel.subject+ ' - ' +elaspedTime
+							: elaspedTime
 						: callModel
 							? elaspedTime
 							: ''
