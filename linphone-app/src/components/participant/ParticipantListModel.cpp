@@ -175,9 +175,6 @@ void ParticipantListModel::updateParticipants () {
 			}
 			if( itParticipant == mList.end()){
 				auto participant = QSharedPointer<ParticipantModel>::create(dbParticipant);
-				connect(this, &ParticipantListModel::deviceSecurityLevelChanged, participant.get(), &ParticipantModel::onDeviceSecurityLevelChanged);
-				connect(this, &ParticipantListModel::securityLevelChanged, participant.get(), &ParticipantModel::onSecurityLevelChanged);
-				connect(participant.get(),&ParticipantModel::updateAdminStatus, this, &ParticipantListModel::setAdminStatus);
 				add(participant);
 				changed = true;
 			}else if(!itParticipant->objectCast<ParticipantModel>()->getParticipant() || itParticipant->objectCast<ParticipantModel>()->getParticipant() != dbParticipant){
