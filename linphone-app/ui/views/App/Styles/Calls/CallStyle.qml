@@ -61,7 +61,7 @@ QtObject {
 		property int topMargin: 26
 		
 		property QtObject busyIndicator: QtObject {
-			property color color: ColorsList.add(sectionName+'_header_busy', 'g').color
+			property color color: ColorsList.add(sectionName+'_header_busy', 'q').color
 			property int height: 30
 			property int width: 30
 		}

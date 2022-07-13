@@ -52,6 +52,7 @@ Item {
 				BusyIndicator {
 					anchors.fill:parent
 					running: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateInProgress
+					color: AccountStatusStyle.busyColor
 				}
 				
 				Icon {

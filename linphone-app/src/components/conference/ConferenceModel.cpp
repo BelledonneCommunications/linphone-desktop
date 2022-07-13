@@ -71,16 +71,18 @@ ConferenceModel::~ConferenceModel(){
 
 bool ConferenceModel::updateLocalParticipant(){
 	bool changed = false;
-	// First try to use findParticipant
-	auto localParticipant = mConference->findParticipant(mConference->getCall()->getCallLog()->getLocalAddress());
-	// Me is not in participants, use Me().
-	if( !localParticipant)
-		localParticipant = mConference->getMe();
-	if( localParticipant && (!mLocalParticipant || mLocalParticipant->getParticipant() != localParticipant) ) {
-		mLocalParticipant = QSharedPointer<ParticipantModel>::create(localParticipant);
-		qDebug() << "Is Admin: " << localParticipant->isAdmin() << " " << mLocalParticipant->getAdminStatus();
-		changed = true;
-		emit localParticipantChanged();
+	if(mConference && mConference->getCall()){
+		// First try to use findParticipant
+		auto localParticipant = mConference->findParticipant(mConference->getCall()->getCallLog()->getLocalAddress());
+		// Me is not in participants, use Me().
+		if( !localParticipant)
+			localParticipant = mConference->getMe();
+		if( localParticipant && (!mLocalParticipant || mLocalParticipant->getParticipant() != localParticipant) ) {
+			mLocalParticipant = QSharedPointer<ParticipantModel>::create(localParticipant);
+			qDebug() << "Is Admin: " << localParticipant->isAdmin() << " " << mLocalParticipant->getAdminStatus();
+			changed = true;
+			emit localParticipantChanged();
+		}
 	}
 	return changed;
 }

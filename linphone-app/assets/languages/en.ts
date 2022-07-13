@@ -3428,6 +3428,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
         <translation>This call is being recorded.</translation>
     </message>
+    <message>
+        <source>videoConferenceWaitParticipantMessage</source>
+        <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
+        <translation>Waiting for another participant...</translation>
+    </message>
 </context>
 <context>
     <name>VideoConferenceFullscreen</name>

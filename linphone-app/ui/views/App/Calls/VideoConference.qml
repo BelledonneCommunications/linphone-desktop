@@ -293,8 +293,12 @@ Rectangle {
 					}
 					Text{
 						Layout.alignment: Qt.AlignCenter
+						
+						text: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid && !conference.callModel.videoEnabled
+						//: 'Waiting for another participant...' :  Waiting message for more participant.
+								? qsTr('videoConferenceWaitParticipantMessage')
 						//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
-						text: qsTr('videoConferenceWaitMessage')
+								: qsTr('videoConferenceWaitMessage')
 						color: VideoConferenceStyle.buzyColor
 					}
 				}

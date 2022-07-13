@@ -41,7 +41,7 @@ Rectangle {
 		anchors.fill: parent
 		ColumnLayout{
 			Layout.alignment: Qt.AlignCenter
-			Layout.bottomMargin: (mainItem.conferenceInfoModel && mainItem.callModel ? 10 : 40) - (errorArea.visible ? errorArea.height + 10: 0)
+			Layout.bottomMargin: (mainItem.conferenceInfoModel && mainItem.callModel ? 10 : 40)
 			spacing: 10
 			BusyIndicator {
 				Layout.alignment: Qt.AlignCenter
@@ -103,6 +103,7 @@ Rectangle {
 		Text {
 			id: errorArea
 			Layout.fillWidth: true
+			Layout.preferredHeight: implicitHeight
 			Layout.bottomMargin: 10
 			horizontalAlignment: Qt.AlignHCenter
 			verticalAlignment: Qt.AlignVCenter

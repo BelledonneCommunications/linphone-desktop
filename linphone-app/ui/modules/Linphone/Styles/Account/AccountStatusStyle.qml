@@ -10,6 +10,7 @@ QtObject {
 	property string sectionName: 'AccountStatus'
 	property int horizontalSpacing: 8
 	property int verticalSpacing: 2
+	property color busyColor: ColorsList.add(sectionName+'_spinner', 'i').color
 	
 	property QtObject presenceLevel: QtObject {
 		property int bottomMargin: 1

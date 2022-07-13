@@ -3392,6 +3392,11 @@
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>videoConferenceWaitParticipantMessage</source>
+        <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>VideoConferenceFullscreen</name>

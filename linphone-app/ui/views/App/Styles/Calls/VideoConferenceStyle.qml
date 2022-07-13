@@ -118,12 +118,6 @@ QtObject {
 		property int spacing: 10
 		property int topMargin: 26
 		
-		property QtObject busyIndicator: QtObject {
-			property color color: ColorsList.add(sectionName+'_header_busy', 'g').color
-			property int height: 30
-			property int width: 30
-		}
-		
 		property QtObject contactDescription: QtObject {
 			property int height: 50
 			property int width: 150

@@ -46,7 +46,7 @@ Item {
 	
 	function clearAll(layoutMode){
 		if( layoutMode != LinphoneEnums.ConferenceLayoutActiveSpeaker){
-			cameraView.cameraEnabled = false
+			mainItem.cameraEnabled = false
 			miniViews.model = []
 		}
 	}
