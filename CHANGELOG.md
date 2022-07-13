@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Phone dialpad on main window.
 - Animated file in chats/notifications.
 - Round progress bar for transferring a file and allow to cancel it.
+- hide all accounts if their custom parameter 'hidden' is set to 1.
 
 ### Fixed
 - Crash on exit.

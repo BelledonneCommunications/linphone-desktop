@@ -123,12 +123,14 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(bool standardChatEnabled READ getStandardChatEnabled WRITE setStandardChatEnabled NOTIFY standardChatEnabledChanged)
 	Q_PROPERTY(bool secureChatEnabled READ getSecureChatEnabled WRITE setSecureChatEnabled NOTIFY secureChatEnabledChanged)
+	Q_PROPERTY(bool groupChatEnabled READ getGroupChatEnabled NOTIFY groupChatEnabledChanged)
 	Q_PROPERTY(bool hideEmptyChatRooms READ getHideEmptyChatRooms WRITE setHideEmptyChatRooms NOTIFY hideEmptyChatRoomsChanged)
+	
 	
 	Q_PROPERTY(bool waitRegistrationForCall READ getWaitRegistrationForCall WRITE setWaitRegistrationForCall NOTIFY waitRegistrationForCallChanged)// Allow call only if the current proxy has been registered
 	
 	Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged)
-	
+	Q_PROPERTY(bool videoConferenceEnabled READ getVideoConferenceEnabled NOTIFY videoConferenceEnabledChanged)
 	
 	Q_PROPERTY(bool chatNotificationsEnabled READ getChatNotificationsEnabled WRITE setChatNotificationsEnabled NOTIFY chatNotificationsEnabledChanged)
 	Q_PROPERTY(bool chatNotificationSoundEnabled READ getChatNotificationSoundEnabled WRITE setChatNotificationSoundEnabled NOTIFY chatNotificationSoundEnabledChanged)
@@ -427,8 +429,11 @@ public:
 	bool getWaitRegistrationForCall() const;
 	void setWaitRegistrationForCall(const bool& data);
 	
+	bool getGroupChatEnabled()const;
+	
 	bool getConferenceEnabled () const;
 	void setConferenceEnabled (bool status);
+	bool getVideoConferenceEnabled()const;
 	
 	bool getChatNotificationsEnabled () const;
 	void setChatNotificationsEnabled (bool status);
@@ -698,11 +703,13 @@ signals:
 	void muteMicrophoneEnabledChanged (bool status);
 	
 	void standardChatEnabledChanged (bool status);
-	void secureChatEnabledChanged (bool status);
+	void secureChatEnabledChanged ();
+	void groupChatEnabledChanged();
 	void hideEmptyChatRoomsChanged (bool status);
 	void waitRegistrationForCallChanged (bool status);
 	
 	void conferenceEnabledChanged (bool status);
+	void videoConferenceEnabledChanged ();
 	
 	void chatNotificationsEnabledChanged (bool status);
 	void chatNotificationSoundEnabledChanged (bool status);

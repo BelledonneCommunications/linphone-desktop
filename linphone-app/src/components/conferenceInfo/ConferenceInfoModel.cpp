@@ -88,8 +88,10 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	mConferenceInfo->setDuration(0);
 	mIsScheduled = false;
 	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
-	accountAddress->clean();
-	mConferenceInfo->setOrganizer(accountAddress);
+	if(accountAddress){
+		accountAddress->clean();
+		mConferenceInfo->setOrganizer(accountAddress);
+	}
 }
 
 // Callable from C++

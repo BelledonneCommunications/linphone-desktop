@@ -268,7 +268,6 @@ ColumnLayout  {
 						
 						onClicked: CallsListModel.launchVideoCall(chatRoomModel.participants.addressesToString)
 					}
-					
 					ActionButton {
 						isCustom: true
 						backgroundRadius: 1000
@@ -303,13 +302,33 @@ ColumnLayout  {
 					}
 					
 					ActionButton {
+						id: groupCallButton
+						property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
+						Connections{
+							target: groupCallButton.conferenceInfoModel
+							onConferenceCreated: {
+								groupCallButton.toggled = false
+							}
+							onConferenceCreationFailed:{
+								groupCallButton.toggled = false
+							}
+						}
 						isCustom: true
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.groupChat
 						
-						visible: SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.isReadOnly
+						visible: SettingsModel.videoConferenceEnabled && SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.isReadOnly
 						
-						onClicked: Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
+						//onClicked: CallsListModel. Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
+						onClicked:{
+							groupCallButton.toggled = true
+							conferenceInfoModel.isScheduled = false
+							conferenceInfoModel.subject = chatRoomModel.subject
+							
+							conferenceInfoModel.setParticipants(conversation.chatRoomModel.participants)
+							conferenceInfoModel.inviteMode = 0;
+							conferenceInfoModel.createConference(false)// TODO activate it when secure video conference is implemented
+						}
 						//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room
 						tooltipText: qsTr("groupChatCallButton")
 					}

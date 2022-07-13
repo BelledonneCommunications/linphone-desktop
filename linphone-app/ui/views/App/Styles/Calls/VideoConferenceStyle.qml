@@ -11,7 +11,7 @@ QtObject {
 	property string sectionName: 'VideoConference'
 	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'conference_bg').color
 	property color fullBackgroundColor: ColorsList.add(sectionName+'_fullscreen_bg', 'fullscreen_conference_bg').color
-	property color buzyColor: ColorsList.add(sectionName+'_indicator', 'i').color
+	property color buzyColor: ColorsList.add(sectionName+'_indicator', 'q').color
 	
 	property QtObject title: QtObject {
 		property color color: ColorsList.add(sectionName+'_title', 'q').color

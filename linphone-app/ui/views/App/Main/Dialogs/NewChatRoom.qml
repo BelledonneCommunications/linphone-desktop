@@ -90,6 +90,7 @@ DialogPlus {
 					Layout.fillWidth: true
 					Layout.topMargin:15
 					spacing:4
+					visible: SettingsModel.secureChatEnabled
 					Text {
 						Layout.fillWidth: true
 						//: 'Would you like to encrypt your chat?' : Ask about setting the chat room as secured.

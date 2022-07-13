@@ -31,12 +31,14 @@
 #include "app/App.hpp"
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
+
 #include "components/core/CoreManager.hpp"
 #include "components/tunnel/TunnelModel.hpp"
 #include "include/LinphoneApp/PluginNetworkHelper.hpp"
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
 #include "utils/MediastreamerUtils.hpp"
+#include "AccountSettingsModel.hpp"
 #include "SettingsModel.hpp"
 
 
@@ -57,7 +59,17 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 			 this, &SettingsModel::handleCallStateChanged);
 	QObject::connect(coreManager->getHandlers().get(), &CoreHandlers::ecCalibrationResult,
 			 this, &SettingsModel::handleEcCalibrationResult);
-
+			 
+// Readonly state that can change from default account
+	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &SettingsModel::groupChatEnabledChanged);
+	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &SettingsModel::videoConferenceEnabledChanged);
+	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &SettingsModel::secureChatEnabledChanged);
+	
+	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::groupChatEnabledChanged);
+	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::videoConferenceEnabledChanged);
+	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::secureChatEnabledChanged);
+	
+	
 	configureRlsUri();
 }
 
@@ -808,13 +820,19 @@ void SettingsModel::setStandardChatEnabled (bool status) {
 }
 
 bool SettingsModel::getSecureChatEnabled () const {
-	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "secure_chat_enabled"), 1);
+	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "secure_chat_enabled"), 1)
+		&& !CoreManager::getInstance()->getCore()->getLimeX3DhServerUrl().empty() && getGroupChatEnabled();
+	;
 }
 
 void SettingsModel::setSecureChatEnabled (bool status) {
 	if(!isReadOnly(UiSection, "secure_chat_enabled"))
 		mConfig->setInt(UiSection, "secure_chat_enabled", status);
-	emit secureChatEnabledChanged(getSecureChatEnabled () );
+	emit secureChatEnabledChanged();
+}
+
+bool SettingsModel::getGroupChatEnabled() const{
+	return !CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getConferenceFactoryUri().empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -853,6 +871,9 @@ void SettingsModel::setConferenceEnabled (bool status) {
 	emit conferenceEnabledChanged(status);
 }
 
+bool SettingsModel::getVideoConferenceEnabled() const{
+	return !!CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getAudioVideoConferenceFactoryAddress();
+}
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getChatNotificationsEnabled () const {

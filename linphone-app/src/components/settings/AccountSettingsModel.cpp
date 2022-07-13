@@ -316,12 +316,10 @@ bool AccountSettingsModel::addOrUpdateAccount(
 		routes.push_back(Utils::interpretUrl(data["route"].toString()));
 		accountParams->setRoutesAddresses(routes);
 	}
-	QString txt = data["conferenceUri"].toString();
-	if(!txt.isEmpty())
-		accountParams->setConferenceFactoryUri(Utils::appStringToCoreString(txt));
+	QString txt = data["conferenceUri"].toString();// Var is used for debug
+	accountParams->setConferenceFactoryUri(Utils::appStringToCoreString(txt));
 	txt = data["videoConferenceUri"].toString();
-	if(!txt.isEmpty())
-		accountParams->setAudioVideoConferenceFactoryAddress(Utils::interpretUrl(txt));
+	accountParams->setAudioVideoConferenceFactoryAddress(Utils::interpretUrl(txt));
 		
 	if(data.contains("contactParams"))
 		accountParams->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));

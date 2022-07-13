@@ -1516,6 +1516,16 @@
         <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>newChatRoomUriMissing</source>
+        <extracomment>&apos;Conference URI is not set. You have to change it in your account settings in order to create new group chats.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newConferenceUriMissing</source>
+        <extracomment>&apos;Video conference URI is not set. You have to change it in your account settings in order to create new conferences.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>

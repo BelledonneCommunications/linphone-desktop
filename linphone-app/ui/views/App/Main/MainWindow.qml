@@ -215,11 +215,19 @@ ApplicationWindow {
 
 						//: 'Start a chat room' : Tooltip to illustrate a button
 						tooltipText : qsTr('newChatRoom')
-						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
+						visible: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled)
+						enabled: SettingsModel.groupChatEnabled
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/NewChatRoom.qml')
 													   ,{})
+						}
+						TooltipArea{
+							visible: !SettingsModel.groupChatEnabled
+							maxWidth: smartSearchBar.width
+							delay:0
+							//: 'Conference URI is not set. You have to change it in your account settings in order to create new group chats.' : Tooltip to warn the user to change a setting to activate an action.
+							text: qsTr('newChatRoomUriMissing')
 						}
 					}
 					
@@ -228,11 +236,19 @@ ApplicationWindow {
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newConference
 						visible: SettingsModel.conferenceEnabled
+						enabled: SettingsModel.videoConferenceEnabled 
 						tooltipText:qsTr('newConferenceButton')
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
 													   ,{})
+						}
+						TooltipArea{
+							visible: !SettingsModel.videoConferenceEnabled
+							maxWidth: smartSearchBar.width
+							delay:0
+							//: 'Video conference URI is not set. You have to change it in your account settings in order to create new conferences.' : Tooltip to warn the user to change a setting to activate an action.
+							text: qsTr('newConferenceUriMissing')
 						}
 					}
 					
@@ -311,7 +327,7 @@ ApplicationWindow {
 							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor : MainWindowStyle.menu.conferences.color
 							//: 'Conferences' : Conference title for main window.
 							name: qsTr('mainWindowConferencesTitle').toUpperCase()
-							visible: SettingsModel.conferenceEnabled
+							visible: SettingsModel.videoConferenceEnabled && SettingsModel.conferenceEnabled
 							
 							onSelected: {
 								timeline.model.unselectAll()
