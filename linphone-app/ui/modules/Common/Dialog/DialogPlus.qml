@@ -93,7 +93,7 @@ Rectangle {
 
 	  Layout.fillHeight: (expandHeight ? true : !dialog.contentIsEmpty)
       Layout.fillWidth: true
-      Layout.topMargin: (showMargins ? DialogStyle.content.topMargin : 0)
+      Layout.topMargin: (showMargins ? titleBar.showBar ? 1 : 2 : 0) * DialogStyle.content.topMargin
       Layout.bottomMargin: (showMargins ? DialogStyle.content.bottomMargin : 0)
 	  Layout.leftMargin: (showMargins ? DialogStyle.content.leftMargin : 0)
 	  Layout.rightMargin: (showMargins ? DialogStyle.content.rightMargin : 0)

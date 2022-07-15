@@ -16,7 +16,7 @@ QtObject {
 	}
 	
 	property QtObject buttons: QtObject {
-		property int bottomMargin: 30
+		property int bottomMargin: 25
 		property int leftMargin: 50
 		property int rightMargin: 50
 		property int spacing: 20
@@ -31,7 +31,7 @@ QtObject {
 	property QtObject content: QtObject {
 		property int leftMargin: 25
 		property int rightMargin: 25
-		property int topMargin: 25
+		property int topMargin: 10
 		property int bottomMargin: 25
 	}
 	
