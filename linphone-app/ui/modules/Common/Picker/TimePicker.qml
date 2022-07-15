@@ -17,12 +17,14 @@ Item{
 	signal newDate(date date)
 	signal clicked(date date)
 	
-	function getDate(){
+	onNewDate: selectedTime = date
+	
+	function getDate(hText, mText){
 		var d = new Date()
-		if(outer.currentItem)
-			d.setHours(outer.currentItem.text)
-		if(inner.currentItem)
-			d.setMinutes(inner.currentItem.text)
+		if(hText || outer.currentItem)
+			d.setHours(hText ? hText : outer.currentItem.text)
+		if(mText || inner.currentItem)
+			d.setMinutes(mText ? mText : inner.currentItem.text)
 		d.setSeconds(0)
 		return d;
 	}
@@ -33,6 +35,13 @@ Item{
 		
 		interactive: false
 		highlightRangeMode:  PathView.NoHighlightRange
+		
+		currentIndex:	0
+		Connections{// startX/Y begin from currentIndex. It must be set to 0 at first.
+			target: mainItem
+			onSelectedTimeChanged: outer.currentIndex = mainItem.selectedTime.getHours() % 24
+		}
+		Component.onCompleted: currentIndex = mainItem.selectedTime.getHours() % 24
 		
 		highlight: Rectangle {
 			id: rect
@@ -60,7 +69,7 @@ Item{
 			
 			MouseArea {
 				anchors.fill: parent
-				onClicked: outer.currentIndex = index
+				onClicked: mainItem.selectedTime = mainItem.getDate(parent.text, undefined)
 			}
 		}
 		
@@ -89,6 +98,13 @@ Item{
 		interactive: false
 		highlightRangeMode:  PathView.NoHighlightRange
 		
+		currentIndex:	0
+		Connections{// startX/Y begin from currentIndex. It must be set to 0 at first.
+			target: mainItem
+			onSelectedTimeChanged: inner.currentIndex = mainItem.selectedTime.getMinutes() / 5
+		}
+		Component.onCompleted: currentIndex = mainItem.selectedTime.getMinutes() / 5
+		
 		highlight: Rectangle {
 			width: 30 * 1.5
 			height: width
@@ -113,7 +129,7 @@ Item{
 			
 			MouseArea {
 				anchors.fill: parent
-				onClicked: inner.currentIndex = index
+				onClicked: mainItem.selectedTime = mainItem.getDate(undefined, parent.text)
 			}
 		}
 		
@@ -136,15 +152,14 @@ Item{
 	
 	RowLayout {
 		id: selectedTimeArea
-		x: centerPosition - width/2
-		y: centerPosition - height/2
+		property int cBinding: centerPosition	// remove binding loop
+		onCBindingChanged: Qt.callLater(function(){x = centerPosition - width/2; y= centerPosition - height/2})// To avoid binding loops
 		
 		Text {
 			id: h
 			font.pointSize: Units.dp * 12
 			font.bold: true
 			text: outer.currentItem.text.length < 2 ? '0' + outer.currentItem.text : outer.currentItem.text
-			onTextChanged: mainItem.newDate(mainItem.getDate())
 		}
 		Text {
 			id: div
@@ -157,7 +172,6 @@ Item{
 			font.pointSize: Units.dp * 12
 			font.bold: true
 			text: inner.currentItem.text.length < 2 ? '0' + inner.currentItem.text : inner.currentItem.text
-			onTextChanged: mainItem.newDate(mainItem.getDate())
 		}
 		
 		
@@ -165,12 +179,8 @@ Item{
 	MouseArea {
 		anchors.fill: selectedTimeArea
 		onClicked: {
-			mainItem.clicked(mainItem.getDate())
+			mainItem.selectedTime = mainItem.getDate()
+			mainItem.clicked(mainItem.selectedTime)
 		}
-	}
-	Component.onCompleted: {
-		outer.currentIndex = mainItem.selectedTime.getHours() % 24
-		inner.currentIndex = mainItem.selectedTime.getMinutes() / 10
-		
 	}
 }

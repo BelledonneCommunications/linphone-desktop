@@ -7,6 +7,7 @@ module Common.Styles
 singleton BusyIndicatorStyle        1.0 Animations/BusyIndicatorStyle.qml
 
 singleton DialogStyle               1.0 Dialog/DialogStyle.qml
+singleton DateTimeDialogStyle       1.0 Dialog/DateTimeDialogStyle.qml
 
 singleton ActionBarStyle            1.0 Form/ActionBarStyle.qml
 singleton ActionSwitchStyle         1.0 Form/ActionSwitchStyle.qml

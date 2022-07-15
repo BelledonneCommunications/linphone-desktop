@@ -315,20 +315,31 @@ void CoreManager::migrate () {
 			if( rcVersion < 1) {
 				newParams->setContactParameters(Constants::DefaultContactParameters);
 				newParams->setExpires(Constants::DefaultExpires);
-				qInfo() << "Migrating " << accountIdentity << " for version 1. contact parameters = " << Constants::DefaultContactParameters << ", expires = " << Constants::DefaultExpires;
+				qInfo() << "Migrating" << accountIdentity << "for version 1. contact parameters =" << Constants::DefaultContactParameters << ", expires =" << Constants::DefaultExpires;
 			}
 			if( rcVersion < 2) {
-				newParams->setConferenceFactoryUri(Constants::DefaultConferenceURI);
+				bool exists = newParams->getConferenceFactoryUri() != "";
 				setlimeServerUrl = true;
-				qInfo() << "Migrating " << accountIdentity << " for version 2. conference factory URI = " << Constants::DefaultConferenceURI;
+				if(!exists )
+					newParams->setConferenceFactoryUri(Constants::DefaultConferenceURI);
+				qInfo() << "Migrating" << accountIdentity << "for version 2. Conference factory URI" << (exists ? std::string("unchanged") : std::string("= ") +Constants::DefaultConferenceURI).c_str();
+				// note: using std::string.c_str() to avoid having double quotes in qInfo()
 			}
 			if( rcVersion < 3){
 				newParams->enableCpimInBasicChatRoom(true);
-				qInfo() << "Migrating " << accountIdentity << " for version 3. enable Cpim in basic chat rooms";
+				qInfo() << "Migrating" << accountIdentity << "for version 3. Enable Cpim in basic chat rooms";
 			}
 			if( rcVersion < 4){
 				newParams->enableRtpBundle(true);
-				qInfo() << "Migrating " << accountIdentity << " for version 4. enable RTP bundle mode";
+				qInfo() << "Migrating" << accountIdentity << "for version 4. Enable RTP bundle mode";
+			}
+			if( rcVersion < 5) {
+				bool exists = !!newParams->getAudioVideoConferenceFactoryAddress();
+				setlimeServerUrl = true;
+				if( !exists)
+					newParams->setAudioVideoConferenceFactoryAddress(Utils::interpretUrl(Constants::DefaultVideoConferenceURI));
+				qInfo() << "Migrating" << accountIdentity << "for version 5. Video conference factory URI" << (exists ? std::string("unchanged") : std::string("= ") +Constants::DefaultVideoConferenceURI).c_str();
+				// note: using std::string.c_str() to avoid having double quotes in qInfo()
 			}
 			account->setParams(newParams);
 		}

@@ -97,14 +97,22 @@ Controls.ComboBox {
 	
 	// ---------------------------------------------------------------------------
 	popup: Controls.Popup{
+		id: popupItem
 		y: comboBox.yPopup
+		x: comboBox.rootItem ? comboBox.width : 0
 		width: comboBox.selectionWidth
-		implicitHeight: contentItem.contentHeight
+		implicitHeight: selector.contentHeight
+		Connections{// Break binding loops
+			target: selector
+			ignoreUnknownSignals: true
+			onContentHeightChanged: Qt.callLater(function(){popupItem.implicitHeight = selector.contentHeight})
+		}
 		topPadding: 0
 		bottomPadding: 0
 		leftPadding: 0
 		rightPadding: 0
 		contentItem: ListItemSelector{
+			id: selector
 			model: comboBox.popup.visible ? comboBox.model : null
 			currentIndex: comboBox.highlightedIndex
 			textRole: comboBox.textRole

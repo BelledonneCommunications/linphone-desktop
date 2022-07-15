@@ -520,6 +520,11 @@ URL del server non configurato.</translation>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation>Partecipa</translation>
     </message>
+    <message>
+        <source>deleteConferenceInfo</source>
+        <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatConferenceInvitationMessage</name>
@@ -1099,6 +1104,24 @@ URL del server non configurato.</translation>
     <message>
         <source>quitWarning</source>
         <translation>Il tuo account è stato creato ma non è ancora stato convalidato. Se esci da questa schermata, dovrai aggiungere e convalidare manualmente il tuo account entro 24 ore.</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeDialog</name>
+    <message>
+        <source>dateTimeDialogDate</source>
+        <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogTime</source>
+        <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogDateTime</source>
+        <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

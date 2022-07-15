@@ -519,6 +519,11 @@
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>deleteConferenceInfo</source>
+        <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatConferenceInvitationMessage</name>
@@ -1093,6 +1098,24 @@
     <message>
         <source>quitWarning</source>
         <translation>アカウントは作成されましたが、まだ確認が完了していません。このビューを終了するには、24時間以内に手動でアカウントを追加して検証する必要があります。</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeDialog</name>
+    <message>
+        <source>dateTimeDialogDate</source>
+        <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogTime</source>
+        <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogDateTime</source>
+        <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

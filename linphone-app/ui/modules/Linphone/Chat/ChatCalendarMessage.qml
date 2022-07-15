@@ -327,7 +327,14 @@ Loader{
 						colorSet: ChatCalendarMessageStyle.deleteButton
 						backgroundRadius: width/2
 						onClicked: {
-							mainItem.conferenceInfoModel.deleteConferenceInfo()
+							window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+								//: 'Do you really want do delete this meeting?' : Warning message to confirm the deletion of a meeting.
+								descriptionText: qsTr('deleteConferenceInfo'),
+							  }, function (status) {
+								if (status) {
+								  mainItem.conferenceInfoModel.deleteConferenceInfo()
+								}
+							  })
 						}
 					}
 				}

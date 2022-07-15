@@ -169,6 +169,7 @@
 		<file>ui/modules/Common/Animations/BusyIndicator.qml</file>
 		<file>ui/modules/Common/Constants/Constants.qml</file>
 		<file>ui/modules/Common/Dialog/ConfirmDialog.qml</file>
+		<file>ui/modules/Common/Dialog/DateTimeDialog.qml</file>
 		<file>ui/modules/Common/Dialog/DialogDescription.qml</file>
 		<file>ui/modules/Common/Dialog/DialogPlus.qml</file>
 		<file>ui/modules/Common/Dialog/DialogTitle.qml</file>
@@ -244,6 +245,7 @@
 		<file>ui/modules/Common/Popup/PopupShadow.qml</file>
 		<file>ui/modules/Common/qmldir</file>
 		<file>ui/modules/Common/Styles/Animations/BusyIndicatorStyle.qml</file>
+		<file>ui/modules/Common/Styles/Dialog/DateTimeDialogStyle.qml</file>
 		<file>ui/modules/Common/Styles/Dialog/DialogStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/ActionBarStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/ActionSwitchStyle.qml</file>

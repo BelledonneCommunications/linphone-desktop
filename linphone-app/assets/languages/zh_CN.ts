@@ -519,6 +519,11 @@
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>deleteConferenceInfo</source>
+        <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatConferenceInvitationMessage</name>
@@ -1093,6 +1098,24 @@
     <message>
         <source>quitWarning</source>
         <translation>您的账户已创建，但未验证。如果您退出当前界面，您将需要在 24 小时之内手动添加并验证您的账户。</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeDialog</name>
+    <message>
+        <source>dateTimeDialogDate</source>
+        <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogTime</source>
+        <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogDateTime</source>
+        <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

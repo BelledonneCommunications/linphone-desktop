@@ -520,6 +520,11 @@ Server URL ist nicht konfiguriert.</translation>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>deleteConferenceInfo</source>
+        <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatConferenceInvitationMessage</name>
@@ -1099,6 +1104,24 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>quitWarning</source>
         <translation>Ihr Konto wurde erstellt aber noch nicht verifiziert. Wenn Sie diese Ansicht schließen müssen Sie Ihr Konto innerhalb der nächsten 24 Stunden manuell anlegen und verifizieren.</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeDialog</name>
+    <message>
+        <source>dateTimeDialogDate</source>
+        <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogTime</source>
+        <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogDateTime</source>
+        <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -294,27 +294,27 @@ DialogPlus {
 							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						TextField{id: dateField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
+							property date currentDate: new Date()
 							function getDate(){
-								return Date.fromLocaleDateString(scheduleForm.locale, text,'yyyy/MM/dd')
+								return currentDate
 							}
 							function setDate(date){
-								text = date.toLocaleDateString(scheduleForm.locale, 'yyyy/MM/dd')
+								currentDate = date
+								text = date.toLocaleDateString(scheduleForm.locale, Qt.ISODate)
 							}
-							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleDateString(scheduleForm.locale, 'yyyy/MM/dd') : ''
+							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.dateTime.toLocaleDateString(scheduleForm.locale, Qt.ISODate) : ''
 							icon: 'drop_down_custom'
 							showWhenEmpty: false
 							MouseArea{
 								anchors.fill: parent
 								onClicked: {
-									if( rightStackView.currentItemType === 1) {
-										rightStackView.currentItemType = 0
-										rightStackView.pop()// Cancel
-									}else {
-										if( rightStackView.depth > 1 )
-											rightStackView.pop()//Remove previous request
-										rightStackView.currentItemType = 1
-										rightStackView.push(datePicker, {selectedDate: new Date(dateField.getDate())})	
-									}
+									window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {showDatePicker:true, selectedDate: new Date(dateField.getDate())}
+										, function (status) {
+											if(status){
+												dateField.setDate(status.selectedDate)
+											}
+										}
+									)
 								}
 							}
 						} 
@@ -341,15 +341,13 @@ DialogPlus {
 								anchors.right: parent.right
 								width: parent.width-50
 								onClicked: {
-									if( rightStackView.currentItemType === 2) {
-										rightStackView.currentItemType = 0
-										rightStackView.pop()// Cancel
-									}else {
-										if( rightStackView.depth > 1 )
-											rightStackView.pop()//Remove previous request
-										rightStackView.currentItemType = 2
-										rightStackView.push(timePicker,{selectedTime: new Date(timeField.getTime())})
-									}
+										window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {showTimePicker:true, selectedTime: new Date(timeField.getTime())}
+										, function (status) {
+												if(status){
+													timeField.setTime(status.selectedTime)
+												}
+											}
+										)
 								}
 							}
 						}
@@ -364,7 +362,7 @@ DialogPlus {
 										]
 							textRole: "text"
 							selectionWidth: 200
-							rootItem: conferenceManager
+							//rootItem: conferenceManager
 						}
 						
 						ComboBox{
@@ -600,31 +598,6 @@ DialogPlus {
 //----------------------------------------------------
 //			STACKVIEWS
 //----------------------------------------------------
-			Component{
-				id: datePicker
-				DatePicker{
-					onClicked: {
-						dateField.setDate(date)
-						rightStackView.currentItemType = 0
-						rightStackView.pop()
-					}
-				}
-			}
-
-			Component{
-				id: timePicker
-				TimePicker{
-					onNewDate:{
-						if(date != timeField.getTime())
-							timeField.setTime(date)
-					}
-					onClicked: {
-						timeField.setTime(date)
-						rightStackView.currentItemType = 0
-						rightStackView.pop()
-					}
-				}
-			}
 		}
 	}
 }

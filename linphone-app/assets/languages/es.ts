@@ -520,6 +520,11 @@ URL del servidor no configurada.</translation>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>deleteConferenceInfo</source>
+        <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatConferenceInvitationMessage</name>
@@ -1099,6 +1104,24 @@ URL del servidor no configurada.</translation>
     <message>
         <source>quitWarning</source>
         <translation>Tu cuenta se ha creado pero aún no se ha validado. Si sales de esta vista, tendrás que agregar y validar manualmente tu cuenta en un plazo de 24 horas.</translation>
+    </message>
+</context>
+<context>
+    <name>DateTimeDialog</name>
+    <message>
+        <source>dateTimeDialogDate</source>
+        <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogTime</source>
+        <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dateTimeDialogDateTime</source>
+        <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
