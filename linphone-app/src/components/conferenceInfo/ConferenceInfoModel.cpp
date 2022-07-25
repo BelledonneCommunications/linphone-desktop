@@ -89,8 +89,9 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	mIsScheduled = false;
 	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
 	if(accountAddress){
-		accountAddress->clean();
-		mConferenceInfo->setOrganizer(accountAddress);
+		auto cleanedClonedAddress = accountAddress->clone();
+		cleanedClonedAddress->clean();
+		mConferenceInfo->setOrganizer(cleanedClonedAddress);
 	}
 }
 
