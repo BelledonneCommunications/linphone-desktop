@@ -82,9 +82,9 @@ Item {
 		model: mainItem.callModel.isConference 
 					? mainItem.participantDevices 
 					: mainItem.callModel.videoEnabled
-							? [{modelData:null}]
+							? [{videoEnabled:true, isPreview:true}]
 							: []
-		onModelChanged: console.log(mainItem.callModel.videoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
+		onModelChanged: console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.videoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
 		spacing: 15
 		verticalLayoutDirection: ItemView.BottomToTop
 		delegate:Item{
@@ -95,10 +95,9 @@ Item {
 					id: miniView
 					anchors.fill: parent
 					anchors.margins: 3
-					
-					deactivateCamera: index <0 || (!modelData && !mainItem.cameraEnabled) || !modelData.videoEnabled || (callModel && callModel.pausedByUser)
-					currentDevice: modelData
-					callModel: mainItem.callModel
+					deactivateCamera: index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser)
+					currentDevice: modelData.isPreview ? null : modelData
+					callModel: modelData.isPreview ? null : mainItem.callModel
 					isCameraFromDevice:  mainItem.callModel.isConference
 					isPaused: currentDevice && currentDevice.isPaused
 					showCloseButton: false
