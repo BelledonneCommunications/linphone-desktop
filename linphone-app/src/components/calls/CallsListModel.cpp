@@ -371,7 +371,9 @@ void CallsListModel::prepareConferenceCall(ConferenceInfoModel * model){
 	app->smartShowWindow(app->getCallsWindow());
 	emit callConferenceAsked(model);
 }
-
+int CallsListModel::addAllToConference(){
+	return CoreManager::getInstance()->getCore()->addAllToConference();
+}
 // -----------------------------------------------------------------------------
 
 int CallsListModel::getRunningCallsNumber () const {

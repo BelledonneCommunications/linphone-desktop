@@ -165,7 +165,7 @@ ContactModel *CallModel::getContactModel() const{
 }
 
 ChatRoomModel * CallModel::getChatRoomModel() const{
-	if(mCall && mCall->getCallLog()->getCallId() != "") {
+	if(mCall && mCall->getCallLog()->getCallId() != "" && !mCall->getConference()) {// Conference has no chat room yet.
 		auto currentParams = mCall->getCurrentParams();
 		bool isEncrypted = currentParams->getMediaEncryption() != linphone::MediaEncryption::None;
 		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
@@ -221,7 +221,7 @@ QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 
 bool CallModel::isConference () const{
 // Check status to avoid crash when requesting a conference on an ended call.
-	return getStatus() != CallStatusEnded && mCall->getConference() != nullptr;
+	return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()).toLower().contains("conf-id") || (getStatus() != CallStatusEnded && mCall->getConference() != nullptr);
 }
 
 // -----------------------------------------------------------------------------

@@ -56,6 +56,8 @@ public:
 	Q_INVOKABLE QVariantMap createChatRoom(const QString& subject, const int& securityLevel, const QVariantList& participants, const bool& selectAfterCreation) const;
 	Q_INVOKABLE void prepareConferenceCall(ConferenceInfoModel * model);
 	
+	Q_INVOKABLE int addAllToConference();
+	
 	
 	Q_INVOKABLE int getRunningCallsNumber () const;
 	
