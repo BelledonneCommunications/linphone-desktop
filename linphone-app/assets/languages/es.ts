@@ -10,7 +10,7 @@
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ayúdanos a traducir %1</translation>
     </message>
 </context>
 <context>
@@ -47,7 +47,7 @@
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation>Iniciar sesión para excluir cierta información de depuración mientras se ejecuta.</translation>
+        <translation>Iniciar sesión para excluir cierta información de depuración mientras se ejecuta</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
@@ -99,23 +99,23 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique el archivo de configuración que se recuperará %1, se añadirá a la configuración actual</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>URL, ruta o archivo</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
-        <translation type="unfinished"></translation>
+        <translation>Llamar</translation>
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished"></translation>
+        <translation>Dirección SIP</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished"></translation>
+        <translation>Buscar actualizaciones</translation>
     </message>
 </context>
 <context>
@@ -154,7 +154,7 @@
     <message>
         <source>homeCgu</source>
         <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Acepto %1 %2terminos de uso%3 y %4politica de privacidad%5</translation>
     </message>
 </context>
 <context>
@@ -444,12 +444,12 @@
     <message>
         <source>attendedTransferComplete</source>
         <extracomment>&apos;COMPLETE ATTENDED TRANSFER&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Transferencia asistida completa</translation>
     </message>
     <message>
         <source>attendedTransferCall</source>
         <extracomment>&apos;ATTENDED TRANSFER CALL&apos; : Title button, design is in uppercase.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Llamada de transferencia asistida</translation>
     </message>
 </context>
 <context>
@@ -477,29 +477,29 @@ URL del servidor no configurada.</translation>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 está tecleando…</numerusform>
+            <numerusform>%1 están tecleando…</numerusform>
         </translation>
     </message>
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Copiado al porta papeles</translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Selección copiada al porta papeles</translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elegir a donde se reenviará el mensaje</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation type="unfinished"></translation>
+        <translation>La conferencia ICS ha sido copiada</translation>
     </message>
 </context>
 <context>
@@ -507,27 +507,27 @@ URL del servidor no configurada.</translation>
     <message>
         <source>icsOrganizer</source>
         <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Organizador</translation>
     </message>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Descripción</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dirección de la conferencia</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Unirse</translation>
     </message>
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Desea eliminar esta conferencia?</translation>
     </message>
 </context>
 <context>
@@ -535,24 +535,24 @@ URL del servidor no configurada.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Descripción</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Unirse</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
         <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>invitación a la reunión</translation>
     </message>
     <message numerus="yes">
         <source>icsParticipants</source>
         <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Participante</numerusform>
+            <numerusform>%1 Participantes</numerusform>
         </translation>
     </message>
 </context>
@@ -561,31 +561,31 @@ URL del servidor no configurada.</translation>
     <message>
         <source>deliveryDelivered</source>
         <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enviado a %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
     </message>
     <message>
         <source>deliveryDeliveredToUser</source>
         <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Recibido por %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
     </message>
     <message>
         <source>deliveryDisplayed</source>
         <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Leído por %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
     </message>
     <message>
         <source>deliveryNotDelivered</source>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 No recibió el mensaje</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
     <message>
         <source>deliveryError</source>
         <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Error mientras se enviaba a %1</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
@@ -594,12 +594,12 @@ URL del servidor no configurada.</translation>
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Descargar</translation>
     </message>
 </context>
 <context>
@@ -607,7 +607,7 @@ URL del servidor no configurada.</translation>
     <message>
         <source>Forwarded</source>
         <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reenviado</translation>
     </message>
 </context>
 <context>
@@ -615,12 +615,12 @@ URL del servidor no configurada.</translation>
     <message>
         <source>menuCopyAll</source>
         <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Copiar todo</translation>
     </message>
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">Copiar</translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
@@ -629,57 +629,57 @@ URL del servidor no configurada.</translation>
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Estado de la entrega</translation>
     </message>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ocultar el estado de la entrega</translation>
     </message>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reenviar</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Responder</translation>
     </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 minuto</numerusform>
+            <numerusform>%1 minutos</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 hora</numerusform>
+            <numerusform>%1 horas</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 día</numerusform>
+            <numerusform>%1 días</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 semana</numerusform>
+            <numerusform>%1 semanas</numerusform>
         </translation>
     </message>
 </context>
@@ -688,7 +688,7 @@ URL del servidor no configurada.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Responder</translation>
     </message>
 </context>
 <context>
@@ -696,7 +696,7 @@ URL del servidor no configurada.</translation>
     <message>
         <source>titleReply</source>
         <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Responder a %1</translation>
     </message>
 </context>
 <context>
@@ -739,7 +739,7 @@ URL del servidor no configurada.</translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminar una llamada específica, todas las llamadas o la llamada actual.</translation>
     </message>
 </context>
 <context>
@@ -803,22 +803,22 @@ URL del servidor no configurada.</translation>
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conferencias</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
         <extracomment>&apos;Finished&apos; : Filter conferences on end status.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Finalizado</translation>
     </message>
     <message>
         <source>conferencesScheduledFilter</source>
         <extracomment>&apos;Scheduled&apos; : Filter conferences on scheduled status.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Programado</translation>
     </message>
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL de la conferencia ha sido copiada</translation>
     </message>
 </context>
 <context>
@@ -913,7 +913,7 @@ URL del servidor no configurada.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Debe configurar el URL de la conferencia en la configuración de su cuenta para crear una conferencia basada en una sala de chat.</translation>
     </message>
 </context>
 <context>
@@ -941,7 +941,7 @@ URL del servidor no configurada.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Debe configurar el URL de la conferencia en la configuración de su cuenta para crear una conferencia basada en una sala de chat.</translation>
     </message>
 </context>
 <context>
@@ -977,48 +977,48 @@ URL del servidor no configurada.</translation>
     <message>
         <source>conversationMenuGroupInformations</source>
         <extracomment>&apos;Group information&apos; : Item menu to get information about the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Información del grupo</translation>
     </message>
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivos de conversación</translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
         <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mensajes efímeros</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Admin</translation>
         <extra-Context>One word title for describing the current admin status</extra-Context>
     </message>
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Llamar a todos los participantes en la sala de chat</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
         <extracomment>&apos;Search in messages&apos; : this is a placeholder when searching something in the timeline list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Buscando mensajes</translation>
     </message>
     <message>
         <source>conversationMenuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete the chat</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eliminar</translation>
     </message>
     <message>
         <source>conversationMenuViewContact</source>
         <extracomment>&apos;View contact&apos; : Item menu to view the contact in address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ver contacto</translation>
     </message>
     <message>
         <source>conversationMenuAddContact</source>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Añadir contacto</translation>
     </message>
 </context>
 <context>
@@ -1115,17 +1115,17 @@ URL del servidor no configurada.</translation>
     <message>
         <source>dateTimeDialogDate</source>
         <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar fecha</translation>
     </message>
     <message>
         <source>dateTimeDialogTime</source>
         <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar Hora</translation>
     </message>
     <message>
         <source>dateTimeDialogDateTime</source>
         <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar fecha y hora</translation>
     </message>
 </context>
 <context>
@@ -1148,30 +1148,30 @@ URL del servidor no configurada.</translation>
     <message>
         <source>ephemeralTitle</source>
         <extracomment>&quot;Ephemeral messages&quot; : Popup title for ephemerals</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mensajes efímeros</translation>
     </message>
     <message>
         <source>ephemeralText</source>
         <extracomment>&apos;New messages will be deleted on both ends once it has been read by your contact. Select a timeout.&apos; : Context Explanation for ephemerals</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Los mensajes nuevos se eliminarán en ambos extremos una vez que hayan sido leídos por su contacto. Seleccione un tiempo de espera.</translation>
     </message>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>¡Los mensajes efímeros solo se admiten en salas de chat basadas en conferencias!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
         <source>disabled</source>
         <extracomment>&apos;Disabled&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deshabilitado</translation>
     </message>
     <message numerus="yes">
         <source>nMinute</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 minuto</numerusform>
+            <numerusform>%1 minutos</numerusform>
         </translation>
     </message>
     <message numerus="yes">
