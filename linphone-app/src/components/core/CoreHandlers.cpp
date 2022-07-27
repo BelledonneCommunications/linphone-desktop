@@ -217,6 +217,7 @@ void CoreHandlers::onMessagesReceived (
 	CoreManager *coreManager = CoreManager::getInstance();
 	SettingsModel *settingsModel = coreManager->getSettingsModel();
 	const App *app = App::getInstance();
+	QStringList notNotifyReasons;
 	
 	for(auto message : messages){
 		if( !message || message->isOutgoing()  )
@@ -236,14 +237,24 @@ void CoreHandlers::onMessagesReceived (
 					&& (!app->hasFocus() || !Utils::isMe(chatRoom->getLocalAddress()))
 					&& !message->isRead())// On aggregation, the list can contains already displayed messages.
 				messagesToNotify.push_back(message);
+			else{
+				notNotifyReasons.push_back(
+					"NotifEnabled=" + QString::number(coreManager->getSettingsModel()->getChatNotificationsEnabled())
+					+" focus=" +QString::number(app->hasFocus())
+					+" isMe=" +QString::number(Utils::isMe(chatRoom->getLocalAddress()))
+					+" isRead=" +QString::number(message->isRead())
+				);
+			}
 		}
 	}
 	if( messagesToSignal.size() > 0)
 		emit messagesReceived(messagesToSignal);
 	if( messagesToNotify.size() > 0)
 		app->getNotifier()->notifyReceivedMessages(messagesToNotify);
+	else if( notNotifyReasons.size() > 0)
+		qInfo() << "Notification received but was not selected to popup. Reasons : \n" << notNotifyReasons.join("\n");
 	// 3. Notify with sound.
-	if( messagesToSignal.size() > 0 ||  messagesToNotify.size() > 0) {
+	if( messagesToNotify.size() > 0) {
 		if (!coreManager->getSettingsModel()->getChatNotificationsEnabled() || !settingsModel->getChatNotificationSoundEnabled())
 			return;
 	

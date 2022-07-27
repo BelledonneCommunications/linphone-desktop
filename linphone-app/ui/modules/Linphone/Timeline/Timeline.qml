@@ -171,6 +171,7 @@ Rectangle {
 					Layout.fillWidth: true
 					id:secureFilter
 					currentIndex: 0
+					onCurrentIndexChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 					textRole: "key"
 					model:  ListModel {
 						ListElement { 
@@ -188,12 +189,12 @@ Rectangle {
 					haveMargin: false
 					backgroundColor: 'transparent'
 					visible: SettingsModel.secureChatEnabled && SettingsModel.standardChatEnabled
-					onActivated:  timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				ComboBox {
 					Layout.fillWidth: true
 					id:groupFilter
 					currentIndex: 0
+					onCurrentIndexChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 					textRole: "key"
 					model:  ListModel {
 						ListElement { 
@@ -211,12 +212,12 @@ Rectangle {
 					haveMargin: false
 					backgroundColor: 'transparent'
 					visible: SettingsModel.secureChatEnabled || SettingsModel.standardChatEnabled
-					onActivated:  timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 				ComboBox {
 					Layout.fillWidth: true
 					id:ephemeralsFilter
 					currentIndex: 0
+					onCurrentIndexChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
 					textRole: "key"
 					model:  ListModel {
 						ListElement { 
@@ -234,7 +235,6 @@ Rectangle {
 					haveMargin: false
 					backgroundColor: 'transparent'
 					visible: SettingsModel.secureChatEnabled || SettingsModel.standardChatEnabled
-					onActivated:  timeline.model.filterFlags = filterChoices.getFilterFlags()
 				}
 			}
 		}
