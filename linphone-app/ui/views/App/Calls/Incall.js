@@ -127,19 +127,21 @@ function showFullscreen (window, callerId, qmlFile, position) {
     return
   }
   DesktopTools.DesktopTools.screenSaverStatus = false
-  var parameters = {
+  Utils.setTimeout(window, 1, function() {
+    var parameters = {
 	  caller: callerId,
 	  x:position.x,
 	  y:position.y,
 	  width:window.width,
 	  height:window.height,
 	  window:window
-	}
-  callerId._fullscreen = Utils.openWindow(Qt.resolvedUrl(qmlFile), parameters.window, {
-	properties: parameters
-  }, true)
-  if(callerId._fullscreen) {
-	callerId._fullscreen.cameraIsReady = Qt.binding(function(){ return !callerId.cameraIsReady})
-	callerId._fullscreen.previewIsReady = Qt.binding(function(){ return !callerId.previewIsReady})
-  }
+    }
+    callerId._fullscreen = Utils.openWindow(Qt.resolvedUrl(qmlFile), parameters.window, {
+	  properties: parameters
+    }, true)
+    if(callerId._fullscreen) {
+	  callerId._fullscreen.cameraIsReady = Qt.binding(function(){ return !callerId.cameraIsReady})
+	  callerId._fullscreen.previewIsReady = Qt.binding(function(){ return !callerId.previewIsReady})
+    }
+  })
 }
