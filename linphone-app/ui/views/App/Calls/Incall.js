@@ -31,117 +31,117 @@
 
 
 function handleCallStatisticsClosed () {
-  // Prevent many clicks on call statistics button.
-  Utils.setTimeout(callQuality, 500, function () {
-    callQuality.enabled = true
-  })
+	// Prevent many clicks on call statistics button.
+	Utils.setTimeout(callQuality, 500, function () {
+		callQuality.enabled = true
+	})
 }
 
 function handleCameraFirstFrameReceived (width, height) {
-  // Cell phone???
-  if (height > width) {
-    return
-  }
-
-  var ratio = container.width / (width / (height / container.height))
-  var diff = container.height * ratio - container.height
-  if (diff < 0) {
-    return
-  }
-
-  window.setHeight(window.height + diff)
+	// Cell phone???
+	if (height > width) {
+		return
+	}
+	
+	var ratio = container.width / (width / (height / container.height))
+	var diff = container.height * ratio - container.height
+	if (diff < 0) {
+		return
+	}
+	
+	window.setHeight(window.height + diff)
 }
 
 function handleStatusChanged (status, isFullscreen) {
-  if (status === Linphone.CallModel.CallStatusEnded) {
-    if (isFullscreen) {
-      // Timeout => Avoid dead lock on mac.
-      Utils.setTimeout(window, 0, isFullscreen.exit)
-    }
-
-    telKeypad.visible = false
-    callStatistics.close()
-  }
+	if (status === Linphone.CallModel.CallStatusEnded) {
+		if (isFullscreen) {
+			// Timeout => Avoid dead lock on mac.
+			Utils.setTimeout(window, 0, isFullscreen.exit)
+		}
+		
+		telKeypad.visible = false
+		callStatistics.close()
+	}
 }
 
 function handleVideoRequested (call) {
-  if (window.virtualWindowVisible || !Linphone.SettingsModel.videoSupported) {
-    call.rejectVideoRequest()
-    return
-  }
-  /*
+	if (window.virtualWindowVisible || !Linphone.SettingsModel.videoSupported) {
+		call.rejectVideoRequest()
+		return
+	}
+	/*
   // Close dialog after 10s.
   var timeout = Utils.setTimeout(incall, 10000, function () {
-    call.statusChanged.disconnect(endedHandler)
-    window.detachVirtualWindow()
-    call.rejectVideoRequest()
+	call.statusChanged.disconnect(endedHandler)
+	window.detachVirtualWindow()
+	call.rejectVideoRequest()
   })
   */
-  // Close dialog if call is ended.
-  var endedHandler = function (status) {
-    if (status === Linphone.CallModel.CallStatusEnded) {
-      Utils.clearTimeout(timeout)	
-      call.statusChanged.disconnect(endedHandler)
-      window.detachVirtualWindow()
-    }
-  }
-  call.statusChanged.connect(endedHandler)
-  // Ask video to user.
-  window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
-    descriptionText: qsTr('acceptVideoDescription'),
-  }, function (status) {
-    //Utils.clearTimeout(timeout)	
-    call.statusChanged.disconnect(endedHandler)
-    if (status) {
-      call.acceptVideoRequest()
-    } else {
-      call.rejectVideoRequest()
-    }
-  })
+	// Close dialog if call is ended.
+	var endedHandler = function (status) {
+		if (status === Linphone.CallModel.CallStatusEnded) {
+			Utils.clearTimeout(timeout)	
+			call.statusChanged.disconnect(endedHandler)
+			window.detachVirtualWindow()
+		}
+	}
+	call.statusChanged.connect(endedHandler)
+	// Ask video to user.
+	window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+								   descriptionText: qsTr('acceptVideoDescription'),
+							   }, function (status) {
+								   //Utils.clearTimeout(timeout)	
+								   call.statusChanged.disconnect(endedHandler)
+								   if (status) {
+									   call.acceptVideoRequest()
+								   } else {
+									   call.rejectVideoRequest()
+								   }
+							   })
 }
 
 function makeReadableSecuredString (securedString) {
-  if (!securedString || !securedString.length) {
-    return qsTr('callNotSecured')
-  }
-
-  return qsTr('securedStringFormat').replace('%1', securedString)
+	if (!securedString || !securedString.length) {
+		return qsTr('callNotSecured')
+	}
+	
+	return qsTr('securedStringFormat').replace('%1', securedString)
 }
 
 function openCallStatistics () {
-  callQuality.enabled = false
-  callStatistics.open()
+	callQuality.enabled = false
+	callStatistics.open()
 }
 
 function openMediaParameters (window, incall) {
-  window.attachVirtualWindow(Utils.buildLinphoneDialogUri('MultimediaParametersDialog'), {
-    call: incall.call
-  })
+	window.attachVirtualWindow(Utils.buildLinphoneDialogUri('MultimediaParametersDialog'), {
+								   call: incall.call
+							   })
 }
 // callerId = incall, qmlFile = 'IncallFullscreen.qml'
 // callerId need to have : _fullscreen and isFullScreen
 function showFullscreen (window, callerId, qmlFile, position) {
-  callerId.isFullScreen = true
-  if (callerId._fullscreen) {
-	callerId._fullscreen.raise()
-    return
-  }
-  DesktopTools.DesktopTools.screenSaverStatus = false
-  Utils.setTimeout(window, 1, function() {
-    var parameters = {
-	  caller: callerId,
-	  x:position.x,
-	  y:position.y,
-	  width:window.width,
-	  height:window.height,
-	  window:window
-    }
-    callerId._fullscreen = Utils.openWindow(Qt.resolvedUrl(qmlFile), parameters.window, {
-	  properties: parameters
-    }, true)
-    if(callerId._fullscreen) {
-	  callerId._fullscreen.cameraIsReady = Qt.binding(function(){ return !callerId.cameraIsReady})
-	  callerId._fullscreen.previewIsReady = Qt.binding(function(){ return !callerId.previewIsReady})
-    }
-  })
+	callerId.isFullScreen = true
+	if (callerId._fullscreen) {
+		callerId._fullscreen.raise()
+		return
+	}
+	DesktopTools.DesktopTools.screenSaverStatus = false
+	Utils.setTimeout(window, 1, function() {
+		var parameters = {
+			caller: callerId,
+			x:position.x,
+			y:position.y,
+			width:window.width,
+			height:window.height,
+			window:window
+		}
+		callerId._fullscreen = Utils.openWindow(Qt.resolvedUrl(qmlFile), parameters.window, {
+													properties: parameters
+												}, true)
+		if(callerId._fullscreen) {
+			callerId._fullscreen.cameraIsReady = Qt.binding(function(){ return !callerId.cameraIsReady})
+			callerId._fullscreen.previewIsReady = Qt.binding(function(){ return !callerId.previewIsReady})
+		}
+	})
 }
