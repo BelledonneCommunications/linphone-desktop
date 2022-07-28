@@ -261,7 +261,8 @@ void ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged(const std:
 void ParticipantDeviceListModel::onParticipantDeviceSpeaking(){
 	auto deviceModel = qobject_cast<ParticipantDeviceModel*>(sender());
 	bool changed = (mActiveSpeakers.removeAll(deviceModel) > 0);
-	if( mActiveSpeakers.size() == 0 || deviceModel->getIsSpeaking()) {// Ensure to have at least one last active speaker
+	// Me should not be in the list.
+	if( !deviceModel->isMe() && (mActiveSpeakers.size() == 0 || deviceModel->getIsSpeaking())) {// Ensure to have at least one last active speaker
 		mActiveSpeakers.push_front(deviceModel);
 		changed = true;
 	}

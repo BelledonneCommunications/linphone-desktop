@@ -64,9 +64,10 @@ void ConferenceInfoMapModel::add(const std::shared_ptr<linphone::ConferenceInfo>
 				if(sendEvents){
 					int row = 0;
 					auto it = mMappedList.begin();
-					while(it != mMappedList.end() && it.key() < conferenceDateTimeSystem)
+					while(it != mMappedList.end() && it.key() < conferenceDateTimeSystem){
+						++row;
 						++it;
-					row = std::distance(it,mMappedList.begin());
+					}
 					beginInsertColumns(QModelIndex(), row, row);	
 				}
 				mMappedList[conferenceDateTimeSystem] = proxy;
