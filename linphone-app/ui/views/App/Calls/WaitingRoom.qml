@@ -37,6 +37,11 @@ Rectangle {
 	
 	Component.onDestruction: {mainItem.previewLoaderEnabled = false;_sipAddressObserver=null}// Need to set it to null because of not calling destructor if not.
 	
+	Connections{
+		target:window
+		onClosing: mainItem.close()
+	}
+
 	ColumnLayout {
 		anchors.fill: parent
 		ColumnLayout{
