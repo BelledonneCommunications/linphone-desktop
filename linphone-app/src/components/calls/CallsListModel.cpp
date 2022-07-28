@@ -236,7 +236,7 @@ ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) co
 	return nullptr;
 }
 
-ChatRoomModel* CallsListModel::createChat (const CallModel * model) const{
+ChatRoomModel* CallsListModel::createChat (CallModel * model){
 	if(model){
 		return model->getChatRoomModel();
 	}

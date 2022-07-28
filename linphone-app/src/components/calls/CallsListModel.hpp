@@ -49,7 +49,7 @@ public:
 	Q_INVOKABLE void launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress = "", const bool& autoSelectAfterCreation = true, QVariantMap options = QVariantMap()) const;
 	Q_INVOKABLE QVariantMap launchChat(const QString &sipAddress, const int& securityLevel) const;
 	Q_INVOKABLE ChatRoomModel* createChat (const QString &participantAddress) const;
-	Q_INVOKABLE ChatRoomModel* createChat (const CallModel * ) const;
+	Q_INVOKABLE ChatRoomModel* createChat (CallModel * );
 	Q_INVOKABLE bool createSecureChat (const QString& subject, const QString &participantAddress) const;
 	
 	QVariantMap createChatRoom(const QString& subject, const int& securityLevel, std::shared_ptr<linphone::Address> localAddress, const QVariantList& participants, const bool& selectAfterCreation) const;
