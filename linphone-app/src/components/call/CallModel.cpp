@@ -166,7 +166,7 @@ ContactModel *CallModel::getContactModel() const{
 }
 
 ChatRoomModel * CallModel::getChatRoomModel(){
-	if(mCall && mCall->getCallLog()->getCallId() != "" && !mCall->getConference()) {// Conference has no chat room yet.
+	if(mCall && mCall->getCallLog()->getCallId() != "" ){
 		auto currentParams = mCall->getCurrentParams();
 		bool isEncrypted = currentParams->getMediaEncryption() != linphone::MediaEncryption::None;
 		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
@@ -176,33 +176,36 @@ ChatRoomModel * CallModel::getChatRoomModel(){
 			else// Chat room is not yet created.
 				return nullptr;
 		}
-		if( mCall->getChatRoom() && (settingsModel->getSecureChatEnabled() && 
+		if( (settingsModel->getSecureChatEnabled() && 
 			(!settingsModel->getStandardChatEnabled() || (settingsModel->getStandardChatEnabled() && isEncrypted))
 			)){// Make a secure chat
 			std::shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-			std::shared_ptr<const linphone::ChatRoomParams> dbParams = mCall->getChatRoom()->getCurrentParams();
 			std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
 			auto callLog = mCall->getCallLog();
 			auto callLocalAddress = callLog->getLocalAddress();
 			std::list<std::shared_ptr<linphone::Address>> participants;
-			std::shared_ptr<linphone::ChatRoom> chatRoom;
 // Copy parameters
 			params->enableEncryption(true);
-			params->enableGroup(dbParams->groupEnabled());
-			params->enableRtt(dbParams->rttEnabled());
-			if( dbParams->getSubject() == "") // A linphone::ChatRoomBackend::FlexisipChat need a subject.
-				params->setSubject("Dummy Subject");
-			else
-				params->setSubject(dbParams->getSubject());
-			std::list<std::shared_ptr<linphone::Participant>> chatRoomParticipants = mCall->getChatRoom()->getParticipants();
-			for(auto p : chatRoomParticipants){
-				participants.push_back(p->getAddress()->clone());
+			auto conference = mCall->getConference();
+			if(conference){// This is a group
+				params->enableGroup(true);
+				params->setSubject(conference->getSubject());
+				auto conferenceParaticipants = conference->getParticipantList();
+				for(auto p : conferenceParaticipants){
+					participants.push_back(p->getAddress()->clone());
 			}
-			chatRoom = core->searchChatRoom(params, callLocalAddress
+			}else{
+				params->enableGroup(false);
+				participants.push_back(mCall->getRemoteAddress()->clone());
+			}
+			if( params->getSubject() == "") // A linphone::ChatRoomBackend::FlexisipChat need a subject.
+				params->setSubject("Dummy Subject");
+			
+			mChatRoom = core->searchChatRoom(params, callLocalAddress
 											 , nullptr
 											 , participants);
-			if(chatRoom)
-				return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, true).get();
+			if(mChatRoom)
+				return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(mChatRoom, true).get();
 			else{// Wait for creation. Secure chat rooms cannot be used before being created.
 				mChatRoom = CoreManager::getInstance()->getCore()->createChatRoom(params, callLocalAddress, participants);
 				auto initializer = ChatRoomInitializer::create(mChatRoom);
