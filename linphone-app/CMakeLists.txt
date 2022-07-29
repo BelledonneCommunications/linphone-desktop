@@ -174,6 +174,7 @@ set(SOURCES
 	src/components/chat-events/ChatMessageListener.cpp
 	src/components/chat-events/ChatMessageModel.cpp
 	src/components/chat-events/ChatNoticeModel.cpp
+	src/components/chat-room/ChatRoomInitializer.cpp
 	src/components/chat-room/ChatRoomListener.cpp
 	src/components/chat-room/ChatRoomModel.cpp
 	src/components/chat-room/ChatRoomProxyModel.cpp
@@ -265,7 +266,6 @@ set(SOURCES
 	src/utils/MediastreamerUtils.cpp
 	src/utils/QExifImageHeader.cpp
 	src/utils/Utils.cpp
-	src/utils/hacks/ChatRoomInitializer.cpp
 	src/utils/plugins/PluginsManager.cpp
 	)
 set(PLUGIN_SOURCES src/utils/plugins/PluginDataAPI.cpp
@@ -307,6 +307,7 @@ set(HEADERS
 	src/components/chat-events/ChatMessageListener.hpp
 	src/components/chat-events/ChatMessageModel.hpp
 	src/components/chat-events/ChatNoticeModel.hpp
+	src/components/chat-room/ChatRoomInitializer.hpp
 	src/components/chat-room/ChatRoomListener.hpp
 	src/components/chat-room/ChatRoomModel.hpp
 	src/components/chat-room/ChatRoomProxyModel.hpp
@@ -400,7 +401,6 @@ set(HEADERS
 	src/utils/MediastreamerUtils.hpp
 	src/utils/QExifImageHeader.hpp
 	src/utils/Utils.hpp
-	src/utils/hacks/ChatRoomInitializer.hpp
 	src/utils/plugins/PluginsManager.hpp
 	)
 set(PLUGIN_HEADERS 

@@ -33,7 +33,6 @@ class CallListener;
 class ConferenceInfoModel;
 class ConferenceModel;
 class ContactModel;
-class ChatRoomListener;
 class ChatRoomModel;
 
 class CallModel : public QObject {
@@ -186,7 +185,7 @@ public:
 	
 	std::shared_ptr<linphone::Call> mCall;
 	std::shared_ptr<CallListener> mCallListener;	// This is passed to linpĥone object and must be in shared_ptr
-	QPair<std::shared_ptr<ChatRoomListener>, std::shared_ptr<linphone::ChatRoom>> mDelayedCreationChatRoom;	// For secure chat rooms, we need to wait till it is created by keeping a ref and by using alistener.
+	std::shared_ptr<linphone::ChatRoom> mChatRoom;	// Used chat room for the call.
 	std::shared_ptr<linphone::Address> mRemoteAddress;
 	std::shared_ptr<linphone::MagicSearch> mMagicSearch;
 	
@@ -195,7 +194,7 @@ public slots:
 	void searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> results);
 	void endCall();
 	void onRemoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording);
-	void onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState);
+	void onChatRoomInitialized(int state);
 	
 signals:
 	void callErrorChanged (const QString &callError);
@@ -300,7 +299,6 @@ public:
 	
 private:
 	void connectTo(CallListener * listener);
-	void connectTo(ChatRoomListener * listener);
 
 	bool mIsInConference = false;
 	

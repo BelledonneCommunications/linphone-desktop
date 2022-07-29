@@ -36,6 +36,7 @@ Window {
 	
 	readonly property bool chatIsOpened: !rightPaned.isClosed()
 	readonly property bool callsIsOpened: !mainPaned.isClosed()
+	readonly property bool haveChat: rightPane.sourceComponent
 	
 	
 	
@@ -267,6 +268,7 @@ Window {
 				id: rightPane
 				anchors.fill: parent
 				sourceComponent: window.call && window.call.chatRoomModel ? chat : null
+				onSourceComponentChanged: if(!sourceComponent) window.closeChat()
 			}
 		}
 	}

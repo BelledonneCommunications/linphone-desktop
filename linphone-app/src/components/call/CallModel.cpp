@@ -27,6 +27,7 @@
 #include "app/App.hpp"
 #include "CallListener.hpp"
 #include "components/calls/CallsListModel.hpp"
+#include "components/chat-room/ChatRoomInitializer.hpp"
 #include "components/chat-room/ChatRoomListener.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
 #include "components/conference/ConferenceModel.hpp"
@@ -55,10 +56,6 @@ void CallModel::connectTo(CallListener * listener){
 	connect(listener, &CallListener::remoteRecording, this, &CallModel::onRemoteRecording);
 }
 
-void CallModel::connectTo(ChatRoomListener * listener){
-	connect(listener, &ChatRoomListener::stateChanged, this, &CallModel::onChatRoomStateChanged);
-}
-
 CallModel::CallModel (shared_ptr<linphone::Call> call){
 	CoreManager *coreManager = CoreManager::getInstance();
 	SettingsModel *settings = coreManager->getSettingsModel();
@@ -81,8 +78,6 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 		}else
 			settings->setCameraMode(settings->getCallCameraMode());
 	}
-	mDelayedCreationChatRoom.first = std::make_shared<ChatRoomListener>();
-	connectTo(mDelayedCreationChatRoom.first.get());
 		
 	// Deal with auto-answer.
 	if (!isOutgoing()) {
@@ -175,9 +170,9 @@ ChatRoomModel * CallModel::getChatRoomModel(){
 		auto currentParams = mCall->getCurrentParams();
 		bool isEncrypted = currentParams->getMediaEncryption() != linphone::MediaEncryption::None;
 		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
-		if(mDelayedCreationChatRoom.second){// We already created a chat room.
-			if( mDelayedCreationChatRoom.second->getState() == linphone::ChatRoom::State::Created)
-				return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(mDelayedCreationChatRoom.second, true).get();
+		if(mChatRoom){// We already created a chat room.
+			if( mChatRoom->getState() == linphone::ChatRoom::State::Created)
+				return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(mChatRoom, true).get();
 			else// Chat room is not yet created.
 				return nullptr;
 		}
@@ -209,8 +204,10 @@ ChatRoomModel * CallModel::getChatRoomModel(){
 			if(chatRoom)
 				return CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, true).get();
 			else{// Wait for creation. Secure chat rooms cannot be used before being created.
-				mDelayedCreationChatRoom.second = CoreManager::getInstance()->getCore()->createChatRoom(params, callLocalAddress, participants);// The result cannot be used.
-				mDelayedCreationChatRoom.second->addListener(mDelayedCreationChatRoom.first);
+				mChatRoom = CoreManager::getInstance()->getCore()->createChatRoom(params, callLocalAddress, participants);
+				auto initializer = ChatRoomInitializer::create(mChatRoom);
+				connect(initializer.get(), &ChatRoomInitializer::finished, this, &CallModel::onChatRoomInitialized, Qt::DirectConnection);
+				ChatRoomInitializer::start(initializer);
 				return nullptr;
 			}
 		}else
@@ -937,9 +934,9 @@ void CallModel::onRemoteRecording(const std::shared_ptr<linphone::Call> & call, 
 	emit remoteRecordingChanged(recording);
 }
 
-void CallModel::onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
-	if(newState == linphone::ChatRoom::State::Created)// A chat room has been created for the call. Warn listeners that the model changed.
-		emit chatRoomModelChanged();
+void CallModel::onChatRoomInitialized(int state){
+	qInfo() << "[CallModel] Chat room initialized with state : " << state;
+	emit chatRoomModelChanged();
 }
 
 void CallModel::setRemoteDisplayName(const std::string& name){

@@ -478,7 +478,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.chat
-			visible: (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && callModel && !callModel.isConference
+			visible: window.haveChat && (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled) && callModel && !callModel.isConference
 			toggled: window.chatIsOpened
 			onClicked: {
 						if (window.chatIsOpened) {

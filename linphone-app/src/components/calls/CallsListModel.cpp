@@ -24,6 +24,7 @@
 
 #include "app/App.hpp"
 #include "components/call/CallModel.hpp"
+#include "components/chat-room/ChatRoomInitializer.hpp"
 #include "components/conference/ConferenceAddModel.hpp"
 #include "components/conference/ConferenceHelperModel.hpp"
 #include "components/conference/ConferenceModel.hpp"
@@ -38,7 +39,7 @@
 
 #include "CallsListModel.hpp"
 
-#include "utils/hacks/ChatRoomInitializer.hpp"
+
 
 // =============================================================================
 
@@ -340,12 +341,15 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			params->setSubject(subject != ""?Utils::appStringToCoreString(subject):"Dummy Subject");
 		if( !chatRoom) {
 			chatRoom = core->createChatRoom(params, localAddress, chatRoomParticipants);
-			if(chatRoom != nullptr && admins.size() > 0)
-				ChatRoomInitializer::setAdminsAsync(params->getSubject(), params->getBackend(), params->groupEnabled(), admins );
+			if(chatRoom != nullptr && admins.size() > 0){
+				auto initializer = ChatRoomInitializer::create(chatRoom);
+				initializer->setAdminsData(admins);
+				ChatRoomInitializer::start(initializer);
+			}
 			timeline = timelineList->getTimeline(chatRoom, false);
 		}else{
 			if(admins.size() > 0){
-				ChatRoomInitializer::setAdminsSync(chatRoom, admins);
+				ChatRoomInitializer::create(chatRoom)->setAdmins(admins);
 			}
 			timeline = timelineList->getTimeline(chatRoom, true);
 		}
