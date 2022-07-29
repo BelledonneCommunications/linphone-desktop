@@ -288,6 +288,7 @@ Rectangle {
 					colorSet: cameraEnabled  ? WaitingRoomStyle.buttons.cameraOn : WaitingRoomStyle.buttons.cameraOff
 					enabled: modeChoice.selectedMode != 2
 					onClicked: cameraEnabled = !cameraEnabled
+					onCameraEnabledChanged: mainItem.previewLoaderEnabled = cameraEnabled
 				}
 				ActionButton{
 					isCustom: true
@@ -325,7 +326,10 @@ Rectangle {
 				backgroundRadius: width/2
 				colorSet: selectedMode == LinphoneEnums.ConferenceLayoutGrid ? WaitingRoomStyle.buttons.gridLayout :
 											  selectedMode == LinphoneEnums.ConferenceLayoutActiveSpeaker ?  WaitingRoomStyle.buttons.activeSpeakerLayout : WaitingRoomStyle.buttons.audioOnly
-				onClicked: layoutMenu.visible = true
+
+				onClicked:layoutMenu.visible = !layoutMenu.visible
+				onSelectedModeChanged: mainItem.previewLoaderEnabled = (selectedMode != 2) && camera.cameraEnabled
+
 				Rectangle{
 					id: layoutMenu
 					anchors.bottom: parent.top

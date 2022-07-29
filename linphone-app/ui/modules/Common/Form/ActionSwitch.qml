@@ -27,7 +27,7 @@ Item {
 	
 	ActionButton {
 		id: actionButton
-		
+		enabled: parent.enabled
 		anchors.fill: parent
 		//icon: parent.icon// + (parent.enabled ? '_on' : '_off')
 		//iconSize: parent.iconSize
