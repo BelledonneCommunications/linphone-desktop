@@ -129,6 +129,7 @@ Row {
 			width: textArea.width
 			
 			deliveryCount: 0
+			isCallEvent: true
 			onRemoveEntryRequested: removeEntry()
 		}
 	}

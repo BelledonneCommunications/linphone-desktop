@@ -23,6 +23,7 @@ Item {
 	property ChatMessageModel chatMessageModel
 	property int deliveryCount : 0
 	property bool deliveryVisible: false
+	property bool isCallEvent: false	// the menu point to an event
 	
 	signal deliveryStatusClicked()
 	signal removeEntryRequested()
@@ -80,6 +81,7 @@ Item {
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: container.forwardClicked()
+			visible: !isCallEvent
 		}
 		MenuItem {
 			//: 'Reply' : Reply to a message from menu
@@ -89,6 +91,7 @@ Item {
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: container.replyClicked()
+			visible: !isCallEvent
 		}
 		
 		MenuItem {
