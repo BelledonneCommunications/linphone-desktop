@@ -535,12 +535,12 @@ URL del server non configurato.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished">Descrizione</translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished">Partecipa</translation>
+        <translation>Partecipa</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
@@ -1626,7 +1626,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mainWindowConferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
-        <translation>Conferenze</translation>
+        <translation>Riunioni</translation>
     </message>
     <message>
         <source>newChatRoomUriMissing</source>
@@ -3421,7 +3421,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">Nome visualizzato (facoltativo)</translation>
+        <translation>Nome visualizzato (facoltativo)</translation>
     </message>
 </context>
 <context>
@@ -3436,7 +3436,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">Nome visualizzato (facoltativo)</translation>
+        <translation>Nome visualizzato (facoltativo)</translation>
     </message>
 </context>
 <context>
@@ -3500,7 +3500,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>startButton</source>
