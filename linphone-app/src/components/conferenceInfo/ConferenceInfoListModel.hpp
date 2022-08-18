@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,33 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CONFERENCE_INFO_PROXY_LIST_MODEL_H_
-#define CONFERENCE_INFO_PROXY_LIST_MODEL_H_
+#ifndef _CONFERENCE_INFO_LIST_MODEL_H_
+#define _CONFERENCE_INFO_LIST_MODEL_H_
 
-#include <QSortFilterProxyModel>
-#include <QSharedPointer>
+#include <linphone++/linphone.hh>
+#include <QDate>
 
-#include "ConferenceInfoModel.hpp"
+#include "app/proxyModel/ProxyAbstractListModel.hpp"
+#include "app/proxyModel/ProxyListModel.hpp"
 #include "app/proxyModel/SortFilterAbstractProxyModel.hpp"
-
 
 // =============================================================================
 
-class QWindow;
-class ProxyListModel;
-
-
-class ConferenceInfoProxyListModel : public SortFilterAbstractProxyModel<ProxyListModel> {
+class ConferenceInfoListModel : public ProxyListModel  {
 	Q_OBJECT
 	
 public:
-	ConferenceInfoProxyListModel (QObject *parent = Q_NULLPTR);
+	ConferenceInfoListModel (QObject *parent = Q_NULLPTR);
+	void add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents = true);
 	
-	void onRemoved();
-			
-protected:
-	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
-	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	QHash<int, QByteArray> roleNames () const override;
+	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	
+signals:
+	void filterTypeChanged(int filterType);
+	
 };
-
+Q_DECLARE_METATYPE(ConferenceInfoListModel*)
 #endif

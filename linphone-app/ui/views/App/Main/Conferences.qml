@@ -11,7 +11,7 @@ import App.Styles 1.0
 
 // =============================================================================
 Item{
-
+	
 	ColumnLayout {
 		id: mainItem
 		property int filterType: -1
@@ -59,10 +59,10 @@ Item{
 				
 				ExclusiveButtons {
 					texts: [
-					//: 'Finished' : Filter conferences on end status.
+						//: 'Finished' : Filter conferences on end status.
 						qsTr('conferencesEndedFilter'),
-					
-					//: 'Scheduled' : Filter conferences on scheduled status.
+						
+						//: 'Scheduled' : Filter conferences on scheduled status.
 						qsTr('conferencesScheduledFilter'),
 					]
 					capitalization: Font.AllUppercase
@@ -94,7 +94,7 @@ Item{
 				section {
 					criteria: ViewSection.FullString
 					delegate: sectionHeading
-					property: '$modelKey'
+					property: '$sectionDate'
 				}
 				
 				model: ConferenceInfoProxyModel{
@@ -151,44 +151,35 @@ Item{
 				//----------------------------------------------------------------------------------------------
 				
 				delegate: Item {
-					implicitHeight: calendarGrid.height + ConferencesStyle.conference.bottomMargin
+					height: entry.height + ConferencesStyle.conference.bottomMargin
 					anchors {
 						left: parent ? parent.left : undefined
 						leftMargin: 10
 						right: parent ? parent.right : undefined
 						rightMargin: 10
 					}
-					GridView{
-						id: calendarGrid
-						property bool expanded : false					//anchors.fill: parent
-						cellWidth: width/2
-						cellHeight: expanded ? 460 : 90
-						model: $modelData
-						height: cellHeight * Math.floor( (count+1) / 2)
-						width: mainItem.width - 20
-						delegate:Rectangle {
-							id: entry
-							
-							width: calendarGrid.cellWidth-10
-							height: calendarGrid.cellHeight-10
-							radius: 6
-							color: mainItem.filterType == ConferenceInfoProxyModel.Ended ? ConferencesStyle.conference.backgroundColor.ended
-																						 : ConferencesStyle.conference.backgroundColor.scheduled
-							border.color: calendarMessage.containsMouse || calendarMessage.isExpanded ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
-							border.width: ConferencesStyle.conference.selectedBorder.width
-							ChatCalendarMessage{
-								id: calendarMessage
-								anchors.centerIn: parent
-								width: parent.width
-								height: parent.height
-								conferenceInfoModel: $modelData
-								gotoButtonMode: mainItem.filterType == ConferenceInfoProxyModel.Scheduled || mainItem.filterType == ConferenceInfoProxyModel.Ended? 1
-																																								  : 0
-								onExpandToggle: calendarGrid.expanded = !calendarGrid.expanded
-								isExpanded: calendarGrid.expanded
-								//: 'Conference URL has been copied' : Message text in a banner to warn the user that the µURL have been copied to the clipboard.
-								onConferenceUriCopied: messageBanner.noticeBannerText = qsTr('conferencesCopiedURL')
-							}
+					Rectangle {
+						id: entry
+						anchors.centerIn: parent
+						width: parent.width / 2
+						height: calendarMessage.height
+						radius: 6
+						color: mainItem.filterType == ConferenceInfoProxyModel.Ended ? ConferencesStyle.conference.backgroundColor.ended
+																					 : ConferencesStyle.conference.backgroundColor.scheduled
+						border.color: calendarMessage.containsMouse || calendarMessage.isExpanded ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
+						border.width: ConferencesStyle.conference.selectedBorder.width
+						ChatCalendarMessage{
+							id: calendarMessage
+							anchors.centerIn: parent
+							width: parent.width
+							height: fitHeight
+							conferenceInfoModel: $modelData
+							gotoButtonMode: mainItem.filterType == ConferenceInfoProxyModel.Scheduled || mainItem.filterType == ConferenceInfoProxyModel.Ended? 1
+																																							  : 0
+							onExpandToggle: isExpanded = !isExpanded
+							//isExpanded: calendarGrid.expanded
+							//: 'Conference URL has been copied' : Message text in a banner to warn the user that the µURL have been copied to the clipboard.
+							onConferenceUriCopied: messageBanner.noticeBannerText = qsTr('conferencesCopiedURL')
 						}
 					}
 				}

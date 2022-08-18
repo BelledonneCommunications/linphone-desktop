@@ -31,10 +31,10 @@
 // =============================================================================
 
 class QWindow;
-class ConferenceInfoMapModel;
+class ConferenceInfoListModel;
 
 
-class ConferenceInfoProxyModel : public SortFilterAbstractProxyModel<ConferenceInfoMapModel> {
+class ConferenceInfoProxyModel : public SortFilterAbstractProxyModel<ConferenceInfoListModel> {
 	class ChatRoomModelFilter;
 	Q_OBJECT
 	
@@ -54,6 +54,7 @@ public:
 			
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
 private:
 	

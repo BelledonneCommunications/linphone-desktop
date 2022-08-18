@@ -187,8 +187,7 @@ set(SOURCES
 	src/components/conference/ConferenceModel.cpp
 	src/components/conference/ConferenceProxyModel.cpp
 	src/components/conferenceInfo/ConferenceInfoModel.cpp
-	src/components/conferenceInfo/ConferenceInfoMapModel.cpp
-	src/components/conferenceInfo/ConferenceInfoProxyListModel.cpp
+	src/components/conferenceInfo/ConferenceInfoListModel.cpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.cpp
 	src/components/conferenceScheduler/ConferenceScheduler.cpp
 	src/components/conferenceScheduler/ConferenceSchedulerListener.cpp
@@ -321,8 +320,7 @@ set(HEADERS
 	src/components/conference/ConferenceModel.hpp
 	src/components/conference/ConferenceProxyModel.hpp
 	src/components/conferenceInfo/ConferenceInfoModel.hpp
-	src/components/conferenceInfo/ConferenceInfoMapModel.hpp
-	src/components/conferenceInfo/ConferenceInfoProxyListModel.hpp
+	src/components/conferenceInfo/ConferenceInfoListModel.hpp
 	src/components/conferenceInfo/ConferenceInfoProxyModel.hpp
 	src/components/conferenceScheduler/ConferenceScheduler.hpp
 	src/components/conferenceScheduler/ConferenceSchedulerListener.hpp

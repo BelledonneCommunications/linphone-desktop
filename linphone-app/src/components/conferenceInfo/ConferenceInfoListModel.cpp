@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2022 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,7 +18,7 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ConferenceInfoMapModel.hpp"
+#include "ConferenceInfoListModel.hpp"
 
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
@@ -34,11 +34,10 @@
 
 #include "ConferenceInfoProxyModel.hpp"
 #include "ConferenceInfoModel.hpp"
-#include "ConferenceInfoProxyListModel.hpp"
 
 // =============================================================================
 
-ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstractMapModel<QDate,SortFilterAbstractProxyModel<ProxyListModel>*>(parent) {
+ConferenceInfoListModel::ConferenceInfoListModel (QObject *parent) : ProxyListModel(parent) {
 	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
 	for(auto conferenceInfo : conferenceInfos){
 		add(conferenceInfo, false);
@@ -47,7 +46,7 @@ ConferenceInfoMapModel::ConferenceInfoMapModel (QObject *parent) : ProxyAbstract
 
 // -----------------------------------------------------------------------------
 
-void ConferenceInfoMapModel::add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents){
+void ConferenceInfoListModel::add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents){
 	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	std::list<std::shared_ptr<linphone::Address>> participants = conferenceInfo->getParticipants();
 		bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
@@ -57,24 +56,24 @@ void ConferenceInfoMapModel::add(const std::shared_ptr<linphone::ConferenceInfo>
 			}) != participants.end());
 		if(haveMe){
 			auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
-			QDate conferenceDateTimeSystem = conferenceInfoModel->getDateTimeSystem().date();
-			if( !mMappedList.contains(conferenceDateTimeSystem)){
-				auto proxy = new ConferenceInfoProxyListModel(this);
-				connect(this, &ConferenceInfoMapModel::filterTypeChanged, proxy, &ConferenceInfoProxyListModel::setFilterType);
-				if(sendEvents){
-					int row = 0;
-					auto it = mMappedList.begin();
-					while(it != mMappedList.end() && it.key() < conferenceDateTimeSystem){
-						++row;
-						++it;
-					}
-					beginInsertColumns(QModelIndex(), row, row);	
-				}
-				mMappedList[conferenceDateTimeSystem] = proxy;
-				if(sendEvents)
-					endInsertColumns();
-			}
-			mMappedList[conferenceDateTimeSystem]->add(conferenceInfoModel);
-			connect(conferenceInfoModel.get(), &ConferenceInfoModel::removed, qobject_cast<ConferenceInfoProxyListModel*>(mMappedList[conferenceDateTimeSystem]), &ConferenceInfoProxyListModel::onRemoved);
+			ProxyListModel::add(conferenceInfoModel);
 		}
 }
+
+QHash<int, QByteArray> ConferenceInfoListModel::roleNames () const{
+	QHash<int, QByteArray> roles;
+	roles[Qt::DisplayRole] = "$modelData";
+	roles[Qt::DisplayRole+1] = "$sectionDate";
+	return roles;
+}
+
+QVariant ConferenceInfoListModel::data (const QModelIndex &index, int role ) const{
+		int row = index.row();
+		if (!index.isValid() || row < 0 || row >= mList.count())
+			return QVariant();
+		if (role == Qt::DisplayRole)
+			return QVariant::fromValue(mList[row].get());
+		else if (role == Qt::DisplayRole +1 )
+			return QVariant::fromValue(mList[row].objectCast<ConferenceInfoModel>()->getDateTimeUtc().date());
+		return QVariant();
+	}

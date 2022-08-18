@@ -26,7 +26,7 @@ Loader{
 	property ContentModel contentModel
 	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
 	property int maxWidth : parent.width
-	property int fitHeight: active && item ? item.fitHeight + (isExpanded? 200 : 0): 0
+	property int fitHeight: active && item ? item.fitHeight : 0
 	property int fitWidth: active && item ? maxWidth/2  + ChatCalendarMessageStyle.widthMargin*2 : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
@@ -60,7 +60,15 @@ Loader{
 		
 		ColumnLayout{
 			id: layout
-			property int fitHeight: dateRow.implicitHeight + title.implicitHeight + participantsRow.implicitHeight +expandedDescription.implicitHeight
+			// Fix for binding loops
+			property int participantsFitHeight: 0
+			property int expandedFitHeight: 0
+			function updateFitHeight(){
+				participantsFitHeight = participantsRow.implicitHeight
+				expandedFitHeight = (expandedDescription.visible? expandedDescription.implicitHeight : 0)
+			}
+			
+			property int fitHeight: dateRow.implicitHeight + title.implicitHeight + participantsFitHeight + expandedFitHeight
 			property int fitWidth: Layout.minimumWidth
 			anchors.fill: parent
 			spacing: 0
@@ -141,9 +149,12 @@ Loader{
 				Layout.rightMargin: 10
 				
 				spacing: ChatCalendarMessageStyle.participants.spacing
+				property int participantLineHeight: participantsList.implicitHeight
+				// Fix for binding loops
+				onImplicitHeightChanged: Qt.callLater( layout.updateFitHeight)
 				
 				Item{
-					Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
+					Layout.preferredHeight: parent.participantLineHeight
 					Layout.preferredWidth: ChatCalendarMessageStyle.participants.iconSize
 					Layout.alignment: Qt.AlignTop
 					clip: false
@@ -159,7 +170,7 @@ Loader{
 				Text {
 					id: participantsList
 					Layout.fillWidth: true
-					Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
+					Layout.preferredHeight: parent.participantLineHeight
 					Layout.topMargin: 4
 					Layout.alignment: Qt.AlignTop
 					visible: !mainItem.isExpanded
@@ -170,7 +181,7 @@ Loader{
 				}
 				ScrollableListView{
 					id: expandedParticipantsList
-					property int minimumHeight: Math.min( count * ChatCalendarMessageStyle.lineHeight, layout.height/(descriptionTitle.visible?3:2))
+					property int minimumHeight: Math.min( count * parent.participantLineHeight, layout.height/(descriptionTitle.visible?3:2))
 					Layout.fillWidth: true
 					Layout.topMargin: 4
 					Layout.minimumHeight: minimumHeight
@@ -182,17 +193,17 @@ Loader{
 					delegate: Row{
 						spacing: 5
 						width: expandedParticipantsList.contentWidth
-						height: ChatCalendarMessageStyle.lineHeight
+						height: participantsRow.participantLineHeight
 						Text{
 							id: displayName
-							height: ChatCalendarMessageStyle.lineHeight
+							height: participantsRow.participantLineHeight
 							text: modelData.displayName
 							color: ChatCalendarMessageStyle.participants.color
 							font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 							elide: Text.ElideRight
 						}
 						Text{
-							height: ChatCalendarMessageStyle.lineHeight
+							height: participantsRow.participantLineHeight
 							width: expandedParticipantsList.contentWidth - displayName.width - parent.spacing	// parent.width is not enough. Force width
 							text: '('+modelData.address+')'
 							color: ChatCalendarMessageStyle.participants.color
@@ -203,7 +214,7 @@ Loader{
 				}
 				Item{
 					Layout.preferredWidth: expandButton.iconSize
-					Layout.preferredHeight: ChatCalendarMessageStyle.lineHeight
+					Layout.preferredHeight: participantsRow.participantLineHeight
 					Layout.alignment: Qt.AlignTop | Qt.AlignRight
 					
 					ActionButton{
@@ -213,16 +224,12 @@ Loader{
 						anchors.verticalCenter: parent.verticalCenter
 						isCustom: true
 						colorSet: mainItem.gotoButtonMode == 0 ? ChatCalendarMessageStyle.gotoButton : ChatCalendarMessageStyle.infoButton
-						iconSize: ChatCalendarMessageStyle.lineHeight
+						iconSize: participantsRow.participantLineHeight
 						backgroundRadius: width/2
 						toggled: mainItem.isExpanded
 						onClicked: mainItem.expandToggle()
 					}
 				}
-			}
-			Item{
-				Layout.fillHeight: true
-				Layout.minimumHeight: 0
 			}
 			ColumnLayout{
 				id: expandedDescription
@@ -232,7 +239,9 @@ Loader{
 				Layout.topMargin: 5
 				visible: mainItem.isExpanded
 				spacing: 0
-				
+				// Fix for binding loops
+				onVisibleChanged: Qt.callLater( layout.updateFitHeight)
+				onImplicitHeightChanged: Qt.callLater( layout.updateFitHeight)
 				Text{
 					id: descriptionTitle
 					Layout.fillWidth: true
@@ -248,7 +257,8 @@ Loader{
 				TextAreaField{
 					id: description
 					Layout.fillWidth: true
-					Layout.fillHeight: true
+					//Layout.fillHeight: true
+					Layout.preferredHeight: visible ? implicitHeight : 0
 					Layout.leftMargin: 10
 					Layout.rightMargin: 10
 					padding: 0
@@ -258,13 +268,13 @@ Loader{
 					font.pointSize: ChatCalendarMessageStyle.description.pointSize
 					border.width: 0
 					visible: description.text != ''
-					
 					text: mainItem.conferenceInfoModel.description
 				}
 				Text{
 					id: linkTitle
 					Layout.fillWidth: true
 					Layout.leftMargin: 10
+					Layout.topMargin: 5
 					color: ChatCalendarMessageStyle.subject.color
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
@@ -300,6 +310,7 @@ Loader{
 				RowLayout{
 					Layout.fillWidth: true
 					Layout.topMargin: 10
+					Layout.bottomMargin: 5
 					Layout.rightMargin: 10
 					spacing: 10
 					Item{
@@ -315,7 +326,7 @@ Loader{
 						isCustom: true
 						colorSet: ChatCalendarMessageStyle.editButton
 						backgroundRadius: width/2
-						visible: UtilsCpp.isMe(mainItem.conferenceInfoModel.organizer)
+						visible: UtilsCpp.isMe(mainItem.conferenceInfoModel.organizer) && mainItem.conferenceInfoModel.endDateTime >= new Date()
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
