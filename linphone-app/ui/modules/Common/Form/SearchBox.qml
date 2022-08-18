@@ -96,7 +96,7 @@ Item {
 			}
 			onActiveFocusChanged: {
 				if (activeFocus && !_isOpen) {
-					
+					_filter(text)
 					searchBox.menuRequested()
 					searchBox.openMenu()
 				}
