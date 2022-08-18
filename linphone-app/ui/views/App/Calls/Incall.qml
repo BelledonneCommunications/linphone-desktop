@@ -437,7 +437,7 @@ Rectangle {
 				backgroundRadius: 90
 				colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating
-				enabled: callModel.videoEnabled
+				visible: callModel && ( !callModel.isConference || callModel.videoEnabled)
 				onClicked: if(callModel){
 							if( callModel.isConference)// Only deactivate camera in conference.
 								callModel.cameraEnabled = !callModel.cameraEnabled

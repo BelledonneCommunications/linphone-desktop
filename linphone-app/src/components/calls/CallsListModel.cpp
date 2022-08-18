@@ -47,7 +47,7 @@ using namespace std;
 
 namespace {
 // Delay before removing call in ms.
-constexpr int DelayBeforeRemoveCall = 3000;
+constexpr int DelayBeforeRemoveCall = 6000;
 }
 
 static inline int findCallIndex (QList<QSharedPointer<QObject>> &list, const shared_ptr<linphone::Call> &call) {
@@ -458,8 +458,11 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 				CallModel * model = &call->getData<CallModel>("call-model");
 				model->endCall();
 			}
-			removeCall(call);
 		} break;
+		case linphone::Call::State::Released:
+			removeCall(call);
+		break;
+		
 		case linphone::Call::State::StreamsRunning: {
 			int index = findCallIndex(mList, call);
 			emit callRunning(index, &call->getData<CallModel>("call-model"));
@@ -515,7 +518,7 @@ void CallsListModel::addDummyCall () {
 }
 
 void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
-	CallModel *callModel;
+	CallModel *callModel = nullptr;
 	
 	try {
 		callModel = &call->getData<CallModel>("call-model");
@@ -525,14 +528,12 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
 		qWarning() << QStringLiteral("Unable to find call:") << call.get();
 		return;
 	}
-	QTimer::singleShot( DelayBeforeRemoveCall , this, [this, callModel] {
-		if( callModel->getCallError() != ""){// We got an error, met more time to see it.
-			QTimer::singleShot( DelayBeforeRemoveCall , this, [this, callModel] {
+	if( callModel && callModel->getCallError() != ""){	// Wait some time to display an error on ending call.
+		QTimer::singleShot( DelayBeforeRemoveCall , this, [this, callModel] {
 				removeCallCb(callModel);
-			});
-		}else
-			removeCallCb(callModel);
-	});
+		});
+	}else
+		remove(callModel);
 }
 
 void CallsListModel::removeCallCb (CallModel *callModel) {
