@@ -30,12 +30,16 @@
 
 // =============================================================================
 
+class ConferenceInfoModel;
+
 class ConferenceInfoListModel : public ProxyListModel  {
 	Q_OBJECT
 	
 public:
 	ConferenceInfoListModel (QObject *parent = Q_NULLPTR);
+	QSharedPointer<ConferenceInfoModel> build(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo) const;
 	void add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents = true);
+	
 	
 	QHash<int, QByteArray> roleNames () const override;
 	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;

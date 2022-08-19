@@ -62,6 +62,14 @@ public:
 	void add(QSharedPointer<T> item){
 		ProxyAbstractListModel<QSharedPointer<QObject>>::add(item.template objectCast<QObject>());
 	}
+
+	template <class T>
+	void add(QList<QSharedPointer<T>> items){
+		beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size() - 1);
+		for(auto i : items)
+			mList << i.template objectCast<QObject>();
+		endInsertRows();
+	}
 	
 	template <class T>
 	void prepend(QSharedPointer<T> item){

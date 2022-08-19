@@ -34,6 +34,7 @@ public:
 	virtual int getCount() const;
 	virtual int getFilterType () const;
 	Q_INVOKABLE QVariant getAt(const int& index) const;
+	Q_INVOKABLE void setSortOrder(const Qt::SortOrder& order);
 	
 	virtual void setFilterType (int filterType);
 	

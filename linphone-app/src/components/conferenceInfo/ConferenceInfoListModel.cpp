@@ -39,25 +39,36 @@
 
 ConferenceInfoListModel::ConferenceInfoListModel (QObject *parent) : ProxyListModel(parent) {
 	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
+	QList<QSharedPointer<ConferenceInfoModel> > items;
 	for(auto conferenceInfo : conferenceInfos){
-		add(conferenceInfo, false);
+		auto item = build(conferenceInfo);
+		if(item)
+			items << item;
 	}
+	if(items.size() > 0)
+		ProxyListModel::add(items);
 }
 
 // -----------------------------------------------------------------------------
 
-void ConferenceInfoListModel::add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents){
+QSharedPointer<ConferenceInfoModel> ConferenceInfoListModel::build(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo) const{
 	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	std::list<std::shared_ptr<linphone::Address>> participants = conferenceInfo->getParticipants();
-		bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
-		if(!haveMe)
-			haveMe = (std::find_if(participants.begin(), participants.end(), [me](const std::shared_ptr<linphone::Address>& address){
-				return me->weakEqual(address);
-			}) != participants.end());
-		if(haveMe){
-			auto conferenceInfoModel = ConferenceInfoModel::create( conferenceInfo );
-			ProxyListModel::add(conferenceInfoModel);
-		}
+	bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
+	if(!haveMe)
+		haveMe = (std::find_if(participants.begin(), participants.end(), [me](const std::shared_ptr<linphone::Address>& address){
+			return me->weakEqual(address);
+		}) != participants.end());
+	if(haveMe)
+		return ConferenceInfoModel::create( conferenceInfo );
+	else
+		return nullptr;
+}
+
+void ConferenceInfoListModel::add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents){
+	auto item = build(conferenceInfo);
+	if( item)
+		ProxyListModel::add(item);
 }
 
 QHash<int, QByteArray> ConferenceInfoListModel::roleNames () const{

@@ -90,6 +90,7 @@ Item{
 				spacing: 10
 				
 				highlightFollowsCurrentItem: false
+				fitCacheToContent: false
 				
 				section {
 					criteria: ViewSection.FullString
@@ -100,6 +101,7 @@ Item{
 				model: ConferenceInfoProxyModel{
 					id: conferencesProxyModel
 					filterType: mainItem.filterType
+					onFilterTypeChanged: setSortOrder(filterType == ConferenceInfoProxyModel.Ended ? Qt.AscendingOrder : Qt.DescendingOrder)
 				}
 				
 				// -----------------------------------------------------------------------

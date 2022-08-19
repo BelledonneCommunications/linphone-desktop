@@ -66,6 +66,11 @@ public:
 		mList << item;
 		endInsertRows();
 	}
+	virtual void add(QList<T> items){
+		beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size()-1);
+		mList << items;
+		endInsertRows();
+	}
 	
 	virtual void prepend(T item){
 		beginInsertRows(QModelIndex(), 0, 0);

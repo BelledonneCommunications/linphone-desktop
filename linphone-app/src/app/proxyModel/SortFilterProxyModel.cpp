@@ -39,6 +39,10 @@ QVariant SortFilterProxyModel::getAt(const int& atIndex) const {
 	return sourceModel()->data(mapToSource(modelIndex), 0);
 }
 
+void SortFilterProxyModel::setSortOrder(const Qt::SortOrder& order){
+	sort(0, order);
+}
+
 void SortFilterProxyModel::setFilterType (int filterType) {
 	if (getFilterType() != filterType) {
 		mFilterType = filterType;
