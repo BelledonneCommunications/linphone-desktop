@@ -23,6 +23,8 @@
 
 
 #include <linphone++/linphone.hh>
+
+#include "utils/LinphoneEnums.hpp"
 // =============================================================================
 #include <QObject>
 #include <QDateTime>
@@ -52,6 +54,7 @@ public:
 	Q_PROPERTY(bool isPaused READ getPaused WRITE setPaused NOTIFY isPausedChanged)
 	Q_PROPERTY(bool isSpeaking READ getIsSpeaking WRITE setIsSpeaking NOTIFY isSpeakingChanged)
 	Q_PROPERTY(bool isMuted READ getIsMuted NOTIFY isMutedChanged)
+	Q_PROPERTY(LinphoneEnums::ParticipantDeviceState state READ getState WRITE setState NOTIFY stateChanged)
   
 	QString getName() const;
 	QString getDisplayName() const;
@@ -63,11 +66,13 @@ public:
 	bool getPaused() const;
 	bool getIsSpeaking() const;
 	bool getIsMuted() const;
+	LinphoneEnums::ParticipantDeviceState getState() const;
 	
 	std::shared_ptr<linphone::ParticipantDevice>  getDevice();
 	
 	void setPaused(bool paused);
 	void setIsSpeaking(bool speaking);
+	void setState(LinphoneEnums::ParticipantDeviceState state);
 	
 	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
 	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted);
@@ -87,6 +92,7 @@ signals:
 	void isPausedChanged();
 	void isSpeakingChanged();
 	void isMutedChanged();
+	void stateChanged();
 
 private:
 
@@ -94,6 +100,7 @@ private:
 	bool mIsVideoEnabled;
 	bool mIsPaused = false;
 	bool mIsSpeaking = false;
+	linphone::ParticipantDeviceState mState;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
     std::shared_ptr<ParticipantDeviceListener> mParticipantDeviceListener;	// This is passed to linpĥone object and must be in shared_ptr

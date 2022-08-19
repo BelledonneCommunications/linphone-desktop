@@ -121,6 +121,25 @@ Q_ENUM_NS(ConferenceLayout)
 linphone::ConferenceLayout toLinphone(const LinphoneEnums::ConferenceLayout& layout);
 LinphoneEnums::ConferenceLayout fromLinphone(const linphone::ConferenceLayout& layout);
 
+enum ParticipantDeviceState {
+	ParticipantDeviceStateJoining = int(linphone::ParticipantDeviceState::Joining),
+	ParticipantDeviceStatePresent = int(linphone::ParticipantDeviceState::Present),
+	ParticipantDeviceStateLeaving = int(linphone::ParticipantDeviceState::Leaving),
+	ParticipantDeviceStateLeft = int(linphone::ParticipantDeviceState::Left),
+	ParticipantDeviceStateScheduledForJoining = int(linphone::ParticipantDeviceState::ScheduledForJoining),
+	ParticipantDeviceStateScheduledForLeaving = int(linphone::ParticipantDeviceState::ScheduledForLeaving),
+	ParticipantDeviceStateOnHold = int(linphone::ParticipantDeviceState::OnHold),
+	ParticipantDeviceStateAlerting = int(linphone::ParticipantDeviceState::Alerting),
+	ParticipantDeviceStateMutedByFocus = int(linphone::ParticipantDeviceState::MutedByFocus),
+	
+};
+Q_ENUM_NS(ParticipantDeviceState)
+
+linphone::ParticipantDeviceState toLinphone(const LinphoneEnums::ParticipantDeviceState& state);
+LinphoneEnums::ParticipantDeviceState fromLinphone(const linphone::ParticipantDeviceState& state);
+
+
+
 enum TunnelMode {
 		TunnelModeDisable = int(linphone::Tunnel::Mode::Disable),
 		TunnelModeEnable= int(linphone::Tunnel::Mode::Enable),

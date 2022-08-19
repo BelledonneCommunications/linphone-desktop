@@ -78,6 +78,14 @@ LinphoneEnums::ConferenceLayout LinphoneEnums::fromLinphone(const linphone::Conf
 	return static_cast<LinphoneEnums::ConferenceLayout>(layout); 
 }
 
+linphone::ParticipantDeviceState LinphoneEnums::toLinphone(const LinphoneEnums::ParticipantDeviceState& state){
+	return static_cast<linphone::ParticipantDeviceState>(state);
+}
+
+LinphoneEnums::ParticipantDeviceState LinphoneEnums::fromLinphone(const linphone::ParticipantDeviceState& state){
+	return static_cast<LinphoneEnums::ParticipantDeviceState>(state); 
+}
+
 linphone::Tunnel::Mode LinphoneEnums::toLinphone(const LinphoneEnums::TunnelMode& data){
 	return static_cast<linphone::Tunnel::Mode>(data);
 }

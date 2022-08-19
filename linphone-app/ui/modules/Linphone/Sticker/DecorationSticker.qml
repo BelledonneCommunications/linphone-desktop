@@ -6,6 +6,7 @@ import App.Styles 1.0
 import Common 1.0
 import Common.Styles 1.0
 import Linphone 1.0
+import LinphoneEnums 1.0
 import Linphone.Styles 1.0
 
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -124,8 +125,8 @@ Item{
 		}
 		Rectangle{// Mute
 			visible: mainItem.currentDevice && mainItem.currentDevice.isMuted
-			height: DecorationStickerStyle.isMuted.button.iconSize
-			width: height
+			Layout.preferredHeight: DecorationStickerStyle.isMuted.button.iconSize
+			Layout.preferredWidth: DecorationStickerStyle.isMuted.button.iconSize
 			radius: width/2
 			color: DecorationStickerStyle.isMuted.button.backgroundNormalColor
 			Icon{
@@ -134,6 +135,11 @@ Item{
 				overwriteColor: DecorationStickerStyle.isMuted.button.foregroundNormalColor
 				iconSize: DecorationStickerStyle.isMuted.button.iconSize
 			}
+		}
+		BusyIndicator{// Joining spinner
+			Layout.preferredHeight: 20
+			Layout.preferredWidth: 20
+			running: mainItem.currentDevice && (mainItem.currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem.currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem.currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
 		}
 	}
 }

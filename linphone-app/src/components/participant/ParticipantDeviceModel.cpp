@@ -44,6 +44,7 @@ ParticipantDeviceModel::ParticipantDeviceModel (CallModel * callModel, std::shar
 		mParticipantDeviceListener = std::make_shared<ParticipantDeviceListener>(nullptr);
 		connectTo(mParticipantDeviceListener.get());
 		device->addListener(mParticipantDeviceListener);
+		mState = device->getState();
 	}
 	mCall = callModel;
 	if(mCall)
@@ -105,7 +106,11 @@ bool ParticipantDeviceModel::getIsMuted() const{
 	return mParticipantDevice ? mParticipantDevice->getIsMuted() : false;
 }
 
-std::shared_ptr<linphone::ParticipantDevice>  ParticipantDeviceModel::getDevice(){
+LinphoneEnums::ParticipantDeviceState ParticipantDeviceModel::getState() const{
+	return LinphoneEnums::fromLinphone(mState);
+}
+
+std::shared_ptr<linphone::ParticipantDevice> ParticipantDeviceModel::getDevice(){
 	return mParticipantDevice;
 }
 
@@ -124,6 +129,14 @@ void ParticipantDeviceModel::setIsSpeaking(bool speaking){
 	if(mIsSpeaking != speaking){
 		mIsSpeaking = speaking;
 		emit isSpeakingChanged();
+	}
+}
+
+void ParticipantDeviceModel::setState(LinphoneEnums::ParticipantDeviceState state){
+	auto newState = LinphoneEnums::toLinphone(state);
+	if(mState != newState){
+		mState = newState;
+		emit stateChanged();
 	}
 }
 
@@ -175,6 +188,7 @@ void ParticipantDeviceModel::onStateChanged(const std::shared_ptr<linphone::Part
 		case linphone::ParticipantDeviceState::MutedByFocus: break;
 	default:{}
 	}
+	setState(LinphoneEnums::fromLinphone(state));
 	updateVideoEnabled();
 }
 void ParticipantDeviceModel::onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType) {
