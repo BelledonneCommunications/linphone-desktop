@@ -26,7 +26,7 @@ Loader{
 	property ContentModel contentModel
 	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
 	property int maxWidth : parent.width
-	property int fitHeight: active && item ? item.fitHeight + (isExpanded? 200 : 0): 0
+	property int fitHeight: active && item ? item.fitHeight : 0 // + (isExpanded? 200 : 0): 0
 	property int fitWidth: active && item ? Math.min(maxWidth > 0 ? maxWidth : 9999999, item.fitWidth  + ChatCalendarMessageStyle.widthMargin*2) : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
@@ -60,7 +60,14 @@ Loader{
 		
 		ColumnLayout{
 			id: layout
-			property int fitHeight: Layout.minimumHeight + (description.visible?description.implicitHeight + 5: 5)
+			// Fix for binding loops
+			property int minHeight: layout.implicitHeight
+			function updateFitHeight(){
+				fitHeight = minHeight + (description.visible? description.implicitHeight : 0)
+			}
+			
+			onMinHeightChanged: Qt.callLater( layout.updateFitHeight)
+			property int fitHeight: 0
 			property int fitWidth: Math.max(shareButton.width + joinButton.width, description.fitWidth)
 			anchors.fill: parent
 			spacing: 0
@@ -218,7 +225,7 @@ Loader{
 			TextAreaField{
 				id: description
 				Layout.fillWidth: true
-				Layout.fillHeight: true
+				Layout.preferredHeight: visible ? implicitHeight : 0
 				Layout.leftMargin: 5
 				padding: 0
 				color: 'transparent'
@@ -229,20 +236,17 @@ Loader{
 				visible: description.text != ''
 				
 				text: mainItem.conferenceInfoModel.description
-			}
-			Item{
-				Layout.fillHeight: true
-				Layout.fillWidth: true
+				
+				onImplicitHeightChanged: Qt.callLater( layout.updateFitHeight)
+				onVisibleChanged: Qt.callLater( layout.updateFitHeight)
 			}
 			RowLayout{
 				Layout.fillWidth: true
-				Layout.fillHeight: true
-				Layout.topMargin: ChatCalendarMessageStyle.bottomMargin
-				Layout.leftMargin: 5
-				Layout.rightMargin: 5
+				Layout.topMargin: 10
+				Layout.bottomMargin: 5
+				Layout.rightMargin: 10
 				spacing: 10
 				Item{
-					Layout.fillHeight: true
 					Layout.fillWidth: true
 				}
 				ActionButton{
@@ -258,6 +262,7 @@ Loader{
 				}
 				TextButtonC{
 					id: joinButton
+					addHeight: 20
 					//: 'Join' : Action button to join the conference.
 					text: qsTr('icsJoinButton').toUpperCase()
 					onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
