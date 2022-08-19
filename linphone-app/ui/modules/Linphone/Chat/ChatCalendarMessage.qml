@@ -330,7 +330,7 @@ Loader{
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
-													   ,{conferenceInfoModel: mainItem.conferenceInfoModel})
+													   ,{conferenceInfoModel: mainItem.conferenceInfoModel, forceSchedule: true})
 						}
 					}
 					ActionButton{

@@ -20,6 +20,7 @@ DialogPlus {
 	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
+	property bool forceSchedule : false
 	property int creationState: 0
 	Timer{
 		id: closeDelay
@@ -249,7 +250,8 @@ DialogPlus {
 							checked: conferenceInfoModel.isScheduled
 							
 							onClicked: {
-								checked = !checked
+								if( !conferenceManager.forceSchedule)
+									checked = !checked
 							}
 							indicatorStyle: SwitchStyle.aux
 						}
