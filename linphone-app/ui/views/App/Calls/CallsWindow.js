@@ -58,6 +58,7 @@ function openConferenceManager (params, exitHandler) {
 }
 
 function openWaitingRoom(model){
+	calls.refreshCall()
 	if(window.conferenceInfoModel)
 		window.conferenceInfoModel = null;
 	window.conferenceInfoModel = model
@@ -68,18 +69,24 @@ function openWaitingRoom(model){
 function getContent (call, conferenceInfoModel) {
 	console.log("Changing contents")
 	if (call == null) {
-		if(conferenceInfoModel)
+		if(conferenceInfoModel) {
+			console.log("waitingRoom")
 			return waitingRoom
-		else
+		}
+		else{
+			console.log("null")
 			return null
+		}
 	}
 	
 	var status = call.status
 	if (status == null) {
+		console.log(calls.conferenceModel.count > 0 ? "conference" : "null")
 		return calls.conferenceModel.count > 0 ? conference : null
 	}
 	var CallModel = Linphone.CallModel
 	if (status === CallModel.CallStatusIncoming) {
+		console.log("incomingCall")
 		return incomingCall
 	}
 	window.conferenceInfoModel = call.conferenceInfoModel;
@@ -88,9 +95,12 @@ function getContent (call, conferenceInfoModel) {
 		return waitingRoom
 	}
 	
-	if(call.isConference)
+	if(call.isConference){
+		console.log("incall")
 		return incall
-		
+	}
+	
+	console.log("incall")	
 	return incall
 }
 
@@ -131,7 +141,7 @@ function handleCallAttendedTransferAsked (call) {
 }
 
 function windowMustBeClosed () {
-	return Linphone.CallsListModel.rowCount() === 0 && !window.virtualWindowVisible
+	return Linphone.CallsListModel.rowCount() === 0 && !window.virtualWindowVisible && middlePane.sourceComponent != waitingRoom
 }
 
 function tryToCloseWindow () {

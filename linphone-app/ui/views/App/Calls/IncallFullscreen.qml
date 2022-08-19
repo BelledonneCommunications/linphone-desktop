@@ -115,6 +115,7 @@ Window {
 					color: IncallStyle.pauseArea.title.color
 				}
 				Text{
+					Layout.topMargin: 10
 					Layout.alignment: Qt.AlignCenter
 					//: 'Click on play button to join it back.' : Explain what to do when being in pause in conference.
 					text: qsTr('incallPauseHint')
@@ -124,7 +125,7 @@ Window {
 				}
 				Item{
 					Layout.fillWidth: true
-					Layout.preferredHeight: 140
+					Layout.fillHeight: true
 				}
 			}
 		}

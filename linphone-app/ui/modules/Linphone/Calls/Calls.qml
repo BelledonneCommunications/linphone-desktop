@@ -20,6 +20,8 @@ ListView {
 	
 	property CallModel _selectedCall: null
 	
+	property var lastCall
+	onSelectedCallChanged: if( selectedCall) lastCall = selectedCall
 	// ---------------------------------------------------------------------------
 	
 	boundsBehavior: Flickable.StopAtBounds
@@ -27,7 +29,17 @@ ListView {
 	spacing: 0
 	
 	// ---------------------------------------------------------------------------
-	
+	function refreshCall(){
+		Logic.resetSelectedCall()
+	}
+	function refreshLastCall(){
+		if(lastCall && lastCall.status === CallModel.CallStatusConnected)
+			Logic.setIndexWithCall(lastCall)
+		else{
+			var call = model.data(model.index(0, 0))
+			Logic.updateSelectedCall(model.data(model.index(0, 0)))
+		}
+	}
 	onCountChanged: Logic.handleCountChanged(count)
 	
 	Connections {

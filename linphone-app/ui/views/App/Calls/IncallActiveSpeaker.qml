@@ -27,15 +27,24 @@ Item {
 	property bool cameraEnabled: true
 	property alias showMe : allDevices.showMe
 	property int participantCount: callModel.isConference ? allDevices.count : 2
+	
 	onParticipantCountChanged: {console.log("Conf count: " +participantCount);allDevices.updateCurrentDevice()}
 
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
 			callModel: mainItem.callModel
 			showMe: true
+			function updateShowMe(){
+				showMe = cameraEnabled && !isPausedByUser
+			}
 			onParticipantSpeaking: updateCurrentDevice()
+			// Do it on changed to ignore hard bindings (that can be override)
 			property bool cameraEnabled: callModel && callModel.cameraEnabled
-			onCameraEnabledChanged: showMe = cameraEnabled	// Do it on changed to ignore hard bindings (that can be override)
+			onCameraEnabledChanged:updateShowMe() 
+			property bool isPausedByUser: callModel && callModel.pausedByUser
+			onIsPausedByUserChanged: updateShowMe()
+			//-----
+			
 			onConferenceCreated: cameraView.resetCamera()
 			function updateCurrentDevice(){
 				var device = getLastActiveSpeaking()
@@ -81,7 +90,7 @@ Item {
 		width: 16 * cellHeight / 9
 		model: mainItem.callModel.isConference 
 					? mainItem.participantDevices 
-					: mainItem.callModel.videoEnabled
+					: mainItem.callModel.videoEnabled && !callModel.pausedByUser
 							? [{videoEnabled:true, isPreview:true}]
 							: []
 		onModelChanged: console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.videoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)

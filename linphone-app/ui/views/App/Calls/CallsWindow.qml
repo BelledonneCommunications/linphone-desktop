@@ -52,8 +52,10 @@ Window {
 	
 	function endOfProcess(exitValue){
 		window.detachVirtualWindow();
-		if(exitValue == 0 && calls.count == 0)
+		if(exitValue == 0 && calls.count == 0 && middlePane.sourceComponent != waitingRoom) {
+			console.log("Closing")
 			close();
+		}
 	}
 	
 	function openConferenceManager (params) {
@@ -85,7 +87,7 @@ Window {
 		maximumLeftLimit: CallsWindowStyle.callsList.maximumWidth
 		minimumLeftLimit: CallsWindowStyle.callsList.minimumWidth
 		
-		hideSplitter: !window.callsIsOpened && middlePane.sourceComponent == incall
+		hideSplitter: !window.callsIsOpened && middlePane.sourceComponent == incall || middlePane.sourceComponent == waitingRoom
 		
 		// -------------------------------------------------------------------------
 		// Calls list.
@@ -235,7 +237,11 @@ Window {
 				id: waitingRoom
 				WaitingRoom{
 					conferenceInfoModel: window.conferenceInfoModel
-					onCancel: endOfProcess(0)
+					onCancel: {
+						endOfProcess(0)
+						window.conferenceInfoModel = null
+						calls.refreshLastCall()
+					}
 					enabled: window.visible
 					callModel: window.call
 				}
@@ -260,6 +266,8 @@ Window {
 					if( sourceComponent == waitingRoom)
 						mainPaned.close()
 					rightPaned.childAItem.update()
+					if(!sourceComponent && calls.count == 0)
+						window.close()
 				}// Force update when loading a new Content. It's just to be sure
 				active: window.call || window.conferenceInfoModel
 			}

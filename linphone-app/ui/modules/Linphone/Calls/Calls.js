@@ -157,7 +157,7 @@ function getParams (call) {
 }
 
 function updateSelectedCall (call, index) {
-	calls._selectedCall = call
+	calls._selectedCall = call ? call : null
 	if (index != null) {
 		calls.currentIndex = index
 	}

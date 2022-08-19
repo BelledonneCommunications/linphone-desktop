@@ -46,7 +46,7 @@ Rectangle {
 		anchors.fill: parent
 		ColumnLayout{
 			Layout.alignment: Qt.AlignCenter
-			Layout.bottomMargin: (mainItem.conferenceInfoModel && mainItem.callModel ? 10 : 40)
+			Layout.bottomMargin: (mainItem.conferenceInfoModel && mainItem.callModel ? 10 : 30)
 			spacing: 10
 			BusyIndicator {
 				Layout.alignment: Qt.AlignCenter
@@ -95,7 +95,7 @@ Rectangle {
 			}
 			Text{
 				Layout.alignment: Qt.AlignCenter
-				Layout.topMargin:  mainItem.callModel ? 0 : 50
+				Layout.topMargin:  mainItem.callModel ? 0 : 40
 				text: mainItem.conferenceInfoModel ? mainItem.conferenceInfoModel.subject 
 												   : (mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : '')
 				color: WaitingRoomStyle.title.color
