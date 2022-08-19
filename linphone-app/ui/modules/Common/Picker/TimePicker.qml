@@ -66,7 +66,6 @@ Item{
 				text: index
 				color: currentItem ? TimePickerStyle.selectedItemColor : TimePickerStyle.unselectedItemColor
 			}
-			
 			MouseArea {
 				anchors.fill: parent
 				onClicked: mainItem.selectedTime = mainItem.getDate(parent.text, undefined)
@@ -77,15 +76,15 @@ Item{
 			id: outPath
 			property int yStep: middleMinSize * Math.cos(2 * Math.PI / outer.count) 
 			
-			startX: mainItem.centerPosition
-			startY: mainItem.centerPosition - outPath.yStep 
+			startX: mainItem.centerPosition+10
+			startY: mainItem.centerPosition - outPath.yStep
 			PathArc {
-				x: mainItem.centerPosition; y: mainItem.centerPosition + outPath.yStep
+				x: mainItem.centerPosition+10; y: mainItem.centerPosition + outPath.yStep
 				radiusX: 110; radiusY: 110
 				useLargeArc: false
 			}
 			PathArc {
-				x: mainItem.centerPosition; y: mainItem.centerPosition - outPath.yStep
+				x: mainItem.centerPosition+10; y: mainItem.centerPosition - outPath.yStep
 				radiusX: 110; radiusY: 110
 				useLargeArc: false
 			}
@@ -136,14 +135,14 @@ Item{
 		path: Path {
 			id: innerPath
 			property int yStep: (middleMinSize - 30 )  * Math.cos(2 * Math.PI / inner.count)
-			startX: mainItem.centerPosition; startY: mainItem.centerPosition - innerPath.yStep
+			startX: mainItem.centerPosition+10; startY: mainItem.centerPosition - innerPath.yStep
 			PathArc {
-				x: mainItem.centerPosition; y: mainItem.centerPosition + innerPath.yStep
+				x: mainItem.centerPosition+10; y: mainItem.centerPosition + innerPath.yStep
 				radiusX: 40; radiusY: 40
 				useLargeArc: false
 			}
 			PathArc {
-				x: mainItem.centerPosition; y: mainItem.centerPosition - innerPath.yStep
+				x: mainItem.centerPosition+10; y: mainItem.centerPosition - innerPath.yStep
 				radiusX: 40; radiusY: 40
 				useLargeArc: false
 			}
@@ -152,9 +151,7 @@ Item{
 	
 	RowLayout {
 		id: selectedTimeArea
-		property int cBinding: centerPosition	// remove binding loop
-		onCBindingChanged: Qt.callLater(function(){x = centerPosition - width/2; y= centerPosition - height/2})// To avoid binding loops
-		
+		anchors.centerIn: parent
 		Text {
 			id: h
 			font.pointSize: Units.dp * 12

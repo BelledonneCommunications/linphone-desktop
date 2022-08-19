@@ -9,6 +9,7 @@ Item{
 	id: mainItem
 	property bool allYears : false	// if false : years from today
 	property alias selectedDate: monthList.selectedDate
+	property bool hideOldDates : false
 	
 	signal clicked(date date);
 	
@@ -17,6 +18,8 @@ Item{
 		anchors.top: parent.top
 		anchors.left: parent.left
 		anchors.right: parent.right
+		anchors.topMargin: 5
+		
 		height: 30
 		Layout.alignment: Qt.AlignCenter
 		ActionButton{
@@ -47,6 +50,8 @@ Item{
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
+		anchors.topMargin: 10
+		
 		cacheBuffer:0
 		property int maxYears: 5	// Max years to be requested.
 		
@@ -93,7 +98,7 @@ Item{
 				property real cellMinSize: Math.min(cellHeight, cellWidth)
 				
 				columns: 7 // days
-				rows:    7
+				rows:    8
 				
 				Repeater {
 					model: grid.columns * grid.rows // 49 cells per month
@@ -132,10 +137,10 @@ Item{
 									if(cellItem.day < 0)
 										// Magic date to set day names in this order : 'S', 'M', 'T', 'W', 'T', 'F', 'S' in Locale
 										return new Date(1,3,index).toLocaleString(Qt.locale(), 'ddd')[0]
-									else if(new Date(year, month, cellItem.date).getMonth() == month)
+									else if(new Date(year, month, cellItem.date).getMonth() == month && (!hideOldDates || new Date(year, month, cellItem.date+1) >= new Date()))	// new Date use time too
 										return cellItem.date
 									else
-										return ''
+										return '-'
 								}
 							}
 						}
@@ -144,7 +149,7 @@ Item{
 							id: mouseArea
 							
 							anchors.fill: parent
-							enabled:    text.text  &&  cellItem.day >= 0
+							enabled:    text.text && text.text != '-' &&  cellItem.day >= 0
 							
 							onClicked: {
 								monthList.selectedDate = new Date(year, month, cellItem.date)

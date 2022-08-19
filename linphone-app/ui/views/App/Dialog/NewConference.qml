@@ -308,7 +308,7 @@ DialogPlus {
 							MouseArea{
 								anchors.fill: parent
 								onClicked: {
-									window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {showDatePicker:true, selectedDate: new Date(dateField.getDate())}
+									window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {hideOldDates:true, showDatePicker:true, selectedDate: new Date(dateField.getDate())}
 										, function (status) {
 											if(status){
 												dateField.setDate(status.selectedDate)

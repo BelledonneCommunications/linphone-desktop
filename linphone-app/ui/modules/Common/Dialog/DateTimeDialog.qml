@@ -12,8 +12,10 @@ import Utils 1.0
 
 DialogPlus {
 	id: mainItem
-	height: 550
+	height: timePicker.visible ? 575 : 500
 	width: 500
+	
+	property alias hideOldDates: datePicker.hideOldDates
 	
 	property alias showDatePicker : datePicker.visible
 	property alias showTimePicker: timePicker.visible
