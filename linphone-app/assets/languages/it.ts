@@ -2565,7 +2565,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Attributi SIP</translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
@@ -2577,7 +2577,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiunge il dominio all&apos;indirizzo SIP (sip:nomeutente@dominio).&lt;br&gt;Il valore di default è sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -2589,7 +2589,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Ottenere informazioni dettagliate sul file di log di Linphone quando vengono fatte delle transazioni (utile per il debug di connessioni TLS).</translation>
     </message>
 </context>
 <context>
