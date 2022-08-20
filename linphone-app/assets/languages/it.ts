@@ -2545,11 +2545,11 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>timeoutLabel</source>
-        <translation type="unfinished">Timeout</translation>
+        <translation type="unfinished">Scadenza</translation>
     </message>
     <message>
         <source>timeoutTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Scadenza del tempo di connessione e ricerca in secondi. Deve essere un numero positivo.&lt;br&gt;Se omesso è 5s.</translation>
     </message>
     <message>
         <source>parsingTitle</source>
@@ -2780,17 +2780,17 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>defaultDeviceNameLabel</source>
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome dispositivo</translation>
     </message>
     <message>
         <source>webviewRegistrationUrlLabel</source>
         <extracomment>&apos;Registration URL&apos; : Label for registration URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo registrazione</translation>
     </message>
     <message>
         <source>webviewLoginUrlLabel</source>
         <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo di accesso</translation>
     </message>
 </context>
 <context>
@@ -2886,12 +2886,12 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceURI</source>
         <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo conferenza</translation>
     </message>
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo conferenza invalido</translation>
     </message>
 </context>
 <context>
@@ -2899,22 +2899,22 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelStatus</source>
         <extracomment>&apos;Tunnel Status&apos; : Field title to introduce the status of the tunnel (activated or not)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Stato del tunnel</translation>
     </message>
     <message>
         <source>tunnelDomain</source>
         <extracomment>&apos;Domain&apos; : Field title of a textfield to set domain.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dominio</translation>
     </message>
     <message>
         <source>tunnelUsername</source>
         <extracomment>&apos;Username&apos; : Field title of a textfield to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>tunnelSIP</source>
         <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -2924,87 +2924,87 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>setHTTPProxy</source>
         <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci proxy HTTP</translation>
     </message>
     <message>
         <source>proxyHttpHost</source>
         <extracomment>&apos;Host&apos; : Placeholder to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ospite</translation>
     </message>
     <message>
         <source>proxyHttpPort</source>
         <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Porta</translation>
     </message>
     <message>
         <source>proxyHttpUsername</source>
         <extracomment>&apos;Username&apos; : Placeholder to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>proxyHttpPassword</source>
         <extracomment>&apos;Password&apos; : Placeholder to set password.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>proxyHttpApply</source>
         <extracomment>&apos;Apply&apos; : Button to set proxy from changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Applica</translation>
     </message>
     <message>
         <source>serverMode</source>
         <extracomment>&apos;Mode&apos; : Field title on form to set tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modalità</translation>
     </message>
     <message>
         <source>serverDualMode</source>
         <extracomment>&apos;Dual mode&apos; : Field title on form to set dual mode of the tunnel.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modalità doppia</translation>
     </message>
     <message>
         <source>serverTitle</source>
         <extracomment>&apos;Server&apos; : Title form to set a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Server</translation>
     </message>
     <message>
         <source>serverHostname</source>
         <extracomment>&apos;Hostname&apos; : Field title on form to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome ospite</translation>
     </message>
     <message>
         <source>serverPort</source>
         <extracomment>&apos;Port&apos; : Field title on form to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Porta</translation>
     </message>
     <message>
         <source>serverDualHostname</source>
         <extracomment>&apos;Dual hostname URL&apos; : Field title on form to set the second hostname for dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo nome ospito doppio</translation>
     </message>
     <message>
         <source>serverDualPort</source>
         <extracomment>&apos;Dual port&apos; : Field title on form to set the second port for the dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Doppia porta</translation>
     </message>
     <message>
         <source>serverRemoteUDPMirrorPort</source>
         <extracomment>&apos;Remote UDP mirror port&apos; : Field title on form to set the remote UDP mirror port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Porta UDP mirror remota</translation>
     </message>
     <message>
         <source>serverDelay</source>
         <extracomment>&apos;Delay&apos; : Field title on form to set the delay of the tunnel.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ritardo</translation>
     </message>
     <message>
         <source>tunnelAddServer</source>
         <extracomment>&apos;Add server&apos; : Button for adding a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi server</translation>
     </message>
     <message>
         <source>tunnelApply</source>
         <extracomment>&apos;Apply&apos; : Button to apply changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Applica</translation>
     </message>
 </context>
 <context>
@@ -3068,27 +3068,27 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsTitle</source>
         <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tipografia</translation>
     </message>
     <message>
         <source>fontsTextChange</source>
         <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi di testo</translation>
     </message>
     <message>
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Scegli nuova tipografia</translation>
     </message>
     <message>
         <source>checkForUpdateLabel</source>
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Controlla aggiornamenti</translation>
     </message>
     <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abilita mappa Mip</translation>
     </message>
     <message>
         <source>mipmapTooltip1</source>
