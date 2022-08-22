@@ -23,6 +23,7 @@
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/participant/ParticipantListModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "components/sip-addresses/SipAddressesSorter.hpp"
 
@@ -35,6 +36,7 @@
 // -----------------------------------------------------------------------------
 
 SearchSipAddressesProxyModel::SearchSipAddressesProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
+	mParticipantListModel = nullptr;
 	setSourceModel(new SearchSipAddressesModel(this));
 	sort(0);
 }
@@ -45,9 +47,20 @@ SearchSipAddressesModel * SearchSipAddressesProxyModel::getModel(){
 	return qobject_cast<SearchSipAddressesModel*>(sourceModel());
 }
 
+ParticipantListModel * SearchSipAddressesProxyModel::getParticipantListModel() const{
+	return mParticipantListModel;
+}
+
 void SearchSipAddressesProxyModel::setFilter (const QString &pattern){
 	mFilter = pattern;
 	getModel()->setFilter(pattern);
+}
+
+void SearchSipAddressesProxyModel::setParticipantListModel(ParticipantListModel * model){
+	if(mParticipantListModel != model){
+		mParticipantListModel = model;
+		emit participantListModelChanged();
+	}
 }
 
 void SearchSipAddressesProxyModel::addAddressToIgnore(const QString& address){
@@ -79,7 +92,9 @@ bool SearchSipAddressesProxyModel::filterAcceptsRow (int sourceRow, const QModel
 	const SearchResultModel * model = sourceModel()->data(index).value<SearchResultModel*>();
 	if(!model)
 		return false;
-	else
+	else if(mParticipantListModel){
+		return !mParticipantListModel->contains(Utils::coreStringToAppString(model->getAddress()->asStringUriOnly()));
+	}else
 		return !mResultsToIgnore.contains(Utils::coreStringToAppString(model->getAddress()->asStringUriOnly()));
 }
 

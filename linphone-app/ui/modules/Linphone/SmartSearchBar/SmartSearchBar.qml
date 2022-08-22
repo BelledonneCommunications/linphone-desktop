@@ -21,6 +21,8 @@ SearchBox {
 	property string previousText: text
 	onTextChanged: if( text != '') previousText = text;
 	
+	property alias participantListModel : searchModel.participantListModel
+	
 	function addAddressToIgnore(entry){
 		searchModel.addAddressToIgnore(entry)
 	}

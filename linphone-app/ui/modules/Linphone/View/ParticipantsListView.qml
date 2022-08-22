@@ -54,6 +54,7 @@ ColumnLayout {
 					selectedParticipants.addAddress(entry.sipAddress)
 				},
 			}]
+		participantListModel: selectedParticipants.participantListModel
 
 		onEntryClicked: {
 			selectedParticipants.addAddress(entry.sipAddress)

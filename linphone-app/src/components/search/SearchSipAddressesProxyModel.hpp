@@ -23,6 +23,7 @@
 
 #include <QSortFilterProxyModel>
 
+class ParticipantListModel;
 class SearchSipAddressesModel;
 
 // =============================================================================
@@ -34,18 +35,22 @@ public:
 	SearchSipAddressesProxyModel (QObject *parent = Q_NULLPTR);
 	
 	Q_PROPERTY(SearchSipAddressesModel * model READ getModel CONSTANT)
+	Q_PROPERTY(ParticipantListModel *participantListModel READ getParticipantListModel WRITE setParticipantListModel NOTIFY  participantListModelChanged)
 	
 	Q_INVOKABLE void addAddressToIgnore(const QString& address);
 	Q_INVOKABLE void removeAddressToIgnore(const QString& address);
 	Q_INVOKABLE bool isIgnored(const QString& address) const;
 	
 	SearchSipAddressesModel * getModel();
+	ParticipantListModel * getParticipantListModel() const;
 	
 	
 	Q_INVOKABLE void setFilter (const QString &pattern);
 	void setResultExceptions(QAbstractListModel* exceptionList);
+	void setParticipantListModel( ParticipantListModel *model);
 	
 signals:
+	void participantListModelChanged();
 	void resultExceptionsChanged();
 	
 protected:
@@ -55,7 +60,7 @@ protected:
 private:
 	QMap<QString, bool> mResultsToIgnore;
 	QString mFilter;
-	
+	ParticipantListModel *mParticipantListModel = nullptr;
 };
 
 #endif
