@@ -8,4 +8,6 @@ QtObject {
 	property string sectionName: 'SearchBox'
 	property color shadowColor: ColorsList.add(sectionName+'_shadow', 'l').color
 	property color iconColor: ColorsList.add(sectionName+'_icon', 'c').color
+	property string searchIcon: 'search_custom'
+	property string cancelIcon: 'close_custom'
 }

@@ -333,7 +333,7 @@ Rectangle {
 				anchors.topMargin: 5
 				anchors.bottomMargin: 5
 				width: parent.width - 14				
-				icon: 'search_custom'
+				icon: text == '' ? 'search_custom' : 'close_custom'
 				iconSize: 30
 				overwriteColor: TimelineStyle.searchField.color
 				//: 'Search in the list' : ths is a placeholder when searching something in the timeline list

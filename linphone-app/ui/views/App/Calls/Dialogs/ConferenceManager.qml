@@ -78,7 +78,7 @@ DialogPlus {
 
           Layout.fillWidth: true
 
-          icon: 'search_custom'
+          icon: text == '' ? 'search_custom' : 'close_custom'
           overwriteColor: ConferenceManagerStyle.searchField.color
 
           onTextChanged: conferenceHelperModel.setFilter(text)

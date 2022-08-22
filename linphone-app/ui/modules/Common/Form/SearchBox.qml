@@ -76,7 +76,7 @@ Item {
 		TextField {
 			id: searchField
 			
-			icon: 'search_custom'
+			icon: text == '' ? SearchBoxStyle.searchIcon : SearchBoxStyle.cancelIcon
 			overwriteColor: SearchBoxStyle.iconColor
 			iconSize: height
 			readOnly: !searchBox.enabled

@@ -47,6 +47,7 @@ DialogPlus {
 					? dateTimeTitle
 					: timeTitle
 				: timeTitle
+	showCloseCross: true
 	// ---------------------------------------------------------------------------
 	RowLayout{
 		anchors.fill: parent

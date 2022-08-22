@@ -575,16 +575,12 @@ ColumnLayout  {
 					margins: 0
 				}
 				width: parent.width-14
-				icon: 'close_custom'
+				icon: text != '' ? 'close_custom' : 'search_custom'
 				overwriteColor: ConversationStyle.filters.iconColor
-				showWhenEmpty: false
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')
 				
 				onTextChanged: searchDelay.restart()
-				onIconClicked: {
-					searchView.text = ''
-				}
 				font.pointSize: ConversationStyle.filters.pointSize
 				
 				Timer{

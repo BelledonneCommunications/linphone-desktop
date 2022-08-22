@@ -306,7 +306,6 @@ DialogPlus {
 							}
 							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.dateTime.toLocaleDateString(scheduleForm.locale, Qt.ISODate) : ''
 							icon: 'drop_down_custom'
-							showWhenEmpty: false
 							MouseArea{
 								anchors.fill: parent
 								onClicked: {
@@ -331,7 +330,6 @@ DialogPlus {
 							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
 							
 							icon: 'drop_down_custom'
-							showWhenEmpty: false
 							onEditingFinished: if(rightStackView.currentItemType === 2) {
 								rightStackView.currentItemType = 0
 								rightStackView.pop()
