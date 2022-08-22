@@ -35,7 +35,7 @@ You will need the tools :
 - `nasm` : https://www.nasm.us/pub/nasm/releasebuilds/
 - `doxygen` (required for the Cxx Wrapper)
 - `Perl`
-- `Pystache` : use 'pip install pystache --user'
+- `pystache` : use 'pip install pystache --user'
 - `six` : use 'pip install six --user'
 - `git`
 
@@ -49,7 +49,7 @@ For Desktop : you will need [Qt5](https://www.qt.io/download-thank-you) (_5.12 o
 
 2. You have to set the environment variable `Qt5_DIR` to point to the path containing the cmake folders of Qt5, and the `PATH` to the Qt5 `bin`. Example:
 
-        Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake"
+        Qt5_DIR="~/Qt/5.12.5/gcc_64/lib/cmake/Qt5"
         PATH="~/Qt/5.12.5/gcc_64/bin/:$PATH"
 
 Note: If you have the third party tool `qtchooser` installed : 
@@ -131,26 +131,39 @@ Usually, if it is about VPX or Decaf, this could come from your Perl installatio
 To install the required dependencies on Mac OS X, you can use [Homebrew](https://brew.sh/).
 Before you install packages with Brew, you may have to change directories permissions (if you can't change permissions with sudo on a MacOS >= High Sierra, get a look at [this StackOverflow answer](https://stackoverflow.com/questions/16432071/how-to-fix-homebrew-permissions#46844441)).
 
-1. Install XCode from the Apple store. Run it at least once to allow it to install its tools.
+1. Install XCode from the Apple store. Run it at least once to allow it to install its tools. You may need to run :
+
+		xcode-select --install
 
 2. Install Homebrew by following the instructions here https://brew.sh/
 
 3. Install dependencies:
 
-        brew install cmake qt git
+        brew install cmake pkg-config git doxygen nasm yasm
 
-4. First ensure you have installed pip. You can get it for python 2.7 [there](https://stackoverflow.com/questions/34886101/how-to-install-pip-to-python-2-7-10-on-mac#34886254).
+4. First ensure you have [pip](https://pypi.org/project/pip/)
 
 5. Then, you can install a pip package with the following command:
 
-        pip install [package]
+        python -m pip install [package]
 
- For instance, if you don't have pystache and the dot package (contained in graphviz), enter the following commands:
+ For instance, enter the following command:
 
-        pip install pystache
-        pip install graphviz
+        python -m pip install pystache six graphviz
+        
+6. Download [Qt](https://www.qt.io/download), install a Qt5 version and set Qt5_DIR and PATH variables.
 
-6. Build as usual (General Steps).
+7. Qt5 is not available for arm64. If you are building on a arm64 system, you have to select the x86_64 processor on the generation stage of cmake :
+
+	-DCMAKE_APPLE_SILICON_PROCESSOR=x86_64
+	
+
+8. Build as usual (General Steps).
+
+9. If you get an error about modules that are not found for Python, it may be because cmake try to use another version from your PATH. It can be the case if you installed Python from brew. Install Python modules by using absolute path.
+For example:
+	
+		/opt/homebrew/python3 -m pip install pystache six graphviz
 
 ## Specific instructions for the Windows platform
 
@@ -198,11 +211,11 @@ Also, more configurations are available in the docker-files folder of linphone-s
 
 | Options | Description | Default value |
 | :--- | :---: | ---: |
-| ENABLE_APP_PACKAGING | Enable packaging. Package will be deployed in `OUTPUT/packages` | NO |
 | ENABLE_APP_LICENSE | Enable the license in packages. | YES |
+| ENABLE_APP_PACKAGING | Enable packaging. Package will be deployed in `OUTPUT/packages` | NO |
 | ENABLE_BUILD_APP_PLUGINS | Enable the build of plugins | YES |
-| ENABLE_BUILD_VERBOSE | Enable the build generation to be more verbose | NO |
 | ENABLE_BUILD_EXAMPLES | Enable the build of examples | NO |
+| ENABLE_BUILD_VERBOSE | Enable the build generation to be more verbose | NO |
 | ENABLE_DAEMON | Enable the linphone daemon interface. | NO |
 | ENABLE_STRICT | Build with strict compilator flags e.g. -Wall -Werror | NO |
 | ENABLE_TESTS | Build with testing binaries of SDK | NO |
@@ -210,9 +223,12 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | ENABLE_TOOLS | Enable tools of SDK | NO |
 | ENABLE_UNIT_TESTS | Enable unit test of SDK. | NO |
 | ENABLE_UPDATE_CHECK | Enable update check. | YES |
+| ENABLE_APP_WEBVIEW | Enable webview for accounts. The Webview engine must be deployed, it takes a large size. | NO |
+| LINPHONE_SDK_MAKE_RELEASE_FILE_URL | Make a RELEASE file that work along check_version and use this URL | "" |
 
 
 <!-- Not customizable without warranty
+| ENABLE_LDAP | Enable LDAP support. | YES |
 | ENABLE_VIDEO | Enable Video support. | YES |
 | ENABLE_OPENH264 | Enable the use of OpenH264 codec | YES |
 | ENABLE_NON_FREE_CODECS | Enable the use of non free codecs | YES |

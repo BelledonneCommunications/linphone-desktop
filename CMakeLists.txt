@@ -90,29 +90,29 @@ endif()
 #				SET OPTIONS
 #-------------------------------------------------------------------------------
 
+option(ENABLE_APP_LICENSE "Enable the license in packages." YES)
 option(ENABLE_APP_PACKAGING "Enable packaging" NO)
-option(ENABLE_UPDATE_CHECK "Enable update check." YES)
-option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO  )
+option(ENABLE_APP_WEBVIEW "Enable webviews." NO) #Webview is not fully supported because of deployments. Used for subscription.
+option(ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" YES)
+option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" NO)
+option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
+option(ENABLE_DAEMON "Enable the linphone daemon interface." NO)
+option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." ON)
+option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
 option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
 option(ENABLE_TESTS_COMPONENTS "Build libbctoolbox-tester" NO  )
 option(ENABLE_TOOLS "Enable tools of SDK" NO)
-option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
-option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." ON)
-option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
+option(ENABLE_UNIT_TESTS "Enable unit test of SDK." NO  )
+option(ENABLE_UPDATE_CHECK "Enable update check." YES)
+
 option(ENABLE_OPENH264 "Enable the use of OpenH264 codec" YES)
 option(ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
-option(ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" YES)
-option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" NO)
+
 option(ENABLE_VIDEO "Enable Video support." YES)
 option(ENABLE_LDAP "Enable LDAP support." YES)
 
-option(ENABLE_DAEMON "Enable the linphone daemon interface." NO)
 option(ENABLE_CONSOLE_UI "Turn on or off compilation of console interface." NO)
 
-option(ENABLE_APP_LICENSE "Enable the license in packages." YES)
-
-#Webview is not fully supported because of deployments. Used for subscription.
-option(ENABLE_APP_WEBVIEW "Enable webviews." NO)
 
 option(LINPHONE_SDK_MAKE_RELEASE_FILE_URL "Make a RELEASE file that work along check_version and use this URL" "")
 
