@@ -115,6 +115,7 @@ Item {
 						onLastTextSelectedChanged: container.lastTextSelected= lastTextSelected
 						onRightClicked: chatMenu.open()
 						onConferenceIcsCopied: container.conferenceIcsCopied()
+						onFileIsHoveringChanged: menuButton.visible = !fileIsHovering
 						Rectangle{
 							anchors.left: parent.left
 							anchors.right: parent.right
@@ -177,6 +178,7 @@ Item {
 	}
 	
 	ActionButton {
+		id: menuButton
 		anchors.left:rectangle.right
 		anchors.leftMargin: -10
 		anchors.top:rectangle.top

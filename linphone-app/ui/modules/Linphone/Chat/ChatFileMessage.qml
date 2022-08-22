@@ -26,6 +26,7 @@ Row {
 	
 	property bool isAnimatedImage : mainRow.contentModel && mainRow.contentModel.wasDownloaded && UtilsCpp.isAnimatedImage(mainRow.contentModel.filePath)
 	property bool haveThumbnail: mainRow.contentModel && mainRow.contentModel.thumbnail
+	property bool isHovering: thumbnailProvider.state == 'hovered'
 	
 	signal copyAllDone()
 	signal copySelectionDone()

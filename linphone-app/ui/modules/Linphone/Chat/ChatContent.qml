@@ -26,6 +26,7 @@ Column{
 	property string lastTextSelected
 	property alias textColor: message.color
 	property alias textFont: message.font
+	property alias fileIsHovering: fileMessage.isHovering
 	
 	signal rightClicked()
 	signal conferenceIcsCopied()
