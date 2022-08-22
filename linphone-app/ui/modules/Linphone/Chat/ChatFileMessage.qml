@@ -78,6 +78,7 @@ Row {
 					property real scaleAnimatorTo : ChatStyle.entry.message.file.animation.thumbnailTo
 					mipmap: SettingsModel.mipmapEnabled
 					source: mainRow.contentModel.thumbnail
+					autoTransform: true
 					fillMode: Image.PreserveAspectFit
 					height: ChatStyle.entry.message.file.height
 					width: height*4/3
@@ -85,7 +86,8 @@ Row {
 						anchors.fill: parent
 						sourceComponent: Image{// Better quality on zoom
 							mipmap: SettingsModel.mipmapEnabled
-							source:'file:/'+mainRow.contentModel.filePath
+							source:'image://external/'+mainRow.contentModel.filePath
+							autoTransform: true
 							fillMode: Image.PreserveAspectFit
 							visible: status == Image.Ready
 						}
@@ -102,6 +104,7 @@ Row {
 					property real scaleAnimatorTo : ChatStyle.entry.message.file.animation.to
 					mipmap: SettingsModel.mipmapEnabled
 					source: 'file:/'+mainRow.contentModel.filePath
+					autoTransform: true
 					fillMode: Image.PreserveAspectFit
 					height: ChatStyle.entry.message.file.heightbetter
 					width: height*4/3

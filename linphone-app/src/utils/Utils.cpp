@@ -112,14 +112,12 @@ QString Utils::toString(const LinphoneEnums::TunnelMode& mode){
 
 QImage Utils::getImage(const QString &pUri) {
 	QImage image(pUri);
+	QImageReader reader(pUri);
+	reader.setAutoTransform(true);
 	if(image.isNull()){// Try to determine format from headers instead of using suffix
-		QImageReader reader(pUri);
 		reader.setDecideFormatFromContent(true);
-		QByteArray format = reader.format();
-		if(!format.isEmpty())
-			image = QImage(pUri, format);
 	}
-	return image;
+	return reader.read();
 }
 QString Utils::getSafeFilePath (const QString &filePath, bool *soFarSoGood) {
 	if (soFarSoGood)
