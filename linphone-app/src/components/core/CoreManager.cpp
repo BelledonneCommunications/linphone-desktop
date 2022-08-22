@@ -92,13 +92,13 @@ CoreManager::~CoreManager(){
 
 void CoreManager::initCoreManager(){
 	qInfo() << "Init CoreManager";
+	mAccountSettingsModel = new AccountSettingsModel(this);
+	mSettingsModel = new SettingsModel(this);
 	mCallsListModel = new CallsListModel(this);
 	mChatModel = new ChatModel(this);
 	mContactsListModel = new ContactsListModel(this);
 	mContactsImporterListModel = new ContactsImporterListModel(this);
-	mAccountSettingsModel = new AccountSettingsModel(this);
 	mLdapListModel = new LdapListModel(this);
-	mSettingsModel = new SettingsModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
 	mTimelineListModel = new TimelineListModel(this);

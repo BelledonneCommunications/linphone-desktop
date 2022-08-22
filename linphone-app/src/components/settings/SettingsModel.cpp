@@ -832,7 +832,7 @@ void SettingsModel::setSecureChatEnabled (bool status) {
 }
 
 bool SettingsModel::getGroupChatEnabled() const{
-	return !CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getConferenceFactoryUri().empty();
+	return CoreManager::getInstance()->getCore()->getDefaultAccount() && !CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getConferenceFactoryUri().empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -872,7 +872,7 @@ void SettingsModel::setConferenceEnabled (bool status) {
 }
 
 bool SettingsModel::getVideoConferenceEnabled() const{
-	return !!CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getAudioVideoConferenceFactoryAddress();
+	return CoreManager::getInstance()->getCore()->getDefaultAccount() && !!CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getAudioVideoConferenceFactoryAddress();
 }
 // -----------------------------------------------------------------------------
 
