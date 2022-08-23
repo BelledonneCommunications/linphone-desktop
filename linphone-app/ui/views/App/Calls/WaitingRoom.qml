@@ -80,7 +80,7 @@ Rectangle {
 				font.pointSize: WaitingRoomStyle.elapsedTime.pointSize
 				horizontalAlignment: Text.AlignHCenter
 				width: parent.width
-				visible: mainItem.callModel
+				visible: mainItem.callModel && mainItem.isEnding
 				Timer {
 					interval: 1000
 					repeat: true
@@ -139,10 +139,10 @@ Rectangle {
 					anchors.centerIn: parent
 					height: cameraHeight
 					width : cameraWidth
-					
-					deactivateCamera: !mainItem.previewLoaderEnabled
-					callModel: mainItem.callModel
+					callModel:  mainItem.callModel
 					conferenceInfoModel: mainItem.conferenceInfoModel
+					deactivateCamera: !mainItem.previewLoaderEnabled || mainItem.isEnding
+					
 					/*
 					image: mainItem._sipAddressObserver && mainItem._sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
 					

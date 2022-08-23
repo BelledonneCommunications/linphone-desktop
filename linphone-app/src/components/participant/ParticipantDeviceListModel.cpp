@@ -39,25 +39,35 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (std::shared_ptr<linphone
 		connect(deviceModel.get(), &ParticipantDeviceModel::isSpeakingChanged, this, &ParticipantDeviceListModel::onParticipantDeviceSpeaking);
 		mList << deviceModel;
 	}
+	mInitialized = true;
 }
 
 ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, QObject *parent) : ProxyListModel(parent) {
 	if(callModel && callModel->isConference()) {
 		mCallModel = callModel;
-		auto conferenceModel = callModel->getConferenceSharedModel();
-		
-		updateDevices(conferenceModel->getConference()->getMe()->getDevices(), true);
-		updateDevices(conferenceModel->getConference()->getParticipantDeviceList(), false);
-		
-		qDebug() << "Conference have " << mList.size() << " devices";
-		connect(conferenceModel.get(), &ConferenceModel::participantAdded, this, &ParticipantDeviceListModel::onParticipantAdded);
-		connect(conferenceModel.get(), &ConferenceModel::participantRemoved, this, &ParticipantDeviceListModel::onParticipantRemoved);
-		connect(conferenceModel.get(), &ConferenceModel::participantDeviceAdded, this, &ParticipantDeviceListModel::onParticipantDeviceAdded);
-		connect(conferenceModel.get(), &ConferenceModel::participantDeviceRemoved, this, &ParticipantDeviceListModel::onParticipantDeviceRemoved);
-		connect(conferenceModel.get(), &ConferenceModel::conferenceStateChanged, this, &ParticipantDeviceListModel::onConferenceStateChanged);
-		connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaCapabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaCapabilityChanged);
-		connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaAvailabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged);
-		connect(conferenceModel.get(), &ConferenceModel::participantDeviceIsSpeakingChanged, this, &ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged);
+		connect(mCallModel, &CallModel::conferenceModelChanged, this, &ParticipantDeviceListModel::onConferenceModelChanged);
+		initConferenceModel();
+	}
+}
+
+void ParticipantDeviceListModel::initConferenceModel(){
+	if(!mInitialized && mCallModel){
+		auto conferenceModel = mCallModel->getConferenceSharedModel();
+		if(conferenceModel){
+			updateDevices(conferenceModel->getConference()->getMe()->getDevices(), true);
+			updateDevices(conferenceModel->getConference()->getParticipantDeviceList(), false);
+			
+			qDebug() << "Conference have " << mList.size() << " devices";
+			connect(conferenceModel.get(), &ConferenceModel::participantAdded, this, &ParticipantDeviceListModel::onParticipantAdded);
+			connect(conferenceModel.get(), &ConferenceModel::participantRemoved, this, &ParticipantDeviceListModel::onParticipantRemoved);
+			connect(conferenceModel.get(), &ConferenceModel::participantDeviceAdded, this, &ParticipantDeviceListModel::onParticipantDeviceAdded);
+			connect(conferenceModel.get(), &ConferenceModel::participantDeviceRemoved, this, &ParticipantDeviceListModel::onParticipantDeviceRemoved);
+			connect(conferenceModel.get(), &ConferenceModel::conferenceStateChanged, this, &ParticipantDeviceListModel::onConferenceStateChanged);
+			connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaCapabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaCapabilityChanged);
+			connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaAvailabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged);
+			connect(conferenceModel.get(), &ConferenceModel::participantDeviceIsSpeakingChanged, this, &ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged);	
+			mInitialized = true;
+		}
 	}
 }
 
@@ -169,6 +179,12 @@ bool ParticipantDeviceListModel::isMeAlone() const{
 			return false;
 	}
 	return true;
+}
+
+void ParticipantDeviceListModel::onConferenceModelChanged (){
+	if(!mInitialized){
+		initConferenceModel();
+	}
 }
 
 void ParticipantDeviceListModel::onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device){

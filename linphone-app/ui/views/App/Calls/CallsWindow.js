@@ -89,19 +89,23 @@ function getContent (call, conferenceInfoModel) {
 		console.log("incomingCall")
 		return incomingCall
 	}
-	window.conferenceInfoModel = call.conferenceInfoModel;
-	if (status === CallModel.CallStatusOutgoing || status === CallModel.CallStatusEnded) {
-		console.log("Is conference ? "+call.isConference)
-		return waitingRoom
-	}
-	
-	if(call.isConference){
-		console.log("incall")
+	if( window.conferenceInfoModel != call.conferenceInfoModel) {
+		Qt.callLater(function(){window.conferenceInfoModel = call.conferenceInfoModel})
+		return middlePane.sourceComponent	// unchange. Wait for later decision on conference model (avoid binding loop on sourceComponent)
+	}else{
+		if(call.isConference){
+			console.log("incall")
+			return incall
+		}
+		if (status === CallModel.CallStatusOutgoing || status === CallModel.CallStatusEnded) {
+			console.log("Is conference ? "+call.isConference)
+			return waitingRoom
+		}
+		
+		
+		console.log("incall")	
 		return incall
 	}
-	
-	console.log("incall")	
-	return incall
 }
 
 // -----------------------------------------------------------------------------

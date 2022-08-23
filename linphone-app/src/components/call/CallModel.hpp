@@ -70,6 +70,7 @@ class CallModel : public QObject {
 	
 	Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged)
 	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged)
+	Q_PROPERTY(bool localVideoEnabled READ getLocalVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged)
 	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE setCameraEnabled NOTIFY statusChanged)
 	Q_PROPERTY(bool updating READ getUpdating NOTIFY statusChanged)
 	
@@ -263,6 +264,8 @@ public:
 	
 	bool getPausedByUser () const;
 	void setPausedByUser (bool status);
+	
+	bool getLocalVideoEnabled () const;
 	
 	bool getVideoEnabled () const;
 	void setVideoEnabled (bool status);

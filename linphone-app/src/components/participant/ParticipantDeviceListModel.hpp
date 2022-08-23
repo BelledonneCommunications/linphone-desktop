@@ -28,8 +28,8 @@
 #include <QDateTime>
 #include <QString>
 #include "app/proxyModel/ProxyListModel.hpp"
+#include "components/call/CallModel.hpp"
 
-class CallModel;
 class ParticipantDeviceModel;
 
 class ParticipantDeviceListModel : public ProxyListModel {
@@ -39,6 +39,7 @@ public:
 	ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent = nullptr);
 	ParticipantDeviceListModel (CallModel * callModel, QObject *parent = nullptr);
 	
+	void initConferenceModel();
 	void updateDevices(std::shared_ptr<linphone::Participant> participant);
 	void updateDevices(const std::list<std::shared_ptr<linphone::ParticipantDevice>>& devices, const bool& isMe);
 	
@@ -52,6 +53,7 @@ public:
 	bool isMeAlone() const;
 	
 public slots:
+	void onConferenceModelChanged ();
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
@@ -71,6 +73,7 @@ signals:
 private:
 	CallModel * mCallModel = nullptr;
 	QList<ParticipantDeviceModel*> mActiveSpeakers;// First item is last speaker
+	bool mInitialized = false;
 	
 };
 

@@ -33,7 +33,7 @@ public:
 	ProxyAbstractListModel (QObject *parent = Q_NULLPTR) : ProxyAbstractObject(parent) {}
 
 	virtual ~ProxyAbstractListModel(){
-		resetData();
+		clearData();
 	}
 	
 	virtual int rowCount (const QModelIndex &index = QModelIndex()) const override{
@@ -100,9 +100,13 @@ public:
 		return true;
 	}
 	
+	virtual void clearData(){
+		mList.clear();
+	}
+	
 	virtual void resetData(){
 		beginResetModel();
-		mList.clear();
+		clearData();
 		endResetModel();
 	}
 	

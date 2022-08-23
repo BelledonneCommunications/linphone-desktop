@@ -183,7 +183,7 @@ Rectangle {
 				id: address
 				Layout.fillWidth: true
 				horizontalAlignment: Qt.AlignHCenter
-				visible: !conferenceModel && callModel
+				visible: !conferenceModel && callModel && !callModel.isConference
 				text: !conferenceModel && callModel
 							? callModel.peerAddress
 							: ''
@@ -275,34 +275,48 @@ Rectangle {
 		}
 		RowLayout{
 			anchors.fill: parent
-			Loader{
-				id: conferenceLayout
+			Item{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
-				sourceComponent: conference.conferenceModel 
-									? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
-									: activeSpeakerComponent
-				onSourceComponentChanged: console.log("conferenceLayout: "+conference.callModel.conferenceVideoLayout)
-				active: conference.callModel
-				ColumnLayout {
+				Loader{
+					id: conferenceLayout
+					anchors.fill: parent	
+					sourceComponent: conference.conferenceModel 
+										? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled
+											? gridComponent
+											: activeSpeakerComponent
+										: activeSpeakerComponent
+					onSourceComponentChanged: console.log("conferenceLayout: "+conference.callModel.conferenceVideoLayout)
+					active: conference.callModel
+				}
+				Rectangle{
 					anchors.fill: parent
-					visible: !conference.callModel || !conferenceLayout.item || conferenceLayout.item.participantCount == 0
-					BusyIndicator{
-						Layout.preferredHeight: 50
-						Layout.preferredWidth: 50
-						Layout.alignment: Qt.AlignCenter
-						running: parent.visible
-						color: IncallStyle.buzyColor
-					}
-					Text{
-						Layout.alignment: Qt.AlignCenter
-						
-						text: conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid && !conference.callModel.videoEnabled
-						//: 'Waiting for another participant...' :  Waiting message for more participant.
-								? qsTr('incallWaitParticipantMessage')
-						//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
-								: qsTr('incallWaitMessage')
-						color: IncallStyle.buzyColor
+					color: conference.color
+					visible: !conference.callModel || (conference.callModel.isConference 
+																&& (!conference.conferenceModel
+																	|| (conference.conferenceModel && !conference.conferenceModel.isReady))
+														)
+														|| !conferenceLayout.item || conferenceLayout.item.participantCount == 0
+														|| (conferenceLayout.sourceComponent == gridComponent && !conference.callModel.videoEnabled && conferenceLayout.item.participantCount <= 1)
+					ColumnLayout {
+						anchors.fill: parent
+						BusyIndicator{
+							Layout.preferredHeight: 40
+							Layout.preferredWidth: 40
+							Layout.alignment: Qt.AlignCenter
+							running: parent.visible
+							color: IncallStyle.buzyColor
+						}
+						Text{
+							Layout.alignment: Qt.AlignCenter
+							
+							text: conferenceLayout.sourceComponent == gridComponent && !conference.callModel.videoEnabled
+							//: 'Waiting for another participant...' :  Waiting message for more participant.
+									? qsTr('incallWaitParticipantMessage')
+							//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
+									: qsTr('incallWaitMessage')
+							color: IncallStyle.buzyColor
+						}
 					}
 				}
 			}
@@ -438,12 +452,13 @@ Rectangle {
 				backgroundRadius: 90
 				colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating
-				visible: callModel && ( !callModel.isConference || callModel.videoEnabled)
+				visible: callModel && (!callModel.isConference || callModel.localVideoEnabled)
 				onClicked: if(callModel){
-							if( callModel.isConference)// Only deactivate camera in conference.
-								callModel.cameraEnabled = !callModel.cameraEnabled
-							else// In one-one, we deactivate all videos.
-								callModel.videoEnabled = !callModel.videoEnabled
+								if( callModel.isConference){// Only deactivate camera in conference.
+									callModel.cameraEnabled = !callModel.cameraEnabled
+								}else{// In one-one, we deactivate all videos.
+									callModel.videoEnabled = !callModel.videoEnabled
+								}
 							}
 			}
 			

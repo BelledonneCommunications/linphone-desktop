@@ -33,10 +33,13 @@ Item {
 	property bool d : callModel && callModel.cameraEnabled
 	property bool isReady: cameraLoader.item && cameraLoader.item.isReady
 	
+	property bool hadCall : false
+	onCallModelChanged: if(callModel) hadCall = true
+	
 	signal videoDefinitionChanged()
 	
 	onCurrentDeviceChanged: {if(container.isCameraFromDevice) resetActive()}
-	Component.onDestruction: isVideoEnabled=false
+	Component.onDestruction: if(!hadCall || (hadCall && callModel) ){isVideoEnabled=false}
 	function resetActive(){
 		resetTimer.resetActive()
 	}

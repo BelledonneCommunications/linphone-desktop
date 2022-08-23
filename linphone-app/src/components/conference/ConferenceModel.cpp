@@ -122,6 +122,13 @@ std::list<std::shared_ptr<linphone::Participant>> ConferenceModel::getParticipan
 		participantList.push_front(me);
 	return participantList;
 }
+
+void ConferenceModel::setIsReady(bool state){
+	if( mIsReady != state){
+		mIsReady = state;
+		emit isReadyChanged();
+	}
+}
 //-----------------------------------------------------------------------------------------------------------------------
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
@@ -169,6 +176,8 @@ void ConferenceModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
 }
 void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newState){
+	if(newState == linphone::Conference::State::Created)
+		setIsReady(true);
 	updateLocalParticipant();
 	emit conferenceStateChanged(newState);
 }

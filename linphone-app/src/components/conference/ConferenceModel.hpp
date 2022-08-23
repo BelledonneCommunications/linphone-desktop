@@ -41,6 +41,7 @@ public:
 	Q_PROPERTY(QDateTime startDate READ getStartDate CONSTANT)
 	Q_PROPERTY(ParticipantListModel* participants READ getParticipantListModel CONSTANT)
 	Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
+	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
 
 
 	static QSharedPointer<ConferenceModel> create(std::shared_ptr<linphone::Conference> chatRoom, QObject *parent = Q_NULLPTR);
@@ -56,6 +57,9 @@ public:
 	Q_INVOKABLE ParticipantModel* getLocalParticipant() const;
 	ParticipantListModel* getParticipantListModel() const;
 	std::list<std::shared_ptr<linphone::Participant>> getParticipantList() const;	// SDK exclude me. We want to get ALL participants.
+	
+	void setIsReady(bool state);
+	
 
 	virtual void onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	virtual void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
@@ -83,6 +87,7 @@ signals:
 	void participantDeviceStateChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDeviceState state);
 	void conferenceStateChanged(linphone::Conference::State newState);
 	void subjectChanged();
+	void isReadyChanged();
 
 private:
 	void connectTo(ConferenceListener * listener);
@@ -92,6 +97,7 @@ private:
 
 	QSharedPointer<ParticipantModel> mLocalParticipant;
 	QSharedPointer<ParticipantListModel> mParticipantListModel;
+	bool mIsReady = false;
 };
 Q_DECLARE_METATYPE(QSharedPointer<ConferenceModel>)
 

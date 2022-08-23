@@ -68,6 +68,8 @@ public:
 	
 	void isReady();
 	void isNotReady();
+public slots:
+	void onCallStateChanged();
 	
 signals:
 	void callChanged (CallModel *callModel);

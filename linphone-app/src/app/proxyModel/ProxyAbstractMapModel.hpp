@@ -32,7 +32,7 @@ public:
 	ProxyAbstractMapModel (QObject *parent = Q_NULLPTR) : ProxyAbstractObject(parent) {}
 
 	virtual ~ProxyAbstractMapModel(){
-		resetData();
+		clearData();
 	}
 	
 	virtual int rowCount (const QModelIndex &index = QModelIndex()) const override{
@@ -58,10 +58,8 @@ public:
 		return QVariant();
 	}
 	
-	virtual void resetData() override{
-		beginResetModel();
+	virtual void clearData() override{
 		mMappedList.clear();
-		endResetModel();
 	}
 	
 protected:

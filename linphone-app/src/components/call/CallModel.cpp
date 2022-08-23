@@ -237,7 +237,7 @@ QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 
 bool CallModel::isConference () const{
 // Check status to avoid crash when requesting a conference on an ended call.
-	return Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()).toLower().contains("conf-id") || (getStatus() != CallStatusEnded && mCall->getConference() != nullptr);
+	return mCall && (Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()).toLower().contains("conf-id") || (getStatus() != CallStatusEnded && mCall->getConference() != nullptr));
 }
 
 // -----------------------------------------------------------------------------
@@ -471,6 +471,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 			break;
 			
 		case linphone::Call::State::StreamsRunning: {
+			
 			if (!mWasConnected && CoreManager::getInstance()->getSettingsModel()->getAutomaticallyRecordCalls()) {
 				startRecording();
 				mWasConnected = true;
@@ -480,7 +481,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 			setCallId(QString::fromStdString(mCall->getCallLog()->getCallId()));
 			break;
 		}
-		case linphone::Call::State::Connected:
+		case linphone::Call::State::Connected: getConferenceSharedModel();
 		case linphone::Call::State::Referred:
 		case linphone::Call::State::Released:
 			mPausedByRemote = false;
@@ -749,8 +750,8 @@ void CallModel::setCameraEnabled (bool status){
 			return;
 
 		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);
-		params->setVideoDirection(status ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
 		params->enableVideo(true);
+		params->setVideoDirection(status ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::RecvOnly);
 		mCall->update(params);
 	}
 }
@@ -786,6 +787,14 @@ void CallModel::setPausedByUser (bool status) {
 bool CallModel::getRemoteVideoEnabled () const {
 	shared_ptr<const linphone::CallParams> params = mCall->getRemoteParams();
 	return params && params->videoEnabled();
+}
+
+bool CallModel::getLocalVideoEnabled () const {
+	if(mCall){
+		shared_ptr<const linphone::CallParams> params = mCall->getParams();
+		return params && params->videoEnabled();
+	}else
+		return true;
 }
 
 bool CallModel::getVideoEnabled () const {
@@ -979,7 +988,7 @@ std::shared_ptr<linphone::Address> CallModel::getRemoteAddress()const{
 }
 
 LinphoneEnums::ConferenceLayout CallModel::getConferenceVideoLayout() const{
-	return LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout());
+	return mCall ? LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout()) : LinphoneEnums::ConferenceLayoutGrid;
 }
 
 void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){

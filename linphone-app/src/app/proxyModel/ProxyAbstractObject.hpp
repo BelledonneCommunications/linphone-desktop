@@ -38,6 +38,7 @@ public:
 		return rowCount();
 	}
 	Q_INVOKABLE virtual bool remove(QObject *itemToRemove){return false;}
+	Q_INVOKABLE virtual void clearData(){}
 	Q_INVOKABLE virtual void resetData(){}
 	
 signals:

@@ -222,7 +222,10 @@ ParticipantDeviceModel * Camera::getParticipantDeviceModel() const{
 
 void Camera::setCallModel (CallModel *callModel) {
 	if (mCallModel != callModel) {
+		if( mCallModel)
+			disconnect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
 		mCallModel = callModel;
+		connect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
 		updateWindowIdLocation();
 		update();
 		
@@ -284,5 +287,12 @@ void Camera::deactivatePreview(){
 		if (--mPreviewCounter == 0)
 			core->enableVideoPreview(false);
 		mPreviewCounterMutex.unlock();
+	}
+}
+
+void Camera::onCallStateChanged(){
+	if( mCallModel->getStatus() == CallModel::CallStatusEnded){
+		resetWindowId();
+		mCallModel = nullptr;
 	}
 }

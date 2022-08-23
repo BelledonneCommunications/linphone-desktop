@@ -113,7 +113,7 @@ Rectangle{
 						, visible: true},
 						
 						{titleIndex: 1
-						, icon: (mainItem.callModel && mainItem.callModel.videoEnabled ?
+						, icon: (mainItem.callModel && mainItem.callModel.localVideoEnabled ?
 										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? IncallMenuStyle.settingsIcons.gridIcon : IncallMenuStyle.settingsIcons.activeSpeakerIcon)
 									: IncallMenuStyle.settingsIcons.audioOnlyIcon)
 						, nextPage:layoutMenu
@@ -236,21 +236,24 @@ Rectangle{
 								text: modelData.text
 								
 								// break bind. Radiobutton checked itself without taking care of custom binding. This workaound works as long as we don't really need the binding.
-								Component.onCompleted: checked = mainItem.callModel ? (mainItem.callModel.videoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
-															|| (!mainItem.callModel.videoEnabled && modelData.value == 2)
+								Component.onCompleted: checked = mainItem.callModel ? (mainItem.callModel.localVideoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
+															|| (!mainItem.callModel.localVideoEnabled && modelData.value == 2)
 															: false
 								Timer{
 									id: changingLayoutDelay
 									interval: 100
 									onTriggered: {if(modelData.value == 2) mainItem.callModel.videoEnabled = false
-												else mainItem.callModel.conferenceVideoLayout = modelData.value
+												else {
+													mainItem.callModel.conferenceVideoLayout = modelData.value
+													mainItem.callModel.videoEnabled = true
+												}
 												mainItem.enabled = true
 											}
 								}
 								onClicked:{
 								// Do changes only if we choose a different layout.
-											if(! ( mainItem.callModel ? (mainItem.callModel.videoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
-															|| (!mainItem.callModel.videoEnabled && modelData.value == 2)
+											if(! ( mainItem.callModel ? (mainItem.callModel.localVideoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
+															|| (!mainItem.callModel.localVideoEnabled && modelData.value == 2)
 															: false)){
 												mainItem.enabled = false
 												mainItem.layoutChanging(modelData.value)// Let time to clear cameras

@@ -89,11 +89,13 @@ Item {
 		
 		width: 16 * cellHeight / 9
 		model: mainItem.callModel.isConference 
-					? mainItem.participantDevices 
-					: mainItem.callModel.videoEnabled && !callModel.pausedByUser
+					? mainItem.participantDevices.showMe && mainItem.participantDevices.count <= 1 
+						? []
+						: mainItem.participantDevices
+					: mainItem.callModel.localVideoEnabled && !callModel.pausedByUser
 							? [{videoEnabled:true, isPreview:true}]
 							: []
-		onModelChanged: console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.videoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
+		onModelChanged: console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.localVideoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
 		spacing: 15
 		verticalLayoutDirection: ItemView.BottomToTop
 		delegate:Item{
