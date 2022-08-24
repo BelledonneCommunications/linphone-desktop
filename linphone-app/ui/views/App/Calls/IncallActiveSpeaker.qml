@@ -76,11 +76,14 @@ Item {
 		anchors.rightMargin: 30
 		anchors.topMargin: 30
 		anchors.bottomMargin: 30
+		
 		height: miniViews.cellHeight
 		width: 16 * height / 9
+		
+		visible: mainItem.showMe && (!callModel.isConference  || allDevices.count >= 1)
 		Sticker{
 			anchors.fill: parent
-			visible: mainItem.showMe && allDevices.count >= 1
+			
 			anchors.margins: 3
 			deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.localVideoEnabled
 			currentDevice: allDevices.me
