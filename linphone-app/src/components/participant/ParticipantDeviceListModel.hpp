@@ -69,6 +69,7 @@ signals:
 	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void participantSpeaking(ParticipantDeviceModel *speakingDevice);
 	void conferenceCreated();
+	void meChanged();
 	
 private:
 	CallModel * mCallModel = nullptr;

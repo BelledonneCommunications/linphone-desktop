@@ -25,25 +25,18 @@ Item {
 	property bool isRightReducedLayout: false
 	property bool isLeftReducedLayout: false
 	property bool cameraEnabled: true
-	property alias showMe : allDevices.showMe
+	property bool showMe : !(callModel && callModel.pausedByUser)
 	property int participantCount: callModel.isConference ? allDevices.count : 2
 	
 	onParticipantCountChanged: {console.log("Conf count: " +participantCount);allDevices.updateCurrentDevice()}
-
+	
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
 			callModel: mainItem.callModel
-			showMe: true
-			function updateShowMe(){
-				showMe = cameraEnabled && !isPausedByUser
-			}
+			showMe: false
+			
 			onParticipantSpeaking: updateCurrentDevice()
-			// Do it on changed to ignore hard bindings (that can be override)
-			property bool cameraEnabled: callModel && callModel.cameraEnabled
-			onCameraEnabledChanged:updateShowMe() 
-			property bool isPausedByUser: callModel && callModel.pausedByUser
-			onIsPausedByUserChanged: updateShowMe()
-			//-----
+			
 			
 			onConferenceCreated: cameraView.resetCamera()
 			function updateCurrentDevice(){
@@ -77,27 +70,63 @@ Item {
 		avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
 		avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 	}
+	Item{// Need an item to not override Sticker internal states. States are needed for changing anchors.
+		id: preview
+		anchors.right: parent.right
+		anchors.rightMargin: 30
+		anchors.topMargin: 30
+		anchors.bottomMargin: 30
+		height: miniViews.cellHeight
+		width: 16 * height / 9
+		Sticker{
+			anchors.fill: parent
+			visible: mainItem.showMe && allDevices.count >= 1
+			anchors.margins: 3
+			deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.localVideoEnabled
+			currentDevice: allDevices.me
+			isPreview: true
+			callModel: mainItem.callModel
+			isCameraFromDevice:  true
+			showCloseButton: false
+			showCustomButton:  false
+			showAvatarBorder: true
+			avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+			avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+		}
+		state: allDevices.count < 2 ? 'bottom' : 'top'
+			 states: [State {
+				 name: "bottom"
+		
+				 AnchorChanges {
+					 target: preview
+					 anchors.top: undefined
+					 anchors.bottom: mainItem.bottom
+				 }
+			 },
+			 State {
+				 name: "top"
+		
+				 AnchorChanges {
+					 target: preview
+					 anchors.top: mainItem.top
+					 anchors.bottom: undefined
+				 }
+			 }]
+	}
 	ScrollableListView{
 		id: miniViews
 		anchors.right: parent.right
-		anchors.top: parent.top
+		anchors.top: preview.bottom
 		anchors.bottom: parent.bottom
 		anchors.rightMargin: 30
-		anchors.topMargin: 30
+		anchors.topMargin: 15
 		anchors.bottomMargin: 30
 		property int cellHeight: 150
 		
 		width: 16 * cellHeight / 9
-		model: mainItem.callModel.isConference 
-					? mainItem.participantDevices.showMe && mainItem.participantDevices.count <= 1 
-						? []
-						: mainItem.participantDevices
-					: mainItem.callModel.localVideoEnabled && !callModel.pausedByUser
-							? [{videoEnabled:true, isPreview:true}]
-							: []
+		model: mainItem.callModel.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
 		onModelChanged: console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.localVideoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
 		spacing: 15
-		verticalLayoutDirection: ItemView.BottomToTop
 		delegate:Item{
 				height: miniViews.cellHeight
 				width: miniViews.width
@@ -116,7 +145,6 @@ Item {
 					showAvatarBorder: true
 					avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
 					avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
-					//onCloseRequested: mainItem.showMe = false
 				}
 			}
 	}

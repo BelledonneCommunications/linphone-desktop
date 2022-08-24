@@ -41,11 +41,13 @@ class ParticipantDeviceProxyModel : public SortFilterProxyModel {
 public:
 	Q_PROPERTY(CallModel * callModel READ getCallModel WRITE setCallModel NOTIFY callModelChanged)
 	Q_PROPERTY(bool showMe READ isShowMe WRITE setShowMe NOTIFY showMeChanged)
+	Q_PROPERTY(ParticipantDeviceModel * me READ getMe NOTIFY meChanged)
 	
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
 	
 	Q_INVOKABLE ParticipantDeviceModel* getAt(int row);
 	Q_INVOKABLE ParticipantDeviceModel* getLastActiveSpeaking();
+	ParticipantDeviceModel * getMe() const;
 	CallModel * getCallModel() const;
 	bool isShowMe() const;
 	
@@ -61,6 +63,7 @@ public slots:
 signals:
 	void callModelChanged();
 	void showMeChanged();
+	void meChanged();
 	void participantSpeaking(ParticipantDeviceModel * speakingDevice);
 	void conferenceCreated();
 	

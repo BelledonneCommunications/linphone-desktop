@@ -296,7 +296,7 @@ Rectangle {
 																&& (!conference.conferenceModel
 																	|| (conference.conferenceModel && !conference.conferenceModel.isReady))
 														)
-														|| !conferenceLayout.item || conferenceLayout.item.participantCount == 0
+														|| !conferenceLayout.item 
 														|| (conferenceLayout.sourceComponent == gridComponent && !conference.callModel.videoEnabled && conferenceLayout.item.participantCount <= 1)
 					ColumnLayout {
 						anchors.fill: parent
