@@ -34,6 +34,7 @@ Rectangle {
 			: DialogStyle.buttons.rightMargin
 
   default property alias _content: content.data
+  property alias foregroundItem: foregroundItemData.data
 
   readonly property bool contentIsEmpty: {
     return _content == null || !_content.length
@@ -110,5 +111,9 @@ Rectangle {
       spacing: DialogStyle.buttons.spacing
 	  visible: children.length>0
     }
+  }
+  Item{
+	id: foregroundItemData
+	anchors.fill: parent
   }
 }

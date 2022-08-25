@@ -1938,6 +1938,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Send invite via Email&apos; : Label for checkbox for sending invitations with mailer.</extracomment>
         <translation>Send invite via Email</translation>
     </message>
+    <message>
+        <source>busyOperations</source>
+        <extracomment>&apos;Operations in progress, please wait&apos; : Waiting message till the end of operations when creating a conference.</extracomment>
+        <translation>Operations in progress, please wait</translation>
+    </message>
 </context>
 <context>
     <name>Notice</name>

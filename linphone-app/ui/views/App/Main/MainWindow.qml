@@ -241,7 +241,11 @@ ApplicationWindow {
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
-													   ,{})
+													   ,{}, function (status) {
+														if( status){
+															setView('Conferences')
+														}
+													   })
 						}
 						TooltipArea{
 							visible: !SettingsModel.videoConferenceEnabled

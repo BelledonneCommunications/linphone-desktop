@@ -21,24 +21,19 @@ DialogPlus {
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
 	property bool forceSchedule : false
-	property int creationState: 0
-	Timer{
-		id: closeDelay
-		interval: 2000
-		onTriggered: conferenceManager.exit(1)
-	}
+	property int creationState: 0// -1=error, 0=Idle, 1=processing, 2=processed
 	Connections{
 		target: conferenceInfoModel
 		onConferenceCreated: {
 			if( conferenceInfoModel.inviteMode == 0 ) {
-				closeDelay.start()
 				conferenceManager.creationState = 2
+				conferenceManager.exit(1)
 			}
 		}
 		onConferenceCreationFailed:{ conferenceManager.creationState = -1 }
 		onInvitationsSent: {
-						closeDelay.start()
 						conferenceManager.creationState = 2
+						conferenceManager.exit(1)
 					}
 	}
 	
@@ -167,13 +162,10 @@ DialogPlus {
 		}
 		, Icon{
 			id: creationStatus
-			height: 15
-			width: 15
+			height: 10
+			width: 10
 			visible: icon != ''
-			icon: conferenceManager.creationState==2	? 'led_green' 
-														: conferenceManager.creationState==-1	? 'led_red'
-																								: conferenceManager.creationState==1	? 'led_orange' 
-																																		: ''
+			icon:conferenceManager.creationState==-1 ? 'led_red' : ''
 		}
 	]
 	
@@ -598,6 +590,37 @@ DialogPlus {
 //----------------------------------------------------
 //			STACKVIEWS
 //----------------------------------------------------
+		}
+	}
+	foregroundItem:	Item{
+		id: busyPanel
+		anchors.fill: parent
+		visible: conferenceManager.creationState == 1
+		MouseArea{// Grabber
+			anchors.fill: parent
+			cursorShape: Qt.ArrowCursor
+		}
+		Rectangle{
+			anchors.fill: parent
+			opacity: 0.6
+			color: 'white'
+		}
+		ColumnLayout{
+			anchors.centerIn: parent
+			spacing: 10
+			BusyIndicator{
+				Layout.preferredHeight: 20
+				Layout.preferredWidth: 20
+				Layout.alignment: Qt.AlignCenter
+				color: NewConferenceStyle.busy.color
+			}
+			Text{
+				Layout.fillWidth: true
+				color: NewConferenceStyle.busy.color
+				//: 'Operations in progress, please wait' : Waiting message till the end of operations when creating a conference.
+				text: qsTr('busyOperations')
+				font.pointSize: NewConferenceStyle.busy.pointSize
+			}
 		}
 	}
 }

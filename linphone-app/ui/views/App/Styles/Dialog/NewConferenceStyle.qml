@@ -17,6 +17,11 @@ QtObject {
 	property color addressesAdminColor: ColorsList.add(sectionName+'_addresses_admin', 'g').color
 	property color requiredColor: ColorsList.add(sectionName+'_required_text', 'g').color
 	
+	property QtObject busy: QtObject{
+		property color color: ColorsList.add(sectionName+'_busy', 'i').color
+		property real pointSize: Units.dp * 10
+	}
+	
 	property QtObject titles: QtObject{
 		property color textColor: ColorsList.add(sectionName+'_schedule_titles', 'g').color
 		property int weight: Font.DemiBold
