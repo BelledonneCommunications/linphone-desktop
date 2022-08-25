@@ -305,6 +305,7 @@ private:
 
 	bool mIsInConference = false;
 	
+	bool mEndByUser = false;
 	bool mPausedByRemote = false;
 	bool mPausedByUser = false;
 	bool mRecording = false;

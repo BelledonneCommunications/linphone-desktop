@@ -62,10 +62,13 @@ Rectangle {
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem.callModel
 						? mainItem.isEnding
-							? "Ending call"
+						//: "Ending call" : status of the call in waiting room when the call end.
+							? qsTr("endCallStatus")
 							: mainItem.callModel.isOutgoing 
-								? "Outgoing call"
-								: "Incoming call"
+						//: "Outgoing call" : status of the call in waiting room when user is calling.
+								? qsTr("outgoingCallStatus")
+						//: "Incoming call" : status of the call in waiting room when user receive a call.
+								: qsTr("incomingCallStatus")
 						: ''
 				color: WaitingRoomStyle.title.color
 				font.pointSize:  WaitingRoomStyle.title.pointSize
@@ -80,7 +83,7 @@ Rectangle {
 				font.pointSize: WaitingRoomStyle.elapsedTime.pointSize
 				horizontalAlignment: Text.AlignHCenter
 				width: parent.width
-				visible: mainItem.callModel && mainItem.isEnding
+				visible: mainItem.callModel && !mainItem.isEnding
 				Timer {
 					interval: 1000
 					repeat: true

@@ -97,8 +97,8 @@ function getContent (call, conferenceInfoModel) {
 			console.log("incall")
 			return incall
 		}
-		if (status === CallModel.CallStatusOutgoing || status === CallModel.CallStatusEnded) {
-			console.log("Is conference ? "+call.isConference)
+		if (status === CallModel.CallStatusOutgoing || (status === CallModel.CallStatusEnded && call.callError != '' )) {
+			console.log("waitingRoom. Is conference ? "+call.isConference)
 			return waitingRoom
 		}
 		

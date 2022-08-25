@@ -377,6 +377,10 @@
         <source>callStatsSentFramerate</source>
         <translation>Sent framerate</translation>
     </message>
+    <message>
+        <source>callErrorHangUp</source>
+        <translation>Remote party hanged up the call.</translation>
+    </message>
 </context>
 <context>
     <name>CallSipAddress</name>
@@ -3520,6 +3524,21 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
         <translation>Start</translation>
+    </message>
+    <message>
+        <source>endCallStatus</source>
+        <extracomment>&quot;Ending call&quot; : status of the call in waiting room when the call end.</extracomment>
+        <translation>Ending call</translation>
+    </message>
+    <message>
+        <source>outgoingCallStatus</source>
+        <extracomment>&quot;Outgoing call&quot; : status of the call in waiting room when user is calling.</extracomment>
+        <translation>Outgoing call</translation>
+    </message>
+    <message>
+        <source>incomingCallStatus</source>
+        <extracomment>&quot;Incoming call&quot; : status of the call in waiting room when user receive a call.</extracomment>
+        <translation>Incoming call</translation>
     </message>
 </context>
 <context>

@@ -340,6 +340,7 @@ void CallModel::acceptWithVideo () {
 }
 
 void CallModel::terminate () {
+	mEndByUser = true;
 	CoreManager *core = CoreManager::getInstance();
 	core->lockVideoRender();
 	if(mCall)
@@ -654,6 +655,10 @@ void CallModel::setCallErrorFromReason (linphone::Reason reason) {
 			break;
 		case linphone::Reason::NotAcceptable:
 			mCallError = tr("callErrorNotAcceptable");
+			break;
+		case linphone::Reason::None:
+			if(!mEndByUser)
+				mCallError = tr("callErrorHangUp");
 			break;
 		default:
 			break;
