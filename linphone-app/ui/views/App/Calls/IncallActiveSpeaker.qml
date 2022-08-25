@@ -74,8 +74,7 @@ Item {
 		id: preview
 		anchors.right: parent.right
 		anchors.rightMargin: 30
-		anchors.topMargin: 30
-		anchors.bottomMargin: 30
+		anchors.bottomMargin: 15
 		
 		height: miniViews.cellHeight
 		width: 16 * height / 9
@@ -96,7 +95,7 @@ Item {
 			avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
 			avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 		}
-		state: allDevices.count < 2 ? 'bottom' : 'top'
+		state: 'bottom'
 			 states: [State {
 				 name: "bottom"
 		
@@ -119,17 +118,18 @@ Item {
 	ScrollableListView{
 		id: miniViews
 		anchors.right: parent.right
-		anchors.top: preview.bottom
-		anchors.bottom: parent.bottom
+		anchors.top: parent.top
+		anchors.bottom: preview.top
 		anchors.rightMargin: 30
 		anchors.topMargin: 15
-		anchors.bottomMargin: 30
+		anchors.bottomMargin: 15
 		property int cellHeight: 150
 		
 		width: 16 * cellHeight / 9
 		model: mainItem.callModel.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
 		onModelChanged: console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.localVideoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
 		spacing: 15
+		verticalLayoutDirection: ListView.BottomToTop 
 		delegate:Item{
 				height: miniViews.cellHeight
 				width: miniViews.width
