@@ -165,7 +165,10 @@ QSharedPointer<ParticipantDeviceModel> ParticipantDeviceListModel::getMe(int * i
 
 ParticipantDeviceModel* ParticipantDeviceListModel::getLastActiveSpeaking() const{
 	if( mActiveSpeakers.size() == 0){
-		return getMe().get();
+		if( mList.size() == 0)
+			return getMe().get();
+		else
+			return mList.back().objectCast<ParticipantDeviceModel>().get();
 	}else
 		return mActiveSpeakers.first();
 }
