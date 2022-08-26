@@ -34,7 +34,7 @@ function initForm (account) {
 
   gAccount = account
     ? account.account
-    : AccountSettingsModel.createAccount()
+    : AccountSettingsModel.createAccount('create-app-sip-account.rc')
 
   var config = AccountSettingsModel.getAccountDescription(gAccount)
 

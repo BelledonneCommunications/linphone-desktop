@@ -126,7 +126,7 @@ function handleAuthenticationRequested (authInfo, realm, sipAddress, userId) {
   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/AuthenticationRequest.qml'), {
     authInfo: authInfo,
     realm: realm,
-    sipAddress: sipAddress,
+    sipAddress: 'sip:'+sipAddress,
     userId: userId,
     virtualWindowHash:Qt.md5('Dialogs/AuthenticationRequest.qml'+realm+sipAddress+userId)
   })
