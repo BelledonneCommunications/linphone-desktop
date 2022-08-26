@@ -14,6 +14,20 @@ QtObject {
 	property QtObject filter: QtObject {
 		property string icon: 'filter_custom'
 		property color color: ColorsList.add(sectionName+'_filter_icon', 'c').color
+		
+		property QtObject buttons: QtObject{
+			property int buttonsSpacing: 8
+			
+			property QtObject button: QtObject {
+				property QtObject color: QtObject {
+					property color hovered: ColorsList.add(sectionName+'_button_h', 'n').color
+					property color normal: ColorsList.add(sectionName+'_button_n', 'x').color
+					property color pressed: ColorsList.add(sectionName+'_button_p', 'g').color
+					property color selected: ColorsList.add(sectionName+'_button_c', 'i').color
+				}
+			}
+		}
+
 	}
 	property QtObject bar: QtObject {
 		property color backgroundColor: ColorsList.add(sectionName+'_bar_bg', 'e').color

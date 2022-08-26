@@ -67,6 +67,7 @@ Item{
 					]
 					capitalization: Font.AllUppercase
 					selectedButton: mainItem.filterType
+					style: ConferencesStyle.filter.buttons
 					onClicked: {
 						if(button <= 1)
 							mainItem.filterType = (button === 0 ? ConferenceInfoProxyModel.Ended :  ConferenceInfoProxyModel.Scheduled);
@@ -180,8 +181,10 @@ Item{
 																																							  : 0
 							onExpandToggle: isExpanded = !isExpanded
 							//isExpanded: calendarGrid.expanded
-							//: 'Conference URL has been copied' : Message text in a banner to warn the user that the µURL have been copied to the clipboard.
+							//: 'Conference URL has been copied' : Message text in a banner to warn the user that the URL have been copied to the clipboard.
 							onConferenceUriCopied: messageBanner.noticeBannerText = qsTr('conferencesCopiedURL')
+							//: 'Conference has been deleted' : Message text in a banner to warn the user that the conference has been deleted.
+							onConferenceRemoved: messageBanner.noticeBannerText = qsTr('conferencesDeleted')
 						}
 					}
 				}

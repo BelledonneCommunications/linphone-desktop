@@ -38,7 +38,9 @@
 // =============================================================================
 
 ConferenceInfoListModel::ConferenceInfoListModel (QObject *parent) : ProxyListModel(parent) {
-	auto conferenceInfos = CoreManager::getInstance()->getCore()->getConferenceInformationList();
+	auto coreManager = CoreManager::getInstance();
+	connect(coreManager->getHandlers().get(), &CoreHandlers::conferenceInfoReceived, this, &ConferenceInfoListModel::onConferenceInfoReceived);
+	auto conferenceInfos = coreManager->getCore()->getConferenceInformationList();
 	QList<QSharedPointer<ConferenceInfoModel> > items;
 	for(auto conferenceInfo : conferenceInfos){
 		auto item = build(conferenceInfo);
@@ -87,4 +89,30 @@ QVariant ConferenceInfoListModel::data (const QModelIndex &index, int role ) con
 		else if (role == Qt::DisplayRole +1 )
 			return QVariant::fromValue(mList[row].objectCast<ConferenceInfoModel>()->getDateTimeUtc().date());
 		return QVariant();
+}
+	
+QSharedPointer<ConferenceInfoModel> ConferenceInfoListModel::get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo) const{
+	auto uri = conferenceInfo->getUri();
+	for(auto item : mList){
+		auto model = item.objectCast<ConferenceInfoModel>();
+		auto dbConferenceInfo = model->getConferenceInfo();
+		if(dbConferenceInfo == conferenceInfo
+		|| dbConferenceInfo->getUri()->weakEqual(uri))
+			return model;
 	}
+	return nullptr;
+}
+
+void ConferenceInfoListModel::onConferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
+	auto realConferenceInfo = ConferenceInfoModel::findConferenceInfo(conferenceInfo);
+	if( realConferenceInfo){
+		auto model = get(realConferenceInfo);
+		if(model)
+			model->setConferenceInfo(realConferenceInfo);
+		else
+			add(realConferenceInfo);
+	}else
+		qWarning() << "No ConferenceInfo have beend found for " << conferenceInfo->getUri()->asString().c_str();
+}
+	
+	

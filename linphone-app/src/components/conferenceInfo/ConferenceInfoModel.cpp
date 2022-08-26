@@ -93,6 +93,16 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 		cleanedClonedAddress->clean();
 		mConferenceInfo->setOrganizer(cleanedClonedAddress);
 	}
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::timeZoneModelChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::dateTimeChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::durationChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::organizerChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::subjectChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::descriptionChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::participantsChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::uriChanged);// Useless but just in case.
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::isScheduledChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
 }
 
 // Callable from C++
@@ -262,6 +272,12 @@ void ConferenceInfoModel::setInviteMode(const int& mode){
 	}
 }
 
+void ConferenceInfoModel::setConferenceInfo(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo){
+	mConferenceInfo = conferenceInfo;
+	mIsScheduled = (mConferenceInfo->getDateTime() != 0 || mConferenceInfo->getDuration() != 0);
+	emit conferenceInfoChanged();
+}
+
 //-------------------------------------------------------------------------------------------------
 
 void ConferenceInfoModel::createConference(const int& securityLevel) {
@@ -284,7 +300,7 @@ void ConferenceInfoModel::createConference(const int& securityLevel) {
 void ConferenceInfoModel::deleteConferenceInfo(){
 	if(mConferenceInfo) {
 		CoreManager::getInstance()->getCore()->deleteConferenceInformation(mConferenceInfo);
-		emit removed();
+		emit removed(true);
 	}
 }
 

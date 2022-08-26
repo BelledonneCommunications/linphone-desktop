@@ -43,6 +43,9 @@ public:
 	
 	QHash<int, QByteArray> roleNames () const override;
 	virtual QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	QSharedPointer<ConferenceInfoModel> get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo) const;
+	
+	void onConferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	
 signals:
 	void filterTypeChanged(int filterType);

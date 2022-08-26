@@ -817,8 +817,13 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>conferencesCopiedURL</source>
-        <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the µURL have been copied to the clipboard.</extracomment>
+        <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
         <translation>Conference URL has been copied</translation>
+    </message>
+    <message>
+        <source>conferencesDeleted</source>
+        <extracomment>&apos;Conference has been deleted&apos; : Message text in a banner to warn the user that the conference has been deleted.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

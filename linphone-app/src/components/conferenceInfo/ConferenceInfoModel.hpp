@@ -83,6 +83,7 @@ public:
 	
 	Q_INVOKABLE void setParticipants(ParticipantListModel * participants);
 	Q_INVOKABLE void setTimeZoneModel(TimeZoneModel * model);
+	void setConferenceInfo(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	
 // Tools
 	Q_INVOKABLE void createConference(const int& securityLevel);
@@ -108,8 +109,9 @@ signals:
 	
 	void conferenceCreated();
 	void conferenceCreationFailed();
+	void conferenceInfoChanged();
 	void invitationsSent();
-	void removed();
+	void removed(bool byUser);
 	
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;
@@ -118,6 +120,7 @@ private:
 	
 	bool mIsScheduled = true;
 	int mInviteMode = 0;
+	bool mRemoveRequested = false;// true if user has request its deletion from DB
 };
 
 Q_DECLARE_METATYPE(QSharedPointer<ConferenceInfoModel>)

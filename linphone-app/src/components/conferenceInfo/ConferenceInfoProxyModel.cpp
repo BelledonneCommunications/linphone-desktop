@@ -37,7 +37,6 @@ using namespace std;
 ConferenceInfoProxyModel::ConferenceInfoProxyModel (QObject *parent) : SortFilterAbstractProxyModel<ConferenceInfoListModel>(new ConferenceInfoListModel(parent), parent) {
 	connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::primarySipAddressChanged, this, &ConferenceInfoProxyModel::update);
 	//connect(this, &ConferenceInfoProxyModel::filterTypeChanged, qobject_cast<ConferenceInfoListModel*>(sourceModel()), &ConferenceInfoListModel);
-	connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::conferenceInfoReceived, this, &ConferenceInfoProxyModel::onConferenceInfoReceived);
 	setFilterType((int)Scheduled);
 }
 
@@ -75,11 +74,3 @@ bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIn
 	return a->getDateTimeUtc() < b->getDateTimeUtc();
 }
 
-void ConferenceInfoProxyModel::onConferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
-	auto realConferenceInfo = ConferenceInfoModel::findConferenceInfo(conferenceInfo);
-	if( realConferenceInfo ){
-		auto model =  qobject_cast<ConferenceInfoListModel*>(sourceModel());
-		model->add(realConferenceInfo);
-	}else
-		qWarning() << "No conferenceInfo have beend found for " << conferenceInfo->getUri()->asString().c_str();
-}

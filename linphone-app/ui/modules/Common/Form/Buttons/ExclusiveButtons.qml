@@ -12,6 +12,7 @@ Row {
 	property int selectedButton: 0
 	property var texts
 	property int capitalization
+	property QtObject style: ExclusiveButtonsStyle
 	
 	// ---------------------------------------------------------------------------
 	
@@ -46,12 +47,12 @@ Row {
 			capitalization: item.capitalization
 			anchors.verticalCenter: parent.verticalCenter
 			backgroundColor: selectedButton === index
-							 ? ExclusiveButtonsStyle.button.color.selected
+							 ? item.style.button.color.selected
 							 : (down
-								? ExclusiveButtonsStyle.button.color.pressed
+								? item.style.button.color.pressed
 								: (hovered
-								   ? ExclusiveButtonsStyle.button.color.hovered
-								   : ExclusiveButtonsStyle.button.color.normal
+								   ? item.style.button.color.hovered
+								   : item.style.button.color.normal
 								   )
 								)
 			text: modelData

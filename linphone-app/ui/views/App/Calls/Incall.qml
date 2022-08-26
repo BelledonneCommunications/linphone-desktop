@@ -27,6 +27,7 @@ Rectangle {
 	property bool cameraIsReady : false
 	property bool previewIsReady : false
 	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
+	property bool isAudioOnly: callModel && callModel.isConference && conferenceLayout.sourceComponent == gridComponent && !callModel.videoEnabled
 	property var _fullscreen: null
 	on_FullscreenChanged: if( !_fullscreen) isFullScreen = false
 
@@ -452,7 +453,7 @@ Rectangle {
 				backgroundRadius: 90
 				colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating
-				visible: callModel && (!callModel.isConference || callModel.localVideoEnabled)
+				enabled: !conference.isAudioOnly
 				onClicked: if(callModel){
 								if( callModel.isConference){// Only deactivate camera in conference.
 									callModel.cameraEnabled = !callModel.cameraEnabled

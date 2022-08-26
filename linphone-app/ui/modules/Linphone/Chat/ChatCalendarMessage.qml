@@ -34,6 +34,7 @@ Loader{
 	
 	signal expandToggle()
 	signal conferenceUriCopied()
+	signal conferenceRemoved()
 	
 	width: parent.width
 	height: parent.height
@@ -351,6 +352,10 @@ Loader{
 				}
 			}
 		}
+	}
+	Connections{
+		target: conferenceInfoModel
+		onRemoved: if(byUser) mainItem.conferenceRemoved()
 	}
 }
 
