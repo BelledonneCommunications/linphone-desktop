@@ -12,7 +12,6 @@ ColumnLayout{
 	property alias delegateModel: grid.model
 	property alias cellHeight: grid.cellHeight
 	property alias cellWidth: grid.cellWidth
-	property bool squaredDisplay: false
 	
 	function appendItem(item){
 		mainLayout.delegateModel.model.append(item)
@@ -67,7 +66,8 @@ ColumnLayout{
 			bufferModels.remove(0,1)
 		}
 	}
-	
+	onWidthChanged: grid.updateLayout()
+	onHeightChanged: grid.updateLayout()
 	GridView{
 		id: grid
 		property int margin: 10
@@ -75,23 +75,41 @@ ColumnLayout{
 		property int columns: 1
 		property int rows: 1
 		
+		function getBestLayout(itemCount){
+			var availableW = mainLayout.width - grid.margin
+			var availableH = mainLayout.height - grid.margin
+			var bestSize = 0
+			var bestC = 1, bestR = 1
+			for(var R = 1 ; R <= itemCount ; ++R){
+				for(var C = itemCount ; C >= 1 ; --C){
+					if( R * C >= itemCount){// This is a good layout candidate
+						var estimatedSize = Math.min(availableW / C, availableH / R)
+						if(estimatedSize > bestSize){
+							bestSize = estimatedSize
+							bestC = C
+							bestR = R
+						}
+					}
+				}
+			}
+			return [bestR, bestC]
+		}
+		
 		function updateLayout(){
-			columns = getColumnCount(itemCount)
-			rows = getRowCount(itemCount)
-		}
-		function getColumnCount(itemCount){
-			return itemCount > 0 ? Math.sqrt(itemCount-1) + 1  : 1
-		}
-		function getRowCount(itemCount){
-			return columns > 1 ? (itemCount-1) / columns + 1 : 1
+			var bestLayout = getBestLayout(itemCount)
+			if( rows != bestLayout[0])
+				rows = bestLayout[0]
+			if( columns != bestLayout[1])
+				columns = bestLayout[1]
 		}
 		property int computedWidth: (mainLayout.width - grid.margin ) / columns
 		property int computedHeight: (mainLayout.height - grid.margin ) / rows 
-		cellWidth: ( squaredDisplay ? Math.min(computedWidth, computedHeight) : computedWidth)
-		cellHeight: ( squaredDisplay ? Math.min(computedWidth, computedHeight) : computedHeight) 
+		cellWidth: Math.min(computedWidth, computedHeight)
+		cellHeight: Math.min(computedWidth, computedHeight)
 		
 		function isLayoutWillChanged(){
-			return columns !== getColumnCount(itemCount+1) || rows !== getRowCount(itemCount+1)
+			var bestLayout = getBestLayout(itemCount+1)
+			return rows !== bestLayout[0] || columns !== bestLayout[1]
 		}
 		
 		Layout.preferredWidth: cellWidth * columns

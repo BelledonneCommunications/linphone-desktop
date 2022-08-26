@@ -25,8 +25,6 @@ Mosaic {
 	property bool cameraEnabled: true
 	property int participantCount: gridModel.count
 	
-	squaredDisplay: true
-	
 	// On grid view, we limit the quality if there are enough participants
 	onParticipantCountChanged: participantCount > ConstantsCpp.maxMosaicParticipants ? SettingsModel.setLimitedMosaicQuality() : SettingsModel.setHighMosaicQuality()
 	function clearAll(layoutMode){
