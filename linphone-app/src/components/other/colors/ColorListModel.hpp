@@ -138,7 +138,9 @@ class ColorListModel : public ProxyListModel {
 		
 		ADD_COLOR("progress_bg", "black", "Background of round progress bar")
 		ADD_COLOR("progress_remaining_fg", "white", "Remaining progression color")
-				
+		
+		ADD_COLOR("timeline_bg_1", "#EFF0F2", "Timeline background color 1")
+		ADD_COLOR("timeline_bg_2", "#FFFFFF", "Timeline background color 2")
 
 // Keywords: 'mKeywordsMap'
 //		s=standard, ma=main, l=list, sc=screen, me=menu

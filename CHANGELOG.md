@@ -16,11 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Animated file in chats/notifications.
 - Round progress bar for transferring a file and allow to cancel it.
 - hide all accounts if their custom parameter 'hidden' is set to 1.
+- Right-click on a timeline will show a slide menu to do actions on the timeline.
 
 ### Fixed
 - Crash on exit.
 - Crash when using no account.
 - Memory stability.
+- Clean 3 chat behaviors : Leave chat room (in group info section of conversation menu), erase history (in conversation's menu), delete chat room (in slide menu, or if chat room is empty and left)
 
 ## 4.4.8 - 2022-07-04
 

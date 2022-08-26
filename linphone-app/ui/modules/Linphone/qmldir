@@ -58,6 +58,7 @@ Sticker                       1.0 Sticker/Sticker.qml
 TelKeypad                     1.0 TelKeypad/TelKeypad.qml
 
 Timeline                      1.0 Timeline/Timeline.qml
+TimelineItem                  1.0 Timeline/TimelineItem.qml
 
 ParticipantsListView          1.0 View/ParticipantsListView.qml
 ParticipantsView              1.0 View/ParticipantsView.qml

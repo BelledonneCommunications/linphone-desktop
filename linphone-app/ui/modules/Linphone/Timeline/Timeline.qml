@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.5
 
 import Common 1.0
+import Common.Styles 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 import ColorsList 1.0
@@ -10,6 +11,7 @@ import ColorsList 1.0
 import UtilsCpp 1.0
 
 import 'Timeline.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -361,66 +363,12 @@ Rectangle {
 			Layout.fillWidth: true
 			currentIndex: -1
 			
-			delegate: Item {
-				height: TimelineStyle.contact.height
-				width: parent ? parent.width : 0
-				
-				Contact {
-					id: contactView
-					property bool isSelected: $modelData != undefined && $modelData.selected	//view.currentIndex === index
-					
-					anchors.fill: parent
-					color: isSelected
-						   ? TimelineStyle.contact.backgroundColor.selected
-						   : (
-								 index % 2 == 0
-								 ? TimelineStyle.contact.backgroundColor.a
-								 : TimelineStyle.contact.backgroundColor.b
-								 )
-					displayUnreadMessageCount: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
-					entry: $modelData.chatRoomModel
-					sipAddressColor: isSelected
-									 ? TimelineStyle.contact.sipAddress.color.selected
-									 : TimelineStyle.contact.sipAddress.color.normal
-					usernameColor: isSelected
-								   ? TimelineStyle.contact.username.color.selected
-								   : TimelineStyle.contact.username.color.normal
-					TooltipArea {	
-						id: contactTooltip						
-						text: UtilsCpp.toDateTimeString($modelData.chatRoomModel.lastUpdateTime)
-						isClickable: true
-					}
-					Icon{
-						icon: TimelineStyle.ephemeralTimer.icon
-						iconSize: TimelineStyle.ephemeralTimer.iconSize
-						overwriteColor:  $modelData && $modelData.selected ? TimelineStyle.ephemeralTimer.selectedTimerColor : TimelineStyle.ephemeralTimer.timerColor
-						anchors.right:parent.right
-						anchors.bottom:parent.bottom
-						anchors.bottomMargin: 7
-						anchors.rightMargin: 7
-						visible: $modelData.chatRoomModel.ephemeralEnabled
-					}
-				}
-				
-				MouseArea {
-					anchors.fill: parent
-					acceptedButtons: Qt.LeftButton | Qt.RightButton
-					propagateComposedEvents: true
-					preventStealing: false
-					onClicked: {
-						if(mouse.button == Qt.LeftButton){
-							timeline.entryClicked($modelData)
-							if(view.updateSelectionModels)
-								$modelData.selected = true
-							view.currentIndex = index;
-						}else{
-							contactTooltip.show()
-						}
-					}
-				}
+			delegate: TimelineItem{
+				timelineModel: $modelData
+				modelIndex: index
 				
 				Connections{
-					target:$modelData
+					target: $modelData
 					onSelectedChanged:{
 						gc()
 						if(view.updateSelectionModels && selected) {

@@ -258,7 +258,8 @@ void ChatRoomModel::removeAllEntries () {
 		if(haveLogs)
 			emit CoreManager::getInstance()->callLogsCountChanged();
 	}
-	deleteChatRoom();
+	if( mChatRoom->isReadOnly())// = hasBeenLeft()
+		deleteChatRoom();
 	endResetModel();
 	emit allEntriesRemoved(mSelf.lock());
 	emit focused();// Removing all entries is like having focus. Don't wait asynchronous events.
@@ -599,8 +600,11 @@ void ChatRoomModel::deleteChatRoom(){
 }
 
 void ChatRoomModel::leaveChatRoom (){
-	if(mChatRoom)
+	if(mChatRoom){
 		mChatRoom->leave();
+		if( mChatRoom->getHistorySize() == 0 && mChatRoom->getHistoryEventsSize() == 0)
+			deleteChatRoom();
+	}
 }
 
 

@@ -67,7 +67,7 @@ void TimelineModel::connectTo(ChatRoomListener * listener){
 
 // =============================================================================
 QSharedPointer<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent){
-	if((!chatRoom || chatRoom->getState() != linphone::ChatRoom::State::Terminated)  && (!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) ) {
+	if((!chatRoom || chatRoom->getState() != linphone::ChatRoom::State::Deleted)  && (!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) ) {
 		QSharedPointer<TimelineModel> model = QSharedPointer<TimelineModel>::create(chatRoom, parent);
 		if(model && model->getChatRoomModel()){
 			

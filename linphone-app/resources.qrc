@@ -416,6 +416,7 @@
 		<file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
 		<file>ui/modules/Linphone/Timeline/Timeline.js</file>
 		<file>ui/modules/Linphone/Timeline/Timeline.qml</file>
+		<file>ui/modules/Linphone/Timeline/TimelineItem.qml</file>
 		<file>ui/modules/Linphone/View/ParticipantsListView.qml</file>
 		<file>ui/modules/Linphone/View/ParticipantsView.qml</file>
 		<file>ui/modules/Linphone/View/SipAddressesView.qml</file>

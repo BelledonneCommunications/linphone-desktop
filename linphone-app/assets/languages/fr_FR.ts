@@ -1012,7 +1012,7 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>conversationMenuDelete</source>
-        <extracomment>&apos;Delete&apos; : Item menu to delete the chat</extracomment>
+        <extracomment>&apos;Delete history&apos; : Item menu to delete the chat&apos;s history</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3388,6 +3388,19 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>timelineFilterConferences</source>
         <extracomment>&apos;Conferences&apos; : Filter item. Selecting it will show all conferences.</extracomment>
         <translation>Conférences</translation>
+    </message>
+</context>
+<context>
+    <name>TimelineItem</name>
+    <message>
+        <source>deleteTimeline</source>
+        <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>deleteTimelineTooltip</source>
+        <extracomment>&apos;After confirmation, it will erase all history, leave the chat room if it is a group chat and delete it in database.&apos;</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

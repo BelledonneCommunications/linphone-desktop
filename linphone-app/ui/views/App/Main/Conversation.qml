@@ -471,7 +471,7 @@ ColumnLayout  {
 					}
 					MenuItem{
 						id: deleteMenuItem
-						//: 'Delete' : Item menu to delete the chat
+						//: 'Delete history' : Item menu to delete the chat's history
 						text: qsTr('conversationMenuDelete')
 						iconMenu: MenuItemStyle.deleteEntry.icon
 						iconSizeMenu: 40

@@ -21,8 +21,8 @@ QtObject {
 		property int height: 60
 		
 		property QtObject backgroundColor: QtObject {
-			property color a: ColorsList.add(sectionName+'_contact_bg_a', 'g10').color
-			property color b: ColorsList.add(sectionName+'_contact_bg_b', 'a').color
+			property color a: ColorsList.add(sectionName+'_contact_bg_a', 'timeline_bg_1').color
+			property color b: ColorsList.add(sectionName+'_contact_bg_b', 'timeline_bg_2').color
 			property color selected: ColorsList.add(sectionName+'_contact_bg_c', 'i').color
 		}
 		
@@ -63,5 +63,29 @@ QtObject {
 		property color color: ColorsList.add(sectionName+'_searchField', 'c').color
 		property color borderColor: ColorsList.add(sectionName+'_searchField_border', 'border').color
 		property int pointSize: Units.dp * 9
+	}
+	
+	property QtObject selectedDeleteAction: QtObject {
+		property int iconSize: 40
+		property string name : 'delete_on_selected'
+		property string icon : 'delete_custom'
+		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'me_h_b_inv_bg').color
+		property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'me_n_b_inv_bg').color
+		property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'me_p_b_inv_bg').color
+		property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'me_n_b_inv_fg').color
+		property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'me_h_b_inv_fg').color
+		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'me_p_b_inv_fg').color
+	}
+	
+	property QtObject deleteAction: QtObject {
+		property int iconSize: 40
+		property string name : 'delete'
+		property string icon : 'delete_custom'
+		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'me_h_b_bg').color
+		property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'me_n_b_bg').color
+		property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'me_p_b_bg').color
+		property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'me_h_b_fg').color
+		property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'me_n_b_fg').color
+		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'me_p_b_fg').color
 	}
 }

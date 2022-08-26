@@ -309,7 +309,8 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 		if(timeline) {
 			if(timeline->getChatRoomModel())
 				timeline->getChatRoomModel()->resetMessageCount();
-			remove(timeline);
+			if(state == linphone::ChatRoom::State::Deleted)
+				remove(timeline);
 		}
 	}
 }
