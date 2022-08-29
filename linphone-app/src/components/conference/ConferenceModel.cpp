@@ -63,6 +63,8 @@ ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conferen
 	mConferenceListener = std::make_shared<ConferenceListener>();
 	connectTo(mConferenceListener.get());
 	mConference->addListener(mConferenceListener);
+	connect(this, &ConferenceModel::participantDeviceAdded, this, &ConferenceModel::participantDeviceCountChanged);
+	connect(this, &ConferenceModel::participantDeviceRemoved, this, &ConferenceModel::participantDeviceCountChanged);
 }
 
 ConferenceModel::~ConferenceModel(){
@@ -121,6 +123,10 @@ std::list<std::shared_ptr<linphone::Participant>> ConferenceModel::getParticipan
 	if( me )
 		participantList.push_front(me);
 	return participantList;
+}
+
+int ConferenceModel::getParticipantDeviceCount() const{
+	return mConference->getParticipantDeviceList().size();
 }
 
 void ConferenceModel::setIsReady(bool state){

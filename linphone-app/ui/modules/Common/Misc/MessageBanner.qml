@@ -10,7 +10,11 @@ Rectangle{
 	
 	property int fitHeight: visible && opacity > 0 ? 32 : 0
 	property string noticeBannerText
-	property int iconMode : 1	// 0=noIcons, 1=copy
+	property bool showIcon: true
+	property alias pointSize: textItem.font.pointSize
+	property alias textColor: textItem.color
+	property alias icon: iconItem.icon
+	property alias iconColor: iconItem.overwriteColor	// = textColor by default
 	
 	onNoticeBannerTextChanged: if(noticeBannerText!='') mainItem.state = "showed"
 	
@@ -27,12 +31,14 @@ Rectangle{
 		anchors.centerIn: parent
 		spacing: 5
 		Icon{
-			icon: if(iconMode == 1) MessageBannerStyle.copyTextIcon
-			overwriteColor: MessageBannerStyle.textColor
+			id: iconItem
+			icon: mainItem.showIcon ? MessageBannerStyle.copyTextIcon : ''
+			overwriteColor: textItem.color
 			iconSize: 20
-			visible: iconMode != 0
+			visible: mainItem.showIcon
 		}
 		Text{
+			id: textItem
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			text: mainItem.noticeBannerText

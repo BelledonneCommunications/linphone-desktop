@@ -141,6 +141,12 @@ class ColorListModel : public ProxyListModel {
 		
 		ADD_COLOR("timeline_bg_1", "#EFF0F2", "Timeline background color 1")
 		ADD_COLOR("timeline_bg_2", "#FFFFFF", "Timeline background color 2")
+		
+		ADD_COLOR("message_banner_bg", "#9ECD1D", "Message banner background")
+		ADD_COLOR("message_banner_fg", "#FFFFFF", "Message banner foreground")
+		ADD_COLOR("incall_message_banner_bg", "#FC4607", "Incall message banner background")
+		ADD_COLOR("incall_message_banner_fg", "#FFFFFF", "Incall message banner foreground")
+		
 
 // Keywords: 'mKeywordsMap'
 //		s=standard, ma=main, l=list, sc=screen, me=menu

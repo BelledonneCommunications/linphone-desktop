@@ -42,6 +42,7 @@ public:
 	Q_PROPERTY(ParticipantListModel* participants READ getParticipantListModel CONSTANT)
 	Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
+	Q_PROPERTY(int participantDeviceCount READ getParticipantDeviceCount NOTIFY participantDeviceCountChanged)
 
 
 	static QSharedPointer<ConferenceModel> create(std::shared_ptr<linphone::Conference> chatRoom, QObject *parent = Q_NULLPTR);
@@ -57,6 +58,7 @@ public:
 	Q_INVOKABLE ParticipantModel* getLocalParticipant() const;
 	ParticipantListModel* getParticipantListModel() const;
 	std::list<std::shared_ptr<linphone::Participant>> getParticipantList() const;	// SDK exclude me. We want to get ALL participants.
+	int getParticipantDeviceCount() const;
 	
 	void setIsReady(bool state);
 	
@@ -88,6 +90,7 @@ signals:
 	void conferenceStateChanged(linphone::Conference::State newState);
 	void subjectChanged();
 	void isReadyChanged();
+	void participantDeviceCountChanged();
 
 private:
 	void connectTo(ConferenceListener * listener);

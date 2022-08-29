@@ -20,20 +20,38 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 // =============================================================================
 
 Rectangle {
-	id: conference
+	id: mainItem
 	
 	property CallModel callModel
 	property ConferenceModel conferenceModel: callModel && callModel.conferenceModel
 	property bool cameraIsReady : false
 	property bool previewIsReady : false
 	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
-	property bool isAudioOnly: callModel && callModel.isConference && conferenceLayout.sourceComponent == gridComponent && !callModel.videoEnabled
+	
 	property var _fullscreen: null
 	on_FullscreenChanged: if( !_fullscreen) isFullScreen = false
 
 	property bool listCallsOpened: true
 	
 	signal openListCallsRequest()
+	
+	property int participantCount: mainItem.conferenceModel 
+									? mainItem.conferenceModel.participantDeviceCount
+									: conferenceLayout.item ? conferenceLayout.item.participantCount : 0
+	
+// States
+	property bool isAudioOnly: callModel && callModel.isConference && conferenceLayout.sourceComponent == gridComponent && !callModel.videoEnabled
+	property bool isReady : mainItem.callModel 
+								&& (!mainItem.callModel.isConference 
+																|| (mainItem.conferenceModel && mainItem.conferenceModel.isReady)
+														)
+								&& conferenceLayout.item && conferenceLayout.status == Loader.Ready
+	function updateMessageBanner(){
+		//: ''You are alone in this conference' : Text in message banner when the user is the only participant.
+		if( isReady && participantCount <= 1) messageBanner.noticeBannerText = qsTr('aloneInConference')
+	}
+	onParticipantCountChanged: updateMessageBanner()
+	onIsReadyChanged: updateMessageBanner()
 	// ---------------------------------------------------------------------------
 	
 	color: IncallStyle.backgroundColor
@@ -42,10 +60,9 @@ Rectangle {
 		target: callModel
 		
 		onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
-		onStatusChanged: Logic.handleStatusChanged (status, conference._fullscreen)
+		onStatusChanged: Logic.handleStatusChanged (status, mainItem._fullscreen)
 		onVideoRequested: Logic.handleVideoRequested(callModel)
 	}
-	
 	// ---------------------------------------------------------------------------
 	Rectangle{
 		MouseArea{
@@ -119,6 +136,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.dialpad
+			visible: mainItem.isReady
 			toggled: telKeypad.visible
 			onClicked: telKeypad.visible = !telKeypad.visible
 		}
@@ -129,6 +147,7 @@ Rectangle {
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.callQuality
 			icon: IncallStyle.buttons.callQuality.icon_0
+			visible: mainItem.isReady
 			toggled: callStatistics.isOpen
 			
 			onClicked: callStatistics.isOpen ? callStatistics.close() : callStatistics.open()
@@ -155,43 +174,56 @@ Rectangle {
 		}
 		
 		// Title
-		ColumnLayout{
+		Item{
 			Layout.fillWidth: true
-			Text{
-				id: title
-				Timer{
-					id: elapsedTimeRefresher
-					running: true
-					interval: 1000
-					repeat: true
-					onTriggered: if(conferenceModel) parent.elaspedTime = Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
-								else parent.elaspedTime = Utils.formatElapsedTime(conference.callModel.duration)
+			Layout.fillHeight: true
+			ColumnLayout{
+				anchors.fill: parent
+				Text{
+					id: title
+					Timer{
+						id: elapsedTimeRefresher
+						running: true
+						interval: 1000
+						repeat: true
+						onTriggered: if(conferenceModel) parent.elaspedTime = Utils.formatElapsedTime(conferenceModel.getElapsedSeconds())
+									else parent.elaspedTime = Utils.formatElapsedTime(mainItem.callModel.duration)
+					}
+					property string elaspedTime
+					horizontalAlignment: Qt.AlignHCenter
+					Layout.fillWidth: true
+					text: conferenceModel 
+							? conferenceModel.subject
+								? conferenceModel.subject+ (elaspedTime ? ' - ' +elaspedTime : '')
+								: elaspedTime
+							: callModel
+								? elaspedTime
+								: ''
+					color: IncallStyle.title.color
+					font.pointSize: IncallStyle.title.pointSize
 				}
-				property string elaspedTime
-				horizontalAlignment: Qt.AlignHCenter
-				Layout.fillWidth: true
-				text: conferenceModel 
-						? conferenceModel.subject
-							? conferenceModel.subject+ ' - ' +elaspedTime
-							: elaspedTime
-						: callModel
-							? elaspedTime
-							: ''
-				color: IncallStyle.title.color
-				font.pointSize: IncallStyle.title.pointSize
+				Text{
+					id: address
+					Layout.fillWidth: true
+					horizontalAlignment: Qt.AlignHCenter
+					visible: !conferenceModel && callModel && !callModel.isConference
+					text: !conferenceModel && callModel
+								? callModel.peerAddress
+								: ''
+					color: IncallStyle.title.color
+					font.pointSize: IncallStyle.title.addressPointSize
+				}
+				
 			}
-			Text{
-				id: address
-				Layout.fillWidth: true
-				horizontalAlignment: Qt.AlignHCenter
-				visible: !conferenceModel && callModel && !callModel.isConference
-				text: !conferenceModel && callModel
-							? callModel.peerAddress
-							: ''
-				color: IncallStyle.title.color
-				font.pointSize: IncallStyle.title.addressPointSize
+			MessageBanner{
+				id: messageBanner
+				
+				anchors.fill: parent
+				textColor: IncallStyle.header.messageBanner.textColor
+				color: IncallStyle.header.messageBanner.color
+				showIcon: false
+				pointSize: IncallStyle.header.messageBanner.pointSize
 			}
-			
 		}
 		// Mode buttons
 		ActionButton{
@@ -205,9 +237,9 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.record
-			property CallModel callModel: conference.callModel
+			property CallModel callModel: mainItem.callModel
 			onCallModelChanged: if(!callModel) callModel.stopRecording()
-			visible: SettingsModel.callRecorderEnabled && callModel
+			visible: SettingsModel.callRecorderEnabled && callModel && (callModel.recording || mainItem.isReady)
 			toggled: callModel.recording
 
 			onClicked: {
@@ -224,8 +256,8 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.screenshot
-			visible: conference.callModel.snapshotEnabled
-			onClicked: conference.callModel.takeSnapshot()
+			visible: mainItem.callModel.snapshotEnabled && mainItem.isReady
+			onClicked: mainItem.callModel.takeSnapshot()
 			//: 'Take Snapshot' : Tooltip for takking snapshot.
 			tooltipText: qsTr('incallSnapshotTooltip')
 		}
@@ -233,7 +265,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.fullscreen
-			visible: conference.callModel.videoEnabled
+			visible: mainItem.callModel.videoEnabled
 			onClicked: Logic.showFullscreen(window, conference, 'IncallFullscreen.qml', title.mapToGlobal(0,0))
 		}
 		
@@ -259,18 +291,18 @@ Rectangle {
 				id: grid
 				Layout.leftMargin: 70
 				Layout.rightMargin: rightMenu.visible ? 15 : 70
-				callModel: conference.callModel
-				cameraEnabled: !conference.isFullScreen
+				callModel: mainItem.callModel
+				cameraEnabled: !mainItem.isFullScreen
 			}
 		}
 		Component{
 			id: activeSpeakerComponent
 			IncallActiveSpeaker{
 				id: activeSpeaker
-				callModel: conference.callModel
+				callModel: mainItem.callModel
 				isRightReducedLayout: rightMenu.visible
-				isLeftReducedLayout: conference.listCallsOpened
-				cameraEnabled: !conference.isFullScreen
+				isLeftReducedLayout: mainItem.listCallsOpened
+				cameraEnabled: !mainItem.isFullScreen
 				onCameraEnabledChanged: console.log(cameraEnabled)
 			}
 		}
@@ -282,23 +314,18 @@ Rectangle {
 				Loader{
 					id: conferenceLayout
 					anchors.fill: parent	
-					sourceComponent: conference.conferenceModel 
-										? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled
+					sourceComponent: mainItem.conferenceModel 
+										? mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !mainItem.callModel.videoEnabled
 											? gridComponent
 											: activeSpeakerComponent
 										: activeSpeakerComponent
-					onSourceComponentChanged: console.log("conferenceLayout: "+conference.callModel.conferenceVideoLayout)
-					active: conference.callModel
+					onSourceComponentChanged: console.log("conferenceLayout: "+mainItem.callModel.conferenceVideoLayout)
+					active: mainItem.callModel
 				}
 				Rectangle{
 					anchors.fill: parent
-					color: conference.color
-					visible: !conference.callModel || (conference.callModel.isConference 
-																&& (!conference.conferenceModel
-																	|| (conference.conferenceModel && !conference.conferenceModel.isReady))
-														)
-														|| !conferenceLayout.item 
-														|| (conferenceLayout.sourceComponent == gridComponent && !conference.callModel.videoEnabled && conferenceLayout.item.participantCount <= 1)
+					color: mainItem.color
+					visible: !mainItem.isReady
 					ColumnLayout {
 						anchors.fill: parent
 						BusyIndicator{
@@ -311,7 +338,7 @@ Rectangle {
 						Text{
 							Layout.alignment: Qt.AlignCenter
 							
-							text: conferenceLayout.sourceComponent == gridComponent && !conference.callModel.videoEnabled
+							text: false //mainItem.needMoreParticipants
 							//: 'Waiting for another participant...' :  Waiting message for more participant.
 									? qsTr('incallWaitParticipantMessage')
 							//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
@@ -326,8 +353,8 @@ Rectangle {
 				Layout.fillHeight: true
 				Layout.preferredWidth: 400
 				Layout.rightMargin: 30
-				callModel: conference.callModel
-				conferenceModel: conference.conferenceModel
+				callModel: mainItem.callModel
+				conferenceModel: mainItem.conferenceModel
 				visible: false
 				onClose: rightMenu.visible = !rightMenu.visible
 				onLayoutChanging: conferenceLayout.item.clearAll(layoutMode)
@@ -404,6 +431,7 @@ Rectangle {
 		z: 2
 		RowLayout{
 			spacing: 10
+			visible: mainItem.isReady
 			Row {
 				spacing: 2
 				visible: SettingsModel.muteMicrophoneEnabled
@@ -453,7 +481,7 @@ Rectangle {
 				backgroundRadius: 90
 				colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating
-				enabled: !conference.isAudioOnly
+				enabled: !mainItem.isAudioOnly
 				onClicked: if(callModel){
 								if( callModel.isConference){// Only deactivate camera in conference.
 									callModel.cameraEnabled = !callModel.cameraEnabled
@@ -469,7 +497,7 @@ Rectangle {
 			ActionButton{
 				isCustom: true
 				backgroundRadius: width/2
-				visible: SettingsModel.callPauseEnabled
+				visible: SettingsModel.callPauseEnabled && mainItem.isReady
 				updating: callModel.updating
 				colorSet: callModel.pausedByUser ? IncallStyle.buttons.play : IncallStyle.buttons.pause
 				onClicked: callModel.pausedByUser = !callModel.pausedByUser
@@ -534,9 +562,9 @@ Rectangle {
 	CallStatistics {
 		id: callStatistics
 		
-		call: conference.callModel
-		width: conference.width
-		height: conference.height
+		call: mainItem.callModel
+		width: mainItem.width
+		height: mainItem.height
 	}
 	TelKeypad {
 		id: telKeypad

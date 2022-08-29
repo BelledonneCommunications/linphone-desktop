@@ -1134,6 +1134,14 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
 </context>
 <context>
+    <name>DecorationSticker</name>
+    <message>
+        <source>paused</source>
+        <extracomment>&apos;paused&apos; : Pause state on sticker, next to username.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DroppableTextArea</name>
     <message>
         <source>fileChooserTitle</source>
@@ -1383,6 +1391,11 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallWaitParticipantMessage</source>
         <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>aloneInConference</source>
+        <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

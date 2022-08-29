@@ -135,6 +135,12 @@ QtObject {
 		property QtObject stats: QtObject {
 			property int relativeY: 90
 		}
+		
+		property QtObject messageBanner: QtObject{
+			property color color: ColorsList.add(sectionName+'_message_bg', 'incall_message_banner_bg').color
+			property color textColor: ColorsList.add(sectionName+'_message_fg', 'incall_message_banner_fg').color
+			property int pointSize: Units.dp * 10
+		}
 	}
 	
 	property QtObject zrtpArea: QtObject {

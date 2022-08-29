@@ -19,7 +19,7 @@ Item{
 	id: mainItem
 	default property alias _content: content.data
 	property alias speakingOverlayDisplayed: effect.visible
-	property alias username: username.text
+	property string username: mainItem._currentDevice ? mainItem._currentDevice.displayName : ''
 	property bool showUsername: true
 	
 	property ParticipantDeviceModel _currentDevice
@@ -78,7 +78,7 @@ Item{
 		}
 	}
 	Text{
-		id: username
+		id: usernameItem
 		visible: mainItem.showUsername && mainItem._currentDevice
 		anchors.right: parent.right
 		anchors.left: parent.left
@@ -86,19 +86,20 @@ Item{
 		anchors.margins: 10
 		elide: Text.ElideRight
 		maximumLineCount: 1
-		text: mainItem._currentDevice && mainItem._currentDevice.displayName + (mainItem._isPaused ? ' (en pause)' : '')
+		//: 'paused' : Pause state on sticker, next to username.
+		text:  mainItem.username + (mainItem._isPaused ? ' ('+qsTr('paused')+')' : '')
 		font.pointSize: DecorationStickerStyle.contactDescription.pointSize
 		font.weight: DecorationStickerStyle.contactDescription.weight
 		color: DecorationStickerStyle.contactDescription.color
 	}
 	Glow {
-		anchors.fill: username
-		visible: username.visible
+		anchors.fill: usernameItem
+		visible: usernameItem.visible
 		//spread: 1
 		radius: 12
 		samples: 25
 		color: "#80000000"
-		source: username
+		source: usernameItem
 	}
 	ActionButton{
 		visible: mainItem._showCloseButton && mainItem._isPreview && mainItem._callModel && mainItem._callModel.videoEnabled

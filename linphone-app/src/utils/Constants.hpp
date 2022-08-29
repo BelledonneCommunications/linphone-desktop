@@ -63,7 +63,7 @@ public:
 	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
 	static constexpr char TranslationUrl[] = "https://weblate.linphone.org/projects/linphone-desktop/";
 	
-	static constexpr int MaxMosaicParticipants = 9;// From 10, the mosaic quality will be limited to avoid useless computations
+	static constexpr int MaxMosaicParticipants = 6;// From 7, the mosaic quality will be limited to avoid useless computations
 	
 	static constexpr char LinphoneBZip2_exe[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
 	static constexpr char LinphoneBZip2_dll[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";

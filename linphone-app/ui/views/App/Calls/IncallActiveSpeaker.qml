@@ -26,7 +26,7 @@ Item {
 	property bool isLeftReducedLayout: false
 	property bool cameraEnabled: true
 	property bool showMe : !(callModel && callModel.pausedByUser) && (callModel.isConference || callModel.localVideoEnabled)
-	property int participantCount: callModel.isConference ? allDevices.count : 2
+	property int participantCount: callModel.isConference ? allDevices.count + 1 : 2	// +me
 	
 	onParticipantCountChanged: {console.log("Conf count: " +participantCount);allDevices.updateCurrentDevice()}
 	
