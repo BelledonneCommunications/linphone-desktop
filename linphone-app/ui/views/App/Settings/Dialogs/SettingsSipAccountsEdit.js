@@ -34,7 +34,7 @@ function initForm (account) {
 
   proxyConfig = account
     ? account.proxyConfig
-    : AccountSettingsModel.createProxyConfig()
+    : AccountSettingsModel.createProxyConfig('create-app-sip-account.rc')
 
   var config = AccountSettingsModel.getProxyConfigDescription(proxyConfig)
 
