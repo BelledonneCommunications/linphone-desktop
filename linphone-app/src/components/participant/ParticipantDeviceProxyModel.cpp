@@ -87,6 +87,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	connect(sourceModel, &ParticipantDeviceListModel::meChanged, this, &ParticipantDeviceProxyModel::meChanged);
 	setSourceModel(sourceModel);
 	emit countChanged();
+	emit meChanged();
 }
 
 void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant){
@@ -98,6 +99,7 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	connect(sourceModel, &ParticipantDeviceListModel::meChanged, this, &ParticipantDeviceProxyModel::meChanged);
 	setSourceModel(sourceModel);
 	emit countChanged();
+	emit meChanged();
 }
 
 void ParticipantDeviceProxyModel::setShowMe(const bool& show){

@@ -125,7 +125,7 @@ Item{
 			onClicked: mainItem.customButtonClicked()
 		}
 		Rectangle{// Mute
-			visible: mainItem.currentDevice && mainItem.currentDevice.isMuted
+			visible: mainItem._currentDevice && mainItem._currentDevice.isMuted
 			Layout.preferredHeight: DecorationStickerStyle.isMuted.button.iconSize
 			Layout.preferredWidth: DecorationStickerStyle.isMuted.button.iconSize
 			radius: width/2
@@ -140,7 +140,7 @@ Item{
 		BusyIndicator{// Joining spinner
 			Layout.preferredHeight: 20
 			Layout.preferredWidth: 20
-			running: mainItem.currentDevice && (mainItem.currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem.currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem.currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
+			running: mainItem._currentDevice && (mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
 		}
 	}
 }

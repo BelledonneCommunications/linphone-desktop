@@ -73,6 +73,7 @@ Item {
 	Item{// Need an item to not override Sticker internal states. States are needed for changing anchors.
 		id: preview
 		anchors.right: parent.right
+		anchors.bottom: parent.bottom
 		anchors.rightMargin: 30
 		anchors.bottomMargin: 15
 		
@@ -95,6 +96,7 @@ Item {
 			avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
 			avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 		}
+		/*
 		state: 'bottom'
 			 states: [State {
 				 name: "bottom"
@@ -113,43 +115,56 @@ Item {
 					 anchors.top: mainItem.top
 					 anchors.bottom: undefined
 				 }
-			 }]
+			 }]*/
 	}
-	ScrollableListView{
-		id: miniViews
+	Item{
 		anchors.right: parent.right
 		anchors.top: parent.top
 		anchors.bottom: preview.top
 		anchors.rightMargin: 30
-		anchors.topMargin: 15
+// WORKAROUND to fix a Qt's bug on not refreshing layout to bottom when loading listview.
+		property int estimatedHeight: miniViews.count * (miniViews.cellHeight+miniViews.spacing)-miniViews.spacing
+		property int unusedHeight : Math.max(0, parent.height// Main Height
+													-preview.height-preview.anchors.topMargin-preview.anchors.bottomMargin// Preview height
+													-30	// margins
+													-estimatedHeight)// contents height
+		anchors.topMargin: 15 + unusedHeight
+//---------------
+
 		anchors.bottomMargin: 15
-		property int cellHeight: 150
-		
-		width: 16 * cellHeight / 9
-		model: mainItem.callModel.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
-		onModelChanged: console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.localVideoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
-		spacing: 15
-		verticalLayoutDirection: ListView.BottomToTop 
-		delegate:Item{
-				height: miniViews.cellHeight
-				width: miniViews.width
-				clip:false
-				Sticker{
-					id: miniView
-					anchors.fill: parent
-					anchors.margins: 3
-					deactivateCamera: index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser)
-					currentDevice: modelData.isPreview ? null : modelData
-					callModel: modelData.isPreview ? null : mainItem.callModel
-					isCameraFromDevice:  mainItem.callModel.isConference
-					isPaused: currentDevice && currentDevice.isPaused
-					showCloseButton: false
-					showCustomButton:  false
-					showAvatarBorder: true
-					avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
-					avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+		width: 16 * miniViews.cellHeight / 9
+		ScrollableListView{
+			id: miniViews
+			property int cellHeight: 150
+			anchors.fill: parent
+			model : mainItem.callModel.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
+			onModelChanged: {
+				console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.localVideoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
+				
 				}
-			}
+			spacing: 15
+			verticalLayoutDirection: ListView.BottomToTop
+			delegate:Item{
+					height: miniViews.cellHeight
+					width: miniViews.width
+					clip:false
+					Sticker{
+						id: miniView
+						anchors.fill: parent
+						anchors.margins: 3
+						deactivateCamera: index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser)
+						currentDevice: modelData.isPreview ? null : modelData
+						callModel: modelData.isPreview ? null : mainItem.callModel
+						isCameraFromDevice:  mainItem.callModel.isConference
+						isPaused: currentDevice && currentDevice.isPaused
+						showCloseButton: false
+						showCustomButton:  false
+						showAvatarBorder: true
+						avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+						avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+					}
+				}
+		}
 	}
 }
 
