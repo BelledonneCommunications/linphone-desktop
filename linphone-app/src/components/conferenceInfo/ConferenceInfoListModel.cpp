@@ -97,8 +97,9 @@ QSharedPointer<ConferenceInfoModel> ConferenceInfoListModel::get(std::shared_ptr
 		auto model = item.objectCast<ConferenceInfoModel>();
 		auto dbConferenceInfo = model->getConferenceInfo();
 		if(dbConferenceInfo == conferenceInfo
-		|| dbConferenceInfo->getUri()->weakEqual(uri))
+		|| dbConferenceInfo->getUri()->equal(uri)){
 			return model;
+		}
 	}
 	return nullptr;
 }

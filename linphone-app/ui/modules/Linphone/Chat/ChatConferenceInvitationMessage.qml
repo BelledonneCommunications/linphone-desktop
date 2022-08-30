@@ -68,20 +68,33 @@ Loader{
 			
 			onMinHeightChanged: Qt.callLater( layout.updateFitHeight)
 			property int fitHeight: 0
-			property int fitWidth: Math.max(shareButton.width + joinButton.width, description.fitWidth)
+			property int fitWidth: Math.max(titleItem.implicitWidth, Math.max(shareButton.width + joinButton.width, description.fitWidth))
 			anchors.fill: parent
 			spacing: 0
 			Text{
+				id: titleItem
 				Layout.fillWidth: true
 				Layout.topMargin: 5
 				Layout.leftMargin: 5
 				Layout.alignment: Qt.AlignRight
 				elide: Text.ElideRight
-				color: ChatCalendarMessageStyle.type.color
+				color: mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateUpdated 
+										? ChatCalendarMessageStyle.type.updatedColor
+										: mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateCancelled
+											? ChatCalendarMessageStyle.type.cancelledColor
+											: ChatCalendarMessageStyle.type.color
+				
 				font.pointSize: ChatCalendarMessageStyle.type.pointSize
 				font.weight: Font.Bold
+				text:  (mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateUpdated
+				//: 'Meeting has been cancelled' : ICS title for a cancelled invitation.
+						? qsTr('icsUpdatedMeetingInvite')
+						:  mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateCancelled
+				//: 'Meeting has been updated' : ICS title for an updated invitation.
+							? qsTr('icsCancelledMeetingInvite')
 				//: 'Meeting invite' : ICS title that is an invitation.
-				text: qsTr('icsMeetingInvite') +': '// + UtilsCpp.getDisplayName(mainItem.conferenceInfoModel.organizer)
+							: qsTr('icsMeetingInvite')
+							) +': '// + UtilsCpp.getDisplayName(mainItem.conferenceInfoModel.organizer)
 			}
 			Text{
 				id: title

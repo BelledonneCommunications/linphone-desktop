@@ -56,7 +56,9 @@ QtObject {
 	property QtObject type: QtObject {
 		property int spacing: 5
 		property int pointSize: Units.dp * 10
-		property color color: ColorsList.add(sectionName+'_subject', 'j').color
+		property color updatedColor: ColorsList.add(sectionName+'_updated_subject', 'updated_ics_fg').color
+		property color cancelledColor: ColorsList.add(sectionName+'_cancelled_subject', 'cancelled_ics_fg').color
+		property color color: ColorsList.add(sectionName+'_subject', 'ics_fg').color
 	}
 	property QtObject subject: QtObject {
 		property int spacing: 5

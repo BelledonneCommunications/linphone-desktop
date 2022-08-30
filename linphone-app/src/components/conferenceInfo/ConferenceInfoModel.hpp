@@ -27,6 +27,8 @@
 #include <QSharedPointer>
 #include <QTimeZone>
 
+#include "utils/LinphoneEnums.hpp"
+
 class ParticipantListModel;
 class ConferenceScheduler;
 class TimeZoneModel;
@@ -47,6 +49,7 @@ public:
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
+	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
 		
 	static QSharedPointer<ConferenceInfoModel> create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	ConferenceInfoModel (QObject * parent = nullptr);
@@ -72,6 +75,7 @@ public:
 	Q_INVOKABLE int getParticipantCount()const;
 	Q_INVOKABLE TimeZoneModel* getTimeZoneModel() const;
 	Q_INVOKABLE QString getIcalendarString() const;
+	LinphoneEnums::ConferenceInfoState getConferenceInfoState() const;
 	
 	void setDateTime(const QDateTime& dateTime);
 	void setDuration(const int& duration);
@@ -106,6 +110,7 @@ signals:
 	void uriChanged();
 	void isScheduledChanged();
 	void inviteModeChanged();
+	void conferenceInfoStateChanged();
 	
 	void conferenceCreated();
 	void conferenceCreationFailed();

@@ -555,6 +555,16 @@ Server URL not configured.</translation>
             <numerusform>%1 participants</numerusform>
         </translation>
     </message>
+    <message>
+        <source>icsUpdatedMeetingInvite</source>
+        <extracomment>&apos;Meeting has been cancelled&apos; : ICS title for a cancelled invitation.</extracomment>
+        <translation>Meeting has been cancelled</translation>
+    </message>
+    <message>
+        <source>icsCancelledMeetingInvite</source>
+        <extracomment>&apos;Meeting has been updated&apos; : ICS title for an updated invitation.</extracomment>
+        <translation>Meeting has been updated</translation>
+    </message>
 </context>
 <context>
     <name>ChatDeliveries</name>

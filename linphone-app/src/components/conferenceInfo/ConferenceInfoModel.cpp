@@ -103,6 +103,7 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::uriChanged);// Useless but just in case.
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::isScheduledChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
 }
 
 // Callable from C++
@@ -111,6 +112,18 @@ ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceIn
 	mTimeZone = QTimeZone::systemTimeZone();
 	mConferenceInfo = conferenceInfo;
 	mIsScheduled = (mConferenceInfo->getDateTime() != 0 || mConferenceInfo->getDuration() != 0);
+	
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::timeZoneModelChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::dateTimeChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::durationChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::organizerChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::subjectChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::descriptionChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::participantsChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::uriChanged);// Useless but just in case.
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::isScheduledChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
 }
 
 ConferenceInfoModel::~ConferenceInfoModel () {
@@ -204,6 +217,10 @@ TimeZoneModel* ConferenceInfoModel::getTimeZoneModel() const{
 
 QString ConferenceInfoModel::getIcalendarString() const{
 	return Utils::coreStringToAppString(mConferenceInfo->getIcalendarString());
+}
+
+LinphoneEnums::ConferenceInfoState ConferenceInfoModel::getConferenceInfoState() const{
+	return LinphoneEnums::fromLinphone(mConferenceInfo->getState());
 }
 
 //------------------------------------------------------------------------------------------------

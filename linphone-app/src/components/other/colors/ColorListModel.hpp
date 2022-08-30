@@ -147,6 +147,9 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("incall_message_banner_bg", "#FC4607", "Incall message banner background")
 		ADD_COLOR("incall_message_banner_fg", "#FFFFFF", "Incall message banner foreground")
 		
+		ADD_COLOR_WITH_LINK("ics_fg", "", "Special text color for ICS", "j")
+		ADD_COLOR("updated_ics_fg", "#EFAE00", "Special text color for updated ICS")
+		ADD_COLOR("cancelled_ics_fg", "#FF0000", "Special text color for cancelled ICS")
 
 // Keywords: 'mKeywordsMap'
 //		s=standard, ma=main, l=list, sc=screen, me=menu

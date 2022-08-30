@@ -121,6 +121,18 @@ Q_ENUM_NS(ConferenceLayout)
 linphone::ConferenceLayout toLinphone(const LinphoneEnums::ConferenceLayout& layout);
 LinphoneEnums::ConferenceLayout fromLinphone(const linphone::ConferenceLayout& layout);
 
+
+enum ConferenceInfoState {
+	ConferenceInfoStateNew = int(linphone::ConferenceInfoState::New),
+	ConferenceInfoStateUpdated = int(linphone::ConferenceInfoState::Updated),
+	ConferenceInfoStateCancelled = int(linphone::ConferenceInfoState::Cancelled)
+};
+Q_ENUM_NS(ConferenceInfoState)
+
+linphone::ConferenceInfoState toLinphone(const LinphoneEnums::ConferenceInfoState& state);
+LinphoneEnums::ConferenceInfoState fromLinphone(const linphone::ConferenceInfoState& state);
+
+
 enum ParticipantDeviceState {
 	ParticipantDeviceStateJoining = int(linphone::ParticipantDeviceState::Joining),
 	ParticipantDeviceStatePresent = int(linphone::ParticipantDeviceState::Present),
