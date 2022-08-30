@@ -35,9 +35,9 @@ Rectangle {
 	
 	signal openListCallsRequest()
 	
-	property int participantCount: mainItem.conferenceModel 
+	property int participantCount: mainItem.conferenceModel
 									? mainItem.conferenceModel.participantDeviceCount
-									: conferenceLayout.item ? conferenceLayout.item.participantCount : 0
+									: conferenceLayout.item ? conferenceLayout.item.participantCount : 2
 	
 // States
 	property bool isAudioOnly: callModel && callModel.isConference && conferenceLayout.sourceComponent == gridComponent && !callModel.videoEnabled
@@ -50,8 +50,13 @@ Rectangle {
 		//: ''You are alone in this conference' : Text in message banner when the user is the only participant.
 		if( isReady && participantCount <= 1) messageBanner.noticeBannerText = qsTr('aloneInConference')
 	}
-	onParticipantCountChanged: updateMessageBanner()
-	onIsReadyChanged: updateMessageBanner()
+	Timer{
+		id: delayMessageBanner
+		interval: 100
+		onTriggered: updateMessageBanner()
+	}
+	onParticipantCountChanged: delayMessageBanner.restart()
+	onIsReadyChanged: delayMessageBanner.restart()
 	// ---------------------------------------------------------------------------
 	
 	color: IncallStyle.backgroundColor
@@ -60,7 +65,9 @@ Rectangle {
 		target: callModel
 		
 		onCameraFirstFrameReceived: Logic.handleCameraFirstFrameReceived(width, height)
-		onStatusChanged: Logic.handleStatusChanged (status, mainItem._fullscreen)
+		onStatusChanged: {Logic.handleStatusChanged (status, mainItem._fullscreen)
+			delayMessageBanner.restart()
+		}
 		onVideoRequested: Logic.handleVideoRequested(callModel)
 	}
 	// ---------------------------------------------------------------------------

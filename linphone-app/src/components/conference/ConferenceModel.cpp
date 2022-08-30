@@ -65,6 +65,7 @@ ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conferen
 	mConference->addListener(mConferenceListener);
 	connect(this, &ConferenceModel::participantDeviceAdded, this, &ConferenceModel::participantDeviceCountChanged);
 	connect(this, &ConferenceModel::participantDeviceRemoved, this, &ConferenceModel::participantDeviceCountChanged);
+	connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ConferenceModel::participantDeviceCountChanged);
 }
 
 ConferenceModel::~ConferenceModel(){
@@ -182,8 +183,10 @@ void ConferenceModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
 }
 void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newState){
-	if(newState == linphone::Conference::State::Created)
+	if(newState == linphone::Conference::State::Created){
 		setIsReady(true);
+		emit participantDeviceCountChanged();
+	}
 	updateLocalParticipant();
 	emit conferenceStateChanged(newState);
 }
