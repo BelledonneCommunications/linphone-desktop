@@ -4,6 +4,7 @@ import QtGraphicalEffects 1.12
 import Common 1.0
 import Linphone 1.0
 import Utils 1.0
+import UtilsCpp 1.0
 
 // =============================================================================
 // An icon image properly resized.
@@ -32,21 +33,29 @@ Item {
 	
 	Image {
 		id:image
+		anchors.fill: parent
+		
 		property bool colorOverwriteEnabled : false
 		mipmap: SettingsModel.mipmapEnabled
 		cache: Images.areReadOnlyImages	
 		asynchronous: true
 		smooth: true
-		//anchors.centerIn: parent
-		anchors.fill: parent
+		antialiasing: false
+// Better quality is only available from Qt5.15
+		fillMode: !qtIsNewer_5_15_0 ? Image.PreserveAspectFit : Image.Stretch // Stretch is default from Qt's doc
+		// Keep aspect ratio is done by ImagePovider that use directly SVG scalings (=no loss quality).
+		source: width != 0 && height != 0 ?  Utils.resolveImageUri(icon) : ''	// Do not load image with unknown requested size
+		sourceSize.width: qtIsNewer_5_15_0
+							? fillMode == Image.TileHorizontally
+								? height
+								: width
+							: 0
+		sourceSize.height: qtIsNewer_5_15_0
+							? fillMode == Image.TileVertically
+								? width
+								: height
+							: 0
 		
-		//width: iconWidth > 0 ? iconWidth : mainItem.width
-		//height: iconHeight > 0 ? iconHeight : mainItem.height
-		
-		fillMode: Image.PreserveAspectFit
-		source: Utils.resolveImageUri(icon)
-		sourceSize.width:  (iconWidth > 0 ? iconWidth : iconSize)
-		sourceSize.height: ( iconHeight > 0 ? iconHeight : iconSize)
 		layer {
 			enabled: image.colorOverwriteEnabled
 			effect: ColorOverlay {

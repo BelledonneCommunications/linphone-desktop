@@ -286,7 +286,9 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
 		qWarning() << QStringLiteral("Invalid svg file: `%1`.").arg(path);
 		return QImage();
 	}
-	
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+	renderer.setAspectRatioMode(Qt::KeepAspectRatio);
+#endif
 	QSize askedSize = !requestedSize.isEmpty()
 			? requestedSize
 			: renderer.defaultSize() * QGuiApplication::primaryScreen()->devicePixelRatio();

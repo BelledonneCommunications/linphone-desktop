@@ -404,6 +404,8 @@ void App::initContentApp () {
 	mEngine->rootContext()->setContextProperty("Colors", mColorListModel->getQmlData());
 	mEngine->rootContext()->setContextProperty("Images", mImageListModel->getQmlData());
 	
+	mEngine->rootContext()->setContextProperty("qtIsNewer_5_15_0", QT_VERSION >= QT_VERSION_CHECK(5, 15, 0) );
+	
 	registerTypes();
 	registerSharedTypes();
 	registerToolTypes();

@@ -24,6 +24,7 @@
 #include <QFile>
 #include <QImageReader>
 #include <QDebug>
+#include <QUrl>
 
 #include "config.h"
 #include "Utils.hpp"
@@ -545,4 +546,22 @@ bool Utils::isPhoneNumber(const QString& txt){
 		return false;
 	auto account = core->getDefaultAccount();
 	return account && account->isPhoneNumber(Utils::appStringToCoreString(txt));
+}
+
+QSize Utils::getImageSize(const QString& url){
+	QString path;
+	QUrl urlDecode(url);
+	if(urlDecode.isLocalFile())
+		path = QDir::toNativeSeparators(urlDecode.toLocalFile());
+	else
+		path = url;
+	QFileInfo info(path);
+	if( !info.exists())
+		return QSize(0,0);
+	QImageReader reader(path);
+	QSize s = reader.size();
+	if( s.isValid())
+		return s;
+	else
+		return QSize(0,0);
 }
