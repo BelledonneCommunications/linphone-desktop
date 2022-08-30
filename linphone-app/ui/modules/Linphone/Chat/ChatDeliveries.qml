@@ -24,15 +24,15 @@ Loader{
 	property ParticipantImdnStateProxyModel imdnStatesModel: ParticipantImdnStateProxyModel {
 		chatMessageModel: loader.chatMessageModel
 	}
-	height: visible ? (ChatStyle.composingText.height-5)*loader.imdnStatesModel.count : 0
+	height: visible ? (ChatStyle.composingText.height-5)*(loader.imdnStatesModel.count/2 + 1) : 0
 	visible:false
 	active: visible
 	sourceComponent: 
 		GridView{
 		id: deliveryLayout
 		
-		cellWidth: parent.width; cellHeight: ChatStyle.composingText.height-5
-		
+		cellWidth: parent.width/2; cellHeight: ChatStyle.composingText.height-5
+		interactive: false
 		model: loader.imdnStatesModel
 		function getText(state, displayName, stateChangeTime){
 			if(state == LinphoneEnums.ChatMessageStateDelivered)
