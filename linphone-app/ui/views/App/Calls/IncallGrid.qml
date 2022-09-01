@@ -25,8 +25,8 @@ Mosaic {
 	property bool cameraEnabled: true
 	property int participantCount: gridModel.count
 	
-	// On grid view, we limit the quality if there are enough participants
-	onParticipantCountChanged: participantCount > ConstantsCpp.maxMosaicParticipants ? SettingsModel.setLimitedMosaicQuality() : SettingsModel.setHighMosaicQuality()
+	// On grid view, we limit the quality if there are enough participants// The vga mode has been activated from the factory rc
+	//onParticipantCountChanged: participantCount > ConstantsCpp.maxMosaicParticipants ? SettingsModel.setLimitedMosaicQuality() : SettingsModel.setHighMosaicQuality()
 	function clearAll(layoutMode){
 		if( layoutMode != 2 && layoutMode != LinphoneEnums.ConferenceLayoutGrid){
 			clear()
