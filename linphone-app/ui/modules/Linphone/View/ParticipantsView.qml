@@ -25,7 +25,7 @@ ScrollableListView {
 	property string headerButtonIcon
 	property var headerButtonAction
 	property bool showHeader : true
-	property bool showContactAddress : true
+	property bool showSubtitle : true
 	property bool showSwitch : false
 	property bool showSeparator : true
 	property bool showAdminStatus : false
@@ -235,7 +235,7 @@ ScrollableListView {
 					id:contactView
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					showContactAddress: sipAddressesView.showContactAddress
+					showSubtitle: sipAddressesView.showSubtitle
 					function getStatus(){
 						var count = 0;
 						var txt = ''

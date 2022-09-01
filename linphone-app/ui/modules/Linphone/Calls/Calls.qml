@@ -124,8 +124,8 @@ ListView {
 			   : CallsStyle.entry.color.normal
 		
 		textColor: isSelected
-				   ? CallsStyle.entry.usernameColor.selected
-				   : CallsStyle.entry.usernameColor.normal
+				   ? CallsStyle.entry.titleColor.selected
+				   : CallsStyle.entry.titleColor.normal
 		
 		onClicked: Logic.resetSelectedCall()
 		onVisibleChanged: !visible && Logic.handleCountChanged(calls.count)
@@ -149,12 +149,12 @@ ListView {
 		color: useColorStatus()
 			   ? CallsStyle.entry.color.selected
 			   : CallsStyle.entry.color.normal
-		sipAddressColor: useColorStatus()
-						 ? CallsStyle.entry.sipAddressColor.selected
-						 : CallsStyle.entry.sipAddressColor.normal
-		usernameColor: useColorStatus()
-					   ? CallsStyle.entry.usernameColor.selected
-					   : CallsStyle.entry.usernameColor.normal
+		subtitleColor: useColorStatus()
+						 ? CallsStyle.entry.subtitleColor.selected
+						 : CallsStyle.entry.subtitleColor.normal
+		titleColor: useColorStatus()
+					   ? CallsStyle.entry.titleColor.selected
+					   : CallsStyle.entry.titleColor.normal
 		
 		signIcon: {
 			var params = loader.params

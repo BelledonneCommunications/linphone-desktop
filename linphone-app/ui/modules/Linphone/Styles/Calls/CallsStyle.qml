@@ -56,14 +56,14 @@ QtObject {
 			property int loops: 3
 		}
 		
-		property QtObject sipAddressColor: QtObject {
-			property color normal: ColorsList.add('Calls_entry_sipAddress_n', 'n').color
-			property color selected: ColorsList.add('Calls_entry_sipAddress_selected', 'q').color
+		property QtObject subtitleColor: QtObject {
+			property color normal: ColorsList.add('Calls_entry_subtitle_n', 'n').color
+			property color selected: ColorsList.add('Calls_entry_subtitle_selected', 'q').color
 		}
 		
-		property QtObject usernameColor: QtObject {
-			property color normal: ColorsList.add('Calls_entry_username_n', 'j').color
-			property color selected: ColorsList.add('Calls_entry_username_selected', 'q').color
+		property QtObject titleColor: QtObject {
+			property color normal: ColorsList.add('Calls_entry_title_n', 'j').color
+			property color selected: ColorsList.add('Calls_entry_title_selected', 'q').color
 		}
 		
 	}

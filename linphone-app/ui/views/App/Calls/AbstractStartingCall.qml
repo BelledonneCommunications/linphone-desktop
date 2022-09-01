@@ -43,8 +43,8 @@ Rectangle {
 				anchors.horizontalCenter: parent.horizontalCenter
 				height: CallStyle.header.contactDescription.height
 				horizontalTextAlignment: Text.AlignHCenter
-				sipAddress: call.peerAddress
-				username: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
+				subtitleText: SipAddressesModel.cleanSipAddress(call.peerAddress)
+				titleText: _sipAddressObserver ? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress) : ''
 				width: contentWidth
 			}
 			

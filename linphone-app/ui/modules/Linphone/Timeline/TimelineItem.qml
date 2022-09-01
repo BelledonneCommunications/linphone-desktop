@@ -61,12 +61,13 @@ Item {
 					 )
 		displayUnreadMessageCount: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
 		entry: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel
-		sipAddressColor: isSelected
-						 ? TimelineStyle.contact.sipAddress.color.selected
-						 : TimelineStyle.contact.sipAddress.color.normal
-		usernameColor: isSelected
-					   ? TimelineStyle.contact.username.color.selected
-					   : TimelineStyle.contact.username.color.normal
+		subtitleColor: isSelected
+						 ? TimelineStyle.contact.subtitle.color.selected
+						 : TimelineStyle.contact.subtitle.color.normal
+		titleColor: isSelected
+					   ? TimelineStyle.contact.title.color.selected
+					   : TimelineStyle.contact.title.color.normal
+		showSubtitle: mainItem.timelineModel.chatRoomModel.isOneToOne || !mainItem.timelineModel.chatRoomModel.isConference
 		TooltipArea {	
 			id: contactTooltip						
 			text: mainItem.timelineModel && UtilsCpp.toDateTimeString(mainItem.timelineModel.chatRoomModel.lastUpdateTime)

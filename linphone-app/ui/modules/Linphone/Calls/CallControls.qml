@@ -15,8 +15,8 @@ Rectangle {
 	default property alias _content: content.data
 	
 	property alias signIcon: signIcon.icon
-	property alias sipAddressColor: contact.sipAddressColor
-	property alias usernameColor: contact.usernameColor
+	property alias subtitleColor: contact.subtitleColor
+	property alias titleColor: contact.titleColor
 	
 	property string peerAddress
 	property string localAddress

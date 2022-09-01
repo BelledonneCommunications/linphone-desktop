@@ -64,10 +64,10 @@ ColumnLayout  {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				
-				sipAddress: historyView.peerAddress
-				sipAddressColor: HistoryViewStyle.bar.description.sipAddressColor
-				username: avatar.username
-				usernameColor: HistoryViewStyle.bar.description.usernameColor
+				subtitleText: SipAddressesModel.cleanSipAddress(sipAddress)(historyView.peerAddress)
+				subtitleColor: HistoryViewStyle.bar.description.subtitleColor
+				titleText: avatar.username
+				titleColor: HistoryViewStyle.bar.description.titleColor
 				visible:peerAddress
 			}
 			

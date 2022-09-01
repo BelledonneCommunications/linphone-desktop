@@ -31,7 +31,7 @@ ScrollableListView {
 	property color headerButtonOverwriteColor
 	property var headerButtonAction
 	property bool showHeader : true
-	property bool showContactAddress : true
+	property bool showSubtitle : true
 	property bool showSwitch : false
 	property bool showSeparator : true
 	property bool isSelectable : true
@@ -244,7 +244,7 @@ ScrollableListView {
 				Contact {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					showContactAddress: sipAddressesView.showContactAddress
+					showSubtitle: sipAddressesView.showSubtitle
 					
 					entry: $modelData
 					

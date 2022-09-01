@@ -8,40 +8,40 @@ import Common 1.0
 
 Column {
 	id:mainItem
-	property alias username: username.fullText
+	property alias titleText: title.fullText
+	property alias subtitleText: subtitle.fullText
 	property string sipAddress
-	property string participants
 	
 	property alias statusText : status.text
 	
 	property var contactDescriptionStyle : ContactDescriptionStyle
 	
-	property color sipAddressColor: contactDescriptionStyle.sipAddress.color
-	property color usernameColor: contactDescriptionStyle.username.color
+	property color subtitleColor: contactDescriptionStyle.subtitle.color
+	property color titleColor: contactDescriptionStyle.title.color
 	property int horizontalTextAlignment
-	property int contentWidth : Math.max(usernameImplicitWidthWorkaround.implicitWidth, addressImplicitWidthWorkaround.implicitWidth)
+	property int contentWidth : Math.max(titleImplicitWidthWorkaround.implicitWidth, subtitleImplicitWidthWorkaround.implicitWidth)
 									+10
 									+statusWidth
-	property int contentHeight : Math.max(username.implicitHeight, address.implicitHeight)+10
+	property int contentHeight : Math.max(title.implicitHeight, subtitle.implicitHeight)+10
 	
 	readonly property int statusWidth : (status.visible ? status.width + 5 : 0)
 	
-	property bool usernameClickable: false
+	property bool titleClickable: false
 	
-	signal usernameClicked()
+	signal titleClicked()
 	
 	// ---------------------------------------------------------------------------
 
 	TextEdit {
-		id: username
+		id: title
 		property string fullText
 		anchors.horizontalCenter: (horizontalTextAlignment == Text.AlignHCenter ? parent.horizontalCenter : undefined)
-		color: usernameColor
-		font.weight: contactDescriptionStyle.username.weight
-		font.pointSize: contactDescriptionStyle.username.pointSize
+		color: titleColor
+		font.weight: contactDescriptionStyle.title.weight
+		font.pointSize: contactDescriptionStyle.title.pointSize
 		horizontalAlignment: horizontalTextAlignment
-		verticalAlignment: (address.visible?Text.AlignBottom:Text.AlignVCenter)
-		width: Math.min(parent.width-statusWidth, usernameImplicitWidthWorkaround.implicitWidth)
+		verticalAlignment: (subtitle.visible?Text.AlignBottom:Text.AlignVCenter)
+		width: Math.min(parent.width-statusWidth, titleImplicitWidthWorkaround.implicitWidth)
 		height: (parent.height-parent.topPadding-parent.bottomPadding)/parent.visibleChildren.length
 		
 		text: metrics.elidedText
@@ -50,18 +50,18 @@ Column {
 		selectByMouse: true
 		
 		Text{// Workaround to get implicitWidth from text without eliding
-				id: usernameImplicitWidthWorkaround
-				text: username.fullText
-				font.weight: username.font.weight
-				font.pointSize: username.font.pointSize
+				id: titleImplicitWidthWorkaround
+				text: title.fullText
+				font.weight: title.font.weight
+				font.pointSize: title.font.pointSize
 				visible: false
 			}
 		
 		TextMetrics {
 			id: metrics
-			font: username.font
-			text: username.fullText
-			elideWidth: username.width
+			font: title.font
+			text: title.fullText
+			elideWidth: title.width
 			elide: Qt.ElideRight
 		}
 		Text{
@@ -73,47 +73,47 @@ Column {
 			verticalAlignment: Text.AlignVCenter
 			visible: text != ''
 			text : ''
-			color: contactDescriptionStyle.username.status.color
-			font.pointSize: contactDescriptionStyle.username.status.pointSize
+			color: contactDescriptionStyle.title.status.color
+			font.pointSize: contactDescriptionStyle.title.status.pointSize
 			font.italic : true
 		}
 		MouseArea{
 			anchors.fill:parent
-			visible: usernameClickable
-			onClicked: usernameClicked()
+			visible: titleClickable
+			onClicked: titleClicked()
 		}
 	}
 	
 	TextEdit {
-		id:address
-		property string fullText: sipAddress?SipAddressesModel.cleanSipAddress(sipAddress):participants
+		id:subtitle
+		property string fullText
 		anchors.horizontalCenter: (horizontalTextAlignment == Text.AlignHCenter ? parent.horizontalCenter : undefined)
-		color: sipAddressColor
-		font.weight: contactDescriptionStyle.sipAddress.weight
-		font.pointSize: contactDescriptionStyle.sipAddress.pointSize
+		color: subtitleColor
+		font.weight: contactDescriptionStyle.subtitle.weight
+		font.pointSize: contactDescriptionStyle.subtitle.pointSize
 		horizontalAlignment: horizontalTextAlignment
-		verticalAlignment: (username.visible?Text.AlignTop:Text.AlignVCenter)
-		width: Math.min(parent.width-statusWidth, addressImplicitWidthWorkaround.implicitWidth)
+		verticalAlignment: (title.visible?Text.AlignTop:Text.AlignVCenter)
+		width: Math.min(parent.width-statusWidth, subtitleImplicitWidthWorkaround.implicitWidth)
 		height: (parent.height-parent.topPadding-parent.bottomPadding)/parent.visibleChildren.length
 		visible: text != ''
 		
-		text: addressMetrics.elidedText
+		text: subtitleMetrics.elidedText
 		onActiveFocusChanged: deselect();
 		readOnly: true
 		selectByMouse: true
 		Text{// Workaround to get implicitWidth from text without eliding
-			id: addressImplicitWidthWorkaround
-			text: address.fullText
-			font.weight: address.font.weight
-			font.pointSize: address.font.pointSize
+			id: subtitleImplicitWidthWorkaround
+			text: subtitle.fullText
+			font.weight: subtitle.font.weight
+			font.pointSize: subtitle.font.pointSize
 			visible: false
 		}
 		
 		TextMetrics {
-			id: addressMetrics
-			font: address.font
-			text: address.fullText
-			elideWidth: address.width
+			id: subtitleMetrics
+			font: subtitle.font
+			text: subtitle.fullText
+			elideWidth: subtitle.width
 			elide: Qt.ElideRight
 		}
 	}

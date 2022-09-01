@@ -141,7 +141,7 @@ DialogPlus {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					
-					showContactAddress:false
+					showSubtitle:false
 					showSwitch : dialog.adminMode
 					showSeparator: false
 					showAdminStatus:!dialog.adminMode
@@ -173,7 +173,7 @@ DialogPlus {
 					}
 					
 					onEntryClicked: {
-						contactItem.showContactAddress = !contactItem.showContactAddress
+						contactItem.showSubtitle = !contactItem.showSubtitle
 					}
 				}
 			}

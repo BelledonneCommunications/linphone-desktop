@@ -90,7 +90,7 @@ DialogPlus {
 						ContactDescription{
 							id:contactDescription
 							anchors.fill:parent
-							username: avatar.username
+							titleText: avatar.username
 						}
 						MouseArea{
 									anchors.fill:contactDescription

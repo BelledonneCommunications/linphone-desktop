@@ -18,23 +18,24 @@ Rectangle {
 	property var entry
 	// entry should have these functions : presenceStatus, sipAddress, username, avatar (image)
 	
-	property alias sipAddressColor: description.sipAddressColor
-	property alias usernameColor: description.usernameColor
+	property alias subtitleColor: description.subtitleColor
+	property alias titleColor: description.titleColor
 	property alias statusText : description.statusText
 	
 	property bool displayUnreadMessageCount: false
-	property bool showContactAddress : true
-	property bool showAuxData : false
+	property bool showSubtitle : true
+	property string subtitle: ''
 	
-	property string username: (entry != undefined
-									?  entry.conferenceInfoModel && entry.conferenceInfoModel.subject
+	property string subject: (entry != undefined && entry.conferenceInfoModel && entry.conferenceInfoModel.subject
 										? entry.conferenceInfoModel.subject
-										: entry.username != undefined
+										: '')
+	property string username: (entry != undefined && entry.username != undefined
 											? entry.username
 											: entry.contactModel != undefined
 												? entry.contactModel.vcard.username
-												: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
-									: '')
+												: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || ''))
+	property string organizer: entry.conferenceInfoModel ? UtilsCpp.getDisplayName(entry.conferenceInfoModel.organizer) : ''
+	
 	signal avatarClicked(var mouse)
 	// ---------------------------------------------------------------------------
 	
@@ -65,16 +66,13 @@ Rectangle {
 								  )
 								:-1
 			
-			//username: UtilsCpp.getDisplayName(entry.sipAddress || entry.peerAddress )
-			
-			username : entry!=undefined 
+			username: entry!=undefined 
 						? entry.conferenceInfoModel
-							? UtilsCpp.getDisplayName(entry.conferenceInfoModel.organizer)
+							? item.organizer
 							: entry.isOneToOne!=undefined && !entry.isOneToOne
 								? ''
 								: item.username
 						: item.username
-						
 			visible:!groupChat.visible
 			Icon {
 				
@@ -126,19 +124,18 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.leftMargin: ContactStyle.spacing
 			
-			sipAddress: (entry && item.showContactAddress
-						&& (item.showAuxData
-							? item.subject
-								? '- ' +item.subject +' -'
-								: ''
-							: (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
-								? entry.conferenceInfoModel
-									? entry.conferenceInfoModel.organizer
-									: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
-								: '')
-						) || ''
-			participants: entry && item.showContactAddress && sipAddress == '' && entry.isOneToOne && entry.participants ? entry.participants.addressesToString : ''
-			username: item.username
+			titleText: item.subject
+						? item.subject
+						: item.username
+			subtitleText: entry && item.showSubtitle
+							? item.subtitle
+								? item.subtitle
+								: (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
+									? item.organizer
+										? item.organizer
+										: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+									: entry.participants.addressesToString
+							: ''
 		}
 		
 		ContactMessageCounter {

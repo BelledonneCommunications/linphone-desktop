@@ -138,18 +138,18 @@ QtObject {
 		}
 		
 		property QtObject contactDescription : QtObject {
-			property QtObject sipAddress: QtObject {
-				property color color: ColorsList.add(sectionName+'_description_sipAddress', 'n').color
+			property QtObject subtitle: QtObject {
+				property color color: ColorsList.add(sectionName+'_description_subtitle', 'n').color
 				property int pointSize: Units.dp * 10
 				property int weight: Font.Light
 			}
 			
-			property QtObject username: QtObject {
-				property color color: ColorsList.add(sectionName+'_description_username', 'j').color
+			property QtObject title: QtObject {
+				property color color: ColorsList.add(sectionName+'_description_title', 'j').color
 				property int pointSize: Units.dp * 11
 				property int weight: Font.Normal
 				property QtObject status : QtObject{
-					property color color : ColorsList.add(sectionName+'_description_username_status', 'g').color
+					property color color : ColorsList.add(sectionName+'_description_title_status', 'g').color
 					property int pointSize : Units.dp * 9
 				}
 			}

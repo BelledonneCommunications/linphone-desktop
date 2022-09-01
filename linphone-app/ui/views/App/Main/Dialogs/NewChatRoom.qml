@@ -360,7 +360,7 @@ DialogPlus {
 							id: participantView
 							anchors.fill: parent
 							
-							showContactAddress:false
+							showSubtitle:false
 							showSwitch : true
 							showSeparator: false
 							isSelectable: false

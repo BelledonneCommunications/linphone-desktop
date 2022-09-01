@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import UtilsCpp 1.0
 
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
@@ -40,8 +41,10 @@ Notification {
 			Contact {
 				Layout.fillWidth: true
 				property ChatRoomModel chatRoomModel : notification.timelineModel.getChatRoomModel()
-				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)		
-				showAuxData: !chatRoomModel.isOneToOne
+				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)
+				subtitle: chatRoomModel.isOneToOne
+							? SipAddressesModel.cleanSipAddress(notification.fullPeerAddress)
+							: UtilsCpp.getDisplayName(notification.fullPeerAddress) 
 				entry: chatRoomModel ? chatRoomModel : sipObserver
 				Component.onDestruction: sipObserver=null// Need to set it to null because of not calling destructor if not.
 			}

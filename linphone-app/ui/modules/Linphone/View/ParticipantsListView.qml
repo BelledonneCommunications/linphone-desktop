@@ -102,7 +102,7 @@ ColumnLayout {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 
-				showContactAddress:false
+				showSubtitle:false
 				showSwitch : mainLayout.isAdmin
 				showSeparator: false
 				showAdminStatus:!mainLayout.isAdmin
@@ -134,7 +134,7 @@ ColumnLayout {
 				}
 
 				onEntryClicked: {
-					contactItem.showContactAddress = !contactItem.showContactAddress
+					contactItem.showSubtitle = !contactItem.showSubtitle
 				}
 			}
 		}

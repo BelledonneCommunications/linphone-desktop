@@ -137,8 +137,8 @@ Rectangle {
 							width: parent.width
 							
 							horizontalTextAlignment: Text.AlignHCenter
-							sipAddress: parent.sipAddress
-							username: parent._sipAddressObserver ? UtilsCpp.getDisplayName(parent._sipAddressObserver.peerAddress) : ''
+							subtitleText: SipAddressesModel.cleanSipAddress(parent.sipAddress)
+							titleText: parent._sipAddressObserver ? UtilsCpp.getDisplayName(parent._sipAddressObserver.peerAddress) : ''
 						}
 						IncallAvatar {
 							

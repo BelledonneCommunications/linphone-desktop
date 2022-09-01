@@ -166,8 +166,19 @@ ColumnLayout  {
 							Layout.alignment: Qt.AlignTop | Qt.AlignLeft
 							visible: !usernameEdit.visible 
 							contactDescriptionStyle: ConversationStyle.bar.contactDescription
-							username: avatar.username
-							usernameClickable: chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
+							titleText: avatar.username
+							titleClickable: chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
+							subtitleText: if(chatRoomModel) {
+											  if(chatRoomModel.groupEnabled) {
+												  return chatRoomModel.participants.displayNamesToString;
+											  }else if(chatRoomModel.isSecure()) {
+												  return chatRoomModel.participants.addressesToString;
+											  }else
+												  return SipAddressesModel.cleanSipAddress(chatRoomModel.sipAddress)
+										  }else
+											  return ''
+							
+							/*
 							participants: if(chatRoomModel) {
 											  if(chatRoomModel.groupEnabled) {
 												  return chatRoomModel.participants.displayNamesToString;
@@ -191,7 +202,8 @@ ColumnLayout  {
 								}
 								
 							}
-							onUsernameClicked: {
+							*/
+							onTitleClicked: {
 								if(!conversation.isReadOnly) {
 									usernameEdit.visible = !usernameEdit.visible
 									usernameEdit.forceActiveFocus()

@@ -26,17 +26,17 @@ QtObject {
 			property color selected: ColorsList.add(sectionName+'_contact_bg_c', 'i').color
 		}
 		
-		property QtObject sipAddress: QtObject {
+		property QtObject subtitle: QtObject {
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_contact_sipAddress_n', 'n').color
-				property color selected: ColorsList.add(sectionName+'_contact_sipAddress_c', 'q').color
+				property color normal: ColorsList.add(sectionName+'_contact_subtitle_n', 'n').color
+				property color selected: ColorsList.add(sectionName+'_contact_subtitle_c', 'q').color
 			}
 		}
 		
-		property QtObject username: QtObject {
+		property QtObject title: QtObject {
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_contact_username_n', 'j').color
-				property color selected: ColorsList.add(sectionName+'_contact_username_c', 'q').color
+				property color normal: ColorsList.add(sectionName+'_contact_title_n', 'j').color
+				property color selected: ColorsList.add(sectionName+'_contact_title_c', 'q').color
 			}
 		}
 	}

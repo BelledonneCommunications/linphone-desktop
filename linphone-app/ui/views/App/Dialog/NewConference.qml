@@ -539,7 +539,7 @@ DialogPlus {
 								id: participantView
 								anchors.fill: parent
 								
-								showContactAddress:false
+								showSubtitle:false
 								showSwitch : conferenceManager.isNew
 								showSeparator: false
 								isSelectable: false

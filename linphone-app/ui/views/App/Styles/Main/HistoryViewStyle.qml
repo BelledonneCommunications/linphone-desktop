@@ -31,8 +31,8 @@ QtObject {
 		}
 		
 		property QtObject description: QtObject {
-			property color sipAddressColor: ColorsList.add(sectionName+'_bar_description_sipAddress', 'g').color
-			property color usernameColor: ColorsList.add(sectionName+'_bar_description_username', 'j').color
+			property color subtitleColor: ColorsList.add(sectionName+'_bar_description_subtitle', 'g').color
+			property color titleColor: ColorsList.add(sectionName+'_bar_description_title', 'j').color
 		}
 	}
 	
