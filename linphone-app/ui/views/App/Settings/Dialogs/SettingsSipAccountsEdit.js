@@ -52,6 +52,7 @@ function initForm (account) {
   route.text = config.route
   conferenceUri.text = config.conferenceUri
   videoConferenceUri.text = config.videoConferenceUri
+  limeServerUrl.text = config.limeServerUrl
   contactParams.text = config.contactParams
   avpfInterval.text = config.avpfInterval
   registerEnabled.checked = config.registerEnabled
@@ -72,7 +73,7 @@ function initForm (account) {
 }
 
 function formIsValid () {
-  return dialog._sipAddressOk && dialog._serverAddressOk && dialog._routeOk && dialog._conferenceUriOk && dialog._videoConferenceUriOk
+  return dialog._sipAddressOk && dialog._serverAddressOk && dialog._routeOk && dialog._conferenceUriOk && dialog._videoConferenceUriOk && dialog._limeServerUrlOk
 }
 
 // -----------------------------------------------------------------------------
@@ -86,6 +87,7 @@ function validAccount (account) {
 		route: route.text,
 		conferenceUri: conferenceUri.text,
 		videoConferenceUri: videoConferenceUri.text,
+		limeServerUrl: limeServerUrl.text,
 		contactParams: contactParams.text,
 		avpfInterval: avpfInterval.text,
 		registerEnabled: registerEnabled.checked,
@@ -117,6 +119,10 @@ function handleConferenceUriChanged (uri) {
 
 function handleVideoConferenceUriChanged (uri) {
   dialog._videoConferenceUriOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)	
+}
+
+function handleLimeServerUrlChanged (uri) {
+  dialog._limeServerUrlOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)	
 }
 
 function handleServerAddressChanged (address) {

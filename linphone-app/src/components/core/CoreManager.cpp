@@ -259,7 +259,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 				nullptr
 				);
 	// Enable LIME on your core to use encryption.
-	mCore->enableLimeX3Dh(mCore->getLimeX3DhServerUrl() != "");
+	mCore->enableLimeX3Dh(mCore->limeX3DhAvailable());
 	// Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
 	
 	mCore->addListener(mHandlers);
@@ -294,8 +294,9 @@ void CoreManager::handleChatRoomCreated(const QSharedPointer<ChatRoomModel> &cha
 
 void CoreManager::migrate () {
 	shared_ptr<linphone::Config> config = mCore->getConfig();
+	auto oldLimeServerUrl = mCore->getLimeX3DhServerUrl();// core url is deprecated : If core url exists, it must be copied to all linphone accounts.
 	int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
-	if (rcVersion == Constants::RcVersionCurrent)
+	if (oldLimeServerUrl.empty() && rcVersion == Constants::RcVersionCurrent)
 		return;
 	if (rcVersion > Constants::RcVersionCurrent) {
 		qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
@@ -306,7 +307,7 @@ void CoreManager::migrate () {
 	qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
 			   .arg(rcVersion).arg(Constants::RcVersionCurrent);
 	
-	bool setlimeServerUrl = false;
+	bool setLimeServerUrl = false;
 	for(const auto &account : getAccountList()){
 		auto params = account->getParams();
 		if( params->getDomain() == Constants::LinphoneDomain) {
@@ -319,7 +320,7 @@ void CoreManager::migrate () {
 			}
 			if( rcVersion < 2) {
 				bool exists = newParams->getConferenceFactoryUri() != "";
-				setlimeServerUrl = true;
+				setLimeServerUrl = true;
 				if(!exists )
 					newParams->setConferenceFactoryUri(Constants::DefaultConferenceURI);
 				qInfo() << "Migrating" << accountIdentity << "for version 2. Conference factory URI" << (exists ? std::string("unchanged") : std::string("= ") +Constants::DefaultConferenceURI).c_str();
@@ -335,17 +336,25 @@ void CoreManager::migrate () {
 			}
 			if( rcVersion < 5) {
 				bool exists = !!newParams->getAudioVideoConferenceFactoryAddress();
-				setlimeServerUrl = true;
+				setLimeServerUrl = true;
 				if( !exists)
 					newParams->setAudioVideoConferenceFactoryAddress(Utils::interpretUrl(Constants::DefaultVideoConferenceURI));
 				qInfo() << "Migrating" << accountIdentity << "for version 5. Video conference factory URI" << (exists ? std::string("unchanged") : std::string("= ") +Constants::DefaultVideoConferenceURI).c_str();
 				// note: using std::string.c_str() to avoid having double quotes in qInfo()
 			}
+			
+			if(!oldLimeServerUrl.empty())
+				newParams->setLimeServerUrl(oldLimeServerUrl);
+			else if( setLimeServerUrl)
+				newParams->setLimeServerUrl(Constants::DefaultLimeServerURL);
+			
 			account->setParams(newParams);
 		}
 	}
-	if(setlimeServerUrl) {
-		mCore->setLimeX3DhServerUrl(Constants::DefaultLimeServerURL);
+	if( !oldLimeServerUrl.empty()) {
+		mCore->setLimeX3DhServerUrl("");
+		mCore->enableLimeX3Dh(true);
+	}else if(setLimeServerUrl) {
 		mCore->enableLimeX3Dh(true);
 	}
 	

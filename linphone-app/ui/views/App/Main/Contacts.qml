@@ -166,7 +166,7 @@ ColumnLayout {
 									backgroundRadius: 90
 									colorSet: SettingsModel.getShowStartChatButton() ? ContactsStyle.chat : ContactsStyle.history
 									visible: SettingsModel.secureChatEnabled
-									enabled: AccountSettingsModel.conferenceURI != ''
+									enabled: AccountSettingsModel.conferenceUri != ''
 									Icon{
 										icon:'secure_level_1'
 										iconSize:parent.height/2
@@ -175,7 +175,7 @@ ColumnLayout {
 									}
 									onClicked: {actions.itemAt(3).open()}
 									tooltipMaxWidth: actionBar.width
-									tooltipVisible: AccountSettingsModel.conferenceURI == ''
+									tooltipVisible: AccountSettingsModel.conferenceUri == ''
 										//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
 									tooltipText: '- ' + qsTr('missingConferenceURI') + '\n'
 								}

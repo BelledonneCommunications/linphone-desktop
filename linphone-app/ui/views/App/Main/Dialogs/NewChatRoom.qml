@@ -28,7 +28,7 @@ DialogPlus {
 			onClicked: exit(0)
 		},
 		TextButtonB {
-			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
+			enabled: selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceUri != ''
 			//: 'Launch' : Start button
 			text: qsTr('startButton')
 			capitalization: Font.AllUppercase
@@ -38,7 +38,7 @@ DialogPlus {
 					exit(1)
 			}
 			TooltipArea{
-				visible: AccountSettingsModel.conferenceURI == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
+				visible: AccountSettingsModel.conferenceUri == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
 				maxWidth: participantView.width
 				delay:0
 				text: {
@@ -49,7 +49,7 @@ DialogPlus {
 						if( selectedParticipants.count < conferenceManager.minParticipants)
 						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the chat creation.
 							txt += '- ' + qsTr('missingParticipants', '', conferenceManager.minParticipants).arg(conferenceManager.minParticipants) + '\n'
-						if( AccountSettingsModel.conferenceURI == '')
+						if( AccountSettingsModel.conferenceUri == '')
 						//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missong in its configuration.
 							txt += '- ' + qsTr('missingConferenceURI') + '\n'
 						return txt;

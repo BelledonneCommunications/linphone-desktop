@@ -823,7 +823,10 @@ void SettingsModel::setStandardChatEnabled (bool status) {
 
 bool SettingsModel::getSecureChatEnabled () const {
 	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "secure_chat_enabled"), 1)
-		&& !CoreManager::getInstance()->getCore()->getLimeX3DhServerUrl().empty() && getGroupChatEnabled();
+		&& getLimeIsSupported()
+		&& CoreManager::getInstance()->getCore()->getDefaultAccount() && !CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getLimeServerUrl().empty()
+		//&& !CoreManager::getInstance()->getCore()->getLimeX3DhServerUrl().empty()
+		&& getGroupChatEnabled();
 	;
 }
 

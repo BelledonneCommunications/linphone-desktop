@@ -2956,6 +2956,21 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>videoConferenceURI</source>
+        <extracomment>&quot;Video Conference URI&quot; : Label of a text edit for filling Video conference URI.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>limeServerUrl</source>
+        <extracomment>&apos;E2E encryption keys server URL&apos; : Label of a text edit for filling the Lime server URL.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invalidLimeServerUrl</source>
+        <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsTunnel</name>

@@ -92,7 +92,7 @@ SearchBox {
 			}, {
 				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 1,
-				visible: SettingsModel.secureChatEnabled && AccountSettingsModel.conferenceURI != '',
+				visible: SettingsModel.secureChatEnabled && AccountSettingsModel.conferenceUri != '',
 				handler: function (entry) {
 					searchBox.closeMenu()
 					searchBox.launchSecureChat(entry.sipAddress)

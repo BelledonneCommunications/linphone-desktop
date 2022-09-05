@@ -106,7 +106,7 @@ DialogPlus {
 			onClicked: exit(0)
 		},
 		TextButtonB {
-			enabled: conferenceManager.creationState != 1 && selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceURI != ''
+			enabled: conferenceManager.creationState != 1 && selectedParticipants.count >= conferenceManager.minParticipants && subject.text != '' && AccountSettingsModel.conferenceUri != ''
 			//: 'Launch' : Launch button
 			text: conferenceManager.isNew ? qsTr('launchButton') 
 			//: 'Update' : Update button
@@ -142,7 +142,7 @@ DialogPlus {
 				conferenceInfoModel.createConference(false && secureSwitch.checked)	// TODO remove false when Encryption is ready to use
 			}
 			TooltipArea{
-				visible: AccountSettingsModel.conferenceURI == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
+				visible: AccountSettingsModel.conferenceUri == '' || subject.text == '' || selectedParticipants.count < conferenceManager.minParticipants
 				maxWidth: participantView.width
 				delay:0
 				text: {
@@ -153,7 +153,7 @@ DialogPlus {
 					if( selectedParticipants.count < conferenceManager.minParticipants)
 						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the conference creation.
 						txt += '- ' + qsTr('missingParticipants', '', conferenceManager.minParticipants).arg(conferenceManager.minParticipants) + '\n'
-					if( AccountSettingsModel.conferenceURI == '')
+					if( AccountSettingsModel.conferenceUri == '')
 						//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
 						txt += '- ' + qsTr('missingConferenceURI') + '\n'
 					return txt;

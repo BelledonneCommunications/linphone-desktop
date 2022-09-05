@@ -18,6 +18,7 @@ DialogPlus {
 	property bool _routeOk: true
 	property bool _conferenceUriOk: true
 	property bool _videoConferenceUriOk: true
+	property bool _limeServerUrlOk: true
 	
 	flat: true
 	showMargins: true
@@ -151,8 +152,8 @@ DialogPlus {
 				}
 				FormLine {
 					FormGroup {
-						
-						label: 'Video Conference URI'
+						//: "Video Conference URI" : Label of a text edit for filling Video conference URI.
+						label: qsTr('videoConferenceURI')
 						
 						TextField {
 							id: videoConferenceUri
@@ -160,6 +161,22 @@ DialogPlus {
 							error: dialog._videoConferenceUriOk ? '' : qsTr("invalidConferenceURI")
 							
 							onTextChanged: Logic.handleVideoConferenceUriChanged(text)
+							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
+							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
+						}
+					}
+				}
+				FormLine {
+					FormGroup {
+						//: 'E2E encryption keys server URL' : Label of a text edit for filling the Lime server URL.
+						label: qsTr('limeServerUrl')
+						
+						TextField {
+							id: limeServerUrl
+							//: "invalid E2E encryption keys server URL" : Error text about E2E encryption keys server URL.
+							error: dialog._limeServerUrlOk ? '' : qsTr("invalidLimeServerUrl")
+							
+							onTextChanged: Logic.handleLimeServerUrlChanged(text)
 							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}
