@@ -86,12 +86,18 @@ DialogPlus {
 				Slider {
 					id: playbackSlider
 					width: parent.width
+					property bool initialized: false
 
-					value: call ? value = call.speakerVolumeGain : value = SettingsModel.playbackGain
-					onPositionChanged: if(call)
-										   call.speakerVolumeGain = position
-										else
-										   SettingsModel.playbackGain = position
+					value: call ? call.speakerVolumeGain : SettingsModel.playbackGain
+					onPositionChanged: {
+										if( initialized){
+											if(call)
+												call.speakerVolumeGain = position
+											else
+												SettingsModel.playbackGain = position
+										}
+									}
+					Component.onCompleted: initialized = true
 
 					ToolTip {
 						parent: playbackSlider.handle
@@ -134,11 +140,15 @@ DialogPlus {
 					id: captureSlider
 					width: parent.width
 					value: call ? call.microVolumeGain : SettingsModel.captureGain
+					property bool initialized: false
 
-					onPositionChanged: if(call)
-										   call.microVolumeGain = position
-										else
-											SettingsModel.captureGain = position
+					onPositionChanged: if(initialized){
+											if(call)
+												call.microVolumeGain = position
+											else
+												SettingsModel.captureGain = position
+										}
+					Component.onCompleted: initialized = true
 
 					ToolTip {
 						parent: captureSlider.handle

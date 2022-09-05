@@ -295,6 +295,8 @@ void SettingsModel::accessAudioSettings() {
 	emit playbackDeviceChanged(getPlaybackDevice());
 	emit captureDeviceChanged(getCaptureDevice());
 	emit ringerDeviceChanged(getRingerDevice());
+	emit playbackGainChanged(getPlaybackGain());
+	emit captureGainChanged(getCaptureGain());
 
 	//if (!getIsInCall()) {
 		startCaptureGraph();
