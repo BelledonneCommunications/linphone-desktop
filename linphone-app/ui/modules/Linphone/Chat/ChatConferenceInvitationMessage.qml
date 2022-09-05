@@ -87,10 +87,10 @@ Loader{
 				font.pointSize: ChatCalendarMessageStyle.type.pointSize
 				font.weight: Font.Bold
 				text:  (mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateUpdated
-				//: 'Meeting has been cancelled' : ICS title for a cancelled invitation.
+				//: 'Meeting has been updated' : ICS title for an updated invitation.
 						? qsTr('icsUpdatedMeetingInvite')
 						:  mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateCancelled
-				//: 'Meeting has been updated' : ICS title for an updated invitation.
+				//: 'Meeting has been cancelled' : ICS title for a cancelled invitation.
 							? qsTr('icsCancelledMeetingInvite')
 				//: 'Meeting invite' : ICS title that is an invitation.
 							: qsTr('icsMeetingInvite')
@@ -264,6 +264,7 @@ Loader{
 				}
 				ActionButton{
 					id: shareButton
+					visible: joinButton.visible
 					iconSize: joinButton.height/2
 					isCustom: true
 					colorSet: ChatCalendarMessageStyle.shareButton
@@ -276,6 +277,7 @@ Loader{
 				TextButtonC{
 					id: joinButton
 					addHeight: 20
+					visible: mainItem.conferenceInfoModel.state != LinphoneEnums.ConferenceInfoStateCancelled
 					//: 'Join' : Action button to join the conference.
 					text: qsTr('icsJoinButton').toUpperCase()
 					onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)

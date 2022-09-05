@@ -36,7 +36,7 @@ Rectangle {
 											? entry.contactModel.vcard.username
 											: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
 									: ''
-	property string organizer: entry.conferenceInfoModel ? UtilsCpp.getDisplayName(entry.conferenceInfoModel.organizer) : ''
+	property string organizer: entry && entry.conferenceInfoModel ? UtilsCpp.getDisplayName(entry.conferenceInfoModel.organizer) : ''
 	
 	signal avatarClicked(var mouse)
 	// ---------------------------------------------------------------------------
