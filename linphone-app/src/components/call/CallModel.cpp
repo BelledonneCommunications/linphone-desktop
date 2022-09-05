@@ -273,6 +273,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 			
 		case linphone::StreamType::Audio:
 			updateStats(callStats, mAudioStats);
+			updateEncrypionStats(callStats, mEncryptionStats);
 			break;
 		case linphone::StreamType::Video:
 			updateStats(callStats, mVideoStats);
@@ -1071,7 +1072,9 @@ QString CallModel::getSecuredString () const {
 			case linphone::MediaEncryption::SRTP:
 				return QStringLiteral("SRTP");
 			case linphone::MediaEncryption::ZRTP:
-				return QStringLiteral("ZRTP");
+				return CoreManager::getInstance()->getCore()->getPostQuantumAvailable()
+						? QStringLiteral("Post Quantum ZRTP")
+						: QStringLiteral("ZRTP");
 			case linphone::MediaEncryption::DTLS:
 				return QStringLiteral("DTLS");
 			case linphone::MediaEncryption::None:
@@ -1090,6 +1093,10 @@ QVariantList CallModel::getAudioStats () const {
 
 QVariantList CallModel::getVideoStats () const {
 	return mVideoStats;
+}
+
+QVariantList CallModel::getEncryptionStats () const {
+	return mEncryptionStats;
 }
 
 // -----------------------------------------------------------------------------
@@ -1175,6 +1182,28 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 		}
 	}
 }
+void CallModel::updateEncrypionStats (const shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList) {
+	if( callStats->getType() == linphone::StreamType::Audio) {// just in case
+		statsList.clear();
+		if(isSecured()) {
+		//: 'Media encryption' : label in encryption section of call statistics
+			statsList << createStat(tr("callStatsMediaEncryption"), getSecuredString());
+			if(mCall->getCurrentParams()->getMediaEncryption() == linphone::MediaEncryption::ZRTP){
+			//: 'Cipher algorithm' : label in encryption section of call statistics
+				statsList << createStat(tr("callStatsCipherAlgo"), Utils::coreStringToAppString(callStats->getZrtpCipherAlgo()));
+			//: 'Key agreement algorithm' : label in encryption section of call statistics
+				statsList << createStat(tr("callStatsKeyAgreementAlgo"), Utils::coreStringToAppString(callStats->getZrtpKeyAgreementAlgo()));
+			//: 'Hash algorithm' : label in encryption section of call statistics
+				statsList << createStat(tr("callStatsHashAlgo"), Utils::coreStringToAppString(callStats->getZrtpHashAlgo()));
+			//: 'Authentication algorithm' : label in encryption section of call statistics
+				statsList << createStat(tr("callStatsAuthAlgo"), Utils::coreStringToAppString(callStats->getZrtpAuthTagAlgo()));
+			//: 'SAS algorithm' : label in encryption section of call statistics
+				statsList << createStat(tr("callStatsSasAlgo"), Utils::coreStringToAppString(callStats->getZrtpSasAlgo()));
+			}
+		}
+	}
+}
+
 
 // -----------------------------------------------------------------------------
 

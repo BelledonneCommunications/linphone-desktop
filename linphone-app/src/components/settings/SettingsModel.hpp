@@ -143,6 +143,7 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(MediaEncryption mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged)
 	Q_PROPERTY(bool mediaEncryptionMandatory READ mandatoryMediaEncryptionEnabled WRITE enableMandatoryMediaEncryption NOTIFY mediaEncryptionChanged)
+	Q_PROPERTY(bool isPostQuantumAvailable READ getPostQuantumAvailable CONSTANT)
 	
 	Q_PROPERTY(bool limeState READ getLimeState WRITE setLimeState NOTIFY limeStateChanged)
 	
@@ -455,6 +456,8 @@ public:
 	
 	bool mandatoryMediaEncryptionEnabled () const;
 	void enableMandatoryMediaEncryption(bool mandatory);
+	
+	bool getPostQuantumAvailable() const;
 	
 	bool getLimeState () const;
 	void setLimeState (const bool& state);

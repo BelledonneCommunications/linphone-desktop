@@ -217,6 +217,7 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | ENABLE_BUILD_EXAMPLES | Enable the build of examples | NO |
 | ENABLE_BUILD_VERBOSE | Enable the build generation to be more verbose | NO |
 | ENABLE_DAEMON | Enable the linphone daemon interface. | NO |
+| ENABLE_PQCRYPTO | Enable post quantum ZRTP. | NO |
 | ENABLE_STRICT | Build with strict compilator flags e.g. -Wall -Werror | NO |
 | ENABLE_TESTS | Build with testing binaries of SDK | NO |
 | ENABLE_TESTS_COMPONENTS | Build libbctoolbox-tester | NO |

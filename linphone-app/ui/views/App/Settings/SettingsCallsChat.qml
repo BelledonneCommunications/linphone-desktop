@@ -20,41 +20,33 @@ TabContainer {
 			width: parent.width
 			
 			FormLine {
-				visible: !!encryption.encryptions.length
+				visible: !!encryption.model.length
 				
 				FormGroup {
 					label: qsTr('encryptionLabel')
 					
-					ExclusiveButtons {
+					ComboBox {
 						id: encryption
+						textRole: 'key'
 						
-						property var encryptions: (function () {
+						model: (function () {
 							var encryptions = SettingsModel.supportedMediaEncryptions
 							if (encryptions.length) {
-								encryptions.unshift([ SettingsModel.MediaEncryptionNone, qsTr('noEncryption') ])
+								encryptions.unshift({value:SettingsModel.MediaEncryptionNone, key:qsTr('noEncryption')})
 							}
 							
 							return encryptions
 						})()
 						
-						texts: encryptions.map(function (value) {
-							return value[1]
-						})
-						
-						onClicked: SettingsModel.mediaEncryption = encryptions[button][0]
-						
-						Binding {
-							property: 'selectedButton'
-							target: encryption
-							value: {
-								var toFound = SettingsModel.mediaEncryption
-								return Number(
-											Utils.findIndex(encryption.encryptions, function (value) {
-												return toFound === value[0]
-											})
-											)
-							}
+						Component.onCompleted: {
+							var toFound = SettingsModel.mediaEncryption
+							currentIndex = Number(
+										Utils.findIndex(encryption.model, function (value) {
+											return toFound === value.value
+										})
+							)
 						}
+						onActivated: SettingsModel.mediaEncryption = model[index].value
 					}
 				}
 				FormGroup {

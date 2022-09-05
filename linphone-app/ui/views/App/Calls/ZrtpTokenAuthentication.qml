@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -23,6 +24,14 @@ Rectangle{
 
     Layout.fillWidth: true
     anchors.bottom: parent.bottom
+    
+    Icon{
+		Layout.alignment: Qt.AlignHCenter
+		Layout.bottomMargin: 5
+		visible: SettingsModel.isPostQuantumAvailable
+		icon: CallStyle.zrtpArea.pqIcon
+		iconSize: CallStyle.zrtpArea.iconSize
+	}
 
   // ---------------------------------------------------------------------------
   // Main text.

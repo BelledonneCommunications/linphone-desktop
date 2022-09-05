@@ -381,6 +381,36 @@
         <source>callErrorHangUp</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>callStatsMediaEncryption</source>
+        <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callStatsCipherAlgo</source>
+        <extracomment>&apos;Cipher algorithm&apos; : label in encryption section of call statistics</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callStatsKeyAgreementAlgo</source>
+        <extracomment>&apos;Key agreement algorithm&apos; : label in encryption section of call statistics</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callStatsHashAlgo</source>
+        <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callStatsAuthAlgo</source>
+        <extracomment>&apos;Authentication algorithm&apos; : label in encryption section of call statistics</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callStatsSasAlgo</source>
+        <extracomment>&apos;SAS algorithm&apos; : label in encryption section of call statistics</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CallSipAddress</name>
@@ -402,6 +432,11 @@
     <message>
         <source>videoStatsLabel</source>
         <translation>Videó</translation>
+    </message>
+    <message>
+        <source>mediaEncryptionLabel</source>
+        <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

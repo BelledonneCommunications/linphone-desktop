@@ -933,7 +933,10 @@ bool SettingsModel::getLimeIsSupported () const {
 // -----------------------------------------------------------------------------
 
 static inline QVariant buildEncryptionDescription (SettingsModel::MediaEncryption encryption, const char *description) {
-	return QVariantList() << encryption << description;
+	QVariantMap m;
+	m["key"] = description;
+	m["value"] = encryption;
+	return m;
 }
 
 QVariantList SettingsModel::getSupportedMediaEncryptions () const {
@@ -943,8 +946,12 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
 	if (core->mediaEncryptionSupported(linphone::MediaEncryption::SRTP))
 		list << buildEncryptionDescription(MediaEncryptionSrtp, "SRTP");
 
-	if (core->mediaEncryptionSupported(linphone::MediaEncryption::ZRTP))
-		list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
+	if (core->mediaEncryptionSupported(linphone::MediaEncryption::ZRTP)){
+		if( core->getPostQuantumAvailable())
+			list << buildEncryptionDescription(MediaEncryptionZrtp, "PQ-ZRTP");
+		else
+			list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
+	}
 	
 	if (core->mediaEncryptionSupported(linphone::MediaEncryption::DTLS))
 		list << buildEncryptionDescription(MediaEncryptionDtls, "DTLS");
@@ -993,6 +1000,10 @@ void SettingsModel::enableMandatoryMediaEncryption(bool mandatory) {
 	} else {
 		emit mediaEncryptionChanged(getMediaEncryption());
 	}
+}
+
+bool SettingsModel::getPostQuantumAvailable() const{
+	return CoreManager::getInstance()->getCore() && CoreManager::getInstance()->getCore()->getPostQuantumAvailable();
 }
 
 // -----------------------------------------------------------------------------

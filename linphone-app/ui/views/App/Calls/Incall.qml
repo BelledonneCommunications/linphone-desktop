@@ -373,8 +373,10 @@ Rectangle {
 		id: zrtp
 		
 		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.margins: CallStyle.container.margins
 		anchors.bottom: actionsButtons.top
+		anchors.leftMargin: CallStyle.container.margins
+		anchors.rightMargin: CallStyle.container.margins
+		anchors.bottomMargin: CallStyle.container.margins
 		height: visible ? implicitHeight : 0
 		
 		call: callModel

@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Round progress bar for transferring a file and allow to cancel it.
 - hide all accounts if their custom parameter 'hidden' is set to 1.
 - Right-click on a timeline will show a slide menu to do actions on the timeline.
+- Post quantum ZRTP.
 
 ### Fixed
 - Crash on exit.

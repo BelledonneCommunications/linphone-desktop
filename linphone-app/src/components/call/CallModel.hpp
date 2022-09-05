@@ -81,6 +81,7 @@ class CallModel : public QObject {
 	
 	Q_PROPERTY(QVariantList audioStats READ getAudioStats NOTIFY statsUpdated)
 	Q_PROPERTY(QVariantList videoStats READ getVideoStats NOTIFY statsUpdated)
+	Q_PROPERTY(QVariantList encryptionStats READ getEncryptionStats NOTIFY statsUpdated)
 	
 	Q_PROPERTY(CallEncryption encryption READ getEncryption NOTIFY securityUpdated)
 	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated)
@@ -286,7 +287,9 @@ public:
 	
 	QVariantList getAudioStats () const;
 	QVariantList getVideoStats () const;
+	QVariantList getEncryptionStats () const;
 	void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
+	void updateEncrypionStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
 	
 	QString iceStateToString (linphone::IceState state) const;
 	
@@ -320,6 +323,7 @@ private:
 	
 	QVariantList mAudioStats;
 	QVariantList mVideoStats;
+	QVariantList mEncryptionStats;
 	std::shared_ptr<SearchListener> mSearch;
 	QString mTransferAddress;
 	QSharedPointer<ConferenceModel> mConferenceModel;

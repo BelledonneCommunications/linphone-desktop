@@ -13,8 +13,8 @@ QtObject {
 	property int height: 280
 	property int leftMargin: 12
 	property int rightMargin: 12
+	property int topMargin: 40
 	property int spacing: 8
-	property int topMargin: 100
 	property QtObject popup: QtObject{
 		property int topMargin: 60
 		property int bottomMargin: 100

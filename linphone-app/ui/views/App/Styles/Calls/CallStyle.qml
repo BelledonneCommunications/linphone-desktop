@@ -87,6 +87,8 @@ QtObject {
 	
 	property QtObject zrtpArea: QtObject {
 		property int height: 50
+		property string pqIcon: 'secure_pq_zrtp'
+		property int iconSize: 30
 		
 		property QtObject buttons: QtObject {
 			property int spacing: 10

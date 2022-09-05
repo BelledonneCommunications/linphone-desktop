@@ -26,14 +26,16 @@ Rectangle {
 	property bool showSubtitle : true
 	property string subtitle: ''
 	
-	property string subject: (entry != undefined && entry.conferenceInfoModel && entry.conferenceInfoModel.subject
+	property string subject: (entry && entry.conferenceInfoModel && entry.conferenceInfoModel.subject
 										? entry.conferenceInfoModel.subject
 										: '')
-	property string username: (entry != undefined && entry.username != undefined
-											? entry.username
-											: entry.contactModel != undefined
-												? entry.contactModel.vcard.username
-												: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || ''))
+	property string username: entry 
+									? entry.username
+										? entry.username
+										: entry.contactModel
+											? entry.contactModel.vcard.username
+											: UtilsCpp.getDisplayName(entry.sipAddress || entry.fullPeerAddress  || entry.peerAddress || '')
+									: ''
 	property string organizer: entry.conferenceInfoModel ? UtilsCpp.getDisplayName(entry.conferenceInfoModel.organizer) : ''
 	
 	signal avatarClicked(var mouse)

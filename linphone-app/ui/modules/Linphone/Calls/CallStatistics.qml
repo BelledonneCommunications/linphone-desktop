@@ -30,28 +30,62 @@ Popup {
 			anchors.leftMargin: CallStatisticsStyle.popup.leftMargin
 			anchors.rightMargin: CallStatisticsStyle.popup.rightMargin
 			radius: 10
-			Row {
+			RowLayout {
+				id: mainLayout
 				anchors {
 					fill: parent
 					topMargin: CallStatisticsStyle.topMargin
 					leftMargin: CallStatisticsStyle.leftMargin
 					rightMargin: CallStatisticsStyle.rightMargin
 				}
-				
-				Loader {
-					property string $label: qsTr('audioStatsLabel')
-					property var $data: callStatistics.call?callStatistics.call.audioStats:null
+				Layout.alignment: Qt.AlignCenter
+				Item{
+					Layout.preferredWidth: videoLoader.sourceComponent ? 0 : parent.width /7
+					Layout.fillHeight: true
+				}
+				Item{
+					Layout.fillWidth: true
+					Layout.fillHeight: true
 					
-					sourceComponent: media
-					width: parent.width / 2
+					Column{
+						anchors.fill: parent
+						spacing: 30
+						Loader {
+							property string $label: qsTr('audioStatsLabel')
+							property var $data: callStatistics.call?callStatistics.call.audioStats:null
+							property bool $fillLayout: !encryptionLoader.active
+							
+							sourceComponent: media
+							width: parent.width
+						}
+						Loader {
+							id: encryptionLoader
+							//: 'Media encryption' : title in call statistics for the encryption section
+							property string $label: qsTr('mediaEncryptionLabel')
+							property var $data: callStatistics.call ? callStatistics.call.encryptionStats : null
+							
+							sourceComponent: callStatistics.call && callStatistics.call.isSecured ? media : undefined
+							width: parent.width
+						}
+					}
 				}
 				
-				Loader {
-					property string $label: qsTr('videoStatsLabel')
-					property var $data: callStatistics.call?callStatistics.call.videoStats:null
-					
-					sourceComponent: media
-					width: parent.width / 2
+				
+				Item{
+					Layout.fillWidth: videoLoader.sourceComponent
+					Layout.fillHeight: true
+					Loader {
+						id: videoLoader
+						property string $label: qsTr('videoStatsLabel')
+						property var $data: callStatistics.call?callStatistics.call.videoStats:null
+						
+						sourceComponent: callStatistics.call && callStatistics.call.videoEnabled ? media : undefined
+						width: sourceComponent ? parent.width : 0
+					}
+				}
+				Item{
+					Layout.preferredWidth: videoLoader.sourceComponent ? 0 : parent.width /7
+					Layout.fillHeight: true
 				}
 			}
 			
@@ -64,7 +98,7 @@ Popup {
 				
 				RowLayout {
 					spacing: CallStatisticsStyle.spacing
-					width: parent.width
+					width: parent ? parent.width : undefined
 					
 					Text {
 						Layout.preferredWidth: CallStatisticsStyle.key.width
@@ -102,7 +136,8 @@ Popup {
 			Component {
 				id: media
 				
-				Column {
+				Column{
+					width: parent.width
 					Text {
 						color: CallStatisticsStyle.title.color
 						
