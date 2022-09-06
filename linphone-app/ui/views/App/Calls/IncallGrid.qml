@@ -56,9 +56,10 @@ Mosaic {
 				id: cameraView
 				anchors.fill: parent
 				
+				callModel: index >= 0 ? participantDevices.callModel : null	// do this before to prioritize changing call on remove
 				deactivateCamera: index <0 || !grid.cameraEnabled || grid.callModel.pausedByUser
 				currentDevice: gridModel.participantDevices.getAt(index)
-				callModel: participantDevices.callModel
+				
 				isCameraFromDevice: true
 				isPaused: avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				showCloseButton: false

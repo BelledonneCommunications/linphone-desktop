@@ -144,6 +144,10 @@ Rectangle {
 					width : cameraWidth
 					callModel:  mainItem.callModel
 					conferenceInfoModel: mainItem.conferenceInfoModel
+											? mainItem.conferenceInfoModel
+											: mainItem.callModel
+												? mainItem.callModel.conferenceModel
+												: null
 					deactivateCamera: !mainItem.previewLoaderEnabled || mainItem.isEnding
 					
 					/*

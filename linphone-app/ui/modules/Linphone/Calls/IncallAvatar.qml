@@ -6,6 +6,7 @@ import UtilsCpp 1.0
 
 import App.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 // =============================================================================
 
 Avatar {
@@ -23,9 +24,7 @@ Avatar {
 										  : null
 	property var _username: conferenceInfoModel
 							? conferenceInfoModel.subject
-							: call && call.conferenceModel
-							  ? call.conferenceModel.subject
-							  : _sipAddressObserver
+							: _sipAddressObserver
 								? UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress)
 								: ''
 	property bool isPaused: (call && (call.status === CallModel.CallStatusPaused)) || (participantDeviceModel && participantDeviceModel.isPaused) || false
