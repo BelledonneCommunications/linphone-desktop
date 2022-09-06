@@ -264,10 +264,14 @@ void TimelineListModel::updateTimelines () {
 }
 
 void TimelineListModel::add (QSharedPointer<TimelineModel> timeline){
-	connect(timeline->getChatRoomModel(), &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
-	ProxyListModel::add(timeline);
-	emit layoutChanged();
-	emit countChanged();
+	auto chatRoomModel = timeline->getChatRoomModel();
+	auto chatRoom = chatRoomModel->getChatRoom();
+	if( !chatRoomModel->haveConferenceAddress() ||  chatRoom->getHistoryEventsSize() != 0) {
+		connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
+		ProxyListModel::add(timeline);
+		emit layoutChanged();
+		emit countChanged();
+	}
 }
 
 void TimelineListModel::removeChatRoomModel(QSharedPointer<ChatRoomModel> model){

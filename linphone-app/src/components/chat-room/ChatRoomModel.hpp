@@ -121,6 +121,7 @@ public:
 	long getEphemeralLifetime() const;
 	bool canBeEphemeral();
 	bool haveEncryption() const;
+	bool haveConferenceAddress() const;
 	bool markAsReadEnabled() const;
 	Q_INVOKABLE bool isSecure() const;
 	int getSecurityLevel() const;

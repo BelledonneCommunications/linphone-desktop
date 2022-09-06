@@ -409,6 +409,10 @@ bool ChatRoomModel::haveEncryption() const{
 	return mChatRoom && mChatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None;
 }
 
+bool ChatRoomModel::haveConferenceAddress() const{
+	return mChatRoom && (mChatRoom->getConferenceAddress() || getFullPeerAddress().toLower().contains("conf-id"));
+}
+
 bool ChatRoomModel::markAsReadEnabled() const{
 	return mMarkAsReadEnabled;
 }

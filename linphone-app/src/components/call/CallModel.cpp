@@ -166,7 +166,7 @@ ContactModel *CallModel::getContactModel() const{
 }
 
 ChatRoomModel * CallModel::getChatRoomModel(){
-	if(mCall && mCall->getCallLog()->getCallId() != "" ){
+	if(mCall && mCall->getCallLog()->getCallId() != "" && !isConference()){// No chat rooms for conference (TODO)
 		auto currentParams = mCall->getCurrentParams();
 		bool isEncrypted = currentParams->getMediaEncryption() != linphone::MediaEncryption::None;
 		SettingsModel * settingsModel = CoreManager::getInstance()->getSettingsModel();
