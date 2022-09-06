@@ -96,39 +96,13 @@ Item {
 			avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
 			avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 		}
-		/*
-		state: 'bottom'
-			 states: [State {
-				 name: "bottom"
-		
-				 AnchorChanges {
-					 target: preview
-					 anchors.top: undefined
-					 anchors.bottom: mainItem.bottom
-				 }
-			 },
-			 State {
-				 name: "top"
-		
-				 AnchorChanges {
-					 target: preview
-					 anchors.top: mainItem.top
-					 anchors.bottom: undefined
-				 }
-			 }]*/
 	}
 	Item{
 		anchors.right: parent.right
 		anchors.top: parent.top
 		anchors.bottom: preview.top
 		anchors.rightMargin: 30
-// WORKAROUND to fix a Qt's bug on not refreshing layout to bottom when loading listview.
-		property int estimatedHeight: miniViews.count * (miniViews.cellHeight+miniViews.spacing)-miniViews.spacing
-		property int unusedHeight : Math.max(0, parent.height// Main Height
-													-preview.height-preview.anchors.topMargin-preview.anchors.bottomMargin// Preview height
-													-30	// margins
-													-estimatedHeight)// contents height
-		anchors.topMargin: 15 + unusedHeight
+		anchors.topMargin: 15
 //---------------
 
 		anchors.bottomMargin: 15
@@ -144,6 +118,8 @@ Item {
 				}
 			spacing: 15
 			verticalLayoutDirection: ListView.BottomToTop
+			fitCacheToContent: false
+			onCountChanged: if(contentItem.height < miniViews.height) positionViewAtBeginning()
 			delegate:Item{
 					height: miniViews.cellHeight
 					width: miniViews.width
