@@ -66,6 +66,7 @@ ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conferen
 	connect(this, &ConferenceModel::participantDeviceAdded, this, &ConferenceModel::participantDeviceCountChanged);
 	connect(this, &ConferenceModel::participantDeviceRemoved, this, &ConferenceModel::participantDeviceCountChanged);
 	connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ConferenceModel::participantDeviceCountChanged);
+	onConferenceStateChanged(mConference->getState());// Is it already Created like for local conference?
 }
 
 ConferenceModel::~ConferenceModel(){

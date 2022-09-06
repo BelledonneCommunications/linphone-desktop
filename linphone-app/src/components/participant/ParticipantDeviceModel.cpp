@@ -145,8 +145,8 @@ void ParticipantDeviceModel::updateVideoEnabled(){
 		(	mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendRecv
 			|| mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendOnly
 		)
-	 || isMe());
-	if( mIsVideoEnabled != enabled && mCall && mCall->getCall()->getState() ==  linphone::Call::State::StreamsRunning) {
+	 || isMe()) && !mIsPaused;
+	 if( mIsVideoEnabled != enabled && mCall && mCall->getCall()->getState() ==  linphone::Call::State::StreamsRunning) {
 		qWarning() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str() : "") << ", me=" << isMe() << ", CallState=" << (mCall ? (int)mCall->getCall()->getState() : -1);
 		mIsVideoEnabled = enabled;
 		emit videoEnabledChanged();

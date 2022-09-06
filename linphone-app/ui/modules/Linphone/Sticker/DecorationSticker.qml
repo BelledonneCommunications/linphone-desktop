@@ -140,7 +140,14 @@ Item{
 		BusyIndicator{// Joining spinner
 			Layout.preferredHeight: 20
 			Layout.preferredWidth: 20
-			running: mainItem._currentDevice && (mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
+			property bool delayed : false
+			visible: delayed && mainItem._currentDevice && (mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
+			Timer{// Delay starting spinner (Qt bug)
+				id: indicatorDelay
+				interval: 100
+				onTriggered: parent.delayed = true
+			}
+			Component.onCompleted: indicatorDelay.start()
 		}
 	}
 }

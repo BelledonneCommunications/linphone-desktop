@@ -204,7 +204,7 @@ ColumnLayout  {
 							}
 							*/
 							onTitleClicked: {
-								if(!conversation.isReadOnly) {
+								if(!conversation.chatRoomModel.isReadOnly) {
 									usernameEdit.visible = !usernameEdit.visible
 									usernameEdit.forceActiveFocus()
 								}
@@ -224,7 +224,7 @@ ColumnLayout  {
 						iconSize:30
 						MouseArea{
 							anchors.fill:parent
-							visible: !conversation.isReadOnly
+							visible: !conversation.chatRoomModel.isReadOnly
 							onClicked : {
 								window.detachVirtualWindow()
 								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
@@ -329,17 +329,21 @@ ColumnLayout  {
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.groupChat
 						
-						visible: SettingsModel.videoConferenceEnabled && SettingsModel.outgoingCallsEnabled && conversation.haveMoreThanOneParticipants && conversation.haveLessThanMinParticipantsForCall && !conversation.isReadOnly
+						visible: !conversation.chatRoomModel.isReadOnly && conversation.haveMoreThanOneParticipants && SettingsModel.outgoingCallsEnabled && (SettingsModel.videoConferenceEnabled || conversation.haveLessThanMinParticipantsForCall)
 						
 						//onClicked: CallsListModel. Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
 						onClicked:{
-							groupCallButton.toggled = true
-							conferenceInfoModel.isScheduled = false
-							conferenceInfoModel.subject = chatRoomModel.subject
+							if( SettingsModel.videoConferenceEnabled ){
+								groupCallButton.toggled = true
+								conferenceInfoModel.isScheduled = false
+								conferenceInfoModel.subject = chatRoomModel.subject
 							
-							conferenceInfoModel.setParticipants(conversation.chatRoomModel.participants)
-							conferenceInfoModel.inviteMode = 0;
-							conferenceInfoModel.createConference(false)// TODO activate it when secure video conference is implemented
+								conferenceInfoModel.setParticipants(conversation.chatRoomModel.participants)
+								conferenceInfoModel.inviteMode = 0;
+								conferenceInfoModel.createConference(false)// TODO activate it when secure video conference is implemented
+							}else{
+								Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
+							}
 						}
 						//: "Call all chat room's participants" : tooltip on a button for calling all participant in the current chat room
 						tooltipText: qsTr("groupChatCallButton")
