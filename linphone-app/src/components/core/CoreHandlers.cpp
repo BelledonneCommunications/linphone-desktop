@@ -129,7 +129,8 @@ void CoreHandlers::onChatRoomStateChanged(
 		const std::shared_ptr<linphone::ChatRoom> & chatRoom,
 		linphone::ChatRoom::State state
 		) {
-	emit chatRoomStateChanged(chatRoom, state);
+	if (core->getGlobalState() == linphone::GlobalState::On)
+		emit chatRoomStateChanged(chatRoom, state);
 }
 
 void CoreHandlers::onConfiguringStatus(
