@@ -46,15 +46,17 @@ Row {
 		SmallButton {
 			capitalization: item.capitalization
 			anchors.verticalCenter: parent.verticalCenter
-			backgroundColor: selectedButton === index
-							 ? item.style.button.color.selected
-							 : (down
-								? item.style.button.color.pressed
-								: (hovered
-								   ? item.style.button.color.hovered
-								   : item.style.button.color.normal
-								   )
-								)
+			backgroundColor: item.style
+								? selectedButton === index
+									? item.style.button.color.selected
+									: (down
+										? item.style.button.color.pressed
+										: (hovered
+											? item.style.button.color.hovered
+											: item.style.button.color.normal
+										)
+									)
+								: ''
 			text: modelData
 			radius: height/2
 			

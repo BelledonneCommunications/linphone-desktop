@@ -145,13 +145,15 @@ void CoreManager::init (QObject *parent, const QString &configPath) {
 
 void CoreManager::uninit () {
 	if (mInstance) {
+		mInstance->stopIterate();
+		auto core = mInstance->mCore;
 		mInstance->lockVideoRender();// Stop do iterations. We have to protect GUI.
-		mInstance->mCore->stop();// This is a synchronized stop.
 		mInstance->unlockVideoRender();
-		if( mInstance->mCore->getGlobalState() != linphone::GlobalState::Off)
-			qWarning() << "Core is not off after stopping it. It may result to have multiple core instance.";
-		delete mInstance;
+		delete mInstance;	// This will also remove stored Linphone objects.
 		mInstance = nullptr;
+		core->stop();
+		if( core->getGlobalState() != linphone::GlobalState::Off)
+			qWarning() << "Core is not off after stopping it. It may result to have multiple core instance.";
 	}
 }
 
