@@ -323,11 +323,11 @@ void ConferenceInfoModel::deleteConferenceInfo(){
 
 //-------------------------------------------------------------------------------------------------
 
-void ConferenceInfoModel::onStateChanged(linphone::ConferenceSchedulerState state){
+void ConferenceInfoModel::onStateChanged(linphone::ConferenceScheduler::State state){
 	qDebug() << "ConferenceInfoModel::onStateChanged: " << (int) state;
-	if( state == linphone::ConferenceSchedulerState::Ready)
+	if( state == linphone::ConferenceScheduler::State::Ready)
 		emit conferenceCreated();
-	else if( state == linphone::ConferenceSchedulerState::Error)
+	else if( state == linphone::ConferenceScheduler::State::Error)
 		emit conferenceCreationFailed();
 }
 void ConferenceInfoModel::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {

@@ -27,78 +27,111 @@
 // =============================================================================
 
 class AssistantModel : public QObject {
-  class Handlers;
-
-  Q_OBJECT;
-
-  Q_PROPERTY(QString email READ getEmail WRITE setEmail NOTIFY emailChanged);
-  Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged);
-  Q_PROPERTY(QString countryCode READ getCountryCode WRITE setCountryCode NOTIFY countryCodeChanged);
-  Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged);
-  Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged);
-  Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged);
-  Q_PROPERTY(QString activationCode READ getActivationCode WRITE setActivationCode NOTIFY activationCodeChanged);
-  Q_PROPERTY(QString configFilename READ getConfigFilename WRITE setConfigFilename NOTIFY configFilenameChanged);
-
+	class Handlers;
+	
+	Q_OBJECT;
+	
+	Q_PROPERTY(QString email READ getEmail WRITE setEmail NOTIFY emailChanged);
+	Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged);
+	Q_PROPERTY(QString countryCode READ getCountryCode WRITE setCountryCode NOTIFY countryCodeChanged);
+	Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged);
+	Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged);
+	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged);
+	Q_PROPERTY(QString activationCode READ getActivationCode WRITE setActivationCode NOTIFY activationCodeChanged);
+	Q_PROPERTY(QString configFilename READ getConfigFilename WRITE setConfigFilename NOTIFY configFilenameChanged);
+	Q_PROPERTY(bool isReadingQRCode READ getIsReadingQRCode WRITE setIsReadingQRCode NOTIFY isReadingQRCodeChanged);
+	
 public:
-  AssistantModel (QObject *parent = Q_NULLPTR);
-
-  Q_INVOKABLE void activate ();
-  Q_INVOKABLE void create ();
-  Q_INVOKABLE void login ();
-
-  Q_INVOKABLE void reset ();
-
-  Q_INVOKABLE bool addOtherSipAccount (const QVariantMap &map);
-
+	AssistantModel (QObject *parent = Q_NULLPTR);
+	virtual ~AssistantModel();
+	
+	Q_INVOKABLE void activate ();
+	Q_INVOKABLE void create ();
+	Q_INVOKABLE void login ();
+	
+	Q_INVOKABLE void reset ();
+	
+	Q_INVOKABLE bool addOtherSipAccount (const QVariantMap &map);
+	
+	Q_INVOKABLE void createTestAccount();
+	Q_INVOKABLE void generateQRCode();
+	Q_INVOKABLE void requestQRCode();
+	Q_INVOKABLE void readQRCode();
+	
+	Q_INVOKABLE void attachAccount(const QString& token);
+	
+	void checkLinkingAccount();
+	
+public slots:
+	void onQRCodeFound(const std::string & result);
+	void onApiReceived(QString apiKey);
+	void newQRCodeNotReceivedTest();
+	
 signals:
-  void emailChanged (const QString &email, const QString &error);
-  void passwordChanged (const QString &password, const QString &error);
-  void countryCodeChanged (const QString &countryCode);
-  void phoneNumberChanged (const QString &phoneNumber, const QString &error);
-  void usernameChanged (const QString &username, const QString &error);
-  void displayNameChanged (const QString &displayName, const QString &error);
-  void activationCodeChanged (const QString &activationCode);
-
-  void activateStatusChanged (const QString &error);
-  void createStatusChanged (const QString &error);
-  void loginStatusChanged (const QString &error);
-  void recoverStatusChanged (const QString &error);
-
-  void configFilenameChanged (const QString &configFilename);
-
+	void emailChanged (const QString &email, const QString &error);
+	void passwordChanged (const QString &password, const QString &error);
+	void countryCodeChanged (const QString &countryCode);
+	void phoneNumberChanged (const QString &phoneNumber, const QString &error);
+	void usernameChanged (const QString &username, const QString &error);
+	void displayNameChanged (const QString &displayName, const QString &error);
+	void activationCodeChanged (const QString &activationCode);
+	
+	void activateStatusChanged (const QString &error);
+	void createStatusChanged (const QString &error);
+	void loginStatusChanged (const QString &error);
+	void recoverStatusChanged (const QString &error);
+	
+	void configFilenameChanged (const QString &configFilename);
+	
+	void newQRCodeReceived(QString code);// code for QRCode generation.
+	void newQRCodeNotReceived(QString message, int errorCode);// The QRCode couldn't be generated. Return HTTP error code.
+	void provisioningTokenReceived(QString token);// Provisioning token to use
+	void isReadingQRCodeChanged();
+	void qRCodeFound(QString token);
+	
+	void qRCodeAttached();
+	void qRCodeNotAttached(QString message, int errorCode);
+	void apiReceived(QString apiKey);
+	
+	
+	
 private:
-  QString getEmail () const;
-  void setEmail (const QString &email);
-
-  QString getPassword () const;
-  void setPassword (const QString &password);
-
-  QString getCountryCode () const;
-  void setCountryCode (const QString &countryCode);
-
-  QString getPhoneNumber () const;
-  void setPhoneNumber (const QString &phoneNumber);
-
-  QString getUsername () const;
-  void setUsername (const QString &username);
-
-  QString getDisplayName () const;
-  void setDisplayName (const QString &displayName);
-
-  QString getActivationCode () const;
-  void setActivationCode (const QString &activationCode);
-
-  QString getConfigFilename () const;
-  void setConfigFilename (const QString &configFilename);
-
-  QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreator::UsernameStatus status) const;
-
-  QString mCountryCode;
-  QString mConfigFilename;
-
-  std::shared_ptr<linphone::AccountCreator> mAccountCreator;
-  std::shared_ptr<Handlers> mHandlers;
+	QString getEmail () const;
+	void setEmail (const QString &email);
+	
+	QString getPassword () const;
+	void setPassword (const QString &password);
+	
+	QString getCountryCode () const;
+	void setCountryCode (const QString &countryCode);
+	
+	QString getPhoneNumber () const;
+	void setPhoneNumber (const QString &phoneNumber);
+	
+	QString getUsername () const;
+	void setUsername (const QString &username);
+	
+	QString getDisplayName () const;
+	void setDisplayName (const QString &displayName);
+	
+	QString getActivationCode () const;
+	void setActivationCode (const QString &activationCode);
+	
+	QString getConfigFilename () const;
+	void setConfigFilename (const QString &configFilename);
+	
+	bool getIsReadingQRCode() const;
+	void setIsReadingQRCode(bool isReading);
+	
+	QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreator::UsernameStatus status) const;
+	
+	QString mCountryCode;
+	QString mConfigFilename;
+	QString mToken;
+	bool mIsReadingQRCode;
+	
+	std::shared_ptr<linphone::AccountCreator> mAccountCreator;
+	std::shared_ptr<Handlers> mHandlers;
 };
 
 #endif // ASSISTANT_MODEL_H_

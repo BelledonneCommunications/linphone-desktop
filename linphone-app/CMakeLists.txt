@@ -45,7 +45,7 @@ include(CheckCXXCompilerFlag)
 set(TARGET_NAME linphone-qt)
 set(LINPHONE_QML_DIR "WORK/qml_files/ui")
 set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS true)
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 
 if(UNIX AND NOT APPLE)
 	set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
@@ -154,6 +154,7 @@ set(SOURCES
 	src/app/providers/AvatarProvider.cpp
 	src/app/providers/ImageProvider.cpp
 	src/app/providers/ExternalImageProvider.cpp
+	src/app/providers/QRCodeProvider.cpp
 	src/app/providers/ThumbnailProvider.cpp
 	src/app/proxyModel/ProxyListModel.cpp
 	src/app/proxyModel/SortFilterProxyModel.cpp
@@ -281,6 +282,7 @@ set(HEADERS
 	src/app/providers/AvatarProvider.hpp
 	src/app/providers/ImageProvider.hpp
 	src/app/providers/ExternalImageProvider.hpp
+	src/app/providers/QRCodeProvider.hpp
 	src/app/providers/ThumbnailProvider.hpp
 	src/app/proxyModel/ProxyAbstractListModel.hpp
 	src/app/proxyModel/ProxyAbstractMapModel.hpp

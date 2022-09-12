@@ -28,6 +28,7 @@ Item {
   property alias text: button.text
   property bool enabled: true
   property bool showBorder : false
+  property alias toggled : button.checked
   
   property alias capitalization : button.capitalization
   
@@ -44,7 +45,7 @@ Item {
       return colorDisabled
     }
 
-    return button.down
+    return button.down || button.checked
       ? colorPressed
       : (button.hovered ? colorHovered : colorNormal)
   }
@@ -54,7 +55,7 @@ Item {
       return borderColorDisabled
     }
 
-    return button.down
+    return button.down || button.checked
       ? borderColorPressed
       : (button.hovered ? borderColorHovered : borderColorNormal)
   }
@@ -64,15 +65,16 @@ Item {
       return textColorDisabled
     }
 
-    return button.down
+    return button.down || button.checked
       ? textColorPressed
       : (button.hovered ? textColorHovered : textColorNormal)
   }
 
   // ---------------------------------------------------------------------------
-
-  height: button.contentItem.implicitHeight + addHeight
-  width: button.contentItem.implicitWidth + addWidth
+   property int fitHeight: button.contentItem.implicitHeight + addHeight
+   property int fitWidth: button.contentItem.implicitWidth + addWidth
+  height: fitHeight
+  width: fitWidth
 
   // ---------------------------------------------------------------------------
 

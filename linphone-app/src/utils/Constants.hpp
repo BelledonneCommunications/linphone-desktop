@@ -72,8 +72,10 @@ public:
 	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
 	static constexpr char DefaultVideoConferenceURI[] = "sip:videoconference-factory@sip.linphone.org";
 	static constexpr char DefaultLimeServerURL[] = "https://lime.linphone.org/lime-server/lime-server.php";
-	static constexpr char RemoteProvisioningURL[] = "https://subscribe.linphone.org/flexiapi/provisioning";
-		
+	
+	static constexpr char DefaultFlexiAPIURL[] = "http://fs-test-sandbox.linphone.org/flexiapi/api/";// Need "/" at the end
+	static constexpr char RemoteProvisioningURL[] = "http://fs-test-sandbox.linphone.org/flexiapi/provisioning";
+	
 	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
 	Q_PROPERTY(QString CguUrl MEMBER CguUrl CONSTANT)
 	Q_PROPERTY(QString PrivatePolicyUrl MEMBER PrivatePolicyUrl CONSTANT)

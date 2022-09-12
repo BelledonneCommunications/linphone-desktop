@@ -512,6 +512,7 @@
 		<file>ui/views/App/Styles/Main/Assistant/AssistantAbstractViewStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/AssistantHomeStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/CreateAppSipAccountStyle.qml</file>
+		<file>ui/views/App/Styles/Main/Assistant/FetchRemoteConfigurationStyle.qml</file>
 		<file>ui/views/App/Styles/Main/AssistantStyle.qml</file>
 		<file>ui/views/App/Styles/Main/Assistant/UseAppSipAccountStyle.qml</file>
 		<file>ui/views/App/Styles/Main/ConferencesStyle.qml</file>

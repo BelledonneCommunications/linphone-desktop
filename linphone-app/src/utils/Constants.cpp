@@ -67,6 +67,7 @@ constexpr char Constants::DefaultXmlrpcUri[];
 constexpr char Constants::DefaultConferenceURI[];
 constexpr char Constants::DefaultVideoConferenceURI[];
 constexpr char Constants::DefaultLimeServerURL[];
+constexpr char Constants::DefaultFlexiAPIURL[];
 constexpr char Constants::RemoteProvisioningURL[];
 constexpr char Constants::DefaultAssistantRegistrationUrl[];
 constexpr char Constants::DefaultAssistantLoginUrl[];

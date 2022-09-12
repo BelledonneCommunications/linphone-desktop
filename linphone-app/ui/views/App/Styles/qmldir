@@ -28,6 +28,7 @@ singleton ActivateAppSipAccountWithPhoneNumberStyle      1.0 Main/Assistant/Acti
 singleton AssistantAbstractViewStyle                     1.0 Main/Assistant/AssistantAbstractViewStyle.qml
 singleton AssistantHomeStyle                             1.0 Main/Assistant/AssistantHomeStyle.qml
 singleton CreateAppSipAccountStyle                       1.0 Main/Assistant/CreateAppSipAccountStyle.qml
+singleton FetchRemoteConfigurationStyle                  1.0 Main/Assistant/FetchRemoteConfigurationStyle.qml
 singleton UseAppSipAccountStyle                          1.0 Main/Assistant/UseAppSipAccountStyle.qml
 
 singleton AssistantStyle                                 1.0 Main/AssistantStyle.qml

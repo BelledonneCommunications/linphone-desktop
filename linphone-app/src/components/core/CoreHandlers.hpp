@@ -59,6 +59,7 @@ signals:
 	void ecCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
 	void setLastRemoteProvisioningState(const linphone::ConfiguringState &state);
 	void conferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
+	void foundQRCode(const std::string & result);
 	
 private:
 	// ---------------------------------------------------------------------------
@@ -165,6 +166,8 @@ private:
 			const std::shared_ptr<linphone::Core> &core,
 			const std::shared_ptr<linphone::Friend> &linphoneFriend
 			) override;
+	
+	void onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result) override;
 	
 	void onTransferStateChanged (
 			const std::shared_ptr<linphone::Core> &core,

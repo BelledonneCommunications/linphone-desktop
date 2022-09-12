@@ -34,7 +34,7 @@ void ParticipantDeviceListener::onIsSpeakingChanged(const std::shared_ptr<linpho
 }
 
 void ParticipantDeviceListener::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMutedVar) {
-	qInfo() << "onIsMuted " << isMutedVar << " vs " << participantDevice->getIsMuted();
+	qInfo() << "onIsMuted " << isMutedVar << " vs " << participantDevice->getIsMuted() << " for " << participantDevice->getAddress()->asString().c_str();
 	emit isMuted(participantDevice, isMutedVar);
 }
 

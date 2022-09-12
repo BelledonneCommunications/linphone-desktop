@@ -95,7 +95,7 @@ public:
 
 // SCHEDULER
 	
-	virtual void onStateChanged(linphone::ConferenceSchedulerState state);
+	virtual void onStateChanged(linphone::ConferenceScheduler::State state);
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 	
 	

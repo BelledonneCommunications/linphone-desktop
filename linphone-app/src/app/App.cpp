@@ -42,6 +42,7 @@
 #include "providers/AvatarProvider.hpp"
 #include "providers/ImageProvider.hpp"
 #include "providers/ExternalImageProvider.hpp"
+#include "providers/QRCodeProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
 #include "utils/Utils.hpp"
@@ -380,6 +381,7 @@ void App::initContentApp () {
 	mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
 	mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
 	mEngine->addImageProvider(ExternalImageProvider::ProviderId, new ExternalImageProvider());
+	mEngine->addImageProvider(QRCodeProvider::ProviderId, new QRCodeProvider());
 	mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 	
 	mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);

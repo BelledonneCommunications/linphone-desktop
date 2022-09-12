@@ -28,7 +28,10 @@
 
 #include "AssistantModel.hpp"
 
+#include <linphone/FlexiAPIClient.hh>
+
 #include <QtDebug>
+#include <QTimer>
 
 // =============================================================================
 
@@ -148,12 +151,18 @@ private:
 
 AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 	mHandlers = make_shared<AssistantModel::Handlers>(this);
-	
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::foundQRCode, this, &AssistantModel::onQRCodeFound);
+	mIsReadingQRCode = false;
 	mAccountCreator = core->createAccountCreator(
 				core->getConfig()->getString("assistant", "xmlrpc_url", Constants::DefaultXmlrpcUri)
 				);
 	mAccountCreator->addListener(mHandlers);
+	connect(this, &AssistantModel::apiReceived, this, &AssistantModel::onApiReceived);
+}
+
+AssistantModel::~AssistantModel(){
+	setIsReadingQRCode(false);
 }
 
 // -----------------------------------------------------------------------------
@@ -268,6 +277,79 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
 		return true;
 	}
 	return false;
+}
+void AssistantModel::createTestAccount(){
+}
+void AssistantModel::generateQRCode(){
+	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	flexiAPIClient
+		->accountProvision()
+		->then([this](FlexiAPIClient::Response response){
+			emit newQRCodeReceived(response.json()["provisioning_token"].asCString());
+		})
+		->error([this](FlexiAPIClient::Response response){
+			emit newQRCodeNotReceived(Utils::coreStringToAppString(response.body), response.code);
+		});
+}
+void AssistantModel::requestQRCode(){
+	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	
+	flexiAPIClient
+		->accountAuthTokenCreate()
+		->then([this](FlexiAPIClient::Response response) {
+			mToken = response.json()["token"].asCString();
+			emit newQRCodeReceived(mToken);
+			QTimer::singleShot(5000, this, &AssistantModel::checkLinkingAccount);
+		})->error([this](FlexiAPIClient::Response response){
+			qWarning() << response.code << " => " << response.body.c_str();
+			emit newQRCodeNotReceived(Utils::coreStringToAppString(response.body), response.code);
+		});
+}
+
+void AssistantModel::readQRCode(){
+	setIsReadingQRCode(!mIsReadingQRCode);
+}
+void AssistantModel::newQRCodeNotReceivedTest(){
+	emit newQRCodeNotReceived("Cannot generate a provisioning key",0);
+}
+void AssistantModel::checkLinkingAccount(){
+	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	flexiAPIClient
+		->accountApiKeyFromAuthTokenGenerate(mToken.toStdString())
+		->then([this](FlexiAPIClient::Response response)mutable{
+			emit apiReceived(Utils::coreStringToAppString(response.json()["api_key"].asCString()));
+		})->error([this](FlexiAPIClient::Response){
+			QTimer::singleShot(5000, this, &AssistantModel::checkLinkingAccount);
+	});
+}
+
+void AssistantModel::onApiReceived(QString apiKey){
+	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	flexiAPIClient->setApiKey(Utils::appStringToCoreString(apiKey).c_str())
+		->accountProvision()
+		->then([this](FlexiAPIClient::Response response){
+			emit provisioningTokenReceived(response.json()["provisioning_token"].asCString());
+		})->error([this](FlexiAPIClient::Response response){
+			//it provisioningTokenReceived("token");
+			emit this->newQRCodeNotReceived("Cannot generate a provisioning key"+(response.body.empty() ? "" : " : " +Utils::coreStringToAppString(response.body)), response.code);
+	});
+}
+void AssistantModel::onQRCodeFound(const std::string & result){
+	setIsReadingQRCode(false);
+	emit qRCodeFound(Utils::coreStringToAppString(result));
+}
+
+void AssistantModel::attachAccount(const QString& token){
+	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	flexiAPIClient->
+	accountAuthTokenAttach(Utils::appStringToCoreString(token))
+		->then([this](FlexiAPIClient::Response response){
+			qWarning() << "Attached";
+			emit qRCodeAttached();
+		})
+		->error([this](FlexiAPIClient::Response response){
+			emit qRCodeNotAttached("Cannot attach"+ (response.body.empty() ? "" : " : " +Utils::coreStringToAppString(response.body)), response.code);
+		});
 }
 
 // -----------------------------------------------------------------------------
@@ -429,6 +511,21 @@ void AssistantModel::setConfigFilename (const QString &configFilename) {
 				);
 	
 	emit configFilenameChanged(configFilename);
+}
+
+bool AssistantModel::getIsReadingQRCode() const{
+	return mIsReadingQRCode;
+}
+
+void AssistantModel::setIsReadingQRCode(bool isReading){
+	if( mIsReadingQRCode != isReading){
+		if( CoreManager::getInstance()->getCore()->qrcodeVideoPreviewEnabled() != isReading){
+			CoreManager::getInstance()->getCore()->enableQrcodeVideoPreview(isReading);
+			//CoreManager::getInstance()->getCore()->enableVideoPreview(isReading);
+		}
+		mIsReadingQRCode = isReading;
+		emit isReadingQRCodeChanged();
+	}
 }
 
 // -----------------------------------------------------------------------------

@@ -32,11 +32,11 @@ public:
 	ConferenceSchedulerListener();
 	virtual ~ConferenceSchedulerListener();
 	
-	virtual void onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) override;
+	virtual void onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceScheduler::State state) override;
 	virtual void onInvitationsSent(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) override;
 
 signals:
-	void stateChanged(linphone::ConferenceSchedulerState state);
+	void stateChanged(linphone::ConferenceScheduler::State state);
 	void invitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 };
 

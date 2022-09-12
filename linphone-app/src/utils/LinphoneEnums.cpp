@@ -78,11 +78,11 @@ LinphoneEnums::ConferenceLayout LinphoneEnums::fromLinphone(const linphone::Conf
 	return static_cast<LinphoneEnums::ConferenceLayout>(layout); 
 }
 
-linphone::ConferenceInfoState LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceInfoState& state){
-	return static_cast<linphone::ConferenceInfoState>(state);
+linphone::ConferenceInfo::State LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceInfoState& state){
+	return static_cast<linphone::ConferenceInfo::State>(state);
 }
 
-LinphoneEnums::ConferenceInfoState LinphoneEnums::fromLinphone(const linphone::ConferenceInfoState& state){
+LinphoneEnums::ConferenceInfoState LinphoneEnums::fromLinphone(const linphone::ConferenceInfo::State& state){
 	return static_cast<LinphoneEnums::ConferenceInfoState>(state); 
 }
 

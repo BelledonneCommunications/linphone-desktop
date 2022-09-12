@@ -33,7 +33,7 @@ ConferenceSchedulerListener::~ConferenceSchedulerListener () {
 }
 
 
-void ConferenceSchedulerListener::onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceSchedulerState state) {
+void ConferenceSchedulerListener::onStateChanged(const std::shared_ptr<linphone::ConferenceScheduler> & conferenceScheduler, linphone::ConferenceScheduler::State state) {
 	qDebug() << "ConferenceSchedulerListener::onStateChanged" << (int) state;
 	emit stateChanged(state);
 }

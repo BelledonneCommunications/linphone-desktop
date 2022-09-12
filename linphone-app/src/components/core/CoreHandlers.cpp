@@ -283,6 +283,10 @@ void CoreHandlers::onNotifyPresenceReceived (
 	emit presenceStatusReceived(linphoneFriend);
 }
 
+void CoreHandlers::onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result){
+	emit foundQRCode(result);
+}
+
 void CoreHandlers::onTransferStateChanged (
 		const shared_ptr<linphone::Core> &,
 		const shared_ptr<linphone::Call> &call,

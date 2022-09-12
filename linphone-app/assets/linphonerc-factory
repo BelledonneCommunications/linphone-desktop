@@ -14,3 +14,6 @@ zrtp_key_agreements_suites=MS_ZRTP_KEY_AGREEMENT_K255_KYB512
 
 [video]
 max_mosaic_size=vga
+
+[ui]
+use_qrcode=0

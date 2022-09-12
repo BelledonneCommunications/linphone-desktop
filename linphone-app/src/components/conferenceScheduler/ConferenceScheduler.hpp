@@ -36,13 +36,13 @@ public:
 	virtual ~ConferenceScheduler ();
 	std::shared_ptr<linphone::ConferenceScheduler> getConferenceScheduler();
 	
-	virtual void onStateChanged(linphone::ConferenceSchedulerState state);
+	virtual void onStateChanged(linphone::ConferenceScheduler::State state);
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 	
 	int mSendInvite = 1;// TODO : Enum for app = 1, email=2. Both = 3
 	
 signals:
-	void stateChanged(linphone::ConferenceSchedulerState state);
+	void stateChanged(linphone::ConferenceScheduler::State state);
 	void invitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 
 private:

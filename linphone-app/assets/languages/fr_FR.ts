@@ -1325,6 +1325,31 @@ URL du serveur non configurée.</translation>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
         <translation>La dernière configuration n&apos;a pas pu être récupérée</translation>
     </message>
+    <message>
+        <source>generateLabel</source>
+        <extracomment>&apos;generate&apos; : title button to generate a code.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>or</source>
+        <extracomment>&apos;or&apos; : conjunction to choose between options.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remoteProvisioningHow</source>
+        <extracomment>&apos;Click on %1 to obtain your remote provisioning QR code&apos; : Describe how to get a remote provisioning QR code by clicking on %1 button (1% is the text in button)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>scanQRCode</source>
+        <extracomment>&apos;Scan the QR code with your phone&apos; : Explain how to use the QRCode by flasing it.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>scanQRCodeWhere</source>
+        <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HistoryView</name>

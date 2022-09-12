@@ -194,6 +194,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(int textMessageFontSize READ getTextMessageFontSize WRITE setTextMessageFontSize NOTIFY textMessageFontSizeChanged)
 	
 	Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged)
+	Q_PROPERTY(QString flexiAPIUrl READ getFlexiAPIUrl WRITE setFlexiAPIUrl NOTIFY flexiAPIUrlChanged)
 	
 	Q_PROPERTY(QString savedScreenshotsFolder READ getSavedScreenshotsFolder WRITE setSavedScreenshotsFolder NOTIFY savedScreenshotsFolderChanged)
 	Q_PROPERTY(QString savedCallsFolder READ getSavedCallsFolder WRITE setSavedCallsFolder NOTIFY savedCallsFolderChanged)
@@ -553,8 +554,13 @@ public:
 	QString getDownloadFolder () const;
 	void setDownloadFolder (const QString &folder);
 	
+	QString getRemoteProvisioningRootUrl() const;
 	QString getRemoteProvisioning () const;
 	void setRemoteProvisioning (const QString &remoteProvisioning);
+	
+	Q_INVOKABLE bool isQRCodeAvailable() const;
+	QString getFlexiAPIUrl() const;
+	void setFlexiAPIUrl (const QString &url);
 	
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
@@ -769,6 +775,7 @@ signals:
 	
 	void remoteProvisioningChanged (const QString &remoteProvisioning);
 	void remoteProvisioningNotChanged (const QString &remoteProvisioning);
+	void flexiAPIUrlChanged (const QString &url);
 	
 	void exitOnCloseChanged (bool value);
 	void mipmapEnabledChanged();

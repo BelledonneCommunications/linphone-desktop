@@ -283,6 +283,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	setOtherPaths();
 	mCore->enableFriendListSubscription(true);
 	mCore->enableRecordAware(true);
+	if(mCore->getAccountCreatorUrl() == "")
+		mCore->setAccountCreatorUrl(Constants::DefaultFlexiAPIURL);
 }
 
 void CoreManager::updateUserAgent(){

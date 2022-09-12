@@ -1481,6 +1481,10 @@ void SettingsModel::setDownloadFolder (const QString &folder) {
 
 // -----------------------------------------------------------------------------
 
+QString SettingsModel::getRemoteProvisioningRootUrl() const{
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "remote_provisioning_root", Constants::RemoteProvisioningURL));
+}
+
 QString SettingsModel::getRemoteProvisioning () const {
 	return Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getProvisioningUri());
 }
@@ -1488,12 +1492,24 @@ QString SettingsModel::getRemoteProvisioning () const {
 void SettingsModel::setRemoteProvisioning (const QString &remoteProvisioning) {
 	QString urlRemoteProvisioning = remoteProvisioning;
 	if( QUrl(urlRemoteProvisioning).isRelative()) {
-		urlRemoteProvisioning = QString(Constants::RemoteProvisioningURL) +"/"+ remoteProvisioning;
+		urlRemoteProvisioning = getRemoteProvisioningRootUrl() +"/"+ remoteProvisioning;
 	}
 	if (!CoreManager::getInstance()->getCore()->setProvisioningUri(Utils::appStringToCoreString(urlRemoteProvisioning)))
 		emit remoteProvisioningChanged(urlRemoteProvisioning);
 	else
 		emit remoteProvisioningNotChanged(urlRemoteProvisioning);
+}
+
+bool SettingsModel::isQRCodeAvailable() const{
+	return linphone::Factory::get()->isQrcodeAvailable() && !!mConfig->getInt(UiSection, "use_qrcode", 1);
+}
+
+QString SettingsModel::getFlexiAPIUrl() const{
+	return Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getAccountCreatorUrl());
+}
+void SettingsModel::setFlexiAPIUrl (const QString &url){
+	CoreManager::getInstance()->getCore()->setAccountCreatorUrl(Utils::appStringToCoreString(url));
+	emit flexiAPIUrlChanged(url);
 }
 
 // -----------------------------------------------------------------------------
