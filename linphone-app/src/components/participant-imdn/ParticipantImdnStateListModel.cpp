@@ -76,8 +76,13 @@ QSharedPointer<ParticipantImdnStateModel> ParticipantImdnStateListModel::getImdn
 //--------------------------------------------------------------------------------
 
 void ParticipantImdnStateListModel::updateState(const std::shared_ptr<const linphone::ParticipantImdnState> & state){
-	if(state->getParticipant())
+	if(state->getParticipant()) {
+		auto imdn = getImdnState(state);
+		auto oldState = imdn->getState();
 		getImdnState(state)->update(state);
+		if( oldState == LinphoneEnums::ChatMessageState::ChatMessageStateIdle && oldState != imdn->getState())
+			emit stateChangedFromIdle();
+	}
 }
 
 //--------------------------------------------------------------------------------

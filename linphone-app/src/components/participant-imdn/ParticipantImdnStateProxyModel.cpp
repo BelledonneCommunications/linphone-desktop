@@ -37,9 +37,10 @@ bool ParticipantImdnStateProxyModel::filterAcceptsRow (
   int sourceRow,
   const QModelIndex &sourceParent
 ) const {
-	Q_UNUSED(sourceRow)
-	Q_UNUSED(sourceParent)
-	return true;
+	auto listModel = qobject_cast<ParticipantImdnStateListModel*>(sourceModel());
+	const QModelIndex index = listModel->index(sourceRow, 0, sourceParent);
+	const ParticipantImdnStateModel *imdn = index.data().value<ParticipantImdnStateModel *>();
+	return imdn->getState() != LinphoneEnums::ChatMessageState::ChatMessageStateIdle;
 }
 
 bool ParticipantImdnStateProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -51,7 +52,8 @@ bool ParticipantImdnStateProxyModel::lessThan (const QModelIndex &left, const QM
 }
 //---------------------------------------------------------------------------------
 int ParticipantImdnStateProxyModel::getCount(){
-	return sourceModel() ? sourceModel()->rowCount() : 0;
+	//return sourceModel() ? sourceModel()->rowCount() : 0;
+	return rowCount();
 }
 
 ChatMessageModel * ParticipantImdnStateProxyModel::getChatMessageModel(){
@@ -68,6 +70,8 @@ void ParticipantImdnStateProxyModel::setChatMessageModel(ChatMessageModel * mess
 				disconnect(model, &ParticipantImdnStateListModel::countChanged, this, &ParticipantImdnStateProxyModel::countChanged);
 			setSourceModel(messageModel);
 			connect(messageModel, &ParticipantImdnStateListModel::countChanged, this, &ParticipantImdnStateProxyModel::countChanged);
+			connect(messageModel, &ParticipantImdnStateListModel::stateChangedFromIdle, this, &ParticipantImdnStateProxyModel::invalidate);
+			connect(messageModel, &ParticipantImdnStateListModel::stateChangedFromIdle, this, &ParticipantImdnStateProxyModel::countChanged);
 			sort(0);
 			emit countChanged();
 		}

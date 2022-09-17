@@ -51,6 +51,8 @@ Loader{
 				//: "%1 have nothing received" Little message to indicate the state of a message
 				//~ Context %1 is someone. The state is that the message hasn't been delivered.
 				return qsTr('deliveryNotDelivered').arg(displayName)
+			else if(state == LinphoneEnums.ChatMessageStateIdle)
+				return ''
 			else
 				//: "Error while sending to %1" Little message to indicate the state of a message
 				//~ Context %1 is someone. The state is that the message hasn't been delivered because of an error.

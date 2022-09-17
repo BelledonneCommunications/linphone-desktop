@@ -47,6 +47,7 @@ public slots:
 
 signals:
 	void imdnStateChanged();
+	void stateChangedFromIdle();
 };
 
 Q_DECLARE_METATYPE(QSharedPointer<ParticipantImdnStateListModel>)

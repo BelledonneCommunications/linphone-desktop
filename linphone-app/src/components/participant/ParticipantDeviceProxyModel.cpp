@@ -37,8 +37,6 @@ bool ParticipantDeviceProxyModel::filterAcceptsRow (
   int sourceRow,
   const QModelIndex &sourceParent
 ) const {
-	Q_UNUSED(sourceRow)
-	Q_UNUSED(sourceParent)
 	auto listModel = qobject_cast<ParticipantDeviceListModel*>(sourceModel());
 	const QModelIndex index = listModel->index(sourceRow, 0, sourceParent);
 	const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
