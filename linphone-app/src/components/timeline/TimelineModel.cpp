@@ -66,8 +66,8 @@ void TimelineModel::connectTo(ChatRoomListener * listener){
 }
 
 // =============================================================================
-QSharedPointer<TimelineModel> TimelineModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent){
-	if((!chatRoom || chatRoom->getState() != linphone::ChatRoom::State::Deleted)  && (!CoreManager::getInstance()->getTimelineListModel() || !CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, false)) ) {
+QSharedPointer<TimelineModel> TimelineModel::create(TimelineListModel * mainList, std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent){
+	if((!chatRoom || chatRoom->getState() != linphone::ChatRoom::State::Deleted)  && (!mainList || !mainList->getTimeline(chatRoom, false)) ) {
 		QSharedPointer<TimelineModel> model = QSharedPointer<TimelineModel>::create(chatRoom, parent);
 		if(model && model->getChatRoomModel()){
 			
@@ -122,6 +122,25 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 	mSelected = false;
 }
 
+TimelineModel::TimelineModel(const TimelineModel * model){
+	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
+	mChatRoomModel = model->mChatRoomModel;
+	if( mChatRoomModel ){
+		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
+		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
+	}
+	if(mChatRoomModel->getChatRoom()){
+		mChatRoomListener = model->mChatRoomListener;
+		connectTo(mChatRoomListener.get());
+		mChatRoomModel->getChatRoom()->addListener(mChatRoomListener);
+	}
+	mSelected = model->mSelected;
+}
+
+QSharedPointer<TimelineModel> TimelineModel::clone()const{
+	return QSharedPointer<TimelineModel>::create(this);
+}
+
 TimelineModel::~TimelineModel(){
 	if( mChatRoomModel->getChatRoom())
 		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
@@ -152,7 +171,7 @@ ChatRoomModel *TimelineModel::getChatRoomModel() const{
 }
 
 void TimelineModel::setSelected(const bool& selected){
-	if(mChatRoomModel && selected != mSelected){
+	if(mChatRoomModel && (selected != mSelected || selected)){
 		mSelected = selected;
 		if(mSelected){
 			qInfo() << "Chat room selected : Subject :" << mChatRoomModel->getSubject()
@@ -166,10 +185,7 @@ void TimelineModel::setSelected(const bool& selected){
 				<< ", canHandleParticipants:"<< mChatRoomModel->canHandleParticipants()
 				<< ", isReadOnly:" << mChatRoomModel->isReadOnly()
 				<< ", state:" << mChatRoomModel->getState();
-				QQmlEngine *engine = App::getInstance()->getEngine();
-				engine->clearComponentCache();
-		}else
-			mChatRoomModel->resetData();// Cleanup leaving chat room
+		}
 		emit selectedChanged(mSelected);
 	}
 }

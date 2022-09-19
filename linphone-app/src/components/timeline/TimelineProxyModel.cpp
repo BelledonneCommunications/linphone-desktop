@@ -37,32 +37,14 @@
 // -----------------------------------------------------------------------------
 
 TimelineProxyModel::TimelineProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
-	CoreManager *coreManager = CoreManager::getInstance();
-	AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
-	TimelineListModel * model = CoreManager::getInstance()->getTimelineListModel();
 	
-	connect(model, SIGNAL(selectedCountChanged(int)), this, SIGNAL(selectedCountChanged(int)));
-	connect(model, &TimelineListModel::updated, this, &TimelineProxyModel::invalidate);
-	connect(model, &TimelineListModel::selectedChanged, this, &TimelineProxyModel::selectedChanged);
-	connect(model, &TimelineListModel::countChanged, this, &TimelineProxyModel::countChanged);
-
-	QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultAccountChanged, this, [this]() {
-		qobject_cast<TimelineListModel*>(sourceModel())->update();
-		invalidate();
-	});
-	QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
-		qobject_cast<TimelineListModel*>(sourceModel())->reset();
-		invalidate();// Invalidate and reload GUI if the model has been reset
-	});
-
-	setSourceModel(model);
-	sort(0);
 }
 
 // -----------------------------------------------------------------------------
 
 void TimelineProxyModel::unselectAll(){
-	qobject_cast<TimelineListModel*>(sourceModel())->selectAll(false);
+	if( sourceModel())
+		qobject_cast<TimelineListModel*>(sourceModel())->selectAll(false);
 }
 
 void TimelineProxyModel::setFilterFlags(const int& filterFlags){
@@ -79,9 +61,49 @@ void TimelineProxyModel::setFilterText(const QString& text){
 		emit filterTextChanged();
 	}
 }
+	
+TimelineProxyModel::TimelineListSource TimelineProxyModel::getListSource() const{
+	return mListSource;
+}
+
+void TimelineProxyModel::setListSource(const TimelineListSource& source){
+	if(source != mListSource) {
+		TimelineListModel * model = nullptr;
+		if( source != Undefined){
+			CoreManager *coreManager = CoreManager::getInstance();
+			AccountSettingsModel *accountSettingsModel = coreManager->getAccountSettingsModel();
+			model = source == Main ? CoreManager::getInstance()->getTimelineListModel() : CoreManager::getInstance()->getTimelineListModel()->clone();
+		
+			connect(model, SIGNAL(selectedCountChanged(int)), this, SIGNAL(selectedCountChanged(int)));
+			connect(model, &TimelineListModel::updated, this, &TimelineProxyModel::invalidate);
+			connect(model, &TimelineListModel::selectedChanged, this, &TimelineProxyModel::selectedChanged);
+			connect(model, &TimelineListModel::countChanged, this, &TimelineProxyModel::countChanged);
+		
+			QObject::connect(accountSettingsModel, &AccountSettingsModel::defaultAccountChanged, this, [this]() {
+				qobject_cast<TimelineListModel*>(sourceModel())->update();
+				invalidate();
+			});
+			QObject::connect(coreManager->getSipAddressesModel(), &SipAddressesModel::sipAddressReset, this, [this]() {
+				qobject_cast<TimelineListModel*>(sourceModel())->reset();
+				invalidate();// Invalidate and reload GUI if the model has been reset
+			});
+		}
+	
+		if( mListSource != Main && sourceModel()){
+			sourceModel()->deleteLater();
+		}
+		setSourceModel(model);
+		sort(0);
+		mListSource = source;
+		emit listSourceChanged();
+	}
+}
+	
 // -----------------------------------------------------------------------------
 
 bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {
+	if(!sourceModel())
+		return false;
 	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 	auto timeline = sourceModel()->data(index).value<TimelineModel*>();
 	if(!timeline || !timeline->getChatRoomModel() || timeline->getChatRoomModel()->getState() == (int)linphone::ChatRoom::State::Deleted)
@@ -116,6 +138,8 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 }
 
 bool TimelineProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
+	if( !sourceModel())
+		return false;
 	const TimelineModel* a = sourceModel()->data(left).value<TimelineModel*>();
 	const TimelineModel* b = sourceModel()->data(right).value<TimelineModel*>();
 	bool aHaveUnread = a->getChatRoomModel()->getAllUnreadCount() > 0;

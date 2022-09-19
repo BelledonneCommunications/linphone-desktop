@@ -357,7 +357,9 @@ ApplicationWindow {
 						
 						Layout.fillHeight: true
 						Layout.fillWidth: true
-						model: TimelineProxyModel{}
+						model: TimelineProxyModel{
+							listSource: TimelineProxyModel.Main
+						}
 						
 						onEntrySelected:{
 							if( entry ) {

@@ -33,14 +33,18 @@
 
 class ChatRoomModel;
 class ChatRoomListener;
+class TimelineListModel;
 
 class TimelineModel : public QObject {
   Q_OBJECT
 
 public:
-	static QSharedPointer<TimelineModel> create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs = std::list<std::shared_ptr<linphone::CallLog>>(), QObject *parent = Q_NULLPTR);
+	static QSharedPointer<TimelineModel> create(TimelineListModel * mainList, std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs = std::list<std::shared_ptr<linphone::CallLog>>(), QObject *parent = Q_NULLPTR);
 	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
+	TimelineModel(const TimelineModel * model);
 	virtual ~TimelineModel();
+	
+	QSharedPointer<TimelineModel> clone() const;
 	
 	Q_PROPERTY(QString fullPeerAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
 	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress NOTIFY fullLocalAddressChanged)

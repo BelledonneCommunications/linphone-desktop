@@ -90,11 +90,12 @@ DialogPlus {
 			Timeline {
 				id: timeline
 				showHistoryButton: false
-				updateSelectionModels: false
 				anchors.fill: parent
-				model: TimelineProxyModel{}
-				onEntryClicked:{
-					if( entry ) {
+				model: TimelineProxyModel{
+					listSource: TimelineProxyModel.Copy
+				}
+				onEntrySelected:{
+					if( entry) {
 						mainItem.chatRoomSelectedCallback(entry.chatRoomModel)
 						exit(1)
 					}

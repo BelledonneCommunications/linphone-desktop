@@ -90,10 +90,7 @@ Item {
 			preventStealing: false
 			onClicked: {
 				if(mouse.button == Qt.LeftButton){
-					timeline.entryClicked(mainItem.timelineModel)
-					if(view.updateSelectionModels)
-						mainItem.timelineModel.selected = true
-					view.currentIndex = mainItem.modelIndex;
+					mainItem.timelineModel.selected = true
 				}else{
 					mainItem.optionsToggled = !mainItem.optionsToggled
 				}

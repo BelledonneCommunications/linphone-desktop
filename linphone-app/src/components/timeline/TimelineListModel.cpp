@@ -53,7 +53,31 @@ TimelineListModel::TimelineListModel (QObject *parent) : ProxyListModel(parent) 
 	updateTimelines ();
 }
 
+TimelineListModel::TimelineListModel(const TimelineListModel* model){
+	mSelectedCount = model->mSelectedCount;
+	CoreHandlers* coreHandlers= CoreManager::getInstance()->getHandlers().get();
+	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
+	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::update);
+	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::updated);
+	
+	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &TimelineListModel::onCallStateChanged);
+	QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &TimelineListModel::onCallCreated);
+	
+	connect(CoreManager::getInstance()->getSettingsModel(), &SettingsModel::hideEmptyChatRoomsChanged, this, &TimelineListModel::update);
+	connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultRegistrationChanged, this, &TimelineListModel::update);
+	for(auto item : model->mList) {
+		auto newItem = qobject_cast<TimelineModel*>(item)->clone();
+		connect(newItem.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
+		connect(newItem->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
+		mList << newItem;
+	}
+}
+
 TimelineListModel::~TimelineListModel(){
+}
+
+TimelineListModel* TimelineListModel::clone() const{
+	return new TimelineListModel(this);
 }
 // -----------------------------------------------------------------------------
 
@@ -109,7 +133,7 @@ QSharedPointer<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<lin
 			}
 		}
 		if(create){
-			QSharedPointer<TimelineModel> model = TimelineModel::create(chatRoom);
+			QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 			if(model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
@@ -157,7 +181,7 @@ QSharedPointer<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_pt
 				return model;
 		}
 		if(create){
-			QSharedPointer<TimelineModel> model = TimelineModel::create(chatRoom);
+			QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 			if(model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
@@ -198,8 +222,13 @@ void TimelineListModel::onSelectedHasChanged(bool selected){
 		}else
 			setSelectedCount(mSelectedCount+1);
 		emit selectedChanged(qobject_cast<TimelineModel*>(sender()));
-	} else
+	} else {
+		if( this ==  CoreManager::getInstance()->getTimelineListModel()) {// Clean memory only if the selection is about the main list.
+			auto timeline = qobject_cast<TimelineModel*>(sender());
+			timeline->getChatRoomModel()->resetData();// Cleanup leaving chat room
+		}
 		setSelectedCount(mSelectedCount-1);
+	}
 }
 
 void TimelineListModel::updateTimelines () {
@@ -252,7 +281,7 @@ void TimelineListModel::updateTimelines () {
 		auto haveTimeline = getTimeline(dbChatRoom, false);
 		if(!haveTimeline && dbChatRoom){// Create a new Timeline if needed
 			
-			QSharedPointer<TimelineModel> model = TimelineModel::create(dbChatRoom, callLogs);
+			QSharedPointer<TimelineModel> model = TimelineModel::create(this, dbChatRoom, callLogs);
 			if( model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
@@ -302,7 +331,7 @@ void TimelineListModel::select(ChatRoomModel * chatRoomModel){
 void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state){
 	if( state == linphone::ChatRoom::State::Created
 			&& !getTimeline(chatRoom, false)){// Create a new Timeline if needed
-		QSharedPointer<TimelineModel> model = TimelineModel::create(chatRoom);
+		QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 		if(model){
 			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);

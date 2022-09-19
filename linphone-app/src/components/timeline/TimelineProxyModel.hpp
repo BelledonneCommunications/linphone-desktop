@@ -45,7 +45,16 @@ public:
 	};
 	Q_ENUM(TimelineFilter)
 	
+	enum TimelineListSource{
+		Undefined, 
+		Main,	// Timeline list comes from the singleton stored in CoreManager.
+		Copy	// Timeline list is created from Main but have no attach to the main list (aside of root items).
+	};
+	Q_ENUM(TimelineListSource)
+	
 	TimelineProxyModel (QObject *parent = Q_NULLPTR);
+	
+	Q_PROPERTY(TimelineListSource listSource READ getListSource WRITE setListSource NOTIFY listSourceChanged)
 	
 	Q_PROPERTY(int filterFlags MEMBER mFilterFlags WRITE setFilterFlags NOTIFY filterFlagsChanged)
 	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
@@ -55,12 +64,16 @@ public:
 	Q_INVOKABLE void setFilterFlags(const int& filterFlags);
 	Q_INVOKABLE void setFilterText(const QString& text);
 	
+	TimelineListSource getListSource() const;
+	void setListSource(const TimelineListSource& source);
+	
 signals:
 	void countChanged();
 	void selectedCountChanged(int selectedCount);
 	void selectedChanged(TimelineModel * timelineModel);
 	void filterFlagsChanged();
 	void filterTextChanged();
+	void listSourceChanged();
 	
 protected:
 	
@@ -74,6 +87,7 @@ protected:
 private:
 	int mFilterFlags = 0;
 	QString mFilterText;
+	TimelineListSource mListSource = Undefined;
 };
 
 #endif // TIMELINE_PROXY_MODEL_H_

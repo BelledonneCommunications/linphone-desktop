@@ -23,14 +23,12 @@ Rectangle {
 	property alias model: view.model
 	property string _selectedSipAddress
 	property bool showHistoryButton : CoreManager.callLogsCount
-	property bool updateSelectionModels : true
 	property bool isFilterVisible: searchView.visible || showFilterView
 	property bool showFiltersButtons: view.count > 0 || timeline.isFilterVisible || timeline.model.filterFlags > 0
 	
 	// ---------------------------------------------------------------------------
 	
 	signal entrySelected (TimelineModel entry)
-	signal entryClicked(TimelineModel entry)
 	signal showHistoryRequest()
 	
 	// ---------------------------------------------------------------------------
@@ -52,7 +50,7 @@ Rectangle {
 					timeline.entrySelected('')
 				}
 			}
-			onSelectedChanged : if(timelineModel && timeline.updateSelectionModels) timeline.entrySelected(timelineModel)
+			onSelectedChanged : if(timelineModel) timeline.entrySelected(timelineModel)
 		}
 		// -------------------------------------------------------------------------
 		// Legend.
@@ -358,7 +356,6 @@ Rectangle {
 		
 		ScrollableListView {
 			id: view
-			property alias updateSelectionModels: timeline.updateSelectionModels
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			currentIndex: -1
@@ -370,8 +367,7 @@ Rectangle {
 				Connections{
 					target: $modelData
 					onSelectedChanged:{
-						gc()
-						if(view.updateSelectionModels && selected) {
+						if(selected) {
 							view.currentIndex = index;
 						}
 					}
