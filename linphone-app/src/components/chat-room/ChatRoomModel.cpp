@@ -410,7 +410,7 @@ bool ChatRoomModel::haveEncryption() const{
 }
 
 bool ChatRoomModel::haveConferenceAddress() const{
-	return mChatRoom && (mChatRoom->getConferenceAddress() || getFullPeerAddress().toLower().contains("conf-id"));
+	return mChatRoom && getFullPeerAddress().toLower().contains("conf-id");
 }
 
 bool ChatRoomModel::markAsReadEnabled() const{
