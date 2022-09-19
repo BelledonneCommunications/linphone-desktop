@@ -135,7 +135,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.callsList
-			visible: !listCallsOpened
+			visible: !listCallsOpened && mainItem.isReady
 			onClicked: openListCallsRequest()
 		}
 		ActionButton{
@@ -183,7 +183,7 @@ Rectangle {
 		// Title
 		Item{
 			Layout.fillWidth: true
-			Layout.fillHeight: true
+			Layout.preferredHeight: title.contentHeight
 			ColumnLayout{
 				anchors.fill: parent
 				Text{
@@ -528,6 +528,7 @@ Rectangle {
 		anchors.bottomMargin: 30
 		anchors.rightMargin: 25
 		height: 60
+		visible: mainItem.isReady
 		ActionButton{
 			isCustom: true
 			backgroundRadius: width/2
