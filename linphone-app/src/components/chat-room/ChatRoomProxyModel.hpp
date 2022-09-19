@@ -45,8 +45,11 @@ class ChatRoomProxyModel : public QSortFilterProxyModel {
 	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
 	Q_PROPERTY(bool markAsReadEnabled READ markAsReadEnabled WRITE enableMarkAsRead NOTIFY markAsReadEnabledChanged)// Focus is at end of the list. Used to reset message count if not at end
 	
+	Q_PROPERTY(bool isCall MEMBER mIsCall WRITE setIsCall NOTIFY isCallChanged)
+	
 public:
 	ChatRoomProxyModel (QObject *parent = Q_NULLPTR);
+	~ChatRoomProxyModel();
 	
 	int getEntryTypeFilter ();
 	Q_INVOKABLE void setEntryTypeFilter (int type);
@@ -54,6 +57,8 @@ public:
 	
 	Q_INVOKABLE QString getDisplayNameComposers()const;
 	Q_INVOKABLE QVariant getAt(int row);
+	
+	void setIsCall(const bool& isCall);
 	
 	
 	Q_INVOKABLE void loadMoreEntriesAsync ();
@@ -88,6 +93,7 @@ signals:
 	
 	void entryTypeFilterChanged (int type);
 	void filterTextChanged();
+	void isCallChanged();
 	
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
@@ -133,6 +139,7 @@ private:
 	QString mFullLocalAddress;
 	static QString gCachedText;
 	bool mMarkAsReadEnabled;
+	bool mIsCall = false;
 	
 	QString mFilterText;
 	

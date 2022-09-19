@@ -56,6 +56,10 @@ ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel
 	sort(0);
 }
 
+ChatRoomProxyModel::~ChatRoomProxyModel(){
+	setChatRoomModel(nullptr);	// Do remove process like setting haveCall if is Call.
+}
+
 // -----------------------------------------------------------------------------
 
 #define GET_CHAT_MODEL() \
@@ -242,6 +246,19 @@ QString ChatRoomProxyModel::getCachedText() const{
 	return gCachedText;
 }
 
+void ChatRoomProxyModel::setIsCall(const bool& isCall){
+	if(mIsCall != isCall) {
+		if(mChatRoomModel){
+			if(isCall){
+				mChatRoomModel->addBindingCall();
+			}else
+				mChatRoomModel->removeBindingCall();
+		}
+		mIsCall = isCall;
+		emit isCallChanged();
+	}
+}
+
 // -----------------------------------------------------------------------------
 
 void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
@@ -252,8 +269,14 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
-			QObject::disconnect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
+			QObject::disconnect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);			
+			if(mIsCall)
+				mChatRoomModel->removeBindingCall();
 		}
+		if( mIsCall && chatRoomModel){
+			chatRoomModel->addBindingCall();
+		}
+		
 		mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoomModel);
 		setSourceModel(mChatRoomModel.get());
 		if (mChatRoomModel) {
@@ -303,9 +326,15 @@ ChatRoomModel *ChatRoomProxyModel::getChatRoomModel () const{
 }
 
 void ChatRoomProxyModel::setChatRoomModel (ChatRoomModel *chatRoomModel){
-	reload(chatRoomModel);
-	emit chatRoomModelChanged();
-	emit isRemoteComposingChanged();
+	if(chatRoomModel){
+		reload(chatRoomModel);
+		emit chatRoomModelChanged();
+		emit isRemoteComposingChanged();
+	}else{
+		if(mIsCall && mChatRoomModel)
+			mChatRoomModel->removeBindingCall();
+			mChatRoomModel = nullptr;
+	}
 }
 // -----------------------------------------------------------------------------
 

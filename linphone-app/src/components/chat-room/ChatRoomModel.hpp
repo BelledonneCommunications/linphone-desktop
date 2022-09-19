@@ -176,6 +176,10 @@ public:
 	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index. -1 if not found.
 	static bool isTerminated(const std::shared_ptr<linphone::ChatRoom>& chatRoom);
 	
+	void addBindingCall();	// If a call is binding to this chat room, we avoid cleaning data (Add=+1, remove=-1)
+	void removeBindingCall();
+	virtual void resetData() override;
+	
 	QDateTime mLastUpdateTime;
 	int mUnreadMessagesCount = 0;
 	int mMissedCallsCount = 0;
@@ -194,7 +198,6 @@ public:
 	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
 	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
 	void insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs);
-	
 	
 	//--------------------		CHAT ROOM HANDLER
 	
@@ -299,6 +302,7 @@ private:
 	QSharedPointer<ParticipantListModel> mParticipantListModel;
 	QSharedPointer<ChatMessageModel> mReplyModel;
 	QSharedPointer<ChatNoticeModel> mUnreadMessageNotice;
+	int mBindingCalls = 0;
 	
 	QWeakPointer<ChatRoomModel> mSelf;
 };

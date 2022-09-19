@@ -218,6 +218,7 @@ Window {
 						fullPeerAddress: window.call.fullPeerAddress
 						fullLocalAddress: window.call.fullLocalAddress
 						localAddress: window.call.localAddress
+						isCall: true	// Used for cleaning data if there are no call associated to this chat room.
 					}
 					
 					Connections {

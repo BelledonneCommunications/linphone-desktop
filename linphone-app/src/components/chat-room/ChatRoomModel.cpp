@@ -859,6 +859,19 @@ bool ChatRoomModel::isTerminated(const std::shared_ptr<linphone::ChatRoom>& chat
 	return chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
 }
 
+void ChatRoomModel::addBindingCall(){	// If a call is binding to this chat room, we avoid cleaning data (Add=+1, remove=-1)
+	++mBindingCalls;
+}
+	
+void ChatRoomModel::removeBindingCall(){
+	--mBindingCalls;
+}
+
+void ChatRoomModel::resetData(){
+	if( mBindingCalls == 0)
+		ProxyListModel::resetData();
+}
+
 void ChatRoomModel::initEntries(){
 	if( mList.size() > mLastEntriesStep)
 		resetData();
