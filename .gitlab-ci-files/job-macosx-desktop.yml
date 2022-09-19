@@ -85,7 +85,7 @@ job-macosx-ninja-novideo:
 #################################################
 # Package - Nightly
 #################################################
-
+# WAIT for QT6 for arm64
 job-macosx-makefile-package:
   stage: package
   tags: [ "macmini-m1-xcode13" ]
@@ -97,7 +97,7 @@ job-macosx-makefile-package:
        - $DEPLOY_MACOSX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$MACOSX_PLATFORM/$APP_FOLDER
-    LINPHONESDK_MACOS_ARCHS: "x86_64,arm64"
+    LINPHONESDK_MACOS_ARCHS: "x86_64"
   extends: job-macosx-makefile
   script:
     - *build_all_script
