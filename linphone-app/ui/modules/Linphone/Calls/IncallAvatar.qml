@@ -42,7 +42,7 @@ Avatar {
 			return null;
 	}
 	
-	username: _username ? _username : ''
+	username: !mainItem.isPaused &&  _username ? _username : ''
 	Text {
 		anchors.fill: parent
 		color: CallStyle.container.pause.text.color

@@ -86,8 +86,8 @@ function getContent (call, conferenceInfoModel) {
 	}
 	var CallModel = Linphone.CallModel
 	if (status === CallModel.CallStatusIncoming) {
-		console.log("incomingCall")
-		return incomingCall
+		console.log("waitingRoom")
+		return waitingRoom
 	}
 	if( window.conferenceInfoModel != call.conferenceInfoModel) {
 		Qt.callLater(function(){window.conferenceInfoModel = call.conferenceInfoModel})

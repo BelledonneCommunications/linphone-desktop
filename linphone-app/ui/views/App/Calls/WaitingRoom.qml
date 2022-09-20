@@ -201,7 +201,7 @@ Rectangle {
 			}
 			Text{
 				Layout.fillWidth: true
-				text: mainItem.callModel && mainItem.callModel.peerAddress
+				text: mainItem.callModel && SipAddressesModel.cleanSipAddress(mainItem.callModel.peerAddress)
 				color: WaitingRoomStyle.callee.color
 				font.pointSize:  WaitingRoomStyle.callee.addressPointSize
 				horizontalAlignment: Text.AlignHCenter

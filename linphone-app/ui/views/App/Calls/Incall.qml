@@ -48,7 +48,7 @@ Rectangle {
 								&& conferenceLayout.item && conferenceLayout.status == Loader.Ready
 	function updateMessageBanner(){
 		//: ''You are alone in this conference' : Text in message banner when the user is the only participant.
-		if( isReady && participantCount <= 1) messageBanner.noticeBannerText = qsTr('aloneInConference')
+		if( conferenceModel && isReady && participantCount <= 1) messageBanner.noticeBannerText = qsTr('aloneInConference')
 	}
 	Timer{
 		id: delayMessageBanner
@@ -183,11 +183,12 @@ Rectangle {
 		// Title
 		Item{
 			Layout.fillWidth: true
-			Layout.preferredHeight: title.contentHeight
+			Layout.preferredHeight: title.contentHeight + address.contentHeight
 			ColumnLayout{
 				anchors.fill: parent
 				Text{
 					id: title
+					Layout.alignment: Qt.AlignHCenter
 					Timer{
 						id: elapsedTimeRefresher
 						running: true
@@ -215,7 +216,7 @@ Rectangle {
 					horizontalAlignment: Qt.AlignHCenter
 					visible: !conferenceModel && callModel && !callModel.isConference
 					text: !conferenceModel && callModel
-								? callModel.peerAddress
+								? SipAddressesModel.cleanSipAddress(callModel.peerAddress)
 								: ''
 					color: IncallStyle.title.color
 					font.pointSize: IncallStyle.title.addressPointSize
