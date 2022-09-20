@@ -24,7 +24,6 @@
 #	$2 = Output Filename
 #	$3 = Qt root path (eg. "~/Qt/5.15.2/gcc_64")
 #	$4 = Key of the code sign (optional but mendatory if code signing)
-#	$5 = Passphrase of the code sign (Optional)
 
 APP_NAME="$1"
 QT_PATH="$3"
@@ -93,11 +92,8 @@ else
 	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
 	#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/${APP_NAME} --output appimage --desktop-file=${WORK_DIR}/app/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/${APP_NAME}.svg
 	echo "-- Code Signing of AppImage"
-	if [ -z "$5" ]; then
-		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $4
-	else
-		./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $4 --sign-args "--pinentry-mode loopback --passphrase $5"
-	fi
+	# APPIMAGETOOL_SIGN_PASSPHRASE has to the parent environment (not here). Do not use export.
+	./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $4
 fi
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
