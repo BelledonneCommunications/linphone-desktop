@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on exit.
 - Memory stability.
 
+## 4.4.10 - 2022-09-20
+
+### Fixes
+- Lime exceptions because of unknown boundaries.
+
 ## 4.4.9 - 2022-08-29
 
 ### Fixes
