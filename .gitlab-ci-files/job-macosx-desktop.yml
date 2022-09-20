@@ -22,7 +22,7 @@
 
 .job-macosx-desktop:
   stage: build
-  tags: [ "macosx-xcode11" ]
+  tags: [ "macmini-m1-xcode13" ]
   script:
     - *build_all_script
   variables:
@@ -88,7 +88,7 @@ job-macosx-ninja-novideo:
 
 job-macosx-makefile-package:
   stage: package
-  tags: [ "macosx-xcode11" ]
+  tags: [ "macmini-m1-xcode13" ]
   dependencies: []
   only:
      variables:
@@ -109,7 +109,7 @@ job-macosx-makefile-package:
 
 job-macosx-codesigning:
   stage: signing
-  tags: [ "macosx-xcode11" ]
+  tags: [ "macmini-m1-xcode13" ]
   needs:
     - job-macosx-makefile-package
   only:
@@ -134,7 +134,7 @@ job-macosx-codesigning:
 
 job-macosx-makefile-deploy:
   stage: deploy
-  tags: [ "macosx-xcode11" ]
+  tags: [ "macmini-m1-xcode13" ]
   needs:
     - job-macosx-codesigning
   only:
@@ -147,7 +147,7 @@ job-macosx-makefile-deploy:
 
 job-macosx-makefile-plugins-deploy:
   stage: deploy
-  tags: [ "macosx-xcode11" ]
+  tags: [ "macmini-m1-xcode13" ]
   needs:
     - job-macosx-makefile
   only:
