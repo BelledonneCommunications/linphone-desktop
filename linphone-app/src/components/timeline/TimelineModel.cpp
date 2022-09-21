@@ -113,6 +113,7 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObj
 		CoreManager::getInstance()->handleChatRoomCreated(mChatRoomModel);
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::chatRoomDeleted, this, &TimelineModel::onChatRoomDeleted);
 	}
 	if(chatRoom){
 		mChatRoomListener = std::make_shared<ChatRoomListener>(this);
@@ -128,6 +129,7 @@ TimelineModel::TimelineModel(const TimelineModel * model){
 	if( mChatRoomModel ){
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::chatRoomDeleted, this, &TimelineModel::onChatRoomDeleted);
 	}
 	if(mChatRoomModel->getChatRoom()){
 		mChatRoomListener = model->mChatRoomListener;
@@ -201,7 +203,7 @@ void TimelineModel::onDefaultAccountChanged(){
 }
 
 void TimelineModel::disconnectChatRoomListener(){
-	if( mChatRoomModel && mChatRoomListener){
+	if( mChatRoomModel && mChatRoomListener && mChatRoomModel->getChatRoom()){
 		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
 	}
 }
@@ -251,3 +253,7 @@ void TimelineModel::onParticipantRegistrationSubscriptionRequested(const std::sh
 void TimelineModel::onParticipantRegistrationUnsubscriptionRequested(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & participantAddress){}
 void TimelineModel::onChatMessageShouldBeStored(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){}
 void TimelineModel::onChatMessageParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){}
+
+void TimelineModel::onChatRoomDeleted(){
+	emit chatRoomDeleted();
+}

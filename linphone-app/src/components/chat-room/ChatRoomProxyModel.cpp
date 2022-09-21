@@ -269,7 +269,8 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
-			QObject::disconnect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);			
+			QObject::disconnect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
+			QObject::disconnect(ChatRoomModel, &ChatRoomModel::chatRoomDeleted, this, &ChatRoomProxyModel::chatRoomDeleted);
 			if(mIsCall)
 				mChatRoomModel->removeBindingCall();
 		}
@@ -287,6 +288,7 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 			QObject::connect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);		
 			QObject::connect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
 			QObject::connect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
+			QObject::connect(ChatRoomModel, &ChatRoomModel::chatRoomDeleted, this, &ChatRoomProxyModel::chatRoomDeleted);
 			mChatRoomModel->initEntries();// This way, we don't load huge chat rooms (that lead to freeze GUI)
 		}
 	}

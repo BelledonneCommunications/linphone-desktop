@@ -65,6 +65,7 @@ public slots:
 	void onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
 	void onCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) ;
 	void onCallCreated(const std::shared_ptr<linphone::Call> &call);
+	void onChatRoomDeleted();
 	
 signals:
 	void countChanged();

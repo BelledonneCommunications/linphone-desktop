@@ -67,7 +67,7 @@ Item {
 		titleColor: isSelected
 					   ? TimelineStyle.contact.title.color.selected
 					   : TimelineStyle.contact.title.color.normal
-		showSubtitle: mainItem.timelineModel.chatRoomModel && (mainItem.timelineModel.chatRoomModel.isOneToOne || !mainItem.timelineModel.chatRoomModel.isConference)
+		showSubtitle: mainItem.timelineModel && (mainItem.timelineModel.chatRoomModel && (mainItem.timelineModel.chatRoomModel.isOneToOne || !mainItem.timelineModel.chatRoomModel.isConference))
 		TooltipArea {	
 			id: contactTooltip						
 			text: mainItem.timelineModel && UtilsCpp.toDateTimeString(mainItem.timelineModel.chatRoomModel.lastUpdateTime)

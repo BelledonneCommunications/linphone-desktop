@@ -68,6 +68,7 @@ TimelineListModel::TimelineListModel(const TimelineListModel* model){
 	for(auto item : model->mList) {
 		auto newItem = qobject_cast<TimelineModel*>(item)->clone();
 		connect(newItem.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
+		connect(newItem.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
 		connect(newItem->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 		mList << newItem;
 	}
@@ -295,6 +296,7 @@ void TimelineListModel::updateTimelines () {
 void TimelineListModel::add (QSharedPointer<TimelineModel> timeline){
 	auto chatRoomModel = timeline->getChatRoomModel();
 	auto chatRoom = chatRoomModel->getChatRoom();
+	connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
 	if( !chatRoomModel->haveConferenceAddress() ||  chatRoom->getHistoryEventsSize() != 0) {
 		connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
 		ProxyListModel::add(timeline);
@@ -397,4 +399,8 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 			CoreManager::getInstance()->getCallsListModel()->createChatRoom("", (createSecureChatRoom?1:0),  callLocalAddress, participants, isOutgoing);
 		}
 	}
+}
+
+void TimelineListModel::onChatRoomDeleted(){
+	remove(sender());
 }

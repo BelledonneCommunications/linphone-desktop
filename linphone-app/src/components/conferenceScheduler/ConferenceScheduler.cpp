@@ -25,6 +25,7 @@
 #include "app/App.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 
 void ConferenceScheduler::connectTo(ConferenceSchedulerListener * listener){
 	connect(listener, &ConferenceSchedulerListener::stateChanged, this, &ConferenceScheduler::onStateChanged);
@@ -61,7 +62,10 @@ void ConferenceScheduler::onStateChanged(linphone::ConferenceScheduler::State st
 		emit CoreManager::getInstance()->getHandlers()->conferenceInfoReceived(mConferenceScheduler->getInfo());
 		if( (mSendInvite & 1) == 1){
 			std::shared_ptr<linphone::ChatRoomParams> params = CoreManager::getInstance()->getCore()->createDefaultChatRoomParams();
-			params->setBackend(linphone::ChatRoomBackend::Basic);
+			if( CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled())
+				params->setBackend(linphone::ChatRoomBackend::FlexisipChat);
+			else
+				params->setBackend(linphone::ChatRoomBackend::Basic);
 			mConferenceScheduler->sendInvitations(params);
 		}
 	}

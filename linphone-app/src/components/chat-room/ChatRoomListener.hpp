@@ -34,7 +34,7 @@ class ChatRoomListener : public QObject, public linphone::ChatRoomListener {
 Q_OBJECT
 public:
 	ChatRoomListener(QObject * parent = nullptr);
-	virtual ~ChatRoomListener(){}
+	virtual ~ChatRoomListener();
 		
 	virtual void onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing) override;
 	virtual void onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message) override;

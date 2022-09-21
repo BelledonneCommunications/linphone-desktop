@@ -184,8 +184,13 @@ Rectangle {
 		Item{
 			Layout.fillWidth: true
 			Layout.preferredHeight: title.contentHeight + address.contentHeight
+			property int centerOffset: mapFromItem(mainItem, mainItem.width/2,0).x - width/2	// Compute center from mainItem
 			ColumnLayout{
-				anchors.fill: parent
+				anchors.top: parent.top
+				anchors.bottom: parent.bottom
+				width: parent.width
+				x: parent.centerOffset
+				
 				Text{
 					id: title
 					Layout.alignment: Qt.AlignHCenter

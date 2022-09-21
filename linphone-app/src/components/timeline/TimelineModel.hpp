@@ -100,6 +100,7 @@ public:
 public slots:
 	void updateUnreadCount();
 	void onDefaultAccountChanged();
+	void onChatRoomDeleted();
 	
 signals:
 	void fullPeerAddressChanged();
@@ -109,6 +110,7 @@ signals:
 	void presenceStatusChanged();
 	void selectedChanged(bool selected);
 	void conferenceLeft();
+	void chatRoomDeleted();
 	
 private:
 

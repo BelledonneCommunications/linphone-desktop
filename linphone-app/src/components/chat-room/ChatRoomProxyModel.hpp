@@ -88,6 +88,7 @@ signals:
 	//bool isSecureChanged(bool secure);
 	
 	void chatRoomModelChanged();
+	void chatRoomDeleted();
 	
 	void moreEntriesLoaded (int n);
 	

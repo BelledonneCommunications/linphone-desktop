@@ -28,7 +28,9 @@
 
 ChatRoomListener::ChatRoomListener(QObject * parent): QObject(parent){
 }
-
+ChatRoomListener::~ChatRoomListener(){
+	qDebug() << "Destroying ChatRoomListener " << this;
+}
 //---------------------------------------------------------------------------------------------------
 
 void ChatRoomListener::onIsComposingReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::Address> & remoteAddress, bool isComposing){

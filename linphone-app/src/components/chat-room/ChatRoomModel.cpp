@@ -439,15 +439,15 @@ bool ChatRoomModel::isOneToOne() const{
 }
 
 bool ChatRoomModel::isMeAdmin() const{
-	return mChatRoom->getMe()->isAdmin();
+	return mChatRoom && mChatRoom->getMe()->isAdmin();
 }
 
 bool ChatRoomModel::isCurrentAccount() const{
-	return Utils::isMe(mChatRoom->getLocalAddress());
+	return mChatRoom && Utils::isMe(mChatRoom->getLocalAddress());
 }
 
 bool ChatRoomModel::canHandleParticipants() const{
-	return mChatRoom->canHandleParticipants();
+	return mChatRoom && mChatRoom->canHandleParticipants();
 }
 
 bool ChatRoomModel::getIsRemoteComposing () const {
@@ -601,6 +601,8 @@ void ChatRoomModel::markAsToDelete(){
 void ChatRoomModel::deleteChatRoom(){
 	qInfo() << "Deleting ChatRoom : " << getSubject() << ",  address=" << getFullPeerAddress();
 	CoreManager::getInstance()->getCore()->deleteChatRoom(mChatRoom);
+	mChatRoom->removeListener(mChatRoomListener);
+	emit chatRoomDeleted();
 }
 
 void ChatRoomModel::leaveChatRoom (){
@@ -702,10 +704,13 @@ void ChatRoomModel::compose () {
 
 void ChatRoomModel::resetMessageCount () {
 	if(mChatRoom && !mDeleteChatRoom && markAsReadEnabled()){
-		if (mChatRoom->getUnreadMessagesCount() > 0){
-			mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
-		}
-		setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
+		if( mChatRoom->getState() != linphone::ChatRoom::State::Deleted){
+			if (mChatRoom->getUnreadMessagesCount() > 0){
+				mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
+			}
+			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
+		}else
+			setUnreadMessagesCount(0);
 		setMissedCallsCount(0);
 		emit messageCountReset();
 		CoreManager::getInstance()->updateUnreadMessageCount();
