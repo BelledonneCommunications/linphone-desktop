@@ -23,6 +23,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/chat-room/ChatRoomModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "ConferenceAddModel.hpp"
@@ -147,11 +148,12 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 
 void ConferenceHelperModel::ConferenceAddModel::update () {
   shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
-  bool enablingVideo = false;// Video is not yet fully supported by the application in conference
+  bool enablingVideo = CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled();// Video is not yet fully supported by the application in conference
   if(!conference){
     auto parameters = mConferenceHelperModel->mCore->createConferenceParams(conference);
     parameters->enableVideo(enablingVideo);
-    parameters->setConferenceFactoryAddress(nullptr);// Do a local conference
+    if(!enablingVideo)
+		parameters->setConferenceFactoryAddress(nullptr);// Do a local conference
     conference = mConferenceHelperModel->mCore->createConferenceWithParams(parameters);
   }
   auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
