@@ -497,14 +497,16 @@ DialogPlus {
 							
 							actions:[{
 									colorSet: NewConferenceStyle.addParticipant,
-									secure: secureSwitch.checked,
+									secure: SettingsModel.secureChatEnabled,
 									visible: true,
 									secureIconVisibleHandler : function(entry) {
-										return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+										return entry && entry.sipAddress ? UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh) : false
 									},
 									handler: function (entry) {
-										selectedParticipants.addAddress(entry.sipAddress)
-										smartSearchBar.addAddressToIgnore(entry.sipAddress);
+										if(entry){
+											selectedParticipants.addAddress(entry.sipAddress)
+											smartSearchBar.addAddressToIgnore(entry.sipAddress);
+										}
 									},
 								}]
 							

@@ -223,7 +223,7 @@ DialogPlus {
 											property int securityLevel : 2
 											anchors.top:parent.top
 											anchors.horizontalCenter: parent.right
-											visible: UtilsCpp.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
+											visible: SettingsModel.secureChatEnabled && UtilsCpp.hasCapability(modelData.sipAddress, LinphoneEnums.FriendCapabilityLimeX3Dh) 
 											icon: 'secure_on'
 											iconSize: parent.height/2
 										}
@@ -316,10 +316,10 @@ DialogPlus {
 						
 						actions:[{
 								colorSet: NewChatRoomStyle.addParticipant,
-								secure: secureSwitch.checked,
+								secure: SettingsModel.secureChatEnabled,
 								visible: true,
 								secureIconVisibleHandler : function(entry) {
-									return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+									return entry && entry.sipsipAddress ? UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh) : false
  								},
 								handler: function (entry) {
 									selectedParticipants.addAddress(entry.sipAddress)

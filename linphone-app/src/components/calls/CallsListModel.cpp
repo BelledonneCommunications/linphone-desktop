@@ -315,9 +315,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	}
 	params->enableEncryption(securityLevel>0);
 	
-	if( securityLevel>0){
-		params->enableEncryption(true);
-	}else
+	if( securityLevel<=0)
 		params->setBackend(linphone::ChatRoomBackend::Basic);
 	params->enableGroup( subject!="" );
 	
