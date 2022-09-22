@@ -624,9 +624,9 @@ ColumnLayout  {
 		proxyModel: ChatRoomProxyModel {
 			id: chatRoomProxyModel
 			
-			Component.onCompleted: {
-				if ( (!chatRoomModel.haveEncryption && !SettingsModel.standardChatEnabled)
-						|| (chatRoomModel.haveEncryption && !SettingsModel.secureChatEnabled) ) {
+			function updateFilter(){
+			if ( chatRoomModel && ((!chatRoomModel.haveEncryption && !SettingsModel.standardChatEnabled)
+						|| (chatRoomModel.haveEncryption && !SettingsModel.secureChatEnabled)) ) {
 					setEntryTypeFilter(ChatRoomModel.CallEntry)
 				}
 			}
@@ -635,6 +635,11 @@ ColumnLayout  {
 			fullPeerAddress: conversation.fullPeerAddress
 			fullLocalAddress: conversation.fullLocalAddress
 			localAddress: conversation.localAddress// Reload is done on localAddress. Use this order
+			
+			onChatRoomModelChanged: updateFilter()
+			Component.onCompleted: {
+				updateFilter()
+			}
 		}
 	}
 	
