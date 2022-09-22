@@ -161,25 +161,33 @@ Rectangle {
 					showCustomButton: !mainItem.callModel
 					showUsername: false
 					customButtonColorSet : WaitingRoomStyle.buttons.options
-					customButtonToggled: mediaMenu.visible
+					customButtonToggled: multimediaLoader.active
 					
 					onVideoDefinitionChanged: previewDefinition = SettingsModel.getCurrentPreviewVideoDefinition()
-					onCustomButtonClicked: mediaMenu.visible = !mediaMenu.visible
+					onCustomButtonClicked: multimediaLoader.active = !multimediaLoader.active
 				}
 			}
-			MultimediaParametersDialog{
-				id: mediaMenu
+			Loader{
+				id: multimediaLoader
 				Layout.fillHeight: true
 				Layout.leftMargin: 10
 				Layout.rightMargin: 10
-				Layout.minimumHeight: fitHeight
-				Layout.minimumWidth: fitWidth
-				radius: 8
-				flat: true
-				showMargins: true
-				fixedSize: false
-				onExitStatus: visible = false
-				visible: false
+				Layout.minimumHeight: item? item.fitHeight : 0
+				Layout.minimumWidth: item? item.fitWidth : 0
+				
+				sourceComponent: multimediaComponent
+				active: false
+				
+				Component{
+					id: multimediaComponent
+					MultimediaParametersDialog{
+						radius: 8
+						flat: true
+						showMargins: true
+						fixedSize: false
+						onExitStatus: multimediaLoader.active = false
+					}
+				}
 			}
 		}
 		ColumnLayout{

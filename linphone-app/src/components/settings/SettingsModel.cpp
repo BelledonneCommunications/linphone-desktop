@@ -275,8 +275,10 @@ void SettingsModel::startCaptureGraph(){
 	++mCaptureGraphListenerCount;
 }
 void SettingsModel::stopCaptureGraph(){
-	if(--mCaptureGraphListenerCount == 0)
-		deleteCaptureGraph();
+	if(mCaptureGraphListenerCount > 0 ){
+		if(--mCaptureGraphListenerCount == 0)
+			deleteCaptureGraph();
+	}
 }
 void SettingsModel::deleteCaptureGraph(){
 	if (mSimpleCaptureGraph) {
