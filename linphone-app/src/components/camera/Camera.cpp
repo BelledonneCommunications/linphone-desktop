@@ -166,6 +166,7 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 		if(renderer)
 			CoreManager::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 	}else if(mWindowIdLocation == Call){
+		if(mCallModel){
 			auto call = mCallModel->getCall();
 			if(call){
 				qDebug() << "[Camera] Setting Camera to CallModel";
@@ -173,6 +174,7 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 				if(renderer)
 					call->setNativeVideoWindowId(renderer);
 			}
+		}
 	}else if( mWindowIdLocation == Device) {
 		auto participantDevice = mParticipantDeviceModel->getDevice();
 		if(participantDevice){
@@ -291,8 +293,9 @@ void Camera::deactivatePreview(){
 }
 
 void Camera::onCallStateChanged(){
-	if( mCallModel->getStatus() == CallModel::CallStatusEnded){
+	if( mCallModel && mCallModel->getStatus() == CallModel::CallStatusEnded){
 		resetWindowId();
+		disconnect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
 		mCallModel = nullptr;
 	}
 }

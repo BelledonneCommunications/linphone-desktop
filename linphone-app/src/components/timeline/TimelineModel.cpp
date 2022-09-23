@@ -68,38 +68,8 @@ void TimelineModel::connectTo(ChatRoomListener * listener){
 // =============================================================================
 QSharedPointer<TimelineModel> TimelineModel::create(TimelineListModel * mainList, std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent){
 	if((!chatRoom || chatRoom->getState() != linphone::ChatRoom::State::Deleted)  && (!mainList || !mainList->getTimeline(chatRoom, false)) ) {
-		QSharedPointer<TimelineModel> model = QSharedPointer<TimelineModel>::create(chatRoom, parent);
+		QSharedPointer<TimelineModel> model = QSharedPointer<TimelineModel>::create(chatRoom,callLogs, parent);
 		if(model && model->getChatRoomModel()){
-			
-			// Get Max updatetime from chat room and last call event
-			auto timelineChatRoom = model->getChatRoomModel();
-			std::shared_ptr<linphone::CallLog> lastCall = nullptr;
-			QString peerAddress = timelineChatRoom->getParticipantAddress();
-			std::shared_ptr<const linphone::Address> lLocalAddress = chatRoom->getLocalAddress();
-			QString localAddress = Utils::coreStringToAppString(lLocalAddress->asStringUriOnly());
-			
-			if(callLogs.size() == 0) {
-				auto callHistory = CallsListModel::getCallHistory(peerAddress, localAddress);
-				if(callHistory.size() > 0)
-					lastCall = callHistory.front();
-			}else{// Find the last call in list
-				std::shared_ptr<linphone::Address> lPeerAddress = Utils::interpretUrl(peerAddress);
-				if( lPeerAddress && lLocalAddress){
-					auto itCallLog = std::find_if(callLogs.begin(), callLogs.end(), [lPeerAddress, lLocalAddress](std::shared_ptr<linphone::CallLog> c){
-						return c->getLocalAddress()->weakEqual(lLocalAddress) && c->getRemoteAddress()->weakEqual(lPeerAddress);
-					});
-					if( itCallLog != callLogs.end())
-						lastCall = *itCallLog;
-					}
-			}
-				
-			if(lastCall){
-				auto callDate = lastCall->getStartDate();
-				if( lastCall->getStatus() == linphone::Call::Status::Success )
-					callDate += lastCall->getDuration();
-				timelineChatRoom->setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(std::max(chatRoom->getLastUpdateTime(), callDate )*1000));
-			}else
-				timelineChatRoom->setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(chatRoom->getLastUpdateTime()*1000));
 			return model;
 		}
 	}
@@ -107,8 +77,11 @@ QSharedPointer<TimelineModel> TimelineModel::create(TimelineListModel * mainList
 }
 
 TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent) : QObject(parent) {
+	TimelineModel(chatRoom, std::list<std::shared_ptr<linphone::CallLog>>(), parent);
+}
+TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
-	mChatRoomModel = ChatRoomModel::create(chatRoom);
+	mChatRoomModel = ChatRoomModel::create(chatRoom, callLogs);
 	if( mChatRoomModel ){
 		CoreManager::getInstance()->handleChatRoomCreated(mChatRoomModel);
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
@@ -144,7 +117,7 @@ QSharedPointer<TimelineModel> TimelineModel::clone()const{
 }
 
 TimelineModel::~TimelineModel(){
-	if( mChatRoomModel->getChatRoom())
+	if(mChatRoomModel && mChatRoomModel->getChatRoom())
 		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
 }
 

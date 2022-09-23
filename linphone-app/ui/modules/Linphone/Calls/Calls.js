@@ -157,9 +157,11 @@ function getParams (call) {
 }
 
 function updateSelectedCall (call, index) {
-	calls._selectedCall = call ? call : null
-	if (index != null) {
-		calls.currentIndex = index
+	if(index != undefined){
+		calls._selectedCall = call ? call : null
+		if (index != null) {
+			calls.currentIndex = index
+		}
 	}
 }
 
@@ -199,7 +201,8 @@ function handleCountChanged (count) {
 		
 		var model = calls.model
 		var index = count - 1
-		updateSelectedCall(model.data(model.index(index, 0)), index)
+		if(model && model.status === CallModel.CallStatusConnected)
+			updateSelectedCall(model.data(model.index(index, 0)), index)
 	} else {
 		setIndexWithCall(call)
 	}
