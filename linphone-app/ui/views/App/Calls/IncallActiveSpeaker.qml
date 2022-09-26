@@ -85,7 +85,8 @@ Item {
 			anchors.fill: parent
 			
 			anchors.margins: 3
-			deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.localVideoEnabled
+			deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.cameraEnabled
+			//onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.showMe +" / " +mainItem.callModel.localVideoEnabled)
 			currentDevice: allDevices.me
 			isPreview: true
 			callModel: mainItem.callModel
@@ -93,7 +94,7 @@ Item {
 			showCloseButton: false
 			showCustomButton:  false
 			showAvatarBorder: true
-			avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+			avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerPreviewBackgroundColor
 			avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 		}
 	}

@@ -37,8 +37,6 @@ Mosaic {
 		id: gridModel
 		property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: participantDevices
-			property bool cameraEnabled: callModel && callModel.cameraEnabled
-			onCameraEnabledChanged: showMe = cameraEnabled	// Do it on changed to ignore hard bindings (that can be override)
 			showMe: true
 		}
 		model: participantDevices
@@ -64,7 +62,7 @@ Mosaic {
 				isPaused: avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				showCloseButton: false
 				showCustomButton:  false
-				avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+				avatarStickerBackgroundColor: isPreview? IncallStyle.container.avatar.stickerPreviewBackgroundColor : IncallStyle.container.avatar.stickerBackgroundColor
 				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 				
 				//onCloseRequested: participantDevices.showMe = false

@@ -95,6 +95,7 @@ QtObject {
 		
 		property QtObject avatar: QtObject {
 			property color stickerBackgroundColor: ColorsList.add(sectionName+'_container_avatar_sticker_bg', 'conference_avatar_sticker_bg').color
+			property color stickerPreviewBackgroundColor: ColorsList.add(sectionName+'_container_avatar_preview_sticker_bg', 'conference_avatar_preview_sticker_bg').color
 			property color backgroundColor: ColorsList.add(sectionName+'_container_avatar_initials_bg', 'conference_avatar_initials_bg').color
 			
 			property int maxSize: 300

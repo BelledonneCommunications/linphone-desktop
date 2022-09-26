@@ -123,6 +123,7 @@ class ColorListModel : public ProxyListModel {
 		
 		ADD_COLOR("conference_bg", "#798791", "Conferences: Background")
 		ADD_COLOR("conference_avatar_sticker_bg", "#A1A1A1", "Conferences : Background for sticker avatar")
+		ADD_COLOR("conference_avatar_preview_sticker_bg", "#475663", "Conferences : Background for sticker avatar of preview")
 		ADD_COLOR("conference_avatar_initials_bg", "#798791", "Conferences : Background for avatar initials")
 		
 		ADD_COLOR("fullscreen_conference_bg", "black", "Conferences: Fullscreen background")
