@@ -394,10 +394,10 @@ ColumnLayout  {
 					y:mainBar.height
 					menuStyle : MenuStyle.aux2
 					
-					property bool showGroupInfo: chatRoomModel & !chatRoomModel.isOneToOne
+					property bool showGroupInfo: chatRoomModel && !chatRoomModel.isOneToOne
 					property bool showDevices : conversation.securityLevel != 1
 					property bool showEphemerals:  conversation.securityLevel != 1 // && chatRoomModel.isMeAdmin // Uncomment when session mode will be implemented
-					
+					property bool showScheduleMeeting: showGroupInfo && SettingsModel.conferenceEnabled
 					
 					MenuItem{
 						id:contactMenu
@@ -484,7 +484,39 @@ ColumnLayout  {
 						height:visible ? 1 : 0
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor
-						visible: deleteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible)
+						visible: scheduleMeetingMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible)
+					}
+					MenuItem{
+						id: scheduleMeetingMenuItem
+						property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
+						
+						//: 'Schedule a meeting' : Item menu to schedule a meeting with the chat participants.
+						text: qsTr('conversationMenuScheduleMeeting')
+						iconMenu: MenuItemStyle.scheduleMeeting.icon
+						iconSizeMenu: 40
+						menuItemStyle : MenuItemStyle.aux2
+						visible: conversationMenu.showScheduleMeeting
+						onClicked: {
+							conferenceInfoModel.isScheduled = true
+							conferenceInfoModel.subject = chatRoomModel.subject
+							conferenceInfoModel.setParticipants(conversation.chatRoomModel.participants)
+							
+							window.detachVirtualWindow()
+							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
+													   ,{conferenceInfoModel: scheduleMeetingMenuItem.conferenceInfoModel}
+													   , function (status) {
+														if( status){
+															setView('Conferences')
+														}
+													   })
+						}
+					}
+					
+					Rectangle{
+						height:visible ? 1 : 0
+						width:parent.width
+						color: ConversationStyle.menu.separatorColor
+						visible: deleteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible || scheduleMeetingMenuItem.visible)
 					}
 					MenuItem{
 						id: deleteMenuItem

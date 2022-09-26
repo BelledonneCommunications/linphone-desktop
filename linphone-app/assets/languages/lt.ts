@@ -1076,6 +1076,11 @@ Nesukonfigūruotas serverio url.</translation>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>conversationMenuScheduleMeeting</source>
+        <extracomment>&apos;Schedule a meeting&apos; : Item menu to schedule a meeting with the chat participants.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>

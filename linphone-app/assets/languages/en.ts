@@ -1070,6 +1070,11 @@ Server URL not configured.</translation>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
         <translation>Add contact</translation>
     </message>
+    <message>
+        <source>conversationMenuScheduleMeeting</source>
+        <extracomment>&apos;Schedule a meeting&apos; : Item menu to schedule a meeting with the chat participants.</extracomment>
+        <translation>Schedule a meeting</translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>

@@ -44,6 +44,10 @@ QtObject {
 	property QtObject ephemeral: QtObject {
 		property string icon : 'menu_ephemeral_custom'
 	}
+	property QtObject scheduleMeeting: QtObject {
+		property string icon : 'meetings_custom'
+	}
+	
 	property QtObject contact: QtObject {
 		property string add : 'contact_add_custom'
 		property string view : 'contact_view_custom'

@@ -22,6 +22,7 @@ DialogPlus {
 	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
 	property bool forceSchedule : false
 	property int creationState: 0// -1=error, 0=Idle, 1=processing, 2=processed
+		
 	Connections{
 		target: conferenceInfoModel
 		onConferenceCreated: {
