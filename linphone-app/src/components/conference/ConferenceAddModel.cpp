@@ -148,12 +148,18 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
 
 void ConferenceHelperModel::ConferenceAddModel::update () {
   shared_ptr<linphone::Conference> conference = mConferenceHelperModel->mCore->getConference();
-  bool enablingVideo = CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled();// Video is not yet fully supported by the application in conference
+  
+  auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
+  bool enablingVideo = false;
+  if( currentCall )
+	enablingVideo = currentCall->getCurrentParams()->videoEnabled();
   if(!conference){
     auto parameters = mConferenceHelperModel->mCore->createConferenceParams(conference);
-    parameters->enableVideo(enablingVideo);
-    if(!enablingVideo)
+    if(!CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled()) {
+		parameters->enableVideo(false);
 		parameters->setConferenceFactoryAddress(nullptr);// Do a local conference
+	}else
+		parameters->enableVideo(enablingVideo);
     conference = mConferenceHelperModel->mCore->createConferenceWithParams(parameters);
   }
   auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
