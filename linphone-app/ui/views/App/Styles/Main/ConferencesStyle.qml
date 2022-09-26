@@ -57,6 +57,7 @@ QtObject {
 			property color ended: ColorsList.add(sectionName+'_conference_ended_bg', 'conference_entry_bg').color
 			property color scheduled: ColorsList.add(sectionName+'_conference_scheduled_bg', 'e').color
 			property color hovered: ColorsList.add(sectionName+'_conference_bg_h', 'g10').color
+			property color cancelled: ColorsList.add(sectionName+'_conference_cancelled_bg', 'cancelled_ics_bg').color
 		}
 		
 		property QtObject border: QtObject {

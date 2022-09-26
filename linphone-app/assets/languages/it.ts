@@ -564,6 +564,11 @@ URL del server non configurato.</translation>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>cancelConferenceInfo</source>
+        <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatConferenceInvitationMessage</name>

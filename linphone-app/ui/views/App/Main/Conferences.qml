@@ -167,8 +167,11 @@ Item{
 						width: parent.width / 2
 						height: calendarMessage.height
 						radius: 6
-						color: mainItem.filterType == ConferenceInfoProxyModel.Ended ? ConferencesStyle.conference.backgroundColor.ended
-																					 : ConferencesStyle.conference.backgroundColor.scheduled
+						color: calendarMessage.isCancelled
+									? ConferencesStyle.conference.backgroundColor.cancelled
+									: mainItem.filterType == ConferenceInfoProxyModel.Ended
+										? ConferencesStyle.conference.backgroundColor.ended
+										: ConferencesStyle.conference.backgroundColor.scheduled
 						border.color: calendarMessage.containsMouse || calendarMessage.isExpanded ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
 						border.width: ConferencesStyle.conference.selectedBorder.width
 						ChatCalendarMessage{

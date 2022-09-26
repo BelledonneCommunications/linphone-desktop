@@ -314,6 +314,13 @@ void ConferenceInfoModel::createConference(const int& securityLevel) {
 	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
 }
 
+void ConferenceInfoModel::cancelConference(){
+	mConferenceScheduler = ConferenceScheduler::create();
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
+	mConferenceScheduler->getConferenceScheduler()->cancelConference(mConferenceInfo);
+}
+
 void ConferenceInfoModel::deleteConferenceInfo(){
 	if(mConferenceInfo) {
 		CoreManager::getInstance()->getCore()->deleteConferenceInformation(mConferenceInfo);

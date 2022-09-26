@@ -32,6 +32,8 @@ Loader{
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
 	property bool isExpanded : false
 	
+	property bool isCancelled: conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateCancelled
+	
 	signal expandToggle()
 	signal conferenceUriCopied()
 	signal conferenceRemoved()
@@ -69,7 +71,7 @@ Loader{
 				expandedFitHeight = (expandedDescription.visible? expandedDescription.implicitHeight : 0)
 			}
 			
-			property int fitHeight: dateRow.implicitHeight + title.implicitHeight + participantsFitHeight + expandedFitHeight
+			property int fitHeight: dateRow.implicitHeight + statusLabel.implicitHeight + title.implicitHeight + participantsFitHeight + expandedFitHeight
 			property int fitWidth: Layout.minimumWidth
 			anchors.fill: parent
 			spacing: 0
@@ -127,6 +129,24 @@ Loader{
 					text: qsTr('icsOrganizer') +' : ' +UtilsCpp.getDisplayName(mainItem.conferenceInfoModel.organizer)
 				}
 			}
+			
+			Text{
+				id: statusLabel
+				Layout.fillWidth: true
+				Layout.preferredHeight: visible ? ChatCalendarMessageStyle.lineHeight : 0
+				Layout.alignment: Qt.AlignTop
+				Layout.leftMargin: 10
+				
+				visible: mainItem.isCancelled
+				
+				elide: Text.ElideRight
+				color: ChatCalendarMessageStyle.type.cancelledColor
+				font.pointSize: ChatCalendarMessageStyle.type.pointSize
+				font.weight: Font.Bold
+				text: 'You have cancelled the conference'
+			}
+			
+			
 			Text{
 				id: title
 				Layout.fillWidth: true
@@ -279,6 +299,7 @@ Loader{
 					color: ChatCalendarMessageStyle.subject.color
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
+					visible: !mainItem.isCancelled
 					
 					//: 'Conference address' : Title for the conference address.
 					text: qsTr('icsconferenceAddressTitle')
@@ -289,6 +310,7 @@ Loader{
 					Layout.leftMargin: 10
 					Layout.rightMargin: 10
 					spacing: 10
+					visible: !mainItem.isCancelled
 					TextField{
 						id: uriField
 						readOnly: true
@@ -314,6 +336,7 @@ Loader{
 					Layout.bottomMargin: 5
 					Layout.rightMargin: 10
 					spacing: 10
+					
 					Item{
 						Layout.fillWidth: true
 					}
@@ -322,12 +345,16 @@ Loader{
 						//: 'Join' : Action button to join the conference.
 						text: qsTr('icsJoinButton').toUpperCase()
 						onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
+						visible: !mainItem.isCancelled
 					}
 					ActionButton{
+						id: editButton
 						isCustom: true
 						colorSet: ChatCalendarMessageStyle.editButton
 						backgroundRadius: width/2
-						visible: UtilsCpp.isMe(mainItem.conferenceInfoModel.organizer) && mainItem.conferenceInfoModel.endDateTime >= new Date()
+						visible: UtilsCpp.isMe(mainItem.conferenceInfoModel.organizer) 
+								&& mainItem.conferenceInfoModel.endDateTime >= new Date()
+								&& !mainItem.isCancelled
 						onClicked: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
@@ -335,19 +362,31 @@ Loader{
 						}
 					}
 					ActionButton{
+						property bool isCancellable: editButton.visible
+						
 						isCustom: true
 						colorSet: ChatCalendarMessageStyle.deleteButton
 						backgroundRadius: width/2
 						onClicked: {
 							window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+								//: 'Do you really want do cancel this meeting?' : Warning message to confirm the cancellation of a meeting.
+								descriptionText: isCancellable
+									? qsTr('cancelConferenceInfo')
 								//: 'Do you really want do delete this meeting?' : Warning message to confirm the deletion of a meeting.
-								descriptionText: qsTr('deleteConferenceInfo'),
+									: qsTr('deleteConferenceInfo')
+								,
 							  }, function (status) {
 								if (status) {
-								  mainItem.conferenceInfoModel.deleteConferenceInfo()
+									if( isCancellable)
+										mainItem.conferenceInfoModel.cancelConference()
+									else
+										mainItem.conferenceInfoModel.deleteConferenceInfo()
 								}
 							  })
 						}
+					}
+					Item{
+						Layout.fillWidth: mainItem.isCancelled
 					}
 				}
 			}

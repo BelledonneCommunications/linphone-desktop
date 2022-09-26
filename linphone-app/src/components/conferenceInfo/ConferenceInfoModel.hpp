@@ -91,6 +91,7 @@ public:
 	
 // Tools
 	Q_INVOKABLE void createConference(const int& securityLevel);
+	Q_INVOKABLE void cancelConference();
 	Q_INVOKABLE void deleteConferenceInfo();// Remove completly this conference info from DB
 
 // SCHEDULER
