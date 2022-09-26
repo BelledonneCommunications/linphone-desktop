@@ -240,7 +240,7 @@ void TimelineListModel::updateTimelines () {
 	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
 		if( ChatRoomModel::isTerminated(chatRoom) && chatRoom->getUnreadMessagesCount() > 0)
 			chatRoom->markAsRead();
-		return chatRoom->getConferenceAddress() && chatRoom->getHistoryEventsSize() == 0;
+		return !chatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic) && chatRoom->getConferenceAddress() && chatRoom->getHistoryEventsSize() == 0;
 	}); 
 	
 //Remove no more chat rooms

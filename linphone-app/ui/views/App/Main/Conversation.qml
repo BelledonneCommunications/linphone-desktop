@@ -99,7 +99,7 @@ ColumnLayout  {
 				Layout.preferredWidth: ConversationStyle.bar.avatarSize
 				
 				image: Logic.getAvatar()
-				presenceLevel: chatRoomModel.presenceStatus
+				presenceLevel: chatRoomModel && chatRoomModel.presenceStatus
 				
 				//username: Logic.getUsername()
 				username: chatRoomModel?chatRoomModel.username:( conversation._sipAddressObserver ? UtilsCpp.getDisplayName(conversation._sipAddressObserver.peerAddress) : '')
@@ -115,7 +115,7 @@ ColumnLayout  {
 				icon: ConversationStyle.bar.groupChatIcon
 				overwriteColor: ConversationStyle.bar.groupChatColor
 				iconSize: ConversationStyle.bar.groupChatSize
-				visible: !chatRoomModel.isOneToOne
+				visible: chatRoomModel && !chatRoomModel.isOneToOne
 			}
 			Item{
 				Layout.fillHeight: true
@@ -139,7 +139,7 @@ ColumnLayout  {
 							Layout.topMargin: 15
 							Layout.preferredHeight: implicitHeight
 							Layout.alignment: Qt.AlignBottom
-							visible:chatRoomModel.isMeAdmin && !usernameEdit.visible && !chatRoomModel.isOneToOne
+							visible: chatRoomModel && chatRoomModel.isMeAdmin && !usernameEdit.visible && !chatRoomModel.isOneToOne
 							
 							Icon{
 								id:adminIcon
@@ -167,7 +167,7 @@ ColumnLayout  {
 							visible: !usernameEdit.visible 
 							contactDescriptionStyle: ConversationStyle.bar.contactDescription
 							titleText: avatar.username
-							titleClickable: chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
+							titleClickable: chatRoomModel && chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
 							subtitleText: if(chatRoomModel) {
 											  if(chatRoomModel.groupEnabled) {
 												  return chatRoomModel.participants.displayNamesToString;
@@ -213,7 +213,7 @@ ColumnLayout  {
 						Item{
 							Layout.fillHeight: true
 							Layout.fillWidth: true
-							visible: chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
+							visible: chatRoomModel && chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
 						}
 					}
 					Icon{
@@ -224,7 +224,7 @@ ColumnLayout  {
 						iconSize:30
 						MouseArea{
 							anchors.fill:parent
-							visible: !conversation.chatRoomModel.isReadOnly
+							visible: conversation.chatRoomModel && !conversation.chatRoomModel.isReadOnly
 							onClicked : {
 								window.detachVirtualWindow()
 								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
@@ -329,7 +329,7 @@ ColumnLayout  {
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.groupChat
 						
-						visible: !conversation.chatRoomModel.isReadOnly && conversation.haveMoreThanOneParticipants && SettingsModel.outgoingCallsEnabled && (SettingsModel.videoConferenceEnabled || conversation.haveLessThanMinParticipantsForCall)
+						visible: conversation.chatRoomModel && !conversation.chatRoomModel.isReadOnly && conversation.haveMoreThanOneParticipants && SettingsModel.outgoingCallsEnabled && (SettingsModel.videoConferenceEnabled || conversation.haveLessThanMinParticipantsForCall)
 						
 						//onClicked: CallsListModel. Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
 						onClicked:{
@@ -369,8 +369,9 @@ ColumnLayout  {
 								conversationMenu.open()
 							}
 						}
-						property string debugData: 'Chat room ID:\n'+chatRoomModel.getFullPeerAddress()
+						property string debugData: chatRoomModel ? 'Chat room ID:\n'+chatRoomModel.getFullPeerAddress()
 													+'\nLocal account:\n'+chatRoomModel.getFullLocalAddress()
+													: 'Chat room is null'
 						onLongPressed:{
 											if( SettingsModel.logsEnabled){
 												conversationMenu.close()
@@ -393,7 +394,7 @@ ColumnLayout  {
 					y:mainBar.height
 					menuStyle : MenuStyle.aux2
 					
-					property bool showGroupInfo: !chatRoomModel.isOneToOne
+					property bool showGroupInfo: chatRoomModel & !chatRoomModel.isOneToOne
 					property bool showDevices : conversation.securityLevel != 1
 					property bool showEphemerals:  conversation.securityLevel != 1 // && chatRoomModel.isMeAdmin // Uncomment when session mode will be implemented
 					
@@ -409,7 +410,7 @@ ColumnLayout  {
 						iconMenu: editMode ? MenuItemStyle.contact.view : MenuItemStyle.contact.add
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
-						visible: SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
+						visible: conversation.chatRoomModel && SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
 						onTriggered: {
 							window.setView('ContactEdit', {
 													  sipAddress: conversation.getFullPeerAddress()
@@ -520,7 +521,7 @@ ColumnLayout  {
 		bottomWidth: ConversationStyle.filters.border.bottomWidth
 		color: ConversationStyle.filters.backgroundColor
 		topWidth: ConversationStyle.filters.border.topWidth
-		visible: !chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled
+		visible: chatRoomModel && (!chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 		
 		ExclusiveButtons {
 			id: filterButtons

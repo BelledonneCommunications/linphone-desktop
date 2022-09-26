@@ -300,7 +300,7 @@ QString ChatRoomModel::getFullLocalAddress () const {
 }
 
 QString ChatRoomModel::getConferenceAddress () const {
-	if(!mChatRoom)
+	if(!mChatRoom || mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic))
 		return "";
 	else {
 		auto address = mChatRoom->getConferenceAddress();

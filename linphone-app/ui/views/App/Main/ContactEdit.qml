@@ -240,23 +240,25 @@ ColumnLayout  {
 		
 		sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
 		
-		function vewConversation(chatRoomModel){
-			window.setView('Conversation', {
-								chatRoomModel:chatRoomModel
-							}, function(){
-								TimelineListModel.select(chatRoomModel)
-						   })
+		function viewConversation(chatRoomModel){
+			if( chatRoomModel){
+				window.setView('Conversation', {
+					chatRoomModel:chatRoomModel
+				}, function(){
+					TimelineListModel.select(chatRoomModel)
+				})
+			}
 		}
 		
 		function createChatRoom(sipAddress){
 			var entry = CallsListModel.createChatRoom( "", false, [sipAddress], false )
 			if(entry)
-				vewConversation(entry.chatRoomModel)
+				viewConversation(entry.chatRoomModel)
 		}
 		function createSecureChatRoom(sipAddress){
 			var entry = CallsListModel.createChatRoom( "", true, [sipAddress], false )
 			if(entry)
-				vewConversation(entry.chatRoomModel)
+				viewConversation(entry.chatRoomModel)
 		}
 		function startCall(sipAddress){
 			CallsListModel.launchAudioCall([sipAddress])
