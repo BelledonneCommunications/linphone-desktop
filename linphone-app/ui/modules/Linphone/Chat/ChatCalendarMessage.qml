@@ -32,7 +32,7 @@ Loader{
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
 	property bool isExpanded : false
 	
-	property bool isCancelled: conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateCancelled
+	property bool isCancelled: conferenceInfoModel && conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateCancelled
 	
 	signal expandToggle()
 	signal conferenceUriCopied()

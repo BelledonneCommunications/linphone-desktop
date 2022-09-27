@@ -46,7 +46,8 @@ public:
 	QSharedPointer<ConferenceInfoModel> get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo) const;
 	
 	void onConferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
-	
+public slots:
+	void onRemoved(bool byUser);
 signals:
 	void filterTypeChanged(int filterType);
 	

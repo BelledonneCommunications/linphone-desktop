@@ -61,9 +61,11 @@ QSharedPointer<ConferenceInfoModel> ConferenceInfoListModel::build(const std::sh
 		haveMe = (std::find_if(participants.begin(), participants.end(), [me](const std::shared_ptr<linphone::Address>& address){
 			return me->weakEqual(address);
 		}) != participants.end());
-	if(haveMe)
-		return ConferenceInfoModel::create( conferenceInfo );
-	else
+	if(haveMe){
+		auto conferenceModel = ConferenceInfoModel::create( conferenceInfo );
+		connect(conferenceModel.get(), &ConferenceInfoModel::removed, this, &ConferenceInfoListModel::onRemoved);
+		return conferenceModel;
+	}else
 		return nullptr;
 }
 
@@ -114,6 +116,10 @@ void ConferenceInfoListModel::onConferenceInfoReceived(const std::shared_ptr<con
 			add(realConferenceInfo);
 	}else
 		qWarning() << "No ConferenceInfo have beend found for " << conferenceInfo->getUri()->asString().c_str();
+}
+
+void ConferenceInfoListModel::onRemoved(bool byUser){
+		remove(sender());
 }
 	
 	

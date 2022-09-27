@@ -158,15 +158,15 @@ QDateTime ConferenceInfoModel::getEndDateTime() const{
 }
 
 QString ConferenceInfoModel::getOrganizer() const{
-	return QString::fromStdString(mConferenceInfo->getOrganizer()->asString());
+	return Utils::coreStringToAppString(mConferenceInfo->getOrganizer()->asString());
 }
 
 QString ConferenceInfoModel::getSubject() const{
-	return QString::fromStdString(mConferenceInfo->getSubject());	
+	return Utils::coreStringToAppString(mConferenceInfo->getSubject());	
 }
 
 QString ConferenceInfoModel::getDescription() const{
-	return QString::fromStdString(mConferenceInfo->getDescription());
+	return Utils::coreStringToAppString(mConferenceInfo->getDescription());
 }
 
 QString ConferenceInfoModel::displayNamesToString()const{
