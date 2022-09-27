@@ -63,6 +63,7 @@ public:
 	Q_INVOKABLE static bool isAnimatedImage(const QString& path);
 	Q_INVOKABLE static bool isPhoneNumber(const QString& txt);
 	Q_INVOKABLE QSize getImageSize(const QString& url);
+	Q_INVOKABLE static QPoint getCursorPosition();
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {

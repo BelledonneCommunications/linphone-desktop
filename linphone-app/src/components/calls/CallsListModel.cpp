@@ -474,6 +474,14 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 // -----------------------------------------------------------------------------
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
+	
+	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(call);
+	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
+	App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
+	
+	add(callModel);
+	emit layoutChanged();
+	
 	if (call->getDir() == linphone::Call::Dir::Outgoing) {
 		QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
 		if (callsWindow) {
@@ -484,13 +492,6 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 				App::smartShowWindow(callsWindow);
 		}
 	}
-	
-	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(call);
-	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
-	App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
-	
-	add(callModel);
-	emit layoutChanged();
 }
 
 

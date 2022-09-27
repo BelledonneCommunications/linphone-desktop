@@ -201,8 +201,11 @@ function handleCountChanged (count) {
 		
 		var model = calls.model
 		var index = count - 1
-		if(model && model.status === CallModel.CallStatusConnected)
-			updateSelectedCall(model.data(model.index(index, 0)), index)
+		if(model){
+			var callModel = model.data(model.index(index, 0))
+			if( callModel.status === Linphone.CallModel.CallStatusConnected || callModel.isOutgoing )
+				updateSelectedCall(callModel, index)
+		}
 	} else {
 		setIndexWithCall(call)
 	}

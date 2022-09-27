@@ -570,12 +570,14 @@ Window {
 		propagateComposedEvents: true
 		cursorShape: undefined
 		//cursorShape: Qt.ArrowCursor
-
 		onEntered: hideButtonsTimer.startTimer()
-		onExited: hideButtonsTimer.stopTimer()
-
-		onPositionChanged: {
-			hideButtonsTimer.startTimer()
+		onExited: {
+			var cursorPosition = UtilsCpp.getCursorPosition()
+			mapToItem(window.contentItem, cursorPosition.x, cursorPosition.y)
+			if (cursorPosition.x <= 0 || cursorPosition.y <= 0
+					|| cursorPosition.x >= width || cursorPosition.y >= height)
+				hideButtonsTimer.stopTimer()
 		}
+		onPositionChanged: hideButtonsTimer.startTimer()
 	}
 }

@@ -20,6 +20,7 @@
 
 #include <QFileInfo>
 #include <QCoreApplication>
+#include <QCursor>
 #include <QDir>
 #include <QFile>
 #include <QImageReader>
@@ -564,4 +565,8 @@ QSize Utils::getImageSize(const QString& url){
 		return s;
 	else
 		return QSize(0,0);
+}
+
+QPoint Utils::getCursorPosition(){
+	return QCursor::pos();
 }

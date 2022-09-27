@@ -120,7 +120,20 @@ Item {
 			spacing: 15
 			verticalLayoutDirection: ListView.BottomToTop
 			fitCacheToContent: false
-			onCountChanged: if(contentItem.height < miniViews.height) positionViewAtBeginning()
+			onCountChanged: updateView()
+			onHeightChanged: updateView()
+			function updateView(){
+				if(contentItem.height < miniViews.height){ 
+					contentItem.y = miniViews.height	// Qt workaround because it do not set correctly value with positionning to beginning
+				}
+			}
+			Component.onCompleted: updateView()
+			Timer{
+				running: true
+				interval: 500
+				repeat: true
+				onTriggered: miniViews.updateView()
+			}
 			delegate:Item{
 					height: miniViews.cellHeight
 					width: miniViews.width
