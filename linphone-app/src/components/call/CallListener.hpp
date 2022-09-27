@@ -39,7 +39,7 @@ public:
 	virtual void onRemoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording) override;
 	
 signals:
-	virtual void remoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording);
+	void remoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording);
 };
 
 Q_DECLARE_METATYPE(CallListener*)
