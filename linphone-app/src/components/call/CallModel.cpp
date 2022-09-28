@@ -1075,13 +1075,13 @@ QString CallModel::getRemoteSas () const {
 
 // -----------------------------------------------------------------------------
 
-QString CallModel::getSecuredString () const {
+QString CallModel::getSecuredString (const shared_ptr<const linphone::CallStats> &callStats) const {
 	if(mCall){
 		switch (mCall->getCurrentParams()->getMediaEncryption()) {
 			case linphone::MediaEncryption::SRTP:
 				return QStringLiteral("SRTP");
 			case linphone::MediaEncryption::ZRTP:
-				return CoreManager::getInstance()->getCore()->getPostQuantumAvailable()
+				return (callStats && callStats->isZrtpKeyAgreementAlgoPostQuantum() || (!callStats && CoreManager::getInstance()->getCore()->getPostQuantumAvailable()) )
 						? QStringLiteral("Post Quantum ZRTP")
 						: QStringLiteral("ZRTP");
 			case linphone::MediaEncryption::DTLS:
@@ -1196,7 +1196,7 @@ void CallModel::updateEncrypionStats (const shared_ptr<const linphone::CallStats
 		statsList.clear();
 		if(isSecured()) {
 		//: 'Media encryption' : label in encryption section of call statistics
-			statsList << createStat(tr("callStatsMediaEncryption"), getSecuredString());
+			statsList << createStat(tr("callStatsMediaEncryption"), getSecuredString(callStats));
 			if(mCall->getCurrentParams()->getMediaEncryption() == linphone::MediaEncryption::ZRTP){
 			//: 'Cipher algorithm' : label in encryption section of call statistics
 				statsList << createStat(tr("callStatsCipherAlgo"), Utils::coreStringToAppString(callStats->getZrtpCipherAlgo()));

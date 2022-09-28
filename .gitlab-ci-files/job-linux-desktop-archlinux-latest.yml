@@ -10,6 +10,7 @@ job-archlinux-latest-ninja-clang:
       - schedules
   variables:
     CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: clang
     CXX: clang++
   extends: .job-linux-desktop
@@ -27,6 +28,7 @@ job-archlinux-latest-makefile-gcc:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
@@ -41,6 +43,7 @@ job-archlinux-latest-makefile-clang:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: clang
     CXX: clang++
   extends: .job-linux-desktop
@@ -55,6 +58,7 @@ job-archlinux-latest-ninja-gcc:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
@@ -77,7 +81,7 @@ job-archlinux-latest-ninja-clang-novideo:
     variables:
       - $NIGHTLY_MASTER
   variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
     CMAKE_GENERATOR: Ninja
     CC: clang
     CXX: clang++

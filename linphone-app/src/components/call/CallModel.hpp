@@ -283,7 +283,7 @@ public:
 	QString getLocalSas () const;
 	QString getRemoteSas () const;
 	
-	QString getSecuredString () const;
+	QString getSecuredString (const std::shared_ptr<const linphone::CallStats> &callStats = nullptr) const;
 	
 	QVariantList getAudioStats () const;
 	QVariantList getVideoStats () const;

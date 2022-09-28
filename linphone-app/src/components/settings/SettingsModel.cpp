@@ -955,7 +955,7 @@ QVariantList SettingsModel::getSupportedMediaEncryptions () const {
 
 	if (core->mediaEncryptionSupported(linphone::MediaEncryption::ZRTP)){
 		if( core->getPostQuantumAvailable())
-			list << buildEncryptionDescription(MediaEncryptionZrtp, "PQ-ZRTP");
+			list << buildEncryptionDescription(MediaEncryptionZrtp, "Post Quantum ZRTP");
 		else
 			list << buildEncryptionDescription(MediaEncryptionZrtp, "ZRTP");
 	}

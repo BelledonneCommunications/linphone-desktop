@@ -38,6 +38,7 @@ job-centos7-ninja-gcc:
       - schedules
   variables:
     CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
@@ -73,7 +74,7 @@ job-centos7-ninja-gcc-package:
      variables:
        - $DEPLOY_LINUX_CENTOS7
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
     CMAKE_GENERATOR: Ninja
     CC: gcc
     CXX: g++

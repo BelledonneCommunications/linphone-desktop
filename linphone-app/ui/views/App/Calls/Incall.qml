@@ -403,9 +403,14 @@ Rectangle {
 		height: IncallStyle.buttons.secure.buttonSize
 		width: height
 		isCustom: true
+		iconIsCustom: ! (callModel.isSecured && SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp)
 		backgroundRadius: width/2
 		
-		colorSet: callModel.isSecured ? IncallStyle.buttons.secure : IncallStyle.buttons.unsecure
+		colorSet: callModel.isSecured
+							? SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp
+								? IncallStyle.buttons.postQuantumSecure
+								: IncallStyle.buttons.secure
+							: IncallStyle.buttons.unsecure
 					
 		onClicked: zrtp.visible = (callModel.encryption === CallModel.CallEncryptionZrtp)
 					

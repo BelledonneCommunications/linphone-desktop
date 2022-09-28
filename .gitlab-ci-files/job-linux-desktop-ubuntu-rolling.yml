@@ -7,6 +7,7 @@ job-ubuntu-rolling-ninja-clang:
       - schedules
   variables:
     CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: clang
     CXX: clang++
   extends: .job-linux-desktop
@@ -26,6 +27,7 @@ job-ubuntu-rolling-makefile-gcc:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
@@ -40,6 +42,7 @@ job-ubuntu-rolling-makefile-clang:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: clang
     CXX: clang++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
@@ -54,6 +57,7 @@ job-ubuntu-rolling-ninja-gcc:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
   extends: .job-linux-desktop
@@ -64,7 +68,7 @@ job-ubuntu-rolling-ninja-gcc-novideo:
     variables:
       - $NIGHTLY_MASTER
   variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
   extends: job-ubuntu-rolling-ninja-gcc
 
 
@@ -73,7 +77,7 @@ job-ubuntu-rolling-ninja-clang-novideo:
     variables:
       - $NIGHTLY_MASTER
   variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
   extends: job-ubuntu-rolling-ninja-clang
 
 #################################################

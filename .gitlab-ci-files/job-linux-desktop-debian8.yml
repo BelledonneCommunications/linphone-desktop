@@ -10,6 +10,7 @@ job-debian8-makefile-gcc:
       - schedules
   variables:
     CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
@@ -25,6 +26,7 @@ job-debian8-makefile-clang:
       - $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: clang
     CXX: clang++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
