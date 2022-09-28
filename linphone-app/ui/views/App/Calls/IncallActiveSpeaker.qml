@@ -44,6 +44,10 @@ Item {
 				if(device)	// Get 
 					cameraView.currentDevice = device
 			}
+			onMeChanged: if( cameraView.isPreview) {
+					cameraView.currentDevice = me
+					cameraView.resetCamera()
+				}
 		}
 	
 	function clearAll(layoutMode){
@@ -57,8 +61,12 @@ Item {
 		id: cameraView
 		callModel: mainItem.callModel
 		deactivateCamera: (callModel && callModel.pausedByUser) || !mainItem.cameraEnabled || (currentDevice && !currentDevice.videoEnabled)
-		isCameraFromDevice: false
-		isPreview: false
+		isPreview: mainItem.showMe && allDevices.count == 0
+		onIsPreviewChanged: if( isPreview){
+			currentDevice = allDevices.me
+			cameraView.resetCamera()
+		}
+		isCameraFromDevice: isPreview
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
@@ -67,7 +75,7 @@ Item {
 		showCloseButton: false
 		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
 		showCustomButton:  false
-		avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
+		avatarStickerBackgroundColor: isPreview ?  IncallStyle.container.avatar.stickerPreviewBackgroundColor : IncallStyle.container.avatar.stickerBackgroundColor
 		avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
 	}
 	Item{// Need an item to not override Sticker internal states. States are needed for changing anchors.
@@ -81,7 +89,9 @@ Item {
 		width: 16 * height / 9
 		
 		visible: mainItem.showMe && (!callModel.isConference  || allDevices.count >= 1)
+		onVisibleChanged: if(visible) previewSticker.resetCamera()
 		Sticker{
+			id: previewSticker
 			anchors.fill: parent
 			
 			anchors.margins: 3
