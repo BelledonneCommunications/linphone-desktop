@@ -26,6 +26,10 @@ Rectangle {
 	
 	signal cancel()
 	
+	function reset(){
+		close()
+		open()
+	}
 	function close(){
 		mainItem.previewLoaderEnabled = false// Need it to close camera.
 	}
@@ -35,7 +39,6 @@ Rectangle {
 	
 	//onCallModelChanged: callModel ? contentsStack.replace(callingComponent) : contentsStack.replace(cameraComponent)
 	//onCallModelChanged: contentsStack.flipped = !!callModel
-	
 	Component.onDestruction: {mainItem.previewLoaderEnabled = false;_sipAddressObserver=null}// Need to set it to null because of not calling destructor if not.
 	
 	Connections{

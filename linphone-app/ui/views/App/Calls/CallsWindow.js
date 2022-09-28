@@ -59,8 +59,8 @@ function openConferenceManager (params, exitHandler) {
 
 function openWaitingRoom(model){
 	calls.refreshCall()
-	if(window.conferenceInfoModel)
-		window.conferenceInfoModel = null;
+	if(window.conferenceInfoModel && middlePane.sourceComponent == waitingRoom)
+		middlePane.item.reset()
 	window.conferenceInfoModel = model
 }
 

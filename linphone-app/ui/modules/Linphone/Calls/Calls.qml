@@ -36,7 +36,7 @@ ListView {
 		if(lastCall && lastCall.status === CallModel.CallStatusConnected)
 			Logic.setIndexWithCall(lastCall)
 		else{
-			for(var i = 0 ; i < model.length() ; ++i){
+			for(var i = 0 ; i < model.rowCount() ; ++i){
 				var call = model.data(model.index(i, 0))
 				if( call && call.status === CallModel.CallStatusConnected){
 					Logic.updateSelectedCall(call, i)
