@@ -84,7 +84,8 @@ ColumnLayout{
 				for(var C = itemCount ; C >= 1 ; --C){
 					if( R * C >= itemCount){// This is a good layout candidate
 						var estimatedSize = Math.min(availableW / C, availableH / R)
-						if(estimatedSize > bestSize){
+						if(estimatedSize > bestSize	// Size is better
+						|| (estimatedSize == bestSize && Math.abs(bestR-bestC) > Math.abs(R - C) )){// Stickers are more homogenized
 							bestSize = estimatedSize
 							bestC = C
 							bestR = R
