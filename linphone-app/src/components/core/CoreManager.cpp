@@ -291,6 +291,14 @@ void CoreManager::updateUserAgent(){
 	mCore->setUserAgent(Utils::appStringToCoreString(Utils::computeUserAgent(mCore->getConfig())), mCore->getVersion());
 	forceRefreshRegisters(); 	// After setting a new device name, REGISTER need to take account it.
 }
+void CoreManager::addingAccount(const std::shared_ptr<const linphone::AccountParams> params) {
+	if( params->getDomain() == Constants::LinphoneDomain) {// Special case for Linphone
+		// It has been decided that if the core encryption is None, new Linphone accounts will reset it to SRTP.
+			if( CoreManager::getInstance()->getSettingsModel()->getMediaEncryption() == SettingsModel::MediaEncryptionNone){
+				CoreManager::getInstance()->getSettingsModel()->setMediaEncryption(SettingsModel::MediaEncryptionSrtp);
+			}
+		}
+}
 
 void CoreManager::handleChatRoomCreated(const QSharedPointer<ChatRoomModel> &chatRoomModel){
 	emit chatRoomModelCreated(chatRoomModel);

@@ -166,6 +166,7 @@ public:
 	Q_INVOKABLE bool isLastRemoteProvisioningGood();
 	Q_INVOKABLE QString getUserAgent()const;
 	void updateUserAgent();
+	void addingAccount(const std::shared_ptr<const linphone::AccountParams> params);
 	
 public slots:
 	void initCoreManager();

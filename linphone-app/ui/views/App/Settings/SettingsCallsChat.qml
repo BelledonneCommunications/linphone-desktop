@@ -37,12 +37,11 @@ TabContainer {
 							
 							return encryptions
 						})()
-						
-						Component.onCompleted: {
-							var toFound = SettingsModel.mediaEncryption
+						property var currentEncryption: SettingsModel.mediaEncryption
+						onCurrentEncryptionChanged: {
 							currentIndex = Number(
 										Utils.findIndex(encryption.model, function (value) {
-											return toFound === value.value
+											return currentEncryption === value.value
 										})
 							)
 						}

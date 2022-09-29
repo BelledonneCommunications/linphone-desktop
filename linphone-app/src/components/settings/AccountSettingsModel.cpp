@@ -127,6 +127,8 @@ bool AccountSettingsModel::addOrUpdateAccount (std::shared_ptr<linphone::Account
 						  .arg(QString::fromStdString(account->getParams()->getIdentityAddress()->asString()));
 			return false;
 		}
+		
+		coreManager->addingAccount(account->getParams());
 		coreManager->getSettingsModel()->configureRlsUri(account);
 	}else
 		coreManager->getSettingsModel()->configureRlsUri();
