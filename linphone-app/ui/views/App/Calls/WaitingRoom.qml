@@ -58,7 +58,7 @@ Rectangle {
 				Layout.preferredWidth: WaitingRoomStyle.header.busyIndicator.width
 				Layout.topMargin: 30
 				color: WaitingRoomStyle.header.busyIndicator.color
-				visible: mainItem.callModel && mainItem.callModel.isOutgoing
+				visible: mainItem.callModel && mainItem.callModel.status !== CallModel.CallStatusConnected
 			}
 			
 			Text{
