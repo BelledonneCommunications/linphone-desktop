@@ -315,7 +315,8 @@ Rectangle {
 					backgroundRadius: width/2
 					colorSet: WaitingRoomStyle.buttons.call
 					visible: false &&  !callModel && conferenceInfoModel
-					onClicked: {CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
+					onClicked: {mainItem.close()
+								CallsListModel.launchVideoCall(conferenceInfoModel.uri, '', 0,
 														   {	video: modeChoice.selectedMode != 2
 															   , camera: camera.cameraEnabled
 															   , micro: !micro.microMuted
