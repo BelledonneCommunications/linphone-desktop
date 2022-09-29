@@ -21,6 +21,7 @@ ApplicationWindow {
 	title: qsTr('settingsTitle')
 	
 	onClosing: {
+		logViewer.active = false
 		SettingsModel.settingsWindowClosing()
 		tabBar.setCurrentIndex(0)
 	}
@@ -199,6 +200,7 @@ ApplicationWindow {
 								Layout.topMargin: 20
 								Layout.leftMargin: 10
 								Layout.rightMargin: 10
+								clip: true
 								
 								delegate: Text {
 									width: idContentListView.width

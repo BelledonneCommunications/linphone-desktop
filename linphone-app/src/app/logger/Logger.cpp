@@ -213,7 +213,7 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 QString Logger::getLogText()const{
 	QDir path = QString::fromStdString(linphone::Core::getLogCollectionPath());
 	QString prefix = QString::fromStdString(linphone::Core::getLogCollectionPrefix());
-	auto files = path.entryInfoList(QStringList(prefix+"*.log"), QDir::Files | QDir::NoSymLinks | QDir::Readable, QDir::Time);
+	auto files = path.entryInfoList(QStringList(prefix+"*.log"), QDir::Files | QDir::NoSymLinks | QDir::Readable, QDir::Time | QDir::Reversed);
     QString result;
 	for(auto fileInfo : files){
 		QFile file(fileInfo.filePath());
