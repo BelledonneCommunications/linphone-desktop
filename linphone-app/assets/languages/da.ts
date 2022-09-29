@@ -10,7 +10,7 @@
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hjælp os at oversætte %1</translation>
     </message>
 </context>
 <context>
@@ -99,23 +99,23 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>Angiv %1 konfigurationsfilen der skal hentes. Den vil blive flettet med den nuværende konfiguration.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>URL, sti eller fil</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
-        <translation type="unfinished"></translation>
+        <translation>ring op</translation>
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP adresse</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished"></translation>
+        <translation>Tjek for opdateringer</translation>
     </message>
 </context>
 <context>
@@ -154,7 +154,7 @@
     <message>
         <source>homeCgu</source>
         <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jeg accepterer %1s %2betingelser for brug%3 og %4fortrolighedspolitik%5</translation>
     </message>
 </context>
 <context>
@@ -512,29 +512,29 @@ Server url ikke konfigureret.</translation>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 indtaster…</numerusform>
+            <numerusform>%1 indtaster…</numerusform>
         </translation>
     </message>
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kopieret til udklipsholder</translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Udvalg kopieret til udklipsholder</translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vælg videresendelse af besked</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation type="unfinished"></translation>
+        <translation>Samtales ICS er kopieret</translation>
     </message>
 </context>
 <context>
@@ -542,27 +542,27 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>icsOrganizer</source>
         <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Organisator</translation>
     </message>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Samtalesadresse</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deltag</translation>
     </message>
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vil du slette dette møde?</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
@@ -575,24 +575,24 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivelse</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Deltag</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
         <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Invitation til møde</translation>
     </message>
     <message numerus="yes">
         <source>icsParticipants</source>
         <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 deltager</numerusform>
+            <numerusform>%1 deltagere</numerusform>
         </translation>
     </message>
     <message>
@@ -611,31 +611,31 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>deliveryDelivered</source>
         <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sendt til %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
     </message>
     <message>
         <source>deliveryDeliveredToUser</source>
         <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modtaget %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
     </message>
     <message>
         <source>deliveryDisplayed</source>
         <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Læst %1 - %2</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
     </message>
     <message>
         <source>deliveryNotDelivered</source>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 har ikke modtaget beskeden</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
     <message>
         <source>deliveryError</source>
         <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fejl under afsendelse til %1</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
@@ -644,12 +644,12 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Annuller</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hent</translation>
     </message>
 </context>
 <context>
@@ -657,7 +657,7 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>Forwarded</source>
         <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Videresendt</translation>
     </message>
 </context>
 <context>
@@ -665,12 +665,12 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>menuCopyAll</source>
         <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kopier alt</translation>
     </message>
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">Kopier</translation>
+        <translation>Kopier</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
@@ -679,57 +679,57 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Afsendelses status</translation>
     </message>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Slet</translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skjul afsendelses status</translation>
     </message>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Videresend</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besvar</translation>
     </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 minut</numerusform>
+            <numerusform>%1 minutter</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 time</numerusform>
+            <numerusform>%1 timer</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 dag</numerusform>
+            <numerusform>%1 dage</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 uge</numerusform>
+            <numerusform>%1 uger</numerusform>
         </translation>
     </message>
 </context>
@@ -738,7 +738,7 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besvar</translation>
     </message>
 </context>
 <context>
@@ -746,7 +746,7 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>titleReply</source>
         <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besvar til %1</translation>
     </message>
 </context>
 <context>
@@ -789,7 +789,7 @@ Server url ikke konfigureret.</translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Afslut opkald, alle eller det nuværende.</translation>
     </message>
 </context>
 <context>
@@ -853,12 +853,12 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konferencer</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
         <extracomment>&apos;Finished&apos; : Filter conferences on end status.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Afsluttet</translation>
     </message>
     <message>
         <source>conferencesScheduledFilter</source>
@@ -868,7 +868,7 @@ Server url ikke konfigureret.</translation>
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konference URL er kopieret</translation>
     </message>
     <message>
         <source>conferencesDeleted</source>
@@ -2132,11 +2132,11 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation>Åbning %1...</translation>
+        <translation>Åbning %1…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>Downloading %1...</translation>
+        <translation>Downloading %1…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
@@ -2782,7 +2782,7 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presenceTitle</source>
-        <translation>Presence</translation>
+        <translation type="unfinished">Presence</translation>
     </message>
     <message>
         <source>rlsUriLabel</source>

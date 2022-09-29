@@ -534,7 +534,7 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation type="unfinished"></translation>
+        <translation>La conferenza ICS è stata copiata</translation>
     </message>
 </context>
 <context>
@@ -542,7 +542,7 @@ URL del server non configurato.</translation>
     <message>
         <source>icsOrganizer</source>
         <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Organizzatore</translation>
     </message>
     <message>
         <source>icsDescription</source>
@@ -562,7 +562,7 @@ URL del server non configurato.</translation>
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi veramente cancellare questo meeting ?</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
@@ -575,24 +575,24 @@ URL del server non configurato.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
-        <translation type="unfinished">Descrizione</translation>
+        <translation>Descrizione</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
-        <translation type="unfinished">Partecipa</translation>
+        <translation>Partecipa</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
         <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Invito al meeting</translation>
     </message>
     <message numerus="yes">
         <source>icsParticipants</source>
         <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 partecipante</numerusform>
+            <numerusform>%1 partecipanti</numerusform>
         </translation>
     </message>
     <message>
@@ -644,12 +644,12 @@ URL del server non configurato.</translation>
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Terminare</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Scaricare</translation>
     </message>
 </context>
 <context>
@@ -1043,7 +1043,7 @@ URL del server non configurato.</translation>
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivi dei partecipanti</translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
@@ -1068,12 +1068,12 @@ URL del server non configurato.</translation>
     <message>
         <source>conversationMenuViewContact</source>
         <extracomment>&apos;View contact&apos; : Item menu to view the contact in address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mostra il contatto</translation>
     </message>
     <message>
         <source>conversationMenuAddContact</source>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi il contatto</translation>
     </message>
     <message>
         <source>conversationMenuScheduleMeeting</source>
@@ -1175,17 +1175,17 @@ URL del server non configurato.</translation>
     <message>
         <source>dateTimeDialogDate</source>
         <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona la data</translation>
     </message>
     <message>
         <source>dateTimeDialogTime</source>
         <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Imposta l&apos;orario</translation>
     </message>
     <message>
         <source>dateTimeDialogDateTime</source>
         <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Imposta data ed ora</translation>
     </message>
 </context>
 <context>
@@ -1436,42 +1436,42 @@ URL del server non configurato.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ora sei fuori dalla conferenza.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Premi il tasto play per ritornare nella conferenza.</translation>
     </message>
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inizia la registrazione</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>termina la registrazione</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Esegui uno snapshot&apos;</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La video conferenza non è ancora iniziata: attendere per favore…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La chiamata viene registrata.</translation>
     </message>
     <message>
         <source>incallWaitParticipantMessage</source>
         <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>In attesa di un altro partecipante...</translation>
     </message>
     <message>
         <source>aloneInConference</source>
@@ -1484,37 +1484,37 @@ URL del server non configurato.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ora sei fuori dalla conferenza.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Clicca su play per riprendere la conferenza.</translation>
     </message>
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inizia la registrazione</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ferma la registrazione</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cattura la schermata</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La video conferenza non è ancora iniziata. Attendere…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Questa chiamata viene registrata.</translation>
     </message>
 </context>
 <context>
@@ -1522,47 +1522,47 @@ URL del server non configurato.</translation>
     <message>
         <source>incallMenuMultimedia</source>
         <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Parametri multimediali</translation>
     </message>
     <message>
         <source>incallMenuLayout</source>
         <extracomment>&apos;Change layout&apos; : Menu title to change the conference layout.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modifica il layout</translation>
     </message>
     <message>
         <source>incallMenuInvite</source>
         <extracomment>&apos;Invite participants&apos; : Menu title to invite participants in admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Invita i partecipanti</translation>
     </message>
     <message>
         <source>incallMenuParticipants</source>
         <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elenco dei partecipanti</translation>
     </message>
     <message>
         <source>incallMenuTitle</source>
         <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni</translation>
     </message>
     <message>
         <source>incallMenuGridLayout</source>
         <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modalità mosaico</translation>
     </message>
     <message>
         <source>incallMenuActiveSpeakerLayout</source>
         <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modalità partecipante attivo</translation>
     </message>
     <message>
         <source>incallMenuAudioLayout</source>
         <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modalità solo audio</translation>
     </message>
     <message>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Attualmente sei l&apos;unico in questa conferenza</translation>
     </message>
 </context>
 <context>
@@ -1724,17 +1724,17 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mainWindowConferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
-        <translation>Conferenze</translation>
+        <translation>Riunioni</translation>
     </message>
     <message>
         <source>newChatRoomUriMissing</source>
         <extracomment>&apos;Conference URI is not set. You have to change it in your account settings in order to create new group chats.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;URI della conferenza non è stato impostato. Devi cambiarlo nelle impostazioni del tuo account per poter creare nuove chat di gruppo.</translation>
     </message>
     <message>
         <source>newConferenceUriMissing</source>
         <extracomment>&apos;Video conference URI is not set. You have to change it in your account settings in order to create new conferences.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;URI della video conferenza non è stato impostato. Devi cambiarlo nelle impostazioni del tuo account per poter creare nuove conferenze.</translation>
     </message>
 </context>
 <context>
@@ -2121,7 +2121,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newChatRoomMessages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>E&apos; stato ricevuto un nuovo messaggio!</translation>
     </message>
 </context>
 <context>
@@ -2167,7 +2167,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conversationDevicesTitle</source>
         <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivi della conversazione</translation>
     </message>
 </context>
 <context>
@@ -2313,7 +2313,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>viewlogs</source>
-        <translation type="unfinished"></translation>
+        <translation>VISTA</translation>
     </message>
 </context>
 <context>
@@ -2501,7 +2501,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>waitRegistrationForCallLabel</source>
         <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chiama dopo la registrazione</translation>
     </message>
     <message>
         <source>chatNotificationsEnabledLabel</source>
@@ -2547,23 +2547,23 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Nome del server da visualizzare sulla lista.</translation>
     </message>
     <message>
         <source>connectionTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Connessione</translation>
     </message>
     <message>
         <source>serverLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>URL del server</translation>
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Server LDAP. es: ldap:/// per un server locale oppure ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Bind DN</translation>
     </message>
     <message>
         <source>bindDNTooltip</source>
@@ -2575,7 +2575,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useTLSLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa TLS</translation>
     </message>
     <message>
         <source>useTLSTooltip</source>
@@ -2583,35 +2583,35 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Usa SAL</translation>
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Linphone usa SAL per la risoluzione DNS. Passerà l&apos;indirizzo IP a LDAP. Facendo cosi la negoziazione TLS non può controllare il nome dell&apos;host. Si possono disattivare le verifiche se si vuole forzare la connessione.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Verifica i certificati su TLS</translation>
     </message>
     <message>
         <source>AutoMode</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto</translation>
     </message>
     <message>
         <source>offMode</source>
-        <translation type="unfinished"></translation>
+        <translation>Off</translation>
     </message>
     <message>
         <source>onMode</source>
-        <translation type="unfinished"></translation>
+        <translation>On</translation>
     </message>
     <message>
         <source>verifyTLSTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifica se il certificato del server TLS deve essere verificato quando si effettua una connessione al server LDAP.</translation>
     </message>
     <message>
         <source>searchTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca</translation>
     </message>
     <message>
         <source>baseObjectLabel</source>
@@ -2627,43 +2627,43 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>filterLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtro</translation>
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>La ricerca si basa su questo filtro quando si cercano contatti.&lt;br&gt;Valore di default: (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Massimo numero di risultati</translation>
     </message>
     <message>
         <source>maxResultsTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Massimo numero di risultati quando si effettua una ricerca.</translation>
     </message>
     <message>
         <source>timeoutLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Scadenza</translation>
     </message>
     <message>
         <source>timeoutTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Scadenza del tempo di connessione e ricerca in secondi. Deve essere un numero positivo.&lt;br&gt;Se omesso è 5s.</translation>
     </message>
     <message>
         <source>parsingTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Parsing</translation>
     </message>
     <message>
         <source>nameAttributesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Attributi del nome</translation>
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Controlla questi attributi per costruire il nome del contatto, separati da una virgola usando il primo con la priorità più alta.&lt;br&gt; Il valore di default è: sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Attributi SIP</translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
@@ -2671,23 +2671,23 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Dominio</translation>
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Aggiunge il dominio all&apos;indirizzo SIP (sip:nomeutente@dominio).&lt;br&gt;Il valore di default è sip.linphone.org</translation>
     </message>
     <message>
         <source>miscLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Misc</translation>
     </message>
     <message>
         <source>debugLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Debug</translation>
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>Ottenere informazioni dettagliate sul file di log di Linphone quando vengono fatte delle transazioni (utile per il debug di connessioni TLS).</translation>
     </message>
 </context>
 <context>
@@ -2878,17 +2878,17 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>defaultDeviceNameLabel</source>
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome dispositivo</translation>
     </message>
     <message>
         <source>webviewRegistrationUrlLabel</source>
         <extracomment>&apos;Registration URL&apos; : Label for registration URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo registrazione</translation>
     </message>
     <message>
         <source>webviewLoginUrlLabel</source>
         <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo di accesso</translation>
     </message>
 </context>
 <context>
@@ -2984,12 +2984,12 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceURI</source>
         <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo conferenza</translation>
     </message>
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo conferenza invalido</translation>
     </message>
     <message>
         <source>videoConferenceURI</source>
@@ -3012,22 +3012,22 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelStatus</source>
         <extracomment>&apos;Tunnel Status&apos; : Field title to introduce the status of the tunnel (activated or not)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Stato del tunnel</translation>
     </message>
     <message>
         <source>tunnelDomain</source>
         <extracomment>&apos;Domain&apos; : Field title of a textfield to set domain.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dominio</translation>
     </message>
     <message>
         <source>tunnelUsername</source>
         <extracomment>&apos;Username&apos; : Field title of a textfield to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>tunnelSIP</source>
         <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -3037,87 +3037,87 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>setHTTPProxy</source>
         <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci proxy HTTP</translation>
     </message>
     <message>
         <source>proxyHttpHost</source>
         <extracomment>&apos;Host&apos; : Placeholder to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ospite</translation>
     </message>
     <message>
         <source>proxyHttpPort</source>
         <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Porta</translation>
     </message>
     <message>
         <source>proxyHttpUsername</source>
         <extracomment>&apos;Username&apos; : Placeholder to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome utente</translation>
     </message>
     <message>
         <source>proxyHttpPassword</source>
         <extracomment>&apos;Password&apos; : Placeholder to set password.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Password</translation>
     </message>
     <message>
         <source>proxyHttpApply</source>
         <extracomment>&apos;Apply&apos; : Button to set proxy from changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Applica</translation>
     </message>
     <message>
         <source>serverMode</source>
         <extracomment>&apos;Mode&apos; : Field title on form to set tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modalità</translation>
     </message>
     <message>
         <source>serverDualMode</source>
         <extracomment>&apos;Dual mode&apos; : Field title on form to set dual mode of the tunnel.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modalità doppia</translation>
     </message>
     <message>
         <source>serverTitle</source>
         <extracomment>&apos;Server&apos; : Title form to set a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Server</translation>
     </message>
     <message>
         <source>serverHostname</source>
         <extracomment>&apos;Hostname&apos; : Field title on form to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome ospite</translation>
     </message>
     <message>
         <source>serverPort</source>
         <extracomment>&apos;Port&apos; : Field title on form to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Porta</translation>
     </message>
     <message>
         <source>serverDualHostname</source>
         <extracomment>&apos;Dual hostname URL&apos; : Field title on form to set the second hostname for dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indirizzo nome ospito doppio</translation>
     </message>
     <message>
         <source>serverDualPort</source>
         <extracomment>&apos;Dual port&apos; : Field title on form to set the second port for the dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Doppia porta</translation>
     </message>
     <message>
         <source>serverRemoteUDPMirrorPort</source>
         <extracomment>&apos;Remote UDP mirror port&apos; : Field title on form to set the remote UDP mirror port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Porta UDP mirror remota</translation>
     </message>
     <message>
         <source>serverDelay</source>
         <extracomment>&apos;Delay&apos; : Field title on form to set the delay of the tunnel.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ritardo</translation>
     </message>
     <message>
         <source>tunnelAddServer</source>
         <extracomment>&apos;Add server&apos; : Button for adding a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungi server</translation>
     </message>
     <message>
         <source>tunnelApply</source>
         <extracomment>&apos;Apply&apos; : Button to apply changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Applica</translation>
     </message>
 </context>
 <context>
@@ -3181,27 +3181,27 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsTitle</source>
         <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tipografia</translation>
     </message>
     <message>
         <source>fontsTextChange</source>
         <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Messaggi di testo</translation>
     </message>
     <message>
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Scegli nuova tipografia</translation>
     </message>
     <message>
         <source>checkForUpdateLabel</source>
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Controlla aggiornamenti</translation>
     </message>
     <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abilita mappa Mip</translation>
     </message>
     <message>
         <source>mipmapTooltip1</source>
@@ -3547,7 +3547,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">Nome visualizzato (facoltativo)</translation>
+        <translation>Nome visualizzato (facoltativo)</translation>
     </message>
 </context>
 <context>
@@ -3562,7 +3562,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished">Nome visualizzato (facoltativo)</translation>
+        <translation>Nome visualizzato (facoltativo)</translation>
     </message>
 </context>
 <context>
@@ -3626,7 +3626,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished">ANNULLA</translation>
+        <translation>Annulla</translation>
     </message>
     <message>
         <source>startButton</source>
