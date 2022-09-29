@@ -41,11 +41,6 @@ function handleClosing (close) {
     Qt.quit()
     return
   }
-
-  if (Qt.platform.os === 'osx') {
-    close.accepted = false
-    window.showMinimized()
-  }
 }
 
 // -----------------------------------------------------------------------------

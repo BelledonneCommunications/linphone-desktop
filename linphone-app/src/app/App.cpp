@@ -460,6 +460,10 @@ bool App::event (QEvent *event) {
 		}
 		
 		Cli::executeCommand(url);
+	}else if(event->type() == QEvent::ApplicationStateChange){
+		auto state = static_cast<QApplicationStateChangeEvent*>(event);
+		if( state->applicationState() == Qt::ApplicationActive)
+			smartShowWindow(getMainWindow());
 	}
 	
 	return SingleApplication::event(event);
