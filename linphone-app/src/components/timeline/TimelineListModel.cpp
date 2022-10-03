@@ -41,6 +41,7 @@
 TimelineListModel::TimelineListModel (QObject *parent) : ProxyListModel(parent) {
 	mSelectedCount = 0;
 	CoreHandlers* coreHandlers= CoreManager::getInstance()->getHandlers().get();
+	connect(coreHandlers, &CoreHandlers::chatRoomRead, this, &TimelineListModel::onChatRoomRead);
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
 	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::update);
 	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::updated);
@@ -56,6 +57,7 @@ TimelineListModel::TimelineListModel (QObject *parent) : ProxyListModel(parent) 
 TimelineListModel::TimelineListModel(const TimelineListModel* model){
 	mSelectedCount = model->mSelectedCount;
 	CoreHandlers* coreHandlers= CoreManager::getInstance()->getHandlers().get();
+	connect(coreHandlers, &CoreHandlers::chatRoomRead, this, &TimelineListModel::onChatRoomRead);
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
 	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::update);
 	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::updated);
@@ -326,6 +328,17 @@ void TimelineListModel::select(ChatRoomModel * chatRoomModel){
 		auto timeline = getTimeline(chatRoomModel->getChatRoom(), false);
 		if(timeline){
 			timeline->setSelected(true);
+		}
+	}
+}
+
+void TimelineListModel::onChatRoomRead(const std::shared_ptr<linphone::ChatRoom> &chatRoom){
+	auto timeline = getTimeline(chatRoom, false);
+	if(timeline) {
+		if(timeline->getChatRoomModel()){
+			timeline->getChatRoomModel()->enableMarkAsRead(true);
+			timeline->getChatRoomModel()->resetMessageCount();
+			timeline->getChatRoomModel()->enableMarkAsRead(false);
 		}
 	}
 }

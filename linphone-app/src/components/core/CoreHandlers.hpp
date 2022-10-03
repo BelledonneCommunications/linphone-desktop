@@ -46,6 +46,7 @@ signals:
 	void callTransferFailed (const std::shared_ptr<linphone::Call> &call);
 	void callTransferSucceeded (const std::shared_ptr<linphone::Call> &call);
 	void callCreated(const std::shared_ptr<linphone::Call> & call);
+	void chatRoomRead(const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 	void chatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state);
 	void coreStarting();
 	void coreStarted ();
@@ -103,6 +104,8 @@ private:
 			const std::shared_ptr<linphone::Core> & lc,
 			const std::shared_ptr<linphone::Call> & call
 			) override;
+			
+	void onChatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom) override;
 	
 	void onChatRoomStateChanged(
 			const std::shared_ptr<linphone::Core> & core, 

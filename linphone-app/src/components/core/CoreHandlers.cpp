@@ -124,6 +124,10 @@ void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,
 	emit callCreated(call);
 }
 
+void CoreHandlers::onChatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom){
+	emit chatRoomRead(chatRoom);
+}
+
 void CoreHandlers::onChatRoomStateChanged(
 		const std::shared_ptr<linphone::Core> & core, 
 		const std::shared_ptr<linphone::ChatRoom> & chatRoom,
