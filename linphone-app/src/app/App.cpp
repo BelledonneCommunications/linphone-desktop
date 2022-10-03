@@ -21,6 +21,8 @@
 
 #ifdef Q_OS_WIN
 #include <QSettings>
+#include <stdlib.h>
+#include <time.h>
 #endif // ifdef Q_OS_WIN
 #include <QCommandLineParser>
 #include <QDir>
@@ -198,6 +200,17 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	
 	setWindowIcon(QIcon(Constants::WindowIconPath));
 	
+	char * tz = getenv("TZ");
+	if(!tz){// If not set, set the environement variable for uses of mktime from the SDK.
+#ifdef Q_OS_WIN
+		_putenv(("TZ="+QTimeZone::systemTimeZoneId().toStdString()).c_str());
+		_tzset();
+#else
+		setenv("TZ", QTimeZone::systemTimeZoneId().toStdString().c_str(), 1);
+		tzset();
+#endif
+	}
+
 	createParser();
 	mParser->process(*this);
 	
