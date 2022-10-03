@@ -176,6 +176,7 @@ public:
 	void updateNewMessageNotice(const int& count);
 	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index. -1 if not found.
 	static bool isTerminated(const std::shared_ptr<linphone::ChatRoom>& chatRoom);
+	bool exists(const std::shared_ptr<linphone::ChatMessage> message) const;
 	
 	void addBindingCall();	// If a call is binding to this chat room, we avoid cleaning data (Add=+1, remove=-1)
 	void removeBindingCall();

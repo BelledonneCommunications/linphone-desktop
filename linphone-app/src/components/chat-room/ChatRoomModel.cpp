@@ -885,6 +885,15 @@ bool ChatRoomModel::isTerminated(const std::shared_ptr<linphone::ChatRoom>& chat
 	return chatRoom->getState() == linphone::ChatRoom::State::Terminated || chatRoom->getState() == linphone::ChatRoom::State::Deleted;
 }
 
+bool ChatRoomModel::exists(const std::shared_ptr<linphone::ChatMessage> message) const{
+	auto entry = std::find_if(mList.begin(), mList.end(), [message](const QSharedPointer<QObject>& entry ){
+			auto chatEventEntry = entry.objectCast<ChatEvent>();
+			return chatEventEntry->mType == ChatRoomModel::EntryType::MessageEntry && chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage() == message;
+		});
+	// if not find, load more entries and find it in new entries.
+	return entry != mList.end();
+}
+
 void ChatRoomModel::addBindingCall(){	// If a call is binding to this chat room, we avoid cleaning data (Add=+1, remove=-1)
 	++mBindingCalls;
 }
@@ -1088,7 +1097,7 @@ void ChatRoomModel::insertCalls (const QList<std::shared_ptr<linphone::CallLog> 
 
 QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message) {
 	QSharedPointer<ChatMessageModel> model;
-	if(mIsInitialized){
+	if(mIsInitialized && !exists(message)){
 		model = ChatMessageModel::create(message);
 		if(model){
 			connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
@@ -1213,7 +1222,6 @@ void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRo
 	if(isComposing)
 		mComposers[remoteAddress] = Utils::getDisplayName(remoteAddress);
 	emit isRemoteComposingChanged();
-	updateLastUpdateTime();
 }
 
 void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
