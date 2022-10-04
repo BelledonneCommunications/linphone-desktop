@@ -1246,24 +1246,24 @@ URL del servidor no configurada.</translation>
         <source>nHour</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 hora</numerusform>
+            <numerusform>%1 horas</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 día</numerusform>
+            <numerusform>%1 días</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 semana</numerusform>
+            <numerusform>%1 semanas</numerusform>
         </translation>
     </message>
     <message>
@@ -1596,7 +1596,7 @@ URL del servidor no configurada.</translation>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -1754,7 +1754,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Buscar actualizaciones</translation>
     </message>
 </context>
 <context>
@@ -1774,7 +1774,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Buscar actualizaciones</translation>
     </message>
 </context>
 <context>
@@ -1850,7 +1850,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -1880,7 +1880,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Debe configurar el URL de la conferencia en la configuración de su cuenta para crear una conferencia basada en una sala de chat.</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
@@ -1916,7 +1916,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Debe configurar el URL de la conferencia en la configuración de su cuenta para crear una conferencia basada en una sala de chat.</translation>
     </message>
     <message>
         <source>newConferenceTitle</source>
@@ -1957,7 +1957,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -2191,7 +2191,7 @@ Haga clic aquí: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
