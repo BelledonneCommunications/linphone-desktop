@@ -333,7 +333,7 @@ Rectangle {
 											: activeSpeakerComponent
 										: activeSpeakerComponent
 					onSourceComponentChanged: console.log("conferenceLayout: "+mainItem.callModel.conferenceVideoLayout)
-					active: mainItem.callModel
+					active: mainItem.callModel && !mainItem.isFullScreen
 				}
 				Rectangle{
 					anchors.fill: parent

@@ -40,11 +40,11 @@ Item {
 			
 			onConferenceCreated: cameraView.resetCamera()
 			function updateCurrentDevice(){
-				var device = getLastActiveSpeaking()
-				if(device)	// Get 
-					cameraView.currentDevice = device
+					var device = getLastActiveSpeaking()
+					if(device)	// Get 
+						cameraView.currentDevice = device
 			}
-			onMeChanged: if( cameraView.isPreview) {
+			onMeChanged: if(cameraView.isPreview) {
 					cameraView.currentDevice = me
 					cameraView.resetCamera()
 				}
@@ -59,17 +59,22 @@ Item {
 
 	Sticker{
 		id: cameraView
-		callModel: mainItem.callModel
-		deactivateCamera: (callModel && callModel.pausedByUser) || !mainItem.cameraEnabled || (currentDevice && !currentDevice.videoEnabled)
-		isPreview: mainItem.showMe && allDevices.count == 0
-		onIsPreviewChanged: if( isPreview){
-			currentDevice = allDevices.me
-			cameraView.resetCamera()
-		}
-		isCameraFromDevice: isPreview
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
+		callModel: mainItem.callModel
+		deactivateCamera: (callModel && callModel.pausedByUser) || !mainItem.cameraEnabled || (currentDevice && !currentDevice.videoEnabled)
+		isPreview: mainItem.showMe && mainItem.participantCount == 1
+		onIsPreviewChanged: {
+			if( isPreview){
+				currentDevice = allDevices.me
+				cameraView.resetCamera()
+			}else
+				allDevices.updateCurrentDevice()
+				cameraView.resetCamera()
+			}
+		isCameraFromDevice: isPreview
+		
 		isPaused: (callModel && callModel.pausedByUser) || (currentDevice && currentDevice.isPaused) //callModel.pausedByUser
 		quickTransition: true
 		showCloseButton: false
@@ -89,23 +94,26 @@ Item {
 		width: 16 * height / 9
 		
 		visible: mainItem.showMe && (!callModel.isConference  || allDevices.count >= 1)
-		onVisibleChanged: if(visible) previewSticker.resetCamera()
-		Sticker{
-			id: previewSticker
+		
+		Loader{
 			anchors.fill: parent
-			
 			anchors.margins: 3
-			deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.cameraEnabled
-			//onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.showMe +" / " +mainItem.callModel.localVideoEnabled)
-			currentDevice: allDevices.me
-			isPreview: true
-			callModel: mainItem.callModel
-			isCameraFromDevice:  true
-			showCloseButton: false
-			showCustomButton:  false
-			showAvatarBorder: true
-			avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerPreviewBackgroundColor
-			avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+			sourceComponent: 
+			Sticker{
+				id: previewSticker
+				deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.cameraEnabled
+				//onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.showMe +" / " +mainItem.callModel.localVideoEnabled)
+				currentDevice: allDevices.me
+				isPreview: true
+				callModel: mainItem.callModel
+				isCameraFromDevice:  true
+				showCloseButton: false
+				showCustomButton:  false
+				showAvatarBorder: true
+				avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerPreviewBackgroundColor
+				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+			}
+			active: parent.visible
 		}
 	}
 	Item{

@@ -257,6 +257,11 @@ Window {
 					enabled: window.visible
 					listCallsOpened: window.callsIsOpened
 					onOpenListCallsRequest: mainPaned.open()
+					onIsFullScreenChanged:	if(isFullScreen){
+												window.hide()
+											}else{
+												window.show()
+											}
 				}
 			}
 			
