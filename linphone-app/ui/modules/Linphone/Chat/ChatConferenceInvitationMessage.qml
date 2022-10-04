@@ -231,7 +231,7 @@ Loader{
 				color: ChatCalendarMessageStyle.subject.color
 				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 				font.weight: Font.Bold
-				//: 'Description' : Title for the conference description.
+				//: 'Description' : Title for the meeting description.
 				text: qsTr('icsDescription')
 				visible: description.text != ''
 			}
@@ -278,7 +278,7 @@ Loader{
 					id: joinButton
 					addHeight: 20
 					visible: mainItem.conferenceInfoModel.state != LinphoneEnums.ConferenceInfoStateCancelled
-					//: 'Join' : Action button to join the conference.
+					//: 'Join' : Action button to join the meeting.
 					text: qsTr('icsJoinButton').toUpperCase()
 					onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
 				}

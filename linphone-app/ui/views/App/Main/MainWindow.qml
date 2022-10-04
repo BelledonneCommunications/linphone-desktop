@@ -251,7 +251,7 @@ ApplicationWindow {
 							visible: !SettingsModel.videoConferenceEnabled
 							maxWidth: smartSearchBar.width
 							delay:0
-							//: 'Video conference URI is not set. You have to change it in your account settings in order to create new conferences.' : Tooltip to warn the user to change a setting to activate an action.
+							//: 'Video conference URI is not set. You have to change it in your account settings in order to create new meetings.' : Tooltip to warn the user to change a setting to activate an action.
 							text: qsTr('newConferenceUriMissing')
 						}
 					}
@@ -329,7 +329,7 @@ ApplicationWindow {
 							icon: MainWindowStyle.menu.conferences.icon
 							iconSize: MainWindowStyle.menu.conferences.iconSize
 							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor : MainWindowStyle.menu.conferences.color
-							//: 'Conferences' : Conference title for main window.
+							//: 'Meetings' : Meeting title for main window.
 							name: qsTr('mainWindowConferencesTitle').toUpperCase()
 							visible: SettingsModel.videoConferenceEnabled && SettingsModel.conferenceEnabled
 							

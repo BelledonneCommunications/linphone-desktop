@@ -39,7 +39,7 @@ Item{
 					bold: true
 					pointSize: ConferencesStyle.bar.text.pointSize
 				}
-				//: 'Conferences' : Conference list title.
+				//: 'Meetings' : Conference list title.
 				text: qsTr('conferencesTitle')
 			}
 		}
@@ -59,10 +59,10 @@ Item{
 				
 				ExclusiveButtons {
 					texts: [
-						//: 'Finished' : Filter conferences on end status.
+						//: 'Finished' : Filter meetings on end status.
 						qsTr('conferencesEndedFilter'),
 						
-						//: 'Scheduled' : Filter conferences on scheduled status.
+						//: 'Scheduled' : Filter meetings on scheduled status.
 						qsTr('conferencesScheduledFilter'),
 					]
 					capitalization: Font.AllUppercase
@@ -184,9 +184,9 @@ Item{
 																																							  : 0
 							onExpandToggle: isExpanded = !isExpanded
 							//isExpanded: calendarGrid.expanded
-							//: 'Conference URL has been copied' : Message text in a banner to warn the user that the URL have been copied to the clipboard.
+							//: 'The meeting URL has been copied' : Message text in a banner to warn the user that the URL have been copied to the clipboard.
 							onConferenceUriCopied: messageBanner.noticeBannerText = qsTr('conferencesCopiedURL')
-							//: 'Conference has been deleted' : Message text in a banner to warn the user that the conference has been deleted.
+							//: 'The meeting has been deleted' : Message text in a banner to warn the user that the meeting has been deleted.
 							onConferenceRemoved: messageBanner.noticeBannerText = qsTr('conferencesDeleted')
 						}
 					}

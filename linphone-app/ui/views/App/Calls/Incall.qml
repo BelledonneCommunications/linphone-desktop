@@ -354,7 +354,7 @@ Rectangle {
 							text: false //mainItem.needMoreParticipants
 							//: 'Waiting for another participant...' :  Waiting message for more participant.
 									? qsTr('incallWaitParticipantMessage')
-							//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
+							//: 'The meeting is not ready. Please Wait...' :  Waiting message for starting a meeting.
 									: qsTr('incallWaitMessage')
 							color: IncallStyle.buzyColor
 						}

@@ -271,7 +271,7 @@ Loader{
 					color: ChatCalendarMessageStyle.subject.color
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
-					//: 'Description' : Title for the conference description.
+					//: 'Description' : Title for the meeting description.
 					text: qsTr('icsDescription')
 					visible: description.text != ''
 				}
@@ -301,7 +301,7 @@ Loader{
 					font.weight: Font.Bold
 					visible: !mainItem.isCancelled
 					
-					//: 'Conference address' : Title for the conference address.
+					//: 'Meeting address' : Title for the conference address.
 					text: qsTr('icsconferenceAddressTitle')
 				}
 				RowLayout{
@@ -342,7 +342,7 @@ Loader{
 					}
 					TextButtonC{
 						addHeight: 20
-						//: 'Join' : Action button to join the conference.
+						//: 'Join' : Action button to join the meeting.
 						text: qsTr('icsJoinButton').toUpperCase()
 						onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
 						visible: !mainItem.isCancelled

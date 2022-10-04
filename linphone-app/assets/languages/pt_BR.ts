@@ -546,17 +546,17 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>icsDescription</source>
-        <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
+        <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
-        <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
+        <extracomment>&apos;Meeting address&apos; : Title for the conference address.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>icsJoinButton</source>
-        <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
+        <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -574,12 +574,12 @@ URL do servidor não configurado.</translation>
     <name>ChatConferenceInvitationMessage</name>
     <message>
         <source>icsDescription</source>
-        <extracomment>&apos;Description&apos; : Title for the conference description.</extracomment>
+        <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>icsJoinButton</source>
-        <extracomment>&apos;Join&apos; : Action button to join the conference.</extracomment>
+        <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -852,27 +852,27 @@ URL do servidor não configurado.</translation>
     <name>Conferences</name>
     <message>
         <source>conferencesTitle</source>
-        <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
+        <extracomment>&apos;Meetings&apos; : Conference list title.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
-        <extracomment>&apos;Finished&apos; : Filter conferences on end status.</extracomment>
+        <extracomment>&apos;Finished&apos; : Filter meetings on end status.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferencesScheduledFilter</source>
-        <extracomment>&apos;Scheduled&apos; : Filter conferences on scheduled status.</extracomment>
+        <extracomment>&apos;Scheduled&apos; : Filter meetings on scheduled status.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferencesCopiedURL</source>
-        <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
+        <extracomment>&apos;The meeting URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferencesDeleted</source>
-        <extracomment>&apos;Conference has been deleted&apos; : Message text in a banner to warn the user that the conference has been deleted.</extracomment>
+        <extracomment>&apos;The meeting has been deleted&apos; : Message text in a banner to warn the user that the meeting has been deleted.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1460,7 +1460,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
-        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1508,7 +1508,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
-        <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
+        <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1561,7 +1561,7 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>incallMenuParticipantsAlone</source>
-        <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
+        <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1723,7 +1723,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>mainWindowConferencesTitle</source>
-        <extracomment>&apos;Conferences&apos; : Conference title for main window.</extracomment>
+        <extracomment>&apos;Meetings&apos; : Meeting title for main window.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1733,7 +1733,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>newConferenceUriMissing</source>
-        <extracomment>&apos;Video conference URI is not set. You have to change it in your account settings in order to create new conferences.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
+        <extracomment>&apos;Video conference URI is not set. You have to change it in your account settings in order to create new meetings.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1907,7 +1907,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
-        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the conference creation.</extracomment>
+        <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the meeting creation.</extracomment>
         <translation type="unfinished">
             <numerusform>Você precisa de pelo menos %1 participante.</numerusform>
             <numerusform>Você precisa de pelo menos %1 participantes.</numerusform>
@@ -1915,7 +1915,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>missingConferenceURI</source>
-        <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
+        <extracomment>&apos;You need to set the meeting URI in your account settings to create a meeting based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
         <translation type="unfinished">Você precisa definir o URI da conferência nas configurações da sua conta para criar uma sala de bate-papo baseada em conferência.</translation>
     </message>
     <message>
@@ -1935,13 +1935,13 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>subjectTooltip</source>
-        <extracomment>&apos;Current subject of the Conference. It cannot be empty&apos;</extracomment>
+        <extracomment>&apos;Current subject of the Meeting. It cannot be empty&apos;</extracomment>
         <translation type="unfinished">Assunto atual da sala de bate-papo. Não pode estar vazio.</translation>
-        <extra-Tooltip>Explanation about the subject of the Conference</extra-Tooltip>
+        <extra-Tooltip>Explanation about the subject of the meeting</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
-        <extracomment>&apos;Would you like to encrypt your conference?&apos; : Ask about setting the conference as secured.</extracomment>
+        <extracomment>&apos;Would you like to encrypt your meeting ?&apos; : Ask about setting the meeting as secured.</extracomment>
         <translation type="unfinished">Você gostaria de criptografar seu bate-papo?</translation>
     </message>
     <message>
@@ -1983,12 +1983,12 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>updateConferenceTitle</source>
-        <extracomment>&apos;Update the conference&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
+        <extracomment>&apos;Update the meeting&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
-        <extracomment>&apos;Would you like to schedule your conference?&apos; : Ask about setting the conference as scheduled.</extracomment>
+        <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2023,7 +2023,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>newConferenceDescriptionTooltip</source>
-        <extracomment>&apos;This description will describe the conference&apos; : Explanation about the description of the conference</extracomment>
+        <extracomment>&apos;This description will describe the meeting&apos; : Explanation about the description of the meeting</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

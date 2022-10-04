@@ -314,7 +314,7 @@ Window {
 						}
 						Text{
 							Layout.alignment: Qt.AlignCenter
-							//: 'Video conference is not ready. Please Wait...' :  Waiting message for starting conference.
+							//: 'The meeting is not ready. Please Wait...' :  Waiting message for starting a meeting.
 							text: qsTr('incallWaitMessage')
 							color: IncallStyle.buzyColor
 						}

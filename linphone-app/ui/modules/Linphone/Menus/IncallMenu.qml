@@ -296,7 +296,7 @@ Rectangle{
 					conferenceModel: mainItem.conferenceModel
 					isAdmin: mainItem.isMeAdmin
 					Text{
-					//: 'Your are currently alone in this conference' : Message to warn the user when there is no other participant.
+					//: 'Your are currently alone in this meeting' : Message to warn the user when there is no other participant.
 						text: qsTr('incallMenuParticipantsAlone')
 						visible: parent.count <= 1
 						font.pointSize: IncallMenuStyle.list.pointSize

@@ -50,7 +50,7 @@ DialogPlus {
 			visible: false	// TODO
 			Text {
 				Layout.fillWidth: true
-				//: 'Would you like to encrypt your conference?' : Ask about setting the conference as secured.
+				//: 'Would you like to encrypt your meeting ?' : Ask about setting the meeting as secured.
 				text:qsTr('askEncryption')
 				color: NewConferenceStyle.askEncryptionColor
 				font.pointSize: NewConferenceStyle.titles.pointSize
@@ -152,10 +152,10 @@ DialogPlus {
 						//: 'You need to fill a subject.' : Tooltip to warn a user on missing field.
 						txt ='- ' + qsTr('missingSubject') + '\n'
 					if( selectedParticipants.count < conferenceManager.minParticipants)
-						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the conference creation.
+						//: 'You need at least %1 participant.' : Tooltip to warn a user that there are not enough participants for the meeting creation.
 						txt += '- ' + qsTr('missingParticipants', '', conferenceManager.minParticipants).arg(conferenceManager.minParticipants) + '\n'
 					if( AccountSettingsModel.conferenceUri == '')
-						//: 'You need to set the conference URI in your account settings to create a conference based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
+						//: 'You need to set the meeting URI in your account settings to create a meeting based chat room.' : Tooltip to warn the user that a setting is missing in its configuration.
 						txt += '- ' + qsTr('missingConferenceURI') + '\n'
 					return txt;
 				}
@@ -174,7 +174,7 @@ DialogPlus {
 	buttonsLeftMargin: 15
 	//: 'Start a video conference' : Title of a popup about creation of a video conference
 	title: conferenceManager.isNew ? qsTr('newConferenceTitle') 
-	//: 'Update the conference' : Title of a popup about updating configuration of a video conference.
+	//: 'Update the meeting' : Title of a popup about updating configuration of a video conference.
 		: qsTr('updateConferenceTitle')
 	
 	height: window.height - 100
@@ -215,8 +215,8 @@ DialogPlus {
 					text: conferenceInfoModel && conferenceInfoModel.subject || ''
 					Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 					TooltipArea{
-						//: 'Current subject of the Conference. It cannot be empty'
-						//~ Tooltip Explanation about the subject of the Conference
+						//: 'Current subject of the Meeting. It cannot be empty'
+						//~ Tooltip Explanation about the subject of the meeting
 						text : qsTr('subjectTooltip')
 					}
 				}
@@ -251,7 +251,7 @@ DialogPlus {
 						Text {
 							Layout.fillWidth: true
 							Layout.rightMargin: 15
-							//: 'Would you like to schedule your conference?' : Ask about setting the conference as scheduled.
+							//: 'Would you like to schedule your meeting?' : Ask about setting the meeting as scheduled.
 							text: qsTr('newConferenceScheduleTitle')
 							color: NewConferenceStyle.titles.textColor
 							font.pointSize: NewConferenceStyle.titles.pointSize
@@ -421,7 +421,7 @@ DialogPlus {
 							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.description : ''
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							TooltipArea{
-								//: 'This description will describe the conference' : Explanation about the description of the conference
+								//: 'This description will describe the meeting' : Explanation about the description of the meeting
 								text : qsTr('newConferenceDescriptionTooltip')
 							}
 						}
