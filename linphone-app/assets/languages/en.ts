@@ -394,7 +394,7 @@
     <message>
         <source>callStatsKeyAgreementAlgo</source>
         <extracomment>&apos;Key agreement algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation>Key agreement algorithm&apos;</translation>
+        <translation>Key agreement algorithm</translation>
     </message>
     <message>
         <source>callStatsHashAlgo</source>
@@ -534,7 +534,7 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation>Conference ICS has been copied</translation>
+        <translation>The invitation has been copied</translation>
     </message>
 </context>
 <context>
@@ -552,7 +552,7 @@ Server URL not configured.</translation>
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Conference address&apos; : Title for the conference address.</extracomment>
-        <translation>Conference address</translation>
+        <translation>Meeting address</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -781,7 +781,7 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Initiate a conference.</translation>
+        <translation>Initiate a meeting.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -823,21 +823,21 @@ Server URL not configured.</translation>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation>CONFERENCE</translation>
+        <translation>MEETING</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation>CONFERENCE</translation>
+        <translation>MEETING</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Manage participants to your conference.</translation>
+        <translation>Manage participants to your meeting.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -853,7 +853,7 @@ Server URL not configured.</translation>
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Conferences&apos; : Conference list title.</extracomment>
-        <translation>Conferences</translation>
+        <translation>Meetings</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
@@ -868,12 +868,12 @@ Server URL not configured.</translation>
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;Conference URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
-        <translation>Conference URL has been copied</translation>
+        <translation>Meeting URL has been copied</translation>
     </message>
     <message>
         <source>conferencesDeleted</source>
         <extracomment>&apos;Conference has been deleted&apos; : Message text in a banner to warn the user that the conference has been deleted.</extracomment>
-        <translation>Conference has been deleted</translation>
+        <translation>The meeting has been deleted</translation>
     </message>
 </context>
 <context>
@@ -1436,7 +1436,7 @@ Server URL not configured.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>You are currently out of the conference.</translation>
+        <translation>You are currently out of the meeting.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1461,7 +1461,7 @@ Server URL not configured.</translation>
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation>Video conference is not ready. Please Wait…</translation>
+        <translation>The meeting is not ready. Please Wait…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
@@ -1476,7 +1476,7 @@ Server URL not configured.</translation>
     <message>
         <source>aloneInConference</source>
         <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
-        <translation>You are alone in this conference</translation>
+        <translation>You are alone in this meeting</translation>
     </message>
 </context>
 <context>
@@ -1484,7 +1484,7 @@ Server URL not configured.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>You are currently out of the conference.</translation>
+        <translation>You are currently out of the meeting.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1509,7 +1509,7 @@ Server URL not configured.</translation>
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;Video conference is not ready. Please Wait...&apos; : Waiting message for starting conference.</extracomment>
-        <translation>Video conference is not ready. Please Wait…</translation>
+        <translation>The meeting is not ready. Please Wait…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
@@ -1562,7 +1562,7 @@ Server URL not configured.</translation>
     <message>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this conference&apos; : Message to warn the user when there is no other participant.</extracomment>
-        <translation>You are currently alone in this conference</translation>
+        <translation>You are currently alone in this meeting</translation>
     </message>
 </context>
 <context>
@@ -1699,7 +1699,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation>Start conference call</translation>
+        <translation>Start meeting call</translation>
     </message>
     <message>
         <source>newChatRoom</source>
@@ -1936,13 +1936,13 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Conference. It cannot be empty&apos;</extracomment>
-        <translation>Current subject of the Conference. It cannot be empty.</translation>
+        <translation>Current subject of the Meeting. It cannot be empty.</translation>
         <extra-Tooltip>Explanation about the subject of the Conference</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your conference?&apos; : Ask about setting the conference as secured.</extracomment>
-        <translation>Would you like to encrypt your conference?</translation>
+        <translation>Would you like to encrypt your meeting ?</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
@@ -1952,7 +1952,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
-        <translation>Search in your contacts or add a custom one to the conference.</translation>
+        <translation>Search in your contacts or add a custom one to the meeting.</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -1984,12 +1984,12 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the conference&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation>Update the conference</translation>
+        <translation>Update the meeting</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your conference?&apos; : Ask about setting the conference as scheduled.</extracomment>
-        <translation>Would you like to schedule your conference?</translation>
+        <translation>Would you like to schedule your meeting?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2024,7 +2024,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the conference&apos; : Explanation about the description of the conference</extracomment>
-        <translation>This description will describe the conference</translation>
+        <translation>This description will describe the meeting</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
