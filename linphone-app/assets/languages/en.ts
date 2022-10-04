@@ -551,7 +551,7 @@ Server URL not configured.</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
-        <extracomment>&apos;Meeting address&apos; : Title for the conference address.</extracomment>
+        <extracomment>&apos;Meeting address&apos; : Title for the meeting address.</extracomment>
         <translation>Meeting address</translation>
     </message>
     <message>

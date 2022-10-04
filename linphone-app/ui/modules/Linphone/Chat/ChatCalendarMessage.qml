@@ -301,7 +301,7 @@ Loader{
 					font.weight: Font.Bold
 					visible: !mainItem.isCancelled
 					
-					//: 'Meeting address' : Title for the conference address.
+					//: 'Meeting address' : Title for the meeting address.
 					text: qsTr('icsconferenceAddressTitle')
 				}
 				RowLayout{
