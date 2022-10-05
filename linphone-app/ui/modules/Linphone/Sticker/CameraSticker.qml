@@ -22,6 +22,7 @@ DecorationSticker{
 	property alias isFullscreen: camera.isFullscreen
 	property alias isCameraFromDevice: camera.isCameraFromDevice
 	property alias isReady: camera.isReady
+	property alias isVideoEnabled: camera.isVideoEnabled
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true
 	property color color : CameraStickerStyle.cameraBackgroundColor

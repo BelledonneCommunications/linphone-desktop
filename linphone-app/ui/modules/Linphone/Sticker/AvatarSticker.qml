@@ -17,7 +17,7 @@ DecorationSticker {
 	
 	property ParticipantDeviceModel currentDevice
 	property CallModel callModel
-	property bool isPaused
+	property alias isPaused: avatar.isPaused
 	
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true

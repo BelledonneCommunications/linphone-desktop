@@ -40,9 +40,13 @@ Item {
 			
 			onConferenceCreated: cameraView.resetCamera()
 			function updateCurrentDevice(){
-					var device = getLastActiveSpeaking()
-					if(device)	// Get 
-						cameraView.currentDevice = device
+				if( callModel ){
+					if( callModel.isConference) {
+						var device = getLastActiveSpeaking()
+						if(device)	// Get 
+							cameraView.currentDevice = device
+					}
+    			}
 			}
 			onMeChanged: if(cameraView.isPreview) {
 					cameraView.currentDevice = me
@@ -56,16 +60,23 @@ Item {
 			miniViews.model = []
 		}
 	}
-
 	Sticker{
 		id: cameraView
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
 		callModel: mainItem.callModel
-		deactivateCamera: (callModel && callModel.pausedByUser) || !mainItem.cameraEnabled || (!callModel.isConference && currentDevice && !currentDevice.videoEnabled)
+		deactivateCamera: callModel.isConference
+							?  (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
+								|| (!callModel.cameraEnabled && mainItem.participantCount == 1)
+								|| (currentDevice && !currentDevice.videoEnabled && mainItem.participantCount == 2)
+							: (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
+								|| currentDevice && !currentDevice.videoEnabled
+		isVideoEnabled: !deactivateCamera
+		onDeactivateCameraChanged: console.log("deactivateCamera? "+deactivateCamera)
 		isPreview: mainItem.showMe && mainItem.participantCount == 1
 		onIsPreviewChanged: {
+            console.log("ispreview ? " +isPreview)
 			if( isPreview){
 				currentDevice = allDevices.me
 				cameraView.resetCamera()
@@ -74,8 +85,13 @@ Item {
 				cameraView.resetCamera()
 			}
 		isCameraFromDevice: isPreview
+		onCurrentDeviceChanged: console.log("CurrentDevice: "+currentDevice)
+		isPaused: callModel.isConference
+					? callModel && callModel.pausedByUser && mainItem.participantCount != 2
+						|| (currentDevice && currentDevice.isPaused)
+					: callModel && !callModel.pausedByUser && (callModel.status === CallModel.CallStatusPaused)
 		
-		isPaused: (callModel && callModel.pausedByUser) || (currentDevice && currentDevice.isPaused) //callModel.pausedByUser
+		onIsPausedChanged: console.log("ispaused ? " +isPaused + " = " +callModel.pausedByUser + " / " + (currentDevice ? currentDevice.isPaused : 'noDevice') +" / " +callModel.isConference + " / " +callModel.status )
 		quickTransition: true
 		showCloseButton: false
 		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
@@ -102,7 +118,8 @@ Item {
 			Sticker{
 				id: previewSticker
 				deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.cameraEnabled
-				//onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.showMe +" / " +mainItem.callModel.localVideoEnabled)
+				//|| ( (callModel.isConference && !mainItem.callModel.cameraEnabled) || (!callModel.isConference && !mainItem.callModel.localVideoEnabled) )
+				onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.showMe +" / " +mainItem.callModel.localVideoEnabled + " / " +mainItem.callModel.cameraEnabled)
 				currentDevice: allDevices.me
 				isPreview: true
 				callModel: mainItem.callModel

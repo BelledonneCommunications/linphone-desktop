@@ -24,6 +24,7 @@
 .pragma library
 
 .import QtQuick 2.7 as QtQuick
+.import Linphone 1.0 as Linphone
 
 .import 'port-tools.js' as PortTools
 .import 'uri-tools.js' as UriTools
@@ -753,13 +754,13 @@ function computeAvatarSize (container, maxSize, ratio) {
 
 function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
   var VideoCodecsModel = Linphone.VideoCodecsModel
-  window.attachVirtualWindow(buildLinphoneDialogUri('ConfirmDialog'), {
+  window.attachVirtualWindow(buildCommonDialogUri('ConfirmDialog'), {
     descriptionText: qsTr('downloadCodecDescription')
       .replace('%1', codecInfo.mime)
       .replace('%2', codecInfo.encoderDescription)
   }, function (status) {
     if (status) {
-      window.attachVirtualWindow(buildCommonDialogUri('OnlineInstallerDialog'), {
+      window.attachVirtualWindow(buildLinphoneDialogUri('OnlineInstallerDialog'), {
         downloadUrl: codecInfo.downloadUrl,
         extract: true,
         installFolder: VideoCodecsModel.codecsFolder,
