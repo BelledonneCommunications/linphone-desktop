@@ -63,7 +63,7 @@ Item {
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
 		callModel: mainItem.callModel
-		deactivateCamera: (callModel && callModel.pausedByUser) || !mainItem.cameraEnabled || (currentDevice && !currentDevice.videoEnabled)
+		deactivateCamera: (callModel && callModel.pausedByUser) || !mainItem.cameraEnabled || (!callModel.isConference && currentDevice && !currentDevice.videoEnabled)
 		isPreview: mainItem.showMe && mainItem.participantCount == 1
 		onIsPreviewChanged: {
 			if( isPreview){

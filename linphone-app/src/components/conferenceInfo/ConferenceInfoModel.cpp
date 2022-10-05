@@ -297,6 +297,19 @@ void ConferenceInfoModel::setConferenceInfo(std::shared_ptr<linphone::Conference
 
 //-------------------------------------------------------------------------------------------------
 
+void ConferenceInfoModel::resetConferenceInfo() {
+	mConferenceInfo = linphone::Factory::get()->createConferenceInfo();
+	mConferenceInfo->setDateTime(0);
+	mConferenceInfo->setDuration(0);
+	mIsScheduled = false;
+	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
+	if(accountAddress){
+		auto cleanedClonedAddress = accountAddress->clone();
+		cleanedClonedAddress->clean();
+		mConferenceInfo->setOrganizer(cleanedClonedAddress);
+	}
+}
+
 void ConferenceInfoModel::createConference(const int& securityLevel) {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();

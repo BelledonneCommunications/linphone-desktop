@@ -335,6 +335,7 @@ ColumnLayout  {
 						onClicked:{
 							if( SettingsModel.videoConferenceEnabled ){
 								groupCallButton.toggled = true
+								conferenceInfoModel.resetConferenceInfo();
 								conferenceInfoModel.isScheduled = false
 								conferenceInfoModel.subject = chatRoomModel.subject
 							
@@ -497,6 +498,7 @@ ColumnLayout  {
 						menuItemStyle : MenuItemStyle.aux2
 						visible: conversationMenu.showScheduleMeeting
 						onClicked: {
+							conferenceInfoModel.resetConferenceInfo()
 							conferenceInfoModel.isScheduled = true
 							conferenceInfoModel.subject = chatRoomModel.subject
 							conferenceInfoModel.setParticipants(conversation.chatRoomModel.participants)
