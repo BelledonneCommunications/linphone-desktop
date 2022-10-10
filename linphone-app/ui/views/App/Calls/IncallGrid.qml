@@ -59,7 +59,7 @@ Mosaic {
 				currentDevice: gridModel.participantDevices.getAt(index)
 				
 				isCameraFromDevice: true
-				isPaused: avatarCell.currentDevice && avatarCell.currentDevice.isPaused
+				isPaused: !isPreview && avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				showCloseButton: false
 				showCustomButton:  false
 				avatarStickerBackgroundColor: isPreview? IncallStyle.container.avatar.stickerPreviewBackgroundColor : IncallStyle.container.avatar.stickerBackgroundColor

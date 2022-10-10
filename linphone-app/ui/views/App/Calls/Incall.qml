@@ -328,11 +328,11 @@ Rectangle {
 					id: conferenceLayout
 					anchors.fill: parent	
 					sourceComponent: mainItem.conferenceModel 
-										? mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !mainItem.callModel.videoEnabled
-											? gridComponent
-											: activeSpeakerComponent
+										? mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutActiveSpeaker
+											? activeSpeakerComponent
+											: gridComponent
 										: activeSpeakerComponent
-					onSourceComponentChanged: console.log("conferenceLayout: "+mainItem.callModel.conferenceVideoLayout)
+					onSourceComponentChanged: console.log("conferenceLayout: "+mainItem.callModel.conferenceVideoLayout + " => " +sourceComponent)
 					active: mainItem.callModel && !mainItem.isFullScreen
 				}
 				Rectangle{

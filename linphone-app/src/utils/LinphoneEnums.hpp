@@ -115,6 +115,7 @@ LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status& capability)
 enum ConferenceLayout {
 	ConferenceLayoutGrid = int(linphone::ConferenceLayout::Grid),
 	ConferenceLayoutActiveSpeaker = int(linphone::ConferenceLayout::ActiveSpeaker),
+	ConferenceLayoutAudioOnly = ConferenceLayoutGrid + ConferenceLayoutActiveSpeaker + 1,
 };
 Q_ENUM_NS(ConferenceLayout)
 

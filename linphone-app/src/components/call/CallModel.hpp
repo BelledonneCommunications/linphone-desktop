@@ -181,7 +181,7 @@ public:
 	
 	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
 	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);	// Make a call request
-	void setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);		// Called from call state changed ater the new layout has been set.
+	void updateConferenceVideoLayout();		// Called from call state changed ater the new layout has been set.
 	
 	static constexpr int DtmfSoundDelay = 200;
 	

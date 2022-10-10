@@ -25,8 +25,9 @@ Item {
 	property bool isRightReducedLayout: false
 	property bool isLeftReducedLayout: false
 	property bool cameraEnabled: true
-	property bool showMe : !(callModel && callModel.pausedByUser) && (callModel.isConference || callModel.localVideoEnabled)
-	property int participantCount: callModel.isConference ? allDevices.count + 1 : 2	// +me
+	property bool isConferenceReady: callModel.isConference && callModel.conferenceModel && callModel.conferenceModel.isReady
+	
+	property int participantCount: callModel.isConference ? allDevices.count + 1 : 2	// +me. allDevices==0 if !conference
 	
 	onParticipantCountChanged: {console.log("Conf count: " +participantCount);allDevices.updateCurrentDevice()}
 	
@@ -66,15 +67,19 @@ Item {
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
 		callModel: mainItem.callModel
-		deactivateCamera: callModel.isConference
-							?  (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
-								|| (!callModel.cameraEnabled && mainItem.participantCount == 1)
-								|| (currentDevice && !currentDevice.videoEnabled && mainItem.participantCount == 2)
-							: (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
-								|| currentDevice && !currentDevice.videoEnabled
+		deactivateCamera: isPreview && callModel.pausedByUser
+							? true
+							: callModel.isConference
+								?  (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
+									|| (!callModel.cameraEnabled && mainItem.participantCount == 1)
+									|| (currentDevice && !currentDevice.videoEnabled)// && mainItem.participantCount == 2)
+									|| !mainItem.isConferenceReady
+								: (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused || !callModel.videoEnabled) )
+									|| currentDevice && !currentDevice.videoEnabled
+								
 		isVideoEnabled: !deactivateCamera
 		onDeactivateCameraChanged: console.log("deactivateCamera? "+deactivateCamera)
-		isPreview: mainItem.showMe && mainItem.participantCount == 1
+		isPreview: !preview.visible && mainItem.participantCount == 1
 		onIsPreviewChanged: {
             console.log("ispreview ? " +isPreview)
 			if( isPreview){
@@ -86,10 +91,12 @@ Item {
 			}
 		isCameraFromDevice: isPreview
 		onCurrentDeviceChanged: console.log("CurrentDevice: "+currentDevice)
-		isPaused: callModel.isConference
-					? callModel && callModel.pausedByUser && mainItem.participantCount != 2
-						|| (currentDevice && currentDevice.isPaused)
-					: callModel && !callModel.pausedByUser && (callModel.status === CallModel.CallStatusPaused)
+		isPaused: isPreview && callModel.pausedByUser
+					? false
+					: callModel.isConference
+						? //callModel && callModel.pausedByUser && mainItem.participantCount != 2 || 
+							(currentDevice && currentDevice.isPaused)
+						: callModel && !callModel.pausedByUser && (callModel.status === CallModel.CallStatusPaused)
 		
 		onIsPausedChanged: console.log("ispaused ? " +isPaused + " = " +callModel.pausedByUser + " / " + (currentDevice ? currentDevice.isPaused : 'noDevice') +" / " +callModel.isConference + " / " +callModel.status )
 		quickTransition: true
@@ -98,6 +105,12 @@ Item {
 		showCustomButton:  false
 		avatarStickerBackgroundColor: isPreview ?  IncallStyle.container.avatar.stickerPreviewBackgroundColor : IncallStyle.container.avatar.stickerBackgroundColor
 		avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+		Component.onCompleted: console.log("Completed: "+isPaused + " = " +callModel.pausedByUser + " / " + (currentDevice ? currentDevice.isPaused : 'noDevice') 
+												+" isPreview?" +isPreview
+												+" / Video?" +(currentDevice  ? currentDevice.videoEnabled : "NoDevice") + "-"+(callModel ? callModel.videoEnabled : "NoCall")
+												+" / Camera?" +(currentDevice  ? currentDevice.cameraEnabled : "NoDevice") + "-"+(callModel ? callModel.cameraEnabled : "NoCall")
+												+" / Deactivated?"+deactivateCamera
+												+" / " +callModel.isConference + " / " +callModel.status)
 	}
 	Item{// Need an item to not override Sticker internal states. States are needed for changing anchors.
 		id: preview
@@ -106,10 +119,17 @@ Item {
 		anchors.rightMargin: 30
 		anchors.bottomMargin: 15
 		
-		height: miniViews.cellHeight
+		height: visible ? miniViews.cellHeight : 0
 		width: 16 * height / 9
 		
-		visible: mainItem.showMe && (!callModel.isConference  || allDevices.count >= 1)
+		//property bool showMe : !(callModel && callModel.pausedByUser) && (callModel.isConference || callModel.localVideoEnabled)
+		
+		visible: mainItem.isConferenceReady && allDevices.count >= 1
+				|| (!callModel.isConference && mainItem.callModel.cameraEnabled)// use videoEnabled if we want to show the preview sticker
+				
+		onVisibleChanged: console.log("visible? "+visible + " / video?" +(callModel ? callModel.videoEnabled : "NoCall")
+											+ " / camera?" +(callModel ? callModel.cameraEnabled : "NoCall")
+											)
 		
 		Loader{
 			anchors.fill: parent
@@ -117,9 +137,12 @@ Item {
 			sourceComponent: 
 			Sticker{
 				id: previewSticker
-				deactivateCamera: !mainItem.callModel || !mainItem.showMe || !mainItem.callModel.cameraEnabled
+				deactivateCamera: !mainItem.callModel || callModel.pausedByUser || !mainItem.callModel.cameraEnabled
+										//|| (!callModel.isConference && !mainItem.callModel.videoEnabled)
+										//|| (callModel.isConference && !mainItem.callModel.cameraEnabled)
+				
 				//|| ( (callModel.isConference && !mainItem.callModel.cameraEnabled) || (!callModel.isConference && !mainItem.callModel.localVideoEnabled) )
-				onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.showMe +" / " +mainItem.callModel.localVideoEnabled + " / " +mainItem.callModel.cameraEnabled)
+				onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.callModel.localVideoEnabled + " / " +mainItem.callModel.cameraEnabled)
 				currentDevice: allDevices.me
 				isPreview: true
 				callModel: mainItem.callModel
@@ -139,10 +162,11 @@ Item {
 		anchors.bottom: preview.top
 		anchors.rightMargin: 30
 		anchors.topMargin: 15
-//---------------
-
 		anchors.bottomMargin: 15
+//---------------
 		width: 16 * miniViews.cellHeight / 9
+		visible: mainItem.isConferenceReady || !callModel.isConference
+		
 		ScrollableListView{
 			id: miniViews
 			property int cellHeight: 150
@@ -177,11 +201,13 @@ Item {
 						id: miniView
 						anchors.fill: parent
 						anchors.margins: 3
-						deactivateCamera: index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser)
+						deactivateCamera: (!mainItem.isConferenceReady || !callModel.isConference)
+											&& (index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser) )
 						currentDevice: modelData.isPreview ? null : modelData
 						callModel: modelData.isPreview ? null : mainItem.callModel
 						isCameraFromDevice:  mainItem.callModel.isConference
 						isPaused: currentDevice && currentDevice.isPaused
+						onIsPausedChanged: console.log("paused:"+isPaused)
 						showCloseButton: false
 						showCustomButton:  false
 						showAvatarBorder: true

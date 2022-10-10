@@ -71,7 +71,10 @@ LinphoneEnums::CallStatus LinphoneEnums::fromLinphone(const linphone::Call::Stat
 }
 
 linphone::ConferenceLayout LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceLayout& layout){
-	return static_cast<linphone::ConferenceLayout>(layout);
+	if( layout != LinphoneEnums::ConferenceLayoutAudioOnly)
+		return static_cast<linphone::ConferenceLayout>(layout);
+	else
+		return linphone::ConferenceLayout::Grid;// Audio Only mode
 }
 
 LinphoneEnums::ConferenceLayout LinphoneEnums::fromLinphone(const linphone::ConferenceLayout& layout){

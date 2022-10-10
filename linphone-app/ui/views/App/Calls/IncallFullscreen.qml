@@ -296,9 +296,11 @@ Window {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					
-					sourceComponent: conference.callModel 
-										? conference.conferenceModel 
-											? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid || !conference.callModel.videoEnabled? gridComponent : activeSpeakerComponent
+					sourceComponent: conference.callModel
+										? conference.conferenceModel
+											? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutActiveSpeaker
+												? activeSpeakerComponent
+												: gridComponent
 											: activeSpeakerComponent
 										: null
 					active: conference.callModel

@@ -69,7 +69,10 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 		mCallListener = std::make_shared<CallListener>();
 		connectTo(mCallListener.get());
 		mCall->addListener(mCallListener);
-		mConferenceVideoLayout = LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout());
+		auto callParams = mCall->getParams();
+		mConferenceVideoLayout = LinphoneEnums::fromLinphone(callParams->getConferenceVideoLayout());
+		if(mConferenceVideoLayout == LinphoneEnums::ConferenceLayoutGrid && !callParams->videoEnabled())
+			mConferenceVideoLayout = LinphoneEnums::ConferenceLayoutAudioOnly;
 		if(mCall->getConference()){
 			if( mConferenceVideoLayout == LinphoneEnums::ConferenceLayoutGrid)
 				settings->setCameraMode(settings->getGridCameraMode());
@@ -479,7 +482,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 				mWasConnected = true;
 			}
 			mPausedByRemote = false;
-			setConferenceVideoLayout(LinphoneEnums::fromLinphone(call->getParams()->getConferenceVideoLayout()));
+			updateConferenceVideoLayout();
 			setCallId(QString::fromStdString(mCall->getCallLog()->getCallId()));
 			break;
 		}
@@ -994,7 +997,8 @@ std::shared_ptr<linphone::Address> CallModel::getRemoteAddress()const{
 }
 
 LinphoneEnums::ConferenceLayout CallModel::getConferenceVideoLayout() const{
-	return mCall ? LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout()) : LinphoneEnums::ConferenceLayoutGrid;
+	return mConferenceVideoLayout;
+//	return mCall ? LinphoneEnums::fromLinphone(mCall->getParams()->getConferenceVideoLayout()) : LinphoneEnums::ConferenceLayoutGrid;
 }
 
 void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){
@@ -1005,21 +1009,26 @@ void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layo
 		coreManager->getSettingsModel()->setCameraMode(coreManager->getSettingsModel()->getActiveSpeakerCameraMode());
 	shared_ptr<linphone::CallParams> params = coreManager->getCore()->createCallParams(mCall);
 	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
-	params->enableVideo(true);
+	params->enableVideo(layout != LinphoneEnums::ConferenceLayoutAudioOnly);
 	mCall->update(params);
 }
 
-void CallModel::setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout){
+void CallModel::updateConferenceVideoLayout(){
+	auto callParams = mCall->getParams();
 	auto settings = CoreManager::getInstance()->getSettingsModel();
-	if(mCall->getConference()){
-			if( layout == LinphoneEnums::ConferenceLayoutGrid)
+	auto newLayout = LinphoneEnums::fromLinphone(callParams->getConferenceVideoLayout());
+	if( !callParams->videoEnabled())
+		newLayout = LinphoneEnums::ConferenceLayoutAudioOnly;
+	if( mConferenceVideoLayout != newLayout && !getPausedByUser()){// Only update if not in pause.
+		if(mCall->getConference()){
+			if( callParams->getConferenceVideoLayout() == linphone::ConferenceLayout::Grid)
 				settings->setCameraMode(settings->getGridCameraMode());
 			else
 				settings->setCameraMode(settings->getActiveSpeakerCameraMode());
 		}else
 			settings->setCameraMode(settings->getCallCameraMode());
-	if( mConferenceVideoLayout != layout){
-		mConferenceVideoLayout = layout;
+		qWarning() << "Changing layout from " << mConferenceVideoLayout << " into " << newLayout;
+		mConferenceVideoLayout = newLayout;
 		emit conferenceVideoLayoutChanged();
 		emit snapshotEnabledChanged();
 	}

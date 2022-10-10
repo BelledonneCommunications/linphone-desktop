@@ -113,9 +113,13 @@ Rectangle{
 						, visible: true},
 						
 						{titleIndex: 1
-						, icon: (mainItem.callModel && mainItem.callModel.localVideoEnabled ?
-										(mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid ? IncallMenuStyle.settingsIcons.gridIcon : IncallMenuStyle.settingsIcons.activeSpeakerIcon)
-									: IncallMenuStyle.settingsIcons.audioOnlyIcon)
+						, icon: (mainItem.callModel
+								? mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutAudioOnly
+									? IncallMenuStyle.settingsIcons.audioOnlyIcon
+									: mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutGrid
+										? IncallMenuStyle.settingsIcons.gridIcon
+										: IncallMenuStyle.settingsIcons.activeSpeakerIcon
+								: IncallMenuStyle.settingsIcons.audioOnlyIcon)
 						, nextPage:layoutMenu
 						, visible: mainItem.callModel && mainItem.callModel.isConference},
 
@@ -215,7 +219,7 @@ Rectangle{
 				//: 'Active speaker mode' : Active speaker layout for video conference.
 						, {text: qsTr('incallMenuActiveSpeakerLayout'), icon: IncallMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker}
 				//: 'Audio only mode' : Audio only layout for video conference.
-						, {text: qsTr('incallMenuAudioLayout'), icon: IncallMenuStyle.modeIcons.audioOnlyIcon, value:2}
+						, {text: qsTr('incallMenuAudioLayout'), icon: IncallMenuStyle.modeIcons.audioOnlyIcon, value:LinphoneEnums.ConferenceLayoutAudioOnly}
 					]				
 					delegate:
 						Borders{
@@ -236,7 +240,7 @@ Rectangle{
 								text: modelData.text
 								
 								property bool isInternallyChecked: mainItem.callModel ? (mainItem.callModel.localVideoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
-															|| (!mainItem.callModel.localVideoEnabled && modelData.value == 2)
+															|| (!mainItem.callModel.localVideoEnabled && modelData.value == LinphoneEnums.ConferenceLayoutAudioOnly)
 															: false
 								// break bind. Radiobutton checked itself without taking care of custom binding. This workaound works as long as we don't really need the binding.
 								onIsInternallyCheckedChanged: checked = isInternallyChecked
@@ -255,7 +259,7 @@ Rectangle{
 								onClicked:{
 								// Do changes only if we choose a different layout.
 											if(! ( mainItem.callModel ? (mainItem.callModel.localVideoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
-															|| (!mainItem.callModel.localVideoEnabled && modelData.value == 2)
+															|| (!mainItem.callModel.localVideoEnabled && modelData.value == LinphoneEnums.ConferenceLayoutAudioOnly)
 															: false)){
 												mainItem.enabled = false
 												mainItem.layoutChanging(modelData.value)// Let time to clear cameras
