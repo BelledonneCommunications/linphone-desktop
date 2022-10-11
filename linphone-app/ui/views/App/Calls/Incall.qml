@@ -55,8 +55,8 @@ Rectangle {
 		interval: 100
 		onTriggered: updateMessageBanner()
 	}
-	onParticipantCountChanged: delayMessageBanner.restart()
-	onIsReadyChanged: delayMessageBanner.restart()
+	onParticipantCountChanged: Qt.callLater(function (){delayMessageBanner.restart()})
+	onIsReadyChanged: Qt.callLater(function (){delayMessageBanner.restart()})
 	// ---------------------------------------------------------------------------
 	
 	color: IncallStyle.backgroundColor

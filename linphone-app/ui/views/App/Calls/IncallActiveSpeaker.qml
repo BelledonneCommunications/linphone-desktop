@@ -29,7 +29,7 @@ Item {
 	
 	property int participantCount: callModel.isConference ? allDevices.count + 1 : 2	// +me. allDevices==0 if !conference
 	
-	onParticipantCountChanged: {console.log("Conf count: " +participantCount);allDevices.updateCurrentDevice()}
+	onParticipantCountChanged: {console.log("Conf count: " +participantCount); Qt.callLater(allDevices.updateCurrentDevice)}
 	
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
@@ -81,7 +81,10 @@ Item {
 		onDeactivateCameraChanged: console.log("deactivateCamera? "+deactivateCamera)
 		isPreview: !preview.visible && mainItem.participantCount == 1
 		onIsPreviewChanged: {
-            console.log("ispreview ? " +isPreview)
+            console.log("ispreview ? " +isPreview + "visible?"+preview.visible +", pCount="+mainItem.participantCount
+				+" / ready?" +mainItem.isConferenceReady
+				+" / allCount=" +allDevices.count
+            )
 			if( isPreview){
 				currentDevice = allDevices.me
 				cameraView.resetCamera()
