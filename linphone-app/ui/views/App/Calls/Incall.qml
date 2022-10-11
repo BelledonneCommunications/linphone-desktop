@@ -269,7 +269,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.screenshot
-			visible: mainItem.callModel.snapshotEnabled && mainItem.isReady
+			visible: SettingsModel.incallScreenshotEnabled && mainItem.isReady && mainItem.callModel && mainItem.callModel.snapshotEnabled
 			onClicked: mainItem.callModel.takeSnapshot()
 			//: 'Take Snapshot' : Tooltip for takking snapshot.
 			tooltipText: qsTr('incallSnapshotTooltip')

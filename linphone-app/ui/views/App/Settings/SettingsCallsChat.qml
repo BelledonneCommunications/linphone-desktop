@@ -203,7 +203,18 @@ TabContainer {
 						onClicked: SettingsModel.automaticallyRecordCalls = !checked
 					}
 				}
-				
+			}
+			FormLine {
+				FormGroup {
+					//: 'Enable screenshots' : Label on switch to choose if we can take screenshots while being in call.
+					label: qsTr('callScreenshotEnabledLabel')
+					
+					Switch {
+						checked: SettingsModel.incallScreenshotEnabled
+						
+						onClicked: SettingsModel.incallScreenshotEnabled = !checked
+					}
+				}
 			}
 		}
 		

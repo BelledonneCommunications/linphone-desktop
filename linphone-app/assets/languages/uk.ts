@@ -552,7 +552,7 @@
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
-        <extracomment>&apos;Meeting address&apos; : Title for the conference address.</extracomment>
+        <extracomment>&apos;Meeting address&apos; : Title for the meeting address.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2534,6 +2534,11 @@
     <message>
         <source>autoDownloadAlways</source>
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>callScreenshotEnabledLabel</source>
+        <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

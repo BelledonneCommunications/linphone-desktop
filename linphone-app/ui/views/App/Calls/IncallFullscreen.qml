@@ -236,7 +236,7 @@ Window {
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: IncallStyle.buttons.screenshot
-				visible: conference.callModel && conference.callModel.snapshotEnabled
+				visible: SettingsModel.incallScreenshotEnabled && conference.callModel && conference.callModel.snapshotEnabled
 				onClicked: conference.callModel && conference.callModel.takeSnapshot()
 				//: 'Take Snapshot' : Tooltip for takking snapshot.
 				tooltipText: qsTr('incallSnapshotTooltip')

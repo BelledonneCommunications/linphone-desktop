@@ -104,7 +104,7 @@ QDateTime ConferenceModel::getStartDate() const{
 }
 
 qint64 ConferenceModel::getElapsedSeconds() const {
-	return getStartDate().secsTo(QDateTime::currentDateTime());
+	return mConference->getDuration();
 }
 
 ParticipantModel* ConferenceModel::getLocalParticipant() const{

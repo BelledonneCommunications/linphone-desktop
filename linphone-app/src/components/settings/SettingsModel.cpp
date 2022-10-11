@@ -866,7 +866,16 @@ void SettingsModel::setWaitRegistrationForCall(const bool& status){
 	mConfig->setInt(UiSection, "call_wait_registration", status);
 	emit waitRegistrationForCallChanged(status);
 }
-	
+
+bool SettingsModel::getIncallScreenshotEnabled() const{
+	return !!mConfig->getInt(UiSection, "show_take_screenshot_button_in_call", 0);
+}
+
+void SettingsModel::setIncallScreenshotEnabled(const bool& status){
+	mConfig->setInt(UiSection, "show_take_screenshot_button_in_call", status);
+	emit incallScreenshotEnabledChanged(status);
+}
+
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getConferenceEnabled () const {

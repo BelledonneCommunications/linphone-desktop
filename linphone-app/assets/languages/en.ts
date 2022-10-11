@@ -2528,6 +2528,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
         <translation>Always</translation>
     </message>
+    <message>
+        <source>callScreenshotEnabledLabel</source>
+        <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
+        <translation>Enable screenshots</translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>

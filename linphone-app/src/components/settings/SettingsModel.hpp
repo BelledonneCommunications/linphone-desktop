@@ -128,6 +128,7 @@ class SettingsModel : public QObject {
 	
 	
 	Q_PROPERTY(bool waitRegistrationForCall READ getWaitRegistrationForCall WRITE setWaitRegistrationForCall NOTIFY waitRegistrationForCallChanged)// Allow call only if the current proxy has been registered
+	Q_PROPERTY(bool incallScreenshotEnabled READ getIncallScreenshotEnabled WRITE setIncallScreenshotEnabled NOTIFY incallScreenshotEnabledChanged)
 	
 	Q_PROPERTY(bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged)
 	Q_PROPERTY(bool videoConferenceEnabled READ getVideoConferenceEnabled NOTIFY videoConferenceEnabledChanged)
@@ -429,7 +430,10 @@ public:
 	void setHideEmptyChatRooms(const bool& data);
 	
 	bool getWaitRegistrationForCall() const;
-	void setWaitRegistrationForCall(const bool& data);
+	void setWaitRegistrationForCall(const bool& status);
+	
+	bool getIncallScreenshotEnabled() const;
+	void setIncallScreenshotEnabled(const bool& status);
 	
 	bool getGroupChatEnabled()const;
 	
@@ -716,6 +720,7 @@ signals:
 	void groupChatEnabledChanged();
 	void hideEmptyChatRoomsChanged (bool status);
 	void waitRegistrationForCallChanged (bool status);
+	void incallScreenshotEnabledChanged(bool status);
 	
 	void conferenceEnabledChanged (bool status);
 	void videoConferenceEnabledChanged ();
