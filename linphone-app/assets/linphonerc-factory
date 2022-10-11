@@ -7,13 +7,16 @@ ec_filter=MSWebRTCAEC
 [app]
 record_aware=1
 
+[rtp]
+accept_any_encryption=1
+
 [sip]
 chat_messages_aggregation_delay=1000
 chat_messages_aggregation=1
 zrtp_key_agreements_suites=MS_ZRTP_KEY_AGREEMENT_K255_KYB512
 
 [video]
-max_mosaic_size=vga
+max_conference_size=vga
 
 [ui]
 use_qrcode=0
