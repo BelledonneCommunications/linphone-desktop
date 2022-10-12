@@ -111,6 +111,7 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 	
 	for (int i = 0; i < count; ++i){
 		auto timeline = mList.takeAt(row).objectCast<TimelineModel>();
+		timeline->setSelected(false);
 		timeline->disconnectChatRoomListener();
 		oldTimelines.push_back(timeline);
 	}
@@ -267,10 +268,10 @@ void TimelineListModel::updateTimelines () {
 			int index = itTimeline - mList.begin();
 			if(index>0){
 				--itTimeline;
-				removeRow(index);
+				removeRow(index);// This will call removeRows()
 				++itTimeline;
 			}else{
-				removeRow(0);
+				removeRow(0);// This will call removeRows()
 				itTimeline = mList.begin();
 			}
 		}else
@@ -315,7 +316,7 @@ void TimelineListModel::removeChatRoomModel(QSharedPointer<ChatRoomModel> model)
 			if(timeline->mChatRoomModel == model){
 				if(model)
 					model->markAsToDelete();
-				remove(*itTimeline);
+				remove(*itTimeline);// This will call removeRows()
 				return;
 			}else
 				++itTimeline;
@@ -357,8 +358,9 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 		if(timeline) {
 			if(timeline->getChatRoomModel())
 				timeline->getChatRoomModel()->resetMessageCount();
-			if(state == linphone::ChatRoom::State::Deleted)
-				remove(timeline);
+			if(state == linphone::ChatRoom::State::Deleted){
+				remove(timeline);// This will call removeRows()
+			}
 		}
 	}
 }
@@ -415,5 +417,5 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 }
 
 void TimelineListModel::onChatRoomDeleted(){
-	remove(sender());
+	remove(sender());// This will call removeRows()
 }

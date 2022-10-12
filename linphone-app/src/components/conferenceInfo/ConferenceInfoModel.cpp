@@ -162,7 +162,7 @@ QString ConferenceInfoModel::getOrganizer() const{
 }
 
 QString ConferenceInfoModel::getSubject() const{
-	return Utils::coreStringToAppString(mConferenceInfo->getSubject());	
+	return QString::fromStdString(mConferenceInfo->getSubject());
 }
 
 QString ConferenceInfoModel::getDescription() const{
