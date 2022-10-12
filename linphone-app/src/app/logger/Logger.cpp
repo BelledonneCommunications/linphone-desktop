@@ -201,6 +201,9 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 		loggingService->setDomain(Constants::QtDomain);
 		loggingService->setLogLevel(linphone::LogLevel::Message);
 		loggingService->addListener(make_shared<LinphoneLogger>(mInstance));
+#ifdef _WIN32
+		loggingService->enableStackTraceDumps(true);
+#endif
 	}
 	
 	linphone::Core::setLogCollectionPrefix(EXECUTABLE_NAME);
