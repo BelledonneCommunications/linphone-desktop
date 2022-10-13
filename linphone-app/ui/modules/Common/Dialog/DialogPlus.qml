@@ -11,7 +11,7 @@ import Common.Styles 1.0
 Rectangle {
   id: dialog
 
-  property alias buttons: buttons.data // Optionnal.
+  property alias buttons: buttonsView.data // Optionnal.
   property alias title : titleBar.text	//Optionnal. Show a title bar with a close button.
   property alias descriptionText: description.text // Optionnal.
   property int buttonsAlignment : Qt.AlignLeft  
@@ -101,7 +101,7 @@ Rectangle {
     }
 
     RowLayout {
-      id: buttons
+      id: buttonsView
 
       Layout.alignment: buttonsAlignment
       Layout.bottomMargin: DialogStyle.buttons.bottomMargin

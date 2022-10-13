@@ -2029,6 +2029,11 @@
         <extracomment>&apos;Operations in progress, please wait&apos; : Waiting message till the end of operations when creating a conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>confirmFormExit</source>
+        <extracomment>&apos;Do you want to close this form ?&apos; : confirmation text for exiting the creatoin form</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Notice</name>

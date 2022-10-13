@@ -53,11 +53,8 @@ constexpr int DelayBeforeRemoveCall = 6000;
 static inline int findCallIndex (QList<QSharedPointer<QObject>> &list, const shared_ptr<linphone::Call> &call) {
 	auto it = find_if(list.begin(), list.end(), [call](QSharedPointer<QObject> callModel) {
 			return call == callModel.objectCast<CallModel>()->getCall();
-});
-	
-	Q_ASSERT(it != list.end());
-	
-	return int(distance(list.begin(), it));
+	});
+	return it == list.end() ? -1 : int(distance(list.begin(), it));
 }
 
 static inline int findCallIndex (QList<QSharedPointer<QObject>> &list, const CallModel &callModel) {
@@ -474,22 +471,24 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 // -----------------------------------------------------------------------------
 
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
-	
-	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(call);
-	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
-	App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
-	
-	add(callModel);
-	emit layoutChanged();
-	
-	if (call->getDir() == linphone::Call::Dir::Outgoing) {
-		QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
-		if (callsWindow) {
-			if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
-				if (!callsWindow->isVisible())
-					callsWindow->showMinimized();
-			} else
-				App::smartShowWindow(callsWindow);
+	int index = findCallIndex(mList, call);
+	if( index < 0){
+		QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(call);
+		qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
+		App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
+		
+		add(callModel);
+		emit layoutChanged();
+		
+		if (call->getDir() == linphone::Call::Dir::Outgoing) {
+			QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
+			if (callsWindow) {
+				if (CoreManager::getInstance()->getSettingsModel()->getKeepCallsWindowInBackground()) {
+					if (!callsWindow->isVisible())
+						callsWindow->showMinimized();
+				} else
+					App::smartShowWindow(callsWindow);
+			}
 		}
 	}
 }

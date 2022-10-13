@@ -19,7 +19,11 @@ DialogPlus {
 	id: conferenceManager
 	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
-	onConferenceInfoModelChanged: selectedParticipants.setAddresses(conferenceInfoModel)
+	onConferenceInfoModelChanged: {
+		dateField.setDate(conferenceManager.conferenceInfoModel.dateTime);
+		timeField.setTime(conferenceManager.conferenceInfoModel.dateTime);
+		selectedParticipants.setAddresses(conferenceInfoModel)
+	}
 	property bool forceSchedule : false
 	property int creationState: 0// -1=error, 0=Idle, 1=processing, 2=processed
 		
@@ -347,7 +351,7 @@ DialogPlus {
 						ComboBox{
 							id: durationField
 							Layout.preferredWidth: parent.cellWidth;
-							currentIndex: conferenceManager.conferenceInfoModel && conferenceManager.conferenceInfoModel.duration >= 1800 ? conferenceManager.conferenceInfoModel.duration / 1800 - 1 : 0
+							currentIndex: conferenceManager.conferenceInfoModel && conferenceManager.conferenceInfoModel.duration >= 1800 ? conferenceManager.conferenceInfoModel.duration / 1800 - 1 : 1
 							model: [{text:Utils.formatDuration(30*60), value:30}
 										,{text:Utils.formatDuration(60*60), value:60}
 										,{text:Utils.formatDuration(120*60), value:120}
@@ -598,10 +602,20 @@ DialogPlus {
 	foregroundItem:	Item{
 		id: busyPanel
 		anchors.fill: parent
-		visible: conferenceManager.creationState == 1
+		visible:conferenceManager.creationState == 1
 		MouseArea{// Grabber
 			anchors.fill: parent
 			cursorShape: Qt.ArrowCursor
+			onClicked:{
+				window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+				//: 'Do you want to close this form ?' : confirmation text for exiting the creatoin form
+					descriptionText: qsTr('confirmFormExit'),
+				}, function (status) {
+					if (status) {
+						exit(0)
+					}
+				})
+			}
 		}
 		Rectangle{
 			anchors.fill: parent
