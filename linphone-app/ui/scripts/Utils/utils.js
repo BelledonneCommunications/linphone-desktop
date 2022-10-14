@@ -765,7 +765,8 @@ function openCodecOnlineInstallerDialog (window, codecInfo, cb) {
         extract: true,
         installFolder: VideoCodecsModel.codecsFolder,
         installName: codecInfo.installName,
-        mime: codecInfo.mime
+        mime: codecInfo.mime,
+        checksum: codecInfo.checksum
       }, function (status) {
         if (status) {
           VideoCodecsModel.reload()

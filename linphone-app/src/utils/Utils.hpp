@@ -64,6 +64,7 @@ public:
 	Q_INVOKABLE static bool isPhoneNumber(const QString& txt);
 	Q_INVOKABLE QSize getImageSize(const QString& url);
 	Q_INVOKABLE static QPoint getCursorPosition();
+	Q_INVOKABLE static QString getFileChecksum(const QString& filePath);
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {

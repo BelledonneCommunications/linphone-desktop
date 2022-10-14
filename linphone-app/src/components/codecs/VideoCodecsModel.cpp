@@ -47,7 +47,8 @@ static bool downloadUpdatableCodec (
   const QString &codecsFolder,
   const QString &mime,
   const QString &downloadUrl,
-  const QString &installName
+  const QString &installName,
+  const QString &checksum
 ) {
   QString versionFilePath = codecsFolder + mime + ".txt";
   QFile versionFile(versionFilePath);
@@ -70,9 +71,16 @@ static bool downloadUpdatableCodec (
   fileExtractor->setExtractFolder(codecsFolder);
   fileExtractor->setExtractName(installName + ".in");
 
-  QObject::connect(fileDownloader, &FileDownloader::downloadFinished, [fileExtractor](const QString &filePath) {
+  QObject::connect(fileDownloader, &FileDownloader::downloadFinished, [fileDownloader, fileExtractor, checksum](const QString &filePath) {
     fileExtractor->setFile(filePath);
-    fileExtractor->extract();
+    QString fileChecksum = Utils::getFileChecksum(filePath);
+    if(fileChecksum == checksum)
+		fileExtractor->extract();
+	else{
+		qWarning() << "File cannot be downloaded : Bad checksum.";
+		fileDownloader->remove();
+		fileDownloader->deleteLater();
+	}
   });
 
   QObject::connect(fileDownloader, &FileDownloader::downloadFailed, [fileDownloader]() {
@@ -128,7 +136,7 @@ void VideoCodecsModel::updateCodecs () {
 
 void VideoCodecsModel::downloadUpdatableCodecs (QObject *parent) {
   #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-    downloadUpdatableCodec(parent, getCodecsFolder(), "H264", Constants::PluginUrlH264, Constants::H264InstallName);
+    downloadUpdatableCodec(parent, getCodecsFolder(), "H264", Constants::PluginUrlH264, Constants::H264InstallName, Constants::PluginH264Check);
   #else
     Q_UNUSED(parent);
   #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
@@ -169,7 +177,7 @@ void VideoCodecsModel::load () {
     if (find_if(codecs.begin(), codecs.end(), [](const shared_ptr<linphone::PayloadType> &codec) {
       return codec->getMimeType() == "H264";
     }) == codecs.end())
-      addDownloadableCodec("H264", Constants::H264Description, Constants::PluginUrlH264, Constants::H264InstallName);
+      addDownloadableCodec("H264", Constants::H264Description, Constants::PluginUrlH264, Constants::H264InstallName, Constants::PluginH264Check);
   #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 }
 

@@ -20,6 +20,7 @@
 
 #include <QFileInfo>
 #include <QCoreApplication>
+#include <QCryptographicHash>
 #include <QCursor>
 #include <QDir>
 #include <QFile>
@@ -569,4 +570,15 @@ QSize Utils::getImageSize(const QString& url){
 
 QPoint Utils::getCursorPosition(){
 	return QCursor::pos();
+}
+
+QString Utils::getFileChecksum(const QString& filePath){
+    QFile file(filePath);
+    if (file.open(QFile::ReadOnly)) {
+        QCryptographicHash hash(QCryptographicHash::Sha256);
+        if (hash.addData(&file)) {
+            return hash.result().toHex();
+        }
+    }
+    return QString();
 }

@@ -82,16 +82,20 @@ constexpr char Constants::LibraryExtension[];
 constexpr char Constants::H264InstallName[];
 #ifdef Q_PROCESSOR_X86_64
 constexpr char Constants::PluginUrlH264[];
+constexpr char Constants::PluginH264Check[];
 #else
 constexpr char Constants::PluginUrlH264[];
+constexpr char Constants::PluginH264Check[];
 #endif // ifdef Q_PROCESSOR_X86_64
 #elif defined(Q_OS_WIN)
 constexpr char Constants::LibraryExtension[];
 constexpr char Constants::H264InstallName[];
 #ifdef Q_OS_WIN64
 constexpr char Constants::PluginUrlH264[];
+constexpr char Constants::PluginH264Check[];
 #else
 constexpr char Constants::PluginUrlH264[];
+constexpr char Constants::PluginH264Check[];
 #endif // ifdef Q_OS_WIN64
 #endif // ifdef Q_OS_LINUX
 constexpr char Constants::VcardScheme[];
