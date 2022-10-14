@@ -102,7 +102,7 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 	for(auto item : mList) {
 		auto deviceModel = item.objectCast<ParticipantDeviceModel>();
 		if(deviceModel->getDevice() == deviceToAdd) {
-			qWarning() << "Device already exist. Send video update event";
+			qDebug() << "Device already exist. Send video update event";
 			deviceModel->updateVideoEnabled();
 			return false;
 		}
@@ -208,7 +208,7 @@ void ParticipantDeviceListModel::onSecurityLevelChanged(std::shared_ptr<const li
 void ParticipantDeviceListModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){	
 	std::list<std::shared_ptr<linphone::ParticipantDevice>> devices = participant->getDevices() ;
 	if(devices.size() == 0)
-		qWarning() << "Participant has no device. It will not be added : " << participant->getAddress()->asString().c_str();
+		qDebug() << "Participant has no device. It will not be added : " << participant->getAddress()->asString().c_str();
 	else
 		for(auto device : devices)
 			add(device);
@@ -237,13 +237,13 @@ void ParticipantDeviceListModel::onParticipantDeviceAdded(const std::shared_ptr<
 		}
 	}
 	
-	qWarning() << "No participant device found from linphone::ParticipantDevice at onParticipantDeviceAdded";
+	qDebug() << "No participant device found from linphone::ParticipantDevice at onParticipantDeviceAdded";
 }
 
 void ParticipantDeviceListModel::onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "Removing participant device : " << mList.count();
 	if(!remove(participantDevice))
-		qWarning() << "No participant device found from linphone::ParticipantDevice at onParticipantDeviceRemoved";
+		qDebug() << "No participant device found from linphone::ParticipantDevice at onParticipantDeviceRemoved";
 }
 
 void ParticipantDeviceListModel::onConferenceStateChanged(linphone::Conference::State newState){

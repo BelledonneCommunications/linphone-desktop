@@ -119,7 +119,6 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 	
 	for(auto timeline : oldTimelines)
 		if(timeline->mSelected) {
-			qWarning() << "Unselecting timemodel " << timeline;
 			timeline->setSelected(false);
 				
 		}
@@ -239,7 +238,6 @@ void TimelineListModel::onSelectedHasChanged(bool selected){
 			emit selectedChanged(qobject_cast<TimelineModel*>(sender()));
 		}
 	}else{// Do nothing
-		qWarning() << "Timeline selection (selected=" << selected << ") is more than 1 : " << mSelectedCount;
 	}
 }
 

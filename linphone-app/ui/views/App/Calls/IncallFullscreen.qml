@@ -277,7 +277,6 @@ Window {
 					Layout.leftMargin: window.hideButtons ? 15 : 70
 					Layout.rightMargin: rightMenu.visible ? 15 : 70
 					callModel: conference.callModel
-					onWidthChanged: console.log("Width: "+width)
 				}
 			}
 			Component{

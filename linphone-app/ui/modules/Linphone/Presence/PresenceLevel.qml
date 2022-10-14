@@ -9,7 +9,6 @@ import Linphone 1.0
 Item {
   property var level: null
   property bool betterIcon : false
-	//onLevelChanged: console.log("Level change : "+Presence.getPresenceStatusAsString(level))
 
   Icon {
     anchors.centerIn: parent
@@ -20,6 +19,5 @@ Item {
     iconSize: parent.height > parent.width
       ? parent.width
       : parent.height
-	//onIconChanged: console.log(Presence.getPresenceStatusAsString(level)+ "//" +icon)
   }
 }

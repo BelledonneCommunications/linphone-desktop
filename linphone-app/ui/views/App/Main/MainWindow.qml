@@ -364,7 +364,7 @@ ApplicationWindow {
 						onEntrySelected:{
 							if( entry ) {
 								if( entry.selected){
-									console.log("Load conversation from entry selected on timeline")
+									console.debug("Load conversation from entry selected on timeline")
 									window.setView('Conversation', {
 												chatRoomModel:entry.chatRoomModel
 											   })

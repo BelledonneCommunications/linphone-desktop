@@ -86,7 +86,7 @@ void RecorderModel::start(){
 }
 
 void RecorderModel::pause(){
-	qWarning() << mRecorder->pause();
+	mRecorder->pause();
 	emit stateChanged();
 }
 

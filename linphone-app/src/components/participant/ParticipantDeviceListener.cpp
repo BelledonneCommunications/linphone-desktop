@@ -29,17 +29,17 @@ ParticipantDeviceListener::ParticipantDeviceListener(QObject *parent) : QObject(
 
 //--------------------------------------------------------------------
 void ParticipantDeviceListener::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
-	qInfo() << "onIsSpeakingChanged " << participantDevice->getAddress()->asString().c_str() << " " << isSpeaking;
+	qDebug() << "onIsSpeakingChanged " << participantDevice->getAddress()->asString().c_str() << " " << isSpeaking;
 	emit isSpeakingChanged(participantDevice, isSpeaking);
 }
 
 void ParticipantDeviceListener::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMutedVar) {
-	qInfo() << "onIsMuted " << isMutedVar << " vs " << participantDevice->getIsMuted() << " for " << participantDevice->getAddress()->asString().c_str();
+	qDebug() << "onIsMuted " << isMutedVar << " vs " << participantDevice->getIsMuted() << " for " << participantDevice->getAddress()->asString().c_str();
 	emit isMuted(participantDevice, isMutedVar);
 }
 
 void ParticipantDeviceListener::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDeviceState state){
-	qInfo() << "onStateChanged: " << participantDevice->getAddress()->asString().c_str() << " " << (int)state;
+	qDebug() << "onStateChanged: " << participantDevice->getAddress()->asString().c_str() << " " << (int)state;
 	emit stateChanged(participantDevice, state);
 }
 
