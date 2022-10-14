@@ -46,7 +46,15 @@ constexpr int SafeFilePathLimit = 100;
 }
 
 std::shared_ptr<linphone::Address> Utils::interpretUrl(const QString& address){
-	return CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address));
+	auto interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address), true);
+	if(!interpretedAddress){// Try by removing scheme.
+		QStringList splitted = address.split(":");
+		if(splitted.size() > 0 && splitted[0] == "sip"){
+			splitted.removeFirst();
+			interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(splitted.join(":")), true);
+		}
+	}
+	return interpretedAddress;
 }
 char *Utils::rstrstr (const char *a, const char *b) {
 	size_t a_len = strlen(a);

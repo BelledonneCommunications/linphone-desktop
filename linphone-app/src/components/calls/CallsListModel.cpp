@@ -95,9 +95,9 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& 
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
-	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
 	if (!address){
-		qCritical() << "The calling address is not a SIP address : " << sipAddress;
+		qCritical() << "The calling address is not an interpretable SIP address: " << sipAddress;
 		return;
 	}
 	
