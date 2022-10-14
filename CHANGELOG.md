@@ -5,27 +5,55 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## 4.5.0 - [undefined]
+## 5.0.0 - [undefined]
 
 ### Added
-- Video conference.
+- Video conference and iCalendars.
+- Make a meeting directly from a group chat.
+- New call layouts.
+- Display a waiting room before going into a conference.
 - Log viewer.
 - Option to set the display name in "using an account" tab of assistant.
 - Long pressed buttons.
 - Phone dialpad on main window.
 - Animated file in chats/notifications.
 - Round progress bar for transferring a file and allow to cancel it.
-- hide all accounts if their custom parameter 'hidden' is set to 1.
+- Hide all accounts if their custom parameter 'hidden' is set to 1.
 - Right-click on a timeline will show a slide menu to do actions on the timeline.
 - Post quantum ZRTP.
+- Windows stack trace dumps into logs on crash.
+- Mark as Read synchronized between devices.
+- Merge messages into one notification to avoid spam.
+- Design overhaul on calls.
 
 ### Fixed
 - Crash on exit.
 - Crash when using no account.
+- Many Windows crashs (camera, incall)
 - Memory stability.
 - Clean 3 chat behaviors : Leave chat room (in group info section of conversation menu), erase history (in conversation's menu), delete chat room (in slide menu, or if chat room is empty and left)
+- On Mac, close windows instead of minimizing them.
+- Running application detection on Install/Uninstall.
+- SVG Icons in better quality.
+- Event timestamps.
+- Optimizations and more minor fixes.
 
-## 4.4.8 - 2022-07-04
+## 4.4.10 - 2022-09-20
+
+### Fixes
+- Lime exceptions because of unknown boundaries.
+- AppimageTool update for code signing.
+
+## 4.4.9 - 2022-08-29
+
+### Fixes
+- Update SDK to fix a crash on startup due to a test on a removed participant device.
+- Use default values for new accounts in settings panel.
+
+### Added
+- Add 'sip' scheme in authentication popup.
+
+## 4.4.8 - 2022-07-05
 
 ### Fixes
 - Display name are based on friends (coming from local or LDAP server) and caller address only.
