@@ -1,4 +1,5 @@
-[![pipeline status](https://gitlab.linphone.org/BC/public/linphone-desktop/badges/master/pipeline.svg)](https://gitlab.linphone.org/BC/public/linphone-desktop/commits/master)
+[![pipeline status](https://gitlab.linphone.org/BC/public/linphone-desktop/badges/master/pipeline.svg)](https://gitlab.linphone.org/BC/public/linphone-desktop/commits/master) [![weblate status](https://weblate.linphone.org/widgets/linphone-desktop/-/svg-badge.svg)](https://weblate.linphone.org/engage/linphone-desktop/?utm_source=widget)
+
 
 # Linphone Desktop
 
@@ -251,11 +252,26 @@ In order to submit a patch for inclusion in Linphone's source code:
 
 Please note that we don't offer free support and these contributions will be addressed on our free-time.
 
+<a href="https://weblate.linphone.org/engage/linphone-desktop/?utm_source=widget">
+<img src="https://weblate.linphone.org/widgets/linphone-desktop/-/multi-auto.svg" alt="Translation status" align="right"/>
+</a>
+
 ### Languages
 
-Linphone is getting a full internationalization support.
-We no longer use transifex for the translation process, instead we have deployed our own instance of [Weblate](https://weblate.linphone.org).
+
+
+<br />
+Linphone is getting a full internationalization support.<br />
+<br />
+We no longer use transifex for the translation process, instead we have deployed our own instance of [Weblate](https://weblate.linphone.org).<br />
+<br />
+<br />
 If you want you can contribute at: https://weblate.linphone.org/projects/linphone-desktop/
+
+<br />
+<br />
+<br />
+<br />
 
 ### Feedback or bug reporting
 

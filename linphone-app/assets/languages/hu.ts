@@ -1899,7 +1899,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the meeting creation.</extracomment>
         <translation>
             <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
-            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
         </translation>
     </message>
     <message>
@@ -2097,7 +2096,6 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>unreadMessageNotice</source>
         <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
         <translation>
-            <numerusform>%1 olvasatlan üzenet</numerusform>
             <numerusform>%1 olvasatlan üzenet</numerusform>
         </translation>
     </message>
@@ -4591,14 +4589,12 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation type="unfinished">
             <numerusform>%1 hét</numerusform>
-            <numerusform>%1 hét</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform>%1 nap</numerusform>
             <numerusform>%1 nap</numerusform>
         </translation>
     </message>
@@ -4607,14 +4603,12 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation type="unfinished">
             <numerusform>%1 óra</numerusform>
-            <numerusform>%1 óra</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform>%1 perc</numerusform>
             <numerusform>%1 perc</numerusform>
         </translation>
     </message>

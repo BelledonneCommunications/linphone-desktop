@@ -1456,7 +1456,7 @@ Server URL not configured.</translation>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation>Take Snapshot&apos;</translation>
+        <translation>Take Snapshot</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
