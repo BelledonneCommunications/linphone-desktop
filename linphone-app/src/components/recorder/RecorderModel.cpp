@@ -91,7 +91,9 @@ void RecorderModel::pause(){
 }
 
 void RecorderModel::stop(){
-	if(mRecorder->pause() == 0)
+	if(mRecorder->getState() == linphone::RecorderState::Running)	// Remove these tests when the SDK do them.
+		mRecorder->pause();
+	if(mRecorder->getState() == linphone::RecorderState::Paused)
 		mRecorder->close();
 	emit stateChanged();
 }

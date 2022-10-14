@@ -146,6 +146,10 @@ bool ContentModel::isVoiceRecording()const{
 	return mContent->isVoiceRecording();
 }
 
+int ContentModel::getFileDuration() const {
+	return mContent->getFileDuration();
+}
+
 // Create a thumbnail from the first content that have a file and store it in Appdata
 void ContentModel::createThumbnail (const bool& force) {
 	if(force || isFile() || isFileEncrypted() || isFileTransfer()){

@@ -73,6 +73,8 @@ public:
 	Q_INVOKABLE bool isText() const;
 	Q_INVOKABLE bool isVoiceRecording()const;
 	
+	Q_INVOKABLE int getFileDuration() const;
+	
 	void createThumbnail (const bool& force = false);
 	void removeThumbnail ();
 	void removeDownloadedFile();

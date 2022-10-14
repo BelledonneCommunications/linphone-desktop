@@ -111,7 +111,6 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 	
 	for (int i = 0; i < count; ++i){
 		auto timeline = mList.takeAt(row).objectCast<TimelineModel>();
-		timeline->setSelected(false);
 		timeline->disconnectChatRoomListener();
 		oldTimelines.push_back(timeline);
 	}
@@ -119,8 +118,11 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 	endRemoveRows();
 	
 	for(auto timeline : oldTimelines)
-		if(timeline->mSelected)
+		if(timeline->mSelected) {
+			qWarning() << "Unselecting timemodel " << timeline;
 			timeline->setSelected(false);
+				
+		}
 	emit countChanged();
 	return true;
 }
@@ -217,21 +219,27 @@ void TimelineListModel::setSelectedCount(int selectedCount){
 }
 
 void TimelineListModel::onSelectedHasChanged(bool selected){
-	if(selected) {
-		if(mSelectedCount >= 1){// We have more selection than wanted : count select first and unselect after : the final signal will be send only on limit
-			setSelectedCount(mSelectedCount+1);// It will not send a change signal
-			for(auto it = mList.begin() ; it != mList.end() ; ++it)
-				if(it->get() != sender())
-					it->objectCast<TimelineModel>()->setSelected(false);
-		}else
-			setSelectedCount(mSelectedCount+1);
-		emit selectedChanged(qobject_cast<TimelineModel*>(sender()));
-	} else {
-		if( this ==  CoreManager::getInstance()->getTimelineListModel()) {// Clean memory only if the selection is about the main list.
-			auto timeline = qobject_cast<TimelineModel*>(sender());
-			timeline->getChatRoomModel()->resetData();// Cleanup leaving chat room
+	if( mSelectedCount == 1){//swap
+		setSelectedCount(0);
+		for(auto it = mList.begin() ; it != mList.end() ; ++it)
+			if(it->get() != sender())
+				it->objectCast<TimelineModel>()->setSelected(false);
+		if(!selected){
+			if( this ==  CoreManager::getInstance()->getTimelineListModel()) {// Clean memory only if the selection is about the main list.
+				auto timeline = qobject_cast<TimelineModel*>(sender());
+				timeline->getChatRoomModel()->resetData();// Cleanup leaving chat room
+			}
+		}else{
+			setSelectedCount(1);
+			emit selectedChanged(qobject_cast<TimelineModel*>(sender()));
 		}
-		setSelectedCount(mSelectedCount-1);
+	}else if( mSelectedCount <1){//Select
+		if(selected){
+			setSelectedCount(1);
+			emit selectedChanged(qobject_cast<TimelineModel*>(sender()));
+		}
+	}else{// Do nothing
+		qWarning() << "Timeline selection (selected=" << selected << ") is more than 1 : " << mSelectedCount;
 	}
 }
 

@@ -46,7 +46,18 @@ Loader{
 		Loader {
 			id: vocalPlayer
 			
-			active: true
+			active: false
+			function play(){
+				if(!vocalPlayer.active)
+					vocalPlayer.active = true
+				else {
+					if(loadedItem.isPlaying){// Pause the play
+						vocalPlayer.item.pause()
+					}else{// Play the audio
+						vocalPlayer.item.play()
+					}
+				}
+			}
 			sourceComponent: SoundPlayer {
 				source: mainItem.contentModel && mainItem.contentModel.filePath
 				onStopped:{
@@ -59,6 +70,7 @@ Loader{
 					mediaProgressBar.refresh()
 				}
 			}
+			onStatusChanged: if (loader.status == Loader.Ready) play()
 		}
 		RowLayout{
 			id: lineLayout
@@ -76,11 +88,7 @@ Loader{
 				colorSet:  (loadedItem.isPlaying ? ChatAudioMessageStyle.pauseAction
 												 : ChatAudioMessageStyle.playAction)
 				onClicked:{
-					if(loadedItem.isPlaying){// Pause the play
-						vocalPlayer.item.pause()
-					}else{// Play the audio
-						vocalPlayer.item.play()
-					}
+					vocalPlayer.play()
 				}
 			}
 			Item{
@@ -93,9 +101,9 @@ Loader{
 				MediaProgressBar{
 					id: mediaProgressBar
 					anchors.fill: parent
-					progressDuration: vocalPlayer.item ? vocalPlayer.item.duration : 0
-					progressPosition: !vocalPlayer.item ? progressDuration : 0
-					value: !vocalPlayer.item ? 0.01 * progressDuration / 5 : 100
+					progressDuration: vocalPlayer.item ? vocalPlayer.item.duration : contentModel.getFileDuration()
+					progressPosition: 0
+					value: 0
 					stopAtEnd: true 
 					resetAtEnd: false
 					backgroundColor: ChatAudioMessageStyle.backgroundColor
