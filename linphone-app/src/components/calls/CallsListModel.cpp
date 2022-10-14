@@ -96,8 +96,10 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& 
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
 	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
-	if (!address)
+	if (!address){
+		qCritical() << "The calling address is not a SIP address : " << sipAddress;
 		return;
+	}
 	
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(false);
