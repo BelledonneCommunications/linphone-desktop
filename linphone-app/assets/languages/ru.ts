@@ -384,7 +384,7 @@
     <message>
         <source>callStatsMediaEncryption</source>
         <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Шифрование потока</translation>
     </message>
     <message>
         <source>callStatsCipherAlgo</source>
@@ -399,7 +399,7 @@
     <message>
         <source>callStatsHashAlgo</source>
         <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Алгоритм хеширования</translation>
     </message>
     <message>
         <source>callStatsAuthAlgo</source>
@@ -436,7 +436,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Шифрование потока</translation>
     </message>
 </context>
 <context>
@@ -553,7 +553,7 @@
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Meeting address&apos; : Title for the meeting address.</extracomment>
-        <translation>Адрес конференции</translation>
+        <translation>Адрес встречи</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -563,7 +563,7 @@
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы действительно хотите удалить эту встречу?</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
@@ -576,25 +576,25 @@
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished">Описание</translation>
+        <translation>Описание</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
-        <translation type="unfinished">Присоединиться</translation>
+        <translation>Присоединиться</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
         <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Приглашение на встречу</translation>
     </message>
     <message numerus="yes">
         <source>icsParticipants</source>
         <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%d участников</numerusform>
+            <numerusform>%d участников</numerusform>
+            <numerusform>%d участников</numerusform>
         </translation>
     </message>
     <message>
@@ -646,12 +646,12 @@
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Скачать</translation>
     </message>
 </context>
 <context>
@@ -859,7 +859,7 @@
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Meetings&apos; : Conference list title.</extracomment>
-        <translation>Конференции</translation>
+        <translation>Встречи</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
@@ -1069,7 +1069,7 @@
     <message>
         <source>conversationMenuDelete</source>
         <extracomment>&apos;Delete history&apos; : Item menu to delete the chat&apos;s history</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить историю</translation>
     </message>
     <message>
         <source>conversationMenuViewContact</source>
@@ -1079,12 +1079,12 @@
     <message>
         <source>conversationMenuAddContact</source>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Добавить контакт</translation>
     </message>
     <message>
         <source>conversationMenuScheduleMeeting</source>
         <extracomment>&apos;Schedule a meeting&apos; : Item menu to schedule a meeting with the chat participants.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Запланировать встречу</translation>
     </message>
 </context>
 <context>
@@ -1199,7 +1199,7 @@
     <message>
         <source>paused</source>
         <extracomment>&apos;paused&apos; : Pause state on sticker, next to username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>(пауза)</translation>
     </message>
 </context>
 <context>
@@ -1446,7 +1446,7 @@
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>Сейчас вы вне конференции.</translation>
+        <translation>В настоящее время вы вне встречи.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1476,7 +1476,7 @@
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Этот звонок записывается.</translation>
     </message>
     <message>
         <source>incallWaitParticipantMessage</source>
@@ -1494,7 +1494,7 @@
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>Сейчас вы вне конференции.</translation>
+        <translation>В настоящее время вы вне встречи.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1524,7 +1524,7 @@
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Этот звонок записывается.</translation>
     </message>
 </context>
 <context>
@@ -1572,7 +1572,7 @@
     <message>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
-        <translation>Сейчас вы одни на этой конференции</translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1734,7 +1734,7 @@
     <message>
         <source>mainWindowConferencesTitle</source>
         <extracomment>&apos;Meetings&apos; : Meeting title for main window.</extracomment>
-        <translation>Конференции</translation>
+        <translation>Встречи</translation>
     </message>
     <message>
         <source>newChatRoomUriMissing</source>
@@ -1954,7 +1954,7 @@
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your meeting ?&apos; : Ask about setting the meeting as secured.</extracomment>
-        <translation>Хотите зашифровать свою конференцию?</translation>
+        <translation>Хотите зашифровать встречу?</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
@@ -2051,7 +2051,7 @@
     <message>
         <source>busyOperations</source>
         <extracomment>&apos;Operations in progress, please wait&apos; : Waiting message till the end of operations when creating a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Выполняется операция, пожалуйста, подождите</translation>
     </message>
     <message>
         <source>confirmFormExit</source>
@@ -3254,7 +3254,7 @@
     <message>
         <source>versionCheckTypeCustom</source>
         <extracomment>&apos;Custom&apos; : Keyword for an option to check the custom version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Настраиваемый</translation>
     </message>
     <message>
         <source>versionCheckTypeNightly</source>
@@ -3360,7 +3360,7 @@
     <message>
         <source>videoCallsModeLabel</source>
         <extracomment>&apos;Calls&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Звонки</translation>
     </message>
     <message>
         <source>videoModeLabel</source>
@@ -3570,7 +3570,7 @@
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображаемое имя (необязательно)</translation>
     </message>
 </context>
 <context>
@@ -3585,7 +3585,7 @@
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Отображаемое имя (не обязательно)</translation>
     </message>
 </context>
 <context>
@@ -3664,12 +3664,12 @@
     <message>
         <source>outgoingCallStatus</source>
         <extracomment>&quot;Outgoing call&quot; : status of the call in waiting room when user is calling.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Исходящий звонок</translation>
     </message>
     <message>
         <source>incomingCallStatus</source>
         <extracomment>&quot;Incoming call&quot; : status of the call in waiting room when user receive a call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Входящий звонок</translation>
     </message>
 </context>
 <context>
@@ -4618,36 +4618,36 @@
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 неделя</numerusform>
+            <numerusform>%1 неделя</numerusform>
+            <numerusform>%1 неделя</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 день</numerusform>
+            <numerusform>%1 день</numerusform>
+            <numerusform>%1 день</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 час</numerusform>
+            <numerusform>%1 час</numerusform>
+            <numerusform>%1 час</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 минута</numerusform>
+            <numerusform>%1 минута</numerusform>
+            <numerusform>%1 минута</numerusform>
         </translation>
     </message>
     <message numerus="yes">

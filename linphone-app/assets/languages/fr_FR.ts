@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -399,7 +399,7 @@
     <message>
         <source>callStatsHashAlgo</source>
         <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished">Algorithme de hachage</translation>
+        <translation>Algorithme de hachage</translation>
     </message>
     <message>
         <source>callStatsAuthAlgo</source>
@@ -436,7 +436,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished">Chiffrement du média</translation>
+        <translation>Chiffrement du média</translation>
     </message>
 </context>
 <context>
@@ -534,7 +534,7 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation type="unfinished">L&apos;invitation a été copiée</translation>
+        <translation>L&apos;invitation a été copiée</translation>
     </message>
 </context>
 <context>
@@ -542,12 +542,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>icsOrganizer</source>
         <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
-        <translation type="unfinished">Organisateur</translation>
+        <translation>Organisateur</translation>
     </message>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished">Description</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
@@ -557,17 +557,17 @@ URL du serveur non configurée.</translation>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
-        <translation type="unfinished">Rejoindre</translation>
+        <translation>Rejoindre</translation>
     </message>
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation type="unfinished">Voulez-vous supprimer cette réunion ?</translation>
+        <translation>Voulez-vous supprimer cette réunion ?</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
-        <translation type="unfinished">Voulez-vous supprimer cette réunion ?</translation>
+        <translation>Voulez-vous supprimer cette réunion ?</translation>
     </message>
 </context>
 <context>
@@ -575,12 +575,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished">Description</translation>
+        <translation>Description</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
-        <translation type="unfinished">Rejoindre</translation>
+        <translation>Rejoindre</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
@@ -644,12 +644,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished">Télécharger</translation>
+        <translation>Télécharger</translation>
     </message>
 </context>
 <context>
@@ -781,11 +781,11 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished">Rejoindre la conférence hébergée par l&apos;adresse SIP avec votre nom d&apos;affichage. Si vous êtes connecté à une proxy config, voir &apos;join-conference-as&apos;.</translation>
+        <translation>Rejoindre la conférence hébergée par l&apos;adresse SIP avec votre nom d&apos;affichage. Si vous êtes connecté à une proxy config, voir &apos;join-conference-as&apos;.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished">Rejoindre la conférence hébergée par l&apos;adresse SIP avec l&apos;adresse SIP invitée. Si vous n&apos;êtes pas connecté à une proxy-config, voir join-conference.</translation>
+        <translation>Rejoindre la conférence hébergée par l&apos;adresse SIP avec l&apos;adresse SIP invitée. Si vous n&apos;êtes pas connecté à une proxy-config, voir join-conference.</translation>
     </message>
     <message>
         <source>byeFunctionDescription</source>
@@ -823,21 +823,21 @@ URL du serveur non configurée.</translation>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation>CONFÉRENCE</translation>
+        <translation>RÉUNION</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation>CONFÉRENCE</translation>
+        <translation>RÉUNION</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Gérer les participants de votre conférence.</translation>
+        <translation>Gérer les participants de votre réunion.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -853,7 +853,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Meetings&apos; : Conference list title.</extracomment>
-        <translation type="unfinished">Réunions</translation>
+        <translation>Réunions</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
@@ -863,17 +863,17 @@ URL du serveur non configurée.</translation>
     <message>
         <source>conferencesScheduledFilter</source>
         <extracomment>&apos;Scheduled&apos; : Filter meetings on scheduled status.</extracomment>
-        <translation type="unfinished">Programmées</translation>
+        <translation>Programmées</translation>
     </message>
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;The meeting URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
-        <translation type="unfinished">Le lien de la réunion à été copié</translation>
+        <translation>Le lien de la réunion à été copié</translation>
     </message>
     <message>
         <source>conferencesDeleted</source>
         <extracomment>&apos;The meeting has been deleted&apos; : Message text in a banner to warn the user that the meeting has been deleted.</extracomment>
-        <translation type="unfinished">La conférence a été supprimée</translation>
+        <translation>La réunion a été supprimée</translation>
     </message>
 </context>
 <context>
@@ -968,7 +968,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished">Vous devez définir l&apos;URI de la réunion dans les paramètres de votre compte pour créer une réunion.</translation>
+        <translation>Vous devez définir l&apos;URI de la réunion dans les paramètres de votre compte pour créer une conférence.</translation>
     </message>
 </context>
 <context>
@@ -1063,7 +1063,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>conversationMenuDelete</source>
         <extracomment>&apos;Delete history&apos; : Item menu to delete the chat&apos;s history</extracomment>
-        <translation type="unfinished">Supprimer l&apos;historique</translation>
+        <translation>Supprimer l&apos;historique</translation>
     </message>
     <message>
         <source>conversationMenuViewContact</source>
@@ -1073,12 +1073,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>conversationMenuAddContact</source>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
-        <translation type="unfinished">Ajouter un contact</translation>
+        <translation>Ajouter un contact</translation>
     </message>
     <message>
         <source>conversationMenuScheduleMeeting</source>
         <extracomment>&apos;Schedule a meeting&apos; : Item menu to schedule a meeting with the chat participants.</extracomment>
-        <translation type="unfinished">Planifier une réunion</translation>
+        <translation>Planifier une réunion</translation>
     </message>
 </context>
 <context>
@@ -1236,7 +1236,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1441,7 +1441,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallPauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished">Cliquez sur le bouton &quot;play&quot; pour la rejoindre.</translation>
+        <translation>Cliquez sur le bouton &quot;play&quot; pour la rejoindre.</translation>
     </message>
     <message>
         <source>incallStartRecordTooltip</source>
@@ -1461,12 +1461,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
-        <translation type="unfinished">La réunion est en cours de préparation. Veuillez patienter…</translation>
+        <translation>La réunion est en cours de préparation. Veuillez patienter…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished">Cet appel est en train d&apos;être enregistré.</translation>
+        <translation>Cet appel est en train d&apos;être enregistré.</translation>
     </message>
     <message>
         <source>incallWaitParticipantMessage</source>
@@ -1476,7 +1476,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>aloneInConference</source>
         <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
-        <translation type="unfinished">Vous êtes actuellement seul dans cette réunion</translation>
+        <translation>Vous êtes actuellement seul dans cette réunion</translation>
     </message>
 </context>
 <context>
@@ -1489,17 +1489,17 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallPauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished">Cliquez sur le bouton &quot;play&quot; pour la rejoindre.</translation>
+        <translation>Cliquez sur le bouton &quot;play&quot; pour la rejoindre.</translation>
     </message>
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished">Commencer l&apos;enregistrement</translation>
+        <translation>Commencer l&apos;enregistrement</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished">Arrêter l&apos;enregistrement</translation>
+        <translation>Arrêter l&apos;enregistrement</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
@@ -1509,7 +1509,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
-        <translation type="unfinished">La réunion est en cours de préparation. Veuillez patienter…</translation>
+        <translation>La réunion est en cours de préparation. Veuillez patienter…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
@@ -1542,27 +1542,27 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallMenuTitle</source>
         <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
-        <translation type="unfinished">Paramètres</translation>
+        <translation>Paramètres</translation>
     </message>
     <message>
         <source>incallMenuGridLayout</source>
         <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
-        <translation type="unfinished">Mode mosaïque</translation>
+        <translation>Mode mosaïque</translation>
     </message>
     <message>
         <source>incallMenuActiveSpeakerLayout</source>
         <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
-        <translation type="unfinished">Mode intervenant actif</translation>
+        <translation>Mode intervenant actif</translation>
     </message>
     <message>
         <source>incallMenuAudioLayout</source>
         <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
-        <translation type="unfinished">Mode audio uniquement</translation>
+        <translation>Mode audio uniquement</translation>
     </message>
     <message>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
-        <translation type="unfinished">Vous êtes actuellement seul dans cette réunion</translation>
+        <translation>Vous êtes actuellement seul dans cette réunion</translation>
     </message>
 </context>
 <context>
@@ -1796,7 +1796,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>menuMultimedia</source>
@@ -1898,17 +1898,17 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished">ANNULER</translation>
+        <translation>ANNULER</translation>
     </message>
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished">Vous devez définir un sujet.</translation>
+        <translation>Vous devez définir un sujet.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the meeting creation.</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Vous devez ajouter au moins %1 participant.</numerusform>
             <numerusform>Vous devez ajouter au moins %1 participants.</numerusform>
         </translation>
@@ -1926,50 +1926,50 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
-        <translation type="unfinished">Sujet</translation>
+        <translation>Sujet</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">Définissez un sujet</translation>
+        <translation>Définissez un sujet</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Meeting. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished">Sujet de la conversation. Il ne peut pas être vide.</translation>
+        <translation>Sujet de la conversation. Il ne peut pas être vide.</translation>
         <extra-Tooltip>Explanation about the subject of the meeting</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your meeting ?&apos; : Ask about setting the meeting as secured.</extracomment>
-        <translation type="unfinished">Voulez-vous chiffrer votre conversation ?</translation>
+        <translation>Voulez-vous chiffrer votre conversation ?</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished">Choisissez les participants</translation>
+        <translation>Choisissez les participants</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
-        <translation type="unfinished">Chercher dans vos contacts ou ajouter à la main dans la conversation.</translation>
+        <translation>Chercher dans vos contacts ou ajouter à la main dans la conversation.</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Admin</translation>
+        <translation>Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished">Enlever ce participant de la sélection</translation>
+        <translation>Enlever ce participant de la sélection</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished">Obligatoire</translation>
+        <translation>Obligatoire</translation>
     </message>
     <message>
         <source>launchButton</source>
@@ -1984,12 +1984,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the meeting&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation type="unfinished">Mettre à jour la réunion</translation>
+        <translation>Mettre à jour la réunion</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation type="unfinished">Voulez-vous programmer cette réunion&#x202f;?</translation>
+        <translation>Voulez-vous programmer cette réunion ?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2024,7 +2024,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the meeting&apos; : Explanation about the description of the meeting</extracomment>
-        <translation type="unfinished">Cette description détaille la réunion</translation>
+        <translation>Cette description détaille la réunion</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
@@ -2044,7 +2044,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>confirmFormExit</source>
         <extracomment>&apos;Do you want to close this form ?&apos; : confirmation text for exiting the creatoin form</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous fermer ce formulaire ?</translation>
     </message>
 </context>
 <context>
@@ -2180,23 +2180,23 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished">Ajouter des participants</translation>
+        <translation>Ajouter des participants</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished">Cherchez des participants parmi vos contacts afin de les inviter dans la conversation de groupe.</translation>
+        <translation>Cherchez des participants parmi vos contacts afin de les inviter dans la conversation de groupe.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished">Liste des participants</translation>
+        <translation>Liste des participants</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Admin</translation>
+        <translation>Admin</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -2531,7 +2531,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>callScreenshotEnabledLabel</source>
         <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Activer les captures d&apos;écran</translation>
     </message>
 </context>
 <context>
@@ -2569,7 +2569,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3513,7 +3513,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation&#x202f;?</translation>
+        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation ?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
@@ -3636,12 +3636,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished">ANNULER</translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
-        <translation type="unfinished">LANCER</translation>
+        <translation>Lancer</translation>
     </message>
     <message>
         <source>endCallStatus</source>
@@ -4581,7 +4581,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished">Voulez-vous installer %1 (%2) ?</translation>
+        <translation>Voulez-vous télécharger %1 (%2) ?</translation>
     </message>
     <message numerus="yes">
         <source>formatYears</source>

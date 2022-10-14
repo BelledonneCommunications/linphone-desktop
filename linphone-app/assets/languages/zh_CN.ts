@@ -384,7 +384,7 @@
     <message>
         <source>callStatsMediaEncryption</source>
         <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>媒体加密</translation>
     </message>
     <message>
         <source>callStatsCipherAlgo</source>
@@ -399,7 +399,7 @@
     <message>
         <source>callStatsHashAlgo</source>
         <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>哈希算法</translation>
     </message>
     <message>
         <source>callStatsAuthAlgo</source>
@@ -436,7 +436,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>媒体加密</translation>
     </message>
 </context>
 <context>
@@ -546,7 +546,7 @@
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>描述信息</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
@@ -574,7 +574,7 @@
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>描述信息</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -642,12 +642,12 @@
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>取消</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>下载</translation>
     </message>
 </context>
 <context>
@@ -655,7 +655,7 @@
     <message>
         <source>Forwarded</source>
         <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>已转发</translation>
     </message>
 </context>
 <context>
@@ -692,12 +692,12 @@
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>转发</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>回复</translation>
     </message>
 </context>
 <context>
@@ -732,7 +732,7 @@
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>回复</translation>
     </message>
 </context>
 <context>
@@ -1057,7 +1057,7 @@
     <message>
         <source>conversationMenuDelete</source>
         <extracomment>&apos;Delete history&apos; : Item menu to delete the chat&apos;s history</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>删除历史记录</translation>
     </message>
     <message>
         <source>conversationMenuViewContact</source>
@@ -1067,7 +1067,7 @@
     <message>
         <source>conversationMenuAddContact</source>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>添加联系人</translation>
     </message>
     <message>
         <source>conversationMenuScheduleMeeting</source>
@@ -1436,17 +1436,17 @@
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>开始录制</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>停止录制</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>截取快照</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
@@ -1484,17 +1484,17 @@
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>开始录制</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>停止录制</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>截取快照</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
@@ -1527,12 +1527,12 @@
     <message>
         <source>incallMenuParticipants</source>
         <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>成员列表</translation>
     </message>
     <message>
         <source>incallMenuTitle</source>
         <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>设置</translation>
     </message>
     <message>
         <source>incallMenuGridLayout</source>
@@ -2007,7 +2007,7 @@
     <message>
         <source>newConferenceDescriptionPlaceholder</source>
         <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>描述信息</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTooltip</source>
@@ -2027,7 +2027,7 @@
     <message>
         <source>busyOperations</source>
         <extracomment>&apos;Operations in progress, please wait&apos; : Waiting message till the end of operations when creating a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>操作正在进行中，请稍候</translation>
     </message>
     <message>
         <source>confirmFormExit</source>
@@ -2095,8 +2095,8 @@
     <message numerus="yes">
         <source>unreadMessageNotice</source>
         <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 未读消息</numerusform>
         </translation>
     </message>
 </context>
@@ -2159,7 +2159,7 @@
     <message>
         <source>conversationDevicesTitle</source>
         <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>对话中的设备</translation>
     </message>
 </context>
 <context>
@@ -2189,7 +2189,7 @@
     <message>
         <source>participantsListRemoveTooltip</source>
         <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>从选择中删除此成员</translation>
     </message>
 </context>
 <context>
@@ -2235,12 +2235,12 @@
     <message>
         <source>LinphoneEnums_TunnelModeDisable</source>
         <extracomment>&apos;Disable&apos; : One word for button action to disable tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeAuto</source>
         <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>自动</translation>
     </message>
 </context>
 <context>
@@ -2508,12 +2508,12 @@
     <message>
         <source>autoDownloadNever</source>
         <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>永不</translation>
     </message>
     <message>
         <source>autoDownloadAlways</source>
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>总是</translation>
     </message>
     <message>
         <source>callScreenshotEnabledLabel</source>
@@ -2875,7 +2875,7 @@
     <message>
         <source>defaultDeviceNameLabel</source>
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>设备名称</translation>
     </message>
     <message>
         <source>webviewRegistrationUrlLabel</source>
@@ -3014,17 +3014,17 @@
     <message>
         <source>tunnelDomain</source>
         <extracomment>&apos;Domain&apos; : Field title of a textfield to set domain.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>域名</translation>
     </message>
     <message>
         <source>tunnelUsername</source>
         <extracomment>&apos;Username&apos; : Field title of a textfield to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>tunnelSIP</source>
         <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -3044,17 +3044,17 @@
     <message>
         <source>proxyHttpPort</source>
         <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>端口</translation>
     </message>
     <message>
         <source>proxyHttpUsername</source>
         <extracomment>&apos;Username&apos; : Placeholder to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <source>proxyHttpPassword</source>
         <extracomment>&apos;Password&apos; : Placeholder to set password.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <source>proxyHttpApply</source>
@@ -3064,7 +3064,7 @@
     <message>
         <source>serverMode</source>
         <extracomment>&apos;Mode&apos; : Field title on form to set tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>模式</translation>
     </message>
     <message>
         <source>serverDualMode</source>
@@ -3079,12 +3079,12 @@
     <message>
         <source>serverHostname</source>
         <extracomment>&apos;Hostname&apos; : Field title on form to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>主机名</translation>
     </message>
     <message>
         <source>serverPort</source>
         <extracomment>&apos;Port&apos; : Field title on form to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>端口</translation>
     </message>
     <message>
         <source>serverDualHostname</source>
@@ -3228,7 +3228,7 @@
     <message>
         <source>versionCheckTypeCustom</source>
         <extracomment>&apos;Custom&apos; : Keyword for an option to check the custom version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>自定义</translation>
     </message>
     <message>
         <source>versionCheckTypeNightly</source>
@@ -3334,7 +3334,7 @@
     <message>
         <source>videoCallsModeLabel</source>
         <extracomment>&apos;Calls&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>电话</translation>
     </message>
     <message>
         <source>videoModeLabel</source>
@@ -3390,7 +3390,7 @@
     <message>
         <source>tunnelTab</source>
         <extracomment>&apos;Tunnel&apos; : Tab title for tunnel section in settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>隧道协议</translation>
     </message>
 </context>
 <context>
@@ -3402,7 +3402,7 @@
     <message>
         <source>contactsSearchPlaceholder</source>
         <extracomment>&apos;Search in contacts&apos; : Placeholder for a search a contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>搜索联系人</translation>
     </message>
     <message>
         <source>contactsSearchTooltip</source>
@@ -3412,7 +3412,7 @@
     <message>
         <source>timelineSelectionHeader</source>
         <extracomment>&apos;Conversations&apos; : header for a selection in conversation list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>对话</translation>
     </message>
 </context>
 <context>
@@ -3544,7 +3544,7 @@
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>显示名（可选）</translation>
     </message>
 </context>
 <context>
@@ -3559,7 +3559,7 @@
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>显示名（可选）</translation>
     </message>
 </context>
 <context>
@@ -3600,7 +3600,7 @@
     <message>
         <source>understandAction</source>
         <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>我明白</translation>
     </message>
     <message>
         <source>warningFeatures</source>
@@ -3638,12 +3638,12 @@
     <message>
         <source>outgoingCallStatus</source>
         <extracomment>&quot;Outgoing call&quot; : status of the call in waiting room when user is calling.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>去電</translation>
     </message>
     <message>
         <source>incomingCallStatus</source>
         <extracomment>&quot;Incoming call&quot; : status of the call in waiting room when user receive a call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>来电</translation>
     </message>
 </context>
 <context>
@@ -4587,29 +4587,29 @@
     <message numerus="yes">
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 周</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 天</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 小时</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 分钟</numerusform>
         </translation>
     </message>
     <message numerus="yes">

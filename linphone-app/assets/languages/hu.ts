@@ -384,7 +384,7 @@
     <message>
         <source>callStatsMediaEncryption</source>
         <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Média titkosítás</translation>
     </message>
     <message>
         <source>callStatsCipherAlgo</source>
@@ -399,7 +399,7 @@
     <message>
         <source>callStatsHashAlgo</source>
         <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kivonatoló algoritmus</translation>
     </message>
     <message>
         <source>callStatsAuthAlgo</source>
@@ -436,7 +436,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Média titkosítás</translation>
     </message>
 </context>
 <context>
@@ -546,7 +546,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
@@ -574,7 +574,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -642,12 +642,12 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Letöltés</translation>
     </message>
 </context>
 <context>
@@ -655,7 +655,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>Forwarded</source>
         <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Továbbítva</translation>
     </message>
 </context>
 <context>
@@ -1057,7 +1057,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>conversationMenuDelete</source>
         <extracomment>&apos;Delete history&apos; : Item menu to delete the chat&apos;s history</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Előzmények törlése</translation>
     </message>
     <message>
         <source>conversationMenuViewContact</source>
@@ -1067,7 +1067,7 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>conversationMenuAddContact</source>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kapcsolat hozzáadása</translation>
     </message>
     <message>
         <source>conversationMenuScheduleMeeting</source>
@@ -1436,17 +1436,17 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Felvétel megindítása</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A felvétel leállítása</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pillanatkép készítése</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
@@ -1484,17 +1484,17 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Felvétel megindítása</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A felvétel leállítása</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pillanatkép készítése</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
@@ -1527,12 +1527,12 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
     <message>
         <source>incallMenuParticipants</source>
         <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Résztvevők listája</translation>
     </message>
     <message>
         <source>incallMenuTitle</source>
         <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <source>incallMenuGridLayout</source>
@@ -1786,7 +1786,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">Rendben</translation>
+        <translation>Rendben</translation>
     </message>
     <message>
         <source>menuMultimedia</source>
@@ -1887,17 +1887,18 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished">Mégse</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished">Ki kell töltenie egy témát.</translation>
+        <translation>Ki kell töltenie egy témát.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the meeting creation.</extracomment>
-        <translation type="unfinished">
+        <translation>
+            <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
             <numerusform>Legalább %1 résztvevő szükséges.</numerusform>
         </translation>
     </message>
@@ -1914,17 +1915,17 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
-        <translation type="unfinished">Téma</translation>
+        <translation>Téma</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">Téma hozzáadása</translation>
+        <translation>Téma hozzáadása</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Meeting. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished">A csevegőszoba jelenlegi témája. Nem lehet üres.</translation>
+        <translation>A csevegőszoba jelenlegi témája. Nem lehet üres.</translation>
         <extra-Tooltip>Explanation about the subject of the meeting</extra-Tooltip>
     </message>
     <message>
@@ -1945,19 +1946,19 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Felügyelet</translation>
+        <translation>Felügyelő</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished">Távolítsa el ezt a résztvevőt a kiválasztásból</translation>
+        <translation>Távolítsa el ezt a résztvevőt a kiválasztásból</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished">Kötelező</translation>
+        <translation>Kötelező</translation>
     </message>
     <message>
         <source>launchButton</source>
@@ -2007,7 +2008,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceDescriptionPlaceholder</source>
         <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Leírás</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTooltip</source>
@@ -2027,7 +2028,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>busyOperations</source>
         <extracomment>&apos;Operations in progress, please wait&apos; : Waiting message till the end of operations when creating a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A művelet folyamatban van, kérjük várjon</translation>
     </message>
     <message>
         <source>confirmFormExit</source>
@@ -2095,8 +2096,9 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message numerus="yes">
         <source>unreadMessageNotice</source>
         <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 olvasatlan üzenet</numerusform>
+            <numerusform>%1 olvasatlan üzenet</numerusform>
         </translation>
     </message>
 </context>
@@ -2167,29 +2169,29 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished">Résztvevők hozzáadása</translation>
+        <translation>Résztvevők hozzáadása</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished">Keresse meg a résztvevőket a névjegyzékben, hogy meghívhassa őket a csevegőszobába.</translation>
+        <translation>Keresse meg a résztvevőket a névjegyzékben, hogy meghívhassa őket a csevegőszobába.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished">Résztvevők listája</translation>
+        <translation>Résztvevők listája</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Felügyelet</translation>
+        <translation>Felügyelő</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>participantsListRemoveTooltip</source>
         <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Távolítsa el ezt a résztvevőt a kiválasztásból</translation>
     </message>
 </context>
 <context>
@@ -2508,12 +2510,12 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>autoDownloadNever</source>
         <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Soha</translation>
     </message>
     <message>
         <source>autoDownloadAlways</source>
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mindig</translation>
     </message>
     <message>
         <source>callScreenshotEnabledLabel</source>
@@ -2875,7 +2877,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>defaultDeviceNameLabel</source>
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eszköz neve</translation>
     </message>
     <message>
         <source>webviewRegistrationUrlLabel</source>
@@ -3228,7 +3230,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>versionCheckTypeCustom</source>
         <extracomment>&apos;Custom&apos; : Keyword for an option to check the custom version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Egyéni</translation>
     </message>
     <message>
         <source>versionCheckTypeNightly</source>
@@ -3334,7 +3336,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoCallsModeLabel</source>
         <extracomment>&apos;Calls&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívások</translation>
     </message>
     <message>
         <source>videoModeLabel</source>
@@ -3544,7 +3546,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjelenítendő név (választható)</translation>
     </message>
 </context>
 <context>
@@ -3559,7 +3561,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Megjelenítendő név (választható)</translation>
     </message>
 </context>
 <context>
@@ -3600,7 +3602,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>understandAction</source>
         <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Megértettem</translation>
     </message>
     <message>
         <source>warningFeatures</source>
@@ -3623,7 +3625,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished">Mégse</translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>startButton</source>
@@ -3638,12 +3640,12 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>outgoingCallStatus</source>
         <extracomment>&quot;Outgoing call&quot; : status of the call in waiting room when user is calling.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kimenő hívás</translation>
     </message>
     <message>
         <source>incomingCallStatus</source>
         <extracomment>&quot;Incoming call&quot; : status of the call in waiting room when user receive a call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bejövő hívás</translation>
     </message>
 </context>
 <context>
@@ -4568,7 +4570,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished">Szeretné letölteni a(z) %1 (%2)?</translation>
+        <translation>Szeretné letölteni a(z) %1 (%2)?</translation>
     </message>
     <message numerus="yes">
         <source>formatYears</source>
@@ -4588,28 +4590,32 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 hét</numerusform>
+            <numerusform>%1 hét</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 nap</numerusform>
+            <numerusform>%1 nap</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 óra</numerusform>
+            <numerusform>%1 óra</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 perc</numerusform>
+            <numerusform>%1 perc</numerusform>
         </translation>
     </message>
     <message numerus="yes">

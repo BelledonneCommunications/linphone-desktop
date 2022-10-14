@@ -111,7 +111,7 @@
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP-adress</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
@@ -384,7 +384,7 @@
     <message>
         <source>callStatsMediaEncryption</source>
         <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mediekryptering</translation>
     </message>
     <message>
         <source>callStatsCipherAlgo</source>
@@ -436,7 +436,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mediekryptering</translation>
     </message>
 </context>
 <context>
@@ -513,8 +513,8 @@ Serverwebbadressen är inte konfigurerad.</translation>
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+            <numerusform>%1 skriver…</numerusform>
+            <numerusform>%1 skriver…</numerusform>
         </translation>
     </message>
     <message>
@@ -547,7 +547,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
@@ -575,7 +575,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beskrivning</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -644,12 +644,12 @@ Serverwebbadressen är inte konfigurerad.</translation>
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ladda ner</translation>
     </message>
 </context>
 <context>
@@ -670,21 +670,21 @@ Serverwebbadressen är inte konfigurerad.</translation>
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">Kopiera</translation>
+        <translation>Kopiera</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
-        <translation type="unfinished">Spela mig!</translation>
+        <translation>Spela mig!</translation>
     </message>
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Leveransstatus</translation>
     </message>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ta bort</translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
@@ -699,7 +699,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Svara</translation>
     </message>
 </context>
 <context>
@@ -738,7 +738,7 @@ Serverwebbadressen är inte konfigurerad.</translation>
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Svara</translation>
     </message>
 </context>
 <context>

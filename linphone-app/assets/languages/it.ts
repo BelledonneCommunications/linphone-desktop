@@ -2697,7 +2697,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Ottenere informazioni dettagliate sul file di log di Linphone quando vengono fatte delle transazioni (utile per il debug di connessioni TLS).</translation>
+        <translation>Registra logs dettagliati quando si effettuano transazioni (utili per il debugging delle connessioni TLS)</translation>
     </message>
 </context>
 <context>
