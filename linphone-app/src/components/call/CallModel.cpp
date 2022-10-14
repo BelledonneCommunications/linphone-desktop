@@ -1027,7 +1027,7 @@ void CallModel::updateConferenceVideoLayout(){
 				settings->setCameraMode(settings->getActiveSpeakerCameraMode());
 		}else
 			settings->setCameraMode(settings->getCallCameraMode());
-		qWarning() << "Changing layout from " << mConferenceVideoLayout << " into " << newLayout;
+		qDebug() << "Changing layout from " << mConferenceVideoLayout << " into " << newLayout;
 		mConferenceVideoLayout = newLayout;
 		emit conferenceVideoLayoutChanged();
 		emit snapshotEnabledChanged();

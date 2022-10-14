@@ -58,14 +58,14 @@ DialogPlus {
 						return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
 					},
 					handler: function (entry) {
-						console.log("Call selected: " +entry + "/"+entry.sipAddress)
+						console.debug("Call selected: " +entry + "/"+entry.sipAddress)
 						mainItem.addressSelectedCallback(entry.sipAddress)
 						exit(1)
 					},
 				}]
 			
 			onEntryClicked: {
-					console.log("Call selected: " +entry + "/"+entry.sipAddress)
+					console.debug("Call selected: " +entry + "/"+entry.sipAddress)
 					mainItem.addressSelectedCallback(entry.sipAddress)
 					exit(1)
 			}

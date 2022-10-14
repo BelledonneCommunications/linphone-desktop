@@ -29,7 +29,6 @@
 ChatRoomListener::ChatRoomListener(QObject * parent): QObject(parent){
 }
 ChatRoomListener::~ChatRoomListener(){
-	qDebug() << "Destroying ChatRoomListener " << this;
 }
 //---------------------------------------------------------------------------------------------------
 

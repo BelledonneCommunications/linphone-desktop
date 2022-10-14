@@ -316,7 +316,6 @@ Rectangle {
 				isRightReducedLayout: rightMenu.visible
 				isLeftReducedLayout: mainItem.listCallsOpened
 				cameraEnabled: !mainItem.isFullScreen
-				onCameraEnabledChanged: console.log(cameraEnabled)
 			}
 		}
 		RowLayout{
@@ -332,7 +331,6 @@ Rectangle {
 											? activeSpeakerComponent
 											: gridComponent
 										: activeSpeakerComponent
-					onSourceComponentChanged: console.log("conferenceLayout: "+mainItem.callModel.conferenceVideoLayout + " => " +sourceComponent)
 					active: mainItem.callModel && !mainItem.isFullScreen
 				}
 				Rectangle{

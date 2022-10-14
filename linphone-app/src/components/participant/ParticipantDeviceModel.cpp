@@ -147,7 +147,7 @@ void ParticipantDeviceModel::updateVideoEnabled(){
 		)
 	 || isMe()) && !mIsPaused;
 	 if( mIsVideoEnabled != enabled && mCall && mCall->getCall()->getState() ==  linphone::Call::State::StreamsRunning) {
-		qWarning() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str() : "") << ", me=" << isMe() << ", CallState=" << (mCall ? (int)mCall->getCall()->getState() : -1);
+		qDebug() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str() : "") << ", me=" << isMe() << ", CallState=" << (mCall ? (int)mCall->getCall()->getState() : -1);
 		mIsVideoEnabled = enabled;
 		emit videoEnabledChanged();
 	}

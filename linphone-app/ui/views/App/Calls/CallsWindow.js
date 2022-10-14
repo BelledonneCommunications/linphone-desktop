@@ -67,26 +67,21 @@ function openWaitingRoom(model){
 // -----------------------------------------------------------------------------
 // Used to get Component based from Call Status
 function getContent (call, conferenceInfoModel) {
-	console.log("Changing contents")
 	if (call == null) {
 		if(conferenceInfoModel) {
-			console.log("waitingRoom")
 			return waitingRoom
 		}
 		else{
-			console.log("null")
 			return null
 		}
 	}
 	
 	var status = call.status
 	if (status == null) {
-		console.log(calls.conferenceModel.count > 0 ? "conference" : "null")
 		return calls.conferenceModel.count > 0 ? conference : null
 	}
 	var CallModel = Linphone.CallModel
 	if (status === CallModel.CallStatusIncoming) {
-		console.log("null")
 		return null;
 	}
 	if( window.conferenceInfoModel != call.conferenceInfoModel) {
@@ -94,16 +89,11 @@ function getContent (call, conferenceInfoModel) {
 		return middlePane.sourceComponent	// unchange. Wait for later decision on conference model (avoid binding loop on sourceComponent)
 	}else{
 		if(call.isConference){
-			console.log("incall")
 			return incall
 		}
 		if (status === CallModel.CallStatusOutgoing || (status === CallModel.CallStatusEnded && call.callError != '' )) {
-			console.log("waitingRoom. Is conference ? "+call.isConference)
 			return waitingRoom
 		}
-		
-		
-		console.log("incall")	
 		return incall
 	}
 }

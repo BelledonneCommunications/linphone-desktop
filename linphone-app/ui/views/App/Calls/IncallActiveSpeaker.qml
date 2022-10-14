@@ -29,7 +29,7 @@ Item {
 	
 	property int participantCount: callModel.isConference ? allDevices.count + 1 : 2	// +me. allDevices==0 if !conference
 	
-	onParticipantCountChanged: {console.log("Conf count: " +participantCount); Qt.callLater(allDevices.updateCurrentDevice)}
+	onParticipantCountChanged: {Qt.callLater(allDevices.updateCurrentDevice)}
 	
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
@@ -78,13 +78,8 @@ Item {
 									|| currentDevice && !currentDevice.videoEnabled
 								
 		isVideoEnabled: !deactivateCamera
-		onDeactivateCameraChanged: console.log("deactivateCamera? "+deactivateCamera)
 		isPreview: !preview.visible && mainItem.participantCount == 1
 		onIsPreviewChanged: {
-            console.log("ispreview ? " +isPreview + "visible?"+preview.visible +", pCount="+mainItem.participantCount
-				+" / ready?" +mainItem.isConferenceReady
-				+" / allCount=" +allDevices.count
-            )
 			if( isPreview){
 				currentDevice = allDevices.me
 				cameraView.resetCamera()
@@ -93,7 +88,6 @@ Item {
 				cameraView.resetCamera()
 			}
 		isCameraFromDevice: isPreview
-		onCurrentDeviceChanged: console.log("CurrentDevice: "+currentDevice)
 		isPaused: isPreview && callModel.pausedByUser
 					? false
 					: callModel.isConference
@@ -101,19 +95,12 @@ Item {
 							(currentDevice && currentDevice.isPaused)
 						: callModel && !callModel.pausedByUser && (callModel.status === CallModel.CallStatusPaused)
 		
-		onIsPausedChanged: console.log("ispaused ? " +isPaused + " = " +callModel.pausedByUser + " / " + (currentDevice ? currentDevice.isPaused : 'noDevice') +" / " +callModel.isConference + " / " +callModel.status )
 		quickTransition: true
 		showCloseButton: false
 		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
 		showCustomButton:  false
 		avatarStickerBackgroundColor: isPreview ?  IncallStyle.container.avatar.stickerPreviewBackgroundColor : IncallStyle.container.avatar.stickerBackgroundColor
 		avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
-		Component.onCompleted: console.log("Completed: "+isPaused + " = " +callModel.pausedByUser + " / " + (currentDevice ? currentDevice.isPaused : 'noDevice') 
-												+" isPreview?" +isPreview
-												+" / Video?" +(currentDevice  ? currentDevice.videoEnabled : "NoDevice") + "-"+(callModel ? callModel.videoEnabled : "NoCall")
-												+" / Camera?" +(currentDevice  ? currentDevice.cameraEnabled : "NoDevice") + "-"+(callModel ? callModel.cameraEnabled : "NoCall")
-												+" / Deactivated?"+deactivateCamera
-												+" / " +callModel.isConference + " / " +callModel.status)
 	}
 	Item{// Need an item to not override Sticker internal states. States are needed for changing anchors.
 		id: preview
@@ -125,14 +112,8 @@ Item {
 		height: visible ? miniViews.cellHeight : 0
 		width: 16 * height / 9
 		
-		//property bool showMe : !(callModel && callModel.pausedByUser) && (callModel.isConference || callModel.localVideoEnabled)
-		
 		visible: mainItem.isConferenceReady && allDevices.count >= 1
 				|| (!callModel.isConference && mainItem.callModel.cameraEnabled)// use videoEnabled if we want to show the preview sticker
-				
-		onVisibleChanged: console.log("visible? "+visible + " / video?" +(callModel ? callModel.videoEnabled : "NoCall")
-											+ " / camera?" +(callModel ? callModel.cameraEnabled : "NoCall")
-											)
 		
 		Loader{
 			anchors.fill: parent
@@ -141,11 +122,6 @@ Item {
 			Sticker{
 				id: previewSticker
 				deactivateCamera: !mainItem.callModel || callModel.pausedByUser || !mainItem.callModel.cameraEnabled
-										//|| (!callModel.isConference && !mainItem.callModel.videoEnabled)
-										//|| (callModel.isConference && !mainItem.callModel.cameraEnabled)
-				
-				//|| ( (callModel.isConference && !mainItem.callModel.cameraEnabled) || (!callModel.isConference && !mainItem.callModel.localVideoEnabled) )
-				onDeactivateCameraChanged: console.log(deactivateCamera + " = " +mainItem.callModel +" / " +mainItem.callModel.localVideoEnabled + " / " +mainItem.callModel.cameraEnabled)
 				currentDevice: allDevices.me
 				isPreview: true
 				callModel: mainItem.callModel
@@ -175,10 +151,6 @@ Item {
 			property int cellHeight: 150
 			anchors.fill: parent
 			model : mainItem.callModel.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
-			onModelChanged: {
-				console.log( mainItem.callModel.isConference+"/"+mainItem.callModel.localVideoEnabled + "/" +mainItem.callModel.cameraEnabled + " / " +count)
-				
-				}
 			spacing: 15
 			verticalLayoutDirection: ListView.BottomToTop
 			fitCacheToContent: false
@@ -210,7 +182,6 @@ Item {
 						callModel: modelData.isPreview ? null : mainItem.callModel
 						isCameraFromDevice:  mainItem.callModel.isConference
 						isPaused: currentDevice && currentDevice.isPaused
-						onIsPausedChanged: console.log("paused:"+isPaused)
 						showCloseButton: false
 						showCustomButton:  false
 						showAvatarBorder: true

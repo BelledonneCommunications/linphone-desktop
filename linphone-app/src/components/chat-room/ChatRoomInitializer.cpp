@@ -84,7 +84,7 @@ void ChatRoomInitializer::setAdmins(QList< std::shared_ptr<linphone::Address>> a
 void ChatRoomInitializer::start(QSharedPointer<ChatRoomInitializer> initializer){
 	QObject * context = new QObject();
 	QObject::connect(initializer.get(), &ChatRoomInitializer::finished, context, [context, initializer](int state){
-		qInfo() << "[ChatRoomInitializer] initialized";
+		qDebug() << "[ChatRoomInitializer] initialized";
 		context->deleteLater();// This will destroy context and initializer
 	});
 }
@@ -97,12 +97,12 @@ void ChatRoomInitializer::checkInitialization(){
 }
 
 void ChatRoomInitializer::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
-	qInfo() << "[ChatRoomInitializer] Conference has been set";
+	qDebug() << "[ChatRoomInitializer] Conference has been set";
 	setAdmins(mAdmins);
 }
 
 void ChatRoomInitializer::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState) {
-	qInfo() << "[ChatRoomInitializer] State : " << (int)newState;
+	qDebug() << "[ChatRoomInitializer] State : " << (int)newState;
 	if( newState >= linphone::ChatRoom::State::Created || newState == linphone::ChatRoom::State::Instantiated) {
 		checkInitialization();
 	}
