@@ -26,6 +26,7 @@
     - $env:Path = ($PATH_TEMP + ";C:\msys64;C:\msys64\usr\bin;C:\msys64\" + $MINGW_TYPE + "\bin;" + $env:SIGNTOOL_ROOT + "\x64")
     - If ($MINGW_TYPE -eq "mingw64") {Import-BatchEnvironment "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"} Else {Import-BatchEnvironment "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"}
     - If ($MINGW_TYPE -eq "mingw64") {$env:Path = ($env:Path + ";C:\Qt\5.15.2\msvc2019_64\bin")} Else {$env:Path = ($env:Path + ";C:\Qt\5.14.2\msvc2019\bin")}
+    - if ($MAKE_RELEASE_FILE_URL) { } else { $RELEASE_FILE = "" }
     - echo $env:Path
     - If ( Test-Path -Path "build-desktop" ) {Remove-Item -recurse -force -path "build-desktop" }
     - mkdir build-desktop
@@ -62,7 +63,7 @@
     #We are forced to use Invoke-Expression to explain to powershell that we don't want it to touch to spaces in arguments
     #If we don't use it, '-A Win32' will be interpreted as "-A ' Win32'" thus making the build fail
     - echo $LastExitCode
-    - Invoke-Expression "& cmake .. -G '$CMAKE_GENERATOR' -DLINPHONESDK_PLATFORM=$LINPHONESDK_PLATFORM -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $NINJA_BUILD_PARALLEL_LEVEL $NINJA_EXPLICIT_COMPILER_SET $DEFAULT_CMAKE_OPTIONS $DEFAULT_WINDOWS_CMAKE_OPTIONS $CMAKE_OPTIONS $CMAKE_ARCHITECTURE $SCHEDULE_CMAKE_OPTIONS"
+    - Invoke-Expression "& cmake .. -G '$CMAKE_GENERATOR' -DLINPHONESDK_PLATFORM=$LINPHONESDK_PLATFORM -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $NINJA_BUILD_PARALLEL_LEVEL $NINJA_EXPLICIT_COMPILER_SET $DEFAULT_CMAKE_OPTIONS $DEFAULT_WINDOWS_CMAKE_OPTIONS $CMAKE_OPTIONS $CMAKE_ARCHITECTURE $SCHEDULE_CMAKE_OPTIONS $RELEASE_FILE"
     - echo $LastExitCode
     - 'if (-not ($LastExitCode -eq 0)) {throw "Error: Configure failed"}'
     - $CLI_OUTPUT_INFO_NINJA
@@ -156,7 +157,8 @@ vs2019-win64-package:
     - if: $PACKAGE_WINDOWS
     - if: $DEPLOY_WINDOWS
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DENABLE_G729=ON -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
 
   
 #################################################
@@ -165,17 +167,16 @@ vs2019-win64-package:
 
 vs2019-win64-upload:
   stage: deploy
-  tags: [ "windows"]
+  tags: [ "windows-powershell"]
   rules:
     - if: $NIGHTLY_MASTER
     - if: $DEPLOY_WINDOWS
   needs:
     - vs2019-win64-package
   script:
-    - scp "build-desktop/OUTPUT/Packages/*.exe" "%DEPLOY_SERVER%:%UPLOAD_ROOT_PATH%/%WINDOWS_PLATFORM%/%APP_FOLDER%
-    - scp "build-desktop/OUTPUT/RELEASE" "%DEPLOY_SERVER%:%UPLOAD_ROOT_PATH%/%WINDOWS_PLATFORM%/
-    - scp "build-desktop/OUTPUT/RELEASE" "%MAIN_DEPLOY_SERVER%:%UPLOAD_ROOT_PATH%/%WINDOWS_PLATFORM%/
-
+    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
 vs2019-win64-plugins-upload:
   stage: deploy
