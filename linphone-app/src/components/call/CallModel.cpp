@@ -1060,7 +1060,10 @@ bool CallModel::isSecured () const {
 QString CallModel::getLocalSas () const {
 	if(mCall){
 		QString token = Utils::coreStringToAppString(mCall->getAuthenticationToken());
-		return mCall->getDir() == linphone::Call::Dir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
+		if(token.isEmpty())
+			return "";
+		else
+			return mCall->getDir() == linphone::Call::Dir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
 	}else
 		return "";
 }
@@ -1068,7 +1071,10 @@ QString CallModel::getLocalSas () const {
 QString CallModel::getRemoteSas () const {
 	if(mCall){
 		QString token = Utils::coreStringToAppString(mCall->getAuthenticationToken());
-		return mCall->getDir() != linphone::Call::Dir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
+		if(token.isEmpty())
+			return "";
+		else
+			return mCall->getDir() != linphone::Call::Dir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
 	}else
 		return "";
 }

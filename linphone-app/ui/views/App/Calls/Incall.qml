@@ -374,20 +374,22 @@ Rectangle {
 			}
 		}
 	}
-	
-	ZrtpTokenAuthentication {
+	Loader{
 		id: zrtp
-		
+		active: call && !call.isSecured && call.encryption === CallModel.CallEncryptionZrtp
 		anchors.horizontalCenter: parent.horizontalCenter
 		anchors.bottom: actionsButtons.top
 		anchors.leftMargin: CallStyle.container.margins
 		anchors.rightMargin: CallStyle.container.margins
 		anchors.bottomMargin: CallStyle.container.margins
-		height: visible ? implicitHeight : 0
-		
-		call: callModel
-		visible: !call.isSecured && call.encryption !== CallModel.CallEncryptionNone
-		z: Constants.zPopup
+		height: active ? implicitHeight : 0
+		sourceComponent:Component{
+			ZrtpTokenAuthentication {
+				call: callModel
+				z: Constants.zPopup
+				onClose: {zrtp.active = false}
+			}
+		}
 	}
 	// -------------------------------------------------------------------------
 	// Action Buttons.
@@ -396,7 +398,6 @@ Rectangle {
 	// Security
 	ActionButton{
 		id: securityButton
-		visible: callModel && !callModel.isConference
 		anchors.left: parent.left
 		anchors.verticalCenter: actionsButtons.verticalCenter
 		anchors.leftMargin: 25
@@ -412,7 +413,7 @@ Rectangle {
 								: IncallStyle.buttons.secure
 							: IncallStyle.buttons.unsecure
 					
-		onClicked: zrtp.visible = (callModel.encryption === CallModel.CallEncryptionZrtp)
+		onClicked: zrtp.active =(callModel.encryption === CallModel.CallEncryptionZrtp)
 					
 		tooltipText: Logic.makeReadableSecuredString(callModel.securedString)
 	}

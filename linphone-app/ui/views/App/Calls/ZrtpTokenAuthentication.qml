@@ -10,13 +10,17 @@ import App.Styles 1.0
 Rectangle{
   id: zrtp
   property var call
-  visible: false
+  property alias localSas: localSasText.text
+  property alias remoteSas : remoteSasText.text
+  
+  signal close()
   color:"transparent"
   
   implicitWidth: columnLayout.implicitWidth
   implicitHeight: columnLayout.implicitHeight+CallStyle.container.margins
   
   radius: 10
+  Component.onCompleted: if( !localSas || !remoteSas) zrtp.close()
     
   ColumnLayout {
     id:columnLayout
@@ -70,6 +74,7 @@ Rectangle{
       }
 
       Text {
+		id: localSasText
         color: CallStyle.zrtpArea.text.colorB
 
         font {
@@ -93,6 +98,7 @@ Rectangle{
       }
 
       Text {
+		id: remoteSasText
         color: CallStyle.zrtpArea.text.colorB
 
         font {
@@ -116,16 +122,16 @@ Rectangle{
       TextButtonA {
         text: qsTr('deny')
         onClicked: {
-          zrtp.visible = false
           zrtp.call.verifyAuthenticationToken(false)
+          zrtp.close()
         }
       }
 
       TextButtonB {
         text: qsTr('accept')
         onClicked: {
-          zrtp.visible = false
           zrtp.call.verifyAuthenticationToken(true)
+          zrtp.close()
         }
       }
     }
