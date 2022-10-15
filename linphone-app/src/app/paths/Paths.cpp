@@ -162,7 +162,11 @@ static inline QString getAppFactoryConfigFilePath () {
 }
 
 static inline QString getAppRootCaFilePath () {
-	return getAppPackageDataDirPath() + Constants::PathRootCa;
+	QString rootca = getAppPackageDataDirPath() + Constants::PathRootCa;
+	if(Paths::filePathExists(rootca.toStdString())){// Packaged
+		return rootca;
+	}
+	return "";
 }
 
 static inline QString getAppFriendsFilePath () {
