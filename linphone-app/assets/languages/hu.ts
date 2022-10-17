@@ -1670,6 +1670,37 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>About %1</source>
+        <translation>A %1 névjegye</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Beállítások</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Szolgáltatások</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>A %1 Elrejtése</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>A több  Elrejtése</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>Mindet Mutat</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>Kilépés %1</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>

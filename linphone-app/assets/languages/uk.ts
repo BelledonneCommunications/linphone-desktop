@@ -1690,6 +1690,37 @@
     </message>
 </context>
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>About %1</source>
+        <translation>Про %1</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Налаштування</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Послуги</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>Приховати %1</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>Приховати інші</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>показати все</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>Вийти %1</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>

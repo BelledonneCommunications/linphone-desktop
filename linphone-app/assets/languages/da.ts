@@ -1680,6 +1680,37 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>About %1</source>
+        <translation>Om %1</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Indstillinger</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Tjenester</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>Skjul %1</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>Skjul andre</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>Vis alle</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>Afslut %1</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
