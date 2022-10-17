@@ -41,4 +41,23 @@ private:
   QSet<QString> mContexts;
 };
 
+// Workaround for bad Application Menu translation on Mac:
+// Overwrite Qt source by our translations :
+//static const char *application_menu_strings[] =
+//{
+//    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","About %1"),
+//    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Preferences..."),
+//    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Services"),
+//    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Hide %1"),
+//    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Hide Others"),
+//    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Show All"),
+//    QT_TRANSLATE_NOOP("MAC_APPLICATION_MENU","Quit %1")
+//};
+
+class MAC_APPLICATION_MENU : public QObject{
+	QString forcedTranslation(){
+		return tr("About %1") + tr("Preferences...") + tr("Services") + tr("Hide %1") + tr("Hide Others") + tr("Show All") + tr("Quit %1");
+	}
+};
+
 #endif // DEFAULT_TRANSLATOR_H_

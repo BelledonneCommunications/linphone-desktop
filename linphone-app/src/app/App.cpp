@@ -144,7 +144,10 @@ static inline bool autoStartEnabled () {
 // -----------------------------------------------------------------------------
 
 static inline bool installLocale (App &app, QTranslator &translator, const QLocale &locale) {
-	return translator.load(locale, Constants::LanguagePath) && app.installTranslator(&translator);
+	bool ok = translator.load(locale, Constants::LanguagePath) && app.installTranslator(&translator);
+	if(ok)
+		QLocale::setDefault(locale);
+	return ok;
 }
 
 static inline string getConfigPathIfExists (const QCommandLineParser &parser) {

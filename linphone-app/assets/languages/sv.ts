@@ -1680,6 +1680,37 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>About %1</source>
+        <translation>Om %1</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Inställningar</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Tjänster</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>Göm %1</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>Göm Övriga</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>Visa Alla</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>Avsluta %1</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>

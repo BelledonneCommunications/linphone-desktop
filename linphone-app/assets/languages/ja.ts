@@ -1670,6 +1670,37 @@
     </message>
 </context>
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>About %1</source>
+        <translation>%1 バージョン情報</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>サービス</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>%1 を隠す</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>他の人を隠す</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>すべて表示する</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>%1 を終了</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>

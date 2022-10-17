@@ -1680,6 +1680,37 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>MAC_APPLICATION_MENU</name>
+    <message>
+        <source>About %1</source>
+        <translation>Über %1</translation>
+    </message>
+    <message>
+        <source>Preferences...</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Dienste</translation>
+    </message>
+    <message>
+        <source>Hide %1</source>
+        <translation>%1 ausblenden</translation>
+    </message>
+    <message>
+        <source>Hide Others</source>
+        <translation>Andere Ausblenden</translation>
+    </message>
+    <message>
+        <source>Show All</source>
+        <translation>Alle Einblenden</translation>
+    </message>
+    <message>
+        <source>Quit %1</source>
+        <translation>%1 beenden</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <source>mainSearchBarPlaceholder</source>
