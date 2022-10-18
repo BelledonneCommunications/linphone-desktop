@@ -162,7 +162,7 @@ QString ConferenceInfoModel::getOrganizer() const{
 }
 
 QString ConferenceInfoModel::getSubject() const{
-	return QString::fromStdString(mConferenceInfo->getSubject());
+	return Utils::coreStringToAppString(mConferenceInfo->getSubject());
 }
 
 QString ConferenceInfoModel::getDescription() const{
@@ -238,7 +238,7 @@ void ConferenceInfoModel::setDuration(const int& duration){
 }
 
 void ConferenceInfoModel::setSubject(const QString& subject){
-	mConferenceInfo->setSubject(subject.toStdString());
+	mConferenceInfo->setSubject(Utils::appStringToCoreString(subject));
 	emit subjectChanged();
 }
 
@@ -248,7 +248,7 @@ void ConferenceInfoModel::setOrganizer(const QString& organizerAddress){
 }
 
 void ConferenceInfoModel::setDescription(const QString& description){
-	mConferenceInfo->setDescription(description.toStdString());
+	mConferenceInfo->setDescription(Utils::appStringToCoreString(description));
 	emit descriptionChanged();
 }
 

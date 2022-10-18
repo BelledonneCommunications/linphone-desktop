@@ -89,7 +89,9 @@ QString ContentModel::getUtf8Text() const{
 
 ConferenceInfoModel * ContentModel::getConferenceInfoModel(){
 	if( !mConferenceInfoModel && isIcalendar()){
-		mConferenceInfoModel = ConferenceInfoModel::create(linphone::Factory::get()->createConferenceInfoFromIcalendarContent(mContent));
+		auto conferenceInfo = linphone::Factory::get()->createConferenceInfoFromIcalendarContent(mContent);
+		if(conferenceInfo)
+			mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
 	}
 	return mConferenceInfoModel.get();
 }
