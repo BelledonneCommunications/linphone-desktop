@@ -26,6 +26,7 @@
 #include <QFile>
 #include <QImageReader>
 #include <QDebug>
+#include <QTimeZone>
 #include <QUrl>
 
 #include "config.h"
@@ -37,6 +38,10 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "app/paths/Paths.hpp"
+
+#ifdef _WIN32
+#include <time.h>
+#endif
 
 // =============================================================================
 
@@ -86,19 +91,29 @@ QDateTime Utils::addMinutes(QDateTime date, const int& min){
 	return date.addSecs(min*60);
 }
 
+QDateTime Utils::getOffsettedUTC(const QDateTime& date){
+	QDateTime utc = date.toUTC();// Get a date free of any offsets.
+	auto timezone = date.timeZone();
+	utc = utc.addSecs(timezone.offsetFromUtc(date));// add offset from date timezone
+	utc.setTimeSpec(Qt::UTC);// ensure to have an UTC date
+	return utc;
+}
+
 QString Utils::toDateTimeString(QDateTime date){
 	if(date.date() == QDate::currentDate())
 		return toTimeString(date);
-	else
-		return date.toString("yyyy/MM/dd hh:mm:ss");
+	else{
+		return getOffsettedUTC(date).toString("yyyy/MM/dd hh:mm:ss");
+	}
 }
 
-QString Utils::toTimeString(QDateTime date){
-	return date.toString("hh:mm:ss");
+QString Utils::toTimeString(QDateTime date, const QString& format){
+// Issue : date.toString() will not print the good time in timezones. Get it from date and add ourself the offset.
+	return getOffsettedUTC(date).toString(format);
 }
 
 QString Utils::toDateString(QDateTime date){
-	return date.toString("yyyy/MM/dd");
+	return getOffsettedUTC(date).toString("yyyy/MM/dd");
 }
 
 QString Utils::getDisplayName(const QString& address){

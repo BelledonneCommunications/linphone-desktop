@@ -5,6 +5,7 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 import Utils 1.0
+import UtilsCpp 1.0
 import LinphoneEnums 1.0
 import Units 1.0
 import ColorsList 1.0
@@ -115,7 +116,7 @@ RowLayout{
 		text: $chatEntry.name?_type.arg($chatEntry.name):_type
 		verticalAlignment: Text.AlignVCenter
 		TooltipArea {
-		  text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
+		  text: UtilsCpp.toDateTimeString($chatEntry.timestamp)
 		}
 	}
 	Rectangle{
