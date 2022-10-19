@@ -103,7 +103,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	
 	// Update fields and make a search to know to who the call belong
 	mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
-	mSearch = std::make_shared<SearchListener>(this);
+	mSearch = std::make_shared<SearchListener>();
 	QObject::connect(mSearch.get(), SIGNAL(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>> )), this, SLOT(searchReceived(std::list<std::shared_ptr<linphone::SearchResult>>)));
 	mMagicSearch->addListener(mSearch);
 

@@ -91,7 +91,7 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it
 	if(chatMessage){
 		mParticipantImdnStateListModel = QSharedPointer<ParticipantImdnStateListModel>::create(chatMessage);
-		mChatMessageListener = std::make_shared<ChatMessageListener>(parent);
+		mChatMessageListener = std::make_shared<ChatMessageListener>();
 		connectTo(mChatMessageListener.get());
 		mChatMessage = chatMessage;
 		mChatMessage->addListener(mChatMessageListener);

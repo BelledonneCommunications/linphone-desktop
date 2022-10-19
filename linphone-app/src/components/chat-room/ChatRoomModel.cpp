@@ -123,7 +123,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, cons
 	mCoreHandlers = coreManager->getHandlers();
 	
 	mChatRoom = chatRoom;
-	mChatRoomListener = std::make_shared<ChatRoomListener>(parent);
+	mChatRoomListener = std::make_shared<ChatRoomListener>();
 	connectTo(mChatRoomListener.get());
 	mChatRoom->addListener(mChatRoomListener);
 	
