@@ -445,7 +445,10 @@ Rectangle {
 							}
 						}
 						onAudioRecordRequest: RecorderManager.resetVocalRecorder()
-						Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
+						Component.onCompleted: {
+							text = proxyModel.chatRoomModel.cachedText
+							cursorPosition=text.length
+						}
 						Rectangle{
 							anchors.fill:parent
 							color:'white'

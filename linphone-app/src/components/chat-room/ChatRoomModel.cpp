@@ -523,6 +523,14 @@ int ChatRoomModel::getAllUnreadCount(){
 	return mUnreadMessagesCount + mMissedCallsCount;
 }
 
+QString ChatRoomModel::getCachedText()const{
+	return mCachedText;
+}
+
+bool ChatRoomModel::hasDraft() const{
+	return mHasDraft;
+}
+
 //------------------------------------------------------------------------------------------------
 
 void ChatRoomModel::setSubject(QString& subject){
@@ -594,6 +602,23 @@ void ChatRoomModel::enableMarkAsRead(const bool& enable){
 	if( mMarkAsReadEnabled != enable){
 		mMarkAsReadEnabled = enable;
 		emit markAsReadEnabledChanged();
+	}
+}
+
+bool ChatRoomModel::setCachedText(const QString& text){
+	if(mCachedText != text){
+		mCachedText = text;
+		emit cachedTextChanged();
+		setHasDraft(!mCachedText.isEmpty());
+		return true;
+	}else
+		return false;
+}
+
+void ChatRoomModel::setHasDraft(const bool& cached){
+	if(mHasDraft != cached){
+		mHasDraft = cached;
+		emit hasDraftChanged();
 	}
 }
 
@@ -699,6 +724,7 @@ void ChatRoomModel::sendMessage (const QString &message) {
 		if(recorder->haveVocalRecorder())
 			recorder->clearVocalRecorder();
 		CoreManager::getInstance()->getChatModel()->clear();
+		setCachedText("");
 	}
 }
 
@@ -718,8 +744,8 @@ void ChatRoomModel::forwardMessage(ChatMessageModel * model){
 }
 // -----------------------------------------------------------------------------
 
-void ChatRoomModel::compose () {
-	if( mChatRoom)
+void ChatRoomModel::compose (const QString& text) {
+	if( setCachedText(text) && mChatRoom)// only send a compose if text has changed
 		mChatRoom->compose();
 }
 
