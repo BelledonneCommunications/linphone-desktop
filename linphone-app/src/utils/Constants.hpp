@@ -136,7 +136,7 @@ public:
 	
 	static constexpr char QtDomain[] = "qt";
 	static constexpr char SrcPattern[] = "/src/";
-	
+	static constexpr char LinphoneLocaleEncoding[] = "UTF-8";// Alternative is to use "locale"
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
@@ -144,6 +144,7 @@ public:
 												// 3 = CPIM on basic chat rooms
 												// 4 = RTP bundle mode
 												// 5 = Video Conference URI
+												
 	
 //--------------------------------------------------------------------------------	
 //								CISCO

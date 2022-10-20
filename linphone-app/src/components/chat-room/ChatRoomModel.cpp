@@ -328,7 +328,7 @@ QString ChatRoomModel::getConferenceAddress () const {
 }
 
 QString ChatRoomModel::getSubject () const {
-	return mChatRoom ? QString::fromStdString(mChatRoom->getSubject()) : "";	// in UTF8
+	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getSubject()) : "";	// in UTF8
 }
 
 QString ChatRoomModel::getUsername () const {
@@ -336,7 +336,7 @@ QString ChatRoomModel::getUsername () const {
 	if( !mChatRoom)
 		return "";
 	if( !isOneToOne())
-		username = QString::fromStdString(mChatRoom->getSubject());
+		username = getSubject();
 	
 	if(username != "")
 		return username;
@@ -360,7 +360,7 @@ QString ChatRoomModel::getUsername () const {
 	if( addr)
 		return Utils::coreStringToAppString(addr->asStringUriOnly());
 	else {
-		qWarning() << "ChatRoom has no peer address or address is invalid : Subject=" << mChatRoom->getSubject().c_str() 
+		qWarning() << "ChatRoom has no peer address or address is invalid : Subject=" << getSubject()
 			<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
 			<< " (" << mChatRoom.get() << ")";
 		return "";
@@ -499,13 +499,13 @@ QString ChatRoomModel::getParticipantAddress(){
 			if( conferenceAddress)
 				return Utils::coreStringToAppString(conferenceAddress->asString());
 			else{
-				qWarning() << "ConferenceAddress is NULL when requesting it from not secure and conference ChatRoomModel. Subject=" << mChatRoom->getSubject().c_str() 
+				qWarning() << "ConferenceAddress is NULL when requesting it from not secure and conference ChatRoomModel. Subject=" << getSubject()
 					<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
 					<< " (" << mChatRoom.get() << ")";
 				return "";
 			}
 		}else {
-			qWarning() << "PeerAddress is NULL when requesting it from not secure ChatRoomModel. Subject=" << mChatRoom->getSubject().c_str()
+			qWarning() << "PeerAddress is NULL when requesting it from not secure ChatRoomModel. Subject=" << getSubject()
 				<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
 				<< " (" << mChatRoom.get() << ")";
 			return "";
@@ -535,7 +535,7 @@ bool ChatRoomModel::hasDraft() const{
 
 void ChatRoomModel::setSubject(QString& subject){
 	if(mChatRoom && getSubject() != subject){
-		mChatRoom->setSubject(subject.toUtf8().toStdString());	// in UTF8
+		mChatRoom->setSubject(Utils::appStringToCoreString(subject));	// in UTF8
 		emit subjectChanged(subject);
 	}
 }

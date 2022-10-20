@@ -27,6 +27,7 @@ constexpr char Constants::DefaultFont[];
 constexpr char Constants::QtDomain[];
 constexpr size_t Constants::MaxLogsCollectionSize;
 constexpr char Constants::SrcPattern[];
+constexpr char Constants::LinphoneLocaleEncoding[];
 
 constexpr char Constants::PathAssistantConfig[];
 constexpr char Constants::PathAvatars[];

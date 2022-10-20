@@ -30,7 +30,7 @@
 #include <linphone++/address.hh>
 
 #include "LinphoneEnums.hpp"
-
+#include "Constants.hpp"
 
 // =============================================================================
 
@@ -70,11 +70,17 @@ public:
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {
-		return QString::fromLocal8Bit(str.c_str(), int(str.size()));
+		if(Constants::LinphoneLocaleEncoding == QString("UTF-8"))
+			return QString::fromStdString(str);
+		else
+			return QString::fromLocal8Bit(str.c_str(), int(str.size()));// When using Locale. Be careful about conversion bijection with UTF-8, you may loss characters
 	}
 	
 	static inline std::string appStringToCoreString (const QString &str) {
-		return qPrintable(str);
+		if(Constants::LinphoneLocaleEncoding == QString("UTF-8"))
+			return str.toStdString();
+		else
+			return qPrintable(str);
 	}
 	
 	// Reverse function of strstr.
