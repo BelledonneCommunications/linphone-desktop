@@ -151,7 +151,7 @@ void FileDownloader::handleDownloadFinished() {
 		mDestinationFile.close();
 		cleanDownloadEnd();
 		QString fileChecksum = Utils::getFileChecksum(mDestinationFile.fileName());
-		if( fileChecksum == mChecksum)
+		if( mChecksum.isEmpty() || fileChecksum == mChecksum)
 			emit downloadFinished(mDestinationFile.fileName());
 		else{
 			qCritical() << "File cannot be downloaded : Bad checksum " << fileChecksum;

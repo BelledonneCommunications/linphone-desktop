@@ -74,10 +74,10 @@ static bool downloadUpdatableCodec (
   QObject::connect(fileDownloader, &FileDownloader::downloadFinished, [fileDownloader, fileExtractor, checksum](const QString &filePath) {
     fileExtractor->setFile(filePath);
     QString fileChecksum = Utils::getFileChecksum(filePath);
-    if(fileChecksum == checksum)
+    if(checksum.isEmpty() || fileChecksum == checksum)
 		fileExtractor->extract();
 	else{
-		qWarning() << "File cannot be downloaded : Bad checksum.";
+		qWarning() << "File cannot be downloaded : Bad checksum : " << fileChecksum;
 		fileDownloader->remove();
 		fileDownloader->deleteLater();
 	}
