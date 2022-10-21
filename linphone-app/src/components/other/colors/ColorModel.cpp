@@ -51,6 +51,9 @@ QString ColorModel::getDescription() const{
 QString ColorModel::getLinkedToImage() const{
 	return mLinkedToImage;
 }
+int ColorModel::getLinkIndex() const{
+	return mLinkIndex;
+}
 
 void ColorModel::setColor(const QColor& color){
 	if(color != mColor){
@@ -62,7 +65,9 @@ void ColorModel::setColor(const QColor& color){
 
 void ColorModel::setInternalColor(const QColor& color){
 	if(color != mColor){
+		auto backup = mColor.alpha();
 		mColor = color;
+		mColor.setAlpha(backup);
 		emit colorChanged();
 	}
 }
@@ -81,4 +86,10 @@ void ColorModel::setDescription(const QString& description){
 
 void ColorModel::setLinkedToImage(const QString& id){
 	mLinkedToImage = id;
+}
+void ColorModel::setLinkIndex(const int& index){
+	if(index != mLinkIndex){
+		mLinkIndex = index;
+		emit linkIndexChanged();
+	}
 }

@@ -53,6 +53,7 @@ Rectangle {
 			Layout.bottomMargin: (mainItem.conferenceInfoModel && mainItem.callModel ? 10 : 30)
 			spacing: 10
 			BusyIndicator {
+				id: busyIndicator
 				Layout.alignment: Qt.AlignCenter
 				Layout.preferredHeight: WaitingRoomStyle.header.busyIndicator.height
 				Layout.preferredWidth: WaitingRoomStyle.header.busyIndicator.width
@@ -63,6 +64,7 @@ Rectangle {
 			
 			Text{
 				Layout.alignment: Qt.AlignCenter
+				Layout.topMargin: busyIndicator.visible ? 0 : 30
 				text: mainItem.callModel
 						? mainItem.isEnded
 						//: "Call ended" : status of the call in waiting room when the call end.

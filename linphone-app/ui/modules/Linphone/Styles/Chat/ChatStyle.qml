@@ -247,7 +247,7 @@ QtObject {
 			}	
 			
 			property QtObject incoming: QtObject {
-				property color backgroundColor: ColorsList.add(sectionName+'_incoming_bg', 'o').color
+				property color backgroundColor: ColorsList.add(sectionName+'_incoming_bg', 'incoming_bg').color
 				property int avatarSize: 20
 				
 				property QtObject text: QtObject {
@@ -257,7 +257,7 @@ QtObject {
 			}
 			
 			property QtObject outgoing: QtObject {
-				property color backgroundColor: ColorsList.add(sectionName+'_outgoing_bg', 'e').color
+				property color backgroundColor: ColorsList.add(sectionName+'_outgoing_bg', 'outgoing_bg').color
 				property int areaSize: 12
 				property int busyIndicatorSize: 12
 				property int sendIconSize: 60

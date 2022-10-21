@@ -49,10 +49,11 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged)
 	
 	Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged)
+// Webviews config
 	Q_PROPERTY(QString assistantRegistrationUrl READ getAssistantRegistrationUrl WRITE setAssistantRegistrationUrl NOTIFY assistantRegistrationUrlChanged)
 	Q_PROPERTY(QString assistantLoginUrl READ getAssistantLoginUrl WRITE setAssistantLoginUrl NOTIFY assistantLoginUrlChanged)
 	Q_PROPERTY(QString assistantLogoutUrl READ getAssistantLogoutUrl WRITE setAssistantLogoutUrl NOTIFY assistantLogoutUrlChanged)
-	
+//----
 	Q_PROPERTY(bool cguAccepted READ isCguAccepted WRITE acceptCgu NOTIFY cguAcceptedChanged)
 	
 	// SIP Accounts. -------------------------------------------------------------

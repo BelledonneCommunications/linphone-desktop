@@ -82,11 +82,13 @@ public:
 	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
 	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
-	
+
+// For Webviews
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
 	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";
-	
+//--------------
+
 	// Max image size in bytes. (100Kb)
 	static constexpr qint64 MaxImageSize = 102400;// In Bytes.
 	static constexpr qint64 FileSizeLimit = 524288000;// In Bytes.
