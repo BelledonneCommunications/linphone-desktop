@@ -298,7 +298,7 @@ DialogPlus {
 						label: qsTr('domainLabel')//'Domain'
 						TextField {
 							id:domain
-							placeholderText :'sip.linphone.org'
+							placeholderText : AccountSettingsModel.primaryDomain
 							text:ldapData.sipDomain
 							error : ldapData.sipDomainFieldError
 							onTextChanged: ldapData.sipDomain = text

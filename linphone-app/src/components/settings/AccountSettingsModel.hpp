@@ -47,6 +47,7 @@ class AccountSettingsModel : public QObject {
 	Q_PROPERTY(QString primaryDisplayName READ getPrimaryDisplayName WRITE setPrimaryDisplayName NOTIFY primaryDisplayNameChanged)
 	Q_PROPERTY(QString primaryUsername READ getPrimaryUsername WRITE setPrimaryUsername NOTIFY primaryUsernameChanged)
 	Q_PROPERTY(QString primarySipAddress READ getPrimarySipAddress NOTIFY primarySipAddressChanged)
+	Q_PROPERTY(QString primaryDomain READ getPrimaryDomain NOTIFY primarySipAddressChanged)
 	
 	Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountsChanged)
 	
@@ -128,6 +129,7 @@ private:
 	void setPrimaryDisplayName (const QString &displayName);
 	
 	QString getPrimarySipAddress () const;
+	QString getPrimaryDomain () const;
 	
 	// ---------------------------------------------------------------------------
 	

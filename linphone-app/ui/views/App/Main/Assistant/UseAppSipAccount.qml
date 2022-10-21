@@ -52,6 +52,7 @@ AssistantAbstractView {
 		}
 		Text {
 			anchors.right:parent.right
+			visible: ConstantsCpp.PasswordRecoveryUrl
 			elide: Text.ElideRight
 			font.pointSize: AboutStyle.copyrightBlock.url.pointSize
 			linkColor: AboutStyle.copyrightBlock.url.color
