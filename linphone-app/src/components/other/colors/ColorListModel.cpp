@@ -106,7 +106,7 @@ QString ColorListModel::buildDescription(QString description){
 	return description;
 }
 
-ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue, const int& overrideAlpha){
+ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue, const int& overrideAlpha, const ColorModel::ContextMode& context){
 	ColorModel * color = getColor(id);
 	if( description == "")
 		description = buildDescription(id);
@@ -123,6 +123,7 @@ ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QStri
 		auto colorShared = QSharedPointer<ColorModel>::create(id, colorValue, description);
 		if(overrideAlpha>=0)
 			colorShared->setAlpha(overrideAlpha* 255 / 100);
+		colorShared->setContext(context);
 		add(colorShared);
 		color = colorShared.get();
 		emit colorChanged();

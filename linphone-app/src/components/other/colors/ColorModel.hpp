@@ -33,6 +33,12 @@ class ColorModel : public QObject {
     Q_OBJECT
 
 public:
+typedef enum{
+		CONTEXT_NORMAL = 0,
+		CONTEXT_HOVERED,// More darker
+		CONTEXT_PRESSED,// More lighter
+		CONTEXT_DEACTIVATED// Alpha
+	}ContextMode;
     ColorModel (const QString& name, const QColor& color, const QString& description, QObject * parent = nullptr);
 	
 	Q_PROPERTY(QColor color MEMBER mColor WRITE setColor NOTIFY colorChanged)
@@ -53,6 +59,8 @@ public:
 	void setDescription(const QString& description);
 	void setLinkIndex(const int& index);
 	void setLinkedToImage(const QString& id);
+	void setContext(const ContextMode& context);
+	void updateContext();
 	
 signals:
 	void colorChanged();
@@ -66,6 +74,7 @@ private:
 	QString mDescription;
 	QString mLinkedToImage;
 	int mLinkIndex = -1;
+	ContextMode mContextMode = CONTEXT_NORMAL;
 };
 
 Q_DECLARE_METATYPE(QSharedPointer<ColorModel>);

@@ -38,6 +38,9 @@
 
 #define ADD_COLOR_WITH_LINK(COLOR, VALUE, DESCRIPTION, LINK) \
 	add(COLOR,LINK,DESCRIPTION,VALUE);
+
+#define ADD_COLOR_WITH_LINK_MODE(COLOR, VALUE, DESCRIPTION, LINK, MODE) \
+	add(COLOR,LINK,DESCRIPTION,VALUE, -1, MODE);
 	
 // Alpha is in percent.
 #define ADD_COLOR_WITH_ALPHA(COLOR, ALPHA, DESCRIPTION) \
@@ -52,6 +55,7 @@ class ColorModel;
 
 class ColorListModel : public ProxyListModel {
 	Q_OBJECT
+	
 	void init() {
 		QSharedPointer<ColorModel> color;
 		ADD_COLOR("a", "transparent", "Generic transparent color.")
@@ -64,10 +68,10 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("h", "#687680", "Others")
 		
 		// Primary color.
-		ADD_COLOR("i", "#FF5E00", "Primary color.")
-		ADD_COLOR_WITH_ALPHA("i", 80, "")		
-		ADD_COLOR("m", "#FF8600", "Primary color for clicked items.")
-		ADD_COLOR("b", "#D64D00", "Primary color for hovered items.")// #DC4100
+		ADD_COLOR("i", "#FF5E00", "Primary color.")//263D86
+		ADD_COLOR_WITH_LINK_MODE("primary_d", "", "Primary color for deactivated items.", "i", ColorModel::CONTEXT_DEACTIVATED)
+		ADD_COLOR_WITH_LINK_MODE("m", "", "Primary color for clicked items.", "i", ColorModel::CONTEXT_PRESSED)
+		ADD_COLOR_WITH_LINK_MODE("b", "", "Primary color for hovered items.", "i", ColorModel::CONTEXT_HOVERED)
 		ADD_COLOR("secondary_h", "#4B5964", "Secondary color for hovered items.")
 		ADD_COLOR("n", "#A1A1A1", "Primary color for pressed button")
 		ADD_COLOR("o", "#D0D8DE", "Primary color for disabled button")
@@ -76,7 +80,6 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("incoming_bg","#D0D8DE","Incoming message background")
 		
 		ADD_COLOR("primary_accept", "#9ECD1D", "Primary color for accepting button")
-		ADD_COLOR_WITH_ALPHA("primary_accept", 80, "")
 		
 		ADD_COLOR("j", "#4B5964", "Username, Background cancel button hovered.")
 		
@@ -180,9 +183,9 @@ class ColorListModel : public ProxyListModel {
 //----------------------------
 // Main Actions : like home button 
 		ADD_COLOR_WITH_LINK("ma_n_b_bg", "", "[M] Main normal button : background", "i")
-		ADD_COLOR_WITH_LINK("ma_d_b_bg", "", "[M] Main disabled button : background", "i80")	// "#FFCEB2"
-		ADD_COLOR_WITH_LINK("ma_h_b_bg", "", "[M] Main hovered button : background", "secondary_h")
-		ADD_COLOR_WITH_LINK("ma_p_b_bg", "", "[M] Main pressed button : background", "b")
+		ADD_COLOR_WITH_LINK("ma_d_b_bg", "", "[M] Main disabled button : background", "primary_d")	// "#FFCEB2"
+		ADD_COLOR_WITH_LINK("ma_h_b_bg", "", "[M] Main hovered button : background", "b")
+		ADD_COLOR_WITH_LINK("ma_p_b_bg", "", "[M] Main pressed button : background", "m")
 		
 		ADD_COLOR("ma_n_b_fg", "white", "[M] Main normal button : foreground")
 		ADD_COLOR("ma_d_b_fg", "white", "[M] Main disabled button : foreground")
@@ -191,7 +194,8 @@ class ColorListModel : public ProxyListModel {
 //-------------------------------------
 // Accept Actions : like accepting a call
 		ADD_COLOR_WITH_LINK("a_n_b_bg", "", "[M] Accept normal button : background", "primary_accept")
-		ADD_COLOR_WITH_LINK("a_d_b_bg", "", "[M] Accept disabled button : background", "primary_accept80")
+		
+		ADD_COLOR_WITH_LINK_MODE("a_d_b_bg", "", "[M] Accept disabled button : background", "primary_accept", ColorModel::CONTEXT_DEACTIVATED)
 		ADD_COLOR("a_h_b_bg", "#7D9F21", "[M] Accept hovered button : background")
 		ADD_COLOR_WITH_LINK("a_p_b_bg", "", "[M] Accept pressed button : background", "a_n_b_bg")
 		
@@ -202,7 +206,7 @@ class ColorListModel : public ProxyListModel {
 //-------------------------------------
 // Reject Actions : like rejecting a call
 		ADD_COLOR_WITH_LINK("r_n_b_bg", "", "[M] Reject normal button : background", "i")
-		ADD_COLOR_WITH_LINK("r_d_b_bg", "", "[M] Reject disabled button : background", "i80")
+		ADD_COLOR_WITH_LINK("r_d_b_bg", "", "[M] Reject disabled button : background", "primary_d")
 		ADD_COLOR_WITH_LINK("r_h_b_bg", "", "[M] Reject hovered button : background", "b")
 		ADD_COLOR_WITH_LINK("r_p_b_bg", "", "[M] Reject pressed button : background", "r_n_b_bg")
 		
@@ -234,8 +238,7 @@ class ColorListModel : public ProxyListModel {
 		
 		ADD_COLOR("me_n_b_fg", "#4B5964", "[M] Menu normal button : foreground")
 		ADD_COLOR("me_h_b_fg", "#96A5B1", "[M] Menu hovered button : foreground")
-		ADD_COLOR_WITH_ALPHA("me_h_b_fg", 80, "")
-		ADD_COLOR_WITH_LINK("me_d_b_fg", "", "[M] Menu disabled button : foreground", "me_h_b_fg80")
+		ADD_COLOR_WITH_LINK_MODE("me_d_b_fg", "", "[M] Menu disabled button : foreground", "me_h_b_fg", ColorModel::CONTEXT_DEACTIVATED)
 		ADD_COLOR_WITH_LINK("me_p_b_fg", "", "[M] Menu pressed button : foreground", "i")
 		ADD_COLOR_WITH_LINK("me_u_b_fg", "", "[M] Menu updating button : background", "me_p_b_fg")
 // Inverse
@@ -246,9 +249,8 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR_WITH_LINK("me_c_b_inv_bg", "", "[M] Menu checked button : inverse foreground", "i")
 		
 		ADD_COLOR("me_n_b_inv_fg", "white", "[M] Menu normal button : inverse foreground")
-		ADD_COLOR_WITH_ALPHA("me_n_b_inv_fg", 80, "")
-		ADD_COLOR_WITH_LINK("me_d_b_inv_fg", "", "[M] Menu disabled button : inverse foreground", "me_n_b_inv_fg80")
-		ADD_COLOR_WITH_LINK("me_h_b_inv_fg", "", "[M] Menu hovered button : inverse foreground", "me_n_b_inv_fg80")
+		ADD_COLOR_WITH_LINK_MODE("me_d_b_inv_fg", "", "[M] Menu disabled button : inverse foreground", "me_n_b_inv_fg", ColorModel::CONTEXT_DEACTIVATED)
+		ADD_COLOR_WITH_LINK_MODE("me_h_b_inv_fg", "", "[M] Menu hovered button : inverse foreground", "me_n_b_inv_fg", ColorModel::CONTEXT_DEACTIVATED)
 		ADD_COLOR("me_p_b_inv_fg", "white", "[M] Menu pressed button : inverse foreground")
 		ADD_COLOR("me_c_b_inv_fg", "white", "[M] Menu checked button : inverse foreground")
 //-------------------------------------	
@@ -314,7 +316,7 @@ public:
 // color : if empty, use the color from link
 // description : describe the color
 // idLink : link this color with another ID
-	Q_INVOKABLE ColorModel * add(const QString& id, const QString& idLink, QString description = "", QString color = "", const int& overrideAlpha = -1);
+	Q_INVOKABLE ColorModel * add(const QString& id, const QString& idLink, QString description = "", QString color = "", const int& overrideAlpha = -1, const  ColorModel::ContextMode& context = ColorModel::CONTEXT_NORMAL);
 	Q_INVOKABLE ColorModel * addImageColor(const QString& id, const QString& imageId, const QString& idLink, QString description = "", QString color = "");
 	
 	void addLink(const QString& a, const QString& b);

@@ -65,9 +65,8 @@ void ColorModel::setColor(const QColor& color){
 
 void ColorModel::setInternalColor(const QColor& color){
 	if(color != mColor){
-		auto backup = mColor.alpha();
 		mColor = color;
-		mColor.setAlpha(backup);
+		updateContext();
 		emit colorChanged();
 	}
 }
@@ -91,5 +90,19 @@ void ColorModel::setLinkIndex(const int& index){
 	if(index != mLinkIndex){
 		mLinkIndex = index;
 		emit linkIndexChanged();
+	}
+}
+
+void ColorModel::setContext(const ContextMode& context){
+	mContextMode = context;
+	updateContext();
+}
+
+void ColorModel::updateContext(){
+	switch(mContextMode){
+	case CONTEXT_NORMAL : break;
+	case CONTEXT_PRESSED: mColor = mColor.lighter(140); break;
+	case CONTEXT_HOVERED: mColor = mColor.darker(140); break;
+	case CONTEXT_DEACTIVATED: mColor.setAlpha(60);break;
 	}
 }
