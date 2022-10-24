@@ -51,8 +51,8 @@ Item{
 					horizontalAlignment: Text.AlignLeft
 					color: UseAppSipAccountStyle.warningBlock.color
 					wrapMode: Text.WordWrap
-					//: 'Some features require a Linphone account, such as group messaging or ephemeral messaging.' : Warning text about features.
-					text: qsTr('warningFeatures')
+					//: 'Some features require a %1 account, such as group messaging or ephemeral messaging.' : Warning text about features. %1 is the application name
+					text: qsTr('warningFeatures').arg(applicationName)
 				}
 				Text{
 					elide: Text.ElideRight

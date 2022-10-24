@@ -2059,7 +2059,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
-        <extracomment>&apos;Send invite via Linphone&apos; : Label for checkbox for sending invitations with Linphone.</extracomment>
+        <extracomment>&apos;Send invite via %1&apos; : Label for checkbox for sending invitations with the application. %1 is the application name.</extracomment>
         <translation>Envoyer les invitations avec Linphone</translation>
     </message>
     <message>
@@ -2628,6 +2628,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalTooltip</source>
+        <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
         <translation>La résolution DNS est effectuée par Linphone en utilisant SAL. Il fournira une IP à LDAP. Ce faisant, la négociation TLS ne pourra pas vérifier le nom d&apos;hôte. Vous devrez donc désactiver les vérifications si vous voulez forcer la connexion.</translation>
     </message>
     <message>
@@ -2716,6 +2717,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
+        <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
         <translation>Ajouter le domaine à l&apos;adresse SIP (sip:nomdutilisateur@domaine). La valeur par défaut est sip.linphone.org</translation>
     </message>
     <message>
@@ -3648,7 +3650,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>warningFeatures</source>
-        <extracomment>&apos;Some features require a Linphone account, such as group messaging or ephemeral messaging.&apos; : Warning text about features.</extracomment>
+        <extracomment>&apos;Some features require a %1 account, such as group messaging or ephemeral messaging.&apos; : Warning text about features. %1 is the application name</extracomment>
         <translation>Certaines fonctionnalités avancées comme les messages de groupe ou les messages éphémères nécessitent un compte Linphone.</translation>
     </message>
     <message>
@@ -3676,7 +3678,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>endCallStatus</source>
-        <extracomment>&quot;Ending call&quot; : status of the call in waiting room when the call end.</extracomment>
+        <extracomment>&quot;Call ended&quot; : status of the call in waiting room when the call end.</extracomment>
         <translation>Fin d&apos;appel</translation>
     </message>
     <message>
