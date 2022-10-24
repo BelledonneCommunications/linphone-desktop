@@ -36,21 +36,16 @@ public:
 	
 	//----------------------------------------------------------------------------------	
 	
-	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
 	static constexpr char DefaultLocale[] = "en";
-		
-	static constexpr char ApplicationMinimalQtVersion[] = "5.10.0";
 	static constexpr char DefaultFont[] = "Noto Sans";
 	
 	static constexpr size_t MaxLogsCollectionSize = 10485760*5; // 50MB.
-	
 	
 #ifdef ENABLE_UPDATE_CHECK
 	static constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
 #endif // ifdef ENABLE_UPDATE_CHECK
 	
 	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
-	static constexpr char LinphoneDomain[] = "sip.linphone.org";
 	static constexpr char DefaultContactParameters[] = "message-expires=604800";
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 3600;
@@ -69,9 +64,6 @@ public:
 	static constexpr char LinphoneBZip2_dll[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
-	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";
-	static constexpr char DefaultVideoConferenceURI[] = "sip:videoconference-factory@sip.linphone.org";
-	static constexpr char DefaultLimeServerURL[] = "https://lime.linphone.org/lime-server/lime-server.php";
 	
 	static constexpr char DefaultFlexiAPIURL[] = "http://fs-test-sandbox.linphone.org/flexiapi/api/";// Need "/" at the end
 	static constexpr char RemoteProvisioningURL[] = "http://fs-test-sandbox.linphone.org/flexiapi/provisioning";
@@ -94,7 +86,18 @@ public:
 	static constexpr qint64 FileSizeLimit = 524288000;// In Bytes.
 	static constexpr int ThumbnailImageFileWidth = 100;
 	static constexpr int ThumbnailImageFileHeight = 100;
+	
+//--------------------------------------------------------------------------------
+//								LINPHONE
+//--------------------------------------------------------------------------------
 
+	static constexpr char LinphoneDomain[] = "sip.linphone.org";	// Use for checking if config are a Linphone
+	static constexpr char WindowIconPath[] = ":/assets/images/linphone_logo.svg";
+	static constexpr char ApplicationMinimalQtVersion[] = "5.10.0";
+	static constexpr char DefaultConferenceURI[] = "sip:conference-factory@sip.linphone.org";	// Default for a Linphone account
+	static constexpr char DefaultVideoConferenceURI[] = "sip:videoconference-factory@sip.linphone.org";	// Default for a Linphone account
+	static constexpr char DefaultLimeServerURL[] = "https://lime.linphone.org/lime-server/lime-server.php";	// Default for a Linphone account
+	
 	static constexpr char PathAssistantConfig[] = "/" EXECUTABLE_NAME "/assistant/";
 	static constexpr char PathAvatars[] = "/avatars/";
 	static constexpr char PathCaptures[] = "/" EXECUTABLE_NAME "/captures/";
@@ -146,8 +149,6 @@ public:
 												// 3 = CPIM on basic chat rooms
 												// 4 = RTP bundle mode
 												// 5 = Video Conference URI
-												
-	
 //--------------------------------------------------------------------------------	
 //								CISCO
 //--------------------------------------------------------------------------------
