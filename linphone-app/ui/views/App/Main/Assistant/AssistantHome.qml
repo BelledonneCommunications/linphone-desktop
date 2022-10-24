@@ -138,12 +138,14 @@ ColumnLayout {
 				append({
 						   $text: qsTr('useOtherSipAccount'),
 						   $view: 'UseOtherSipAccount',
-						   $viewType: 'UseOtherSipAccount'
+						   $viewType: 'UseOtherSipAccount',
+						   $props: {}
 					   })
 				append( {
 						   $text: qsTr('fetchRemoteConfiguration'),
 						   $view: 'FetchRemoteConfiguration',
-						   $viewType: 'FetchRemoteConfiguration'
+						   $viewType: 'FetchRemoteConfiguration',
+						   $props: {}
 					   })
 			}
 		}

@@ -507,7 +507,11 @@ QString AccountSettingsModel::getPrimarySipAddress () const {
 }
 
 QString AccountSettingsModel::getDefaultAccountDomain() const{
-	return Utils::coreStringToAppString(CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getDomain());
+	auto account = CoreManager::getInstance()->getCore()->getDefaultAccount();
+	if(account)
+		return Utils::coreStringToAppString(account->getParams()->getDomain());
+	else
+		return "";
 }
 
 // -----------------------------------------------------------------------------
