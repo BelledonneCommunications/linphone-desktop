@@ -36,6 +36,8 @@
 #include <QSystemTrayIcon>
 #include <QTimer>
 
+#include <bctoolbox/charconv.h>
+
 #include "config.h"
 #include "cli/Cli.hpp"
 #include "components/Components.hpp"
@@ -213,7 +215,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 		tzset();
 #endif
 	}
-
+	bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);// Use UTF-8 for internals. Linphone uses UTF-8 so there will be no loss on data with less precise encodings. Qt will do the rest.
+	
 	createParser();
 	mParser->process(*this);
 	

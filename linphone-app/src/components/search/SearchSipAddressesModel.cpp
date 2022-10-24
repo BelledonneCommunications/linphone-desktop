@@ -49,7 +49,7 @@ using namespace std;
 SearchSipAddressesModel::SearchSipAddressesModel (QObject *parent) : ProxyListModel(parent) {
 	
 	mMagicSearch = CoreManager::getInstance()->getCore()->createMagicSearch();
-	mSearch = std::make_shared<SearchListener>(this);
+	mSearch = std::make_shared<SearchListener>();
 	QObject::connect(mSearch.get(), &SearchListener::searchReceived, this, &SearchSipAddressesModel::searchReceived, Qt::QueuedConnection);
 	mMagicSearch->addListener(mSearch);
 	

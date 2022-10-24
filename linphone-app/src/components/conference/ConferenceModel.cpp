@@ -96,7 +96,7 @@ std::shared_ptr<linphone::Conference> ConferenceModel::getConference()const{
 }
 
 QString ConferenceModel::getSubject() const{
-	return QString::fromStdString(mConference->getSubject());
+	return Utils::coreStringToAppString(mConference->getSubject());
 }
 
 QDateTime ConferenceModel::getStartDate() const{

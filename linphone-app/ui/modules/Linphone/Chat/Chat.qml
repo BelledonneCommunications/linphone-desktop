@@ -244,15 +244,12 @@ Rectangle {
 								color: ChatStyle.entry.event.text.color
 								font.pointSize: ChatStyle.entry.time.pointSize
 								
-								text: $chatEntry.timestamp.toLocaleString(
-										  Qt.locale(App.locale),
-										  'hh:mm'
-										  )
+								text: UtilsCpp.toTimeString($chatEntry.timestamp, 'hh:mm')
 								
 								verticalAlignment: Text.AlignVCenter
 								
 								TooltipArea {
-									text: $chatEntry.timestamp.toLocaleString(Qt.locale(App.locale))
+									text: UtilsCpp.toDateTimeString($chatEntry.timestamp)
 								}
 								visible:!isNotice
 							}
@@ -448,7 +445,10 @@ Rectangle {
 							}
 						}
 						onAudioRecordRequest: RecorderManager.resetVocalRecorder()
-						Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
+						Component.onCompleted: {
+							text = proxyModel.chatRoomModel.cachedText
+							cursorPosition=text.length
+						}
 						Rectangle{
 							anchors.fill:parent
 							color:'white'

@@ -157,7 +157,8 @@ void AbstractCodecsModel::addDownloadableCodec (
   const QString &mime,
   const QString &encoderDescription,
   const QString &downloadUrl,
-  const QString &installName
+  const QString &installName,
+  const QString &checksum
 ) {
   QVariantMap map;
 
@@ -165,6 +166,7 @@ void AbstractCodecsModel::addDownloadableCodec (
   map["encoderDescription"] = encoderDescription;
   map["installName"] = installName;
   map["mime"] = mime;
+  map["checksum"] = checksum;
 
   mList << map;
 }

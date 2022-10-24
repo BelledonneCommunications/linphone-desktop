@@ -95,9 +95,11 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& 
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
-	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
-	if (!address)
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
+	if (!address){
+		qCritical() << "The calling address is not an interpretable SIP address: " << sipAddress;
 		return;
+	}
 	
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(false);
@@ -341,7 +343,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 				initializer->setAdminsData(admins);
 				ChatRoomInitializer::start(initializer);
 			}
-			timeline = timelineList->getTimeline(chatRoom, false);
+			timeline = timelineList->getTimeline(chatRoom, ChatRoomModel::isTerminated(chatRoom));
 		}else{
 			if(admins.size() > 0){
 				ChatRoomInitializer::create(chatRoom)->setAdmins(admins);

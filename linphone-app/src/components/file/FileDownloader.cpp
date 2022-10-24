@@ -19,6 +19,7 @@
  */
 
 #include <QTest>
+#include <QDebug>
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/settings/SettingsModel.hpp"
@@ -149,7 +150,14 @@ void FileDownloader::handleDownloadFinished() {
 		qInfo() << QStringLiteral("Download of %1 finished to %2").arg(mUrl.toString(), mDestinationFile.fileName());
 		mDestinationFile.close();
 		cleanDownloadEnd();
-		emit downloadFinished(mDestinationFile.fileName());
+		QString fileChecksum = Utils::getFileChecksum(mDestinationFile.fileName());
+		if( mChecksum.isEmpty() || fileChecksum == mChecksum)
+			emit downloadFinished(mDestinationFile.fileName());
+		else{
+			qCritical() << "File cannot be downloaded : Bad checksum " << fileChecksum;
+			mDestinationFile.remove();
+			emit downloadFailed();
+		}
 	}
 }
 
@@ -259,6 +267,17 @@ QString FileDownloader::synchronousDownload(const QUrl &url, const QString &dest
 		}
 	}
 	return filePath;
+}
+
+QString FileDownloader::getChecksum() const{
+	return mChecksum;
+}
+
+void FileDownloader::setChecksum(const QString& code){
+	if(mChecksum != code) {
+		mChecksum = code;
+		emit checksumChanged();
+	}
 }
 
 qint64 FileDownloader::getReadBytes () const {

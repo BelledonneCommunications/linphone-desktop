@@ -53,7 +53,7 @@ DialogPlus {
 							id:displayName
 							placeholderText : (serverUrl.text?serverUrl.text:serverUrl.placeholderText)
 							text:ldapData.displayName
-							onTextChanged: ldapData.displayName = text
+							onTextChanged: Qt.callLater(function(){ldapData.displayName = text})
 							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							TooltipArea{
@@ -76,7 +76,7 @@ DialogPlus {
 							id:serverUrl
 							placeholderText :"Server"
 							text:ldapData.server
-							onTextChanged: ldapData.server = text
+							onTextChanged: Qt.callLater(function(){ldapData.server = text})
 							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 							error : ldapData.serverFieldError
@@ -97,7 +97,7 @@ DialogPlus {
 							placeholderText :"Bind DN"
 							text:ldapData.bindDn
 							error : ldapData.bindDnFieldError
-							onTextChanged: ldapData.bindDn= text
+							onTextChanged: Qt.callLater(function(){ldapData.bindDn= text})
 							TooltipArea{
 								text : qsTr('bindDNTooltip')//'The bind DN is the credential that is used to authenticate against an LDAP.\n eg: cn=ausername,ou=people,dc=bc,dc=com'
 								//tooltipParent: dialog
@@ -114,7 +114,7 @@ DialogPlus {
 							id:password
 							text:ldapData.password
 							error : ldapData.passwordFieldError
-							onTextChanged: ldapData.password = text
+							onTextChanged: Qt.callLater(function(){ldapData.password = text})
 							placeholderText :"Password"
 						}
 					}
@@ -148,7 +148,8 @@ DialogPlus {
 							}
 							TooltipArea{
 								tooltipParent:useRow
-								text : qsTr('useSalTooltip')//'The dns resolution is done by Linphone using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.'
+								//: 'The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.'
+								text : qsTr('useSalTooltip').arg(applicationName)
 							}
 						}
 					}
@@ -190,7 +191,7 @@ DialogPlus {
 							placeholderText :qsTr('baseObjectPlaceholder')//"Base Object"
 							text:ldapData.baseObject
 							error : ldapData.baseObjectFieldError
-							onTextChanged: ldapData.baseObject = text
+							onTextChanged: Qt.callLater(function(){ldapData.baseObject = text})
 							TooltipArea{
 								text : qsTr('baseObjectTooltip')//'BaseObject is a specification for LDAP Search Scopes that specifies that the Search Request should only be performed against the entry specified as the search base DN.\n\nNo entries below it will be considered.'
 								//tooltipParent: dialog
@@ -209,7 +210,7 @@ DialogPlus {
 							id:filter
 							text:ldapData.filter
 							error : ldapData.filterFieldError
-							onTextChanged: ldapData.filter = text
+							onTextChanged: Qt.callLater(function(){ldapData.filter = text})
 							placeholderText :"(sn=%s)"
 							TooltipArea{
 								text : qsTr('filterTooltip')//'The search is base on this filter to search friends. Default value : (sn=%s)'
@@ -230,7 +231,7 @@ DialogPlus {
 							id:maxResults
 							text:ldapData.maxResults
 							error : ldapData.maxResultsFieldError
-							onTextChanged: ldapData.maxResults = text
+							onTextChanged: Qt.callLater(function(){ldapData.maxResults = text})
 							TooltipArea{
 								tooltipParent:connectionRow
 								text : qsTr('maxResultsTooltip')//'The max results when requesting searches'
@@ -243,7 +244,7 @@ DialogPlus {
 							id:timeout
 							text:ldapData.timeout
 							error : ldapData.timeoutFieldError
-							onTextChanged: ldapData.timeout = text
+							onTextChanged: Qt.callLater(function(){ldapData.timeout = text})
 							TooltipArea{
 								tooltipParent:connectionRow
 								text : qsTr('timeoutTooltip')//'The connection and search timeout in seconds. Default is 5'
@@ -269,7 +270,7 @@ DialogPlus {
 							placeholderText :'sn'
 							text:ldapData.nameAttributes
 							error : ldapData.nameAttributesFieldError
-							onTextChanged: ldapData.nameAttributes = text
+							onTextChanged: Qt.callLater(function(){ldapData.nameAttributes = text})
 							TooltipArea{
 								text : qsTr('nameAttributesTooltip')//'Check these attributes To build Name Friend, separated by a comma and the first is the highest priority. The default value is: sn'
 								tooltipParent: nameAttributes
@@ -285,7 +286,7 @@ DialogPlus {
 							placeholderText :'mobile,telephoneNumber,homePhone,sn'
 							text:ldapData.sipAttributes
 							error : ldapData.sipAttributesFieldError
-							onTextChanged: ldapData.sipAttributes = text
+							onTextChanged: Qt.callLater(function(){ldapData.sipAttributes = text})
 							TooltipArea{
 								text : qsTr('sipAttributesTooltip')//'Check these attributes to build the SIP username in address of Friend. Attributes are separated by a comma and the first is the highest priority. The default value is: mobile,telephoneNumber,homePhone,sn'
 								tooltipParent: sipAttributes
@@ -298,12 +299,13 @@ DialogPlus {
 						label: qsTr('domainLabel')//'Domain'
 						TextField {
 							id:domain
-							placeholderText :'sip.linphone.org'
+							placeholderText : AccountSettingsModel.defaultAccountDomain
 							text:ldapData.sipDomain
 							error : ldapData.sipDomainFieldError
-							onTextChanged: ldapData.sipDomain = text
+							onTextChanged: Qt.callLater(function(){ldapData.sipDomain = text})
 							TooltipArea{
-								text : qsTr('domainTooltip')//'Add the domain to the sip address(username@domain). The default value is sip.linphone.org'
+							//: 'Add the domain to the sip address(username@domain).' Tooltip to explain that this field is used to complete a result with this domain.
+								text : qsTr('domainTooltip')//
 								//tooltipParent: dialog
 							}
 						}
@@ -332,7 +334,8 @@ DialogPlus {
 							}
 							TooltipArea{
 								tooltipParent:miscLine
-								text : qsTr('debugTooltip')//'Get verbose logs in Linphone log file when doing transactions (useful to debug TLS connections)'
+								//:'Get verbose logs in log file when doing transactions (useful to debug TLS connections)'
+								text : qsTr('debugTooltip')
 							}
 						}
 					}

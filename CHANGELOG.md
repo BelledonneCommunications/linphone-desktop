@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mark as Read synchronized between devices.
 - Merge messages into one notification to avoid spam.
 - Design overhaul on calls.
+- Use a cryptographic checksum when downloading openH264 from CISCO (Update to 2.2.0)
 
 ### Fixed
 - Crash on exit.

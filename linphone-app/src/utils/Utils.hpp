@@ -30,7 +30,7 @@
 #include <linphone++/address.hh>
 
 #include "LinphoneEnums.hpp"
-
+#include "Constants.hpp"
 
 // =============================================================================
 
@@ -54,8 +54,9 @@ public:
 	// Qt interfaces	
 	Q_INVOKABLE static bool hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability);
 	Q_INVOKABLE static QDateTime addMinutes(QDateTime date, const int& min);
+	static QDateTime getOffsettedUTC(const QDateTime& date);
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
-	Q_INVOKABLE static QString toTimeString(QDateTime date);
+	Q_INVOKABLE static QString toTimeString(QDateTime date, const QString& format = "hh:mm:ss");
 	Q_INVOKABLE static QString toDateString(QDateTime date);
 	Q_INVOKABLE static QString getDisplayName(const QString& address);
 	Q_INVOKABLE static QString toString(const LinphoneEnums::TunnelMode& mode);
@@ -64,14 +65,22 @@ public:
 	Q_INVOKABLE static bool isPhoneNumber(const QString& txt);
 	Q_INVOKABLE QSize getImageSize(const QString& url);
 	Q_INVOKABLE static QPoint getCursorPosition();
+	Q_INVOKABLE static QString getFileChecksum(const QString& filePath);
+	
 //----------------------------------------------------------------------------------
 	
 	static inline QString coreStringToAppString (const std::string &str) {
-		return QString::fromLocal8Bit(str.c_str(), int(str.size()));
+		if(Constants::LinphoneLocaleEncoding == QString("UTF-8"))
+			return QString::fromStdString(str);
+		else
+			return QString::fromLocal8Bit(str.c_str(), int(str.size()));// When using Locale. Be careful about conversion bijection with UTF-8, you may loss characters
 	}
 	
 	static inline std::string appStringToCoreString (const QString &str) {
-		return qPrintable(str);
+		if(Constants::LinphoneLocaleEncoding == QString("UTF-8"))
+			return str.toStdString();
+		else
+			return qPrintable(str);
 	}
 	
 	// Reverse function of strstr.

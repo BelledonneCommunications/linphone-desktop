@@ -123,7 +123,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, cons
 	mCoreHandlers = coreManager->getHandlers();
 	
 	mChatRoom = chatRoom;
-	mChatRoomListener = std::make_shared<ChatRoomListener>(parent);
+	mChatRoomListener = std::make_shared<ChatRoomListener>();
 	connectTo(mChatRoomListener.get());
 	mChatRoom->addListener(mChatRoomListener);
 	
@@ -328,7 +328,7 @@ QString ChatRoomModel::getConferenceAddress () const {
 }
 
 QString ChatRoomModel::getSubject () const {
-	return mChatRoom ? QString::fromStdString(mChatRoom->getSubject()) : "";	// in UTF8
+	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getSubject()) : "";	// in UTF8
 }
 
 QString ChatRoomModel::getUsername () const {
@@ -336,7 +336,7 @@ QString ChatRoomModel::getUsername () const {
 	if( !mChatRoom)
 		return "";
 	if( !isOneToOne())
-		username = QString::fromStdString(mChatRoom->getSubject());
+		username = getSubject();
 	
 	if(username != "")
 		return username;
@@ -360,7 +360,7 @@ QString ChatRoomModel::getUsername () const {
 	if( addr)
 		return Utils::coreStringToAppString(addr->asStringUriOnly());
 	else {
-		qWarning() << "ChatRoom has no peer address or address is invalid : Subject=" << mChatRoom->getSubject().c_str() 
+		qWarning() << "ChatRoom has no peer address or address is invalid : Subject=" << getSubject()
 			<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
 			<< " (" << mChatRoom.get() << ")";
 		return "";
@@ -499,13 +499,13 @@ QString ChatRoomModel::getParticipantAddress(){
 			if( conferenceAddress)
 				return Utils::coreStringToAppString(conferenceAddress->asString());
 			else{
-				qWarning() << "ConferenceAddress is NULL when requesting it from not secure and conference ChatRoomModel. Subject=" << mChatRoom->getSubject().c_str() 
+				qWarning() << "ConferenceAddress is NULL when requesting it from not secure and conference ChatRoomModel. Subject=" << getSubject()
 					<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
 					<< " (" << mChatRoom.get() << ")";
 				return "";
 			}
 		}else {
-			qWarning() << "PeerAddress is NULL when requesting it from not secure ChatRoomModel. Subject=" << mChatRoom->getSubject().c_str()
+			qWarning() << "PeerAddress is NULL when requesting it from not secure ChatRoomModel. Subject=" << getSubject()
 				<< ", created at " << QDateTime::fromSecsSinceEpoch(mChatRoom->getCreationTime())
 				<< " (" << mChatRoom.get() << ")";
 			return "";
@@ -523,11 +523,19 @@ int ChatRoomModel::getAllUnreadCount(){
 	return mUnreadMessagesCount + mMissedCallsCount;
 }
 
+QString ChatRoomModel::getCachedText()const{
+	return mCachedText;
+}
+
+bool ChatRoomModel::hasDraft() const{
+	return mHasDraft;
+}
+
 //------------------------------------------------------------------------------------------------
 
 void ChatRoomModel::setSubject(QString& subject){
 	if(mChatRoom && getSubject() != subject){
-		mChatRoom->setSubject(subject.toUtf8().toStdString());	// in UTF8
+		mChatRoom->setSubject(Utils::appStringToCoreString(subject));	// in UTF8
 		emit subjectChanged(subject);
 	}
 }
@@ -594,6 +602,23 @@ void ChatRoomModel::enableMarkAsRead(const bool& enable){
 	if( mMarkAsReadEnabled != enable){
 		mMarkAsReadEnabled = enable;
 		emit markAsReadEnabledChanged();
+	}
+}
+
+bool ChatRoomModel::setCachedText(const QString& text){
+	if(mCachedText != text){
+		mCachedText = text;
+		emit cachedTextChanged();
+		setHasDraft(!mCachedText.isEmpty());
+		return true;
+	}else
+		return false;
+}
+
+void ChatRoomModel::setHasDraft(const bool& cached){
+	if(mHasDraft != cached){
+		mHasDraft = cached;
+		emit hasDraftChanged();
 	}
 }
 
@@ -699,6 +724,7 @@ void ChatRoomModel::sendMessage (const QString &message) {
 		if(recorder->haveVocalRecorder())
 			recorder->clearVocalRecorder();
 		CoreManager::getInstance()->getChatModel()->clear();
+		setCachedText("");
 	}
 }
 
@@ -718,8 +744,8 @@ void ChatRoomModel::forwardMessage(ChatMessageModel * model){
 }
 // -----------------------------------------------------------------------------
 
-void ChatRoomModel::compose () {
-	if( mChatRoom)
+void ChatRoomModel::compose (const QString& text) {
+	if( setCachedText(text) && mChatRoom)// only send a compose if text has changed
 		mChatRoom->compose();
 }
 

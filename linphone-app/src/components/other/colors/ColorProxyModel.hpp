@@ -38,9 +38,26 @@ class ColorProxyModel : public QSortFilterProxyModel {
 public:
 	ColorProxyModel (QObject *parent = nullptr);
 	
+	Q_PROPERTY(QString sortDescription READ getSortDescription NOTIFY sortChanged)
+	Q_PROPERTY(int showPageIndex READ getShowPageIndex WRITE setShowPageIndex NOTIFY showPageIndexChanged)
+	Q_PROPERTY(bool showAll READ getShowAll WRITE setShowAll NOTIFY showAllChanged)
+	
 	Q_INVOKABLE void updateLink(const QString& id, const QString& newLink);
+	
 	Q_INVOKABLE void changeSort();
 	
+	QString getSortDescription() const;
+	
+	int getShowPageIndex()const;
+	void setShowPageIndex(const int& index);
+	
+	bool getShowAll()const;
+	void setShowAll(const bool& showAll);
+	
+signals:
+	void sortChanged();
+	void showPageIndexChanged();
+	void showAllChanged();
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
@@ -48,6 +65,8 @@ protected:
 	
 private:
 	int mSortMode;
+	int mShowPageIndex = 0;
+	bool mShowAll = false;
 	
 };
 

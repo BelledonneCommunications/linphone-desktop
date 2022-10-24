@@ -48,7 +48,7 @@ function handleLogsUploaded (url) {
 
     if(Qt.openUrlExternally(
           'mailto:' + encodeURIComponent(Linphone.SettingsModel.logsEmail) +
-          '?subject=' + encodeURIComponent('Desktop Linphone Log') +
+          '?subject=' + encodeURIComponent( ('Desktop %1 Log').arg(applicationName)) +
           '&body=' + encodeURIComponent(url)
         ))
         sendLogsBlock.stop(qsTr('logsMailerSuccess').replace('%1', url))

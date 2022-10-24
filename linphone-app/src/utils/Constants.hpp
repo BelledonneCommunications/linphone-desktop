@@ -82,11 +82,13 @@ public:
 	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
 	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
-	
+
+// For Webviews
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
 	static constexpr char DefaultAssistantLoginUrl[] = "https://subscribe.linphone.org/login";
 	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";
-	
+//--------------
+
 	// Max image size in bytes. (100Kb)
 	static constexpr qint64 MaxImageSize = 102400;// In Bytes.
 	static constexpr qint64 FileSizeLimit = 524288000;// In Bytes.
@@ -136,7 +138,7 @@ public:
 	
 	static constexpr char QtDomain[] = "qt";
 	static constexpr char SrcPattern[] = "/src/";
-	
+	static constexpr char LinphoneLocaleEncoding[] = "UTF-8";// Alternative is to use "locale"
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
@@ -144,6 +146,7 @@ public:
 												// 3 = CPIM on basic chat rooms
 												// 4 = RTP bundle mode
 												// 5 = Video Conference URI
+												
 	
 //--------------------------------------------------------------------------------	
 //								CISCO
@@ -156,17 +159,21 @@ public:
 	static constexpr char LibraryExtension[] = "so";
 	static constexpr char H264InstallName[] = "libopenh264.so";
 #ifdef Q_PROCESSOR_X86_64
-	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1.0-linux64.5.so.bz2";
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux64.6.so.bz2";
+	static constexpr char PluginH264Check[] = "45ba1aaeb6213c19cd9622b79788e16b05beabc4d16a3a74e57f046a0826fd77";
 #else
-	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.1.0-linux32.5.so.bz2";
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/libopenh264-2.2.0-linux32.6.so.bz2";
+	static constexpr char PluginH264Check[] = "bf18e0e79c4a23018b0ea5ad6d7dd14fd1b6a6189d2f88fd56dece019fc415c8";
 #endif // ifdef Q_PROCESSOR_X86_64
 #elif defined(Q_OS_WIN)
 	static constexpr char LibraryExtension[] = "dll";
 	static constexpr char H264InstallName[] = "openh264.dll";
 #ifdef Q_OS_WIN64
-	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.1.0-win64.dll.bz2";
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.2.0-win64.dll.bz2";
+	static constexpr char PluginH264Check[] = "799e08c418b6cdeadfbe18d027392158face4a5c901d41f83712a20f0d41ad7d";
 #else
-	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.1.0-win32.dll.bz2";
+	static constexpr char PluginUrlH264[] = "http://ciscobinary.openh264.org/openh264-2.2.0-win32.dll.bz2";
+	static constexpr char PluginH264Check[] = "2205097a3a309271e15879b25a905eb290cfdd7fd7a8a0c1037e0458e5dc1f21";
 #endif // ifdef Q_OS_WIN64
 #endif // ifdef Q_OS_LINUX
 

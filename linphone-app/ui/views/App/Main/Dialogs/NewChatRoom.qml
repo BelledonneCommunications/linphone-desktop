@@ -391,7 +391,8 @@ DialogPlus {
 								chatRoomModel:null
 								
 							}
-							onEntryClicked: actions[0].handler(entry)
+							// it's best to toggle all contacts instead of one (that will be reset after loadng another address)
+							onEntryClicked: participantView.showSubtitle = !participantView.showSubtitle
 						}
 					}
 				}

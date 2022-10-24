@@ -431,8 +431,8 @@ DialogPlus {
 						}
 						CheckBoxText {
 							id: inviteAppAccountCheckBox
-							//: 'Send invite via Linphone' : Label for checkbox for sending invitations with Linphone.
-							text: qsTr('newConferenceSendLinphoneInviteLabel')
+							//: 'Send invite via %1' : Label for checkbox for sending invitations with the application. %1 is the application name.
+							text: qsTr('newConferenceSendLinphoneInviteLabel').arg(applicationName)
 							width: parent.width
 							checked: true
 						}

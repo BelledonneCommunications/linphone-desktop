@@ -15,6 +15,7 @@ DialogPlus {
 
   property alias downloadUrl: fileDownloader.url
   property alias installFolder: fileDownloader.downloadFolder
+  property alias checksum: fileDownloader.checksum
   property string installName // Right install name.
   property string mime // Human readable name.
 

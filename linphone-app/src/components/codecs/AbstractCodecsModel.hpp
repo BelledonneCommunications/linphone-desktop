@@ -63,7 +63,8 @@ protected:
     const QString &mime,
     const QString &encoderDescription,
     const QString &downloadUrl,
-    const QString &installName
+    const QString &installName,
+    const QString &chekcksum
   );
 
   virtual void updateCodecs (std::list<std::shared_ptr<linphone::PayloadType>> &codecs) = 0;

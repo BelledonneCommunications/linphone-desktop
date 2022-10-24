@@ -214,6 +214,8 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | :--- | :---: | ---: |
 | ENABLE_APP_LICENSE | Enable the license in packages. | YES |
 | ENABLE_APP_PACKAGING | Enable packaging. Package will be deployed in `OUTPUT/packages` | NO |
+| ENABLE_APP_WEBVIEW | Enable webview for accounts. The Webview engine must be deployed, it takes a large size. | NO |
+| ENABLE_APP_PACKAGE_ROOTCA | Embed the rootca file (concatenation of all root certificates published by mozilla) into the package | YES |
 | ENABLE_BUILD_APP_PLUGINS | Enable the build of plugins | YES |
 | ENABLE_BUILD_EXAMPLES | Enable the build of examples | NO |
 | ENABLE_BUILD_VERBOSE | Enable the build generation to be more verbose | NO |
@@ -225,7 +227,6 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | ENABLE_TOOLS | Enable tools of SDK | NO |
 | ENABLE_UNIT_TESTS | Enable unit test of SDK. | NO |
 | ENABLE_UPDATE_CHECK | Enable update check. | YES |
-| ENABLE_APP_WEBVIEW | Enable webview for accounts. The Webview engine must be deployed, it takes a large size. | NO |
 | LINPHONE_SDK_MAKE_RELEASE_FILE_URL | Make a RELEASE file that work along check_version and use this URL | "" |
 
 

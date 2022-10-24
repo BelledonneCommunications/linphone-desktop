@@ -39,6 +39,7 @@ class FileDownloader : public QObject{
   Q_PROPERTY(qint64 readBytes READ getReadBytes NOTIFY readBytesChanged);
   Q_PROPERTY(qint64 totalBytes READ getTotalBytes NOTIFY totalBytesChanged);
   Q_PROPERTY(bool downloading READ getDownloading NOTIFY downloadingChanged);
+  Q_PROPERTY(QString checksum READ getChecksum WRITE setChecksum NOTIFY checksumChanged);
 
 public:
   FileDownloader (QObject *parent = Q_NULLPTR) : QObject(parent) {
@@ -63,6 +64,9 @@ public:
   void setOverwriteFile(const bool &overwrite);
   static QString synchronousDownload(const QUrl &url, const QString &destinationFolder, const bool &overwriteFile);// Return the filpath. Empty if nof file could be downloaded
 
+  QString getChecksum() const;
+  void setChecksum(const QString& code);
+
 signals:
   void urlChanged (const QUrl &url);
   void downloadFolderChanged (const QString &downloadFolder);
@@ -71,6 +75,7 @@ signals:
   void downloadingChanged (bool downloading);
   void downloadFinished (const QString &filePath);
   void downloadFailed();
+  void checksumChanged();
 
 private:
   qint64 getReadBytes () const;
@@ -97,6 +102,7 @@ private:
   QUrl mUrl;
   QString mDownloadFolder;
   QFile mDestinationFile;
+  QString mChecksum;
 
   qint64 mReadBytes = 0;
   qint64 mTotalBytes = 0;

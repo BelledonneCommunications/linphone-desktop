@@ -20,11 +20,13 @@
 
 #include <QFileInfo>
 #include <QCoreApplication>
+#include <QCryptographicHash>
 #include <QCursor>
 #include <QDir>
 #include <QFile>
 #include <QImageReader>
 #include <QDebug>
+#include <QTimeZone>
 #include <QUrl>
 
 #include "config.h"
@@ -37,6 +39,10 @@
 #include "components/settings/SettingsModel.hpp"
 #include "app/paths/Paths.hpp"
 
+#ifdef _WIN32
+#include <time.h>
+#endif
+
 // =============================================================================
 
 namespace {
@@ -45,7 +51,15 @@ constexpr int SafeFilePathLimit = 100;
 }
 
 std::shared_ptr<linphone::Address> Utils::interpretUrl(const QString& address){
-	return CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address));
+	auto interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address), true);
+	if(!interpretedAddress){// Try by removing scheme.
+		QStringList splitted = address.split(":");
+		if(splitted.size() > 0 && splitted[0] == "sip"){
+			splitted.removeFirst();
+			interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(splitted.join(":")), true);
+		}
+	}
+	return interpretedAddress;
 }
 char *Utils::rstrstr (const char *a, const char *b) {
 	size_t a_len = strlen(a);
@@ -77,19 +91,29 @@ QDateTime Utils::addMinutes(QDateTime date, const int& min){
 	return date.addSecs(min*60);
 }
 
+QDateTime Utils::getOffsettedUTC(const QDateTime& date){
+	QDateTime utc = date.toUTC();// Get a date free of any offsets.
+	auto timezone = date.timeZone();
+	utc = utc.addSecs(timezone.offsetFromUtc(date));// add offset from date timezone
+	utc.setTimeSpec(Qt::UTC);// ensure to have an UTC date
+	return utc;
+}
+
 QString Utils::toDateTimeString(QDateTime date){
 	if(date.date() == QDate::currentDate())
 		return toTimeString(date);
-	else
-		return date.toString("yyyy/MM/dd hh:mm:ss");
+	else{
+		return getOffsettedUTC(date).toString("yyyy/MM/dd hh:mm:ss");
+	}
 }
 
-QString Utils::toTimeString(QDateTime date){
-	return date.toString("hh:mm:ss");
+QString Utils::toTimeString(QDateTime date, const QString& format){
+// Issue : date.toString() will not print the good time in timezones. Get it from date and add ourself the offset.
+	return getOffsettedUTC(date).toString(format);
 }
 
 QString Utils::toDateString(QDateTime date){
-	return date.toString("yyyy/MM/dd");
+	return getOffsettedUTC(date).toString("yyyy/MM/dd");
 }
 
 QString Utils::getDisplayName(const QString& address){
@@ -569,4 +593,15 @@ QSize Utils::getImageSize(const QString& url){
 
 QPoint Utils::getCursorPosition(){
 	return QCursor::pos();
+}
+
+QString Utils::getFileChecksum(const QString& filePath){
+    QFile file(filePath);
+    if (file.open(QFile::ReadOnly)) {
+        QCryptographicHash hash(QCryptographicHash::Sha256);
+        if (hash.addData(&file)) {
+            return hash.result().toHex();
+        }
+    }
+    return QString();
 }

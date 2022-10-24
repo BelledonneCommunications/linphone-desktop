@@ -41,7 +41,7 @@ ParticipantDeviceModel::ParticipantDeviceModel (CallModel * callModel, std::shar
 	mIsMe = isMe;
 	mParticipantDevice = device;
 	if( device) {
-		mParticipantDeviceListener = std::make_shared<ParticipantDeviceListener>(nullptr);
+		mParticipantDeviceListener = std::make_shared<ParticipantDeviceListener>();
 		connectTo(mParticipantDeviceListener.get());
 		device->addListener(mParticipantDeviceListener);
 		mState = device->getState();

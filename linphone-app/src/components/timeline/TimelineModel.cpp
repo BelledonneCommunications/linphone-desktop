@@ -89,7 +89,7 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, cons
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::chatRoomDeleted, this, &TimelineModel::onChatRoomDeleted);
 	}
 	if(chatRoom){
-		mChatRoomListener = std::make_shared<ChatRoomListener>(this);
+		mChatRoomListener = std::make_shared<ChatRoomListener>();
 		connectTo(mChatRoomListener.get());
 		chatRoom->addListener(mChatRoomListener);
 	}
@@ -117,7 +117,7 @@ QSharedPointer<TimelineModel> TimelineModel::clone()const{
 }
 
 TimelineModel::~TimelineModel(){
-	if(mChatRoomModel && mChatRoomModel->getChatRoom())
+	if(mChatRoomModel && mChatRoomListener && mChatRoomModel->getChatRoom())
 		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
 }
 
@@ -178,6 +178,7 @@ void TimelineModel::onDefaultAccountChanged(){
 void TimelineModel::disconnectChatRoomListener(){
 	if( mChatRoomModel && mChatRoomListener && mChatRoomModel->getChatRoom()){
 		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
+		mChatRoomListener = nullptr;
 	}
 }
 

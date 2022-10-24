@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
+import UtilsCpp 1.0
 
 import 'History.js' as Logic
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -164,15 +165,12 @@ Rectangle {
               color: HistoryStyle.entry.time.color
               font.pointSize: HistoryStyle.entry.time.pointSize
 
-              text: $historyEntry.timestamp.toLocaleString(
-                Qt.locale(App.locale),
-                'hh:mm'
-              )
+              text: UtilsCpp.toTimeString($historyEntry.timestamp, 'hh:mm')
 
               verticalAlignment: Text.AlignVCenter
 
               TooltipArea {
-                text: $historyEntry.timestamp.toLocaleString(Qt.locale(App.locale))
+                text: UtilsCpp.toDateTimeString($historyEntry.timestamp)
               }
             }
 

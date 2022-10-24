@@ -106,7 +106,7 @@ QString ColorListModel::buildDescription(QString description){
 	return description;
 }
 
-ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue){
+ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue, const int& overrideAlpha, const ColorModel::ContextMode& context){
 	ColorModel * color = getColor(id);
 	if( description == "")
 		description = buildDescription(id);
@@ -121,11 +121,16 @@ ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QStri
 			addLink(id, idLink);
 		}
 		auto colorShared = QSharedPointer<ColorModel>::create(id, colorValue, description);
+		if(overrideAlpha>=0)
+			colorShared->setAlpha(overrideAlpha* 255 / 100);
+		colorShared->setContext(context);
 		add(colorShared);
 		color = colorShared.get();
 		emit colorChanged();
 	}else if( description != color->getDescription()) {
 		color->setDescription(description);
+		if(overrideAlpha>=0)
+			color->setAlpha(overrideAlpha* 255 / 100);
 		emit colorChanged();
 	}
 	return color;
@@ -138,6 +143,12 @@ ColorModel * ColorListModel::addImageColor(const QString& id, const QString& ima
 	return model;
 }
 
+void ColorListModel::updateLinkIndexToColor(const QString& id, const int& index){
+	auto colorModel = getColor(id);
+	if(colorModel)
+		colorModel->setLinkIndex(index);
+}
+
 void ColorListModel::addLink(const QString& a, const QString& b){
 	int index = 0;
 	if( mColorLinkIndexes.contains(b)){
@@ -146,14 +157,17 @@ void ColorListModel::addLink(const QString& a, const QString& b){
 		index = mColorLinks.size();
 		mColorLinks.push_back(QStringList(b));
 		mColorLinkIndexes[b] = index;
+		updateLinkIndexToColor(b, index);
 	}
 	mColorLinks[index].push_back(a);
 	mColorLinkIndexes[a] = index;
+	updateLinkIndexToColor(a, index);
 }
 
 void ColorListModel::removeLink(const QString& a){
 	mColorLinks[mColorLinkIndexes[a]].removeOne(a);
 	mColorLinkIndexes.remove(a);
+	updateLinkIndexToColor(a, -1);
 }
 
 void ColorListModel::updateLink(const QString& id, const QString& newLink){
@@ -234,6 +248,9 @@ void ColorListModel::overrideColors (const std::shared_ptr<linphone::Config> &co
 			}
 			mColorLinks = colorLinks;
 			mColorLinkIndexes = colorLinksIndexes;
+			for(auto it = mColorLinkIndexes.begin() ; it != mColorLinkIndexes.end() ; ++it){
+				updateLinkIndexToColor(it.key(), it.value());
+			}
 		}else{
 			bool haveColor = false;
 			QString qtConfigId = QString::fromStdString(configId);

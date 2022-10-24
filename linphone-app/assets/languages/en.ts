@@ -2059,8 +2059,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
-        <extracomment>&apos;Send invite via Linphone&apos; : Label for checkbox for sending invitations with Linphone.</extracomment>
-        <translation>Send invite via Linphone</translation>
+        <extracomment>&apos;Send invite via %1&apos; : Label for checkbox for sending invitations with the application. %1 is the application name.</extracomment>
+        <translation>Send invite via %1</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
@@ -2331,7 +2331,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsMailerFailed</source>
-        <translatorcomment>Message when Linphone try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
+        <translatorcomment>Message when the application try to open a mailer to send logs, after uploading them to the server (%1 would be the upload url)</translatorcomment>
         <translation>Mailer cannot be found but logs were uploaded to %1</translation>
     </message>
     <message>
@@ -2643,7 +2643,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useSalTooltip</source>
-        <translation>The DNS resolution is done by Linphone using SAL. It will pass an IP to LDAP. By doing that, the TLS negotiation cannot check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
+        <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
+        <translation>The DNS resolution is done by %1 using SAL. It will pass an IP to LDAP. By doing that, the TLS negotiation cannot check the hostname. You may deactivate the verifications if wanted to force the connection.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2730,7 +2731,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>domainTooltip</source>
-        <translation>Add the domain to the SIP address (sip:username@domain).&lt;br&gt;The default value is sip.linphone.org</translation>
+        <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
+        <translation>Add the domain to the SIP address (sip:username@domain).</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -2743,7 +2745,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Get verbose logs in Linphone log file when doing transactions (useful to debug TLS connections).</translation>
+        <translation>Get verbose logs in log file when doing transactions (useful to debug TLS connections).</translation>
     </message>
     <message>
         <source>timeoutLabel</source>
@@ -3671,8 +3673,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>warningFeatures</source>
-        <extracomment>&apos;Some features require a Linphone account, such as group messaging or ephemeral messaging.&apos; : Warning text about features.</extracomment>
-        <translation>Some features require a Linphone account, such as group messaging or ephemeral messaging.</translation>
+        <extracomment>&apos;Some features require a %1 account, such as group messaging or ephemeral messaging.&apos; : Warning text about features. %1 is the application name</extracomment>
+        <translation>Some features require a %1 account, such as group messaging or ephemeral messaging.</translation>
     </message>
     <message>
         <source>warningThirdParty</source>
@@ -3699,8 +3701,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>endCallStatus</source>
-        <extracomment>&quot;Ending call&quot; : status of the call in waiting room when the call end.</extracomment>
-        <translation>Ending call</translation>
+        <extracomment>&quot;Call ended&quot; : status of the call in waiting room when the call end.</extracomment>
+        <translation>Call ended</translation>
     </message>
     <message>
         <source>outgoingCallStatus</source>

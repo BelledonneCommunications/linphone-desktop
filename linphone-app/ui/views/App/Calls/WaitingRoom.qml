@@ -22,7 +22,7 @@ Rectangle {
 	property CallModel callModel	// Store the call for processing calling.
 	property bool previewLoaderEnabled: callModel ? callModel.videoEnabled : true
 	property var _sipAddressObserver: callModel ? SipAddressesModel.getSipAddressObserver(callModel.fullPeerAddress, callModel.fullLocalAddress) : undefined
-	property bool isEnding: callModel && callModel.status == CallModel.CallStatusEnded
+	property bool isEnded: callModel && callModel.status == CallModel.CallStatusEnded
 	
 	signal cancel()
 	
@@ -53,19 +53,21 @@ Rectangle {
 			Layout.bottomMargin: (mainItem.conferenceInfoModel && mainItem.callModel ? 10 : 30)
 			spacing: 10
 			BusyIndicator {
+				id: busyIndicator
 				Layout.alignment: Qt.AlignCenter
 				Layout.preferredHeight: WaitingRoomStyle.header.busyIndicator.height
 				Layout.preferredWidth: WaitingRoomStyle.header.busyIndicator.width
 				Layout.topMargin: 30
 				color: WaitingRoomStyle.header.busyIndicator.color
-				visible: mainItem.callModel && mainItem.callModel.status !== CallModel.CallStatusConnected
+				visible: mainItem.callModel && mainItem.callModel.status !== CallModel.CallStatusConnected && !mainItem.isEnded
 			}
 			
 			Text{
 				Layout.alignment: Qt.AlignCenter
+				Layout.topMargin: busyIndicator.visible ? 0 : 30
 				text: mainItem.callModel
-						? mainItem.isEnding
-						//: "Ending call" : status of the call in waiting room when the call end.
+						? mainItem.isEnded
+						//: "Call ended" : status of the call in waiting room when the call end.
 							? qsTr("endCallStatus")
 							: mainItem.callModel.isOutgoing 
 						//: "Outgoing call" : status of the call in waiting room when user is calling.
@@ -86,7 +88,7 @@ Rectangle {
 				font.pointSize: WaitingRoomStyle.elapsedTime.pointSize
 				horizontalAlignment: Text.AlignHCenter
 				width: parent.width
-				visible: mainItem.callModel && !mainItem.isEnding
+				visible: mainItem.callModel && !mainItem.isEnded
 				Timer {
 					interval: 1000
 					repeat: true
@@ -151,7 +153,7 @@ Rectangle {
 											: mainItem.callModel
 												? mainItem.callModel.conferenceModel
 												: null
-					deactivateCamera: !mainItem.previewLoaderEnabled || mainItem.isEnding
+					deactivateCamera: !mainItem.previewLoaderEnabled || mainItem.isEnded
 					
 					/*
 					image: mainItem._sipAddressObserver && mainItem._sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
@@ -228,7 +230,7 @@ Rectangle {
 			Layout.alignment: Qt.AlignCenter
 			Layout.topMargin: 20
 			Layout.bottomMargin: 15
-			visible: mainItem.conferenceInfoModel && !mainItem.isEnding
+			visible: mainItem.conferenceInfoModel && !mainItem.isEnded
 			
 			spacing: 30
 			TextButtonA {
@@ -262,7 +264,7 @@ Rectangle {
 			Layout.preferredHeight: actionsButtons.height
 			Layout.bottomMargin: 30
 			Layout.topMargin: 20
-			visible: !mainItem.isEnding
+			visible: !mainItem.isEnded
 			// Action buttons
 			RowLayout{
 				id: actionsButtons
