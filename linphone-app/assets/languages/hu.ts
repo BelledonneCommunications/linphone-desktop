@@ -2616,7 +2616,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>A DNS feloldását Linphone végzi SAL használatával. Egy IP-címet továbbít az LDAP kiszolgálónak. Ezzel a TLS tárgyalás nem tudta ellenőrizni az állomásnévét. Deaktiválhatja az ellenőrzéseket, ha kényszeríteni szeretné a kapcsolatot.</translation>
+        <translation>A DNS feloldását %1 végzi SAL használatával. Egy IP-címet továbbít az LDAP kiszolgálónak. Ezzel a TLS tárgyalás nem tudta ellenőrizni az állomásnévét. Deaktiválhatja az ellenőrzéseket, ha kényszeríteni szeretné a kapcsolatot.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2705,7 +2705,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation>Tartomány hozzáadása a SIP-címhez (sip:felhasználónév@tartomány).&lt;br&gt;Az alapértelmezett érték a sip.linphone.org</translation>
+        <translation>Tartomány hozzáadása a SIP-címhez (sip:felhasználónév@tartomány).</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -2717,7 +2717,7 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Részletes naplófájlok beszerzése a Linphone naplófájljába tranzakciók során (hasznos a TLS-kapcsolatok hibakereséséhez).</translation>
+        <translation>Részletes naplófájlok beszerzése naplófájljába tranzakciók során (hasznos a TLS-kapcsolatok hibakereséséhez).</translation>
     </message>
 </context>
 <context>

@@ -2629,7 +2629,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>DNS-Auflösung wird von Linphone via SAL gemacht. Die IP wird an den LDAP-Server übertragen. Dadurch kann bei der TLS-Verhandlung der Hostname nicht geprüft werden. Sie können die Prüfung deaktivieren um die Verbindung zu erzwingen.</translation>
+        <translation>DNS-Auflösung wird von %1 via SAL gemacht. Die IP wird an den LDAP-Server übertragen. Dadurch kann bei der TLS-Verhandlung der Hostname nicht geprüft werden. Sie können die Prüfung deaktivieren um die Verbindung zu erzwingen.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2718,7 +2718,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation>Füge die Domain der SIP-Adresse hinzu (sip:username@domain).&lt;br&gt;Der Standardwert ist sip.linphone.org</translation>
+        <translation>Füge die Domain der SIP-Adresse hinzu (sip:username@domain).</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -2730,7 +2730,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Bei LDAP-Anfragen ausführliche Logeinträge in die Linphone-Logdatei schreiben (hilfreich um TLS-Verbindungen zu untersuchen).</translation>
+        <translation>Bei LDAP-Anfragen ausführliche Logeinträge Logdatei schreiben (hilfreich um TLS-Verbindungen zu untersuchen).</translation>
     </message>
 </context>
 <context>

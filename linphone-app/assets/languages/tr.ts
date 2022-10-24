@@ -2616,7 +2616,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>DNS çözümleme SAL kullanılarak Linphone tarafından yapılır. LDAP&apos;a bir IP gönderir. Bunu yaparak, TLS uzlaşısı ana makine adını denetleyemez. Bağlantıyı dayatmak isteniyorsa doğrulamaları devre dışı bırakmanız gerekebilir.</translation>
+        <translation>DNS çözümleme SAL kullanılarak %1 tarafından yapılır. LDAP&apos;a bir IP gönderir. Bunu yaparak, TLS uzlaşısı ana makine adını denetleyemez. Bağlantıyı dayatmak isteniyorsa doğrulamaları devre dışı bırakmanız gerekebilir.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2705,7 +2705,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation>SIP adresine etki alanı ekle (sip:kullanici@etkialanı).&lt;br&gt;Öntanımlı değer: sip.linphone.org</translation>
+        <translation>SIP adresine etki alanı ekle (sip:kullanici@etkialanı).</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -2717,7 +2717,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>İşlem yaparken Linphone günlük dosyasına ayrıntılı günlükle (TLS bağlantısı hataları ayıklanırken kullanışlıdır).</translation>
+        <translation>İşlem yaparken günlük dosyasına ayrıntılı günlükle (TLS bağlantısı hataları ayıklanırken kullanışlıdır).</translation>
     </message>
 </context>
 <context>
@@ -3638,7 +3638,7 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>warningFeatures</source>
         <extracomment>&apos;Some features require a %1 account, such as group messaging or ephemeral messaging.&apos; : Warning text about features. %1 is the application name</extracomment>
-        <translation>Küme iletileri veya kısa ömürlü iletiler gibi bazı özellikler Linphone hesabı gerektirir.</translation>
+        <translation>Küme iletileri veya kısa ömürlü iletiler gibi bazı özellikler %1 hesabı gerektirir.</translation>
     </message>
     <message>
         <source>warningThirdParty</source>
