@@ -2629,7 +2629,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>A resolução DNS é feita pelo Linphone usando SAL. Ele vai passar um IP para o LDAP. Com isso, a negociação TLS não conseguiu verificar o nome do host. Você pode desativar as verificações se quiser forçar a conexão.</translation>
+        <translation>A resolução DNS é feita pelo %1 usando SAL. Ele vai passar um IP para o LDAP. Com isso, a negociação TLS não conseguiu verificar o nome do host. Você pode desativar as verificações se quiser forçar a conexão.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2718,7 +2718,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation>Adicione o domínio ao endereço SIP (sip:username@domain). &lt;br&gt;O valor padrão é sip.linphone.org</translation>
+        <translation>Adicione o domínio ao endereço SIP (sip:username@domain).</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -2730,7 +2730,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Obtenha logs detalhados no arquivo de log do Linphone ao fazer transações (útil para depurar conexões TLS).</translation>
+        <translation>Obtenha logs detalhados no arquivo de log ao fazer transações (útil para depurar conexões TLS).</translation>
     </message>
 </context>
 <context>

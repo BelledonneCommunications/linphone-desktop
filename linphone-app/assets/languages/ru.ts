@@ -2072,7 +2072,7 @@
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
         <extracomment>&apos;Send invite via %1&apos; : Label for checkbox for sending invitations with the application. %1 is the application name.</extracomment>
-        <translation>Отправить приглашение через Linphone</translation>
+        <translation>Отправить приглашение через %1</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
@@ -2642,7 +2642,7 @@
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>Разрешение DNS выполняется Linphone с использованием SAL. Он передаст IP в LDAP. При этом согласование TLS не может проверить имя хоста. Вы можете деактивировать проверки, если хотите принудительно установить соединение.</translation>
+        <translation>Разрешение DNS выполняется %1 с использованием SAL. Он передаст IP в LDAP. При этом согласование TLS не может проверить имя хоста. Вы можете деактивировать проверки, если хотите принудительно установить соединение.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2731,7 +2731,7 @@
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation>Добавьте домен к SIP-адресу (sip:username@domain).&lt;br&gt;Значение по умолчанию: sip.linphone.org</translation>
+        <translation>Добавьте домен к SIP-адресу (sip:username@domain).</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -2743,7 +2743,7 @@
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Получайте подробные журналы в файле журнала Linphone при выполнении транзакций (полезно для отладки соединений TLS).</translation>
+        <translation>Получайте подробные журналы в файле журнала при выполнении транзакций (полезно для отладки соединений TLS).</translation>
     </message>
 </context>
 <context>
@@ -3664,7 +3664,7 @@
     <message>
         <source>warningFeatures</source>
         <extracomment>&apos;Some features require a %1 account, such as group messaging or ephemeral messaging.&apos; : Warning text about features. %1 is the application name</extracomment>
-        <translation>Для некоторых функций требуется аккаунт Linphone, например для группового обмена сообщениями или обмена недолговечными сообщениями.</translation>
+        <translation>Для некоторых функций требуется аккаунт %1, например для группового обмена сообщениями или обмена недолговечными сообщениями.</translation>
     </message>
     <message>
         <source>warningThirdParty</source>

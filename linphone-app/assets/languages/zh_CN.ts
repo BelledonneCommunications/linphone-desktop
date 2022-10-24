@@ -2616,7 +2616,7 @@
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>DNS 解析已由 Linphone 使用 SAL 完成。 它会将 IP 传递给 LDAP。 通过这样做，TLS 协商无法检查主机名。 如果想强制连接，您可以停用验证。</translation>
+        <translation>DNS 解析已由 %1 使用 SAL 完成。 它会将 IP 传递给 LDAP。 通过这样做，TLS 协商无法检查主机名。 如果想强制连接，您可以停用验证。</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2705,7 +2705,7 @@
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation>添加域名到SIP地址（sip:username@domain）。&lt;br&gt;默认值是sip.linphone.org</translation>
+        <translation>添加域名到SIP地址（sip:username@domain）。</translation>
     </message>
     <message>
         <source>miscLabel</source>

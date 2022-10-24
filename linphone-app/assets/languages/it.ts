@@ -1456,7 +1456,7 @@ URL del server non configurato.</translation>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation>Esegui uno snapshot&apos;</translation>
+        <translation>Esegui uno snapshot</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
@@ -2060,7 +2060,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
         <extracomment>&apos;Send invite via %1&apos; : Label for checkbox for sending invitations with the application. %1 is the application name.</extracomment>
-        <translation>Invita tramite Linphone</translation>
+        <translation>Invita tramite %1</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
@@ -2629,7 +2629,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>Linphone usa SAL per la risoluzione DNS. Passerà l&apos;indirizzo IP a LDAP. Facendo cosi la negoziazione TLS non può controllare il nome dell&apos;host. Si possono disattivare le verifiche se si vuole forzare la connessione.</translation>
+        <translation>%1 usa SAL per la risoluzione DNS. Passerà l&apos;indirizzo IP a LDAP. Facendo cosi la negoziazione TLS non può controllare il nome dell&apos;host. Si possono disattivare le verifiche se si vuole forzare la connessione.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2718,7 +2718,7 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation>Aggiunge il dominio all&apos;indirizzo SIP (sip:nomeutente@dominio).&lt;br&gt;Il valore di default è sip.linphone.org</translation>
+        <translation>Aggiunge il dominio all&apos;indirizzo SIP (sip:nomeutente@dominio).</translation>
     </message>
     <message>
         <source>miscLabel</source>
