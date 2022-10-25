@@ -75,16 +75,7 @@ Rectangle {
 								? ''
 								: item.username
 						: item.username
-			visible:!groupChat.visible
-			Icon {
-				
-				anchors.fill: parent
-				
-				icon: ContactStyle.groupChat.icon
-				overwriteColor: ContactStyle.groupChat.avatarColor
-				iconSize: ContactStyle.contentHeight
-				visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
-			}
+			isOneToOne: entry==undefined || entry.isOneToOne==undefined || entry.isOneToOne
 			
 			Icon{
 				anchors.top:parent.top
@@ -96,26 +87,6 @@ Rectangle {
 			MouseArea{
 				anchors.fill: parent
 				onClicked: item.avatarClicked(mouse)
-			}
-		}
-		Icon {
-			id: groupChat
-			
-			Layout.preferredHeight: ContactStyle.contentHeight
-			Layout.preferredWidth: ContactStyle.contentHeight
-			
-			icon: ContactStyle.groupChat.icon
-			overwriteColor: ContactStyle.groupChat.color
-			iconSize: ContactStyle.contentHeight
-			visible: false //entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
-			
-			Icon{
-				anchors.right: parent.right
-				anchors.top:parent.top
-				anchors.topMargin: -5
-				visible: entry!=undefined && entry.haveEncryption != undefined && entry.haveEncryption
-				icon: entry?(entry.securityLevel === 2?'secure_level_1': entry.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'):'secure_level_unsafe'
-				iconSize:15
 			}
 		}
 		

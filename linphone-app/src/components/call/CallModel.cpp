@@ -240,7 +240,22 @@ QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 
 bool CallModel::isConference () const{
 // Check status to avoid crash when requesting a conference on an ended call.
-	return mCall && (Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()).toLower().contains("conf-id") || (getStatus() != CallStatusEnded && mCall->getConference() != nullptr));
+	bool isConf = false;
+	if(mCall){
+		isConf = getStatus() != CallStatusEnded && (mCall->getConference() != nullptr || mConferenceInfoModel != nullptr);
+		if(!isConf){// Check special cases for Linphone. Having conf-id for a conference URI is not standard.
+			auto remoteAddress = mCall->getRemoteAddress();
+			if( remoteAddress->getDomain() == Constants::LinphoneDomain){
+				isConf = remoteAddress->hasUriParam("conf-id");
+			}
+		}
+	}
+	
+	return isConf;
+}
+
+bool CallModel::isOneToOne() const{
+	return !isConference();
 }
 
 // -----------------------------------------------------------------------------

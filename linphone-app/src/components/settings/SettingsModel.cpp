@@ -548,12 +548,9 @@ static inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const l
 	QVariantMap map;
 
 	if (!definition) {
-		Q_ASSERT(!CoreManager::getInstance()->getCore()->videoSupported());
-
 		map["name"] = QStringLiteral("Bad EGG");
 		map["width"] = QStringLiteral("?????");
 		map["height"] = QStringLiteral("?????");
-
 		return map;
 	}
 
