@@ -73,27 +73,14 @@ Item {
 			text: mainItem.timelineModel && UtilsCpp.toDateTimeString(mainItem.timelineModel.chatRoomModel.lastUpdateTime)
 			isClickable: true
 		}
-		
-		Icon{
-			id: draft
-			icon: TimelineStyle.draft.icon
-			iconSize: visible ? TimelineStyle.draft.iconSize : 0
-			overwriteColor:  mainItem.timelineModel && mainItem.timelineModel.selected ? TimelineStyle.draft.selectedColor : TimelineStyle.draft.color
-			anchors.right:parent.right
-			anchors.bottom:parent.bottom
-			anchors.bottomMargin: 3
-			anchors.rightMargin: 7
-			visible: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel.hasDraft
-		}
-		
 		Icon{
 			icon: TimelineStyle.ephemeralTimer.icon
 			iconSize: TimelineStyle.ephemeralTimer.iconSize
 			overwriteColor:  mainItem.timelineModel && mainItem.timelineModel.selected ? TimelineStyle.ephemeralTimer.selectedTimerColor : TimelineStyle.ephemeralTimer.timerColor
-			anchors.right:draft.left
+			anchors.right:parent.right
 			anchors.bottom:parent.bottom
-			anchors.bottomMargin: 3
-			anchors.rightMargin: draft.visible ? 0 : 7
+			anchors.bottomMargin: 7
+			anchors.rightMargin: 7
 			visible: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel.ephemeralEnabled
 		}
 		MouseArea {

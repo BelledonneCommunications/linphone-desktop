@@ -92,9 +92,6 @@ public:
 	
 	Q_PROPERTY(bool entriesLoading READ isEntriesLoading WRITE setEntriesLoading NOTIFY entriesLoadingChanged)
 	
-	Q_PROPERTY(QString cachedText READ getCachedText WRITE setCachedText NOTIFY cachedTextChanged)
-	Q_PROPERTY(bool hasDraft READ hasDraft WRITE setHasDraft NOTIFY hasDraftChanged)
-	
 	
 	static QSharedPointer<ChatRoomModel> create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs = std::list<std::shared_ptr<linphone::CallLog>>());
 	ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs = std::list<std::shared_ptr<linphone::CallLog>>(), QObject * parent = nullptr);
@@ -144,8 +141,6 @@ public:
 	QList<QString> getComposers();
 	QString getParticipantAddress();	// return peerAddress if not secure else return the first participant SIP address.
 	int getAllUnreadCount();	// Return unread messages and missed call.
-	QString getCachedText() const;
-	bool hasDraft() const;
 		
 //---- Setters
 	void setSubject(QString& subject);
@@ -159,8 +154,6 @@ public:
 	void setEphemeralEnabled(bool enabled);
 	void setEphemeralLifetime(long lifetime);
 	void enableMarkAsRead(const bool& enable);
-	bool setCachedText(const QString& text);	// return true if cache changed
-	void setHasDraft(const bool& draft);
 	
 	void setReply(ChatMessageModel * model);
 	ChatMessageModel * getReply()const;
@@ -175,7 +168,7 @@ public:
 	Q_INVOKABLE void updateParticipants(const QVariantList& participants);		
 	void sendMessage (const QString &message);
 	Q_INVOKABLE void forwardMessage(ChatMessageModel * model);
-	void compose (const QString& text);
+	void compose ();
 	Q_INVOKABLE void resetMessageCount ();
 	void initEntries();
 	Q_INVOKABLE int loadMoreEntries();	// return new entries count
@@ -280,8 +273,6 @@ signals:
 	void markAsReadEnabledChanged();
 	void chatRoomDeleted();// Must be connected with DirectConnection mode
 	void replyChanged();
-	void cachedTextChanged();
-	void hasDraftChanged();
 	
 // Chat Room listener callbacks	
 	
@@ -314,8 +305,6 @@ private:
 	QSharedPointer<ChatMessageModel> mReplyModel;
 	QSharedPointer<ChatNoticeModel> mUnreadMessageNotice;
 	int mBindingCalls = 0;
-	QString mCachedText;	// TODO : replace it by content to manage files/audio etc.
-	bool mHasDraft = false;
 	
 	QWeakPointer<ChatRoomModel> mSelf;
 };

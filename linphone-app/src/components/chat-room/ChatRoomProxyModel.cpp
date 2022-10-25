@@ -36,6 +36,8 @@
 
 using namespace std;
 
+QString ChatRoomProxyModel::gCachedText;
+
 // =============================================================================
 
 ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
@@ -99,7 +101,8 @@ CREATE_PARENT_MODEL_FUNCTION(deleteChatRoom)
 
 void ChatRoomProxyModel::compose (const QString& text) {
 	if (mChatRoomModel)
-		mChatRoomModel->compose(text);
+		mChatRoomModel->compose();
+	gCachedText = text;
 }
 
 int ChatRoomProxyModel::getEntryTypeFilter () {
@@ -237,6 +240,10 @@ QString ChatRoomProxyModel::getDisplayNameComposers()const{
 QVariant ChatRoomProxyModel::getAt(int row){
 	QModelIndex sourceIndex = mapToSource(this->index(row, 0));
 	return sourceModel()->data(sourceIndex);
+}
+
+QString ChatRoomProxyModel::getCachedText() const{
+	return gCachedText;
 }
 
 void ChatRoomProxyModel::setIsCall(const bool& isCall){
