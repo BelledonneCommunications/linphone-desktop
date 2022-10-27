@@ -2060,7 +2060,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
         <extracomment>&apos;Send invite via %1&apos; : Label for checkbox for sending invitations with the application. %1 is the application name.</extracomment>
-        <translation>Envoyer les invitations avec Linphone</translation>
+        <translation>Envoyer les invitations avec %1</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
@@ -2629,7 +2629,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation>La résolution DNS est effectuée par Linphone en utilisant SAL. Il fournira une IP à LDAP. Ce faisant, la négociation TLS ne pourra pas vérifier le nom d&apos;hôte. Vous devrez donc désactiver les vérifications si vous voulez forcer la connexion.</translation>
+        <translation>La résolution DNS est effectuée par %1 en utilisant SAL. Il fournira une IP à LDAP. Ce faisant, la négociation TLS ne pourra pas vérifier le nom d&apos;hôte. Vous devrez donc désactiver les vérifications si vous voulez forcer la connexion.</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
