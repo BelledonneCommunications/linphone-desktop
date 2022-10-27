@@ -285,6 +285,8 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	mCore->enableRecordAware(true);
 	if(mCore->getAccountCreatorUrl() == "")
 		mCore->setAccountCreatorUrl(Constants::DefaultFlexiAPIURL);
+	if( mCore->getAccountList().size() == 0)
+		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 }
 
 void CoreManager::updateUserAgent(){

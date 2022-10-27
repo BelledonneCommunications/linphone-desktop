@@ -46,6 +46,7 @@ public:
 #endif // ifdef ENABLE_UPDATE_CHECK
 	
 	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
+	static constexpr char DefaultUploadLogsServer[] = "https://www.linphone.org:444/lft.php";
 	static constexpr char DefaultContactParameters[] = "message-expires=604800";
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 3600;
