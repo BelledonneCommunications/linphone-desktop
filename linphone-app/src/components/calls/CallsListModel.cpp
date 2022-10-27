@@ -343,7 +343,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 				initializer->setAdminsData(admins);
 				ChatRoomInitializer::start(initializer);
 			}
-			timeline = timelineList->getTimeline(chatRoom, ChatRoomModel::isTerminated(chatRoom));
+			timeline = timelineList->getTimeline(chatRoom, true);
 		}else{
 			if(admins.size() > 0){
 				ChatRoomInitializer::create(chatRoom)->setAdmins(admins);

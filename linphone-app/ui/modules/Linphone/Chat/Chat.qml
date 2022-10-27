@@ -12,6 +12,7 @@ import LinphoneEnums 1.0
 import Units 1.0
 
 import 'Chat.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -290,10 +291,10 @@ Rectangle {
 										//: 'Choose where to forward the message' : Dialog title for choosing where to forward the current message.
 										, {title: qsTr('forwardDialogTitle'),
 											addressSelectedCallback: function (sipAddress) {
-																		var chat = CallsListModel.createChat(sipAddress)
+																		var chat = CallsListModel.createChatRoom( '', proxyModel.chatRoomModel.haveEncryption, [sipAddress], false )
 																		if(chat){
-																			chat.forwardMessage($chatEntry)
-																			TimelineListModel.select(chat)
+																			chat.chatRoomModel.forwardMessage($chatEntry)
+																			TimelineListModel.select(chat.chatRoomModel)
 																		}
 																	},
 											chatRoomSelectedCallback: function (chatRoomModel){

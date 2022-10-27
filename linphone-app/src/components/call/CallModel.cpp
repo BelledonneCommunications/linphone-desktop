@@ -242,7 +242,9 @@ bool CallModel::isConference () const{
 // Check status to avoid crash when requesting a conference on an ended call.
 	bool isConf = false;
 	if(mCall){
-		isConf = getStatus() != CallStatusEnded && (mCall->getConference() != nullptr || mConferenceInfoModel != nullptr);
+	// Do not call getConference on Ended status.
+		isConf = (getStatus() != CallStatusEnded && mCall->getConference() != nullptr) || mConferenceInfoModel != nullptr;
+		
 		if(!isConf){// Check special cases for Linphone. Having conf-id for a conference URI is not standard.
 			auto remoteAddress = mCall->getRemoteAddress();
 			if( remoteAddress->getDomain() == Constants::LinphoneDomain){

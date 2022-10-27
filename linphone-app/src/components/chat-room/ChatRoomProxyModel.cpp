@@ -335,7 +335,7 @@ void ChatRoomProxyModel::setChatRoomModel (ChatRoomModel *chatRoomModel){
 	}else{
 		if(mIsCall && mChatRoomModel)
 			mChatRoomModel->removeBindingCall();
-			mChatRoomModel = nullptr;
+		mChatRoomModel = nullptr;
 	}
 }
 // -----------------------------------------------------------------------------

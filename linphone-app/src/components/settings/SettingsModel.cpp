@@ -69,7 +69,6 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::videoConferenceEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::secureChatEnabledChanged);
 	
-	
 	configureRlsUri();
 }
 

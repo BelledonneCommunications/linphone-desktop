@@ -107,7 +107,7 @@ void ChatRoomModel::connectTo(ChatRoomListener * listener){
 }
 
 // -----------------------------------------------------------------------------
-QSharedPointer<ChatRoomModel> ChatRoomModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs){
+QSharedPointer<ChatRoomModel> ChatRoomModel::create(const std::shared_ptr<linphone::ChatRoom>& chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs){
 	QSharedPointer<ChatRoomModel> model = QSharedPointer<ChatRoomModel>::create(chatRoom, callLogs);
 	if(model){
 		model->mSelf = model;
@@ -117,7 +117,7 @@ QSharedPointer<ChatRoomModel> ChatRoomModel::create(std::shared_ptr<linphone::Ch
 		return nullptr;
 }
 
-ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject * parent) : ProxyListModel(parent){
+ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject * parent) : ProxyListModel(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	CoreManager *coreManager = CoreManager::getInstance();
 	mCoreHandlers = coreManager->getHandlers();
@@ -311,11 +311,11 @@ QString ChatRoomModel::getLocalAddress () const {
 }
 
 QString ChatRoomModel::getFullPeerAddress () const {
-	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString()) : "";
+	return mChatRoom && mChatRoom->getPeerAddress() ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString()) : "";
 }
 
 QString ChatRoomModel::getFullLocalAddress () const {
-	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asString()) : "";
+	return mChatRoom && mChatRoom->getLocalAddress()? Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asString()) : "";
 }
 
 QString ChatRoomModel::getConferenceAddress () const {
@@ -620,15 +620,14 @@ void ChatRoomModel::markAsToDelete(){
 void ChatRoomModel::deleteChatRoom(){
 	qInfo() << "Deleting ChatRoom : " << getSubject() << ",  address=" << getFullPeerAddress();
 	if(mChatRoom){
-		mChatRoom->removeListener(mChatRoomListener);
 		CoreManager::getInstance()->getCore()->deleteChatRoom(mChatRoom);
 	}
-	emit chatRoomDeleted();
 }
 
 void ChatRoomModel::leaveChatRoom (){
 	if(mChatRoom){
-		mChatRoom->leave();
+		if(!isReadOnly())
+			mChatRoom->leave();
 		if( mChatRoom->getHistorySize() == 0 && mChatRoom->getHistoryEventsSize() == 0)
 			deleteChatRoom();
 	}
@@ -1311,6 +1310,11 @@ void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linpho
 void ChatRoomModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
 	updateLastUpdateTime();
 	emit stateChanged(getState());
+	if(newState == linphone::ChatRoom::State::Deleted){
+		mChatRoom->removeListener(mChatRoomListener);
+		mChatRoom = nullptr;
+		emit chatRoomDeleted();
+	}
 }
 
 void ChatRoomModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){

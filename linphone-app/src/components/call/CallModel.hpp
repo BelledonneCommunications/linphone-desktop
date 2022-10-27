@@ -55,8 +55,8 @@ class CallModel : public QObject {
 	Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT)
 	
 	Q_PROPERTY(bool isInConference READ isInConference NOTIFY isInConferenceChanged)
-	Q_PROPERTY(bool isConference READ isConference CONSTANT)
-	Q_PROPERTY(bool isOneToOne READ isOneToOne CONSTANT)
+	Q_PROPERTY(bool isConference READ isConference NOTIFY conferenceInfoModelChanged)
+	Q_PROPERTY(bool isOneToOne READ isOneToOne NOTIFY conferenceInfoModelChanged)
 	
 	
 	Q_PROPERTY(int duration READ getDuration CONSTANT) // Constants but called with a timer in qml.
