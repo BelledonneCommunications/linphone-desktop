@@ -58,6 +58,7 @@ void ParticipantDeviceListModel::initConferenceModel(){
 			updateDevices(conferenceModel->getConference()->getParticipantDeviceList(), false);
 			
 			qDebug() << "Conference have " << mList.size() << " devices";
+			connect(conferenceModel.get(), &ConferenceModel::activeSpeakerParticipantDevice, this, &ParticipantDeviceListModel::onActiveSpeakerParticipantDevice);	
 			connect(conferenceModel.get(), &ConferenceModel::participantAdded, this, &ParticipantDeviceListModel::onParticipantAdded);
 			connect(conferenceModel.get(), &ConferenceModel::participantRemoved, this, &ParticipantDeviceListModel::onParticipantRemoved);
 			connect(conferenceModel.get(), &ConferenceModel::participantDeviceAdded, this, &ParticipantDeviceListModel::onParticipantDeviceAdded);
@@ -116,6 +117,9 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 	if( addMe){
 		qDebug() << "Added a me device";
 		emit meChanged();
+	}else if(mList.size() == 1 || (mList.size() == 2 && isMe(mList.front().objectCast<ParticipantDeviceModel>()->getDevice()))){
+		mActiveSpeaker = mList.back().objectCast<ParticipantDeviceModel>();
+		emit activeSpeakerChanged();
 	}
 	return true;
 }
@@ -126,7 +130,6 @@ bool ParticipantDeviceListModel::remove(std::shared_ptr<const linphone::Particip
 		auto device = item.objectCast<ParticipantDeviceModel>();
 		if( device->getDevice() == deviceToRemove){
 			device->updateVideoEnabled();
-			mActiveSpeakers.removeAll(device.get());
 			removeRow(row);
 			return true;
 		}else
@@ -163,14 +166,8 @@ QSharedPointer<ParticipantDeviceModel> ParticipantDeviceListModel::getMe(int * i
 	return nullptr;
 }
 
-ParticipantDeviceModel* ParticipantDeviceListModel::getLastActiveSpeaking() const{
-	if( mActiveSpeakers.size() == 0){
-		if( mList.size() == 0)
-			return getMe().get();
-		else
-			return mList.back().objectCast<ParticipantDeviceModel>().get();
-	}else
-		return mActiveSpeakers.first();
+ParticipantDeviceModel* ParticipantDeviceListModel::getActiveSpeakerModel() const{
+	return mActiveSpeaker.get();
 }
 
 bool ParticipantDeviceListModel::isMe(std::shared_ptr<linphone::ParticipantDevice> deviceToCheck)const{
@@ -280,6 +277,13 @@ void ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged(con
 	else
 		onParticipantDeviceAdded(participantDevice);
 }
+void ParticipantDeviceListModel::onActiveSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice>& participantDevice){
+	auto device = get(participantDevice);
+	if( device){
+		mActiveSpeaker = device;
+		emit activeSpeakerChanged();
+	}
+}
 
 void ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking){
 	auto device = get(participantDevice);
@@ -288,14 +292,5 @@ void ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged(const std:
 }
 
 void ParticipantDeviceListModel::onParticipantDeviceSpeaking(){
-	auto deviceModel = qobject_cast<ParticipantDeviceModel*>(sender());
-	bool changed = false;
-	// Me should not be in the list.
-	if( !deviceModel->isMe() && (mActiveSpeakers.size() == 0 || deviceModel->getIsSpeaking())) {// Ensure to have at least one last active speaker
-		changed = mActiveSpeakers.removeAll(deviceModel) > 0;
-		mActiveSpeakers.push_front(deviceModel);
-		changed = true;
-	}
-	if(changed)
-		emit participantSpeaking(deviceModel);
+
 }

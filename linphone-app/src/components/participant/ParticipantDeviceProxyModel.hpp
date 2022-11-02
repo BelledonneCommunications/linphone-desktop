@@ -42,12 +42,14 @@ public:
 	Q_PROPERTY(CallModel * callModel READ getCallModel WRITE setCallModel NOTIFY callModelChanged)
 	Q_PROPERTY(bool showMe READ isShowMe WRITE setShowMe NOTIFY showMeChanged)
 	Q_PROPERTY(ParticipantDeviceModel * me READ getMe NOTIFY meChanged)
+	Q_PROPERTY(ParticipantDeviceModel* activeSpeaker READ getActiveSpeakerModel NOTIFY activeSpeakerChanged)
 	
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
 	
 	Q_INVOKABLE ParticipantDeviceModel* getAt(int row);
-	Q_INVOKABLE ParticipantDeviceModel* getLastActiveSpeaking();
-	ParticipantDeviceModel * getMe() const;
+	ParticipantDeviceModel* getActiveSpeakerModel();
+	ParticipantDeviceModel* getMe() const;
+	
 	CallModel * getCallModel() const;
 	bool isShowMe() const;
 	
@@ -56,11 +58,14 @@ public:
 	void setParticipant(ParticipantModel * participant);
 	void setShowMe(const bool& show);
 	
+	void connectTo(ParticipantDeviceListModel* model);
+	
 public slots:
 	void onCountChanged();
 	void onParticipantSpeaking(ParticipantDeviceModel * speakingDevice);
 		
 signals:
+	void activeSpeakerChanged();
 	void callModelChanged();
 	void showMeChanged();
 	void meChanged();

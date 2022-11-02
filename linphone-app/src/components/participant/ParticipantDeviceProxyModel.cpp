@@ -57,9 +57,9 @@ ParticipantDeviceModel *ParticipantDeviceProxyModel::getAt(int row){
 	return sourceModel()->data(sourceIndex).value<ParticipantDeviceModel *>();
 }
 
-ParticipantDeviceModel* ParticipantDeviceProxyModel::getLastActiveSpeaking(){
+ParticipantDeviceModel* ParticipantDeviceProxyModel::getActiveSpeakerModel(){
 	auto listModel = qobject_cast<ParticipantDeviceListModel*>(sourceModel());
-	return listModel ? listModel->getLastActiveSpeaking() : nullptr;
+	return listModel ? listModel->getActiveSpeakerModel() : nullptr;
 }
 
 CallModel * ParticipantDeviceProxyModel::getCallModel() const{
@@ -74,15 +74,19 @@ ParticipantDeviceModel * ParticipantDeviceProxyModel::getMe() const{
 bool ParticipantDeviceProxyModel::isShowMe() const{
 	return mShowMe;
 }
-	
+
+void ParticipantDeviceProxyModel::connectTo(ParticipantDeviceListModel* model){
+	connect(model, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::onCountChanged);
+	connect(model, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::onParticipantSpeaking);
+	connect(model, &ParticipantDeviceListModel::conferenceCreated, this, &ParticipantDeviceProxyModel::conferenceCreated);
+	connect(model, &ParticipantDeviceListModel::meChanged, this, &ParticipantDeviceProxyModel::meChanged);
+	connect(model, &ParticipantDeviceListModel::activeSpeakerChanged, this, &ParticipantDeviceProxyModel::activeSpeakerChanged);
+}
 void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	setFilterType(1);
 	mCallModel = callModel;
 	auto sourceModel = new ParticipantDeviceListModel(mCallModel);
-	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::onCountChanged);
-	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::onParticipantSpeaking);
-	connect(sourceModel, &ParticipantDeviceListModel::conferenceCreated, this, &ParticipantDeviceProxyModel::conferenceCreated);
-	connect(sourceModel, &ParticipantDeviceListModel::meChanged, this, &ParticipantDeviceProxyModel::meChanged);
+	connectTo(sourceModel);
 	setSourceModel(sourceModel);
 	emit countChanged();
 	emit meChanged();
@@ -91,10 +95,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant){
 	setFilterType(0);
 	auto sourceModel = participant->getParticipantDevices().get();
-	connect(sourceModel, &ParticipantDeviceListModel::countChanged, this, &ParticipantDeviceProxyModel::countChanged);
-	connect(sourceModel, &ParticipantDeviceListModel::participantSpeaking, this, &ParticipantDeviceProxyModel::onParticipantSpeaking);
-	connect(sourceModel, &ParticipantDeviceListModel::conferenceCreated, this, &ParticipantDeviceProxyModel::conferenceCreated);
-	connect(sourceModel, &ParticipantDeviceListModel::meChanged, this, &ParticipantDeviceProxyModel::meChanged);
+	connectTo(sourceModel);
 	setSourceModel(sourceModel);
 	emit countChanged();
 	emit meChanged();

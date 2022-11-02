@@ -100,7 +100,6 @@ public:
 	virtual void onStateChanged(linphone::ConferenceScheduler::State state);
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 	
-	
 signals:
 	void timeZoneModelChanged();
 	void dateTimeChanged();

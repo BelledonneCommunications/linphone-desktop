@@ -41,6 +41,11 @@ ConferenceListener::~ConferenceListener(){
 //-----------------------------------------------------------------------------------------------------------------------
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
+void ConferenceListener::onActiveSpeakerParticipantDevice(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice) {
+	qDebug() << "onActiveSpeakerParticipantDevice: "  << participantDevice->getAddress()->asString().c_str();
+	emit activeSpeakerParticipantDevice(participantDevice);
+}
+
 void ConferenceListener::onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant){
 	qDebug() << "onParticipantAdded: " << participant->getAddress()->asString().c_str();
 	emit participantAdded(participant);

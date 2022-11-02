@@ -107,7 +107,9 @@ Rectangle {
 									? item.organizer
 										? item.organizer
 										: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
-									: entry.participants.addressesToString
+									: entry.participants
+										? entry.participants.addressesToString
+										: ''
 							: ''
 		}
 		

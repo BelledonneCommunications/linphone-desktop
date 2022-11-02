@@ -189,6 +189,7 @@ void fromString(const QString& transportType, LinphoneEnums::TransportType *tran
 
 
 Q_DECLARE_METATYPE(LinphoneEnums::CallStatus)
+
 Q_DECLARE_METATYPE(LinphoneEnums::ChatMessageState)
 Q_DECLARE_METATYPE(LinphoneEnums::ConferenceLayout)
 Q_DECLARE_METATYPE(LinphoneEnums::ConferenceInfoState)
@@ -198,6 +199,6 @@ Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)
 Q_DECLARE_METATYPE(LinphoneEnums::ParticipantDeviceState)
 Q_DECLARE_METATYPE(LinphoneEnums::RecorderState)
 Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
-
+Q_DECLARE_METATYPE(LinphoneEnums::TransportType)
 
 #endif

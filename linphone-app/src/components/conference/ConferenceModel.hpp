@@ -62,7 +62,7 @@ public:
 	
 	void setIsReady(bool state);
 	
-
+	virtual void onActiveSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	virtual void onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	virtual void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
 	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
@@ -77,6 +77,7 @@ public:
 //---------------------------------------------------------------------------
 	
 signals:
+	void activeSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void localParticipantChanged();
 	void participantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantRemoved(const std::shared_ptr<const linphone::Participant> & participant);

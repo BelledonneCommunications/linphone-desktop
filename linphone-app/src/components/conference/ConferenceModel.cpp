@@ -37,6 +37,7 @@
 #include "components/Components.hpp"
 
 void ConferenceModel::connectTo(ConferenceListener * listener){
+	connect(listener, &ConferenceListener::activeSpeakerParticipantDevice, this, &ConferenceModel::onActiveSpeakerParticipantDevice);
 	connect(listener, &ConferenceListener::participantAdded, this, &ConferenceModel::onParticipantAdded);
 	connect(listener, &ConferenceListener::participantRemoved, this, &ConferenceModel::onParticipantRemoved);
 	connect(listener, &ConferenceListener::participantAdminStatusChanged, this, &ConferenceModel::onParticipantAdminStatusChanged);
@@ -140,6 +141,9 @@ void ConferenceModel::setIsReady(bool state){
 //-----------------------------------------------------------------------------------------------------------------------
 //												LINPHONE LISTENERS
 //-----------------------------------------------------------------------------------------------------------------------
+void ConferenceModel::onActiveSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
+	emit activeSpeakerParticipantDevice(participantDevice);
+}
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant){
 	qDebug() << "Added call, participant count: " << getParticipantList().size() << ". Me devices : " << mConference->getMe()->getDevices().size();
 	updateLocalParticipant();
