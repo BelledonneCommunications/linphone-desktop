@@ -33,6 +33,7 @@ namespace linphone {
 
 class ContactModel;
 class VcardModel;
+class FriendListListener;
 
 class ContactsListModel : public ProxyListModel {
 	friend class SipAddressesModel;
@@ -52,6 +53,16 @@ public:
 	Q_INVOKABLE void removeContact (ContactModel *contact);
 	
 	Q_INVOKABLE void cleanAvatars ();
+	Q_INVOKABLE void update ();
+	
+	void connectTo(FriendListListener * listener);
+	
+public slots:
+	void onContactCreated(const std::shared_ptr<linphone::Friend> & linphoneFriend);
+	void onContactDeleted(const std::shared_ptr<linphone::Friend> & linphoneFriend);
+	void onContactUpdated(const std::shared_ptr<linphone::Friend> & newFriend, const std::shared_ptr<linphone::Friend> & oldFriend);
+	void onSyncStatusChanged(linphone::FriendList::SyncStatus status, const std::string & message);
+	void onPresenceReceived(const std::list<std::shared_ptr<linphone::Friend>> & friends);
 	
 signals:
 	void contactAdded (QSharedPointer<ContactModel>);
@@ -65,7 +76,8 @@ private:
 	void addContact (QSharedPointer<ContactModel> contact);
 	
 	QMap<QString, QSharedPointer<ContactModel>>	mOptimizedSearch;
-	std::shared_ptr<linphone::FriendList> mLinphoneFriends;
+	std::list<std::shared_ptr<linphone::FriendList>> mLinphoneFriends;
+	std::shared_ptr<FriendListListener> mFriendListListener;
 };
 
 #endif // CONTACTS_LIST_MODEL_H_

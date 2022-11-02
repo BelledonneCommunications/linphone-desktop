@@ -260,6 +260,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 				Paths::getFactoryConfigFilePath(),
 				nullptr
 				);
+	setDatabasesPaths();
 	// Enable LIME on your core to use encryption.
 	mCore->enableLimeX3Dh(mCore->limeX3DhAvailable());
 	// Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
@@ -279,7 +280,6 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	QString userAgent = Utils::computeUserAgent(config);
 	mCore->setUserAgent(Utils::appStringToCoreString(userAgent), mCore->getVersion());
 	mCore->start();
-	setDatabasesPaths();
 	setOtherPaths();
 	mCore->enableFriendListSubscription(true);
 	mCore->enableRecordAware(true);

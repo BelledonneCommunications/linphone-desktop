@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New call layouts.
 - Display a waiting room before going into a conference.
 - Log viewer.
+- Read contacts from all friends lists.
 - Option to set the display name in "using an account" tab of assistant.
 - Long pressed buttons.
 - Phone dialpad on main window.

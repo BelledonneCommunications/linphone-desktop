@@ -307,10 +307,12 @@ ApplicationWindow {
 							visible: SettingsModel.contactsEnabled
 							
 							onSelected: {
+								ContactsListModel.update()
 								timeline.model.unselectAll()
 								setView('Contacts')
 							}
 							onClicked:{
+								ContactsListModel.update()
 								setView('Contacts')
 							}
 							Icon{
