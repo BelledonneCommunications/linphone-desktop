@@ -37,6 +37,9 @@ class CallsListModel : public ProxyListModel {
 	Q_OBJECT
 	
 public:
+	Q_PROPERTY(bool canMergeCalls READ canMergeCalls NOTIFY canMergeCallsChanged)
+
+
 	CallsListModel (QObject *parent = Q_NULLPTR);
 	
 	CallModel *findCallModelFromPeerAddress (const QString &peerAddress) const;
@@ -57,9 +60,11 @@ public:
 	Q_INVOKABLE void prepareConferenceCall(ConferenceInfoModel * model);
 	
 	Q_INVOKABLE int addAllToConference();
+	Q_INVOKABLE void mergeAll();
 	
 	
 	Q_INVOKABLE int getRunningCallsNumber () const;
+	bool canMergeCalls()const;
 	
 	Q_INVOKABLE void terminateAllCalls () const;
 	Q_INVOKABLE void terminateCall (const QString& sipAddress) const;
@@ -73,6 +78,7 @@ signals:
 	void callConferenceAsked(ConferenceInfoModel * conferenceInfoModel);
 	
 	void callMissed (CallModel *callModel);
+	void canMergeCallsChanged();
 	
 	
 private:

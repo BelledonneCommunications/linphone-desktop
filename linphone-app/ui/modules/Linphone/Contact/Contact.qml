@@ -21,6 +21,7 @@ Rectangle {
 	property alias subtitleColor: description.subtitleColor
 	property alias titleColor: description.titleColor
 	property alias statusText : description.statusText
+	property alias isDarkMode: avatar.isDarkMode
 	
 	property bool displayUnreadMessageCount: false
 	property bool showSubtitle : true

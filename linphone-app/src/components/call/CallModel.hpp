@@ -200,8 +200,10 @@ public slots:
 	void endCall();
 	void onRemoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording);
 	void onChatRoomInitialized(int state);
+	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	
 signals:
+	void meAdminChanged();
 	void callErrorChanged (const QString &callError);
 	void callIdChanged();
 	void isInConferenceChanged (bool status);

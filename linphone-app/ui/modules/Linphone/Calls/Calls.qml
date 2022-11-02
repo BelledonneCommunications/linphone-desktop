@@ -144,20 +144,17 @@ ListView {
 		id: _callControls
 		
 		// -------------------------------------------------------------------------
-		
-		function useColorStatus () {
-			return calls.currentIndex === index && $modelData && $modelData.status !== CallModel.CallStatusEnded
-		}
+		isDarkMode: calls.currentIndex === index && $modelData!=undefined && $modelData.status!=undefined && $modelData.status !== CallModel.CallStatusEnded
 		
 		// -------------------------------------------------------------------------
 		
-		color: useColorStatus()
+		color: isDarkMode
 			   ? CallsStyle.entry.color.selected
 			   : CallsStyle.entry.color.normal
-		subtitleColor: useColorStatus()
+		subtitleColor: isDarkMode
 						 ? CallsStyle.entry.subtitleColor.selected
 						 : CallsStyle.entry.subtitleColor.normal
-		titleColor: useColorStatus()
+		titleColor: isDarkMode
 					   ? CallsStyle.entry.titleColor.selected
 					   : CallsStyle.entry.titleColor.normal
 		

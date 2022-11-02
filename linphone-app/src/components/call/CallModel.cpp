@@ -109,8 +109,10 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 
 	if(mCall) {
 		mRemoteAddress = mCall->getRemoteAddress()->clone();
-		if(mCall->getConference())
+		if(mCall->getConference()) {
 			mConferenceModel = ConferenceModel::create(mCall->getConference());
+			connect(mConferenceModel.get(), &ConferenceModel::participantAdminStatusChanged, this, &CallModel::onParticipantAdminStatusChanged);
+		}
 		auto conferenceInfo = CoreManager::getInstance()->getCore()->findConferenceInformationFromUri(getConferenceAddress());
 		if(	conferenceInfo ){
 			mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
@@ -232,7 +234,8 @@ ConferenceInfoModel * CallModel::getConferenceInfoModel(){
 
 QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 	if(mCall->getConference() && !mConferenceModel){
-		mConferenceModel = ConferenceModel::create(mCall->getConference());	
+		mConferenceModel = ConferenceModel::create(mCall->getConference());
+		connect(mConferenceModel.get(), &ConferenceModel::participantAdminStatusChanged, this, &CallModel::onParticipantAdminStatusChanged);
 		emit conferenceModelChanged();
 	}
 	return mConferenceModel;
@@ -975,6 +978,12 @@ void CallModel::onRemoteRecording(const std::shared_ptr<linphone::Call> & call, 
 void CallModel::onChatRoomInitialized(int state){
 	qInfo() << "[CallModel] Chat room initialized with state : " << state;
 	emit chatRoomModelChanged();
+}
+
+void CallModel::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant){
+	if(mConferenceModel && participant == mConferenceModel->getConference()->getMe()) {
+		emit meAdminChanged();
+	}
 }
 
 void CallModel::setRemoteDisplayName(const std::string& name){

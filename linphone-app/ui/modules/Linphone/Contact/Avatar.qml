@@ -15,7 +15,8 @@ Item {
 	// ---------------------------------------------------------------------------
 	
 	property alias presenceLevel: presenceLevelIcon.level
-	property color backgroundColor: AvatarStyle.backgroundColor
+	property bool isDarkMode: false
+	property color backgroundColor: isDarkMode ? AvatarStyle.backgroundDarkModeColor : AvatarStyle.backgroundColor
 	property color foregroundColor: 'transparent'
 	property string username
 	property var image
@@ -64,7 +65,7 @@ Item {
 	Text {
 		id: initialsText
 		anchors.centerIn: parent
-		color: AvatarStyle.initials.color
+		color: isDarkMode ? AvatarStyle.initials.darkModeColor : AvatarStyle.initials.color
 		font.pointSize: {
 			var width
 			
@@ -82,7 +83,7 @@ Item {
 	Icon {
 		anchors.fill: parent
 		icon: ContactStyle.groupChat.icon
-		overwriteColor: ContactStyle.groupChat.avatarColor
+		overwriteColor: isDarkMode ? ContactStyle.groupChat.avatarDarkModeColor : ContactStyle.groupChat.avatarColor
 		iconSize: avatar.width
 		//visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
 		visible: !avatar.isOneToOne

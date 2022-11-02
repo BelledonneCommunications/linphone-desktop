@@ -140,11 +140,12 @@ Window {
 							ActionButton {
 								isCustom: true
 								backgroundRadius: 4
-								colorSet: CallsWindowStyle.callsList.newConference
+								colorSet: CallsWindowStyle.callsList.mergeConference
 								visible: SettingsModel.conferenceEnabled
+								enabled: CallsListModel.canMergeCalls
 								
 								onClicked: {
-									Logic.openConferenceManager()
+									CallsListModel.mergeAll()
 								}
 							}
 						}

@@ -99,6 +99,8 @@ void ParticipantDeviceListModel::updateDevices(const std::list<std::shared_ptr<l
 }
 
 bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice> deviceToAdd){
+	auto deviceToAddAddr = deviceToAdd->getAddress();
+	int row = 0;
 	qDebug() << "Adding device " << deviceToAdd->getAddress()->asString().c_str();
 	for(auto item : mList) {
 		auto deviceModel = item.objectCast<ParticipantDeviceModel>();
@@ -106,7 +108,12 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 			qDebug() << "Device already exist. Send video update event";
 			deviceModel->updateVideoEnabled();
 			return false;
+		}else if(deviceToAddAddr->equal(deviceModel->getDevice()->getAddress())){// Address is the same (same device) but the model is using another linphone object. Replace it.
+			deviceModel->updateVideoEnabled();
+			removeRow(row);
+			break;
 		}
+		++row;
 	}
 	bool addMe = isMe(deviceToAdd);
 	auto deviceModel = ParticipantDeviceModel::create(mCallModel, deviceToAdd, addMe);
@@ -114,6 +121,12 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 	connect(deviceModel.get(), &ParticipantDeviceModel::isSpeakingChanged, this, &ParticipantDeviceListModel::onParticipantDeviceSpeaking);
 	ProxyListModel::add<ParticipantDeviceModel>(deviceModel);
 	qDebug() << "Device added. Count=" << mList.count();
+	QStringList debugDevices;
+	for(auto i : mList){
+		auto item = i.objectCast<ParticipantDeviceModel>();
+		debugDevices.push_back( item->getAddress());
+	}
+	qDebug() << debugDevices.join("\n");
 	if( addMe){
 		qDebug() << "Added a me device";
 		emit meChanged();
