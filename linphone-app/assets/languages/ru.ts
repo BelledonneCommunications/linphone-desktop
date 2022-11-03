@@ -3723,17 +3723,17 @@
     <message>
         <source>Later</source>
         <extracomment>&apos;Later&apos; : Button label to do something in another time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Позже</translation>
     </message>
     <message>
         <source>Correct</source>
         <extracomment>&apos;Correct&apos; : Button label to confirm a code.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Правильный</translation>
     </message>
     <message>
         <source>title</source>
         <extracomment>&apos;Communication security&apos; : Title of popup for ZRTP confirmation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Безопасность связи</translation>
     </message>
 </context>
 <context>
