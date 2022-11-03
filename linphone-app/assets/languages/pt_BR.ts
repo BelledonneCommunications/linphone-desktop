@@ -3693,9 +3693,10 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>ZrtpTokenAuthentication</name>
+    <name>ZrtpTokenAuthenticationDialog</name>
     <message>
         <source>confirmSas</source>
+        <extracomment>&apos;To raise the security level, you can check the following codes with your correspondent.&apos; : Explanation to do a security check.</extracomment>
         <translation>Confirme o seguinte SAS com peer.</translation>
     </message>
     <message>
@@ -3707,12 +3708,19 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <translation>Seu contato deve dizer:</translation>
     </message>
     <message>
-        <source>deny</source>
-        <translation>NEGAR</translation>
+        <source>Later</source>
+        <extracomment>&apos;Later&apos; : Button label to do something in another time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>accept</source>
-        <translation>CONFIRMAR</translation>
+        <source>Correct</source>
+        <extracomment>&apos;Correct&apos; : Button label to confirm a code.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>title</source>
+        <extracomment>&apos;Communication security&apos; : Title of popup for ZRTP confirmation.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

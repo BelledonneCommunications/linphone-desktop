@@ -34,6 +34,8 @@ singleton ContactStyle                         1.0 Contact/ContactStyle.qml
 singleton MultimediaParametersDialogStyle      1.0 Dialog/MultimediaParametersDialogStyle.qml
 singleton OnlineInstallerDialogStyle           1.0 Dialog/OnlineInstallerDialogStyle.qml
 singleton SipAddressDialogStyle                1.0 Dialog/SipAddressDialogStyle.qml
+singleton ZrtpTokenAuthenticationDialogStyle   1.0 Dialog/ZrtpTokenAuthenticationDialogStyle.qml
+
 
 singleton HistoryStyle                         1.0 History/HistoryStyle.qml
 

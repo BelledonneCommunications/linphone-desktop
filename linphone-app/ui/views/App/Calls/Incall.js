@@ -100,12 +100,12 @@ function handleVideoRequested (call) {
 							   })
 }
 
-function makeReadableSecuredString (securedString) {
-	if (!securedString || !securedString.length) {
+function makeReadableSecuredString (isSecured, secureString) {
+	if (!isSecured) {
 		return qsTr('callNotSecured')
 	}
 	
-	return qsTr('securedStringFormat').replace('%1', securedString)
+	return qsTr('securedStringFormat').replace('%1', secureString)
 }
 
 function openCallStatistics () {

@@ -3706,9 +3706,10 @@
     </message>
 </context>
 <context>
-    <name>ZrtpTokenAuthentication</name>
+    <name>ZrtpTokenAuthenticationDialog</name>
     <message>
         <source>confirmSas</source>
+        <extracomment>&apos;To raise the security level, you can check the following codes with your correspondent.&apos; : Explanation to do a security check.</extracomment>
         <translation>Підтвердіть такий рядок автентифікації з контактом.</translation>
     </message>
     <message>
@@ -3720,12 +3721,19 @@
         <translation>Ваш контакт повинен сказати:</translation>
     </message>
     <message>
-        <source>deny</source>
-        <translation>ВІДХИЛИТИ</translation>
+        <source>Later</source>
+        <extracomment>&apos;Later&apos; : Button label to do something in another time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>accept</source>
-        <translation>СХВАЛИТИ</translation>
+        <source>Correct</source>
+        <extracomment>&apos;Correct&apos; : Button label to confirm a code.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>title</source>
+        <extracomment>&apos;Communication security&apos; : Title of popup for ZRTP confirmation.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

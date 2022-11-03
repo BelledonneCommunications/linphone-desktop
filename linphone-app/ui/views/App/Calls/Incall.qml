@@ -57,6 +57,7 @@ Rectangle {
 	}
 	onParticipantCountChanged: Qt.callLater(function (){delayMessageBanner.restart()})
 	onIsReadyChanged: Qt.callLater(function (){delayMessageBanner.restart()})
+	
 	// ---------------------------------------------------------------------------
 	
 	color: IncallStyle.backgroundColor
@@ -69,6 +70,9 @@ Rectangle {
 			delayMessageBanner.restart()
 		}
 		onVideoRequested: Logic.handleVideoRequested(callModel)
+		onEncryptionChanged: if(!callModel.isSecured && callModel.encryption === CallModel.CallEncryptionZrtp){
+							window.attachVirtualWindow(Utils.buildLinphoneDialogUri('ZrtpTokenAuthenticationDialog'), {call:callModel})
+						}
 	}
 	// ---------------------------------------------------------------------------
 	Rectangle{
@@ -293,7 +297,7 @@ Rectangle {
 		anchors.top: featuresRow.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.bottom: zrtp.top
+		anchors.bottom: actionsButtons.top
 		
 		anchors.topMargin: 15
 		anchors.bottomMargin: 20
@@ -372,23 +376,6 @@ Rectangle {
 			}
 		}
 	}
-	Loader{
-		id: zrtp
-		active: call && !call.isSecured && call.encryption === CallModel.CallEncryptionZrtp
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.bottom: actionsButtons.top
-		anchors.leftMargin: CallStyle.container.margins
-		anchors.rightMargin: CallStyle.container.margins
-		anchors.bottomMargin: CallStyle.container.margins
-		height: active ? implicitHeight : 0
-		sourceComponent:Component{
-			ZrtpTokenAuthentication {
-				call: callModel
-				z: Constants.zPopup
-				onClose: {zrtp.active = false}
-			}
-		}
-	}
 	// -------------------------------------------------------------------------
 	// Action Buttons.
 	// -------------------------------------------------------------------------
@@ -406,14 +393,16 @@ Rectangle {
 		backgroundRadius: width/2
 		
 		colorSet: callModel.isSecured
-							? SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp
+							? SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp && callModel.isPQZrtp == CallModel.CallPQStateOn
 								? IncallStyle.buttons.postQuantumSecure
 								: IncallStyle.buttons.secure
 							: IncallStyle.buttons.unsecure
 					
-		onClicked: zrtp.active =(callModel.encryption === CallModel.CallEncryptionZrtp)
+		onClicked: if(callModel.encryption === CallModel.CallEncryptionZrtp){
+			window.attachVirtualWindow(Utils.buildLinphoneDialogUri('ZrtpTokenAuthenticationDialog'), {call:callModel})
+		}
 					
-		tooltipText: Logic.makeReadableSecuredString(callModel.securedString)
+		tooltipText: Logic.makeReadableSecuredString(callModel.isSecured, callModel.securedString)
 	}
 	RowLayout{
 		visible: callModel.remoteRecording
