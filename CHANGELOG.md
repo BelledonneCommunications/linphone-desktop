@@ -17,6 +17,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on exit.
 - Memory stability.
 
+## 4.4.11 - 2022-11-03
+
+### Fixes
+- Mac video couldn't be used on old OSx
+- Application detection on install/uninstall
+- Update SDK to 5.1.69
+
 ## 4.4.10 - 2022-09-20
 
 ### Fixes
