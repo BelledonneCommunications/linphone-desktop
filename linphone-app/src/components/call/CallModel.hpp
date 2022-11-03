@@ -85,11 +85,12 @@ class CallModel : public QObject {
 	Q_PROPERTY(QVariantList videoStats READ getVideoStats NOTIFY statsUpdated)
 	Q_PROPERTY(QVariantList encryptionStats READ getEncryptionStats NOTIFY statsUpdated)
 	
-	Q_PROPERTY(CallEncryption encryption READ getEncryption NOTIFY securityUpdated)
+	Q_PROPERTY(CallEncryption encryption READ getEncryption WRITE setEncryption NOTIFY encryptionChanged)
 	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated)
 	Q_PROPERTY(QString localSas READ getLocalSas NOTIFY securityUpdated)
 	Q_PROPERTY(QString remoteSas READ getRemoteSas NOTIFY securityUpdated)
 	Q_PROPERTY(QString securedString READ getSecuredString NOTIFY securityUpdated)
+	Q_PROPERTY(CallPQState isPQZrtp MEMBER mIsPQZrtp WRITE isPQZrtp NOTIFY isPQZrtpChanged)
 	
 	Q_PROPERTY(QString transferAddress READ getTransferAddress WRITE setTransferAddress NOTIFY transferAddressChanged)
 	
@@ -115,6 +116,13 @@ public:
 		CallEncryptionZrtp = int(linphone::MediaEncryption::ZRTP)
 	};
 	Q_ENUM(CallEncryption);
+	
+	enum CallPQState {
+		CallPQStateNone = 0,
+		CallPQStateOn,
+		CallPQStateOff,
+	};
+	Q_ENUM(CallPQState);
 	
 	CallModel (std::shared_ptr<linphone::Call> call);
 	~CallModel ();
@@ -220,6 +228,8 @@ signals:
 	void statusChanged (CallStatus status);
 	void videoRequested ();
 	void securityUpdated ();
+	void encryptionChanged();
+	void isPQZrtpChanged();
 	void speakerVolumeGainChanged (float volume);
 	void microVolumeGainChanged (float volume);
 	
@@ -283,6 +293,8 @@ public:
 	bool getSnapshotEnabled() const;
 	
 	CallEncryption getEncryption () const;
+	bool setEncryption(const CallModel::CallEncryption& encryption);// true if changed
+	void updateEncryption();
 	bool isSecured () const;
 	
 	QString getLocalSas () const;
@@ -295,6 +307,7 @@ public:
 	QVariantList getEncryptionStats () const;
 	void updateStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
 	void updateEncrypionStats (const std::shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList);
+	void isPQZrtp(const CallPQState& isPQ);
 	
 	QString iceStateToString (linphone::IceState state) const;
 	
@@ -312,6 +325,8 @@ private:
 	void connectTo(CallListener * listener);
 
 	bool mIsInConference = false;
+	CallPQState mIsPQZrtp = CallPQStateNone;
+	CallEncryption mEncryption = CallEncryptionNone;
 	
 	bool mEndByUser = false;
 	bool mPausedByRemote = false;

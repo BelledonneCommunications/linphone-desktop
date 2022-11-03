@@ -330,7 +330,7 @@ Item {
 			hoverEnabled: true
 			acceptedButtons: Qt.NoButton
 			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-			visible: !iconIsCustom
+			visible: !iconIsCustom && !tooltip.visible
 		}
 	}
 	

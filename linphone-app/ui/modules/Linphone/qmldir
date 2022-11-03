@@ -36,6 +36,7 @@ ContactDescription            1.0 Contact/ContactDescription.qml
 
 SipAddressDialog              1.0 Dialog/SipAddressDialog.qml
 MultimediaParametersDialog    1.0 Dialog/MultimediaParametersDialog.qml
+ZrtpTokenAuthenticationDialog 1.0 Dialog/ZrtpTokenAuthenticationDialog.qml
 
 FileView                      1.0 File/FileView.qml
 

@@ -3716,10 +3716,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
-    <name>ZrtpTokenAuthentication</name>
+    <name>ZrtpTokenAuthenticationDialog</name>
     <message>
         <source>confirmSas</source>
-        <translation>Confirm the following SAS with peer.</translation>
+        <extracomment>&apos;To raise the security level, you can check the following codes with your correspondent.&apos; : Explanation to do a security check.</extracomment>
+        <translation>To raise the security level, you can check the following codes with your correspondent.</translation>
     </message>
     <message>
         <source>codeA</source>
@@ -3730,12 +3731,19 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Your contact should say:</translation>
     </message>
     <message>
-        <source>deny</source>
-        <translation>DENY</translation>
+        <source>Later</source>
+        <extracomment>&apos;Later&apos; : Button label to do something in another time.</extracomment>
+        <translation>Later</translation>
     </message>
     <message>
-        <source>accept</source>
-        <translation>CONFIRM</translation>
+        <source>Correct</source>
+        <extracomment>&apos;Correct&apos; : Button label to confirm a code.</extracomment>
+        <translation>Correct</translation>
+    </message>
+    <message>
+        <source>title</source>
+        <extracomment>&apos;Communication security&apos; : Title of popup for ZRTP confirmation.</extracomment>
+        <translation>Communication security</translation>
     </message>
 </context>
 <context>

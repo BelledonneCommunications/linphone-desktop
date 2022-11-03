@@ -3680,9 +3680,10 @@
     </message>
 </context>
 <context>
-    <name>ZrtpTokenAuthentication</name>
+    <name>ZrtpTokenAuthenticationDialog</name>
     <message>
         <source>confirmSas</source>
+        <extracomment>&apos;To raise the security level, you can check the following codes with your correspondent.&apos; : Explanation to do a security check.</extracomment>
         <translation>与同行确认以下 SAS。</translation>
     </message>
     <message>
@@ -3694,12 +3695,19 @@
         <translation>您的联系人应该说：</translation>
     </message>
     <message>
-        <source>deny</source>
-        <translation>否认</translation>
+        <source>Later</source>
+        <extracomment>&apos;Later&apos; : Button label to do something in another time.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>accept</source>
-        <translation>确认</translation>
+        <source>Correct</source>
+        <extracomment>&apos;Correct&apos; : Button label to confirm a code.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>title</source>
+        <extracomment>&apos;Communication security&apos; : Title of popup for ZRTP confirmation.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
