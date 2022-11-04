@@ -983,9 +983,6 @@ void SettingsModel::setMediaEncryption (MediaEncryption encryption) {
 	if (encryption == getMediaEncryption())
 		return;
 
-	if (encryption != SettingsModel::MediaEncryptionZrtp)
-        setLimeState(false);
-
 	CoreManager::getInstance()->getCore()->setMediaEncryption(
 								  static_cast<linphone::MediaEncryption>(encryption)
 								  );
@@ -1028,10 +1025,7 @@ void SettingsModel::setLimeState (const bool& state) {
 	if (state == getLimeState())
 		return;
 
-    if (state)
-		setMediaEncryption(SettingsModel::MediaEncryptionZrtp);
-
-    CoreManager::getInstance()->getCore()->enableLimeX3Dh(!state);
+    CoreManager::getInstance()->getCore()->enableLimeX3Dh(state);
 
 	emit limeStateChanged(state);
 }
