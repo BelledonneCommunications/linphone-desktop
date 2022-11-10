@@ -18,7 +18,7 @@ ColumnLayout{
 	}
 	
 	function add(item){
-		if( !grid.isLayoutWillChanged() || !transitionningTimer.running)
+		if( !grid.isLayoutWillChanged())
 			appendItem(item)
 		else
 			bufferModels.append(item)
@@ -34,7 +34,7 @@ ColumnLayout{
 	}
 	
 	function tryToAdd(item){
-		if( !grid.isLayoutWillChanged() || !transitionningTimer.running) {
+		if( !grid.isLayoutWillChanged()) {
 			appendItem(item)
 			return true
 		}else
@@ -51,21 +51,7 @@ ColumnLayout{
 	
 	property int transitionCount : 0
 	property var bufferModels : ListModel{}
-	property int maxTransitionTime: 250
-	Timer{
-		id: transitionningTimer
-		running: false
-		interval: maxTransitionTime + 5
-		onTriggered: updateBuffers()
-	}
-	function startTransition(){
-		transitionningTimer.restart()
-	}
-	function updateBuffers(){
-		while(bufferModels.count > 0 && tryToAdd(bufferModels.get(0))){
-			bufferModels.remove(0,1)
-		}
-	}
+	
 	onWidthChanged: grid.updateLayout()
 	onHeightChanged: grid.updateLayout()
 	GridView{
@@ -120,63 +106,6 @@ ColumnLayout{
 		interactive: false
 		model: DelegateModel{}
 		
-		//-------------------				ANIMATIONS
-		property Transition defaultTransition: Transition {
-			SequentialAnimation {
-				ScriptAction {
-					script: {
-						mainLayout.startTransition()
-					}
-				}
-				ParallelAnimation {
-					NumberAnimation { properties: "x,y"; duration: mainLayout.maxTransitionTime }
-				}
-			}
-		}
-		
-		add: Transition {
-			SequentialAnimation {
-				ScriptAction {
-					script: {
-						mainLayout.startTransition()
-					}
-				}
-				ParallelAnimation {
-					NumberAnimation { property: "opacity"; from: 0; duration: mainLayout.maxTransitionTime }
-					NumberAnimation { properties: "x,y"; from: 0; duration: mainLayout.maxTransitionTime; easing.type: Easing.OutBounce }
-				}
-			}
-		}
-		
-		addDisplaced: defaultTransition
-		displaced: defaultTransition
-		move: defaultTransition
-		moveDisplaced: defaultTransition
-		remove: Transition {
-			SequentialAnimation {
-				PropertyAction { target: grid; property: "GridView.delayRemove"; value: true }
-				ScriptAction {
-					script: {
-						mainLayout.startTransition()
-					}
-				}
-				ParallelAnimation {
-					NumberAnimation { property: "opacity"; to: 0; duration: mainLayout.maxTransitionTime }
-					NumberAnimation { properties: "x,y"; to: 0; duration: mainLayout.maxTransitionTime }
-				}
-				PropertyAction { target: grid; property: "GridView.delayRemove"; value: false }
-			}
-		}
-		removeDisplaced: defaultTransition
-		populate:defaultTransition
-		
-		Timer{	// if cell sizes change while adding/removing an item the animation will not end at the right position.
-			id: updateLayoutDelay
-			interval: mainLayout.maxTransitionTime
-			onTriggered: grid.updateLayout()
-		}
-		onItemCountChanged: {
-			updateLayoutDelay.restart()
-		}
+		onCountChanged: grid.updateLayout()
 	}
 }

@@ -61,7 +61,9 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 	
 	if (row < 0 || count < 0 || limit >= mList.count())
 		return false;
-	
+		
+	auto friendsList = CoreManager::getInstance()->getCore()->getFriendsLists();
+
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i) {
@@ -70,7 +72,7 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 			mOptimizedSearch.remove(address.toString());
 		}
 		
-		for(auto l : mLinphoneFriends)
+		for(auto l : friendsList)
 			l->removeFriend(contact->mLinphoneFriend);
 		
 		emit contactRemoved(contact);
@@ -110,7 +112,16 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 	contact = QSharedPointer<ContactModel>::create(vcardModel);
 	App::getInstance()->getEngine()->setObjectOwnership(contact.get(), QQmlEngine::CppOwnership);
 	
-	if (mLinphoneFriends.front()->addFriend(contact->mLinphoneFriend) != linphone::FriendList::Status::OK) {
+	if( mLinphoneFriends.size() == 0){
+		update();// Friends were not loaded correctly. Update them.
+	}
+	auto friendsList = CoreManager::getInstance()->getCore()->getDefaultFriendList();
+	if( !friendsList){
+		qWarning() << "There is no friends list available, cannot add a contact" ;
+		return nullptr;
+	}
+	
+	if (friendsList->addFriend(contact->mLinphoneFriend) != linphone::FriendList::Status::OK) {
 		qWarning() << QStringLiteral("Unable to add contact from vcard:") << vcardModel;
 		return nullptr;
 	}
@@ -118,7 +129,7 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 	qInfo() << QStringLiteral("Add contact from vcard:") << contact.get() << vcardModel;
 	
 	// Make sure new subscribe is issued.
-	mLinphoneFriends.front()->updateSubscriptions();
+	friendsList->updateSubscriptions();
 	
 	emit layoutChanged();
 	

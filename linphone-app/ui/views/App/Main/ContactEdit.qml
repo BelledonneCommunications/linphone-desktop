@@ -35,9 +35,7 @@ ColumnLayout  {
 	Component.onDestruction: {_vcard=null}// Need to set it to null because of not calling destructor if not.
 	Component.onCompleted:{
 		var sipAddress = contactEdit.sipAddress
-		var contact = contactEdit._contact = SipAddressesModel.mapSipAddressToContact(
-		  sipAddress
-		)
+		var contact = contactEdit._contact = SipAddressesModel.mapSipAddressToContact(sipAddress)
 	  
 		if (!contact) {
 		  // Add a new contact.
