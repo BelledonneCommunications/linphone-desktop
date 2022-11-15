@@ -131,10 +131,13 @@ Rectangle {
 		RowLayout{
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+			spacing: 0
 			Item{
 				id: stickerView
 				Layout.fillHeight: true
 				Layout.fillWidth: true
+				Layout.leftMargin: 10
+				Layout.rightMargin: 10
 				Sticker{
 					id: contentsStack
 					
@@ -175,7 +178,7 @@ Rectangle {
 			Loader{
 				id: multimediaLoader
 				Layout.fillHeight: true
-				Layout.leftMargin: 10
+				Layout.leftMargin: 0
 				Layout.rightMargin: 10
 				Layout.minimumHeight: item? item.fitHeight : 0
 				Layout.minimumWidth: item? item.fitWidth : 0
