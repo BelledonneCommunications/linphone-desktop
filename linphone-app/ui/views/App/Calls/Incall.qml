@@ -489,14 +489,26 @@ Rectangle {
 				backgroundRadius: 90
 				colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating
-				enabled: !mainItem.isAudioOnly
+				property bool _activateCamera: false
 				onClicked: if(callModel){
 								if( callModel.isConference){// Only deactivate camera in conference.
-									callModel.cameraEnabled = !callModel.cameraEnabled
+									if(mainItem.isAudioOnly && SettingsModel.videoConferenceLayout != 2) {
+										camera._activateCamera = true
+										conferenceLayout.item.clearAll(SettingsModel.videoConferenceLayout)
+										callModel.conferenceVideoLayout = SettingsModel.videoConferenceLayout
+									}else
+										callModel.cameraEnabled = !callModel.cameraEnabled
 								}else{// In one-one, we deactivate all videos.
 									callModel.videoEnabled = !callModel.videoEnabled
 								}
 							}
+				Connections{// Enable camera only when status is ok
+					target: callModel
+					onStatusChanged: if( camera._activateCamera && (status == LinphoneEnums.CallStatusConnected || status == LinphoneEnums.CallStatusIdle)){
+						camera._activateCamera = false
+						callModel.cameraEnabled = true
+					}
+				}
 			}
 			
 		}
