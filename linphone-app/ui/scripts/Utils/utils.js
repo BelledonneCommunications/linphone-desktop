@@ -562,6 +562,14 @@ function buildDate(date, time){
 	dateTime.setSeconds(time.getSeconds())
 	return dateTime
 }
+
+
+function fromUTC(date){
+	return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
+                date.getUTCDate(), date.getUTCHours(),
+                date.getUTCMinutes(), date.getUTCSeconds()));
+}
+
 // -----------------------------------------------------------------------------
 
 function formatSize (size) {

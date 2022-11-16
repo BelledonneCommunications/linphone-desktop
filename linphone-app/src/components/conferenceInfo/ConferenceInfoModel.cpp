@@ -139,7 +139,7 @@ std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::findConferenceInf
 
 //------------------------------------------------------------------------------------------------
 
-
+//Note conferenceInfo->getDateTime uses system timezone.
 QDateTime ConferenceInfoModel::getDateTimeUtc() const{
 	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000).toUTC();
 }

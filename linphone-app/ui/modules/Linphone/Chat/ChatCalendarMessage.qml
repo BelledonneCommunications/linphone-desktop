@@ -111,7 +111,8 @@ Loader{
 						color: ChatCalendarMessageStyle.schedule.color
 						elide: Text.ElideRight
 						font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
-						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTime, 'hh:mm')
+// Reminder: QML use locale time (not system). Use UTC from C++ => convert it into QML => pass QML => convert it into UTC and apply our timezone.
+						text: UtilsCpp.toTimeString(Utils.fromUTC(mainItem.conferenceInfoModel.dateTimeUtc), 'hh:mm')
 								+ (mainItem.conferenceInfoModel.duration > 0 ? ' (' +Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
 																			: '')																			
 					}

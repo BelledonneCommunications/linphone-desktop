@@ -158,7 +158,7 @@ Loader{
 						color: ChatCalendarMessageStyle.schedule.color
 						elide: Text.ElideRight
 						font.pointSize: Units.dp * 8
-						text: Qt.formatDate(mainItem.conferenceInfoModel.dateTimeUtc, 'yyyy/MM/dd')
+						text: UtilsCpp.toDateString(Utils.fromUTC(mainItem.conferenceInfoModel.dateTimeUtc), 'yyyy/MM/dd')
 					}
 				}
 				RowLayout {
@@ -182,7 +182,8 @@ Loader{
 						color: ChatCalendarMessageStyle.schedule.color
 						elide: Text.ElideRight
 						font.pointSize: Units.dp * 8
-						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTimeUtc, 'hh:mm')
+// Reminder: QML use locale time (not system). Use UTC from C++ => convert it into QML => pass QML => convert it into UTC and apply our timezone.
+						text: UtilsCpp.toTimeString( Utils.fromUTC(mainItem.conferenceInfoModel.dateTimeUtc), 'hh:mm')
 							  + (mainItem.conferenceInfoModel.duration > 0 ? ' ('+Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
 																		   : '')
 					}
