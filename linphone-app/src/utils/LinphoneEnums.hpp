@@ -133,6 +133,18 @@ Q_ENUM_NS(ConferenceInfoState)
 linphone::ConferenceInfo::State toLinphone(const LinphoneEnums::ConferenceInfoState& state);
 LinphoneEnums::ConferenceInfoState fromLinphone(const linphone::ConferenceInfo::State& state);
 
+enum ConferenceSchedulerState {
+	ConferenceSchedulerStateAllocationPending = int(linphone::ConferenceScheduler::State::AllocationPending),
+	ConferenceSchedulerStateError = int(linphone::ConferenceScheduler::State::Error),
+	ConferenceSchedulerStateIdle = int(linphone::ConferenceScheduler::State::Idle),
+	ConferenceSchedulerStateReady = int(linphone::ConferenceScheduler::State::Ready),
+	ConferenceSchedulerStateUpdating = int(linphone::ConferenceScheduler::State::Updating)
+};
+Q_ENUM_NS(ConferenceSchedulerState)
+
+linphone::ConferenceScheduler::State toLinphone(const LinphoneEnums::ConferenceSchedulerState& state);
+LinphoneEnums::ConferenceSchedulerState fromLinphone(const linphone::ConferenceScheduler::State& state);
+
 
 enum ParticipantDeviceState {
 	ParticipantDeviceStateJoining = int(linphone::ParticipantDeviceState::Joining),
@@ -189,10 +201,10 @@ void fromString(const QString& transportType, LinphoneEnums::TransportType *tran
 
 
 Q_DECLARE_METATYPE(LinphoneEnums::CallStatus)
-
 Q_DECLARE_METATYPE(LinphoneEnums::ChatMessageState)
 Q_DECLARE_METATYPE(LinphoneEnums::ConferenceLayout)
 Q_DECLARE_METATYPE(LinphoneEnums::ConferenceInfoState)
+Q_DECLARE_METATYPE(LinphoneEnums::ConferenceSchedulerState)
 Q_DECLARE_METATYPE(LinphoneEnums::EventLogType)
 Q_DECLARE_METATYPE(LinphoneEnums::FriendCapability)
 Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)

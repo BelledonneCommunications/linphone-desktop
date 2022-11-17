@@ -104,6 +104,7 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::isScheduledChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceSchedulerStateChanged);
 }
 
 // Callable from C++
@@ -124,6 +125,7 @@ ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceIn
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::isScheduledChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceSchedulerStateChanged);
 }
 
 ConferenceInfoModel::~ConferenceInfoModel () {
@@ -221,6 +223,10 @@ QString ConferenceInfoModel::getIcalendarString() const{
 
 LinphoneEnums::ConferenceInfoState ConferenceInfoModel::getConferenceInfoState() const{
 	return LinphoneEnums::fromLinphone(mConferenceInfo->getState());
+}
+
+LinphoneEnums::ConferenceSchedulerState ConferenceInfoModel::getConferenceSchedulerState() const{
+	return LinphoneEnums::fromLinphone(mLastConferenceSchedulerState);
 }
 
 //------------------------------------------------------------------------------------------------
@@ -323,14 +329,14 @@ void ConferenceInfoModel::createConference(const int& securityLevel) {
 	mConferenceScheduler = ConferenceScheduler::create();
 	mConferenceScheduler->mSendInvite = mInviteMode;
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
-	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onConferenceSchedulerStateChanged);
 	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
 }
 
 void ConferenceInfoModel::cancelConference(){
 	mConferenceScheduler = ConferenceScheduler::create();
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
-	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onConferenceSchedulerStateChanged);
 	mConferenceScheduler->getConferenceScheduler()->cancelConference(mConferenceInfo);
 }
 
@@ -343,12 +349,14 @@ void ConferenceInfoModel::deleteConferenceInfo(){
 
 //-------------------------------------------------------------------------------------------------
 
-void ConferenceInfoModel::onStateChanged(linphone::ConferenceScheduler::State state){
-	qDebug() << "ConferenceInfoModel::onStateChanged: " << (int) state;
+void ConferenceInfoModel::onConferenceSchedulerStateChanged(linphone::ConferenceScheduler::State state){
+	qDebug() << "ConferenceInfoModel::onConferenceSchedulerStateChanged: " << (int) state;
+	mLastConferenceSchedulerState = state;
 	if( state == linphone::ConferenceScheduler::State::Ready)
 		emit conferenceCreated();
 	else if( state == linphone::ConferenceScheduler::State::Error)
 		emit conferenceCreationFailed();
+	emit conferenceInfoChanged();
 }
 void ConferenceInfoModel::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
 	qDebug() << "ConferenceInfoModel::onInvitationsSent";
