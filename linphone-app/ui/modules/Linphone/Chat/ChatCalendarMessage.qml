@@ -179,6 +179,8 @@ Loader{
 					Layout.preferredHeight: parent.participantLineHeight
 					Layout.preferredWidth: ChatCalendarMessageStyle.participants.iconSize
 					Layout.alignment: Qt.AlignTop
+					
+					visible: mainItem.conferenceInfoModel.participantCount > 0
 					clip: false
 					Icon{
 						anchors.top: parent.top

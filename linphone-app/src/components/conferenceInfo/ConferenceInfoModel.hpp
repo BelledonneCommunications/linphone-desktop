@@ -49,6 +49,7 @@ public:
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
+	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState conferenceSchedulerState READ getConferenceSchedulerState NOTIFY conferenceSchedulerStateChanged)
 		

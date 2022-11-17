@@ -109,12 +109,14 @@ Loader{
 			}
 			RowLayout {
 				id: participantsRow
+				property int participantCount: mainItem.conferenceInfoModel.participantCount
 				Layout.fillWidth: true
 				Layout.preferredHeight: ChatCalendarMessageStyle.participants.iconSize
 				Layout.leftMargin: 5
 				Layout.rightMargin: 15
 				
-				spacing: ChatCalendarMessageStyle.participants.spacing
+				spacing: ChatCalendarMessageStyle.participants.spacing				
+				visible: participantsRow.participantCount > 0
 				
 				Icon{
 					icon: ChatCalendarMessageStyle.participants.icon
@@ -124,13 +126,12 @@ Loader{
 				
 				Text {
 					id: participantsList
-					property int participantCount: mainItem.conferenceInfoModel.getParticipantCount()
 					Layout.fillWidth: true
 					color: ChatCalendarMessageStyle.participants.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 					//: '%1 participant' : number(=%1) of participant.
-					text:  qsTr('icsParticipants', '', participantCount).arg(participantCount)
+					text:  qsTr('icsParticipants', '', participantsRow.participantCount).arg(participantsRow.participantCount)
 				}
 			}
 			ColumnLayout{
