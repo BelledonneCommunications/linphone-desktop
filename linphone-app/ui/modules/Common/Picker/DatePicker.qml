@@ -107,7 +107,7 @@ Item{
 						id: cellItem
 						property int day:  index - 7 // 0 = top left below Sunday (-7 to 41)
 						property int date: day - firstDay + 1 // 1-31
-						property bool selected : new Date(year, month, date).toDateString() == monthList.selectedDate.toDateString()  &&  text.text  &&  day >= 0
+						property bool selected : text.text != '-' && new Date(year, month, date).toDateString() == monthList.selectedDate.toDateString()  &&  text.text  &&  day >= 0
 						width: grid.cellMinSize
 						height: width
 						
