@@ -100,6 +100,10 @@ QSharedPointer<ContactModel> ContactsListModel::findContactModelFromUsername (co
 }
 
 // -----------------------------------------------------------------------------
+ContactModel *ContactsListModel::getContactModelFromAddress (const QString& address) const{
+	auto contact = findContactModelFromSipAddress(address);
+	return contact.get();
+}
 
 ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 	// Try to merge vcardModel to an existing contact.

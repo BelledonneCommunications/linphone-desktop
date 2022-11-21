@@ -49,6 +49,7 @@ public:
 	QSharedPointer<ContactModel> findContactModelFromSipAddress (const QString &sipAddress) const;
 	QSharedPointer<ContactModel> findContactModelFromUsername (const QString &username) const;
 	
+	Q_INVOKABLE ContactModel *getContactModelFromAddress (const QString& address) const;
 	Q_INVOKABLE ContactModel *addContact (VcardModel *vcardModel);
 	Q_INVOKABLE void removeContact (ContactModel *contact);
 	
