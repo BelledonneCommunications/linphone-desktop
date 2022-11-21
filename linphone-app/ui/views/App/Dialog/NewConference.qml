@@ -20,8 +20,8 @@ DialogPlus {
 	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: {
-		dateField.setDate(conferenceManager.conferenceInfoModel.dateTime);
-		timeField.setTime(conferenceManager.conferenceInfoModel.dateTime);
+		dateField.setDate(conferenceManager.conferenceInfoModel.dateTimeUtc);
+		timeField.setTime(conferenceManager.conferenceInfoModel.dateTimeUtc);
 		selectedParticipants.setAddresses(conferenceInfoModel)
 	}
 	property bool forceSchedule : false
@@ -319,12 +319,15 @@ DialogPlus {
 						TextField{id: timeField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getTime(){
-								return Date.fromLocaleTimeString(scheduleForm.locale, timeField.text, 'hh:mm')
+								return Date.fromLocaleTimeString(scheduleForm.locale, timeField._text, 'hh:mm')
 							}
 							function setTime(date){
-								text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
+								_text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
+								text = UtilsCpp.toTimeString(date, 'hh:mm')// Display the unchanged time
 							}
-							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
+							// hidden time to be used from JS : JS Local time can be wrong on Windows because of daylights that are not takken account.
+							property string _text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
+							text: conferenceManager.conferenceInfoModel? UtilsCpp.toTimeString(conferenceManager.conferenceInfoModel.dateTimeUtc, 'hh:mm') : ''
 							
 							icon: 'drop_down_custom'
 							onEditingFinished: if(rightStackView.currentItemType === 2) {
