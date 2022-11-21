@@ -88,7 +88,7 @@ public:
   Q_INVOKABLE void removeEmail (const QString &email);
   Q_INVOKABLE bool updateEmail (const QString &oldEmail, const QString &email);
 
-  Q_INVOKABLE bool addUrl (const QString &url);
+  Q_INVOKABLE bool addUrl (QString url);
   Q_INVOKABLE void removeUrl (const QString &url);
   Q_INVOKABLE bool updateUrl (const QString &oldUrl, const QString &url);
 
