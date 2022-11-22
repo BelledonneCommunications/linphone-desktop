@@ -204,7 +204,11 @@ Loader{
 					Layout.leftMargin: 10
 					spacing: 0
 					visible: mainItem.isExpanded
-					onVisibleChanged: model= mainItem.conferenceInfoModel.getParticipants()
+					onVisibleChanged: visible ? model= mainItem.conferenceInfoModel.getParticipants() : model = []
+					Connections{
+						target: mainItem.conferenceInfoModel
+						onParticipantsChanged: if(expandedParticipantsList.visible) expandedParticipantsList.model = mainItem.conferenceInfoModel.getParticipants()
+					}
 					
 					delegate: Row{
 						spacing: 5

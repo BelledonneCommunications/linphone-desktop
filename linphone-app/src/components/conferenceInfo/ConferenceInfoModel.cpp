@@ -260,6 +260,7 @@ void ConferenceInfoModel::setDescription(const QString& description){
 
 void ConferenceInfoModel::setParticipants(ParticipantListModel * participants){
 	mConferenceInfo->setParticipants(participants->getParticipants());
+	emit participantsChanged();
 }
 
 void ConferenceInfoModel::setTimeZoneModel(TimeZoneModel * model){
