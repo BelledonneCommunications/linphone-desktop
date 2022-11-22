@@ -255,7 +255,6 @@ Rectangle {
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.record
 			property CallModel callModel: mainItem.callModel
-			onCallModelChanged: if(!callModel) callModel.stopRecording()
 			visible: SettingsModel.callRecorderEnabled && callModel && (callModel.recording || mainItem.isReady)
 			toggled: callModel.recording
 

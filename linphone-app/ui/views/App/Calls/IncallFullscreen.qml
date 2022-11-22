@@ -221,7 +221,6 @@ Window {
 				backgroundRadius: width/2
 				colorSet: IncallStyle.buttons.record
 				property CallModel callModel: conference.callModel
-				onCallModelChanged: if(callModel) callModel.stopRecording()
 				visible: SettingsModel.callRecorderEnabled && callModel
 				toggled: callModel && callModel.recording
 
