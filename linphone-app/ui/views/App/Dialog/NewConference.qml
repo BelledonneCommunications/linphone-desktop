@@ -557,7 +557,6 @@ DialogPlus {
 								function removeParticipant(entry){
 									smartSearchBar.removeAddressToIgnore(entry.sipAddress)
 									selectedParticipants.removeModel(entry)
-									++lastContacts.reloadCount
 								}
 								
 								
@@ -579,7 +578,7 @@ DialogPlus {
 									id:selectedParticipants
 									chatRoomModel:null
 								}
-								onEntryClicked: actions[0].handler(entry)
+								onEntryClicked: participantView.showSubtitle =  !participantView.showSubtitle
 							}
 						}
 					}
