@@ -6,6 +6,8 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 import Common.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 
 ScrollableListView {
@@ -253,16 +255,7 @@ ScrollableListView {
 					statusText : showAdminStatus ? getStatus()  : ''
 					
 					entry:  $modelData
-					
 					onAvatarClicked: sipAddressesView.entryClicked(parent.entry, index, contactView)
-					
-					BusyIndicator{
-						anchors.verticalCenter: parent.verticalCenter
-						anchors.horizontalCenter: parent.horizontalCenter
-						width:15
-						height:15
-						running: sipAddressesView.showInvitingIndicator && $modelData.inviting
-					}
 				}
 				
 				
@@ -289,6 +282,7 @@ ScrollableListView {
 					}
 					
 					Repeater {
+						id: actionsRepeater
 						model: sipAddressesView.actions
 						
 						ActionButton {
@@ -308,6 +302,21 @@ ScrollableListView {
 								iconSize: parent.height/2
 								anchors.top:parent.top
 								anchors.horizontalCenter: parent.right
+							}
+							Loader{
+								anchors.verticalCenter: parent.verticalCenter
+								anchors.horizontalCenter: parent.horizontalCenter
+								height: parent.height - 2
+								width: height
+								
+								active: index == actionsRepeater.count -1 && sipAddressesView.showInvitingIndicator && contactView.entry && contactView.entry.inviting
+								
+								sourceComponent: Component{
+									BusyIndicator{
+										color: BusyIndicatorStyle.alternateColor
+										running: true
+									}
+								}
 							}
 						}
 					}

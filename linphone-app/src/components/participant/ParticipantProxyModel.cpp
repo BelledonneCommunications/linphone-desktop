@@ -92,8 +92,11 @@ void ParticipantProxyModel::setChatRoomModel(ChatRoomModel * chatRoomModel){
 			connect(participants, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
 			setSourceModel(participants);
 			emit participantListModelChanged();
-			for(int i = 0 ; i < participants->getCount() ; ++i)
-				emit addressAdded(participants->getAt<ParticipantModel>(i)->getSipAddress());
+			for(int i = 0 ; i < participants->getCount() ; ++i) {
+				auto participant = participants->getAt<ParticipantModel>(i);
+				connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
+				emit addressAdded(participant->getSipAddress());
+			}
 		}else if(!sourceModel()){
 			auto model = new ParticipantListModel((ChatRoomModel*)nullptr, this); 
 			connect(model, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
@@ -113,8 +116,11 @@ void ParticipantProxyModel::setConferenceModel(ConferenceModel * conferenceModel
 			connect(participants, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
 			setSourceModel(participants);
 			emit participantListModelChanged();
-			for(int i = 0 ; i < participants->getCount() ; ++i)
-				emit addressAdded(participants->getAt<ParticipantModel>(i)->getSipAddress());
+			for(int i = 0 ; i < participants->getCount() ; ++i) {
+				auto participant = participants->getAt<ParticipantModel>(i);
+				connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
+				emit addressAdded(participant->getSipAddress());
+			}
 		}else if(!sourceModel()){
 			auto model = new ParticipantListModel((ConferenceModel*)nullptr, this); 
 			connect(model, &ParticipantListModel::countChanged, this, &ParticipantProxyModel::countChanged);
@@ -144,12 +150,12 @@ void ParticipantProxyModel::addAddress(const QString& address){
 	ParticipantListModel * participantsModel = qobject_cast<ParticipantListModel*>(sourceModel());
 	if(!participantsModel->contains(address)){
 		QSharedPointer<ParticipantModel> participant = QSharedPointer<ParticipantModel>::create(nullptr);
+		connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
 		participant->setSipAddress(address);
 		participantsModel->add(participant);
 		if(mChatRoomModel && mChatRoomModel->getChatRoom()){// Invite and wait for its creation
-			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
-			connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
 			participant->startInvitation();
+			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
 		}
 		if( mConferenceModel && mConferenceModel->getConference()){
 			auto addressToInvite = Utils::interpretUrl(address);
@@ -158,23 +164,18 @@ void ParticipantProxyModel::addAddress(const QString& address){
 			auto haveCall = std::find_if(currentCalls.begin(), currentCalls.end(), [addressToInvite](const std::shared_ptr<linphone::Call>& call){
 				return call->getRemoteAddress()->weakEqual(addressToInvite);
 			});
+			participant->startInvitation();
 			if( haveCall == currentCalls.end())
 				mConferenceModel->getConference()->addParticipant(addressToInvite);
 			else{
 				runningCallsToAdd.push_back(*haveCall);
 				mConferenceModel->getConference()->addParticipants(runningCallsToAdd);
 			}
-			
-			
 		/*
 			std::list<std::shared_ptr<linphone::Address>> addressesToInvite;
 			addressesToInvite.push_back(addressToInvite);
 			auto callParameters = CoreManager::getInstance()->getCore()->createCallParams(mConferenceModel->getConference()->getCall());
-			mConferenceModel->getConference()->inviteParticipants(addressesToInvite, callParameters);*/
-			
-			connect(participant.get(), &ParticipantModel::invitationTimeout, this, &ParticipantProxyModel::removeModel);
-			participant->startInvitation();
-			
+			mConferenceModel->getConference()->inviteParticipants(addressesToInvite, callParameters);*/		
 		}
 		emit countChanged();
 		emit addressAdded(address);
