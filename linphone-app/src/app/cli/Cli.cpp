@@ -63,6 +63,20 @@ static void cliCall (QHash<QString, QString> &args) {
 		CoreManager::getInstance()->getCallsListModel()->launchAudioCall(args["sip-address"], "");
 }
 
+static void cliAccept (QHash<QString, QString> &args) {
+	auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
+	if(currentCall){
+		currentCall->accept();
+	}
+}
+
+static void cliDecline (QHash<QString, QString> &args) {
+	auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
+	if(currentCall){
+		currentCall->decline();
+	}
+}
+
 static void cliBye (QHash<QString, QString> &args) {
 	auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
 	if(args.size() > 0) {
@@ -428,6 +442,8 @@ QMap<QString, Cli::Command> Cli::mCommands = {
 		{ "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
 	}),
 	createCommand("bye", QT_TR_NOOP("byeFunctionDescription"), cliBye, QHash<QString, Argument>(), true),
+	createCommand("accept", QT_TR_NOOP("acceptFunctionDescription"), cliAccept, QHash<QString, Argument>(), true),
+	createCommand("decline", QT_TR_NOOP("declineFunctionDescription"), cliDecline, QHash<QString, Argument>(), true),
 };
 
 // -----------------------------------------------------------------------------
