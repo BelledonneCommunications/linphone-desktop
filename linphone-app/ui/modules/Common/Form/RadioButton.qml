@@ -17,6 +17,14 @@ Control.RadioButton{
 	font.pointSize: RadioButtonStyle.pointSize
 	spacing: 10
 	FontMetrics{id: fontMetrics}
+	
+	MouseArea{
+		anchors.fill:parent
+		hoverEnabled: true
+		acceptedButtons: Qt.NoButton
+		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+	}
+	
 	indicator: Rectangle {
 		height: fontMetrics.height - 5 
 		width: height

@@ -166,13 +166,16 @@ Rectangle{
 								font.pointSize: IncallMenuStyle.list.pointSize
 								color: IncallMenuStyle.list.color
 							}
-							ActionButton{
+							Icon{
 								Layout.minimumWidth: iconWidth
 								Layout.rightMargin: 10
 								Layout.alignment: Qt.AlignVCenter
-								backgroundRadius: width/2
-								isCustom: true
-								colorSet: IncallMenuStyle.buttons.next
+								//backgroundRadius: width/2
+								
+								icon: IncallMenuStyle.buttons.next.icon
+								overwriteColor: IncallMenuStyle.buttons.next.backgroundNormalColor
+								iconWidth: IncallMenuStyle.buttons.next.iconSize
+								iconHeight: IncallMenuStyle.buttons.next.iconSize
 							}
 						}
 						MouseArea{
@@ -236,6 +239,10 @@ Rectangle{
 						Layout.preferredHeight: Math.max(layoutIcon.height, radio.contentItem.implicitHeight) + 20
 						Layout.fillWidth: true
 						enabled: mainItem.callModel && !mainItem.callModel.updating
+						MouseArea{
+							anchors.fill: parent
+							onClicked: radio.clicked()
+						}
 						RowLayout{
 							anchors.fill: parent
 							
