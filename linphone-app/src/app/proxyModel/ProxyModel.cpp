@@ -35,6 +35,19 @@ ProxyModel::ProxyModel (QAbstractItemModel * model, const int& defaultFilterMode
 	sort(0, Qt::DescendingOrder);
 }
 
+ProxyModel::~ProxyModel(){
+	if(mDeleteSourceModel)
+		deleteSourceModel();
+}
+
+void ProxyModel::deleteSourceModel(){
+	auto oldSourceModel = sourceModel();
+	if(oldSourceModel) {
+		oldSourceModel->deleteLater();
+		setSourceModel(nullptr);
+	}
+}
+
 int ProxyModel::getFilterMode () const {
 	return mFilterMode;
 }

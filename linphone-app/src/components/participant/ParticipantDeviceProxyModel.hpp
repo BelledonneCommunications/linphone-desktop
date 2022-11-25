@@ -45,6 +45,7 @@ public:
 	Q_PROPERTY(ParticipantDeviceModel* activeSpeaker READ getActiveSpeakerModel NOTIFY activeSpeakerChanged)
 	
 	ParticipantDeviceProxyModel (QObject *parent = nullptr);
+	~ParticipantDeviceProxyModel();
 	
 	Q_INVOKABLE ParticipantDeviceModel* getAt(int row);
 	ParticipantDeviceModel* getActiveSpeakerModel();
@@ -76,7 +77,6 @@ protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
-	QSharedPointer<ParticipantDeviceListModel> mDevices;
 	CallModel * mCallModel;
 	bool mShowMe = true;
 };

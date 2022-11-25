@@ -27,6 +27,7 @@
 // -----------------------------------------------------------------------------
 
 TimeZoneProxyModel::TimeZoneProxyModel (QObject *parent) : SortFilterProxyModel(parent) {
+	mDeleteSourceModel = true;
 	setSourceModel(new TimeZoneListModel(parent));
 	sort(0);
 }

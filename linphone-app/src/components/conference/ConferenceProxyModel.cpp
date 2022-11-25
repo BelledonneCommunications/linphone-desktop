@@ -38,6 +38,7 @@
 using namespace std;
 
 ConferenceProxyModel::ConferenceProxyModel (QObject *parent) : SortFilterProxyModel(parent) {
+  mDeleteSourceModel = false;
   setSourceModel(CoreManager::getInstance()->getCallsListModel());
   emit conferenceChanged();
 

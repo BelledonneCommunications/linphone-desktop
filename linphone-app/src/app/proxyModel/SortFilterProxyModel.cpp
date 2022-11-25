@@ -26,6 +26,19 @@ SortFilterProxyModel::SortFilterProxyModel(QObject * parent) : QSortFilterProxyM
 	connect(this, &SortFilterProxyModel::rowsRemoved, this, &SortFilterProxyModel::countChanged);
 }
 
+SortFilterProxyModel::~SortFilterProxyModel(){
+	if(mDeleteSourceModel)
+		deleteSourceModel();
+}
+
+void SortFilterProxyModel::deleteSourceModel(){
+	auto oldSourceModel = sourceModel();
+	if(oldSourceModel) {
+		oldSourceModel->deleteLater();
+		setSourceModel(nullptr);
+	}
+}
+
 int SortFilterProxyModel::getCount() const{
 	return rowCount();
 }

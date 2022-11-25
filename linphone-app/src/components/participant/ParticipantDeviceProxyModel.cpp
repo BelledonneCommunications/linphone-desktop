@@ -31,6 +31,10 @@
 // =============================================================================
 
 ParticipantDeviceProxyModel::ParticipantDeviceProxyModel (QObject *parent) : SortFilterProxyModel(parent){
+	mDeleteSourceModel = true;
+}
+
+ParticipantDeviceProxyModel::~ParticipantDeviceProxyModel(){
 }
 
 bool ParticipantDeviceProxyModel::filterAcceptsRow (
@@ -85,18 +89,20 @@ void ParticipantDeviceProxyModel::connectTo(ParticipantDeviceListModel* model){
 void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	setFilterType(1);
 	mCallModel = callModel;
-	auto sourceModel = new ParticipantDeviceListModel(mCallModel);
-	connectTo(sourceModel);
-	setSourceModel(sourceModel);
+	deleteSourceModel();
+	auto newSourceModel = new ParticipantDeviceListModel(mCallModel);
+	connectTo(newSourceModel);
+	setSourceModel(newSourceModel);
 	emit countChanged();
 	emit meChanged();
 }
 
 void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant){
 	setFilterType(0);
-	auto sourceModel = participant->getParticipantDevices().get();
-	connectTo(sourceModel);
-	setSourceModel(sourceModel);
+	deleteSourceModel();
+	auto newSourceModel = participant->getParticipantDevices().get();
+	connectTo(newSourceModel);
+	setSourceModel(newSourceModel);
 	emit countChanged();
 	emit meChanged();
 }

@@ -57,6 +57,7 @@ ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel
 }
 
 ChatRoomProxyModel::~ChatRoomProxyModel(){
+	setSourceModel(nullptr);
 	setChatRoomModel(nullptr);	// Do remove process like setting haveCall if is Call.
 }
 
