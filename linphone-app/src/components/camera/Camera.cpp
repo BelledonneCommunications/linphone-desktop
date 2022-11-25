@@ -44,6 +44,7 @@ int Camera::mPreviewCounter;
 
 // =============================================================================
 Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
+	qDebug() << "[Camera] Camera constructor" << this;
 	updateWindowIdLocation();
 	setTextureFollowsItemSize(true);
 	// The fbo content must be y-mirrored because the ms rendering is y-inverted.
@@ -66,9 +67,11 @@ Camera::Camera (QQuickItem *parent) : QQuickFramebufferObject(parent) {
 
 Camera::~Camera(){
 	qDebug() << "[Camera] Camera destructor" << this;
+	mRefreshTimer->stop();
+	
 	if(mIsPreview)
 		deactivatePreview();
-	setWindowIdLocation(None);
+	setWindowIdLocation(None);// We need to remove the Qt Buffer from SDK ot avoid to reuse it.
 }
 
 void Camera::resetWindowId() const{
@@ -157,8 +160,6 @@ void Camera::removeParticipantDeviceModel(){
 }
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
-	resetWindowId();
-
 	QQuickFramebufferObject::Renderer * renderer = NULL;
 	if(mWindowIdLocation == CorePreview){
 		qDebug() << "[Camera] Setting Camera to Preview";

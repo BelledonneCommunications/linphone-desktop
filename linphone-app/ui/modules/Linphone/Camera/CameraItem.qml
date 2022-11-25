@@ -22,10 +22,11 @@ Item {
 	property bool isFullscreen: false
 	property bool hideCamera: false
 	property bool isPaused: false
-	property bool deactivateCamera: false
+	property bool deactivateCamera: true
 	property bool isVideoEnabled: !deactivateCamera && (!callModel || callModel.videoEnabled)
-									&& (!container.currentDevice || callModel && (container.currentDevice
-																			&& (container.currentDevice.videoEnabled || (container.currentDevice.isMe && callModel.cameraEnabled))))
+									&& (!container.currentDevice || ( callModel && container.currentDevice &&
+																		( (!container.currentDevice.isMe && container.currentDevice.videoEnabled)
+																			|| (container.currentDevice.isMe && callModel.cameraEnabled))))
 
 	property bool a : callModel && callModel.videoEnabled
 	property bool b: container.currentDevice && container.currentDevice.videoEnabled
@@ -51,6 +52,10 @@ Item {
 		anchors.fill: parent
 		
 		active: !resetActive && container.isVideoEnabled
+		onActiveChanged: {
+			console.log("QML Camera status : " + active)
+		}
+		
 		sourceComponent: container.isVideoEnabled && !container.isPaused? camera : null		
 		
 		Timer{

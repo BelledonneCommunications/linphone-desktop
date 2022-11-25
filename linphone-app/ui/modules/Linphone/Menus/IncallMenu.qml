@@ -50,6 +50,14 @@ Rectangle{
 	onVisibleChanged: if(!visible && contentsStack.nViews > 1) {
 		contentsStack.pop()
 	}
+	property bool _activateCamera: false
+	Connections{// Enable camera only when status is ok
+		target: mainItem.callModel
+		onStatusChanged: if( mainItem._activateCamera && (status == LinphoneEnums.CallStatusConnected || status == LinphoneEnums.CallStatusIdle)){
+			camera._activateCamera = false
+			callModel.cameraEnabled = true
+		}
+	}
 	ButtonGroup{id: modeGroup}
 	ColumnLayout{
 		anchors.fill: parent
@@ -227,6 +235,7 @@ Rectangle{
 						bottomWidth: IncallMenuStyle.list.border.width
 						Layout.preferredHeight: Math.max(layoutIcon.height, radio.contentItem.implicitHeight) + 20
 						Layout.fillWidth: true
+						enabled: mainItem.callModel && !mainItem.callModel.updating
 						RowLayout{
 							anchors.fill: parent
 							
@@ -238,37 +247,16 @@ Rectangle{
 								Layout.alignment: Qt.AlignVCenter
 								ButtonGroup.group: modeGroup
 								text: modelData.text
-								
 								property bool isInternallyChecked: mainItem.callModel ? (mainItem.callModel.localVideoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
 															|| (!mainItem.callModel.localVideoEnabled && modelData.value == LinphoneEnums.ConferenceLayoutAudioOnly)
 															: false
 								// break bind. Radiobutton checked itself without taking care of custom binding. This workaound works as long as we don't really need the binding.
 								onIsInternallyCheckedChanged: checked = isInternallyChecked
 								Component.onCompleted: checked = isInternallyChecked
-								Timer{
-									id: changingLayoutDelay
-									interval: 100
-									onTriggered: {if(modelData.value == 2) mainItem.callModel.videoEnabled = false
-												else {
-													mainItem.callModel.conferenceVideoLayout = modelData.value
-													mainItem.callModel.videoEnabled = true
-												}
-												mainItem.enabled = true
-											}
-								}
-								onClicked:{
-								// Do changes only if we choose a different layout.
-											if(! ( mainItem.callModel ? (mainItem.callModel.localVideoEnabled && modelData.value == mainItem.callModel.conferenceVideoLayout)
-															|| (!mainItem.callModel.localVideoEnabled && modelData.value == LinphoneEnums.ConferenceLayoutAudioOnly)
-															: false)){
-												mainItem.enabled = false
-												mainItem.layoutChanging(modelData.value)// Let time to clear cameras
-												changingLayoutDelay.start()
-											}
-										}
+								onClicked: mainItem.layoutChanging(modelData.value)
 							}
 							Icon{
-								id: layoutIcon							
+								id: layoutIcon
 								Layout.minimumWidth: iconWidth
 								Layout.rightMargin: 10
 								Layout.alignment: Qt.AlignVCenter

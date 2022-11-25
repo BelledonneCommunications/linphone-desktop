@@ -27,6 +27,7 @@ Rectangle {
 	property bool cameraIsReady : false
 	property bool previewIsReady : false
 	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
+	property bool layoutChanging: false
 	
 	property var _fullscreen: null
 	on_FullscreenChanged: if( !_fullscreen) isFullScreen = false
@@ -40,7 +41,7 @@ Rectangle {
 									: conferenceLayout.item ? conferenceLayout.item.participantCount : 2
 	
 // States
-	property bool isAudioOnly: callModel && callModel.isConference && conferenceLayout.sourceComponent == gridComponent && !callModel.videoEnabled
+	property bool isAudioOnly:  callModel && callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutAudioOnly
 	property bool isReady : mainItem.callModel 
 								&& (!mainItem.callModel.isConference 
 																|| (mainItem.conferenceModel && mainItem.conferenceModel.isReady)
@@ -308,7 +309,7 @@ Rectangle {
 				Layout.leftMargin: 70
 				Layout.rightMargin: rightMenu.visible ? 15 : 70
 				callModel: mainItem.callModel
-				cameraEnabled: !mainItem.isFullScreen
+				cameraEnabled: !mainItem.isFullScreen && !mainItem.layoutChanging
 			}
 		}
 		Component{
@@ -318,7 +319,7 @@ Rectangle {
 				callModel: mainItem.callModel
 				isRightReducedLayout: rightMenu.visible
 				isLeftReducedLayout: mainItem.listCallsOpened
-				cameraEnabled: !mainItem.isFullScreen
+				cameraEnabled: !mainItem.isFullScreen && !mainItem.layoutChanging
 			}
 		}
 		RowLayout{
@@ -328,12 +329,50 @@ Rectangle {
 				Layout.fillWidth: true
 				Loader{
 					id: conferenceLayout
-					anchors.fill: parent	
-					sourceComponent: mainItem.conferenceModel 
-										? mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutActiveSpeaker
-											? activeSpeakerComponent
-											: gridComponent
-										: activeSpeakerComponent
+					anchors.fill: parent
+					
+					Timer{// Avoid Qt crashes when layout changes while videos are on
+						id: layoutDelay
+						interval: 100
+						property int step : 0
+						property var layoutMode
+						onTriggered: {
+							switch(step){
+							case 2 : step = 0; mainItem.layoutChanging = false; break;
+							case 1: ++step; conferenceLayout.sourceComponent = conferenceLayout.getLayout(); layoutDelay.restart(); break;
+							case 0: if( mainItem.callModel.conferenceVideoLayout != layoutMode)
+										mainItem.callModel.conferenceVideoLayout = layoutMode
+									else {
+										++step;
+										layoutDelay.restart()
+									}
+									break;
+							}
+						}
+						function begin(layoutMode){
+							step = 0
+							layoutDelay.layoutMode = layoutMode
+							mainItem.layoutChanging = true
+							layoutDelay.restart()
+						}
+					}
+					function getLayout(){
+						return mainItem.conferenceModel
+								? mainItem.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutActiveSpeaker
+									? activeSpeakerComponent
+									: gridComponent
+								: activeSpeakerComponent
+					}
+						
+					Connections{
+						target: mainItem.callModel
+						
+						onConferenceVideoLayoutChanged: {
+							layoutDelay.layoutMode = mainItem.callModel.conferenceVideoLayout
+							layoutDelay.restart()
+						}
+					}
+					sourceComponent: getLayout()
 					active: mainItem.callModel && !mainItem.isFullScreen
 				}
 				Rectangle{
@@ -342,12 +381,16 @@ Rectangle {
 					visible: !mainItem.isReady
 					ColumnLayout {
 						anchors.fill: parent
-						BusyIndicator{
+						Loader{
 							Layout.preferredHeight: 40
 							Layout.preferredWidth: 40
 							Layout.alignment: Qt.AlignCenter
-							running: parent.visible
-							color: IncallStyle.buzyColor
+							active: parent.visible
+							sourceComponent: Component{
+								BusyIndicator{
+									color: IncallStyle.buzyColor
+								}
+							}
 						}
 						Text{
 							Layout.alignment: Qt.AlignCenter
@@ -370,8 +413,11 @@ Rectangle {
 				callModel: mainItem.callModel
 				conferenceModel: mainItem.conferenceModel
 				visible: false
+				enabled: !mainItem.layoutChanging
 				onClose: rightMenu.visible = !rightMenu.visible
-				onLayoutChanging: conferenceLayout.item.clearAll(layoutMode)
+				onLayoutChanging: {
+						layoutDelay.begin(layoutMode)
+				}
 			}
 		}
 	}
@@ -487,14 +533,14 @@ Rectangle {
 				isCustom: true
 				backgroundRadius: 90
 				colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
-				updating: callModel.videoEnabled && callModel.updating
+				updating: callModel.videoEnabled && callModel.updating && !mainItem.layoutChanging
 				property bool _activateCamera: false
-				onClicked: if(callModel){
+				onClicked: if(callModel && !mainItem.layoutChanging){
 								if( callModel.isConference){// Only deactivate camera in conference.
-									if(mainItem.isAudioOnly && SettingsModel.videoConferenceLayout != 2) {
+									if(mainItem.isAudioOnly) {
+										var layout = SettingsModel.videoConferenceLayout != LinphoneEnums.ConferenceLayoutAudioOnly ? SettingsModel.videoConferenceLayout : LinphoneEnums.ConferenceLayoutGrid
+										layoutDelay.being(layout)
 										camera._activateCamera = true
-										conferenceLayout.item.clearAll(SettingsModel.videoConferenceLayout)
-										callModel.conferenceVideoLayout = SettingsModel.videoConferenceLayout
 									}else
 										callModel.cameraEnabled = !callModel.cameraEnabled
 								}else{// In one-one, we deactivate all videos.

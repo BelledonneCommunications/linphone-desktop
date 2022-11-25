@@ -37,12 +37,6 @@ Item {
 			onConferenceCreated: cameraView.resetCamera()
 		}
 	
-	function clearAll(layoutMode){
-		if( layoutMode != LinphoneEnums.ConferenceLayoutActiveSpeaker){
-			mainItem.cameraEnabled = false
-			miniViews.model = []
-		}
-	}
 	Sticker{
 		id: cameraView
 		anchors.fill: parent
@@ -54,7 +48,7 @@ Item {
 							: callModel.isConference
 								? allDevices.activeSpeaker
 								: null
-		deactivateCamera: isPreview && callModel.pausedByUser
+		deactivateCamera: !mainItem.cameraEnabled || (isPreview && callModel.pausedByUser)
 							? true
 							: callModel.isConference
 								?  (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
@@ -63,8 +57,6 @@ Item {
 									|| !mainItem.isConferenceReady
 								: (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused || !callModel.videoEnabled) )
 									|| currentDevice && !currentDevice.videoEnabled
-								
-		isVideoEnabled: !deactivateCamera
 		isPreview: !preview.visible && mainItem.participantCount == 1
 		onIsPreviewChanged: {cameraView.resetCamera() }
 		isCameraFromDevice: isPreview
@@ -101,7 +93,7 @@ Item {
 			sourceComponent: 
 			Sticker{
 				id: previewSticker
-				deactivateCamera: !mainItem.callModel || callModel.pausedByUser || !mainItem.callModel.cameraEnabled
+				deactivateCamera: !mainItem.cameraEnabled || !mainItem.callModel || callModel.pausedByUser || !mainItem.callModel.cameraEnabled
 				currentDevice: allDevices.me
 				isPreview: true
 				callModel: mainItem.callModel

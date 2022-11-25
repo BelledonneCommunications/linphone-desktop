@@ -101,15 +101,20 @@ Item{
 		color: "#80000000"
 		source: usernameItem
 	}
-	ActionButton{
-		visible: mainItem._showCloseButton && mainItem._isPreview && mainItem._callModel && mainItem._callModel.videoEnabled
+	Loader{
+		id: closeLoader
 		anchors.right: parent.right
 		anchors.top: parent.top
 		anchors.rightMargin: 5
 		anchors.topMargin: 5
-		isCustom: true
-		colorSet: DecorationStickerStyle.closePreview
-		onClicked: mainItem.closeRequested()
+		active: mainItem._showCloseButton && mainItem._isPreview && mainItem._callModel && mainItem._callModel.videoEnabled
+		sourceComponent: Component{
+			ActionButton{
+				isCustom: true
+				colorSet: DecorationStickerStyle.closePreview
+				onClicked: mainItem.closeRequested()
+			}
+		}
 	}
 	ColumnLayout{
 		anchors.top: parent.top
@@ -137,17 +142,22 @@ Item{
 				iconSize: DecorationStickerStyle.isMuted.button.iconSize
 			}
 		}
-		BusyIndicator{// Joining spinner
+		Loader{
+			id: busyLoader
+			property bool delayed : false
 			Layout.preferredHeight: 20
 			Layout.preferredWidth: 20
-			property bool delayed : false
-			visible: delayed && mainItem._currentDevice && (mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
-			Timer{// Delay starting spinner (Qt bug)
-				id: indicatorDelay
-				interval: 100
-				onTriggered: parent.delayed = true
+			active: delayed && mainItem._currentDevice && (mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
+			sourceComponent: Component{
+				BusyIndicator{// Joining spinner
+					Timer{// Delay starting spinner (Qt bug)
+						id: indicatorDelay
+						interval: 100
+						onTriggered: busyLoader.delayed = true
+					}
+					Component.onCompleted: indicatorDelay.start()
+				}
 			}
-			Component.onCompleted: indicatorDelay.start()
 		}
 	}
 }

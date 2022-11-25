@@ -68,6 +68,9 @@ Window {
 		property ConferenceModel conferenceModel: callModel && callModel.conferenceModel
 		property var _fullscreen: null
 		property bool listCallsOpened: false
+		property bool layoutChanging: false
+	
+		property bool isAudioOnly:  callModel && callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutAudioOnly
 
 		signal openListCallsRequest()
 		// ---------------------------------------------------------------------------
@@ -238,7 +241,7 @@ Window {
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: IncallStyle.buttons.screenshot
-				visible: SettingsModel.incallScreenshotEnabled && conference.callModel && (!conference.callModel.isConference || mainItem.callModel.snapshotEnabled)
+				visible: SettingsModel.incallScreenshotEnabled && conference.callModel && (!conference.callModel.isConference || window.callModel.snapshotEnabled)
 				onClicked: conference.callModel && conference.callModel.takeSnapshot()
 				//: 'Take Snapshot' : Tooltip for takking snapshot.
 				tooltipText: qsTr('incallSnapshotTooltip')
@@ -279,6 +282,7 @@ Window {
 					Layout.leftMargin: window.hideButtons ? 15 : 70
 					Layout.rightMargin: rightMenu.visible ? 15 : 70
 					callModel: conference.callModel
+					cameraEnabled: !conference.layoutChanging
 				}
 			}
 			Component{
@@ -286,6 +290,7 @@ Window {
 				IncallActiveSpeaker{
 					id: activeSpeaker
 					callModel: conference.callModel
+					cameraEnabled: !conference.layoutChanging
 					isRightReducedLayout: rightMenu.visible
 					isLeftReducedLayout: conference.listCallsOpened
 				}
@@ -297,13 +302,48 @@ Window {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					
-					sourceComponent: conference.callModel
-										? conference.conferenceModel
-											? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutActiveSpeaker
-												? activeSpeakerComponent
-												: gridComponent
-											: activeSpeakerComponent
-										: null
+					Timer{// Avoid Qt crashes when layout changes while videos are on
+						id: layoutDelay
+						interval: 100
+						property int step : 0
+						property var layoutMode
+						onTriggered: {
+							switch(step){
+							case 2 : step = 0; conference.layoutChanging = false; break;
+							case 1: ++step; conferenceLayout.sourceComponent = conferenceLayout.getLayout(); layoutDelay.restart(); break;
+							case 0: if( conference.callModel.conferenceVideoLayout != layoutMode)
+										conference.callModel.conferenceVideoLayout = layoutMode
+									else {
+										++step;
+										layoutDelay.restart()
+									}
+									break;
+							}
+						}
+						function begin(layoutMode){
+							step = 0
+							layoutDelay.layoutMode = layoutMode
+							conference.layoutChanging = true
+							layoutDelay.restart()
+						}
+					}
+					function getLayout(){
+						return conference.conferenceModel
+								? conference.callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutActiveSpeaker
+									? activeSpeakerComponent
+									: gridComponent
+								: activeSpeakerComponent
+					}
+						
+					Connections{
+						target: conference.callModel
+						
+						onConferenceVideoLayoutChanged: {
+							layoutDelay.layoutMode = conference.callModel.conferenceVideoLayout
+							layoutDelay.restart()
+						}
+					}
+					sourceComponent: getLayout()
 					active: conference.callModel
 					ColumnLayout {
 						anchors.fill: parent
@@ -332,6 +372,9 @@ Window {
 					conferenceModel: conference.conferenceModel
 					visible: false
 					onClose: rightMenu.visible = !rightMenu.visible
+					onLayoutChanging: {
+						layoutDelay.begin(layoutMode)
+				}
 				}
 			}
 		}
@@ -450,8 +493,14 @@ Window {
 					backgroundRadius: 90
 					colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 					updating: callModel && callModel.videoEnabled && callModel.updating
-					enabled: callModel && callModel.videoEnabled
-					onClicked: if(callModel) callModel.cameraEnabled = !callModel.cameraEnabled
+					onClicked: if(callModel && !conference.layoutChanging){
+								if( callModel.isConference){// Only deactivate camera in conference.
+									callModel.cameraEnabled = !callModel.cameraEnabled
+								}else{// In one-one, we deactivate all videos.
+									if(callModel.videoEnabled ) Qt.callLater(function(){window.exit()})
+										callModel.videoEnabled = !callModel.videoEnabled
+								}
+							}
 				}
 			}
 			RowLayout{
