@@ -11,7 +11,7 @@ import Linphone.Styles 1.0
 import Units 1.0
 import UtilsCpp 1.0
 
-
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 // =============================================================================
 
 ColumnLayout {
@@ -114,6 +114,9 @@ ColumnLayout {
 												  colorSet: ParticipantsListViewStyle.removeParticipant,
 												  secure:0,
 												  visible:true,
+												  visibleHandler: function(entry){
+													return !UtilsCpp.isMe(entry.sipAddress)
+												  },
 												  //: 'Remove this participant from the list' : Tootltip to explain that the action will lead to remove the participant.
 												  tooltipText: qsTr('participantsListRemoveTooltip'),
 												  handler: function (entry) {

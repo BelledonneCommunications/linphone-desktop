@@ -122,6 +122,9 @@ ScrollableListView {
 									backgroundRadius: 90
 									colorSet: modelData.colorSet
 									visible: sipAddressesView.actions[index].visible
+												&& (!sipAddressesView.actions[index].visibleHandler || sipAddressesView.actions[index].visibleHandler({
+																						   sipAddress: sipAddressesView.interpretableSipAddress
+																					   }))
 									
 									onClicked: sipAddressesView.actions[index].handler({
 																						   sipAddress: sipAddressesView.interpretableSipAddress
@@ -285,36 +288,43 @@ ScrollableListView {
 						id: actionsRepeater
 						model: sipAddressesView.actions
 						
-						ActionButton {
-							isCustom: true
-							backgroundRadius: 90
-							colorSet: modelData.colorSet
+						Item{
+							height: buttonAction.height
+							width: buttonAction.width
 							anchors.verticalCenter: parent.verticalCenter
-							tooltipText: modelData.tooltipText? modelData.tooltipText:''
-							visible: sipAddressesView.actions[index].visible
-							onClicked: {
-								sipAddressesView.actions[index].handler(contactView.entry)
-							}
-							Icon{
-								visible: modelData.secure>0 &&
-									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$modelData}) : true)
-								icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
-								iconSize: parent.height/2
-								anchors.top:parent.top
-								anchors.horizontalCenter: parent.right
-							}
-							Loader{
+							ActionButton {
+								id: buttonAction
+								isCustom: true
+								backgroundRadius: 90
+								colorSet: modelData.colorSet
 								anchors.verticalCenter: parent.verticalCenter
-								anchors.horizontalCenter: parent.horizontalCenter
-								height: parent.height - 2
-								width: height
+								tooltipText: modelData.tooltipText? modelData.tooltipText:''
+								visible: sipAddressesView.actions[index].visible && (!sipAddressesView.actions[index].visibleHandler || sipAddressesView.actions[index].visibleHandler(contactView.entry))
 								
-								active: index == actionsRepeater.count -1 && sipAddressesView.showInvitingIndicator && contactView.entry && contactView.entry.inviting
-								
-								sourceComponent: Component{
-									BusyIndicator{
-										color: BusyIndicatorStyle.alternateColor
-										running: true
+								onClicked: {
+									sipAddressesView.actions[index].handler(contactView.entry)
+								}
+								Icon{
+									visible: modelData.secure>0 &&
+										(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$modelData}) : true)
+									icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
+									iconSize: parent.height/2
+									anchors.top:parent.top
+									anchors.horizontalCenter: parent.right
+								}
+								Loader{
+									anchors.verticalCenter: parent.verticalCenter
+									anchors.horizontalCenter: parent.horizontalCenter
+									height: parent.height - 2
+									width: height
+									
+									active: index == actionsRepeater.count -1 && sipAddressesView.showInvitingIndicator && contactView.entry && contactView.entry.inviting
+									
+									sourceComponent: Component{
+										BusyIndicator{
+											color: BusyIndicatorStyle.alternateColor
+											running: true
+										}
 									}
 								}
 							}
