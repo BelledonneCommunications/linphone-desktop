@@ -144,16 +144,18 @@ Item{
 		}
 		Loader{
 			id: busyLoader
-			property bool delayed : false
+			
 			Layout.preferredHeight: 20
 			Layout.preferredWidth: 20
-			active: delayed && mainItem._currentDevice && (mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
+			active: mainItem._currentDevice && (mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateScheduledForJoining || mainItem._currentDevice.state == LinphoneEnums.ParticipantDeviceStateAlerting)
 			sourceComponent: Component{
 				BusyIndicator{// Joining spinner
+					id: joiningSpinner
+					running: false
 					Timer{// Delay starting spinner (Qt bug)
 						id: indicatorDelay
 						interval: 100
-						onTriggered: busyLoader.delayed = true
+						onTriggered: joiningSpinner.running = true
 					}
 					Component.onCompleted: indicatorDelay.start()
 				}
