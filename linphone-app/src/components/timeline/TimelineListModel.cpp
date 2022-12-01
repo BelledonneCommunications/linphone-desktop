@@ -246,7 +246,17 @@ void TimelineListModel::updateTimelines () {
 	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
 		if( ChatRoomModel::isTerminated(chatRoom) && chatRoom->getUnreadMessagesCount() > 0)
 			chatRoom->markAsRead();
-		return chatRoom->getState() == linphone::ChatRoom::State::Deleted || (!chatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic) && chatRoom->getConferenceAddress() && chatRoom->getHistoryEventsSize() == 0);
+		if(chatRoom->getState() == linphone::ChatRoom::State::Deleted)
+			return true;
+		if(!chatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic)){
+			auto conferenceAddress = chatRoom->getConferenceAddress();
+			if( conferenceAddress && conferenceAddress->getDomain() == Constants::LinphoneDomain) {
+				QString conferenceAddressStr = Utils::coreStringToAppString(conferenceAddress->asStringUriOnly());
+				if( conferenceAddressStr.contains("conf-id"))
+					return true;
+			}
+		}
+		return false;
 	}); 
 	
 //Remove no more chat rooms
