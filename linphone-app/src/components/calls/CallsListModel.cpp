@@ -355,9 +355,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 			result["chatRoomModel"] = QVariant::fromValue(timeline->getChatRoomModel());
 			if(selectAfterCreation) {// The timeline here will not receive the first creation event. Set Selected if needed
-				QTimer::singleShot(200, [timeline](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
-					timeline->setSelected(true);
-				});
+				timeline->delaySelected();
 			}
 		}
 	}

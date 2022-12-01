@@ -27,6 +27,7 @@
 void LinphoneEnums::registerMetaTypes(){
 	qRegisterMetaType<LinphoneEnums::CallStatus>();
 	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
+	qRegisterMetaType<LinphoneEnums::ChatRoomState>();
 	qRegisterMetaType<LinphoneEnums::ConferenceLayout>();
 	qRegisterMetaType<LinphoneEnums::ConferenceInfoState>();
 	qRegisterMetaType<LinphoneEnums::ConferenceSchedulerState>();
@@ -65,6 +66,14 @@ linphone::ChatMessage::State LinphoneEnums::toLinphone(const LinphoneEnums::Chat
 }
 LinphoneEnums::ChatMessageState LinphoneEnums::fromLinphone(const linphone::ChatMessage::State& data){
 	return static_cast<LinphoneEnums::ChatMessageState>(data); 
+}
+
+linphone::ChatRoom::State LinphoneEnums::toLinphone(const LinphoneEnums::ChatRoomState& data){
+	return static_cast<linphone::ChatRoom::State>(data);
+}
+
+LinphoneEnums::ChatRoomState LinphoneEnums::fromLinphone(const linphone::ChatRoom::State& data){
+	return static_cast<LinphoneEnums::ChatRoomState>(data); 
 }
 
 linphone::Call::Status LinphoneEnums::toLinphone(const LinphoneEnums::CallStatus& data){

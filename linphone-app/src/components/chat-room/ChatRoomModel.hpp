@@ -25,6 +25,8 @@
 #include "app/proxyModel/ProxyListModel.hpp"
 #include <QDateTime>
 
+#include "utils/LinphoneEnums.hpp"
+
 // =============================================================================
 // Fetch all N messages of a ChatRoom.
 // =============================================================================
@@ -73,13 +75,14 @@ public:
 	Q_PROPERTY(bool isComposing READ getIsRemoteComposing NOTIFY isRemoteComposingChanged)
 	Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
 	Q_PROPERTY(bool isReadOnly READ isReadOnly NOTIFY isReadOnlyChanged)
+	Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged)
 	
 	Q_PROPERTY(QString sipAddress READ getFullPeerAddress NOTIFY fullPeerAddressChanged)
 	Q_PROPERTY(QString sipAddressUriOnly READ getPeerAddress NOTIFY fullPeerAddressChanged)
 	Q_PROPERTY(QString username READ getUsername NOTIFY usernameChanged)
 	Q_PROPERTY(QString avatar READ getAvatar NOTIFY avatarChanged)
 	Q_PROPERTY(int presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)
-	Q_PROPERTY(int state READ getState NOTIFY stateChanged)
+	Q_PROPERTY(LinphoneEnums::ChatRoomState state READ getState NOTIFY stateChanged)
 	
 	Q_PROPERTY(long ephemeralLifetime READ getEphemeralLifetime WRITE setEphemeralLifetime NOTIFY ephemeralLifetimeChanged)
 	Q_PROPERTY(bool ephemeralEnabled READ isEphemeralEnabled WRITE setEphemeralEnabled NOTIFY ephemeralEnabledChanged)
@@ -116,7 +119,7 @@ public:
 	QString getUsername () const;
 	QString getAvatar () const;
 	int getPresenceStatus() const;
-	int getState() const;
+	LinphoneEnums::ChatRoomState getState() const;
 	bool isReadOnly() const;
 	bool isEphemeralEnabled() const;
 	long getEphemeralLifetime() const;
@@ -135,6 +138,8 @@ public:
 	bool getIsRemoteComposing () const;
 	bool isEntriesLoading() const;
 	bool isBasic() const;
+	bool isUpdating() const;
+	
 	ParticipantListModel* getParticipantListModel() const;
 	std::list<std::shared_ptr<linphone::Participant>> getParticipants(const bool& withMe = true) const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
@@ -273,6 +278,7 @@ signals:
 	void markAsReadEnabledChanged();
 	void chatRoomDeleted();// Must be connected with DirectConnection mode
 	void replyChanged();
+	void updatingChanged();
 	
 // Chat Room listener callbacks	
 	

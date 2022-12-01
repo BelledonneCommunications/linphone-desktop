@@ -25,6 +25,7 @@ Rectangle {
 	
 	property bool displayUnreadMessageCount: false
 	property bool showSubtitle : true
+	property bool showBusyIndicator: false
 	property string subtitle: ''
 	
 	property string subject: (entry && entry.conferenceInfoModel && entry.conferenceInfoModel.subject
@@ -88,6 +89,27 @@ Rectangle {
 			MouseArea{
 				anchors.fill: parent
 				onClicked: item.avatarClicked(mouse)
+			}
+			
+			Loader{
+				id: busyLoader
+				
+				anchors.fill: parent
+				anchors.margins: 5
+				
+				active: item.showBusyIndicator
+				sourceComponent: Component{
+					BusyIndicator{// Joining spinner
+						id: joiningSpinner
+						running: false
+						Timer{// Delay starting spinner (Qt bug)
+							id: indicatorDelay
+							interval: 100
+							onTriggered: joiningSpinner.running = true
+						}
+						Component.onCompleted: indicatorDelay.start()
+					}
+				}
 			}
 		}
 		

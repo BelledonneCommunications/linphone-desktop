@@ -149,6 +149,7 @@ ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoo
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::avatarChanged);
 
 	connect(this, &ChatRoomModel::fullPeerAddressChanged, this, &ChatRoomModel::usernameChanged);
+	connect(this, &ChatRoomModel::stateChanged, this, &ChatRoomModel::updatingChanged);
 	
 	if(mChatRoom){
 		mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
@@ -404,8 +405,8 @@ std::list<std::shared_ptr<linphone::Participant>> ChatRoomModel::getParticipants
 	return participantList;
 }
 
-int ChatRoomModel::getState() const {
-	return mChatRoom ? (int)mChatRoom->getState() : 0;	
+LinphoneEnums::ChatRoomState ChatRoomModel::getState() const {
+	return mChatRoom ? LinphoneEnums::fromLinphone(mChatRoom->getState()) : LinphoneEnums::ChatRoomStateNone;
 }
 
 bool ChatRoomModel::isReadOnly() const{
@@ -479,6 +480,10 @@ bool ChatRoomModel::isEntriesLoading() const{
 
 bool ChatRoomModel::isBasic() const{
 	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic);
+}
+
+bool ChatRoomModel::isUpdating() const{
+	return getState() == LinphoneEnums::ChatRoomStateCreationPending || getState() == LinphoneEnums::ChatRoomStateTerminationPending;
 }
 
 std::shared_ptr<linphone::ChatRoom> ChatRoomModel::getChatRoom(){

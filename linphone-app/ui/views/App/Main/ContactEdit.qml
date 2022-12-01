@@ -239,7 +239,7 @@ ColumnLayout  {
 		sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
 		
 		function viewConversation(chatRoomModel){
-			if( chatRoomModel){
+			if( chatRoomModel && !chatRoomModel.updating){
 				window.setView('Conversation', {
 					chatRoomModel:chatRoomModel
 				}, function(){

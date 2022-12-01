@@ -87,6 +87,8 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, cons
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::chatRoomDeleted, this, &TimelineModel::onChatRoomDeleted);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::updatingChanged, this, &TimelineModel::updatingChanged);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::stateChanged, this, &TimelineModel::onChatRoomStateChanged);
 	}
 	if(chatRoom){
 		mChatRoomListener = std::make_shared<ChatRoomListener>();
@@ -103,6 +105,8 @@ TimelineModel::TimelineModel(const TimelineModel * model){
 		QObject::connect(this, &TimelineModel::selectedChanged, this, &TimelineModel::updateUnreadCount);
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::chatRoomDeleted, this, &TimelineModel::onChatRoomDeleted);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::updatingChanged, this, &TimelineModel::updatingChanged);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::stateChanged, this, &TimelineModel::onChatRoomStateChanged);
 	}
 	if(mChatRoomModel->getChatRoom()){
 		mChatRoomListener = model->mChatRoomListener;
@@ -141,6 +145,10 @@ int TimelineModel::getPresenceStatus() const{
 	return 0;
 }
 
+bool TimelineModel::isUpdating() const{
+	return !mChatRoomModel || mChatRoomModel->isUpdating();
+}
+
 ChatRoomModel *TimelineModel::getChatRoomModel() const{
 	return mChatRoomModel.get();
 }
@@ -163,6 +171,15 @@ void TimelineModel::setSelected(const bool& selected){
 		}
 		emit selectedChanged(mSelected);
 	}
+}
+
+void TimelineModel::delaySelected(){
+	if( mChatRoomModel->getState() == LinphoneEnums::ChatRoomStateCreated){
+		QTimer::singleShot(200, [&](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
+			setSelected(true);
+		});
+	}else
+		mDelaySelection = true;
 }
 
 void TimelineModel::updateUnreadCount(){
@@ -230,4 +247,11 @@ void TimelineModel::onChatMessageParticipantImdnStateChanged(const std::shared_p
 
 void TimelineModel::onChatRoomDeleted(){
 	emit chatRoomDeleted();
+}
+
+void TimelineModel::onChatRoomStateChanged(){
+	if(mDelaySelection && mChatRoomModel->getState() == LinphoneEnums::ChatRoomStateCreated){
+		mDelaySelection = false;
+		setSelected(true);
+	}
 }

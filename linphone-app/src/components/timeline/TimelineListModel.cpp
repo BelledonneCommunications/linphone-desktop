@@ -328,7 +328,10 @@ void TimelineListModel::select(ChatRoomModel * chatRoomModel){
 	if(chatRoomModel) {
 		auto timeline = getTimeline(chatRoomModel->getChatRoom(), false);
 		if(timeline){
-			timeline->setSelected(true);
+			if(timeline->isUpdating())
+				timeline->delaySelected();
+			else
+				timeline->setSelected(true);
 		}
 	}
 }
