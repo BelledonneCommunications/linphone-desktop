@@ -493,6 +493,7 @@ Window {
 					backgroundRadius: 90
 					colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 					updating: callModel && callModel.videoEnabled && callModel.updating
+					enabled: callModel && !callModel.pausedByUser
 					onClicked: if(callModel && !conference.layoutChanging){
 								if( callModel.isConference){// Only deactivate camera in conference.
 									callModel.cameraEnabled = !callModel.cameraEnabled
