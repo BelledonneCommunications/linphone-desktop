@@ -30,6 +30,9 @@ FILE * gStream = NULL;
 #endif
 
 #include "components/core/CoreManager.hpp"
+#include "components/vfs/VfsUtils.hpp"
+#include "utils/Utils.hpp"
+
 // =============================================================================
 
 void cleanStream(){
@@ -43,6 +46,7 @@ void cleanStream(){
 }
 
 
+
 int main (int argc, char *argv[]) {
 #ifdef __APPLE__
 	qputenv("QT_ENABLE_GLYPH_CACHE_WORKAROUND", "1");	// On Mac, set this workaround to avoid glitches on M1, because of https://bugreports.qt.io/browse/QTBUG-89379
@@ -53,13 +57,16 @@ int main (int argc, char *argv[]) {
 		freopen_s(&gStream, "CONOUT$", "w", stderr);
 	}
 #endif
+	bool vfsEncrypted = VfsUtils::updateSDKWithKey();
+	
 	AppController controller(argc, argv);
 #ifdef QT_QML_DEBUG
 	QQmlDebuggingEnabler enabler;
 #endif
 	//QLoggingCategory::setFilterRules("*.debug=true;qml=false");
 	App *app = controller.getApp();
-	
+	if(vfsEncrypted)
+		qInfo() << "Activation of VFS encryption.";
 	if (app->isSecondary())
 	{
 		qInfo() << QStringLiteral("Running secondary app success. Kill it now.");
@@ -81,5 +88,8 @@ int main (int argc, char *argv[]) {
 			core->stop();
 	}
 	cleanStream();
+	if( ret == App::DeleteDataCode){
+		Utils::deleteAllUserDataOffline();
+	}
 	return ret;
 }

@@ -29,6 +29,7 @@
 
 #include "components/core/CoreHandlers.hpp"
 #include "components/contacts/ContactsImporterModel.hpp"
+#include "components/vfs/VfsUtils.hpp"
 #include "utils/LinphoneEnums.hpp"
 
 // =============================================================================
@@ -220,6 +221,8 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(QString logsUploadUrl READ getLogsUploadUrl WRITE setLogsUploadUrl NOTIFY logsUploadUrlChanged)
 	Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged)
 	Q_PROPERTY(QString logsEmail READ getLogsEmail WRITE setLogsEmail NOTIFY logsEmailChanged)
+	
+	Q_PROPERTY(bool isVfsEncrypted READ getVfsEncrypted NOTIFY vfsEncryptedChanged)
 	
 	Q_PROPERTY(bool developerSettingsEnabled READ getDeveloperSettingsEnabled WRITE setDeveloperSettingsEnabled NOTIFY developerSettingsEnabledChanged)
 	
@@ -610,6 +613,9 @@ public:
 	QString getLogsEmail () const;
 	void setLogsEmail (const QString &email);
 	
+	bool getVfsEncrypted ();
+	Q_INVOKABLE void setVfsEncrypted (bool encrypted, const bool deleteUserData);
+	
 	Q_INVOKABLE bool isLdapAvailable();
 	
 	// ---------------------------------------------------------------------------
@@ -797,6 +803,7 @@ signals:
 	void logsUploadUrlChanged (const QString &url);
 	void logsEnabledChanged (bool status);
 	void logsEmailChanged (const QString &email);
+	void vfsEncryptedChanged();
 	
 	void contactImporterChanged();
 	
@@ -808,6 +815,8 @@ private:
 	int mCurrentSettingsTab = 0;
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
+	VfsUtils mVfsUtils;
+	bool mVfsEncrypted = false;
 	
 	std::shared_ptr<linphone::Config> mConfig;
 };

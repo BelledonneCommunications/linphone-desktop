@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -1241,7 +1241,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1364,6 +1364,14 @@ URL du serveur non configurée.</translation>
         <source>scanQRCodeWhere</source>
         <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
         <translation>Allez dans l&apos;assistant de l&apos;application - QR code</translation>
+    </message>
+</context>
+<context>
+    <name>FileViewDialog</name>
+    <message>
+        <source>exportAsTitle</source>
+        <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2025,7 +2033,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation>Voulez-vous programmer cette réunion ?</translation>
+        <translation>Voulez-vous programmer cette réunion&#x202f;?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2356,6 +2364,44 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>viewlogs</source>
         <translation>AFFICHER</translation>
     </message>
+    <message>
+        <source>vfsTitle</source>
+        <extracomment>&apos;VFS&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsEncryption</source>
+        <extracomment>&apos;Encrypt all the application&apos; : Label to encrypt application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsDeactivation</source>
+        <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsActivation</source>
+        <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>deleteData</source>
+        <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsDeletion</source>
+        <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsAudio</name>
@@ -2605,7 +2651,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3551,7 +3597,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation ?</translation>
+        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation&#x202f;?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
@@ -3667,6 +3713,21 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
         <translation>Si vous souhaitez les activer pour un projet professionnel, contactez-nous.</translation>
+    </message>
+</context>
+<context>
+    <name>VfsUtils</name>
+    <message>
+        <source>Delete key failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read key failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write key failed: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

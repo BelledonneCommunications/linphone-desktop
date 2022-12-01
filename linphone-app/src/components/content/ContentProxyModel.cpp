@@ -56,7 +56,7 @@ void ContentProxyModel::setContentListModel(ContentListModel * model){
 
 void ContentProxyModel::addFile(const QString& path){
 	ContentListModel* model = qobject_cast<ContentListModel*>(sourceModel());
-	model->addFile(path);
+	model->addFile( QUrl::fromPercentEncoding(path.toUtf8()));
 }
 
 bool ContentProxyModel::filterAcceptsRow (

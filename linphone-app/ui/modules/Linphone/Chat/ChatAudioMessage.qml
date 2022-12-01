@@ -32,7 +32,17 @@ Loader{
 	property bool isOutgoing : contentModel && contentModel.chatMessageModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
 	property bool isActive: active
 	
+	property string filePath : tempFile.filePath
+	
 	active: contentModel && contentModel.isVoiceRecording()
+	
+	onContentModelChanged: if(contentModel){
+		tempFile.createFileFromContent(contentModel, false);
+	}
+	
+	TemporaryFile {
+		id: tempFile
+	}
 	
 	sourceComponent: Item{
 		id: loadedItem
@@ -59,7 +69,7 @@ Loader{
 				}
 			}
 			sourceComponent: SoundPlayer {
-				source: mainItem.contentModel && mainItem.contentModel.filePath
+				source: mainItem.contentModel && mainItem.filePath
 				onStopped:{
 					mediaProgressBar.value = 101
 				}

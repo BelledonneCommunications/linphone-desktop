@@ -14,6 +14,7 @@ import Common.Styles 1.0
 ProgressBar {
 	id: progressBar
 	
+	property alias customActions: customActions.data
 	property bool stopAtEnd: true
 	property bool resetAtEnd: false
 	property int progressDuration			// Max duration
@@ -21,7 +22,10 @@ ProgressBar {
 	property alias colorSet: progression.colorSet
 	property alias backgroundColor: backgroundArea.color
 	property alias durationTextColor: durationText.color
+	property alias progressLineBackgroundColor: progressionLineBackground.color
 	property int waveLeftMargin: 0
+	property int progressSize: height
+	property bool blockValueAtEnd: true
 	
 	function start(){
 		progressBar.value = 0
@@ -45,7 +49,7 @@ ProgressBar {
 		interval: 5
 	}
 	to: 101
-	value: 0
+	value: progressPosition * to / progressDuration
 	onValueChanged:{
 					if(value > 100){
 						if( progressBar.stopAtEnd)
@@ -53,7 +57,7 @@ ProgressBar {
 						if(progressBar.resetAtEnd) {
 							progressBar.value = 0
 							progressPosition = 0
-						}else{
+						}else if(progressBar.blockValueAtEnd){
 							progressBar.value = 100// Stay at 100
 							progressPosition = progressDuration
 						}
@@ -82,19 +86,29 @@ ProgressBar {
 			RowLayout{
 				anchors.fill: parent
 				spacing: 0
-				ActionButton{
-					id: progression
+				 RowLayout {
+					id: customActions
+					visible: children.length>0
+				}
+				Rectangle{
+					id: progressionLineBackground
 					Layout.fillWidth: true
-					Layout.fillHeight: true
 					Layout.leftMargin: progressBar.waveLeftMargin
-					backgroundRadius: 5
-					fillMode: Image.TileHorizontally
-					verticalAlignment: Image.AlignLeft
-					horizontalAlignment: Image.AlignLeft
-					isCustom: true
-					colorSet: MediaProgressBarStyle.progressionWave
-					percentageDisplayed: 0
-					onClicked: progressBar.seekRequested(x * progressBar.progressDuration/width)
+					Layout.preferredHeight: progressBar.progressSize
+					color: 'transparent'
+					radius: 5
+					ActionButton{
+						id: progression
+						anchors.fill: parent
+						backgroundRadius: 5
+						fillMode: Image.TileHorizontally
+						verticalAlignment: Image.AlignLeft
+						horizontalAlignment: Image.AlignLeft
+						isCustom: true
+						colorSet: MediaProgressBarStyle.progressionWave
+						percentageDisplayed: 0
+						onClicked: progressBar.seekRequested(x * progressBar.progressDuration/width)
+					}
 				}
 				Text{
 					id: durationText

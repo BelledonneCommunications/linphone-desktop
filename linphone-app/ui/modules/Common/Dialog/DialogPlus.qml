@@ -21,6 +21,7 @@ Rectangle {
   property bool expandHeight: flat
   property alias showCloseCross : titleBar.showCloseCross
   property alias showTitleBar: titleBar.showBar
+  property alias showButtons: buttonsView.visible
   
   property int buttonsLeftMargin :(buttonsAlignment & Qt.AlignLeft )== Qt.AlignLeft
         ? DialogStyle.buttons.leftMargin

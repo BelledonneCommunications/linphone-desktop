@@ -4,6 +4,7 @@ import QtQuick.Controls 2.5
 
 import Common 1.0
 import Linphone 1.0
+import Utils 1.0
 
 import App.Styles 1.0
 import Linphone.Styles 1.0
@@ -327,6 +328,56 @@ TabContainer {
 			}
 		}
 		
+		// -------------------------------------------------------------------------
+		//								VFS
+		// -------------------------------------------------------------------------
+		
+		Form {
+		//: 'VFS'
+			title: qsTr('vfsTitle')
+			width: parent.width
+			
+			FormLine {
+				FormGroup {
+				//: 'Encrypt all the application' : Label to encrypt application
+					label: qsTr('vfsEncryption')
+					
+					Switch {
+						checked: SettingsModel.isVfsEncrypted
+						
+						onClicked: {
+								window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+													descriptionText: (checked
+													//: 'Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.' : Explanation to deactivate the VFS encryption.
+																			? qsTr('vfsDeactivation')
+													//: 'Are you sure to activate the encryption? You cannot revert without deleting ALL your data' : Explanation to activate the VFS encryption.
+																			: qsTr('vfsActivation'))
+													, buttonTexts : (checked
+																			?[qsTr('cancel'), 
+																			//: 'Delete data' : Action to delete all data.
+																				qsTr('deleteData')]
+																			: [qsTr('cancel'), qsTr('confirm')])
+													, height:320
+												}, function (status) {
+													if(status > 0){
+														if (status == 1 && checked){// Test on 1 in case if we want more options (aka more buttons)
+															window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+															//: 'The application will delete your application data files. Do you confirm ?'
+																descriptionText: qsTr('vfsDeletion')
+																, height: 320
+															}, function (deleteStatus) {
+															if( deleteStatus)
+																SettingsModel.setVfsEncrypted(!checked, true)
+															})
+														}else
+															SettingsModel.setVfsEncrypted(!checked, false)
+													}
+												})
+						}
+					}
+				}
+			}
+		}
 		// -------------------------------------------------------------------------
 		// Developer settings.
 		// -------------------------------------------------------------------------

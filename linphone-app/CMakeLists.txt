@@ -52,6 +52,11 @@ if(UNIX AND NOT APPLE)
 endif()
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../cmake")
 list(APPEND CMAKE_MODULE_PATH "${LINPHONE_OUTPUT_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${LINPHONE_OUTPUT_DIR}/lib64/cmake")
+list(APPEND CMAKE_MODULE_PATH "${LINPHONE_OUTPUT_DIR}/lib/cmake")
+
+list(APPEND CMAKE_PREFIX_PATH "${QTKEYCHAIN_OUTPUT_DIR}/lib64/cmake")
+list(APPEND CMAKE_PREFIX_PATH "${QTKEYCHAIN_OUTPUT_DIR}/lib/cmake")
 
 set(APP_LIBRARY app-library)
 set(APP_PLUGIN app-plugin)
@@ -81,6 +86,10 @@ find_package(Linphone CONFIG)
 find_package(belcard CONFIG)
 find_package(Mediastreamer2 CONFIG)
 find_package(ortp CONFIG)
+
+if(ENABLE_QT_KEYCHAIN)
+	find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG REQUIRED)
+endif()
 
 if(ENABLE_BUILD_VERBOSE)
 	message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}, PREFIX_PATH=${CMAKE_PREFIX_PATH}")
@@ -204,6 +213,7 @@ set(SOURCES
 	src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
 	src/components/file/FileDownloader.cpp
 	src/components/file/FileExtractor.cpp
+	src/components/file/TemporaryFile.cpp
 	src/components/friend/FriendListListener.cpp
 	src/components/history/HistoryModel.cpp
 	src/components/history/HistoryProxyModel.cpp
@@ -340,6 +350,7 @@ set(HEADERS
 	src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
 	src/components/file/FileDownloader.hpp
 	src/components/file/FileExtractor.hpp
+	src/components/file/TemporaryFile.hpp
 	src/components/friend/FriendListListener.hpp
 	src/components/history/HistoryModel.hpp
 	src/components/history/HistoryProxyModel.hpp
@@ -451,6 +462,11 @@ else ()
 		src/components/other/desktop-tools/screen-saver/ScreenSaverXdg.hpp
 		)
 endif ()
+
+if(ENABLE_QT_KEYCHAIN)
+	list(APPEND HEADERS src/components/vfs/VfsUtils.hpp)
+	list(APPEND SOURCES src/components/vfs/VfsUtils.cpp)
+endif()
 
 set(QRC_RESOURCES resources.qrc)
 if(ENABLE_APP_WEBVIEW)
@@ -614,6 +630,12 @@ set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
 
 set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
+
+#if(ENABLE_QT_KEYCHAIN)
+#	list(APPEND INCLUDED_DIRECTORIES ${QtKeyChain_INCLUDE_DIRS})
+#	list(APPEND LIBRARIES_LIST ${QtKeyChain_LIBRARIES})
+#endif()
+
 if(WIN32)
 	set(LIBRARIES)
 	foreach(LIBRARY ${LIBRARIES_LIST})# Search for lib full path
@@ -655,6 +677,12 @@ foreach (package ${QT5_PACKAGES_OPTIONAL})
 		message("Optional package ${package} not found.")
 	endif ()
 endforeach ()
+
+if(ENABLE_QT_KEYCHAIN)
+	target_link_libraries(${APP_LIBRARY} ${QTKEYCHAIN_TARGET_NAME})
+	target_link_libraries(${APP_PLUGIN} ${QTKEYCHAIN_TARGET_NAME})
+	target_link_libraries(${TARGET_NAME} ${QTKEYCHAIN_TARGET_NAME})
+endif()
 
 
 if (APPLE)

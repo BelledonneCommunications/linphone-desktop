@@ -45,7 +45,6 @@ Item {
 			
 			return files
 		}, [])
-		
 		if (files.length > 0) {
 			dropped(files)
 		}

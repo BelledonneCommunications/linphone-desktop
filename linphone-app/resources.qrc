@@ -175,6 +175,7 @@
 		<file>ui/modules/Common/Dialog/DialogDescription.qml</file>
 		<file>ui/modules/Common/Dialog/DialogPlus.qml</file>
 		<file>ui/modules/Common/Dialog/DialogTitle.qml</file>
+		<file>ui/modules/Common/Dialog/FileViewDialog.qml</file>
 		<file>ui/modules/Common/Form/ActionBar.qml</file>
 		<file>ui/modules/Common/Form/ActionButton.qml</file>
 		<file>ui/modules/Common/Form/ActionSwitch.qml</file>
@@ -223,6 +224,7 @@
 		<file>ui/modules/Common/Form/Tab/TabContainer.qml</file>
 		<file>ui/modules/Common/Form/TransparentTextInput.qml</file>
 		<file>ui/modules/Common/Helpers/DragBox.qml</file>
+		<file>ui/modules/Common/Helpers/HoveringMouseArea.qml</file>
 		<file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
 		<file>ui/modules/Common/Image/Icon.qml</file>
 		<file>ui/modules/Common/Image/RoundedImage.qml</file>
@@ -249,6 +251,7 @@
 		<file>ui/modules/Common/Styles/Animations/BusyIndicatorStyle.qml</file>
 		<file>ui/modules/Common/Styles/Dialog/DateTimeDialogStyle.qml</file>
 		<file>ui/modules/Common/Styles/Dialog/DialogStyle.qml</file>
+		<file>ui/modules/Common/Styles/Dialog/FileViewDialogStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/ActionBarStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/ActionSwitchStyle.qml</file>
 		<file>ui/modules/Common/Styles/Form/Buttons/AbstractTextButtonStyle.qml</file>

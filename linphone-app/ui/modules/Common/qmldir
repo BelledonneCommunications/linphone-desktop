@@ -16,6 +16,8 @@ DateTimeDialog          1.0 Dialog/DateTimeDialog.qml
 DialogDescription       1.0 Dialog/DialogDescription.qml
 ConfirmDialog           1.0 Dialog/ConfirmDialog.qml
 DialogPlus              1.0 Dialog/DialogPlus.qml
+FileViewDialog          1.0 Dialog/FileViewDialog.qml
+
 
 ActionBar               1.0 Form/ActionBar.qml
 ActionButton            1.0 Form/ActionButton.qml
@@ -65,6 +67,7 @@ TabButton               1.0 Form/Tab/TabButton.qml
 TabContainer            1.0 Form/Tab/TabContainer.qml
 
 DragBox                 1.0 Helpers/DragBox.qml
+HoveringMouseArea       1.0 Helpers/HoveringMouseArea.qml
 InvertedMouseArea       1.0 Helpers/InvertedMouseArea.qml
 
 Icon                    1.0 Image/Icon.qml

@@ -280,14 +280,21 @@ Row {
 			onClicked: {
 				if(rectangle.isTransferring)
 					mainRow.contentModel.cancelDownloadFile()
-				else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
-					mainRow.contentModel.openFile()
-				} else if (mainRow.contentModel && mainRow.contentModel.wasDownloaded) {
-					mainRow.contentModel.openFile(true)// Show directory
+				else if( !mainRow.contentModel.wasDownloaded) {
 					thumbnailProvider.state = ''
-				} else  {
 					mainRow.contentModel.downloadFile()
+				}else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
+					window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
+													contentModel: mainRow.contentModel,
+												}, function (status) {
+												})
+				} else if (mainRow.contentModel ) {
 					thumbnailProvider.state = ''
+					mainRow.contentModel.openFile(true)// Show directory
+				} else  {
+					thumbnailProvider.state = ''
+					mainRow.contentModel.downloadFile()
+					
 				}
 			}
 			onExited: thumbnailProvider.state = ''

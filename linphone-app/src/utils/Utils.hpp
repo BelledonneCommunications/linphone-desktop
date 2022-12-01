@@ -62,11 +62,15 @@ public:
 	Q_INVOKABLE static QString toString(const LinphoneEnums::TunnelMode& mode);
 	Q_INVOKABLE static bool isMe(const QString& address);
 	Q_INVOKABLE static bool isAnimatedImage(const QString& path);
+	Q_INVOKABLE static bool isImage(const QString& path);
+	Q_INVOKABLE static bool isVideo(const QString& path);
+	Q_INVOKABLE static bool isSupportedForDisplay(const QString& path);
 	Q_INVOKABLE static bool isPhoneNumber(const QString& txt);
 	Q_INVOKABLE QSize getImageSize(const QString& url);
 	Q_INVOKABLE static QPoint getCursorPosition();
 	Q_INVOKABLE static QString getFileChecksum(const QString& filePath);
 	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options);
+	Q_INVOKABLE static QString getFileContent(const QString& filePath);
 	
 //----------------------------------------------------------------------------------
 	
@@ -145,6 +149,9 @@ public:
 	static QString computeUserAgent(const std::shared_ptr<linphone::Config>& config);
 	
 	static bool isMe(const std::shared_ptr<const linphone::Address>& address);
+	
+	static void deleteAllUserData();
+	static void deleteAllUserDataOffline();// When we are out of all events and core is not running (aka in main())
 	
 };
 

@@ -12,7 +12,7 @@ QtObject {
 	property int emptySpace: 10
 	property color color: ColorsList.add(sectionName, 'q').color
 	
-	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'a').color
+	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'e').color
 	
 	property QtObject pauseAction: QtObject {
 		property int iconSize: 25

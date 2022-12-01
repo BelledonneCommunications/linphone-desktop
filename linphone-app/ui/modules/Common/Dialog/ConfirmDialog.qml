@@ -23,11 +23,16 @@ DialogPlus {
 			text: mainItem.buttonTexts[1]
 			visible: mainItem.showButtonOnly<0 || mainItem.showButtonOnly == 1
 			onClicked: exit(1)
+		},
+		TextButtonB {
+			text: mainItem.buttonTexts.length > 2 ? mainItem.buttonTexts[2] : ''
+			visible: mainItem.buttonTexts.length > 2 && (mainItem.showButtonOnly<0 || mainItem.showButtonOnly == 2)
+			onClicked: exit(2)
 		}
 	]
 	
 	buttonsAlignment: Qt.AlignCenter
 	
 	height: DialogStyle.confirmDialog.height + 30
-	width: DialogStyle.confirmDialog.width
+	width: Math.max(DialogStyle.confirmDialog.width, buttonTexts.length * 150 + DialogStyle.buttons.leftMargin + DialogStyle.buttons.rightMargin)
 }

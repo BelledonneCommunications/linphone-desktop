@@ -54,7 +54,8 @@ set(CMAKE_CXX_STANDARD 11)
 # Prepare gobal CMAKE configuration specific to the current project
 set(SDK_BUILD_DIR "${CMAKE_BINARY_DIR}/WORK")       # SDK build in WORK. Keep all in it.
 set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/desktop")
-
+set(QTKEYCHAIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/qtkeychain")
+set(QTKEYCHAIN_TARGET_NAME "EQt5Keychain")
 set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
 
 set(CMAKE_PREFIX_PATH "${LINPHONE_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR};${APPLICATION_OUTPUT_DIR}/include${PREFIX_PATH}")
@@ -65,6 +66,8 @@ elseif(APPLE)
 else()
 	set( CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${APPLICATION_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
 endif()
+list(APPEND CMAKE_PREFIX_PATH "${QTKEYCHAIN_OUTPUT_DIR}/lib64/cmake")
+list(APPEND CMAKE_PREFIX_PATH "${QTKEYCHAIN_OUTPUT_DIR}/lib/cmake")
 string(REPLACE ";" "|" PREFIX_PATH "${CMAKE_PREFIX_PATH}")
 #set(PREFIX_PATH "${LINPHONE_OUTPUT_DIR}|${APPLICATION_OUTPUT_DIR}${PREFIX_PATH}")
 
@@ -99,6 +102,7 @@ option(ENABLE_BUILD_EXAMPLES "Enable the build of examples" NO)
 option(ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" NO)
 option(ENABLE_DAEMON "Enable the linphone daemon interface." NO)
 option(ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." ON)
+option(ENABLE_QT_KEYCHAIN "Build QtKeychain to manage VFS from System key stores." ON)
 option(ENABLE_SANITIZER "Enable sanitizer." NO)
 option(ENABLE_STRICT "Build with strict compilator flags e.g. -Wall -Werror" NO)
 option(ENABLE_TESTS "Build with testing binaries of SDK" NO  )
@@ -127,6 +131,9 @@ endif()
 
 option(ENABLE_RELATIVE_PREFIX "Set Internal packages relative to the binary" YES)
 
+#QtKeychain
+option(LIBSECRET_SUPPORT "Build with libsecret support" OFF) #Need libsecret-devel
+
 set(APP_OPTIONS "-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_LICENSE=${ENABLE_APP_LICENSE}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_PACKAGING=${ENABLE_APP_PACKAGING}")
@@ -140,6 +147,7 @@ list(APPEND APP_OPTIONS "-DENABLE_FFMPEG=${ENABLE_FFMPEG}")
 list(APPEND APP_OPTIONS "-DENABLE_LDAP=${ENABLE_LDAP}")
 list(APPEND APP_OPTIONS "-DENABLE_NON_FREE_CODECS=${ENABLE_NON_FREE_CODECS}")
 list(APPEND APP_OPTIONS "-DENABLE_OPENH264=${ENABLE_OPENH264}")
+list(APPEND APP_OPTIONS "-DENABLE_QT_KEYCHAIN=${ENABLE_QT_KEYCHAIN}")
 list(APPEND APP_OPTIONS "-DENABLE_SANITIZER=${ENABLE_SANITIZER}")
 list(APPEND APP_OPTIONS "-DENABLE_STRICT=${ENABLE_STRICT}")
 list(APPEND APP_OPTIONS "-DENABLE_TESTS=${ENABLE_TESTS}")
@@ -148,9 +156,6 @@ list(APPEND APP_OPTIONS "-DENABLE_TOOLS=${ENABLE_TOOLS}")
 list(APPEND APP_OPTIONS "-DENABLE_UNIT_TESTS=${ENABLE_UNIT_TESTS}")
 list(APPEND APP_OPTIONS "-DENABLE_VIDEO=${ENABLE_VIDEO}")
 
-
-
-
 if(LINPHONE_SDK_MAKE_RELEASE_FILE_URL)
 	list(APPEND APP_OPTIONS "-DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=${LINPHONE_SDK_MAKE_RELEASE_FILE_URL}")
 endif()
@@ -158,13 +163,15 @@ if(LINPHONESDK_MACOS_ARCHS)
 	list(APPEND APP_OPTIONS "-DLINPHONESDK_MACOS_ARCHS=${LINPHONESDK_MACOS_ARCHS}")
 endif()
 
-
 if(ENABLE_V4L)
     list(APPEND APP_OPTIONS "-DENABLE_V4L=${ENABLE_V4L}")
 endif()
 list(APPEND APP_OPTIONS "-DENABLE_RELATIVE_PREFIX=${ENABLE_RELATIVE_PREFIX}")
 
 list(APPEND APP_OPTIONS "-DLINPHONE_OUTPUT_DIR=${LINPHONE_OUTPUT_DIR}")
+list(APPEND APP_OPTIONS "-DQTKEYCHAIN_OUTPUT_DIR=${QTKEYCHAIN_OUTPUT_DIR}")
+list(APPEND APP_OPTIONS "-DQTKEYCHAIN_TARGET_NAME=${QTKEYCHAIN_TARGET_NAME}")
+
 list(APPEND APP_OPTIONS "-DENABLE_QT_GL=${ENABLE_VIDEO}")#Activate on video
 
 include(ExternalProject)
@@ -192,6 +199,9 @@ if(CMAKE_OSX_DEPLOYMENT_TARGET)
 endif()
 list(APPEND APP_OPTIONS "-DCMAKE_CXX_STANDARD=${CMAKE_CXX_STANDARD}")
 
+set(QTKEYCHAIN_OPTIONS "-DLIBSECRET_SUPPORT=${LIBSECRET_SUPPORT}")
+list(APPEND QTKEYCHAIN_OPTIONS "-DQTKEYCHAIN_TARGET_NAME=${QTKEYCHAIN_TARGET_NAME}")
+
 if(ENABLE_BUILD_APP_PLUGINS)
 	file(GLOB children "plugins/*")
 	set(dirlist "")
@@ -209,28 +219,43 @@ endif()
 
 
 if(NOT LINPHONE_QT_ONLY)
-ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
-    SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
-    INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
-    STAMP_DIR "${SDK_BUILD_DIR}/stamp"
-    BINARY_DIR "${SDK_BUILD_DIR}"
-    STEP_TARGETS build
-    BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
-    LIST_SEPARATOR | # Use the alternate list separator
-    CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-    BUILD_ALWAYS NO #${DO_BUILD}
-)
-ExternalProject_Add_Step(sdk force_build
-	COMMENT "Forcing build for 'desktop'"
-	DEPENDEES configure
-	DEPENDERS build
-	ALWAYS 1
-)
+#add_subdirectory(external/qtkeychain)
+	if(ENABLE_QT_KEYCHAIN)
+		ExternalProject_Add(app-qtkeychain PREFIX "${CMAKE_BINARY_DIR}/qtkeychain"
+			SOURCE_DIR "${CMAKE_SOURCE_DIR}/external/qtkeychain"
+			INSTALL_DIR "${QTKEYCHAIN_OUTPUT_DIR}"
+			BINARY_DIR "${SDK_BUILD_DIR}/qtkeychain"
+			BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+			LIST_SEPARATOR | # Use the alternate list separator
+			CMAKE_ARGS ${APP_OPTIONS} ${QTKEYCHAIN_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+			BUILD_ALWAYS NO #${DO_BUILD}
+		)
+	endif()
+	ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
+		SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
+		INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
+		STAMP_DIR "${SDK_BUILD_DIR}/stamp"
+		BINARY_DIR "${SDK_BUILD_DIR}"
+		STEP_TARGETS build
+		BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
+		INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
+		LIST_SEPARATOR | # Use the alternate list separator
+		CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
+		BUILD_ALWAYS NO #${DO_BUILD}
+	)
+	ExternalProject_Add_Step(sdk force_build
+		COMMENT "Forcing build for 'sdk'"
+		DEPENDEES configure
+		DEPENDERS build
+		ALWAYS 1
+	)
 endif()
 include(FindPkgConfig)
 
-set(APP_DEPENDS sdk)
+set(APP_DEPENDS sdk)# Used if NOT LINPHONE_QT_ONLY
+if(ENABLE_QT_KEYCHAIN)
+	list(APPEND APP_DEPENDS app-qtkeychain)
+endif()
 find_package(Qt5 5.10 COMPONENTS Core REQUIRED)
 
 if ( NOT Qt5_FOUND )
@@ -243,8 +268,12 @@ find_package(bctoolbox CONFIG QUIET)
 find_package(belcard CONFIG QUIET)
 find_package(Mediastreamer2 CONFIG QUIET)
 find_package(ortp CONFIG QUIET)
+find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG QUIET)
 
-if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND) OR FORCE_APP_EXTERNAL_PROJECTS)
+if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND)
+	OR ( ENABLE_QT_KEYCHAIN AND NOT(${QTKEYCHAIN_TARGET_NAME}_FOUND) )
+	OR FORCE_APP_EXTERNAL_PROJECTS
+)
 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target install")
 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
 		SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
@@ -270,7 +299,7 @@ if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR N
 			CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
 		)
 	endif()
-	install(CODE "message(STATUS Running install)")
+	install(CODE "message(STATUS \"Running install\")")
 	set(AUTO_REGENERATION auto_regeneration)
 	if(	ENABLE_BUILD_APP_PLUGINS)
 		add_custom_target(${AUTO_REGENERATION} ALL

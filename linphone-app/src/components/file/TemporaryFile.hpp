@@ -18,25 +18,36 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "app/paths/Paths.hpp"
-#include "utils/Utils.hpp"
+#ifndef TEMPORARY_FILE_H_
+#define TEMPORARY_FILE_H_
 
-#include "ExternalImageProvider.hpp"
-
-#include <QImageReader>
+#include <QFile>
 
 // =============================================================================
 
-const QString ExternalImageProvider::ProviderId = "external";
+class ContentModel;
 
-ExternalImageProvider::ExternalImageProvider () : QQuickImageProvider(
-  QQmlImageProviderBase::Image,
-  QQmlImageProviderBase::ForceAsynchronousImageLoading
-) {
-}
+class TemporaryFile : public QObject {
+	Q_OBJECT
+public:
+	TemporaryFile (QObject *parent = nullptr);
+	~TemporaryFile ();
+	
+	Q_PROPERTY(QString filePath READ getFilePath NOTIFY filePathChanged)// not changeable from QML as it comes from a ContentModel
+	
+	Q_INVOKABLE void createFileFromContent(ContentModel * contentModel, const bool& exportPlainFile = true);
+	
+	QString getFilePath () const;
+	void setFilePath(const QString& path, const bool& toDelete);
+	
+	void deleteFile();
+	
+signals :
+	void filePathChanged();
+	
+private:
+	QString mFilePath;
+	bool mDeleteFile = false;
+};
 
-QImage ExternalImageProvider::requestImage (const QString &id, QSize *size, const QSize &) {
-  QImage image(Utils::getImage(QUrl::fromPercentEncoding(id.toUtf8())));
-  *size = image.size();
-  return image;
-}
+#endif

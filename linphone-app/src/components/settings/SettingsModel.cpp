@@ -69,6 +69,38 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::videoConferenceEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::secureChatEnabledChanged);
 	
+	connect(&mVfsUtils, &VfsUtils::keyRead, this, [&](const QString& key, const QString& value){
+		if(key == mVfsUtils.getApplicationVfsEncryptionKey()){
+			if(!mVfsEncrypted){
+				mVfsEncrypted = true;
+				emit vfsEncryptedChanged();
+			}
+		}
+	});
+	connect(&mVfsUtils, &VfsUtils::keyWritten, this, [&](const QString& key){
+		if(key == mVfsUtils.getApplicationVfsEncryptionKey()){
+			if(!mVfsEncrypted){
+				mVfsEncrypted = true;
+				emit vfsEncryptedChanged();
+			}
+		}
+	});
+	connect(&mVfsUtils, &VfsUtils::keyDeleted, this, [&](const QString& key){
+		if(key == mVfsUtils.getApplicationVfsEncryptionKey()){
+			mVfsEncrypted = false;
+			emit vfsEncryptedChanged();
+			if(mVfsUtils.needToDeleteUserData())
+				Utils::deleteAllUserData();
+			else
+				App::getInstance()->quit();
+		}
+	});
+	
+	
+	connect(&mVfsUtils, &VfsUtils::error, this, [&](){
+		
+	});
+	
 	configureRlsUri();
 }
 
@@ -1697,6 +1729,25 @@ bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) 
 }
 
 // ---------------------------------------------------------------------------
+
+bool SettingsModel::getVfsEncrypted (){
+	mVfsUtils.readKey(mVfsUtils.getApplicationVfsEncryptionKey());
+	return mVfsEncrypted;
+}
+
+void SettingsModel::setVfsEncrypted (bool encrypted, const bool deleteUserData){
+	if(getVfsEncrypted() != encrypted){
+		if(encrypted) {
+			mVfsUtils.newEncryptionKey();
+		}else{// Remove key, stop core, delete data and initiate reboot
+			mVfsUtils.needToDeleteUserData(deleteUserData);
+			mVfsUtils.deleteKey(mVfsUtils.getApplicationVfsEncryptionKey());
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
+
 bool SettingsModel::isDeveloperSettingsAvailable() const {
 #ifdef DEBUG
 	return true;

@@ -294,5 +294,30 @@ void ContentModel::openFile (bool showDirectory) {
 	}
 }
 
+bool ContentModel::saveAs (const QString& path){
+	QString cachePath = Utils::coreStringToAppString(mContent->exportPlainFile());
+	bool toDelete = true;
+	bool result = false;
+	if(cachePath.isEmpty()) {
+		cachePath = Utils::coreStringToAppString(mContent->getFilePath());
+		toDelete = false;
+	}
+	if(!cachePath.isEmpty())
+	{
+		QString decodedPath = QUrl::fromPercentEncoding(path.toUtf8());
+		QFile file(cachePath);
+		QFile newFile(decodedPath);
+		if(newFile.exists())
+			newFile.remove();
+		result = file.copy(decodedPath);
+		if(toDelete)
+			file.remove();
+		if(result)
+			QDesktopServices::openUrl(QUrl(QStringLiteral("file:///%1").arg(decodedPath)));
+	}
+	
+	return result;
+}
+
 void ContentModel::updateTransferData(){
 }

@@ -54,6 +54,7 @@
 #include "core/CoreManager.hpp"
 #include "file/FileDownloader.hpp"
 #include "file/FileExtractor.hpp"
+#include "file/TemporaryFile.hpp"
 #include "history/HistoryProxyModel.hpp"
 #include "ldap/LdapModel.hpp"
 #include "ldap/LdapListModel.hpp"

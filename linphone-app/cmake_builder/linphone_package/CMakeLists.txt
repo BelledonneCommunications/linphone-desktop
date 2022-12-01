@@ -109,6 +109,10 @@ endif ()
 # ==============================================================================
 set(APP_QT_CONF_DPI "1")
 if (WIN32)	
+	if(ENABLE_QT_KEYCHAIN)
+		file(GLOB LIB_FILES "${QTKEYCHAIN_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/*.dll")
+		install(FILES ${LIB_FILES} DESTINATION "${CMAKE_INSTALL_BINDIR}/")
+	endif()
 	
 	file(GLOB LIB_FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/*.dll")	
 	install(FILES ${LIB_FILES} DESTINATION "${CMAKE_INSTALL_BINDIR}/")
@@ -214,6 +218,10 @@ elseif (APPLE)
 		message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}' to '@executable_path/../Frameworks'")
 		execute_process(COMMAND install_name_tool -rpath "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}" "@executable_path/../Frameworks" "${LIBRARY}")
 	endforeach ()
+	if(ENABLE_QT_KEYCHAIN)
+		file(GLOB SHARED_LIBRARIES "${QTKEYCHAIN_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.dylib")
+		install(FILES ${SHARED_LIBRARIES} DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
+	endif()
 	install(TARGETS ${APP_PLUGIN} 
 		ARCHIVE DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks"
 		LIBRARY DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" 
@@ -242,6 +250,9 @@ else()# Not Windows and Apple
 		execute_process(COMMAND install_name_tool -addrpath "$ORIGIN/../lib64" "${LIBRARY}")
 	endforeach ()
 	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/" DESTINATION "${CMAKE_INSTALL_BINDIR}" USE_SOURCE_PERMISSIONS)
+	if(ENABLE_QT_KEYCHAIN)
+		install(DIRECTORY "${QTKEYCHAIN_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/" DESTINATION "${CMAKE_INSTALL_LIBDIR}" USE_SOURCE_PERMISSIONS)
+	endif()
 #Just in case. This is useless because we have to use CMAKE_INSTALL_LIBDIR
 	if( EXISTS "${LINPHONE_OUTPUT_DIR}/lib/")
 		file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/lib/*.so*")

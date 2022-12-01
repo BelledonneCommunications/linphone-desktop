@@ -1357,6 +1357,14 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
 </context>
 <context>
+    <name>FileViewDialog</name>
+    <message>
+        <source>exportAsTitle</source>
+        <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
@@ -2341,6 +2349,44 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>viewlogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsTitle</source>
+        <extracomment>&apos;VFS&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsEncryption</source>
+        <extracomment>&apos;Encrypt all the application&apos; : Label to encrypt application</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsDeactivation</source>
+        <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsActivation</source>
+        <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>deleteData</source>
+        <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>vfsDeletion</source>
+        <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3654,6 +3700,21 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
         <translation>Ticari projede etkinleştirmek için lütfen bizimle iletişime geçin.</translation>
+    </message>
+</context>
+<context>
+    <name>VfsUtils</name>
+    <message>
+        <source>Delete key failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Read key failed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Write key failed: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

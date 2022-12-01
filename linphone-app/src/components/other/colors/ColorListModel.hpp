@@ -285,7 +285,7 @@ class ColorListModel : public ProxyListModel {
 		
 		// Field error.
 		ADD_COLOR("error", "#FF0000", "Error Generic button.")
-		
+		ADD_COLOR_WITH_ALPHA("c", 80, "")
 		ADD_COLOR_WITH_ALPHA("g", 10, "")
 		ADD_COLOR_WITH_ALPHA("g", 20, "")
 		ADD_COLOR_WITH_ALPHA("g", 90, "")

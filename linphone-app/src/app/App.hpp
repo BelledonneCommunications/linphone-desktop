@@ -105,6 +105,7 @@ public:
   }
 
   static constexpr int RestartCode = 1000;
+  static constexpr int DeleteDataCode = 1001;
 
   Q_INVOKABLE void restart () {
     exit(RestartCode);

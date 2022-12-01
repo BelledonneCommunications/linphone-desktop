@@ -591,41 +591,9 @@ Window {
 		visible: SettingsModel.showTelKeypadAutomatically
 		y: 50
 	}
-	MouseArea{
-		Timer {
-			id: hideButtonsTimer
-			property bool realRunning : false
-			property bool firstUse: true
-
-			interval: firstUse ? 500 : 4000
-			running: false
-			triggeredOnStart: !firstUse
-			onTriggered: {if(!firstUse && realRunning != running) realRunning = running
-							firstUse = false}
-			function startTimer(){
-				if(!firstUse || !running)
-					restart();
-			}
-			function stopTimer(){
-				stop()
-				realRunning = false
-				hideButtonsTimer.firstUse = false
-			}
-		}
-
+	
+	HoveringMouseArea{
+		id: hideButtonsTimer
 		anchors.fill: parent
-		acceptedButtons: Qt.NoButton
-		propagateComposedEvents: true
-		cursorShape: undefined
-		//cursorShape: Qt.ArrowCursor
-		onEntered: hideButtonsTimer.startTimer()
-		onExited: {
-			var cursorPosition = UtilsCpp.getCursorPosition()
-			mapToItem(window.contentItem, cursorPosition.x, cursorPosition.y)
-			if (cursorPosition.x <= 0 || cursorPosition.y <= 0
-					|| cursorPosition.x >= width || cursorPosition.y >= height)
-				hideButtonsTimer.stopTimer()
-		}
-		onPositionChanged: hideButtonsTimer.startTimer()
 	}
 }

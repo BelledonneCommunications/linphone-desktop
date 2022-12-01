@@ -4,3 +4,6 @@ path = linphone-sdk
 [submodule "plugins/contacts/contacts-api"]
 	path = plugins/contacts/contacts-api
 	url =  https://gitlab.linphone.org/BC/public/linphone-desktop-plugins/contacts/contacts-api.git
+[submodule "external/qtkeychain"]
+	path = external/qtkeychain
+	url = https://gitlab.linphone.org/BC/public/external/qtkeychain.git

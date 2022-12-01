@@ -26,12 +26,14 @@
 #include <QFile>
 #include <QImageReader>
 #include <QDebug>
+#include <QMimeDatabase>
 #include <QTimeZone>
 #include <QUrl>
 
 #include "config.h"
 #include "Utils.hpp"
 #include "UriTools.hpp"
+#include "app/App.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contact/ContactModel.hpp"
@@ -566,6 +568,23 @@ bool Utils::isAnimatedImage(const QString& path){
 	return reader.supportsAnimation() && reader.imageCount() > 1;
 }
 
+bool Utils::isImage(const QString& path){
+	QFileInfo info(path);
+	if( !info.exists())
+		return false;
+	QImageReader reader(path);
+	return reader.imageCount() == 1;
+}
+
+
+bool Utils::isVideo(const QString& path){
+	return QMimeDatabase().mimeTypeForFile(path).name().contains("video");
+}
+
+bool Utils::isSupportedForDisplay(const QString& path){
+	return !QMimeDatabase().mimeTypeForFile(path).name().contains("application");// "for pdf : "application/pdf". Note : Make an exception when supported.
+}
+
 bool Utils::isPhoneNumber(const QString& txt){
 	auto core = CoreManager::getInstance()->getCore();
 	if(!core)
@@ -647,4 +666,30 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 		images = "<div>" + images +"</div>";
 	
 	return images + "<p style=\"white-space:pre-wrap;\">" + formattedText.join("") + "</p>";
+}
+
+QString Utils::getFileContent(const QString& filePath){
+	QString contents;
+	QFile file(filePath);
+	if (!file.open(QFile::ReadOnly | QFile::Text))
+		return "";
+	return file.readAll();
+}
+static QStringList gDbPaths;
+
+void Utils::deleteAllUserData(){
+// Store usable data like custom folders
+	gDbPaths.clear();
+	gDbPaths.append(Utils::coreStringToAppString(linphone::Factory::get()->getDataDir(nullptr)));
+	gDbPaths.append(Utils::coreStringToAppString(linphone::Factory::get()->getConfigDir(nullptr)));
+// Exit with a delete code
+	App::getInstance()->exit(App::DeleteDataCode);
+}
+
+void Utils::deleteAllUserDataOffline(){
+	qWarning() << "Deleting all data! ";
+	for(int i = 0 ; i < gDbPaths.size() ; ++i){
+		QDir dir(gDbPaths[i]);
+		qWarning() << "Deleting " << gDbPaths[i] << " : " << (dir.removeRecursively() ? "Successfully" : "Failed");
+	}
 }
