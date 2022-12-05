@@ -109,7 +109,7 @@ Loader{
 			}
 			RowLayout {
 				id: participantsRow
-				property int participantCount: mainItem.conferenceInfoModel.participantCount
+				property int participantCount: mainItem.conferenceInfoModel.allParticipantCount
 				Layout.fillWidth: true
 				Layout.preferredHeight: ChatCalendarMessageStyle.participants.iconSize
 				Layout.leftMargin: 5
@@ -204,10 +204,10 @@ Loader{
 					Layout.leftMargin: 10
 					spacing: 0
 					visible: mainItem.isExpanded
-					onVisibleChanged: visible ? model= mainItem.conferenceInfoModel.getParticipants() : model = []
+					onVisibleChanged: visible ? model= mainItem.conferenceInfoModel.getAllParticipants() : model = []
 					Connections{
 						target: mainItem.conferenceInfoModel
-						onParticipantsChanged: if(expandedParticipantsList.visible) expandedParticipantsList.model = mainItem.conferenceInfoModel.getParticipants()
+						onParticipantsChanged: if(expandedParticipantsList.visible) expandedParticipantsList.model = mainItem.conferenceInfoModel.getAllParticipants()
 					}
 					
 					delegate: Row{

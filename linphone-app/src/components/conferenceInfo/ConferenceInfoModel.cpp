@@ -207,9 +207,27 @@ QVariantList ConferenceInfoModel::getParticipants() const{
 	}
 	return addresses;
 }
+QVariantList ConferenceInfoModel::getAllParticipants() const{
+	QVariantList addresses = getParticipants();
+	QString organizerAddress = QString::fromStdString(mConferenceInfo->getOrganizer()->asStringUriOnly());
+	for(auto item : addresses){
+		if( item.toMap()["address"] == organizerAddress)
+			return addresses;
+	}
+	QVariantMap participant;
+	participant["displayName"] = Utils::getDisplayName(mConferenceInfo->getOrganizer());
+	participant["address"] = organizerAddress;
+	addresses << participant;
+	return addresses;
+}
+
 
 int ConferenceInfoModel::getParticipantCount()const{
 	return mConferenceInfo->getParticipants().size();
+}
+
+int ConferenceInfoModel::getAllParticipantCount()const{
+	return getAllParticipants().size();
 }
 
 TimeZoneModel* ConferenceInfoModel::getTimeZoneModel() const{

@@ -50,6 +50,7 @@ public:
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
 	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
+	Q_PROPERTY(int allParticipantCount READ getAllParticipantCount NOTIFY participantsChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState conferenceSchedulerState READ getConferenceSchedulerState NOTIFY conferenceSchedulerStateChanged)
 		
@@ -74,7 +75,9 @@ public:
 	bool isScheduled() const;
 	int getInviteMode() const;
 	Q_INVOKABLE QVariantList getParticipants() const;
+	Q_INVOKABLE QVariantList getAllParticipants() const;
 	Q_INVOKABLE int getParticipantCount()const;
+	Q_INVOKABLE int getAllParticipantCount()const;
 	Q_INVOKABLE TimeZoneModel* getTimeZoneModel() const;
 	Q_INVOKABLE QString getIcalendarString() const;
 	LinphoneEnums::ConferenceInfoState getConferenceInfoState() const;

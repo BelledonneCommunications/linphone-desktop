@@ -212,10 +212,10 @@ Loader{
 					Layout.alignment: Qt.AlignTop
 					spacing: 0
 					visible: mainItem.isExpanded
-					onVisibleChanged: visible ? model= mainItem.conferenceInfoModel.getParticipants() : model = []
+					onVisibleChanged: visible ? model= mainItem.conferenceInfoModel.getAllParticipants() : model = []
 					Connections{
 						target: mainItem.conferenceInfoModel
-						onParticipantsChanged: if(expandedParticipantsList.visible) expandedParticipantsList.model = mainItem.conferenceInfoModel.getParticipants()
+						onParticipantsChanged: if(expandedParticipantsList.visible) expandedParticipantsList.model = mainItem.conferenceInfoModel.getAllParticipants()
 					}
 					
 					delegate: Row{
