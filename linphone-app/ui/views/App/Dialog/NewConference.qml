@@ -20,8 +20,8 @@ DialogPlus {
 	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: {
-		dateField.setDate(conferenceManager.conferenceInfoModel.dateTimeUtc);
-		timeField.setTime(conferenceManager.conferenceInfoModel.dateTimeUtc);
+		dateField.setDate(conferenceManager.conferenceInfoModel.dateTime);
+		timeField.setTime(conferenceManager.conferenceInfoModel.dateTime);
 		selectedParticipants.setAddresses(conferenceInfoModel)
 	}
 	property bool forceSchedule : false
@@ -299,9 +299,9 @@ DialogPlus {
 							}
 							function setDate(date){
 								currentDate = date
-								text = date.toLocaleDateString(scheduleForm.locale, Qt.ISODate)
+								text = Utils.exactDate(date).toLocaleDateString(scheduleForm.locale, Qt.ISODate)
 							}
-							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.dateTime.toLocaleDateString(scheduleForm.locale, Qt.ISODate) : ''
+							text: conferenceManager.conferenceInfoModel ? Utils.exactDate(conferenceManager.conferenceInfoModel.dateTime).toLocaleDateString(scheduleForm.locale, Qt.ISODate) : ''
 							icon: 'drop_down_custom'
 							MouseArea{
 								anchors.fill: parent

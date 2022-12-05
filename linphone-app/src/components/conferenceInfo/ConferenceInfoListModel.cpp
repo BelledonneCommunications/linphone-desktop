@@ -89,7 +89,7 @@ QVariant ConferenceInfoListModel::data (const QModelIndex &index, int role ) con
 		if (role == Qt::DisplayRole)
 			return QVariant::fromValue(mList[row].get());
 		else if (role == Qt::DisplayRole +1 )
-			return QVariant::fromValue(mList[row].objectCast<ConferenceInfoModel>()->getDateTimeUtc().date());
+			return QVariant::fromValue(mList[row].objectCast<ConferenceInfoModel>()->getDateTimeSystem().date());
 		return QVariant();
 }
 	

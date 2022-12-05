@@ -563,11 +563,21 @@ function buildDate(date, time){
 	return dateTime
 }
 
+function equalDate(date1, date2){
+    return date1.getFullYear() == date2.getFullYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate()
+}
 
 function fromUTC(date){
 	return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(),
                 date.getUTCDate(), date.getUTCHours(),
                 date.getUTCMinutes(), date.getUTCSeconds()));
+}
+// return EXACTLY what date has been set (not take account of Locale timezones, eg. Date(2000,0,1) will print january and not december if timezone lead there.)
+// Use this function for toLocaleString/toLocaleDateString or other
+function exactDate(date) {
+    var timeOffset = date.getTimezoneOffset() * 60000
+    var exactDate = new Date(date.valueOf() - timeOffset)
+    return exactDate
 }
 
 // -----------------------------------------------------------------------------

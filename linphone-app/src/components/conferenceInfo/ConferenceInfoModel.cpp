@@ -141,14 +141,15 @@ std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::findConferenceInf
 
 //------------------------------------------------------------------------------------------------
 
-//Note conferenceInfo->getDateTime uses system timezone.
-QDateTime ConferenceInfoModel::getDateTimeUtc() const{
-	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000).toUTC();
+//Note conferenceInfo->getDateTime uses system timezone and fromMSecsSinceEpoch need a UTC
+QDateTime ConferenceInfoModel::getDateTimeSystem() const{
+	QDateTime reference(QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000));// Get a reference for timezone offset computing
+	qint64 utcMs = (mConferenceInfo->getDateTime() - QTimeZone::systemTimeZone().offsetFromUtc(reference)) * 1000;// Remove system timezone offset to get UTC
+	return QDateTime::fromMSecsSinceEpoch(utcMs, QTimeZone::systemTimeZone());	// Return a System Timezone datetime based
 }
 
-QDateTime ConferenceInfoModel::getDateTimeSystem() const{
-	QDateTime utc = getDateTimeUtc();
-	return utc.addSecs(QTimeZone::systemTimeZone().offsetFromUtc(utc));
+QDateTime ConferenceInfoModel::getDateTimeUtc() const{
+	return getDateTimeSystem().toUTC();
 }
 
 int ConferenceInfoModel::getDuration() const{
@@ -230,11 +231,13 @@ LinphoneEnums::ConferenceSchedulerState ConferenceInfoModel::getConferenceSchedu
 }
 
 //------------------------------------------------------------------------------------------------
-// Convert into UTC with TimeZone and pass system timezone to conference info
+// Datetime is in Custom (Locale/UTC/System). Convert into system timezone for conference info
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){
-	QDateTime utc = dateTime.addSecs( -mTimeZone.offsetFromUtc(dateTime));
-	QDateTime system = utc.addSecs(QTimeZone::systemTimeZone().offsetFromUtc(utc));
-	mConferenceInfo->setDateTime(system.toMSecsSinceEpoch() / 1000);
+	QDateTime system = dateTime.toTimeZone(QTimeZone::systemTimeZone());//System
+	int offset = QTimeZone::systemTimeZone().offsetFromUtc(system);//Get UTC offset in system coordinate
+	system = system.addSecs( offset - mTimeZone.offsetFromUtc(dateTime));// Delta on offsets
+	mConferenceInfo->setDateTime(system.toMSecsSinceEpoch() / 1000 + offset);// toMSecsSinceEpoch() is UTC, add system reference.
+	
 	emit dateTimeChanged();
 }
 
@@ -321,11 +324,10 @@ void ConferenceInfoModel::createConference(const int& securityLevel) {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
-	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();
+	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer() << " for " << getDateTimeSystem().toString();
 	qInfo() << "Participants:";
 	for(auto p : mConferenceInfo->getParticipants())
 		qInfo() << "\t" << p->asString().c_str();
-	
 	
 	mConferenceScheduler = ConferenceScheduler::create();
 	mConferenceScheduler->mSendInvite = mInviteMode;
