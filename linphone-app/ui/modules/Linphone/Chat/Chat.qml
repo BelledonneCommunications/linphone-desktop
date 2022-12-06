@@ -33,10 +33,17 @@ Rectangle {
 	
 	color: ChatStyle.color
 	clip: true
-	
+	Timer{// Let some time to have a better cell sizes
+		id: repositionerDelay
+		property int indexToMove
+		interval: 100
+		onTriggered: chat.positionViewAtIndex(indexToMove, ListView.Center)
+	}
 	function positionViewAtIndex(index){
 		chat.bindToEnd = false
-		chat.positionViewAtIndex(index, ListView.Beginning)
+		chat.positionViewAtIndex(index, ListView.Center)
+		repositionerDelay.indexToMove = index
+		repositionerDelay.restart()
 	}
 	
 	function goToMessage(message){

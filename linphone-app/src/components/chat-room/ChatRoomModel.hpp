@@ -311,6 +311,7 @@ private:
 	QSharedPointer<ChatMessageModel> mReplyModel;
 	QSharedPointer<ChatNoticeModel> mUnreadMessageNotice;
 	int mBindingCalls = 0;
+	bool mPostModelChangedEvents = true;
 	
 	QWeakPointer<ChatRoomModel> mSelf;
 };

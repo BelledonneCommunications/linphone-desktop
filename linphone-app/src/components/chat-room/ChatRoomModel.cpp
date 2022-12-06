@@ -858,23 +858,31 @@ int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
 		});
 	// if not find, load more entries and find it in new entries.
 		if( entry == mList.end()){
+			mPostModelChangedEvents = false;
+			beginResetModel();
 			int newEntries = loadMoreEntries();
 			while( newEntries > 0){// no more new entries
 				int entryCount = 0;
 				entry = mList.begin();
-				auto chatEventEntry = entry->objectCast<ChatEvent>();	
+				auto chatEventEntry = entry->objectCast<ChatEvent>();
 				while(entryCount < newEntries && 
 					(chatEventEntry->mType != ChatRoomModel::EntryType::MessageEntry || chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage() != linphoneMessage)
 				){
 					++entryCount;
 					++entry;
+					if( entry != mList.end())
+						chatEventEntry = entry->objectCast<ChatEvent>();
 				}
 				if( entryCount < newEntries){// We got it
 					qDebug() << "Find message at " << entryCount << " after loading new entries";
+					mPostModelChangedEvents = true;
+					endResetModel();
 					return entryCount;
 				}else
 					newEntries = loadMoreEntries();// continue
 			}
+			mPostModelChangedEvents = true;
+			endResetModel();
 		}else{
 			int entryCount = entry - mList.begin();
 			qDebug() << "Find message at " << entryCount;
@@ -1029,18 +1037,21 @@ int ChatRoomModel::loadMoreEntries(){
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
 		
 		if(entries.size() >0){
-			beginInsertRows(QModelIndex(), 0, entries.size()-1);
+			if(mPostModelChangedEvents)
+				beginInsertRows(QModelIndex(), 0, entries.size()-1);
 			for(auto entry : entries)
 				mList.prepend(entry);
-			endInsertRows();
+			if(mPostModelChangedEvents)
+				endInsertRows();
 			//emit layoutChanged();
 			updateLastUpdateTime();
 		}
 		newEntries = entries.size();
 	}while( newEntries>0 && currentRowCount == rowCount());
-	currentRowCount = rowCount() - currentRowCount + 1;
+	currentRowCount = rowCount() - currentRowCount;
 	setEntriesLoading(false);
-	emit moreEntriesLoaded(currentRowCount);
+	if(mPostModelChangedEvents)
+		emit moreEntriesLoaded(currentRowCount);
 	return currentRowCount;
 }
 
