@@ -540,7 +540,7 @@ Rectangle {
 								if( callModel.isConference){// Only deactivate camera in conference.
 									if(mainItem.isAudioOnly) {
 										var layout = SettingsModel.videoConferenceLayout != LinphoneEnums.ConferenceLayoutAudioOnly ? SettingsModel.videoConferenceLayout : LinphoneEnums.ConferenceLayoutGrid
-										layoutDelay.being(layout)
+										layoutDelay.begin(layout)
 										camera._activateCamera = true
 									}else
 										callModel.cameraEnabled = !callModel.cameraEnabled
