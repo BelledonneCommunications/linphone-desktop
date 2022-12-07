@@ -367,9 +367,11 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 }
 
 void CallsListModel::prepareConferenceCall(ConferenceInfoModel * model){
-	auto app = App::getInstance();
-	app->smartShowWindow(app->getCallsWindow());
-	emit callConferenceAsked(model);
+	if(model->getConferenceInfoState() != LinphoneEnums::ConferenceInfoStateCancelled) {
+		auto app = App::getInstance();
+		app->smartShowWindow(app->getCallsWindow());
+		emit callConferenceAsked(model);
+	}
 }
 
 int CallsListModel::addAllToConference(){
