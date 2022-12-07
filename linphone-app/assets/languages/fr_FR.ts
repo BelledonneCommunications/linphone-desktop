@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -568,6 +568,11 @@ URL du serveur non configurée.</translation>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
         <translation>Voulez-vous supprimer cette réunion ?</translation>
+    </message>
+    <message>
+        <source>icsCancelledMeetingInvite</source>
+        <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
+        <translation type="unfinished">La réunion a été annulée</translation>
     </message>
 </context>
 <context>
@@ -1236,7 +1241,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -2020,7 +2025,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation>Voulez-vous programmer cette réunion ?</translation>
+        <translation>Voulez-vous programmer cette réunion&#x202f;?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2600,7 +2605,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3546,7 +3551,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation ?</translation>
+        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation&#x202f;?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>

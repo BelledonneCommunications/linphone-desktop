@@ -144,9 +144,9 @@ Loader{
 				color: ChatCalendarMessageStyle.type.cancelledColor
 				font.pointSize: ChatCalendarMessageStyle.type.pointSize
 				font.weight: Font.Bold
-				text: 'You have cancelled the conference'
+				//: 'Meeting has been cancelled' : ICS Title for cancelled meetings
+				text:qsTr('icsCancelledMeetingInvite')
 			}
-			
 			
 			Text{
 				id: title

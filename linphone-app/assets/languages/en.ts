@@ -569,6 +569,11 @@ Server URL not configured.</translation>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
         <translation>Do you really want do cancel this meeting?</translation>
     </message>
+    <message>
+        <source>icsCancelledMeetingInvite</source>
+        <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
+        <translation>Meeting has been cancelled</translation>
+    </message>
 </context>
 <context>
     <name>ChatConferenceInvitationMessage</name>
