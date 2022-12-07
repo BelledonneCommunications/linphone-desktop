@@ -24,6 +24,7 @@
 
 #include <linphone++/linphone.hh>
 #include "ChatRoomInitializer.hpp"
+#include "utils/LinphoneEnums.hpp"
 
 
 #include <QList>
@@ -54,7 +55,7 @@ public:
 	virtual void onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState);
 	
 signals:
-	void finished(int state);	// this signal is emit before deletion and give the current linphone::ChatRoom:State of the chat room.
+	void finished(LinphoneEnums::ChatRoomState state);	// this signal is emit before deletion and give the current linphone::ChatRoom:State of the chat room.
 	
 private:
 	void connectTo(ChatRoomListener * listener);

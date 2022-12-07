@@ -29,45 +29,26 @@ Item {
 	
 	property int participantCount: callModel.isConference ? allDevices.count + 1 : 2	// +me. allDevices==0 if !conference
 	
-	onParticipantCountChanged: {Qt.callLater(allDevices.updateCurrentDevice)}
-	
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
 			callModel: mainItem.callModel
-			showMe: false
-			
-			onParticipantSpeaking: updateCurrentDevice()
-			
+			showMe: false		
 			
 			onConferenceCreated: cameraView.resetCamera()
-			function updateCurrentDevice(){
-				if( callModel ){
-					if( callModel.isConference) {
-						var device = getLastActiveSpeaking()
-						if(device)	// Get 
-							cameraView.currentDevice = device
-					}
-    			}
-			}
-			onMeChanged: if(cameraView.isPreview) {
-					cameraView.currentDevice = me
-					cameraView.resetCamera()
-				}
 		}
 	
-	function clearAll(layoutMode){
-		if( layoutMode != LinphoneEnums.ConferenceLayoutActiveSpeaker){
-			mainItem.cameraEnabled = false
-			miniViews.model = []
-		}
-	}
 	Sticker{
 		id: cameraView
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
 		callModel: mainItem.callModel
-		deactivateCamera: isPreview && callModel.pausedByUser
+		currentDevice: isPreview
+							? allDevices.me
+							: callModel.isConference
+								? allDevices.activeSpeaker
+								: null
+		deactivateCamera: !mainItem.cameraEnabled || (isPreview && callModel.pausedByUser)
 							? true
 							: callModel.isConference
 								?  (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
@@ -76,17 +57,8 @@ Item {
 									|| !mainItem.isConferenceReady
 								: (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused || !callModel.videoEnabled) )
 									|| currentDevice && !currentDevice.videoEnabled
-								
-		isVideoEnabled: !deactivateCamera
 		isPreview: !preview.visible && mainItem.participantCount == 1
-		onIsPreviewChanged: {
-			if( isPreview){
-				currentDevice = allDevices.me
-				cameraView.resetCamera()
-			}else
-				allDevices.updateCurrentDevice()
-				cameraView.resetCamera()
-			}
+		onIsPreviewChanged: {cameraView.resetCamera() }
 		isCameraFromDevice: isPreview
 		isPaused: isPreview && callModel.pausedByUser
 					? false
@@ -121,7 +93,7 @@ Item {
 			sourceComponent: 
 			Sticker{
 				id: previewSticker
-				deactivateCamera: !mainItem.callModel || callModel.pausedByUser || !mainItem.callModel.cameraEnabled
+				deactivateCamera: !mainItem.cameraEnabled || !mainItem.callModel || callModel.pausedByUser || !mainItem.callModel.cameraEnabled
 				currentDevice: allDevices.me
 				isPreview: true
 				callModel: mainItem.callModel
@@ -192,4 +164,5 @@ Item {
 		}
 	}
 }
+
 

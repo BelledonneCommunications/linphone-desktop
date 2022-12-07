@@ -62,6 +62,7 @@
 		<file>assets/images/conference_audio_only_custom.svg</file>
 		<file>assets/images/conference_layout_grid_custom.svg</file>
 		<file>assets/images/conference_layout_active_speaker_custom.svg</file>
+		<file>assets/images/conference_merge_custom.svg</file>
 		<file>assets/images/contact_add_custom.svg</file>
 		<file>assets/images/contact_card_photo_custom.svg</file>
 		<file>assets/images/contact_custom.svg</file>
@@ -77,7 +78,6 @@
 		<file>assets/images/declined_outgoing_call_custom.svg</file>
 		<file>assets/images/delete_custom.svg</file>
 		<file>assets/images/download_custom.svg</file>
-		<file>assets/images/draft_custom.svg</file>
 		<file>assets/images/drop_down_custom.svg</file>
 		<file>assets/images/edit_custom.svg</file>
 		<file>assets/images/ended_call_custom.svg</file>

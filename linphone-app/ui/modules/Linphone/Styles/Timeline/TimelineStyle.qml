@@ -17,13 +17,6 @@ QtObject {
 		property color selectedTimerColor: ColorsList.addImageColor(sectionName+'_ephemeralTimer_c', icon, 'q').color
 	}
 	
-	property QtObject draft: QtObject{
-		property string icon: 'draft_custom'
-		property int iconSize : 30
-		property color color: ColorsList.addImageColor(sectionName+'_draft', icon, 'ad').color
-		property color selectedColor: ColorsList.addImageColor(sectionName+'_draft_c', icon, 'q').color
-	}
-	
 	property QtObject contact: QtObject {
 		property int height: 60
 		

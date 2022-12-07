@@ -107,7 +107,7 @@ void ChatRoomModel::connectTo(ChatRoomListener * listener){
 }
 
 // -----------------------------------------------------------------------------
-QSharedPointer<ChatRoomModel> ChatRoomModel::create(std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs){
+QSharedPointer<ChatRoomModel> ChatRoomModel::create(const std::shared_ptr<linphone::ChatRoom>& chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs){
 	QSharedPointer<ChatRoomModel> model = QSharedPointer<ChatRoomModel>::create(chatRoom, callLogs);
 	if(model){
 		model->mSelf = model;
@@ -117,7 +117,7 @@ QSharedPointer<ChatRoomModel> ChatRoomModel::create(std::shared_ptr<linphone::Ch
 		return nullptr;
 }
 
-ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject * parent) : ProxyListModel(parent){
+ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject * parent) : ProxyListModel(parent){
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	CoreManager *coreManager = CoreManager::getInstance();
 	mCoreHandlers = coreManager->getHandlers();
@@ -149,6 +149,7 @@ ChatRoomModel::ChatRoomModel (std::shared_ptr<linphone::ChatRoom> chatRoom, cons
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::avatarChanged);
 
 	connect(this, &ChatRoomModel::fullPeerAddressChanged, this, &ChatRoomModel::usernameChanged);
+	connect(this, &ChatRoomModel::stateChanged, this, &ChatRoomModel::updatingChanged);
 	
 	if(mChatRoom){
 		mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
@@ -311,11 +312,11 @@ QString ChatRoomModel::getLocalAddress () const {
 }
 
 QString ChatRoomModel::getFullPeerAddress () const {
-	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString()) : "";
+	return mChatRoom && mChatRoom->getPeerAddress() ? Utils::coreStringToAppString(mChatRoom->getPeerAddress()->asString()) : "";
 }
 
 QString ChatRoomModel::getFullLocalAddress () const {
-	return mChatRoom ? Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asString()) : "";
+	return mChatRoom && mChatRoom->getLocalAddress()? Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asString()) : "";
 }
 
 QString ChatRoomModel::getConferenceAddress () const {
@@ -404,8 +405,8 @@ std::list<std::shared_ptr<linphone::Participant>> ChatRoomModel::getParticipants
 	return participantList;
 }
 
-int ChatRoomModel::getState() const {
-	return mChatRoom ? (int)mChatRoom->getState() : 0;	
+LinphoneEnums::ChatRoomState ChatRoomModel::getState() const {
+	return mChatRoom ? LinphoneEnums::fromLinphone(mChatRoom->getState()) : LinphoneEnums::ChatRoomStateNone;
 }
 
 bool ChatRoomModel::isReadOnly() const{
@@ -481,6 +482,10 @@ bool ChatRoomModel::isBasic() const{
 	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic);
 }
 
+bool ChatRoomModel::isUpdating() const{
+	return getState() == LinphoneEnums::ChatRoomStateCreationPending || getState() == LinphoneEnums::ChatRoomStateTerminationPending;
+}
+
 std::shared_ptr<linphone::ChatRoom> ChatRoomModel::getChatRoom(){
 	return mChatRoom;
 }
@@ -521,14 +526,6 @@ QString ChatRoomModel::getParticipantAddress(){
 
 int ChatRoomModel::getAllUnreadCount(){
 	return mUnreadMessagesCount + mMissedCallsCount;
-}
-
-QString ChatRoomModel::getCachedText()const{
-	return mCachedText;
-}
-
-bool ChatRoomModel::hasDraft() const{
-	return mHasDraft;
 }
 
 //------------------------------------------------------------------------------------------------
@@ -605,23 +602,6 @@ void ChatRoomModel::enableMarkAsRead(const bool& enable){
 	}
 }
 
-bool ChatRoomModel::setCachedText(const QString& text){
-	if(mCachedText != text){
-		mCachedText = text;
-		emit cachedTextChanged();
-		setHasDraft(!mCachedText.isEmpty());
-		return true;
-	}else
-		return false;
-}
-
-void ChatRoomModel::setHasDraft(const bool& cached){
-	if(mHasDraft != cached){
-		mHasDraft = cached;
-		emit hasDraftChanged();
-	}
-}
-
 void ChatRoomModel::setReply(ChatMessageModel * model){
 	if(model != mReplyModel.get()){
 		if( model && model->getChatMessage() )
@@ -645,15 +625,14 @@ void ChatRoomModel::markAsToDelete(){
 void ChatRoomModel::deleteChatRoom(){
 	qInfo() << "Deleting ChatRoom : " << getSubject() << ",  address=" << getFullPeerAddress();
 	if(mChatRoom){
-		mChatRoom->removeListener(mChatRoomListener);
 		CoreManager::getInstance()->getCore()->deleteChatRoom(mChatRoom);
 	}
-	emit chatRoomDeleted();
 }
 
 void ChatRoomModel::leaveChatRoom (){
 	if(mChatRoom){
-		mChatRoom->leave();
+		if(!isReadOnly())
+			mChatRoom->leave();
 		if( mChatRoom->getHistorySize() == 0 && mChatRoom->getHistoryEventsSize() == 0)
 			deleteChatRoom();
 	}
@@ -724,7 +703,6 @@ void ChatRoomModel::sendMessage (const QString &message) {
 		if(recorder->haveVocalRecorder())
 			recorder->clearVocalRecorder();
 		CoreManager::getInstance()->getChatModel()->clear();
-		setCachedText("");
 	}
 }
 
@@ -744,8 +722,8 @@ void ChatRoomModel::forwardMessage(ChatMessageModel * model){
 }
 // -----------------------------------------------------------------------------
 
-void ChatRoomModel::compose (const QString& text) {
-	if( setCachedText(text) && mChatRoom)// only send a compose if text has changed
+void ChatRoomModel::compose () {
+	if( mChatRoom)
 		mChatRoom->compose();
 }
 
@@ -880,23 +858,31 @@ int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
 		});
 	// if not find, load more entries and find it in new entries.
 		if( entry == mList.end()){
+			mPostModelChangedEvents = false;
+			beginResetModel();
 			int newEntries = loadMoreEntries();
 			while( newEntries > 0){// no more new entries
 				int entryCount = 0;
 				entry = mList.begin();
-				auto chatEventEntry = entry->objectCast<ChatEvent>();	
+				auto chatEventEntry = entry->objectCast<ChatEvent>();
 				while(entryCount < newEntries && 
 					(chatEventEntry->mType != ChatRoomModel::EntryType::MessageEntry || chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage() != linphoneMessage)
 				){
 					++entryCount;
 					++entry;
+					if( entry != mList.end())
+						chatEventEntry = entry->objectCast<ChatEvent>();
 				}
 				if( entryCount < newEntries){// We got it
 					qDebug() << "Find message at " << entryCount << " after loading new entries";
+					mPostModelChangedEvents = true;
+					endResetModel();
 					return entryCount;
 				}else
 					newEntries = loadMoreEntries();// continue
 			}
+			mPostModelChangedEvents = true;
+			endResetModel();
 		}else{
 			int entryCount = entry - mList.begin();
 			qDebug() << "Find message at " << entryCount;
@@ -1051,18 +1037,21 @@ int ChatRoomModel::loadMoreEntries(){
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
 		
 		if(entries.size() >0){
-			beginInsertRows(QModelIndex(), 0, entries.size()-1);
+			if(mPostModelChangedEvents)
+				beginInsertRows(QModelIndex(), 0, entries.size()-1);
 			for(auto entry : entries)
 				mList.prepend(entry);
-			endInsertRows();
+			if(mPostModelChangedEvents)
+				endInsertRows();
 			//emit layoutChanged();
 			updateLastUpdateTime();
 		}
 		newEntries = entries.size();
 	}while( newEntries>0 && currentRowCount == rowCount());
-	currentRowCount = rowCount() - currentRowCount + 1;
+	currentRowCount = rowCount() - currentRowCount;
 	setEntriesLoading(false);
-	emit moreEntriesLoaded(currentRowCount);
+	if(mPostModelChangedEvents)
+		emit moreEntriesLoaded(currentRowCount);
 	return currentRowCount;
 }
 
@@ -1337,6 +1326,11 @@ void ChatRoomModel::onParticipantAdminStatusChanged(const std::shared_ptr<linpho
 void ChatRoomModel::onStateChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, linphone::ChatRoom::State newState){
 	updateLastUpdateTime();
 	emit stateChanged(getState());
+	if(newState == linphone::ChatRoom::State::Deleted){
+		mChatRoom->removeListener(mChatRoomListener);
+		mChatRoom = nullptr;
+		emit chatRoomDeleted();
+	}
 }
 
 void ChatRoomModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){

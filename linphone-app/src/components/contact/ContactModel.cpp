@@ -215,3 +215,7 @@ Presence::PresenceLevel ContactModel::getPresenceLevel () const {
 bool ContactModel::hasCapability(const LinphoneEnums::FriendCapability& capability){
 	return mLinphoneFriend->hasCapability(LinphoneEnums::toLinphone(capability));
 }
+
+std::shared_ptr<linphone::Friend> ContactModel::getFriend() const{
+	return mLinphoneFriend;
+}

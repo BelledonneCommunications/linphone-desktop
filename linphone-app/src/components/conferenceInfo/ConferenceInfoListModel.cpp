@@ -43,7 +43,7 @@ ConferenceInfoListModel::ConferenceInfoListModel (QObject *parent) : ProxyListMo
 	auto conferenceInfos = coreManager->getCore()->getConferenceInformationList();
 	QList<QSharedPointer<ConferenceInfoModel> > items;
 	for(auto conferenceInfo : conferenceInfos){
-		auto item = build(conferenceInfo);
+		auto item = build(conferenceInfo, mBuildAll);
 		if(item)
 			items << item;
 	}
@@ -53,10 +53,10 @@ ConferenceInfoListModel::ConferenceInfoListModel (QObject *parent) : ProxyListMo
 
 // -----------------------------------------------------------------------------
 
-QSharedPointer<ConferenceInfoModel> ConferenceInfoListModel::build(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo) const{
+QSharedPointer<ConferenceInfoModel> ConferenceInfoListModel::build(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& buildAll) const{
 	auto me = CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	std::list<std::shared_ptr<linphone::Address>> participants = conferenceInfo->getParticipants();
-	bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
+	bool haveMe = buildAll || conferenceInfo->getOrganizer()->weakEqual(me);
 	if(!haveMe)
 		haveMe = (std::find_if(participants.begin(), participants.end(), [me](const std::shared_ptr<linphone::Address>& address){
 			return me->weakEqual(address);
@@ -70,7 +70,7 @@ QSharedPointer<ConferenceInfoModel> ConferenceInfoListModel::build(const std::sh
 }
 
 void ConferenceInfoListModel::add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents){
-	auto item = build(conferenceInfo);
+	auto item = build(conferenceInfo, mBuildAll);
 	if( item)
 		ProxyListModel::add(item);
 }
@@ -89,7 +89,7 @@ QVariant ConferenceInfoListModel::data (const QModelIndex &index, int role ) con
 		if (role == Qt::DisplayRole)
 			return QVariant::fromValue(mList[row].get());
 		else if (role == Qt::DisplayRole +1 )
-			return QVariant::fromValue(mList[row].objectCast<ConferenceInfoModel>()->getDateTimeUtc().date());
+			return QVariant::fromValue(mList[row].objectCast<ConferenceInfoModel>()->getDateTimeSystem().date());
 		return QVariant();
 }
 	

@@ -35,6 +35,9 @@ public:
 	
 	ProxyModel (QObject *parent = Q_NULLPTR);
 	ProxyModel (QAbstractItemModel * list, const int& defaultFilterMode, QObject *parent = Q_NULLPTR);
+	virtual ~ProxyModel();
+	
+	virtual void deleteSourceModel();
 	
 	int getFilterMode () const;
 	void setFilterMode (int filterMode);
@@ -55,6 +58,8 @@ signals:
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
+	
+	bool mDeleteSourceModel = false;
 	
 private:
 	int mFilterMode;

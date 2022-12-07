@@ -204,6 +204,7 @@ set(SOURCES
 	src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
 	src/components/file/FileDownloader.cpp
 	src/components/file/FileExtractor.cpp
+	src/components/friend/FriendListListener.cpp
 	src/components/history/HistoryModel.cpp
 	src/components/history/HistoryProxyModel.cpp
 	src/components/ldap/LdapModel.cpp
@@ -338,6 +339,7 @@ set(HEADERS
 	src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
 	src/components/file/FileDownloader.hpp
 	src/components/file/FileExtractor.hpp
+	src/components/friend/FriendListListener.hpp
 	src/components/history/HistoryModel.hpp
 	src/components/history/HistoryProxyModel.hpp
 	src/components/ldap/LdapModel.hpp

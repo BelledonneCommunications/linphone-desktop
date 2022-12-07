@@ -21,9 +21,11 @@ Rectangle {
 	property alias subtitleColor: description.subtitleColor
 	property alias titleColor: description.titleColor
 	property alias statusText : description.statusText
+	property alias isDarkMode: avatar.isDarkMode
 	
 	property bool displayUnreadMessageCount: false
 	property bool showSubtitle : true
+	property bool showBusyIndicator: false
 	property string subtitle: ''
 	
 	property string subject: (entry && entry.conferenceInfoModel && entry.conferenceInfoModel.subject
@@ -75,16 +77,7 @@ Rectangle {
 								? ''
 								: item.username
 						: item.username
-			visible:!groupChat.visible
-			Icon {
-				
-				anchors.fill: parent
-				
-				icon: ContactStyle.groupChat.icon
-				overwriteColor: ContactStyle.groupChat.avatarColor
-				iconSize: ContactStyle.contentHeight
-				visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
-			}
+			isOneToOne: entry==undefined || entry.isOneToOne==undefined || entry.isOneToOne
 			
 			Icon{
 				anchors.top:parent.top
@@ -97,25 +90,26 @@ Rectangle {
 				anchors.fill: parent
 				onClicked: item.avatarClicked(mouse)
 			}
-		}
-		Icon {
-			id: groupChat
 			
-			Layout.preferredHeight: ContactStyle.contentHeight
-			Layout.preferredWidth: ContactStyle.contentHeight
-			
-			icon: ContactStyle.groupChat.icon
-			overwriteColor: ContactStyle.groupChat.color
-			iconSize: ContactStyle.contentHeight
-			visible: false //entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
-			
-			Icon{
-				anchors.right: parent.right
-				anchors.top:parent.top
-				anchors.topMargin: -5
-				visible: entry!=undefined && entry.haveEncryption != undefined && entry.haveEncryption
-				icon: entry?(entry.securityLevel === 2?'secure_level_1': entry.securityLevel===3? 'secure_level_2' : 'secure_level_unsafe'):'secure_level_unsafe'
-				iconSize:15
+			Loader{
+				id: busyLoader
+				
+				anchors.fill: parent
+				anchors.margins: 5
+				
+				active: item.showBusyIndicator
+				sourceComponent: Component{
+					BusyIndicator{// Joining spinner
+						id: joiningSpinner
+						running: false
+						Timer{// Delay starting spinner (Qt bug)
+							id: indicatorDelay
+							interval: 100
+							onTriggered: joiningSpinner.running = true
+						}
+						Component.onCompleted: indicatorDelay.start()
+					}
+				}
 			}
 		}
 		
@@ -136,7 +130,9 @@ Rectangle {
 									? item.organizer
 										? item.organizer
 										: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
-									: entry.participants.addressesToString
+									: entry.participants
+										? entry.participants.addressesToString
+										: ''
 							: ''
 		}
 		

@@ -27,12 +27,6 @@ Mosaic {
 	
 	// On grid view, we limit the quality if there are enough participants// The vga mode has been activated from the factory rc
 	//onParticipantCountChanged: participantCount > ConstantsCpp.maxMosaicParticipants ? SettingsModel.setLimitedMosaicQuality() : SettingsModel.setHighMosaicQuality()
-	function clearAll(layoutMode){
-		if( layoutMode != 2 && layoutMode != LinphoneEnums.ConferenceLayoutGrid){
-			clear()
-			gridModel.model = []
-		}
-	}
 	delegateModel: DelegateModel{
 		id: gridModel
 		property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {

@@ -65,6 +65,7 @@ constexpr int Constants::ThumbnailImageFileHeight;
 constexpr qint64 Constants::FileSizeLimit;
 
 constexpr char Constants::DefaultXmlrpcUri[];
+constexpr char Constants::DefaultUploadLogsServer[];
 constexpr char Constants::DefaultConferenceURI[];
 constexpr char Constants::DefaultVideoConferenceURI[];
 constexpr char Constants::DefaultLimeServerURL[];

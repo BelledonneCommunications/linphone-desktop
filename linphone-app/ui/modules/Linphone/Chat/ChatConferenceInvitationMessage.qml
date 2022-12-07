@@ -109,12 +109,14 @@ Loader{
 			}
 			RowLayout {
 				id: participantsRow
+				property int participantCount: mainItem.conferenceInfoModel.allParticipantCount
 				Layout.fillWidth: true
 				Layout.preferredHeight: ChatCalendarMessageStyle.participants.iconSize
 				Layout.leftMargin: 5
 				Layout.rightMargin: 15
 				
-				spacing: ChatCalendarMessageStyle.participants.spacing
+				spacing: ChatCalendarMessageStyle.participants.spacing				
+				visible: participantsRow.participantCount > 0
 				
 				Icon{
 					icon: ChatCalendarMessageStyle.participants.icon
@@ -124,13 +126,12 @@ Loader{
 				
 				Text {
 					id: participantsList
-					property int participantCount: mainItem.conferenceInfoModel.getParticipantCount()
 					Layout.fillWidth: true
 					color: ChatCalendarMessageStyle.participants.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 					//: '%1 participant' : number(=%1) of participant.
-					text:  qsTr('icsParticipants', '', participantCount).arg(participantCount)
+					text:  qsTr('icsParticipants', '', participantsRow.participantCount).arg(participantsRow.participantCount)
 				}
 			}
 			ColumnLayout{
@@ -158,7 +159,7 @@ Loader{
 						color: ChatCalendarMessageStyle.schedule.color
 						elide: Text.ElideRight
 						font.pointSize: Units.dp * 8
-						text: Qt.formatDate(mainItem.conferenceInfoModel.dateTimeUtc, 'yyyy/MM/dd')
+						text: UtilsCpp.toDateString(Utils.fromUTC(mainItem.conferenceInfoModel.dateTimeUtc), 'yyyy/MM/dd')
 					}
 				}
 				RowLayout {
@@ -182,7 +183,8 @@ Loader{
 						color: ChatCalendarMessageStyle.schedule.color
 						elide: Text.ElideRight
 						font.pointSize: Units.dp * 8
-						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTimeUtc, 'hh:mm')
+// Reminder: QML use locale time (not system). Use UTC from C++ => convert it into QML => pass QML => convert it into UTC and apply our timezone.
+						text: UtilsCpp.toTimeString( Utils.fromUTC(mainItem.conferenceInfoModel.dateTimeUtc), 'hh:mm')
 							  + (mainItem.conferenceInfoModel.duration > 0 ? ' ('+Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
 																		   : '')
 					}
@@ -202,7 +204,11 @@ Loader{
 					Layout.leftMargin: 10
 					spacing: 0
 					visible: mainItem.isExpanded
-					onVisibleChanged: model= mainItem.conferenceInfoModel.getParticipants()
+					onVisibleChanged: visible ? model= mainItem.conferenceInfoModel.getAllParticipants() : model = []
+					Connections{
+						target: mainItem.conferenceInfoModel
+						onParticipantsChanged: if(expandedParticipantsList.visible) expandedParticipantsList.model = mainItem.conferenceInfoModel.getAllParticipants()
+					}
 					
 					delegate: Row{
 						spacing: 5

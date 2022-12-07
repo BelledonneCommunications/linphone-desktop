@@ -57,6 +57,8 @@ public:
   Q_INVOKABLE VcardModel *cloneVcardModel () const;
   Presence::PresenceLevel getPresenceLevel () const;
   Q_INVOKABLE bool hasCapability(const LinphoneEnums::FriendCapability& capability);
+  
+  std::shared_ptr<linphone::Friend> getFriend() const;
 
 signals:
   void contactUpdated ();

@@ -69,9 +69,10 @@ TabContainer {
 						currentIndex: {
 							var preset = SettingsModel.videoPreset
 							
-							return Number(Utils.findIndex(model, function (value) {
+							var index = Number(Utils.findIndex(model, function (value) {
 								return preset === value.value
 							}))
+							return index>=0 ? index : 0;
 						}
 						
 						model: [{

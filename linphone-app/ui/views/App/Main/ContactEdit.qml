@@ -35,9 +35,7 @@ ColumnLayout  {
 	Component.onDestruction: {_vcard=null}// Need to set it to null because of not calling destructor if not.
 	Component.onCompleted:{
 		var sipAddress = contactEdit.sipAddress
-		var contact = contactEdit._contact = SipAddressesModel.mapSipAddressToContact(
-		  sipAddress
-		)
+		var contact = contactEdit._contact = ContactsListModel.getContactModelFromAddress(sipAddress)
 	  
 		if (!contact) {
 		  // Add a new contact.
@@ -241,7 +239,7 @@ ColumnLayout  {
 		sipAddresses: _contact ? _contact.vcard.sipAddresses : [ contactEdit.sipAddress ]
 		
 		function viewConversation(chatRoomModel){
-			if( chatRoomModel){
+			if( chatRoomModel && !chatRoomModel.updating){
 				window.setView('Conversation', {
 					chatRoomModel:chatRoomModel
 				}, function(){

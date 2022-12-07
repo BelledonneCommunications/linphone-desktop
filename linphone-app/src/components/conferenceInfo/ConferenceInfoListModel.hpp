@@ -37,7 +37,7 @@ class ConferenceInfoListModel : public ProxyListModel  {
 	
 public:
 	ConferenceInfoListModel (QObject *parent = Q_NULLPTR);
-	QSharedPointer<ConferenceInfoModel> build(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo) const;
+	QSharedPointer<ConferenceInfoModel> build(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& buildAll) const;
 	void add(const std::shared_ptr<linphone::ConferenceInfo> & conferenceInfo, const bool& sendEvents = true);
 	
 	
@@ -50,7 +50,8 @@ public slots:
 	void onRemoved(bool byUser);
 signals:
 	void filterTypeChanged(int filterType);
-	
+private:
+	bool mBuildAll = true; // Short term design choice : display all. As of 5.2.0 SDK and on cancel, there are no more more links between conference info and current account.
 };
 Q_DECLARE_METATYPE(ConferenceInfoListModel*)
 #endif

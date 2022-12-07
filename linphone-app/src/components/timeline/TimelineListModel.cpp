@@ -71,7 +71,6 @@ TimelineListModel::TimelineListModel(const TimelineListModel* model){
 		auto newItem = qobject_cast<TimelineModel*>(item)->clone();
 		connect(newItem.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
 		connect(newItem.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
-		connect(newItem->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 		mList << newItem;
 	}
 }
@@ -141,7 +140,6 @@ QSharedPointer<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<lin
 			QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 			if(model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 				add(model);
 				return model;
 			}
@@ -189,7 +187,6 @@ QSharedPointer<ChatRoomModel> TimelineListModel::getChatRoomModel(std::shared_pt
 			QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 			if(model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 				add(model);
 				return model->mChatRoomModel;
 			}
@@ -249,7 +246,17 @@ void TimelineListModel::updateTimelines () {
 	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
 		if( ChatRoomModel::isTerminated(chatRoom) && chatRoom->getUnreadMessagesCount() > 0)
 			chatRoom->markAsRead();
-		return !chatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic) && chatRoom->getConferenceAddress() && chatRoom->getHistoryEventsSize() == 0;
+		if(chatRoom->getState() == linphone::ChatRoom::State::Deleted)
+			return true;
+		if(!chatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic)){
+			auto conferenceAddress = chatRoom->getConferenceAddress();
+			if( conferenceAddress && conferenceAddress->getDomain() == Constants::LinphoneDomain) {
+				QString conferenceAddressStr = Utils::coreStringToAppString(conferenceAddress->asStringUriOnly());
+				if( conferenceAddressStr.contains("conf-id"))
+					return true;
+			}
+		}
+		return false;
 	}); 
 	
 //Remove no more chat rooms
@@ -294,7 +301,6 @@ void TimelineListModel::updateTimelines () {
 			QSharedPointer<TimelineModel> model = TimelineModel::create(this, dbChatRoom, callLogs);
 			if( model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-				connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 				add(model);
 			}
 		}
@@ -306,12 +312,10 @@ void TimelineListModel::add (QSharedPointer<TimelineModel> timeline){
 	auto chatRoomModel = timeline->getChatRoomModel();
 	auto chatRoom = chatRoomModel->getChatRoom();
 	connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
-	if( !chatRoomModel->haveConferenceAddress() ||  chatRoom->getHistoryEventsSize() != 0) {
-		connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
-		ProxyListModel::add(timeline);
-		emit layoutChanged();
-		emit countChanged();
-	}
+	connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
+	ProxyListModel::add(timeline);
+	emit layoutChanged();
+	emit countChanged();
 }
 
 void TimelineListModel::removeChatRoomModel(QSharedPointer<ChatRoomModel> model){
@@ -334,7 +338,10 @@ void TimelineListModel::select(ChatRoomModel * chatRoomModel){
 	if(chatRoomModel) {
 		auto timeline = getTimeline(chatRoomModel->getChatRoom(), false);
 		if(timeline){
-			timeline->setSelected(true);
+			if(timeline->isUpdating())
+				timeline->delaySelected();
+			else
+				timeline->setSelected(true);
 		}
 	}
 }
@@ -356,7 +363,6 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 		QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 		if(model){
 			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-			connect(model->getChatRoomModel(), &ChatRoomModel::allEntriesRemoved, this, &TimelineListModel::removeChatRoomModel);
 			add(model);			
 		}
 	}else if(state == linphone::ChatRoom::State::Deleted || state == linphone::ChatRoom::State::Terminated){
@@ -367,6 +373,11 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 			if(state == linphone::ChatRoom::State::Deleted){
 				remove(timeline);// This will call removeRows()
 			}
+		}
+	}else if(state == linphone::ChatRoom::State::CreationFailed){
+		auto timeline = getTimeline(chatRoom, false);
+		if(timeline) {
+			remove(timeline);// This will call removeRows()
 		}
 	}
 }

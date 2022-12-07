@@ -12,6 +12,7 @@ import LinphoneEnums 1.0
 import Units 1.0
 
 import 'Chat.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -32,10 +33,17 @@ Rectangle {
 	
 	color: ChatStyle.color
 	clip: true
-	
+	Timer{// Let some time to have a better cell sizes
+		id: repositionerDelay
+		property int indexToMove
+		interval: 100
+		onTriggered: chat.positionViewAtIndex(indexToMove, ListView.Center)
+	}
 	function positionViewAtIndex(index){
 		chat.bindToEnd = false
-		chat.positionViewAtIndex(index, ListView.Beginning)
+		chat.positionViewAtIndex(index, ListView.Center)
+		repositionerDelay.indexToMove = index
+		repositionerDelay.restart()
 	}
 	
 	function goToMessage(message){
@@ -290,10 +298,10 @@ Rectangle {
 										//: 'Choose where to forward the message' : Dialog title for choosing where to forward the current message.
 										, {title: qsTr('forwardDialogTitle'),
 											addressSelectedCallback: function (sipAddress) {
-																		var chat = CallsListModel.createChat(sipAddress)
+																		var chat = CallsListModel.createChatRoom( '', proxyModel.chatRoomModel.haveEncryption, [sipAddress], false )
 																		if(chat){
-																			chat.forwardMessage($chatEntry)
-																			TimelineListModel.select(chat)
+																			chat.chatRoomModel.forwardMessage($chatEntry)
+																			TimelineListModel.select(chat.chatRoomModel)
 																		}
 																	},
 											chatRoomSelectedCallback: function (chatRoomModel){
@@ -379,6 +387,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: textAreaBorders.height + chatMessagePreview.height+messageBlock.height
 			color: ChatStyle.sendArea.backgroundBorder.color
+			visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.isReadOnly && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 			ColumnLayout{
 				anchors.fill: parent				
 				spacing: 0
@@ -411,7 +420,6 @@ Rectangle {
 					Layout.leftMargin: ChatStyle.sendArea.backgroundBorder.width
 					borderColor: ChatStyle.sendArea.border.color
 					topWidth: ChatStyle.sendArea.border.width
-					visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.isReadOnly && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 					
 					DroppableTextArea {
 						id: textArea
@@ -423,7 +431,7 @@ Rectangle {
 						anchors.right: parent.right
 						anchors.bottom: parent.bottom
 						
-						height:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
+						height: visible ? ChatStyle.sendArea.height + ChatStyle.sendArea.border.width : 0
 						minimumHeight:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
 						maximumHeight:container.height/2
 						
@@ -445,10 +453,7 @@ Rectangle {
 							}
 						}
 						onAudioRecordRequest: RecorderManager.resetVocalRecorder()
-						Component.onCompleted: {
-							text = proxyModel.chatRoomModel.cachedText
-							cursorPosition=text.length
-						}
+						Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
 						Rectangle{
 							anchors.fill:parent
 							color:'white'

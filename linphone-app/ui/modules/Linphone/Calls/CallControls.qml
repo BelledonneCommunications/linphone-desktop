@@ -13,6 +13,7 @@ Rectangle {
 	// ---------------------------------------------------------------------------
 	
 	default property alias _content: content.data
+	property alias isDarkMode: contact.isDarkMode
 	
 	property alias signIcon: signIcon.icon
 	property alias subtitleColor: contact.subtitleColor

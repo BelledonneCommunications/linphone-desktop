@@ -54,6 +54,8 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 		QModelIndex index = listModel->index(sourceRow, 0, QModelIndex());
 		const ConferenceInfoModel* ics = sourceModel()->data(index).value<ConferenceInfoModel*>();
 		if(ics){
+			if(ics->getDuration() == 0)
+				return false;
 			QDateTime currentDateTime = QDateTime::currentDateTime();
 			if( mFilterType == 0){
 				return ics->getEndDateTime() < currentDateTime;
@@ -65,7 +67,7 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 				return mFilterType == -1;
 		}
 	}
-	return true;
+	return false;
 }
 
 bool ConferenceInfoProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {

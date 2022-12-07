@@ -52,6 +52,7 @@ public:
 	Q_PROPERTY(ChatRoomModel* chatRoomModel READ getChatRoomModel CONSTANT)
 	
 	Q_PROPERTY(bool selected MEMBER mSelected WRITE setSelected NOTIFY selectedChanged)
+	Q_PROPERTY(bool updating READ isUpdating NOTIFY updatingChanged) 
 	
 	
 	QString getFullPeerAddress() const;
@@ -61,7 +62,10 @@ public:
 	QString getAvatar() const;
 	int getPresenceStatus() const;
 	
+	bool isUpdating() const;
+	
 	void setSelected(const bool& selected);
+	void delaySelected();
 	
 	Q_INVOKABLE ChatRoomModel* getChatRoomModel() const;
 	
@@ -102,6 +106,7 @@ public slots:
 	void updateUnreadCount();
 	void onDefaultAccountChanged();
 	void onChatRoomDeleted();
+	void onChatRoomStateChanged();
 	
 signals:
 	void fullPeerAddressChanged();
@@ -112,8 +117,11 @@ signals:
 	void selectedChanged(bool selected);
 	void conferenceLeft();
 	void chatRoomDeleted();
+	void updatingChanged();
 	
 private:
+
+	bool mDelaySelection = false;
 
 	void connectTo(ChatRoomListener * listener);
 	std::shared_ptr<ChatRoomListener> mChatRoomListener;

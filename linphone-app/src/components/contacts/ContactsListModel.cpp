@@ -24,40 +24,26 @@
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/friend/FriendListListener.hpp"
 
 #include "ContactsListModel.hpp"
 
+// =============================================================================
+void ContactsListModel::connectTo(FriendListListener * listener){
+	connect(listener, &FriendListListener::contactCreated, this, &ContactsListModel::onContactCreated);
+	connect(listener, &FriendListListener::contactDeleted, this, &ContactsListModel::onContactDeleted);
+	connect(listener, &FriendListListener::contactUpdated, this, &ContactsListModel::onContactUpdated);
+	connect(listener, &FriendListListener::syncStatusChanged, this, &ContactsListModel::onSyncStatusChanged);
+	connect(listener, &FriendListListener::presenceReceived, this, &ContactsListModel::onPresenceReceived);
+}
 // =============================================================================
 
 using namespace std;
 
 ContactsListModel::ContactsListModel (QObject *parent) : ProxyListModel(parent) {
-	mLinphoneFriends = CoreManager::getInstance()->getCore()->getFriendsLists().front();
-	// Clean friends.
-	{
-		list<shared_ptr<linphone::Friend>> toRemove;
-		for (const auto &linphoneFriend : mLinphoneFriends->getFriends()) {
-			if (!linphoneFriend->getVcard())
-				toRemove.push_back(linphoneFriend);
-		}
-		
-		for (const auto &linphoneFriend : toRemove) {
-			qWarning() << QStringLiteral("Remove one friend without vcard.");
-			mLinphoneFriends->removeFriend(linphoneFriend);
-		}
-	}
-	
-	// Init contacts with linphone friends list.
-	QQmlEngine *engine = App::getInstance()->getEngine();
-	for (const auto &linphoneFriend : mLinphoneFriends->getFriends()) {
-		auto contact = QSharedPointer<ContactModel>::create(linphoneFriend);
-		
-		// See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
-		// The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
-		engine->setObjectOwnership(contact.get(), QQmlEngine::CppOwnership);
-		
-		addContact(contact);
-	}
+	mFriendListListener = std::make_shared<FriendListListener>();
+	connectTo(mFriendListListener.get());
+	update();
 }
 
 ContactsListModel::~ContactsListModel(){
@@ -65,7 +51,7 @@ ContactsListModel::~ContactsListModel(){
 		beginResetModel();
 		mOptimizedSearch.clear();
 		mList.clear();
-		mLinphoneFriends = nullptr;
+		mLinphoneFriends.clear();
 		endResetModel();
 	}
 }
@@ -75,7 +61,9 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 	
 	if (row < 0 || count < 0 || limit >= mList.count())
 		return false;
-	
+		
+	auto friendsList = CoreManager::getInstance()->getCore()->getFriendsLists();
+
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i) {
@@ -84,7 +72,8 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 			mOptimizedSearch.remove(address.toString());
 		}
 		
-		mLinphoneFriends->removeFriend(contact->mLinphoneFriend);
+		for(auto l : friendsList)
+			l->removeFriend(contact->mLinphoneFriend);
 		
 		emit contactRemoved(contact);
 	}
@@ -111,6 +100,10 @@ QSharedPointer<ContactModel> ContactsListModel::findContactModelFromUsername (co
 }
 
 // -----------------------------------------------------------------------------
+ContactModel *ContactsListModel::getContactModelFromAddress (const QString& address) const{
+	auto contact = findContactModelFromSipAddress(address);
+	return contact.get();
+}
 
 ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 	// Try to merge vcardModel to an existing contact.
@@ -123,7 +116,16 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 	contact = QSharedPointer<ContactModel>::create(vcardModel);
 	App::getInstance()->getEngine()->setObjectOwnership(contact.get(), QQmlEngine::CppOwnership);
 	
-	if (mLinphoneFriends->addFriend(contact->mLinphoneFriend) != linphone::FriendList::Status::OK) {
+	if( mLinphoneFriends.size() == 0){
+		update();// Friends were not loaded correctly. Update them.
+	}
+	auto friendsList = CoreManager::getInstance()->getCore()->getDefaultFriendList();
+	if( !friendsList){
+		qWarning() << "There is no friends list available, cannot add a contact" ;
+		return nullptr;
+	}
+	
+	if (friendsList->addFriend(contact->mLinphoneFriend) != linphone::FriendList::Status::OK) {
 		qWarning() << QStringLiteral("Unable to add contact from vcard:") << vcardModel;
 		return nullptr;
 	}
@@ -131,9 +133,8 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 	qInfo() << QStringLiteral("Add contact from vcard:") << contact.get() << vcardModel;
 	
 	// Make sure new subscribe is issued.
-	mLinphoneFriends->updateSubscriptions();
+	friendsList->updateSubscriptions();
 	
-	addContact(contact);
 	emit layoutChanged();
 	
 	emit contactAdded(contact);
@@ -177,3 +178,47 @@ void ContactsListModel::addContact (QSharedPointer<ContactModel> contact) {
 		mOptimizedSearch[address.toString()] = contact;
 	}
 }
+
+void ContactsListModel::update(){
+	beginResetModel();
+	for(auto l : mLinphoneFriends)
+		l->removeListener(mFriendListListener);
+	mLinphoneFriends.clear();
+	mOptimizedSearch.clear();
+	mList.clear();
+	endResetModel();
+
+	mLinphoneFriends = CoreManager::getInstance()->getCore()->getFriendsLists();
+	
+	for(auto l : mLinphoneFriends){
+		l->addListener(mFriendListListener);
+		for (const auto &linphoneFriend : l->getFriends()) {
+			onContactCreated(linphoneFriend);
+		}
+	}
+}
+
+//------------------------------------------------------------------------------------------------
+
+void ContactsListModel::onContactCreated(const std::shared_ptr<linphone::Friend> & linphoneFriend){
+	QQmlEngine *engine = App::getInstance()->getEngine();
+	auto haveContact = std::find_if(mList.begin(), mList.end(), [linphoneFriend] (const QSharedPointer<QObject>& item){		
+			return item.objectCast<ContactModel>()->getFriend() == linphoneFriend;
+		});
+	if(haveContact == mList.end()) {
+		auto contact = QSharedPointer<ContactModel>::create(linphoneFriend);
+	// See: http://doc.qt.io/qt-5/qtqml-cppintegration-data.html#data-ownership
+	// The returned value must have a explicit parent or a QQmlEngine::CppOwnership.
+		engine->setObjectOwnership(contact.get(), QQmlEngine::CppOwnership);
+		addContact(contact);
+	}
+}
+void ContactsListModel::onContactDeleted(const std::shared_ptr<linphone::Friend> & linphoneFriend){
+}
+void ContactsListModel::onContactUpdated(const std::shared_ptr<linphone::Friend> & newFriend, const std::shared_ptr<linphone::Friend> & oldFriend){
+}
+void ContactsListModel::onSyncStatusChanged(linphone::FriendList::SyncStatus status, const std::string & message){
+}
+void ContactsListModel::onPresenceReceived(const std::list<std::shared_ptr<linphone::Friend>> & friends){
+}
+

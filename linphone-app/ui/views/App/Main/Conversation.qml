@@ -103,20 +103,9 @@ ColumnLayout  {
 				
 				//username: Logic.getUsername()
 				username: chatRoomModel?chatRoomModel.username:( conversation._sipAddressObserver ? UtilsCpp.getDisplayName(conversation._sipAddressObserver.peerAddress) : '')
-				visible: !groupChat.visible				
+				isOneToOne: chatRoomModel==undefined || chatRoomModel.isOneToOne==undefined || chatRoomModel.isOneToOne
 			}
 			
-			Icon {
-				id: groupChat
-				
-				Layout.preferredHeight: ConversationStyle.bar.groupChatSize
-				Layout.preferredWidth: ConversationStyle.bar.groupChatSize
-				
-				icon: ConversationStyle.bar.groupChatIcon
-				overwriteColor: ConversationStyle.bar.groupChatColor
-				iconSize: ConversationStyle.bar.groupChatSize
-				visible: chatRoomModel && !chatRoomModel.isOneToOne
-			}
 			Item{
 				Layout.fillHeight: true
 				Layout.fillWidth: true
@@ -127,7 +116,7 @@ ColumnLayout  {
 					ColumnLayout{
 						
 						property int maximumContentWidth: contactBar.width
-														  -(avatar.visible?avatar.width:0)-(groupChat.visible?groupChat.width:0)
+														  -(avatar.visible?avatar.width:0)
 														  -actionBar.width - (secureIcon.visible?secureIcon.width :0)
 														  -3*ConversationStyle.bar.spacing 
 						Layout.fillHeight: true

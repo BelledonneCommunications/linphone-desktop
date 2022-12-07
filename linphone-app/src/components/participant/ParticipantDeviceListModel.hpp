@@ -47,12 +47,13 @@ public:
 	bool remove(std::shared_ptr<const linphone::ParticipantDevice> deviceToAdd);
 	QSharedPointer<ParticipantDeviceModel> get(std::shared_ptr<const linphone::ParticipantDevice> deviceToGet, int * index = nullptr);
 	QSharedPointer<ParticipantDeviceModel> getMe(int * index = nullptr)const;
-	ParticipantDeviceModel* getLastActiveSpeaking() const;
+	ParticipantDeviceModel* getActiveSpeakerModel() const;
 	
 	bool isMe(std::shared_ptr<linphone::ParticipantDevice> device)const;
 	bool isMeAlone() const;
 	
 public slots:
+	void onActiveSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice>& participantDevice);
 	void onConferenceModelChanged ();
 	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void onParticipantAdded(const std::shared_ptr<const linphone::Participant> & participant);
@@ -66,6 +67,7 @@ public slots:
 	void onParticipantDeviceSpeaking();
 
 signals:
+	void activeSpeakerChanged();
 	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void participantSpeaking(ParticipantDeviceModel *speakingDevice);
 	void conferenceCreated();
@@ -73,7 +75,8 @@ signals:
 	
 private:
 	CallModel * mCallModel = nullptr;
-	QList<ParticipantDeviceModel*> mActiveSpeakers;// First item is last speaker
+	QSharedPointer<ParticipantDeviceModel> mActiveSpeaker;
+	//QList<ParticipantDeviceModel*> mActiveSpeakers;// First item is last speaker
 	bool mInitialized = false;
 	
 };

@@ -5,6 +5,8 @@ import Common 1.0
 import Common.Styles 1.0
 import Units 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 Item{
 	id: mainItem
 	property bool allYears : false	// if false : years from today
@@ -33,9 +35,10 @@ Item{
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignCenter
 			horizontalAlignment: Qt.AlignCenter
-			text: new Date(monthList.currentYear, monthList.currentMonth, 1).toLocaleString(Qt.locale(), 'MMMM yyyy')
+			text: new Date(monthList.currentYear, monthList.currentMonth, 15).toLocaleString(Qt.locale(), 'MMMM yyyy')// 15 because of timezones that can change the date for localeString
 			color: DatePickerStyle.title.color
 			font.pointSize: DatePickerStyle.title.pointSize
+			font.capitalization: Font.Capitalize
 		}
 		ActionButton{
 			isCustom: true
@@ -62,7 +65,7 @@ Item{
 		}
 		
 		property date selectedDate: new Date()
-		property int minYear: mainItem.allYears ? new Date(0,0,0).getFullYear() : new Date().getFullYear()
+		property int minYear: mainItem.allYears ? new Date(0,0,1).getFullYear() : new Date().getFullYear()
 		
 		snapMode:    ListView.SnapOneItem
 		orientation: Qt.Horizontal
@@ -70,7 +73,7 @@ Item{
 		
 		// One model per month
 		model: (new Date().getFullYear()- minYear + maxYears) * 12
-		
+		currentIndex: 0
 		property int currentYear:      Math.floor(currentIndex / 12) + minYear
 		property int currentMonth:     currentIndex % 12
 		
@@ -87,7 +90,7 @@ Item{
 			property int year:      Math.floor(index / 12) + monthList.minYear 
 			property int month:     index % 12
 			property int firstDay:  new Date(year, month, 1).getDay()
-				
+			
 			GridLayout { // 1 month calender
 				id: grid
 				
@@ -105,9 +108,12 @@ Item{
 					
 					delegate: Item{
 						id: cellItem
-						property int day:  index - 7 // 0 = top left below Sunday (-7 to 41)
+						property int day: index - 7 // 0 = top left below Sunday (-7 to 41)
 						property int date: day - firstDay + 1 // 1-31
-						property bool selected : new Date(year, month, date).toDateString() == monthList.selectedDate.toDateString()  &&  text.text  &&  day >= 0
+						property date cellDate: new Date(year, month, date)
+						property bool selected : text.text != '-' 
+											&& Utils.equalDate(cellDate, monthList.selectedDate)
+											&& text.text && day >= 0
 						width: grid.cellMinSize
 						height: width
 						
@@ -132,12 +138,12 @@ Item{
 													: cellItem.day < 0 
 														? DatePickerStyle.cell.dayHeaderPointSize
 														: DatePickerStyle.cell.dayPointSize
-								font.bold: cellItem.day < 0 || cellItem.selected || new Date(year, month, cellItem.date).toDateString() == new Date().toDateString() // today
+								font.bold: cellItem.day < 0 || cellItem.selected || Utils.equalDate(cellItem.cellDate, new Date()) // today
 								text: {
-									if(cellItem.day < 0)
+									if(cellItem.day < 0){
 										// Magic date to set day names in this order : 'S', 'M', 'T', 'W', 'T', 'F', 'S' in Locale
-										return new Date(1,3,index).toLocaleString(Qt.locale(), 'ddd')[0]
-									else if(new Date(year, month, cellItem.date).getMonth() == month && (!hideOldDates || new Date(year, month, cellItem.date+1) >= new Date()))	// new Date use time too
+										return Utils.exactDate(new Date(2000,9,index+1)).toLocaleString(Qt.locale(), 'ddd')[0].toUpperCase()
+									}else if(cellItem.cellDate.getMonth() == month && (!hideOldDates || new Date(year, month, cellItem.date+1) >= new Date()))	// new Date use time too
 										return cellItem.date
 									else
 										return '-'
@@ -152,7 +158,7 @@ Item{
 							enabled:    text.text && text.text != '-' &&  cellItem.day >= 0
 							
 							onClicked: {
-								monthList.selectedDate = new Date(year, month, cellItem.date)
+								monthList.selectedDate = cellItem.cellDate
 								mainItem.clicked(monthList.selectedDate)
 							}
 						}

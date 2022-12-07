@@ -79,6 +79,7 @@ Item{
 		anchors.fill: parent
 		visible: false
 		onVideoDefinitionChanged: mainItem.videoDefinitionChanged()
+		deactivateCamera: false
 	}
 	OpacityMask{
 		id: renderedCamera

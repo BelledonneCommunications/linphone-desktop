@@ -104,6 +104,7 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::isScheduledChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceSchedulerStateChanged);
 }
 
 // Callable from C++
@@ -124,6 +125,7 @@ ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceIn
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::isScheduledChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
+	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceSchedulerStateChanged);
 }
 
 ConferenceInfoModel::~ConferenceInfoModel () {
@@ -139,14 +141,15 @@ std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::findConferenceInf
 
 //------------------------------------------------------------------------------------------------
 
-
-QDateTime ConferenceInfoModel::getDateTimeUtc() const{
-	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000).toUTC();
+//Note conferenceInfo->getDateTime uses system timezone and fromMSecsSinceEpoch need a UTC
+QDateTime ConferenceInfoModel::getDateTimeSystem() const{
+	QDateTime reference(QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000));// Get a reference for timezone offset computing
+	qint64 utcMs = (mConferenceInfo->getDateTime() - QTimeZone::systemTimeZone().offsetFromUtc(reference)) * 1000;// Remove system timezone offset to get UTC
+	return QDateTime::fromMSecsSinceEpoch(utcMs, QTimeZone::systemTimeZone());	// Return a System Timezone datetime based
 }
 
-QDateTime ConferenceInfoModel::getDateTimeSystem() const{
-	QDateTime utc = getDateTimeUtc();
-	return utc.addSecs(QTimeZone::systemTimeZone().offsetFromUtc(utc));
+QDateTime ConferenceInfoModel::getDateTimeUtc() const{
+	return getDateTimeSystem().toUTC();
 }
 
 int ConferenceInfoModel::getDuration() const{
@@ -204,9 +207,27 @@ QVariantList ConferenceInfoModel::getParticipants() const{
 	}
 	return addresses;
 }
+QVariantList ConferenceInfoModel::getAllParticipants() const{
+	QVariantList addresses = getParticipants();
+	QString organizerAddress = QString::fromStdString(mConferenceInfo->getOrganizer()->asStringUriOnly());
+	for(auto item : addresses){
+		if( item.toMap()["address"] == organizerAddress)
+			return addresses;
+	}
+	QVariantMap participant;
+	participant["displayName"] = Utils::getDisplayName(mConferenceInfo->getOrganizer());
+	participant["address"] = organizerAddress;
+	addresses << participant;
+	return addresses;
+}
+
 
 int ConferenceInfoModel::getParticipantCount()const{
 	return mConferenceInfo->getParticipants().size();
+}
+
+int ConferenceInfoModel::getAllParticipantCount()const{
+	return getAllParticipants().size();
 }
 
 TimeZoneModel* ConferenceInfoModel::getTimeZoneModel() const{
@@ -223,12 +244,18 @@ LinphoneEnums::ConferenceInfoState ConferenceInfoModel::getConferenceInfoState()
 	return LinphoneEnums::fromLinphone(mConferenceInfo->getState());
 }
 
+LinphoneEnums::ConferenceSchedulerState ConferenceInfoModel::getConferenceSchedulerState() const{
+	return LinphoneEnums::fromLinphone(mLastConferenceSchedulerState);
+}
+
 //------------------------------------------------------------------------------------------------
-// Convert into UTC with TimeZone and pass system timezone to conference info
+// Datetime is in Custom (Locale/UTC/System). Convert into system timezone for conference info
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){
-	QDateTime utc = dateTime.addSecs( -mTimeZone.offsetFromUtc(dateTime));
-	QDateTime system = utc.addSecs(QTimeZone::systemTimeZone().offsetFromUtc(utc));
-	mConferenceInfo->setDateTime(system.toMSecsSinceEpoch() / 1000);
+	QDateTime system = dateTime.toTimeZone(QTimeZone::systemTimeZone());//System
+	int offset = QTimeZone::systemTimeZone().offsetFromUtc(system);//Get UTC offset in system coordinate
+	system = system.addSecs( offset - mTimeZone.offsetFromUtc(dateTime));// Delta on offsets
+	mConferenceInfo->setDateTime(system.toMSecsSinceEpoch() / 1000 + offset);// toMSecsSinceEpoch() is UTC, add system reference.
+	
 	emit dateTimeChanged();
 }
 
@@ -254,6 +281,7 @@ void ConferenceInfoModel::setDescription(const QString& description){
 
 void ConferenceInfoModel::setParticipants(ParticipantListModel * participants){
 	mConferenceInfo->setParticipants(participants->getParticipants());
+	emit participantsChanged();
 }
 
 void ConferenceInfoModel::setTimeZoneModel(TimeZoneModel * model){
@@ -314,23 +342,22 @@ void ConferenceInfoModel::createConference(const int& securityLevel) {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	static std::shared_ptr<linphone::Conference> conference;
-	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer();
+	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by " << getOrganizer() << " for " << getDateTimeSystem().toString();
 	qInfo() << "Participants:";
 	for(auto p : mConferenceInfo->getParticipants())
 		qInfo() << "\t" << p->asString().c_str();
 	
-	
 	mConferenceScheduler = ConferenceScheduler::create();
 	mConferenceScheduler->mSendInvite = mInviteMode;
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
-	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onConferenceSchedulerStateChanged);
 	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfo);
 }
 
 void ConferenceInfoModel::cancelConference(){
 	mConferenceScheduler = ConferenceScheduler::create();
 	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this, &ConferenceInfoModel::onInvitationsSent);
-	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onStateChanged);
+	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this, &ConferenceInfoModel::onConferenceSchedulerStateChanged);
 	mConferenceScheduler->getConferenceScheduler()->cancelConference(mConferenceInfo);
 }
 
@@ -343,12 +370,14 @@ void ConferenceInfoModel::deleteConferenceInfo(){
 
 //-------------------------------------------------------------------------------------------------
 
-void ConferenceInfoModel::onStateChanged(linphone::ConferenceScheduler::State state){
-	qDebug() << "ConferenceInfoModel::onStateChanged: " << (int) state;
+void ConferenceInfoModel::onConferenceSchedulerStateChanged(linphone::ConferenceScheduler::State state){
+	qDebug() << "ConferenceInfoModel::onConferenceSchedulerStateChanged: " << (int) state;
+	mLastConferenceSchedulerState = state;
 	if( state == linphone::ConferenceScheduler::State::Ready)
 		emit conferenceCreated();
 	else if( state == linphone::ConferenceScheduler::State::Error)
 		emit conferenceCreationFailed();
+	emit conferenceInfoChanged();
 }
 void ConferenceInfoModel::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations) {
 	qDebug() << "ConferenceInfoModel::onInvitationsSent";

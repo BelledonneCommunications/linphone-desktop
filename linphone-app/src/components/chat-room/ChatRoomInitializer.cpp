@@ -83,7 +83,7 @@ void ChatRoomInitializer::setAdmins(QList< std::shared_ptr<linphone::Address>> a
 
 void ChatRoomInitializer::start(QSharedPointer<ChatRoomInitializer> initializer){
 	QObject * context = new QObject();
-	QObject::connect(initializer.get(), &ChatRoomInitializer::finished, context, [context, initializer](int state){
+	QObject::connect(initializer.get(), &ChatRoomInitializer::finished, context, [context, initializer](LinphoneEnums::ChatRoomState state){
 		qDebug() << "[ChatRoomInitializer] initialized";
 		context->deleteLater();// This will destroy context and initializer
 	});
@@ -93,7 +93,7 @@ void ChatRoomInitializer::checkInitialization(){
 	if( mAdmins.size() > 0 && !mAdminsSet)
 		return;
 		
-	emit finished((int)mChatRoom->getState());
+	emit finished(LinphoneEnums::fromLinphone(mChatRoom->getState()));
 }
 
 void ChatRoomInitializer::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {

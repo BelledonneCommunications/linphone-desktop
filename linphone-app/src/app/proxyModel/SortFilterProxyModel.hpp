@@ -30,6 +30,8 @@ public:
 	Q_PROPERTY(int filterType READ getFilterType WRITE setFilterType NOTIFY filterTypeChanged)
 	
 	SortFilterProxyModel(QObject * parent = nullptr);
+	virtual ~SortFilterProxyModel();
+	virtual void deleteSourceModel();
 	
 	virtual int getCount() const;
 	virtual int getFilterType () const;
@@ -47,6 +49,7 @@ signals:
 	
 protected:
 	int mFilterType;
+	bool mDeleteSourceModel = false;
 };
 
 #endif

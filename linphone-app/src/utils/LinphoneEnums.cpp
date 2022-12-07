@@ -25,14 +25,19 @@
 // =============================================================================
 
 void LinphoneEnums::registerMetaTypes(){
-	qRegisterMetaType<LinphoneEnums::MediaEncryption>();
-	qRegisterMetaType<LinphoneEnums::FriendCapability>();
-	qRegisterMetaType<LinphoneEnums::EventLogType>();
-	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
 	qRegisterMetaType<LinphoneEnums::CallStatus>();
+	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
+	qRegisterMetaType<LinphoneEnums::ChatRoomState>();
 	qRegisterMetaType<LinphoneEnums::ConferenceLayout>();
-	qRegisterMetaType<LinphoneEnums::TunnelMode>();
+	qRegisterMetaType<LinphoneEnums::ConferenceInfoState>();
+	qRegisterMetaType<LinphoneEnums::ConferenceSchedulerState>();
+	qRegisterMetaType<LinphoneEnums::EventLogType>();
+	qRegisterMetaType<LinphoneEnums::FriendCapability>();
+	qRegisterMetaType<LinphoneEnums::MediaEncryption>();
+	qRegisterMetaType<LinphoneEnums::ParticipantDeviceState>();
 	qRegisterMetaType<LinphoneEnums::RecorderState>();
+	qRegisterMetaType<LinphoneEnums::TunnelMode>();
+	qRegisterMetaType<LinphoneEnums::TransportType>();
 }
 
 linphone::MediaEncryption LinphoneEnums::toLinphone(const LinphoneEnums::MediaEncryption& data){
@@ -63,6 +68,14 @@ LinphoneEnums::ChatMessageState LinphoneEnums::fromLinphone(const linphone::Chat
 	return static_cast<LinphoneEnums::ChatMessageState>(data); 
 }
 
+linphone::ChatRoom::State LinphoneEnums::toLinphone(const LinphoneEnums::ChatRoomState& data){
+	return static_cast<linphone::ChatRoom::State>(data);
+}
+
+LinphoneEnums::ChatRoomState LinphoneEnums::fromLinphone(const linphone::ChatRoom::State& data){
+	return static_cast<LinphoneEnums::ChatRoomState>(data); 
+}
+
 linphone::Call::Status LinphoneEnums::toLinphone(const LinphoneEnums::CallStatus& data){
 	return static_cast<linphone::Call::Status>(data);
 }
@@ -87,6 +100,14 @@ linphone::ConferenceInfo::State LinphoneEnums::toLinphone(const LinphoneEnums::C
 
 LinphoneEnums::ConferenceInfoState LinphoneEnums::fromLinphone(const linphone::ConferenceInfo::State& state){
 	return static_cast<LinphoneEnums::ConferenceInfoState>(state); 
+}
+
+linphone::ConferenceScheduler::State LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceSchedulerState& state){
+	return static_cast<linphone::ConferenceScheduler::State>(state);
+}
+
+LinphoneEnums::ConferenceSchedulerState LinphoneEnums::fromLinphone(const linphone::ConferenceScheduler::State& state){
+	return static_cast<LinphoneEnums::ConferenceSchedulerState>(state); 
 }
 
 linphone::ParticipantDeviceState LinphoneEnums::toLinphone(const LinphoneEnums::ParticipantDeviceState& state){

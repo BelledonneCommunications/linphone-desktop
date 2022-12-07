@@ -35,6 +35,7 @@ public:
 	virtual ~ConferenceListener();
 
 // LINPHONE LISTENERS
+	virtual void onActiveSpeakerParticipantDevice(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice) override;
 	virtual void onParticipantAdded(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
 	virtual void onParticipantRemoved(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
 	virtual void onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::Participant> & participant) override;
@@ -50,6 +51,7 @@ public:
 //---------------------------------------------------------------------------
 	
 signals:
+	void activeSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantAdded(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantRemoved(const std::shared_ptr<const linphone::Participant> & participant);
 	void participantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
@@ -61,6 +63,7 @@ signals:
 	void participantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
 	void conferenceStateChanged(linphone::Conference::State newState);
 	void subjectChanged(const std::string & subject);
+	
 };
 
 

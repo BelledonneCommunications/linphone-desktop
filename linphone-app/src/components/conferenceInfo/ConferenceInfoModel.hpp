@@ -49,7 +49,10 @@ public:
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
+	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
+	Q_PROPERTY(int allParticipantCount READ getAllParticipantCount NOTIFY participantsChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
+	Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState conferenceSchedulerState READ getConferenceSchedulerState NOTIFY conferenceSchedulerStateChanged)
 		
 	static QSharedPointer<ConferenceInfoModel> create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	ConferenceInfoModel (QObject * parent = nullptr);
@@ -72,10 +75,13 @@ public:
 	bool isScheduled() const;
 	int getInviteMode() const;
 	Q_INVOKABLE QVariantList getParticipants() const;
+	Q_INVOKABLE QVariantList getAllParticipants() const;
 	Q_INVOKABLE int getParticipantCount()const;
+	Q_INVOKABLE int getAllParticipantCount()const;
 	Q_INVOKABLE TimeZoneModel* getTimeZoneModel() const;
 	Q_INVOKABLE QString getIcalendarString() const;
 	LinphoneEnums::ConferenceInfoState getConferenceInfoState() const;
+	LinphoneEnums::ConferenceSchedulerState getConferenceSchedulerState() const;
 	
 	void setDateTime(const QDateTime& dateTime);
 	void setDuration(const int& duration);
@@ -97,9 +103,8 @@ public:
 
 // SCHEDULER
 	
-	virtual void onStateChanged(linphone::ConferenceScheduler::State state);
+	virtual void onConferenceSchedulerStateChanged(linphone::ConferenceScheduler::State state);
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
-	
 	
 signals:
 	void timeZoneModelChanged();
@@ -113,6 +118,7 @@ signals:
 	void isScheduledChanged();
 	void inviteModeChanged();
 	void conferenceInfoStateChanged();
+	void conferenceSchedulerStateChanged();
 	
 	void conferenceCreated();
 	void conferenceCreationFailed();
@@ -128,6 +134,7 @@ private:
 	bool mIsScheduled = true;
 	int mInviteMode = 0;
 	bool mRemoveRequested = false;// true if user has request its deletion from DB
+	linphone::ConferenceScheduler::State  mLastConferenceSchedulerState = linphone::ConferenceScheduler::State::Idle;// Workaround for missing getter in scheduler.
 };
 
 Q_DECLARE_METATYPE(QSharedPointer<ConferenceInfoModel>)

@@ -19,7 +19,7 @@ QtObject {
 		}
 		property QtObject burgerMenu: QtObject {
 			property string name : 'burgerMenu'
-			property string icon : 'burger_menu_custom'
+			property string icon : 'menu_vdots_custom'
 			property int iconSize: 35
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'me_n_b_bg').color
 			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'me_h_b_bg').color
@@ -30,7 +30,7 @@ QtObject {
 		}
 		property QtObject selectedBurgerMenu: QtObject {
 			property string name : 'selectedBurgerMenu'
-			property string icon : 'burger_menu_custom'
+			property string icon : 'menu_vdots_custom'
 			property int iconSize: 35
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'me_n_b_inv_bg').color
 			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'me_h_b_inv_bg').color
@@ -39,6 +39,7 @@ QtObject {
 			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'me_h_b_inv_fg').color
 			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'me_p_b_inv_fg').color
 		}
+		
 		property QtObject hangup: QtObject {
 			property int iconSize: 35
 			property string icon : 'hangup_custom'

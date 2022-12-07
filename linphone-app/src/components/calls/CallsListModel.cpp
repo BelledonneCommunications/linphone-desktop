@@ -69,6 +69,7 @@ CallsListModel::CallsListModel (QObject *parent) : ProxyListModel(parent) {
 				mCoreHandlers.get(), &CoreHandlers::callStateChanged,
 				this, &CallsListModel::handleCallStateChanged
 				);
+	connect(this, &CallsListModel::countChanged, this, &CallsListModel::canMergeCallsChanged);
 }
 
 CallModel *CallsListModel::findCallModelFromPeerAddress (const QString &peerAddress) const {
@@ -343,7 +344,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 				initializer->setAdminsData(admins);
 				ChatRoomInitializer::start(initializer);
 			}
-			timeline = timelineList->getTimeline(chatRoom, ChatRoomModel::isTerminated(chatRoom));
+			timeline = timelineList->getTimeline(chatRoom, true);
 		}else{
 			if(admins.size() > 0){
 				ChatRoomInitializer::create(chatRoom)->setAdmins(admins);
@@ -354,9 +355,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
 			result["chatRoomModel"] = QVariant::fromValue(timeline->getChatRoomModel());
 			if(selectAfterCreation) {// The timeline here will not receive the first creation event. Set Selected if needed
-				QTimer::singleShot(200, [timeline](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
-					timeline->setSelected(true);
-				});
+				timeline->delaySelected();
 			}
 		}
 	}
@@ -368,17 +367,104 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 }
 
 void CallsListModel::prepareConferenceCall(ConferenceInfoModel * model){
-	auto app = App::getInstance();
-	app->smartShowWindow(app->getCallsWindow());
-	emit callConferenceAsked(model);
+	if(model->getConferenceInfoState() != LinphoneEnums::ConferenceInfoStateCancelled) {
+		auto app = App::getInstance();
+		app->smartShowWindow(app->getCallsWindow());
+		emit callConferenceAsked(model);
+	}
 }
+
 int CallsListModel::addAllToConference(){
 	return CoreManager::getInstance()->getCore()->addAllToConference();
+}
+
+void CallsListModel::mergeAll(){
+	auto core = CoreManager::getInstance()->getCore();
+	auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
+	shared_ptr<linphone::Conference> conference = core->getConference();
+	
+	// Search a managable conference from calls
+	if(!conference){
+		for(auto call : currentCalls){
+			auto dbConference = call->getConference();
+			if(dbConference && dbConference->getMe()->isAdmin()){
+				conference = dbConference;
+				break;
+			}
+		}
+	}
+  
+	auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
+	bool enablingVideo = false;
+	if( currentCall )
+		enablingVideo = currentCall->getCurrentParams()->videoEnabled();
+	if(!conference){
+		auto parameters = core->createConferenceParams(conference);
+		
+		if(!CoreManager::getInstance()->getSettingsModel()->getVideoConferenceEnabled()) {
+			parameters->enableVideo(false);
+			parameters->setConferenceFactoryAddress(nullptr);// Do a local conference
+			parameters->setSubject("Local meeting");
+		}else{
+			parameters->enableVideo(enablingVideo);
+			parameters->setSubject("Meeting");
+		}
+		conference = core->createConferenceWithParams(parameters);
+	}
+	
+	list<shared_ptr<linphone::Address>> allLinphoneAddresses;
+	list<shared_ptr<linphone::Address>> newCalls;
+	list<shared_ptr<linphone::Call>> runningCallsToAdd;
+	
+	for(auto call : currentCalls){
+		if(!call->getConference()){
+			runningCallsToAdd.push_back(call);
+		}
+	}
+ 
+// 1) Add running calls
+	if( runningCallsToAdd.size() > 0){
+		conference->addParticipants(runningCallsToAdd);
+	}
+  /*
+// 2) Put in pause and remove all calls that are not in the conference list
+	for(const auto &call : CoreManager::getInstance()->getCore()->getCalls()){
+      const std::string callAddress = call->getRemoteAddress()->asStringUriOnly();
+      auto address = allLinphoneAddresses.begin();
+      while(address != allLinphoneAddresses.end() && (*address)->asStringUriOnly() != callAddress)
+        ++address;
+      if(address == allLinphoneAddresses.end()){// Not in conference list :  put in pause and remove it from conference if it's the case
+        if( call->getParams()->getLocalConferenceMode() ){// Remove conference if it is not yet requested
+          CoreManager::getInstance()->getCore()->removeFromConference(call);
+        }else
+          call->pause();
+      }
+    }*/
 }
 // -----------------------------------------------------------------------------
 
 int CallsListModel::getRunningCallsNumber () const {
 	return CoreManager::getInstance()->getCore()->getCallsNb();
+}
+
+bool CallsListModel::canMergeCalls()const{
+	auto calls = CoreManager::getInstance()->getCore()->getCalls();
+	
+	bool mergableConference = false;
+	int mergableCalls = 0;
+	bool mergable = false;
+	for(auto itCall = calls.begin(); !mergable && itCall != calls.end() ; ++itCall ) {
+		auto conference = (*itCall)->getConference();
+		if(conference){
+			if( !mergableConference )
+				mergableConference = (conference  && conference->getMe()->isAdmin());
+		}else{
+			++mergableCalls;
+		}
+		mergable = (mergableConference && mergableCalls>0)	// A call can be merged into the conference
+					 || mergableCalls>1;// 2 calls can be merged
+	}
+	return mergable;
 }
 
 void CallsListModel::terminateAllCalls () const {
@@ -479,6 +565,8 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 		qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
 		App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
 		
+		connect(callModel.get(), &CallModel::meAdminChanged, this, &CallsListModel::canMergeCallsChanged);
+		
 		add(callModel);
 		emit layoutChanged();
 		
@@ -511,7 +599,7 @@ void CallsListModel::addDummyCall () {
 		int id = findCallIndex(mList, *callModel);
 		emit dataChanged(index(id, 0), index(id, 0));
 	});
-	
+	connect(callModel.get(), &CallModel::meAdminChanged, this, &CallsListModel::canMergeCallsChanged);
 	
 	add(callModel);
 	emit layoutChanged();

@@ -69,7 +69,6 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::videoConferenceEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::secureChatEnabledChanged);
 	
-	
 	configureRlsUri();
 }
 
@@ -548,12 +547,9 @@ static inline QVariantMap createMapFromVideoDefinition (const shared_ptr<const l
 	QVariantMap map;
 
 	if (!definition) {
-		Q_ASSERT(!CoreManager::getInstance()->getCore()->videoSupported());
-
 		map["name"] = QStringLiteral("Bad EGG");
 		map["width"] = QStringLiteral("?????");
 		map["height"] = QStringLiteral("?????");
-
 		return map;
 	}
 
@@ -987,9 +983,6 @@ void SettingsModel::setMediaEncryption (MediaEncryption encryption) {
 	if (encryption == getMediaEncryption())
 		return;
 
-	if (encryption != SettingsModel::MediaEncryptionZrtp)
-        setLimeState(false);
-
 	CoreManager::getInstance()->getCore()->setMediaEncryption(
 								  static_cast<linphone::MediaEncryption>(encryption)
 								  );
@@ -1032,10 +1025,7 @@ void SettingsModel::setLimeState (const bool& state) {
 	if (state == getLimeState())
 		return;
 
-    if (state)
-		setMediaEncryption(SettingsModel::MediaEncryptionZrtp);
-
-    CoreManager::getInstance()->getCore()->enableLimeX3Dh(!state);
+    CoreManager::getInstance()->getCore()->enableLimeX3Dh(state);
 
 	emit limeStateChanged(state);
 }

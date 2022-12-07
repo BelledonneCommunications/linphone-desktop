@@ -36,6 +36,8 @@
 
 using namespace std;
 
+QString ChatRoomProxyModel::gCachedText;
+
 // =============================================================================
 
 ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
@@ -55,6 +57,7 @@ ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel
 }
 
 ChatRoomProxyModel::~ChatRoomProxyModel(){
+	setSourceModel(nullptr);
 	setChatRoomModel(nullptr);	// Do remove process like setting haveCall if is Call.
 }
 
@@ -99,7 +102,8 @@ CREATE_PARENT_MODEL_FUNCTION(deleteChatRoom)
 
 void ChatRoomProxyModel::compose (const QString& text) {
 	if (mChatRoomModel)
-		mChatRoomModel->compose(text);
+		mChatRoomModel->compose();
+	gCachedText = text;
 }
 
 int ChatRoomProxyModel::getEntryTypeFilter () {
@@ -239,6 +243,10 @@ QVariant ChatRoomProxyModel::getAt(int row){
 	return sourceModel()->data(sourceIndex);
 }
 
+QString ChatRoomProxyModel::getCachedText() const{
+	return gCachedText;
+}
+
 void ChatRoomProxyModel::setIsCall(const bool& isCall){
 	if(mIsCall != isCall) {
 		if(mChatRoomModel){
@@ -328,7 +336,7 @@ void ChatRoomProxyModel::setChatRoomModel (ChatRoomModel *chatRoomModel){
 	}else{
 		if(mIsCall && mChatRoomModel)
 			mChatRoomModel->removeBindingCall();
-			mChatRoomModel = nullptr;
+		mChatRoomModel = nullptr;
 	}
 }
 // -----------------------------------------------------------------------------

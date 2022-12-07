@@ -6,6 +6,8 @@ import Linphone 1.0
 import Linphone.Styles 1.0
 import Common.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 
 ScrollableListView {
@@ -120,6 +122,9 @@ ScrollableListView {
 									backgroundRadius: 90
 									colorSet: modelData.colorSet
 									visible: sipAddressesView.actions[index].visible
+												&& (!sipAddressesView.actions[index].visibleHandler || sipAddressesView.actions[index].visibleHandler({
+																						   sipAddress: sipAddressesView.interpretableSipAddress
+																					   }))
 									
 									onClicked: sipAddressesView.actions[index].handler({
 																						   sipAddress: sipAddressesView.interpretableSipAddress
@@ -253,16 +258,7 @@ ScrollableListView {
 					statusText : showAdminStatus ? getStatus()  : ''
 					
 					entry:  $modelData
-					
 					onAvatarClicked: sipAddressesView.entryClicked(parent.entry, index, contactView)
-					
-					BusyIndicator{
-						anchors.verticalCenter: parent.verticalCenter
-						anchors.horizontalCenter: parent.horizontalCenter
-						width:15
-						height:15
-						running: sipAddressesView.showInvitingIndicator && $modelData.inviting
-					}
 				}
 				
 				
@@ -289,25 +285,48 @@ ScrollableListView {
 					}
 					
 					Repeater {
+						id: actionsRepeater
 						model: sipAddressesView.actions
 						
-						ActionButton {
-							isCustom: true
-							backgroundRadius: 90
-							colorSet: modelData.colorSet
+						Item{
+							height: buttonAction.height
+							width: buttonAction.width
 							anchors.verticalCenter: parent.verticalCenter
-							tooltipText: modelData.tooltipText? modelData.tooltipText:''
-							visible: sipAddressesView.actions[index].visible
-							onClicked: {
-								sipAddressesView.actions[index].handler(contactView.entry)
-							}
-							Icon{
-								visible: modelData.secure>0 &&
-									(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$modelData}) : true)
-								icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
-								iconSize: parent.height/2
-								anchors.top:parent.top
-								anchors.horizontalCenter: parent.right
+							ActionButton {
+								id: buttonAction
+								isCustom: true
+								backgroundRadius: 90
+								colorSet: modelData.colorSet
+								anchors.verticalCenter: parent.verticalCenter
+								tooltipText: modelData.tooltipText? modelData.tooltipText:''
+								visible: sipAddressesView.actions[index].visible && (!sipAddressesView.actions[index].visibleHandler || sipAddressesView.actions[index].visibleHandler(contactView.entry))
+								
+								onClicked: {
+									sipAddressesView.actions[index].handler(contactView.entry)
+								}
+								Icon{
+									visible: modelData.secure>0 &&
+										(sipAddressesView.actions[index].secureIconVisibleHandler ? sipAddressesView.actions[index].secureIconVisibleHandler({sipAddres:$modelData}) : true)
+									icon: modelData.secure === 2?'secure_level_2':'secure_level_1'
+									iconSize: parent.height/2
+									anchors.top:parent.top
+									anchors.horizontalCenter: parent.right
+								}
+								Loader{
+									anchors.verticalCenter: parent.verticalCenter
+									anchors.horizontalCenter: parent.horizontalCenter
+									height: parent.height - 2
+									width: height
+									
+									active: index == actionsRepeater.count -1 && sipAddressesView.showInvitingIndicator && contactView.entry && contactView.entry.inviting
+									
+									sourceComponent: Component{
+										BusyIndicator{
+											color: BusyIndicatorStyle.alternateColor
+											running: true
+										}
+									}
+								}
 							}
 						}
 					}

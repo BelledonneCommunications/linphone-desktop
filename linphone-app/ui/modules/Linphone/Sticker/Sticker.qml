@@ -35,7 +35,7 @@ Item{
 	property alias showActiveSpeakerOverlay: camera.showActiveSpeakerOverlay
 	property alias isCameraFromDevice: camera.isCameraFromDevice
 	property alias deactivateCamera: camera.deactivateCamera
-	property alias isVideoEnabled: camera.isVideoEnabled
+	readonly property alias isVideoEnabled: camera.isVideoEnabled
 	
 	property alias image: avatar.image
 	property alias avatarBackgroundColor: avatar.avatarBackgroundColor

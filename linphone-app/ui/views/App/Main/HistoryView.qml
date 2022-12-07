@@ -14,12 +14,14 @@ import 'HistoryView.js' as Logic
 ColumnLayout  {
 	id: historyView
 	
-	property string peerAddress
-	property string fullPeerAddress
+	property var entry
+	property string peerAddress : entry ? entry.sipAddress : ''
+	property string fullPeerAddress : entry ? entry.sipAddress : ''
+	
 	
 	property var _sipAddressObserver: peerAddress?SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), ''):null
 	
-	
+	onEntryChanged: historyProxyModel.resetMessageCount()
 	// ---------------------------------------------------------------------------
 	
 	spacing: 0
@@ -56,15 +58,21 @@ ColumnLayout  {
 																	historyView._sipAddressObserver.presenceStatus
 																	):null
 				
-				username: peerAddress && historyView._sipAddressObserver? UtilsCpp.getDisplayName(historyView._sipAddressObserver.peerAddress):null
-				visible:peerAddress
+				username: historyView.entry && historyView.entry.wasConference
+							? historyView.entry.title
+							: peerAddress && historyView._sipAddressObserver
+								? UtilsCpp.getDisplayName(historyView._sipAddressObserver.peerAddress)
+								: null
+				visible: peerAddress
 			}
 			
 			ContactDescription {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				
-				subtitleText: SipAddressesModel.cleanSipAddress(sipAddress)(historyView.peerAddress)
+				subtitleText: historyView.entry && historyView.entry.wasConference
+								? ''
+								: SipAddressesModel.cleanSipAddress(historyView.peerAddress)
 				subtitleColor: HistoryViewStyle.bar.description.subtitleColor
 				titleText: avatar.username
 				titleColor: HistoryViewStyle.bar.description.titleColor
@@ -75,10 +83,10 @@ ColumnLayout  {
 				Layout.fillHeight: true
 				
 				spacing: HistoryViewStyle.bar.actions.spacing
-				
 				ActionBar {
 					anchors.verticalCenter: parent.verticalCenter
 					iconSize: HistoryViewStyle.bar.actions.call.iconSize
+					visible: historyView.entry ? !historyView.entry.wasConference : false
 					
 					ActionButton {
 						isCustom: true
@@ -129,7 +137,7 @@ ColumnLayout  {
 						backgroundRadius: 4
 						colorSet: historyView._sipAddressObserver && historyView._sipAddressObserver.contact ? ConversationStyle.bar.actions.edit.viewContact : ConversationStyle.bar.actions.edit.addContact
 						iconSize: HistoryViewStyle.bar.actions.edit.iconSize
-						visible: peerAddress && SettingsModel.contactsEnabled
+						visible: SettingsModel.contactsEnabled && historyView.entry ? !historyView.entry.wasConference : false
 						
 						onClicked: window.setView('ContactEdit', { sipAddress: historyView.peerAddress })
 						tooltipText: peerAddress?Logic.getEditTooltipText():''
@@ -158,9 +166,7 @@ ColumnLayout  {
 		Layout.fillWidth: true
 		
 		onEntryClicked:{
-			historyView.fullPeerAddress=entry.sipAddress
-			historyView.peerAddress=entry.sipAddress
-			historyProxyModel.resetMessageCount()
+			historyView.entry = entry
 		}
 		
 		proxyModel: HistoryProxyModel {

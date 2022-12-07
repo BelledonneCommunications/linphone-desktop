@@ -299,9 +299,9 @@ DialogPlus {
 							}
 							function setDate(date){
 								currentDate = date
-								text = date.toLocaleDateString(scheduleForm.locale, Qt.ISODate)
+								text = Utils.exactDate(date).toLocaleDateString(scheduleForm.locale, Qt.ISODate)
 							}
-							text: conferenceManager.conferenceInfoModel ? conferenceManager.conferenceInfoModel.dateTime.toLocaleDateString(scheduleForm.locale, Qt.ISODate) : ''
+							text: conferenceManager.conferenceInfoModel ? Utils.exactDate(conferenceManager.conferenceInfoModel.dateTime).toLocaleDateString(scheduleForm.locale, Qt.ISODate) : ''
 							icon: 'drop_down_custom'
 							MouseArea{
 								anchors.fill: parent
@@ -319,12 +319,15 @@ DialogPlus {
 						TextField{id: timeField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getTime(){
-								return Date.fromLocaleTimeString(scheduleForm.locale, timeField.text, 'hh:mm')
+								return Date.fromLocaleTimeString(scheduleForm.locale, timeField._text, 'hh:mm')
 							}
 							function setTime(date){
-								text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
+								_text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
+								text = UtilsCpp.toTimeString(date, 'hh:mm')// Display the unchanged time
 							}
-							text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
+							// hidden time to be used from JS : JS Local time can be wrong on Windows because of daylights that are not takken account.
+							property string _text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
+							text: conferenceManager.conferenceInfoModel? UtilsCpp.toTimeString(conferenceManager.conferenceInfoModel.dateTimeUtc, 'hh:mm') : ''
 							
 							icon: 'drop_down_custom'
 							onEditingFinished: if(rightStackView.currentItemType === 2) {
@@ -554,7 +557,6 @@ DialogPlus {
 								function removeParticipant(entry){
 									smartSearchBar.removeAddressToIgnore(entry.sipAddress)
 									selectedParticipants.removeModel(entry)
-									++lastContacts.reloadCount
 								}
 								
 								
@@ -576,7 +578,7 @@ DialogPlus {
 									id:selectedParticipants
 									chatRoomModel:null
 								}
-								onEntryClicked: actions[0].handler(entry)
+								onEntryClicked: participantView.showSubtitle =  !participantView.showSubtitle
 							}
 						}
 					}

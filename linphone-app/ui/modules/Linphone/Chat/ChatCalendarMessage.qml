@@ -111,7 +111,8 @@ Loader{
 						color: ChatCalendarMessageStyle.schedule.color
 						elide: Text.ElideRight
 						font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
-						text: Qt.formatDateTime(mainItem.conferenceInfoModel.dateTime, 'hh:mm')
+// Reminder: QML use locale time (not system). Use UTC from C++ => convert it into QML => pass QML => convert it into UTC and apply our timezone.
+						text: UtilsCpp.toTimeString(Utils.fromUTC(mainItem.conferenceInfoModel.dateTimeUtc), 'hh:mm')
 								+ (mainItem.conferenceInfoModel.duration > 0 ? ' (' +Utils.formatDuration(mainItem.conferenceInfoModel.duration * 60) + ')'
 																			: '')																			
 					}
@@ -143,9 +144,9 @@ Loader{
 				color: ChatCalendarMessageStyle.type.cancelledColor
 				font.pointSize: ChatCalendarMessageStyle.type.pointSize
 				font.weight: Font.Bold
-				text: 'You have cancelled the conference'
+				//: 'Meeting has been cancelled' : ICS Title for cancelled meetings
+				text:qsTr('icsCancelledMeetingInvite')
 			}
-			
 			
 			Text{
 				id: title
@@ -178,6 +179,8 @@ Loader{
 					Layout.preferredHeight: parent.participantLineHeight
 					Layout.preferredWidth: ChatCalendarMessageStyle.participants.iconSize
 					Layout.alignment: Qt.AlignTop
+					
+					visible: mainItem.conferenceInfoModel.participantCount > 0
 					clip: false
 					Icon{
 						anchors.top: parent.top
@@ -209,7 +212,11 @@ Loader{
 					Layout.alignment: Qt.AlignTop
 					spacing: 0
 					visible: mainItem.isExpanded
-					onVisibleChanged: model= mainItem.conferenceInfoModel.getParticipants()
+					onVisibleChanged: visible ? model= mainItem.conferenceInfoModel.getAllParticipants() : model = []
+					Connections{
+						target: mainItem.conferenceInfoModel
+						onParticipantsChanged: if(expandedParticipantsList.visible) expandedParticipantsList.model = mainItem.conferenceInfoModel.getAllParticipants()
+					}
 					
 					delegate: Row{
 						spacing: 5

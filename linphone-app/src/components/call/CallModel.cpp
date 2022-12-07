@@ -116,8 +116,10 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 
 	if(mCall) {
 		mRemoteAddress = mCall->getRemoteAddress()->clone();
-		if(mCall->getConference())
+		if(mCall->getConference()) {
 			mConferenceModel = ConferenceModel::create(mCall->getConference());
+			connect(mConferenceModel.get(), &ConferenceModel::participantAdminStatusChanged, this, &CallModel::onParticipantAdminStatusChanged);
+		}
 		auto conferenceInfo = CoreManager::getInstance()->getCore()->findConferenceInformationFromUri(getConferenceAddress());
 		if(	conferenceInfo ){
 			mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
@@ -239,7 +241,8 @@ ConferenceInfoModel * CallModel::getConferenceInfoModel(){
 
 QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 	if(mCall->getConference() && !mConferenceModel){
-		mConferenceModel = ConferenceModel::create(mCall->getConference());	
+		mConferenceModel = ConferenceModel::create(mCall->getConference());
+		connect(mConferenceModel.get(), &ConferenceModel::participantAdminStatusChanged, this, &CallModel::onParticipantAdminStatusChanged);
 		emit conferenceModelChanged();
 	}
 	return mConferenceModel;
@@ -247,7 +250,24 @@ QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 
 bool CallModel::isConference () const{
 // Check status to avoid crash when requesting a conference on an ended call.
-	return mCall && (Utils::coreStringToAppString(mCall->getRemoteAddress()->asString()).toLower().contains("conf-id") || (getStatus() != CallStatusEnded && mCall->getConference() != nullptr));
+	bool isConf = false;
+	if(mCall){
+	// Do not call getConference on Ended status.
+		isConf = (getStatus() != CallStatusEnded && mCall->getConference() != nullptr) || mConferenceInfoModel != nullptr;
+		
+		if(!isConf){// Check special cases for Linphone. Having conf-id for a conference URI is not standard.
+			auto remoteAddress = mCall->getRemoteAddress();
+			if( remoteAddress->getDomain() == Constants::LinphoneDomain){
+				isConf = remoteAddress->hasUriParam("conf-id");
+			}
+		}
+	}
+	
+	return isConf;
+}
+
+bool CallModel::isOneToOne() const{
+	return !isConference();
 }
 
 // -----------------------------------------------------------------------------
@@ -970,6 +990,12 @@ void CallModel::onRemoteRecording(const std::shared_ptr<linphone::Call> & call, 
 void CallModel::onChatRoomInitialized(int state){
 	qInfo() << "[CallModel] Chat room initialized with state : " << state;
 	emit chatRoomModelChanged();
+}
+
+void CallModel::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant){
+	if(mConferenceModel && participant == mConferenceModel->getConference()->getMe()) {
+		emit meAdminChanged();
+	}
 }
 
 void CallModel::setRemoteDisplayName(const std::string& name){

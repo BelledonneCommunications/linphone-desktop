@@ -55,7 +55,9 @@ class CallModel : public QObject {
 	Q_PROPERTY(bool isOutgoing READ isOutgoing CONSTANT)
 	
 	Q_PROPERTY(bool isInConference READ isInConference NOTIFY isInConferenceChanged)
-	Q_PROPERTY(bool isConference READ isConference CONSTANT)
+	Q_PROPERTY(bool isConference READ isConference NOTIFY conferenceInfoModelChanged)
+	Q_PROPERTY(bool isOneToOne READ isOneToOne NOTIFY conferenceInfoModelChanged)
+	
 	
 	Q_PROPERTY(int duration READ getDuration CONSTANT) // Constants but called with a timer in qml.
 	Q_PROPERTY(float quality READ getQuality CONSTANT)
@@ -145,6 +147,7 @@ public:
 		return mIsInConference;
 	}
 	bool isConference () const;
+	bool isOneToOne() const;
 	
 	void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams);
 	static void setRecordFile (const std::shared_ptr<linphone::CallParams> &callParams, const QString &to);
@@ -205,8 +208,10 @@ public slots:
 	void endCall();
 	void onRemoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording);
 	void onChatRoomInitialized(int state);
+	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	
 signals:
+	void meAdminChanged();
 	void callErrorChanged (const QString &callError);
 	void callIdChanged();
 	void isInConferenceChanged (bool status);

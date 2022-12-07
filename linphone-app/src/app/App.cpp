@@ -153,7 +153,7 @@ static inline bool installLocale (App &app, QTranslator &translator, const QLoca
 }
 
 static inline string getConfigPathIfExists (const QCommandLineParser &parser) {
-	QString filePath = parser.value("config");
+	QString filePath = parser.isSet("config") ? parser.value("config") : "";
 	string configPath;
 	if(!QUrl(filePath).isRelative()){
 		configPath = Utils::appStringToCoreString(FileDownloader::synchronousDownload(filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
@@ -217,23 +217,27 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	}
 	bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);// Use UTF-8 for internals. Linphone uses UTF-8 so there will be no loss on data with less precise encodings. Qt will do the rest.
 	
+	
 	createParser();
+	mParser->parse(this->arguments());
+// Get configuration for translators
+	shared_ptr<linphone::Config> config = Utils::getConfigIfExists (QString::fromStdString(getConfigPathIfExists(*mParser)));
+	
+	// Init locale.
+	mTranslator = new DefaultTranslator(this);
+	mDefaultTranslator = new DefaultTranslator(this);
+	initLocale(config);
+	Logger::init(config);
+	
+	createParser();// Recreate parser in order to use translations from config.
 	mParser->process(*this);
 	
-	// Initialize logger.
-	shared_ptr<linphone::Config> config = Utils::getConfigIfExists (QString::fromStdString(getConfigPathIfExists(*mParser)));
-	Logger::init(config);
 	if (mParser->isSet("verbose"))
 		Logger::getInstance()->setVerbose(true);
 	
 	// List available locales.
 	for (const auto &locale : QDir(Constants::LanguagePath).entryList())
 		mAvailableLocales << QLocale(locale);
-	
-	// Init locale.
-	mTranslator = new DefaultTranslator(this);
-	mDefaultTranslator = new DefaultTranslator(this);
-	initLocale(config);
 	
 	if (mParser->isSet("help")) {
 		mParser->showHelp();

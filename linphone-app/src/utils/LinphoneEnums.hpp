@@ -95,8 +95,25 @@ enum ChatMessageState {
 };
 Q_ENUM_NS(ChatMessageState)
 
-linphone::ChatMessage::State toLinphone(const LinphoneEnums::ChatMessageState& capability);
-LinphoneEnums::ChatMessageState fromLinphone(const linphone::ChatMessage::State& capability);
+linphone::ChatMessage::State toLinphone(const LinphoneEnums::ChatMessageState& data);
+LinphoneEnums::ChatMessageState fromLinphone(const linphone::ChatMessage::State& data);
+
+enum ChatRoomState {
+	ChatRoomStateNone = int(linphone::ChatRoom::State::None),
+	ChatRoomStateInstantiated = int(linphone::ChatRoom::State::Instantiated),
+	ChatRoomStateCreationPending = int(linphone::ChatRoom::State::CreationPending),
+	ChatRoomStateCreated = int(linphone::ChatRoom::State::Created),
+	ChatRoomStateCreationFailed = int(linphone::ChatRoom::State::CreationFailed),
+	ChatRoomStateTerminationPending = int(linphone::ChatRoom::State::TerminationPending),
+	ChatRoomStateTerminated = int(linphone::ChatRoom::State::Terminated),
+	ChatRoomStateTerminationFailed = int(linphone::ChatRoom::State::TerminationFailed),
+	ChatRoomStateDeleted = int(linphone::ChatRoom::State::Deleted),
+};
+Q_ENUM_NS(ChatRoomState)
+
+linphone::ChatRoom::State toLinphone(const LinphoneEnums::ChatRoomState& data);
+LinphoneEnums::ChatRoomState fromLinphone(const linphone::ChatRoom::State& data);
+
 
 enum CallStatus {
 		CallStatusDeclined = int(linphone::Call::Status::Declined),
@@ -132,6 +149,18 @@ Q_ENUM_NS(ConferenceInfoState)
 
 linphone::ConferenceInfo::State toLinphone(const LinphoneEnums::ConferenceInfoState& state);
 LinphoneEnums::ConferenceInfoState fromLinphone(const linphone::ConferenceInfo::State& state);
+
+enum ConferenceSchedulerState {
+	ConferenceSchedulerStateAllocationPending = int(linphone::ConferenceScheduler::State::AllocationPending),
+	ConferenceSchedulerStateError = int(linphone::ConferenceScheduler::State::Error),
+	ConferenceSchedulerStateIdle = int(linphone::ConferenceScheduler::State::Idle),
+	ConferenceSchedulerStateReady = int(linphone::ConferenceScheduler::State::Ready),
+	ConferenceSchedulerStateUpdating = int(linphone::ConferenceScheduler::State::Updating)
+};
+Q_ENUM_NS(ConferenceSchedulerState)
+
+linphone::ConferenceScheduler::State toLinphone(const LinphoneEnums::ConferenceSchedulerState& state);
+LinphoneEnums::ConferenceSchedulerState fromLinphone(const linphone::ConferenceScheduler::State& state);
 
 
 enum ParticipantDeviceState {
@@ -190,14 +219,16 @@ void fromString(const QString& transportType, LinphoneEnums::TransportType *tran
 
 Q_DECLARE_METATYPE(LinphoneEnums::CallStatus)
 Q_DECLARE_METATYPE(LinphoneEnums::ChatMessageState)
+Q_DECLARE_METATYPE(LinphoneEnums::ChatRoomState)
 Q_DECLARE_METATYPE(LinphoneEnums::ConferenceLayout)
 Q_DECLARE_METATYPE(LinphoneEnums::ConferenceInfoState)
+Q_DECLARE_METATYPE(LinphoneEnums::ConferenceSchedulerState)
 Q_DECLARE_METATYPE(LinphoneEnums::EventLogType)
 Q_DECLARE_METATYPE(LinphoneEnums::FriendCapability)
 Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)
 Q_DECLARE_METATYPE(LinphoneEnums::ParticipantDeviceState)
 Q_DECLARE_METATYPE(LinphoneEnums::RecorderState)
 Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
-
+Q_DECLARE_METATYPE(LinphoneEnums::TransportType)
 
 #endif

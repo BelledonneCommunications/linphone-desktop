@@ -460,9 +460,12 @@ QVariantList VcardModel::getUrls () const {
 	return list;
 }
 
-bool VcardModel::addUrl (const QString &url) {
+bool VcardModel::addUrl (QString url) {
 	CHECK_VCARD_IS_WRITABLE(this);
-
+	QUrl urlParser(url);
+	if( urlParser.scheme() == ""){
+		url = "https://"+url;
+	}
 	shared_ptr<belcard::BelCard> belcard = mVcard->getVcard();
 	if (findBelCardValue(belcard->getURLs(), url))
 		return false;

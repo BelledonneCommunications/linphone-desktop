@@ -455,8 +455,10 @@ void SipAddressesModel::handleMessageCountReset (ChatRoomModel *chatRoomModel) {
 }
 
 void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
-	const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
-	addOrUpdateSipAddress(peerAddress, message);
+	if(message->getChatRoom() && message->getChatRoom()->getPeerAddress()){
+		const QString peerAddress(Utils::coreStringToAppString(message->getChatRoom()->getPeerAddress()->asStringUriOnly()));
+		addOrUpdateSipAddress(peerAddress, message);
+	}
 }
 
 void SipAddressesModel::handleIsComposingChanged (const shared_ptr<linphone::ChatRoom> &chatRoom) {

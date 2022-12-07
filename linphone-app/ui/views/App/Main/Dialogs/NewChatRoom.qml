@@ -90,7 +90,7 @@ DialogPlus {
 					Layout.fillWidth: true
 					Layout.topMargin:15
 					spacing:4
-					visible: SettingsModel.secureChatEnabled
+					visible: SettingsModel.secureChatEnabled && SettingsModel.standardChatEnabled
 					Text {
 						Layout.fillWidth: true
 						//: 'Would you like to encrypt your chat?' : Ask about setting the chat room as secured.
@@ -157,13 +157,24 @@ DialogPlus {
 				ColumnLayout {
 					Layout.fillWidth: true
 					spacing:10
-					Text{
-						textFormat: Text.RichText
-						//: 'Subject' : Label of a text field about the subject of the chat room
-						text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
-						color: NewChatRoomStyle.subjectTitleColor
-						font.pointSize: Units.dp * 11
-						font.weight: Font.DemiBold
+					RowLayout{
+						Icon{
+								id:defaultSecure
+								Layout.alignment: Qt.AlignCenter
+								Layout.preferredHeight: visible? 20 : 0
+								Layout.preferredWidth: visible? 20 : 0
+								icon: 'secure_on'
+								iconSize:20
+								visible: SettingsModel.secureChatEnabled && !SettingsModel.standardChatEnabled
+							}
+						Text{
+							textFormat: Text.RichText
+							//: 'Subject' : Label of a text field about the subject of the chat room
+							text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
+							color: NewChatRoomStyle.subjectTitleColor
+							font.pointSize: Units.dp * 11
+							font.weight: Font.DemiBold
+						}
 					}
 					TextField {
 						id:subject
