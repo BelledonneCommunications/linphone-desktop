@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## 5.0.0 - [undefined]
+## 5.0.0 - 2022-12-07
 
 ### Added
 - Video conference and iCalendars.
@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Read contacts from all friends lists.
 - Option to set the display name in "using an account" tab of assistant.
 - Long pressed buttons.
+- Date and Time pickers.
 - Phone dialpad on main window.
 - Animated file in chats/notifications.
 - Round progress bar for transferring a file and allow to cancel it.
@@ -26,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mark as Read synchronized between devices.
 - Merge messages into one notification to avoid spam.
 - Design overhaul on calls.
+- Audio devices can be changed while being in call.
 - Use a cryptographic checksum when downloading openH264 from CISCO (Update to 2.2.0)
 
 ### Fixed
