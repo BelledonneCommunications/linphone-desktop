@@ -262,6 +262,7 @@ set(SOURCES
 	src/utils/LinphoneEnums.cpp
 	src/utils/MediastreamerUtils.cpp
 	src/utils/QExifImageHeader.cpp
+	src/utils/UriTools.cpp
 	src/utils/Utils.cpp
 	src/utils/plugins/PluginsManager.cpp
 	)
@@ -398,6 +399,7 @@ set(HEADERS
 	src/utils/LinphoneEnums.hpp
 	src/utils/MediastreamerUtils.hpp
 	src/utils/QExifImageHeader.hpp
+	src/utils/UriTools.hpp
 	src/utils/Utils.hpp
 	src/utils/plugins/PluginsManager.hpp
 	)

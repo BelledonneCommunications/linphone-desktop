@@ -426,7 +426,6 @@
 		<file>ui/modules/Linphone/View/SipAddressesView.qml</file>
 		<file>ui/scripts/Utils/port-tools.js</file>
 		<file>ui/scripts/Utils/qmldir</file>
-		<file>ui/scripts/Utils/uri-tools.js</file>
 		<file>ui/scripts/Utils/utils.js</file>
 		<file>ui/views/App/qmldir</file>
 		<file>ui/views/App/Calls/AbstractStartingCall.qml</file>

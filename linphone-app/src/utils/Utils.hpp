@@ -66,6 +66,7 @@ public:
 	Q_INVOKABLE QSize getImageSize(const QString& url);
 	Q_INVOKABLE static QPoint getCursorPosition();
 	Q_INVOKABLE static QString getFileChecksum(const QString& filePath);
+	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options);
 	
 //----------------------------------------------------------------------------------
 	
