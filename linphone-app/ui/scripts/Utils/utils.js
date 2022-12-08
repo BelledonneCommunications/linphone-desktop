@@ -27,7 +27,6 @@
 .import Linphone 1.0 as Linphone
 
 .import 'port-tools.js' as PortTools
-.import 'uri-tools.js' as UriTools
 
 // =============================================================================
 // Constants.
@@ -93,51 +92,6 @@ function createObject (source, parent, options) {
   }
 
   return object
-}
-
-// -----------------------------------------------------------------------------
-
-function encodeTextToQmlRichFormat (text, options) {
-  var images = ''
-
-  if (!options) {
-    options = {}
-  }
-
-  var formattedText = execAll(UriTools.URI_REGEX, text, function (str, valid) {
-    if (!valid) {
-      return unscapeHtml(str)
-    }
-
-    var uri = startsWith(str, 'www.') ? 'http://' + str : str
-
-    var ext = getExtension(str)
-    if (includes([ 'jpg', 'jpeg', 'gif', 'png', 'svg' ], ext)) {
-      images += '<a href="' + uri + '"><img' + (
-        options.imagesWidth != null
-          ? ' width="' + options.imagesWidth + '"'
-          : ''
-      ) + (
-        options.imagesHeight != null
-        ? ' height="' + options.imagesHeight + '"'
-        : ''
-      ) + ' src="' + str + '" /></a>'
-    }
-
-    return '<a href="' + uri + '">' + unscapeHtml(str) + '</a>'
-  }).join('')
-  if (images.length > 0) {
-    images = '<div>' + images + '</div>'
-  }
-
-  return images.concat('<p style="white-space:pre-wrap;">' + formattedText + '</p>')
-}
-
-function extractFirstUri (str) {
-  var res = str.match(UriTools.URI_REGEX)
-  return res == null || startsWith(res[0], 'www')
-    ? undefined
-    : res[0]
 }
 
 // -----------------------------------------------------------------------------
@@ -381,40 +335,6 @@ function dirname (str) {
   }
 
   return str2.slice(0, str2.lastIndexOf('/') + 1)
-}
-
-// -----------------------------------------------------------------------------
-
-function execAll (regex, text, cb) {
-  var index = 0
-  var arr = []
-  var match
-
-  if (!cb) {
-    cb = function (text) {
-      return text
-    }
-  }
-
-  while ((match = regex.exec(text))) {
-    var curIndex = match.index
-    var matchStr = match[0]
-
-    if (curIndex > index) {
-      arr.push(cb(text.substring(index, curIndex), false))
-    }
-
-    arr.push(cb(matchStr, true))
-
-    index = curIndex + matchStr.length
-  }
-
-  var length = text.length
-  if (index < length) {
-    arr.push(cb(text.substring(index, length)))
-  }
-
-  return arr
 }
 
 // -----------------------------------------------------------------------------

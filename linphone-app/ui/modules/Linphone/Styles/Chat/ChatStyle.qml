@@ -243,7 +243,8 @@ QtObject {
 			}
 			
 			property QtObject images: QtObject {
-				property int height: 48
+				property int height: 240
+				property int width: 240
 			}	
 			
 			property QtObject incoming: QtObject {

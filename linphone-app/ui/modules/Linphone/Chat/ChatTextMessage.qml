@@ -42,7 +42,7 @@ TextEdit {
 	font.family: customFont.family
 	font.pointSize: Units.dp * customFont.pointSize
 	
-	text: visible ? Utils.encodeTextToQmlRichFormat(contentModel.text, {
+	text: visible ? UtilsCpp.encodeTextToQmlRichFormat(contentModel.text, {
 														imagesHeight: ChatStyle.entry.message.images.height,
 														imagesWidth: ChatStyle.entry.message.images.width
 													})

@@ -31,6 +31,7 @@
 
 #include "config.h"
 #include "Utils.hpp"
+#include "UriTools.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contact/ContactModel.hpp"
@@ -604,4 +605,46 @@ QString Utils::getFileChecksum(const QString& filePath){
         }
     }
     return QString();
+}
+
+QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options){
+	
+	QString images;
+	QStringList formattedText;
+	QStringList imageFormat;
+	for(auto format : QImageReader::supportedImageFormats())
+		imageFormat.append(QString::fromLatin1(format).toUpper());
+	auto iriParsed = UriTools::parseIri(text);
+	for(int i = 0 ; i < iriParsed.size() ; ++i){
+		QString iri = iriParsed[i].second.replace('&', "&amp;")
+					.replace('<', "\u2063&lt;")
+					.replace('>', "\u2063&gt;")
+					.replace('"', "&quot;")
+					.replace('\'', "&#039;");
+		if(!iriParsed[i].first)
+			formattedText.append(iri);
+		else{
+			QString uri = iriParsed[i].second.left(3) == "www" ? "http://"+iriParsed[i].second : iriParsed[i].second ;
+			int extIndex = iriParsed[i].second.lastIndexOf('.');
+			QString ext;
+			if( extIndex >= 0)
+				ext = iriParsed[i].second.mid(extIndex+1).toUpper();
+			if(imageFormat.contains(ext.toLatin1())){// imagesHeight is not used because of bugs on display (blank image if set without width)
+				images += "<a href=\"" + uri + "\"><img" + (
+						options.contains("imagesWidth")
+							? QString(" width='") + options["imagesWidth"].toString() + "'"
+							: ""
+					) + (
+						options.contains("imagesWidth")
+						? QString(" height='auto'")
+						: ""
+					) + " src=\"" + iriParsed[i].second + "\" /></a>";
+			}else
+				formattedText.append( "<a href=\"" + uri + "\">" + iri + "</a>");
+		}
+	}
+	if(images != "")
+		images = "<div>" + images +"</div>";
+	
+	return images + "<p style=\"white-space:pre-wrap;\">" + formattedText.join("") + "</p>";
 }
