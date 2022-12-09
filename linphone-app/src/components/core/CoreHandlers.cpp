@@ -227,29 +227,26 @@ void CoreHandlers::onMessagesReceived (
 	for(auto message : messages){
 		if( !message || message->isOutgoing()  )
 			continue;
-		const string contentType = message->getContentType();
 		
-		if (contentType == "text/plain" || contentType == "application/vnd.gsma.rcs-ft-http+xml") {
-			messagesToSignal.push_back(message);
-			
-			// 1. Do not notify if chat is not activated.
-			if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getStandardChatEnabled()
-				|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
-				continue;
-			
-			// 2. Notify with Notification popup.
-			if (coreManager->getSettingsModel()->getChatNotificationsEnabled() 
-					&& (!app->hasFocus() || !Utils::isMe(chatRoom->getLocalAddress()))
-					&& !message->isRead())// On aggregation, the list can contains already displayed messages.
-				messagesToNotify.push_back(message);
-			else{
-				notNotifyReasons.push_back(
-					"NotifEnabled=" + QString::number(coreManager->getSettingsModel()->getChatNotificationsEnabled())
-					+" focus=" +QString::number(app->hasFocus())
-					+" isMe=" +QString::number(Utils::isMe(chatRoom->getLocalAddress()))
-					+" isRead=" +QString::number(message->isRead())
-				);
-			}
+		messagesToSignal.push_back(message);
+		
+		// 1. Do not notify if chat is not activated.
+		if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getStandardChatEnabled()
+			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
+			continue;
+		
+		// 2. Notify with Notification popup.
+		if (coreManager->getSettingsModel()->getChatNotificationsEnabled() 
+				&& (!app->hasFocus() || !Utils::isMe(chatRoom->getLocalAddress()))
+				&& !message->isRead())// On aggregation, the list can contains already displayed messages.
+			messagesToNotify.push_back(message);
+		else{
+			notNotifyReasons.push_back(
+				"NotifEnabled=" + QString::number(coreManager->getSettingsModel()->getChatNotificationsEnabled())
+				+" focus=" +QString::number(app->hasFocus())
+				+" isMe=" +QString::number(Utils::isMe(chatRoom->getLocalAddress()))
+				+" isRead=" +QString::number(message->isRead())
+			);
 		}
 	}
 	if( messagesToSignal.size() > 0)
