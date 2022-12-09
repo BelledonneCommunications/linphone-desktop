@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - RF3987 to allow IRI parsing in chats.
 - Image display in chats from an URL.
+- Display a notification of all kind of messages.
 
 ## 5.0.0 - 2022-12-07
 
