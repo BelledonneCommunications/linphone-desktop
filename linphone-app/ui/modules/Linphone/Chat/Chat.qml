@@ -151,9 +151,11 @@ Rectangle {
 							font {
 								bold: true
 								pointSize: ChatStyle.sectionHeading.text.pointSize
+								capitalization: Font.Capitalize
 							}
 							horizontalAlignment: Text.AlignHCenter
 							verticalAlignment: Text.AlignVCenter
+							
 							
 							// Cast section to integer because Qt converts the
 							// sectionDate in string!!!
