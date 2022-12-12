@@ -853,7 +853,7 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
 	}
 	
 	// Try to use system locale.
-	QLocale sysLocale = QLocale::system();
+	QLocale sysLocale = QLocale(QLocale::system().name());// Use Locale from name because Qt has a bug where it didn't use the QLocale::language (aka : translator.language != lolcale.language) on Mac.
 	if (installLocale(*this, *mTranslator, sysLocale)) {
 		mLocale = sysLocale.name();
 		return;
