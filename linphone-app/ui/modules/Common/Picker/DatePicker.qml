@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
+import Linphone 1.0
 import Units 1.0
 
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -35,7 +36,7 @@ Item{
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignCenter
 			horizontalAlignment: Qt.AlignCenter
-			text: new Date(monthList.currentYear, monthList.currentMonth, 15).toLocaleString(Qt.locale(), 'MMMM yyyy')// 15 because of timezones that can change the date for localeString
+			text: new Date(monthList.currentYear, monthList.currentMonth, 15).toLocaleString(App.locale, 'MMMM yyyy')// 15 because of timezones that can change the date for localeString
 			color: DatePickerStyle.title.color
 			font.pointSize: DatePickerStyle.title.pointSize
 			font.capitalization: Font.Capitalize
@@ -142,7 +143,7 @@ Item{
 								text: {
 									if(cellItem.day < 0){
 										// Magic date to set day names in this order : 'S', 'M', 'T', 'W', 'T', 'F', 'S' in Locale
-										return Utils.exactDate(new Date(2000,9,index+1)).toLocaleString(Qt.locale(), 'ddd')[0].toUpperCase()
+										return Utils.exactDate(new Date(2000,9,index+1)).toLocaleString(App.locale, 'ddd')[0].toUpperCase()
 									}else if(cellItem.cellDate.getMonth() == month && (!hideOldDates || new Date(year, month, cellItem.date+1) >= new Date()))	// new Date use time too
 										return cellItem.date
 									else

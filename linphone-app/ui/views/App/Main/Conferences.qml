@@ -139,11 +139,7 @@ Item{
 								horizontalAlignment: Text.AlignHCenter
 								verticalAlignment: Text.AlignVCenter
 								
-								// Cast section to integer because Qt converts the
-								// sectionDate in string!!!
-								text: new Date(section).toLocaleDateString(
-										  Qt.locale(App.locale)
-										  )
+								text: new Date(section).toLocaleDateString(App.locale)
 							}
 						}
 					}

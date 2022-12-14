@@ -580,7 +580,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Beschreibung</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
