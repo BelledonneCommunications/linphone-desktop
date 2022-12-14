@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
 	<key>CFBundleName</key>
 	<string>@APPLICATION_NAME@</string>
 	<key>CFBundleDisplayName</key>

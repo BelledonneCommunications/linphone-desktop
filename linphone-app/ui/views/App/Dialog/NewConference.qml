@@ -270,7 +270,7 @@ DialogPlus {
 						Layout.fillHeight: true
 						Layout.margins: 10
 						columns: 4
-						property var locale: Qt.locale()
+						property var locale: App.locale
 						property date currentDate: new Date()
 						property int cellWidth: (parent.width-15-20)/columns
 						

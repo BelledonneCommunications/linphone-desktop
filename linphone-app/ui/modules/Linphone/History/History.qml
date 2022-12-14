@@ -97,15 +97,12 @@ Rectangle {
               font {
                 bold: true
                 pointSize: HistoryStyle.sectionHeading.text.pointSize
+                capitalization: Font.Capitalize
               }
               horizontalAlignment: Text.AlignHCenter
               verticalAlignment: Text.AlignVCenter
 
-              // Cast section to integer because Qt converts the
-              // sectionDate in string!!!
-              text: new Date(section).toLocaleDateString(
-                Qt.locale(App.locale)
-              )
+              text: new Date(section).toLocaleDateString(App.locale)
             }
           }
         }

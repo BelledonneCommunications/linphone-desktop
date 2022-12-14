@@ -254,7 +254,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	mAutoStart = autoStartEnabled();
 	
 	qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
-	qInfo() << QStringLiteral("Use locale: %1").arg(mLocale);
+	qInfo() << QStringLiteral("Use locale: %1 with language: %2").arg(mLocale.name()).arg(QLocale::languageToString(mLocale.language()));
 }
 
 App::~App () {
@@ -841,22 +841,34 @@ void App::initLocale (const shared_ptr<linphone::Config> &config) {
 	QString locale;
 	
 	// Use english. This default translator is used if there are no found translations in others loads
-	mLocale = Constants::DefaultLocale;
-	if (!installLocale(*this, *mDefaultTranslator, QLocale(mLocale)))
+	mLocale = QLocale(Constants::DefaultLocale);
+	if (!installLocale(*this, *mDefaultTranslator, mLocale))
 		qFatal("Unable to install default translator.");
 	
 	if (config)
 		locale = Utils::coreStringToAppString(config->getString(SettingsModel::UiSection, "locale", ""));
 	
 	if (!locale.isEmpty() && installLocale(*this, *mTranslator, QLocale(locale))) {
-		mLocale = locale;
+		mLocale = QLocale(locale);
 		return;
 	}
 	
-	// Try to use system locale.
-	QLocale sysLocale = QLocale(QLocale::system().name());// Use Locale from name because Qt has a bug where it didn't use the QLocale::language (aka : translator.language != lolcale.language) on Mac.
+// Try to use system locale.
+//#ifdef Q_OS_MACOS
+// Use this workaround if there is still an issue about detecting wrong language from system on Mac. Qt doesn't use the current system language on QLocale::system(). So we need to get it from user settings and overwrite its Locale.
+//	QSettings settings;
+//	QString preferredLanguage = settings.value("AppleLanguages").toStringList().first();
+//	QStringList qtLocale = QLocale::system().name().split('_');
+//	if(qtLocale[0] != preferredLanguage){
+//		qInfo() << "Override Qt language from " << qtLocale[0] << " to the preferred language : " << preferredLanguage;
+//		qtLocale[0] = preferredLanguage;
+//	}
+//	QLocale sysLocale = QLocale(qtLocale.join('_'));
+//#else
+	QLocale sysLocale(QLocale::system().name());// Use Locale from name because Qt has a bug where it didn't use the QLocale::language (aka : translator.language != locale.language) on Mac.
+//#endif
 	if (installLocale(*this, *mTranslator, sysLocale)) {
-		mLocale = sysLocale.name();
+		mLocale = sysLocale;
 		return;
 	}
 	
@@ -878,7 +890,7 @@ void App::setConfigLocale (const QString &locale) {
 	emit configLocaleChanged(locale);
 }
 
-QString App::getLocale () const {
+QLocale App::getLocale () const {
 	return mLocale;
 }
 

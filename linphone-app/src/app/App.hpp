@@ -46,7 +46,7 @@ class App : public SingleApplication {
   Q_OBJECT
 
   Q_PROPERTY(QString configLocale READ getConfigLocale WRITE setConfigLocale NOTIFY configLocaleChanged)
-  Q_PROPERTY(QString locale READ getLocale CONSTANT)
+  Q_PROPERTY(QLocale locale READ getLocale CONSTANT)
   Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT)
   Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT)
 
@@ -143,7 +143,7 @@ private:
   QString getConfigLocale () const;
   void setConfigLocale (const QString &locale);
 
-  QString getLocale () const;
+  QLocale getLocale () const;
 
   QVariantList getAvailableLocales () const {
     return mAvailableLocales;
@@ -171,7 +171,7 @@ private:
   }
 
   QVariantList mAvailableLocales;
-  QString mLocale;
+  QLocale mLocale;
 
   bool mAutoStart = false;
 
