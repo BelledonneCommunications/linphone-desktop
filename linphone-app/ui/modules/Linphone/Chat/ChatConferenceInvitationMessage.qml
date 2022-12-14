@@ -116,7 +116,7 @@ Loader{
 				Layout.rightMargin: 15
 				
 				spacing: ChatCalendarMessageStyle.participants.spacing				
-				visible: participantsRow.participantCount > 0
+				visible: participantsRow.participantCount > 0 && mainItem.conferenceInfoModel.state != LinphoneEnums.ConferenceInfoStateCancelled
 				
 				Icon{
 					icon: ChatCalendarMessageStyle.participants.icon
