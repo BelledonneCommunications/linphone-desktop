@@ -41,6 +41,8 @@ Item {
     width: parent.width
 
     Row {
+      anchors.fill: parent
+      anchors.leftMargin: ChatStyle.entry.message.extraContent.leftMargin
       spacing: ChatStyle.entry.message.extraContent.spacing
 
       Component {
