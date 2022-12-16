@@ -816,7 +816,6 @@ private:
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
 	VfsUtils mVfsUtils;
-	bool mVfsEncrypted = false;
 	
 	std::shared_ptr<linphone::Config> mConfig;
 };
