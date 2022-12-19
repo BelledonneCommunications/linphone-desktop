@@ -28,7 +28,9 @@
 
 #include "AssistantModel.hpp"
 
+#ifdef ENABLE_QRCODE
 #include <linphone/FlexiAPIClient.hh>
+#endif
 
 #include <QtDebug>
 #include <QTimer>
@@ -282,6 +284,7 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
 void AssistantModel::createTestAccount(){
 }
 void AssistantModel::generateQRCode(){
+#ifdef ENABLE_QRCODE
 	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient
 		->accountProvision()
@@ -291,8 +294,10 @@ void AssistantModel::generateQRCode(){
 		->error([this](FlexiAPIClient::Response response){
 			emit newQRCodeNotReceived(Utils::coreStringToAppString(response.body), response.code);
 		});
+#endif
 }
 void AssistantModel::requestQRCode(){
+#ifdef ENABLE_QRCODE
 	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	
 	flexiAPIClient
@@ -305,6 +310,7 @@ void AssistantModel::requestQRCode(){
 			qWarning() << response.code << " => " << response.body.c_str();
 			emit newQRCodeNotReceived(Utils::coreStringToAppString(response.body), response.code);
 		});
+#endif
 }
 
 void AssistantModel::readQRCode(){
@@ -314,6 +320,7 @@ void AssistantModel::newQRCodeNotReceivedTest(){
 	emit newQRCodeNotReceived("Cannot generate a provisioning key",0);
 }
 void AssistantModel::checkLinkingAccount(){
+#ifdef ENABLE_QRCODE
 	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient
 		->accountApiKeyFromAuthTokenGenerate(mToken.toStdString())
@@ -322,9 +329,11 @@ void AssistantModel::checkLinkingAccount(){
 		})->error([this](FlexiAPIClient::Response){
 			QTimer::singleShot(5000, this, &AssistantModel::checkLinkingAccount);
 	});
+#endif
 }
 
 void AssistantModel::onApiReceived(QString apiKey){
+#ifdef ENABLE_QRCODE
 	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient->setApiKey(Utils::appStringToCoreString(apiKey).c_str())
 		->accountProvision()
@@ -334,6 +343,7 @@ void AssistantModel::onApiReceived(QString apiKey){
 			//it provisioningTokenReceived("token");
 			emit this->newQRCodeNotReceived("Cannot generate a provisioning key"+(response.body.empty() ? "" : " : " +Utils::coreStringToAppString(response.body)), response.code);
 	});
+#endif
 }
 void AssistantModel::onQRCodeFound(const std::string & result){
 	setIsReadingQRCode(false);
@@ -341,6 +351,7 @@ void AssistantModel::onQRCodeFound(const std::string & result){
 }
 
 void AssistantModel::attachAccount(const QString& token){
+#ifdef ENABLE_QRCODE
 	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient->
 	accountAuthTokenAttach(Utils::appStringToCoreString(token))
@@ -351,6 +362,7 @@ void AssistantModel::attachAccount(const QString& token){
 		->error([this](FlexiAPIClient::Response response){
 			emit qRCodeNotAttached("Cannot attach"+ (response.body.empty() ? "" : " : " +Utils::coreStringToAppString(response.body)), response.code);
 		});
+#endif
 }
 
 // -----------------------------------------------------------------------------
