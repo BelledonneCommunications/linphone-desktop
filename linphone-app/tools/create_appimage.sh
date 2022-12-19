@@ -49,6 +49,10 @@ cp -f "${BIN_SOURCE_DIR}/lib"/libapp-plugin* "${WORK_DIR}/AppDir/usr/lib/"
 cp -f "${BIN_SOURCE_DIR}/lib64"/libsoci_sqlite3* "${WORK_DIR}/AppDir/usr/lib/"
 cp -f "${BIN_SOURCE_DIR}/lib64"/libapp-plugin* "${WORK_DIR}/AppDir/usr/lib/"
 
+cp -f "${BIN_SOURCE_DIR}/lib"/libEQt* "${WORK_DIR}/AppDir/usr/lib/"
+cp -f "${BIN_SOURCE_DIR}/lib64"/libEQt* "${WORK_DIR}/AppDir/usr/lib/"
+
+
 if [ -d "${BIN_SOURCE_DIR}/lib64/mediastreamer" ]; then
 	mkdir -p "${WORK_DIR}/AppDir/usr/plugins/"
 	cp -rf "${BIN_SOURCE_DIR}"/lib64/mediastreamer "${WORK_DIR}/AppDir/usr/plugins/"

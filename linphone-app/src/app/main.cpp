@@ -30,8 +30,11 @@ FILE * gStream = NULL;
 #endif
 
 #include "components/core/CoreManager.hpp"
-#include "components/vfs/VfsUtils.hpp"
 #include "utils/Utils.hpp"
+
+#ifdef ENABLE_QT_KEYCHAIN
+#include "components/vfs/VfsUtils.hpp"
+#endif
 
 // =============================================================================
 
@@ -57,8 +60,13 @@ int main (int argc, char *argv[]) {
 		freopen_s(&gStream, "CONOUT$", "w", stderr);
 	}
 #endif
+
+#ifdef ENABLE_QT_KEYCHAIN
 	bool vfsEncrypted = VfsUtils::updateSDKWithKey();
-	
+#else
+	bool vfsEncrypted = false;
+#endif
+
 	AppController controller(argc, argv);
 #ifdef QT_QML_DEBUG
 	QQmlDebuggingEnabler enabler;

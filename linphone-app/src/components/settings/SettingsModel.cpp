@@ -68,7 +68,7 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::groupChatEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::videoConferenceEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::secureChatEnabledChanged);
-	
+#ifdef ENABLE_QT_KEYCHAIN
 	connect(&mVfsUtils, &VfsUtils::keyRead, this, [&](const QString& key, const QString& value){
 		if(key == mVfsUtils.getApplicationVfsEncryptionKey()){
 			if(!getVfsEncrypted()){
@@ -100,7 +100,7 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(&mVfsUtils, &VfsUtils::error, this, [&](){
 		
 	});
-	
+#endif
 	configureRlsUri();
 }
 
@@ -1735,6 +1735,7 @@ bool SettingsModel::getVfsEncrypted (){
 }
 
 void SettingsModel::setVfsEncrypted (bool encrypted, const bool deleteUserData){
+#ifdef ENABLE_QT_KEYCHAIN
 	if(getVfsEncrypted() != encrypted){
 		if(encrypted) {
 			mVfsUtils.newEncryptionKey();
@@ -1743,6 +1744,7 @@ void SettingsModel::setVfsEncrypted (bool encrypted, const bool deleteUserData){
 			mVfsUtils.deleteKey(mVfsUtils.getApplicationVfsEncryptionKey());
 		}
 	}
+#endif
 }
 
 // ---------------------------------------------------------------------------

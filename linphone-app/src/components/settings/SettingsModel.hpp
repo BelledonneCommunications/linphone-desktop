@@ -29,8 +29,11 @@
 
 #include "components/core/CoreHandlers.hpp"
 #include "components/contacts/ContactsImporterModel.hpp"
-#include "components/vfs/VfsUtils.hpp"
 #include "utils/LinphoneEnums.hpp"
+
+#ifdef ENABLE_QT_KEYCHAIN
+#include "components/vfs/VfsUtils.hpp"
+#endif
 
 // =============================================================================
 class TunnelModel;
@@ -815,7 +818,9 @@ private:
 	int mCurrentSettingsTab = 0;
 	MediastreamerUtils::SimpleCaptureGraph *mSimpleCaptureGraph = nullptr;
 	int mCaptureGraphListenerCount = 0;
+#ifdef ENABLE_QT_KEYCHAIN
 	VfsUtils mVfsUtils;
+#endif
 	
 	std::shared_ptr<linphone::Config> mConfig;
 };
