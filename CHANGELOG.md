@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - VFS Encryption
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 
+## 5.0.3 - 2022-12-19
+
+### Fixed
+- Missing SetThreadDescription entry point on Windows 7/8 (SDK update)
+- Add more margin on message's IMDN that was behind the icon menu in chats.
+- Remove JSON dependencies on unused Flexiapi.
+
 ## 5.0.2 - 2022-12-13
 
 ### Fixed

@@ -89,6 +89,7 @@ find_package(ortp CONFIG)
 
 if(ENABLE_QT_KEYCHAIN)
 	find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG REQUIRED)
+	add_definitions(-DENABLE_QT_KEYCHAIN)
 endif()
 
 if(ENABLE_BUILD_VERBOSE)
