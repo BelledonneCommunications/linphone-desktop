@@ -26,6 +26,8 @@
 
 #include "UriTools.hpp"
 
+#include <QDebug>
+
 static UriTools gUriTools;
 
 UriTools::UriTools(){
@@ -45,22 +47,23 @@ QVector<QPair<bool, QString> > UriTools::parse(const QString& text, const QRegul
 	QVector<QPair<bool, QString> > results;
 	int currentIndex = 0;
 	auto match = regex.match(text);
-	
+	int lastCapturedIndex = match.lastCapturedIndex();
 	for (int i = 0; i <= match.lastCapturedIndex(); ++i) {
 		int startIndex = match.capturedStart(i);
-		if(currentIndex != startIndex){
+		if(currentIndex != startIndex){// characters before startIndex doesn't match
 			results.push_back({false, text.mid(currentIndex, startIndex - currentIndex)});
 		}
 		results.push_back({true, match.captured(i)});
-		currentIndex = startIndex;
+		currentIndex = match.capturedEnd(i);
 	}
 	
-	if(results.size() == 0)
+	if(lastCapturedIndex == -1)
 		results.push_back({false, text});
 	else{
-		currentIndex += results.back().second.length();
-		if( currentIndex < text.size())
-			results.push_back({false, text.mid(currentIndex)});
+		if( currentIndex < text.size()) {
+			QString unparsedText = text.mid(currentIndex);
+			results.append(parse(unparsedText, regex));
+		}
 	}
 	return results;
 }
