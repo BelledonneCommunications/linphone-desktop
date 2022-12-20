@@ -279,6 +279,8 @@ void Notifier::notifyReceivedMessages (const list<shared_ptr<linphone::ChatMessa
 	QString txt;
 	if( messages.size() > 0){
 		shared_ptr<linphone::ChatMessage> message = messages.front();
+		//: 'New messages received!' Notification that warn the user of new messages.
+		QString newMessage = tr("newChatRoomMessages");
 		
 		if( messages.size() == 1){
 			if(! message->getFileTransferInformation() ){
@@ -289,8 +291,9 @@ void Notifier::notifyReceivedMessages (const list<shared_ptr<linphone::ChatMessa
 			}else
 				txt = tr("newFileMessage");
 		}else
-		//: 'New messages received!' Notification that warn the user of new messages.
-			txt = tr("newChatRoomMessages");
+			txt = newMessage;
+		if(txt.isEmpty())
+			txt = newMessage;
 		map["message"] = txt;
 		shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
 		map["timelineModel"].setValue(CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true).get());
