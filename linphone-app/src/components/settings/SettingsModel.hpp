@@ -573,7 +573,7 @@ public:
 	bool isCheckForUpdateEnabled() const;
 	void setCheckForUpdateEnabled(bool enable);
 	
-	QString getVersionCheckUrl() const;
+	QString getVersionCheckUrl();
 	void setVersionCheckUrl(const QString& url);
 	
 	VersionCheckType getVersionCheckType() const;

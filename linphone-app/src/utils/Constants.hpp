@@ -82,8 +82,8 @@ public:
 	static constexpr char DefaultAssistantLogoutUrl[] = "https://subscribe.linphone.org/logout";
 //--------------
 
-	// Max image size in bytes. (100Kb)
-	static constexpr qint64 MaxImageSize = 102400;// In Bytes.
+	// Max image size in bytes. (1Mb)
+	static constexpr qint64 MaxImageSize = 1024000;// In Bytes.
 	static constexpr qint64 FileSizeLimit = 524288000;// In Bytes.
 	static constexpr int ThumbnailImageFileWidth = 100;
 	static constexpr int ThumbnailImageFileHeight = 100;

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Missing SetThreadDescription entry point on Windows 7/8 (SDK update)
 - Add more margin on message's IMDN that was behind the icon menu in chats.
 - Remove JSON dependencies on unused Flexiapi.
+- Crash at startup about missing contact address on account (SDK fix)
 
 ## 5.0.2 - 2022-12-13
 
