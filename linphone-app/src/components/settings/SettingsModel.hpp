@@ -570,6 +570,7 @@ public:
 	bool getExitOnClose () const;
 	void setExitOnClose (bool value);
 	
+	Q_INVOKABLE static bool isCheckForUpdateAvailable();
 	bool isCheckForUpdateEnabled() const;
 	void setCheckForUpdateEnabled(bool enable);
 	

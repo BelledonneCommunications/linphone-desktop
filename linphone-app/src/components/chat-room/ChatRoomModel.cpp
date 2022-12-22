@@ -937,9 +937,10 @@ void ChatRoomModel::initEntries(){
 	// Get calls.
 		bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
 		bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
+		bool noChat = !secureChatEnabled && !standardChatEnabled;
 	
-		if( isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
-			|| standardChatEnabled && !isSecure()) ) {
+		if(noChat || (isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
+			|| standardChatEnabled && !isSecure())) ) {
 			auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
 			// callhistory is sorted from newest to oldest
 			int count = 0;
@@ -1006,9 +1007,10 @@ int ChatRoomModel::loadMoreEntries(){
 	// Calls
 		bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
 		bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
+		bool noChat = !secureChatEnabled && !standardChatEnabled;
 	
-		if( isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
-			|| standardChatEnabled && !isSecure()) ) {
+		if( noChat || (isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
+			|| standardChatEnabled && !isSecure())) ) {
 			auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
 			int count = 0;
 			auto itCallHistory = callHistory.begin();

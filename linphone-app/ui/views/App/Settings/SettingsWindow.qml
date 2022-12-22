@@ -57,7 +57,7 @@ ApplicationWindow {
 					id: tabBar
 					
 					onCurrentIndexChanged: SettingsModel.onSettingsTabChanged(currentIndex)
-					
+					spacing:0
 					TabButton {
 						iconName: TabButtonStyle.icon.sipAccountsIcon
 						text: qsTr('sipAccountsTab')
@@ -71,10 +71,10 @@ ApplicationWindow {
 					}
 					
 					TabButton {
-						enabled: SettingsModel.videoSupported
+						visible: SettingsModel.videoSupported
 						iconName: TabButtonStyle.icon.videoIcon
 						text: qsTr('videoTab')
-						width: implicitWidth
+						width: visible ? implicitWidth : 0
 					}
 					
 					TabButton {

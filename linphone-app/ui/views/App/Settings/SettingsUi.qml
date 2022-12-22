@@ -239,6 +239,7 @@ TabContainer {
 			}
 			FormLine {
 				maxItemWidth: parent.width
+				visible: SettingsModel.isCheckForUpdateAvailable()
 				FormGroup {
 					//: 'Check for updates' : Label switch for enabling check for updates
 					label: qsTr('checkForUpdateLabel')

@@ -198,6 +198,7 @@ DialogPlus {
 		RowLayout {
 			spacing: MultimediaParametersDialogStyle.column.entry.spacing
 			width: parent.width
+			visible: SettingsModel.videoSupported
 
 			Icon {
 				icon: MultimediaParametersDialogStyle.column.entry.camera.icon

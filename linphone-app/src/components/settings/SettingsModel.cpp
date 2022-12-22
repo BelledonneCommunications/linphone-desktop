@@ -1529,14 +1529,15 @@ void SettingsModel::setExitOnClose (bool value) {
 	emit exitOnCloseChanged(value);
 }
 
-bool SettingsModel::isCheckForUpdateEnabled() const{
+bool SettingsModel::isCheckForUpdateAvailable(){
 #ifdef ENABLE_UPDATE_CHECK
-	int enabled = 1;
+	return true;
 #else
-	int enabled = 0;
+	return false;
 #endif
-	return !!mConfig->getInt(UiSection, "check_for_update_enabled", enabled);
-
+}
+bool SettingsModel::isCheckForUpdateEnabled() const{
+	return !!mConfig->getInt(UiSection, "check_for_update_enabled", isCheckForUpdateAvailable());
 }
 
 void SettingsModel::setCheckForUpdateEnabled(bool enable){

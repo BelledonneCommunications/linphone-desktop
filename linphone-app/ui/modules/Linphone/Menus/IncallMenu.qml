@@ -203,7 +203,7 @@ Rectangle{
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					Layout.minimumHeight: fitHeight
-					call: conference.callModel
+					call: mainItem.callModel
 					flat: true
 					showMargins: true
 					expandHeight: false
