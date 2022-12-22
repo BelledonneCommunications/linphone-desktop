@@ -27,6 +27,7 @@ MenuBar {
 		
 
 		MenuItem {
+			visible: SettingsModel.isCheckForUpdateAvailable()
 			//: 'Check for updates' : Item menu for checking updates
 			text: qsTr('checkForUpdates')
 			role: MenuItem.ApplicationSpecificRole

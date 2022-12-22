@@ -109,9 +109,10 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 	if(!timeline || !timeline->getChatRoomModel() || timeline->getChatRoomModel()->getState() == (int)linphone::ChatRoom::State::Deleted)
 		return false;
 	bool haveEncryption = timeline->getChatRoomModel()->haveEncryption();
-	if(!CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled() && !haveEncryption)
+	bool noChat = !CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled() && !CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
+	if(!noChat && !CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled() && !haveEncryption)
 		return false;
-	if(!CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled() && haveEncryption)
+	if(!noChat && !CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled() && haveEncryption)
 		return false;
 	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
 	bool isGroup = timeline->getChatRoomModel()->isGroupEnabled();

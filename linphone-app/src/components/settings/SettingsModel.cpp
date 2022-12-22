@@ -1556,8 +1556,15 @@ void SettingsModel::setExitOnClose (bool value) {
 	emit exitOnCloseChanged(value);
 }
 
+bool SettingsModel::isCheckForUpdateAvailable(){
+#ifdef ENABLE_UPDATE_CHECK
+	return true;
+#else
+	return false;
+#endif
+}
 bool SettingsModel::isCheckForUpdateEnabled() const{
-	return !!mConfig->getInt(UiSection, "check_for_update_enabled", 1);
+	return !!mConfig->getInt(UiSection, "check_for_update_enabled", isCheckForUpdateAvailable());
 }
 
 void SettingsModel::setCheckForUpdateEnabled(bool enable){
