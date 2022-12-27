@@ -125,12 +125,12 @@ ListView {
 		visible: calls.conferenceModel.count > 0
 		
 		color: isSelected
-			   ? CallsStyle.entry.color.selected
-			   : CallsStyle.entry.color.normal
+			   ? CallsStyle.entry.color.selected.color
+			   : CallsStyle.entry.color.normal.color
 		
 		textColor: isSelected
-				   ? CallsStyle.entry.titleColor.selected
-				   : CallsStyle.entry.titleColor.normal
+				   ? CallsStyle.entry.titleColor.selected.color
+				   : CallsStyle.entry.titleColor.normal.color
 		
 		onClicked: Logic.resetSelectedCall()
 		onVisibleChanged: !visible && Logic.handleCountChanged(calls.count)
@@ -147,16 +147,16 @@ ListView {
 		isDarkMode: calls.currentIndex === index && $modelData!=undefined && $modelData.status!=undefined && $modelData.status !== CallModel.CallStatusEnded
 		
 		// -------------------------------------------------------------------------
-		
+		property var entryColors: CallsStyle.entry.color
 		color: isDarkMode
-			   ? CallsStyle.entry.color.selected
-			   : CallsStyle.entry.color.normal
+			   ? entryColors.selected.color
+			   : entryColors.normal.color
 		subtitleColor: isDarkMode
-						 ? CallsStyle.entry.subtitleColor.selected
-						 : CallsStyle.entry.subtitleColor.normal
+						 ? CallsStyle.entry.subtitleColor.selected.color
+						 : CallsStyle.entry.subtitleColor.normal.color
 		titleColor: isDarkMode
-					   ? CallsStyle.entry.titleColor.selected
-					   : CallsStyle.entry.titleColor.normal
+					   ? CallsStyle.entry.titleColor.selected.color
+					   : CallsStyle.entry.titleColor.normal.color
 		
 		signIcon: {
 			var params = loader.params
@@ -194,14 +194,14 @@ ListView {
 			
 			ColorAnimation {
 				duration: CallsStyle.entry.endCallAnimation.duration
-				from: CallsStyle.entry.color.normal
-				to: CallsStyle.entry.endCallAnimation.blinkColor
+				from: CallsStyle.entry.color.normal.color
+				to: CallsStyle.entry.endCallAnimation.blinkColor.color
 			}
 			
 			ColorAnimation {
 				duration: CallsStyle.entry.endCallAnimation.duration
-				from: CallsStyle.entry.endCallAnimation.blinkColor
-				to: CallsStyle.entry.color.normal
+				from: CallsStyle.entry.endCallAnimation.blinkColor.color
+				to: CallsStyle.entry.color.normal.color
 			}
 		}
 	}

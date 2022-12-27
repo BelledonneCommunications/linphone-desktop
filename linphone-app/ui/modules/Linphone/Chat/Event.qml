@@ -92,7 +92,7 @@ Row {
 	Icon {
 		height: parent.height
 		icon: mainItem.iconData ? mainItem.iconData.icon : null
-		overwriteColor: mainItem.iconData ? mainItem.iconData.color: null
+		overwriteColor: mainItem.iconData ? mainItem.iconData.colorModel.color: null
 		iconSize: ChatStyle.entry.event.iconSize
 		width: ChatStyle.entry.metaWidth
 	}
@@ -115,7 +115,7 @@ Row {
 			}
 		}
 		
-		color: ChatStyle.entry.event.text.color
+		color: ChatStyle.entry.event.text.colorModel.color
 		font {
 			bold: true
 			pointSize: ChatStyle.entry.event.text.pointSize

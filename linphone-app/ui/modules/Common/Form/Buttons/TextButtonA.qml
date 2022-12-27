@@ -5,18 +5,18 @@ import Common.Styles 1.0
 AbstractTextButton {
 	property var textButtonStyle : TextButtonAStyle
 	
-	colorDisabled: textButtonStyle.backgroundColor.disabled
-	colorHovered: textButtonStyle.backgroundColor.hovered
-	colorNormal: textButtonStyle.backgroundColor.normal
-	colorPressed: textButtonStyle.backgroundColor.pressed
+	colorDisabled: textButtonStyle.backgroundColor.disabled.color
+	colorHovered: textButtonStyle.backgroundColor.hovered.color
+	colorNormal: textButtonStyle.backgroundColor.normal.color
+	colorPressed: textButtonStyle.backgroundColor.pressed.color
 	
-	textColorDisabled: textButtonStyle.textColor.disabled
-	textColorHovered: textButtonStyle.textColor.hovered
-	textColorNormal: textButtonStyle.textColor.normal
-	textColorPressed: textButtonStyle.textColor.pressed
+	textColorDisabled: textButtonStyle.textColor.disabled.color
+	textColorHovered: textButtonStyle.textColor.hovered.color
+	textColorNormal: textButtonStyle.textColor.normal.color
+	textColorPressed: textButtonStyle.textColor.pressed.color
 	
-	borderColorDisabled: textButtonStyle.borderColor.disabled
-	borderColorHovered: textButtonStyle.borderColor.hovered
-	borderColorNormal: textButtonStyle.borderColor.normal
-	borderColorPressed: textButtonStyle.borderColor.pressed
+	borderColorDisabled: textButtonStyle.borderColor.disabled.color
+	borderColorHovered: textButtonStyle.borderColor.hovered.color
+	borderColorNormal: textButtonStyle.borderColor.normal.color
+	borderColorPressed: textButtonStyle.borderColor.pressed.color
 }

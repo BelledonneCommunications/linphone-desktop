@@ -10,7 +10,7 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
-  color: HomeStyle.color
+  color: HomeStyle.colorModel.color
 
   // TODO: Remove me when smart tooltip will be available.
   Component {

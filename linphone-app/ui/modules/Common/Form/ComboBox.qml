@@ -17,8 +17,8 @@ Controls.ComboBox {
 	property var iconRole
 	property bool haveBorder: true
 	property bool haveMargin: true
-	property color backgroundColor: ComboBoxStyle.background.color.normal
-	property color foregroundColor: ComboBoxStyle.contentItem.text.color
+	property color backgroundColor: ComboBoxStyle.background.color.normal.color
+	property color foregroundColor: ComboBoxStyle.contentItem.text.colorModel.color
 	
 	property var rootItem 
 	property int yPopup: rootItem ? -mapToItem(rootItem,x,y).y : height + 1
@@ -32,13 +32,13 @@ Controls.ComboBox {
 	
 	background: Rectangle {
 		border {
-			color: ComboBoxStyle.background.border.color
+			color: ComboBoxStyle.background.border.colorModel.color
 			width: comboBox.haveBorder ? ComboBoxStyle.background.border.width : 0
 		}
 		
 		color: comboBox.enabled
 			   ? comboBox.backgroundColor
-			   : ComboBoxStyle.background.color.readOnly
+			   : ComboBoxStyle.background.color.readOnly.color
 		
 		radius: ComboBoxStyle.background.radius
 		
@@ -89,7 +89,7 @@ Controls.ComboBox {
 	indicator: Icon {
 		icon: ComboBoxStyle.indicator.dropDown.icon
 		iconSize: ComboBoxStyle.indicator.dropDown.iconSize
-		overwriteColor: ComboBoxStyle.indicator.dropDown.color
+		overwriteColor: ComboBoxStyle.indicator.dropDown.colorModel.color
 		
 		x: comboBox.width - width - comboBox.rightPadding
 		y: comboBox.topPadding + (comboBox.availableHeight - height) / 2

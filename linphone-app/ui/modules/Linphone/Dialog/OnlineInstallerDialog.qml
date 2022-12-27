@@ -93,15 +93,15 @@ DialogPlus {
       indeterminate : target.totalBytes == 0
 
       background: Rectangle {
-        color: OnlineInstallerDialogStyle.column.bar.background.color
+        color: OnlineInstallerDialogStyle.column.bar.background.colorModel.color
         radius: OnlineInstallerDialogStyle.column.bar.radius
       }
 
       contentItem: Item {
         Rectangle {
           color: dialog._exitStatus
-            ? OnlineInstallerDialogStyle.column.bar.contentItem.color.normal
-            : OnlineInstallerDialogStyle.column.bar.contentItem.color.failed
+            ? OnlineInstallerDialogStyle.column.bar.contentItem.color.normal.color
+            : OnlineInstallerDialogStyle.column.bar.contentItem.color.failed.color
           height: parent.height
           radius: OnlineInstallerDialogStyle.column.bar.radius
           width: progressBar.visualPosition * parent.width
@@ -111,7 +111,7 @@ DialogPlus {
 
     Text {
       anchors.right: parent.right
-      color: OnlineInstallerDialogStyle.column.text.color
+      color: OnlineInstallerDialogStyle.column.text.colorModel.color
       font.pointSize: OnlineInstallerDialogStyle.column.text.pointSize
 
       text: {

@@ -82,7 +82,7 @@ Item {
 		
 		background: Rectangle {
 			id: backgroundPopup
-			color: PopupStyle.backgroundColor
+			color: PopupStyle.backgroundColor.color
 			height: popup.height
 			width: popup.width
 			

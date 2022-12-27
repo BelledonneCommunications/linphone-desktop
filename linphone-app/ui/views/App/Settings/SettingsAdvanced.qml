@@ -205,7 +205,7 @@ TabContainer {
 										Component{
 											id: textComponent
 											Text {
-												color: FormTableStyle.entry.text.color
+												color: FormTableStyle.entry.text.colorModel.color
 												elide: Text.ElideRight
 												horizontalAlignment: Text.AlignHCenter
 												text: importerLine.fields[$modelData['fieldId']]?importerLine.fields[$modelData['fieldId']]:''
@@ -261,7 +261,7 @@ TabContainer {
 									property bool isError:false
 									selectByMouse: true
 									readOnly:true
-									color: (isError?SettingsAdvancedStyle.error.color:SettingsAdvancedStyle.info.color)
+									color: (isError?SettingsAdvancedStyle.error.colorModel.color : SettingsAdvancedStyle.info.colorModel.color)
 									width:parent.width
 									horizontalAlignment:Text.AlignRight
 									font {

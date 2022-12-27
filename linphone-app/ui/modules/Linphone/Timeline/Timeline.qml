@@ -33,7 +33,7 @@ Rectangle {
 	
 	// ---------------------------------------------------------------------------
 	property bool showFilterView : false
-	color: TimelineStyle.color
+	color: TimelineStyle.colorModel.color
 	
 	ColumnLayout {
 		anchors.fill: parent
@@ -61,7 +61,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: TimelineStyle.legend.height
 			Layout.alignment: Qt.AlignTop
-			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered:TimelineStyle.legend.backgroundColor.normal
+			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered.color:TimelineStyle.legend.backgroundColor.normal.color
 			visible: showHistoryButton || showFiltersButtons
 			
 			MouseArea{// no more showing history
@@ -80,7 +80,7 @@ Rectangle {
 					Layout.fillWidth: true
 					Layout.leftMargin: TimelineStyle.legend.leftMargin
 					visible: showFiltersButtons
-					color: TimelineStyle.legend.color
+					color: TimelineStyle.legend.colorModel.color
 					font.pointSize: TimelineStyle.legend.pointSize
 					//: A title for filtering mode.
 					text: qsTr('timelineFilter')+' : ' 
@@ -97,7 +97,7 @@ Rectangle {
 					Layout.alignment: Qt.AlignRight
 					icon: 'filter_params_custom'
 					iconSize: TimelineStyle.legend.iconSize
-					overwriteColor: TimelineStyle.legend.color
+					overwriteColor: TimelineStyle.legend.colorModel.color
 					visible: showFiltersButtons
 					MouseArea{
 						anchors.fill:parent
@@ -122,7 +122,7 @@ Rectangle {
 						property bool searching: searchView.visible
 						icon: (searchView.visible? 'close_custom': 'search_custom')
 						iconSize: TimelineStyle.legend.iconSize
-						overwriteColor: TimelineStyle.legend.color
+						overwriteColor: TimelineStyle.legend.colorModel.color
 					}
 				}
 				MouseArea{
@@ -141,7 +141,7 @@ Rectangle {
 						property bool searching: searchView.visible
 						icon: 'call_history_custom'
 						iconSize: TimelineStyle.legend.iconSize
-						overwriteColor: TimelineStyle.legend.color
+						overwriteColor: TimelineStyle.legend.colorModel.color
 					}
 				}
 			}
@@ -154,7 +154,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: filterChoices.height
 			Layout.alignment: Qt.AlignCenter
-			border.color: TimelineStyle.filterField.borderColor
+			border.color: TimelineStyle.filterField.borderColor.color
 			border.width: 2
 			visible: timeline.showFilterView && !SettingsModel.useMinimalTimelineFilter
 			
@@ -243,7 +243,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: minimalFilterChoices.height
 			Layout.alignment: Qt.AlignCenter
-			border.color: TimelineStyle.filterField.borderColor
+			border.color: TimelineStyle.filterField.borderColor.color
 			border.width: 2
 			visible: timeline.showFilterView && SettingsModel.useMinimalTimelineFilter
 			
@@ -315,7 +315,7 @@ Rectangle {
 			Layout.fillWidth: true
 			Layout.preferredHeight: 40
 			Layout.alignment: Qt.AlignCenter
-			border.color: TimelineStyle.searchField.borderColor
+			border.color: TimelineStyle.searchField.borderColor.color
 			border.width: 2
 			visible:false
 			onVisibleChanged: if(visible){
@@ -335,7 +335,7 @@ Rectangle {
 				width: parent.width - 14				
 				icon: text == '' ? 'search_custom' : 'close_custom'
 				iconSize: 30
-				overwriteColor: TimelineStyle.searchField.color
+				overwriteColor: TimelineStyle.searchField.colorModel.color
 				//: 'Search in the list' : ths is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('timelineSearchPlaceholderText')
 				

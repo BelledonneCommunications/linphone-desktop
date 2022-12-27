@@ -8,9 +8,9 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName : 'ChatReplyMessage'
-	property color color: ColorsList.add(sectionName, 'q').color
+	property var colorModel: ColorsList.add(sectionName, 'q')
 	property QtObject header: QtObject{
-		property color color: ColorsList.add(sectionName+'_header', 'h').color
+		property var colorModel: ColorsList.add(sectionName+'_header', 'h')
 		property int pointSizeOffset: -3
 		property QtObject forwardIcon: QtObject{
 			property string icon : 'menu_forward_custom'

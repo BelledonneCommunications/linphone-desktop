@@ -21,12 +21,12 @@ QtObject {
 		property int spacing: 20
 		
 		property QtObject description: QtObject {
-			property color color: ColorsList.add(sectionName+'_info_description', 'g').color
+			property var colorModel: ColorsList.add(sectionName+'_info_description', 'g')
 			property int pointSize: Units.dp * 11
 		}
 		
 		property QtObject title: QtObject {
-			property color color: ColorsList.add(sectionName+'_info_title', 'g').color
+			property var colorModel: ColorsList.add(sectionName+'_info_title', 'g')
 			property int pointSize: Units.dp * 11
 		}
 	}

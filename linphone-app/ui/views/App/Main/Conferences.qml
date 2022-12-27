@@ -27,14 +27,14 @@ Item{
 			Layout.fillWidth: true
 			Layout.preferredHeight: ConferencesStyle.bar.height
 			
-			color: ConferencesStyle.bar.backgroundColor
+			color: ConferencesStyle.bar.backgroundColor.color
 			Text{
 				anchors.fill: parent
 				verticalAlignment: Qt.AlignVCenter
 				
 				anchors.leftMargin: 40
 				
-				color: ConferencesStyle.bar.text.color
+				color: ConferencesStyle.bar.text.colorModel.color
 				font {
 					bold: true
 					pointSize: ConferencesStyle.bar.text.pointSize
@@ -83,7 +83,7 @@ Item{
 		Rectangle {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			color: ConferencesStyle.backgroundColor
+			color: ConferencesStyle.backgroundColor.color
 			
 			ScrollableListView {
 				id: conferenceList
@@ -119,7 +119,7 @@ Item{
 						Borders {
 							id: container
 							
-							borderColor: ConferencesStyle.sectionHeading.border.color
+							borderColor: ConferencesStyle.sectionHeading.border.colorModel.color
 							bottomWidth: ConferencesStyle.sectionHeading.border.width
 							implicitHeight: text.contentHeight +
 											ConferencesStyle.sectionHeading.padding * 2 +
@@ -131,7 +131,7 @@ Item{
 								id: text
 								
 								anchors.fill: parent
-								color: ConferencesStyle.sectionHeading.text.color
+								color: ConferencesStyle.sectionHeading.text.colorModel.color
 								font {
 									bold: true
 									pointSize: ConferencesStyle.sectionHeading.text.pointSize
@@ -164,11 +164,11 @@ Item{
 						height: calendarMessage.height
 						radius: 6
 						color: calendarMessage.isCancelled
-									? ConferencesStyle.conference.backgroundColor.cancelled
+									? ConferencesStyle.conference.backgroundColor.cancelled.color
 									: mainItem.filterType == ConferenceInfoProxyModel.Ended
-										? ConferencesStyle.conference.backgroundColor.ended
-										: ConferencesStyle.conference.backgroundColor.scheduled
-						border.color: calendarMessage.containsMouse || calendarMessage.isExpanded ? ConferencesStyle.conference.selectedBorder.color  : 'transparent'
+										? ConferencesStyle.conference.backgroundColor.ended.color
+										: ConferencesStyle.conference.backgroundColor.scheduled.color
+						border.color: calendarMessage.containsMouse || calendarMessage.isExpanded ? ConferencesStyle.conference.selectedBorder.colorModel.color  : 'transparent'
 						border.width: ConferencesStyle.conference.selectedBorder.width
 						ChatCalendarMessage{
 							id: calendarMessage

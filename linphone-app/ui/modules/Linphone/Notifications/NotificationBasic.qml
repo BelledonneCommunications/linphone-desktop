@@ -27,7 +27,7 @@ Notification {
     sourceComponent: Text {
       anchors.fill: parent
 
-      color: NotificationBasicStyle.message.color
+      color: NotificationBasicStyle.message.colorModel.color
       font.pointSize: NotificationBasicStyle.message.pointSize
       text: notification.message
       verticalAlignment: Text.AlignVCenter

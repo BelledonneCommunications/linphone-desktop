@@ -13,10 +13,10 @@ Rectangle {
   signal clicked
 
   color: mouseArea.pressed
-    ? DropDownStaticMenuStyle.entry.color.pressed
+    ? DropDownStaticMenuStyle.entry.color.pressed.color
     : (mouseArea.containsMouse
-       ? DropDownStaticMenuStyle.entry.color.hovered
-       : DropDownStaticMenuStyle.entry.color.normal
+       ? DropDownStaticMenuStyle.entry.color.hovered.color
+       : DropDownStaticMenuStyle.entry.color.normal.color
       )
   height: parent.entryHeight
   width: parent.entryWidth
@@ -32,7 +32,7 @@ Rectangle {
       rightMargin: DropDownStaticMenuStyle.entry.rightMargin
     }
 
-    color: DropDownStaticMenuStyle.entry.text.color
+    color: DropDownStaticMenuStyle.entry.text.colorModel.color
     elide: Text.ElideRight
     font.pointSize: DropDownStaticMenuStyle.entry.text.pointSize
 

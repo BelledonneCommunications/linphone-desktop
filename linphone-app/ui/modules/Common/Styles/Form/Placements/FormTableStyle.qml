@@ -16,7 +16,7 @@ QtObject {
 		property int maxWidth: 400
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_entry_text', 'j').color
+			property var colorModel: ColorsList.add(sectionName+'_entry_text', 'j')
 			property int pointSize: Units.dp * 10
 		}
 	}

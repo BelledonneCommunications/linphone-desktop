@@ -37,7 +37,7 @@ Item{
 			Layout.alignment: Qt.AlignCenter
 			horizontalAlignment: Qt.AlignCenter
 			text: new Date(monthList.currentYear, monthList.currentMonth, 15).toLocaleString(App.locale, 'MMMM yyyy')// 15 because of timezones that can change the date for localeString
-			color: DatePickerStyle.title.color
+			color: DatePickerStyle.title.colorModel.color
 			font.pointSize: DatePickerStyle.title.pointSize
 			font.capitalization: Font.Capitalize
 		}
@@ -124,7 +124,7 @@ Item{
 							height: width
 							//border.width: 0.3 * radius
 							border.width: 2
-							border.color: cellItem.selected ? DatePickerStyle.cell.selectedBorderColor : 'transparent' // selected
+							border.color: cellItem.selected ? DatePickerStyle.cell.selectedBorderColor.color : 'transparent' // selected
 							//radius: 0.02 * monthList.height
 							radius: width/2
 							opacity: !mouseArea.pressed? 1: 0.3  //  pressed state
@@ -133,7 +133,7 @@ Item{
 								id: text
 								
 								anchors.centerIn: parent
-								color: DatePickerStyle.cell.color
+								color: DatePickerStyle.cell.colorModel.color
 								font.pixelSize: cellItem.selected 
 													? DatePickerStyle.cell.selectedPointSize
 													: cellItem.day < 0 

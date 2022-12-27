@@ -63,7 +63,7 @@ DialogPlus {
 		Icon{
 			icon: EphemeralChatRoomStyle.timer.icon
 			iconSize: EphemeralChatRoomStyle.timer.iconSize
-			overwriteColor: EphemeralChatRoomStyle.timer.timerColor
+			overwriteColor: EphemeralChatRoomStyle.timer.timerColor.color
 			Layout.preferredHeight: EphemeralChatRoomStyle.timer.preferredHeight
 			Layout.preferredWidth: EphemeralChatRoomStyle.timer.preferredWidth
 			Layout.alignment: Qt.AlignCenter
@@ -84,7 +84,7 @@ DialogPlus {
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
 			font.pointSize: EphemeralChatRoomStyle.descriptionText.pointSize
-			color: EphemeralChatRoomStyle.descriptionText.color
+			color: EphemeralChatRoomStyle.descriptionText.colorModel.color
 		}
 		ComboBox{
 			Layout.alignment: Qt.AlignCenter

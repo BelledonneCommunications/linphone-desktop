@@ -15,7 +15,7 @@ Controls.Slider {
 
 	background: Rectangle {
 		id: backgroundItem
-		color: SliderStyle.background.color
+		color: SliderStyle.background.colorModel.color
 
 		x: slider.leftPadding
 		y: slider.topPadding + slider.availableHeight / 2 - height / 2
@@ -29,7 +29,7 @@ Controls.Slider {
 		radius: SliderStyle.background.radius
 
 		Rectangle {
-			color: SliderStyle.background.content.color
+			color: SliderStyle.background.content.colorModel.color
 
 			height: parent.height
 			width: slider.visualPosition * parent.width
@@ -41,12 +41,12 @@ Controls.Slider {
 	handle: Rectangle {
 		id: handleItem
 		border.color: slider.pressed
-					  ? SliderStyle.handle.border.color.pressed
-					  : SliderStyle.handle.border.color.normal
+					  ? SliderStyle.handle.border.color.pressed.color
+					  : SliderStyle.handle.border.color.normal.color
 
 		color: slider.pressed
-			   ? SliderStyle.handle.color.pressed
-			   : SliderStyle.handle.color.normal
+			   ? SliderStyle.handle.color.pressed.color
+			   : SliderStyle.handle.color.normal.color
 
 		x: slider.leftPadding + slider.visualPosition * (slider.availableWidth - width)
 		y: slider.topPadding + slider.availableHeight / 2 - height / 2

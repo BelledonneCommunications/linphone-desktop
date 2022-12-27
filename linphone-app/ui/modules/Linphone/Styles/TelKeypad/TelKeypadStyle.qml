@@ -11,8 +11,8 @@ QtObject {
 	property int height: 240
 	property int rowSpacing: 12
 	property int width: 240
-	property color color: ColorsList.add(sectionName+'', 'telkeypad_bg').color
-	property color selectedColor : ColorsList.add(sectionName+'_c', 'm').color
+	property var colorModel: ColorsList.add(sectionName+'', 'telkeypad_bg')
+	property var selectedColor : ColorsList.add(sectionName+'_c', 'm')
 	property int selectedBorderWidth: 2
 	property real radius : 20
 	
@@ -26,18 +26,18 @@ QtObject {
 			property int iconSize: 0
 			property string name : 'telButton'
 			property string icon : ''
-			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'telkeypad_fg').color
-			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'telkeypad_h').color
-			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'i').color
-			property color backgroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'i').color
-			property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'transparent').color
-			property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'transparent').color
-			property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'transparent').color
-			property color foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'transparent').color
+			property var backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'telkeypad_fg')
+			property var backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'telkeypad_h')
+			property var backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'i')
+			property var backgroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'i')
+			property var foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'transparent')
+			property var foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'transparent')
+			property var foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'transparent')
+			property var foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'transparent')
 		}
 		
 		property QtObject line: QtObject {
-			property color color: ColorsList.add(sectionName+'_b_line', 'l50').color
+			property var colorModel: ColorsList.add(sectionName+'_b_line', 'l50')
 			property int bottomMargin: 4
 			property int height: 2
 			property int leftMargin: 8
@@ -46,7 +46,7 @@ QtObject {
 		}
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_b_text', 'telkeypad_bg').color
+			property var colorModel: ColorsList.add(sectionName+'_b_text', 'telkeypad_bg')
 			property int pointSize: Units.dp * 14
 		}
 	}

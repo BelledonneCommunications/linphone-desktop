@@ -25,7 +25,7 @@ Item {
       rightMargin: DialogStyle.description.rightMargin
     }
 
-    color: DialogStyle.description.color
+    color: DialogStyle.description.colorModel.color
     font.pointSize: DialogStyle.description.pointSize
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter

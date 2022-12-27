@@ -56,7 +56,7 @@ DialogPlus {
 				Layout.fillWidth: true
 				//: 'Would you like to encrypt your meeting ?' : Ask about setting the meeting as secured.
 				text:qsTr('askEncryption')
-				color: NewConferenceStyle.askEncryptionColor
+				color: NewConferenceStyle.askEncryptionColor.color
 				font.pointSize: NewConferenceStyle.titles.pointSize
 				font.weight: Font.DemiBold
 			}
@@ -207,7 +207,7 @@ DialogPlus {
 					textFormat: Text.RichText
 					//: 'Subject' : Label of a text field about the subject of the conference
 					text :qsTr('subjectLabel') +'<span style="color:red">*</span>'
-					color: NewConferenceStyle.titles.textColor
+					color: NewConferenceStyle.titles.textColor.color
 					font.pointSize: NewConferenceStyle.titles.pointSize
 					font.weight: NewConferenceStyle.titles.weight
 				}
@@ -257,7 +257,7 @@ DialogPlus {
 							Layout.rightMargin: 15
 							//: 'Would you like to schedule your meeting?' : Ask about setting the meeting as scheduled.
 							text: qsTr('newConferenceScheduleTitle')
-							color: NewConferenceStyle.titles.textColor
+							color: NewConferenceStyle.titles.textColor.color
 							font.pointSize: NewConferenceStyle.titles.pointSize
 							font.weight: NewConferenceStyle.titles.weight
 							wrapMode: Text.WordWrap
@@ -278,21 +278,21 @@ DialogPlus {
 						Text{textFormat: Text.RichText; 
 							//: 'Date' : Date label.
 							text: qsTr('newConferenceDate')+'<span style="color:red">*</span>'
-							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor.color; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						Text{textFormat: Text.RichText
 						//: 'Time' : Time label.
 							text: qsTr('newConferenceTimeTitle')+'<span style="color:red">*</span>'
-							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor.color; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						Text{textFormat: Text.RichText
 						//: 'Duration' : Duration label.
 							text: qsTr('newConferenceDurationTitle')
-							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor.color; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						Text{textFormat: Text.RichText
 						//: 'Timezone' : Timezone label.
 							text: qsTr('newConferenceTimezoneTitle')
-							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
+							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor.color; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						TextField{id: dateField; Layout.preferredWidth: parent.cellWidth
-							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
+							color: NewConferenceStyle.fields.textColor.color; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							property date currentDate: new Date()
 							function getDate(){
 								return currentDate
@@ -317,7 +317,7 @@ DialogPlus {
 							}
 						} 
 						TextField{id: timeField; Layout.preferredWidth: parent.cellWidth
-							color: NewConferenceStyle.fields.textColor; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
+							color: NewConferenceStyle.fields.textColor.color; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getTime(){
 								return Date.fromLocaleTimeString(scheduleForm.locale, timeField._text, 'hh:mm')
 							}
@@ -415,7 +415,7 @@ DialogPlus {
 							textFormat: Text.RichText
 							//: 'Add a description' : Label of a text field about the description of the conference
 							text : qsTr('newConferenceDescriptionTitle')
-							color: NewConferenceStyle.titles.textColor
+							color: NewConferenceStyle.titles.textColor.color
 							font.pointSize: NewConferenceStyle.titles.pointSize
 							font.weight: NewConferenceStyle.titles.weight
 						}
@@ -477,7 +477,7 @@ DialogPlus {
 					Layout.fillHeight: true
 					Layout.fillWidth: true
 					border.width: 1
-					border.color: NewConferenceStyle.addressesBorderColor
+					border.color: NewConferenceStyle.addressesBorderColor.color
 					
 					ColumnLayout {
 						anchors.fill: parent
@@ -532,7 +532,7 @@ DialogPlus {
 							//~ one word for admin status
 							text : qsTr('adminStatus')
 							
-							color: NewConferenceStyle.addressesAdminColor
+							color: NewConferenceStyle.addressesAdminColor.color
 							font.pointSize: Units.dp * 11
 							font.weight: Font.Light
 							visible: participantView.count > 0
@@ -591,7 +591,7 @@ DialogPlus {
 						textFormat: Text.RichText
 						//: 'Required' : Word relative to a star to explain that it is a requirement (Field form)
 						text : '<span style="color:red">*</span> '+qsTr('requiredField')
-						color: NewConferenceStyle.requiredColor
+						color: NewConferenceStyle.requiredColor.color
 						font.pointSize: Units.dp * 8
 					}
 				}
@@ -631,11 +631,11 @@ DialogPlus {
 				Layout.preferredHeight: 20
 				Layout.preferredWidth: 20
 				Layout.alignment: Qt.AlignCenter
-				color: NewConferenceStyle.busy.color
+				color: NewConferenceStyle.busy.colorModel.color
 			}
 			Text{
 				Layout.fillWidth: true
-				color: NewConferenceStyle.busy.color
+				color: NewConferenceStyle.busy.colorModel.color
 				//: 'Operations in progress, please wait' : Waiting message till the end of operations when creating a conference.
 				text: qsTr('busyOperations')
 				font.pointSize: NewConferenceStyle.busy.pointSize

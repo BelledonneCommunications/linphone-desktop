@@ -74,7 +74,7 @@ DialogPlus {
 			id: description
 			Layout.fillWidth: true
 			
-			color: SipAddressDialogStyle.list.color
+			color: SipAddressDialogStyle.list.colorModel.color
 			font.pointSize: SipAddressDialogStyle.list.pointSize
 			horizontalAlignment: Qt.AlignLeft
 			verticalAlignment: Text.AlignVCenter

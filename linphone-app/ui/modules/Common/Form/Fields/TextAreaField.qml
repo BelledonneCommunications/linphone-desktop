@@ -22,13 +22,13 @@ Rectangle {
 	height: TextAreaFieldStyle.background.height
 	width: TextAreaFieldStyle.background.width
 	border {
-		color: TextAreaFieldStyle.background.border.color
+		color: TextAreaFieldStyle.background.border.colorModel.color
 		width: TextAreaFieldStyle.background.border.width
 	}
 	
 	color: textArea.readOnly
-		   ? TextAreaFieldStyle.background.color.readOnly
-		   : TextAreaFieldStyle.background.color.normal
+		   ? TextAreaFieldStyle.background.color.readOnly.color
+		   : TextAreaFieldStyle.background.color.normal.color
 	
 	radius: TextAreaFieldStyle.background.radius
 // Fit Width computation
@@ -65,7 +65,7 @@ Rectangle {
 			
 			background: Item{}
 			
-			color: TextAreaFieldStyle.text.color
+			color: TextAreaFieldStyle.text.colorModel.color
 			font.pointSize: TextAreaFieldStyle.text.pointSize
 			selectByMouse: true
 			wrapMode: TextArea.Wrap

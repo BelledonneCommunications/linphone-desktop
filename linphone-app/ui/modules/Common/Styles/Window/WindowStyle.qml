@@ -8,6 +8,6 @@ import ColorsList 1.0
 QtObject {
 	property string sectionName: 'Window'
 	property QtObject transientWindow: QtObject {
-		property color color: ColorsList.add(sectionName+'_transient', 'l80').color
+		property var colorModel: ColorsList.add(sectionName+'_transient', 'l80')
 	}
 }

@@ -54,20 +54,26 @@ Item {
 		height: mainItem.height
 		width: mainItem.width
 		color: isSelected
-			   ? TimelineStyle.contact.backgroundColor.selected
+			   ? TimelineStyle.contact.backgroundColor.selected.color
 			   : (
 					 mainItem.modelIndex % 2 == 0
-					 ? TimelineStyle.contact.backgroundColor.a
-					 : TimelineStyle.contact.backgroundColor.b
+					 ? TimelineStyle.contact.backgroundColor.a.color
+					 : TimelineStyle.contact.backgroundColor.b.color
 					 )
 		displayUnreadMessageCount: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
 		entry: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel
+		
+		property var subtitleSelectedColors: TimelineStyle.contact.subtitle.color.selected
+		property var subtitleNormalColors: TimelineStyle.contact.subtitle.color.normal
+		property var titleSelectedColors: TimelineStyle.contact.title.color.selected
+		property var titleNormalColors: TimelineStyle.contact.title.color.normal
+		
 		subtitleColor: isSelected
-						 ? TimelineStyle.contact.subtitle.color.selected
-						 : TimelineStyle.contact.subtitle.color.normal
+						 ? subtitleSelectedColors.color
+						 : subtitleNormalColors.color
 		titleColor: isSelected
-					   ? TimelineStyle.contact.title.color.selected
-					   : TimelineStyle.contact.title.color.normal
+					   ? titleSelectedColors.color
+					   : titleNormalColors.color
 		showSubtitle: mainItem.timelineModel && (mainItem.timelineModel.chatRoomModel && (mainItem.timelineModel.chatRoomModel.isOneToOne || !mainItem.timelineModel.chatRoomModel.isConference))
 		showBusyIndicator: mainItem.timelineModel && mainItem.timelineModel.updating
 		TooltipArea {
@@ -78,7 +84,7 @@ Item {
 		Icon{
 			icon: TimelineStyle.ephemeralTimer.icon
 			iconSize: TimelineStyle.ephemeralTimer.iconSize
-			overwriteColor:  mainItem.timelineModel && mainItem.timelineModel.selected ? TimelineStyle.ephemeralTimer.selectedTimerColor : TimelineStyle.ephemeralTimer.timerColor
+			overwriteColor:  mainItem.timelineModel && mainItem.timelineModel.selected ? TimelineStyle.ephemeralTimer.selectedTimerColor.color : TimelineStyle.ephemeralTimer.timerColor.color
 			anchors.right:parent.right
 			anchors.bottom:parent.bottom
 			anchors.bottomMargin: 7

@@ -71,8 +71,8 @@ Item {
 		showCloseButton: false
 		showActiveSpeakerOverlay: false	// This is an active speaker. We don't need to show the indicator.
 		showCustomButton:  false
-		avatarStickerBackgroundColor: isPreview ?  IncallStyle.container.avatar.stickerPreviewBackgroundColor : IncallStyle.container.avatar.stickerBackgroundColor
-		avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+		avatarStickerBackgroundColor: isPreview ?  IncallStyle.container.avatar.stickerPreviewBackgroundColor.color : IncallStyle.container.avatar.stickerBackgroundColor.color
+		avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor.color
 	}
 	Item{// Need an item to not override Sticker internal states. States are needed for changing anchors.
 		id: preview
@@ -101,8 +101,8 @@ Item {
 				showCloseButton: false
 				showCustomButton:  false
 				showAvatarBorder: true
-				avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerPreviewBackgroundColor
-				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+				avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerPreviewBackgroundColor.color
+				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor.color
 			}
 			active: parent.visible
 		}
@@ -157,8 +157,8 @@ Item {
 						showCloseButton: false
 						showCustomButton:  false
 						showAvatarBorder: true
-						avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor
-						avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+						avatarStickerBackgroundColor: IncallStyle.container.avatar.stickerBackgroundColor.color
+						avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor.color
 					}
 				}
 		}

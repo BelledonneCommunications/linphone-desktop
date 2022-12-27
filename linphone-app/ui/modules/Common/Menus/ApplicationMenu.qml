@@ -29,7 +29,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: ApplicationMenuStyle.backgroundColor
+  color: ApplicationMenuStyle.backgroundColor.color
   implicitHeight: content.height
   width: entryWidth
 

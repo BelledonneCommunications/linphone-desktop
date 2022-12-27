@@ -79,10 +79,10 @@ Loader{
 				Layout.alignment: Qt.AlignRight
 				elide: Text.ElideRight
 				color: mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateUpdated 
-										? ChatCalendarMessageStyle.type.updatedColor
+										? ChatCalendarMessageStyle.type.updatedColor.color
 										: mainItem.conferenceInfoModel.state == LinphoneEnums.ConferenceInfoStateCancelled
-											? ChatCalendarMessageStyle.type.cancelledColor
-											: ChatCalendarMessageStyle.type.color
+											? ChatCalendarMessageStyle.type.cancelledColor.color
+											: ChatCalendarMessageStyle.type.colorModel.color
 				
 				font.pointSize: ChatCalendarMessageStyle.type.pointSize
 				font.weight: Font.Bold
@@ -102,7 +102,7 @@ Loader{
 				Layout.leftMargin: 5
 				Layout.alignment: Qt.AlignRight
 				elide: Text.ElideRight
-				color: ChatCalendarMessageStyle.subject.color
+				color: ChatCalendarMessageStyle.subject.colorModel.color
 				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 				font.weight: Font.Bold
 				text: mainItem.conferenceInfoModel.subject
@@ -121,13 +121,13 @@ Loader{
 				Icon{
 					icon: ChatCalendarMessageStyle.participants.icon
 					iconSize: ChatCalendarMessageStyle.participants.iconSize
-					overwriteColor: ChatCalendarMessageStyle.participants.color
+					overwriteColor: ChatCalendarMessageStyle.participants.colorModel.color
 				}
 				
 				Text {
 					id: participantsList
 					Layout.fillWidth: true
-					color: ChatCalendarMessageStyle.participants.color
+					color: ChatCalendarMessageStyle.participants.colorModel.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 					//: '%1 participant' : number(=%1) of participant.
@@ -148,7 +148,7 @@ Loader{
 					Icon{
 						icon: ChatCalendarMessageStyle.calendar.icon
 						iconSize: ChatCalendarMessageStyle.calendar.iconSize-2
-						overwriteColor: ChatCalendarMessageStyle.calendar.color
+						overwriteColor: ChatCalendarMessageStyle.calendar.colorModel.color
 					}
 					
 					Text {
@@ -156,7 +156,7 @@ Loader{
 						Layout.fillWidth: true
 						Layout.minimumWidth: implicitWidth
 						verticalAlignment: Qt.AlignVCenter
-						color: ChatCalendarMessageStyle.schedule.color
+						color: ChatCalendarMessageStyle.schedule.colorModel.color
 						elide: Text.ElideRight
 						font.pointSize: Units.dp * 8
 						text: UtilsCpp.toDateString(Utils.fromUTC(mainItem.conferenceInfoModel.dateTimeUtc), 'yyyy/MM/dd')
@@ -172,7 +172,7 @@ Loader{
 					Icon{
 						icon: ChatCalendarMessageStyle.schedule.icon
 						iconSize: ChatCalendarMessageStyle.schedule.iconSize-2
-						overwriteColor: ChatCalendarMessageStyle.schedule.color
+						overwriteColor: ChatCalendarMessageStyle.schedule.colorModel.color
 					}
 					
 					Text {
@@ -180,7 +180,7 @@ Loader{
 						Layout.fillWidth: true
 						Layout.minimumWidth: implicitWidth
 						verticalAlignment: Qt.AlignVCenter
-						color: ChatCalendarMessageStyle.schedule.color
+						color: ChatCalendarMessageStyle.schedule.colorModel.color
 						elide: Text.ElideRight
 						font.pointSize: Units.dp * 8
 // Reminder: QML use locale time (not system). Use UTC from C++ => convert it into QML => pass QML => convert it into UTC and apply our timezone.
@@ -215,13 +215,13 @@ Loader{
 						width: expandedParticipantsList.width
 						height: ChatCalendarMessageStyle.lineHeight
 						Text{text: modelData.displayName
-							color: ChatCalendarMessageStyle.description.color
+							color: ChatCalendarMessageStyle.description.colorModel.color
 							font.pointSize: ChatCalendarMessageStyle.description.pointSize
 							elide: Text.ElideRight
 							wrapMode: TextEdit.WordWrap
 						}
 						Text{text: '('+modelData.address+')'
-							color: ChatCalendarMessageStyle.description.color
+							color: ChatCalendarMessageStyle.description.colorModel.color
 							font.pointSize: ChatCalendarMessageStyle.description.pointSize
 							elide: Text.ElideRight
 							wrapMode: TextEdit.WordWrap
@@ -234,7 +234,7 @@ Loader{
 				Layout.fillWidth: true
 				Layout.leftMargin: 5
 				Layout.topMargin: 5
-				color: ChatCalendarMessageStyle.subject.color
+				color: ChatCalendarMessageStyle.subject.colorModel.color
 				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 				font.weight: Font.Bold
 				//: 'Description' : Title for the meeting description.
@@ -249,7 +249,7 @@ Loader{
 				padding: 0
 				color: 'transparent'
 				readOnly: true
-				textColor: ChatCalendarMessageStyle.description.color
+				textColor: ChatCalendarMessageStyle.description.colorModel.color
 				font.pointSize: ChatCalendarMessageStyle.description.pointSize
 				border.width: 0
 				visible: description.text != ''

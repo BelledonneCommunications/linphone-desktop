@@ -30,12 +30,12 @@ DesktopPopup {
   }
 
   Rectangle {
-    color: NotificationStyle.color
+    color: NotificationStyle.colorModel.color
     height: overrodeHeight || NotificationStyle.height
     width: NotificationStyle.width
 
     border {
-      color: NotificationStyle.border.color
+      color: NotificationStyle.border.colorModel.color
       width: NotificationStyle.border.width
     }
 

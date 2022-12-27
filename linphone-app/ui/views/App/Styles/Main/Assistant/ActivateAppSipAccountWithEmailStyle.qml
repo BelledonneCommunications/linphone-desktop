@@ -11,7 +11,7 @@ QtObject {
 	property int spacing: 20
 	
 	property QtObject activationSteps: QtObject {
-		property color color: ColorsList.add(sectionName+'_email_steps', 'g').color
+		property var colorModel: ColorsList.add(sectionName+'_email_steps', 'g')
 		property int pointSize: Units.dp * 10
 	}
 }

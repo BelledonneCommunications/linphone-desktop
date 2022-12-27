@@ -25,7 +25,7 @@ ColumnLayout {
 		
 		Layout.fillWidth: true
 		
-		color: FormVGroupStyle.legend.color
+		color: FormVGroupStyle.legend.colorModel.color
 		elide: Text.ElideRight
 		font.pointSize: FormVGroupStyle.legend.pointSize
 		verticalAlignment: Text.AlignVCenter

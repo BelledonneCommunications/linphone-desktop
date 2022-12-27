@@ -97,7 +97,7 @@ Loader{
 							anchors.centerIn: parent
 							icon: ChatCalendarMessageStyle.schedule.icon
 							iconSize: ChatCalendarMessageStyle.schedule.iconSize
-							overwriteColor: ChatCalendarMessageStyle.schedule.color
+							overwriteColor: ChatCalendarMessageStyle.schedule.colorModel.color
 						}
 					}
 					
@@ -108,7 +108,7 @@ Loader{
 						Layout.minimumWidth: implicitWidth
 						
 						verticalAlignment: Qt.AlignVCenter
-						color: ChatCalendarMessageStyle.schedule.color
+						color: ChatCalendarMessageStyle.schedule.colorModel.color
 						elide: Text.ElideRight
 						font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
 // Reminder: QML use locale time (not system). Use UTC from C++ => convert it into QML => pass QML => convert it into UTC and apply our timezone.
@@ -123,7 +123,7 @@ Loader{
 					Layout.rightMargin: 15
 					horizontalAlignment: Qt.AlignRight
 					verticalAlignment: Qt.AlignVCenter
-					color: ChatCalendarMessageStyle.schedule.color
+					color: ChatCalendarMessageStyle.schedule.colorModel.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.schedule.pointSize
 					//: 'Organizer' : Label Title for the organizer.
@@ -141,7 +141,7 @@ Loader{
 				visible: mainItem.isCancelled
 				
 				elide: Text.ElideRight
-				color: ChatCalendarMessageStyle.type.cancelledColor
+				color: ChatCalendarMessageStyle.type.cancelledColor.color
 				font.pointSize: ChatCalendarMessageStyle.type.pointSize
 				font.weight: Font.Bold
 				//: 'Meeting has been cancelled' : ICS Title for cancelled meetings
@@ -156,7 +156,7 @@ Loader{
 				Layout.leftMargin: 10
 				
 				elide: Text.ElideRight
-				color: ChatCalendarMessageStyle.subject.color
+				color: ChatCalendarMessageStyle.subject.colorModel.color
 				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 				font.weight: Font.Bold
 				text: mainItem.conferenceInfoModel.subject
@@ -187,7 +187,7 @@ Loader{
 						anchors.horizontalCenter: parent.horizontalCenter
 						icon: ChatCalendarMessageStyle.participants.icon
 						iconSize: ChatCalendarMessageStyle.participants.iconSize
-						overwriteColor: ChatCalendarMessageStyle.participants.color
+						overwriteColor: ChatCalendarMessageStyle.participants.colorModel.color
 					}
 				}
 				
@@ -198,7 +198,7 @@ Loader{
 					Layout.topMargin: 4
 					Layout.alignment: Qt.AlignTop
 					visible: !mainItem.isExpanded
-					color: ChatCalendarMessageStyle.participants.color
+					color: ChatCalendarMessageStyle.participants.colorModel.color
 					elide: Text.ElideRight
 					font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 					text: mainItem.conferenceInfoModel.displayNamesToString
@@ -226,7 +226,7 @@ Loader{
 							id: displayName
 							height: participantsRow.participantLineHeight
 							text: modelData.displayName
-							color: ChatCalendarMessageStyle.participants.color
+							color: ChatCalendarMessageStyle.participants.colorModel.color
 							font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 							elide: Text.ElideRight
 						}
@@ -234,7 +234,7 @@ Loader{
 							height: participantsRow.participantLineHeight
 							width: expandedParticipantsList.contentWidth - displayName.width - parent.spacing	// parent.width is not enough. Force width
 							text: '('+modelData.address+')'
-							color: ChatCalendarMessageStyle.participants.color
+							color: ChatCalendarMessageStyle.participants.colorModel.color
 							font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 							elide: Text.ElideRight
 						}
@@ -275,7 +275,7 @@ Loader{
 					Layout.fillWidth: true
 					Layout.leftMargin: 10
 					Layout.topMargin: 5
-					color: ChatCalendarMessageStyle.subject.color
+					color: ChatCalendarMessageStyle.subject.colorModel.color
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
 					//: 'Description' : Title for the meeting description.
@@ -292,7 +292,7 @@ Loader{
 					padding: 0
 					color: 'transparent'
 					readOnly: true
-					textColor: ChatCalendarMessageStyle.description.color
+					textColor: ChatCalendarMessageStyle.description.colorModel.color
 					font.pointSize: ChatCalendarMessageStyle.description.pointSize
 					border.width: 0
 					visible: description.text != ''
@@ -303,7 +303,7 @@ Loader{
 					Layout.fillWidth: true
 					Layout.leftMargin: 10
 					Layout.topMargin: 5
-					color: ChatCalendarMessageStyle.subject.color
+					color: ChatCalendarMessageStyle.subject.colorModel.color
 					font.pointSize: ChatCalendarMessageStyle.subject.pointSize
 					font.weight: Font.Bold
 					visible: !mainItem.isCancelled

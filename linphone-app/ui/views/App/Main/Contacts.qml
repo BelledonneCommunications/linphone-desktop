@@ -32,7 +32,7 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.preferredHeight: ContactsStyle.bar.height
 		
-		color: ContactsStyle.bar.backgroundColor
+		color: ContactsStyle.bar.backgroundColor.color
 		
 		RowLayout {
 			anchors {
@@ -45,7 +45,7 @@ ColumnLayout {
 			TextField {
 				Layout.fillWidth: true
 				icon: ContactsStyle.filter.icon
-				overwriteColor: ContactsStyle.filter.color
+				overwriteColor: ContactsStyle.filter.colorModel.color
 				placeholderText: qsTr('searchContactPlaceholder')
 				
 				onTextChanged: contacts.setFilter(text)
@@ -75,7 +75,7 @@ ColumnLayout {
 	Rectangle {
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		color: ContactsStyle.backgroundColor
+		color: ContactsStyle.backgroundColor.color
 		
 		ScrollableListView {
 			anchors.fill: parent
@@ -86,7 +86,7 @@ ColumnLayout {
 			}
 			
 			delegate: Borders {
-				bottomColor: ContactsStyle.contact.border.color
+				bottomColor: ContactsStyle.contact.border.colorModel.color
 				bottomWidth: ContactsStyle.contact.border.width
 				height: ContactsStyle.contact.height
 				width: parent ? parent.width : 0
@@ -97,7 +97,7 @@ ColumnLayout {
 					id: contact
 					
 					anchors.fill: parent
-					color: ContactsStyle.contact.backgroundColor.normal
+					color: ContactsStyle.contact.backgroundColor.normal.color
 					
 					// -------------------------------------------------------------------
 					
@@ -115,7 +115,7 @@ ColumnLayout {
 							
 							Text {
 								Layout.fillWidth: true
-								color: ContactsStyle.contact.presence.color
+								color: ContactsStyle.contact.presence.colorModel.color
 								elide: Text.ElideRight
 								font.pointSize: ContactsStyle.contact.presence.pointSize
 								text: Presence.getPresenceStatusAsString($modelData.presenceStatus)
@@ -282,7 +282,7 @@ ColumnLayout {
 								Layout.fillHeight: true
 								Layout.preferredWidth: ContactsStyle.contact.username.width
 								
-								color: ContactsStyle.contact.username.color
+								color: ContactsStyle.contact.username.colorModel.color
 								elide: Text.ElideRight
 								
 								font {
@@ -311,12 +311,12 @@ ColumnLayout {
 						when: mouseArea.containsMouse
 						
 						PropertyChanges {
-							color: ContactsStyle.contact.backgroundColor.hovered
+							color: ContactsStyle.contact.backgroundColor.hovered.color
 							target: contact
 						}
 						
 						PropertyChanges {
-							color: ContactsStyle.contact.indicator.color
+							color: ContactsStyle.contact.indicator.colorModel.color
 							target: indicator
 						}
 						

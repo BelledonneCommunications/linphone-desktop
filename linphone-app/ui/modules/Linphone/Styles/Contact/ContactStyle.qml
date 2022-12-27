@@ -14,8 +14,8 @@ QtObject {
 	
 	property QtObject groupChat: QtObject {
 		property string icon: 'chat_room_custom'
-		property color color: ColorsList.addImageColor(sectionName+'_groupChat', icon, 'g').color
-		property color avatarColor: ColorsList.addImageColor(sectionName+'_groupChat_onAvatar', icon, 'q').color
-		property color avatarDarkModeColor: ColorsList.addImageColor(sectionName+'_groupChat_dark_onAvatar', icon, 'd').color
+		property var colorModel: ColorsList.addImageColor(sectionName+'_groupChat', icon, 'g')
+		property var avatarColor: ColorsList.addImageColor(sectionName+'_groupChat_onAvatar', icon, 'q')
+		property var avatarDarkModeColor: ColorsList.addImageColor(sectionName+'_groupChat_dark_onAvatar', icon, 'd')
 	}
 }

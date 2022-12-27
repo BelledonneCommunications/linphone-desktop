@@ -127,7 +127,7 @@ Column {
           right: parent.right
         }
 
-        color: CodecsViewerStyle.attribute.background.color.normal
+        color: CodecsViewerStyle.attribute.background.color.normal.color
 
         height: dragArea.height
 
@@ -202,7 +202,7 @@ Column {
           PropertyChanges {
             target: content
 
-            color: CodecsViewerStyle.attribute.background.color.hovered
+            color: CodecsViewerStyle.attribute.background.color.hovered.color
           }
         },
 
@@ -212,7 +212,7 @@ Column {
           PropertyChanges {
             target: content
 
-            color: CodecsViewerStyle.attribute.background.color.hovered
+            color: CodecsViewerStyle.attribute.background.color.hovered.color
           }
 
           PropertyChanges {

@@ -5,7 +5,7 @@ import Linphone.Styles 1.0
 // =============================================================================
 
 Text {
-  color: CodecsViewerStyle.legend.color
+  color: CodecsViewerStyle.legend.colorModel.color
   elide: Text.ElideRight
 
   font {

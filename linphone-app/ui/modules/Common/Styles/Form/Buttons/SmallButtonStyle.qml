@@ -16,14 +16,14 @@ QtObject {
 		property int radius: 20
 		
 		property QtObject color: QtObject {
-			property color hovered: ColorsList.add(sectionName+'_bg_h', 'c').color
-			property color normal: ColorsList.add(sectionName+'_bg_n', 'f').color
-			property color pressed: ColorsList.add(sectionName+'_bg_p', 'i').color
+			property var hovered: ColorsList.add(sectionName+'_bg_h', 'c')
+			property var normal: ColorsList.add(sectionName+'_bg_n', 'f')
+			property var pressed: ColorsList.add(sectionName+'_bg_p', 'i')
 		}
 	}
 	
 	property QtObject text: QtObject {
-		property color color: ColorsList.add(sectionName+'_text', 'q').color
+		property var colorModel: ColorsList.add(sectionName+'_text', 'q')
 		property int pointSize: Units.dp * 8
 	}
 }

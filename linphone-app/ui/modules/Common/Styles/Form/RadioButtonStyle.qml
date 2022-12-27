@@ -9,10 +9,10 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'RadioButton'
-	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'k').color
+	property var backgroundColor: ColorsList.add(sectionName+'_bg', 'k')
 	
 	property int height: 60
-	property color color: ColorsList.add(sectionName+'_fg', 'j').color
+	property var colorModel: ColorsList.add(sectionName+'_fg', 'j')
 	property int weight: Font.Normal
 	property int selectedWeight: Font.Bold
 	property int pointSize: Units.dp * 12

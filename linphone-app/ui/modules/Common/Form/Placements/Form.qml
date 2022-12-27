@@ -31,7 +31,7 @@ Column {
 				id: title
 				anchors.verticalCenter: parent.verticalCenter
 				
-				color: FormStyle.header.title.color
+				color: FormStyle.header.title.colorModel.color
 				font {
 					bold: true
 					pointSize: FormStyle.header.title.pointSize
@@ -63,7 +63,7 @@ Column {
 			Layout.fillWidth: true
 			Layout.preferredHeight: FormStyle.header.separator.height
 			
-			color: FormStyle.header.separator.color
+			color: FormStyle.header.separator.colorModel.color
 		}
 		
 		Item {

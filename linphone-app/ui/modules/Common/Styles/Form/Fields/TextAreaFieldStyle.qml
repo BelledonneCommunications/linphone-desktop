@@ -15,18 +15,18 @@ QtObject {
 		property int radius: 4
 		
 		property QtObject border: QtObject {
-			property color color: ColorsList.add(sectionName+'_bg_border', 'c').color
+			property var colorModel: ColorsList.add(sectionName+'_bg_border', 'c')
 			property int width: 1
 		}
 		
 		property QtObject color: QtObject {
-			property color normal: ColorsList.add(sectionName+'_bg_n', 'q').color
-			property color readOnly: ColorsList.add(sectionName+'_bg_readOnly', 'e').color
+			property var normal: ColorsList.add(sectionName+'_bg_n', 'q')
+			property var readOnly: ColorsList.add(sectionName+'_bg_readOnly', 'e')
 		}
 	}
 	
 	property QtObject text: QtObject {
-		property color color: ColorsList.add(sectionName+'_text', 'd').color
+		property var colorModel: ColorsList.add(sectionName+'_text', 'd')
 		property int pointSize: Units.dp * 10
 		property int padding: 8
 	}

@@ -27,15 +27,15 @@ ScrollBar {
 	
 	background: Rectangle {
 		anchors.fill: parent
-		color: ForceScrollBarStyle.background.color
+		color: ForceScrollBarStyle.background.colorModel.color
 		radius: ForceScrollBarStyle.background.radius
 	}
 	contentItem: Rectangle {
 		color: scrollBar.pressed
-			   ? ForceScrollBarStyle.color.pressed
+			   ? ForceScrollBarStyle.color.pressed.color
 			   : (scrollBar.hovered
-				  ? ForceScrollBarStyle.color.hovered
-				  : ForceScrollBarStyle.color.normal
+				  ? ForceScrollBarStyle.color.hovered.color
+				  : ForceScrollBarStyle.color.normal.color
 				  )
 		implicitHeight: ForceScrollBarStyle.contentItem.implicitHeight
 		implicitWidth: ForceScrollBarStyle.contentItem.implicitWidth

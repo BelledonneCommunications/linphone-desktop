@@ -48,7 +48,7 @@ Item{
         anchors.fill: content
         glowRadius: 4
         spread: 0.9
-        color: DecorationStickerStyle.border.color
+        color: DecorationStickerStyle.border.colorModel.color
         cornerRadius: (mainItem.radius? mainItem.radius : 0) + glowRadius
         visible: mainItem._showActiveSpeakerOverlay && mainItem._currentDevice && mainItem._currentDevice.isSpeaking
     }
@@ -60,7 +60,7 @@ Item{
 	Rectangle{
 		id: hideView
 		anchors.fill: parent
-		color: DecorationStickerStyle.pauseView.backgroundColor
+		color: DecorationStickerStyle.pauseView.backgroundColor.color
 		radius: DecorationStickerStyle.radius
 		visible: mainItem._isPaused
 		Rectangle{
@@ -68,11 +68,11 @@ Item{
 			height: DecorationStickerStyle.pauseView.button.iconSize
 			width: height
 			radius: width/2
-			color: DecorationStickerStyle.pauseView.button.backgroundNormalColor
+			color: DecorationStickerStyle.pauseView.button.backgroundNormalColor.color
 			Icon{
 				anchors.centerIn: parent
 				icon: DecorationStickerStyle.pauseView.button.icon
-				overwriteColor: DecorationStickerStyle.pauseView.button.foregroundNormalColor
+				overwriteColor: DecorationStickerStyle.pauseView.button.foregroundNormalColor.color
 				iconSize: DecorationStickerStyle.pauseView.button.iconSize
 			}
 		}
@@ -90,7 +90,7 @@ Item{
 		text:  mainItem.username + (mainItem._isPaused ? ' ('+qsTr('paused')+')' : '')
 		font.pointSize: DecorationStickerStyle.contactDescription.pointSize
 		font.weight: DecorationStickerStyle.contactDescription.weight
-		color: DecorationStickerStyle.contactDescription.color
+		color: DecorationStickerStyle.contactDescription.colorModel.color
 	}
 	Glow {
 		anchors.fill: usernameItem
@@ -134,11 +134,11 @@ Item{
 			Layout.preferredHeight: DecorationStickerStyle.isMuted.button.iconSize
 			Layout.preferredWidth: DecorationStickerStyle.isMuted.button.iconSize
 			radius: width/2
-			color: DecorationStickerStyle.isMuted.button.backgroundNormalColor
+			color: DecorationStickerStyle.isMuted.button.backgroundNormalColor.color
 			Icon{
 				anchors.centerIn: parent
 				icon: DecorationStickerStyle.isMuted.button.icon
-				overwriteColor: DecorationStickerStyle.isMuted.button.foregroundNormalColor
+				overwriteColor: DecorationStickerStyle.isMuted.button.foregroundNormalColor.color
 				iconSize: DecorationStickerStyle.isMuted.button.iconSize
 			}
 		}

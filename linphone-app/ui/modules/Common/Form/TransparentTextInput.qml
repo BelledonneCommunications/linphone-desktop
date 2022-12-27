@@ -34,7 +34,7 @@ Item {
     id: background
 
     color: (textInput.activeFocus || parent.forceFocus) && !textInput.readOnly
-      ? TransparentTextInputStyle.backgroundColor
+      ? TransparentTextInputStyle.backgroundColor.color
       : // No Style constant, see component name.
         // It's a `transparent` TextInput.
        'transparent'
@@ -66,7 +66,7 @@ Item {
     id: placeholder
 
     anchors.centerIn: parent
-    color: TransparentTextInputStyle.placeholder.color
+    color: TransparentTextInputStyle.placeholder.colorModel.color
     elide: Text.ElideRight
 
     font {
@@ -90,8 +90,8 @@ Item {
 
     clip: true
     color: activeFocus && !readOnly
-      ? TransparentTextInputStyle.text.color.focused
-      : TransparentTextInputStyle.text.color.normal
+      ? TransparentTextInputStyle.text.color.focused.color
+      : TransparentTextInputStyle.text.color.normal.color
     font.pointSize: TransparentTextInputStyle.text.pointSize
     selectByMouse: true
     verticalAlignment: TextInput.AlignVCenter

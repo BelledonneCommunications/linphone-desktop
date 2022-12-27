@@ -21,8 +21,8 @@ QtObject {
 	}
 	
 	property QtObject text: QtObject {
-		property color colorA: ColorsList.add(sectionName+'_zrtp_text_a', 'j').color
-		property color colorB: ColorsList.add(sectionName+'_zrtp_text_b', 's').color
+		property var colorA: ColorsList.add(sectionName+'_zrtp_text_a', 'j')
+		property var colorB: ColorsList.add(sectionName+'_zrtp_text_b', 's')
 		property int pointSize: Units.dp * 10
 		property int titlePointSize: Units.dp * 12
 		property int sasPointSize: Units.dp * 13

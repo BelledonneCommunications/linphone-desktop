@@ -53,7 +53,7 @@ Notification {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				
-				color: NotificationReceivedMessageStyle.messageContainer.color
+				color: NotificationReceivedMessageStyle.messageContainer.colorModel.color
 				radius: NotificationReceivedMessageStyle.messageContainer.radius
 				
 				Text {
@@ -62,7 +62,7 @@ Notification {
 						margins: NotificationReceivedMessageStyle.messageContainer.margins
 					}
 					
-					color: NotificationReceivedMessageStyle.messageContainer.text.color
+					color: NotificationReceivedMessageStyle.messageContainer.text.colorModel.color
 					elide: Text.ElideRight
 					
 					font {

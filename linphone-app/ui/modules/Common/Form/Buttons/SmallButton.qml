@@ -17,16 +17,16 @@ Button {
     id: background
 
     color: button.down
-      ? SmallButtonStyle.background.color.pressed
+      ? SmallButtonStyle.background.color.pressed.color
       : (button.hovered
-         ? SmallButtonStyle.background.color.hovered
-         : SmallButtonStyle.background.color.normal
+         ? SmallButtonStyle.background.color.hovered.color
+         : SmallButtonStyle.background.color.normal.color
         )
     implicitHeight: SmallButtonStyle.background.height
     radius: SmallButtonStyle.background.radius
   }
   contentItem: Text {
-    color: SmallButtonStyle.text.color
+    color: SmallButtonStyle.text.colorModel.color
     font.pointSize: SmallButtonStyle.text.pointSize
     font.weight: Font.Bold
     font.capitalization: button.capitalization

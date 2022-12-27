@@ -13,26 +13,26 @@ QtObject {
 	property QtObject high: QtObject {
 		property QtObject background: QtObject {
 			property QtObject color: QtObject {
-				property color disabled:  ColorsList.add(sectionName+'_bg_d', 'o').color
-				property color enabled: ColorsList.add(sectionName+'_bg_enabled', 'n').color
+				property var disabled:  ColorsList.add(sectionName+'_bg_d', 'o')
+				property var enabled: ColorsList.add(sectionName+'_bg_enabled', 'n')
 			}
 		}
 		
 		property QtObject contentItem: QtObject {
-			property color color: ColorsList.add(sectionName+'_contentItem', 'b').color
+			property var colorModel: ColorsList.add(sectionName+'_contentItem', 'b')
 		}
 	}
 	
 	property QtObject low: QtObject {
 		property QtObject background: QtObject {
 			property QtObject color: QtObject {
-				property color disabled: ColorsList.add(sectionName+'_low_bg_d', 'o').color
-				property color enabled: ColorsList.add(sectionName+'_low_bg_enabled', 'n').color
+				property var disabled: ColorsList.add(sectionName+'_low_bg_d', 'o')
+				property var enabled: ColorsList.add(sectionName+'_low_bg_enabled', 'n')
 			}
 		}
 		
 		property QtObject contentItem: QtObject {
-			property color color: ColorsList.add(sectionName+'_low_contentItem', 'j').color
+			property var colorModel: ColorsList.add(sectionName+'_low_contentItem', 'j')
 		}
 	}
 }

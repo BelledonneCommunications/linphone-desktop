@@ -16,7 +16,7 @@ QtObject {
 	}
 	
 	property QtObject description: QtObject {
-		property color color: ColorsList.add(sectionName+'_description', 'n').color
+		property var colorModel: ColorsList.add(sectionName+'_description', 'n')
 		property int pointSize: Units.dp * 10
 		property int height: 40
 	}
@@ -27,7 +27,7 @@ QtObject {
 	}
 	
 	property QtObject title: QtObject {
-		property color color: ColorsList.add(sectionName+'_title', 'j').color
+		property var colorModel: ColorsList.add(sectionName+'_title', 'j')
 		property int bottomMargin: 10
 		property int pointSize: Units.dp * 10
 		property int height: 20

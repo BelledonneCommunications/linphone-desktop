@@ -106,30 +106,42 @@ QString ColorListModel::buildDescription(QString description){
 	return description;
 }
 
-ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue, const int& overrideAlpha, const ColorModel::ContextMode& context){
+ColorModel * ColorListModel::add(const QString& id, const QString& idLink, QString description, QString colorValue, const int& overrideAlpha, ColorModel::ContextMode context){
 	ColorModel * color = getColor(id);
 	if( description == "")
 		description = buildDescription(id);
 	if(!color){
+		QColor colorToUse(colorValue);
+		QColor linkColor;
 		if(idLink != ""){
 			if( colorValue == ""){
-				auto linkColor = getColor(idLink);
-				if(linkColor){
-					colorValue = linkColor->getColor().name(QColor::HexArgb);
+				auto linkColorModel = getColor(idLink);
+				if(linkColorModel){
+					linkColor = linkColorModel->getOriginColor();
+					if( context == ColorModel::CONTEXT_FROMLINK){
+						context = linkColorModel->getContext();
+						colorToUse = linkColorModel->getColor();
+					}else
+						colorToUse = linkColorModel->getColor(context);
+					
 				}
 			}
 			addLink(id, idLink);
 		}
-		auto colorShared = QSharedPointer<ColorModel>::create(id, colorValue, description);
-		if(overrideAlpha>=0)
+		if(overrideAlpha>0)
+			colorToUse.setAlpha(overrideAlpha* 255 / 100);
+		if( context == ColorModel::CONTEXT_FROMLINK)
+			context = ColorModel::CONTEXT_NORMAL;
+		
+		auto colorShared = QSharedPointer<ColorModel>::create(id, colorToUse, linkColor, description, context);
+		if(!colorToUse.isValid() && overrideAlpha>0)
 			colorShared->setAlpha(overrideAlpha* 255 / 100);
-		colorShared->setContext(context);
 		add(colorShared);
 		color = colorShared.get();
 		emit colorChanged();
 	}else if( description != color->getDescription()) {
 		color->setDescription(description);
-		if(overrideAlpha>=0)
+		if(overrideAlpha>0)
 			color->setAlpha(overrideAlpha* 255 / 100);
 		emit colorChanged();
 	}
@@ -291,7 +303,7 @@ void ColorListModel::handleUiColorChanged(const QString& id, const QColor& color
 		for(int i = 0 ; i < mColorLinks[index].size() ; ++i){
 			auto colorToUpdate = getColor(mColorLinks[index][i]);
 			if(colorToUpdate)
-				colorToUpdate->setInternalColor(color);
+				colorToUpdate->setOriginColor(color, false);
 		}
 	}
 }

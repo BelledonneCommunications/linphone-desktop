@@ -49,7 +49,7 @@ Item{
 					
 					width: parent.width
 					horizontalAlignment: Text.AlignLeft
-					color: UseAppSipAccountStyle.warningBlock.color
+					color: UseAppSipAccountStyle.warningBlock.colorModel.color
 					wrapMode: Text.WordWrap
 					//: 'Some features require a %1 account, such as group messaging or ephemeral messaging.' : Warning text about features. %1 is the application name
 					text: qsTr('warningFeatures').arg(applicationName)
@@ -60,7 +60,7 @@ Item{
 					
 					width: parent.width
 					horizontalAlignment: Text.AlignLeft
-					color: UseAppSipAccountStyle.warningBlock.color
+					color: UseAppSipAccountStyle.warningBlock.colorModel.color
 					wrapMode: Text.WordWrap
 					//: 'These features are hidden when you register with a third party SIP account.' : Warning text for using third party account.
 					text: qsTr('warningThirdParty')
@@ -71,7 +71,7 @@ Item{
 					
 					width: parent.width
 					horizontalAlignment: Text.AlignLeft
-					color: UseAppSipAccountStyle.warningBlock.color
+					color: UseAppSipAccountStyle.warningBlock.colorModel.color
 					wrapMode: Text.WordWrap
 					//: 'To enable it in a commercial project, please contact us.' : Warning text for contacting about enabling features.
 					text: qsTr('warningContact')
@@ -83,7 +83,7 @@ Item{
 					width: parent.width
 					horizontalAlignment: Text.AlignHCenter
 					wrapMode: Text.WordWrap
-					color: UseAppSipAccountStyle.warningBlock.color
+					color: UseAppSipAccountStyle.warningBlock.colorModel.color
 					linkColor: UseAppSipAccountStyle.warningBlock.contactUrl.color
 					text: '<a href="'+ConstantsCpp.ContactUrl+'">'+ConstantsCpp.ContactUrl+'</a>'
 					

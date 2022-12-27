@@ -75,7 +75,7 @@ DialogPlus {
 			//: 'Communication security' : Title of popup for ZRTP confirmation.
 			text: qsTr('title')
 			
-			color: ZrtpTokenAuthenticationDialogStyle.text.colorA
+			color: ZrtpTokenAuthenticationDialogStyle.text.colorA.color
 			wrapMode: Text.WordWrap
 			
 			font {
@@ -91,7 +91,7 @@ DialogPlus {
 			//: 'To raise the security level, you can check the following codes with your correspondent.' : Explanation to do a security check.
 			text: qsTr('confirmSas')
 			
-			color: ZrtpTokenAuthenticationDialogStyle.text.colorA
+			color: ZrtpTokenAuthenticationDialogStyle.text.colorA.color
 			wrapMode: Text.WordWrap
 			
 			font.pointSize: ZrtpTokenAuthenticationDialogStyle.text.pointSize
@@ -113,7 +113,7 @@ DialogPlus {
 				
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				color: ZrtpTokenAuthenticationDialogStyle.text.colorA
+				color: ZrtpTokenAuthenticationDialogStyle.text.colorA.color
 				font.pointSize: ZrtpTokenAuthenticationDialogStyle.text.pointSize
 				text: qsTr('codeA')
 			}
@@ -124,7 +124,7 @@ DialogPlus {
 			
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				color: ZrtpTokenAuthenticationDialogStyle.text.colorB
+				color: ZrtpTokenAuthenticationDialogStyle.text.colorB.color
 				
 				font {
 					bold: true
@@ -139,7 +139,7 @@ DialogPlus {
 			
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				color: ZrtpTokenAuthenticationDialogStyle.text.colorA
+				color: ZrtpTokenAuthenticationDialogStyle.text.colorA.color
 				font.pointSize: ZrtpTokenAuthenticationDialogStyle.text.pointSize
 				text: qsTr('codeB')
 			}
@@ -150,7 +150,7 @@ DialogPlus {
 			
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				color: ZrtpTokenAuthenticationDialogStyle.text.colorB
+				color: ZrtpTokenAuthenticationDialogStyle.text.colorB.color
 				
 				font {
 					bold: true

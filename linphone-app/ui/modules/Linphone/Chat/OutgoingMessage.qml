@@ -37,7 +37,7 @@ Item {
 			leftMargin: ChatStyle.entry.metaWidth
 			right: parent.right
 		}
-		backgroundColor: ChatStyle.entry.message.outgoing.backgroundColor
+		backgroundColorModel: ChatStyle.entry.message.outgoing.backgroundColor
 		width: parent.width
 		
 		Row {

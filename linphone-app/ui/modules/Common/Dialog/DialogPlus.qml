@@ -53,7 +53,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: DialogStyle.color
+  color: DialogStyle.colorModel.color
 
   layer {
 	enabled: !dialog.flat

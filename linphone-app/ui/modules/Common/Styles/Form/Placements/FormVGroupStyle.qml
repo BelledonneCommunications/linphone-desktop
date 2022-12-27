@@ -15,13 +15,13 @@ QtObject {
 	}
 	
 	property QtObject error: QtObject {
-		property color color: ColorsList.add(sectionName+'_error', 'error').color
+		property var colorModel: ColorsList.add(sectionName+'_error', 'error')
 		property int pointSize: Units.dp * 10
 		property int height: 11
 	}
 	
 	property QtObject legend: QtObject {
-		property color color: ColorsList.add(sectionName+'_legend', 'j').color
+		property var colorModel: ColorsList.add(sectionName+'_legend', 'j')
 		property int pointSize: Units.dp * 10
 	}
 }

@@ -21,7 +21,7 @@ Row {
   Text {
     id: title
 
-    color: FormTableStyle.entry.text.color
+    color: FormTableStyle.entry.text.colorModel.color
     elide: Text.ElideRight
 
     horizontalAlignment: Text.AlignRight

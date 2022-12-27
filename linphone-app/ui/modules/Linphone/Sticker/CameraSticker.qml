@@ -25,7 +25,7 @@ DecorationSticker{
 	property alias isVideoEnabled: camera.isVideoEnabled
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true
-	property color color : CameraStickerStyle.cameraBackgroundColor
+	property color color : CameraStickerStyle.cameraBackgroundColor.color
 	
 	property alias showCustomButton: mainItem._showCustomButton
 	property alias customButtonToggled: mainItem._customButtonToggled

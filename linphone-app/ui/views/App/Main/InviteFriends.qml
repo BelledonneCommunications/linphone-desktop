@@ -10,7 +10,7 @@ import App.Styles 1.0
 // =============================================================================
 
 Rectangle {
-  color: InviteFriendsStyle.color
+  color: InviteFriendsStyle.colorModel.color
 
   ColumnLayout {
     anchors.fill: parent

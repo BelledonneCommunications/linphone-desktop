@@ -19,11 +19,11 @@ Controls.ItemDelegate {
 	hoverEnabled: true
 	background: Rectangle {
 		color: item.hovered
-			   ? CommonItemDelegateStyle.color.hovered
-			   : CommonItemDelegateStyle.color.normal
+			   ? CommonItemDelegateStyle.color.hovered.color
+			   : CommonItemDelegateStyle.color.normal.color
 		Rectangle {
 			anchors.left: parent.left
-			color: CommonItemDelegateStyle.indicator.color
+			color: CommonItemDelegateStyle.indicator.colorModel.color
 			
 			height: parent.height
 			width: CommonItemDelegateStyle.indicator.width
@@ -33,7 +33,7 @@ Controls.ItemDelegate {
 		
 		Rectangle {
 			anchors.bottom: parent.bottom
-			color: CommonItemDelegateStyle.separator.color
+			color: CommonItemDelegateStyle.separator.colorModel.color
 			
 			height: CommonItemDelegateStyle.separator.height
 			width: parent.width
@@ -56,7 +56,7 @@ Controls.ItemDelegate {
 		Text {
 			Layout.fillWidth: true
 			
-			color: CommonItemDelegateStyle.contentItem.text.color
+			color: CommonItemDelegateStyle.contentItem.text.colorModel.color
 			elide: Text.ElideRight
 			
 			font {

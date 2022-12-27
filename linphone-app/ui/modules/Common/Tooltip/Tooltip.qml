@@ -93,7 +93,7 @@ Core.ToolTip {
         fill: parent
         margins: TooltipStyle.margins
       }
-      color: TooltipStyle.backgroundColor
+      color: TooltipStyle.backgroundColor.color
       radius: TooltipStyle.radius
     }
 
@@ -112,7 +112,7 @@ Core.ToolTip {
       layer {
 			enabled: true
 			effect: ColorOverlay {
-				color: TooltipStyle.backgroundColor
+				color: TooltipStyle.backgroundColor.color
 			}
 		}
       visible: tooltip.visible && _edge
@@ -125,7 +125,7 @@ Core.ToolTip {
 
   contentItem: Core.Text {
     id: text
-    color: TooltipStyle.color
+    color: TooltipStyle.colorModel.color
     font.pointSize: TooltipStyle.pointSize
     padding: TooltipStyle.padding + TooltipStyle.margins
     text: tooltip.text

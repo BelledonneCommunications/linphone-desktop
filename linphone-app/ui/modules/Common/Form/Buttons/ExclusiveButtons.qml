@@ -48,12 +48,12 @@ Row {
 			anchors.verticalCenter: parent.verticalCenter
 			backgroundColor: item.style
 								? selectedButton === index
-									? item.style.button.color.selected
+									? item.style.button.color.selected.color
 									: (down
-										? item.style.button.color.pressed
+										? item.style.button.color.pressed.color
 										: (hovered
-											? item.style.button.color.hovered
-											: item.style.button.color.normal
+											? item.style.button.color.hovered.color
+											: item.style.button.color.normal.color
 										)
 									)
 								: ''

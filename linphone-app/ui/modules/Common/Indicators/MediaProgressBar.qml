@@ -71,7 +71,7 @@ ProgressBar {
 			
 	background: Rectangle {
 		id: backgroundArea
-		color: MediaProgressBarStyle.backgroundColor
+		color: MediaProgressBarStyle.backgroundColor.color
 		radius: 5
 		clip: false
 	}

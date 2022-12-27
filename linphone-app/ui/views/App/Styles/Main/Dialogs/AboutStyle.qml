@@ -16,12 +16,12 @@ QtObject {
     property int spacing: 10
 
     property QtObject license: QtObject {
-      property color color: ColorsList.add(sectionName+'_license', 'd').color
+      property var colorModel: ColorsList.add(sectionName+'_license', 'd')
       property int pointSize: Units.dp * 10
     }
 
     property QtObject url: QtObject {
-      property color color: ColorsList.add(sectionName+'_url', 'i').color
+      property var colorModel: ColorsList.add(sectionName+'_url', 'i')
       property int pointSize: Units.dp * 10
     }
   }
@@ -31,12 +31,12 @@ QtObject {
     property int spacing: 10
 
     property QtObject appVersion: QtObject {
-      property color color: ColorsList.add(sectionName+'_appVersion', 'd').color
+      property var colorModel: ColorsList.add(sectionName+'_appVersion', 'd')
       property int pointSize: Units.dp * 10
     }
 
     property QtObject coreVersion: QtObject {
-      property color color: ColorsList.add(sectionName+'_coreVersion', 'd').color
+      property var colorModel: ColorsList.add(sectionName+'_coreVersion', 'd')
       property int pointSize: Units.dp * 10
     }
   }

@@ -142,12 +142,12 @@ TabContainer {
 							width: audioTestSlider.availableWidth
 							height: implicitHeight
 							radius: 2
-							color: SettingsAudioStyle.sliderBackgroundColor
+							color: SettingsAudioStyle.sliderBackgroundColor.color
 							
 							Rectangle {
 								width: audioTestSlider.visualPosition * parent.width
 								height: parent.height
-								color: audioTestSlider.value > 0.8 ? SettingsAudioStyle.sliderHighColor : SettingsAudioStyle.sliderLowColor
+								color: audioTestSlider.value > 0.8 ? SettingsAudioStyle.sliderHighColor.color : SettingsAudioStyle.sliderLowColor.color
 								radius: 2
 							}
 						}

@@ -10,7 +10,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'AvatarSticker'
-	property color stickerBackgroundColor: ColorsList.add(sectionName+'_out_bg', 'avatar_initials_sticker_bg').color
-	property color inBackgroundColor: ColorsList.add(sectionName+'_in_bg', 'avatar_initials_bg').color
+	property var stickerBackgroundColor: ColorsList.add(sectionName+'_out_bg', 'avatar_initials_sticker_bg')
+	property var inBackgroundColor: ColorsList.add(sectionName+'_in_bg', 'avatar_initials_bg')
 	property int radius : 10
 }

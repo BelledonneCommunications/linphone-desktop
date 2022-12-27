@@ -15,8 +15,8 @@ QtObject {
 		
 		property QtObject background: QtObject {
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_n', 'a').color
-				property color hovered: ColorsList.add(sectionName+'_h', 'o').color
+				property var normal: ColorsList.add(sectionName+'_n', 'a')
+				property var hovered: ColorsList.add(sectionName+'_h', 'o')
 			}
 		}
 		
@@ -25,7 +25,7 @@ QtObject {
 		}
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_text', 'j').color
+			property var colorModel: ColorsList.add(sectionName+'_text', 'j')
 			property int pointSize: Units.dp * 10
 		}
 	}
@@ -40,7 +40,7 @@ QtObject {
 	}
 	
 	property QtObject legend: QtObject {
-		property color color: ColorsList.add(sectionName+'_legend', 'j').color
+		property var colorModel: ColorsList.add(sectionName+'_legend', 'j')
 		property int pointSize: Units.dp * 10
 		property int height: 50
 	}

@@ -12,11 +12,11 @@ Controls.Menu {
 	width: menuStyle.width ? menuStyle.width : parent.width
 	background: Rectangle {
 		implicitWidth: menu.width
-		color: menuStyle.color
+		color: menuStyle.colorModel.color
 		radius: menuStyle.radius
 		
 		border{
-			color:menuStyle.border.color
+			color:menuStyle.border.colorModel.color
 			width: menuStyle.border.width
 		}
 		

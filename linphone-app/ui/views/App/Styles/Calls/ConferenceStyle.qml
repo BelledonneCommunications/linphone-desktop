@@ -9,7 +9,7 @@ import ColorsList 1.0
 QtObject {
 	property string sectionName: 'Conference'
 	property QtObject description: QtObject {
-		property color color: ColorsList.add(sectionName+'_description', 'j').color
+		property var colorModel: ColorsList.add(sectionName+'_description', 'j')
 		property int pointSize: Units.dp * 12
 		property int height: 60
 		property int width: 150

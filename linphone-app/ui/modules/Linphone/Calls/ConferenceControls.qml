@@ -20,7 +20,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: ConferenceControlsStyle.color
+  color: ConferenceControlsStyle.colorModel.color
   height: ConferenceControlsStyle.height
 
   MouseArea {

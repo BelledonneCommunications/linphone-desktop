@@ -97,7 +97,7 @@ Row {
 	Icon {
 		height: parent.height
 		icon: mainItem.iconData ? mainItem.iconData.icon : null
-		overwriteColor: mainItem.iconData ? mainItem.iconData.color: null
+		overwriteColor: mainItem.iconData ? mainItem.iconData.colorModel.color: null
 		iconSize: HistoryStyle.entry.event.iconSize
 		width: HistoryStyle.entry.metaWidth
 	}
@@ -119,7 +119,7 @@ Row {
 			}
 		}
 		
-		color: HistoryStyle.entry.event.text.color
+		color: HistoryStyle.entry.event.text.colorModel.color
 		font {
 			bold: true
 			pointSize: HistoryStyle.entry.event.text.pointSize
@@ -133,7 +133,7 @@ Row {
 		}
 	}
 	Text {
-		color: HistoryStyle.entry.event.text.color
+		color: HistoryStyle.entry.event.text.colorModel.color
 		font {
 			bold: true
 			pointSize: HistoryStyle.entry.event.text.pointSize

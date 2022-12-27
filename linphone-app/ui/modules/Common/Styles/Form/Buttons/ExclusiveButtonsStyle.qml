@@ -10,10 +10,10 @@ QtObject {
 	
 	property QtObject button: QtObject {
 		property QtObject color: QtObject {
-			property color hovered: ColorsList.add(sectionName+'_h', 'n').color
-			property color normal: ColorsList.add(sectionName+'_n', 'x').color
-			property color pressed: ColorsList.add(sectionName+'_p', 'i').color
-			property color selected: ColorsList.add(sectionName+'_c', 'g').color
+			property var hovered: ColorsList.add(sectionName+'_h', 'n')
+			property var normal: ColorsList.add(sectionName+'_n', 'x')
+			property var pressed: ColorsList.add(sectionName+'_p', 'i')
+			property var selected: ColorsList.add(sectionName+'_c', 'g')
 		}
 	}
 }

@@ -65,7 +65,7 @@ Rectangle{
 		Borders{
 			Layout.fillWidth: true
 			Layout.preferredHeight: Math.max(IncallMenuStyle.header.height, titleMenu.implicitHeight+20)
-			bottomColor: IncallMenuStyle.list.border.color
+			bottomColor: IncallMenuStyle.list.border.colorModel.color
 			bottomWidth: IncallMenuStyle.list.border.width
 			RowLayout{
 				anchors.fill: parent
@@ -82,7 +82,7 @@ Rectangle{
 					Layout.fillWidth: true
 					Layout.preferredHeight: implicitHeight
 					horizontalAlignment: Qt.AlignCenter
-					color: IncallMenuStyle.header.color
+					color: IncallMenuStyle.header.colorModel.color
 					font.pointSize: IncallMenuStyle.header.pointSize
 					font.weight: IncallMenuStyle.header.weight
 					wrapMode: Text.WordWrap
@@ -138,7 +138,7 @@ Rectangle{
 					]
 					delegate:
 						Borders{
-						bottomColor: IncallMenuStyle.list.border.color
+						bottomColor: IncallMenuStyle.list.border.colorModel.color
 						bottomWidth: IncallMenuStyle.list.border.width
 						Layout.preferredHeight: Math.max(settingIcon.height, settingsDescription.implicitHeight) + 20
 						Layout.fillWidth: true
@@ -151,7 +151,7 @@ Rectangle{
 								Layout.leftMargin: 15
 								Layout.alignment: Qt.AlignVCenter
 								icon: modelData.icon
-								overwriteColor: IncallMenuStyle.list.color
+								overwriteColor: IncallMenuStyle.list.colorModel.color
 								iconWidth: IncallMenuStyle.settingsIcons.width
 								iconHeight: IncallMenuStyle.settingsIcons.height
 							}
@@ -164,7 +164,7 @@ Rectangle{
 		
 								text: mainItem.menuTitles[modelData.titleIndex]
 								font.pointSize: IncallMenuStyle.list.pointSize
-								color: IncallMenuStyle.list.color
+								color: IncallMenuStyle.list.colorModel.color
 							}
 							Icon{
 								Layout.minimumWidth: iconWidth
@@ -173,7 +173,7 @@ Rectangle{
 								//backgroundRadius: width/2
 								
 								icon: IncallMenuStyle.buttons.next.icon
-								overwriteColor: IncallMenuStyle.buttons.next.backgroundNormalColor
+								overwriteColor: IncallMenuStyle.buttons.next.backgroundNormalColor.color
 								iconWidth: IncallMenuStyle.buttons.next.iconSize
 								iconHeight: IncallMenuStyle.buttons.next.iconSize
 							}
@@ -234,7 +234,7 @@ Rectangle{
 					]				
 					delegate:
 						Borders{
-						bottomColor: IncallMenuStyle.list.border.color
+						bottomColor: IncallMenuStyle.list.border.colorModel.color
 						bottomWidth: IncallMenuStyle.list.border.width
 						Layout.preferredHeight: Math.max(layoutIcon.height, radio.contentItem.implicitHeight) + 20
 						Layout.fillWidth: true
@@ -299,7 +299,7 @@ Rectangle{
 						text: qsTr('incallMenuParticipantsAlone')
 						visible: parent.count <= 1
 						font.pointSize: IncallMenuStyle.list.pointSize
-						color: IncallMenuStyle.list.color
+						color: IncallMenuStyle.list.colorModel.color
 					}
 				}
 				Item{// Spacer

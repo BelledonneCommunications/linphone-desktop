@@ -56,8 +56,8 @@ Mosaic {
 				isPaused: !isPreview && avatarCell.currentDevice && avatarCell.currentDevice.isPaused
 				showCloseButton: false
 				showCustomButton:  false
-				avatarStickerBackgroundColor: isPreview? IncallStyle.container.avatar.stickerPreviewBackgroundColor : IncallStyle.container.avatar.stickerBackgroundColor
-				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor
+				avatarStickerBackgroundColor: isPreview? IncallStyle.container.avatar.stickerPreviewBackgroundColor.color : IncallStyle.container.avatar.stickerBackgroundColor.color
+				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor.color
 				
 				//onCloseRequested: participantDevices.showMe = false
 			}

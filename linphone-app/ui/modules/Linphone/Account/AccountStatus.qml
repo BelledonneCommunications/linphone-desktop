@@ -52,7 +52,7 @@ Item {
 				BusyIndicator {
 					anchors.fill:parent
 					running: AccountSettingsModel.registrationState === AccountSettingsModel.RegistrationStateInProgress
-					color: AccountStatusStyle.busyColor
+					color: AccountStatusStyle.busyColor.color
 				}
 				
 				Icon {
@@ -68,7 +68,7 @@ Item {
 			Text {
 				id:username
 				Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
-				color: AccountStatusStyle.username.color
+				color: AccountStatusStyle.username.colorModel.color
 				elide: Text.ElideRight
 				font.bold: true
 				font.pointSize: AccountStatusStyle.username.pointSize
@@ -99,7 +99,7 @@ Item {
 		Text {
 			Layout.preferredHeight:parent.height / 2
 			Layout.preferredWidth:parent.width
-			color: AccountStatusStyle.sipAddress.color
+			color: AccountStatusStyle.sipAddress.colorModel.color
 			elide: Text.ElideRight
 			font.pointSize: AccountStatusStyle.sipAddress.pointSize
 			text: AccountSettingsModel.sipAddress

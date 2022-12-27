@@ -19,19 +19,19 @@ QtObject {
 			property int radius: 6
 			
 			property QtObject background: QtObject {
-				property color color: ColorsList.add(sectionName+'_bar_bg', 'f').color
+				property var colorModel: ColorsList.add(sectionName+'_bar_bg', 'f')
 			}
 			
 			property QtObject contentItem: QtObject {
 				property QtObject color: QtObject {
-					property color failed: ColorsList.add(sectionName+'_bar_content_failed', 'error').color
-					property color normal: ColorsList.add(sectionName+'_bar_content_n', 'p').color
+					property var failed: ColorsList.add(sectionName+'_bar_content_failed', 'error')
+					property var normal: ColorsList.add(sectionName+'_bar_content_n', 'p')
 				}
 			}
 		}
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_text', 'd').color
+			property var colorModel: ColorsList.add(sectionName+'_text', 'd')
 			property int pointSize: Units.dp * 11
 		}
 	}

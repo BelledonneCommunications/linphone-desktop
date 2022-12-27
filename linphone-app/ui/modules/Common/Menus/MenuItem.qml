@@ -30,11 +30,11 @@ Controls.MenuItem {
 	
 	background: Rectangle {	
 		color: button.down
-			   ? menuItemStyle.background.color.pressed
+			   ? menuItemStyle.background.color.pressed.color
 			   : (
 					 button.hovered
-					 ? menuItemStyle.background.color.hovered
-					 : menuItemStyle.background.color.normal
+					 ? menuItemStyle.background.color.hovered.color
+					 : menuItemStyle.background.color.normal.color
 					 )
 		implicitHeight: button.menuItemStyle.background.height
 	}
@@ -53,13 +53,13 @@ Controls.MenuItem {
 				iconSize: rowText.lineCount > 0 ? rowText.contentHeight/rowText.lineCount + 2 : 0
 				overwriteColor: button.enabled
 								? (button.down
-								   ? menuItemStyle.text.color.pressed
+								   ? menuItemStyle.text.color.pressed.color
 								   : (
 										 button.hovered
-										 ? menuItemStyle.text.color.hovered
-										 : menuItemStyle.text.color.normal
+										 ? menuItemStyle.text.color.hovered.color
+										 : menuItemStyle.text.color.normal.color
 										 ))
-								: menuItemStyle.text.color.disabled
+								: menuItemStyle.text.color.disabled.color
 			}
 		}
 		Text {
@@ -70,13 +70,13 @@ Controls.MenuItem {
 			Layout.rightMargin:(iconLayoutDirection == Qt.LeftToRight ? menuItemStyle.rightMargin : 0)
 			color: button.enabled
 				   ? (button.down
-					  ? menuItemStyle.text.color.pressed
+					  ? menuItemStyle.text.color.pressed.color
 					  : (
 							button.hovered
-							? menuItemStyle.text.color.hovered
-							: menuItemStyle.text.color.normal
+							? menuItemStyle.text.color.hovered.color
+							: menuItemStyle.text.color.normal.color
 							))
-				   : menuItemStyle.text.color.disabled
+				   : menuItemStyle.text.color.disabled.color
 			
 			elide: Text.ElideRight
 			

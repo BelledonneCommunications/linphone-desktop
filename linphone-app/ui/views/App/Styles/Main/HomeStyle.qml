@@ -6,6 +6,6 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'Home'
-	property color color: ColorsList.add(sectionName+'_bg', 'k').color
+	property var colorModel: ColorsList.add(sectionName+'_bg', 'k')
 	property int spacing: 20
 }

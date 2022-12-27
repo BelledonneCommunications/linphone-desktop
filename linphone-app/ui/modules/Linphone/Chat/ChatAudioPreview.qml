@@ -30,7 +30,7 @@ Rectangle{
 	
 	Layout.preferredHeight: visible ? ChatAudioPreviewStyle.height  : 0
 	
-	color: ChatAudioPreviewStyle.backgroundColor
+	color: ChatAudioPreviewStyle.backgroundColor.color
 	radius: 0
 	state: haveRecorder ? 'showed' : 'hidden'
 	clip: false

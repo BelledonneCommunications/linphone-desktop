@@ -16,8 +16,8 @@ Column {
 	
 	property var contactDescriptionStyle : ContactDescriptionStyle
 	
-	property color subtitleColor: contactDescriptionStyle.subtitle.color
-	property color titleColor: contactDescriptionStyle.title.color
+	property color subtitleColor: contactDescriptionStyle.subtitle.colorModel.color
+	property color titleColor: contactDescriptionStyle.title.colorModel.color
 	property int horizontalTextAlignment
 	property int contentWidth : Math.max(titleImplicitWidthWorkaround.implicitWidth, subtitleImplicitWidthWorkaround.implicitWidth)
 									+10
@@ -73,7 +73,7 @@ Column {
 			verticalAlignment: Text.AlignVCenter
 			visible: text != ''
 			text : ''
-			color: contactDescriptionStyle.title.status.color
+			color: contactDescriptionStyle.title.status.colorModel.color
 			font.pointSize: contactDescriptionStyle.title.status.pointSize
 			font.italic : true
 		}

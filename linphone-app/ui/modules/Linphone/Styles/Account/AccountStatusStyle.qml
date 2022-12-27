@@ -10,7 +10,7 @@ QtObject {
 	property string sectionName: 'AccountStatus'
 	property int horizontalSpacing: 8
 	property int verticalSpacing: 2
-	property color busyColor: ColorsList.add(sectionName+'_spinner', 'i').color
+	property var busyColor: ColorsList.add(sectionName+'_spinner', 'i')
 	
 	property QtObject presenceLevel: QtObject {
 		property int bottomMargin: 1
@@ -18,12 +18,12 @@ QtObject {
 	}
 	
 	property QtObject sipAddress: QtObject {
-		property color color: ColorsList.add(sectionName+'_sipAddress', 'g').color
+		property var colorModel: ColorsList.add(sectionName+'_sipAddress', 'g')
 		property int pointSize: Units.dp * 10
 	}
 	
 	property QtObject username: QtObject {
-		property color color: ColorsList.add(sectionName+'_username', 'j').color
+		property var colorModel: ColorsList.add(sectionName+'_username', 'j')
 		property int pointSize: Units.dp * 11
 	}
 	property QtObject messageCounter: QtObject {

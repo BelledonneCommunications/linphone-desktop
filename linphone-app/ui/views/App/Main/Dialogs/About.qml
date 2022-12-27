@@ -50,7 +50,7 @@ DialogPlus {
 				
 				TextEdit {
 					id: appVersion
-					color: AboutStyle.versionsBlock.appVersion.color
+					color: AboutStyle.versionsBlock.appVersion.colorModel.color
 					selectByMouse: true
 					font.pointSize: AboutStyle.versionsBlock.appVersion.pointSize
 					text: 'Desktop ' + Qt.application.version + ' - Qt' + App.qtVersion +'\nCore ' + CoreManager.version
@@ -91,7 +91,7 @@ DialogPlus {
 			}
 			
 			Text {
-				color: AboutStyle.copyrightBlock.license.color
+				color: AboutStyle.copyrightBlock.license.colorModel.color
 				elide: Text.ElideRight
 				font.pointSize: AboutStyle.copyrightBlock.license.pointSize
 				visible: applicationVendor != ''
@@ -105,8 +105,8 @@ DialogPlus {
 			Text {
 				elide: Text.ElideRight
 				font.pointSize: AboutStyle.copyrightBlock.url.pointSize
-				color: AboutStyle.copyrightBlock.url.color
-				linkColor: AboutStyle.copyrightBlock.url.color
+				color: AboutStyle.copyrightBlock.url.colorModel.color
+				linkColor: AboutStyle.copyrightBlock.url.colorModel.color
 				//: 'Help us translate %1' : %1 is the application name
 				text: '<a href="'+ConstantsCpp.TranslationUrl+'" style="text-decoration:none;color:'+AboutStyle.copyrightBlock.url.color+'">'+qsTr('aboutTranslation').arg(applicationName)+'</a>'
 				textFormat: Text.RichText

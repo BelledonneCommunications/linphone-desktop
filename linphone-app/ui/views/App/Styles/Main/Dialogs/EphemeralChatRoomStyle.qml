@@ -23,14 +23,14 @@ QtObject {
 		property int preferredHeight: 60
 		property int preferredWidth: 60
 		property string icon: 'timer_custom'
-		property color timerColor: ColorsList.addImageColor(sectionName+'_timer', icon, 'ad').color
+		property var timerColor: ColorsList.addImageColor(sectionName+'_timer', icon, 'ad')
 	}
 	property QtObject descriptionText: QtObject {
 		property int preferredWidth: 200
 		property int leftMargin: 10
 		property int rightMargin: 10
 		property real pointSize: Units.dp * 11
-		property color color: ColorsList.add(sectionName+'_popup_description', 'd').color
+		property var colorModel: ColorsList.add(sectionName+'_popup_description', 'd')
 	}
 	property QtObject timerPicker: QtObject {
 		property int preferredWidth: 150

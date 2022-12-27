@@ -19,19 +19,19 @@ QtObject {
 				property int iconSize: 30
 				property string icon : 'speaker_on_custom'
 				property string name : 'speaker'
-				property color color : ColorsList.addImageColor(sectionName+'_'+name, icon, 'g').color
+				property var colorModel : ColorsList.addImageColor(sectionName+'_'+name, icon, 'g')
 			}
 			property QtObject micro: QtObject {
 				property int iconSize: 30
 				property string icon : 'micro_on_custom'
 				property string name : 'micro'
-				property color color : ColorsList.addImageColor(sectionName+'_'+name, icon, 'g').color
+				property var colorModel : ColorsList.addImageColor(sectionName+'_'+name, icon, 'g')
 			}
 			property QtObject camera: QtObject {
 				property int iconSize: 30
 				property string icon : 'camera_on_custom'
 				property string name : 'camera'
-				property color color : ColorsList.addImageColor(sectionName+'_'+name, icon, 'g').color
+				property var colorModel : ColorsList.addImageColor(sectionName+'_'+name, icon, 'g')
 			}
 		}
 	}

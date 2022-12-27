@@ -17,7 +17,7 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 Rectangle {
 	id: mainItem
-	color: WaitingRoomStyle.backgroundColor
+	color: WaitingRoomStyle.backgroundColor.color
 	property ConferenceInfoModel conferenceInfoModel
 	property CallModel callModel	// Store the call for processing calling.
 	property bool previewLoaderEnabled: callModel ? callModel.videoEnabled : true
@@ -58,7 +58,7 @@ Rectangle {
 				Layout.preferredHeight: WaitingRoomStyle.header.busyIndicator.height
 				Layout.preferredWidth: WaitingRoomStyle.header.busyIndicator.width
 				Layout.topMargin: 30
-				color: WaitingRoomStyle.header.busyIndicator.color
+				color: WaitingRoomStyle.header.busyIndicator.colorModel.color
 				visible: mainItem.callModel && mainItem.callModel.status !== CallModel.CallStatusConnected && !mainItem.isEnded
 			}
 			
@@ -75,7 +75,7 @@ Rectangle {
 						//: "Incoming call" : status of the call in waiting room when user receive a call.
 								: qsTr("incomingCallStatus")
 						: ''
-				color: WaitingRoomStyle.title.color
+				color: WaitingRoomStyle.title.colorModel.color
 				font.pointSize:  WaitingRoomStyle.title.pointSize
 				horizontalAlignment: Qt.AlignHCenter
 				verticalAlignment: Qt.AlignVCenter
@@ -84,7 +84,7 @@ Rectangle {
 			Text {
 				id: elapsedTime
 				Layout.alignment: Qt.AlignCenter
-				color: WaitingRoomStyle.elapsedTime.color
+				color: WaitingRoomStyle.elapsedTime.colorModel.color
 				font.pointSize: WaitingRoomStyle.elapsedTime.pointSize
 				horizontalAlignment: Text.AlignHCenter
 				width: parent.width
@@ -107,7 +107,7 @@ Rectangle {
 				Layout.topMargin:  mainItem.callModel ? 0 : 40
 				text: mainItem.conferenceInfoModel ? mainItem.conferenceInfoModel.subject 
 												   : (mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : '')
-				color: WaitingRoomStyle.title.color
+				color: WaitingRoomStyle.title.colorModel.color
 				font.pointSize:  WaitingRoomStyle.title.pointSize
 				horizontalAlignment: Qt.AlignHCenter
 				verticalAlignment: Qt.AlignVCenter
@@ -122,7 +122,7 @@ Rectangle {
 			horizontalAlignment: Qt.AlignHCenter
 			verticalAlignment: Qt.AlignVCenter
 				
-			color: WaitingRoomStyle.callError.color
+			color: WaitingRoomStyle.callError.colorModel.color
 			font.pointSize: WaitingRoomStyle.callError.pointSize
 			width: parent.width
 			visible: mainItem.callModel && mainItem.callModel.callError
@@ -209,7 +209,7 @@ Rectangle {
 			Text{
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : ''
-				color: WaitingRoomStyle.callee.color
+				color: WaitingRoomStyle.callee.colorModel.color
 				font.pointSize:  WaitingRoomStyle.callee.displayNamePointSize
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
@@ -218,7 +218,7 @@ Rectangle {
 			Text{
 				Layout.fillWidth: true
 				text: mainItem.callModel && SipAddressesModel.cleanSipAddress(mainItem.callModel.peerAddress)
-				color: WaitingRoomStyle.callee.color
+				color: WaitingRoomStyle.callee.colorModel.color
 				font.pointSize:  WaitingRoomStyle.callee.addressPointSize
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
@@ -365,7 +365,7 @@ Rectangle {
 					width: parent.width + 10
 					
 					visible: false
-					color: WaitingRoomStyle.menuColor
+					color: WaitingRoomStyle.menuColor.color
 					radius: 5
 					
 					ColumnLayout{

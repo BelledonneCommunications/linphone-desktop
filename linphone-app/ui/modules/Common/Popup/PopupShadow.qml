@@ -5,7 +5,7 @@ import Common.Styles 1.0
 // =============================================================================
 
 DropShadow {
-  color: PopupStyle.shadow.color
+  color: PopupStyle.shadow.colorModel.color
   horizontalOffset: PopupStyle.shadow.horizontalOffset
   radius: PopupStyle.shadow.radius
   samples: PopupStyle.shadow.samples

@@ -31,7 +31,7 @@ Column {
     Text {
       id: title
 
-      color: CardBlockStyle.title.color
+      color: CardBlockStyle.title.colorModel.color
       elide: Text.ElideRight
       horizontalAlignment: Text.AlignHCenter
       wrapMode: Text.WordWrap
@@ -48,7 +48,7 @@ Column {
     Text {
       id: description
 
-      color: CardBlockStyle.description.color
+      color: CardBlockStyle.description.colorModel.color
       elide: Text.ElideRight
       font.pointSize: CardBlockStyle.description.pointSize
       horizontalAlignment: Text.AlignHCenter

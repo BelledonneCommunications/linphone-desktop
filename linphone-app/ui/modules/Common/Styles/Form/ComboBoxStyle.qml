@@ -11,7 +11,7 @@ QtObject {
 		property QtObject dropDown : QtObject{
 			property string icon: 'drop_down_custom'
 			property int iconSize: 20
-			property color color: ColorsList.addImageColor(sectionName+'_indicator', icon, 'l_n_b_fg').color
+			property var colorModel: ColorsList.addImageColor(sectionName+'_indicator', icon, 'l_n_b_fg')
 		}
 	 }
 	property QtObject background: QtObject {
@@ -21,13 +21,13 @@ QtObject {
 		property int width: 200
 		
 		property QtObject border: QtObject {
-			property color color: ColorsList.add(sectionName+'_border_n', 'c').color
+			property var colorModel: ColorsList.add(sectionName+'_border_n', 'c')
 			property int width: 1
 		}
 		
 		property QtObject color: QtObject {
-			property color normal: ColorsList.add(sectionName+'_normal', 'q').color
-			property color readOnly: ColorsList.add(sectionName+'_readonly', 'e').color
+			property var normal: ColorsList.add(sectionName+'_normal', 'q')
+			property var readOnly: ColorsList.add(sectionName+'_readonly', 'e')
 		}
 	}
 	
@@ -37,7 +37,7 @@ QtObject {
 		property int spacing: 5
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_text_n', 'd').color
+			property var colorModel: ColorsList.add(sectionName+'_text_n', 'd')
 			property int pointSize: Units.dp * 10
 		}
 	}

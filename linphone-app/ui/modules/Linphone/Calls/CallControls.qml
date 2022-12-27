@@ -32,7 +32,7 @@ Rectangle {
 	
 	// ---------------------------------------------------------------------------
 	
-	color: CallControlsStyle.color
+	color: CallControlsStyle.colorModel.color
 	height: CallControlsStyle.height
 	
 	MouseArea {

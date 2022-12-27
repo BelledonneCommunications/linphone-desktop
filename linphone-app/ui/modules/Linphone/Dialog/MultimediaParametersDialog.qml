@@ -64,7 +64,7 @@ DialogPlus {
 				Layout.preferredHeight: ComboBoxStyle.background.height
 
 				icon: MultimediaParametersDialogStyle.column.entry.speaker.icon
-				overwriteColor: MultimediaParametersDialogStyle.column.entry.speaker.color
+				overwriteColor: MultimediaParametersDialogStyle.column.entry.speaker.colorModel.color
 				iconSize: MultimediaParametersDialogStyle.column.entry.speaker.iconSize
 			}
 
@@ -117,7 +117,7 @@ DialogPlus {
 				Layout.preferredHeight: ComboBoxStyle.background.height
 
 				icon: MultimediaParametersDialogStyle.column.entry.micro.icon
-				overwriteColor: MultimediaParametersDialogStyle.column.entry.micro.color
+				overwriteColor: MultimediaParametersDialogStyle.column.entry.micro.colorModel.color
 				iconSize: MultimediaParametersDialogStyle.column.entry.micro.iconSize
 			}
 
@@ -171,12 +171,12 @@ DialogPlus {
 						width: audioTestSlider.availableWidth
 						height: implicitHeight
 						radius: 2
-						color: SettingsAudioStyle.sliderBackgroundColor
+						color: SettingsAudioStyle.sliderBackgroundColor.color
 
 						Rectangle {
 							width: audioTestSlider.visualPosition * parent.width
 							height: parent.height
-							color: audioTestSlider.value > 0.8 ? SettingsAudioStyle.sliderHighColor : SettingsAudioStyle.sliderLowColor
+							color: audioTestSlider.value > 0.8 ? SettingsAudioStyle.sliderHighColor.color : SettingsAudioStyle.sliderLowColor.color
 							radius: 2
 						}
 					}
@@ -201,7 +201,7 @@ DialogPlus {
 
 			Icon {
 				icon: MultimediaParametersDialogStyle.column.entry.camera.icon
-				overwriteColor: MultimediaParametersDialogStyle.column.entry.camera.color
+				overwriteColor: MultimediaParametersDialogStyle.column.entry.camera.colorModel.color
 				iconSize: MultimediaParametersDialogStyle.column.entry.speaker.iconSize
 			}
 

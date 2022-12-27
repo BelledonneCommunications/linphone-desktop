@@ -13,13 +13,13 @@ QtObject {
 		property int iconSize: 150
 		
 		property QtObject description: QtObject {
-			property color color: ColorsList.add(sectionName+'_home_description', 'g').color
+			property var colorModel: ColorsList.add(sectionName+'_home_description', 'g')
 			property int pointSize: Units.dp * 10
 			property int height: 40
 		}
 		
 		property QtObject title: QtObject {
-			property color color: ColorsList.add(sectionName+'_home_title', 'g').color
+			property var colorModel: ColorsList.add(sectionName+'_home_title', 'g')
 			property int pointSize: Units.dp * 11
 			property int height: 40
 		}

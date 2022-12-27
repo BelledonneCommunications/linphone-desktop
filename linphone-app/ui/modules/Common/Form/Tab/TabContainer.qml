@@ -11,7 +11,7 @@ import Utils 1.0
 Rectangle {
   default property alias _content: content.data
 
-  color: TabContainerStyle.color
+  color: TabContainerStyle.colorModel.color
 
   ColumnLayout {
     anchors.fill: parent
@@ -50,7 +50,7 @@ Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: TabContainerStyle.separator.height
 
-      color: TabContainerStyle.separator.color
+      color: TabContainerStyle.separator.colorModel.color
       visible: scrollBar.visible
     }
   }

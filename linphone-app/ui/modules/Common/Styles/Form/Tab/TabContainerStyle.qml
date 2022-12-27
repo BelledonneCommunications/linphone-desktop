@@ -6,7 +6,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'TabContainer'
-	property color color: ColorsList.add(sectionName+'', 'k').color
+	property var colorModel: ColorsList.add(sectionName+'', 'k')
 	property int bottomMargin: 30
 	property int leftMargin: 30
 	property int rightMargin: 40
@@ -14,6 +14,6 @@ QtObject {
 	
 	property QtObject separator: QtObject {
 		property int height: 2
-		property color color: ColorsList.add(sectionName+'_separator', 'f').color
+		property var colorModel: ColorsList.add(sectionName+'_separator', 'f')
 	}
 }

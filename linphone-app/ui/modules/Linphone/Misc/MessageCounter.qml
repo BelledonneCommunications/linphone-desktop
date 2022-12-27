@@ -37,7 +37,7 @@ Item{
 		
 		Text {
 			anchors.centerIn: parent
-			color: MessageCounterStyle.text.color
+			color: MessageCounterStyle.text.colorModel.color
 			font.pointSize: messageCounter.pointSize
 			text: (messageCounter.count>99 ? '+' : messageCounter.count)
 		}

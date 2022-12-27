@@ -29,15 +29,15 @@ Column {
 
     background: Rectangle {
       color: vuMeter.enabled
-        ? VuMeterStyle.high.background.color.enabled
-        : VuMeterStyle.high.background.color.disabled
+        ? VuMeterStyle.high.background.color.enabled.color
+        : VuMeterStyle.high.background.color.disabled.color
     }
 
     contentItem: Item {
       Rectangle {
         anchors.bottom: parent.bottom
 
-        color: VuMeterStyle.high.contentItem.color
+        color: VuMeterStyle.high.contentItem.colorModel.color
         height: high.visualPosition * parent.height
         width: parent.width
 
@@ -59,15 +59,15 @@ Column {
 
     background: Rectangle {
       color: vuMeter.enabled
-        ? VuMeterStyle.low.background.color.enabled
-        : VuMeterStyle.low.background.color.disabled
+        ? VuMeterStyle.low.background.color.enabled.color
+        : VuMeterStyle.low.background.color.disabled.color
     }
 
     contentItem: Item {
       Rectangle {
         anchors.bottom: parent.bottom
 
-        color: VuMeterStyle.low.contentItem.color
+        color: VuMeterStyle.low.contentItem.colorModel.color
         height: low.visualPosition * parent.height
         width: parent.width
 

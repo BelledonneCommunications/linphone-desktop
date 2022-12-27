@@ -281,10 +281,10 @@ Item {
 		Rectangle {
 			anchors.fill: parent
 			color: parent.pressed
-				   ? PanedStyle.handle.color.pressed
+				   ? PanedStyle.handle.color.pressed.color
 				   : (parent.containsMouse
-					  ? PanedStyle.handle.color.hovered
-					  : PanedStyle.handle.color.normal
+					  ? PanedStyle.handle.color.hovered.color
+					  : PanedStyle.handle.color.normal.color
 					  )
 		}
 	}

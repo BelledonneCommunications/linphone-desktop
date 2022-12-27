@@ -18,7 +18,7 @@ Rectangle {
 	
 	// ---------------------------------------------------------------------------
 	
-	color: CallStyle.backgroundColor
+	color: CallStyle.backgroundColor.color
 	
 	// ---------------------------------------------------------------------------
 	
@@ -57,7 +57,7 @@ Rectangle {
 				horizontalAlignment: Text.AlignHCenter
 				text: qsTr('conferenceTitle')
 				
-				color: ConferenceStyle.description.color
+				color: ConferenceStyle.description.colorModel.color
 				
 				font {
 					bold: true
@@ -160,7 +160,7 @@ Rectangle {
 									verticalCenter: parent.verticalCenter
 								}
 								
-								color: CallStyle.header.busyIndicator.color
+								color: CallStyle.header.busyIndicator.colorModel.color
 								height: CallStyle.header.busyIndicator.height
 								width: CallStyle.header.busyIndicator.width
 								

@@ -13,10 +13,10 @@ QtObject {
 	property QtObject warningBlock: QtObject {
 		property int spacing: 10
 		property int pointSize: Units.dp * 10
-		property color color: ColorsList.add(sectionName+'_description', 'g').color
+		property var colorModel: ColorsList.add(sectionName+'_description', 'g')
 		
 		property QtObject contactUrl: QtObject {
-			property color color: ColorsList.add(sectionName+'_url', 'i').color
+			property var colorModel: ColorsList.add(sectionName+'_url', 'i')
 			property int pointSize: Units.dp * 9
 		}
 	}

@@ -69,7 +69,7 @@ DialogPlus {
 					Layout.fillWidth: true
 					
 					icon: text == '' ? 'search_custom' : 'close_custom'
-					overwriteColor: CallTransferStyle.searchField.color
+					overwriteColor: CallTransferStyle.searchField.colorModel.color
 					
 					onTextChanged: sipAddressesModel.setFilter(text)
 				}

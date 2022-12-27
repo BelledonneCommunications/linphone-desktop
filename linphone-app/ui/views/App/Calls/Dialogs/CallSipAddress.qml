@@ -47,7 +47,7 @@ DialogPlus {
 					Layout.fillWidth: true
 					
 					icon: text == '' ? 'search_custom' : 'close_custom'
-					overwriteColor: CallSipAddressStyle.searchField.color
+					overwriteColor: CallSipAddressStyle.searchField.colorModel.color
 					
 					onTextChanged: sipAddressesModel.setFilter(text)
 				}

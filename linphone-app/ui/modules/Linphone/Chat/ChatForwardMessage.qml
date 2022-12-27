@@ -44,7 +44,7 @@ Item {
 				icon: ChatForwardMessageStyle.header.forwardIcon.icon
 				iconSize: ChatForwardMessageStyle.header.forwardIcon.iconSize
 				height: iconSize
-				overwriteColor: ChatForwardMessageStyle.header.color
+				overwriteColor: ChatForwardMessageStyle.header.colorModel.color
 			}
 			Text{
 				id: headerText
@@ -56,7 +56,7 @@ Item {
 				text: qsTr('Forwarded')// + (forwardInfo ? ' : ' +forwardInfo : '')
 				font.family: mainItem.customFont.family
 				font.pointSize: Units.dp * (mainItem.customFont.pointSize + ChatForwardMessageStyle.header.pointSizeOffset)
-				color: ChatForwardMessageStyle.header.color
+				color: ChatForwardMessageStyle.header.colorModel.color
 			}
 		}
 	}

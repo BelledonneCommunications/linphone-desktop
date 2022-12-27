@@ -11,7 +11,7 @@ QtObject {
 	property int height: 80
 	
 	property QtObject error: QtObject {
-		property color color: ColorsList.add(sectionName+'_error', 'error').color
+		property var colorModel: ColorsList.add(sectionName+'_error', 'error')
 		property int pointSize: Units.dp * 11
 		property int padding: 4
 	}

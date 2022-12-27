@@ -77,6 +77,6 @@ RowLayout {
 		// Arbitrary value.
 		Layout.minimumWidth: 1
 		
-		backgroundColor: ChatStyle.entry.message.incoming.backgroundColor
+		backgroundColorModel: ChatStyle.entry.message.incoming.backgroundColor
 	}
 }

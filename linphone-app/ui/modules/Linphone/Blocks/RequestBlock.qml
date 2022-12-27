@@ -36,7 +36,7 @@ Column {
 		readOnly: true
 		selectByMouse: true
 		
-		color: RequestBlockStyle.error.color
+		color: RequestBlockStyle.error.colorModel.color
 		
 		font {
 			italic: true

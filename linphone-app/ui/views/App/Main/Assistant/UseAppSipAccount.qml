@@ -55,7 +55,7 @@ AssistantAbstractView {
 			visible: ConstantsCpp.PasswordRecoveryUrl
 			elide: Text.ElideRight
 			font.pointSize: AboutStyle.copyrightBlock.url.pointSize
-			linkColor: AboutStyle.copyrightBlock.url.color
+			linkColor: AboutStyle.copyrightBlock.url.colorModel.color
 			//: 'Forgotten password?' : text for an url shortcut to change the password
 			text: '<a href="'+ConstantsCpp.PasswordRecoveryUrl+'">'+qsTr("passwordRecovery")+'</a>'
 			

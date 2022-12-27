@@ -22,7 +22,7 @@ DecorationSticker {
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true
 	property real avatarRatio : 2/3
-	property color color : AvatarStickerStyle.stickerBackgroundColor
+	property color color : AvatarStickerStyle.stickerBackgroundColor.color
 	
 	property alias image: avatar.image
 	property alias avatarBackgroundColor: avatar.backgroundColor
@@ -60,7 +60,7 @@ DecorationSticker {
 			call: participantDeviceModel ? undefined : mainItem.callModel
 			height: Utils.computeAvatarSize(mainItem, mainItem.width, avatarRatio)
 			width: height
-			backgroundColor: AvatarStickerStyle.inBackgroundColor
+			backgroundColor: AvatarStickerStyle.inBackgroundColor.color
 		}
 	}
 }

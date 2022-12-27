@@ -86,7 +86,7 @@ ScrollableListView {
 				
 				sourceComponent: Rectangle {
 					anchors.fill: parent
-					color: SipAddressesViewStyle.entry.color.normal
+					color: SipAddressesViewStyle.entry.color.normal.color
 					
 					RowLayout {
 						anchors {
@@ -161,8 +161,8 @@ ScrollableListView {
 				Rectangle {
 					anchors.fill: parent
 					color: parent.pressed
-						   ? SipAddressesViewStyle.header.color.pressed
-						   : SipAddressesViewStyle.header.color.normal
+						   ? SipAddressesViewStyle.header.color.pressed.color
+						   : SipAddressesViewStyle.header.color.normal.color
 					
 					Text {
 						anchors {
@@ -177,8 +177,8 @@ ScrollableListView {
 						}
 						
 						color: headerButton.pressed
-							   ? SipAddressesViewStyle.header.text.color.pressed
-							   : SipAddressesViewStyle.header.text.color.normal
+							   ? SipAddressesViewStyle.header.text.color.pressed.color
+							   : SipAddressesViewStyle.header.text.color.normal.color
 						text: sipAddressesView.headerButtonDescription
 					}
 					
@@ -206,7 +206,7 @@ ScrollableListView {
 	delegate: Rectangle {
 		id: sipAddressEntry
 		
-		color: SipAddressesViewStyle.entry.color.normal
+		color: SipAddressesViewStyle.entry.color.normal.color
 		height: SipAddressesViewStyle.entry.height
 		width: parent ? parent.width : 0
 		
@@ -322,7 +322,7 @@ ScrollableListView {
 									
 									sourceComponent: Component{
 										BusyIndicator{
-											color: BusyIndicatorStyle.alternateColor
+											color: BusyIndicatorStyle.alternateColor.color
 											running: true
 										}
 									}
@@ -336,7 +336,7 @@ ScrollableListView {
 		
 		// Separator.
 		Rectangle {
-			color: SipAddressesViewStyle.entry.separator.color
+			color: SipAddressesViewStyle.entry.separator.colorModel.color
 			height: SipAddressesViewStyle.entry.separator.height
 			width: parent.width
 			visible: sipAddressesView.showSeparator
@@ -348,12 +348,12 @@ ScrollableListView {
 			when: mouseArea.containsMouse && sipAddressesView.isSelectable
 			
 			PropertyChanges {
-				color: SipAddressesViewStyle.entry.color.hovered
+				color: SipAddressesViewStyle.entry.color.hovered.color
 				target: sipAddressEntry
 			}
 			
 			PropertyChanges {
-				color: SipAddressesViewStyle.entry.indicator.color
+				color: SipAddressesViewStyle.entry.indicator.colorModel.color
 				target: indicator
 			}
 		}

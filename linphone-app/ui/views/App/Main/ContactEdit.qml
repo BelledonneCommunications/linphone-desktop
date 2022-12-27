@@ -87,7 +87,7 @@ ColumnLayout  {
 		
 		Layout.fillWidth: true
 		Layout.preferredHeight: ContactEditStyle.bar.height
-		color: ContactEditStyle.bar.color
+		color: ContactEditStyle.bar.colorModel.color
 		
 		RowLayout {
 			anchors {
@@ -123,7 +123,7 @@ ColumnLayout  {
 				Layout.fillWidth: true
 				Layout.preferredHeight: ContactEditStyle.bar.buttons.size
 				
-				color: ContactEditStyle.bar.username.color
+				color: ContactEditStyle.bar.username.colorModel.color
 				
 				font {
 					bold: true
@@ -274,7 +274,7 @@ ColumnLayout  {
 		Layout.fillHeight: true
 		Layout.fillWidth: true
 		
-		color: ContactEditStyle.content.color
+		color: ContactEditStyle.content.colorModel.color
 		
 		Flickable {
 			id: flick
@@ -315,7 +315,7 @@ ColumnLayout  {
 				Rectangle {
 					Layout.fillWidth: true
 					Layout.preferredHeight: ContactEditStyle.values.separator.height
-					color: ContactEditStyle.values.separator.color
+					color: ContactEditStyle.values.separator.colorModel.color
 				}
 				
 				ListForm {
@@ -335,7 +335,7 @@ ColumnLayout  {
 				Rectangle {
 					Layout.fillWidth: true
 					Layout.preferredHeight: ContactEditStyle.values.separator.height
-					color: ContactEditStyle.values.separator.color
+					color: ContactEditStyle.values.separator.colorModel.color
 				}
 				
 				ListForm {
@@ -355,7 +355,7 @@ ColumnLayout  {
 				Rectangle {
 					Layout.fillWidth: true
 					Layout.preferredHeight: ContactEditStyle.values.separator.height
-					color: ContactEditStyle.values.separator.color
+					color: ContactEditStyle.values.separator.colorModel.color
 				}
 				
 				ListForm {
@@ -375,7 +375,7 @@ ColumnLayout  {
 				Rectangle {
 					Layout.fillWidth: true
 					Layout.preferredHeight: ContactEditStyle.values.separator.height
-					color: ContactEditStyle.values.separator.color
+					color: ContactEditStyle.values.separator.colorModel.color
 				}
 				
 				StaticListForm {

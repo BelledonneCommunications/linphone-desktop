@@ -76,7 +76,7 @@ DialogPlus {
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
 			font.pointSize: InfoEncryptionStyle.descriptionText.pointSize
-			color: InfoEncryptionStyle.descriptionText.color
+			color: InfoEncryptionStyle.descriptionText.colorModel.color
 			
 			wrapMode: Text.Wrap
 			//: "Instant messages are end-to-end encrypted in secured conversations. It is possible to upgrade the security level of a conversation by authentificating participants."
@@ -92,7 +92,7 @@ DialogPlus {
 			verticalAlignment: Text.AlignVCenter
 			horizontalAlignment: Text.AlignHCenter
 			font.pointSize: InfoEncryptionStyle.descriptionText.pointSize
-			color: InfoEncryptionStyle.descriptionText.color
+			color: InfoEncryptionStyle.descriptionText.colorModel.color
 			
 			wrapMode: Text.Wrap
 			//: "To do so, call the contact and follow the authentification process."

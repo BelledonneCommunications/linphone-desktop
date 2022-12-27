@@ -11,7 +11,7 @@ QtObject {
 	property QtObject entry: QtObject {
 		
 		property QtObject status: QtObject {
-			property color color : ColorsList.add(sectionName+'_entry_status', 'g').color
+			property var colorModel : ColorsList.add(sectionName+'_entry_status', 'g')
 			property int pointSize : Units.dp * 8
 		}
 	}

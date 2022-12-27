@@ -11,6 +11,8 @@ import Common 1.0
 
 Item {
 	id: wrappedButton
+	objectName: '__internalActionButton'
+	
 	property color defaultBackgroundColor: 'white'
 	property color defaultForegroundColor: 'black'
 	
@@ -18,17 +20,17 @@ Item {
 	readonly property QtObject defaultColorSet : QtObject {
 		property int iconSize: 30
 		property string icon : ''
-		property color backgroundNormalColor : defaultBackgroundColor
-		property color backgroundDisabledColor : defaultBackgroundColor
-		property color backgroundHoveredColor : defaultBackgroundColor
-		property color backgroundUpdatingColor : defaultBackgroundColor
-		property color backgroundPressedColor : defaultBackgroundColor
+		property var backgroundNormalColor : {'color' : defaultBackgroundColor}
+		property var backgroundDisabledColor : {'color' : defaultBackgroundColor}
+		property var backgroundHoveredColor : {'color' : defaultBackgroundColor}
+		property var backgroundUpdatingColor : {'color' : defaultBackgroundColor}
+		property var backgroundPressedColor : {'color' : defaultBackgroundColor}
 	// Color for shown part
-		property color foregroundNormalColor : defaultForegroundColor
-		property color foregroundDisabledColor : defaultForegroundColor
-		property color foregroundHoveredColor : defaultForegroundColor
-		property color foregroundUpdatingColor : defaultForegroundColor
-		property color foregroundPressedColor : defaultForegroundColor
+		property var foregroundNormalColor : {'color' : defaultForegroundColor}
+		property var foregroundDisabledColor : {'color' : defaultForegroundColor}
+		property var foregroundHoveredColor : {'color' : defaultForegroundColor}
+		property var foregroundUpdatingColor : {'color' : defaultForegroundColor}
+		property var foregroundPressedColor : {'color' : defaultForegroundColor}
 	}
 	property QtObject colorSet: defaultColorSet
 	onColorSetChanged: if(!colorSet) colorSet = defaultColorSet
@@ -61,18 +63,18 @@ Item {
 	
 	
 // Hidden part : transparent if not specified
-	property color backgroundHiddenPartNormalColor : colorSet.backgroundHiddenPartNormalColor ? colorSet.backgroundHiddenPartNormalColor : (colorSet.backgroundNormalColor ? colorSet.backgroundNormalColor : 'transparent')
-	property color backgroundHiddenPartDisabledColor : colorSet.backgroundHiddenPartDisabledColor ? colorSet.backgroundHiddenPartDisabledColor : (colorSet.backgroundDisabledColor ? colorSet.backgroundDisabledColor : 'transparent')
-	property color backgroundHiddenPartHoveredColor : colorSet.backgroundHiddenPartHoveredColor ? colorSet.backgroundHiddenPartHoveredColor : (colorSet.backgroundHoveredColor ? colorSet.backgroundHoveredColor : 'transparent')
-	property color backgroundHiddenPartUpdatingColor : colorSet.backgroundHiddenPartUpdatingColor ? colorSet.backgroundHiddenPartUpdatingColor : (colorSet.backgroundUpdatingColor ? colorSet.backgroundUpdatingColor : 'transparent')
-	property color backgroundHiddenPartPressedColor : colorSet.backgroundHiddenPartPressedColor ? colorSet.backgroundHiddenPartPressedColor : (colorSet.backgroundPressedColor ? colorSet.backgroundPressedColor : 'transparent')
+	property var backgroundHiddenPartNormalColor : colorSet.backgroundHiddenPartNormalColor ? colorSet.backgroundHiddenPartNormalColor.color : (colorSet.backgroundNormalColor ? colorSet.backgroundNormalColor.color : 'transparent')
+	property color backgroundHiddenPartDisabledColor : colorSet.backgroundHiddenPartDisabledColor ? colorSet.backgroundHiddenPartDisabledColor.color : (colorSet.backgroundDisabledColor ? colorSet.backgroundDisabledColor.color : 'transparent')
+	property var backgroundHiddenPartHoveredColor : colorSet.backgroundHiddenPartHoveredColor ? colorSet.backgroundHiddenPartHoveredColor.color : (colorSet.backgroundHoveredColor ? colorSet.backgroundHoveredColor.color : 'transparent')
+	property color backgroundHiddenPartUpdatingColor : colorSet.backgroundHiddenPartUpdatingColor ? colorSet.backgroundHiddenPartUpdatingColor.color : (colorSet.backgroundUpdatingColor ? colorSet.backgroundUpdatingColor.color : 'transparent')
+	property var backgroundHiddenPartPressedColor : colorSet.backgroundHiddenPartPressedColor ? colorSet.backgroundHiddenPartPressedColor.color : (colorSet.backgroundPressedColor ? colorSet.backgroundPressedColor.color : 'transparent')
 	
 // AutoColor : alpha /4	for foreground
-	property color foregroundHiddenPartNormalColor : colorSet.foregroundHiddenPartNormalColor ? colorSet.foregroundHiddenPartNormalColor : (colorSet.foregroundNormalColor ? Qt.rgba(colorSet.foregroundNormalColor.r, colorSet.foregroundNormalColor.g, colorSet.foregroundNormalColor.b, colorSet.foregroundNormalColor.a/4) : 'transparent')
-	property color foregroundHiddenPartDisabledColor : colorSet.foregroundHiddenPartDisabledColor ? colorSet.foregroundHiddenPartDisabledColor : (colorSet.foregroundDisabledColor ? Qt.rgba(colorSet.foregroundDisabledColor.r, colorSet.foregroundDisabledColor.g, colorSet.foregroundDisabledColor.b, colorSet.foregroundDisabledColor.a/4): 'transparent')
-	property color foregroundHiddenPartHoveredColor : colorSet.foregroundHiddenPartHoveredColor ? colorSet.foregroundHiddenPartHoveredColor : (colorSet.foregroundHoveredColor ? Qt.rgba(colorSet.foregroundHoveredColor.r, colorSet.foregroundHoveredColor.g, colorSet.foregroundHoveredColor.b, colorSet.foregroundHoveredColor.a/4): 'transparent')
-	property color foregroundHiddenPartUpdatingColor : colorSet.foregroundHiddenPartUpdatingColor ? colorSet.foregroundHiddenPartUpdatingColor : (colorSet.foregroundUpdatingColor ? Qt.rgba(colorSet.foregroundUpdatingColor.r, colorSet.foregroundUpdatingColor.g, colorSet.foregroundUpdatingColor.b, colorSet.foregroundUpdatingColor.a/4): 'transparent')
-	property color foregroundHiddenPartPressedColor : colorSet.foregroundHiddenPartPressedColor ? colorSet.foregroundHiddenPartPressedColor : (colorSet.foregroundPressedColor ? Qt.rgba(colorSet.foregroundPressedColor.r, colorSet.foregroundPressedColor.g, colorSet.foregroundPressedColor.b, colorSet.foregroundPressedColor.a/4): 'transparent')
+	property var foregroundHiddenPartNormalColor : colorSet.foregroundHiddenPartNormalColor ? colorSet.foregroundHiddenPartNormalColor.color : (colorSet.foregroundNormalColor ? Qt.rgba(colorSet.foregroundNormalColor.color.r, colorSet.foregroundNormalColor.color.g, colorSet.foregroundNormalColor.color.b, colorSet.foregroundNormalColor.color.a/4) : 'transparent')
+	property color foregroundHiddenPartDisabledColor : colorSet.foregroundHiddenPartDisabledColor ? colorSet.foregroundHiddenPartDisabledColor.color : (colorSet.foregroundDisabledColor ? Qt.rgba(colorSet.foregroundDisabledColor.color.r, colorSet.foregroundDisabledColor.color.g, colorSet.foregroundDisabledColor.color.b, colorSet.foregroundDisabledColor.color.a/4): 'transparent')
+	property var foregroundHiddenPartHoveredColor : colorSet.foregroundHiddenPartHoveredColor ? colorSet.foregroundHiddenPartHoveredColor.color : (colorSet.foregroundHoveredColor ? Qt.rgba(colorSet.foregroundHoveredColor.color.r, colorSet.foregroundHoveredColor.color.g, colorSet.foregroundHoveredColor.color.b, colorSet.foregroundHoveredColor.color.a/4): 'transparent')
+	property color foregroundHiddenPartUpdatingColor : colorSet.foregroundHiddenPartUpdatingColor ? colorSet.foregroundHiddenPartUpdatingColor.color : (colorSet.foregroundUpdatingColor ? Qt.rgba(colorSet.foregroundUpdatingColor.color.r, colorSet.foregroundUpdatingColor.color.g, colorSet.foregroundUpdatingColor.color.b, colorSet.foregroundUpdatingColor.color.a/4): 'transparent')
+	property var foregroundHiddenPartPressedColor : colorSet.foregroundHiddenPartPressedColor ? colorSet.foregroundHiddenPartPressedColor.color : (colorSet.foregroundPressedColor ? Qt.rgba(colorSet.foregroundPressedColor.color.r, colorSet.foregroundPressedColor.color.g, colorSet.foregroundPressedColor.color.b, colorSet.foregroundPressedColor.color.a/4): 'transparent')
 //---------------------------------------------	
 	property int percentageDisplayed : 100
 	
@@ -127,14 +129,14 @@ Item {
 			//if(wrappedButton.icon == '')
 				//return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return getColor(wrappedButton.colorSet.backgroundUpdatingColor, defaultColor, 'backgroundUpdatingColor')
+				return getColor(wrappedButton.colorSet.backgroundUpdatingColor.color, defaultColor, 'backgroundUpdatingColor')
 			if (!useStates)
-				return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
+				return getColor(wrappedButton.colorSet.backgroundNormalColor.color, defaultColor, 'backgroundNormalColor')
 			if (!wrappedButton.enabled)
-				return getColor(wrappedButton.colorSet.backgroundDisabledColor, defaultColor, 'backgroundDisabledColor')
-			return button.down ? getColor(wrappedButton.colorSet.backgroundPressedColor, defaultColor, 'backgroundPressedColor')
-							   : (button.hovered ? getColor(wrappedButton.colorSet.backgroundHoveredColor, defaultColor, 'backgroundHoveredColor')
-									: getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor'))
+				return getColor(wrappedButton.colorSet.backgroundDisabledColor.color, defaultColor, 'backgroundDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.backgroundPressedColor.color, defaultColor, 'backgroundPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.backgroundHoveredColor.color, defaultColor, 'backgroundHoveredColor')
+									: getColor(wrappedButton.colorSet.backgroundNormalColor.color, defaultColor, 'backgroundNormalColor'))
 		}else
 			return defaultColor
 	}
@@ -142,16 +144,16 @@ Item {
 		var defaultColor = 'black'
 		if(isCustom){
 			//if(wrappedButton.icon == '')
-				//return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
+				//return getColor(wrappedButton.colorSet.foregroundNormalColor.color, defaultColor, 'foregroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return getColor(wrappedButton.colorSet.foregroundUpdatingColor, defaultColor, 'foregroundUpdatingColor')
+				return getColor(wrappedButton.colorSet.foregroundUpdatingColor.color, defaultColor, 'foregroundUpdatingColor')
 			if (!useStates)
-				return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
+				return getColor(wrappedButton.colorSet.foregroundNormalColor.color, defaultColor, 'foregroundNormalColor')
 			if (!wrappedButton.enabled)
-				return getColor(wrappedButton.colorSet.foregroundDisabledColor, defaultColor, 'foregroundDisabledColor')
-			return button.down ? getColor(wrappedButton.colorSet.foregroundPressedColor, defaultColor, 'foregroundPressedColor')
-							   : (button.hovered ? getColor(wrappedButton.colorSet.foregroundHoveredColor, defaultColor, 'foregroundHoveredColor')
-									: getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor'))
+				return getColor(wrappedButton.colorSet.foregroundDisabledColor.color, defaultColor, 'foregroundDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.foregroundPressedColor.color, defaultColor, 'foregroundPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.foregroundHoveredColor.color, defaultColor, 'foregroundHoveredColor')
+									: getColor(wrappedButton.colorSet.foregroundNormalColor.color, defaultColor, 'foregroundNormalColor'))
 		}else
 			return defaultColor
 	}
@@ -161,14 +163,14 @@ Item {
 			//if(wrappedButton.icon == '')
 				//return getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return getColor(wrappedButton.colorSet.backgroundHiddenPartUpdatingColor, defaultColor, 'backgroundHiddenPartUpdatingColor')
+				return getColor(wrappedButton.colorSet.backgroundHiddenPartUpdatingColor.color, defaultColor, 'backgroundHiddenPartUpdatingColor')
 			if (!useStates)
-				return getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor')
+				return getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor.color, defaultColor, 'backgroundHiddenPartNormalColor')
 			if (!wrappedButton.enabled)
-				return getColor(wrappedButton.colorSet.backgroundHiddenPartDisabledColor, defaultColor, 'backgroundHiddenPartDisabledColor')
-			return button.down ? getColor(wrappedButton.colorSet.backgroundHiddenPartPressedColor, defaultColor, 'backgroundHiddenPartPressedColor')
-							   : (button.hovered ? getColor(wrappedButton.colorSet.backgroundHiddenPartHoveredColor, defaultColor, 'backgroundHiddenPartHoveredColor')
-									: getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor, defaultColor, 'backgroundHiddenPartNormalColor'))
+				return getColor(wrappedButton.colorSet.backgroundHiddenPartDisabledColor.color, defaultColor, 'backgroundHiddenPartDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.backgroundHiddenPartPressedColor.color, defaultColor, 'backgroundHiddenPartPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.backgroundHiddenPartHoveredColor.color, defaultColor, 'backgroundHiddenPartHoveredColor')
+									: getColor(wrappedButton.colorSet.backgroundHiddenPartNormalColor.color, defaultColor, 'backgroundHiddenPartNormalColor'))
 		}else
 			return defaultColor
 	}
@@ -178,14 +180,14 @@ Item {
 			//if(wrappedButton.icon == '')
 				//return getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
-				return getColor(wrappedButton.colorSet.foregroundHiddenPartUpdatingColor, defaultColor, 'foregroundHiddenPartUpdatingColor')
+				return getColor(wrappedButton.colorSet.foregroundHiddenPartUpdatingColor.color, defaultColor, 'foregroundHiddenPartUpdatingColor')
 			if (!useStates)
-				return getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor')
+				return getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor.color, defaultColor, 'foregroundHiddenPartNormalColor')
 			if (!wrappedButton.enabled)
-				return getColor(wrappedButton.colorSet.foregroundHiddenPartDisabledColor, defaultColor, 'foregroundHiddenPartDisabledColor')
-			return button.down ? getColor(wrappedButton.colorSet.foregroundHiddenPartPressedColor, defaultColor, 'foregroundHiddenPartPressedColor')
-							   : (button.hovered ? getColor(wrappedButton.colorSet.foregroundHiddenPartHoveredColor, defaultColor, 'foregroundHiddenPartHoveredColor')
-									: getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor, defaultColor, 'foregroundHiddenPartNormalColor'))
+				return getColor(wrappedButton.colorSet.foregroundHiddenPartDisabledColor.color, defaultColor, 'foregroundHiddenPartDisabledColor')
+			return button.down ? getColor(wrappedButton.colorSet.foregroundHiddenPartPressedColor.color, defaultColor, 'foregroundHiddenPartPressedColor')
+							   : (button.hovered ? getColor(wrappedButton.colorSet.foregroundHiddenPartHoveredColor.color, defaultColor, 'foregroundHiddenPartHoveredColor')
+									: getColor(wrappedButton.colorSet.foregroundHiddenPartNormalColor.color, defaultColor, 'foregroundHiddenPartNormalColor'))
 		}else
 			return defaultColor
 	}
@@ -198,6 +200,8 @@ Item {
 	
 	Button {
 		id: button
+		
+		property alias _colorSet: wrappedButton.colorSet	// Make an alias here because parent item is not accessible directly from C++ events.
 		
 		anchors.fill: parent
 		background: Row{

@@ -22,7 +22,7 @@ Rectangle{
 	property int leftMargin: 10
 	property int rightMargin: 10
 	
-	color: ChatStyle.replyPreview.backgroundColor
+	color: ChatStyle.replyPreview.backgroundColor.color
 	radius: 10
 	state: chatRoomModel && chatRoomModel.reply ? 'showed' : 'hidden'
 	// Remove bottom corners				
@@ -54,7 +54,7 @@ Rectangle{
 			spacing: 5
 			Icon{
 				icon: ChatStyle.replyPreview.icon
-				overwriteColor: ChatStyle.replyPreview.iconColor
+				overwriteColor: ChatStyle.replyPreview.iconColor.color
 				iconSize: 20
 			}
 			Text{
@@ -65,7 +65,7 @@ Rectangle{
 				text: replyPreviewBlock.chatRoomModel && replyPreviewBlock.chatRoomModel.reply ?  qsTr('titleReply').arg(replyPreviewBlock.chatRoomModel.reply.fromDisplayName) : ''
 				font.pointSize: ChatStyle.replyPreview.headerPointSize
 				font.weight: Font.Bold
-				color: ChatStyle.replyPreview.headerTextColor
+				color: ChatStyle.replyPreview.headerTextColor.color
 			}
 		}
 		
@@ -93,7 +93,7 @@ Rectangle{
 					Rectangle{
 							anchors.left: parent.left
 							anchors.right: parent.right
-							color: ChatStyle.entry.separator.color
+							color: ChatStyle.entry.separator.colorModel.color
 							height: visible ? ChatStyle.entry.separator.width : 0
 							visible: (index !== (messageContentsList.count - 1)) 
 						}

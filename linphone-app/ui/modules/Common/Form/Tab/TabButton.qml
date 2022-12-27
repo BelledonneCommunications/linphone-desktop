@@ -21,38 +21,38 @@ Controls.TabButton {
 	
 	function _getBackgroundColor () {
 		if (_isSelected) {
-			return TabButtonStyle.backgroundColor.selected
+			return TabButtonStyle.backgroundColor.selected.color
 		}
 		
 		return button.enabled
 				? (
 					  button.down
-					  ? TabButtonStyle.backgroundColor.pressed
+					  ? TabButtonStyle.backgroundColor.pressed.color
 					  : (
 							button.hovered
-							? TabButtonStyle.backgroundColor.hovered
-							: TabButtonStyle.backgroundColor.normal
+							? TabButtonStyle.backgroundColor.hovered.color
+							: TabButtonStyle.backgroundColor.normal.color
 							)
 					  )
-				: TabButtonStyle.backgroundColor.disabled
+				: TabButtonStyle.backgroundColor.disabled.color
 	}
 	
 	function _getTextColor () {
 		if (_isSelected) {
-			return TabButtonStyle.text.color.selected
+			return TabButtonStyle.text.color.selected.color
 		}
 		
 		return button.enabled
 				? (
 					  button.down
-					  ? TabButtonStyle.text.color.pressed
+					  ? TabButtonStyle.text.color.pressed.color
 					  : (
 							button.hovered
-							? TabButtonStyle.text.color.hovered
-							: TabButtonStyle.text.color.normal
+							? TabButtonStyle.text.color.hovered.color
+							: TabButtonStyle.text.color.normal.color
 							)
 					  )
-				: TabButtonStyle.text.color.disabled
+				: TabButtonStyle.text.color.disabled.color
 	}
 	
 	// ---------------------------------------------------------------------------

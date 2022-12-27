@@ -15,7 +15,7 @@ ProgressBar{
 	to: 100
 	value: 0
 	background: Rectangle {
-		color: RoundProgressBarStyle.backgroundColor
+		color: RoundProgressBarStyle.backgroundColor.color
 		radius: width
 	}
 	Timer{
@@ -40,7 +40,7 @@ ProgressBar{
 			
 			ShapePath {
 				id: pathDial
-				strokeColor: RoundProgressBarStyle.progressRemainColor
+				strokeColor: RoundProgressBarStyle.progressRemainColor.color
 				fillColor: 'transparent'
 				strokeWidth: RoundProgressBarStyle.progressionWidth
 				capStyle: Qt.RoundCap
@@ -57,7 +57,7 @@ ProgressBar{
 			
 			ShapePath {
 				id: pathProgress
-				strokeColor: RoundProgressBarStyle.progressColor
+				strokeColor: RoundProgressBarStyle.progressColor.color
 				fillColor: 'transparent'
 				strokeWidth: RoundProgressBarStyle.progressionWidth
 				capStyle: Qt.RoundCap
@@ -75,7 +75,7 @@ ProgressBar{
 		Text{
 			anchors.centerIn: parent
 			text: mainItem.text
-			color: RoundProgressBarStyle.progressRemainColor
+			color: RoundProgressBarStyle.progressRemainColor.color
 			font.pointSize: RoundProgressBarStyle.pointSize
 			font.bold: true
 			horizontalAlignment: Text.AlignHCenter

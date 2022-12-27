@@ -78,7 +78,7 @@ Window {
 		focus: true
 
 		Keys.onEscapePressed: window.exit()
-		color: hideButtons ? IncallStyle.fullBackgroundColor : IncallStyle.backgroundColor
+		color: hideButtons ? IncallStyle.fullBackgroundColor.color : IncallStyle.backgroundColor.color
 
 		Connections {
 			target: callModel
@@ -95,7 +95,7 @@ Window {
 		Rectangle{
 			anchors.fill: parent
 			visible: callModel && callModel.pausedByUser
-			color: IncallStyle.pauseArea.backgroundColor
+			color: IncallStyle.pauseArea.backgroundColor.color
 			z: 1
 			ColumnLayout{
 				anchors.fill: parent
@@ -118,7 +118,7 @@ Window {
 					text: qsTr('incallPauseWarning')
 					font.pointSize: IncallStyle.pauseArea.title.pointSize
 					font.weight: IncallStyle.pauseArea.title.weight
-					color: IncallStyle.pauseArea.title.color
+					color: IncallStyle.pauseArea.title.colorModel.color
 				}
 				Text{
 					Layout.topMargin: 10
@@ -127,7 +127,7 @@ Window {
 					text: qsTr('incallPauseHint')
 					font.pointSize: IncallStyle.pauseArea.description.pointSize
 					font.weight: IncallStyle.pauseArea.description.weight
-					color: IncallStyle.pauseArea.description.color
+					color: IncallStyle.pauseArea.description.colorModel.color
 				}
 				Item{
 					Layout.fillWidth: true
@@ -208,7 +208,7 @@ Window {
 				horizontalAlignment: Qt.AlignHCenter
 				Layout.fillWidth: true
 				text: conference.conferenceModel ? conference.conferenceModel.subject+ elaspedTime : ''
-				color: IncallStyle.title.color
+				color: IncallStyle.title.colorModel.color
 				font.pointSize: IncallStyle.title.pointSize
 			}
 			// Mode buttons
@@ -353,13 +353,13 @@ Window {
 							Layout.preferredWidth: 50
 							Layout.alignment: Qt.AlignCenter
 							running: parent.visible
-							color: IncallStyle.buzyColor
+							color: IncallStyle.buzyColor.color
 						}
 						Text{
 							Layout.alignment: Qt.AlignCenter
 							//: 'The meeting is not ready. Please Wait...' :  Waiting message for starting a meeting.
 							text: qsTr('incallWaitMessage')
-							color: IncallStyle.buzyColor
+							color: IncallStyle.buzyColor.color
 						}
 					}
 				}
@@ -420,13 +420,13 @@ Window {
 			Icon{
 				icon: IncallStyle.recordWarning.icon
 				iconSize: IncallStyle.recordWarning.iconSize
-				overwriteColor: IncallStyle.recordWarning.iconColor
+				overwriteColor: IncallStyle.recordWarning.iconColor.color
 			}
 			Text{
 				Layout.fillWidth: true
 				//: 'This call is being recorded.' : Warn the user that the remote is currently recording the call.
 				text: qsTr('callWarningRecord')
-				color: IncallStyle.recordWarning.color
+				color: IncallStyle.recordWarning.colorModel.color
 				font.italic: true
 				font.pointSize: IncallStyle.recordWarning.pointSize
 				wrapMode: Text.WordWrap

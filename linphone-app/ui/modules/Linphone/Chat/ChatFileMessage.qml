@@ -123,7 +123,7 @@ Row {
 					
 					height: fitHeight
 					width: fitWidth
-					color: ChatStyle.entry.message.file.extension.background.color
+					color: ChatStyle.entry.message.file.extension.background.colorModel.color
 					radius: ChatStyle.entry.message.file.extension.radius
 					ColumnLayout{
 						anchors.fill: parent
@@ -143,7 +143,7 @@ Row {
 								anchors.horizontalCenter: parent.horizontalCenter
 								anchors.bottomMargin: ChatStyle.entry.message.file.spacing
 								width: parent.width - 2*ChatStyle.entry.message.file.spacing
-								color: ChatStyle.entry.message.file.extension.text.color
+								color: ChatStyle.entry.message.file.extension.text.colorModel.color
 								font.bold: true
 								font.pointSize: ChatStyle.entry.message.file.extension.text.pointSize
 								clip: true
@@ -175,7 +175,7 @@ Row {
 							Layout.fillHeight: true
 							visible: mainRow.contentModel && !mainRow.isAnimatedImage && !mainRow.haveThumbnail
 							
-							color: ChatStyle.entry.message.file.extension.text.color
+							color: ChatStyle.entry.message.file.extension.text.colorModel.color
 							elide: Text.ElideRight
 							font.pointSize: ChatStyle.entry.message.file.name.pointSize
 							wrapMode: Text.WrapAnywhere
@@ -195,7 +195,7 @@ Row {
 														: ''
 							font.underline: true
 							font.pointSize: ChatStyle.entry.message.file.download.pointSize
-							color:ChatStyle.entry.message.file.extension.text.color
+							color:ChatStyle.entry.message.file.extension.text.colorModel.color
 							visible: (mainRow.contentModel? (!mainItem.isOutgoing && !mainRow.contentModel.wasDownloaded) || rectangle.isTransferring  : false)
 							horizontalAlignment: Qt.AlignCenter
 							verticalAlignment: Qt.AlignCenter

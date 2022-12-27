@@ -35,7 +35,7 @@ RowLayout {
     Layout.preferredHeight: ListFormStyle.lineHeight
     Layout.preferredWidth: ListFormStyle.titleArea.text.width
 
-    color: ListFormStyle.titleArea.text.color
+    color: ListFormStyle.titleArea.text.colorModel.color
     elide: Text.ElideRight
 
     font {

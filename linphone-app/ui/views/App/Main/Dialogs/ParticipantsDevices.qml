@@ -132,7 +132,7 @@ DialogPlus {
 					}
 				}
 				Rectangle {
-					color: ParticipantsDevicesStyle.lineSeparatorColor
+					color: ParticipantsDevicesStyle.lineSeparatorColor.color
 					Layout.preferredHeight: 1
 					Layout.fillWidth: true
 				}
@@ -159,7 +159,7 @@ DialogPlus {
 						
 						width:parent.width
 						height:50
-						color: ParticipantsDevicesStyle.lineBackgroundColor
+						color: ParticipantsDevicesStyle.lineBackgroundColor.color
 						RowLayout{
 							anchors.fill:parent
 							Text{
@@ -200,7 +200,7 @@ DialogPlus {
 							}
 						}
 						Rectangle {
-							color: ParticipantsDevicesStyle.lineSeparatorColor
+							color: ParticipantsDevicesStyle.lineSeparatorColor.color
 							anchors.left : parent.left
 							anchors.right  :parent.right
 							anchors.bottom: parent.bottom

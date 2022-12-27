@@ -16,7 +16,7 @@ Item {
 	
 	property alias presenceLevel: presenceLevelIcon.level
 	property bool isDarkMode: false
-	property color backgroundColor: isDarkMode ? AvatarStyle.backgroundDarkModeColor : AvatarStyle.backgroundColor
+	property color backgroundColor: isDarkMode ? AvatarStyle.backgroundDarkModeColor.color : AvatarStyle.backgroundColor.color
 	property color foregroundColor: 'transparent'
 	property string username
 	property var image
@@ -58,14 +58,14 @@ Item {
 			anchors.fill: parent
 			icon: AvatarStyle.personImage
 			visible: parent.source == '' && avatar.isPhoneNumber
-			overwriteColor: AvatarStyle.initials.color
+			overwriteColor: AvatarStyle.initials.colorModel.color
 		}
 	}
 	
 	Text {
 		id: initialsText
 		anchors.centerIn: parent
-		color: isDarkMode ? AvatarStyle.initials.darkModeColor : AvatarStyle.initials.color
+		color: isDarkMode ? AvatarStyle.initials.darkModeColor.color : AvatarStyle.initials.colorModel.color
 		font.pointSize: {
 			var width
 			
@@ -83,7 +83,7 @@ Item {
 	Icon {
 		anchors.fill: parent
 		icon: ContactStyle.groupChat.icon
-		overwriteColor: isDarkMode ? ContactStyle.groupChat.avatarDarkModeColor : ContactStyle.groupChat.avatarColor
+		overwriteColor: isDarkMode ? ContactStyle.groupChat.avatarDarkModeColor.color : ContactStyle.groupChat.avatarColor.color
 		iconSize: avatar.width
 		//visible: entry!=undefined && entry.isOneToOne!=undefined && !entry.isOneToOne
 		visible: !avatar.isOneToOne

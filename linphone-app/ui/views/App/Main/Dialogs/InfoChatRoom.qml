@@ -117,7 +117,7 @@ DialogPlus {
 					Layout.leftMargin: InfoChatRoomStyle.results.title.leftMargin
 					//: 'Participant list'
 					text:qsTr('participantList')
-					color: InfoChatRoomStyle.results.title.color
+					color: InfoChatRoomStyle.results.title.colorModel.color
 					font.pointSize:InfoChatRoomStyle.results.title.pointSize
 					font.weight: InfoChatRoomStyle.results.title.weight
 				}
@@ -129,7 +129,7 @@ DialogPlus {
 					//~ one word for admin status
 					text : qsTr('adminStatus')
 					
-					color: InfoChatRoomStyle.results.header.color
+					color: InfoChatRoomStyle.results.header.colorModel.color
 					font.pointSize: InfoChatRoomStyle.results.header.pointSize
 					font.weight: InfoChatRoomStyle.results.header.weight
 					visible: dialog.adminMode && participantView.count > 0

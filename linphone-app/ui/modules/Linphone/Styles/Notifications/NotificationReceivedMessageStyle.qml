@@ -8,7 +8,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'NotificationReceivedMessage'
-	property color color: ColorsList.add(sectionName+'_message', 'k').color
+	property var colorModel: ColorsList.add(sectionName+'_message', 'k')
 	property int bottomMargin: 15
 	property int leftMargin: 15
 	property int overrodeHeight: 55
@@ -16,12 +16,12 @@ QtObject {
 	property int spacing: 0
 	
 	property QtObject messageContainer: QtObject {
-		property color color: ColorsList.add(sectionName+'_message_container', 'o').color
+		property var colorModel: ColorsList.add(sectionName+'_message_container', 'o')
 		property int radius: 6
 		property int margins: 10
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_message_container_text', 'l').color
+			property var colorModel: ColorsList.add(sectionName+'_message_container_text', 'l')
 			property int pointSize: Units.dp * 9
 		}
 	}

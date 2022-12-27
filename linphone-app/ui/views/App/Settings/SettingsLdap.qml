@@ -42,7 +42,7 @@ Column {
 					spacing:SettingsAdvancedStyle.lists.spacing
 					Text {
 						id: summaryTitle
-						color: FormStyle.header.title.color
+						color: FormStyle.header.title.colorModel.color
 						text: (modelData.displayName?modelData.displayName:(modelData.server?modelData.server:qsTr('newServer')))//'New server'))
 						font {
 							bold: true

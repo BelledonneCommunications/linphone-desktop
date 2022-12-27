@@ -28,18 +28,18 @@ Controls.TextField {
 	background: Rectangle {
 		border {
 			color: textField.error.length > 0
-				   ? textFieldStyle.background.border.color.error
+				   ? textFieldStyle.background.border.color.error.color
 				   : (
 						 textField.activeFocus && !textField.readOnly
-						 ? textFieldStyle.background.border.color.selected
-						 : textFieldStyle.background.border.color.normal
+						 ? textFieldStyle.background.border.color.selected.color
+						 : textFieldStyle.background.border.color.normal.color
 						 )
 			width: textFieldStyle.background.border.width
 		}
 		
 		color: textField.readOnly
-			   ? textFieldStyle.background.color.readOnly
-			   : textFieldStyle.background.color.normal
+			   ? textFieldStyle.background.color.readOnly.color
+			   : textFieldStyle.background.color.normal.color
 		
 		implicitHeight: textFieldStyle.background.height
 		implicitWidth: textFieldStyle.background.width
@@ -57,8 +57,8 @@ Controls.TextField {
 				
 				border {
 					color: textField.error.length > 0
-						   ? textFieldStyle.background.border.color.error
-						   : textFieldStyle.background.border.color.normal
+						   ? textFieldStyle.background.border.color.error.color
+						   : textFieldStyle.background.border.color.normal.color
 					width: textFieldStyle.background.border.width
 				}
 				
@@ -69,7 +69,7 @@ Controls.TextField {
 		}
 	}
 	
-	color: textField.readOnly ? textFieldStyle.text.readOnly : textFieldStyle.text.normal
+	color: textField.readOnly ? textFieldStyle.text.readOnly.color : textFieldStyle.text.normal.color
 	font.pointSize: textFieldStyle.text.pointSize
 	rightPadding: textFieldStyle.text.rightPadding + toolsContainer.width + (icon.visible ? icon.iconSize + 10: 0)
 	selectByMouse: true
@@ -94,7 +94,7 @@ Controls.TextField {
 			anchors.topMargin: 5
 			textFormat: Text.RichText
 			text : '<span style="color:red">*</span>'
-			color: textFieldStyle.background.mandatory.color
+			color: textFieldStyle.background.mandatory.colorModel.color
 			font.pointSize: textFieldStyle.background.mandatory.pointSize
 			visible: textField.isMandatory
 		}
@@ -108,7 +108,7 @@ Controls.TextField {
 		id:statusItem
 		selectByMouse: true
 		readOnly:true
-		color: textFieldStyle.background.border.color.error
+		color: textFieldStyle.background.border.color.error.color
 		width:parent.width
 		anchors.bottom:parent.bottom
 		anchors.bottomMargin: 2

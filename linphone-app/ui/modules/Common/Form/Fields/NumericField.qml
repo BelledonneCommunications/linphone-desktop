@@ -67,12 +67,12 @@ TextField {
 
           background: Rectangle {
             color: buttonInstance.down && !numericField.readOnly
-              ? NumericFieldStyle.tools.button.color.pressed
-              : NumericFieldStyle.tools.button.color.normal
+              ? NumericFieldStyle.tools.button.color.pressed.color
+              : NumericFieldStyle.tools.button.color.normal.color
           }
 
           contentItem: Text {
-            color: NumericFieldStyle.tools.button.text.color
+            color: NumericFieldStyle.tools.button.text.colorModel.color
             text: buttonInstance.text
             font.pointSize: NumericFieldStyle.tools.button.text.pointSize
 

@@ -15,7 +15,7 @@ QtObject {
 	}
 	
 	property QtObject text: QtObject {
-		property color color: ColorsList.add(sectionName+'_text', 'q').color
+		property var colorModel: ColorsList.add(sectionName+'_text', 'q')
 		property int pointSize: Units.dp * 6
 	}
 }

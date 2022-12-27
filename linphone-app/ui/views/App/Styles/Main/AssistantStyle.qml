@@ -7,7 +7,7 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'Assistant'
-	property color color: ColorsList.add(sectionName, 'k').color
+	property var colorModel: ColorsList.add(sectionName, 'k')
 	property int bottomMargin: 35
 	property int leftMargin: 90
 	property int rightMargin: 90

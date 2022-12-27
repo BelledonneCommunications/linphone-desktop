@@ -34,7 +34,7 @@ ColumnLayout  {
 		Layout.fillWidth: true
 		Layout.preferredHeight: peerAddress?HistoryViewStyle.bar.height:HistoryViewStyle.bar.height/2
 		
-		color: HistoryViewStyle.bar.backgroundColor
+		color: HistoryViewStyle.bar.backgroundColor.color
 		
 		RowLayout {
 			anchors {

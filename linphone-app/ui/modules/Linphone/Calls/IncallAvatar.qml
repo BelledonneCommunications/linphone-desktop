@@ -31,7 +31,7 @@ Avatar {
 	
 	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	
-	backgroundColor: CallStyle.container.avatar.backgroundColor
+	backgroundColor: CallStyle.container.avatar.backgroundColor.color
 	foregroundColor: mainItem.isPaused ? CallStyle.container.pause.color : 'transparent'
 	
 	image: {
@@ -45,7 +45,7 @@ Avatar {
 	username: _username
 	Text {
 		anchors.fill: parent
-		color: CallStyle.container.pause.text.color
+		color: CallStyle.container.pause.text.colorModel.color
 		
 		// `|| 1` => `pointSize` must be greater than 0.
 		font.pointSize: (width / CallStyle.container.pause.text.pointSizeFactor) || 1

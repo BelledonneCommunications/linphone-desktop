@@ -31,7 +31,7 @@ Rectangle {
 	
 	// ---------------------------------------------------------------------------
 	
-	color: ChatStyle.color
+	color: ChatStyle.colorModel.color
 	clip: true
 	Timer{// Let some time to have a better cell sizes
 		id: repositionerDelay
@@ -135,7 +135,7 @@ Rectangle {
 					Borders {
 						id: container
 						
-						borderColor: ChatStyle.sectionHeading.border.color
+						borderColor: ChatStyle.sectionHeading.border.colorModel.color
 						bottomWidth: ChatStyle.sectionHeading.border.width
 						implicitHeight: text.contentHeight +
 										ChatStyle.sectionHeading.padding * 2 +
@@ -147,7 +147,7 @@ Rectangle {
 							id: text
 							
 							anchors.fill: parent
-							color: ChatStyle.sectionHeading.text.color
+							color: ChatStyle.sectionHeading.text.colorModel.color
 							font {
 								bold: true
 								pointSize: ChatStyle.sectionHeading.text.pointSize
@@ -192,7 +192,7 @@ Rectangle {
 										   ChatStyle.entry.message.outgoing.areaSize
 				}
 				
-				color: ChatStyle.color
+				color: ChatStyle.colorModel.color
 				implicitHeight: layout.height + ChatStyle.entry.bottomMargin
 				clip: false
 				
@@ -223,7 +223,7 @@ Rectangle {
 									return null
 							}
 							
-							color: ChatStyle.entry.event.text.color
+							color: ChatStyle.entry.event.text.colorModel.color
 							font.pointSize: ChatStyle.entry.event.text.pointSize
 							visible: isMessage 
 									 && $chatEntry != undefined
@@ -246,7 +246,7 @@ Rectangle {
 								Layout.preferredHeight: ChatStyle.entry.lineHeight
 								Layout.preferredWidth: ChatStyle.entry.time.width
 								
-								color: ChatStyle.entry.event.text.color
+								color: ChatStyle.entry.event.text.colorModel.color
 								font.pointSize: ChatStyle.entry.time.pointSize
 								
 								text: UtilsCpp.toTimeString($chatEntry.timestamp, 'hh:mm')
@@ -327,7 +327,7 @@ Rectangle {
 					id: composersItem
 					property var composers : container.proxyModel.chatRoomModel ? container.proxyModel.chatRoomModel.composers : undefined
 					property int count : composers && composers.length ? composers.length : 0
-					color: ChatStyle.composingText.color
+					color: ChatStyle.composingText.colorModel.color
 					font.pointSize: ChatStyle.composingText.pointSize
 					height: visible ? undefined : 0
 					leftPadding: ChatStyle.composingText.leftPadding
@@ -383,7 +383,7 @@ Rectangle {
 			id: bottomChatBackground
 			Layout.fillWidth: true
 			Layout.preferredHeight: textAreaBorders.height + chatMessagePreview.height+messageBlock.height
-			color: ChatStyle.sendArea.backgroundBorder.color
+			color: ChatStyle.sendArea.backgroundBorder.colorModel.color
 			visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.isReadOnly && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 			ColumnLayout{
 				anchors.fill: parent				
@@ -415,7 +415,7 @@ Rectangle {
 					Layout.fillWidth: true
 					Layout.preferredHeight: textArea.height
 					Layout.leftMargin: ChatStyle.sendArea.backgroundBorder.width
-					borderColor: ChatStyle.sendArea.border.color
+					borderColor: ChatStyle.sendArea.border.colorModel.color
 					topWidth: ChatStyle.sendArea.border.width
 					
 					DroppableTextArea {

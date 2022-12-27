@@ -81,11 +81,11 @@ Item {
         width: list.width
 
         color: mouseArea.pressed
-          ? SipAddressesMenuStyle.entry.color.pressed
+          ? SipAddressesMenuStyle.entry.color.pressed.color
           : (
             mouseArea.containsMouse
-              ? SipAddressesMenuStyle.entry.color.hovered
-              : SipAddressesMenuStyle.entry.color.normal
+              ? SipAddressesMenuStyle.entry.color.hovered.color
+              : SipAddressesMenuStyle.entry.color.normal.color
           )
 
         Text {
@@ -96,7 +96,7 @@ Item {
             rightMargin: SipAddressesMenuStyle.entry.rightMargin
           }
 
-          color: SipAddressesMenuStyle.entry.text.color
+          color: SipAddressesMenuStyle.entry.text.colorModel.color
           elide: Text.ElideRight
           font.pointSize: SipAddressesMenuStyle.entry.text.pointSize
           height: parent.height

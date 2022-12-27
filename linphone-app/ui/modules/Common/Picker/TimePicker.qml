@@ -48,7 +48,7 @@ Item{
 			width: 30 * 1.5
 			height: width
 			radius: width / 2
-			border.color: TimePickerStyle.hoursColor
+			border.color: TimePickerStyle.hoursColor.color
 			border.width: 3
 		}
 		
@@ -64,7 +64,7 @@ Item{
 				font.pointSize: Units.dp * 11
 				font.bold: currentItem
 				text: index
-				color: currentItem ? TimePickerStyle.selectedItemColor : TimePickerStyle.unselectedItemColor
+				color: currentItem ? TimePickerStyle.selectedItemColor.color : TimePickerStyle.unselectedItemColor.color
 			}
 			MouseArea {
 				anchors.fill: parent
@@ -108,7 +108,7 @@ Item{
 			width: 30 * 1.5
 			height: width
 			radius: width / 2
-			border.color: TimePickerStyle.minutesColor
+			border.color: TimePickerStyle.minutesColor.color
 			border.width: 3
 		}
 		
@@ -123,7 +123,7 @@ Item{
 				font.pointSize: Units.dp * 11
 				font.bold: currentItem
 				text: index * 5
-				color: currentItem ? TimePickerStyle.selectedItemColor : TimePickerStyle.unselectedItemColor
+				color: currentItem ? TimePickerStyle.selectedItemColor.color : TimePickerStyle.unselectedItemColor.color
 			}
 			
 			MouseArea {

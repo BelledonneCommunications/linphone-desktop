@@ -24,8 +24,8 @@ Item {
 	Rectangle{
 		anchors.fill:parent
 		gradient: Gradient {
-			GradientStop { position: 0.0; color: DialogStyle.title.lowGradient }
-			GradientStop { position: 1.0; color: DialogStyle.title.highGradient }
+			GradientStop { position: 0.0; color: DialogStyle.title.lowGradient.color }
+			GradientStop { position: 1.0; color: DialogStyle.title.highGradient.color }
 		}
 		visible: showBar && !flat
 	}
@@ -38,7 +38,7 @@ Item {
 			rightMargin: DialogStyle.description.rightMargin
 		}
 		
-		color: DialogStyle.description.color
+		color: DialogStyle.description.colorModel.color
 		font.pointSize: !flat ? Units.dp * 10 : Units.dp * 14
 		font.weight: !flat ? Font.Normal : Font.Bold
 		horizontalAlignment: Text.AlignHCenter

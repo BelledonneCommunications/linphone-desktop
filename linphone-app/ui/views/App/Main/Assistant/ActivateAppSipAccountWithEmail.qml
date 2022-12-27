@@ -25,7 +25,7 @@ AssistantAbstractView {
     width: parent.width
 
     Text {
-      color: ActivateAppSipAccountWithEmailStyle.activationSteps.color
+      color: ActivateAppSipAccountWithEmailStyle.activationSteps.colorModel.color
       font.pointSize: ActivateAppSipAccountWithEmailStyle.activationSteps.pointSize
       horizontalAlignment: Text.AlignHCenter
       text: qsTr('activationSteps').replace('%1', assistantModel.email)

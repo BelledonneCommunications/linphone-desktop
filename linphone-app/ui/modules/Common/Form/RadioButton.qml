@@ -31,7 +31,7 @@ Control.RadioButton{
 		x: parent.leftPadding
 		y: parent.height / 2 - height / 2
 		radius: width/2
-		border.color: RadioButtonStyle.color
+		border.color: RadioButtonStyle.colorModel.color
 		property bool checked: parent.checked
 		Rectangle {
 			width: parent.width - 8
@@ -39,7 +39,7 @@ Control.RadioButton{
 			x: 4
 			y: 4
 			radius: width/2
-			color: RadioButtonStyle.color
+			color: RadioButtonStyle.colorModel.color
 			visible: parent.checked
 		}
 	}
@@ -53,7 +53,7 @@ Control.RadioButton{
 		onYChanged: y = 0
 		onHeightChanged: height=implicitHeight
 		//---------------------------------------
-		color: RadioButtonStyle.color
+		color: RadioButtonStyle.colorModel.color
 		verticalAlignment: Text.AlignVCenter
 		leftPadding: parent.indicator.width + parent.spacing
 		wrapMode: Text.WordWrap

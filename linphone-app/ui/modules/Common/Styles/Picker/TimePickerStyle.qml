@@ -8,9 +8,9 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName : 'TimePicker'
-	property color hoursColor: ColorsList.add(sectionName+'_hours', 'i').color
-	property color minutesColor: ColorsList.add(sectionName+'_minutes', 'i').color
-	property color selectedItemColor: ColorsList.add(sectionName+'_selected', 'l').color
-	property color unselectedItemColor: ColorsList.add(sectionName+'_unselected', 'g').color
+	property var hoursColor: ColorsList.add(sectionName+'_hours', 'i')
+	property var minutesColor: ColorsList.add(sectionName+'_minutes', 'i')
+	property var selectedItemColor: ColorsList.add(sectionName+'_selected', 'l')
+	property var unselectedItemColor: ColorsList.add(sectionName+'_unselected', 'g')
 	
 }

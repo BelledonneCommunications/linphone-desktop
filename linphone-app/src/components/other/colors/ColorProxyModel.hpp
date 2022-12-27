@@ -29,6 +29,7 @@
 #include <QString>
 #include <QSortFilterProxyModel>
 
+class ColorModel;
 class ColorListModel;
 class ChatMessageModel;
 
@@ -43,8 +44,12 @@ public:
 	Q_PROPERTY(bool showAll READ getShowAll WRITE setShowAll NOTIFY showAllChanged)
 	
 	Q_INVOKABLE void updateLink(const QString& id, const QString& newLink);
-	
+	Q_INVOKABLE void viewLinks(const QString& id);
 	Q_INVOKABLE void changeSort();
+	Q_INVOKABLE void filterText(const QString& text);
+	
+	void resetColors();
+	void addColor(ColorModel * colorModel);
 	
 	QString getSortDescription() const;
 	
@@ -66,8 +71,10 @@ protected:
 private:
 	int mSortMode;
 	int mShowPageIndex = 0;
-	bool mShowAll = false;
-	
+	bool mShowAll = true;
+	int mLinksIndex = -1;
+	QString mFilterText;
+	QList<QSharedPointer<QObject>> mColors;
 };
 
 #endif

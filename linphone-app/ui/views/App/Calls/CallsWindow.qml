@@ -97,7 +97,7 @@ Window {
 		childA: Rectangle {
 			id: leftPaned
 			anchors.fill: parent
-			color: CallsWindowStyle.callsList.color
+			color: CallsWindowStyle.callsList.colorModel.color
 			
 			ColumnLayout {
 				anchors.fill: parent
@@ -116,8 +116,8 @@ Window {
 						end: Qt.point(0, height)
 						
 						gradient: Gradient {
-							GradientStop { position: 0.0; color: CallsWindowStyle.callsList.header.color1 }
-							GradientStop { position: 1.0; color: CallsWindowStyle.callsList.header.color2 }
+							GradientStop { position: 0.0; color: CallsWindowStyle.callsList.header.color1.color }
+							GradientStop { position: 1.0; color: CallsWindowStyle.callsList.header.color2.color }
 						}
 					}
 					RowLayout{

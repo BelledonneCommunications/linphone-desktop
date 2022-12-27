@@ -103,7 +103,7 @@ SearchBox {
 		
 		headerButtonDescription: qsTr('addContact')
 		headerButtonIcon: 'contact_add_custom'
-		headerButtonOverwriteColor: SipAddressesViewStyle.header.button.color
+		headerButtonOverwriteColor: SipAddressesViewStyle.header.button.colorModel.color
 		headerButtonAction: SettingsModel.contactsEnabled && (function (sipAddress) {
 			searchBox.closeMenu()
 			searchBox.addContact(sipAddress)

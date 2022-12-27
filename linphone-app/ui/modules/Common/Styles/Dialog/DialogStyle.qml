@@ -8,11 +8,11 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName : 'Dialog'
-	property color color: ColorsList.add(sectionName, 'k').color
+	property var colorModel: ColorsList.add(sectionName, 'k')
 	
 	property QtObject title: QtObject {
-		property color lowGradient: ColorsList.add(sectionName+'_title_gradient_low', 'y').color
-		property color highGradient: ColorsList.add(sectionName+'_title_gradient_high', 'z').color
+		property var lowGradient: ColorsList.add(sectionName+'_title_gradient_low', 'y')
+		property var highGradient: ColorsList.add(sectionName+'_title_gradient_high', 'z')
 	}
 	
 	property QtObject buttons: QtObject {
@@ -36,7 +36,7 @@ QtObject {
 	}
 	
 	property QtObject description: QtObject {
-		property color color: ColorsList.add(sectionName+'_description', 'j').color
+		property var colorModel: ColorsList.add(sectionName+'_description', 'j')
 		property int leftMargin: 50
 		property int pointSize: Units.dp * 11
 		property int rightMargin: 50
@@ -46,11 +46,11 @@ QtObject {
 		property int iconSize: 20
 		property string name : 'close'
 		property string icon : 'close_custom'
-		property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 'l_n_b_bg').color
-		property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_h', icon, 'l_h_b_bg').color
-		property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_p', icon, 'l_p_b_bg').color
-		property color foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_n', icon, 'l_n_b_fg').color
-		property color foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 'l_h_b_fg').color
-		property color foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 'l_p_b_fg').color
+		property var backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_n', icon, 'l_n_b_bg')
+		property var backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_h', icon, 'l_h_b_bg')
+		property var backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_b_p', icon, 'l_p_b_bg')
+		property var foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_n', icon, 'l_n_b_fg')
+		property var foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_h', icon, 'l_h_b_fg')
+		property var foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_f_p', icon, 'l_p_b_fg')
 	}
 }

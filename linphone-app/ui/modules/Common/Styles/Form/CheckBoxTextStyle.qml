@@ -13,9 +13,9 @@ QtObject {
 	property int size: 18
 	
 	property QtObject color: QtObject {
-		property color pressed:  ColorsList.add(sectionName+'_p', 'i').color
-		property color hovered: ColorsList.add(sectionName+'_h', 'h').color
-		property color normal: ColorsList.add(sectionName+'_n', 'g').color
-		property color selected:  ColorsList.add(sectionName+'_u', 'i').color
+		property var pressed:  ColorsList.add(sectionName+'_p', 'i')
+		property var hovered: ColorsList.add(sectionName+'_h', 'h')
+		property var normal: ColorsList.add(sectionName+'_n', 'g')
+		property var selected:  ColorsList.add(sectionName+'_u', 'i')
 	}
 }

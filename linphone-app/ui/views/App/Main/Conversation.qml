@@ -80,7 +80,7 @@ ColumnLayout  {
 		Layout.fillWidth: true
 		Layout.preferredHeight: ConversationStyle.bar.height
 		
-		color: ConversationStyle.bar.backgroundColor
+		color: ConversationStyle.bar.backgroundColor.color
 		clip:false
 		
 		RowLayout {
@@ -133,7 +133,7 @@ ColumnLayout  {
 							Icon{
 								id:adminIcon
 								icon : ConversationStyle.bar.status.adminStatusIcon
-								overwriteColor: ConversationStyle.bar.status.adminStatusColor
+								overwriteColor: ConversationStyle.bar.status.adminStatusColor.color
 								iconSize: ConversationStyle.bar.status.adminStatusIconSize
 							}
 							Text{
@@ -141,7 +141,7 @@ ColumnLayout  {
 								//: 'Admin' : Admin(istrator)
 								//~ Context One word title for describing the current admin status
 								text: qsTr('adminStatus')
-								color: ConversationStyle.bar.status.adminTextColor
+								color: ConversationStyle.bar.status.adminTextColor.color
 								font.pointSize: Units.dp * 8
 							}
 						}
@@ -413,7 +413,7 @@ ColumnLayout  {
 					Rectangle{
 						height:visible ? 1 : 0
 						width:parent.width
-						color: ConversationStyle.menu.separatorColor
+						color: ConversationStyle.menu.separatorColor.color
 						visible: groupInfoMenu.visible && contactMenu.visible
 					}
 					MenuItem{
@@ -433,7 +433,7 @@ ColumnLayout  {
 					Rectangle{
 						height:visible ? 1 : 0
 						width:parent.width
-						color: ConversationStyle.menu.separatorColor
+						color: ConversationStyle.menu.separatorColor.color
 						visible: devicesMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible)
 					}
 					MenuItem{
@@ -453,7 +453,7 @@ ColumnLayout  {
 					Rectangle{
 						height:visible ? 1 : 0
 						width:parent.width
-						color: ConversationStyle.menu.separatorColor
+						color: ConversationStyle.menu.separatorColor.color
 						visible: ephemeralMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible)
 					}
 					MenuItem{
@@ -473,7 +473,7 @@ ColumnLayout  {
 					Rectangle{
 						height:visible ? 1 : 0
 						width:parent.width
-						color: ConversationStyle.menu.separatorColor
+						color: ConversationStyle.menu.separatorColor.color
 						visible: scheduleMeetingMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible)
 					}
 					MenuItem{
@@ -506,7 +506,7 @@ ColumnLayout  {
 					Rectangle{
 						height:visible ? 1 : 0
 						width:parent.width
-						color: ConversationStyle.menu.separatorColor
+						color: ConversationStyle.menu.separatorColor.color
 						visible: deleteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible || scheduleMeetingMenuItem.visible)
 					}
 					MenuItem{
@@ -540,9 +540,9 @@ ColumnLayout  {
 		Layout.fillWidth: true
 		Layout.preferredHeight: active ? ConversationStyle.filters.height : 0
 		
-		borderColor: ConversationStyle.filters.border.color
+		borderColor: ConversationStyle.filters.border.colorModel.color
 		bottomWidth: ConversationStyle.filters.border.bottomWidth
-		color: ConversationStyle.filters.backgroundColor
+		color: ConversationStyle.filters.backgroundColor.color
 		topWidth: ConversationStyle.filters.border.topWidth
 		visible: chatRoomModel && (!chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 		
@@ -588,7 +588,7 @@ ColumnLayout  {
 				anchors.horizontalCenter: parent.horizontalCenter
 				icon: (searchView.visible? 'close_custom': 'search_custom')
 				iconSize: 30
-				overwriteColor: ConversationStyle.bar.searchIconColor
+				overwriteColor: ConversationStyle.bar.searchIconColor.color
 			}
 			onClicked: {
 				searchView.visible = !searchView.visible
@@ -616,7 +616,7 @@ ColumnLayout  {
 				}
 				width: parent.width-14
 				icon: text != '' ? 'close_custom' : 'search_custom'
-				overwriteColor: ConversationStyle.filters.iconColor
+				overwriteColor: ConversationStyle.filters.iconColor.color
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')
 				

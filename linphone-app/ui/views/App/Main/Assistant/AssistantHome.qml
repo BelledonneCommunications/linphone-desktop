@@ -40,7 +40,7 @@ ColumnLayout {
 				height: AssistantHomeStyle.info.title.height
 				Layout.fillWidth: true
 				
-				color: AssistantHomeStyle.info.title.color
+				color: AssistantHomeStyle.info.title.colorModel.color
 				elide: Text.ElideRight
 				
 				horizontalAlignment: Text.AlignHCenter
@@ -59,7 +59,7 @@ ColumnLayout {
 				Layout.fillWidth: true
 				//width: parent.width
 				
-				color: AssistantHomeStyle.info.description.color
+				color: AssistantHomeStyle.info.description.colorModel.color
 				elide: Text.ElideRight
 				font.pointSize: AssistantHomeStyle.info.description.pointSize
 				horizontalAlignment: Text.AlignHCenter

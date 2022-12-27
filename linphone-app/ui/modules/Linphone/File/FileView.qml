@@ -41,12 +41,12 @@ Item {
 		id: extension
 		
 		Rectangle {
-			color: ChatStyle.entry.message.file.extension.background.color
+			color: ChatStyle.entry.message.file.extension.background.colorModel.color
 			
 			Text {
 				anchors.fill: parent
 				
-				color: ChatStyle.entry.message.file.extension.text.color
+				color: ChatStyle.entry.message.file.extension.text.colorModel.color
 				font.bold: true
 				elide: Text.ElideRight
 				text: Utils.getExtension(mainItem.name).toUpperCase()

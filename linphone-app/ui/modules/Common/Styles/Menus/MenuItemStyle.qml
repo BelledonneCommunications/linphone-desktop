@@ -62,9 +62,9 @@ QtObject {
 			property int height: 30
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_normal_bg_h', 'o').color
-				property color normal: ColorsList.add(sectionName+'_normal_bg_n', 'q').color
-				property color pressed: ColorsList.add(sectionName+'_normal_bg_p', 'o').color
+				property var hovered: ColorsList.add(sectionName+'_normal_bg_h', 'o')
+				property var normal: ColorsList.add(sectionName+'_normal_bg_n', 'q')
+				property var pressed: ColorsList.add(sectionName+'_normal_bg_p', 'o')
 			}
 		}
 		
@@ -73,10 +73,10 @@ QtObject {
 			property int weight : Font.Bold
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_n_text_h', 'j').color
-				property color normal: ColorsList.add(sectionName+'_n_text_n', 'j').color
-				property color pressed: ColorsList.add(sectionName+'_n_text_p', 'j').color
-				property color disabled: ColorsList.add(sectionName+'_n_text_d', 'l50').color
+				property var hovered: ColorsList.add(sectionName+'_n_text_h', 'j')
+				property var normal: ColorsList.add(sectionName+'_n_text_n', 'j')
+				property var pressed: ColorsList.add(sectionName+'_n_text_p', 'j')
+				property var disabled: ColorsList.add(sectionName+'_n_text_d', 'l50')
 			}
 		}
 	}
@@ -88,9 +88,9 @@ QtObject {
 			property int height: 40
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_aux_bg_h', 'v').color
-				property color normal: ColorsList.add(sectionName+'_aux_bg_n', 'a').color
-				property color pressed: ColorsList.add(sectionName+'_aux_bg_p', 'v').color
+				property var hovered: ColorsList.add(sectionName+'_aux_bg_h', 'v')
+				property var normal: ColorsList.add(sectionName+'_aux_bg_n', 'a')
+				property var pressed: ColorsList.add(sectionName+'_aux_bg_p', 'v')
 			}
 		}
 		
@@ -99,10 +99,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_aux_text_h', 'j').color
-				property color normal: ColorsList.add(sectionName+'_aux_text_n', 'j').color
-				property color pressed: ColorsList.add(sectionName+'_aux_text_p', 'j').color
-				property color disabled: ColorsList.add(sectionName+'_aux_text_d', 'l50').color
+				property var hovered: ColorsList.add(sectionName+'_aux_text_h', 'j')
+				property var normal: ColorsList.add(sectionName+'_aux_text_n', 'j')
+				property var pressed: ColorsList.add(sectionName+'_aux_text_p', 'j')
+				property var disabled: ColorsList.add(sectionName+'_aux_text_d', 'l50')
 			}
 		}
 	}
@@ -114,9 +114,9 @@ QtObject {
 			property int height: 40
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_auxRed_bg_h', 'v').color
-				property color normal: ColorsList.add(sectionName+'_auxRed_bg_n', 'a').color
-				property color pressed: ColorsList.add(sectionName+'_auxRed_bg_p', 'v').color
+				property var hovered: ColorsList.add(sectionName+'_auxRed_bg_h', 'v')
+				property var normal: ColorsList.add(sectionName+'_auxRed_bg_n', 'a')
+				property var pressed: ColorsList.add(sectionName+'_auxRed_bg_p', 'v')
 			}
 		}
 		
@@ -125,10 +125,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_auxError_text_h', 'error').color
-				property color normal: ColorsList.add(sectionName+'_auxError_text_n', 'error').color
-				property color pressed: ColorsList.add(sectionName+'_auxError_text_p', 'error').color
-				property color disabled: ColorsList.add(sectionName+'_auxError_text_d', 'l50').color
+				property var hovered: ColorsList.add(sectionName+'_auxError_text_h', 'error')
+				property var normal: ColorsList.add(sectionName+'_auxError_text_n', 'error')
+				property var pressed: ColorsList.add(sectionName+'_auxError_text_p', 'error')
+				property var disabled: ColorsList.add(sectionName+'_auxError_text_d', 'l50')
 			}
 		}
 	}
@@ -140,9 +140,9 @@ QtObject {
 			property int height: 50
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_aux2_bg_h', 'w').color
-				property color normal: ColorsList.add(sectionName+'_aux2_bg_n', 'w').color
-				property color pressed: ColorsList.add(sectionName+'_aux2_bg_p', 'v').color
+				property var hovered: ColorsList.add(sectionName+'_aux2_bg_h', 'w')
+				property var normal: ColorsList.add(sectionName+'_aux2_bg_n', 'w')
+				property var pressed: ColorsList.add(sectionName+'_aux2_bg_p', 'v')
 			}
 		}
 		
@@ -151,10 +151,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_aux2_text_h', 'm').color
-				property color normal: ColorsList.add(sectionName+'_aux2_text_n', 'j').color
-				property color pressed: ColorsList.add(sectionName+'_aux2_text_p', 'm').color
-				property color disabled: ColorsList.add(sectionName+'_aux2_text_d', 'l50').color
+				property var hovered: ColorsList.add(sectionName+'_aux2_text_h', 'm')
+				property var normal: ColorsList.add(sectionName+'_aux2_text_n', 'j')
+				property var pressed: ColorsList.add(sectionName+'_aux2_text_p', 'm')
+				property var disabled: ColorsList.add(sectionName+'_aux2_text_d', 'l50')
 			}
 		}
 	}
@@ -166,9 +166,9 @@ QtObject {
 			property int height: 50
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_aux2Error_bg_h', 'w').color
-				property color normal: ColorsList.add(sectionName+'_aux2Error_bg_n', 'w').color
-				property color pressed: ColorsList.add(sectionName+'_aux2Error_bg_p', 'v').color
+				property var hovered: ColorsList.add(sectionName+'_aux2Error_bg_h', 'w')
+				property var normal: ColorsList.add(sectionName+'_aux2Error_bg_n', 'w')
+				property var pressed: ColorsList.add(sectionName+'_aux2Error_bg_p', 'v')
 			}
 		}
 		
@@ -177,10 +177,10 @@ QtObject {
 			property int weight : Font.Normal
 			
 			property QtObject color: QtObject {
-				property color hovered: ColorsList.add(sectionName+'_aux2Error_text_h', 'error').color
-				property color normal: ColorsList.add(sectionName+'_aux2Error_text_n', 'error').color
-				property color pressed: ColorsList.add(sectionName+'_aux2Error_text_p', 'error').color
-				property color disabled: ColorsList.add(sectionName+'_aux2Error_text_d', 'l50').color
+				property var hovered: ColorsList.add(sectionName+'_aux2Error_text_h', 'error')
+				property var normal: ColorsList.add(sectionName+'_aux2Error_text_n', 'error')
+				property var pressed: ColorsList.add(sectionName+'_aux2Error_text_p', 'error')
+				property var disabled: ColorsList.add(sectionName+'_aux2Error_text_d', 'l50')
 			}
 		}
 	}

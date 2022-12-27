@@ -25,7 +25,7 @@ RowLayout {
     Layout.preferredHeight: FormHGroupStyle.legend.height
     Layout.preferredWidth: fitLabel ? Math.min(label.fitWidth, FormHGroupStyle.legend.width) : FormHGroupStyle.legend.width
 
-    color: FormHGroupStyle.legend.color
+    color: FormHGroupStyle.legend.colorModel.color
     elide: Text.ElideRight
     font.pointSize: FormHGroupStyle.legend.pointSize
 

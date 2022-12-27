@@ -73,7 +73,7 @@ Item{
 				
 				font.pointSize: FetchRemoteConfigurationStyle.fieldTitles.pointSize
 				font.weight: Font.Bold
-				color: FetchRemoteConfigurationStyle.fieldTitles.color
+				color: FetchRemoteConfigurationStyle.fieldTitles.colorModel.color
 				
 				
 				text: qsTr('urlLabel')
@@ -127,7 +127,7 @@ Item{
 				font.pointSize: FetchRemoteConfigurationStyle.fieldTitles.pointSize
 				font.weight: Font.Bold
 				font.capitalization: Font.Capitalize
-				color: FetchRemoteConfigurationStyle.fieldTitles.color
+				color: FetchRemoteConfigurationStyle.fieldTitles.colorModel.color
 				//: 'or' : conjunction to choose between options.
 				text: qsTr('or')
 			}
@@ -142,7 +142,7 @@ Item{
 					Layout.fillHeight: true
 					Layout.preferredWidth: height
 					Layout.alignment: Qt.AlignCenter
-					border.color: FetchRemoteConfigurationStyle.qRCode.borderColor
+					border.color: FetchRemoteConfigurationStyle.qRCode.borderColor.color
 					radius: 20
 					border.width: 1
 					Text{
@@ -156,7 +156,7 @@ Item{
 						visible: assistantModel.qrcode == ''
 						wrapMode: Text.WordWrap
 						font.pointSize: FetchRemoteConfigurationStyle.explanationQRCode.pointSize
-						color: FetchRemoteConfigurationStyle.explanationQRCode.color
+						color: FetchRemoteConfigurationStyle.explanationQRCode.colorModel.color
 						//: 'Click on %1 to obtain your remote provisioning QR code' : Describe how to get a remote provisioning QR code by clicking on %1 button (1% is the text in button)
 						text : qsTr('remoteProvisioningHow').arg(mainItem.generateButtonText)
 					}
@@ -179,7 +179,7 @@ Item{
 					visible: assistantModel.qrcode != ''
 					wrapMode: Text.WordWrap
 					font.pointSize: FetchRemoteConfigurationStyle.explanationQRCode.pointSize
-					color: FetchRemoteConfigurationStyle.explanationQRCode.color
+					color: FetchRemoteConfigurationStyle.explanationQRCode.colorModel.color
 					//: 'Scan the QR code with your phone' : Explain how to use the QRCode by flasing it.
 					text: qsTr('scanQRCode') + '\n'
 					//: 'In your app go in assistant - QR code provisioning' : Describe where to flash the QRCode in the mobile application.

@@ -67,7 +67,7 @@ Column{
 		id: message
 		contentModel: mainItem.contentModel
 		onLastTextSelectedChanged: mainItem.lastTextSelected = lastTextSelected
-		color: isOutgoing ? ChatStyle.entry.message.outgoing.text.color : ChatStyle.entry.message.incoming.text.color
+		color: isOutgoing ? ChatStyle.entry.message.outgoing.text.colorModel.color : ChatStyle.entry.message.incoming.text.colorModel.color
 		onRightClicked: mainItem.rightClicked()
 	}
 }

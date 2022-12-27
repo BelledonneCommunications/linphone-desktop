@@ -52,7 +52,7 @@ Item {
 	
 	Rectangle{
 		anchors.fill: parent
-		color: DroppableTextAreaStyle.outsideBackgroundColor
+		color: DroppableTextAreaStyle.outsideBackgroundColor.color
 		// ---------------------------------------------------------------------------
 		RowLayout{
 			anchors.fill: parent
@@ -148,12 +148,12 @@ Item {
 					}
 
 					background: Rectangle {
-						color: DroppableTextAreaStyle.backgroundColor
+						color: DroppableTextAreaStyle.backgroundColor.color
 						radius: 5
 						clip:true
 					}
 					
-					color: DroppableTextAreaStyle.text.color
+					color: DroppableTextAreaStyle.text.colorModel.color
 					font.pointSize: DroppableTextAreaStyle.text.pointSize-1
 					rightPadding: fileChooserButton.width +
 								  fileChooserButton.anchors.rightMargin +
@@ -213,7 +213,7 @@ Item {
 				Icon{
 					visible: sendButton.visible && droppableTextArea.isEphemeral
 					icon: DroppableTextAreaStyle.ephemeralTimer.icon
-					overwriteColor: DroppableTextAreaStyle.ephemeralTimer.timerColor
+					overwriteColor: DroppableTextAreaStyle.ephemeralTimer.timerColor.color
 					iconSize: DroppableTextAreaStyle.ephemeralTimer.iconSize
 					anchors.right:parent.right
 					anchors.bottom : parent.bottom
@@ -227,12 +227,12 @@ Item {
 			id: hoverContent
 			
 			anchors.fill: parent
-			color: DroppableTextAreaStyle.hoverContent.backgroundColor
+			color: DroppableTextAreaStyle.hoverContent.backgroundColor.color
 			visible: false
 			
 			Text {
 				anchors.centerIn: parent
-				color: DroppableTextAreaStyle.hoverContent.text.color
+				color: DroppableTextAreaStyle.hoverContent.text.colorModel.color
 				font.pointSize: DroppableTextAreaStyle.hoverContent.text.pointSize
 				text: qsTr('dropYourAttachment')
 			}

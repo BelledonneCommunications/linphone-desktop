@@ -31,6 +31,9 @@
 // =============================================================================
 
 ColorProxyModel::ColorProxyModel (QObject *parent) : QSortFilterProxyModel(parent){
+	connect(App::getInstance()->getColorListModel(), &ColorListModel::uiResetColors, this, &ColorProxyModel::resetColors);
+	connect(App::getInstance()->getColorListModel(), &ColorListModel::uiAddColor, this, &ColorProxyModel::addColor);
+
 	setSourceModel(App::getInstance()->getColorListModel());
 	mSortMode = 0;
 	sort(0);
@@ -63,10 +66,38 @@ void ColorProxyModel::updateLink(const QString& id, const QString& newLink){
 	invalidate();
 }
 
+void ColorProxyModel::viewLinks(const QString& id){
+	if(id != ""){
+		ColorListModel * listModel = static_cast<ColorListModel*>(sourceModel());
+		mLinksIndex = listModel->getLinkIndex(id);
+	}else{
+		mLinksIndex = -1;
+	}
+	invalidate();
+}
+
+void ColorProxyModel::filterText(const QString& text){
+	mFilterText = text;
+	invalidate();
+}
+
 void ColorProxyModel::changeSort(){
 	mSortMode = (mSortMode+1)%4;
 	invalidate();
 	emit sortChanged();
+}
+
+void ColorProxyModel::resetColors(){
+	mColors.clear();
+	invalidate();
+}
+void ColorProxyModel::addColor(ColorModel * colorModel){
+	auto listModel = qobject_cast<ProxyListModel*>(sourceModel());
+	auto colorListModel = App::getInstance()->getColorListModel();
+	auto internalColorModel = colorListModel->get(colorModel);
+	if( internalColorModel)
+		mColors << internalColorModel;
+	invalidate();
 }
 
 QString ColorProxyModel::getSortDescription() const{
@@ -89,6 +120,22 @@ bool ColorProxyModel::filterAcceptsRow (
 	Q_UNUSED(sourceParent)
 	const QModelIndex index = sourceModel()->index(sourceRow, 0, sourceParent);
 	const ColorModel *model= index.data().value<ColorModel *>();
+	if(mLinksIndex>=0){
+		ColorListModel * listModel = static_cast<ColorListModel*>(sourceModel());
+		auto ids = listModel->getColorIdLinks()[mLinksIndex];
+		for(int i = 0 ; i < ids.size() ; ++i)
+			if(listModel->getColor(ids[i]) == model)
+				return true;
+		return false;
+	}
+	if(!mFilterText.isEmpty()){
+		return model->getName().contains(mFilterText, Qt::CaseInsensitive) || model->getDescription().contains(mFilterText, Qt::CaseInsensitive);
+	}
+	auto it = std::find_if(mColors.begin(), mColors.end(), [model](QSharedPointer<QObject> colorModel) {
+			return colorModel == model;
+	});
+	 if( it == mColors.end())
+		return false;
 	//return model->getLinkedToImage() == "";// Remove linked to image from list
 	int currentPage = sourceRow / 50;
 	return  mShowAll || currentPage == mShowPageIndex;

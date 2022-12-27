@@ -20,7 +20,7 @@ Rectangle {
 	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	// ---------------------------------------------------------------------------
 	
-	color: CallStyle.backgroundColor
+	color: CallStyle.backgroundColor.color
 	
 	ColumnLayout {
 		anchors {
@@ -50,7 +50,7 @@ Rectangle {
 			
 			BusyIndicator {
 				anchors.horizontalCenter: parent.horizontalCenter
-				color: CallStyle.header.busyIndicator.color
+				color: CallStyle.header.busyIndicator.colorModel.color
 				height: CallStyle.header.busyIndicator.height
 				width: CallStyle.header.busyIndicator.width
 				

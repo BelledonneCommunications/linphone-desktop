@@ -10,6 +10,6 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'CameraSticker'
-	property color cameraBackgroundColor: ColorsList.add(sectionName+'_camera_bg', 'fullscreen_conference_bg').color
+	property var cameraBackgroundColor: ColorsList.add(sectionName+'_camera_bg', 'fullscreen_conference_bg')
 	property int radius : 10
 }

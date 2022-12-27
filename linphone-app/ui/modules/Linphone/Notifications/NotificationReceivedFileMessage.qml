@@ -40,7 +40,7 @@ Notification {
 			Text {
 				Layout.fillWidth: true
 				
-				color: NotificationReceivedFileMessageStyle.fileName.color
+				color: NotificationReceivedFileMessageStyle.fileName.colorModel.color
 				elide: Text.ElideRight
 				font.pointSize: NotificationReceivedFileMessageStyle.fileName.pointSize
 				text: Utils.basename(notification.fileUri)
@@ -76,7 +76,7 @@ Notification {
 			Text {
 				Layout.preferredWidth: NotificationReceivedFileMessageStyle.fileSize.width
 				
-				color: NotificationReceivedFileMessageStyle.fileSize.color
+				color: NotificationReceivedFileMessageStyle.fileSize.colorModel.color
 				elide: Text.ElideRight
 				font.pointSize: NotificationReceivedFileMessageStyle.fileSize.pointSize
 				horizontalAlignment: Text.AlignRight

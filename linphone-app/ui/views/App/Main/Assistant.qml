@@ -14,7 +14,7 @@ Item {
 	
 	Rectangle {
 		anchors.fill: parent
-		color: AssistantStyle.color
+		color: AssistantStyle.colorModel.color
 	}
 	function pushView (view, properties) {
 		stack.pushView(view, properties)

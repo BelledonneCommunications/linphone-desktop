@@ -61,7 +61,7 @@ Rectangle {
 	
 	// ---------------------------------------------------------------------------
 	
-	color: IncallStyle.backgroundColor
+	color: IncallStyle.backgroundColor.color
 	
 	Connections {
 		target: callModel
@@ -82,7 +82,7 @@ Rectangle {
 		}
 		anchors.fill: parent
 		visible: callModel.pausedByUser
-		color: IncallStyle.pauseArea.backgroundColor
+		color: IncallStyle.pauseArea.backgroundColor.color
 		z: 1
 		ColumnLayout{
 			anchors.fill: parent
@@ -104,7 +104,7 @@ Rectangle {
 				text: qsTr('incallPauseWarning')
 				font.pointSize: IncallStyle.pauseArea.title.pointSize
 				font.weight: IncallStyle.pauseArea.title.weight
-				color: IncallStyle.pauseArea.title.color
+				color: IncallStyle.pauseArea.title.colorModel.color
 			}
 			Text{
 				Layout.topMargin: 10
@@ -113,7 +113,7 @@ Rectangle {
 				text: qsTr('incallPauseHint')
 				font.pointSize: IncallStyle.pauseArea.description.pointSize
 				font.weight: IncallStyle.pauseArea.description.weight
-				color: IncallStyle.pauseArea.description.color
+				color: IncallStyle.pauseArea.description.colorModel.color
 			}
 			Item{
 				Layout.fillWidth: true
@@ -217,7 +217,7 @@ Rectangle {
 							: callModel
 								? elaspedTime
 								: ''
-					color: IncallStyle.title.color
+					color: IncallStyle.title.colorModel.color
 					font.pointSize: IncallStyle.title.pointSize
 				}
 				Text{
@@ -228,7 +228,7 @@ Rectangle {
 					text: !conferenceModel && callModel
 								? SipAddressesModel.cleanSipAddress(callModel.peerAddress)
 								: ''
-					color: IncallStyle.title.color
+					color: IncallStyle.title.colorModel.color
 					font.pointSize: IncallStyle.title.addressPointSize
 				}
 				
@@ -237,8 +237,8 @@ Rectangle {
 				id: messageBanner
 				
 				anchors.fill: parent
-				textColor: IncallStyle.header.messageBanner.textColor
-				color: IncallStyle.header.messageBanner.color
+				textColor: IncallStyle.header.messageBanner.textColor.color
+				color: IncallStyle.header.messageBanner.colorModel.color
 				showIcon: false
 				pointSize: IncallStyle.header.messageBanner.pointSize
 			}
@@ -388,7 +388,7 @@ Rectangle {
 							active: parent.visible
 							sourceComponent: Component{
 								BusyIndicator{
-									color: IncallStyle.buzyColor
+									color: IncallStyle.buzyColor.color
 								}
 							}
 						}
@@ -400,7 +400,7 @@ Rectangle {
 									? qsTr('incallWaitParticipantMessage')
 							//: 'The meeting is not ready. Please Wait...' :  Waiting message for starting a meeting.
 									: qsTr('incallWaitMessage')
-							color: IncallStyle.buzyColor
+							color: IncallStyle.buzyColor.color
 						}
 					}
 				}
@@ -461,13 +461,13 @@ Rectangle {
 		Icon{
 			icon: IncallStyle.recordWarning.icon
 			iconSize: IncallStyle.recordWarning.iconSize
-			overwriteColor: IncallStyle.recordWarning.iconColor
+			overwriteColor: IncallStyle.recordWarning.iconColor.color
 		}
 		Text{
 			Layout.fillWidth: true
 			//: 'This call is being recorded.' : Warn the user that the remote is currently recording the call.
 			text: qsTr('callWarningRecord')
-			color: IncallStyle.recordWarning.color
+			color: IncallStyle.recordWarning.colorModel.color
 			font.italic: true
 			font.pointSize: IncallStyle.recordWarning.pointSize
 			wrapMode: Text.WordWrap

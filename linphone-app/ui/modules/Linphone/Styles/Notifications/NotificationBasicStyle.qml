@@ -13,7 +13,7 @@ QtObject {
 	property int overrodeHeight: 55
 	
 	property QtObject message: QtObject {
-		property color color: ColorsList.add(sectionName+'_message', 'h').color
+		property var colorModel: ColorsList.add(sectionName+'_message', 'h')
 		property int pointSize: Units.dp * 10
 	}
 }

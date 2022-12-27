@@ -34,33 +34,38 @@ class ColorModel : public QObject {
 
 public:
 typedef enum{
+		CONTEXT_FROMLINK = -1,
 		CONTEXT_NORMAL = 0,
 		CONTEXT_HOVERED,// More darker
 		CONTEXT_PRESSED,// More lighter
 		CONTEXT_DEACTIVATED// Alpha
 	}ContextMode;
-    ColorModel (const QString& name, const QColor& color, const QString& description, QObject * parent = nullptr);
+    ColorModel (const QString& name, const QColor& color, const QColor& originColor, const QString& description, const ContextMode& context, QObject * parent = nullptr);
 	
-	Q_PROPERTY(QColor color MEMBER mColor WRITE setColor NOTIFY colorChanged)
+	Q_PROPERTY(QColor color READ getColor WRITE setColor NOTIFY colorChanged)
 	Q_PROPERTY(QString description MEMBER mDescription WRITE setDescription NOTIFY descriptionChanged)
 	Q_PROPERTY(QString name MEMBER mName CONSTANT)
 	Q_PROPERTY(int linkIndex MEMBER mLinkIndex WRITE setLinkIndex NOTIFY linkIndexChanged)
   
 	QColor getColor() const;
+	QColor getColor(const ContextMode& context) const;
+	QColor getOriginColor() const;
 	QString getDescription() const;
 	QString getName() const;
 	int getLinkIndex() const;
+	ContextMode getContext() const;
 	Q_INVOKABLE QString toString(){return getName();}
 	QString getLinkedToImage() const;
 	
 	void setColor(const QColor& color);
-	void setInternalColor(const QColor& color);
+	void setOriginColor(const QColor& color, const bool& emitEvents = true);
 	void setAlpha(const int& alpha);
 	void setDescription(const QString& description);
 	void setLinkIndex(const int& index);
 	void setLinkedToImage(const QString& id);
 	void setContext(const ContextMode& context);
 	void updateContext();
+	void updateContextFromColor();
 	
 signals:
 	void colorChanged();
@@ -71,6 +76,8 @@ signals:
 private:
 	QString mName;
 	QColor mColor;
+	QColor mOriginColor;
+	double mAlphaFactor = -1.0;
 	QString mDescription;
 	QString mLinkedToImage;
 	int mLinkIndex = -1;

@@ -22,7 +22,7 @@ Item{
 	property alias isCameraFromDevice: camera.isCameraFromDevice
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true
-	property color color : camera.isReady ?  CameraViewStyle.cameraBackgroundColor : CameraViewStyle.outBackgroundColor
+	property color color : camera.isReady ?  CameraViewStyle.cameraBackgroundColor.color : CameraViewStyle.outBackgroundColor.color
 	property real avatarRatio : 2/3
 	
 	signal closeRequested()
@@ -37,13 +37,13 @@ Item{
         anchors.fill: backgroundArea
         glowRadius: 4
         spread: 0.9
-        color: CameraViewStyle.border.color
+        color: CameraViewStyle.border.colorModel.color
         cornerRadius: backgroundArea.radius + glowRadius
         visible: mainItem.showActiveSpeakerOverlay && mainItem.currentDevice && mainItem.currentDevice.isSpeaking
     }
 	Rectangle {
         id: backgroundArea
-        color: mainItem.color
+        color: mainItem.colorModel.color
         anchors.fill: parent
         radius: CameraViewStyle.radius
         Component {
@@ -110,7 +110,7 @@ Item{
 	Rectangle{
 		id: hideView
 		anchors.fill: parent
-		color: CameraViewStyle.pauseView.backgroundColor
+		color: CameraViewStyle.pauseView.backgroundColor.color
 		radius: CameraViewStyle.radius
 		visible: mainItem.isPaused
 		Rectangle{
@@ -118,11 +118,11 @@ Item{
 			height: CameraViewStyle.pauseView.button.iconSize
 			width: height
 			radius: width/2
-			color: CameraViewStyle.pauseView.button.backgroundNormalColor
+			color: CameraViewStyle.pauseView.button.backgroundNormalColor.colorModel.color
 			Icon{
 				anchors.centerIn: parent
 				icon: CameraViewStyle.pauseView.button.icon
-				overwriteColor: CameraViewStyle.pauseView.button.foregroundNormalColor
+				overwriteColor: CameraViewStyle.pauseView.button.foregroundNormalColor.color
 				iconSize: CameraViewStyle.pauseView.button.iconSize
 			}
 		}
@@ -139,7 +139,7 @@ Item{
 		text: mainItem.currentDevice && mainItem.currentDevice.displayName + (mainItem.isPaused ? ' (en pause)' : '')
 		font.pointSize: CameraViewStyle.contactDescription.pointSize
 		font.weight: CameraViewStyle.contactDescription.weight
-		color: CameraViewStyle.contactDescription.color
+		color: CameraViewStyle.contactDescription.colorModel.color
 	}
 	Glow {
 		anchors.fill: username
@@ -168,11 +168,11 @@ Item{
 		height: CameraViewStyle.isMuted.button.iconSize
 		width: height
 		radius: width/2
-		color: CameraViewStyle.isMuted.button.backgroundNormalColor
+		color: CameraViewStyle.isMuted.button.backgroundNormalColor.colorModel.color
 		Icon{
 			anchors.centerIn: parent
 			icon: CameraViewStyle.isMuted.button.icon
-			overwriteColor: CameraViewStyle.isMuted.button.foregroundNormalColor
+			overwriteColor: CameraViewStyle.isMuted.button.foregroundNormalColor.color
 			iconSize: CameraViewStyle.isMuted.button.iconSize
 		}
 	}

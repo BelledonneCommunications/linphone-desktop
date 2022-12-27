@@ -45,7 +45,7 @@ Item {
 		anchors.top:parent.top
 		anchors.topMargin:(visible?AssistantAbstractViewStyle.info.spacing:0)
 		anchors.horizontalCenter: parent.horizontalCenter
-		color: AssistantAbstractViewStyle.info.title.color
+		color: AssistantAbstractViewStyle.info.title.colorModel.color
 		elide: Text.ElideRight
 		
 		font {
@@ -65,7 +65,7 @@ Item {
 		anchors.topMargin:(visible?AssistantAbstractViewStyle.info.spacing:0)
 		anchors.horizontalCenter: parent.horizontalCenter
 		
-		color: AssistantAbstractViewStyle.info.description.color
+		color: AssistantAbstractViewStyle.info.description.colorModel.color
 		elide: Text.ElideRight
 		
 		font.pointSize: AssistantAbstractViewStyle.info.description.pointSize

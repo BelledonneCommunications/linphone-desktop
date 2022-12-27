@@ -41,11 +41,11 @@ TextField {
       }
 
       color: mouseArea.pressed
-        ? FileChooserButtonStyle.tools.button.color.pressed
+        ? FileChooserButtonStyle.tools.button.color.pressed.color
         : (
           mouseArea.containsMouse
-            ? FileChooserButtonStyle.tools.button.color.hovered
-            : FileChooserButtonStyle.tools.button.color.normal
+            ? FileChooserButtonStyle.tools.button.color.hovered.color
+            : FileChooserButtonStyle.tools.button.color.normal.color
         )
 
       ActionButton {

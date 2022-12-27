@@ -8,9 +8,9 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName : 'ChatReplyMessage'
-	property color color: ColorsList.add(sectionName, 'q').color
+	property var colorModel: ColorsList.add(sectionName, 'q')
 	property QtObject header: QtObject{
-		property color color: ColorsList.add(sectionName+'_header', 'h').color
+		property var colorModel: ColorsList.add(sectionName+'_header', 'h')
 		property int pointSizeOffset: -3
 		property QtObject replyIcon: QtObject{
 			property string icon : 'menu_reply_custom'
@@ -18,10 +18,10 @@ QtObject {
 		}
 	}
 	property QtObject replyArea: QtObject{
-		property color outgoingMarkColor: ColorsList.add(sectionName+'_reply_outgoing_mark', 'm').color
-		property color incomingMarkColor: ColorsList.add(sectionName+'_reply_incoming_mark', 'r').color
-		property color backgroundColor: ColorsList.add(sectionName+'_reply_bg', 'q').color
-		property color foregroundColor: ColorsList.add(sectionName+'_reply_fg', 'h').color
+		property var outgoingMarkColor: ColorsList.add(sectionName+'_reply_outgoing_mark', 'm')
+		property var incomingMarkColor: ColorsList.add(sectionName+'_reply_incoming_mark', 'r')
+		property var backgroundColor: ColorsList.add(sectionName+'_reply_bg', 'q')
+		property var foregroundColor: ColorsList.add(sectionName+'_reply_fg', 'h')
 		property int usernamePointSizeOffset: -2
 		property int pointSizeOffset: -2
 	}

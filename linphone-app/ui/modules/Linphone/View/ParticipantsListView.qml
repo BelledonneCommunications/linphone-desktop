@@ -77,7 +77,7 @@ ColumnLayout {
 				Layout.leftMargin: ParticipantsListViewStyle.results.title.leftMargin
 				//: 'Participant list'
 				text:qsTr('participantList')
-				color: ParticipantsListViewStyle.results.title.color
+				color: ParticipantsListViewStyle.results.title.colorModel.color
 				font.pointSize:ParticipantsListViewStyle.results.title.pointSize
 				font.weight: ParticipantsListViewStyle.results.title.weight
 			}
@@ -90,7 +90,7 @@ ColumnLayout {
 				//~ one word for admin status
 				text : qsTr('adminStatus')
 
-				color: ParticipantsListViewStyle.results.header.color
+				color: ParticipantsListViewStyle.results.header.colorModel.color
 				font.pointSize: ParticipantsListViewStyle.results.header.pointSize
 				font.weight: ParticipantsListViewStyle.results.header.weight
 				visible: mainLayout.isAdmin && participantView.count > 0

@@ -9,7 +9,7 @@ import ColorsList 1.0
 QtObject {
 	property string sectionName: 'ApplicationMenu'
 	property int spacing: 1
-	property color backgroundColor: ColorsList.add(sectionName+'_bg', 'n').color
+	property var backgroundColor: ColorsList.add(sectionName+'_bg', 'n')
 	
 	property QtObject entry: QtObject {
 		property int iconSize: 24
@@ -18,14 +18,14 @@ QtObject {
 		property int spacing: 18
 		
 		property QtObject color: QtObject {
-			property color hovered: ColorsList.add(sectionName+'_entry_h', 'h').color
-			property color normal: ColorsList.add(sectionName+'_entry_n', 'g').color
-			property color pressed: ColorsList.add(sectionName+'_entry_p', 'i').color
-			property color selected: ColorsList.add(sectionName+'_entry_selected', 'j').color
+			property var hovered: ColorsList.add(sectionName+'_entry_h', 'h')
+			property var normal: ColorsList.add(sectionName+'_entry_n', 'g')
+			property var pressed: ColorsList.add(sectionName+'_entry_p', 'i')
+			property var selected: ColorsList.add(sectionName+'_entry_selected', 'j')
 		}
 		
 		property QtObject indicator: QtObject {
-			property color color: ColorsList.add(sectionName+'_entry_indicator', 'i').color
+			property var colorModel: ColorsList.add(sectionName+'_entry_indicator', 'i')
 			property int width: 5
 		}
 		
@@ -33,8 +33,8 @@ QtObject {
 			property int pointSize: Units.dp * 10
 			
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_entry_text_n', 'q').color
-				property color selected: ColorsList.add(sectionName+'_entry_text_c', 'q').color
+				property var normal: ColorsList.add(sectionName+'_entry_text_n', 'q')
+				property var selected: ColorsList.add(sectionName+'_entry_text_c', 'q')
 			}
 		}
 	}

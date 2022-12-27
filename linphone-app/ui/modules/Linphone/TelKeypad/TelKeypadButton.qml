@@ -74,7 +74,7 @@ Item {
 					id: charText
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					color: TelKeypadStyle.button.text.color
+					color: TelKeypadStyle.button.text.colorModel.color
 					elide: Text.ElideRight
 					
 					font {
@@ -90,7 +90,7 @@ Item {
 				Icon{
 					icon: TelKeypadStyle.voicemail.icon
 					iconSize: charText.height/2
-					overwriteColor: TelKeypadStyle.button.text.color
+					overwriteColor: TelKeypadStyle.button.text.colorModel.color
 					visible: button.showVoicemail
 				}
 			}
@@ -98,7 +98,7 @@ Item {
 				visible: text != ''
 					Layout.fillHeight: true
 					Layout.fillWidth: true
-					color: TelKeypadStyle.button.text.color
+					color: TelKeypadStyle.button.text.colorModel.color
 					elide: Text.ElideRight
 					
 					font {

@@ -15,13 +15,13 @@ QtObject {
 		property int rightMargin: 8
 		
 		property QtObject color: QtObject {
-			property color hovered: ColorsList.add(sectionName+'_entry_h', 'j').color
-			property color normal: ColorsList.add(sectionName+'_entry_n', 'g').color
-			property color pressed: ColorsList.add(sectionName+'_entry_p', 'i').color
+			property var hovered: ColorsList.add(sectionName+'_entry_h', 'j')
+			property var normal: ColorsList.add(sectionName+'_entry_n', 'g')
+			property var pressed: ColorsList.add(sectionName+'_entry_p', 'i')
 		}
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_entry_text', 'q').color
+			property var colorModel: ColorsList.add(sectionName+'_entry_text', 'q')
 			property int pointSize: Units.dp * 9
 		}
 	}

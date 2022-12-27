@@ -16,27 +16,27 @@ QtObject {
 			
 			property QtObject border: QtObject {
 				property QtObject color: QtObject {
-					property color error: ColorsList.add(sectionName+'_n_bg_border_error', 'error').color
-					property color normal: ColorsList.add(sectionName+'_n_bg_border_n', 'c').color
-					property color selected: ColorsList.add(sectionName+'_n_bg_border_c', 'i').color
+					property var error: ColorsList.add(sectionName+'_n_bg_border_error', 'error')
+					property var normal: ColorsList.add(sectionName+'_n_bg_border_n', 'c')
+					property var selected: ColorsList.add(sectionName+'_n_bg_border_c', 'i')
 				}
 				
 				property int width: 1
 			}
 			
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_n_bg_n', 'q').color
-				property color readOnly: ColorsList.add(sectionName+'_n_bg_readonly', 'e').color
+				property var normal: ColorsList.add(sectionName+'_n_bg_n', 'q')
+				property var readOnly: ColorsList.add(sectionName+'_n_bg_readonly', 'e')
 			}
 			property QtObject mandatory: QtObject{
-				property color color: ColorsList.add(sectionName+'_required_text', 'g').color
+				property var colorModel: ColorsList.add(sectionName+'_required_text', 'g')
 				property real pointSize: Units.dp * 10
 			}
 		}
 		
 		property QtObject text: QtObject {
-			property color normal: ColorsList.add(sectionName+'_n_text', 'd').color
-			property color readOnly: ColorsList.add(sectionName+'_n_text_readonly', 'd').color
+			property var normal: ColorsList.add(sectionName+'_n_text', 'd')
+			property var readOnly: ColorsList.add(sectionName+'_n_text_readonly', 'd')
 			property int pointSize: Units.dp * 10
 			property int rightPadding: 5
 		}
@@ -50,27 +50,27 @@ QtObject {
 			
 			property QtObject border: QtObject {
 				property QtObject color: QtObject {
-					property color error: 'black'
-					property color normal: 'black'
-					property color selected: 'black'
+					property var error: {'color':'black'}
+					property var normal: {'color':'black'}
+					property var selected: {'color':'black'}
 				}
 				
 				property int width: 0
 			}
 			
 			property QtObject color: QtObject {
-				property color normal:  ColorsList.add(sectionName+'_unbordered_bg_n', 'q').color
-				property color readOnly: ColorsList.add(sectionName+'_unbordered_bg_readonly', 'e').color
+				property var normal:  ColorsList.add(sectionName+'_unbordered_bg_n', 'q')
+				property var readOnly: ColorsList.add(sectionName+'_unbordered_bg_readonly', 'e')
 			}
 			property QtObject mandatory: QtObject{
-				property color color: ColorsList.add(sectionName+'_unbordered_required_text', 'g').color
+				property var colorModel: ColorsList.add(sectionName+'_unbordered_required_text', 'g')
 				property real pointSize: Units.dp * 10
 			}
 		}
 		
 		property QtObject text: QtObject {
-			property color normal: ColorsList.add(sectionName+'_unbordered_text', 'd').color
-			property color readOnly: ColorsList.add(sectionName+'_unbordered_text_readonly', 'd').color
+			property var normal: ColorsList.add(sectionName+'_unbordered_text', 'd')
+			property var readOnly: ColorsList.add(sectionName+'_unbordered_text_readonly', 'd')
 			property int pointSize: Units.dp * 10
 			property int rightPadding: 5
 		}
@@ -84,27 +84,27 @@ QtObject {
 			
 			property QtObject border: QtObject {
 				property QtObject color: QtObject {
-					property color error: 'black'
-					property color normal: 'black'
-					property color selected: 'black'
+					property var error: {'color':'black'}
+					property var normal: {'color':'black'}
+					property var selected: {'color':'black'}
 				}
 				
 				property int width: 0
 			}
 			
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_flat_bg_n', 'q').color
-				property color readOnly: ColorsList.add(sectionName+'_flat_bg_readonly', 'e').color
+				property var normal: ColorsList.add(sectionName+'_flat_bg_n', 'q')
+				property var readOnly: ColorsList.add(sectionName+'_flat_bg_readonly', 'e')
 			}
 			property QtObject mandatory: QtObject{
-				property color color: ColorsList.add(sectionName+'_flat_required_text', 'g').color
+				property var colorModel: ColorsList.add(sectionName+'_flat_required_text', 'g')
 				property real pointSize: Units.dp * 10
 			}
 		}
 		
 		property QtObject text: QtObject {
-			property color normal: ColorsList.add(sectionName+'_flat_text', 'd').color
-			property color readonly: ColorsList.add(sectionName+'_flat_text_readonly', 'd').color
+			property var normal: ColorsList.add(sectionName+'_flat_text', 'd')
+			property var readonly: ColorsList.add(sectionName+'_flat_text_readonly', 'd')
 			property int pointSize: Units.dp * 10
 			property int rightPadding: 5
 		}
@@ -118,27 +118,27 @@ QtObject {
 			
 			property QtObject border: QtObject {
 				property QtObject color: QtObject {
-					property color error: 'black'
-					property color normal: 'black'
-					property color selected: 'black'
+					property var error: {'color':'black'}
+					property var normal: {'color':'black'}
+					property var selected: {'color':'black'}
 				}
 				
 				property int width: 0
 			}
 			
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_flat_inv_bg_n', 'q').color
-				property color readOnly: ColorsList.add(sectionName+'_flat_inv_bg_readonly', 'q').color
+				property var normal: ColorsList.add(sectionName+'_flat_inv_bg_n', 'q')
+				property var readOnly: ColorsList.add(sectionName+'_flat_inv_bg_readonly', 'q')
 			}
 			property QtObject mandatory: QtObject{
-				property color color: ColorsList.add(sectionName+'_flat_inv_required_text', 'g').color
+				property var colorModel: ColorsList.add(sectionName+'_flat_inv_required_text', 'g')
 				property real pointSize: Units.dp * 10
 			}
 		}
 		
 		property QtObject text: QtObject {
-			property color color: ColorsList.add(sectionName+'_flat_inv_text', 'd').color
-			property color readOnly: ColorsList.add(sectionName+'_flat_inv_readonly', 'readonly_fg').color
+			property var colorModel: ColorsList.add(sectionName+'_flat_inv_text', 'd')
+			property var readOnly: ColorsList.add(sectionName+'_flat_inv_readonly', 'readonly_fg')
 			property int pointSize: Units.dp * 10
 			property int rightPadding: 5
 		}

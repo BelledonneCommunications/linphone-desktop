@@ -366,7 +366,7 @@ TabContainer {
 							id: autoDownloadText
 							property int preferredWidth : 0
 							Layout.preferredWidth: preferredWidth
-							color: FormHGroupStyle.legend.color
+							color: FormHGroupStyle.legend.colorModel.color
 							font.pointSize: FormHGroupStyle.legend.pointSize
 							
 							function updateText(value){

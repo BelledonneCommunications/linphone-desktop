@@ -20,7 +20,7 @@ Rectangle {
 
   // ---------------------------------------------------------------------------
 
-  color: HistoryStyle.color
+  color: HistoryStyle.colorModel.color
 
   ColumnLayout {
     anchors.fill: parent
@@ -81,7 +81,7 @@ Rectangle {
           Borders {
             id: container
 
-            borderColor: HistoryStyle.sectionHeading.border.color
+            borderColor: HistoryStyle.sectionHeading.border.colorModel.color
             bottomWidth: HistoryStyle.sectionHeading.border.width
             implicitHeight: text.contentHeight +
               HistoryStyle.sectionHeading.padding * 2 +
@@ -93,7 +93,7 @@ Rectangle {
               id: text
 
               anchors.fill: parent
-              color: HistoryStyle.sectionHeading.text.color
+              color: HistoryStyle.sectionHeading.text.colorModel.color
               font {
                 bold: true
                 pointSize: HistoryStyle.sectionHeading.text.pointSize
@@ -134,7 +134,7 @@ Rectangle {
             HistoryStyle.entry.message.extraContent.leftMargin
         }
 
-        color: HistoryStyle.color
+        color: HistoryStyle.colorModel.color
         implicitHeight: layout.height + HistoryStyle.entry.bottomMargin
 
         // ---------------------------------------------------------------------
@@ -159,7 +159,7 @@ Rectangle {
               Layout.preferredHeight: HistoryStyle.entry.lineHeight
               Layout.preferredWidth: HistoryStyle.entry.time.width
 
-              color: HistoryStyle.entry.time.color
+              color: HistoryStyle.entry.time.colorModel.color
               font.pointSize: HistoryStyle.entry.time.pointSize
 
               text: UtilsCpp.toTimeString($historyEntry.timestamp, 'hh:mm')

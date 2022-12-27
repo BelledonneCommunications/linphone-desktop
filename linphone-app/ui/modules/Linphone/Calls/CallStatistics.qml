@@ -11,7 +11,7 @@ Popup {
 	id: callStatistics
 	
 	property var call
-	backgroundPopup: CallStatisticsStyle.outsideColor
+	backgroundPopup: CallStatisticsStyle.outsideColor.color
 	showShadow: false	// if true, we get a brownish/yollow color due to alphas
 	// ---------------------------------------------------------------------------
 	delayClosing: true
@@ -23,7 +23,7 @@ Popup {
 			onClicked: callStatistics.close()
 		}
 		Rectangle {
-			color: CallStatisticsStyle.color
+			color: CallStatisticsStyle.colorModel.color
 			anchors.fill: parent
 			anchors.topMargin: CallStatisticsStyle.popup.topMargin
 			anchors.bottomMargin: CallStatisticsStyle.popup.bottomMargin
@@ -103,7 +103,7 @@ Popup {
 					Text {
 						Layout.preferredWidth: CallStatisticsStyle.key.width
 						
-						color: CallStatisticsStyle.key.color
+						color: CallStatisticsStyle.key.colorModel.color
 						elide: Text.ElideRight
 						
 						font {
@@ -120,7 +120,7 @@ Popup {
 					Text {
 						Layout.fillWidth: true
 						
-						color: CallStatisticsStyle.value.color
+						color: CallStatisticsStyle.value.colorModel.color
 						elide: Text.ElideRight
 						font.pointSize: CallStatisticsStyle.value.pointSize
 						
@@ -139,7 +139,7 @@ Popup {
 				Column{
 					width: parent.width
 					Text {
-						color: CallStatisticsStyle.title.color
+						color: CallStatisticsStyle.title.colorModel.color
 						
 						font {
 							bold: true

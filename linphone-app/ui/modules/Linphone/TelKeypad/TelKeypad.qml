@@ -16,7 +16,7 @@ Rectangle {
 	signal sendDtmf(var dtmf)
 	signal keyPressed(var event)
 	
-	color: TelKeypadStyle.color   // useless as it is overridden by buttons color, but keep it if buttons are transparent
+	color: TelKeypadStyle.colorModel.color   // useless as it is overridden by buttons color, but keep it if buttons are transparent
 	onActiveFocusChanged: {if(activeFocus) selectedArea.border.width=TelKeypadStyle.selectedBorderWidth; else selectedArea.border.width=0}
 	Keys.onPressed: keyPressed(event)
 	layer {
@@ -111,7 +111,7 @@ Rectangle {
 		id: selectedArea
 		anchors.fill:parent
 		color:"transparent"
-		border.color:TelKeypadStyle.selectedColor
+		border.color:TelKeypadStyle.selectedColor.color
 		border.width:0 
 		focus:false
 		enabled:false

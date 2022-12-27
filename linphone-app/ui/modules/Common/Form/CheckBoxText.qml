@@ -13,11 +13,11 @@ CheckBox {
 	
 	contentItem: Text {
 		color: checkBox.down
-			   ? CheckBoxTextStyle.color.pressed
+			   ? CheckBoxTextStyle.color.pressed.color
 			   : (
 					 checkBox.hovered
-					 ? CheckBoxTextStyle.color.hovered
-					 : CheckBoxTextStyle.color.normal
+					 ? CheckBoxTextStyle.color.hovered.color
+					 : CheckBoxTextStyle.color.normal.color
 					 )
 		
 		elide: Text.ElideRight
@@ -43,14 +43,14 @@ CheckBox {
 	
 	indicator: Rectangle {
 		border.color: checkBox.down
-					  ? CheckBoxTextStyle.color.pressed
+					  ? CheckBoxTextStyle.color.pressed.color
 					  : (
 							checkBox.hovered
-							? CheckBoxTextStyle.color.hovered
+							? CheckBoxTextStyle.color.hovered.color
 							: (
 								checkBox.checked
-								? CheckBoxTextStyle.color.selected
-								: CheckBoxTextStyle.color.normal
+								? CheckBoxTextStyle.color.selected.color
+								: CheckBoxTextStyle.color.normal.color
 							  )
 							)
 		
@@ -64,13 +64,13 @@ CheckBox {
 		
 		Rectangle {
 			color: checkBox.down
-				   ? CheckBoxTextStyle.color.pressed
+				   ? CheckBoxTextStyle.color.pressed.color
 				   : (checkBox.hovered
-					  ? CheckBoxTextStyle.color.hovered
+					  ? CheckBoxTextStyle.color.hovered.color
 					  : (
 							checkBox.checked
-							? CheckBoxTextStyle.color.selected
-							: CheckBoxTextStyle.color.normal
+							? CheckBoxTextStyle.color.selected.color
+							: CheckBoxTextStyle.color.normal.color
 							)
 					  )
 			
@@ -89,13 +89,13 @@ CheckBox {
 			visible: checkBox.checkState == Qt.PartiallyChecked
 			ShapePath{
 				strokeColor: checkBox.down
-							 ? CheckBoxTextStyle.color.pressed
+							 ? CheckBoxTextStyle.color.pressed.color
 							 : (checkBox.hovered
-								? CheckBoxTextStyle.color.hovered
+								? CheckBoxTextStyle.color.hovered.color
 								: (
 									checkBox.checked
-									? CheckBoxTextStyle.color.selected
-									: CheckBoxTextStyle.color.normal
+									? CheckBoxTextStyle.color.selected.color
+									: CheckBoxTextStyle.color.normal.color
 								  )
 								)
 				strokeWidth: 2
@@ -107,10 +107,10 @@ CheckBox {
 			}
 			ShapePath{
 				strokeColor: checkBox.down
-							 ? CheckBoxTextStyle.color.pressed
+							 ? CheckBoxTextStyle.color.pressed.color
 							 : (checkBox.hovered
-								? CheckBoxTextStyle.color.hovered
-								: CheckBoxTextStyle.color.normal
+								? CheckBoxTextStyle.color.hovered.color
+								: CheckBoxTextStyle.color.normal.color
 								)
 				strokeWidth: 2
 				fillColor: 'transparent'

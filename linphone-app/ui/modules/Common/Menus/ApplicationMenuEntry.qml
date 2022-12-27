@@ -45,12 +45,12 @@ Rectangle {
 	// ---------------------------------------------------------------------------
 	
 	color: mouseArea.pressed
-		   ? ApplicationMenuStyle.entry.color.pressed
+		   ? ApplicationMenuStyle.entry.color.pressed.color
 		   : (isSelected
-			  ? ApplicationMenuStyle.entry.color.selected
+			  ? ApplicationMenuStyle.entry.color.selected.color
 			  : (mouseArea.containsMouse
-				 ? ApplicationMenuStyle.entry.color.hovered
-				 : ApplicationMenuStyle.entry.color.normal
+				 ? ApplicationMenuStyle.entry.color.hovered.color
+				 : ApplicationMenuStyle.entry.color.normal.color
 				 )
 			  )
 	height: parent.parent.entryHeight
@@ -78,8 +78,8 @@ Rectangle {
 			
 			Layout.fillWidth: true
 			color: entry.isSelected
-				   ? ApplicationMenuStyle.entry.text.color.selected
-				   : ApplicationMenuStyle.entry.text.color.normal
+				   ? ApplicationMenuStyle.entry.text.color.selected.color
+				   : ApplicationMenuStyle.entry.text.color.normal.color
 			font.pointSize: ApplicationMenuStyle.entry.text.pointSize
 			font.weight: Font.DemiBold
 			height: parent.height
@@ -95,7 +95,7 @@ Rectangle {
 		
 		height: parent.height
 		color: entry.isSelected
-			   ? ApplicationMenuStyle.entry.indicator.color
+			   ? ApplicationMenuStyle.entry.indicator.colorModel.color
 			   : 'transparent'
 		width: ApplicationMenuStyle.entry.indicator.width
 	}

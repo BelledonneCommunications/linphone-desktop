@@ -68,7 +68,7 @@ RowLayout {
 			id: text
 			
 			Layout.preferredWidth: ListFormStyle.titleArea.text.width
-			color: ListFormStyle.titleArea.text.color
+			color: ListFormStyle.titleArea.text.colorModel.color
 			elide: Text.ElideRight
 			
 			font {
@@ -87,7 +87,7 @@ RowLayout {
 		
 		Layout.fillWidth: true
 		Layout.preferredHeight: ListFormStyle.lineHeight
-		color: ListFormStyle.value.placeholder.color
+		color: ListFormStyle.value.placeholder.colorModel.color
 		
 		font {
 			italic: true

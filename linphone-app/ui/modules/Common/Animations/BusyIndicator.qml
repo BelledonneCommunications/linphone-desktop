@@ -10,7 +10,7 @@ BusyIndicator {
 	
 	// ---------------------------------------------------------------------------
 	
-	property color color: BusyIndicatorStyle.color
+	property color color: BusyIndicatorStyle.colorModel.color
 	
 	readonly property int _rotation: 360
 	readonly property int _size: width < height ? width : height

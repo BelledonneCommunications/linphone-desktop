@@ -13,12 +13,12 @@ QtObject {
 		
 		property QtObject button: QtObject {
 			property QtObject color: QtObject {
-				property color normal: ColorsList.add(sectionName+'_n', 'f').color
-				property color pressed: ColorsList.add(sectionName+'_p', 'c').color
+				property var normal: ColorsList.add(sectionName+'_n', 'f')
+				property var pressed: ColorsList.add(sectionName+'_p', 'c')
 			}
 			
 			property QtObject text: QtObject {
-				property color color: ColorsList.add(sectionName+'_text', 'd').color
+				property var colorModel: ColorsList.add(sectionName+'_text', 'd')
 				property int pointSize: Units.dp * 9
 			}
 		}

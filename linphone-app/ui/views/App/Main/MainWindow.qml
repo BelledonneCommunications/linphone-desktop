@@ -122,6 +122,7 @@ ApplicationWindow {
 						onClicked: leftPanel.visible = !leftPanel.visible
 					}
 					ActionButton {
+						id: home
 						isCustom: true
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.home
@@ -158,12 +159,12 @@ ApplicationWindow {
 								  ? 'auto_answer_custom'
 								  : ''
 							iconSize: MainWindowStyle.autoAnswerStatus.iconSize
-							overwriteColor: MainWindowStyle.autoAnswerStatus.text.color
+							overwriteColor: MainWindowStyle.autoAnswerStatus.text.colorModel.color
 						}
 						
 						Text {
 							clip: true
-							color: MainWindowStyle.autoAnswerStatus.text.color
+							color: MainWindowStyle.autoAnswerStatus.text.colorModel.color
 							font {
 								bold: true
 								pointSize: MainWindowStyle.autoAnswerStatus.text.pointSize
@@ -302,7 +303,7 @@ ApplicationWindow {
 							
 							icon: MainWindowStyle.menu.contacts.icon
 							iconSize: MainWindowStyle.menu.contacts.iconSize
-							overwriteColor: isSelected ? MainWindowStyle.menu.contacts.selectedColor : MainWindowStyle.menu.contacts.color
+							overwriteColor: isSelected ? MainWindowStyle.menu.contacts.selectedColor.color : MainWindowStyle.menu.contacts.colorModel.color
 							name: qsTr('contactsEntry')
 							visible: SettingsModel.contactsEnabled
 							
@@ -330,7 +331,7 @@ ApplicationWindow {
 							
 							icon: MainWindowStyle.menu.conferences.icon
 							iconSize: MainWindowStyle.menu.conferences.iconSize
-							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor : MainWindowStyle.menu.conferences.color
+							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor.color : MainWindowStyle.menu.conferences.colorModel.color
 							//: 'Meetings' : Meeting title for main window.
 							name: qsTr('mainWindowConferencesTitle').toUpperCase()
 							visible: SettingsModel.videoConferenceEnabled && SettingsModel.conferenceEnabled

@@ -24,7 +24,7 @@ Item {
 	
 	// ---------------------------------------------------------------------------
 	
-	property alias backgroundColor: rectangle.color
+	property alias backgroundColorModel: rectangle.colorModel
 	
 	default property alias _content: content.data
 	
@@ -46,6 +46,7 @@ Item {
 		property int maxWidth: parent.width
 		property int dataWidth: maxWidth
 		property bool ephemeral : $chatEntry.isEphemeral
+		property var colorModel:{'color': 'transparent'}
 		function updateWidth(){
 			var maxWidth = Math.max(forwardMessage.fitWidth, replyMessage.fitWidth)
 			for(var child in messageContentsList.contentItem.children) {
@@ -58,6 +59,7 @@ Item {
 		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
 		radius: ChatStyle.entry.message.radius
 		clip: false
+		color: colorModel.color
 		width: (
 				   ephemeralTimerRow.visible && dataWidth < ephemeralTimerRow.width + 2*ChatStyle.entry.message.padding
 				   ? ephemeralTimerRow.width + 2*ChatStyle.entry.message.padding
@@ -119,7 +121,7 @@ Item {
 						Rectangle{
 							anchors.left: parent.left
 							anchors.right: parent.right
-							color: ChatStyle.entry.separator.color
+							color: ChatStyle.entry.separator.colorModel.color
 							height: visible ? ChatStyle.entry.separator.width : 0
 							visible: (index !== (messageContentsList.count - 1)) 
 						}
@@ -137,7 +139,7 @@ Item {
 				anchors.bottom: parent.bottom	
 				anchors.bottomMargin: 5
 				text: $chatEntry.ephemeralExpireTime > 0 ? Utils.formatElapsedTime($chatEntry.ephemeralExpireTime) : Utils.formatElapsedTime($chatEntry.ephemeralLifetime)
-				color: ChatStyle.ephemeralTimer.timerColor
+				color: ChatStyle.ephemeralTimer.timerColor.color
 				font.pointSize: Units.dp * 8
 				Timer{
 					running:parent.visible
@@ -149,7 +151,7 @@ Item {
 			Icon{
 				anchors.verticalCenter: ephemeralText.verticalCenter
 				icon: ChatStyle.ephemeralTimer.icon
-				overwriteColor: ChatStyle.ephemeralTimer.timerColor
+				overwriteColor: ChatStyle.ephemeralTimer.timerColor.color
 				iconSize: ChatStyle.ephemeralTimer.iconSize
 			}
 		}

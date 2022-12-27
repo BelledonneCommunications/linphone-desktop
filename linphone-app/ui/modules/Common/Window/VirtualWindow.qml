@@ -65,7 +65,7 @@ StackView{
                         property alias contentLoader:contentLoader
         
                         anchors.fill: parent
-                        color: WindowStyle.transientWindow.color
+                        color: WindowStyle.transientWindow.colorModel.color
                         Loader{
                             id:contentLoader
                             anchors.centerIn: parent

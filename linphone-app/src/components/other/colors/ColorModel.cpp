@@ -29,11 +29,20 @@
 
 // =============================================================================
 
-ColorModel::ColorModel (const QString& name, const QColor& color, const QString& description, QObject * parent) : QObject(parent) {
+ColorModel::ColorModel (const QString& name, const QColor& color, const QColor& originColor, const QString& description, const ContextMode& context, QObject * parent) : QObject(parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mName = name;
-	setColor(color);
-	setDescription(description) ;
+	mContextMode = context;
+	if( color.isValid() && originColor.isValid()){
+		mColor = color;
+		mOriginColor = originColor;
+		if(mColor.alpha() != mOriginColor.alpha() && mOriginColor.alpha() > 0)
+			mAlphaFactor = mColor.alpha() / (double)mOriginColor.alpha();
+	}else if( color.isValid())
+		setColor(color);
+	else
+		setOriginColor(originColor);
+	setDescription(description);
 }
 
 // -----------------------------------------------------------------------------
@@ -45,6 +54,23 @@ QString ColorModel::getName() const{
 QColor ColorModel::getColor() const{
 	return mColor;
 }
+
+QColor ColorModel::getColor(const ContextMode& context) const{
+	QColor color = mOriginColor;
+	if(mAlphaFactor>0)
+		color.setAlpha(std::min(255.0, mOriginColor.alpha() * mAlphaFactor));
+	switch(context){
+	case CONTEXT_FROMLINK : case CONTEXT_NORMAL : break;
+	case CONTEXT_PRESSED: color = color.lighter(140); break;
+	case CONTEXT_HOVERED: color = color.darker(140); break;
+	case CONTEXT_DEACTIVATED: color.setAlpha(60);break;
+	}
+	return color;
+}
+
+QColor ColorModel::getOriginColor() const{
+	return mOriginColor;
+}
 QString ColorModel::getDescription() const{
 	return mDescription;
 }
@@ -55,23 +81,34 @@ int ColorModel::getLinkIndex() const{
 	return mLinkIndex;
 }
 
+ColorModel::ContextMode ColorModel::getContext() const{
+	return mContextMode;
+}
+
 void ColorModel::setColor(const QColor& color){
 	if(color != mColor){
+		if(mAlphaFactor>=0 && mColor.isValid() && mOriginColor.isValid() && color.alpha() != mColor.alpha() && mOriginColor.alpha() != 0)
+			mAlphaFactor = color.alpha() / (double)mOriginColor.alpha();
 		mColor = color;
+		updateContextFromColor();
 		emit colorChanged();
-		emit uiColorChanged(mName, color);
+		emit uiColorChanged(mName, mOriginColor);
 	}
 }
 
-void ColorModel::setInternalColor(const QColor& color){
-	if(color != mColor){
-		mColor = color;
+
+void ColorModel::setOriginColor(const QColor& color, const bool& emitEvents){
+	if(color != mOriginColor){
+		mOriginColor = color;
 		updateContext();
-		emit colorChanged();
+		if(emitEvents)
+			emit uiColorChanged(mName, mOriginColor);
 	}
 }
 
 void ColorModel::setAlpha(const int& alpha){
+	if(mOriginColor.alpha()>0)
+		mAlphaFactor = alpha / (double)mOriginColor.alpha();
 	mColor.setAlpha(alpha);
 	emit colorChanged();
 }
@@ -99,10 +136,20 @@ void ColorModel::setContext(const ContextMode& context){
 }
 
 void ColorModel::updateContext(){
+	//auto backup = mColor.alpha();
+	mColor = getColor(mContextMode);
+	emit colorChanged();
+}
+
+void ColorModel::updateContextFromColor(){
+	auto backup = mOriginColor.alpha();
+	mOriginColor = mColor;
+	if(mAlphaFactor>0)
+		mOriginColor.setAlpha(std::min(255.0, mColor.alpha() / mAlphaFactor));
 	switch(mContextMode){
-	case CONTEXT_NORMAL : break;
-	case CONTEXT_PRESSED: mColor = mColor.lighter(140); break;
-	case CONTEXT_HOVERED: mColor = mColor.darker(140); break;
-	case CONTEXT_DEACTIVATED: mColor.setAlpha(60);break;
+	case CONTEXT_FROMLINK : case CONTEXT_NORMAL : break;
+	case CONTEXT_PRESSED: mOriginColor = mOriginColor.darker(140); break;
+	case CONTEXT_HOVERED: mOriginColor = mOriginColor.lighter(140); break;
+	case CONTEXT_DEACTIVATED: mOriginColor.setAlpha(backup);break;
 	}
 }

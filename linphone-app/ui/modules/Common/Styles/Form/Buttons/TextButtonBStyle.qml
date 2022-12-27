@@ -7,17 +7,17 @@ import ColorsList 1.0
 QtObject {
 	property string sectionName: 'TextButtonB'
 	property QtObject backgroundColor: QtObject {
-		property color disabled: ColorsList.add(sectionName+'_bg_d', 'i30').color
-		property color hovered: ColorsList.add(sectionName+'_bg_h', 'b').color
-		property color normal: ColorsList.add(sectionName+'_bg_n', 'i').color
-		property color pressed: ColorsList.add(sectionName+'_bg_p', 'm').color
+		property var disabled: ColorsList.add(sectionName+'_bg_d', 'i30')
+		property var hovered: ColorsList.add(sectionName+'_bg_h', 'b')
+		property var normal: ColorsList.add(sectionName+'_bg_n', 'i')
+		property var pressed: ColorsList.add(sectionName+'_bg_p', 'm')
 	}
 	
 	property QtObject textColor: QtObject {
-		property color disabled: ColorsList.add(sectionName+'_text_d', 'q').color
-		property color hovered: ColorsList.add(sectionName+'_text_h', 'q').color
-		property color normal: ColorsList.add(sectionName+'_text_n', 'q').color
-		property color pressed: ColorsList.add(sectionName+'_text_p', 'q').color
+		property var disabled: ColorsList.add(sectionName+'_text_d', 'q')
+		property var hovered: ColorsList.add(sectionName+'_text_h', 'q')
+		property var normal: ColorsList.add(sectionName+'_text_n', 'q')
+		property var pressed: ColorsList.add(sectionName+'_text_p', 'q')
 	}
 	property QtObject borderColor : backgroundColor
 }

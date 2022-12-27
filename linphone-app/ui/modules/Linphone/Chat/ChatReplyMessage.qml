@@ -51,7 +51,7 @@ Item {
 				icon: ChatReplyMessageStyle.header.replyIcon.icon
 				iconSize: ChatReplyMessageStyle.header.replyIcon.iconSize
 				height: iconSize
-				overwriteColor: ChatReplyMessageStyle.header.color
+				overwriteColor: ChatReplyMessageStyle.header.colorModel.color
 				MouseArea{
 					anchors.fill: parent
 					onClicked: mainItem.goToMessage(mainItem.chatMessageModel)
@@ -66,7 +66,7 @@ Item {
 					  + (chatMessageModel || !mainChatMessageModel? '' : ' - ' + mainChatMessageModel.fromDisplayNameReplyMessage)
 				font.family: mainItem.customFont.family
 				font.pointSize: Units.dp * (mainItem.customFont.pointSize + ChatReplyMessageStyle.header.pointSizeOffset)
-				color: ChatReplyMessageStyle.header.color
+				color: ChatReplyMessageStyle.header.colorModel.color
 				MouseArea{
 					anchors.fill: parent
 					onClicked: mainItem.goToMessage(mainItem.chatMessageModel)
@@ -85,11 +85,11 @@ Item {
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
 				width: 7
-				color: chatMessageModel && chatMessageModel.isOutgoing ? ChatReplyMessageStyle.replyArea.outgoingMarkColor  : ChatReplyMessageStyle.replyArea.incomingMarkColor
+				color: chatMessageModel && chatMessageModel.isOutgoing ? ChatReplyMessageStyle.replyArea.outgoingMarkColor.color  : ChatReplyMessageStyle.replyArea.incomingMarkColor.color
 			}
 			
 			radius: 5
-			color: ChatReplyMessageStyle.replyArea.backgroundColor
+			color: ChatReplyMessageStyle.replyArea.backgroundColor.color
 			visible: chatMessageModel != undefined
 			Text{
 				id: usernameReplied
@@ -106,7 +106,7 @@ Item {
 				font.pointSize: Units.dp * (mainItem.customFont.pointSize + ChatReplyMessageStyle.replyArea.usernamePointSizeOffset)
 				font.weight: Font.Bold
 				
-				color: ChatReplyMessageStyle.replyArea.foregroundColor
+				color: ChatReplyMessageStyle.replyArea.foregroundColor.color
 			}
 			ScrollableListView {
 				id: replyMessage
@@ -138,14 +138,14 @@ Item {
 				
 				delegate: ChatContent{
 					contentModel: $modelData
-					textColor: ChatReplyMessageStyle.replyArea.foregroundColor
+					textColor: ChatReplyMessageStyle.replyArea.foregroundColor.color
 					onFitWidthChanged:{
 						replyMessage.updateWidth()			
 					}
 					Rectangle{
 							anchors.left: parent.left
 							anchors.right: parent.right
-							color: ChatStyle.entry.separator.color
+							color: ChatStyle.entry.separator.colorModel.color
 							height: visible ? ChatStyle.entry.separator.width : 0
 							visible: (index !== (replyMessage.count - 1)) 
 						}

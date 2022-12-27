@@ -33,7 +33,7 @@
 #include "app/proxyModel/ProxyListModel.hpp"
 
 #define ADD_COLOR(COLOR, VALUE, DESCRIPTION) \
-	color = QSharedPointer<ColorModel>::create(COLOR, VALUE, DESCRIPTION); \
+	color = QSharedPointer<ColorModel>::create(COLOR, QColor(VALUE), QColor(), DESCRIPTION, ColorModel::CONTEXT_NORMAL); \
 	add(color);
 
 #define ADD_COLOR_WITH_LINK(COLOR, VALUE, DESCRIPTION, LINK) \
@@ -316,7 +316,7 @@ public:
 // color : if empty, use the color from link
 // description : describe the color
 // idLink : link this color with another ID
-	Q_INVOKABLE ColorModel * add(const QString& id, const QString& idLink, QString description = "", QString color = "", const int& overrideAlpha = -1, const  ColorModel::ContextMode& context = ColorModel::CONTEXT_NORMAL);
+	Q_INVOKABLE ColorModel * add(const QString& id, const QString& idLink, QString description = "", QString color = "", const int& overrideAlpha = -1, ColorModel::ContextMode context = ColorModel::CONTEXT_FROMLINK);
 	Q_INVOKABLE ColorModel * addImageColor(const QString& id, const QString& imageId, const QString& idLink, QString description = "", QString color = "");
 	
 	void addLink(const QString& a, const QString& b);
@@ -336,6 +336,10 @@ public slots:
 
 signals:
 	void colorChanged();
+	
+// Internal mechanics
+	void uiResetColors();
+	void uiAddColor(ColorModel* colorModel);
 	
 private:
 	void add(QSharedPointer<ColorModel> imdn);

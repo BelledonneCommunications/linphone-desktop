@@ -79,7 +79,7 @@ DialogPlus {
           Layout.fillWidth: true
 
           icon: text == '' ? 'search_custom' : 'close_custom'
-          overwriteColor: ConferenceManagerStyle.searchField.color
+          overwriteColor: ConferenceManagerStyle.searchField.colorModel.color
 
           onTextChanged: conferenceHelperModel.setFilter(text)
         }
@@ -131,7 +131,7 @@ DialogPlus {
       Layout.preferredWidth: ConferenceManagerStyle.columns.separator.width
       Layout.rightMargin: ConferenceManagerStyle.columns.separator.rightMargin
 
-      color: ConferenceManagerStyle.columns.separator.color
+      color: ConferenceManagerStyle.columns.separator.colorModel.color
     }
 
     // -------------------------------------------------------------------------

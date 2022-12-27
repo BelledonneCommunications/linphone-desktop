@@ -18,7 +18,7 @@ Rectangle{
 	
 	onNoticeBannerTextChanged: if(noticeBannerText!='') mainItem.state = "showed"
 	
-	color: MessageBannerStyle.color
+	color: MessageBannerStyle.colorModel.color
 	radius: 10
 	state: "hidden"
 	Timer{
@@ -45,7 +45,7 @@ Rectangle{
 			font {
 				pointSize: MessageBannerStyle.pointSize
 			}
-			color: MessageBannerStyle.textColor
+			color: MessageBannerStyle.textColor.color
 		}
 	}
 	states: [

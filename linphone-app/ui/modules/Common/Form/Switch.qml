@@ -30,16 +30,16 @@ Controls.Switch {
     border.color: control.enabled
       ? (
         control.checked
-          ? indicatorStyle.indicator.border.color.checked
-          : indicatorStyle.indicator.border.color.normal
-      ) : indicatorStyle.indicator.border.color.disabled
+          ? indicatorStyle.indicator.border.color.checked.color
+          : indicatorStyle.indicator.border.color.normal.color
+      ) : indicatorStyle.indicator.border.color.disabled.color
 
     color: control.enabled
       ? (
         control.checked
-          ? indicatorStyle.indicator.color.checked
-          : indicatorStyle.indicator.color.normal
-      ) : indicatorStyle.indicator.color.disabled
+          ? indicatorStyle.indicator.color.checked.color
+          : indicatorStyle.indicator.color.normal.color
+      ) : indicatorStyle.indicator.color.disabled.color
 
     radius: indicatorStyle.indicator.radius
     x: control.leftPadding
@@ -59,18 +59,18 @@ Controls.Switch {
           control.checked
             ? (
               control.down
-                ? indicatorStyle.sphere.border.color.pressed
-                : indicatorStyle.sphere.border.color.checked
-            ) : indicatorStyle.sphere.border.color.normal
-        ) : indicatorStyle.sphere.border.color.disabled
+                ? indicatorStyle.sphere.border.color.pressed.color
+                : indicatorStyle.sphere.border.color.checked.color
+            ) : indicatorStyle.sphere.border.color.normal.color
+        ) : indicatorStyle.sphere.border.color.disabled.color
 
       color: control.enabled
         ?
           (
           control.down
-            ? indicatorStyle.sphere.color.pressed
-            : indicatorStyle.sphere.color.normal
-        ) : indicatorStyle.sphere.color.disabled
+            ? indicatorStyle.sphere.color.pressed.color
+            : indicatorStyle.sphere.color.normal.color
+        ) : indicatorStyle.sphere.color.disabled.color
 
       radius: width / 2
 
