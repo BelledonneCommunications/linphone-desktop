@@ -94,9 +94,11 @@ DialogPlus {
 				color: AboutStyle.copyrightBlock.license.colorModel.color
 				elide: Text.ElideRight
 				font.pointSize: AboutStyle.copyrightBlock.license.pointSize
-				visible: applicationVendor != ''
-				text: (applicationLicence? applicationLicence+'\n':'') +'\u00A9 '+ copyrightRangeDate +
-					  ' ' + applicationVendor
+				visible: applicationVendor || applicationLicence || copyrightRangeDate
+				text: (applicationLicence? applicationLicence+'\n':'')
+						+(copyrightRangeDate || applicationVendor ? '\u00A9 ': '')
+						+ (copyrightRangeDate ? copyrightRangeDate : '')
+						+ (applicationVendor ? ' ' + applicationVendor : '')
 				
 				width: parent.width
 				

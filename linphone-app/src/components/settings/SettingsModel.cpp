@@ -257,7 +257,12 @@ void SettingsModel::setAssistantLogoutUrl (QString url) {
 }
 
 bool SettingsModel::isCguAccepted () const{
-	return !!mConfig->getInt(UiSection, "read_and_agree_terms_and_privacy", 0);
+#ifdef APPLICATION_VENDOR
+	QString applicationVendor = APPLICATION_VENDOR;
+#else
+	QString applicationVendor;
+#endif
+	return !!mConfig->getInt(UiSection, "read_and_agree_terms_and_privacy", ( applicationVendor != "" && Constants::CguUrl != QString("") && Constants::PrivatePolicyUrl != QString("") ? 0 : 1));
 }
 
 void SettingsModel::acceptCgu(const bool accept){
@@ -1572,8 +1577,14 @@ void SettingsModel::setCheckForUpdateEnabled(bool enable){
 	emit checkForUpdateEnabledChanged();
 }
 
-QString SettingsModel::getVersionCheckUrl() const{
-	return Utils::coreStringToAppString(mConfig->getString("misc", "version_check_url_root", Constants::VersionCheckReleaseUrl));
+QString SettingsModel::getVersionCheckUrl(){
+	auto url = mConfig->getString("misc", "version_check_url_root", "");
+	if( url == "" ){
+		url = Constants::VersionCheckReleaseUrl;
+		if( url != "")
+			mConfig->setString("misc", "version_check_url_root", url);
+	}
+	return Utils::coreStringToAppString(url);
 }
 
 void SettingsModel::setVersionCheckUrl(const QString& url){

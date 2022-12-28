@@ -24,7 +24,6 @@
 #include <memory>
 
 #include <QQuickFramebufferObject>
-#include <mediastreamer2/msogl.h>
 #include <QMutex>
 #include <QTimer>
 

@@ -23,7 +23,7 @@
     # We double the "\" to escape paths as -replace uses regular expressions
     - $PATH_TEMP = $PATH_TEMP -replace "C:\\MinGW\\bin;" -replace "C:\\Strawberry\\c\\bin;" -replace "C:\\Program Files\\NASM"
     - echo $PATH_TEMP
-    - $env:Path = ($PATH_TEMP + ";C:\msys64;C:\msys64\usr\bin;C:\msys64\" + $MINGW_TYPE + "\bin;" + $env:SIGNTOOL_ROOT + "\x64")
+    - $env:Path = ($PATH_TEMP + ";C:\msys64\" + $MINGW_TYPE + "\bin;" + $env:SIGNTOOL_ROOT + "\x64;C:\msys64;C:\msys64\usr\bin;")
     - If ($MINGW_TYPE -eq "mingw64") {Import-BatchEnvironment "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"} Else {Import-BatchEnvironment "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"}
     - If ($MINGW_TYPE -eq "mingw64") {$env:Path = ($env:Path + ";C:\Qt\5.15.2\msvc2019_64\bin")} Else {$env:Path = ($env:Path + ";C:\Qt\5.14.2\msvc2019\bin")}
     - if ($MAKE_RELEASE_FILE_URL) { } else { $RELEASE_FILE = "" }

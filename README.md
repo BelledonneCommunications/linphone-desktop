@@ -178,9 +178,10 @@ If a build for 64bits is needed, replace all `mingw32` by `mingw64`, `i686` by `
       - `pacman -Sy --needed base-devel mingw-w64-i686-toolchain`
       - `pacman -S python3-pip` in `MSYS2 MSYS` console
       - `python3 -m pip install pystache six` in `cmd`
-    - In this order, add `C:\msys64\`, `C:\msys64\usr\bin` and `C:\msys64\mingw32\bin` in your PATH (the last one is needed by cmake to know where gcc is) to the PATH environement variable from windows advanced settings.
+      - In this order, add `C:\msys64\mingw<N>\bin`, `C:\msys64\` and `C:\msys64\usr\bin` in your PATH environement variable from Windows advanced settings. Binaries from the msys folder (not from mingw32/64) doesn't fully support Windows Path and thus, they are to be avoided.
+*<N> is the version of MinGW32/64*
     
-When building the SDK, it will install automatically from MSYS2 : `perl`, `yasm`, `gawk`, `bzip2`, `nasm, `sed`, `patch`, `pkg-config`, `gettext`, `glib2` and `intltool` (if needed)
+When building the SDK, it will install automatically from MSYS2 : `toolchain`, `python`, `doxygen`, `perl`, `yasm`, `gawk`, `bzip2`, `nasm`, `sed`, `patch`, `pkg-config`, `gettext`, `glib2`, `intltool` and `graphviz` (if needed)
 
   - `git` : use MSYS2 : `pacman -S git` or [download](https://git-scm.com/download/win)
   

@@ -425,7 +425,11 @@ void App::initContentApp () {
 #else
 	mEngine->rootContext()->setContextProperty("applicationLicence", "");
 #endif
-	mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
+#ifdef COPYRIGHT_RANGE_DATE
+ 	mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
+#else
+	mEngine->rootContext()->setContextProperty("copyrightRangeDate", "");
+#endif
 	mEngine->rootContext()->setContextProperty("Colors", mColorListModel->getQmlData());
 	mEngine->rootContext()->setContextProperty("Images", mImageListModel->getQmlData());
 	
