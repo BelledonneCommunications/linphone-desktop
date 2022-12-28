@@ -4,10 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 5.0.4 - undefined
+## 5.0.4 - 2022-12-28
 
 ### Fixed
 - Volume gauge in multimedia parameters while being in call.
+- Update SDK to 5.2.6 :
+	* Crash at startup
+	* losing video
 
 ## 5.0.3 - 2022-12-21
 
