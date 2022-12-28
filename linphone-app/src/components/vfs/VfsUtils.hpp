@@ -37,7 +37,9 @@ public:
 	Q_INVOKABLE void writeKey(const QString& key, const QString& value); // Write a key and send error() or keyWritten()
 	
 	
-	void newEncryptionKey();	// Generate a key, store it and update SDK.
+	void newEncryptionKeyAsync();	// Generate a key, store it and update SDK. Wait for keyWritten() or error().
+	
+	static bool newEncryptionKey(); // Generate a key, store it and update SDK.
 	static bool updateSDKWithKey();	// Update SDK if key exists. Return true if encrypted.
 	static void updateSDKWithKey(const QString& key);// SDK->setVfsEncryption(key) 
 	

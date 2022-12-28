@@ -24,6 +24,8 @@
 #include <linphone/api/c-factory.h>
 #include <linphone++/factory.hh>
 
+#include <app/paths/Paths.hpp>
+#include <components/settings/SettingsModel.hpp>
 #include <utils/Utils.hpp>
 #include <utils/Constants.hpp>
 
@@ -96,7 +98,7 @@ void VfsUtils::needToDeleteUserData(const bool& need){
 	
 //-----------------------------------------------------------------------------------------------
 
-void VfsUtils::newEncryptionKey(){
+void VfsUtils::newEncryptionKeyAsync(){
 	QString value;
 	bctoolbox::RNG rng;
 	auto key = rng.randomize(32);
@@ -106,6 +108,22 @@ void VfsUtils::newEncryptionKey(){
 	for(int i = 0 ; i < keySize ; ++i)
 		value += QString::number(shaKey[i], 16);
 	writeKey(getApplicationVfsEncryptionKey(), value);
+}
+
+bool VfsUtils::newEncryptionKey(){
+	int argc = 1;
+	const char * argv = "dummy";
+	QCoreApplication vfsSetter(argc,(char**)&argv);
+	VfsUtils vfs;
+	QObject::connect(&vfs, &VfsUtils::keyWritten, &vfsSetter, [&vfsSetter, &vfs] (const QString& key){
+		vfsSetter.quit();
+	}, Qt::QueuedConnection);
+	QObject::connect(&vfs, &VfsUtils::error, &vfsSetter, [&vfsSetter](const QString& errorText){
+		qCritical() << "[VFS] " << errorText;
+		vfsSetter.exit(-1);
+	}, Qt::QueuedConnection);
+	vfs.newEncryptionKeyAsync();
+	return vfsSetter.exec() != -1;
 }
 
 bool VfsUtils::updateSDKWithKey() {
@@ -118,11 +136,20 @@ bool VfsUtils::updateSDKWithKey() {
 		vfs.mVfsEncrypted = true;
 		vfsSetter.quit();
 	}, Qt::QueuedConnection);
-	QObject::connect(&vfs, &VfsUtils::error, &vfsSetter, [&vfsSetter](){
+	QObject::connect(&vfs, &VfsUtils::error, &vfsSetter, [&vfsSetter](const QString& errorText){
 		vfsSetter.quit();
 	}, Qt::QueuedConnection);
 	vfs.readKey(vfs.getApplicationVfsEncryptionKey());
 	vfsSetter.exec();
+	
+	
+	if(!vfs.mVfsEncrypted){// Doesn't have key. Check in factory if it is mandatory.
+		auto config = linphone::Factory::get()->createConfigWithFactory("", Paths::getFactoryConfigFilePath());
+		if(config->getBool(SettingsModel::UiSection, "vfs_encryption_enabled", false)){
+			return VfsUtils::newEncryptionKey();// Return false on error.
+		}
+	}
+	
 	return vfs.mVfsEncrypted;
 }
 

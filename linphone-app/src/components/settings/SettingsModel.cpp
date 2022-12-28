@@ -1745,7 +1745,7 @@ void SettingsModel::setVfsEncrypted (bool encrypted, const bool deleteUserData){
 #ifdef ENABLE_QT_KEYCHAIN
 	if(getVfsEncrypted() != encrypted){
 		if(encrypted) {
-			mVfsUtils.newEncryptionKey();
+			mVfsUtils.newEncryptionKeyAsync();
 		}else{// Remove key, stop core, delete data and initiate reboot
 			mVfsUtils.needToDeleteUserData(deleteUserData);
 			mVfsUtils.deleteKey(mVfsUtils.getApplicationVfsEncryptionKey());
