@@ -224,6 +224,7 @@
 		<file>ui/modules/Common/Form/TransparentTextInput.qml</file>
 		<file>ui/modules/Common/Helpers/DragBox.qml</file>
 		<file>ui/modules/Common/Helpers/InvertedMouseArea.qml</file>
+		<file>ui/modules/Common/Helpers/MovableMouseArea.qml</file>
 		<file>ui/modules/Common/Image/Icon.qml</file>
 		<file>ui/modules/Common/Image/RoundedImage.qml</file>
 		<file>ui/modules/Common/Indicators/MediaProgressBar.qml</file>

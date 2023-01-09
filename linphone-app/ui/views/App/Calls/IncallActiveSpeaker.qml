@@ -106,6 +106,25 @@ Item {
 			}
 			active: parent.visible
 		}
+		
+		MovableMouseArea{
+			id: dragger
+			anchors.fill: parent
+			visible: mainItem.participantCount <= 2
+			function resetPosition(){
+				preview.anchors.right = mainItem.right
+				preview.anchors.bottom = mainItem.bottom
+			}
+			onVisibleChanged: if(!visible){
+				resetPosition()
+			}
+			drag.target: preview
+			onDraggingChanged: if(dragging){
+				preview.anchors.right = undefined
+				preview.anchors.bottom = undefined
+			}
+			onRequestResetPosition: resetPosition()
+		}
 	}
 	Item{
 		anchors.right: parent.right

@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## 5.0.7 - undefined
+
+### Added
+- Interactive preview in call:
+	* Movable on holding mouse's left click.
+	* Resizeable on mouse's wheel.
+	* Reset on mouse's right click (first for size if changed, second for position)
+
 ## 5.0.6 - 2023-01-10
 
 ### Fixed

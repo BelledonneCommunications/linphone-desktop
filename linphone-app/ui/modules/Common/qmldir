@@ -66,6 +66,7 @@ TabContainer            1.0 Form/Tab/TabContainer.qml
 
 DragBox                 1.0 Helpers/DragBox.qml
 InvertedMouseArea       1.0 Helpers/InvertedMouseArea.qml
+MovableMouseArea        1.0 Helpers/MovableMouseArea.qml
 
 Icon                    1.0 Image/Icon.qml
 RoundedImage            1.0 Image/RoundedImage.qml
