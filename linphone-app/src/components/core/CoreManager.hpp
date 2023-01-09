@@ -56,6 +56,7 @@ class CoreManager : public QObject {
 	Q_PROPERTY(QString downloadUrl READ getDownloadUrl CONSTANT)
 	Q_PROPERTY(int eventCount READ getEventCount NOTIFY eventCountChanged)
 	Q_PROPERTY(int callLogsCount READ getCallLogsCount NOTIFY callLogsCountChanged)
+	Q_PROPERTY(bool initialized READ isInitialized NOTIFY coreManagerInitialized)
 	
 public:
 	bool started () const {
@@ -162,6 +163,7 @@ public:
 	std::list<std::shared_ptr<linphone::Account>> getAccountList()const;
 	
 	static bool isInstanciated(){return mInstance!=nullptr;}
+	bool isInitialized() const;
 	
 	Q_INVOKABLE bool isLastRemoteProvisioningGood();
 	Q_INVOKABLE QString getUserAgent()const;
