@@ -8,7 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Crash at startup
-- Update SDK to 5.2.8
+- Deploy missing OpenSSL libraries on Windows (fix blank message on image url)
+- Update SDK to 5.2.10
 
 ## 5.0.4 - 2022-12-28
 

@@ -1253,12 +1253,14 @@ void ChatRoomModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom>
 
 
 void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
-	if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnded ){
-		setMissedCallsCount(mMissedCallsCount+1);
-	}else if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated ){
-		emit fullPeerAddressChanged();
+	if(eventLog){
+		if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnded ){
+			setMissedCallsCount(mMissedCallsCount+1);
+		}else if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated ){
+			emit fullPeerAddressChanged();
+		}
+		updateLastUpdateTime();
 	}
-	updateLastUpdateTime();
 }
 
 void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {

@@ -324,7 +324,10 @@ void CoreManager::migrate () {
 	
 	qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
 			   .arg(rcVersion).arg(Constants::RcVersionCurrent);
-	
+	if( !oldLimeServerUrl.empty()) {
+		mCore->setLimeX3DhServerUrl("");
+		mCore->enableLimeX3Dh(true);
+	}
 	bool setLimeServerUrl = false;
 	for(const auto &account : getAccountList()){
 		auto params = account->getParams();
@@ -360,19 +363,17 @@ void CoreManager::migrate () {
 				qInfo() << "Migrating" << accountIdentity << "for version 5. Video conference factory URI" << (exists ? std::string("unchanged") : std::string("= ") +Constants::DefaultVideoConferenceURI).c_str();
 				// note: using std::string.c_str() to avoid having double quotes in qInfo()
 			}
-			
-			if(!oldLimeServerUrl.empty())
-				newParams->setLimeServerUrl(oldLimeServerUrl);
-			else if( setLimeServerUrl)
-				newParams->setLimeServerUrl(Constants::DefaultLimeServerURL);
+			if(newParams->getLimeServerUrl().empty()){
+				if(!oldLimeServerUrl.empty())
+					newParams->setLimeServerUrl(oldLimeServerUrl);
+				else if( setLimeServerUrl)
+					newParams->setLimeServerUrl(Constants::DefaultLimeServerURL);
+			}
 			
 			account->setParams(newParams);
 		}
 	}
-	if( !oldLimeServerUrl.empty()) {
-		mCore->setLimeX3DhServerUrl("");
-		mCore->enableLimeX3Dh(true);
-	}else if(setLimeServerUrl) {
+	if( oldLimeServerUrl.empty() && setLimeServerUrl) {
 		mCore->enableLimeX3Dh(true);
 	}
 	
