@@ -7,13 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 5.0.6 - 2023-01-10
 
 ### Fixed
-- URI Handlers to a conference
+- URI Handlers to a conference.
+- Display application icon and estimated size in Windows programs list.
 
 ## 5.0.5 - 2023-01-09
 
 ### Fixed
-- Crash at startup
-- Deploy missing OpenSSL libraries on Windows (fix blank message on image url)
+- Crash at startup.
+- Deploy missing OpenSSL libraries on Windows (fix blank message on image url).
 - Update SDK to 5.2.10
 
 ## 5.0.4 - 2022-12-28
