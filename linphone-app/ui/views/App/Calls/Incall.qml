@@ -256,7 +256,8 @@ Rectangle {
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.record
 			property CallModel callModel: mainItem.callModel
-			visible: SettingsModel.callRecorderEnabled && callModel && (callModel.recording || mainItem.isReady)
+			visible: SettingsModel.callRecorderEnabled && callModel && (callModel.recording || mainItem.isReady) 
+							&& !mainItem.conferenceModel // Remove recording for conference (not fully implemented)
 			toggled: callModel.recording
 
 			onClicked: {
