@@ -225,6 +225,7 @@ Window {
 				colorSet: IncallStyle.buttons.record
 				property CallModel callModel: conference.callModel
 				visible: SettingsModel.callRecorderEnabled && callModel
+							&& !conference.conferenceModel // Remove recording for conference (not fully implemented)
 				toggled: callModel && callModel.recording
 
 				onClicked: {
