@@ -132,7 +132,7 @@ Item {
 		anchors.bottom: preview.top
 		anchors.rightMargin: 30
 		anchors.topMargin: 15
-		anchors.bottomMargin: 15
+		anchors.bottomMargin: 0
 //---------------
 		width: 16 * miniViews.cellHeight / 9
 		visible: mainItem.isConferenceReady || !callModel.isConference
@@ -142,31 +142,29 @@ Item {
 			property int cellHeight: 150
 			anchors.fill: parent
 			model : mainItem.callModel.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
-			spacing: 15
+			spacing: 0
 			verticalLayoutDirection: ListView.BottomToTop
 			fitCacheToContent: false
-			onCountChanged: updateView()
-			onHeightChanged: updateView()
-			function updateView(){
-				if(contentItem.height < miniViews.height){ 
-					contentItem.y = miniViews.height	// Qt workaround because it do not set correctly value with positionning to beginning
-				}
+			property int oldCount : 0// Count changed can be called without a change... (bug?). Use oldCount to avoid it.
+			onCountChanged: {if(oldCount != count){ oldCount = count ; Qt.callLater(forceRefresh)}}
+			onHeightChanged: Qt.callLater(forceRefresh)
+			function forceRefresh(){// Force a content refresh via layout direction. Qt is buggy when managing sizes in ListView.
+				miniViews.verticalLayoutDirection = ListView.TopToBottom
+				miniViews.verticalLayoutDirection = ListView.BottomToTop
 			}
-			Component.onCompleted: updateView()
-			Timer{
-				running: true
-				interval: 500
-				repeat: true
-				onTriggered: miniViews.updateView()
-			}
+			Component.onCompleted: {Qt.callLater(forceRefresh)}
 			delegate:Item{
-					height: miniViews.cellHeight
-					width: miniViews.width
+					height: visible ? miniViews.cellHeight + 15 : 0
+					width: visible ? miniViews.width : 0
+					visible: cameraView.currentDevice != modelData
 					clip:false
 					Sticker{
 						id: miniView
 						anchors.fill: parent
-						anchors.margins: 3
+						anchors.topMargin: 3
+						anchors.leftMargin: 3
+						anchors.rightMargin: 3
+						anchors.bottomMargin: 18
 						deactivateCamera: (!mainItem.isConferenceReady || !callModel.isConference)
 											&& (index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser) )
 						currentDevice: modelData.isPreview ? null : modelData
