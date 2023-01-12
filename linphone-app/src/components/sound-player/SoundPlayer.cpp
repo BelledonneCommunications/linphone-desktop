@@ -93,26 +93,33 @@ void SoundPlayer::pause () {
 	emit playbackStateChanged(mPlaybackState);
 }
 
-void SoundPlayer::play () {
-	if (mPlaybackState == SoundPlayer::PlayingState || mSource == "")
-		return;
+bool SoundPlayer::open(){
+	return mInternalPlayer->open(Utils::appStringToCoreString(mSource)) == 0;
+}
+
+bool SoundPlayer::play () {
+	if (mPlaybackState == SoundPlayer::PlayingState)
+		return true;
+	else if(mSource == "")
+		return false;
 	if (
 			(mPlaybackState == SoundPlayer::StoppedState || mPlaybackState == SoundPlayer::ErrorState) &&
-			mInternalPlayer->open(Utils::appStringToCoreString(mSource))
+			!open()
 			) {
 		qWarning() << QStringLiteral("Unable to open: `%1`").arg(mSource);
-		return;
+		return false;
 	}
 	if (mInternalPlayer->start()
 			) {
 		setError(QStringLiteral("Unable to play: `%1`").arg(mSource));
-		return;
+		return false;
 	}
 	mForceCloseTimer->start();
 	mPlaybackState = SoundPlayer::PlayingState;
 	
 	emit playing();
 	emit playbackStateChanged(mPlaybackState);
+	return true;
 }
 
 void SoundPlayer::stop () {
@@ -129,6 +136,10 @@ void SoundPlayer::seek (int offset) {
 
 int SoundPlayer::getPosition () const {
 	return mInternalPlayer->getCurrentPosition();
+}
+
+bool SoundPlayer::hasVideo() const{
+	return mInternalPlayer->getIsVideoAvailable();
 }
 
 // -----------------------------------------------------------------------------
@@ -228,4 +239,18 @@ void SoundPlayer::setPlaybackState (PlaybackState playbackState) {
 
 int SoundPlayer::getDuration () const {
 	return mInternalPlayer->getDuration();
+}
+
+QDateTime SoundPlayer::getCreationDateTime() const{
+	QFileInfo fileInfo(mSource);
+	QDateTime creationDate = fileInfo.birthTime();
+	return creationDate.isValid() ? creationDate : fileInfo.lastModified();
+}
+
+QString SoundPlayer::getBaseName() const{
+	return QFileInfo(mSource).baseName();
+}
+
+std::shared_ptr<linphone::Player> SoundPlayer::getLinphonePlayer()const{
+	return mInternalPlayer;
 }

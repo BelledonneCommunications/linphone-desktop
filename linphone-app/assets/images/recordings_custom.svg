@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   version="1.1"
+   id="svg19"
+   sodipodi:docname="menu_recordings.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs23" />
+  <sodipodi:namedview
+     id="namedview21"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="8.9569892"
+     inkscape:cx="33.716687"
+     inkscape:cy="46.444178"
+     inkscape:window-width="1920"
+     inkscape:window-height="1163"
+     inkscape:window-x="1920"
+     inkscape:window-y="500"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg19" />
+  <title
+     id="title2">menu_recordings@3x</title>
+  <g
+     id="menu_recordings"
+     stroke="none"
+     stroke-width="1"
+     fill="none"
+     fill-rule="evenodd"
+     transform="matrix(0.43010753,0,0,0.43010753,22.5,20)">
+    <path
+       d="m 44,49.408775 c 0,1.380712 -1.119288,2.5 -2.5,2.5 -1.380712,0 -2.5,-1.119288 -2.5,-2.5 V 15.858977 C 39,9.8671957 34.088652,5 28.019919,5 21.953212,5 17.041545,9.8677246 17.041545,15.858977 v 33.549798 c 0,5.988072 4.911888,10.854733 10.978374,10.854733 1.380712,0 2.5,1.119288 2.5,2.5 0,1.380712 -1.119288,2.5 -2.5,2.5 -8.81761,0 -15.978374,-7.094831 -15.978374,-15.854733 V 15.858977 C 12.041545,7.0961924 19.201797,0 28.019919,0 36.840019,0 44,7.0956142 44,15.858977 Z"
+       fill="#444445"
+       id="path4" />
+    <polygon
+       fill="#444445"
+       points="30.51992,72.988783 25.51992,72.988783 25.51992,88.739626 30.51992,88.739626 "
+       id="polygon6" />
+    <path
+       d="m 30.519919,72.988783 v 15.750843 c 0,3.333334 -5,3.333334 -5,0 V 72.988783 c 0,-3.333334 5,-3.333334 5,0 z"
+       fill="#444445"
+       id="path8" />
+    <polygon
+       fill="#444445"
+       points="21.078967,88 21.078967,93 34.404614,93 34.404614,88 "
+       id="polygon10" />
+    <path
+       d="m 21.078967,88 h 13.325647 c 3.333333,0 3.333333,5 0,5 H 21.078967 c -3.333333,0 -3.333333,-5 0,-5 z"
+       fill="#444445"
+       id="path12" />
+    <path
+       d="m 0,33.123199 c 0,-1.380712 1.1192881,-2.5 2.5,-2.5 1.3807119,0 2.5,1.119288 2.5,2.5 v 14.574432 c 0,12.583093 10.301683,22.791152 23.020773,22.791152 1.380712,0 2.5,1.119288 2.5,2.5 0,1.380712 -1.119288,2.5 -2.5,2.5 C 12.550426,75.488783 0,63.052418 0,47.697631 Z"
+       fill="#444445"
+       id="path14" />
+    <path
+       d="M 44,85.026212 62.729894,73.500726 44,61.974034 Z m -1.189707,-29.655327 26,16.000838 c 1.586319,0.976247 1.586265,3.282118 -9.9e-5,4.258291 l -26,15.999162 C 41.144517,92.654154 39,91.455776 39,89.5 v -32 c 0,-1.955828 2.14462,-3.154199 3.810293,-2.129115 z"
+       fill="#444445"
+       fill-rule="nonzero"
+       id="path16" />
+  </g>
+  <metadata
+     id="metadata840">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>menu_recordings@3x</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

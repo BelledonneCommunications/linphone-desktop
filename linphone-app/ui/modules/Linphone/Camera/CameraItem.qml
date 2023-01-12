@@ -18,6 +18,7 @@ Item {
 	property bool isCameraFromDevice: true
 	property ParticipantDeviceModel currentDevice
 	property CallModel callModel
+	property SoundPlayer linphonePlayer
 	property bool isPreview: (!callModel && !container.currentDevice) || ( container.currentDevice && container.currentDevice.isMe)
 	property bool isFullscreen: false
 	property bool hideCamera: false
@@ -77,6 +78,7 @@ Item {
 			id: camera
 			Camera {
 				participantDeviceModel: container.currentDevice
+				linphonePlayer: container.linphonePlayer
 				call: container.isCameraFromDevice ? null : container.callModel
 				anchors.fill: parent
 				isPreview: container.isPreview

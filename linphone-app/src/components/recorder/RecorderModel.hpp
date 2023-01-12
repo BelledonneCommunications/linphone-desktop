@@ -44,6 +44,9 @@ public:
 	LinphoneEnums::RecorderState getState() const;
 	Q_INVOKABLE QString getFile()const;
 	
+	static QStringList splitSavedFilename(const QString& filename);// If doesn't match to generateSavedFilename, return filename
+	static QDateTime getDateTimeSavedFilename(const QString& filename);
+	
 	Q_INVOKABLE void start();
 	Q_INVOKABLE void pause();
 	Q_INVOKABLE void stop();

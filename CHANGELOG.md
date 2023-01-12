@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	* Resizeable on mouse's wheel.
 	* Reset on mouse's right click (first for size if changed, second for position)
 - Hide the active speaker from the mini views.
+- Display recordings list from the burger menu.
 
 ### Fixed
 - Mini views layout on actives speaker.

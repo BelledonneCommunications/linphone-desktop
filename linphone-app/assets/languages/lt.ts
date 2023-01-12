@@ -1802,6 +1802,11 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>recordings</source>
+        <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowTopMenuBar</name>
@@ -1820,6 +1825,11 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recordings</source>
+        <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2302,6 +2312,24 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>LinphoneEnums_TunnelModeAuto</source>
         <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Recordings</name>
+    <message>
+        <source>titleNoRecordings</source>
+        <extracomment>&apos;No recordings&apos; : Title of an empty list of records.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recordingsVocalLabel</source>
+        <extracomment>&apos;Vocal&apos; : Label for recording type that is a vocal message.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recordingsDelete</source>
+        <extracomment>&apos;Are you sure you want to delete this item?&apos; : Confirmation message for removing a record.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

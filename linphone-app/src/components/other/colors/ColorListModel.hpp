@@ -191,6 +191,17 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("ma_d_b_fg", "white", "[M] Main disabled button : foreground")
 		ADD_COLOR("ma_h_b_fg", "white", "[M] Main hovered button : foreground")
 		ADD_COLOR("ma_p_b_fg", "white", "[M] Main pressed button : foreground")
+		
+// Inverse
+		ADD_COLOR("ma_n_b_inv_bg", "transparent", "[M] Main normal button : inverse background")
+		ADD_COLOR("ma_d_b_inv_bg", "transparent", "[M] Main disabled button : inverse background")
+		ADD_COLOR("ma_h_b_inv_bg", "transparent", "[M] Main hovered button : inverse background")
+		ADD_COLOR("ma_p_b_inv_bg", "transparent", "[M] Main pressed button : inverse background")
+		
+		ADD_COLOR_WITH_LINK("ma_n_b_inv_fg", "", "[M] Main normal button : inverse foreground", "i")
+		ADD_COLOR_WITH_LINK("ma_d_b_inv_fg", "", "[M] Main disabled button : inverse foreground", "primary_d")
+		ADD_COLOR_WITH_LINK("ma_h_b_inv_fg", "", "[M] Main hovered button : inverse foreground", "b")
+		ADD_COLOR_WITH_LINK("ma_p_b_inv_fg", "", "[M] Main pressed button : inverse foreground", "m")
 //-------------------------------------
 // Accept Actions : like accepting a call
 		ADD_COLOR_WITH_LINK("a_n_b_bg", "", "[M] Accept normal button : background", "primary_accept")

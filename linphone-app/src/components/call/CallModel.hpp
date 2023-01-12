@@ -320,8 +320,12 @@ public:
 	
 	QString generateSavedFilename () const;
 	
+// Format : Date_Time_From_To
 	static QString generateSavedFilename (const QString &from, const QString &to);
-	
+	static QStringList splitSavedFilename(const QString& filename);// If doesn't match to generateSavedFilename, return filename
+	static QDateTime getDateTimeSavedFilename(const QString& filename);
+	static QString getFromSavedFilename(const QString& filename);
+	static QString getToSavedFilename(const QString& filename);
 private:
 	void connectTo(CallListener * listener);
 

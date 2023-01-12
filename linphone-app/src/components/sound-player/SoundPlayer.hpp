@@ -40,9 +40,11 @@ class SoundPlayer : public QObject {
 	Q_OBJECT
 	
 	Q_PROPERTY(QString source READ getSource WRITE setSource NOTIFY sourceChanged)
+	Q_PROPERTY(QString baseName READ getBaseName NOTIFY sourceChanged)
 	Q_PROPERTY(PlaybackState playbackState READ getPlaybackState WRITE setPlaybackState NOTIFY playbackStateChanged)
 	Q_PROPERTY(int duration READ getDuration NOTIFY sourceChanged)
 	Q_PROPERTY(bool isRinger MEMBER mIsRinger)
+	Q_PROPERTY(QDateTime creationDateTime READ getCreationDateTime NOTIFY sourceChanged)
 	
 public:
 	enum PlaybackState {
@@ -56,13 +58,23 @@ public:
 	SoundPlayer (QObject *parent = Q_NULLPTR);
 	~SoundPlayer ();
 	
+	bool open();
 	Q_INVOKABLE void pause ();
-	Q_INVOKABLE void play ();
+	Q_INVOKABLE bool play ();
 	Q_INVOKABLE void stop ();
 	
 	Q_INVOKABLE void seek (int offset);
 	
 	Q_INVOKABLE int getPosition () const;
+	Q_INVOKABLE bool hasVideo() const;// Call it after playing a video because the detection is not outside this scope.
+	
+	int getDuration () const;
+	QDateTime getCreationDateTime() const;
+	QString getBaseName() const;
+	std::shared_ptr<linphone::Player> getLinphonePlayer()const;
+	
+	QString getSource () const;
+	void setSource (const QString &source);
 	
 signals:
 	void sourceChanged (const QString &source);
@@ -83,13 +95,10 @@ private:
 	
 	void setError (const QString &message);
 	
-	QString getSource () const;
-	void setSource (const QString &source);
-	
 	PlaybackState getPlaybackState () const;
 	void setPlaybackState (PlaybackState playbackState);
 	
-	int getDuration () const;
+	
 	
 	QString mSource;
 	PlaybackState mPlaybackState = StoppedState;

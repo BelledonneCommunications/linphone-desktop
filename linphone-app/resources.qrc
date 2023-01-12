@@ -135,6 +135,7 @@
 		<file>assets/images/play_custom.svg</file>
 		<file>assets/images/recording_sign.svg</file>
 		<file>assets/images/record_custom.svg</file>
+		<file>assets/images/recordings_custom.svg</file>
 		<file>assets/images/remove_participant_custom.svg</file>
 		<file>assets/images/screen_sharing_custom.svg</file>
 		<file>assets/images/screenshot_custom.svg</file>
@@ -481,6 +482,7 @@
 		<file>ui/views/App/Main/MainWindowMenuBar.qml</file>
 		<file>ui/views/App/Main/MainWindow.qml</file>
 		<file>ui/views/App/Main/MainWindowTopMenuBar.qml</file>
+		<file>ui/views/App/Main/Recordings.qml</file>
 		<file>ui/views/App/Settings/Dialogs/SettingsLdapEdit.qml</file>
 		<file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.js</file>
 		<file>ui/views/App/Settings/Dialogs/SettingsSipAccountsEdit.qml</file>
@@ -533,6 +535,7 @@
 		<file>ui/views/App/Styles/Main/InviteFriendsStyle.qml</file>
 		<file>ui/views/App/Styles/Main/HistoryViewStyle.qml</file>
 		<file>ui/views/App/Styles/Main/MainWindowStyle.qml</file>
+		<file>ui/views/App/Styles/Main/RecordingsStyle.qml</file>
 		<file>ui/views/App/Styles/qmldir</file>
 		<file>ui/views/App/Styles/Settings/Dialogs/SettingsSipAccountsEditStyle.qml</file>
 		<file>ui/views/App/Styles/Settings/Dialogs/SettingsVideoPreviewStyle.qml</file>
