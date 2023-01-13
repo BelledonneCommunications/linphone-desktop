@@ -33,12 +33,12 @@ ListView {
 		Logic.resetSelectedCall()
 	}
 	function refreshLastCall(){
-		if(lastCall && lastCall.status === CallModel.CallStatusConnected)
+		if(lastCall && (lastCall.status === CallModel.CallStatusConnected || lastCall.status === CallModel.CallStatusOutgoing))
 			Logic.setIndexWithCall(lastCall)
 		else{
 			for(var i = 0 ; i < model.rowCount() ; ++i){
 				var call = model.data(model.index(i, 0))
-				if( call && call.status === CallModel.CallStatusConnected){
+				if( call && (call.status === CallModel.CallStatusConnected || call.status === CallModel.CallStatusPaused || call.status == CallModel.CallStatusOutgoing)){
 					Logic.updateSelectedCall(call, i)
 					return;
 				}
@@ -80,7 +80,7 @@ ListView {
 		
 		ActionButton {
 			id: button
-			property bool isSelected : calls.currentIndex === callId && call.status !== CallModel.CallStatusEnded
+			property bool isSelected : calls.currentIndex === callId
 			isCustom: true
 			backgroundRadius: 4
 			colorSet: isSelected ? CallsStyle.entry.selectedBurgerMenu : CallsStyle.entry.burgerMenu

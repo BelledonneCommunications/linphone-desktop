@@ -88,7 +88,7 @@ Window {
 		maximumLeftLimit: CallsWindowStyle.callsList.maximumWidth
 		minimumLeftLimit: CallsWindowStyle.callsList.minimumWidth
 		
-		hideSplitter: !window.callsIsOpened && middlePane.sourceComponent == incall || middlePane.sourceComponent == waitingRoom
+		hideSplitter: !window.callsIsOpened && (middlePane.sourceComponent == incall && window.call.status != CallModel.CallStatusPaused) || middlePane.sourceComponent == waitingRoom
 		
 		// -------------------------------------------------------------------------
 		// Calls list.

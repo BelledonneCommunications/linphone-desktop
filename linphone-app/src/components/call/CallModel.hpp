@@ -126,6 +126,7 @@ public:
 	
 	CallModel (std::shared_ptr<linphone::Call> call);
 	~CallModel ();
+	void removeCall();
 	
 	std::shared_ptr<linphone::Call> getCall () const {
 		return mCall;
