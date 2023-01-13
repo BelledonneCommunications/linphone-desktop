@@ -159,7 +159,7 @@ void Camera::removeParticipantDeviceModel(){
 	mParticipantDeviceModel = nullptr;
 }
 
-void Camera::callRemoved(){
+void Camera::removeCallModel(){
 	mCallModel = nullptr;
 }
 
@@ -229,11 +229,13 @@ ParticipantDeviceModel * Camera::getParticipantDeviceModel() const{
 
 void Camera::setCallModel (CallModel *callModel) {
 	if (mCallModel != callModel) {
-		if( mCallModel)
+		if( mCallModel){
 			disconnect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
+			disconnect(mCallModel, &QObject::destroyed, this, &Camera::removeCallModel);
+		}
 		mCallModel = callModel;
 		connect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
-		connect(mCallModel, &QObject::destroyed, this, &Camera::callRemoved);
+		connect(mCallModel, &QObject::destroyed, this, &Camera::removeCallModel);
 		updateWindowIdLocation();
 		update();
 		
@@ -263,7 +265,7 @@ void Camera::setIsReady(bool status) {
 }
 
 void Camera::setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel){
-if (mParticipantDeviceModel != participantDeviceModel) {
+	if (mParticipantDeviceModel != participantDeviceModel) {
 		if( mParticipantDeviceModel)
 			disconnect(mParticipantDeviceModel, &QObject::destroyed, this, &Camera::removeParticipantDeviceModel);
 		mParticipantDeviceModel = participantDeviceModel;
