@@ -94,7 +94,7 @@ private:
 	void deactivatePreview();
 	void updateWindowIdLocation();
 	void removeParticipantDeviceModel();
-	void callRemoved();
+	void removeCallModel();
 	
 	QVariantMap mLastVideoDefinition;
 	QTimer mLastVideoDefinitionChecker;
