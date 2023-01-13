@@ -130,6 +130,10 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 
 CallModel::~CallModel () {
 	mMagicSearch->removeListener(mSearch);
+	removeCall();
+}
+
+void CallModel::removeCall(){
 	if(mCall){
 		mCall->removeListener(mCallListener);
 		mConferenceModel = nullptr;// Ordering deletion.

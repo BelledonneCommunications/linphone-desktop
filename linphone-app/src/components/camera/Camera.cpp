@@ -159,6 +159,10 @@ void Camera::removeParticipantDeviceModel(){
 	mParticipantDeviceModel = nullptr;
 }
 
+void Camera::callRemoved(){
+	mCallModel = nullptr;
+}
+
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
 	if(mWindowIdLocation == CorePreview){
@@ -229,6 +233,7 @@ void Camera::setCallModel (CallModel *callModel) {
 			disconnect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
 		mCallModel = callModel;
 		connect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
+		connect(mCallModel, &QObject::destroyed, this, &Camera::callRemoved);
 		updateWindowIdLocation();
 		update();
 		

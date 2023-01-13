@@ -165,6 +165,16 @@ function updateSelectedCall (call, index) {
 	}
 }
 
+function getCallToStatusCondition(model, condition){
+	for(var index = count - 1 ; index >= 0 ; --index){
+		var callModel = model.data(model.index(index, 0))
+		if(callModel.status === condition){
+			return {'callModel': callModel, 'index': index}
+		}
+	}
+	return null
+}
+
 function resetSelectedCall () {
 	updateSelectedCall(null, -1)
 }
@@ -193,20 +203,43 @@ function handleCountChanged (count) {
 	}
 	
 	var call = calls._selectedCall
+	var model = calls.model
 	
-	if (call == null) {
-		if (calls.conferenceModel.count > 0) {
+	if (call == null) {// No selected call. 
+		if (calls.conferenceModel.count > 0) {// TODO : Is this needed?
 			return
 		}
-		
-		var model = calls.model
-		var index = count - 1
-		if(model){
-			var callModel = model.data(model.index(index, 0))
-			if( callModel.status === Linphone.CallModel.CallStatusConnected || callModel.isOutgoing )
-				updateSelectedCall(callModel, index)
+		if(model){// Choose one call
+			var candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusConnected)
+			if(candidate && candidate.callModel.isOutgoing) {
+				updateSelectedCall(candidate.callModel, candidate.index)
+				return;
+			}
+			candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusOutgoing)
+			if(candidate){
+				updateSelectedCall(candidate.callModel, candidate.index)
+				return;
+			}
+			candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusPaused)
+			if(candidate){
+				updateSelectedCall(candidate.callModel, candidate.index)
+				return;
+			}else
+				calls.refreshLastCall()
 		}
-	} else {
+	} else{
+		if(model){// Select a call that has been localy initiated.
+			var candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusConnected)
+			if(candidate && candidate.callModel.isOutgoing) {
+				updateSelectedCall(candidate.callModel, candidate.index)
+				return;
+			}
+			candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusOutgoing)
+			if(candidate){
+				updateSelectedCall(candidate.callModel, candidate.index)
+				return;
+			}
+		}
 		setIndexWithCall(call)
 	}
 }

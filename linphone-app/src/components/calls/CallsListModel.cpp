@@ -540,6 +540,8 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 			if(call->dataExists("call-model")) {
 				CallModel * model = &call->getData<CallModel>("call-model");
 				model->endCall();
+				if(model->getCallError() == "")
+					removeCall(call);
 			}
 		} break;
 		case linphone::Call::State::Released:
@@ -608,22 +610,20 @@ void CallsListModel::addDummyCall () {
 void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
 	CallModel *callModel = nullptr;
 	
-	try {
-		callModel = &call->getData<CallModel>("call-model");
-	} catch (const out_of_range &) {
-		// The call model not exists because the linphone call state
-		// `CallStateIncomingReceived`/`CallStateOutgoingInit` was not notified.
-		qWarning() << QStringLiteral("Unable to find call:") << call.get();
+	if(!call->dataExists("call-model"))
 		return;
-	}
+	callModel = &call->getData<CallModel>("call-model");
 	if( callModel && callModel->getCallError() != ""){	// Wait some time to display an error on ending call.
 		QTimer::singleShot( DelayBeforeRemoveCall , this, [this, callModel] {
 				removeCallCb(callModel);
 		});
-	}else
+	}else{
+		callModel->removeCall();
 		remove(callModel);
+	}
 }
 
 void CallsListModel::removeCallCb (CallModel *callModel) {
+	callModel->removeCall();
 	remove(callModel);
 }
