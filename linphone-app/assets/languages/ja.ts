@@ -10,7 +10,7 @@
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 の翻訳に協力する</translation>
     </message>
 </context>
 <context>
@@ -145,7 +145,7 @@
     </message>
     <message>
         <source>homeDescription</source>
-        <translation>このアシスタントはあなたの%1アカウントの設定を助けます。</translation>
+        <translation>このアシスタントは、SIPアカウントの設定と使用のお手伝いをします。</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
@@ -217,7 +217,7 @@
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation>SMS認証に失敗しました。!</translation>
+        <translation>SMS認証に失敗しました</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
@@ -225,7 +225,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
-        <translation>無効な電話番号!</translation>
+        <translation>無効な電話番号</translation>
     </message>
     <message>
         <source>phoneNumberStatusTooShort</source>
@@ -237,7 +237,7 @@
     </message>
     <message>
         <source>phoneNumberStatusInvalidCountryCode</source>
-        <translation>無効な国番号!</translation>
+        <translation>無効な国番号</translation>
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
@@ -513,18 +513,18 @@
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
         <translation type="unfinished">
-            <numerusform></numerusform>
+            <numerusform>%1 が入力中…</numerusform>
         </translation>
     </message>
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>クリップボードにコピーしました</translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">選択した項目をクリップボードにコピーしました</translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
