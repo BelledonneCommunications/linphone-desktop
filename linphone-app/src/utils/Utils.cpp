@@ -542,11 +542,22 @@ std::shared_ptr<linphone::Config> Utils::getConfigIfExists (const QString &confi
 	return linphone::Config::newWithFactory(configPath.toStdString(), factoryPath);
 }
 
+QString Utils::getApplicationProduct(){
+// Note: Keep '-' as a separator between application name and application type
+	return QString(APPLICATION_NAME"-Desktop").remove(' ')+"/"+QCoreApplication::applicationVersion();
+}
+
+QString Utils::getOsProduct(){
+	QString version = QSysInfo::productVersion().remove(' ');// A version can be "Server 2016" (for Windows Server 2016)
+	QString product = QSysInfo::productType().replace(' ', '-');	// Just in case
+	return product+"/"+version;
+}
+
 QString Utils::computeUserAgent(const std::shared_ptr<linphone::Config>& config){
-	return QStringLiteral(APPLICATION_NAME" Desktop/%1 (%2) %3, Qt %4 LinphoneCore")
-					.arg(QCoreApplication::applicationVersion())
+	return QStringLiteral("%1 (%2) %3 Qt/%4 LinphoneSDK")
+					.arg(Utils::getApplicationProduct())
 					.arg(SettingsModel::getDeviceName(config))
-					.arg(QSysInfo::prettyProductName())
+					.arg(Utils::getOsProduct())
 					.arg(qVersion());
 }
 

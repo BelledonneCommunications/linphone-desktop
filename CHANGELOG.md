@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Mini views layout on actives speaker.
 - Set 1 month to default message expires.
+- User-agent format compliance
 
 ## 5.0.6 - 2023-01-10
 
