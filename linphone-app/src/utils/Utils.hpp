@@ -146,6 +146,8 @@ public:
 	static void copyDir(QString from, QString to);// Copy a folder recursively without erasing old file
 	static QString getDisplayName(const std::shared_ptr<const linphone::Address>& address);	// Get the displayname from addres in this order : Friends, Contact, Display address, Username address
 	static std::shared_ptr<linphone::Config> getConfigIfExists (const QString& configPath);
+	static QString getApplicationProduct();
+	static QString getOsProduct();
 	static QString computeUserAgent(const std::shared_ptr<linphone::Config>& config);
 	
 	static bool isMe(const std::shared_ptr<const linphone::Address>& address);
