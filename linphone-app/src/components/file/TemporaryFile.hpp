@@ -22,6 +22,7 @@
 #define TEMPORARY_FILE_H_
 
 #include <QFile>
+#include <linphone++/linphone.hh>
 
 // =============================================================================
 
@@ -34,20 +35,28 @@ public:
 	~TemporaryFile ();
 	
 	Q_PROPERTY(QString filePath READ getFilePath NOTIFY filePathChanged)// not changeable from QML as it comes from a ContentModel
+	Q_PROPERTY(bool isReadable READ isReadable NOTIFY isReadableChanged)
 	
-	Q_INVOKABLE void createFileFromContent(ContentModel * contentModel, const bool& exportPlainFile = true);
+	void createFileFromContent(std::shared_ptr<linphone::Content> content, const bool& exportPlainFile = true);
+	Q_INVOKABLE void createFileFromContentModel(ContentModel * contentModel, const bool& exportPlainFile = true);
+	Q_INVOKABLE void createFile(const QString& filePath, const bool& exportPlainFile = true);
 	
 	QString getFilePath () const;
+	bool isReadable() const;
+	
 	void setFilePath(const QString& path, const bool& toDelete);
+	void setIsReadable(const bool& isReadable);
 	
 	void deleteFile();
 	
 signals :
 	void filePathChanged();
+	void isReadableChanged();
 	
 private:
 	QString mFilePath;
 	bool mDeleteFile = false;
+	bool mIsReadable = false;
 };
 
 #endif

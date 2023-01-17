@@ -72,7 +72,7 @@ DialogPlus {
 			Text {
 				elide: Text.ElideRight
 				font.pointSize: AboutStyle.copyrightBlock.url.pointSize
-				linkColor: AboutStyle.copyrightBlock.url.color
+				linkColor: AboutStyle.copyrightBlock.url.colorModel.color
 				text: '<a href="'+applicationUrl+'">'+applicationUrl+'</a>'
 				
 				width: parent.width

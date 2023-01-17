@@ -37,7 +37,7 @@ Loader{
 	active: contentModel && contentModel.isVoiceRecording()
 	
 	onContentModelChanged: if(contentModel){
-		tempFile.createFileFromContent(contentModel, false);
+		tempFile.createFileFromContentModel(contentModel, false);
 	}
 	
 	TemporaryFile {

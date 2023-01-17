@@ -27,6 +27,8 @@
 #include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
+#include <linphone++/linphone.hh>
+
 // =============================================================================
 
 using namespace std;
@@ -39,29 +41,56 @@ TemporaryFile::~TemporaryFile () {
 	deleteFile();
 }
 
-void TemporaryFile::createFileFromContent(ContentModel * contentModel, const bool& exportPlainFile){
-	if(contentModel){
+
+void TemporaryFile::createFileFromContent(std::shared_ptr<linphone::Content> content, const bool& exportPlainFile){
+	if(content){
 		QString filePath;
-		if( exportPlainFile || CoreManager::getInstance()->getSettingsModel()->getVfsEncrypted() )
-			filePath = Utils::coreStringToAppString(contentModel->getContent()->exportPlainFile());
+		if( exportPlainFile || (CoreManager::getInstance()->getSettingsModel()->getVfsEncrypted() && content->isFileEncrypted()) )
+			filePath = Utils::coreStringToAppString(content->exportPlainFile());
 		bool toDelete = true;
 		if(filePath.isEmpty()){
-			filePath = contentModel->getFilePath();
+			filePath = Utils::coreStringToAppString(content->getFilePath());
 			toDelete = false;
-		}
+			if(content->isFileEncrypted())// filePath was empty while the file is encrypted : it couldn't be decoded.
+				setIsReadable(false);
+			else
+				setIsReadable(true);
+		}else
+			setIsReadable(true);
 		setFilePath(filePath, toDelete);
 	}
+}
+
+void TemporaryFile::createFileFromContentModel(ContentModel * contentModel, const bool& exportPlainFile){
+	if(contentModel)
+		createFileFromContent(contentModel->getContent());
+}
+
+void TemporaryFile::createFile(const QString& openFilePath, const bool& exportPlainFile){
+	createFileFromContent(linphone::Factory::get()->createContentFromFile(Utils::appStringToCoreString(openFilePath)), exportPlainFile);
 }
 
 QString TemporaryFile::getFilePath () const{
 	return mFilePath;
 }
+
+bool TemporaryFile::isReadable() const{
+	return mIsReadable;
+}
+
 void TemporaryFile::setFilePath(const QString& path, const bool& toDelete){
 	if(path != mFilePath) {
 		deleteFile();
 		mFilePath = path;
 		mDeleteFile = toDelete;
 		emit filePathChanged();
+	}
+}
+
+void TemporaryFile::setIsReadable(const bool& isReadable){
+	if(isReadable != mIsReadable) {
+		mIsReadable = isReadable;
+		emit isReadableChanged();
 	}
 }
 

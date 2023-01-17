@@ -25,16 +25,26 @@ DialogPlus{
 	property bool isAnimatedImage : filePath && UtilsCpp.isAnimatedImage(filePath)
 	property bool isVideo: filePath && UtilsCpp.isVideo(filePath)
 	property bool isImage: filePath && UtilsCpp.isImage(filePath)
-	property bool isSupportedForDisplay: filePath && UtilsCpp.isSupportedForDisplay(filePath)
+	property bool isSupportedForDisplay: filePath && tempFile.isReadable && UtilsCpp.isSupportedForDisplay(filePath)
 	
 	showCloseCross: true
 	showButtons: !isVideo
 	buttonsAlignment: Qt.AlignRight
 	
-	buttons: [
+	buttons: [/*
 		ActionButton{
-			Layout.preferredHeight: iconSize
-			Layout.preferredWidth: iconSize
+			Layout.preferredHeight: 3*iconSize/2
+			Layout.preferredWidth: 3*iconSize/2
+			isCustom: true
+			backgroundRadius: width
+			colorSet:  FileViewDialogStyle.exportFile
+			onClicked: {
+				loadAsDialog.open()
+			}
+		},*/
+		ActionButton{
+			Layout.preferredHeight: 3*iconSize/2
+			Layout.preferredWidth: 3*iconSize/2
 			isCustom: true
 			backgroundRadius: width
 			colorSet:  FileViewDialogStyle.exportFile
@@ -48,7 +58,7 @@ DialogPlus{
 	
 	radius: 10
 	onContentModelChanged: if(contentModel){
-		tempFile.createFileFromContent(contentModel, false);
+		tempFile.createFileFromContentModel(contentModel, false);
 	}
 	onExitStatus: if(loader.sourceComponent == videoComponent) loader.item.stop();
 	
@@ -70,24 +80,42 @@ DialogPlus{
 				}
 				return files
 			}, [])
-				contentModel.saveAs(files[0])
+			contentModel.saveAs(files[0])
 		}
 	}
-	
+
+	FileDialog {
+		id: loadAsDialog
+		folder: shortcuts.documents
+		//: "Load": Title of a file dialog to export a file.
+		title: 'Load'
+		selectExisting: true
+		//defaultSuffix: Utils.getExtension(mainItem.filePath)// Doesn't seems to work on all platforms
+		onAccepted: {
+			var files = fileUrls.reduce(function (files, file) {
+				if (file.startsWith('file:')) {
+					files.push(Utils.getSystemPathFromUri(file))
+				}
+				return files
+			}, [])
+			tempFile.createFile(files[0], false);
+		}
+	}
+
 	Loader{
 		id: loader
 		anchors.fill: parent
 	
 		active: true
-		sourceComponent: isVideo
-							? videoComponent
-							: mainItem.isAnimatedImage
-								? animatedImageComponent
-								: mainItem.isImage
-									? imageComponent
-									: isSupportedForDisplay
-										? fileTextComponent
-										: placeholderComponent
+		sourceComponent: isSupportedForDisplay
+							? isVideo
+								? videoComponent
+								: mainItem.isAnimatedImage
+									? animatedImageComponent
+									: mainItem.isImage
+										? imageComponent
+										: fileTextComponent
+							: placeholderComponent
 //--------------------------------------------------------------------------------------------------		
 //						VIDEOS
 //--------------------------------------------------------------------------------------------------		
@@ -114,7 +142,7 @@ DialogPlus{
 					anchors.centerIn: parent
 					height: 50
 					width: 50
-					color: BusyIndicatorStyle.alternateColor
+					color: BusyIndicatorStyle.alternateColor.color
 				}
 				
 				HoveringMouseArea{
@@ -152,10 +180,10 @@ DialogPlus{
 								stopAtEnd: false
 								resetAtEnd: false
 								blockValueAtEnd: false
-								backgroundColor: ChatAudioMessageStyle.backgroundColor
-								progressLineBackgroundColor: FileViewDialogStyle.progression.backgroundColor
+								backgroundColor: ChatAudioMessageStyle.backgroundColor.color
+								progressLineBackgroundColor: FileViewDialogStyle.progression.backgroundColor.color
 								colorSet: FileViewDialogStyle.progression
-								durationTextColor: ChatStyle.entry.message.outgoing.text.color
+								durationTextColor: ChatStyle.entry.message.outgoing.text.colorModel.color
 								progressSize: 10
 								customActions: [
 									ActionButton{
@@ -265,6 +293,10 @@ DialogPlus{
 					//idContentListView.positionViewAtEnd()
 				}
 				Component.onCompleted: updateText()
+				Connections{
+					target: tempFile
+					onFilePathChanged: idContentListView.updateText()
+				}
 			}
 		}
 //--------------------------------------------------------------------------------------------------
@@ -272,11 +304,14 @@ DialogPlus{
 //--------------------------------------------------------------------------------------------------
 		Component {
 			id: placeholderComponent
-			Icon{
-				id: fileIcon
+			Item{
 				Layout.alignment: Qt.AlignCenter
-				icon: FileViewDialogStyle.extension.unknownIcon
-				iconSize: FileViewDialogStyle.extension.iconSize
+				Icon{
+					id: fileIcon
+					anchors.centerIn: parent
+					icon: FileViewDialogStyle.extension.unknownIcon
+					iconSize: FileViewDialogStyle.extension.iconSize
+				}
 			}
 		}
 	}
