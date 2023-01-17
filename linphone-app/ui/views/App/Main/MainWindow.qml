@@ -75,7 +75,6 @@ ApplicationWindow {
 			readonly property alias conferencesEntry: conferencesEntry
 			
 			readonly property alias contentLoader: contentLoader
-			//readonly property alias conferencesEntry: conferencesEntry
 			readonly property alias menu: menu
 			
 			readonly property alias timeline: timeline
@@ -267,6 +266,10 @@ ApplicationWindow {
 						onClicked: toggled ? menuBar.close() : menuBar.open()// a bit useless as Menu will depopup on losing focus but this code is kept for giving idea
 						MainWindowMenuBar {
 							id: menuBar
+							onDisplayRecordings: {
+								timeline.model.unselectAll()
+								setView('Recordings')
+							}
 						}
 					}
 				}
@@ -326,6 +329,7 @@ ApplicationWindow {
 								
 							}
 						}
+						
 						ApplicationMenuEntry {
 							id: conferencesEntry
 							
@@ -414,7 +418,12 @@ ApplicationWindow {
 	Loader{
 		id: customMenuBar
 		active:Qt.platform.os === 'osx'
-		sourceComponent:MainWindowTopMenuBar{}
+		sourceComponent:MainWindowTopMenuBar{
+			onDisplayRecordings: {
+				timeline.model.unselectAll()
+				setView('Recordings')
+			}
+		}
 	}
 	Component.onCompleted: if(Qt.platform.os === 'osx') menuBar = customMenuBar
 	// ---------------------------------------------------------------------------

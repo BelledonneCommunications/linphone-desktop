@@ -40,6 +40,7 @@ singleton HomeStyle                                      1.0 Main/HomeStyle.qml
 singleton HistoryViewStyle                               1.0 Main/HistoryViewStyle.qml
 singleton InviteFriendsStyle                             1.0 Main/InviteFriendsStyle.qml
 singleton MainWindowStyle                                1.0 Main/MainWindowStyle.qml
+singleton RecordingsStyle                                1.0 Main/RecordingsStyle.qml
 
 singleton AboutStyle                                     1.0 Main/Dialogs/AboutStyle.qml
 singleton AuthenticationRequestStyle                     1.0 Main/Dialogs/AuthenticationRequestStyle.qml

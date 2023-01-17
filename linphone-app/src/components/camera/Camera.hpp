@@ -27,6 +27,8 @@
 #include <QMutex>
 #include <QTimer>
 
+#include "components/sound-player/SoundPlayer.hpp"
+
 // =============================================================================
 
 namespace linphone {
@@ -35,6 +37,7 @@ namespace linphone {
 
 class CallModel;
 class ParticipantDeviceModel;
+
 // -----------------------------------------------------------------------------
 
 class Camera : public QQuickFramebufferObject {
@@ -44,12 +47,14 @@ class Camera : public QQuickFramebufferObject {
 	Q_PROPERTY(ParticipantDeviceModel * participantDeviceModel READ getParticipantDeviceModel WRITE setParticipantDeviceModel NOTIFY participantDeviceModelChanged)
 	Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
 	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged);
+	Q_PROPERTY(SoundPlayer * linphonePlayer READ getLinphonePlayer WRITE setLinphonePlayer NOTIFY linphonePlayerChanged)
 
 	typedef enum{
 		None = -1,
 		CorePreview = 0,
 		Call,
 		Device,
+		Player,
 		Core
 	}WindowIdLocation;
 	
@@ -77,24 +82,28 @@ signals:
 	void participantDeviceModelChanged(ParticipantDeviceModel *participantDeviceModel);
 	void requestNewRenderer();
 	void videoDefinitionChanged();
+	void linphonePlayerChanged(SoundPlayer * linphonePlayer);
 	
 private:
 	CallModel *getCallModel () const;
 	bool getIsPreview () const;
 	bool getIsReady () const;
 	ParticipantDeviceModel * getParticipantDeviceModel() const;
+	SoundPlayer * getLinphonePlayer() const;
 	
 	void setCallModel (CallModel *callModel);
 	void setIsPreview (bool status);
 	void setIsReady(bool status);
 	void setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel);
-	void setWindowIdLocation(const WindowIdLocation& location);
+	void setLinphonePlayer(SoundPlayer *player);
+	void setWindowIdLocation(const WindowIdLocation& location);	
 	
 	void activatePreview();
 	void deactivatePreview();
 	void updateWindowIdLocation();
 	void removeParticipantDeviceModel();
 	void removeCallModel();
+	void removeLinphonePlayer();
 	
 	QVariantMap mLastVideoDefinition;
 	QTimer mLastVideoDefinitionChecker;
@@ -103,6 +112,7 @@ private:
 	bool mIsReady = false;
 	CallModel *mCallModel = nullptr;
 	ParticipantDeviceModel *mParticipantDeviceModel = nullptr;
+	SoundPlayer * mLinphonePlayer = nullptr;
 
 	WindowIdLocation mWindowIdLocation = None;
 	mutable bool mIsWindowIdSet = false;

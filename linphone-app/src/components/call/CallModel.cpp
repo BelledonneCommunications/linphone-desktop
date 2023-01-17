@@ -1316,7 +1316,7 @@ QString CallModel::generateSavedFilename () const {
 
 QString CallModel::generateSavedFilename (const QString &from, const QString &to) {
 	auto escape = [](const QString &str) {
-		constexpr char ReservedCharacters[] = "[<|>|:|\"|/|\\\\|\\?|\\*|\\+|\\|]+";
+		constexpr char ReservedCharacters[] = "[<|>|:|\"|/|\\\\|\\?|\\*|\\+|\\||_|-]+";
 		static QRegularExpression regexp(ReservedCharacters);
 		return QString(str).replace(regexp, "");
 	};
@@ -1324,4 +1324,36 @@ QString CallModel::generateSavedFilename (const QString &from, const QString &to
 			.arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
 			.arg(escape(from))
 			.arg(escape(to));
+}
+
+QStringList CallModel::splitSavedFilename(const QString& filename){
+	QStringList fields = filename.split('_');
+	if(fields.size() == 4 && fields[0].split('-').size() == 3 && fields[1].split('-').size() == 3){
+		return fields;
+	}else
+		return QStringList(filename);
+}
+
+QDateTime CallModel::getDateTimeSavedFilename(const QString& filename){
+	auto fields = splitSavedFilename(filename);
+	if(fields.size() > 1)
+		return QDateTime::fromString(fields[0] + "_" +fields[1], "yyyy-MM-dd_hh-mm-ss");
+	else
+		return QDateTime();
+}
+
+QString CallModel::getFromSavedFilename(const QString& filename){
+	auto fields = splitSavedFilename(filename);
+	if(fields.size() > 1)
+		return fields[2];
+	else
+		return "";
+}
+
+QString CallModel::getToSavedFilename(const QString& filename){
+	auto fields = splitSavedFilename(filename);
+	if(fields.size() > 1)
+		return fields[3];
+	else
+		return "";
 }

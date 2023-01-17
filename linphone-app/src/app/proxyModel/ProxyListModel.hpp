@@ -86,16 +86,18 @@ public:
 	
 	virtual bool remove(QObject *itemToRemove) override{
 		bool removed = false;
-		qInfo() << QStringLiteral("Removing ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
-		int index = 0;
-		for(auto item : mList)
-			if( item == itemToRemove) {
-				removed = removeRow(index);
-				break;
-			}else
-				++index;
-		if( !removed)
-			qWarning() << QStringLiteral("Unable to remove ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
+		if(itemToRemove){
+			qInfo() << QStringLiteral("Removing ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
+			int index = 0;
+			for(auto item : mList)
+				if( item == itemToRemove) {
+					removed = removeRow(index);
+					break;
+				}else
+					++index;
+			if( !removed)
+				qWarning() << QStringLiteral("Unable to remove ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ") << itemToRemove;
+		}
 		return removed;
 	}
 	virtual bool remove(QSharedPointer<QObject> itemToRemove){

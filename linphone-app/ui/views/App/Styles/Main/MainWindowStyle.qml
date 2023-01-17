@@ -50,6 +50,12 @@ QtObject {
 			property var colorModel: ColorsList.add(sectionName+'_me_conferences', 'me_n_b_inv_fg')
 			property var selectedColor: ColorsList.add(sectionName+'_me_conferences_c', 'me_p_b_inv_fg')
 		}
+		property QtObject recordings: QtObject {
+			property string icon: 'recordings_custom'
+			property int iconSize: 50
+			property color color: ColorsList.add(sectionName+'_me_recordings', 'me_n_b_inv_fg').color
+			property color selectedColor: ColorsList.add(sectionName+'_me_recordings_c', 'me_p_b_inv_fg').color
+		}
 		/*
 		property string conferencesIcon: 'conference'
 		property var conferencesColor: ColorsList.add(sectionName+'_me_confs', 'me_n_b_inv_fg')

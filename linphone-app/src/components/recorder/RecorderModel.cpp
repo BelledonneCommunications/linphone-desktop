@@ -64,6 +64,23 @@ QString RecorderModel::getFile()const{
 	return Utils::coreStringToAppString(mRecorder->getFile());
 }
 
+QStringList RecorderModel::splitSavedFilename(const QString& filename){
+	QStringList fields = filename.split('_');
+	if(fields.size() == 3 && fields[0] == "vocal"  && fields[1].split('-').size() == 3
+		 && fields[2].split('-').size() == 4){
+		return fields;
+	}else
+		return QStringList(filename);
+}
+
+QDateTime RecorderModel::getDateTimeSavedFilename(const QString& filename){
+	auto fields = splitSavedFilename(filename);
+	if(fields.size() > 1)
+		return QDateTime::fromString(fields[1] + "_" +fields[2], "yyyy-MM-dd_hh-mm-ss-zzz");
+	else
+		return QDateTime();;
+}
+
 void RecorderModel::start(){
 	bool soFarSoGood;
 	QString filename = QStringLiteral("vocal_%1.mkv")

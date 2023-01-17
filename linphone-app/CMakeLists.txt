@@ -223,6 +223,7 @@ set(SOURCES
 	src/components/file/FileDownloader.cpp
 	src/components/file/FileExtractor.cpp
 	src/components/file/TemporaryFile.cpp
+	src/components/file/FileMediaModel.cpp
 	src/components/friend/FriendListListener.cpp
 	src/components/history/HistoryModel.cpp
 	src/components/history/HistoryProxyModel.cpp
@@ -257,6 +258,8 @@ set(SOURCES
 	src/components/presence/Presence.cpp
 	src/components/recorder/RecorderManager.cpp
 	src/components/recorder/RecorderModel.cpp
+	src/components/recorder/RecordingListModel.cpp
+	src/components/recorder/RecordingProxyModel.cpp
 	src/components/search/SearchListener.cpp
 	src/components/search/SearchResultModel.cpp
 	src/components/search/SearchSipAddressesModel.cpp
@@ -360,6 +363,7 @@ set(HEADERS
 	src/components/file/FileDownloader.hpp
 	src/components/file/FileExtractor.hpp
 	src/components/file/TemporaryFile.hpp
+	src/components/file/FileMediaModel.hpp
 	src/components/friend/FriendListListener.hpp
 	src/components/history/HistoryModel.hpp
 	src/components/history/HistoryProxyModel.hpp
@@ -395,6 +399,8 @@ set(HEADERS
 	src/components/presence/Presence.hpp
 	src/components/recorder/RecorderManager.hpp
 	src/components/recorder/RecorderModel.hpp
+	src/components/recorder/RecordingListModel.hpp
+	src/components/recorder/RecordingProxyModel.hpp
 	src/components/search/SearchListener.hpp
 	src/components/search/SearchResultModel.hpp
 	src/components/search/SearchSipAddressesModel.hpp

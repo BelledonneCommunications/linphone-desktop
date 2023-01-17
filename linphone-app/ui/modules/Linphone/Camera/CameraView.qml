@@ -15,6 +15,7 @@ Item{
 	id: mainItem
 	property alias currentDevice: camera.currentDevice
 	property alias callModel: camera.callModel
+	property alias linphonePlayer : camera.linphonePlayer
 	property alias hideCamera: camera.hideCamera
 	property alias isPaused: camera.isPaused
 	property alias isPreview: camera.isPreview
