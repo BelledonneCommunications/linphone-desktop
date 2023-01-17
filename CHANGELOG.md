@@ -4,7 +4,6 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-
 ## 5.1.0 - undefined
 
 ### Added
@@ -18,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 	* Movable on holding mouse's left click.
 	* Resizeable on mouse's wheel.
 	* Reset on mouse's right click (first for size if changed, second for position)
+- Hide the active speaker from the mini views.
+
+### Fixed
+- Mini views layout on actives speaker.
+- Set 1 month to default message expires.
 
 ## 5.0.6 - 2023-01-10
 
