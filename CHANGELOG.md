@@ -11,6 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - VFS Encryption
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 
+## 5.0.7 - undefined
+
+### Added
+- Interactive preview in call:
+	* Movable on holding mouse's left click.
+	* Resizeable on mouse's wheel.
+	* Reset on mouse's right click (first for size if changed, second for position)
+
 ## 5.0.6 - 2023-01-10
 
 ### Fixed
