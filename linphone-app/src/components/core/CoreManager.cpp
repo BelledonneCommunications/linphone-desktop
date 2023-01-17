@@ -111,6 +111,10 @@ void CoreManager::initCoreManager(){
 	emit coreManagerInitialized();
 }
 
+bool CoreManager::isInitialized() const{
+	return mStarted;
+}
+
 AbstractEventCountNotifier * CoreManager::getEventCountNotifier(){
 	return mEventCountNotifier;
 }
