@@ -558,7 +558,11 @@ QString Utils::getOsProduct(){
 QString Utils::computeUserAgent(const std::shared_ptr<linphone::Config>& config){
 	return QStringLiteral("%1 (%2) %3 Qt/%4 LinphoneSDK")
 					.arg(Utils::getApplicationProduct())
-					.arg(SettingsModel::getDeviceName(config))
+					.arg(SettingsModel::getDeviceName(config)
+							.replace('\\', "\\\\")
+							.replace('(', "\\(")
+							.replace(')', "\\)")
+					)
 					.arg(Utils::getOsProduct())
 					.arg(qVersion());
 }
