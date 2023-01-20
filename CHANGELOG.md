@@ -10,7 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - VFS Encryption
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 
-## 5.0.7 - undefined
+## 5.0.8 - 2023-01-20
+
+### Fixed
+- Qt 5.12 compatibility on recordings.
+
+## 5.0.7 - 2023-01-19
 
 ### Added
 - Interactive preview in call:

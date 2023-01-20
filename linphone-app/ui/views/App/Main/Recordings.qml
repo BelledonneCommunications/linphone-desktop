@@ -36,7 +36,7 @@ Item {
 			id: sectionHeading
 			Form {
 				anchors.rightMargin : 10
-				required property string section
+				//required property string section	// Only for > Qt 5.15
 				title: section
 				width: parent.width
 				height: 30
