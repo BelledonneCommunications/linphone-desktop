@@ -796,6 +796,14 @@ URL del server non configurato.</translation>
         <source>byeFunctionDescription</source>
         <translation>Termina una chiamata specifica, tutte le chiamate o la chiamata corrente.</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

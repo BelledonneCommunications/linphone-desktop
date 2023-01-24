@@ -790,6 +790,14 @@
         <source>byeFunctionDescription</source>
         <translation>结束特定通话、所有通话或当前通话。</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

@@ -796,6 +796,14 @@ Server URL ist nicht konfiguriert.</translation>
         <source>byeFunctionDescription</source>
         <translation>Beendet einen spezifischen Anruf, alle Anrufe oder den aktuellen Anruf.</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

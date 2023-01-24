@@ -796,6 +796,14 @@ Server url ikke konfigureret.</translation>
         <source>byeFunctionDescription</source>
         <translation>Afslut opkald, alle eller det nuværende.</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

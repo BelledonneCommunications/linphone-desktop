@@ -790,6 +790,14 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <source>byeFunctionDescription</source>
         <translation>Belirli çağrıyı, tüm çağrıları veya geçerli çağrıyı bitir.</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

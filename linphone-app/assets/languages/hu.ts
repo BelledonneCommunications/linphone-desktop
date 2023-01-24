@@ -790,6 +790,14 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <source>byeFunctionDescription</source>
         <translation>Egy adott hívás, az összes hívás vagy az jelenlegi hívás befejezése.</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

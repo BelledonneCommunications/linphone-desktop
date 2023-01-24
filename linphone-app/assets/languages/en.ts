@@ -796,6 +796,14 @@ Server URL not configured.</translation>
         <source>joinConferenceAsFunctionDescription</source>
         <translation>Join the conference hosted by the sip-address as with the guest-sip-address. If you are not connected to a proxy-config, see join-conference.</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation>Accept the current call.</translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation>Decline the current call.</translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>

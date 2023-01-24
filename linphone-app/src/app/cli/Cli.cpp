@@ -52,7 +52,6 @@ static void cliShow (QHash<QString, QString> &args) {
 
 static void cliCall (QHash<QString, QString> &args) {
 	QString addressToCall = args["sip-address"];
-	
 	if(args.size() > 1){// Call with options
 		App *app = App::getInstance();
 		args["call"] = args["sip-address"];// Swap cli def to parser
@@ -61,6 +60,30 @@ static void cliCall (QHash<QString, QString> &args) {
 		app->initContentApp();
 	}else
 		CoreManager::getInstance()->getCallsListModel()->launchAudioCall(args["sip-address"], "");
+}
+
+static void cliAccept (QHash<QString, QString> &args) {
+	auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
+	App *app = App::getInstance();
+	if( args.size() > 0){
+		app->processArguments(args);
+		app->initContentApp();
+	}
+	if(currentCall){
+		currentCall->accept();
+	}
+}
+
+static void cliDecline (QHash<QString, QString> &args) {
+	auto currentCall = CoreManager::getInstance()->getCore()->getCurrentCall();
+	App *app = App::getInstance();
+	if( args.size() > 0){
+		app->processArguments(args);
+		app->initContentApp();
+	}
+	if(currentCall){
+		currentCall->decline(linphone::Reason::Declined);
+	}
 }
 
 static void cliBye (QHash<QString, QString> &args) {
@@ -427,6 +450,8 @@ QMap<QString, Cli::Command> Cli::mCommands = {
 		{ "sip-address", {} }, { "conference-id", {} }, { "guest-sip-address", {} }
 	}),
 	createCommand("bye", QT_TR_NOOP("byeFunctionDescription"), cliBye, QHash<QString, Argument>(), true),
+	createCommand("accept", QT_TR_NOOP("acceptFunctionDescription"), cliAccept, QHash<QString, Argument>(), true),
+	createCommand("decline", QT_TR_NOOP("declineFunctionDescription"), cliDecline, QHash<QString, Argument>(), true),
 };
 
 // -----------------------------------------------------------------------------
