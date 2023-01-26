@@ -75,7 +75,7 @@
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation>CLI で %1 を使用するためのヘルプメニューを表示します。</translation>
+        <translation>CLI で %1 を使用するためのヘルプメニューを表示します</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
@@ -154,7 +154,7 @@
     <message>
         <source>homeCgu</source>
         <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1の%2利用規約%3と%4プライバシーポリシー%5に同意します</translation>
     </message>
 </context>
 <context>
@@ -512,7 +512,7 @@
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 が入力中…</numerusform>
         </translation>
     </message>
@@ -524,7 +524,7 @@
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished">選択した項目をクリップボードにコピーしました</translation>
+        <translation>選択した項目をクリップボードにコピーしました</translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
@@ -673,7 +673,7 @@
     <message>
         <source>menuCopy</source>
         <extracomment>&apos;Copy&apos; : Text menu to copy selected text in message into clipboard</extracomment>
-        <translation type="unfinished">-了解</translation>
+        <translation>コピー</translation>
     </message>
     <message>
         <source>menuPlayMe</source>
@@ -1376,19 +1376,19 @@
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
-        <translation type="unfinished">履歴をクリアしてよろしいですか？</translation>
+        <translation>履歴を削除してもよろしいですか？</translation>
     </message>
     <message>
         <source>tooltipContactEdit</source>
-        <translation type="unfinished">連絡先の編集</translation>
+        <translation>連絡先の編集</translation>
     </message>
     <message>
         <source>tooltipContactAdd</source>
-        <translation type="unfinished">連絡先の追加</translation>
+        <translation>連絡先の追加</translation>
     </message>
     <message>
         <source>cleanHistory</source>
-        <translation type="unfinished">履歴の削除</translation>
+        <translation>履歴の削除</translation>
     </message>
 </context>
 <context>
@@ -1586,7 +1586,7 @@
     <message>
         <source>ok</source>
         <extracomment>&apos;OK&apos; : Button label</extracomment>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>addParticipantPlaceholder</source>
@@ -1848,7 +1848,7 @@
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>menuMultimedia</source>
@@ -2186,11 +2186,11 @@
     </message>
     <message>
         <source>onlineInstallerExtractingDescription</source>
-        <translation>%1 を抽出しています...</translation>
+        <translation>%1 を抽出しています…</translation>
     </message>
     <message>
         <source>onlineInstallerDownloadingDescription</source>
-        <translation>%1 をダウンロードしています...</translation>
+        <translation>%1 をダウンロードしています…</translation>
     </message>
     <message>
         <source>onlineInstallerFinishedDescription</source>
@@ -2343,7 +2343,7 @@
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation>ログのアップロードに失敗しました</translation>
+        <translation>ログのアップロードに失敗しました。</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
@@ -2409,7 +2409,7 @@
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>deleteData</source>
@@ -2831,7 +2831,7 @@
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation>STUN/TURN server</translation>
+        <translation>STUN/TURNサーバー</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
@@ -3060,7 +3060,7 @@
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation>無効なSIPアドレス</translation>
+        <translation>無効なSIPアドレスです。</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
@@ -3068,7 +3068,7 @@
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation>無効なルート</translation>
+        <translation>無効なルートです。</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
@@ -3080,11 +3080,11 @@
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation> TURNを有効にする</translation>
+        <translation>TURNを有効にする</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
-        <translation> TURNユーザー</translation>
+        <translation>TURNユーザー</translation>
     </message>
     <message>
         <source>turnPasswordLabel</source>
