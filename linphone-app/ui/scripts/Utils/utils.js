@@ -577,23 +577,20 @@ function getExtension (str) {
 // Test if a value is included in an array or object.
 function includes (obj, value, startIndex) {
   obj = ensureArray(obj)
-
   if (startIndex == null) {
     startIndex = 0
   }
-
   var length = obj.length
 
   for (var i = startIndex; i < length; i++) {
     if (
-      value === obj[i] ||
+      value == obj[i] ||
       // Check `NaN`.
       (value !== value && obj[i] !== obj[i])
     ) {
       return true
     }
   }
-
   return false
 }
 
