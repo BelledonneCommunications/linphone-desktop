@@ -55,7 +55,10 @@ MenuBar {
 		MenuItem {
 			text: qsTr('quit')
 			role: MenuItem.QuitRole
-			onTriggered: Qt.quit()
+			onTriggered: {
+				console.info("Exiting App from Top Menu");
+				Qt.quit()
+			}
 			shortcut: StandardKey.Quit
 			
 		}

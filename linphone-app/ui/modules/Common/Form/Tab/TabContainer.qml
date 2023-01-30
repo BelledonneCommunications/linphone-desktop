@@ -18,9 +18,13 @@ Rectangle {
     spacing: 0
 
     Flickable {
-      ScrollBar.vertical: ForceScrollBar {
-        id: scrollBar
-      }
+		id: flickable
+		ScrollBar.vertical: ForceScrollBar {
+			id: scrollBar
+			contentSizeTarget: flickable.contentHeight
+			sizeTarget: flickable.height
+			Component.onCompleted: updatePolicy()
+		}
 
       Layout.fillHeight: true
       Layout.fillWidth: true

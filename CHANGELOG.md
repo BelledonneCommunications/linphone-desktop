@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.1.0 - undefined
+
+### Added
+- VFS Encryption
+- File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
+- Accept/decline CLI commands.
+
+## 5.0.9 - 2023-01-30
+
+### Fixed
+- Display hidden scrollbars.
+- Display hidden error icon on messages.
+
 ## 5.0.8 - 2023-01-20
 
 ### Fixed

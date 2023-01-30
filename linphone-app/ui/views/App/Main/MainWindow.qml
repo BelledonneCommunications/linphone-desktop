@@ -43,7 +43,7 @@ ApplicationWindow {
 	minimumHeight: MainWindowStyle.minimumHeight
 	minimumWidth: MainWindowStyle.minimumWidth
 	
-	title: Utils.capitalizeFirstLetter(Qt.application.name)
+	title: Utils.capitalizeFirstLetter(applicationName)
 	
 	// ---------------------------------------------------------------------------
 	

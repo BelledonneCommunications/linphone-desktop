@@ -279,7 +279,11 @@ ColumnLayout  {
 		Flickable {
 			id: flick
 			
-			ScrollBar.vertical: ForceScrollBar {}
+			ScrollBar.vertical: ForceScrollBar {
+				contentSizeTarget: flick.contentHeight
+				sizeTarget: flick.height
+				Component.onCompleted: updatePolicy()
+			}
 			
 			anchors.fill: parent
 			boundsBehavior: Flickable.StopAtBounds

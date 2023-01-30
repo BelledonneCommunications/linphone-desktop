@@ -224,8 +224,7 @@ void SingleApplicationPrivate::connectToPrimary (int msecs, char connectionType)
 
 #ifdef Q_OS_UNIX
   void SingleApplicationPrivate::terminate (int signum) {
-    Q_UNUSED(signum);
-    SingleApplication::instance()->quit();
+    SingleApplication::instance()->exit(signum);
   }
 #endif // ifdef Q_OS_UNIX
 
