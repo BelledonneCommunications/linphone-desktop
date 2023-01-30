@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Display hidden scrollbars.
 - Display hidden error icon on messages.
+- Update SDK to 5.2.17
 
 ## 5.0.8 - 2023-01-20
 
