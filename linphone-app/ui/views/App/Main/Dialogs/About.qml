@@ -110,7 +110,7 @@ DialogPlus {
 				color: AboutStyle.copyrightBlock.url.colorModel.color
 				linkColor: AboutStyle.copyrightBlock.url.colorModel.color
 				//: 'Help us translate %1' : %1 is the application name
-				text: '<a href="'+ConstantsCpp.TranslationUrl+'" style="text-decoration:none;color:'+AboutStyle.copyrightBlock.url.color+'">'+qsTr('aboutTranslation').arg(applicationName)+'</a>'
+				text: '<a href="'+ConstantsCpp.TranslationUrl+'" style="text-decoration:none;color:'+AboutStyle.copyrightBlock.url.colorModel.color+'">'+qsTr('aboutTranslation').arg(applicationName)+'</a>'
 				textFormat: Text.RichText
 				
 				width: parent.width

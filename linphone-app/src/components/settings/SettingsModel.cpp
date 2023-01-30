@@ -91,8 +91,10 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 			emit vfsEncryptedChanged();
 			if(mVfsUtils.needToDeleteUserData())
 				Utils::deleteAllUserData();
-			else
+			else{
+				qInfo() << "Exiting App from VFS settings";
 				App::getInstance()->quit();
+			}
 		}
 	});
 	

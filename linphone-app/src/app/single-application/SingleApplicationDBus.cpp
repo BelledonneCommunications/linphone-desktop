@@ -56,8 +56,7 @@ void SingleApplicationPrivate::startSecondary () {
 }
 
 void SingleApplicationPrivate::terminate (int signum) {
-  Q_UNUSED(signum)
-  SingleApplication::instance()->quit();
+  SingleApplication::instance()->exit(signum);
 }
 
 SingleApplication::SingleApplication (int &argc, char *argv[], bool allowSecondary, Options options, int)

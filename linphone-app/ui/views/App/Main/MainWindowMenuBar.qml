@@ -38,7 +38,10 @@ Item {
 		context: Qt.ApplicationShortcut
 		sequence: StandardKey.Quit
 		
-		onActivated: Qt.quit()
+		onActivated: {
+			console.info("Exiting App from Menu");
+			Qt.quit()
+		}
 	}
 	
 	Shortcut {

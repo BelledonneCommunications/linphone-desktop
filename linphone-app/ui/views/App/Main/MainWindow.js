@@ -38,6 +38,7 @@ function handleActiveFocusItemChanged (activeFocusItem) {
 
 function handleClosing (close) {
   if (Linphone.SettingsModel.exitOnClose) {
+    console.info("Exiting App from MainWindow");
     Qt.quit()
     return
   }
