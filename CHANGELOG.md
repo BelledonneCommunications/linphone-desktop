@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display hidden scrollbars.
 - Display hidden error icon on messages.
 - Display recordings page on Mac.
-- Update SDK to 5.2.17
+- Update SDK to 5.2.19 (fix crash)
 
 ## 5.0.8 - 2023-01-20
 
