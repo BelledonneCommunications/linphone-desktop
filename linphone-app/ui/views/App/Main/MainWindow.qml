@@ -420,7 +420,8 @@ ApplicationWindow {
 		active:Qt.platform.os === 'osx'
 		sourceComponent:MainWindowTopMenuBar{
 			onDisplayRecordings: {
-				timeline.model.unselectAll()
+				if(mainLoader.item)
+					mainLoader.item.timeline.model.unselectAll()
 				setView('Recordings')
 			}
 		}

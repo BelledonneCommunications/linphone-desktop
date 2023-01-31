@@ -11,8 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 - Accept/decline CLI commands.
 
+## 5.0.9 - 2023-01-31
+
 ### Fixed
 - Display hidden scrollbars.
+- Display hidden error icon on messages.
+- Display recordings page on Mac.
+- Update SDK to 5.2.19
 
 ## 5.0.8 - 2023-01-20
 
