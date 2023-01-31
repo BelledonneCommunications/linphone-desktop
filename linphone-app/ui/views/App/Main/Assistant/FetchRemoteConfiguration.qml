@@ -44,6 +44,9 @@ Item{
 			target: assistantModel
 			onNewQRCodeReceived: {assistantModel.qrcode = 'image://qrcode/'+code; requestBlock.stop('')}
 			onNewQRCodeNotReceived: requestBlock.stop(message)
+			onOauth2StatusChanged: requestBlock.setText(status)
+			onOauth2RequestFailed: requestBlock.stop(error)
+			onOauth2AuthenticationGranted: requestBlock.stop('')
 			onProvisioningTokenReceived: {url.text = token
 											SettingsModel.remoteProvisioning = url.text
 											assistantModel.qrcode = ''
@@ -116,8 +119,27 @@ Item{
 				id: requestBlock
 				action: (function () {
 				})
-				Layout.preferredWidth: parent.width
-				
+				Layout.fillWidth: true
+			}
+			Text{
+				Layout.topMargin: 15
+				Layout.alignment: Qt.AlignCenter
+				visible: oAuth2Button.visible
+				font.pointSize: FetchRemoteConfigurationStyle.fieldTitles.pointSize
+				font.weight: Font.Bold
+				font.capitalization: Font.Capitalize
+				color: FetchRemoteConfigurationStyle.fieldTitles.colorModel.color
+				//: 'or' : conjunction to choose between options.
+				text: qsTr('or')
+			}
+			TextButtonB {
+				id: oAuth2Button
+				Layout.margins: 15
+				Layout.alignment: Qt.AlignCenter
+				text: 'OAuth2'
+				visible: assistantModel.isOAuth2Available()
+				onClicked: {requestBlock.execute(); assistantModel.requestOauth2()}
+				capitalization: Font.AllUppercase
 			}
 			Text{
 				Layout.topMargin: 15
@@ -192,6 +214,7 @@ Item{
 					capitalization: Font.AllUppercase
 				}
 			}
+			
 //------------------------------------------------------------------
 // Developer Section
 //------------------------------------------------------------------

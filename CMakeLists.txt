@@ -94,6 +94,7 @@ endif()
 #-------------------------------------------------------------------------------
 
 option(ENABLE_APP_LICENSE "Enable the license in packages." YES)
+option(ENABLE_APP_OAUTH2 "Build with OAuth2 support for remote provisioning." OFF) #Experimental.
 option(ENABLE_APP_PACKAGING "Enable packaging" NO)
 option(ENABLE_APP_PACKAGE_ROOTCA "Embed the rootca file into the package" YES)
 option(ENABLE_APP_WEBVIEW "Enable webviews." NO) #Webview is not fully supported because of deployments. Used for subscription.
@@ -141,6 +142,7 @@ option(LIBSECRET_SUPPORT "Build with libsecret support" OFF) #Need libsecret-dev
 
 set(APP_OPTIONS "-DENABLE_UPDATE_CHECK=${ENABLE_UPDATE_CHECK}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_LICENSE=${ENABLE_APP_LICENSE}")
+list(APPEND APP_OPTIONS "-DENABLE_APP_OAUTH2=${ENABLE_APP_OAUTH2}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_PACKAGING=${ENABLE_APP_PACKAGING}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_PACKAGE_ROOTCA=${ENABLE_APP_PACKAGE_ROOTCA}")
 list(APPEND APP_OPTIONS "-DENABLE_APP_WEBVIEW=${ENABLE_APP_WEBVIEW}")
@@ -156,6 +158,7 @@ else()
 endif()
 list(APPEND APP_OPTIONS "-DENABLE_LDAP=${ENABLE_LDAP}")
 list(APPEND APP_OPTIONS "-DENABLE_NON_FREE_CODECS=${ENABLE_NON_FREE_CODECS}")
+list(APPEND APP_OPTIONS "-DENABLE_OPENH264=${ENABLE_OPENH264}")
 list(APPEND APP_OPTIONS "-DENABLE_OPENH264=${ENABLE_OPENH264}")
 list(APPEND APP_OPTIONS "-DENABLE_QT_KEYCHAIN=${ENABLE_QT_KEYCHAIN}")
 list(APPEND APP_OPTIONS "-DENABLE_OPENSSL_EXPORT=${ENABLE_OPENSSL_EXPORT}")

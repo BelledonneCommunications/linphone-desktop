@@ -32,6 +32,7 @@
 #include "app/logger/Logger.hpp"
 #include "app/paths/Paths.hpp"
 
+#include "components/assistant/AssistantModel.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/tunnel/TunnelModel.hpp"
 #include "include/LinphoneApp/PluginNetworkHelper.hpp"
@@ -1754,6 +1755,58 @@ void SettingsModel::setLogsEmail (const QString &email) {
 
 bool SettingsModel::isLdapAvailable(){
 	return CoreManager::getInstance()->getCore()->ldapAvailable();
+}
+
+bool SettingsModel::isOAuth2Available(){
+	return AssistantModel::isOAuth2Available();
+}
+
+QString SettingsModel::getOAuth2AuthorizationUrl()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_authorization_url", Constants::OAuth2AuthorizationUrl)
+					    );
+}
+
+QString SettingsModel::getOAuth2AccessTokenUrl()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_access_token_url", Constants::OAuth2AccessTokenUrl)
+					    );
+}
+
+QString SettingsModel::getOAuth2RedirectUri()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_redirect_uri", Constants::OAuth2RedirectUri)
+					    );
+}
+
+QString SettingsModel::getOAuth2Identifier()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_identifier", Constants::OAuth2Identifier)
+					    );
+}
+
+QString SettingsModel::getOAuth2Password()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_password", Constants::OAuth2Password)
+					    );
+}
+
+QString SettingsModel::getOAuth2Scope()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_scope", Constants::OAuth2Scope)
+					    );
+}
+
+QString SettingsModel::getOAuth2RemoteProvisioningBasicAuth()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_remote_provisioning_basic_auth", Constants::RemoteProvisioningBasicAuth)
+					    );
+}
+
+QString SettingsModel::getOAuth2RemoteProvisioningHeader()const{
+	return Utils::coreStringToAppString(
+					    mConfig->getString(UiSection, "oauth2_remote_provisioning_header", Constants::DefaultOAuth2RemoteProvisioningHeader)
+					    );
 }
 
 // ---------------------------------------------------------------------------

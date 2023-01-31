@@ -25,6 +25,9 @@
 #include <QObject>
 
 // =============================================================================
+#ifdef ENABLE_OAUTH2
+class OAuth2Model;
+#endif
 
 class AssistantModel : public QObject {
 	class Handlers;
@@ -57,8 +60,11 @@ public:
 	Q_INVOKABLE void generateQRCode();
 	Q_INVOKABLE void requestQRCode();
 	Q_INVOKABLE void readQRCode();
+	Q_INVOKABLE void requestOauth2();
 	
 	Q_INVOKABLE void attachAccount(const QString& token);
+	
+	Q_INVOKABLE static bool isOAuth2Available();
 	
 	void checkLinkingAccount();
 	
@@ -80,6 +86,10 @@ signals:
 	void createStatusChanged (const QString &error);
 	void loginStatusChanged (const QString &error);
 	void recoverStatusChanged (const QString &error);
+	void oauth2RequestFailed(const QString& error);
+	
+	void oauth2StatusChanged(const QString& status);
+	void oauth2AuthenticationGranted();
 	
 	void configFilenameChanged (const QString &configFilename);
 	
@@ -132,6 +142,9 @@ private:
 	
 	std::shared_ptr<linphone::AccountCreator> mAccountCreator;
 	std::shared_ptr<Handlers> mHandlers;
+#ifdef ENABLE_OAUTH2
+	OAuth2Model * oAuth2Model = nullptr;
+#endif
 };
 
 #endif // ASSISTANT_MODEL_H_

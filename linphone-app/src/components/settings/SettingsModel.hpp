@@ -630,6 +630,17 @@ public:
 	
 	Q_INVOKABLE bool isLdapAvailable();
 	
+// OAuth 2
+	Q_INVOKABLE bool isOAuth2Available();
+	QString getOAuth2AuthorizationUrl()const;
+	QString getOAuth2AccessTokenUrl()const;
+	QString getOAuth2RedirectUri()const;
+	QString getOAuth2Identifier()const;
+	QString getOAuth2Password()const;
+	QString getOAuth2Scope()const;
+	QString getOAuth2RemoteProvisioningBasicAuth()const;
+	QString getOAuth2RemoteProvisioningHeader()const;
+	
 	// ---------------------------------------------------------------------------
 	
 	static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);

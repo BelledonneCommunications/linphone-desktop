@@ -28,6 +28,10 @@
 
 #include "AssistantModel.hpp"
 
+#ifdef ENABLE_OAUTH2
+#include "components/authentication/OAuth2Model.hpp"
+#endif
+
 #ifdef ENABLE_QRCODE
 #include <linphone/FlexiAPIClient.hh>
 #endif
@@ -166,6 +170,11 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 
 AssistantModel::~AssistantModel(){
 	setIsReadingQRCode(false);
+#ifdef ENABLE_OAUTH2
+	if(oAuth2Model)
+		oAuth2Model->deleteLater();
+	oAuth2Model = nullptr;
+#endif
 }
 
 // -----------------------------------------------------------------------------
@@ -362,6 +371,28 @@ void AssistantModel::attachAccount(const QString& token){
 		->error([this](FlexiAPIClient::Response response){
 			emit qRCodeNotAttached("Cannot attach"+ (response.body.empty() ? "" : " : " +Utils::coreStringToAppString(response.body)), response.code);
 		});
+#endif
+}
+
+bool AssistantModel::isOAuth2Available(){
+#ifdef ENABLE_OAUTH2
+	return OAuth2Model::isAvailable();
+#else
+	return false;
+#endif
+}
+
+void AssistantModel::requestOauth2(){
+#ifdef ENABLE_OAUTH2
+	if(isOAuth2Available()){
+		if(oAuth2Model)
+			oAuth2Model->deleteLater();
+		oAuth2Model = new OAuth2Model();
+		connect(oAuth2Model, &OAuth2Model::requestFailed, this, &AssistantModel::oauth2RequestFailed);
+		connect(oAuth2Model, &OAuth2Model::statusChanged, this, &AssistantModel::oauth2StatusChanged);
+		connect(oAuth2Model, &OAuth2Model::authenticated, this, &AssistantModel::oauth2AuthenticationGranted);
+		oAuth2Model->grant();
+	}
 #endif
 }
 

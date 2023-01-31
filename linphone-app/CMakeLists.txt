@@ -134,6 +134,10 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 
 set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network Test Qml)
 
+if(ENABLE_APP_OAUTH2)
+	list(APPEND QT5_PACKAGES NetworkAuth)
+	add_definitions(-DENABLE_OAUTH2)
+endif()
 if(ENABLE_APP_WEBVIEW)
 	list(APPEND QT5_PACKAGES WebView WebEngine WebEngineCore)
 	add_definitions(-DENABLE_WEBVIEW)
@@ -429,10 +433,12 @@ set(HEADERS
 	src/utils/Utils.hpp
 	src/utils/plugins/PluginsManager.hpp
 	)
+
 set(PLUGIN_HEADERS 
 	include/LinphoneApp/PluginDataAPI.hpp
 	include/LinphoneApp/PluginNetworkHelper.hpp
 	include/LinphoneApp/LinphonePlugin.hpp)
+
 list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 set(MAIN_FILE src/app/main.cpp)
 
@@ -482,6 +488,12 @@ if(ENABLE_QT_KEYCHAIN)
 	list(APPEND HEADERS src/components/vfs/VfsUtils.hpp)
 	list(APPEND SOURCES src/components/vfs/VfsUtils.cpp)
 endif()
+
+if(ENABLE_APP_OAUTH2)
+	list(APPEND HEADERS src/components/authentication/OAuth2Model.hpp)
+	list(APPEND SOURCES src/components/authentication/OAuth2Model.cpp)
+endif()
+
 
 set(QRC_RESOURCES resources.qrc)
 if(ENABLE_APP_WEBVIEW)

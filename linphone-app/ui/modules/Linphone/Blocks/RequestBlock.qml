@@ -1,6 +1,7 @@
 import QtQuick 2.7
 
 import Common 1.0
+import Common.Styles 1.0
 import Linphone.Styles 1.0
 
 // =============================================================================
@@ -50,7 +51,7 @@ Column {
 		padding: RequestBlockStyle.error.padding
 		wrapMode: Text.WordWrap
 		
-		visible: !block.loading && errorBlock.text != ''
+		visible: errorBlock.text != ''
 	}
 	
 	BusyIndicator {
@@ -58,7 +59,7 @@ Column {
 		anchors {
 			horizontalCenter: parent.horizontalCenter
 		}
-		
+		color: BusyIndicatorStyle.alternateColor.color
 		height: visible ? RequestBlockStyle.loadingIndicator.height : 0
 		width: RequestBlockStyle.loadingIndicator.width
 		

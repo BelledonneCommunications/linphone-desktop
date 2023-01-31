@@ -76,6 +76,17 @@ constexpr char Constants::DefaultAssistantRegistrationUrl[];
 constexpr char Constants::DefaultAssistantLoginUrl[];
 constexpr char Constants::DefaultAssistantLogoutUrl[];
 
+constexpr char Constants::RemoteProvisioningBasicAuth[];
+constexpr char Constants::OAuth2AuthorizationUrl[];
+constexpr char Constants::OAuth2AccessTokenUrl[];
+constexpr char Constants::OAuth2RedirectUri[];
+constexpr char Constants::OAuth2Identifier[];
+constexpr char Constants::OAuth2Password[];
+constexpr char Constants::OAuth2Scope[];
+constexpr char Constants::DefaultOAuth2RemoteProvisioningHeader[];
+
+
+
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 constexpr char Constants::H264Description[];
 #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)

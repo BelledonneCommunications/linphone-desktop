@@ -67,8 +67,18 @@ public:
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 	
-	static constexpr char DefaultFlexiAPIURL[] = "http://fs-test-sandbox.linphone.org/flexiapi/api/";// Need "/" at the end
-	static constexpr char RemoteProvisioningURL[] = "http://fs-test-sandbox.linphone.org/flexiapi/provisioning";
+	static constexpr char DefaultFlexiAPIURL[] = "https://subscribe.linphone.org/api/";// Need "/" at the end
+	static constexpr char RemoteProvisioningURL[] = "https://subscribe.linphone.org/api/provisioning";
+	static constexpr char RemoteProvisioningBasicAuth[] = "";
+// OAuth2 settings
+	static constexpr char OAuth2AuthorizationUrl[] = "";
+	static constexpr char OAuth2AccessTokenUrl[] = "";
+	static constexpr char OAuth2RedirectUri[] = "";
+	static constexpr char OAuth2Identifier[] = "";
+	static constexpr char OAuth2Password[] = "";
+	static constexpr char OAuth2Scope[] = "";
+	static constexpr char DefaultOAuth2RemoteProvisioningHeader[] = "x-linphone-oauth2-token";
+	
 	
 	Q_PROPERTY(QString PasswordRecoveryUrl MEMBER PasswordRecoveryUrl CONSTANT)
 	Q_PROPERTY(QString CguUrl MEMBER CguUrl CONSTANT)
