@@ -1483,6 +1483,11 @@ Server URL not configured.</translation>
         <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
         <translation>You are alone in this meeting</translation>
     </message>
+    <message>
+        <source>incallWaitConnectedMessage</source>
+        <extracomment>&apos;The call is not ready. Please Wait...&apos; : Waiting message for starting a call.</extracomment>
+        <translation>The call is not ready. Please Wait…</translation>
+    </message>
 </context>
 <context>
     <name>IncallFullscreen</name>

@@ -282,7 +282,6 @@ Window {
 													window.close()
 												lastComponent = sourceComponent
 											}
-						
 										}// Force update when loading a new Content. It's just to be sure
 				active: window.call || window.conferenceInfoModel
 			}
