@@ -134,6 +134,7 @@ CallModel::~CallModel () {
 }
 
 void CallModel::removeCall(){
+	emit statusChanged(getStatus());
 	if(mCall){
 		mCall->removeListener(mCallListener);
 		mConferenceModel = nullptr;// Ordering deletion.

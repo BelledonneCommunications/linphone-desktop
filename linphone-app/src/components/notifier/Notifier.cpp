@@ -324,7 +324,7 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
 	map["call"].setValue(callModel);
 	CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
 			
-			QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
+	QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
 		if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
 			deleteNotification(QVariant::fromValue(notification));
 	});
