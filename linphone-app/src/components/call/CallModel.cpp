@@ -134,7 +134,6 @@ CallModel::~CallModel () {
 }
 
 void CallModel::removeCall(){
-	emit statusChanged(getStatus());
 	if(mCall){
 		mCall->removeListener(mCallListener);
 		mConferenceModel = nullptr;// Ordering deletion.
@@ -623,27 +622,32 @@ void CallModel::stopAutoAnswerTimer () const {
 // -----------------------------------------------------------------------------
 
 CallModel::CallStatus CallModel::getStatus () const {
+	CallModel::CallStatus status;
 	if(mCall){
 		switch (mCall->getState()) {
 			case linphone::Call::State::Connected:
 			case linphone::Call::State::StreamsRunning:
-				return CallStatusConnected;
+				status = CallStatusConnected;
+				break;
 				
 			case linphone::Call::State::End:
 			case linphone::Call::State::Error:
 			case linphone::Call::State::Referred:
 			case linphone::Call::State::Released:
-				return CallStatusEnded;
+				status = CallStatusEnded;
+				break;
 				
 			case linphone::Call::State::Paused:
 			case linphone::Call::State::PausedByRemote:
 			case linphone::Call::State::Pausing:
 			case linphone::Call::State::Resuming:
-				return CallStatusPaused;
+				status = CallStatusPaused;
+				break;
 				
 			case linphone::Call::State::Updating:
 			case linphone::Call::State::UpdatedByRemote:
-				return mPausedByRemote ? CallStatusPaused : CallStatusConnected;
+				status = mPausedByRemote ? CallStatusPaused : CallStatusConnected;
+				break;
 				
 			case linphone::Call::State::EarlyUpdatedByRemote:
 			case linphone::Call::State::EarlyUpdating:
@@ -654,12 +658,13 @@ CallModel::CallStatus CallModel::getStatus () const {
 			case linphone::Call::State::OutgoingInit:
 			case linphone::Call::State::OutgoingProgress:
 			case linphone::Call::State::OutgoingRinging:
-				break;
+			default:{
+				status = mCall->getDir() == linphone::Call::Dir::Incoming ? CallStatusIncoming : CallStatusOutgoing;	
+			}
 		}
-		
-		return mCall->getDir() == linphone::Call::Dir::Incoming ? CallStatusIncoming : CallStatusOutgoing;
 	}else
-		return CallStatusIdle;
+		status = CallStatusIdle;
+	return status;
 }
 
 // -----------------------------------------------------------------------------

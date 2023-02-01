@@ -328,6 +328,9 @@ void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
 		if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
 			deleteNotification(QVariant::fromValue(notification));
 	});
+	QObject::connect(callModel, &CallModel::destroyed, notification, [this, notification]() {
+			deleteNotification(QVariant::fromValue(notification));
+	});
 	
 }
 

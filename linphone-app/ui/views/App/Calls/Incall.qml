@@ -42,7 +42,7 @@ Rectangle {
 	
 // States
 	property bool isAudioOnly:  callModel && callModel.conferenceVideoLayout == LinphoneEnums.ConferenceLayoutAudioOnly
-	property bool isReady : mainItem.callModel 
+	property bool isReady : mainItem.callModel && mainItem.callModel.status != CallModel.CallStatusIdle
 								&& (!mainItem.callModel.isConference 
 																|| (mainItem.conferenceModel && mainItem.conferenceModel.isReady)
 														)
@@ -399,8 +399,11 @@ Rectangle {
 							text: false //mainItem.needMoreParticipants
 							//: 'Waiting for another participant...' :  Waiting message for more participant.
 									? qsTr('incallWaitParticipantMessage')
+									: mainItem.callModel && mainItem.callModel.isConference
 							//: 'The meeting is not ready. Please Wait...' :  Waiting message for starting a meeting.
-									: qsTr('incallWaitMessage')
+										? qsTr('incallWaitMessage')
+										//: 'The call is not ready. Please Wait...' :  Waiting message for starting a call.
+										: qsTr('incallWaitConnectedMessage')
 							color: IncallStyle.buzyColor.color
 						}
 					}
@@ -552,7 +555,7 @@ Rectangle {
 							}
 				Connections{// Enable camera only when status is ok
 					target: callModel
-					onStatusChanged: if( camera._activateCamera && (status == LinphoneEnums.CallStatusConnected || status == LinphoneEnums.CallStatusIdle)){
+					onStatusChanged: if( camera._activateCamera && (status == CallModel.CallStatusConnected || status == CallModel.CallStatusIdle)){
 						camera._activateCamera = false
 						callModel.cameraEnabled = true
 					}

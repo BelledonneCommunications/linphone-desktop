@@ -524,6 +524,7 @@ static void joinConference (const shared_ptr<linphone::Call> &call) {
 	addModel->update();
 }
 
+// Global handler on core (is call before call model receive it). Used for model creation.
 void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
 	switch (state) {
 		case linphone::Call::State::IncomingReceived:
@@ -534,27 +535,36 @@ void CallsListModel::handleCallStateChanged (const shared_ptr<linphone::Call> &c
 		case linphone::Call::State::OutgoingInit:
 			addCall(call);
 			break;
-			
-		case linphone::Call::State::End:
-		case linphone::Call::State::Error:{
-			if(call->dataExists("call-model")) {
-				CallModel * model = &call->getData<CallModel>("call-model");
-				model->endCall();
-				if(model->getCallError() == "")
-					removeCall(call);
-			}
-		} break;
-		case linphone::Call::State::Released:
-			removeCall(call);
-		break;
-		
-		case linphone::Call::State::StreamsRunning: {
-			int index = findCallIndex(mList, call);
-			emit callRunning(index, &call->getData<CallModel>("call-model"));
-		} break;
-			
 		default:
 			break;
+	}
+}
+
+// Call handler
+void CallsListModel::handleCallStatusChanged () {
+	auto callModel = qobject_cast<CallModel*>(sender());
+	auto call = callModel->getCall();
+	if( call){
+		auto state = call->getState();
+		switch (state) {
+			case linphone::Call::State::End:
+			case linphone::Call::State::Error:{
+				callModel->endCall();
+				if(callModel->getCallError() == "")
+					removeCall(call);
+			} break;
+			case linphone::Call::State::Released:
+				removeCall(call);
+			break;
+			
+			case linphone::Call::State::StreamsRunning: {
+				int index = findCallIndex(mList, call);
+				emit callRunning(index, callModel);
+			} break;
+				
+			default:
+				break;
+		}
 	}
 }
 
@@ -568,6 +578,7 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 		App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
 		
 		connect(callModel.get(), &CallModel::meAdminChanged, this, &CallsListModel::canMergeCallsChanged);
+		connect(callModel.get(), &CallModel::statusChanged, this, &CallsListModel::handleCallStatusChanged);
 		
 		add(callModel);
 		emit layoutChanged();
@@ -602,6 +613,7 @@ void CallsListModel::addDummyCall () {
 		emit dataChanged(index(id, 0), index(id, 0));
 	});
 	connect(callModel.get(), &CallModel::meAdminChanged, this, &CallsListModel::canMergeCallsChanged);
+	connect(callModel.get(), &CallModel::statusChanged, this, &CallsListModel::handleCallStatusChanged);
 	
 	add(callModel);
 	emit layoutChanged();
@@ -618,7 +630,6 @@ void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {
 				removeCallCb(callModel);
 		});
 	}else{
-		callModel->removeCall();
 		remove(callModel);
 	}
 }

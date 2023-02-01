@@ -1489,6 +1489,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>incallWaitConnectedMessage</source>
+        <extracomment>&apos;The call is not ready. Please Wait...&apos; : Waiting message for starting a call.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>IncallFullscreen</name>

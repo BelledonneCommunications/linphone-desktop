@@ -53,7 +53,7 @@ Rectangle{
 	property bool _activateCamera: false
 	Connections{// Enable camera only when status is ok
 		target: mainItem.callModel
-		onStatusChanged: if( mainItem._activateCamera && (status == LinphoneEnums.CallStatusConnected || status == LinphoneEnums.CallStatusIdle)){
+		onStatusChanged: if( mainItem._activateCamera && (status == CallModel.CallStatusConnected || status == CallModel.CallStatusIdle)){
 			camera._activateCamera = false
 			callModel.cameraEnabled = true
 		}
