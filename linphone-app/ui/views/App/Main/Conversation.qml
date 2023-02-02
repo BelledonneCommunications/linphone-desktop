@@ -400,7 +400,7 @@ ColumnLayout  {
 						iconMenu: editMode ? MenuItemStyle.contact.view : MenuItemStyle.contact.add
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
-						visible: conversation.chatRoomModel && SettingsModel.contactsEnabled && !conversation.chatRoomModel.groupEnabled
+						visible: conversation.chatRoomModel && SettingsModel.contactsEnabled && conversation.chatRoomModel.isOneToOne
 						onTriggered: {
 							window.setView('ContactEdit', {
 													  sipAddress: conversation.getFullPeerAddress()

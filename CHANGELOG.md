@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove blank notification when declining incoming call.
 - Remove blank page when opening calls window and add a waiting step while connecting to call.
 - Camera activation issue based on call status.
+- Crash when editing contacts from chat.
+- Contacts synchronization on creation.
+- Contact menu in secure chats.
 
 ## 5.0.9 - 2023-01-30
 
