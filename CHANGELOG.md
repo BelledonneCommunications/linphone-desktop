@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash when editing contacts from chat.
 - Contacts synchronization on creation.
 - Contact menu in secure chats.
+- Remove FFMPEG from dependencies as it is no mmore needed.
 
 ## 5.0.9 - 2023-01-30
 
