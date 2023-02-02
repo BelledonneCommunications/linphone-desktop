@@ -45,8 +45,10 @@ ContactModel::ContactModel (VcardModel *vcardModel, QObject * parent) : QObject(
 
   mLinphoneFriend = linphone::Friend::newFromVcard(vcardModel->mVcard);
   mLinphoneFriend->setData("contact-model", *this);
-
-  qInfo() << QStringLiteral("Create contact from vcard:") << this << vcardModel;
+  if(mLinphoneFriend)
+	qInfo() << QStringLiteral("Create contact from vcard:") << this << vcardModel;
+  else
+    qCritical() << QStringLiteral("Friend couldn't be created for vcard:") << this << vcardModel;
   setVcardModelInternal(vcardModel);
 }
 
