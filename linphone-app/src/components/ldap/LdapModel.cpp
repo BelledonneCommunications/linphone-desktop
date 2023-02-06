@@ -114,8 +114,6 @@ void LdapModel::set(){
 	mLdapParams->setSipDomain(mSipDomain.toStdString());
 	mLdapParams->setDebugLevel( (linphone::LdapDebugLevel) mDebug);
 	mLdapParams->setServerCertificatesVerificationMode((linphone::LdapCertVerificationMode)mVerifyServerCertificates);
-	static int gCount = 0;
-	mLdapParams->setAuthMethod((++gCount % 2) == 0 ? linphone::LdapAuthMethod::Anonymous : linphone::LdapAuthMethod::Simple);
 }
 
 void LdapModel::unset(){

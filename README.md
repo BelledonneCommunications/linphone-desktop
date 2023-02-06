@@ -236,7 +236,7 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | ENABLE_VIDEO | Enable Video support. | YES |
 | ENABLE_OPENH264 | Enable the use of OpenH264 codec | YES |
 | ENABLE_NON_FREE_CODECS | Enable the use of non free codecs | YES |
-| ENABLE_FFMPEG | Build mediastreamer2 with ffmpeg video support. | ON |
+| ENABLE_FFMPEG | Build mediastreamer2 with ffmpeg video support. | NO |
 | ENABLE_CONSOLE_UI | Turn on or off compilation of console interface. | NO |
 -->
 
