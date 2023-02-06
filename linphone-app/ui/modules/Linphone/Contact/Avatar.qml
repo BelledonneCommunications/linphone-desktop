@@ -33,14 +33,15 @@ Item {
 	}
 	
 	function _computeInitials () {
+	// Do not use charAt from string because it doesn't support all UTF8 characters.
 		var result = username.match(_initialsRegex)
 		if (!result) {
-			return username.length > 0 ? username.charAt(0).toUpperCase() : ''
+			var usernameArray = Array.from(username)
+			return usernameArray.length > 0 ? usernameArray[0].toUpperCase() : ''
 		}
-		
-		return result[1].charAt(0).toUpperCase() + (
-					result[2] != null
-					? result[2].charAt(0).toUpperCase()
+		return Array.from(result[1])[0].toUpperCase() + (
+					result.length > 1 && result[2].length > 0
+					? Array.from(result[2])[0].toUpperCase()
 					: ''
 					)
 	}
