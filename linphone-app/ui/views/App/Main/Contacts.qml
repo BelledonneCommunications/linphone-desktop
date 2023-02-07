@@ -290,7 +290,9 @@ ColumnLayout {
 									pointSize: ContactsStyle.contact.username.pointSize
 								}
 								font.family: SettingsModel.textMessageFont.family
-								text: $modelData.vcard.username
+								
+								text: UtilsCpp.encodeTextToQmlRichFormat($modelData.vcard.username)
+								textFormat: Text.RichText
 								verticalAlignment: Text.AlignVCenter
 							}
 							

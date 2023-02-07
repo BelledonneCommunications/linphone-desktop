@@ -198,6 +198,8 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(QFont textMessageFont READ getTextMessageFont WRITE setTextMessageFont NOTIFY textMessageFontChanged)
 	Q_PROPERTY(int textMessageFontSize READ getTextMessageFontSize WRITE setTextMessageFontSize NOTIFY textMessageFontSizeChanged)
+	Q_PROPERTY(QFont emojiFont READ getEmojiFont WRITE setEmojiFont NOTIFY emojiFontChanged)
+	Q_PROPERTY(int emojiFontSize READ getEmojiFontSize WRITE setEmojiFontSize NOTIFY emojiFontSizeChanged)
 	
 	Q_PROPERTY(QString remoteProvisioning READ getRemoteProvisioning WRITE setRemoteProvisioning NOTIFY remoteProvisioningChanged)
 	Q_PROPERTY(QString flexiAPIUrl READ getFlexiAPIUrl WRITE setFlexiAPIUrl NOTIFY flexiAPIUrlChanged)
@@ -556,6 +558,12 @@ public:
 	int getTextMessageFontSize() const;
 	void setTextMessageFontSize(const int& size);
 	
+	QFont getEmojiFont() const;
+	void setEmojiFont(const QFont& font);
+	
+	int getEmojiFontSize() const;
+	void setEmojiFontSize(const int& size);
+	
 	QString getSavedScreenshotsFolder () const;
 	void setSavedScreenshotsFolder (const QString &folder);
 	
@@ -784,6 +792,9 @@ signals:
 	
 	void textMessageFontChanged(const QFont& font);
 	void textMessageFontSizeChanged(const int& size);
+	
+	void emojiFontChanged(const QFont& font);
+	void emojiFontSizeChanged(const int& size);
 	
 	void savedScreenshotsFolderChanged (const QString &folder);
 	void savedCallsFolderChanged (const QString &folder);

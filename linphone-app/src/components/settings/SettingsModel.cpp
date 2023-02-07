@@ -1468,6 +1468,26 @@ void SettingsModel::setTextMessageFontSize(const int& size){
 	mConfig->setInt(UiSection, "text_message_font_size", size);
 	emit textMessageFontSizeChanged(size);
 }
+
+QFont SettingsModel::getEmojiFont() const{
+	QString family = Utils::coreStringToAppString(mConfig->getString(UiSection, "emoji_font", Utils::appStringToCoreString(QFont(Constants::DefaultEmojiFont).family())));
+	int pointSize = getTextMessageFontSize();
+	return QFont(family,pointSize);
+}
+
+void SettingsModel::setEmojiFont(const QFont& font){
+	mConfig->setString(UiSection, "emoji_font", Utils::appStringToCoreString(font.family()));
+	emit emojiFontChanged(font);
+}
+
+int SettingsModel::getEmojiFontSize() const{
+	return mConfig->getInt(UiSection, "emoji_font_size", 10);
+}
+
+void SettingsModel::setEmojiFontSize(const int& size){
+	mConfig->setInt(UiSection, "emoji_font_size", size);
+	emit emojiFontSizeChanged(size);
+}
 	
 QString SettingsModel::getSavedScreenshotsFolder () const {
 	return QDir::cleanPath(

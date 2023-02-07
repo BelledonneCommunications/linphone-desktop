@@ -23,6 +23,7 @@ constexpr char Constants::AssistantViewName[];
 
 constexpr char Constants::ApplicationMinimalQtVersion[];
 constexpr char Constants::DefaultFont[];
+constexpr char Constants::DefaultEmojiFont[];
 
 constexpr char Constants::QtDomain[];
 constexpr size_t Constants::MaxLogsCollectionSize;

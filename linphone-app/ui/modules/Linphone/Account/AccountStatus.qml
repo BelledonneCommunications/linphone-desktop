@@ -6,6 +6,7 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
+import UtilsCpp 1.0
 // =============================================================================
 
 Item {
@@ -72,7 +73,8 @@ Item {
 				elide: Text.ElideRight
 				font.bold: true
 				font.pointSize: AccountStatusStyle.username.pointSize
-				text: AccountSettingsModel.username
+				text: UtilsCpp.encodeTextToQmlRichFormat(AccountSettingsModel.username)
+				textFormat: Text.RichText
 				verticalAlignment: Text.AlignBottom
 			}
 			Item {

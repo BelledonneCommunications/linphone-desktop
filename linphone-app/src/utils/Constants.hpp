@@ -38,6 +38,7 @@ public:
 	
 	static constexpr char DefaultLocale[] = "en";
 	static constexpr char DefaultFont[] = "Noto Sans";
+	static constexpr char DefaultEmojiFont[] = "Noto Color Emoji";
 	
 	static constexpr size_t MaxLogsCollectionSize = 10485760*5; // 50MB.
 	

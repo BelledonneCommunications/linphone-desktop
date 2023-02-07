@@ -33,7 +33,7 @@ Item {
 	}
 	
 	function _computeInitials () {
-		return UtilsCpp.getInitials(username);
+		return UtilsCpp.encodeTextToQmlRichFormat(UtilsCpp.getInitials(username));
 	}
 	
 	// ---------------------------------------------------------------------------
@@ -67,8 +67,8 @@ Item {
 			
 			return AvatarStyle.initials.pointSize * (width || 1)
 		}
-		
 		text: _computeInitials()
+		textFormat: Text.RichText
 		visible: roundedImage.status !== Image.Ready && !avatar.isPhoneNumber && avatar.isOneToOne
 	}
 	
