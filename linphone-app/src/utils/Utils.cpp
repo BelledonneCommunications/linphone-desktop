@@ -125,17 +125,18 @@ QString Utils::getInitials(const QString& username){
 	if(username.isEmpty()) return "";
 	
 	QRegularExpression regex("[\\s\\.]+");
-	QStringList words = username.split(regex, Qt::SkipEmptyParts);
+	QStringList words = username.split(regex);// Qt 5.14: Qt::SkipEmptyParts
 	QStringList initials;
 	auto str32 = words[0].toStdU32String();
 	std::u32string char32;
 	char32 += str32[0];
 	initials << QString::fromStdU32String(char32);
-	
-	if(words.size() > 1){
-		str32 = words[1].toStdU32String();
-		char32[0] = str32[0];
-		initials << QString::fromStdU32String(char32);
+	for(int i = 1; i < words.size() && initials.size() <= 1 ; ++i) {
+		if( words[i].size() > 0){
+			str32 = words[i].toStdU32String();
+			char32[0] = str32[0];
+			initials << QString::fromStdU32String(char32);
+		}
 	}
 	return initials.join("");
 }
