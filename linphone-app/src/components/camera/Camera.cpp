@@ -167,6 +167,10 @@ void Camera::removeParticipantDeviceModel(){
 }
 
 void Camera::removeCallModel(){
+	if( mCallModel){
+		disconnect(mCallModel, &CallModel::statusChanged, this, &Camera::onCallStateChanged);
+		disconnect(mCallModel, &QObject::destroyed, this, &Camera::removeCallModel);
+	}
 	mCallModel = nullptr;
 }
 

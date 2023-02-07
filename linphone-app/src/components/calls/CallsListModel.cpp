@@ -573,7 +573,7 @@ void CallsListModel::handleCallStatusChanged () {
 void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 	int index = findCallIndex(mList, call);
 	if( index < 0){
-		QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(call);
+		QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>(new CallModel(call), &QObject::deleteLater);
 		qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
 		App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
 		
@@ -603,7 +603,7 @@ void CallsListModel::addDummyCall () {
 			App::smartShowWindow(callsWindow);
 	}
 	
-	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>::create(nullptr);
+	QSharedPointer<CallModel> callModel = QSharedPointer<CallModel>(new CallModel(nullptr), &QObject::deleteLater);
 	qInfo() << QStringLiteral("Add call:") << callModel->getFullLocalAddress() << callModel->getFullPeerAddress();
 	App::getInstance()->getEngine()->setObjectOwnership(callModel.get(), QQmlEngine::CppOwnership);
 	
