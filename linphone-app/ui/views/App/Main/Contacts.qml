@@ -289,7 +289,7 @@ ColumnLayout {
 									bold: true
 									pointSize: ContactsStyle.contact.username.pointSize
 								}
-								
+								font.family: SettingsModel.textMessageFont.family
 								text: $modelData.vcard.username
 								verticalAlignment: Text.AlignVCenter
 							}

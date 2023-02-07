@@ -132,6 +132,7 @@ ColumnLayout  {
 				forceFocus: true
 				readOnly: !_edition
 				text: avatar.username
+				font.family: SettingsModel.textMessageFont.family
 				
 				onEditingFinished: Logic.setUsername(text)
 				onReadOnlyChanged: {
