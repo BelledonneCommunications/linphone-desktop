@@ -121,6 +121,25 @@ QString Utils::getDisplayName(const QString& address){
 	return getDisplayName(interpretUrl(address));
 }
 
+QString Utils::getInitials(const QString& username){
+	if(username.isEmpty()) return "";
+	
+	QRegularExpression regex("[\\s\\.]+");
+	QStringList words = username.split(regex, Qt::SkipEmptyParts);
+	QStringList initials;
+	auto str32 = words[0].toStdU32String();
+	std::u32string char32;
+	char32 += str32[0];
+	initials << QString::fromStdU32String(char32);
+	
+	if(words.size() > 1){
+		str32 = words[1].toStdU32String();
+		char32[0] = str32[0];
+		initials << QString::fromStdU32String(char32);
+	}
+	return initials.join("");
+}
+
 QString Utils::toString(const LinphoneEnums::TunnelMode& mode){
 	switch(mode){
 	case LinphoneEnums::TunnelMode::TunnelModeEnable :

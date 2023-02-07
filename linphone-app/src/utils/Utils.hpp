@@ -59,6 +59,7 @@ public:
 	Q_INVOKABLE static QString toTimeString(QDateTime date, const QString& format = "hh:mm:ss");
 	Q_INVOKABLE static QString toDateString(QDateTime date);
 	Q_INVOKABLE static QString getDisplayName(const QString& address);
+	Q_INVOKABLE static QString getInitials(const QString& username);	// Support UTF32
 	Q_INVOKABLE static QString toString(const LinphoneEnums::TunnelMode& mode);
 	Q_INVOKABLE static bool isMe(const QString& address);
 	Q_INVOKABLE static bool isAnimatedImage(const QString& path);
