@@ -582,7 +582,6 @@ void CallModel::accept (bool withVideo) {
 		} else
 			App::smartShowWindow(callsWindow);
 	}
-	qApp->processEvents();  // Process GUI events before accepting in order to be synchronized with Call objects and be ready to get SDK events
 	shared_ptr<linphone::Core> core = coreManager->getCore();
 	if(mCall) {
 		shared_ptr<linphone::CallParams> params = core->createCallParams(mCall);

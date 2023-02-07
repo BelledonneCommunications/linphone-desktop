@@ -6,6 +6,7 @@ import Common 1.0
 import Linphone 1.0
 
 import App.Styles 1.0
+import Common.Styles 1.0
 
 import 'CallsWindow.js' as Logic
 
@@ -268,22 +269,42 @@ Window {
 			
 			// -----------------------------------------------------------------------
 			
-			childA: Loader {
-				id: middlePane
+			childA: Rectangle{
 				anchors.fill: parent
-				sourceComponent: Logic.getContent(window.call, window.conferenceInfoModel)
-				property var lastComponent: null
-				onSourceComponentChanged: {
-											if(lastComponent != sourceComponent){
-												if( sourceComponent == waitingRoom)
-													mainPaned.close()
-												rightPaned.childAItem.update()
-												if(!sourceComponent && calls.count == 0)
-													window.close()
-												lastComponent = sourceComponent
-											}
-										}// Force update when loading a new Content. It's just to be sure
-				active: window.call || window.conferenceInfoModel
+				color: 'transparent'
+				ColumnLayout {
+					id: waitingPage
+					anchors.fill: parent
+					visible: middlePane.status != Loader.Ready || !middlePane.sourceComponent
+					Loader{
+						Layout.preferredHeight: 40
+						Layout.preferredWidth: 40
+						Layout.alignment: Qt.AlignCenter
+						active: waitingPage.visible
+						sourceComponent: Component{
+							BusyIndicator{
+								color: BusyIndicatorStyle.alternateColor.color
+							}
+						}
+					}
+				}
+				Loader {
+					id: middlePane
+					anchors.fill: parent
+					sourceComponent: Logic.getContent(window.call, window.conferenceInfoModel)
+					property var lastComponent: null
+					onSourceComponentChanged: {
+												if(lastComponent != sourceComponent){
+													if( sourceComponent == waitingRoom)
+														mainPaned.close()
+													rightPaned.childAItem.update()
+													if(!sourceComponent && calls.count == 0)
+														window.close()
+													lastComponent = sourceComponent
+												}
+											}// Force update when loading a new Content. It's just to be sure
+					active: window.call || window.conferenceInfoModel
+				}
 			}
 			
 			childB: Loader {

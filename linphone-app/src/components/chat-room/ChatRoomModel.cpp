@@ -966,7 +966,6 @@ void ChatRoomModel::setEntriesLoading(const bool& loading){
 	if( mEntriesLoading != loading){
 		mEntriesLoading = loading;
 		emit entriesLoadingChanged(mEntriesLoading);
-		qApp->processEvents();
 	}
 }
 
