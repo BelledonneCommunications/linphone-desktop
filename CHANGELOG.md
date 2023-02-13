@@ -12,11 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Accept/decline CLI commands.
 - Colored Emojis with its own font family.
 
-## 5.0.11 - udnefined
+## 5.0.11 - undefined
 
 ### Fixed
 - Display of non-Ascii avatar
 - Crash on ending call in conference.
+- Switch off camera at startup.
 
 ## 5.0.10 - 2023-02-02
 
