@@ -37,7 +37,8 @@ ParticipantModel::ParticipantModel (shared_ptr<linphone::Participant> linphonePa
 	mAdminStatus = false;
 	if(mParticipant){
 		mAdminStatus = mParticipant->isAdmin();
-		mParticipantDevices = QSharedPointer<ParticipantDeviceListModel>::create(mParticipant);
+		mParticipantDevices = QSharedPointer<ParticipantDeviceListModel>::create(mParticipant, nullptr);
+		App::getInstance()->getEngine()->setObjectOwnership(mParticipantDevices.get(), QQmlEngine::CppOwnership);// Managed by QSharedPointer
 		connect(this, &ParticipantModel::deviceSecurityLevelChanged, mParticipantDevices.get(), &ParticipantDeviceListModel::securityLevelChanged);
 	}
 }
@@ -107,7 +108,8 @@ void ParticipantModel::setParticipant(std::shared_ptr<linphone::Participant> par
 	mParticipant = participant;
 	if(mParticipant){
 		mAdminStatus = mParticipant->isAdmin();
-		mParticipantDevices = QSharedPointer<ParticipantDeviceListModel>::create(mParticipant);
+		mParticipantDevices = QSharedPointer<ParticipantDeviceListModel>::create(mParticipant, nullptr);
+		App::getInstance()->getEngine()->setObjectOwnership(mParticipantDevices.get(), QQmlEngine::CppOwnership);// Managed by QSharedPointer
 		connect(this, &ParticipantModel::deviceSecurityLevelChanged, mParticipantDevices.get(), &ParticipantDeviceListModel::securityLevelChanged);
 	}
 	emit invitingChanged();
