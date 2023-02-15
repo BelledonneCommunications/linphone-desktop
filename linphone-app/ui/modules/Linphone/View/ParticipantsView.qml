@@ -275,7 +275,7 @@ ScrollableListView {
 						width:50
 						indicatorStyle: SwitchStyle.aux
 						
-						visible: sipAddressesView.showSwitch
+						visible: sipAddressesView.showSwitch && !$modelData.isMe
 						
 						enabled:true
 						checked: $modelData.adminStatus
@@ -300,7 +300,6 @@ ScrollableListView {
 								anchors.verticalCenter: parent.verticalCenter
 								tooltipText: modelData.tooltipText? modelData.tooltipText:''
 								visible: sipAddressesView.actions[index].visible && (!sipAddressesView.actions[index].visibleHandler || sipAddressesView.actions[index].visibleHandler(contactView.entry))
-								
 								onClicked: {
 									sipAddressesView.actions[index].handler(contactView.entry)
 								}

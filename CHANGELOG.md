@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Deactivate action buttons and menus if chat room has been left.
 - Display of non-Ascii avatar
 - Remove duplicated nat policies.
+- Remove unadmin feature to self because of not fully supported.
 - Save Stun/Turn proxy configuration.
 - Switch off camera at startup.
 

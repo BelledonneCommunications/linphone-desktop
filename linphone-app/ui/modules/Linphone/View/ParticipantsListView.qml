@@ -115,7 +115,7 @@ ColumnLayout {
 												  secure:0,
 												  visible:true,
 												  visibleHandler: function(entry){
-													return !UtilsCpp.isMe(entry.sipAddress)
+													return (entry.isMe != undefined && !entry.isMe) || (entry.isMe == undefined && !UtilsCpp.isMe(entry.sipAddress))
 												  },
 												  //: 'Remove this participant from the list' : Tootltip to explain that the action will lead to remove the participant.
 												  tooltipText: qsTr('participantsListRemoveTooltip'),

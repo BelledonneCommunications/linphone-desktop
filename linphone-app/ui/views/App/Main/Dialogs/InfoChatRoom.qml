@@ -150,16 +150,19 @@ DialogPlus {
 					
 					
 					actions:  dialog.adminMode ? [{
-															 colorSet: InfoChatRoomStyle.removeParticipant,
-															 secure:0,
-															 visible:true,
-															 tooltipText: 'Remove this participant from the selection',
-															 handler: function (entry) {
-																 selectedParticipants.removeModel(entry)
-																 //							++lastContacts.reloadCount
-															 }
-														 }]
-													  : []
+															colorSet: InfoChatRoomStyle.removeParticipant,
+															secure:0,
+															visible:true,
+															visibleHandler: function(entry){
+																return (entry.isMe != undefined && !entry.isMe) || (entry.isMe == undefined && !UtilsCpp.isMe(entry.sipAddress))
+															},
+															tooltipText: 'Remove this participant from the selection',
+															handler: function (entry) {
+																selectedParticipants.removeModel(entry)
+																//							++lastContacts.reloadCount
+															}
+														}]
+													: []
 					
 					genSipAddress: ''
 					
