@@ -24,18 +24,28 @@ Controls.MenuItem {
 	property int offsetTopMargin : 0
 	property int offsetBottomMargin : 0
 	
+	property color _textColor:
+					(button.down
+					  ? menuItemStyle.text.color.pressed
+					  : (
+							button.hovered
+							? menuItemStyle.text.color.hovered
+							: menuItemStyle.text.color.normal
+							))
+	
 	height:visible?undefined:0
 	
 	Component.onCompleted: menu.width = Math.max(menu.width, implicitWidth)
+	opacity: enabled ? 1.0 : 0.5
 	
 	background: Rectangle {	
 		color: button.down
-			   ? menuItemStyle.background.color.pressed
-			   : (
-					 button.hovered
-					 ? menuItemStyle.background.color.hovered
-					 : menuItemStyle.background.color.normal
-					 )
+					? menuItemStyle.background.color.pressed
+					: (
+						button.hovered
+						? menuItemStyle.background.color.hovered
+						: menuItemStyle.background.color.normal
+					)
 		implicitHeight: button.menuItemStyle.background.height
 	}
 	contentItem:RowLayout{
@@ -51,15 +61,7 @@ Controls.MenuItem {
 				visible: icon
 				anchors.centerIn: parent
 				iconSize: rowText.lineCount > 0 ? rowText.contentHeight/rowText.lineCount + 2 : 0
-				overwriteColor: button.enabled
-								? (button.down
-								   ? menuItemStyle.text.color.pressed
-								   : (
-										 button.hovered
-										 ? menuItemStyle.text.color.hovered
-										 : menuItemStyle.text.color.normal
-										 ))
-								: menuItemStyle.text.color.disabled
+				overwriteColor: button._textColor
 			}
 		}
 		Text {
@@ -68,15 +70,7 @@ Controls.MenuItem {
 			Layout.fillHeight: true
 			Layout.leftMargin:(iconLayoutDirection == Qt.LeftToRight ? 0 : menuItemStyle.leftMargin)
 			Layout.rightMargin:(iconLayoutDirection == Qt.LeftToRight ? menuItemStyle.rightMargin : 0)
-			color: button.enabled
-				   ? (button.down
-					  ? menuItemStyle.text.color.pressed
-					  : (
-							button.hovered
-							? menuItemStyle.text.color.hovered
-							: menuItemStyle.text.color.normal
-							))
-				   : menuItemStyle.text.color.disabled
+			color: button._textColor
 			
 			elide: Text.ElideRight
 			

@@ -117,7 +117,8 @@ Item {
 		if(color)
 			return color
 			else{
-				console.warn("No color defined for :"+debugVar+ " on "+_getIcon())
+				if( debugVar )
+					console.warn("No color defined for :"+debugVar+ " on "+_getIcon())
 				return defaultColor
 			}
 	}
@@ -128,10 +129,11 @@ Item {
 				//return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
 				return getColor(wrappedButton.colorSet.backgroundUpdatingColor, defaultColor, 'backgroundUpdatingColor')
+			var normalColor = getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
 			if (!useStates)
-				return getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor')
+				return normalColor
 			if (!wrappedButton.enabled)
-				return getColor(wrappedButton.colorSet.backgroundDisabledColor, defaultColor, 'backgroundDisabledColor')
+				return getColor(wrappedButton.colorSet.backgroundDisabledColor, normalColor)
 			return button.down ? getColor(wrappedButton.colorSet.backgroundPressedColor, defaultColor, 'backgroundPressedColor')
 							   : (button.hovered ? getColor(wrappedButton.colorSet.backgroundHoveredColor, defaultColor, 'backgroundHoveredColor')
 									: getColor(wrappedButton.colorSet.backgroundNormalColor, defaultColor, 'backgroundNormalColor'))
@@ -145,10 +147,11 @@ Item {
 				//return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
 			if (wrappedButton.updating || wrappedButton.toggled)
 				return getColor(wrappedButton.colorSet.foregroundUpdatingColor, defaultColor, 'foregroundUpdatingColor')
+				var normalColor = getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
 			if (!useStates)
-				return getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor')
+				return normalColor
 			if (!wrappedButton.enabled)
-				return getColor(wrappedButton.colorSet.foregroundDisabledColor, defaultColor, 'foregroundDisabledColor')
+				return getColor(wrappedButton.colorSet.foregroundDisabledColor, normalColor)
 			return button.down ? getColor(wrappedButton.colorSet.foregroundPressedColor, defaultColor, 'foregroundPressedColor')
 							   : (button.hovered ? getColor(wrappedButton.colorSet.foregroundHoveredColor, defaultColor, 'foregroundHoveredColor')
 									: getColor(wrappedButton.colorSet.foregroundNormalColor, defaultColor, 'foregroundNormalColor'))
@@ -194,7 +197,7 @@ Item {
 	property int fitWidth: iconWidth || iconSize || parent.iconSize || parent.width
 	height: fitHeight
 	width: fitWidth
-	
+	opacity: enabled ? 1.0 : 0.5
 	
 	Button {
 		id: button
@@ -296,6 +299,7 @@ Item {
 				hoverEnabled: true
 				acceptedButtons: Qt.NoButton
 				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+				visible: wrappedButton.enabled
 			}
 		}
 	 
@@ -318,6 +322,7 @@ Item {
 				hoverEnabled: true
 				acceptedButtons: Qt.NoButton
 				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+				visible: wrappedButton.enabled
 			}
 		}
 		TooltipArea {
@@ -330,7 +335,7 @@ Item {
 			hoverEnabled: true
 			acceptedButtons: Qt.NoButton
 			cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-			visible: !iconIsCustom && !tooltip.visible
+			visible: wrappedButton.enabled && !iconIsCustom && !tooltip.visible
 		}
 	}
 	

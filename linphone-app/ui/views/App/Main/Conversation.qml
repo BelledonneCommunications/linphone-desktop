@@ -266,6 +266,7 @@ ColumnLayout  {
 						colorSet: ConversationStyle.bar.actions.videoCall
 						
 						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.haveMoreThanOneParticipants
+						enabled: !conversation.chatRoomModel.isReadOnly
 						
 						onClicked: CallsListModel.launchVideoCall(chatRoomModel.participants.addressesToString)
 					}
@@ -275,6 +276,7 @@ ColumnLayout  {
 						colorSet: ConversationStyle.bar.actions.call
 						
 						visible: SettingsModel.outgoingCallsEnabled && !conversation.haveMoreThanOneParticipants
+						enabled: !conversation.chatRoomModel.isReadOnly
 						
 						onClicked: CallsListModel.launchAudioCall(chatRoomModel.participants.addressesToString)
 					}
@@ -284,6 +286,7 @@ ColumnLayout  {
 						colorSet: ConversationStyle.bar.actions.chat
 						
 						visible: SettingsModel.standardChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel != 1
+						enabled: !conversation.chatRoomModel.isReadOnly
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 0)
 					}
@@ -292,6 +295,7 @@ ColumnLayout  {
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.chat
 						visible: SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton() && !conversation.haveMoreThanOneParticipants && conversation.securityLevel == 1
+						enabled: !conversation.chatRoomModel.isReadOnly
 						
 						onClicked: CallsListModel.launchChat(chatRoomModel.participants.addressesToString, 1)
 						Icon{
@@ -318,9 +322,9 @@ ColumnLayout  {
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.groupChat
 						
-						visible: conversation.chatRoomModel && !conversation.chatRoomModel.isReadOnly && conversation.haveMoreThanOneParticipants && SettingsModel.outgoingCallsEnabled && (SettingsModel.videoConferenceEnabled || conversation.haveLessThanMinParticipantsForCall)
+						visible: conversation.chatRoomModel && conversation.haveMoreThanOneParticipants && SettingsModel.outgoingCallsEnabled && (SettingsModel.videoConferenceEnabled || conversation.haveLessThanMinParticipantsForCall)
+						enabled: !conversation.chatRoomModel.isReadOnly
 						
-						//onClicked: CallsListModel. Logic.openConferenceManager({chatRoomModel:conversation.chatRoomModel, autoCall:true})
 						onClicked:{
 							if( SettingsModel.videoConferenceEnabled ){
 								groupCallButton.toggled = true
@@ -442,6 +446,7 @@ ColumnLayout  {
 						text: qsTr('conversationMenuDevices')
 						iconMenu: MenuItemStyle.devices.icon
 						visible: conversationMenu.showDevices
+						enabled: !conversation.chatRoomModel.isReadOnly
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
@@ -464,6 +469,7 @@ ColumnLayout  {
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						visible: conversationMenu.showEphemerals
+						enabled: !conversation.chatRoomModel.isReadOnly
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/EphemeralChatRoom.qml')
@@ -486,6 +492,7 @@ ColumnLayout  {
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						visible: conversationMenu.showScheduleMeeting
+						enabled: !conversation.chatRoomModel.isReadOnly
 						onClicked: {
 							conferenceInfoModel.resetConferenceInfo()
 							conferenceInfoModel.isScheduled = true

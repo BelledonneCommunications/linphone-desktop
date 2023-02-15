@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Crash on ending call in conference.
 - Crash after showing participant devices.
+- Deactivate action buttons and menus if chat room has been left.
 - Display of non-Ascii avatar
 - Remove duplicated nat policies.
 - Save Stun/Turn proxy configuration.
