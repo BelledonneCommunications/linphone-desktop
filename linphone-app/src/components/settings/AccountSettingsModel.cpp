@@ -142,12 +142,12 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 	QVariantMap map;
 	auto accountParams = account->getParams();
 	
-	{
-		const shared_ptr<const linphone::Address> address = accountParams->getIdentityAddress();
-		map["sipAddress"] = address
-				? Utils::coreStringToAppString(accountParams->getIdentityAddress()->asString())
-				: QString("");
-	}
+	
+	const shared_ptr<const linphone::Address> address = accountParams->getIdentityAddress();
+	map["sipAddress"] = address
+			? Utils::coreStringToAppString(accountParams->getIdentityAddress()->asString())
+			: QString("");
+	
 	map["serverAddress"] = Utils::coreStringToAppString(accountParams->getServerAddress()->asString());
 	map["registrationDuration"] = accountParams->getPublishExpires();
 	
@@ -161,10 +161,10 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 	else
 		map["route"] = "";
 	map["conferenceUri"] = Utils::coreStringToAppString(accountParams->getConferenceFactoryUri());
-	auto address = accountParams->getAudioVideoConferenceFactoryAddress();
-	map["videoConferenceUri"] = address ? Utils::coreStringToAppString(address->asString()) : "";
+	auto audioVideoConferenceAddress = accountParams->getAudioVideoConferenceFactoryAddress();
+	map["videoConferenceUri"] = audioVideoConferenceAddress ? Utils::coreStringToAppString(audioVideoConferenceAddress->asString()) : "";
 	map["limeServerUrl"] = Utils::coreStringToAppString(accountParams->getLimeServerUrl());
-	map["videoConferenceUri"] = address ? Utils::coreStringToAppString(address->asString()) : "";
+	map["videoConferenceUri"] = audioVideoConferenceAddress ? Utils::coreStringToAppString(audioVideoConferenceAddress->asString()) : "";
 	map["contactParams"] = Utils::coreStringToAppString(accountParams->getContactParameters());
 	map["avpfInterval"] = accountParams->getAvpfRrInterval();
 	map["registerEnabled"] = accountParams->registerEnabled();
@@ -294,19 +294,16 @@ bool AccountSettingsModel::addOrUpdateAccount(
 	QString literal = data["sipAddress"].toString();
 	
 	// Sip address.
-	{
-		
-		shared_ptr<linphone::Address> address = Utils::interpretUrl(literal);
-		if (!address) {
-			qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
-			return false;
-		}
-		
-		if (accountParams->setIdentityAddress(address)) {
-			qWarning() << QStringLiteral("Unable to set identity address: `%1`.")
-						  .arg(Utils::coreStringToAppString(address->asStringUriOnly()));
-			return false;
-		}
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(literal);
+	if (!address) {
+		qWarning() << QStringLiteral("Unable to create sip address object from: `%1`.").arg(literal);
+		return false;
+	}
+	
+	if (accountParams->setIdentityAddress(address)) {
+		qWarning() << QStringLiteral("Unable to set identity address: `%1`.")
+					  .arg(Utils::coreStringToAppString(address->asStringUriOnly()));
+		return false;
 	}
 	
 	// Server address.
@@ -353,23 +350,24 @@ bool AccountSettingsModel::addOrUpdateAccount(
 	bool createdNat = !natPolicy;
 	if (createdNat)
 		natPolicy = CoreManager::getInstance()->getCore()->createNatPolicy();
-	if(data.contains("iceEnabled"))
-		natPolicy->enableIce(data["iceEnabled"].toBool());
-	if(data.contains("iceEnabled"))
-		natPolicy->enableStun(data["iceEnabled"].toBool());
-	string turnUser, stunServer;
-	if(data.contains("turnUser"))
-		turnUser = Utils::appStringToCoreString(data["turnUser"].toString());
-	if(data.contains("stunServer"))
-		stunServer = Utils::appStringToCoreString(data["stunServer"].toString());
-	if(data.contains("turnEnabled"))
-		natPolicy->enableTurn(data["turnEnabled"].toBool());
-	natPolicy->setStunServerUsername(turnUser);
-	natPolicy->setStunServer(stunServer);
+	else
+		natPolicy = natPolicy->clone();//Init an internal ref. Without this clone, ref can be empty (aka default) and couldn't be used.
+	bool iceEnabled = data.contains("iceEnabled") ? data["iceEnabled"].toBool() : natPolicy->iceEnabled();
+	bool stunEnabled = data.contains("iceEnabled") ? data["iceEnabled"].toBool() : natPolicy->stunEnabled();
+	bool turnEnabled = data.contains("turnEnabled") ? data["turnEnabled"].toBool() : natPolicy->turnEnabled();
+	string turnUser = data.contains("turnUser") ? Utils::appStringToCoreString(data["turnUser"].toString()) : natPolicy->getStunServerUsername();
+	string stunServer = data.contains("stunServer") ? Utils::appStringToCoreString(data["stunServer"].toString()) : natPolicy->getStunServer();
 	
-	if( createdNat)
-		accountParams->setNatPolicy(natPolicy);
+	if( createdNat || iceEnabled != natPolicy->iceEnabled() || stunEnabled != natPolicy->stunEnabled() || turnEnabled != natPolicy->turnEnabled() || turnUser != natPolicy->getStunServerUsername() || stunServer != natPolicy->getStunServer()){
+		natPolicy->enableIce(iceEnabled);
+		natPolicy->enableStun(stunEnabled);
+		natPolicy->enableTurn(turnEnabled);
+		natPolicy->setStunServerUsername(turnUser);
+		natPolicy->setStunServer(stunServer);
+	}
+	accountParams->setNatPolicy(natPolicy);// TODO : We don't have an API to know if the current nat policy have a ref or not, so reset the natPolicy in all case. When we can hjave this info, put the set in the previous if-block
 	
+	// Setting TURN auth info
 	shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
 	shared_ptr<const linphone::AuthInfo> authInfo(core->findAuthInfo("", turnUser, stunServer));
 	if (authInfo) {
@@ -377,8 +375,8 @@ bool AccountSettingsModel::addOrUpdateAccount(
 		clonedAuthInfo->setUserid(turnUser);
 		clonedAuthInfo->setUsername(turnUser);
 		clonedAuthInfo->setPassword(Utils::appStringToCoreString(data["turnPassword"].toString()));
-		core->addAuthInfo(clonedAuthInfo);
 		core->removeAuthInfo(authInfo);
+		core->addAuthInfo(clonedAuthInfo);
 	} else
 		core->addAuthInfo(linphone::Factory::get()->createAuthInfo(
 							  turnUser,

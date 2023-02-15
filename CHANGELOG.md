@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on ending call in conference.
 - Crash after showing participant devices.
 - Display of non-Ascii avatar
+- Remove duplicated nat policies.
+- Save Stun/Turn proxy configuration.
 - Switch off camera at startup.
 
 ## 5.0.10 - 2023-02-02
