@@ -103,7 +103,7 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>URL、パスまたはファイル</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
@@ -111,11 +111,11 @@
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP アドレス</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished"></translation>
+        <translation>アップデートを確認する</translation>
     </message>
 </context>
 <context>
@@ -384,7 +384,7 @@
     <message>
         <source>callStatsMediaEncryption</source>
         <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>メディア暗号化</translation>
     </message>
     <message>
         <source>callStatsCipherAlgo</source>
@@ -436,7 +436,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>メディア暗号化</translation>
     </message>
 </context>
 <context>
@@ -533,7 +533,7 @@
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation type="unfinished"></translation>
+        <translation>招待状をコピーしました</translation>
     </message>
 </context>
 <context>
@@ -546,7 +546,7 @@
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>概要</translation>
     </message>
     <message>
         <source>icsconferenceAddressTitle</source>
@@ -2828,7 +2828,7 @@
     </message>
     <message>
         <source>natAndFirewallTitle</source>
-        <translation>NAT and Firewall</translation>
+        <translation>NATとファイアーウォール</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
