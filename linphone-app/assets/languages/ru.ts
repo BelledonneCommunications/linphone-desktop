@@ -379,7 +379,7 @@
     </message>
     <message>
         <source>callErrorHangUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Собеседник закончил разговор.</translation>
     </message>
     <message>
         <source>callStatsMediaEncryption</source>
@@ -389,12 +389,12 @@
     <message>
         <source>callStatsCipherAlgo</source>
         <extracomment>&apos;Cipher algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Алгоритм шифрования</translation>
     </message>
     <message>
         <source>callStatsKeyAgreementAlgo</source>
         <extracomment>&apos;Key agreement algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Алгоритм согласования ключей</translation>
     </message>
     <message>
         <source>callStatsHashAlgo</source>
@@ -404,12 +404,12 @@
     <message>
         <source>callStatsAuthAlgo</source>
         <extracomment>&apos;Authentication algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Алгоритм аутентификации</translation>
     </message>
     <message>
         <source>callStatsSasAlgo</source>
         <extracomment>&apos;SAS algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Алгоритм SAS</translation>
     </message>
 </context>
 <context>
@@ -535,7 +535,7 @@
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation type="unfinished"></translation>
+        <translation>Приглашение было скопировано</translation>
     </message>
 </context>
 <context>
@@ -568,12 +568,12 @@
     <message>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите отменить эту встречу?</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Встреча была отменена</translation>
     </message>
 </context>
 <context>
@@ -605,12 +605,12 @@
     <message>
         <source>icsUpdatedMeetingInvite</source>
         <extracomment>&apos;Meeting has been updated&apos; : ICS title for an updated invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Встреча была обновлена</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS title for a cancelled invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Встреча была отменена</translation>
     </message>
 </context>
 <context>
@@ -788,7 +788,7 @@
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Начать конференцию.</translation>
+        <translation>Начать встречу.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -804,11 +804,11 @@
     </message>
     <message>
         <source>acceptFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Принять текущий вызов.</translation>
     </message>
     <message>
         <source>declineFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Отклонить текущий вызов.</translation>
     </message>
 </context>
 <context>
@@ -842,21 +842,21 @@
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation>КОНФЕРЕНЦИЯ</translation>
+        <translation>ВСТРЕЧА</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation>КОНФЕРЕНЦИЯ</translation>
+        <translation>ВСТРЕЧА</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Управляйте участниками вашей конференции.</translation>
+        <translation>Управляйте участниками вашей встречи.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -887,12 +887,12 @@
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;The meeting URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
-        <translation>URL конференции скопирован</translation>
+        <translation>Ссылка на встречу скопирована</translation>
     </message>
     <message>
         <source>conferencesDeleted</source>
         <extracomment>&apos;The meeting has been deleted&apos; : Message text in a banner to warn the user that the meeting has been deleted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Встреча была удалена</translation>
     </message>
 </context>
 <context>
@@ -1087,7 +1087,7 @@
     <message>
         <source>conversationMenuViewContact</source>
         <extracomment>&apos;View contact&apos; : Item menu to view the contact in address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Просмотреть контакт</translation>
     </message>
     <message>
         <source>conversationMenuAddContact</source>
@@ -1194,17 +1194,17 @@
     <message>
         <source>dateTimeDialogDate</source>
         <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Выбор даты</translation>
     </message>
     <message>
         <source>dateTimeDialogTime</source>
         <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Выбор времени</translation>
     </message>
     <message>
         <source>dateTimeDialogDateTime</source>
         <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Выбрать дату и время</translation>
     </message>
 </context>
 <context>
@@ -1361,27 +1361,27 @@
     <message>
         <source>generateLabel</source>
         <extracomment>&apos;generate&apos; : title button to generate a code.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>создать</translation>
     </message>
     <message>
         <source>or</source>
         <extracomment>&apos;or&apos; : conjunction to choose between options.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>или</translation>
     </message>
     <message>
         <source>remoteProvisioningHow</source>
         <extracomment>&apos;Click on %1 to obtain your remote provisioning QR code&apos; : Describe how to get a remote provisioning QR code by clicking on %1 button (1% is the text in button)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите на «%1» для получения удалённого QR-кода для инициализации</translation>
     </message>
     <message>
         <source>scanQRCode</source>
         <extracomment>&apos;Scan the QR code with your phone&apos; : Explain how to use the QRCode by flasing it.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Отсканируйте QR-код с помощью камеры своего телефона</translation>
     </message>
     <message>
         <source>scanQRCodeWhere</source>
         <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>В вашем приложении перейдите в «Помощник» — «Предоставление QR-кода»</translation>
     </message>
 </context>
 <context>
@@ -1389,7 +1389,7 @@
     <message>
         <source>exportAsTitle</source>
         <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать как...</translation>
     </message>
 </context>
 <context>
@@ -1487,12 +1487,12 @@
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation>Сделать скриншот</translation>
+        <translation>Сделать снимок экрана</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
-        <translation>Видеоконференция не готова. Пожалуйста, подождите…</translation>
+        <translation>Встреча не готова. Пожалуйста, подождите…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
@@ -1502,17 +1502,17 @@
     <message>
         <source>incallWaitParticipantMessage</source>
         <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>В ожидании другого участника...</translation>
     </message>
     <message>
         <source>aloneInConference</source>
         <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы являетесь единственным участником этой встречи</translation>
     </message>
     <message>
         <source>incallWaitConnectedMessage</source>
         <extracomment>&apos;The call is not ready. Please Wait...&apos; : Waiting message for starting a call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Звонок не готов. Подождите...</translation>
     </message>
 </context>
 <context>
@@ -1545,7 +1545,7 @@
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
-        <translation>Видеоконференция не готова. Пожалуйста, подождите…</translation>
+        <translation>Встреча не готова. Пожалуйста, подождите…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
@@ -1727,11 +1727,11 @@
     </message>
     <message>
         <source>Services</source>
-        <translation type="unfinished"></translation>
+        <translation>Службы</translation>
     </message>
     <message>
         <source>Hide %1</source>
-        <translation type="unfinished">Скрывать %1</translation>
+        <translation>Скрывать %1</translation>
     </message>
     <message>
         <source>Hide Others</source>
@@ -1766,7 +1766,7 @@
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation>Начать конференц звонок</translation>
+        <translation>Начать встречу</translation>
     </message>
     <message>
         <source>newChatRoom</source>
@@ -1796,12 +1796,12 @@
     <message>
         <source>newChatRoomUriMissing</source>
         <extracomment>&apos;Conference URI is not set. You have to change it in your account settings in order to create new group chats.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI конференции не задан. Необходимо настроить его в параметрах учётной записи, чтобы создавать новые групповые чаты.</translation>
     </message>
     <message>
         <source>newConferenceUriMissing</source>
         <extracomment>&apos;Video conference URI is not set. You have to change it in your account settings in order to create new meetings.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI видеоконференции не задан. Измените его в параметрах своей учётной записи, чтобы создавать новые конференции.</translation>
     </message>
 </context>
 <context>
@@ -1826,7 +1826,7 @@
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Записи</translation>
     </message>
 </context>
 <context>
@@ -1851,7 +1851,7 @@
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Записи</translation>
     </message>
 </context>
 <context>
@@ -2015,7 +2015,7 @@
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Meeting. It cannot be empty&apos;</extracomment>
-        <translation>Текущая тема конференции. Она не может быть пустой.</translation>
+        <translation>Текущая тема встречи. Она не может быть пустой.</translation>
         <extra-Tooltip>Explanation about the subject of the meeting</extra-Tooltip>
     </message>
     <message>
@@ -2031,7 +2031,7 @@
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
-        <translation>Найти в своих контактах или добавить своё в конференцию.</translation>
+        <translation>Найти в своих контактах или добавить контакт вручную.</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -2063,12 +2063,12 @@
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the meeting&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation>Обновить конференцию</translation>
+        <translation>Обновить встречу</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation>Вы хотите запланировать конференцию?</translation>
+        <translation>Вы хотите запланировать встречу?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2103,7 +2103,7 @@
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the meeting&apos; : Explanation about the description of the meeting</extracomment>
-        <translation>Это описание будет описывать конференцию</translation>
+        <translation>Этот текст будет описывать встречу</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
@@ -2123,7 +2123,7 @@
     <message>
         <source>confirmFormExit</source>
         <extracomment>&apos;Do you want to close this form ?&apos; : confirmation text for exiting the creatoin form</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Закрыть эту форму?</translation>
     </message>
 </context>
 <context>
@@ -2206,7 +2206,7 @@
     <message>
         <source>newChatRoomMessages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Получены новые сообщения!</translation>
     </message>
 </context>
 <context>
@@ -2341,17 +2341,17 @@
     <message>
         <source>titleNoRecordings</source>
         <extracomment>&apos;No recordings&apos; : Title of an empty list of records.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Записей нет</translation>
     </message>
     <message>
         <source>recordingsVocalLabel</source>
         <extracomment>&apos;Vocal&apos; : Label for recording type that is a vocal message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Голос</translation>
     </message>
     <message>
         <source>recordingsDelete</source>
         <extracomment>&apos;Are you sure you want to delete this item?&apos; : Confirmation message for removing a record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить эту запись?</translation>
     </message>
 </context>
 <context>
@@ -2416,45 +2416,45 @@
     </message>
     <message>
         <source>viewlogs</source>
-        <translation type="unfinished"></translation>
+        <translation>ВИД</translation>
     </message>
     <message>
         <source>vfsTitle</source>
         <extracomment>&apos;VFS&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ВФС</translation>
     </message>
     <message>
         <source>vfsEncryption</source>
         <extracomment>&apos;Encrypt all the application&apos; : Label to encrypt application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Зашифровать данные приложения</translation>
     </message>
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите отключить шифрование? Приложение закроется, и данные будут утеряны. Перед использованием приложения их надо будет удалить.</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите включить шифрование?  Эту функцию нельзя будет отменить, не удалив ВСЕ данные.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">ОТМЕНА</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <source>deleteData</source>
         <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Удалить данные</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Подтвердить</translation>
     </message>
     <message>
         <source>vfsDeletion</source>
         <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Файлы данных приложения будут удалены. Продолжить?</translation>
     </message>
 </context>
 <context>
@@ -2667,7 +2667,7 @@
     <message>
         <source>callScreenshotEnabledLabel</source>
         <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Разрешить снимки экрана</translation>
     </message>
 </context>
 <context>
@@ -3142,17 +3142,17 @@
     <message>
         <source>videoConferenceURI</source>
         <extracomment>&quot;Video Conference URI&quot; : Label of a text edit for filling Video conference URI.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI видеоконференции</translation>
     </message>
     <message>
         <source>limeServerUrl</source>
         <extracomment>&apos;E2E encryption keys server URL&apos; : Label of a text edit for filling the Lime server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Адрес сервера ключей шифрования E2E</translation>
     </message>
     <message>
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>неверный адрес сервера ключей шифрования E2E</translation>
     </message>
 </context>
 <context>
@@ -3374,7 +3374,7 @@
     <message>
         <source>versionCheckTypeRelease</source>
         <extracomment>&apos;Release&apos; : Keyword for an option to check the release version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Выпуск</translation>
     </message>
     <message>
         <source>versionCheckTypeCustom</source>
@@ -3384,7 +3384,7 @@
     <message>
         <source>versionCheckTypeNightly</source>
         <extracomment>&apos;Nightly&apos; : Keyword for an option to check the nightly version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ночной</translation>
     </message>
 </context>
 <context>
@@ -3440,47 +3440,47 @@
     <message>
         <source>videoDisplayTitle</source>
         <extracomment>&apos;Video display&apos; : Title for display parameters</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Отображение видео</translation>
     </message>
     <message>
         <source>videoHybrid</source>
         <extracomment>&apos;Hybrid&apos; : Hybrid mode for camera.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Гибридный режим</translation>
     </message>
     <message>
         <source>videoOccupyAllSpace</source>
         <extracomment>&apos;Occupy all space&apos; : Camera mode for a centered cropping view.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Занять всё пространство</translation>
     </message>
     <message>
         <source>videoBlackBars</source>
         <extracomment>&apos;Black bars&apos; : Camera mode for a fit view with black bars to keep ratio.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Чёрные полосы</translation>
     </message>
     <message>
         <source>videoLayout</source>
         <extracomment>&apos;Default video layout&apos; : Label to choose the default layout in video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Стандартный макет видео</translation>
     </message>
     <message>
         <source>videoActiveSpeakerLayout</source>
         <extracomment>&apos;Active speaker&apos; : Active speaker layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Активный участник</translation>
     </message>
     <message>
         <source>videoMosaicLayout</source>
         <extracomment>&apos;Mosaic&apos; : Mosaic layout invideo conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Мозаика</translation>
     </message>
     <message>
         <source>videoGridModeLabel</source>
         <extracomment>&apos;Mosaic&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Мозаика</translation>
     </message>
     <message>
         <source>videoActiveSpeakerModeLabel</source>
         <extracomment>&apos;Active speaker&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Активный участник</translation>
     </message>
     <message>
         <source>videoCallsModeLabel</source>
@@ -3490,7 +3490,7 @@
     <message>
         <source>videoModeLabel</source>
         <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Режимы камеры</translation>
     </message>
 </context>
 <context>
@@ -3651,12 +3651,12 @@
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы уверены, что хотите удалить и выйти из этой шкалы времени?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
         <extracomment>&apos;After confirmation, it will erase all history, leave the chat room if it is a group chat and delete it in database.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>После подтверждения будет удалена вся история, а также будет произведён выход из чат-комнат и групповых чатов и удаление их из базы данных.</translation>
     </message>
 </context>
 <context>
@@ -3773,15 +3773,15 @@
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка удаления ключа: %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка чтения ключа: %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка записи ключа: %1</translation>
     </message>
 </context>
 <context>
@@ -3799,7 +3799,7 @@
     <message>
         <source>endCallStatus</source>
         <extracomment>&quot;Call ended&quot; : status of the call in waiting room when the call end.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вызов завершён</translation>
     </message>
     <message>
         <source>outgoingCallStatus</source>
@@ -4747,64 +4747,64 @@
     <message numerus="yes">
         <source>formatYears</source>
         <extracomment>&apos;%1 year&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 год</numerusform>
+            <numerusform>%1 года</numerusform>
+            <numerusform>%1 лет</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 месяц</numerusform>
+            <numerusform>%1 месяца</numerusform>
+            <numerusform>%1 месяцев</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 неделя</numerusform>
-            <numerusform>%1 неделя</numerusform>
-            <numerusform>%1 неделя</numerusform>
+            <numerusform>%1 недели</numerusform>
+            <numerusform>%1 недель</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 день</numerusform>
-            <numerusform>%1 день</numerusform>
-            <numerusform>%1 день</numerusform>
+            <numerusform>%1 дня</numerusform>
+            <numerusform>%1 дней</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 час</numerusform>
-            <numerusform>%1 час</numerusform>
-            <numerusform>%1 час</numerusform>
+            <numerusform>%1 часа</numerusform>
+            <numerusform>%1 часов</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 минута</numerusform>
-            <numerusform>%1 минута</numerusform>
-            <numerusform>%1 минута</numerusform>
+            <numerusform>%1 минуты</numerusform>
+            <numerusform>%1 минут</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatSeconds</source>
         <extracomment>&apos;%1 second&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 секунда</numerusform>
+            <numerusform>%1 секунды</numerusform>
+            <numerusform>%1 секунд</numerusform>
         </translation>
     </message>
 </context>
