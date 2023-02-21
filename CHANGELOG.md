@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove unadmin feature to self because of not fully supported.
 - Save Stun/Turn proxy configuration.
 - Switch off camera at startup.
+- Update SDK to 5.2.24 (Fix unresponsive video conference on Mac/Windows)
 
 ## 5.0.10 - 2023-02-02
 
