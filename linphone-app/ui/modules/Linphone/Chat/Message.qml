@@ -91,6 +91,7 @@ Item {
 					rectangle.updateWidth()
 				}
 				onGoToMessage: container.goToMessage(message)
+				onConferenceIcsCopied: container.conferenceIcsCopied()
 			}
 			ListView {
 				id: messageContentsList

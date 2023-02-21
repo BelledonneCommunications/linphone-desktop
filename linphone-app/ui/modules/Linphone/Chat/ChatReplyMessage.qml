@@ -37,6 +37,7 @@ Item {
 	onMainChatMessageModelChanged: if( mainChatMessageModel && mainChatMessageModel.replyChatMessageModel) chatMessageModel = mainChatMessageModel.replyChatMessageModel
 	
 	signal goToMessage(ChatMessageModel message)
+	signal conferenceIcsCopied()
 	
 	ColumnLayout{
 		anchors.fill: parent
@@ -142,6 +143,7 @@ Item {
 					onFitWidthChanged:{
 						replyMessage.updateWidth()			
 					}
+					onConferenceIcsCopied: mainItem.conferenceIcsCopied()
 					Rectangle{
 							anchors.left: parent.left
 							anchors.right: parent.right
