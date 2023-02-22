@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash after showing participant devices.
 - Deactivate action buttons and menus if chat room has been left.
 - Display of non-Ascii avatar
+- Icon transparency generations on icon.ico
 - Remove duplicated nat policies.
 - Remove unadmin feature to self because of not fully supported.
 - Save Stun/Turn proxy configuration.
