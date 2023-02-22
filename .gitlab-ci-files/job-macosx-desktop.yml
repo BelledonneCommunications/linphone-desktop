@@ -5,8 +5,8 @@
 
 .build_all_script: &build_all_script |
   ccache -s
-  export Qt5_DIR=~/Qt/5.15.2/clang_64/lib/cmake/Qt5
-  export PATH=~/Qt/5.15.2/clang_64/bin:$PATH
+  export Qt5_DIR=~/Qt/$QT_MAC_VER/lib/cmake/Qt5
+  export PATH=~/Qt/$QT_MAC_VER/bin:$PATH
   if [ -d "build" ]; then rm -rf build; fi;
   mkdir -p build/OUTPUT
   cd build

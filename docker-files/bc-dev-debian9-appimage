@@ -1,10 +1,14 @@
-FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian9:20210217_python3
+FROM gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian9:20210421_python3_fix_pip
+
+ARG QT_EMAIL
+ARG QT_PASSWORD
+ARG QT_VERSION=5.15.12
+ARG QT_VERSION_MODULE=qt.qt5.51512
 
 MAINTAINER Peio Rigaux <peio.rigaux@belledonne-communications.com>
 
 #Tools for QT buid script
 RUN sudo apt-get update && sudo apt-get install -y pigz
-
 
 #QT Dependencies
 #atspi and dbus may be used to enable qt accessibility for screan reader
@@ -17,20 +21,23 @@ RUN sudo apt-get update && sudo apt-get install -y libxcb-keysyms1-dev libxcb-im
 
 #needed fot qt to find dbus
 ENV PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig
-# Build qt5.12.12
-RUN git clone -b master --single-branch https://gitlab.linphone.org/BC/public/linphone-desktop.git && \
-    ./linphone-desktop/tools/build_qt_rpm && \
-    find "./linphone-desktop/rpm-linphone-qt-5.12/rpmbuild/RPMS/x86_64/" -iname "*.rpm" -exec sudo fakeroot alien -d {} + && \
-    find "." -maxdepth 1 -iname "*.deb" -exec sudo dpkg -i --force-overwrite {} + && \
-    rm -rf ./linphone-desktop
-
-ENV Qt5_DIR=/opt/com.belledonne-communications/linphone/lib/cmake
-ENV PATH=/opt/com.belledonne-communications/linphone/bin:$PATH
 
 #Appimage deps
 RUN sudo apt-get install -y wget fuse libfuse2 gnupg2
 
+#Update certificates
+RUN sudo sed -i '/^mozilla\/DST_Root_CA_X3/s/^/!/' /etc/ca-certificates.conf
+RUN sudo update-ca-certificates -f
+
+# Add Qt and download
+ADD https://download.qt.io/development_releases/online_installers/4.4/qt-unified-linux-x64-4.4.0-beta-online.run /home/bc/qt-unified-linux-x64-4.4.0-beta-online.run
+RUN sudo chmod +x /home/bc/qt-unified-linux-x64-4.4.0-beta-online.run
+RUN sudo /home/bc/qt-unified-linux-x64-4.4.0-beta-online.run install $QT_VERSION_MODULE $QT_VERSION_MODULE.qtpdf $QT_VERSION_MODULE.qtwebengine $QT_VERSION_MODULE.qtnetworkauth --email $QT_EMAIL --pw $QT_PASSWORD --accept-licenses --accept-obligations --auto-answer telemetry-question=No,AssociateCommonFiletypes=Yes --confirm-command --no-default-installations
+
 USER bc
 WORKDIR /home/bc
+
+ENV Qt5_DIR=/opt/Qt/$QT_VERSION/gcc_64/lib/cmake
+ENV PATH=/opt/Qt/$QT_VERSION/gcc_64/bin:$PATH
 ENV PS1='\[\e[34m\]\u@bc-dev-centos7>\[\e[0m\] '
 CMD bash
