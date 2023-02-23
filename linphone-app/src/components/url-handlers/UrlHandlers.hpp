@@ -26,10 +26,11 @@
 // =============================================================================
 
 class UrlHandlers : public QObject {
-  Q_OBJECT;
+  Q_OBJECT
 
 public:
   UrlHandlers (QObject *parent = Q_NULLPTR);
+  ~UrlHandlers();
 
 public slots:
   void handleSip (const QUrl &url);
