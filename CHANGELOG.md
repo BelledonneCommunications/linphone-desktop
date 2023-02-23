@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Display of non-Ascii avatar
 - Crash on ending call in conference.
+- Icon transparency generations on icon.ico
+- Remove duplicated nat policies.
+- Remove unadmin feature to self because of not fully supported.
+- Save Stun/Turn proxy configuration.
 - Switch off camera at startup.
 
 ## 5.0.10 - 2023-02-02
