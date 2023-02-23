@@ -32,6 +32,9 @@ BIN_SOURCE_DIR="OUTPUT/"
 
 WORK_DIR="WORK/Packages/AppImageDir"
 
+# Goal : avoid fuse on CI. --appimage-extract-and-run is not enough because of not propagate to plugins.
+export APPIMAGE_EXTRACT_AND_RUN=1
+
 rm -rf ${WORK_DIR}/AppDir
 mkdir -p "${WORK_DIR}/AppDir/usr/"
 
@@ -85,7 +88,7 @@ export LD_LIBRARY_PATH=${QT_PATH}/lib
 
 echo "-- Generating AppDir for AppImage"
 if [ -z "$4" ]; then
-	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
+	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --output appimage --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
 else
 	if [ -f "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage" ]; then
 		echo "appimagetool-x86_64.AppImage exists"
@@ -93,11 +96,11 @@ else
 		wget -P "${WORK_DIR}/AppBin" https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage
 		chmod +x "${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage"
 	fi
-	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
+	./${WORK_DIR}/AppBin/linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=${WORK_DIR}/AppDir -e ${WORK_DIR}/AppDir/usr/bin/${APP_NAME} --desktop-file=${WORK_DIR}/AppDir/usr/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/AppDir/usr/share/icons/hicolor/scalable/apps/${APP_NAME}.svg --plugin qt
 	#./linuxdeploy-x86_64.AppImage --appdir=${WORK_DIR}/ -e ${WORK_DIR}/app/bin/${APP_NAME} --output appimage --desktop-file=${WORK_DIR}/app/share/applications/${APP_NAME}.desktop -i ${WORK_DIR}/app/share/icons/hicolor/scalable/apps/${APP_NAME}.svg
 	echo "-- Code Signing of AppImage"
 	# APPIMAGETOOL_SIGN_PASSPHRASE has to the parent environment (not here). Do not use export.
-	./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage ${WORK_DIR}/AppDir --sign --sign-key $4
+	./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage --appimage-extract-and-run ${WORK_DIR}/AppDir --sign --sign-key $4
 fi
 
 mkdir -p "${BIN_SOURCE_DIR}/Packages"
