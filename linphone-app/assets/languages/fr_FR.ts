@@ -2418,12 +2418,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain de désactiver le cryptage de l&apos;application? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
+        <translation>Êtes-vous certain de désactiver le cryptage de l&apos;application ? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain d&apos;activer le cryptage? Cette action est irréversible sans perdre TOUTES vos données.</translation>
+        <translation>Êtes-vous certain d&apos;activer le chiffrement ? Cette action est irréversible sans perdre TOUTES vos données.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -3760,15 +3760,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation>Échec lors de la suppression de la clef: %1</translation>
+        <translation>Échec lors de la suppression de la clef : %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation>Échec lors de la lecture de la clef: %1</translation>
+        <translation>Échec lors de la lecture de la clef : %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation>Échec lors de l&apos;écriture de la clef: %1</translation>
+        <translation>Échec lors de l&apos;écriture de la clef : %1</translation>
     </message>
 </context>
 <context>
