@@ -45,7 +45,7 @@ RecorderModel* RecorderManager::getVocalRecorder(){
 	if( !mVocalRecorder) {
 		auto core = CoreManager::getInstance()->getCore();
 		std::shared_ptr<linphone::RecorderParams> params = core->createRecorderParams();
-		params->setFileFormat(linphone::RecorderFileFormat::Mkv);
+		params->setFileFormat(linphone::Recorder::FileFormat::Mkv);
 		params->setVideoCodec("");
 		auto recorder = core->createRecorder(params);
 		if(recorder)

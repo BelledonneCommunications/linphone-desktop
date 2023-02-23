@@ -175,17 +175,17 @@ void ParticipantDeviceModel::onIsSpeakingChanged(const std::shared_ptr<linphone:
 void ParticipantDeviceModel::onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted) {
 	emit isMutedChanged();
 }
-void ParticipantDeviceModel::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDeviceState state){
+void ParticipantDeviceModel::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDevice::State state){
 	switch(state){
-		case linphone::ParticipantDeviceState::Joining: break;
-		case linphone::ParticipantDeviceState::Present: setPaused(false);break;
-		case linphone::ParticipantDeviceState::Leaving: break;
-		case linphone::ParticipantDeviceState::Left: break;
-		case linphone::ParticipantDeviceState::ScheduledForJoining: break;
-		case linphone::ParticipantDeviceState::ScheduledForLeaving: break;
-		case linphone::ParticipantDeviceState::OnHold: setPaused(true);break;
-		case linphone::ParticipantDeviceState::Alerting: break;
-		case linphone::ParticipantDeviceState::MutedByFocus: break;
+		case linphone::ParticipantDevice::State::Joining: break;
+		case linphone::ParticipantDevice::State::Present: setPaused(false);break;
+		case linphone::ParticipantDevice::State::Leaving: break;
+		case linphone::ParticipantDevice::State::Left: break;
+		case linphone::ParticipantDevice::State::ScheduledForJoining: break;
+		case linphone::ParticipantDevice::State::ScheduledForLeaving: break;
+		case linphone::ParticipantDevice::State::OnHold: setPaused(true);break;
+		case linphone::ParticipantDevice::State::Alerting: break;
+		case linphone::ParticipantDevice::State::MutedByFocus: break;
 	default:{}
 	}
 	setState(LinphoneEnums::fromLinphone(state));

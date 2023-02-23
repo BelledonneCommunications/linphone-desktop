@@ -38,7 +38,7 @@ void ParticipantDeviceListener::onIsMuted(const std::shared_ptr<linphone::Partic
 	emit isMuted(participantDevice, isMutedVar);
 }
 
-void ParticipantDeviceListener::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDeviceState state){
+void ParticipantDeviceListener::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDevice::State state){
 	qDebug() << "onStateChanged: " << participantDevice->getAddress()->asString().c_str() << " " << (int)state;
 	emit stateChanged(participantDevice, state);
 }

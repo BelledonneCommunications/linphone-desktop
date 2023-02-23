@@ -141,11 +141,11 @@ void CoreHandlers::onChatRoomStateChanged(
 
 void CoreHandlers::onConfiguringStatus(
 		const std::shared_ptr<linphone::Core> & core,
-		linphone::ConfiguringState status,
+		linphone::Config::ConfiguringState status,
 		const std::string & message){
 	Q_UNUSED(core)
 	emit setLastRemoteProvisioningState(status);
-	if(status == linphone::ConfiguringState::Failed){
+	if(status == linphone::Config::ConfiguringState::Failed){
 		qWarning() << "Remote provisioning has failed and was removed : "<< QString::fromStdString(message);
 		core->setProvisioningUri("");
 	}
@@ -233,8 +233,8 @@ void CoreHandlers::onMessagesReceived (
 		if( !message || message->isOutgoing()  )
 			continue;
 		// 1. Do not notify if chat is not activated.
-		if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getStandardChatEnabled()
-			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
+		if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoom::EncryptionBackend::None && !settingsModel->getStandardChatEnabled()
+			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoom::EncryptionBackend::None && !settingsModel->getSecureChatEnabled())
 			continue;
 			
 		messagesToSignal.push_back(message);

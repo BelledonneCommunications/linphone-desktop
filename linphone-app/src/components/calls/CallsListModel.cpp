@@ -186,7 +186,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	
 	shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	
-	auto layout = options.contains("layout") ? LinphoneEnums::toLinphone((LinphoneEnums::ConferenceLayout)options["layout"].toInt()) : linphone::ConferenceLayout::Grid;
+	auto layout = options.contains("layout") ? LinphoneEnums::toLinphone((LinphoneEnums::ConferenceLayout)options["layout"].toInt()) : linphone::Conference::Layout::Grid;
 	bool enableMicro =options.contains("micro") ? options["micro"].toBool() : true;
 	bool enableVideo = options.contains("video") ? options["video"].toBool() : true;
 	bool enableCamera = options.contains("camera") ? options["camera"].toBool() : true;
@@ -224,7 +224,7 @@ ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) co
 	std::shared_ptr<const linphone::Address> localAddress;
 	participants.push_back(address);
 	
-	params->setBackend(linphone::ChatRoomBackend::Basic);
+	params->setBackend(linphone::ChatRoom::Backend::Basic);
 	
 	qInfo() << "Create ChatRoom with " <<participantAddress;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
@@ -316,7 +316,7 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	params->enableEncryption(securityLevel>0);
 	
 	if( securityLevel<=0)
-		params->setBackend(linphone::ChatRoomBackend::Basic);
+		params->setBackend(linphone::ChatRoom::Backend::Basic);
 	params->enableGroup( subject!="" );
 	
 	

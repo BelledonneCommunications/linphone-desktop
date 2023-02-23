@@ -45,15 +45,15 @@ linphone::MediaEncryption toLinphone(const LinphoneEnums::MediaEncryption& encry
 LinphoneEnums::MediaEncryption fromLinphone(const linphone::MediaEncryption& encryption);
 
 enum FriendCapability {
-	FriendCapabilityNone = int(linphone::FriendCapability::None),
-	FriendCapabilityGroupChat = int(linphone::FriendCapability::GroupChat),
-	FriendCapabilityLimeX3Dh = int(linphone::FriendCapability::LimeX3Dh),
-	FriendCapabilityEphemeralMessages = int(linphone::FriendCapability::EphemeralMessages)
+	FriendCapabilityNone = int(linphone::Friend::Capability::None),
+	FriendCapabilityGroupChat = int(linphone::Friend::Capability::GroupChat),
+	FriendCapabilityLimeX3Dh = int(linphone::Friend::Capability::LimeX3Dh),
+	FriendCapabilityEphemeralMessages = int(linphone::Friend::Capability::EphemeralMessages)
 };
 Q_ENUM_NS(FriendCapability)
 
-linphone::FriendCapability toLinphone(const LinphoneEnums::FriendCapability& capability);
-LinphoneEnums::FriendCapability fromLinphone(const linphone::FriendCapability& capability);
+linphone::Friend::Capability toLinphone(const LinphoneEnums::FriendCapability& capability);
+LinphoneEnums::FriendCapability fromLinphone(const linphone::Friend::Capability& capability);
 
 
 enum EventLogType {
@@ -130,14 +130,14 @@ linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus& capability);
 LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status& capability);
 
 enum ConferenceLayout {
-	ConferenceLayoutGrid = int(linphone::ConferenceLayout::Grid),
-	ConferenceLayoutActiveSpeaker = int(linphone::ConferenceLayout::ActiveSpeaker),
+	ConferenceLayoutGrid = int(linphone::Conference::Layout::Grid),
+	ConferenceLayoutActiveSpeaker = int(linphone::Conference::Layout::ActiveSpeaker),
 	ConferenceLayoutAudioOnly = ConferenceLayoutGrid + ConferenceLayoutActiveSpeaker + 1,
 };
 Q_ENUM_NS(ConferenceLayout)
 
-linphone::ConferenceLayout toLinphone(const LinphoneEnums::ConferenceLayout& layout);
-LinphoneEnums::ConferenceLayout fromLinphone(const linphone::ConferenceLayout& layout);
+linphone::Conference::Layout toLinphone(const LinphoneEnums::ConferenceLayout& layout);
+LinphoneEnums::ConferenceLayout fromLinphone(const linphone::Conference::Layout& layout);
 
 
 enum ConferenceInfoState {
@@ -164,21 +164,21 @@ LinphoneEnums::ConferenceSchedulerState fromLinphone(const linphone::ConferenceS
 
 
 enum ParticipantDeviceState {
-	ParticipantDeviceStateJoining = int(linphone::ParticipantDeviceState::Joining),
-	ParticipantDeviceStatePresent = int(linphone::ParticipantDeviceState::Present),
-	ParticipantDeviceStateLeaving = int(linphone::ParticipantDeviceState::Leaving),
-	ParticipantDeviceStateLeft = int(linphone::ParticipantDeviceState::Left),
-	ParticipantDeviceStateScheduledForJoining = int(linphone::ParticipantDeviceState::ScheduledForJoining),
-	ParticipantDeviceStateScheduledForLeaving = int(linphone::ParticipantDeviceState::ScheduledForLeaving),
-	ParticipantDeviceStateOnHold = int(linphone::ParticipantDeviceState::OnHold),
-	ParticipantDeviceStateAlerting = int(linphone::ParticipantDeviceState::Alerting),
-	ParticipantDeviceStateMutedByFocus = int(linphone::ParticipantDeviceState::MutedByFocus),
+	ParticipantDeviceStateJoining = int(linphone::ParticipantDevice::State::Joining),
+	ParticipantDeviceStatePresent = int(linphone::ParticipantDevice::State::Present),
+	ParticipantDeviceStateLeaving = int(linphone::ParticipantDevice::State::Leaving),
+	ParticipantDeviceStateLeft = int(linphone::ParticipantDevice::State::Left),
+	ParticipantDeviceStateScheduledForJoining = int(linphone::ParticipantDevice::State::ScheduledForJoining),
+	ParticipantDeviceStateScheduledForLeaving = int(linphone::ParticipantDevice::State::ScheduledForLeaving),
+	ParticipantDeviceStateOnHold = int(linphone::ParticipantDevice::State::OnHold),
+	ParticipantDeviceStateAlerting = int(linphone::ParticipantDevice::State::Alerting),
+	ParticipantDeviceStateMutedByFocus = int(linphone::ParticipantDevice::State::MutedByFocus),
 	
 };
 Q_ENUM_NS(ParticipantDeviceState)
 
-linphone::ParticipantDeviceState toLinphone(const LinphoneEnums::ParticipantDeviceState& state);
-LinphoneEnums::ParticipantDeviceState fromLinphone(const linphone::ParticipantDeviceState& state);
+linphone::ParticipantDevice::State toLinphone(const LinphoneEnums::ParticipantDeviceState& state);
+LinphoneEnums::ParticipantDeviceState fromLinphone(const linphone::ParticipantDevice::State& state);
 
 
 
@@ -193,14 +193,14 @@ linphone::Tunnel::Mode toLinphone(const LinphoneEnums::TunnelMode& mode);
 LinphoneEnums::TunnelMode fromLinphone(const linphone::Tunnel::Mode& mode);
 
 enum RecorderState{
-		RecorderStateClosed = int(linphone::RecorderState::Closed),
-		RecorderStatePaused = int(linphone::RecorderState::Paused),
-		RecorderStateRunning = int(linphone::RecorderState::Running)
+		RecorderStateClosed = int(linphone::Recorder::State::Closed),
+		RecorderStatePaused = int(linphone::Recorder::State::Paused),
+		RecorderStateRunning = int(linphone::Recorder::State::Running)
 };
 Q_ENUM_NS(RecorderState)
 
-linphone::RecorderState toLinphone(const LinphoneEnums::RecorderState& state);
-LinphoneEnums::RecorderState fromLinphone(const linphone::RecorderState& state);
+linphone::Recorder::State toLinphone(const LinphoneEnums::RecorderState& state);
+LinphoneEnums::RecorderState fromLinphone(const linphone::Recorder::State& state);
 
 enum TransportType{
 		TransportTypeDtls = int(linphone::TransportType::Dtls),

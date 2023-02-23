@@ -316,7 +316,7 @@ QString ChatRoomModel::getFullLocalAddress () const {
 }
 
 QString ChatRoomModel::getConferenceAddress () const {
-	if(!mChatRoom || mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic))
+	if(!mChatRoom || mChatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic))
 		return "";
 	else {
 		auto address = mChatRoom->getConferenceAddress();
@@ -435,7 +435,7 @@ bool ChatRoomModel::canBeEphemeral(){
 }
 
 bool ChatRoomModel::haveEncryption() const{
-	return mChatRoom && mChatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None;
+	return mChatRoom && mChatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoom::EncryptionBackend::None;
 }
 
 bool ChatRoomModel::haveConferenceAddress() const{
@@ -447,8 +447,8 @@ bool ChatRoomModel::markAsReadEnabled() const{
 }
 
 bool ChatRoomModel::isSecure() const{
-	return mChatRoom && (mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Encrypted
-			|| mChatRoom->getSecurityLevel() == linphone::ChatRoomSecurityLevel::Safe);
+	return mChatRoom && (mChatRoom->getSecurityLevel() == linphone::ChatRoom::SecurityLevel::Encrypted
+			|| mChatRoom->getSecurityLevel() == linphone::ChatRoom::SecurityLevel::Safe);
 }
 
 int ChatRoomModel::getSecurityLevel() const{
@@ -460,11 +460,11 @@ bool ChatRoomModel::isGroupEnabled() const{
 }
 
 bool ChatRoomModel::isConference() const{
-	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Conference);
+	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference);
 }
 
 bool ChatRoomModel::isOneToOne() const{
-	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::OneToOne);
+	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne);
 }
 
 bool ChatRoomModel::isMeAdmin() const{
@@ -488,7 +488,7 @@ bool ChatRoomModel::isEntriesLoading() const{
 }
 
 bool ChatRoomModel::isBasic() const{
-	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Basic);
+	return mChatRoom && mChatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic);
 }
 
 bool ChatRoomModel::isUpdating() const{

@@ -69,7 +69,7 @@ CoreManager *CoreManager::mInstance=nullptr;
 CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
 	mCore = nullptr;
-	mLastRemoteProvisioningState = linphone::ConfiguringState::Skipped;
+	mLastRemoteProvisioningState = linphone::Config::ConfiguringState::Skipped;
 	CoreHandlers *coreHandlers = mHandlers.get();
 	QObject::connect(coreHandlers, &CoreHandlers::coreStarting, this, &CoreManager::startIterate, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::setLastRemoteProvisioningState, this, &CoreManager::setLastRemoteProvisioningState);
@@ -459,12 +459,12 @@ QString CoreManager::getDownloadUrl () {
 	return Constants::DownloadUrl;
 }
 
-void CoreManager::setLastRemoteProvisioningState(const linphone::ConfiguringState& state){
+void CoreManager::setLastRemoteProvisioningState(const linphone::Config::ConfiguringState& state){
 	mLastRemoteProvisioningState = state;
 }
 
 bool CoreManager::isLastRemoteProvisioningGood(){
-	return mLastRemoteProvisioningState != linphone::ConfiguringState::Failed;
+	return mLastRemoteProvisioningState != linphone::Config::ConfiguringState::Failed;
 }
 
 QString CoreManager::getUserAgent()const {

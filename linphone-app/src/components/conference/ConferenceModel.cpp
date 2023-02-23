@@ -165,7 +165,7 @@ void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<const lin
 	emit participantDeviceRemoved(participantDevice);
 }
 
-void ConferenceModel::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDeviceState state){
+void ConferenceModel::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDevice::State state){
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
 	updateLocalParticipant();
 	emit participantDeviceStateChanged(device, state);

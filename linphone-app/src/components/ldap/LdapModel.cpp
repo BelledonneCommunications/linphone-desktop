@@ -112,8 +112,8 @@ void LdapModel::set(){
 	mLdapParams->setNameAttribute(mNameAttributes.toStdString());
 	mLdapParams->setSipAttribute(mSipAttributes.toStdString());
 	mLdapParams->setSipDomain(mSipDomain.toStdString());
-	mLdapParams->setDebugLevel( (linphone::LdapDebugLevel) mDebug);
-	mLdapParams->setServerCertificatesVerificationMode((linphone::LdapCertVerificationMode)mVerifyServerCertificates);
+	mLdapParams->setDebugLevel( (linphone::Ldap::DebugLevel) mDebug);
+	mLdapParams->setServerCertificatesVerificationMode((linphone::Ldap::CertVerificationMode)mVerifyServerCertificates);
 }
 
 void LdapModel::unset(){

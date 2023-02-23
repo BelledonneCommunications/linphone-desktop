@@ -67,7 +67,7 @@ void ConferenceListener::onParticipantDeviceRemoved(const std::shared_ptr<linpho
 	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
 }
-void ConferenceListener::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDeviceState state) {
+void ConferenceListener::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDevice::State state) {
 	qDebug() << "onParticipantDeviceStateChanged: " << device->getAddress()->asString().c_str() << " isInConf?[" << device->isInConference() << "] " << (int)state;
 	emit participantDeviceStateChanged(conference, device, state);
 }

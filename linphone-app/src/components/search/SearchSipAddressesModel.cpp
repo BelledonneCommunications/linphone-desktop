@@ -62,7 +62,7 @@ SearchSipAddressesModel::~SearchSipAddressesModel(){
 // -----------------------------------------------------------------------------
 
 void SearchSipAddressesModel::setFilter(const QString& filter){
-	mMagicSearch->getContactsListAsync(filter.toStdString(),"", (int)linphone::MagicSearchSource::All, linphone::MagicSearchAggregation::None);
+	mMagicSearch->getContactsListAsync(filter.toStdString(),"", (int)linphone::MagicSearch::Source::All, linphone::MagicSearch::Aggregation::None);
 	//searchReceived(mMagicSearch->getContactListFromFilter(Utils::appStringToCoreString(filter),""));	// Just to show how to use sync method
 }
 

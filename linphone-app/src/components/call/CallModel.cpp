@@ -124,7 +124,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 		if(	conferenceInfo ){
 			mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
 		}
-		mMagicSearch->getContactsListAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain(), (int)linphone::MagicSearchSource::LdapServers | (int)linphone::MagicSearchSource::Friends, linphone::MagicSearchAggregation::Friend);
+		mMagicSearch->getContactsListAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain(), (int)linphone::MagicSearch::Source::LdapServers | (int)linphone::MagicSearch::Source::Friends, linphone::MagicSearch::Aggregation::Friend);
 	}
 }
 
@@ -214,7 +214,7 @@ ChatRoomModel * CallModel::getChatRoomModel(){
 				params->enableGroup(false);
 				participants.push_back(mCall->getRemoteAddress()->clone());
 			}
-			if( params->getSubject() == "") // A linphone::ChatRoomBackend::FlexisipChat need a subject.
+			if( params->getSubject() == "") // A linphone::ChatRoom::Backend::FlexisipChat need a subject.
 				params->setSubject("Dummy Subject");
 			
 			mChatRoom = core->searchChatRoom(params, callLocalAddress
@@ -959,7 +959,7 @@ void CallModel::searchReceived(std::list<std::shared_ptr<linphone::SearchResult>
 				std::string newDisplayName = (*it)->getAddress()->getDisplayName();
 				if(!newDisplayName.empty()){
 				// LDAP friend
-					if( ((*it)->getSourceFlags() & (int) linphone::MagicSearchSource::LdapServers) == (int) linphone::MagicSearchSource::LdapServers){
+					if( ((*it)->getSourceFlags() & (int) linphone::MagicSearch::Source::LdapServers) == (int) linphone::MagicSearch::Source::LdapServers){
 						setRemoteDisplayName(newDisplayName);
 						found = true;
 					}else if( Utils::coreStringToAppString(mRemoteAddress->getDisplayName()).isEmpty()){
@@ -1073,7 +1073,7 @@ void CallModel::updateConferenceVideoLayout(){
 		newLayout = LinphoneEnums::ConferenceLayoutAudioOnly;
 	if( mConferenceVideoLayout != newLayout && !getPausedByUser()){// Only update if not in pause.
 		if(mCall->getConference()){
-			if( callParams->getConferenceVideoLayout() == linphone::ConferenceLayout::Grid)
+			if( callParams->getConferenceVideoLayout() == linphone::Conference::Layout::Grid)
 				settings->setCameraMode(settings->getGridCameraMode());
 			else
 				settings->setCameraMode(settings->getActiveSpeakerCameraMode());
@@ -1207,10 +1207,10 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 		
 		QString family;
 		switch (callStats->getIpFamilyOfRemote()) {
-			case linphone::AddressFamily::Inet:
+			case linphone::Address::Family::Inet:
 				family = QStringLiteral("IPv4");
 				break;
-			case linphone::AddressFamily::Inet6:
+			case linphone::Address::Family::Inet6:
 				family = QStringLiteral("IPv6");
 				break;
 			default:

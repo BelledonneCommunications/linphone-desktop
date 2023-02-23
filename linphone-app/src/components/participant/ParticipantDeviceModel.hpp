@@ -76,7 +76,7 @@ public:
 	
 	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
 	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted);
-	virtual void onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDeviceState state);
+	virtual void onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDevice::State state);
 	virtual void onStreamCapabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::MediaDirection direction, linphone::StreamType streamType);
 	virtual void onStreamAvailabilityChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool available, linphone::StreamType streamType);
 	
@@ -100,7 +100,7 @@ private:
 	bool mIsVideoEnabled;
 	bool mIsPaused = false;
 	bool mIsSpeaking = false;
-	linphone::ParticipantDeviceState mState;
+	linphone::ParticipantDevice::State mState;
 
     std::shared_ptr<linphone::ParticipantDevice> mParticipantDevice;
     std::shared_ptr<ParticipantDeviceListener> mParticipantDeviceListener;	// This is passed to linpĥone object and must be in shared_ptr
