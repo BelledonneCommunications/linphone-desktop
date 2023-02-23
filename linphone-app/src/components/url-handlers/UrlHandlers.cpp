@@ -31,6 +31,11 @@ UrlHandlers::UrlHandlers (QObject *parent) : QObject(parent) {
   QDesktopServices::setUrlHandler("sips", this, "handleSip");
 }
 
+UrlHandlers::~UrlHandlers(){
+	QDesktopServices::unsetUrlHandler("sips");
+	QDesktopServices::unsetUrlHandler("sip");
+}
+
 void UrlHandlers::handleSip (const QUrl &url) {
   emit sip(SipAddressesModel::interpretSipAddress(url));
 }

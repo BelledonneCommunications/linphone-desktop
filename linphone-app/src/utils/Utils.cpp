@@ -140,7 +140,7 @@ QString Utils::getInitials(const QString& username){
 			initials << QString::fromStdU32String(char32);
 		}
 	}
-	return initials.join("");
+	return  App::getInstance()->getLocale().toUpper(initials.join(""));
 }
 
 QString Utils::toString(const LinphoneEnums::TunnelMode& mode){

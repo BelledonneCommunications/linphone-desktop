@@ -84,6 +84,8 @@ public:
 	return mImageListModel;
 	}
 	
+  QLocale getLocale () const;
+	
    //static ColorListModel *getColorListModel () const {
     //return App::getInstance()-getColorListModel();
   //}
@@ -142,8 +144,6 @@ private:
 
   QString getConfigLocale () const;
   void setConfigLocale (const QString &locale);
-
-  QLocale getLocale () const;
 
   QVariantList getAvailableLocales () const {
     return mAvailableLocales;
