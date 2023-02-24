@@ -25,6 +25,7 @@ DialogPlus{
 	property bool isAnimatedImage : filePath && UtilsCpp.isAnimatedImage(filePath)
 	property bool isVideo: filePath && UtilsCpp.isVideo(filePath)
 	property bool isImage: filePath && UtilsCpp.isImage(filePath)
+	property bool isPdf: filePath && UtilsCpp.isPdf(filePath)
 	property bool isSupportedForDisplay: filePath && tempFile.isReadable && UtilsCpp.isSupportedForDisplay(filePath)
 	
 	showCloseCross: true
@@ -61,6 +62,12 @@ DialogPlus{
 		tempFile.createFileFromContentModel(contentModel, false);
 	}
 	onExitStatus: if(loader.sourceComponent == videoComponent) loader.item.stop();
+	Component.onCompleted:{
+		if(mainItem.isPdf){
+			if(UtilsCpp.openWithPdfViewer(contentModel, mainItem.filePath, 800,800))
+				Qt.callLater(mainItem.exit)
+		}
+	}
 	
 	TemporaryFile {
 		id: tempFile

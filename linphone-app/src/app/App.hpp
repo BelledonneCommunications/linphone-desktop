@@ -118,6 +118,9 @@ public:
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
   Q_INVOKABLE static void checkForUpdates(bool force = false);
+
+// Check module availability when no dependencies are needed (else use SettingsModel)
+  Q_INVOKABLE static bool isPdfAvailable();
   
 public slots:
   void stateChanged(Qt::ApplicationState);
@@ -136,6 +139,7 @@ private:
   void registerSharedTypes ();
   void registerToolTypes ();
   void registerSharedToolTypes ();
+  void registerUninstalledModules ();
 
   void setTrayIcon ();
   void createNotifier ();

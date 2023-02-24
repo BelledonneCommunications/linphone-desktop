@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PdfWidget</class>
+ <widget class="QMainWindow" name="PdfWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>700</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>PDF Viewer</string>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>true</bool>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <item>
+     <widget class="QWidget" name="widget" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QToolButton" name="downloadToolButton">
+         <property name="minimumSize">
+          <size>
+           <width>33</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>33</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="baseSize">
+          <size>
+           <width>0</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:white;
+border-radius:5px;
+border-width:1px</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme="document-save">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>27</width>
+           <height>27</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>304</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QWidget" name="widget_4" native="true">
+         <property name="autoFillBackground">
+          <bool>true</bool>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QLabel{background-color:white}</string>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="fullscreenToolButton">
+         <property name="minimumSize">
+          <size>
+           <width>33</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>33</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="cursor">
+          <cursorShape>PointingHandCursor</cursorShape>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:white;
+border-radius:5px;
+border-width:1px</string>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset theme="view-fullscreen">
+           <normaloff>.</normaloff>.</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>27</width>
+           <height>27</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <item>
+         <widget class="QWidget" name="widget_2" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>376</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QToolButton" name="rotationToolButton">
+             <property name="minimumSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:white;
+border-radius:5px;
+border-width:1px</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset theme="object-rotate-right">
+               <normaloff>.</normaloff>.</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="zoomInToolButton">
+             <property name="minimumSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:white;
+border-radius:5px;
+border-width:1px</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset theme="zoom-in">
+               <normaloff>.</normaloff>.</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QToolButton" name="zoomOutToolButton">
+             <property name="minimumSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>PointingHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:white;
+border-radius:5px;
+border-width:1px</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset theme="zoom-out">
+               <normaloff>.</normaloff>.</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>33</width>
+               <height>33</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPdfView" name="pdfView" native="true">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>700</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuView">
+    <property name="title">
+     <string>View</string>
+    </property>
+    <widget class="QMenu" name="menuZoom">
+     <property name="title">
+      <string>Zoom...</string>
+     </property>
+     <addaction name="actionZoom_In"/>
+     <addaction name="actionZoom_Out"/>
+     <addaction name="separator"/>
+     <addaction name="actionZoomFit_Width"/>
+     <addaction name="actionZoomFit_Page"/>
+     <addaction name="actionZoom25"/>
+     <addaction name="actionZoom50"/>
+     <addaction name="actionZoom70"/>
+     <addaction name="actionZoom85"/>
+     <addaction name="actionZoom100"/>
+     <addaction name="actionZoom125"/>
+     <addaction name="actionZoom150"/>
+     <addaction name="actionZoom175"/>
+     <addaction name="actionZoom200"/>
+     <addaction name="actionZoom300"/>
+     <addaction name="actionZoom400"/>
+    </widget>
+    <addaction name="menuZoom"/>
+    <addaction name="actionPrevious_Page"/>
+    <addaction name="actionNext_Page"/>
+    <addaction name="separator"/>
+    <addaction name="actionContinuous"/>
+   </widget>
+   <addaction name="menuView"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <action name="actionZoom_In">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/zoom-in-24.png</normaloff>:/icons/images/zoom-in-24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+=</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out">
+   <property name="icon">
+    <iconset>
+     <normaloff>:/icons/images/zoom-out-24.png</normaloff>:/icons/images/zoom-out-24.png</iconset>
+   </property>
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionPrevious_Page">
+   <property name="text">
+    <string>Previous Page</string>
+   </property>
+   <property name="shortcut">
+    <string>PgUp</string>
+   </property>
+  </action>
+  <action name="actionNext_Page">
+   <property name="text">
+    <string>Next Page</string>
+   </property>
+   <property name="shortcut">
+    <string>PgDown</string>
+   </property>
+  </action>
+  <action name="actionContinuous">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Continuous</string>
+   </property>
+  </action>
+  <action name="actionZoomFit_Width">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fit Width</string>
+   </property>
+  </action>
+  <action name="actionZoomFit_Page">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Fit Page</string>
+   </property>
+  </action>
+  <action name="actionZoom25">
+   <property name="text">
+    <string>25%</string>
+   </property>
+  </action>
+  <action name="actionZoom50">
+   <property name="text">
+    <string>50%</string>
+   </property>
+  </action>
+  <action name="actionZoom70">
+   <property name="text">
+    <string>70%</string>
+   </property>
+  </action>
+  <action name="actionZoom85">
+   <property name="text">
+    <string>85%</string>
+   </property>
+  </action>
+  <action name="actionZoom100">
+   <property name="text">
+    <string>100%</string>
+   </property>
+  </action>
+  <action name="actionZoom125">
+   <property name="text">
+    <string>125%</string>
+   </property>
+  </action>
+  <action name="actionZoom150">
+   <property name="text">
+    <string>150%</string>
+   </property>
+  </action>
+  <action name="actionZoom175">
+   <property name="text">
+    <string>175%</string>
+   </property>
+  </action>
+  <action name="actionZoom200">
+   <property name="text">
+    <string>200%</string>
+   </property>
+  </action>
+  <action name="actionZoom300">
+   <property name="text">
+    <string>300%</string>
+   </property>
+  </action>
+  <action name="actionZoom400">
+   <property name="text">
+    <string>400%</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QPdfView</class>
+   <extends>QWidget</extends>
+   <header location="global">qpdfview.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>zoomInToolButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionZoom_In</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>27</x>
+     <y>519</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zoomOutToolButton</sender>
+   <signal>clicked()</signal>
+   <receiver>actionZoom_Out</receiver>
+   <slot>trigger()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>27</x>
+     <y>552</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

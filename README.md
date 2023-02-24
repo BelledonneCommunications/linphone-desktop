@@ -215,6 +215,7 @@ Also, more configurations are available in the docker-files folder of linphone-s
 | :--- | :---: | ---: |
 | ENABLE_APP_LICENSE | Enable the license in packages. | YES |
 | ENABLE_APP_PACKAGING | Enable packaging. Package will be deployed in `OUTPUT/packages` | NO |
+| ENABLE_APP_PDF_VIEWER | Enable PDF viewer. Need Qt PDF module. | YES |
 | ENABLE_APP_WEBVIEW | Enable webview for accounts. The Webview engine must be deployed, it takes a large size. | NO |
 | ENABLE_APP_PACKAGE_ROOTCA | Embed the rootca file (concatenation of all root certificates published by mozilla) into the package | YES |
 | ENABLE_BUILD_APP_PLUGINS | Enable the build of plugins | YES |

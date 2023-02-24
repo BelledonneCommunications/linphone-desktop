@@ -153,11 +153,29 @@ if (UNIX AND NOT APPLE)
 	list(APPEND QT5_PACKAGES DBus)
 endif ()
 set(QT5_PACKAGES_OPTIONAL TextToSpeech QmlModels)
+if(ENABLE_APP_PDF_VIEWER)
+	list(APPEND QT5_PACKAGES_OPTIONAL Pdf PdfWidgets)
+endif()
 set(CMAKE_AUTOMOC ON)
+SET(CMAKE_AUTOUIC ON)
 
 
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES} REQUIRED)
 find_package(Qt5 COMPONENTS ${QT5_PACKAGES_OPTIONAL} QUIET)
+
+set(LIBRARIES)
+set(INCLUDED_DIRECTORIES)
+foreach (package ${QT5_PACKAGES_OPTIONAL})
+	if ("${Qt5${package}_FOUND}")
+		message("Optional package ${package} found.")
+		list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
+		list(APPEND LIBRARIES ${Qt5${package}_LIBRARIES})
+		string(TOUPPER "${package}" INCLUDE_NAME)
+		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${INCLUDE_NAME}_ENABLED")
+	else ()
+		message("Optional package ${package} not found.")
+	endif ()
+endforeach ()
 
 bc_git_version(${TARGET_NAME} ${PROJECT_VERSION})
 
@@ -439,6 +457,8 @@ set(PLUGIN_HEADERS
 	include/LinphoneApp/PluginNetworkHelper.hpp
 	include/LinphoneApp/LinphonePlugin.hpp)
 
+set( UIS)
+
 list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 set(MAIN_FILE src/app/main.cpp)
 
@@ -494,6 +514,11 @@ if(ENABLE_APP_OAUTH2)
 	list(APPEND SOURCES src/components/authentication/OAuth2Model.cpp)
 endif()
 
+if(Qt5Pdf_FOUND)
+	list(APPEND HEADERS src/components/pdf/PdfWidget.hpp)
+	list(APPEND SOURCES src/components/pdf/PdfWidget.cpp)
+endif()
+
 
 set(QRC_RESOURCES resources.qrc)
 if(ENABLE_APP_WEBVIEW)
@@ -523,6 +548,10 @@ PREPEND(SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 PREPEND(HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
 PREPEND(PLUGIN_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/")
 PREPEND(PLUGIN_HEADERS "${CMAKE_CURRENT_SOURCE_DIR}/")
+
+if(Qt5Pdf_FOUND)
+	qt5_wrap_ui(SOURCES src/components/pdf/PdfWidget.ui)
+endif()
 
 # ------------------------------------------------------------------------------
 # Compute QML files list.
@@ -653,7 +682,7 @@ endif()
 target_compile_definitions(${APP_PLUGIN} PUBLIC "-DENABLE_APP_EXPORT_PLUGIN")
 set_target_properties(${APP_PLUGIN} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-set(INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}")
+list(APPEND INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}")
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
 
 set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
@@ -664,7 +693,6 @@ set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_
 #endif()
 
 if(WIN32)
-	set(LIBRARIES)
 	foreach(LIBRARY ${LIBRARIES_LIST})# Search for lib full path
 		find_library(FIND_LIBRARY_ITEM_${LIBRARY} NAMES ${LIBRARY} lib${LIBRARY} REQUIRED)#find_library need a specific variable name each time
 		if(FIND_LIBRARY_ITEM_${LIBRARY})
@@ -674,7 +702,7 @@ if(WIN32)
 		endif()
 	endforeach()
 else()
-	set(LIBRARIES ${LIBRARIES_LIST})
+	list(APPEND LIBRARIES ${LIBRARIES_LIST})
 endif()
 
 if(ENABLE_BUILD_VERBOSE)
@@ -692,18 +720,7 @@ foreach (package ${QT5_PACKAGES})
 	endif ()
 endforeach ()
 
-foreach (package ${QT5_PACKAGES_OPTIONAL})
-	if ("${Qt5${package}_FOUND}")
-		message("Optional package ${package} found.")
-		list(APPEND INCLUDED_DIRECTORIES "${Qt5${package}_INCLUDE_DIRS}")
-		list(APPEND LIBRARIES ${Qt5${package}_LIBRARIES})
-		
-		string(TOUPPER "${package}" INCLUDE_NAME)
-		set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D${INCLUDE_NAME}_ENABLED")
-	else ()
-		message("Optional package ${package} not found.")
-	endif ()
-endforeach ()
+
 
 if(ENABLE_QT_KEYCHAIN)
 	target_link_libraries(${APP_LIBRARY} ${QTKEYCHAIN_TARGET_NAME})

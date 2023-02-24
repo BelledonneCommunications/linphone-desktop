@@ -40,7 +40,7 @@ TextEdit {
 	readOnly: true
 	selectByMouse: true
 	font.family: customFont.family
-	font.pointSize: Units.dp * customFont.pointSize * (UtilsCpp.isOnlyEmojis(contentModel.text) ?  4 : 1 )
+	font.pointSize: Units.dp * customFont.pointSize * (contentModel && UtilsCpp.isOnlyEmojis(contentModel.text) ?  4 : 1 )
 	
 	text: visible ? UtilsCpp.encodeTextToQmlRichFormat(contentModel.text, {
 														imagesHeight: ChatStyle.entry.message.images.height,

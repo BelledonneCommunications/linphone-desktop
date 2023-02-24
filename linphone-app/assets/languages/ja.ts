@@ -579,7 +579,7 @@
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">概要</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -1801,7 +1801,7 @@
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">アップデートを確認する</translation>
     </message>
     <message>
         <source>recordings</source>
@@ -1826,7 +1826,7 @@
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">アップデートを確認する</translation>
     </message>
     <message>
         <source>recordings</source>
@@ -2270,6 +2270,113 @@
     <message>
         <source>participantsMe</source>
         <extracomment>&apos;Me&apos; : One word for myself.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PdfWidget</name>
+    <message>
+        <source>PDF Viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+=</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PgUp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PgDown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>25%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>50%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>70%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>85%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>100%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>125%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>150%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>175%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>200%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>300%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>400%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

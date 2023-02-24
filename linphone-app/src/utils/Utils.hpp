@@ -32,6 +32,9 @@
 #include "LinphoneEnums.hpp"
 #include "Constants.hpp"
 
+class QAction;
+class QWidget;
+
 // =============================================================================
 
 /*
@@ -46,6 +49,7 @@
 #endif // if defined(__GNUC__) && __GNUC__ >= 7
 #endif // ifndef UTILS_NO_BREAK
 
+class ContentModel;
 
 class Utils : public QObject{
 	Q_OBJECT
@@ -65,6 +69,7 @@ public:
 	Q_INVOKABLE static bool isAnimatedImage(const QString& path);
 	Q_INVOKABLE static bool isImage(const QString& path);
 	Q_INVOKABLE static bool isVideo(const QString& path);
+	Q_INVOKABLE static bool isPdf(const QString& path);
 	Q_INVOKABLE static bool isSupportedForDisplay(const QString& path);
 	Q_INVOKABLE static bool isPhoneNumber(const QString& txt);
 	Q_INVOKABLE QSize getImageSize(const QString& url);
@@ -75,6 +80,8 @@ public:
 	Q_INVOKABLE static bool isOnlyEmojis(const QString& text);
 	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options = QVariantMap());
 	Q_INVOKABLE static QString getFileContent(const QString& filePath);
+	
+	Q_INVOKABLE static bool openWithPdfViewer(ContentModel *contentModel, const QString& filePath, const int& width, const int& height);	// return true if PDF is enabled
 	
 //----------------------------------------------------------------------------------
 	
@@ -159,6 +166,9 @@ public:
 	static void deleteAllUserData();
 	static void deleteAllUserDataOffline();// When we are out of all events and core is not running (aka in main())
 	
+	static void setFamilyFont(QAction * dest, const QString& family);
+	static void setFamilyFont(QWidget * dest, const QString& family);
+	static QPixmap getMaskedPixmap(const QString& name, const QColor& color);
 };
 
 #endif // UTILS_H_

@@ -244,7 +244,7 @@ ImageProvider::ImageProvider () : QQuickImageProvider(
 
 // -----------------------------------------------------------------------------
 
-QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize) {
+QImage ImageProvider::computeImage (const QString &id, QSize *size, const QSize &requestedSize) {
 	ImageModel * model = App::getInstance()->getImageListModel()->getImageModel(id);
 	if(!model)
 		return QImage();
@@ -313,6 +313,13 @@ QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize 
 	return image;
 }
 
-QPixmap ImageProvider::requestPixmap (const QString &id, QSize *size, const QSize &requestedSize) {
-	return QPixmap::fromImage(requestImage(id, size, requestedSize));
+QPixmap ImageProvider::computePixmap (const QString &id, QSize *size, const QSize &requestedSize) {
+	return QPixmap::fromImage(computeImage(id, size, requestedSize));
+}
+
+QPixmap ImageProvider::requestPixmap (const QString &id, QSize *size, const QSize &requestedSize){
+	return computePixmap(id, size, requestedSize);
+}
+QImage ImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize){
+	return computeImage(id, size, requestedSize);
 }

@@ -2287,6 +2287,114 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>PdfWidget</name>
+    <message>
+        <source>PDF Viewer</source>
+        <translatorcomment>Title for the PDF viewer</translatorcomment>
+        <translation>PDF Viewer</translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation>View</translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation>Zoom In</translation>
+    </message>
+    <message>
+        <source>Ctrl+=</source>
+        <translation>Ctr+=</translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation>Zoom Out</translation>
+    </message>
+    <message>
+        <source>Ctrl+-</source>
+        <translation>Ctrl+-</translation>
+    </message>
+    <message>
+        <source>Previous Page</source>
+        <translation>Previous Page</translation>
+    </message>
+    <message>
+        <source>PgUp</source>
+        <translation>PgUp</translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation>Next Page</translation>
+    </message>
+    <message>
+        <source>PgDown</source>
+        <translation>PgDown</translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation>Continuous</translation>
+    </message>
+    <message>
+        <source>Zoom...</source>
+        <translation>Zoom…</translation>
+    </message>
+    <message>
+        <source>Fit Width</source>
+        <translation>Fit Width</translation>
+    </message>
+    <message>
+        <source>Fit Page</source>
+        <translation>Fit Page</translation>
+    </message>
+    <message>
+        <source>25%</source>
+        <translation>25%</translation>
+    </message>
+    <message>
+        <source>50%</source>
+        <translation>50%</translation>
+    </message>
+    <message>
+        <source>70%</source>
+        <translation>70%</translation>
+    </message>
+    <message>
+        <source>85%</source>
+        <translation>85%</translation>
+    </message>
+    <message>
+        <source>100%</source>
+        <translation>100%</translation>
+    </message>
+    <message>
+        <source>125%</source>
+        <translation>125%</translation>
+    </message>
+    <message>
+        <source>150%</source>
+        <translation>150%</translation>
+    </message>
+    <message>
+        <source>175%</source>
+        <translation>175%</translation>
+    </message>
+    <message>
+        <source>200%</source>
+        <translation>200%</translation>
+    </message>
+    <message>
+        <source>300%</source>
+        <translation>300%</translation>
+    </message>
+    <message>
+        <source>400%</source>
+        <translation>400%</translation>
+    </message>
+    <message>
+        <source>Export as...</source>
+        <translation>Export as…</translation>
+    </message>
+</context>
+<context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>

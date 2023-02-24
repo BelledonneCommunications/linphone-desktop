@@ -439,6 +439,7 @@ void App::initContentApp () {
 	registerSharedTypes();
 	registerToolTypes();
 	registerSharedToolTypes();
+	registerUninstalledModules();
 	
 	// Enable notifications.
 	mNotifier = new Notifier(mEngine);
@@ -623,8 +624,8 @@ static inline void registerType (const char *name) {
 }
 
 template<typename T>
-static inline void registerToolType (const char *name) {
-	qmlRegisterSingletonType<T>(name, 1, 0, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
+static inline void registerToolType (const char *name, const int &major_version = 1 , const int &minor_version = 0) {
+	qmlRegisterSingletonType<T>(name, major_version, minor_version, name, [](QQmlEngine *engine, QJSEngine *) -> QObject *{
 		return new T(engine);
 	});
 }
@@ -772,6 +773,11 @@ void App::registerSharedToolTypes () {
 	qInfo() << QStringLiteral("Registering shared tool types...");
 	
 	registerSharedToolType<ColorListModel,App,  &App::getColorListModel>("ColorsList");
+}
+
+void App::registerUninstalledModules() {
+	if(!isPdfAvailable())
+		qmlRegisterModule("QtQuick.Pdf",5,15);
 }
 
 // -----------------------------------------------------------------------------
@@ -1116,4 +1122,12 @@ void App::checkForUpdates(bool force) {
 		CoreManager::getInstance()->getCore()->checkForUpdate(
 					Utils::appStringToCoreString(applicationVersion())
 					);
+}
+
+bool App::isPdfAvailable(){
+#ifdef PDF_ENABLED
+	return true;
+#else
+	return false;
+#endif
 }

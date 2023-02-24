@@ -136,6 +136,7 @@
 		<file>assets/images/recording_sign.svg</file>
 		<file>assets/images/record_custom.svg</file>
 		<file>assets/images/recordings_custom.svg</file>
+		<file>assets/images/rotation_custom.svg</file>
 		<file>assets/images/remove_participant_custom.svg</file>
 		<file>assets/images/screen_sharing_custom.svg</file>
 		<file>assets/images/screenshot_custom.svg</file>
@@ -169,6 +170,8 @@
 		<file>assets/images/video_call_accept_custom.svg</file>
 		<file>assets/images/video_call_custom.svg</file>
 		<file>assets/images/warning.svg</file>
+		<file>assets/images/zoom_in_custom.svg</file>
+		<file>assets/images/zoom_out_custom.svg</file>
 		<file>ui/modules/Common/Animations/BusyIndicator.qml</file>
 		<file>ui/modules/Common/Constants/Constants.qml</file>
 		<file>ui/modules/Common/Dialog/ConfirmDialog.qml</file>

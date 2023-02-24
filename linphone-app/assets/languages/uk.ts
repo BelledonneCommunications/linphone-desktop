@@ -2300,6 +2300,113 @@
     </message>
 </context>
 <context>
+    <name>PdfWidget</name>
+    <message>
+        <source>PDF Viewer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>View</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+=</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ctrl+-</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PgUp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Next Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PgDown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Continuous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Zoom...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit Width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fit Page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>25%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>50%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>70%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>85%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>100%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>125%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>150%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>175%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>200%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>300%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>400%</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>Presence</name>
     <message>
         <source>presenceOnline</source>

@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include <QAction>
+#include <QBitmap>
 #include <QFileInfo>
 #include <QCoreApplication>
 #include <QCryptographicHash>
@@ -30,17 +32,25 @@
 #include <QTimeZone>
 #include <QUrl>
 
+#ifdef PDF_ENABLED
+#include <QtPdf/QPdfDocument>
+#include <QtPdfWidgets/QPdfView>
+#include "components/pdf/PdfWidget.hpp"
+#endif
+
 #include "config.h"
 #include "Utils.hpp"
 #include "UriTools.hpp"
 #include "app/App.hpp"
+#include "app/paths/Paths.hpp"
+#include "app/providers/ImageProvider.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
-#include "app/paths/Paths.hpp"
+
 
 #ifdef _WIN32
 #include <time.h>
@@ -616,6 +626,10 @@ bool Utils::isVideo(const QString& path){
 	return QMimeDatabase().mimeTypeForFile(path).name().contains("video");
 }
 
+bool Utils::isPdf(const QString& path){
+	return QMimeDatabase().mimeTypeForFile(path).name().contains("application/pdf");
+}
+
 bool Utils::isSupportedForDisplay(const QString& path){
 	return !QMimeDatabase().mimeTypeForFile(path).name().contains("application");// "for pdf : "application/pdf". Note : Make an exception when supported.
 }
@@ -769,4 +783,39 @@ void Utils::deleteAllUserDataOffline(){
 		QDir dir(gDbPaths[i]);
 		qWarning() << "Deleting " << gDbPaths[i] << " : " << (dir.removeRecursively() ? "Successfully" : "Failed");
 	}
+}
+
+//-------------------------------------------------------------------------------------------------------
+//					WIDGETS
+//-------------------------------------------------------------------------------------------------------
+
+bool Utils::openWithPdfViewer(ContentModel * contentModel, const QString& filePath, const int& width, const int& height) {
+#ifdef PDF_ENABLED
+	PdfWidget *view = new PdfWidget(contentModel);
+	view->setMinimumSize(QSize(width, height));
+	view->show();
+	view->open(filePath);
+	return true;
+#else
+	return false;
+#endif
+}
+
+void Utils::setFamilyFont(QAction * dest, const QString& family){
+	QFont font(dest->font());
+	font.setFamily(family);
+	dest->setFont(font);
+}
+void Utils::setFamilyFont(QWidget * dest, const QString& family){
+	QFont font(dest->font());
+	font.setFamily(family);
+	dest->setFont(font);
+}
+QPixmap Utils::getMaskedPixmap(const QString& name, const QColor& color){
+	QSize size;
+	QPixmap img = ImageProvider::computePixmap(name, &size);
+	QPixmap pxr( img.size() );
+	pxr.fill( color );
+	pxr.setMask( img.createMaskFromColor( Qt::transparent ) );
+	return pxr;
 }
