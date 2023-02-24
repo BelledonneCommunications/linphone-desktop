@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 - Accept/decline CLI commands.
 
-## 5.0.11 - undefined
+## 5.0.11 - 2023-02-24
 
 ### Fixed
 - Crash on ending call in conference.
@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Save Stun/Turn proxy configuration.
 - Switch off camera at startup.
 - Upgrade Qt to 5.15.12
-- Update SDK to 5.2.24 (Fix unresponsive video conference on Mac/Windows)
+- Update SDK to 5.2.25 (Fix unresponsive video conference on Mac/Windows)
 
 ## 5.0.10 - 2023-02-02
 
