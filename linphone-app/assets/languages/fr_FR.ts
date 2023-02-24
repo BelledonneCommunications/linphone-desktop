@@ -796,6 +796,14 @@ URL du serveur non configurée.</translation>
         <source>byeFunctionDescription</source>
         <translation>Terminer un appel spécifique, tous les appels ou l&apos;appel en cours.</translation>
     </message>
+    <message>
+        <source>acceptFunctionDescription</source>
+        <translation>Accepter l&apos;appel en cours.</translation>
+    </message>
+    <message>
+        <source>declineFunctionDescription</source>
+        <translation>Décliner l&apos;appel en cours.</translation>
+    </message>
 </context>
 <context>
     <name>CodecsViewer</name>
@@ -1367,6 +1375,14 @@ URL du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>FileViewDialog</name>
+    <message>
+        <source>exportAsTitle</source>
+        <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
+        <translation>Exporter vers…</translation>
+    </message>
+</context>
+<context>
     <name>HistoryView</name>
     <message>
         <source>removeAllEntriesDescription</source>
@@ -1486,7 +1502,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallWaitConnectedMessage</source>
         <extracomment>&apos;The call is not ready. Please Wait...&apos; : Waiting message for starting a call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La réunion est en cours de préparation. Veuillez patienter…</translation>
     </message>
 </context>
 <context>
@@ -1800,7 +1816,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrements</translation>
     </message>
 </context>
 <context>
@@ -1825,7 +1841,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrements</translation>
     </message>
 </context>
 <context>
@@ -2312,17 +2328,17 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>titleNoRecordings</source>
         <extracomment>&apos;No recordings&apos; : Title of an empty list of records.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aucun enregistrement disponible</translation>
     </message>
     <message>
         <source>recordingsVocalLabel</source>
         <extracomment>&apos;Vocal&apos; : Label for recording type that is a vocal message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vocal</translation>
     </message>
     <message>
         <source>recordingsDelete</source>
         <extracomment>&apos;Are you sure you want to delete this item?&apos; : Confirmation message for removing a record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Souhaitez-vous supprimer cet élément ?</translation>
     </message>
 </context>
 <context>
@@ -2388,6 +2404,44 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>viewlogs</source>
         <translation>AFFICHER</translation>
+    </message>
+    <message>
+        <source>vfsTitle</source>
+        <extracomment>&apos;VFS&apos;</extracomment>
+        <translation>VFS</translation>
+    </message>
+    <message>
+        <source>vfsEncryption</source>
+        <extracomment>&apos;Encrypt all the application&apos; : Label to encrypt application</extracomment>
+        <translation>Crypter toute l&apos;application</translation>
+    </message>
+    <message>
+        <source>vfsDeactivation</source>
+        <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
+        <translation>Êtes-vous certain de désactiver le cryptage de l&apos;application? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
+    </message>
+    <message>
+        <source>vfsActivation</source>
+        <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
+        <translation>Êtes-vous certain d&apos;activer le cryptage? Cette action est irréversible sans perdre TOUTES vos données.</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>deleteData</source>
+        <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
+        <translation>Effacer les données</translation>
+    </message>
+    <message>
+        <source>confirm</source>
+        <translation>Confirmer</translation>
+    </message>
+    <message>
+        <source>vfsDeletion</source>
+        <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
+        <translation>L&apos;application va supprimer toutes ses données. Veuillez confirmer cette suppression.</translation>
     </message>
 </context>
 <context>
@@ -3700,6 +3754,21 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
         <translation>Si vous souhaitez les activer pour un projet professionnel, contactez-nous.</translation>
+    </message>
+</context>
+<context>
+    <name>VfsUtils</name>
+    <message>
+        <source>Delete key failed: %1</source>
+        <translation>Échec lors de la suppression de la clef: %1</translation>
+    </message>
+    <message>
+        <source>Read key failed: %1</source>
+        <translation>Échec lors de la lecture de la clef: %1</translation>
+    </message>
+    <message>
+        <source>Write key failed: %1</source>
+        <translation>Échec lors de l&apos;écriture de la clef: %1</translation>
     </message>
 </context>
 <context>
