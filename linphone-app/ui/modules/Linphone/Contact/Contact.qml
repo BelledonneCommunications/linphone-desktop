@@ -50,7 +50,6 @@ Rectangle {
 		anchors {
 			fill: parent
 			leftMargin: ContactStyle.leftMargin
-			rightMargin: ContactStyle.rightMargin
 		}
 		spacing: 0
 		
@@ -138,11 +137,9 @@ Rectangle {
 		
 		ContactMessageCounter {
 			Layout.alignment: Qt.AlignTop
-			
-			count: entry?Number(entry.unreadMessagesCount) + Number(entry.missedCallsCount):0
-			isComposing: Boolean(entry && entry.composers && entry.composers.length > 0)
-			
-			visible: entry?(entry.unreadMessagesCount !== null || entry.missedCallsCount !== null) && item.displayUnreadMessageCount:false
+			Layout.preferredWidth: count > 0 && visible ? implicitWidth : 0
+			entry: item.entry
+			displayCounter: item.displayUnreadMessageCount
 		}
 	}
 }

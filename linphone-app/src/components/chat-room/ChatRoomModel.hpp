@@ -88,6 +88,7 @@ public:
 	Q_PROPERTY(bool ephemeralEnabled READ isEphemeralEnabled WRITE setEphemeralEnabled NOTIFY ephemeralEnabledChanged)
 	Q_PROPERTY(bool canBeEphemeral READ canBeEphemeral NOTIFY canBeEphemeralChanged)
 	Q_PROPERTY(bool markAsReadEnabled READ markAsReadEnabled WRITE enableMarkAsRead NOTIFY markAsReadEnabledChanged)
+	Q_PROPERTY(bool notificationsEnabled READ isNotificationsEnabled WRITE enableNotifications NOTIFY notificationsEnabledChanged)
 	
 	Q_PROPERTY(ParticipantListModel* participants READ getParticipantListModel CONSTANT)
 	
@@ -139,6 +140,7 @@ public:
 	bool isEntriesLoading() const;
 	bool isBasic() const;
 	bool isUpdating() const;
+	bool isNotificationsEnabled() const;
 	
 	ParticipantListModel* getParticipantListModel() const;
 	std::list<std::shared_ptr<linphone::Participant>> getParticipants(const bool& withMe = true) const;
@@ -159,6 +161,7 @@ public:
 	void setEphemeralEnabled(bool enabled);
 	void setEphemeralLifetime(long lifetime);
 	void enableMarkAsRead(const bool& enable);
+	void enableNotifications(const bool& enable);
 	
 	void setReply(ChatMessageModel * model);
 	ChatMessageModel * getReply()const;
@@ -205,6 +208,10 @@ public:
 	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
 	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
 	void insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs);
+	
+	QString getChatRoomId()const;
+	static QString getChatRoomId(const QString& localAddress, const QString& remoteAddress);
+	static QString getChatRoomId(const std::shared_ptr<linphone::ChatRoom>& chatRoom);	// For convenience
 	
 	//--------------------		CHAT ROOM HANDLER
 	
@@ -279,6 +286,7 @@ signals:
 	void chatRoomDeleted();// Must be connected with DirectConnection mode
 	void replyChanged();
 	void updatingChanged();
+	void notificationsEnabledChanged();
 	
 // Chat Room listener callbacks	
 	

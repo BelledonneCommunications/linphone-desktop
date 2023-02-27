@@ -120,7 +120,7 @@ Item {
 			iconSizeMenu: MenuItemStyle.entry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
-			visible: !chatMessageModel.isOutgoing
+			visible: container.chatMessageModel && !container.chatMessageModel.isOutgoing
 			onTriggered: container.isContact ? container.viewContactClicked(container.chatMessageModel.fromSipAddress) : container.addContactClicked(container.chatMessageModel.fromSipAddress)
 		}
 		MenuItem {

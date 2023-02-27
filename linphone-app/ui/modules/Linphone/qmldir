@@ -33,6 +33,7 @@ CodecsViewer                  1.0 Codecs/CodecsViewer.qml
 Avatar                        1.0 Contact/Avatar.qml
 Contact                       1.0 Contact/Contact.qml
 ContactDescription            1.0 Contact/ContactDescription.qml
+ContactMessageCounter         1.0 Contact/ContactMessageCounter.qml
 
 SipAddressDialog              1.0 Dialog/SipAddressDialog.qml
 MultimediaParametersDialog    1.0 Dialog/MultimediaParametersDialog.qml

@@ -27,6 +27,7 @@
 #include <QElapsedTimer>
 #include <QFileInfo>
 #include <QMimeDatabase>
+#include <QSettings>
 #include <QTimer>
 #include <QUuid>
 #include <QMessageBox>
@@ -486,6 +487,14 @@ bool ChatRoomModel::isUpdating() const{
 	return getState() == LinphoneEnums::ChatRoomStateCreationPending || getState() == LinphoneEnums::ChatRoomStateTerminationPending;
 }
 
+bool ChatRoomModel::isNotificationsEnabled() const{
+	auto id = getChatRoomId();
+	QSettings settings;
+	settings.beginGroup("chatrooms");
+	settings.beginGroup(id);
+	return settings.value("notifications", true).toBool();
+}
+
 std::shared_ptr<linphone::ChatRoom> ChatRoomModel::getChatRoom(){
 	return mChatRoom;
 }
@@ -599,6 +608,16 @@ void ChatRoomModel::enableMarkAsRead(const bool& enable){
 	if( mMarkAsReadEnabled != enable){
 		mMarkAsReadEnabled = enable;
 		emit markAsReadEnabledChanged();
+	}
+}
+void ChatRoomModel::enableNotifications(const bool& enable){
+	if(enable != isNotificationsEnabled()){
+		auto id = getChatRoomId();
+		QSettings settings;
+		settings.beginGroup("chatrooms");
+		settings.beginGroup(id);
+		settings.setValue("notifications", enable);
+		notificationsEnabledChanged();
 	}
 }
 
@@ -1164,6 +1183,20 @@ void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLo
 			emit layoutChanged();
 		}
 	}
+}
+
+QString ChatRoomModel::getChatRoomId()const{
+	return getChatRoomId(getLocalAddress(), getPeerAddress());
+}
+
+QString ChatRoomModel::getChatRoomId(const QString& localAddress, const QString& remoteAddress){
+	return localAddress + "~"+remoteAddress;
+}
+
+QString ChatRoomModel::getChatRoomId(const std::shared_ptr<linphone::ChatRoom>& chatRoom){
+	auto localAddress = chatRoom->getLocalAddress()->clone();
+	localAddress->clean();
+	return getChatRoomId(Utils::coreStringToAppString(localAddress->asStringUriOnly()), (chatRoom->getPeerAddress() ? Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly()) : ""));
 }
 
 // -----------------------------------------------------------------------------

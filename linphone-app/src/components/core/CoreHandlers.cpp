@@ -20,6 +20,7 @@
 
 #include <QMutex>
 #include <QtDebug>
+#include <QSettings>
 #include <QThread>
 #include <QTimer>
 
@@ -223,7 +224,9 @@ void CoreHandlers::onMessagesReceived (
 	SettingsModel *settingsModel = coreManager->getSettingsModel();
 	const App *app = App::getInstance();
 	QStringList notNotifyReasons;
+	QSettings appSettings;
 	
+	appSettings.beginGroup("chatrooms");
 	for(auto message : messages){
 		if( !message || message->isOutgoing()  )
 			continue;
@@ -235,7 +238,16 @@ void CoreHandlers::onMessagesReceived (
 			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
 			continue;
 		
-		// 2. Notify with Notification popup.
+		// 2. Do not notify if the chatroom's notification has been deactivated.
+		appSettings.beginGroup(ChatRoomModel::getChatRoomId(chatRoom));
+		if(!appSettings.value("notifications", true).toBool()){
+			appSettings.endGroup();
+			continue;
+		}else{
+			appSettings.endGroup();
+		}
+		
+		// 3. Notify with Notification popup.
 		if (coreManager->getSettingsModel()->getChatNotificationsEnabled() 
 				&& (!app->hasFocus() || !Utils::isMe(chatRoom->getLocalAddress()))
 				&& !message->isRead())// On aggregation, the list can contains already displayed messages.

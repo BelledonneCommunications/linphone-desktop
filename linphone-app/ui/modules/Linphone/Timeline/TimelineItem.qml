@@ -14,7 +14,7 @@ import 'Timeline.js' as Logic
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
-Item {
+Rectangle {
 	id: mainItem
 	property TimelineModel timelineModel
 	property bool optionsToggled: false
@@ -46,61 +46,106 @@ Item {
 	]
 	enabled: !contactView.showBusyIndicator
 	
-	
-	Contact {
-		id: contactView
-		property bool isSelected: mainItem.timelineModel != undefined && mainItem.timelineModel.selected	//view.currentIndex === index
-		
-		height: mainItem.height
-		width: mainItem.width
-		color: isSelected
+	color: contactView.isSelected
 			   ? TimelineStyle.contact.backgroundColor.selected.color
 			   : (
 					 mainItem.modelIndex % 2 == 0
 					 ? TimelineStyle.contact.backgroundColor.a.color
 					 : TimelineStyle.contact.backgroundColor.b.color
 					 )
-		displayUnreadMessageCount: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
-		entry: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel
-		
-		property var subtitleSelectedColors: TimelineStyle.contact.subtitle.color.selected
-		property var subtitleNormalColors: TimelineStyle.contact.subtitle.color.normal
-		property var titleSelectedColors: TimelineStyle.contact.title.color.selected
-		property var titleNormalColors: TimelineStyle.contact.title.color.normal
-		
-		subtitleColor: isSelected
-						 ? subtitleSelectedColors.color
-						 : subtitleNormalColors.color
-		titleColor: isSelected
-					   ? titleSelectedColors.color
-					   : titleNormalColors.color
-		showSubtitle: mainItem.timelineModel && (mainItem.timelineModel.chatRoomModel && (mainItem.timelineModel.chatRoomModel.isOneToOne || !mainItem.timelineModel.chatRoomModel.isConference))
-		showBusyIndicator: mainItem.timelineModel && mainItem.timelineModel.updating
-		TooltipArea {
-			id: contactTooltip						
-			text: mainItem.timelineModel && UtilsCpp.toDateTimeString(mainItem.timelineModel.chatRoomModel.lastUpdateTime)
-			isClickable: true
+	
+	RowLayout{
+		anchors.fill: parent
+		anchors.rightMargin: 5
+		spacing: 0
+		Contact {
+			id: contactView
+			property bool isSelected: mainItem.timelineModel != undefined && mainItem.timelineModel.selected	//view.currentIndex === index
+			Layout.fillHeight: true
+			Layout.fillWidth: true
+			color: isSelected
+				   ? TimelineStyle.contact.backgroundColor.selected.color
+				   : (
+						 mainItem.modelIndex % 2 == 0
+						 ? TimelineStyle.contact.backgroundColor.a.color
+						 : TimelineStyle.contact.backgroundColor.b.color
+						 )
+			displayUnreadMessageCount: false
+			entry: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel
+			
+			property var subtitleSelectedColors: TimelineStyle.contact.subtitle.color.selected
+			property var subtitleNormalColors: TimelineStyle.contact.subtitle.color.normal
+			property var titleSelectedColors: TimelineStyle.contact.title.color.selected
+			property var titleNormalColors: TimelineStyle.contact.title.color.normal
+			
+			subtitleColor: isSelected
+							 ? subtitleSelectedColors.color
+							 : subtitleNormalColors.color
+			titleColor: isSelected
+						   ? titleSelectedColors.color
+						   : titleNormalColors.color
+			showSubtitle: mainItem.timelineModel && (mainItem.timelineModel.chatRoomModel && (mainItem.timelineModel.chatRoomModel.isOneToOne || !mainItem.timelineModel.chatRoomModel.isConference))
+			showBusyIndicator: mainItem.timelineModel && mainItem.timelineModel.updating
+			TooltipArea {
+				id: contactTooltip
+				text: mainItem.timelineModel && UtilsCpp.toDateTimeString(mainItem.timelineModel.chatRoomModel.lastUpdateTime)
+				isClickable: true
+			}
+			MouseArea {
+				anchors.fill: parent
+				acceptedButtons: Qt.LeftButton | Qt.RightButton
+				propagateComposedEvents: true
+				preventStealing: false
+				onClicked: {
+					if(mouse.button == Qt.LeftButton){
+						mainItem.timelineModel.selected = true
+					}else{
+						mainItem.optionsToggled = !mainItem.optionsToggled
+					}
+				}
+			}
 		}
-		Icon{
-			icon: TimelineStyle.ephemeralTimer.icon
-			iconSize: TimelineStyle.ephemeralTimer.iconSize
-			overwriteColor:  mainItem.timelineModel && mainItem.timelineModel.selected ? TimelineStyle.ephemeralTimer.selectedTimerColor.color : TimelineStyle.ephemeralTimer.timerColor.color
-			anchors.right:parent.right
-			anchors.bottom:parent.bottom
-			anchors.bottomMargin: 7
-			anchors.rightMargin: 7
-			visible: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel.ephemeralEnabled
-		}
-		MouseArea {
-			anchors.fill: parent
-			acceptedButtons: Qt.LeftButton | Qt.RightButton
-			propagateComposedEvents: true
-			preventStealing: false
-			onClicked: {
-				if(mouse.button == Qt.LeftButton){
-					mainItem.timelineModel.selected = true
-				}else{
-					mainItem.optionsToggled = !mainItem.optionsToggled
+		ColumnLayout{
+			spacing: 0
+			Layout.maximumWidth: statusLayout.count > 0 || unreadMessageCounter.visible ? -1 : 0
+			Layout.fillHeight: true
+			RowLayout{
+				Layout.alignment: Qt.AlignTop | Qt.AlignRight
+				Layout.fillHeight: true
+				spacing: 0
+				ContactMessageCounter {
+					id: unreadMessageCounter
+					Layout.alignment: Qt.AlignTop
+					Layout.preferredWidth: implicitWidth
+					Layout.preferredHeight: implicitHeight
+					Layout.rightMargin: 9
+					displayCounter: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
+					entry: contactView.entry
+				}
+			}
+			RowLayout{
+				id: statusLayout
+				property int count : (ephemeralIcon.visible ? 1 : 0) + (notificationsIcon.visible ? 1 : 0)
+				spacing: 0
+				Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+				Layout.preferredHeight: TimelineStyle.status.iconSize
+				Icon{
+					id: notificationsIcon
+					Layout.preferredHeight: TimelineStyle.status.iconSize
+					Layout.preferredWidth: TimelineStyle.status.iconSize
+					icon: TimelineStyle.disabledNotifications.icon
+					iconSize: TimelineStyle.status.iconSize
+					overwriteColor:  mainItem.timelineModel && mainItem.timelineModel.selected ? TimelineStyle.disabledNotifications.selectedColorModel.color : TimelineStyle.disabledNotifications.colorModel.color
+					visible: mainItem.timelineModel && !mainItem.timelineModel.chatRoomModel.notificationsEnabled
+				}
+				Icon{
+					id: ephemeralIcon
+					Layout.preferredHeight: TimelineStyle.status.iconSize
+					Layout.preferredWidth: TimelineStyle.status.iconSize
+					icon: TimelineStyle.ephemeralTimer.icon
+					iconSize: TimelineStyle.status.iconSize
+					overwriteColor:  mainItem.timelineModel && mainItem.timelineModel.selected ? TimelineStyle.ephemeralTimer.selectedTimerColor.color : TimelineStyle.ephemeralTimer.timerColor.color
+					visible: mainItem.timelineModel && mainItem.timelineModel.chatRoomModel.ephemeralEnabled
 				}
 			}
 		}

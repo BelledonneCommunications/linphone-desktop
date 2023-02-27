@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Colored Emojis with its own font family.
 - OAuth2 connection to retrieve remote provisioning (Experimental and not usable without configuration).
 - Add/View contact from a message.
+- Mute option for each chatrooms.
 
 ## 5.0.11 - undefined
 

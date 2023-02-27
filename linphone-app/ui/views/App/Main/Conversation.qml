@@ -507,7 +507,28 @@ ColumnLayout  {
 						height:visible ? 1 : 0
 						width:parent.width
 						color: ConversationStyle.menu.separatorColor.color
-						visible: deleteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible || scheduleMeetingMenuItem.visible)
+						visible: muteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible || scheduleMeetingMenuItem.visible)
+					}
+					MenuItem{
+						id: muteMenuItem
+						text: chatRoomModel.notificationsEnabled
+						//: 'Disable notifications' : Item menu to disable chat's notifications
+							? qsTr('conversationMenuDeactivate')
+						//: 'Enable notifications' : Item menu to enable chat's notifications
+							: qsTr('conversationMenuActivate')
+						iconMenu: chatRoomModel.notificationsEnabled ? MenuItemStyle.notifications.off : MenuItemStyle.notifications.on
+						iconSizeMenu: 40
+						menuItemStyle : MenuItemStyle.aux2
+						onTriggered: {
+							chatRoomModel.notificationsEnabled = !chatRoomModel.notificationsEnabled
+						}
+					}
+					
+					Rectangle{
+						height:visible ? 1 : 0
+						width:parent.width
+						color: ConversationStyle.menu.separatorColor.color
+						visible: deleteMenuItem.visible && (contactMenu.visible || groupInfoMenu.visible || devicesMenuItem.visible || ephemeralMenuItem.visible || scheduleMeetingMenuItem.visible || muteMenuItem.visible)
 					}
 					MenuItem{
 						id: deleteMenuItem

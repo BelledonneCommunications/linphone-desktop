@@ -9,6 +9,15 @@ import ColorsList 1.0
 QtObject {
 	property string sectionName: 'Timeline'
 	property var colorModel: ColorsList.add(sectionName+'_bg', 'q')
+	property QtObject status: QtObject{
+		property int iconSize : 30
+	}
+	
+	property QtObject disabledNotifications: QtObject{
+		property string icon: 'notifications_off_custom'
+		property var colorModel: ColorsList.addImageColor(sectionName+'_disabledNotifications', icon, 'ad')
+		property var selectedColorModel: ColorsList.addImageColor(sectionName+'_disabledNotifications_c', icon, 'q')
+	}
 	
 	property QtObject ephemeralTimer: QtObject{
 		property string icon: 'timer_custom'

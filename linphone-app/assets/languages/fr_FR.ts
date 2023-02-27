@@ -173,7 +173,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -1103,6 +1103,16 @@ URL du serveur non configurée.</translation>
         <extracomment>&apos;Schedule a meeting&apos; : Item menu to schedule a meeting with the chat participants.</extracomment>
         <translation>Planifier une réunion</translation>
     </message>
+    <message>
+        <source>conversationMenuDeactivate</source>
+        <extracomment>&apos;Disable notifications&apos; : Item menu to disable chat&apos;s notifications</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conversationMenuActivate</source>
+        <extracomment>&apos;Enable notifications&apos; : Item menu to enable chat&apos;s notifications</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
@@ -1259,7 +1269,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -2066,7 +2076,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation>Voulez-vous programmer cette réunion ?</translation>
+        <translation>Voulez-vous programmer cette réunion&#x202f;?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2535,12 +2545,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application ? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
+        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application&#xa0;? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain d&apos;activer le chiffrement ? Cette action est irréversible sans perdre TOUTES vos données.</translation>
+        <translation>Êtes-vous certain d&apos;activer le chiffrement&#xa0;? Cette action est irréversible sans perdre TOUTES vos données.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -2809,7 +2819,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3755,7 +3765,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation ?</translation>
+        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation&#x202f;?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
@@ -3877,15 +3887,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation>Échec lors de la suppression de la clef : %1</translation>
+        <translation>Échec lors de la suppression de la clef&#xa0;: %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation>Échec lors de la lecture de la clef : %1</translation>
+        <translation>Échec lors de la lecture de la clef&#xa0;: %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation>Échec lors de l&apos;écriture de la clef : %1</translation>
+        <translation>Échec lors de l&apos;écriture de la clef&#xa0;: %1</translation>
     </message>
 </context>
 <context>

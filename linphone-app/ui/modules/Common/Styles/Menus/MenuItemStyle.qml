@@ -47,7 +47,10 @@ QtObject {
 	property QtObject scheduleMeeting: QtObject {
 		property string icon : 'meetings_custom'
 	}
-	
+	property QtObject notifications: QtObject {
+		property string off : 'notifications_off_custom'
+		property string on : 'notifications_on_custom'
+	}
 	property QtObject contact: QtObject {
 		property string add : 'contact_add_custom'
 		property string view : 'contact_view_custom'

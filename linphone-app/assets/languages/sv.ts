@@ -1103,6 +1103,16 @@ Serverwebbadressen är inte konfigurerad.</translation>
         <extracomment>&apos;Schedule a meeting&apos; : Item menu to schedule a meeting with the chat participants.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>conversationMenuDeactivate</source>
+        <extracomment>&apos;Disable notifications&apos; : Item menu to disable chat&apos;s notifications</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>conversationMenuActivate</source>
+        <extracomment>&apos;Enable notifications&apos; : Item menu to enable chat&apos;s notifications</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
