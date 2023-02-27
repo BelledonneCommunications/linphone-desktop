@@ -92,6 +92,13 @@ TabContainer {
 										pointSize: FormTableStyle.entry.text.pointSize
 								}
 							}
+							ActionButton{
+								isCustom: true
+								backgroundRadius: 90
+								colorSet: SettingsUiStyle.cancel
+								onClicked: SettingsModel.textMessageFont = ''
+								Layout.preferredWidth: 25
+							}
 						}
 						
 					}

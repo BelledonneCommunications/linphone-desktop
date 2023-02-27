@@ -1456,7 +1456,12 @@ QFont SettingsModel::getTextMessageFont() const{
 }
 
 void SettingsModel::setTextMessageFont(const QFont& font){
-	mConfig->setString(UiSection, "text_message_font", Utils::appStringToCoreString(font.family()));
+	QString family;
+	if(font == QFont())
+		family = Constants::DefaultFont;
+	else
+		family = font.family();
+	mConfig->setString(UiSection, "text_message_font", Utils::appStringToCoreString(family));
 	setTextMessageFontSize(font.pointSize());
 	emit textMessageFontChanged(font);
 }
@@ -1477,7 +1482,12 @@ QFont SettingsModel::getEmojiFont() const{
 }
 
 void SettingsModel::setEmojiFont(const QFont& font){
-	mConfig->setString(UiSection, "emoji_font", Utils::appStringToCoreString(font.family()));
+	QString family;
+	if(font == QFont())
+		family = Constants::DefaultEmojiFont;
+	else
+		family = font.family();
+	mConfig->setString(UiSection, "emoji_font", Utils::appStringToCoreString(family));
 	emit emojiFontChanged(font);
 }
 
