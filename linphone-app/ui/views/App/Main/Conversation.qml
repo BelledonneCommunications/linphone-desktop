@@ -665,6 +665,12 @@ ColumnLayout  {
 				updateFilter()
 			}
 		}
+		onAddContactClicked: window.setView('ContactEdit', {
+													  sipAddress: contactAddress
+												  })
+		onViewContactClicked: window.setView('ContactEdit', {
+													  sipAddress: contactAddress
+												  })
 	}
 	
 	Connections {

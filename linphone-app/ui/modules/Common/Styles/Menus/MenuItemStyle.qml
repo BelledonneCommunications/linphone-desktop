@@ -53,6 +53,10 @@ QtObject {
 		property string view : 'contact_view_custom'
 	}
 	
+	property QtObject entry: QtObject{
+		property int iconSize: 30
+	}
+	
 	
 	property QtObject normal : QtObject{
 		property int leftMargin: 5

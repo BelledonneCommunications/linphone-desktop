@@ -36,6 +36,8 @@ Item {
 	signal forwardClicked()
 	signal goToMessage(ChatMessageModel message)
 	signal conferenceIcsCopied()
+	signal addContactClicked(string contactAddress)
+	signal viewContactClicked(string contactAddress)
 	
 	// ---------------------------------------------------------------------------
 	property string lastTextSelected
@@ -211,5 +213,7 @@ Item {
 		onCopySelectionDone: container.copySelectionDone()
 		onReplyClicked: container.replyClicked()
 		onForwardClicked: container.forwardClicked()
+		onAddContactClicked: container.addContactClicked(contactAddress)
+		onViewContactClicked: container.viewContactClicked(contactAddress)
 	}
 }

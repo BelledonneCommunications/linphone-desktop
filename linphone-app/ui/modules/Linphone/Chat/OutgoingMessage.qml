@@ -21,6 +21,8 @@ Item {
 	signal forwardClicked()
 	signal goToMessage(ChatMessageModel message)
 	signal conferenceIcsCopied()
+	signal addContactClicked(string contactAddress)
+	signal viewContactClicked(string contactAddress)
 	
 	Message {
 		id: message
@@ -31,6 +33,8 @@ Item {
 		onForwardClicked: parent.forwardClicked()
 		onGoToMessage: parent.goToMessage(message)
 		onConferenceIcsCopied: parent.conferenceIcsCopied()
+		onAddContactClicked: parent.addContactClicked(contactAddress)
+		onViewContactClicked: parent.viewContactClicked(contactAddress)
 		
 		anchors {
 			left: parent.left

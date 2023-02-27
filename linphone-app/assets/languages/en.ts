@@ -706,6 +706,16 @@ Server URL not configured.</translation>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
         <translation>Reply</translation>
     </message>
+    <message>
+        <source>menuViewContact</source>
+        <extracomment>&apos;View contact&apos; : Menu item to view the contact.</extracomment>
+        <translation>View contact</translation>
+    </message>
+    <message>
+        <source>menuAddContact</source>
+        <extracomment>&apos;Add to contacts&apos; : Menu item to add the contact to address book.</extracomment>
+        <translation>Add to contacts</translation>
+    </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>

@@ -158,7 +158,7 @@ QString ChatMessageModel::getToSipAddress() const{
 }
 
 ContactModel * ChatMessageModel::getContactModel() const{
-	return mChatMessage ? CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asString())).get() : nullptr;
+	return mChatMessage ? CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getFromAddress()->asStringUriOnly()))).get() : nullptr;
 }
 
 bool ChatMessageModel::isEphemeral() const{

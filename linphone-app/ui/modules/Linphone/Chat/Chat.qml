@@ -28,6 +28,9 @@ Rectangle {
 	// ---------------------------------------------------------------------------
 	
 	signal messageToSend (string text)
+	signal addContactClicked(string contactAddress)
+	signal viewContactClicked(string contactAddress)
+	
 	
 	// ---------------------------------------------------------------------------
 	
@@ -314,6 +317,8 @@ Rectangle {
 									container.goToMessage(message)	// sometimes, there is no access to chat id (maybe because of cleaning component while loading new items). Use a global intermediate.
 								}
 								onConferenceIcsCopied: container.noticeBannerText = qsTr('conferencesCopiedICS')
+								onAddContactClicked: container.addContactClicked(contactAddress)
+								onViewContactClicked: container.viewContactClicked(contactAddress)
 							}
 						}
 					}

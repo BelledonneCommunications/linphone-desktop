@@ -31,12 +31,15 @@ Item {
 	signal copySelectionDone()
 	signal replyClicked()
 	signal forwardClicked()
+	signal addContactClicked(string contactAddress)
+	signal viewContactClicked(string contactAddress)
 
 	function open(){
 		messageMenu.popup()
 	}
 	
 	property string chatTextContent: chatMessageModel && chatMessageModel.content
+	property bool isContact: (chatMessageModel && chatMessageModel.contactModel) || false
 	
 	
 	Menu {
@@ -48,7 +51,7 @@ Item {
 													  //: 'Copy' : Text menu to copy selected text in message into clipboard
 													:  qsTr('menuCopy'))
 			iconMenu: MenuItemStyle.copy.icon
-			iconSizeMenu: MenuItemStyle.copy.iconSize
+			iconSizeMenu: MenuItemStyle.entry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: {
@@ -67,7 +70,7 @@ Item {
 			enabled: TextToSpeech.available
 			text: qsTr('menuPlayMe')
 			iconMenu: MenuItemStyle.speaker.icon
-			iconSizeMenu: MenuItemStyle.speaker.iconSize
+			iconSizeMenu: MenuItemStyle.entry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: TextToSpeech.say(container.chatTextContent)
@@ -77,7 +80,7 @@ Item {
 			//: 'Forward' : Forward  a message from menu
 			text: qsTr('menuForward')
 			iconMenu: MenuItemStyle.forward.icon
-			iconSizeMenu: MenuItemStyle.forward.iconSize
+			iconSizeMenu: MenuItemStyle.entry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: container.forwardClicked()
@@ -87,7 +90,7 @@ Item {
 			//: 'Reply' : Reply to a message from menu
 			text: qsTr('menuReply')
 			iconMenu: MenuItemStyle.reply.icon
-			iconSizeMenu: MenuItemStyle.reply.iconSize
+			iconSizeMenu: MenuItemStyle.entry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			onTriggered: container.replyClicked()
@@ -101,17 +104,30 @@ Item {
 			: qsTr('menuDeliveryStatus')
 			)
 			iconMenu: MenuItemStyle.imdn.icon
-			iconSizeMenu: MenuItemStyle.imdn.iconSize
+			iconSizeMenu: MenuItemStyle.entry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.aux
 			visible: container.deliveryCount > 0
 			onTriggered: container.deliveryStatusClicked()
 		}
 		MenuItem {
+			text: container.isContact
+					//: 'View contact' : Menu item to view the contact.
+					? qsTr('menuViewContact')
+					//: 'Add to contacts' : Menu item to add the contact to address book.
+					: qsTr('menuAddContact')
+			iconMenu: container.isContact ? MenuItemStyle.contact.view : MenuItemStyle.contact.add
+			iconSizeMenu: MenuItemStyle.entry.iconSize
+			iconLayoutDirection: Qt.RightToLeft
+			menuItemStyle : MenuItemStyle.aux
+			visible: !chatMessageModel.isOutgoing
+			onTriggered: container.isContact ? container.viewContactClicked(container.chatMessageModel.fromSipAddress) : container.addContactClicked(container.chatMessageModel.fromSipAddress)
+		}
+		MenuItem {
 			//: 'Delete' : Item menu to delete a message
 			text: qsTr('menuDelete')
 			iconMenu: MenuItemStyle.deleteEntry.icon
-			iconSizeMenu: MenuItemStyle.deleteEntry.iconSize
+			iconSizeMenu: MenuItemStyle.entry.iconSize
 			iconLayoutDirection: Qt.RightToLeft
 			menuItemStyle : MenuItemStyle.auxError
 			onTriggered: container.removeEntryRequested()
