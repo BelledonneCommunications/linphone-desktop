@@ -1436,11 +1436,10 @@ void SettingsModel::setTextMessageFontSize(const int& size){
 }
 	
 QString SettingsModel::getSavedScreenshotsFolder () const {
-	return QDir::cleanPath(
-			       Utils::coreStringToAppString(
-							    mConfig->getString(UiSection, "saved_screenshots_folder", Paths::getCapturesDirPath())
-							    )
-			       ) + QDir::separator();
+	auto path = mConfig->getString(UiSection, "saved_screenshots_folder", "");
+	if(path == "")
+		path = Paths::getCapturesDirPath();
+	return QDir::cleanPath(Utils::coreStringToAppString(path)) + QDir::separator();
 }
 
 void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
@@ -1452,15 +1451,17 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 // -----------------------------------------------------------------------------
 
 static inline string getLegacySavedCallsFolder (const shared_ptr<linphone::Config> &config) {
-	return config->getString(SettingsModel::UiSection, "saved_videos_folder", Paths::getCapturesDirPath());
+	auto path = config->getString(SettingsModel::UiSection, "saved_videos_folder", "");
+	if(path == "")// Avoid to call default function if exist because calling Path:: will create a folder to be writable.
+		path = Paths::getCapturesDirPath();
+	return path;
 }
 
 QString SettingsModel::getSavedCallsFolder () const {
-	return QDir::cleanPath(
-			       Utils::coreStringToAppString(
-							    mConfig->getString(UiSection, "saved_calls_folder", getLegacySavedCallsFolder(mConfig))
-							    )
-			       ) + QDir::separator();
+	auto path = mConfig->getString(UiSection, "saved_calls_folder", "");// Avoid to call default function if exist.
+	if(path == "")
+		path = getLegacySavedCallsFolder(mConfig);
+	return QDir::cleanPath(Utils::coreStringToAppString(path)) + QDir::separator();
 }
 
 void SettingsModel::setSavedCallsFolder (const QString &folder) {
@@ -1472,11 +1473,10 @@ void SettingsModel::setSavedCallsFolder (const QString &folder) {
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getDownloadFolder () const {
-	return QDir::cleanPath(
-			       Utils::coreStringToAppString(
-							    mConfig->getString(UiSection, "download_folder", Paths::getDownloadDirPath())
-							    )
-			       ) + QDir::separator();
+	auto path = mConfig->getString(UiSection, "download_folder", "");// Avoid to call default function if exist because calling Path:: will create a folder to be writable.
+	if(path == "" )
+		path = Paths::getDownloadDirPath();
+	return QDir::cleanPath(Utils::coreStringToAppString(path)) + QDir::separator();
 }
 
 void SettingsModel::setDownloadFolder (const QString &folder) {

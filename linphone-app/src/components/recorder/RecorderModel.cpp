@@ -87,7 +87,7 @@ void RecorderModel::start(){
 			.arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss-zzz"));
 	const QString safeFilePath = Utils::getSafeFilePath(
 				QStringLiteral("%1%2")
-				.arg(Utils::coreStringToAppString(Paths::getCapturesDirPath()))
+				.arg(CoreManager::getInstance()->getSettingsModel()->getSavedCallsFolder())
 				.arg(filename),
 				&soFarSoGood
 				);
