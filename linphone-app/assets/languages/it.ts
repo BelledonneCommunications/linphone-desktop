@@ -379,12 +379,12 @@
     </message>
     <message>
         <source>callErrorHangUp</source>
-        <translation type="unfinished"></translation>
+        <translation>Il partecipante remoto ha terminato la chiamata.</translation>
     </message>
     <message>
         <source>callStatsMediaEncryption</source>
         <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criptaggio dei dati multimediali</translation>
     </message>
     <message>
         <source>callStatsCipherAlgo</source>
@@ -399,17 +399,17 @@
     <message>
         <source>callStatsHashAlgo</source>
         <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Funzione di hash</translation>
     </message>
     <message>
         <source>callStatsAuthAlgo</source>
         <extracomment>&apos;Authentication algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo di autenticazione</translation>
     </message>
     <message>
         <source>callStatsSasAlgo</source>
         <extracomment>&apos;SAS algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo SAS</translation>
     </message>
 </context>
 <context>
@@ -436,7 +436,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criptaggio dei dati multimediali</translation>
     </message>
 </context>
 <context>
@@ -534,7 +534,7 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation>La conferenza ICS è stata copiata</translation>
+        <translation>L&apos;invito è stato copiato</translation>
     </message>
 </context>
 <context>
@@ -552,7 +552,7 @@ URL del server non configurato.</translation>
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Meeting address&apos; : Title for the meeting address.</extracomment>
-        <translation>Indirizzo conferenza</translation>
+        <translation>Indirizzo per l&apos;incontro</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -567,12 +567,12 @@ URL del server non configurato.</translation>
     <message>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vuoi veramente cancellare l&apos;incontro?</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;incontro è stato cancellato</translation>
     </message>
 </context>
 <context>
@@ -603,12 +603,12 @@ URL del server non configurato.</translation>
     <message>
         <source>icsUpdatedMeetingInvite</source>
         <extracomment>&apos;Meeting has been updated&apos; : ICS title for an updated invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;incontro è stato modificato</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS title for a cancelled invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;incontro è stato cancellato</translation>
     </message>
 </context>
 <context>
@@ -709,12 +709,12 @@ URL del server non configurato.</translation>
     <message>
         <source>menuViewContact</source>
         <extracomment>&apos;View contact&apos; : Menu item to view the contact.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vedi contatto</translation>
     </message>
     <message>
         <source>menuAddContact</source>
         <extracomment>&apos;Add to contacts&apos; : Menu item to add the contact to address book.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aggiungere ai contatti</translation>
     </message>
 </context>
 <context>
@@ -792,7 +792,7 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Inizia una conferenza.</translation>
+        <translation>Iniziare un incontro.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
