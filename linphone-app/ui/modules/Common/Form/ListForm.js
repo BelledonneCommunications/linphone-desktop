@@ -67,6 +67,7 @@ function addValue (value) {
 }
 
 function handleEditionFinished (index, text) {
+  if(index<0) return
   var model = values.model
   var oldValue = model.get(index).$value
 

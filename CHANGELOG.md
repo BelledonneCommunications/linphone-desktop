@@ -16,7 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mute option for each chatrooms.
 - New Chat Layout.
 
-## 5.0.11 - undefined
+
+## 5.0.12 - undefined
+
+## Fixed
+- Unusable Contact sheet.
+
+## 5.0.11 - 2023-02-24
 
 ### Fixed
 - Display of non-Ascii avatar
