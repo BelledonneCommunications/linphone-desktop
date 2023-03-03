@@ -24,6 +24,7 @@
 #include <QDesktopServices>
 #include <QImageReader>
 #include <QMessageBox>
+#include <QPainter>
 
 #include "app/App.hpp"
 #include "app/paths/Paths.hpp"
@@ -163,20 +164,26 @@ void ContentModel::createThumbnail (const bool& force) {
 		if(!appdata.mData.contains(path) 
 				|| !QFileInfo(QString::fromStdString(Paths::getThumbnailsDirPath())+appdata.mData[path]).isFile()){
 			// File don't exist. Create the thumbnail
+			QImage originalImage(path);
 			
-			QImage image(path);
-			if( image.isNull()){// Try to determine format from headers
+			if( originalImage.isNull()){// Try to determine format from headers
 				QImageReader reader(path);
 				reader.setDecideFormatFromContent(true);
 				QByteArray format = reader.format();
 				if(!format.isEmpty())
-					image = QImage(path, format);
+					originalImage = QImage(path, format);
 			}
-			if (!image.isNull()){
+			if (!originalImage.isNull()){
 				int rotation = 0;
 				QExifImageHeader exifImageHeader;
 				if (exifImageHeader.loadFromJpeg(path))
 					rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
+// Fill with color to replace transparency with white color instead of black (default).
+				QImage image(originalImage.size(), originalImage.format());
+				image.fill(QColor(Qt::white).rgb());
+				QPainter painter(&image);
+				painter.drawImage(0, 0, originalImage);
+//--------------------
 				QImage thumbnail = image.scaled(
 							Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
 							Qt::KeepAspectRatio, Qt::SmoothTransformation
