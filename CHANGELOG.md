@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mute option for each chatrooms.
 - New Chat Layout.
 
+### Fixed
+- Update SDK to 5.2.29
+
 ## 5.0.12 - 2023-03-01
 
 ## Fixed
