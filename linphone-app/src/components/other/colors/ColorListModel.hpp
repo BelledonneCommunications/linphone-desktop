@@ -76,8 +76,14 @@ class ColorListModel : public ProxyListModel {
 		ADD_COLOR("n", "#A1A1A1", "Primary color for pressed button")
 		ADD_COLOR("o", "#D0D8DE", "Primary color for disabled button")
 		
-		ADD_COLOR("outgoing_bg","#F3F3F3","Outgoing message background")
-		ADD_COLOR("incoming_bg","#D0D8DE","Incoming message background")
+		ADD_COLOR("outgoing_bg","#FFEEE5","Outgoing message background")
+		ADD_COLOR("incoming_bg","#F3F3F3","Incoming message background")
+		
+		ADD_COLOR("outgoing_reply_mark_bg","#FF9E67","Outgoing reply message mark background")
+		ADD_COLOR("incoming_reply_mark_bg","#9B9B9B","Incoming reply message mark background")
+		
+		ADD_COLOR("reply_file_bg","#F4F4F4","File icon background in reply")
+		ADD_COLOR("extension_file_border","#DEDEDE","File icon border in reply")
 		
 		ADD_COLOR("primary_accept", "#9ECD1D", "Primary color for accepting button")
 		

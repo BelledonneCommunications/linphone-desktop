@@ -39,10 +39,24 @@ class ContentProxyModel : public QSortFilterProxyModel {
 public:
 	ContentProxyModel (QObject *parent = nullptr);	
 	Q_PROPERTY(ChatMessageModel * chatMessageModel READ getChatMessageModel WRITE setChatMessageModel NOTIFY chatMessageModelChanged)
+	Q_PROPERTY(FilterContentType filter READ getFilter WRITE setFilter NOTIFY filterChanged)
+	
+	enum FilterContentType {
+		All,
+		File,
+		Text,
+		Voice,
+		Conference,
+		Unknown
+	};
+	Q_ENUM(FilterContentType)
 	
 	ChatMessageModel * getChatMessageModel() const;
 	
+	
 	void setChatMessageModel(ChatMessageModel * message);
+	FilterContentType getFilter() const;
+	void setFilter(const FilterContentType& contentType);
 	Q_INVOKABLE void setContentListModel(ContentListModel * model);
 	Q_INVOKABLE void addFile(const QString& path);
 	Q_INVOKABLE void remove(ContentModel * model);
@@ -50,13 +64,14 @@ public:
 	
 signals:
 	void chatMessageModelChanged();
+	void filterChanged();
 	
 protected:
 	virtual bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
 	std::shared_ptr<ContentListModel> mContents;
-	
+	FilterContentType mFilter = All;
 };
 
 #endif

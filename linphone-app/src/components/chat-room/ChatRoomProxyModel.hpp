@@ -21,7 +21,7 @@
 #ifndef CHAT_ROOM_PROXY_MODEL_H_
 #define CHAT_ROOM_PROXY_MODEL_H_
 
-#include <QSortFilterProxyModel>
+#include "app/proxyModel/SortFilterProxyModel.hpp"
 
 #include "ChatRoomModel.hpp"
 
@@ -29,7 +29,7 @@
 
 class QWindow;
 
-class ChatRoomProxyModel : public QSortFilterProxyModel {
+class ChatRoomProxyModel : public SortFilterProxyModel {
 	class ChatRoomModelFilter;
 	
 	Q_OBJECT

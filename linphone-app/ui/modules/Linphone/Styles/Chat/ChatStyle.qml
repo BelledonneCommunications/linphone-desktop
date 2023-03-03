@@ -173,7 +173,7 @@ QtObject {
 		
 		property QtObject message: QtObject {
 			property int padding: 8
-			property int radius: 4
+			property int radius: 8
 			
 			property QtObject extraContent: QtObject {
 				property int leftMargin: 10
@@ -182,7 +182,7 @@ QtObject {
 			}
 			
 			property QtObject file: QtObject {
-				property int height: 80
+				property int height: 120
 				property int heightbetter: 200
 				property int iconSize: 18
 				property int margins: 8
@@ -212,10 +212,11 @@ QtObject {
 					property string icon:  'file_extension_custom'
 					property string unknownIcon:  'file_unknown_custom'
 					property int iconSize: 60
-					property int radius: 5
+					property int radius: 0
 					
 					property QtObject background: QtObject {
 						property var colorModel: ColorsList.add(sectionName+'_file_extension_bg', 'q')
+						property var borderColorModel: ColorsList.add(sectionName+'_file_extension_border', 'extension_file_border')
 					}
 					
 					property QtObject text: QtObject {
@@ -249,7 +250,7 @@ QtObject {
 			
 			property QtObject incoming: QtObject {
 				property var backgroundColor: ColorsList.add(sectionName+'_incoming_bg', 'incoming_bg')
-				property int avatarSize: 20
+				property int avatarSize: 30
 				
 				property QtObject text: QtObject {
 					property var colorModel: ColorsList.add(sectionName+'_incoming_text', 'd')
@@ -259,9 +260,9 @@ QtObject {
 			
 			property QtObject outgoing: QtObject {
 				property var backgroundColor: ColorsList.add(sectionName+'_outgoing_bg', 'outgoing_bg')
-				property int areaSize: 12
+				property int areaSize: 32
 				property int busyIndicatorSize: 12
-				property int sendIconSize: 60
+				property int sendIconSize: 12
 				
 				property QtObject text: QtObject {
 					property var colorModel: ColorsList.add(sectionName+'_outgoing_text', 'd')

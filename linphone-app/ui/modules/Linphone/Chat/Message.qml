@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
+import QtQml.Models 2.15
 
 import Clipboard 1.0
 import Common 1.0
@@ -16,6 +17,7 @@ import LinphoneEnums 1.0
 import ColorsList 1.0
 
 import 'Message.js' as Logic
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
 // =============================================================================
 
@@ -25,8 +27,10 @@ Item {
 	// ---------------------------------------------------------------------------
 	
 	property alias backgroundColorModel: rectangle.colorModel
-	
+	property bool isHovering : false
 	default property alias _content: content.data
+	property bool isTopGrouped: false
+	property bool isBottomGrouped: false
 	
 	// ---------------------------------------------------------------------------
 	
@@ -41,94 +45,52 @@ Item {
 	
 	// ---------------------------------------------------------------------------
 	property string lastTextSelected
-	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + messageData.height
-	
+	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + chatContent.height
 	Rectangle {
 		id: rectangle
-		property int maxWidth: parent.width
-		property int dataWidth: maxWidth
+		property int availableWidth: parent.width
 		property bool ephemeral : $chatEntry.isEphemeral
 		property var colorModel:{'color': 'transparent'}
-		function updateWidth(){
-			var maxWidth = Math.max(forwardMessage.fitWidth, replyMessage.fitWidth)
-			for(var child in messageContentsList.contentItem.children) {
-				var a = messageContentsList.contentItem.children[child].fitWidth
-				if(a)
-					maxWidth = Math.max(maxWidth,a)
-			}
-			rectangle.dataWidth = maxWidth
-		}
+		
+		anchors.left: !$chatEntry.isOutgoing ? parent.left : undefined
+		anchors.right: $chatEntry.isOutgoing ? parent.right : undefined
+		
 		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
 		radius: ChatStyle.entry.message.radius
 		clip: false
 		color: colorModel.color
-		width: (
-				   ephemeralTimerRow.visible && dataWidth < ephemeralTimerRow.width + 2*ChatStyle.entry.message.padding
+		width: (//implicitWidth
+				   ephemeralTimerRow.visible && (chatContent.bestWidth < ephemeralTimerRow.width + 2*ChatStyle.entry.message.padding)
 				   ? ephemeralTimerRow.width + 2*ChatStyle.entry.message.padding
-				   : Math.min(dataWidth, maxWidth)
+				   : Math.min(chatContent.bestWidth, availableWidth)
 				   )
+		
 		// ---------------------------------------------------------------------------
 		// Message.
 		// ---------------------------------------------------------------------------
-		
-		Column{
-			id: messageData
+		Rectangle{
+			visible: container.isTopGrouped || container.isBottomGrouped
+			color: parent.color
+			anchors.left: !$chatEntry.isOutgoing ? parent.left : undefined
+			anchors.right: $chatEntry.isOutgoing ? parent.right : undefined
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.topMargin: container.isTopGrouped ? 0 : parent.radius
+			anchors.bottomMargin: container.isBottomGrouped ? 0 : parent.radius
+			width: parent.radius
+		}
+		ChatFullContent{
+			id: chatContent
+			anchors.top: parent.top
 			anchors.left: parent.left
 			anchors.right: parent.right
-			spacing: 0
-			ChatForwardMessage{
-				id: forwardMessage
-				mainChatMessageModel: $chatEntry
-				visible: $chatEntry.isForward
-				maxWidth: container.width
-				onFitWidthChanged:{
-					rectangle.updateWidth()
-				}
-			}
-			ChatReplyMessage{
-				id: replyMessage
-				z: 1
-				mainChatMessageModel: $chatEntry
-				visible: $chatEntry.isReply
-				maxWidth: container.width
-				onFitWidthChanged:{
-					rectangle.updateWidth()
-				}
-				onGoToMessage: container.goToMessage(message)
-			}
-			ListView {
-				id: messageContentsList
-				anchors.left: parent.left
-				anchors.right: parent.right
-				visible: count > 0
-				spacing: 0
-				clip: false
-				model: ContentProxyModel{
-					chatMessageModel: $chatEntry
-				}
-				height: contentHeight
-				boundsBehavior: Flickable.StopAtBounds
-				interactive: false
-				delegate: 
-					ChatContent{
-						maxWidth: container.width
-						contentModel: $modelData
-						onFitWidthChanged:{
-							rectangle.updateWidth()			
-						}
-						onLastTextSelectedChanged: container.lastTextSelected= lastTextSelected
-						onRightClicked: chatMenu.open()
-						onConferenceIcsCopied: container.conferenceIcsCopied()
-						onFileIsHoveringChanged: menuButton.visible = !fileIsHovering
-						Rectangle{
-							anchors.left: parent.left
-							anchors.right: parent.right
-							color: ChatStyle.entry.separator.colorModel.color
-							height: visible ? ChatStyle.entry.separator.width : 0
-							visible: (index !== (messageContentsList.count - 1)) 
-						}
-					}
-			}
+			chatMessageModel: $chatEntry
+			availableWidth: rectangle.availableWidth
+			onLastTextSelectedChanged: container.lastTextSelected= lastTextSelected
+			onGoToMessage: container.goToMessage(message)
+			onRightClicked: chatMenu.open()
+			onConferenceIcsCopied: container.conferenceIcsCopied()
+			onIsFileHoveringChanged: menuButton.visible = !isFileHovering
 		}
 		Row{
 			id:ephemeralTimerRow
@@ -158,7 +120,6 @@ Item {
 			}
 		}
 	}
-	
 	// ---------------------------------------------------------------------------
 	// Extra content.
 	// ---------------------------------------------------------------------------
@@ -168,8 +129,10 @@ Item {
 		
 		anchors {
 			left: rectangle.right
+			bottom: rectangle.bottom
 			leftMargin: ChatStyle.entry.message.extraContent.leftMargin
 		}
+		
 	}
 	ChatDeliveries{
 		id: deliveryLayout
@@ -193,7 +156,7 @@ Item {
 		backgroundRadius: 8
 		
 		colorSet : ChatStyle.entry.menu
-		visible: isHoverEntry()
+		visible: container.isHovering
 		
 		onClicked: chatMenu.open()
 	}

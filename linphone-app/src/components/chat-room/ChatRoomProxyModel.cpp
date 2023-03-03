@@ -40,9 +40,9 @@ QString ChatRoomProxyModel::gCachedText;
 
 // =============================================================================
 
-ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
+ChatRoomProxyModel::ChatRoomProxyModel (QObject *parent) : SortFilterProxyModel(parent) {
 	mMarkAsReadEnabled = true;
-	
+	mDeleteSourceModel= false;
 	App *app = App::getInstance();
 	QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
 		handleIsActiveChanged(App::getInstance()->getMainWindow());

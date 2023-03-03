@@ -25,9 +25,9 @@ Loader{
 	id: mainItem
 	property ContentModel contentModel
 	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
-	property int maxWidth : parent.width
+	property int availableWidth : parent.width
 	property int fitHeight: active && item ? item.fitHeight : 0
-	property int fitWidth: active && item ? maxWidth/2  + ChatCalendarMessageStyle.widthMargin*2 : 0
+	property int fitWidth: active && item ? availableWidth/2  + ChatCalendarMessageStyle.widthMargin*2 : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
 	property bool isExpanded : false

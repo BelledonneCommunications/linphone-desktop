@@ -288,6 +288,9 @@ void Notifier::notifyReceivedMessages (const list<shared_ptr<linphone::ChatMessa
 				}
 			}else
 				txt = tr("newFileMessage");
+			if(txt.isEmpty() && message->hasConferenceInvitationContent())
+			//: 'Conference invitation received!' : Notification about receiving an invitation to a conference.
+				txt = tr("newConferenceInvitation");
 		}else
 		//: 'New messages received!' Notification that warn the user of new messages.
 			txt = tr("newChatRoomMessages");

@@ -2215,6 +2215,11 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>E&apos; stato ricevuto un nuovo messaggio!</translation>
     </message>
+    <message>
+        <source>newConferenceInvitation</source>
+        <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>

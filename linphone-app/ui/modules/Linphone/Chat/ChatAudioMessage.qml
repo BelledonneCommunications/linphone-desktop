@@ -24,8 +24,8 @@ import 'Message.js' as Logic
 Loader{
 	id: mainItem
 	property ContentModel contentModel
-	property int maxWidth : parent.width
-	property int fitWidth: active ? Math.max(maxWidth - ChatAudioMessageStyle.emptySpace, ChatAudioMessageStyle.minWidth) : 0
+	property int availableWidth : parent.width
+	property int fitWidth: active ? Math.max(availableWidth - ChatAudioMessageStyle.emptySpace, ChatAudioMessageStyle.minWidth) : 0
 	property int fitHeight: active ? 60 : 0
 	
 	property font customFont : SettingsModel.textMessageFont
@@ -49,7 +49,7 @@ Loader{
 		property bool isPlaying : vocalPlayer.item && vocalPlayer.item.playbackState === SoundPlayer.PlayingState
 		onIsPlayingChanged: isPlaying ? mediaProgressBar.resume() : mediaProgressBar.stop()
 		
-		width: maxWidth < 0 || maxWidth > fitWidth ? fitWidth : maxWidth
+		width: availableWidth < 0 || availableWidth > fitWidth ? fitWidth : availableWidth
 		height: mainItem.fitHeight
 		
 		clip: false

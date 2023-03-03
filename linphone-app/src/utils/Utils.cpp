@@ -125,8 +125,8 @@ QString Utils::toTimeString(QDateTime date, const QString& format){
 	return getOffsettedUTC(date).toString(format);
 }
 
-QString Utils::toDateString(QDateTime date){
-	return getOffsettedUTC(date).toString("yyyy/MM/dd");
+QString Utils::toDateString(QDateTime date, const QString& format){
+	return getOffsettedUTC(date).toString(format);
 }
 
 QString Utils::getDisplayName(const QString& address){

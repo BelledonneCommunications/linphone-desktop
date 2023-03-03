@@ -19,11 +19,21 @@ Row {
 	property ChatMessageModel chatMessageModel: contentModel && contentModel.chatMessageModel
 	property ContentModel contentModel
 	property bool isOutgoing : chatMessageModel && ( chatMessageModel.isOutgoing  || chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
-	property int fitWidth: visible ? Math.max( Math.max((thumbnailProvider.sourceComponent == extension ? thumbnailProvider.item.fitWidth : 0)
+	property int fitHeight: ChatStyle.entry.message.file.height
+	property int fitWidth: ChatStyle.entry.message.file.height * 4 / 3 + 2*ChatStyle.entry.message.file.margins
+	property int borderWidth : 0
+	property color backgroundColor: ChatStyle.entry.message.file.extension.background.colorModel.color
+	property int backgroundRadius: ChatStyle.entry.message.file.extension.radius
+	/*
+	property int fitWidth: visible 
+								? Math.max( Math.max((thumbnailProvider.sourceComponent == extension 
+																? thumbnailProvider.item.fitWidth 
+																: 0)
 														, thumbnailProvider.width + 3*ChatStyle.entry.message.file.margins)
-											  , Math.max(ChatStyle.entry.message.file.width, ChatStyle.entry.message.outgoing.areaSize)) : 0
+											  , Math.max(ChatStyle.entry.message.file.width, ChatStyle.entry.message.outgoing.areaSize)) 
+								: 0
 	property int fitHeight: visible ? rectangle.height : 0
-	
+	*/
 	property bool isAnimatedImage : mainRow.contentModel && mainRow.contentModel.wasDownloaded && UtilsCpp.isAnimatedImage(mainRow.contentModel.filePath)
 	property bool haveThumbnail: mainRow.contentModel && mainRow.contentModel.thumbnail
 	property bool isHovering: thumbnailProvider.state == 'hovered'
@@ -32,7 +42,8 @@ Row {
 	signal copySelectionDone()
 	signal forwardClicked()
 	height: fitHeight
-	visible: contentModel && !contentModel.isIcalendar() && (contentModel.isFile() || contentModel.isFileTransfer()) && !contentModel.isVoiceRecording()
+	width: fitWidth
+	visible: true
 	// ---------------------------------------------------------------------------
 	// File message.
 	// ---------------------------------------------------------------------------
@@ -56,15 +67,14 @@ Row {
 			property string thumbnail :  mainRow.contentModel ? mainRow.contentModel.thumbnail : ''
 			color: 'transparent'
 			anchors.left: parent.left
+			anchors.right: parent.right
 			anchors.top: parent.top
-			anchors.leftMargin: ChatStyle.entry.message.file.margins
-			anchors.topMargin: ChatStyle.entry.message.file.margins
-			height: 2*ChatStyle.entry.message.file.margins + (mainRow.isAnimatedImage ? ChatStyle.entry.message.file.heightbetter
-																						: thumbnailProvider.sourceComponent == extension ? thumbnailProvider.item.fitHeight
-																																		: ChatStyle.entry.message.file.height
+			height: 2*ChatStyle.entry.message.file.margins + (mainRow.isAnimatedImage 
+																? ChatStyle.entry.message.file.heightbetter
+																: thumbnailProvider.sourceComponent == extension
+																	? ChatStyle.entry.message.file.height
+																	: ChatStyle.entry.message.file.height
 															)
-			width: mainRow.width
-			
 			radius: ChatStyle.entry.message.radius
 			
 			// ---------------------------------------------------------------------
@@ -77,12 +87,14 @@ Row {
 				Image {
 					id: thumbnailImageSource
 					property real scaleAnimatorTo : ChatStyle.entry.message.file.animation.thumbnailTo
+					anchors.centerIn: parent
 					mipmap: SettingsModel.mipmapEnabled
 					source: mainRow.contentModel.thumbnail
 					autoTransform: true
 					fillMode: Image.PreserveAspectFit
 					height: ChatStyle.entry.message.file.height
 					width: height*4/3
+					
 					Loader{
 						anchors.fill: parent
 						sourceComponent: Image{// Better quality on zoom
@@ -117,14 +129,18 @@ Row {
 				
 				Rectangle {
 					property int fitWidth: Math.max(downloadText.implicitWidth, Math.max(fileName.visible ? fileName.implicitWidth : 0, fileIcon.iconSize)) + 20
-					property int fitHeight: fileIcon.iconSize + (fileName.visible ? fileName.implicitHeight + ChatStyle.entry.message.file.spacing : 0 ) 
-											+ (downloadText.visible? downloadText.implicitHeight + ChatStyle.entry.message.file.spacing : 0) + 2*ChatStyle.entry.message.file.margins
+					//property int fitHeight: fileIcon.iconSize + (fileName.visible ? fileName.implicitHeight + ChatStyle.entry.message.file.spacing : 0 ) 
+//											+ (downloadText.visible? downloadText.implicitHeight + ChatStyle.entry.message.file.spacing : 0) + 2*ChatStyle.entry.message.file.margins
 					property real scaleAnimatorTo : ChatStyle.entry.message.file.animation.to
 					
-					height: fitHeight
-					width: fitWidth
-					color: ChatStyle.entry.message.file.extension.background.colorModel.color
-					radius: ChatStyle.entry.message.file.extension.radius
+					anchors.centerIn: parent
+					height: ChatStyle.entry.message.file.height
+					width: height*4/3
+					color: mainRow.backgroundColor
+					radius: mainRow.backgroundRadius
+					border.width: mainRow.borderWidth
+					border.color: ChatStyle.entry.message.file.extension.background.borderColorModel.color
+					
 					ColumnLayout{
 						anchors.fill: parent
 						anchors.topMargin: ChatStyle.entry.message.file.margins 
@@ -135,6 +151,8 @@ Row {
 							Layout.alignment: Qt.AlignCenter
 							icon: extensionText.text != '' ?  ChatStyle.entry.message.file.extension.icon : ChatStyle.entry.message.file.extension.unknownIcon
 							iconSize: ChatStyle.entry.message.file.extension.iconSize
+							Layout.fillHeight: true
+							Layout.fillWidth: true
 							Layout.preferredHeight: iconSize
 							Layout.preferredWidth: iconSize
 							Text {
@@ -176,10 +194,10 @@ Row {
 							visible: mainRow.contentModel && !mainRow.isAnimatedImage && !mainRow.haveThumbnail
 							
 							color: ChatStyle.entry.message.file.extension.text.colorModel.color
-							elide: Text.ElideRight
 							font.pointSize: ChatStyle.entry.message.file.name.pointSize
 							wrapMode: Text.WrapAnywhere
-							horizontalAlignment: Qt.AlignCenter
+							horizontalAlignment: Text.AlignHCenter
+							maximumLineCount: 2
 							
 							text: (mainRow.contentModel ? mainRow.contentModel.name : '')
 						}
@@ -187,7 +205,7 @@ Row {
 							id: downloadText
 							Layout.fillWidth: true
 							Layout.fillHeight: true
-							Layout.preferredHeight: visible ? ChatStyle.entry.message.file.download.height : 0
+							Layout.preferredHeight: visible ? contentHeight : 0
 							//: 'Cancel' : Message link to cancel a transfer (upload/download)
 							text: mainRow.contentModel ? rectangle.isTransferring ? qsTr('fileTransferCancel')
 							//: 'Download' : Message link to download a file
@@ -197,8 +215,8 @@ Row {
 							font.pointSize: ChatStyle.entry.message.file.download.pointSize
 							color:ChatStyle.entry.message.file.extension.text.colorModel.color
 							visible: (mainRow.contentModel? (!mainItem.isOutgoing && !mainRow.contentModel.wasDownloaded) || rectangle.isTransferring  : false)
-							horizontalAlignment: Qt.AlignCenter
-							verticalAlignment: Qt.AlignCenter
+							horizontalAlignment: Text.AlignHCenter
+							verticalAlignment: Text.AlignVCenter
 						}
 					}
 					
@@ -206,7 +224,7 @@ Row {
 			}
 			Loader {
 				id: thumbnailProvider
-				
+				anchors.centerIn: parent
 				sourceComponent: (mainRow.contentModel ? 
 									  (mainRow.isAnimatedImage ? animatedImage
 															   :  (mainRow.haveThumbnail ? thumbnailImage : extension )

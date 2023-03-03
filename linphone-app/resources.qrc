@@ -331,6 +331,7 @@
 		<file>ui/modules/Linphone/Chat/Chat.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatContent.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatDeliveries.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatFullContent.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMenu.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatAudioMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatAudioPreview.qml</file>

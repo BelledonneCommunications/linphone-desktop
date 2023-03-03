@@ -17,8 +17,9 @@ import 'Chat.js' as Logic
 Rectangle{
 	id: replyPreviewBlock
 	property ChatRoomModel chatRoomModel
+	property ChatMessageModel replyModel: chatRoomModel ? chatRoomModel.reply : null
 	property int maxHeight : parent.maxHeight
-	Layout.preferredHeight: visible ? Math.min(messageContentsList.height + replyPreviewHeaderArea.implicitHeight + 15, replyPreviewBlock.maxHeight) : 0
+	Layout.preferredHeight: visible ? Math.min(messageContents.height + replyPreviewHeaderArea.implicitHeight + 15, replyPreviewBlock.maxHeight) : 0
 	property int leftMargin: 10
 	property int rightMargin: 10
 	
@@ -71,33 +72,19 @@ Rectangle{
 		
 		Flickable {
 			id: replyPreviewTextArea
-			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < messageContentsList.height}
+			ScrollBar.vertical: ForceScrollBar {visible: replyPreviewTextArea.height < messageContents.height}
 			boundsBehavior: Flickable.StopAtBounds
-			contentHeight: messageContentsList.height
+			contentHeight: messageContents.height
 			contentWidth: width - ScrollBar.vertical.width
 			flickableDirection: Flickable.VerticalFlick 
 			clip: true
 			Layout.fillHeight: true
 			Layout.fillWidth: true
-			ListView {
-				id: messageContentsList
-				anchors.left: parent.left
-				anchors.right: parent.right
-				model: ContentProxyModel{
-					chatMessageModel: replyPreviewBlock.chatRoomModel && replyPreviewBlock.chatRoomModel.reply
-				}
-				height: contentHeight
-				clip: true
-				delegate: ChatContent{
-					contentModel: $modelData
-					Rectangle{
-							anchors.left: parent.left
-							anchors.right: parent.right
-							color: ChatStyle.entry.separator.colorModel.color
-							height: visible ? ChatStyle.entry.separator.width : 0
-							visible: (index !== (messageContentsList.count - 1)) 
-						}
-				}
+			ChatContent{
+				id: messageContents
+				width: replyPreviewTextArea.contentWidth
+				chatMessageModel: replyPreviewBlock.replyModel
+				availableWidth: parent.width
 			}
 		}
 	}

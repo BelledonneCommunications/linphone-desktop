@@ -12,6 +12,10 @@ RowLayout {
 	
 	Layout.fillWidth: true
 	
+	property alias isHovering: message.isHovering
+	property alias isTopGrouped: message.isTopGrouped
+	property alias isBottomGrouped: message.isBottomGrouped
+	
 	signal copyAllDone()
 	signal copySelectionDone()
 	signal replyClicked()
@@ -66,16 +70,17 @@ RowLayout {
 	Message {
 		id: message
 		
-		onCopyAllDone: parent.copyAllDone()
-		onCopySelectionDone: parent.copySelectionDone()
-		onReplyClicked: parent.replyClicked()
-		onForwardClicked: parent.forwardClicked()
-		onGoToMessage: parent.goToMessage(message)
-		onConferenceIcsCopied: parent.conferenceIcsCopied()
-		onAddContactClicked: parent.addContactClicked(contactAddress)
-		onViewContactClicked: parent.viewContactClicked(contactAddress)
+		onCopyAllDone: mainRow.copyAllDone()
+		onCopySelectionDone: mainRow.copySelectionDone()
+		onReplyClicked: mainRow.replyClicked()
+		onForwardClicked: mainRow.forwardClicked()
+		onGoToMessage: mainRow.goToMessage(message)
+		onConferenceIcsCopied: mainRow.conferenceIcsCopied()
+		onAddContactClicked: mainRow.addContactClicked(contactAddress)
+		onViewContactClicked: mainRow.viewContactClicked(contactAddress)
 		
 		Layout.fillWidth: true
+		Layout.rightMargin: 10
 		
 		// Not a style. Workaround to avoid a 0 width.
 		// Arbitrary value.

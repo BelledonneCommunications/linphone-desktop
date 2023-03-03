@@ -23,16 +23,18 @@ Item {
 	id: mainItem
 	property ChatMessageModel chatMessageModel
 	property ChatMessageModel mainChatMessageModel
-	property int maxWidth : parent.width
+	property int availableWidth : parent.width
 	property int headerHeight: ChatReplyMessageStyle.header.replyIcon.iconSize
-	property int replyHeight: (chatMessageModel ? replyMessage.height + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 3 + 3 : 0)
-	property int fitWidth: visible ? Math.max(usernameReplied.implicitWidth + replyMessage.fitWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2 : 0
+	//property int replyHeight: (chatMessageModel ? replyMessage.height + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 3 + 3 : 0)
+	//property int fitWidth: visible ? Math.max(usernameReplied.implicitWidth + replyMessage.fitWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2 : 0
+	property int replyHeight: (chatMessageModel ? chatContent.height + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 3 + 3 : 0)
+	property int fitWidth: visible ? Math.max(usernameReplied.implicitWidth, chatContent.bestWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2 : 0
 	property int fitHeight: visible ? headerHeight + replyHeight : 0
 	
 	property font customFont : SettingsModel.textMessageFont
 	
 	visible: mainChatMessageModel && mainChatMessageModel.isReply
-	width: maxWidth < 0 || maxWidth > fitWidth ? fitWidth : maxWidth
+	width: availableWidth < 0 || availableWidth > fitWidth ? fitWidth : availableWidth
 	height: fitHeight
 	onMainChatMessageModelChanged: if( mainChatMessageModel && mainChatMessageModel.replyChatMessageModel) chatMessageModel = mainChatMessageModel.replyChatMessageModel
 	
@@ -80,15 +82,25 @@ Item {
 			Layout.bottomMargin: ChatStyle.entry.message.padding
 			Layout.leftMargin: 10
 			Layout.rightMargin: 10
+			clip: true
 			Rectangle{
+				id: colorBar
 				anchors.left: parent.left
 				anchors.top: parent.top
 				anchors.bottom: parent.bottom
-				width: 7
+				width: 15
+				radius: 8
 				color: chatMessageModel && chatMessageModel.isOutgoing ? ChatReplyMessageStyle.replyArea.outgoingMarkColor.color  : ChatReplyMessageStyle.replyArea.incomingMarkColor.color
+				Rectangle{
+					anchors.right: parent.right
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					width: 5
+					color: ChatReplyMessageStyle.replyArea.backgroundColor.color
+				}
 			}
 			
-			radius: 5
+			radius: 8
 			color: ChatReplyMessageStyle.replyArea.backgroundColor.color
 			visible: chatMessageModel != undefined
 			Text{
@@ -97,7 +109,6 @@ Item {
 				anchors.left: parent.left
 				anchors.right: parent.right
 				anchors.topMargin: 3
-				
 				
 				leftPadding: 2 * ChatStyle.entry.message.padding
 				
@@ -108,48 +119,20 @@ Item {
 				
 				color: ChatReplyMessageStyle.replyArea.foregroundColor.color
 			}
-			ScrollableListView {
-				id: replyMessage
-				property int fitWidth : 0
-				hideScrollBars: true
+			ChatContent{
+				id: chatContent
 				anchors.top: usernameReplied.bottom
-				anchors.left: parent.left
+				chatMessageModel: mainItem.chatMessageModel
+				availableWidth: mainItem.availableWidth
+				anchors.left: colorBar.right
 				anchors.right: parent.right
 				anchors.topMargin: 3
-				anchors.leftMargin: 5
-				interactive: false
-				clip: false
+				useTextColor: true
+				textColor: ChatReplyMessageStyle.replyArea.foregroundColor.color
 				
-				function updateWidth(){
-					var maxWidth = 0
-					for(var child in replyMessage.contentItem.children) {
-						var a = replyMessage.contentItem.children[child].fitWidth
-						if(a)
-							maxWidth = Math.max(maxWidth,a)
-					}
-					fitWidth = maxWidth
-				}
-				
-				model: ContentProxyModel{
-					chatMessageModel: mainItem.chatMessageModel
-				}
-				
-				onContentHeightChanged: Qt.callLater( function(){replyMessage.height = replyMessage.contentHeight})
-				
-				delegate: ChatContent{
-					contentModel: $modelData
-					textColor: ChatReplyMessageStyle.replyArea.foregroundColor.color
-					onFitWidthChanged:{
-						replyMessage.updateWidth()			
-					}
-					Rectangle{
-							anchors.left: parent.left
-							anchors.right: parent.right
-							color: ChatStyle.entry.separator.colorModel.color
-							height: visible ? ChatStyle.entry.separator.width : 0
-							visible: (index !== (replyMessage.count - 1)) 
-						}
-				}
+				fileBackgroundRadius:5
+				fileBackgroundColor: ChatReplyMessageStyle.replyArea.fileBackgroundColor.color
+				fileBorderWidth:1
 			}
 		}
 	}

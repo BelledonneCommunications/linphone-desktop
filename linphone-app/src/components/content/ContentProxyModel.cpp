@@ -63,9 +63,25 @@ bool ContentProxyModel::filterAcceptsRow (
 		int sourceRow,
 		const QModelIndex &sourceParent
 		) const {
-	Q_UNUSED(sourceRow)
-	Q_UNUSED(sourceParent)
-	return true;
+		
+	bool show = false;
+	
+	if (mFilter == FilterContentType::All)
+		show = true;
+	else{
+		QModelIndex index = sourceModel()->index(sourceRow, 0, QModelIndex());
+		auto contentModel = sourceModel()->data(index).value<ContentModel*>();
+		
+		if( mFilter == FilterContentType::Text && contentModel->isText())
+			show = true;
+		else if( mFilter == FilterContentType::Voice && contentModel->isVoiceRecording())
+			show = true;
+		else if( mFilter == FilterContentType::Conference && contentModel->getConferenceInfoModel())
+			show = true;
+		else if( mFilter == FilterContentType::File && !contentModel->isIcalendar() && (contentModel->isFile() || contentModel->isFileTransfer()|| contentModel->isFileEncrypted()) && !contentModel->isVoiceRecording() )
+			show = true;
+	}
+	return show;
 }
 
 bool ContentProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -98,4 +114,15 @@ void ContentProxyModel::remove(ContentModel * model){
 
 void ContentProxyModel::clear(){
 	qobject_cast<ContentListModel*>(sourceModel())->clear();
+}
+
+ContentProxyModel::FilterContentType ContentProxyModel::getFilter() const{
+	return mFilter;
+}
+void ContentProxyModel::setFilter(const FilterContentType& contentType){
+	if(contentType != mFilter){
+		mFilter = contentType;
+		emit filterChanged();
+		invalidate();
+	}
 }

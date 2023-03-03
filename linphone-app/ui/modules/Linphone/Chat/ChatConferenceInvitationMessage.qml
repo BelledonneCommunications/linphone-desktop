@@ -25,9 +25,9 @@ Loader{
 	id: mainItem
 	property ContentModel contentModel
 	property ConferenceInfoModel conferenceInfoModel: contentModel ? contentModel.conferenceInfoModel : null
-	property int maxWidth : parent.width
+	property int availableWidth : parent.width
 	property int fitHeight: active && item ? item.fitHeight : 0 // + (isExpanded? 200 : 0): 0
-	property int fitWidth: active && item ? Math.min(maxWidth > 0 ? maxWidth : 9999999, item.fitWidth  + ChatCalendarMessageStyle.widthMargin*2) : 0
+	property int fitWidth: active && item ? Math.min(availableWidth > 0 ? availableWidth : 9999999, item.fitWidth  + ChatCalendarMessageStyle.widthMargin*2) : 0
 	property bool containsMouse: false
 	property int gotoButtonMode: -1	//-1: hide, 0:goto, 1:MoreInfo
 	property bool isExpanded : false
@@ -56,7 +56,12 @@ Loader{
 		
 		hoverEnabled: true
 		onClicked: CallsListModel.prepareConferenceCall(mainItem.conferenceInfoModel)
-		onHoveredChanged: mainItem.containsMouse = loadedItem.containsMouse		
+		onHoveredChanged: mainItem.containsMouse = loadedItem.containsMouse
+		Rectangle{
+			anchors.fill: parent
+			color: ChatCalendarMessageStyle.backgroundColor.normal.color
+			radius: 5
+		}
 		
 		ColumnLayout{
 			id: layout
@@ -104,7 +109,6 @@ Loader{
 				elide: Text.ElideRight
 				color: ChatCalendarMessageStyle.subject.colorModel.color
 				font.pointSize: ChatCalendarMessageStyle.subject.pointSize
-				font.weight: Font.Bold
 				text: mainItem.conferenceInfoModel.subject
 			}
 			RowLayout {

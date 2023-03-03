@@ -23,8 +23,8 @@ TextEdit {
 	property ContentModel contentModel
 	property string lastTextSelected : ''
 	property font customFont : SettingsModel.textMessageFont
-	property int fitHeight: visible ? contentHeight + padding + 8 : 0
-	property int fitWidth: visible ? implicitWidth + 2: 0	// add 2 because there is a bug on border that lead to not fit text exactly
+	property int fitHeight: contentHeight + padding + 8
+	property int fitWidth: implicitWidth + 2	// add 2 because there is a bug on border that lead to not fit text exactly
 	
 	signal rightClicked()
 	
@@ -32,8 +32,8 @@ TextEdit {
 	property int removeWarningFromBindingLoop : implicitWidth	// Just a dummy variable to remove meaningless binding loop on implicitWidth
 	
 	height: fitHeight
-	width: parent.width
-	visible: contentModel && contentModel.isText()
+	width: parent && parent.width || 1
+	visible: contentModel// && contentModel.isText()
 	clip: false
 	padding: ChatStyle.entry.message.padding
 	textMargin: 0

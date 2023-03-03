@@ -18,12 +18,14 @@ QtObject {
 		}
 	}
 	property QtObject replyArea: QtObject{
-		property var outgoingMarkColor: ColorsList.add(sectionName+'_reply_outgoing_mark', 'm')
-		property var incomingMarkColor: ColorsList.add(sectionName+'_reply_incoming_mark', 'r')
+		property var outgoingMarkColor: ColorsList.add(sectionName+'_reply_outgoing_mark', 'outgoing_reply_mark_bg')
+		property var incomingMarkColor: ColorsList.add(sectionName+'_reply_incoming_mark', 'incoming_reply_mark_bg')
 		property var backgroundColor: ColorsList.add(sectionName+'_reply_bg', 'q')
 		property var foregroundColor: ColorsList.add(sectionName+'_reply_fg', 'h')
+		property var fileBackgroundColor: ColorsList.add(sectionName+'_reply_file_bg', 'reply_file_bg')
 		property int usernamePointSizeOffset: -2
 		property int pointSizeOffset: -2
+		
 	}
 	
 	property int padding: 8

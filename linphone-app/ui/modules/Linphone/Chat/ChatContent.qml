@@ -16,58 +16,199 @@ import LinphoneEnums 1.0
 import ColorsList 1.0
 
 // =============================================================================
-Column{
+// Simple content display without reply and forward. These modules need to be splitted because of cyclic dependencies.
+// See ChatFullContent
+
+Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 	id: mainItem
-	property ContentModel contentModel
+	property ChatMessageModel chatMessageModel: null
+	property int availableWidth	//const
+	property int fileWidth: ChatStyle.entry.message.file.height * 4 / 3 + 2*ChatStyle.entry.message.file.margins
 	
-	property int fitHeight: calendarMessage.fitHeight + message.fitHeight + fileMessage.fitHeight + audioMessage.fitHeight
-	property int fitWidth: calendarMessage.fitWidth + message.fitWidth + fileMessage.fitWidth + audioMessage.fitWidth
-	property color backgroundColor
-	property string lastTextSelected
-	property alias textColor: message.color
-	property alias textFont: message.font
-	property alias fileIsHovering: fileMessage.isHovering
+	// Readonly
+	property int bestWidth: Math.min(availableWidth, Math.max(filesBestWidth, conferencesBestWidth, textsBestWidth, voicesBestWidth))
+	property int filesBestWidth: 0
+	property int filesCount: 0
+	property int conferencesCount: 0
+	property int conferencesBestWidth: 0
+	property int textsBestWidth: 0
+	property int textsCount: 0
+	property int voicesBestWidth: 0
+	property int voicesCount: 0
 	
+	signal isFileHoveringChanged(bool isFileHovering)
+	signal lastTextSelectedChanged(string lastTextSelected)
 	signal rightClicked()
 	signal conferenceIcsCopied()
 	
-	property int maxWidth
-	height: fitHeight
-	anchors.left: parent ? parent.left : undefined
-	anchors.right: parent ? parent.right : undefined
+	property bool useTextColor: false
+	property color textColor
 	
-	spacing: 0
+	property int fileBorderWidth : 0
+	property color fileBackgroundColor: ChatStyle.entry.message.file.extension.background.colorModel.color
+	property int fileBackgroundRadius: ChatStyle.entry.message.file.extension.radius
 	
-	property bool isOutgoing : contentModel && contentModel.chatMessageModel && (contentModel.chatMessageModel.isOutgoing  || contentModel.chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
-	z: message.visible ? 0 : 1
-	ChatConferenceInvitationMessage{
-		id: calendarMessage
-		contentModel: mainItem.contentModel
-		width: parent.width
-		maxWidth: mainItem.maxWidth
-		gotoButtonMode: 1
-		onExpandToggle: isExpanded=!isExpanded
-		height: fitHeight
-		z: 1
-		onConferenceIcsCopied:mainItem.conferenceIcsCopied()
-	}
-	ChatAudioMessage{
-		id: audioMessage
-		contentModel: mainItem.contentModel
-		visible: contentModel
-		z: 1
-	}
-	ChatFileMessage{
-		id: fileMessage
-		contentModel: mainItem.contentModel
-		width: parent.width
-		z: 2
-	}
-	ChatTextMessage {
-		id: message
-		contentModel: mainItem.contentModel
-		onLastTextSelectedChanged: mainItem.lastTextSelected = lastTextSelected
-		color: isOutgoing ? ChatStyle.entry.message.outgoing.text.colorModel.color : ChatStyle.entry.message.incoming.text.colorModel.color
-		onRightClicked: mainItem.rightClicked()
+	active: chatMessageModel
+	
+	sourceComponent: Component{
+		Column{
+			id: mainComponent
+			spacing: 0
+			function updateFilesBestWidth(){
+				var newBestWidth = 0
+				var count = 0
+				for(var child in messageFilesList.children) {
+					var item = messageFilesList.children[child]
+					if(item){
+						var a = item.fitWidth
+						if(a) {
+							++count
+							newBestWidth = Math.max(newBestWidth,a)
+						}
+					}
+				}
+				if(count > 1){
+					newBestWidth = Math.max(newBestWidth, mainItem.fileWidth*count)
+				}
+				mainItem.filesCount = count
+				mainItem.filesBestWidth = newBestWidth
+			}
+			function updateListBestWidth(listView){
+				var newBestWidth = 0
+				var count = 0
+				for(var child in listView.contentItem.children) {
+					var a = listView.contentItem.children[child].fitWidth
+					if(a) {
+						++count
+						newBestWidth = Math.max(newBestWidth,a)
+					}
+				}
+				return [count, newBestWidth];
+			}
+			ListView {
+				id: messagesVoicesList
+				width: parent.width
+				visible: count > 0
+				spacing: 0
+				clip: false
+				model: ContentProxyModel{
+					filter: ContentProxyModel.ContentType.Voice
+					chatMessageModel: mainItem.chatMessageModel
+				}
+				height: contentHeight
+				boundsBehavior: Flickable.StopAtBounds
+				interactive: false
+				function updateBestWidth(){
+					var newWidth = mainComponent.updateListBestWidth(messagesVoicesList)
+					mainItem.voicesCount = newWidth[0]
+					mainItem.voicesBestWidth = newWidth[1]
+				}
+				delegate: ChatAudioMessage{
+					id: audioMessage
+					contentModel: $modelData
+					visible: contentModel
+					z: 1
+					Component.onCompleted: messagesVoicesList.updateBestWidth()
+				}
+				Component.onCompleted: messagesVoicesList.updateBestWidth
+			}
+// CONFERENCE
+			ListView {
+				id: messagesConferencesList
+				width: parent.width
+				visible: count > 0
+				spacing: 0
+				clip: false
+				model: ContentProxyModel{
+					filter: ContentProxyModel.ContentType.Conference
+					chatMessageModel: mainItem.chatMessageModel
+				}
+				height: contentHeight
+				boundsBehavior: Flickable.StopAtBounds
+				interactive: false
+				function updateBestWidth(){
+					var newWidth = mainComponent.updateListBestWidth(messagesConferencesList)
+					mainItem.conferencesCount = newWidth[0]
+					mainItem.conferencesBestWidth = newWidth[1]
+				}
+				Component.onCompleted: messagesConferencesList.updateBestWidth()
+				delegate: ChatConferenceInvitationMessage{
+					id: calendarMessage
+					contentModel: $modelData
+					width: parent.width
+					availableWidth: mainItem.availableWidth
+					gotoButtonMode: 1
+					onExpandToggle: isExpanded=!isExpanded
+					height: fitHeight
+					z: 1
+					onConferenceIcsCopied:mainItem.conferenceIcsCopied()
+					onFitWidthChanged: messagesConferencesList.updateBestWidth()
+					Component.onCompleted: messagesConferencesList.updateBestWidth()
+				}
+			}
+// FILES
+			GridLayout {
+				id: messageFilesList
+				property alias count: repeater.count
+				visible: count > 0
+				clip: false	
+				
+				property int availableSection: mainItem.availableWidth / mainItem.fileWidth
+				property int bestFitSection: mainItem.bestWidth / mainItem.fileWidth
+				columns: Math.max(1, Math.min(availableSection , bestFitSection))
+				columnSpacing: 0
+				rowSpacing: 0
+				width: parent.width
+				Repeater{
+					id: repeater
+					model: ContentProxyModel{
+						filter: ContentProxyModel.ContentType.File
+						chatMessageModel: mainItem.chatMessageModel
+					}
+					ChatFileMessage{
+						contentModel: $modelData
+						onIsHoveringChanged: mainItem.isFileHoveringChanged(isHovering)
+						borderWidth: mainItem.fileBorderWidth
+						backgroundColor: mainItem.fileBackgroundColor
+						backgroundRadius: mainItem.fileBackgroundRadius
+						Component.onCompleted: mainComponent.updateFilesBestWidth()
+					}
+				}
+			}
+// TEXTS
+			ListView {
+				id: messagesTextsList
+				width: parent.width
+				visible: count > 0
+				spacing: 0
+				clip: false
+				model: ContentProxyModel{
+					filter: ContentProxyModel.ContentType.Text
+					chatMessageModel: mainItem.chatMessageModel
+				}
+				height: contentHeight
+				boundsBehavior: Flickable.StopAtBounds
+				interactive: false
+				function updateBestWidth(){
+					var newWidth = mainComponent.updateListBestWidth(messagesTextsList)
+					mainItem.textsCount = newWidth[0]
+					mainItem.textsBestWidth = newWidth[1]
+				}
+				Component.onCompleted: messagesTextsList.updateBestWidth()
+				delegate: 
+					ChatTextMessage {
+					contentModel: $modelData
+					onLastTextSelectedChanged: mainItem.lastTextSelectedChanged(lastTextSelected)
+					color: mainItem.useTextColor
+								? mainItem.textColor
+								: $modelData.isOutgoing
+									? ChatStyle.entry.message.outgoing.text.colorModel.color
+									: ChatStyle.entry.message.incoming.text.colorModel.color
+					onRightClicked: mainItem.rightClicked()
+					onFitWidthChanged: messagesTextsList.updateBestWidth()
+					Component.onCompleted: messagesTextsList.updateBestWidth()
+				}
+			}
+		}
 	}
 }

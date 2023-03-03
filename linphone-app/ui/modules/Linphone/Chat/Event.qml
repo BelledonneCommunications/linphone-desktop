@@ -12,6 +12,9 @@ Row {
 	id: mainItem
 	property QtObject iconData
 	property string translation
+	property bool isHovering : false
+	property bool isTopGrouped: false
+	property bool isBottomGrouped: false
 	Component.onCompleted: {
 		if ($chatEntry.status == LinphoneEnums.CallStatusSuccess) {
 			if(!$chatEntry.isStart){

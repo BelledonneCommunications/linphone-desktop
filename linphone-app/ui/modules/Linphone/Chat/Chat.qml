@@ -97,13 +97,7 @@ Rectangle {
 					container.proxyModel.loadMoreEntriesAsync()
 				}
 			}
-			section {
-				criteria: ViewSection.FullString
-				delegate: sectionHeading
-				property: '$sectionDate'
-			}
 			// -----------------------------------------------------------------------
-			
 			Component.onCompleted: Logic.initView()
 			onMovementStarted: {Logic.handleMovementStarted(); chat.isMoving = true}
 			onMovementEnded: {Logic.handleMovementEnded(); chat.isMoving = false}
@@ -125,47 +119,6 @@ Rectangle {
 			}
 			
 			// -----------------------------------------------------------------------
-			// Heading.
-			// -----------------------------------------------------------------------
-			
-			Component {
-				id: sectionHeading
-				
-				Item {
-					implicitHeight: container.height + ChatStyle.sectionHeading.bottomMargin
-					width: parent.width
-					clip: false
-					Borders {
-						id: container
-						
-						borderColor: ChatStyle.sectionHeading.border.colorModel.color
-						bottomWidth: ChatStyle.sectionHeading.border.width
-						implicitHeight: text.contentHeight +
-										ChatStyle.sectionHeading.padding * 2 +
-										ChatStyle.sectionHeading.border.width * 2
-						topWidth: ChatStyle.sectionHeading.border.width
-						width: parent.width
-						
-						Text {
-							id: text
-							
-							anchors.fill: parent
-							color: ChatStyle.sectionHeading.text.colorModel.color
-							font {
-								bold: true
-								pointSize: ChatStyle.sectionHeading.text.pointSize
-								capitalization: Font.Capitalize
-							}
-							horizontalAlignment: Text.AlignHCenter
-							verticalAlignment: Text.AlignVCenter
-							
-							text: new Date(section).toLocaleDateString(App.locale)
-						}
-					}
-				}
-			}
-			
-			// -----------------------------------------------------------------------
 			// Message/Event renderer.
 			// -----------------------------------------------------------------------
 			
@@ -174,7 +127,22 @@ Rectangle {
 				property bool isNotice : $chatEntry.type === ChatRoomModel.NoticeEntry
 				property bool isCall : $chatEntry.type === ChatRoomModel.CallEntry
 				property bool isMessage : $chatEntry.type === ChatRoomModel.MessageEntry
+				property var previousItem : proxyModel.count > 0 && index >0 ? proxyModel.getAt(index-1) : null
+				property var nextItem : proxyModel.count > 0 ? proxyModel.getAt(index+1) : null	// bind to count
+				property bool displayDate: !Utils.equalDate(new Date($chatEntry.timestamp), new Date())
+				property bool isTopGrouped: isGrouped(entry.previousItem, $chatEntry) || false
+				property bool isBottomGrouped: isGrouped($chatEntry, entry.nextItem) || false
 				
+				onIsBottomGroupedChanged: if(loader.item) loader.item.isBottomGrouped = isBottomGrouped
+				onIsTopGroupedChanged: if(loader.item) loader.item.isTopGrouped = isTopGrouped
+				
+				function isGrouped(item1, item2){
+					return item1 && item2  //Have a previous entry
+											&& item1.type == ChatRoomModel.MessageEntry // Previous entry is a message
+											&& item2.type == ChatRoomModel.MessageEntry // Previous entry is a message
+											&& item2.fromSipAddress == item1.fromSipAddress // Same user
+											&& Math.abs((new Date(item2.timestamp)).getTime() - (new Date(item1.timestamp)).getTime())/1000 < 60
+				}
 				function isHoverEntry () {
 					return mouseArea.containsMouse
 				}
@@ -182,22 +150,12 @@ Rectangle {
 				function removeEntry () {
 					proxyModel.removeRow(index)
 				}
-				
-				anchors {
-					left: parent ? parent.left : undefined
-					leftMargin: isNotice?0:ChatStyle.entry.leftMargin
-					right: parent ? parent.right : undefined
-					
-					rightMargin: isNotice?0:ChatStyle.entry.deleteIconSize +
-										   ChatStyle.entry.message.extraContent.spacing +
-										   ChatStyle.entry.message.extraContent.rightMargin +
-										   ChatStyle.entry.message.extraContent.leftMargin +
-										   ChatStyle.entry.message.outgoing.areaSize
-				}
-				
 				color: ChatStyle.colorModel.color
-				implicitHeight: layout.height + ChatStyle.entry.bottomMargin
+				implicitHeight: layout.height + (entry.isBottomGrouped? 1 : ChatStyle.entry.bottomMargin)
+				
+				width: chat.contentWidth	// Fill all space
 				clip: false
+				
 				
 				// ---------------------------------------------------------------------
 				
@@ -208,51 +166,37 @@ Rectangle {
 					hoverEnabled: true
 					implicitHeight: layout.height
 					width: parent.width + parent.anchors.rightMargin
+					anchors.top: parent.top
+					//anchors.topMargin: (entry.isTopGrouped? 1 : ChatStyle.entry.bottomMargin)
 					clip: false
 					acceptedButtons: Qt.NoButton
+					onContainsMouseChanged: if(loader.item) loader.item.isHovering = containsMouse
 					ColumnLayout{
 						id: layout
 						spacing: 0
 						width: entry.width
-						Text{
-							id:authorName
-							Layout.leftMargin: timeDisplay.width + 10
+						RowLayout{
+							id: headerLayout
 							Layout.fillWidth: true
-							text : $chatEntry.fromDisplayName ? $chatEntry.fromDisplayName : ''
-							property var previousItem : {
-								if(index >0)
-									return proxyModel.getAt(index-1)
-								else 
-									return null
-							}
-							
-							color: ChatStyle.entry.event.text.colorModel.color
-							font.pointSize: ChatStyle.entry.event.text.pointSize
-							visible: isMessage 
-									 && $chatEntry != undefined
-									 && !$chatEntry.isOutgoing // Only outgoing
-									 && (!previousItem  //No previous entry
-										 || previousItem.type != ChatRoomModel.MessageEntry // Previous entry is a message
-										 || previousItem.fromSipAddress != $chatEntry.fromSipAddress // Different user
-										 || (new Date(previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0) // Same day == section
-										 )
-						}
-						RowLayout {
-							
-							spacing: 0
-							width: entry.width
-							
+							Layout.alignment: Qt.AlignTop | ($chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
+							Layout.leftMargin: ChatStyle.entry.metaWidth// + ChatStyle.entry.message.extraContent.spacing
+							Layout.rightMargin: ChatStyle.entry.message.outgoing.areaSize
+							spacing:0
 							// Display time.
+							visible: !entry.isTopGrouped
 							Text {
 								id:timeDisplay
-								Layout.alignment: Qt.AlignTop
-								Layout.preferredHeight: ChatStyle.entry.lineHeight
-								Layout.preferredWidth: ChatStyle.entry.time.width
+								Layout.alignment: Qt.AlignTop | ($chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
+								Layout.preferredHeight: implicitHeight// ChatStyle.entry.lineHeight
+								//Layout.preferredWidth: ChatStyle.entry.time.width
 								
 								color: ChatStyle.entry.event.text.colorModel.color
 								font.pointSize: ChatStyle.entry.time.pointSize
-								
-								text: UtilsCpp.toTimeString($chatEntry.timestamp, 'hh:mm')
+								property bool displayYear: entry.displayDate && (new Date($chatEntry.timestamp)).getFullYear() != (new Date()).getFullYear()
+								text: $chatEntry
+											? (entry.displayDate ? UtilsCpp.toDateString($chatEntry.timestamp, (displayYear ? 'yyyy/':'') + 'MM/dd') + ' ' : '')
+													+ UtilsCpp.toTimeString($chatEntry.timestamp, 'hh:mm') + (authorName.visible ? ' - ' : '')
+											: ''
 								
 								verticalAlignment: Text.AlignVCenter
 								
@@ -261,65 +205,85 @@ Rectangle {
 								}
 								visible:!isNotice
 							}
-							
-							// Display content.
-							Loader {
-								id: loader
-								height: (item !== null && typeof(item)!== 'undefined')? item.height: 0
-								Layout.fillWidth: true
-								source: Logic.getComponentFromEntry($chatEntry)
-								property int loaderIndex: 0	// index of loader from remaining loaders
-								property int remainingIndex : loaderIndex % ((chat.remainingLoadersCount) / chat.syncLoaderBatch) != 0	// Check loader index to remaining loader.
-								onRemainingIndexChanged: if( remainingIndex == 0 && asynchronous) asynchronous = false
-								asynchronous: true
-								z:1
-							
-								onStatusChanged:	if( status == Loader.Ready) {
-														remainingIndex = -1	// overwrite to remove signal changed. That way, there is no more binding loops.
-														--chat.remainingLoadersCount // Loader is ready: remove one from remaining count.
-													}
+							Text{
+								id:authorName
+								//Layout.leftMargin: timeDisplay.width + ChatStyle.entry.metaWidth + ChatStyle.entry.message.extraContent.spacing
+								property var displayName: $chatEntry.fromDisplayName ? $chatEntry.fromDisplayName : $chatEntry.name
+								text : displayName != undefined ? displayName : ''
 								
-								Component.onCompleted: loaderIndex = ++chat.remainingLoadersCount	// on new Loader : one more remaining
-								Component.onDestruction: if( status != Loader.Ready) --chat.remainingLoadersCount	// Remove remaining count if not loaded
+								color: ChatStyle.entry.event.text.colorModel.color
+								font.pointSize: ChatStyle.entry.event.text.pointSize
+								visible: isMessage 
+										 && $chatEntry != undefined
+										 && !$chatEntry.isOutgoing // Only outgoing
+										 && (!entry.previousItem  //No previous entry
+											 || entry.previousItem.type != ChatRoomModel.MessageEntry // Previous entry is a message
+											 || entry.previousItem.fromSipAddress != $chatEntry.fromSipAddress // Different user
+											 || (new Date(entry.previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0) // Same day == section
+											 )
+							}
+						}
+						// Display content.
+						Loader {
+							id: loader
+							height: (item !== null && typeof(item)!== 'undefined')? item.height: 0
+							Layout.fillWidth: true
+							source: Logic.getComponentFromEntry($chatEntry)
+							property int loaderIndex: 0	// index of loader from remaining loaders
+							property int remainingIndex : loaderIndex % ((chat.remainingLoadersCount) / chat.syncLoaderBatch) != 0	// Check loader index to remaining loader.
+							onRemainingIndexChanged: if( remainingIndex == 0 && asynchronous) asynchronous = false
+							asynchronous: true
+							z:1
+						
+							onStatusChanged:	if( status == Loader.Ready) {
+													loader.item.isTopGrouped = entry.isTopGrouped
+													loader.item.isBottomGrouped = entry.isBottomGrouped
+													remainingIndex = -1	// overwrite to remove signal changed. That way, there is no more binding loops.
+													--chat.remainingLoadersCount // Loader is ready: remove one from remaining count.
+												}
+							
+							Component.onCompleted: {
+								loaderIndex = ++chat.remainingLoadersCount	// on new Loader : one more remaining
+							}
+							Component.onDestruction: if( status != Loader.Ready) --chat.remainingLoadersCount	// Remove remaining count if not loaded
+						}
+							
+						Connections{
+							target: loader.item
+							ignoreUnknownSignals: true
+							//: "Copied to clipboard" : when a user copy a text from the menu, this message show up.
+							onCopyAllDone: container.noticeBannerText = qsTr("allTextCopied")
+							//: "Selection copied to clipboard" : when a user copy a text from the menu, this message show up.
+							onCopySelectionDone: container.noticeBannerText = qsTr("selectedTextCopied")
+							onReplyClicked: {
+								proxyModel.chatRoomModel.reply = $chatEntry
+							}
+							onForwardClicked:{
+								window.attachVirtualWindow(Qt.resolvedUrl('../Dialog/SipAddressDialog.qml')
+									//: 'Choose where to forward the message' : Dialog title for choosing where to forward the current message.
+									, {title: qsTr('forwardDialogTitle'),
+										addressSelectedCallback: function (sipAddress) {
+																	var chat = CallsListModel.createChatRoom( '', proxyModel.chatRoomModel.haveEncryption, [sipAddress], false )
+																	if(chat){
+																		chat.chatRoomModel.forwardMessage($chatEntry)
+																		TimelineListModel.select(chat.chatRoomModel)
+																	}
+																},
+										chatRoomSelectedCallback: function (chatRoomModel){
+																	if(chatRoomModel){
+																		chatRoomModel.forwardMessage($chatEntry)
+																		TimelineListModel.select(chatRoomModel)
+																	}
+									}
+								})
 							}
 							
-							Connections{
-								target: loader.item
-								ignoreUnknownSignals: true
-								//: "Copied to clipboard" : when a user copy a text from the menu, this message show up.
-								onCopyAllDone: container.noticeBannerText = qsTr("allTextCopied")
-								//: "Selection copied to clipboard" : when a user copy a text from the menu, this message show up.
-								onCopySelectionDone: container.noticeBannerText = qsTr("selectedTextCopied")
-								onReplyClicked: {
-									proxyModel.chatRoomModel.reply = $chatEntry
-								}
-								onForwardClicked:{
-									window.attachVirtualWindow(Qt.resolvedUrl('../Dialog/SipAddressDialog.qml')
-										//: 'Choose where to forward the message' : Dialog title for choosing where to forward the current message.
-										, {title: qsTr('forwardDialogTitle'),
-											addressSelectedCallback: function (sipAddress) {
-																		var chat = CallsListModel.createChatRoom( '', proxyModel.chatRoomModel.haveEncryption, [sipAddress], false )
-																		if(chat){
-																			chat.chatRoomModel.forwardMessage($chatEntry)
-																			TimelineListModel.select(chat.chatRoomModel)
-																		}
-																	},
-											chatRoomSelectedCallback: function (chatRoomModel){
-																		if(chatRoomModel){
-																			chatRoomModel.forwardMessage($chatEntry)
-																			TimelineListModel.select(chatRoomModel)
-																		}
-										}
-									})
-								}
-								
-								onGoToMessage:{
-									container.goToMessage(message)	// sometimes, there is no access to chat id (maybe because of cleaning component while loading new items). Use a global intermediate.
-								}
-								onConferenceIcsCopied: container.noticeBannerText = qsTr('conferencesCopiedICS')
-								onAddContactClicked: container.addContactClicked(contactAddress)
-								onViewContactClicked: container.viewContactClicked(contactAddress)
+							onGoToMessage:{
+								container.goToMessage(message)	// sometimes, there is no access to chat id (maybe because of cleaning component while loading new items). Use a global intermediate.
 							}
+							onConferenceIcsCopied: container.noticeBannerText = qsTr('conferencesCopiedICS')
+							onAddContactClicked: container.addContactClicked(contactAddress)
+							onViewContactClicked: container.viewContactClicked(contactAddress)
 						}
 					}
 				}

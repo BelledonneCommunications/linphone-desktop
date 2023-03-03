@@ -95,6 +95,9 @@ RowLayout{
 	property color eventColor : (isError ? ChatStyle.entry.event.notice.errorColor.color
 								: ( isImportant ? ChatStyle.entry.event.notice.importantColor.color
 									: ChatStyle.entry.event.notice.colorModel.color ))
+	property bool isHovering : false
+	property bool isTopGrouped: false
+	property bool isBottomGrouped: false
 	
 	Layout.preferredHeight: ChatStyle.entry.lineHeight
 	spacing: ChatStyle.entry.message.extraContent.spacing

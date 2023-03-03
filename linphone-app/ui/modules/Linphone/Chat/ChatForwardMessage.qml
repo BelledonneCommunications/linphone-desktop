@@ -22,13 +22,13 @@ import 'Message.js' as Logic
 Item {
 	id: mainItem
 	property ChatMessageModel mainChatMessageModel
-	property int maxWidth : parent.width
+	property int availableWidth : parent.width
 	property int fitWidth:  visible ? headerArea.fitWidth + 7 + ChatForwardMessageStyle.padding * 2 : 0
-	property int fitHeight: visible ? icon.height : 0
+	property int fitHeight: visible ? icon.height + 5 : 0
 	property font customFont : SettingsModel.textMessageFont
 	
 	visible: mainChatMessageModel && mainChatMessageModel.isForward
-	width: maxWidth > fitWidth ? fitWidth : maxWidth
+	width: availableWidth > fitWidth ? fitWidth : availableWidth
 	height: fitHeight
 	
 	ColumnLayout{

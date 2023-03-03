@@ -722,5 +722,8 @@ function printObject(o) {
   for (var p in o) {
     out += p + ': ' + o[p] + '\n';
   }
-  return out;
+  if(!o)
+    return 'Empty'
+  else
+    return out;
 }

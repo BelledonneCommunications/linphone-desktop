@@ -76,12 +76,7 @@ Column {
 			}
 			Text{
 				id:status
-				Layout.fillWidth: true
 				Layout.alignment: Qt.AlignVCenter
-				//anchors.top:parent.top
-				//anchors.bottom : parent.bottom
-				//anchors.left:parent.right
-				//anchors.leftMargin:5
 				verticalAlignment: Text.AlignVCenter
 				visible: text != ''
 				text : ''
