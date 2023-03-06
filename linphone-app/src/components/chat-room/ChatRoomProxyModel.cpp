@@ -181,7 +181,7 @@ bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
 		return true;
 	if(!a)
 		return false;
-	return a->getTimestamp() < b->getTimestamp();
+	return a->getReceivedTimestamp() < b->getReceivedTimestamp();
 }
 // -----------------------------------------------------------------------------
 

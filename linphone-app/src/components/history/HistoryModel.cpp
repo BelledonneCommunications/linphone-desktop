@@ -50,6 +50,10 @@ using namespace std;
 static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
 	dest["type"] = HistoryModel::CallEntry;
 	dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
+	if(callLog->dataExists("receivedTime"))
+		dest["receivedTimestamp"] = QDateTime::fromMSecsSinceEpoch(callLog->getData<time_t>("receivedTime") * 1000);
+	else
+		dest["receivedTimestamp"] = dest["timestamp"];
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = true;
@@ -63,6 +67,10 @@ static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linph
 static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
 	dest["type"] = HistoryModel::CallEntry;
 	dest["timestamp"] = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
+	if(callLog->dataExists("receivedTime"))
+		dest["receivedTimestamp"] = QDateTime::fromMSecsSinceEpoch((callLog->getData<time_t>("receivedTime") + callLog->getDuration()) * 1000);
+	else
+		dest["receivedTimestamp"] = dest["timestamp"];
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = false;
@@ -112,7 +120,7 @@ QVariant HistoryModel::data (const QModelIndex &index, int role) const {
 		return QVariant::fromValue(data);
 	}
 	case Roles::SectionDate:
-		return QVariant::fromValue(mEntries[row].first["timestamp"].toDate());
+		return QVariant::fromValue(mEntries[row].first["receivedTimestamp"].toDate());
 	}
 	
 	return QVariant();
@@ -231,7 +239,7 @@ void HistoryModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
 	const QList<HistoryEntryData>::iterator *start = nullptr
 	) {
 		auto it = lower_bound(start ? *start : mEntries.begin(), mEntries.end(), entry, [](const HistoryEntryData &a, const HistoryEntryData &b) {
-			return a.first["timestamp"] < b.first["timestamp"];
+			return a.first["receivedTimestamp"] < b.first["receivedTimestamp"];
 		});
 		
 		int row = int(distance(mEntries.begin(), it));

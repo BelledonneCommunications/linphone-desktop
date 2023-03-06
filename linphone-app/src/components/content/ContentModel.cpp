@@ -230,7 +230,12 @@ void ContentModel::removeThumbnail(){
 			QFile(thumbnailPath).remove();
 		}
 	}
+	QString backup;
+	if( mAppData.mData.contains("receivedTime"))
+		backup = mAppData.mData["receivedTime"];
 	mAppData.mData.clear();
+	if( !backup.isEmpty())
+		mAppData.mData["receivedTime"] = backup;
 }
 
 void ContentModel::removeDownloadedFile(){

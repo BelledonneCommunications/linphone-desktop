@@ -83,6 +83,7 @@ public:
 	Q_PROPERTY(bool wasDownloaded MEMBER mWasDownloaded WRITE setWasDownloaded NOTIFY wasDownloadedChanged)
 	Q_PROPERTY(ChatRoomModel::EntryType type MEMBER mType CONSTANT)
 	Q_PROPERTY(QDateTime timestamp MEMBER mTimestamp CONSTANT)
+	Q_PROPERTY(QDateTime receivedTimestamp MEMBER mReceivedTimestamp CONSTANT)
 	Q_PROPERTY(QString content MEMBER mContent NOTIFY contentChanged)
 	
 	
@@ -125,6 +126,7 @@ public:
 	
 	void setWasDownloaded(bool wasDownloaded);
 	virtual void setTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime()) override;
+	virtual void setReceivedTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime()) override;
 	
 	//----------------------------------------------------------------------------	
 	

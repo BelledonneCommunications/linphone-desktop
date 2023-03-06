@@ -418,7 +418,7 @@ void SipAddressesModel::handleLastEntryRemoved (ChatRoomModel *chatRoomModel) {
 				).toMap();
 	
 	// Update the timestamp with the new last chat message timestamp.
-	it2->timestamp = map["timestamp"].toDateTime();
+	it2->timestamp = map["receivedTimestamp"].toDateTime();
 	emit dataChanged(index(row, 0), index(row, 0));
 }
 

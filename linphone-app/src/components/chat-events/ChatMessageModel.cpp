@@ -109,6 +109,13 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 		mContent = txt;
 		
 		mTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessage->getTime() * 1000);
+		auto appdata = ChatMessageModel::AppDataManager(QString::fromStdString(chatMessage->getAppdata()));
+		if(!appdata.mData.contains("receivedTime")){
+			appdata.mData["receivedTime"] = QString::number(mTimestamp.toSecsSinceEpoch());
+			chatMessage->setAppdata(Utils::appStringToCoreString(appdata.toString()));
+			mReceivedTimestamp = mTimestamp;
+		}else
+			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch(appdata.mData["receivedTime"].toULongLong() * 1000);
 	}
 	mWasDownloaded = false;
 
@@ -233,6 +240,10 @@ void ChatMessageModel::setWasDownloaded(bool wasDownloaded){
 
 void ChatMessageModel::setTimestamp(const QDateTime& timestamp) {
 	mTimestamp = timestamp;
+}
+
+void ChatMessageModel::setReceivedTimestamp(const QDateTime& timestamp) {
+	mReceivedTimestamp = timestamp;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------

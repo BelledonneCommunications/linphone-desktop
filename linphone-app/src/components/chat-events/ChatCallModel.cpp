@@ -31,10 +31,19 @@ ChatCallModel::ChatCallModel ( std::shared_ptr<linphone::CallLog> callLog, const
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mCallLog = callLog;
 	mIsStart = isStart;
+	bool hasReceived = mCallLog->dataExists("receivedTime");
 	if(isStart){
 		mTimestamp = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
+		if(hasReceived)
+			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch(mCallLog->getData<time_t>("receivedTime"));
+		else
+			mReceivedTimestamp = mTimestamp;
 	}else{
 		mTimestamp = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
+		if(hasReceived)
+			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch((mCallLog->getData<time_t>("receivedTime") + callLog->getDuration()) * 1000);
+		else
+			mReceivedTimestamp = mTimestamp;
 	}
 	mIsOutgoing = (mCallLog->getDir() == linphone::Call::Dir::Outgoing);
 	mStatus = (LinphoneEnums::fromLinphone(mCallLog->getStatus()));

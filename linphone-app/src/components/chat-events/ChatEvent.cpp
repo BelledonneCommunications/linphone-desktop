@@ -35,8 +35,17 @@ ChatEvent::~ChatEvent(){
 QDateTime ChatEvent::getTimestamp() const{
 	return mTimestamp;
 }
+
+QDateTime ChatEvent::getReceivedTimestamp() const{
+	return mReceivedTimestamp;
+}
+
 void ChatEvent::setTimestamp(const QDateTime& timestamp){
 	mTimestamp = timestamp;
+}
+
+void ChatEvent::setReceivedTimestamp(const QDateTime& timestamp){
+	mReceivedTimestamp = timestamp;
 }
 
 void ChatEvent::deleteEvent(){

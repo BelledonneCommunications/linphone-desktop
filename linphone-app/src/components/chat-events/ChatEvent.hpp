@@ -34,12 +34,16 @@ public:
 	ChatRoomModel::EntryType mType;
 	
 	virtual QDateTime  getTimestamp() const;
+	virtual QDateTime  getReceivedTimestamp() const;
+	
 	virtual void setTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime());
+	virtual void setReceivedTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime());
 	
 	virtual void deleteEvent();
 	
 protected: 
 	QDateTime mTimestamp;
+	QDateTime mReceivedTimestamp;
 };
 Q_DECLARE_METATYPE(ChatEvent*)
 #endif

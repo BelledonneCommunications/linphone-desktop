@@ -37,6 +37,7 @@ public:
 	
 	Q_PROPERTY(ChatRoomModel::EntryType type MEMBER mType CONSTANT)
 	Q_PROPERTY(QDateTime timestamp MEMBER mTimestamp CONSTANT)
+	Q_PROPERTY(QDateTime receivedTimestamp MEMBER mReceivedTimestamp CONSTANT)
 	
 	Q_PROPERTY(bool isStart MEMBER mIsStart WRITE setIsStart NOTIFY isStartChanged)
 	Q_PROPERTY(LinphoneEnums::CallStatus status MEMBER mStatus WRITE setStatus NOTIFY statusChanged)
