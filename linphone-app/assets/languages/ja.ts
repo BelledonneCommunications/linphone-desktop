@@ -99,7 +99,7 @@
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>取得する %1 構成ファイルを指定します。これは現在の構成にマージされます。</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
@@ -107,7 +107,7 @@
     </message>
     <message>
         <source>commandLineOptionCall</source>
-        <translation type="unfinished"></translation>
+        <translation>電話をかける</translation>
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
@@ -379,7 +379,7 @@
     </message>
     <message>
         <source>callErrorHangUp</source>
-        <translation type="unfinished"></translation>
+        <translation>相手が通話を終了しました。</translation>
     </message>
     <message>
         <source>callStatsMediaEncryption</source>
@@ -389,27 +389,27 @@
     <message>
         <source>callStatsCipherAlgo</source>
         <extracomment>&apos;Cipher algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>暗号化アルゴリズム</translation>
     </message>
     <message>
         <source>callStatsKeyAgreementAlgo</source>
         <extracomment>&apos;Key agreement algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>鍵合意アルゴリズム</translation>
     </message>
     <message>
         <source>callStatsHashAlgo</source>
         <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ハッシュアルゴリズム</translation>
     </message>
     <message>
         <source>callStatsAuthAlgo</source>
         <extracomment>&apos;Authentication algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>認証アルゴリズム</translation>
     </message>
     <message>
         <source>callStatsSasAlgo</source>
         <extracomment>&apos;SAS algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SASアルゴリズム</translation>
     </message>
 </context>
 <context>
@@ -529,7 +529,7 @@
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>転送先を選択する</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
@@ -541,7 +541,7 @@
     <message>
         <source>icsOrganizer</source>
         <extracomment>&apos;Organizer&apos; : Label Title for the organizer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>主催者</translation>
     </message>
     <message>
         <source>icsDescription</source>
@@ -551,27 +551,27 @@
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Meeting address&apos; : Title for the meeting address.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ミーティングアドレス</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>参加</translation>
     </message>
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>この会議を削除しますか？</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>この会議を削除しますか？</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議がキャンセルされました</translation>
     </message>
 </context>
 <context>
@@ -579,34 +579,34 @@
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished">概要</translation>
+        <translation>概要</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>参加</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
         <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議への招待</translation>
     </message>
     <message numerus="yes">
         <source>icsParticipants</source>
         <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 人の参加者</numerusform>
         </translation>
     </message>
     <message>
         <source>icsUpdatedMeetingInvite</source>
         <extracomment>&apos;Meeting has been updated&apos; : ICS title for an updated invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議が更新されました</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS title for a cancelled invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議がキャンセルされました</translation>
     </message>
 </context>
 <context>
@@ -632,7 +632,7 @@
     <message>
         <source>deliveryNotDelivered</source>
         <extracomment>&quot;%1 have nothing received&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 はメッセージを受信しませんでした</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered.</extra-Context>
     </message>
     <message>
@@ -647,12 +647,12 @@
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ダウンロード</translation>
     </message>
 </context>
 <context>
@@ -660,7 +660,7 @@
     <message>
         <source>Forwarded</source>
         <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>転送済み</translation>
     </message>
 </context>
 <context>
@@ -668,7 +668,7 @@
     <message>
         <source>menuCopyAll</source>
         <extracomment>&apos;Copy all&apos; : Text menu to copy all message text into clipboard</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてコピー</translation>
     </message>
     <message>
         <source>menuCopy</source>
@@ -682,63 +682,63 @@
     <message>
         <source>menuDeliveryStatus</source>
         <extracomment>&apos;Delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>送信状況</translation>
     </message>
     <message>
         <source>menuDelete</source>
         <extracomment>&apos;Delete&apos; : Item menu to delete a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>削除</translation>
     </message>
     <message>
         <source>menuHideDeliveryStatus</source>
         <extracomment>&apos;Hide delivery status&apos; : Item menu that lead to IMDN of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>送信状況を非表示にする</translation>
     </message>
     <message>
         <source>menuForward</source>
         <extracomment>&apos;Forward&apos; : Forward a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>転送</translation>
     </message>
     <message>
         <source>menuReply</source>
         <extracomment>&apos;Reply&apos; : Reply to a message from menu</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>返信</translation>
     </message>
     <message>
         <source>menuViewContact</source>
         <extracomment>&apos;View contact&apos; : Menu item to view the contact.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>連絡先を表示</translation>
     </message>
     <message>
         <source>menuAddContact</source>
         <extracomment>&apos;Add to contacts&apos; : Menu item to add the contact to address book.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>連絡先に追加</translation>
     </message>
 </context>
 <context>
     <name>ChatNoticeModel</name>
     <message numerus="yes">
         <source>nMinute</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 分</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nHour</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 時間</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nDay</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 日</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>nWeek</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 週間</numerusform>
         </translation>
     </message>
 </context>
@@ -747,7 +747,7 @@
     <message>
         <source>headerReply</source>
         <extracomment>&apos;Reply&apos; : Header on a message that contains a reply.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>返信</translation>
     </message>
 </context>
 <context>
@@ -755,7 +755,7 @@
     <message>
         <source>titleReply</source>
         <extracomment>&apos;Reply to %1&apos; : Title for a reply preview to know who said what.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 に返信</translation>
     </message>
 </context>
 <context>
@@ -1060,7 +1060,7 @@
     <message>
         <source>conversationMenuDevices</source>
         <extracomment>&quot;Conversation&apos;s devices&quot; : Item menu to get all participant devices of the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">会話で利用中のデバイス</translation>
     </message>
     <message>
         <source>conversationMenuEphemeral</source>
@@ -1335,7 +1335,7 @@
     <name>FetchRemoteConfiguration</name>
     <message>
         <source>confirmAction</source>
-        <translation>フェッチ</translation>
+        <translation>取得</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationTitle</source>
@@ -1376,7 +1376,7 @@
     <message>
         <source>scanQRCode</source>
         <extracomment>&apos;Scan the QR code with your phone&apos; : Explain how to use the QRCode by flasing it.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>携帯電話でQRコードを読み取る</translation>
     </message>
     <message>
         <source>scanQRCodeWhere</source>
@@ -1477,12 +1477,12 @@
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>録音を開始</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>録音を停止</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
@@ -1497,7 +1497,7 @@
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>この通話は録音されています。</translation>
     </message>
     <message>
         <source>incallWaitParticipantMessage</source>
@@ -1530,12 +1530,12 @@
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>録音を開始</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>録音を停止</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
@@ -1550,7 +1550,7 @@
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>この通話は録音されています。</translation>
     </message>
 </context>
 <context>
@@ -1826,7 +1826,7 @@
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>録音</translation>
     </message>
 </context>
 <context>
@@ -1851,7 +1851,7 @@
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">録音</translation>
     </message>
 </context>
 <context>
@@ -2251,7 +2251,7 @@
     <message>
         <source>conversationDevicesTitle</source>
         <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">会話で利用中のデバイス</translation>
     </message>
 </context>
 <context>
@@ -2447,7 +2447,7 @@
     <message>
         <source>titleNoRecordings</source>
         <extracomment>&apos;No recordings&apos; : Title of an empty list of records.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>録音がありません</translation>
     </message>
     <message>
         <source>recordingsVocalLabel</source>
@@ -3132,7 +3132,7 @@
     <message>
         <source>defaultDeviceNameLabel</source>
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>デバイス名</translation>
     </message>
     <message>
         <source>webviewRegistrationUrlLabel</source>
@@ -3435,17 +3435,17 @@
     <message>
         <source>fontsTitle</source>
         <extracomment>&apos;Fonts&apos; : title of fonts section in settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>フォント</translation>
     </message>
     <message>
         <source>fontsTextChange</source>
         <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>テキストメッセージ</translation>
     </message>
     <message>
         <source>fontsPopupTitle</source>
         <extracomment>&apos;Select a new font&apos; : Popup title for choosing new fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>新しいフォントを選択</translation>
     </message>
     <message>
         <source>checkForUpdateLabel</source>
