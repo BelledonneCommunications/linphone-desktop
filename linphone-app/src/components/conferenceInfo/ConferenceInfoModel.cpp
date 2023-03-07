@@ -87,11 +87,14 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	mConferenceInfo->setDateTime(0);
 	mConferenceInfo->setDuration(0);
 	mIsScheduled = false;
-	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
-	if(accountAddress){
-		auto cleanedClonedAddress = accountAddress->clone();
-		cleanedClonedAddress->clean();
-		mConferenceInfo->setOrganizer(cleanedClonedAddress);
+	auto defaultAccount = CoreManager::getInstance()->getCore()->getDefaultAccount();
+	if(defaultAccount){
+		auto accountAddress = defaultAccount->getContactAddress();
+		if(accountAddress){
+			auto cleanedClonedAddress = accountAddress->clone();
+			cleanedClonedAddress->clean();
+			mConferenceInfo->setOrganizer(cleanedClonedAddress);
+		}
 	}
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::timeZoneModelChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::dateTimeChanged);
@@ -324,11 +327,14 @@ void ConferenceInfoModel::resetConferenceInfo() {
 	mConferenceInfo->setDateTime(0);
 	mConferenceInfo->setDuration(0);
 	mIsScheduled = false;
-	auto accountAddress = CoreManager::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
-	if(accountAddress){
-		auto cleanedClonedAddress = accountAddress->clone();
-		cleanedClonedAddress->clean();
-		mConferenceInfo->setOrganizer(cleanedClonedAddress);
+	auto defaultAccount = CoreManager::getInstance()->getCore()->getDefaultAccount();
+	if(defaultAccount){
+		auto accountAddress = defaultAccount->getContactAddress();
+		if(accountAddress){
+			auto cleanedClonedAddress = accountAddress->clone();
+			cleanedClonedAddress->clean();
+			mConferenceInfo->setOrganizer(cleanedClonedAddress);
+		}
 	}
 }
 

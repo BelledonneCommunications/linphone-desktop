@@ -19,9 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Update SDK to 5.2.29
 
+## 5.0.13 - undefined
+
+### Fixed
+- Crash on chat rooms with default account.
+
 ## 5.0.12 - 2023-03-01
 
-## Fixed
+### Fixed
 - Some case of unwanted settings folders creation.
 - Replace black thumbnails that contains transparency by white color.
 - Unusable Contact sheet.
