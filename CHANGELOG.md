@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Crash on chat rooms with default account.
+- Show display name for local accounts.
 
 ## 5.0.12 - 2023-03-01
 

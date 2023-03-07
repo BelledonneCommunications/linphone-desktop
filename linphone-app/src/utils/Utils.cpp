@@ -538,17 +538,30 @@ QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& ad
 			// Try to get display from full address
 			displayName = QString::fromStdString(address->getDisplayName());
 			if( displayName == ""){
-				// Try to get display name from logs
-				auto callHistory = CoreManager::getInstance()->getCore()->getCallLogs();
-				auto callLog = std::find_if(callHistory.begin(), callHistory.end(), [address](std::shared_ptr<linphone::CallLog>& cl){
-						return cl->getRemoteAddress()->weakEqual(address);
-				});
-				if(callLog != callHistory.end())
-					displayName = QString::fromStdString((*callLog)->getRemoteAddress()->getDisplayName());
-				if(displayName == "")
-					displayName = QString::fromStdString(address->getDisplayName());
-				if(displayName == "")
-					displayName = Utils::coreStringToAppString(address->getUsername());
+				// Try to get display name from proxies
+				auto accounts = CoreManager::getInstance()->getCore()->getAccountList();
+				for(auto accountIt = accounts.begin() ; displayName=="" && accountIt != accounts.end() ; ++accountIt){
+					auto params = accountIt->get()->getParams();
+					if(params){
+						auto accountAddress = params->getIdentityAddress();
+						if(accountAddress && accountAddress->weakEqual(address)){
+							displayName = Utils::coreStringToAppString(accountAddress->getDisplayName());
+						}
+					}
+				}
+				if(displayName == ""){
+					// Try to get display name from logs
+					auto callHistory = CoreManager::getInstance()->getCore()->getCallLogs();
+					auto callLog = std::find_if(callHistory.begin(), callHistory.end(), [address](std::shared_ptr<linphone::CallLog>& cl){
+							return cl->getRemoteAddress()->weakEqual(address);
+					});
+					if(callLog != callHistory.end())
+						displayName = QString::fromStdString((*callLog)->getRemoteAddress()->getDisplayName());
+					if(displayName == "")
+						displayName = QString::fromStdString(address->getDisplayName());
+					if(displayName == "")
+						displayName = Utils::coreStringToAppString(address->getUsername());
+				}
 			}
 		}
 	}
