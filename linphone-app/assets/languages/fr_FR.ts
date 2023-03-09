@@ -1106,12 +1106,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>conversationMenuDeactivate</source>
         <extracomment>&apos;Disable notifications&apos; : Item menu to disable chat&apos;s notifications</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Désactiver les notifications</translation>
     </message>
     <message>
         <source>conversationMenuActivate</source>
         <extracomment>&apos;Enable notifications&apos; : Item menu to enable chat&apos;s notifications</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Activer les notifications</translation>
     </message>
 </context>
 <context>
@@ -2218,7 +2218,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceInvitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vous avez reçu une invitation à participer à une conférence !</translation>
     </message>
 </context>
 <context>
