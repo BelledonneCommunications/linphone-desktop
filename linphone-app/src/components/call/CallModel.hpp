@@ -144,9 +144,7 @@ public:
 	ConferenceInfoModel* getConferenceInfoModel();
 	QSharedPointer<ConferenceModel> getConferenceSharedModel();
 	
-	bool isInConference () const {
-		return mIsInConference;
-	}
+	bool isInConference () const;
 	bool isConference () const;
 	bool isOneToOne() const;
 	

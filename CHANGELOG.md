@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 5.0.13 - undefined
 
 ### Fixed
+- Conference layout refreshing on creation.
+- Crash and display of local conferences.
 - Crash on chat rooms with default account.
 - Show display name for local accounts.
 

@@ -252,6 +252,10 @@ QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 	return mConferenceModel;
 }
 
+bool CallModel::isInConference () const{
+	return mIsInConference;
+}
+
 bool CallModel::isConference () const{
 // Check status to avoid crash when requesting a conference on an ended call.
 	bool isConf = false;
@@ -498,6 +502,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 		auto conferenceInfo = CoreManager::getInstance()->getCore()->findConferenceInformationFromUri(getConferenceAddress());
 		if(	conferenceInfo ){
 				mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
+				getConferenceSharedModel();	// emit new conferenceModel if it was not created.
 				emit conferenceInfoModelChanged();
 		}
 	}
@@ -511,7 +516,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 			break;
 			
 		case linphone::Call::State::StreamsRunning: {
-			
+			getConferenceSharedModel();
 			if (!mWasConnected && CoreManager::getInstance()->getSettingsModel()->getAutomaticallyRecordCalls()) {
 				startRecording();
 				mWasConnected = true;
