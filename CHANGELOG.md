@@ -11,13 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 - Accept/decline CLI commands.
 
-## 5.0.13 - undefined
+## 5.0.13 - 2023-03-13
 
 ### Fixed
 - Conference layout refreshing on creation.
 - Crash and display of local conferences.
 - Crash on chat rooms with default account.
 - Show display name for local accounts.
+- Update SDK to 5.2.32
 
 ## 5.0.12 - 2023-03-01
 
