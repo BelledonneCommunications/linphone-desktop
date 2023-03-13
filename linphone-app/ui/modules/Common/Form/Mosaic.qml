@@ -89,6 +89,7 @@ ColumnLayout{
 			if( columns != bestLayout[1])
 				columns = bestLayout[1]
 		}
+		onItemCountChanged: updateLayout()
 		property int computedWidth: (mainLayout.width - grid.margin ) / columns
 		property int computedHeight: (mainLayout.height - grid.margin ) / rows 
 		cellWidth: Math.min(computedWidth, computedHeight)

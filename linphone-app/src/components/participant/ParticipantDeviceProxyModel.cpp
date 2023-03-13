@@ -57,8 +57,11 @@ bool ParticipantDeviceProxyModel::lessThan (const QModelIndex &left, const QMode
 
 
 ParticipantDeviceModel *ParticipantDeviceProxyModel::getAt(int row){
-	QModelIndex sourceIndex = mapToSource(this->index(row, 0));
-	return sourceModel()->data(sourceIndex).value<ParticipantDeviceModel *>();
+	if(row>=0){
+		QModelIndex sourceIndex = mapToSource(this->index(row, 0));
+		return sourceModel()->data(sourceIndex).value<ParticipantDeviceModel *>();
+	}else
+		return nullptr;
 }
 
 ParticipantDeviceModel* ParticipantDeviceProxyModel::getActiveSpeakerModel(){
