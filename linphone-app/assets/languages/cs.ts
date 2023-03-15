@@ -4898,69 +4898,69 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Chcete si stáhnout %1 (%2)?</translation>
     </message>
     <message numerus="yes">
         <source>formatYears</source>
         <extracomment>&apos;%1 year&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 rok</numerusform>
+            <numerusform>%1 roky</numerusform>
+            <numerusform>%1 roků</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 měsíc</numerusform>
+            <numerusform>%1 měsíce</numerusform>
+            <numerusform>%1 měsíců</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 týden</numerusform>
+            <numerusform>%1 týdny</numerusform>
+            <numerusform>%1 týdnů</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 den</numerusform>
+            <numerusform>%1 dny</numerusform>
+            <numerusform>%1 dnů</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 hodina</numerusform>
+            <numerusform>%1 hodiny</numerusform>
+            <numerusform>%1 hodin</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 minuta</numerusform>
+            <numerusform>%1 minuty</numerusform>
+            <numerusform>%1 minut</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatSeconds</source>
         <extracomment>&apos;%1 second&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 vteřina</numerusform>
+            <numerusform>%1 vteřiny</numerusform>
+            <numerusform>%1 vteřin</numerusform>
         </translation>
     </message>
 </context>
