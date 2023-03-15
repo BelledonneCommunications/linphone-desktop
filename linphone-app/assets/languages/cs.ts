@@ -806,11 +806,11 @@ Adresa URL serveru není nakonfigurována.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
-        <translation type="unfinished">Připojte se ke konferenci hostované adresou sip jako display-name. Pokud jste připojeni ke konfiguraci proxy serveru, viz join-conference-as.</translation>
+        <translation>Připojte se ke konferenci hostované adresou sip jako display-name. Pokud jste připojeni ke konfiguraci proxy serveru, viz join-conference-as.</translation>
     </message>
     <message>
         <source>joinConferenceAsFunctionDescription</source>
-        <translation type="unfinished">Připojte se ke konferenci hostované adresou sip stejně jako k adrese guest-sip. Pokud nejste připojeni ke konfiguraci proxy serveru, viz join-conference.</translation>
+        <translation>Připojte se ke konferenci hostované adresou sip stejně jako k adrese guest-sip. Pokud nejste připojeni ke konfiguraci proxy serveru, viz join-conference.</translation>
     </message>
     <message>
         <source>acceptFunctionDescription</source>
@@ -1401,7 +1401,7 @@ Adresa URL serveru není nakonfigurována.</translation>
     <message>
         <source>scanQRCodeWhere</source>
         <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
-        <translation type="unfinished">V aplikaci přejděte do asistenta - Poskytování QR kódu</translation>
+        <translation>V aplikaci přejděte do Nastavení - Načtení vzdálené konfigurace - QR kód</translation>
     </message>
 </context>
 <context>
@@ -3145,7 +3145,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>deleteAccountDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Opravdu si přejete tento účet odstranit?</translation>
     </message>
     <message>
         <source>eraseAllPasswordsDescription</source>
@@ -3153,7 +3153,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazené jméno</translation>
     </message>
     <message>
         <source>assistantTitle</source>
@@ -3161,7 +3161,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>createAppSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolit vytvoření účtu</translation>
     </message>
     <message>
         <source>useAppSipAccountEnabledLabel</source>
@@ -3169,7 +3169,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>useOtherSipAccountEnabledLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Povolení používání obecného účtu</translation>
     </message>
     <message>
         <source>fetchRemoteConfigurationEnabledLabel</source>
@@ -3182,7 +3182,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>defaultDeviceNameLabel</source>
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Název zařízení</translation>
     </message>
     <message>
         <source>webviewRegistrationUrlLabel</source>
@@ -3192,7 +3192,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>webviewLoginUrlLabel</source>
         <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přihlašovací URL</translation>
     </message>
 </context>
 <context>
@@ -3247,7 +3247,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>invalidSipAddress</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná SIP adresa.</translation>
     </message>
     <message>
         <source>invalidServerAddress</source>
@@ -3255,7 +3255,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>invalidRoute</source>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná trasa.</translation>
     </message>
     <message>
         <source>enableIceLabel</source>
@@ -3263,7 +3263,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>stunServerLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>STUN/TURN server</translation>
     </message>
     <message>
         <source>enableTurnLabel</source>
@@ -3283,7 +3283,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>mainSipAccountSettingsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Hlavní nastavení účtu SIP</translation>
     </message>
     <message>
         <source>conferenceURI</source>
@@ -3293,7 +3293,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Neplatná URI adresa konference</translation>
     </message>
     <message>
         <source>videoConferenceURI</source>
@@ -3303,7 +3303,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>limeServerUrl</source>
         <extracomment>&apos;E2E encryption keys server URL&apos; : Label of a text edit for filling the Lime server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL adresa serveru s E2E šifrovacími klíči</translation>
     </message>
     <message>
         <source>invalidLimeServerUrl</source>
@@ -3316,7 +3316,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelStatus</source>
         <extracomment>&apos;Tunnel Status&apos; : Field title to introduce the status of the tunnel (activated or not)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Stav tunelu</translation>
     </message>
     <message>
         <source>tunnelDomain</source>
@@ -3331,7 +3331,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelSIP</source>
         <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -3341,7 +3341,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>setHTTPProxy</source>
         <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nastavení HTTP proxy</translation>
     </message>
     <message>
         <source>proxyHttpHost</source>
@@ -3351,7 +3351,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>proxyHttpPort</source>
         <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Port</translation>
     </message>
     <message>
         <source>proxyHttpUsername</source>
@@ -3428,7 +3428,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>SettingsUi</name>
     <message>
         <source>pathsTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Umístění</translation>
     </message>
     <message>
         <source>savedScreenshotsLabel</source>
@@ -3436,7 +3436,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>savedCallsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Složka s uloženými hovory</translation>
     </message>
     <message>
         <source>languagesTitle</source>
@@ -3444,7 +3444,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>languagesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Jazyk</translation>
     </message>
     <message>
         <source>systemLocale</source>
@@ -3452,7 +3452,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>cleanAvatars</source>
-        <translation type="unfinished"></translation>
+        <translation>VYMAZAT AVATARY</translation>
     </message>
     <message>
         <source>cleanAvatarsDescription</source>
@@ -3460,7 +3460,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>downloadLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Složka pro stažené soubory</translation>
     </message>
     <message>
         <source>setLocaleDescription</source>
@@ -3468,7 +3468,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>otherTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Ostatní</translation>
     </message>
     <message>
         <source>exitOnCloseLabel</source>
@@ -3476,7 +3476,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>dataTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>Data uživatelského rozhraní</translation>
     </message>
     <message>
         <source>autoStartLabel</source>
@@ -3490,7 +3490,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsTextChange</source>
         <extracomment>&apos;Text Messages&apos; : Label for changing text message fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Textové zprávy</translation>
     </message>
     <message>
         <source>fontsPopupTitle</source>
@@ -3500,7 +3500,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>checkForUpdateLabel</source>
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zkontrolujte aktualizace</translation>
     </message>
     <message>
         <source>mipmapLabel</source>
@@ -3510,7 +3510,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mipmapTooltip1</source>
         <extracomment>&apos;This property holds whether the image uses mipmap filtering when scaled or transformed.&apos; : first line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tato vlastnost určuje, zda obrázek při škálování nebo transformaci používá filtrování mipmap.</translation>
     </message>
     <message>
         <source>mipmapTooltip2</source>
@@ -3520,7 +3520,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>minimalTimelineFilterLabel</source>
         <extracomment>&apos;Minimal Timeline filter&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Minimální filtr časové osy</translation>
     </message>
     <message>
         <source>minimalTimelineFilterTooltip</source>
@@ -3530,7 +3530,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>versionCheckTypeRelease</source>
         <extracomment>&apos;Release&apos; : Keyword for an option to check the release version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vydání</translation>
     </message>
     <message>
         <source>versionCheckTypeCustom</source>
@@ -3540,7 +3540,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>versionCheckTypeNightly</source>
         <extracomment>&apos;Nightly&apos; : Keyword for an option to check the nightly version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nightly</translation>
     </message>
 </context>
 <context>
@@ -3551,7 +3551,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoFramerateLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Snímková frekvence</translation>
     </message>
     <message>
         <source>videoCaptureTitle</source>
@@ -3559,7 +3559,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoPresetLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Předvolby videa</translation>
     </message>
     <message>
         <source>presetDefault</source>
@@ -3567,7 +3567,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presetHighFps</source>
-        <translation type="unfinished"></translation>
+        <translation>Vysoká snímkovací frekvence</translation>
     </message>
     <message>
         <source>presetCustom</source>
@@ -3636,7 +3636,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoActiveSpeakerModeLabel</source>
         <extracomment>&apos;Active speaker&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktivní repro</translation>
     </message>
     <message>
         <source>videoCallsModeLabel</source>
@@ -3672,7 +3672,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoTab</source>
-        <translation type="unfinished"></translation>
+        <translation>Video</translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
@@ -3680,7 +3680,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>networkTab</source>
-        <translation type="unfinished"></translation>
+        <translation>Síť</translation>
     </message>
     <message>
         <source>uiTab</source>
@@ -3688,7 +3688,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>validButton</source>
-        <translation type="unfinished"></translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>uiAdvanced</source>
@@ -3697,7 +3697,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>tunnelTab</source>
         <extracomment>&apos;Tunnel&apos; : Tab title for tunnel section in settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tunel</translation>
     </message>
 </context>
 <context>
@@ -3739,7 +3739,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilterAll</source>
         <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vše</translation>
     </message>
     <message>
         <source>timelineFilterCustom</source>
@@ -3836,7 +3836,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>passwordRecovery</source>
         <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zapomněli jste heslo?</translation>
     </message>
 </context>
 <context>
@@ -3847,7 +3847,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>phoneNumberLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Telefonní číslo</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -3862,7 +3862,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>passwordLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Heslo</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -3874,7 +3874,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>confirmAction</source>
         <extracomment>&apos;Use&apos; : Popup confirmation for a form</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Použít</translation>
     </message>
     <message>
         <source>useOtherSipAccountTitle</source>
@@ -3882,7 +3882,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Uživatelské jméno</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -3902,12 +3902,12 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>addOtherSipAccountError</source>
-        <translation type="unfinished"></translation>
+        <translation>Tento účet nelze přidat.</translation>
     </message>
     <message>
         <source>understandAction</source>
         <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rozumím</translation>
     </message>
     <message>
         <source>warningFeatures</source>
@@ -3917,12 +3917,12 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>warningThirdParty</source>
         <extracomment>&apos;These features are hidden when you register with a third party SIP account.&apos; : Warning text for using third party account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tyto funkce jsou při registraci SIP účtu třetí strany skryté.</translation>
     </message>
     <message>
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chcete-li je použít v komerčním projektu, kontaktujte nás.</translation>
     </message>
 </context>
 <context>
@@ -3933,11 +3933,11 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Čtení klíče se nezdařilo: %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapsání klíče se nezdařilo: %1</translation>
     </message>
 </context>
 <context>
@@ -3950,7 +3950,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>endCallStatus</source>
@@ -3960,7 +3960,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>outgoingCallStatus</source>
         <extracomment>&quot;Outgoing call&quot; : status of the call in waiting room when user is calling.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odchozí hovor</translation>
     </message>
     <message>
         <source>incomingCallStatus</source>
