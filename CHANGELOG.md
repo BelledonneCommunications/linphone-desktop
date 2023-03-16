@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 - Downgrade Qt back to 5.15.2 because of Qt commercial licence that break other GPL licences.
 - Show file extension image instead of thumbnails if image's size factor is too low/high.
+- Update SDK to 5.2.35 (ZLib vulnerability).
 
 ## 5.0.13 - 2023-03-13 - postprone to 5.0.14
 
