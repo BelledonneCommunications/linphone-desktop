@@ -184,33 +184,38 @@ void ContentModel::createThumbnail (const bool& force) {
 				QPainter painter(&image);
 				painter.drawImage(0, 0, originalImage);
 //--------------------
-				QImage thumbnail = image.scaled(
-							Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
-							Qt::KeepAspectRatio, Qt::SmoothTransformation
-							);
-				
-				if (rotation != 0) {
-					QTransform transform;
-					if (rotation == 3 || rotation == 4)
-						transform.rotate(180);
-					else if (rotation == 5 || rotation == 6)
-						transform.rotate(90);
-					else if (rotation == 7 || rotation == 8)
-						transform.rotate(-90);
-					thumbnail = thumbnail.transformed(transform);
-					if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
-						thumbnail = thumbnail.mirrored(true, false);
-				}
-				QString uuid = QUuid::createUuid().toString();
-				id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
-				
-				if (!thumbnail.save(QString::fromStdString(Paths::getThumbnailsDirPath()) + id , "jpg", 100)) {
-					qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(path);
-				}else{
-					appdata.mData[path] = id;
-					mAppData.mData[path] = id;
-					if(mChatMessageModel)
-						mChatMessageModel->getChatMessage()->setAppdata(appdata.toString().toStdString());
+				double factor = image.width() / image.height();
+				if(factor < 0.2 || factor > 5){
+					qInfo() << QStringLiteral("Cannot create thumbnails because size factor is too low/much of: `%1`.").arg(path);
+				}else {
+					QImage thumbnail = image.scaled(
+								Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
+								Qt::KeepAspectRatio, Qt::SmoothTransformation
+								);
+					
+					if (rotation != 0) {
+						QTransform transform;
+						if (rotation == 3 || rotation == 4)
+							transform.rotate(180);
+						else if (rotation == 5 || rotation == 6)
+							transform.rotate(90);
+						else if (rotation == 7 || rotation == 8)
+							transform.rotate(-90);
+						thumbnail = thumbnail.transformed(transform);
+						if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
+							thumbnail = thumbnail.mirrored(true, false);
+					}
+					QString uuid = QUuid::createUuid().toString();
+					id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
+					
+					if (!thumbnail.save(QString::fromStdString(Paths::getThumbnailsDirPath()) + id , "jpg", 100)) {
+						qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(path);
+					}else{
+						appdata.mData[path] = id;
+						mAppData.mData[path] = id;
+						if(mChatMessageModel)
+							mChatMessageModel->getChatMessage()->setAppdata(appdata.toString().toStdString());
+					}
 				}
 			}
 		}
