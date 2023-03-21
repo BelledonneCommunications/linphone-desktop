@@ -238,13 +238,12 @@ void CoreHandlers::onMessagesReceived (
 		}
 		if( !message || message->isOutgoing()  )
 			continue;
-		
-		messagesToSignal.push_back(message);
-		
 		// 1. Do not notify if chat is not activated.
 		if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getStandardChatEnabled()
 			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())
 			continue;
+			
+		messagesToSignal.push_back(message);
 		
 		// 2. Do not notify if the chatroom's notification has been deactivated.
 		appSettings.beginGroup(ChatRoomModel::getChatRoomId(chatRoom));

@@ -174,8 +174,8 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress, const bool& autoSelectAfterCreation, QVariantMap options) const {
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = autoSelectAfterCreation;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	if (!core->videoSupported()) {
-		qWarning() << QStringLiteral("Unable to launch video call. (Video not supported.) Launching audio call...");
+	if (!CoreManager::getInstance()->getSettingsModel()->getVideoEnabled()) {
+		qWarning() << QStringLiteral("Unable to launch video call. (Video not enabled.) Launching audio call...");
 		launchAudioCall(sipAddress, prepareTransfertAddress, {});
 		return;
 	}

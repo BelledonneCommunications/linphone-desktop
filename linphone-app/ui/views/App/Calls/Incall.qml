@@ -539,7 +539,7 @@ Rectangle {
 				colorSet: callModel && callModel.cameraEnabled  ? IncallStyle.buttons.cameraOn : IncallStyle.buttons.cameraOff
 				updating: callModel.videoEnabled && callModel.updating && !mainItem.layoutChanging
 				enabled: callModel && !callModel.pausedByUser
-				visible: SettingsModel.videoSupported
+				visible: SettingsModel.videoEnabled
 				property bool _activateCamera: false
 				onClicked: if(callModel && !mainItem.layoutChanging){
 								if( callModel.isConference){// Only deactivate camera in conference.

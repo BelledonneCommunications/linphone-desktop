@@ -83,7 +83,7 @@ function getParams (call) {
 	
 	if (status === CallModel.CallStatusIncoming) {
 		var optActions = []
-		if (Linphone.SettingsModel.videoSupported) {
+		if (Linphone.SettingsModel.videoEnabled) {
 			optActions.push({
 								handler: call.acceptWithVideo,
 								name: qsTr('acceptVideoCall')

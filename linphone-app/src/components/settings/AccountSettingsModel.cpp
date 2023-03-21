@@ -519,12 +519,12 @@ QString AccountSettingsModel::getDefaultAccountDomain() const{
 QVariantList AccountSettingsModel::getAccounts () const {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	QVariantList accounts;
-	
-	if(CoreManager::getInstance()->getSettingsModel()->getShowLocalSipAccount()) {
+	auto settingsModel = CoreManager::getInstance()->getSettingsModel();
+	if(settingsModel->getShowLocalSipAccount()) {
 		QVariantMap account;
 		account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
 		account["fullSipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
-		account["unreadMessageCount"] = core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed());
+		account["unreadMessageCount"] = settingsModel->getStandardChatEnabled() || settingsModel->getSecureChatEnabled() ?  core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed()) : 0;
 		account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());
 		account["account"].setValue(nullptr);
 		accounts << account;
@@ -535,7 +535,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
 		accountMap["sipAddress"] = Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asStringUriOnly());
 		accountMap["fullSipAddress"] = Utils::coreStringToAppString(account->getParams()->getIdentityAddress()->asString());
 		accountMap["account"].setValue(account);
-		accountMap["unreadMessageCount"] = account->getUnreadChatMessageCount();
+		accountMap["unreadMessageCount"] = settingsModel->getStandardChatEnabled() || settingsModel->getSecureChatEnabled() ? account->getUnreadChatMessageCount() : 0;
 		accountMap["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(accountMap["sipAddress"].toString());
 		accounts << accountMap;
 	}

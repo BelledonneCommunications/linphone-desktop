@@ -94,7 +94,7 @@ TabContainer {
 			FormLine {
 				FormGroup {
 					label: qsTr('autoAnswerWithVideoLabel')
-					visible: SettingsModel.videoSupported
+					visible: SettingsModel.videoEnabled
 					
 					Switch {
 						checked: SettingsModel.autoAnswerVideoStatus

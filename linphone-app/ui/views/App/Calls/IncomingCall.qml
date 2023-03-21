@@ -16,7 +16,7 @@ AbstractStartingCall {
 			isCustom: true
 			backgroundRadius: 90
 			colorSet: CallStyle.buttons.acceptVideoCall
-			visible: SettingsModel.videoSupported
+			visible: SettingsModel.videoEnabled
 			onClicked: call.acceptWithVideo()
 		}
 		

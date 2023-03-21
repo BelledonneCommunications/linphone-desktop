@@ -75,7 +75,7 @@ DialogPlus {
 								handler: function (entry) {
 									launchVideoCall(entry.sipAddress)
 								},
-								visible: SettingsModel.videoSupported && SettingsModel.showStartVideoCallButton,
+								visible: SettingsModel.videoEnabled && SettingsModel.showStartVideoCallButton,
 								handlerSipAddress: function(sipAddress) {
 									launchVideoCall(sipAddress)
 								}

@@ -57,6 +57,8 @@ AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObje
     coreManager->getSettingsModel(), &SettingsModel::secureChatEnabledChanged,
     this, &AbstractEventCountNotifier::internalnotifyEventCount
   );
+  QObject::connect(coreManager->getSettingsModel(), &SettingsModel::standardChatEnabledChanged,    this, &AbstractEventCountNotifier::updateUnreadMessageCount);
+  QObject::connect(coreManager->getSettingsModel(), &SettingsModel::secureChatEnabledChanged,    this, &AbstractEventCountNotifier::updateUnreadMessageCount);
   /*
   QObject::connect(
     coreManager->getCallsListModel(), &CallsListModel::callMissed,
@@ -67,8 +69,12 @@ AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObje
 // -----------------------------------------------------------------------------
 
 void AbstractEventCountNotifier::updateUnreadMessageCount () {
-  mUnreadMessageCount = CoreManager::getInstance()->getCore()->getUnreadChatMessageCountFromActiveLocals();
-  internalnotifyEventCount();
+	auto coreManager = CoreManager::getInstance();
+	if(!coreManager->getSettingsModel()->getStandardChatEnabled() && !coreManager->getSettingsModel()->getSecureChatEnabled())
+		mUnreadMessageCount = 0;
+	else
+		mUnreadMessageCount = CoreManager::getInstance()->getCore()->getUnreadChatMessageCountFromActiveLocals();
+	internalnotifyEventCount();
 }
 
 void AbstractEventCountNotifier::internalnotifyEventCount () {

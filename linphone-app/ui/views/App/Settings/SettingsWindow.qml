@@ -71,7 +71,7 @@ ApplicationWindow {
 					}
 					
 					TabButton {
-						visible: SettingsModel.videoSupported
+						visible: SettingsModel.videoEnabled || SettingsModel.developerSettingsEnabled
 						iconName: TabButtonStyle.icon.videoIcon
 						text: qsTr('videoTab')
 						width: visible ? implicitWidth : 0

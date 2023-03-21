@@ -62,7 +62,7 @@ Notification {
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: NotificationReceivedCallStyle.acceptVideoCall
-						visible: SettingsModel.videoSupported && notification.call.getRemoteVideoEnabled()
+						visible: SettingsModel.videoEnabled && notification.call.getRemoteVideoEnabled()
 						
 						onClicked: notification._close(notification.call.acceptWithVideo)
 					}

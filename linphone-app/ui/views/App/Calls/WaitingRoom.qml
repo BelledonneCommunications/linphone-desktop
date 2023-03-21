@@ -20,7 +20,7 @@ Rectangle {
 	color: WaitingRoomStyle.backgroundColor.color
 	property ConferenceInfoModel conferenceInfoModel
 	property CallModel callModel	// Store the call for processing calling.
-	property bool previewLoaderEnabled: callModel ? callModel.videoEnabled : true
+	property bool previewLoaderEnabled: callModel ? callModel.videoEnabled : SettingsModel.videoEnabled
 	property var _sipAddressObserver: callModel ? SipAddressesModel.getSipAddressObserver(callModel.fullPeerAddress, callModel.fullLocalAddress) : undefined
 	property bool isEnded: callModel && callModel.status == CallModel.CallStatusEnded
 	
@@ -156,7 +156,7 @@ Rectangle {
 											: mainItem.callModel
 												? mainItem.callModel.conferenceModel
 												: null
-					deactivateCamera: !mainItem.previewLoaderEnabled || mainItem.isEnded
+					deactivateCamera: !SettingsModel.videoEnabled || !mainItem.previewLoaderEnabled || mainItem.isEnded
 					
 					/*
 					image: mainItem._sipAddressObserver && mainItem._sipAddressObserver.contact && mainItem._sipAddressObserver.contact.vcard.avatar
@@ -307,7 +307,7 @@ Rectangle {
 				ActionSwitch {
 					id: camera
 					property bool cameraEnabled: true
-					visible: !mainItem.callModel
+					visible: !mainItem.callModel && SettingsModel.videoEnabled
 					isCustom: true
 					backgroundRadius: 90
 					colorSet: cameraEnabled  ? WaitingRoomStyle.buttons.cameraOn : WaitingRoomStyle.buttons.cameraOff
@@ -346,7 +346,7 @@ Rectangle {
 				property int selectedMode: SettingsModel.videoConferenceLayout
 				anchors.centerIn: parent
 				anchors.horizontalCenterOffset: contentsStack.cameraWidth/2 - modeChoice.width/2
-				visible: !mainItem.callModel
+				visible: !mainItem.callModel && SettingsModel.videoEnabled
 				toggled: layoutMenu.visible
 				isCustom: true
 				backgroundRadius: width/2

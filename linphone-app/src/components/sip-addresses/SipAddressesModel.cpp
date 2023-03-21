@@ -32,6 +32,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/history/HistoryModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "SipAddressesModel.hpp"
@@ -510,7 +511,11 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
 
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const shared_ptr<linphone::ChatMessage> &message) {
 	shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
-	int count = chatRoom->getUnreadMessagesCount();
+	auto settingsModel = CoreManager::getInstance()->getSettingsModel();
+	int count = 0;
+	if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoomEncryptionBackend::None && !settingsModel->getStandardChatEnabled()
+			|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoomEncryptionBackend::None && !settingsModel->getSecureChatEnabled())	
+		count = chatRoom->getUnreadMessagesCount();
 	
 	QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())));
 	QString peerAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getPeerAddress()->asStringUriOnly())));

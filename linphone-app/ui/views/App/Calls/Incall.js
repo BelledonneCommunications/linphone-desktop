@@ -65,7 +65,7 @@ function handleStatusChanged (status, isFullscreen) {
 }
 
 function handleVideoRequested (call) {
-	if (window.virtualWindowVisible || !Linphone.SettingsModel.videoSupported) {
+	if (window.virtualWindowVisible || !Linphone.SettingsModel.videoEnabled) {
 		call.rejectVideoRequest()
 		return
 	}

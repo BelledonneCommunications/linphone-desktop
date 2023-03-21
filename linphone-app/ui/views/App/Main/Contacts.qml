@@ -139,7 +139,7 @@ ColumnLayout {
 									isCustom: true
 									backgroundRadius: 90
 									colorSet: ContactsStyle.videoCall
-									visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.getShowStartVideoCallButton()
+									visible: SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.getShowStartVideoCallButton()
 									
 									onClicked: actions.itemAt(0).open()
 								}

@@ -213,7 +213,7 @@ ColumnLayout  {
 						iconSize:30
 						MouseArea{
 							anchors.fill:parent
-							visible: conversation.chatRoomModel && !conversation.chatRoomModel.isReadOnly
+							visible: conversation.chatRoomModel && !conversation.chatRoomModel.isReadOnly && (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled)
 							onClicked : {
 								window.detachVirtualWindow()
 								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
@@ -265,7 +265,7 @@ ColumnLayout  {
 						backgroundRadius: 1000
 						colorSet: ConversationStyle.bar.actions.videoCall
 						
-						visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.haveMoreThanOneParticipants
+						visible: SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton && !conversation.haveMoreThanOneParticipants
 						
 						onClicked: CallsListModel.launchVideoCall(chatRoomModel.participants.addressesToString)
 					}
@@ -441,7 +441,7 @@ ColumnLayout  {
 						//: "Conversation's devices" : Item menu to get all participant devices of the chat room
 						text: qsTr('conversationMenuDevices')
 						iconMenu: MenuItemStyle.devices.icon
-						visible: conversationMenu.showDevices
+						visible: conversationMenu.showDevices && (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled)
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
 						onTriggered: {
@@ -463,7 +463,7 @@ ColumnLayout  {
 						iconMenu: MenuItemStyle.ephemeral.icon
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
-						visible: conversationMenu.showEphemerals
+						visible: conversationMenu.showEphemerals && (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled)
 						onTriggered: {
 							window.detachVirtualWindow()
 							window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/EphemeralChatRoom.qml')
@@ -485,7 +485,7 @@ ColumnLayout  {
 						iconMenu: MenuItemStyle.scheduleMeeting.icon
 						iconSizeMenu: 40
 						menuItemStyle : MenuItemStyle.aux2
-						visible: conversationMenu.showScheduleMeeting
+						visible: SettingsModel.videoConferenceEnabled && conversationMenu.showScheduleMeeting
 						onClicked: {
 							conferenceInfoModel.resetConferenceInfo()
 							conferenceInfoModel.isScheduled = true
@@ -511,6 +511,7 @@ ColumnLayout  {
 					}
 					MenuItem{
 						id: muteMenuItem
+						visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
 						text: chatRoomModel.notificationsEnabled
 						//: 'Disable notifications' : Item menu to disable chat's notifications
 							? qsTr('conversationMenuDeactivate')

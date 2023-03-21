@@ -129,6 +129,7 @@ Rectangle {
 				spacing: 0
 				Layout.alignment: Qt.AlignBottom | Qt.AlignRight
 				Layout.preferredHeight: TimelineStyle.status.iconSize
+				visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
 				Icon{
 					id: notificationsIcon
 					Layout.preferredHeight: TimelineStyle.status.iconSize

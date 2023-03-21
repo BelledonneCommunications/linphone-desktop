@@ -112,7 +112,7 @@ TabContainer {
 		
 		Form {
 			title: qsTr('pathsTitle')
-			visible: SettingsModel.videoSupported ||
+			visible: SettingsModel.videoEnabled ||
 					 SettingsModel.callRecorderEnabled ||
 					 SettingsModel.standardChatEnabled ||
 					 SettingsModel.secureChatEnabled ||
@@ -120,7 +120,7 @@ TabContainer {
 			width: parent.width
 			
 			FormLine {
-				visible: SettingsModel.videoSupported
+				visible: SettingsModel.videoEnabled
 				
 				FormGroup {
 					label: qsTr('savedScreenshotsLabel')

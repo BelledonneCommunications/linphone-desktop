@@ -632,9 +632,17 @@ void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
 	emit videoDefinitionChanged(definition);
 }
 
-bool SettingsModel::getVideoSupported () const {
-	return CoreManager::getInstance()->getCore()->videoSupported();
+bool SettingsModel::getVideoEnabled() const {
+	return CoreManager::getInstance()->getCore()->videoSupported() && !!mConfig->getInt(UiSection, "video_enabled", 1);
 }
+
+void SettingsModel::setVideoEnabled(const bool& enable){
+	if( CoreManager::getInstance()->getCore()->videoSupported()){
+		mConfig->setInt(UiSection, "video_enabled", enable);
+		emit videoEnabledChanged();
+	}
+}
+
 void SettingsModel::setHighMosaicQuality(){
 	mConfig->setString("video", "max_mosaic_size", "");
 }

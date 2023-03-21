@@ -97,7 +97,7 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(QVariantMap videoDefinition READ getVideoDefinition WRITE setVideoDefinition NOTIFY videoDefinitionChanged)
 	
-	Q_PROPERTY(bool videoSupported READ getVideoSupported CONSTANT)
+	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY videoEnabledChanged)
 	
 	Q_PROPERTY(bool showVideoCodecs READ getShowVideoCodecs WRITE setShowVideoCodecs NOTIFY showVideoCodecsChanged)
 	
@@ -374,7 +374,8 @@ public:
 	Q_INVOKABLE QVariantMap getCurrentPreviewVideoDefinition () const;
 	void setVideoDefinition (const QVariantMap &definition);
 	
-	bool getVideoSupported () const;
+	bool getVideoEnabled() const;
+	void setVideoEnabled(const bool& enable);
 	
 	bool getShowVideoCodecs () const;
 	void setShowVideoCodecs (bool status);
@@ -709,7 +710,7 @@ signals:
 	void showAudioCodecsChanged (bool status);
 	
 	// Video. --------------------------------------------------------------------
-	
+	void videoEnabledChanged();
 	void videoDevicesChanged (const QStringList &devices);
 	void videoDeviceChanged (const QString &device);
 	

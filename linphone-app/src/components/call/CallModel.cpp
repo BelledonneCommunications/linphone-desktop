@@ -679,7 +679,7 @@ void CallModel::acceptWithAutoAnswerDelay () {
 	
 	// Use auto-answer if activated and it's the only call.
 	if (settingsModel->getAutoAnswerStatus() && coreManager->getCore()->getCallsNb() == 1) {
-		if (mCall && mCall->getRemoteParams()->videoEnabled() && settingsModel->getAutoAnswerVideoStatus() && settingsModel->getVideoSupported())
+		if (mCall && mCall->getRemoteParams()->videoEnabled() && settingsModel->getAutoAnswerVideoStatus() && settingsModel->getVideoEnabled())
 			acceptWithVideo();
 		else
 			accept();
@@ -787,8 +787,8 @@ bool CallModel::getCameraEnabled () const{
 
 void CallModel::setCameraEnabled (bool status){
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	if (!core->videoSupported()) {
-		qWarning() << QStringLiteral("Unable to update video call property. (Video not supported.)");
+	if (!CoreManager::getInstance()->getSettingsModel()->getVideoEnabled()) {
+		qWarning() << QStringLiteral("Unable to update video call property. (Video not enabled.)");
 		return;
 	}
 	if(mCall) {
@@ -857,13 +857,13 @@ bool CallModel::getVideoEnabled () const {
 		shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
 		return params && params->videoEnabled();
 	}else
-		return true;
+		return CoreManager::getInstance()->getSettingsModel()->getVideoEnabled();
 }
 
 void CallModel::setVideoEnabled (bool status) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	if (!core->videoSupported()) {
-		qWarning() << QStringLiteral("Unable to update video call property. (Video not supported.)");
+	if (!CoreManager::getInstance()->getSettingsModel()->getVideoEnabled()) {
+		qWarning() << QStringLiteral("Unable to update video call property. (Video not enabled.)");
 		return;
 	}
 	if(mCall) {

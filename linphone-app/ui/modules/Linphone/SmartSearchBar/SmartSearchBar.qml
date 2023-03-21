@@ -70,7 +70,7 @@ SearchBox {
 					searchBox.closeMenu()
 					searchBox.launchVideoCall(entry.sipAddress)
 				},
-				visible: SettingsModel.videoSupported && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
+				visible: SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 			}, {
 				colorSet: SipAddressesViewStyle.call,
 				secure: 0,

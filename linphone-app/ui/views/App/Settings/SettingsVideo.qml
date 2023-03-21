@@ -176,6 +176,16 @@ TabContainer {
 						onClicked: SettingsModel.showVideoCodecs = !checked
 					}
 				}
+				
+				FormGroup {
+					label: 'Video enabled'
+					
+					Switch {
+						checked: SettingsModel.videoEnabled
+						
+						onClicked: SettingsModel.videoEnabled = !checked
+					}
+				}
 			}
 			
 			CodecsViewer {
