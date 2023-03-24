@@ -149,7 +149,8 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 				: QString("");
 	}
 	map["serverAddress"] = Utils::coreStringToAppString(accountParams->getServerAddress()->asString());
-	map["registrationDuration"] = accountParams->getPublishExpires();
+	map["registrationDuration"] = accountParams->getExpires();
+	map["publishDuration"] = accountParams->getPublishExpires();
 	
 	if( map["serverAddress"].toString().toUpper().contains("TRANSPORT="))// transport has been specified : let the RFC select the transport
 		map["transport"] = LinphoneEnums::toString(LinphoneEnums::fromLinphone(accountParams->getTransport()));
@@ -320,7 +321,9 @@ bool AccountSettingsModel::addOrUpdateAccount(
 	}
 	
 	if(data.contains("registrationDuration"))
-		accountParams->setPublishExpires(data["registrationDuration"].toInt());
+		accountParams->setExpires(data["registrationDuration"].toInt());
+	if(data.contains("publishDuration"))
+		accountParams->setPublishExpires(data["publishDuration"].toInt());
 	if(data.contains("route")) {
 		std::list<std::shared_ptr<linphone::Address>> routes;
 		routes.push_back(Utils::interpretUrl(data["route"].toString()));
