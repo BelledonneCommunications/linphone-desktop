@@ -108,9 +108,11 @@ ColumnLayout {
 							spacing: ContactsStyle.contact.spacing
 							
 							PresenceLevel {
+								id: presenceLevel
 								Layout.preferredHeight: ContactsStyle.contact.presenceLevelSize
 								Layout.preferredWidth: ContactsStyle.contact.presenceLevelSize
 								level: $modelData.presenceLevel
+								timestamp: $modelData.presenceTimestamp
 							}
 							
 							Text {
@@ -118,7 +120,8 @@ ColumnLayout {
 								color: ContactsStyle.contact.presence.colorModel.color
 								elide: Text.ElideRight
 								font.pointSize: ContactsStyle.contact.presence.pointSize
-								text: Presence.getPresenceStatusAsString($modelData.presenceStatus)
+								text: presenceLevel.presenceText
+								visible: presenceLevel.visible
 							}
 						}
 					}

@@ -57,6 +57,9 @@ ColumnLayout  {
 				presenceLevel: historyView._sipAddressObserver?Presence.getPresenceLevel(
 																	historyView._sipAddressObserver.presenceStatus
 																	):null
+				presenceTimestamp: historyView._sipAddressObserver?Presence.getPresenceTimestamp(
+																	historyView._sipAddressObserver.presenceStatus
+																	):null
 				
 				username: historyView.entry && historyView.entry.wasConference
 							? historyView.entry.title

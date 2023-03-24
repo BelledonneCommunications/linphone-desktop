@@ -135,6 +135,7 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &pee
 	if (it != mPeerAddressToSipAddressEntry.end()) {
 		model->setContact(it->contact);
 		model->setPresenceStatus(it->presenceStatus);
+		model->setPresenceTimestamp(it->presenceTimestamp);
 		
 		auto it2 = it->localAddressToConferenceEntry.find(cleanedLocalAddress);
 		if (it2 != it->localAddressToConferenceEntry.end())
@@ -364,18 +365,19 @@ void SipAddressesModel::handlePresenceReceived (
 			status = Presence::PresenceStatus::Offline;
 			break;
 	}
-	
+	QDateTime presenceTimestamp = QDateTime::fromMSecsSinceEpoch(presenceModel->getTimestamp()*1000);
 	auto it = mPeerAddressToSipAddressEntry.find(sipAddress);
 	if (it != mPeerAddressToSipAddressEntry.end()) {
 		qInfo() << QStringLiteral("Update presence of `%1`: %2.").arg(sipAddress).arg(status);
 		it->presenceStatus = status;
+		it->presenceTimestamp = presenceTimestamp;
 		
 		int row = mRefs.indexOf(&(*it));
 		Q_ASSERT(row != -1);
 		emit dataChanged(index(row, 0), index(row, 0));
 	}
 	
-	updateObservers(sipAddress, status);
+	updateObservers(sipAddress, status, presenceTimestamp);
 }
 
 void SipAddressesModel::handleAllEntriesRemoved (ChatRoomModel *chatRoomModel) {
@@ -663,9 +665,11 @@ void SipAddressesModel::updateObservers (const QString &sipAddress, QSharedPoint
 		observer->setContact(contact);
 }
 
-void SipAddressesModel::updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus) {
-	for (auto &observer : mObservers.values(sipAddress))
+void SipAddressesModel::updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus, const QDateTime &presenceTimestamp) {
+	for (auto &observer : mObservers.values(sipAddress)){
 		observer->setPresenceStatus(presenceStatus);
+		observer->setPresenceTimestamp(presenceTimestamp);
+	}
 }
 
 void SipAddressesModel::updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount, int missedCallCount) {

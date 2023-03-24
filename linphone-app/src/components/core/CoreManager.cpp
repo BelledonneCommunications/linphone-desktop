@@ -364,6 +364,10 @@ void CoreManager::migrate () {
 				qInfo() << "Migrating" << accountIdentity << "for version 5. Video conference factory URI" << (exists ? std::string("unchanged") : std::string("= ") +Constants::DefaultVideoConferenceURI).c_str();
 				// note: using std::string.c_str() to avoid having double quotes in qInfo()
 			}
+			if( rcVersion < 6) {
+				newParams->setPublishExpires(Constants::DefaultPublishExpires);
+				qInfo() << "Migrating" << accountIdentity << "for version 6. publish expires =" << Constants::DefaultPublishExpires;
+			}
 			if(newParams->getLimeServerUrl().empty()){
 				if(!oldLimeServerUrl.empty())
 					newParams->setLimeServerUrl(oldLimeServerUrl);

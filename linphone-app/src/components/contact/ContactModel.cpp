@@ -210,9 +210,18 @@ Presence::PresenceStatus ContactModel::getPresenceStatus () const {
   return static_cast<Presence::PresenceStatus>(mLinphoneFriend->getConsolidatedPresence());
 }
 
+QDateTime ContactModel::getPresenceTimestamp() const{
+	if(mLinphoneFriend->getPresenceModel()){
+			return QDateTime::fromMSecsSinceEpoch(mLinphoneFriend->getPresenceModel()->getTimestamp() * 1000);
+	}else
+		return QDateTime();
+}
+
 Presence::PresenceLevel ContactModel::getPresenceLevel () const {
   return Presence::getPresenceLevel(getPresenceStatus());
 }
+
+
 
 bool ContactModel::hasCapability(const LinphoneEnums::FriendCapability& capability){
 	return mLinphoneFriend->hasCapability(LinphoneEnums::toLinphone(capability));

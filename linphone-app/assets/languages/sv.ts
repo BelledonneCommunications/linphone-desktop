@@ -2438,6 +2438,29 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>PresenceLevel</name>
+    <message>
+        <source>presenceOnline</source>
+        <extracomment>&apos;Online⁣&apos;: Presence text</extracomment>
+        <translation type="unfinished">Tillgänglig</translation>
+    </message>
+    <message>
+        <source>presenceLastSeenToday</source>
+        <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceLastSeenYesterday</source>
+        <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>presenceLastSeen</source>
+        <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
@@ -3271,6 +3294,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>publishDurationLabel</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

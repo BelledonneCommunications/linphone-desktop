@@ -113,6 +113,7 @@ ColumnLayout  {
 					image: _vcard ? _vcard.avatar : ''
 					username: _vcard ? _vcard.username : ''
 					presenceLevel: _contact ? _contact.presenceLevel : -1
+					presenceTimestamp: _contact && _contact.presenceTimestamp
 					visible: (isLoaded() && !parent.hovered) || !_edition
 				}
 			}

@@ -2439,6 +2439,29 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>PresenceLevel</name>
+    <message>
+        <source>presenceOnline</source>
+        <extracomment>&apos;Online⁣&apos;: Presence text</extracomment>
+        <translation>Online⁣</translation>
+    </message>
+    <message>
+        <source>presenceLastSeenToday</source>
+        <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
+        <translation>Online today at %1</translation>
+    </message>
+    <message>
+        <source>presenceLastSeenYesterday</source>
+        <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
+        <translation>Online yesterday at %1</translation>
+    </message>
+    <message>
+        <source>presenceLastSeen</source>
+        <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
+        <translation>Online on %1</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
@@ -3296,6 +3319,10 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
         <translation>invalid E2E encryption keys server URL</translation>
+    </message>
+    <message>
+        <source>publishDurationLabel</source>
+        <translation>Publish duration (sec)</translation>
     </message>
 </context>
 <context>

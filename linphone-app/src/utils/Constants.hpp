@@ -50,7 +50,8 @@ public:
 	static constexpr char DefaultUploadLogsServer[] = "https://www.linphone.org:444/lft.php";
 	static constexpr char DefaultContactParameters[] = "message-expires=2419200";
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
-	static constexpr int DefaultExpires = 3600;
+	static constexpr int DefaultExpires = 600;
+	static constexpr int DefaultPublishExpires = 120;
 	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
 	static constexpr char VersionCheckReleaseUrl[] = "https://linphone.org/releases";
 	static constexpr char VersionCheckNightlyUrl[] = "https://linphone.org/snapshots";
@@ -157,10 +158,11 @@ public:
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
-	static constexpr int RcVersionCurrent = 5;	// 2 = Conference URI
+	static constexpr int RcVersionCurrent = 6;	// 2 = Conference URI
 												// 3 = CPIM on basic chat rooms
 												// 4 = RTP bundle mode
 												// 5 = Video Conference URI
+												// 6 = Publish expires
 //--------------------------------------------------------------------------------	
 //								CISCO
 //--------------------------------------------------------------------------------

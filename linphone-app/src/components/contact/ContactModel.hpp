@@ -24,6 +24,7 @@
 #include "components/presence/Presence.hpp"
 #include "utils/LinphoneEnums.hpp"
 
+#include <QDateTime>
 #include <QSharedPointer>
 // =============================================================================
 
@@ -39,6 +40,7 @@ class ContactModel : public QObject {
   Q_OBJECT
 
   Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged)
+  Q_PROPERTY(QDateTime presenceTimestamp READ getPresenceTimestamp NOTIFY presenceStatusChanged)
   Q_PROPERTY(Presence::PresenceLevel presenceLevel READ getPresenceLevel NOTIFY presenceLevelChanged)
   Q_PROPERTY(VcardModel * vcard READ getVcardModel WRITE setVcardModel NOTIFY contactUpdated)
 
@@ -56,6 +58,7 @@ public:
 
   Q_INVOKABLE VcardModel *cloneVcardModel () const;
   Presence::PresenceLevel getPresenceLevel () const;
+  QDateTime getPresenceTimestamp() const;
   Q_INVOKABLE bool hasCapability(const LinphoneEnums::FriendCapability& capability);
   
   std::shared_ptr<linphone::Friend> getFriend() const;
@@ -73,7 +76,6 @@ private:
   void updateSipAddresses (VcardModel *oldVcardModel);
 
   Presence::PresenceStatus getPresenceStatus () const;
-  
 
   VcardModel *mVcardModel = nullptr;
   std::shared_ptr<linphone::Friend> mLinphoneFriend;

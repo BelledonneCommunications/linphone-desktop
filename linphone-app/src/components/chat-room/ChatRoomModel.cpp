@@ -392,6 +392,19 @@ int ChatRoomModel::getPresenceStatus() const {
 		return -1;
 }
 
+QDateTime ChatRoomModel::getPresenceTimestamp() const {
+	if( mChatRoom && mChatRoom->getNbParticipants() == 1 && !isGroupEnabled()){
+		auto participants = getParticipants(false);
+		auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(Utils::coreStringToAppString((*participants.begin())->getAddress()->asString()));
+		if(contact) {
+			return contact->getPresenceTimestamp();
+		}
+		else
+			return QDateTime();
+	}else
+		return QDateTime();
+}
+
 ParticipantListModel* ChatRoomModel::getParticipantListModel() const{
 	return mParticipantListModel.get();
 }

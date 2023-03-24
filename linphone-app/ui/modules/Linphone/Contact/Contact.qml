@@ -68,7 +68,7 @@ Rectangle {
 													 : (entry.presenceStatus >= 0 ? Presence.getPresenceLevel(entry.presenceStatus) : -1)
 								  )
 								:-1
-			
+			presenceTimestamp: entry && entry.contactModel && entry.contactModel.presenceTimestamp
 			username: entry!=undefined 
 						? entry.conferenceInfoModel
 							? item.organizer

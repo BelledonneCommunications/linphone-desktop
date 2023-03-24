@@ -14,6 +14,7 @@ accept_any_encryption=1
 chat_messages_aggregation_delay=1000
 chat_messages_aggregation=1
 zrtp_key_agreements_suites=MS_ZRTP_KEY_AGREEMENT_K255_KYB512
+update_presence_model_timestamp_before_publish_expires_refresh=1
 
 [video]
 max_conference_size=vga

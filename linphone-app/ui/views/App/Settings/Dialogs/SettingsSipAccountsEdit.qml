@@ -232,6 +232,15 @@ DialogPlus {
 							onClicked: checked = !checked
 						}
 					}
+					FormGroup {
+						label: qsTr('publishDurationLabel')
+						
+						NumericField {
+							id: publishDuration
+							Keys.onEnterPressed:  route.forceActiveFocus()
+							Keys.onReturnPressed:  route.forceActiveFocus()
+						}
+					}
 				}
 				
 				FormLine {

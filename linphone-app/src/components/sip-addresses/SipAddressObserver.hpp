@@ -24,6 +24,7 @@
 #include "components/presence/Presence.hpp"
 
 #include <QSharedPointer>
+#include <QDateTime>
 
 // =============================================================================
 
@@ -39,6 +40,7 @@ class SipAddressObserver : public QObject {
 
 	Q_PROPERTY(ContactModel *contact READ getContact NOTIFY contactChanged);
 	Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
+	Q_PROPERTY(QDateTime presenceTimestamp READ getPresenceTimestamp NOTIFY presenceTimestampChanged);
 	Q_PROPERTY(int unreadMessageCount READ getUnreadMessageCount NOTIFY unreadMessageCountChanged);
 
 	Q_PROPERTY(bool isOneToOne MEMBER isOneToOne CONSTANT);
@@ -54,6 +56,7 @@ public:
 signals:
 	void contactChanged (QSharedPointer<ContactModel>);
 	void presenceStatusChanged (const Presence::PresenceStatus &presenceStatus);
+	void presenceTimestampChanged (const QDateTime &presenceTimestamp);
 	void unreadMessageCountChanged (int unreadMessageCount);
 
 private:
@@ -78,8 +81,12 @@ private:
 	Presence::PresenceStatus getPresenceStatus () const {
 		return mPresenceStatus;
 	}
+	QDateTime getPresenceTimestamp() const{
+		return mPresenceTimestamp;
+	}
 
 	void setPresenceStatus (const Presence::PresenceStatus &presenceStatus);
+	void setPresenceTimestamp (const QDateTime &presenceTimestamp);
 
 	// ---------------------------------------------------------------------------
 
@@ -94,6 +101,7 @@ private:
 
 	QSharedPointer<ContactModel> mContact;
 	Presence::PresenceStatus mPresenceStatus = Presence::PresenceStatus::Offline;
+	QDateTime mPresenceTimestamp;
 	int mUnreadMessageCount = 0;
 };
 

@@ -13,8 +13,10 @@ Item {
 	id: avatar
 	
 	// ---------------------------------------------------------------------------
-	
+	property alias hasPresence: presenceLevelIcon.visible
 	property alias presenceLevel: presenceLevelIcon.level
+	property alias presenceText: presenceLevelIcon.text
+	property alias presenceTimestamp: presenceLevelIcon.timestamp
 	property bool isDarkMode: false
 	property color backgroundColor: isDarkMode ? AvatarStyle.backgroundDarkModeColor.color : AvatarStyle.backgroundColor.color
 	property color foregroundColor: 'transparent'
@@ -83,7 +85,6 @@ Item {
 	
 	PresenceLevel {
 		id: presenceLevelIcon
-		visible: level >= 0
 		
 		anchors {
 			bottom: parent.bottom

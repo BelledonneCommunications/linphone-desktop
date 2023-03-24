@@ -2438,6 +2438,29 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>PresenceLevel</name>
+    <message>
+        <source>presenceOnline</source>
+        <extracomment>&apos;Online⁣&apos;: Presence text</extracomment>
+        <translation>En ligne</translation>
+    </message>
+    <message>
+        <source>presenceLastSeenToday</source>
+        <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
+        <translation>En ligne aujourd&apos;hui à %1</translation>
+    </message>
+    <message>
+        <source>presenceLastSeenYesterday</source>
+        <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
+        <translation>En ligne hier à %1</translation>
+    </message>
+    <message>
+        <source>presenceLastSeen</source>
+        <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
+        <translation>En ligne le %1</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
@@ -3272,6 +3295,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
         <translation>URL du serveur de clés pour le chiffrement de bout en bout invalide</translation>
+    </message>
+    <message>
+        <source>publishDurationLabel</source>
+        <translation>Durée de présence (sec)</translation>
     </message>
 </context>
 <context>

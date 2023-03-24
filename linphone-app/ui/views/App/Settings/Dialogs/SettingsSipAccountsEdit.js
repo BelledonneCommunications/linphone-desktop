@@ -41,6 +41,7 @@ function initForm (account) {
   sipAddress.text = config.sipAddress
   serverAddress.text = config.serverAddress
   registrationDuration.text = config.registrationDuration
+  publishDuration.text = config.publishDuration
 
   var currentTransport = config.transport.toUpperCase()
   transport.currentIndex = Number(
@@ -83,6 +84,7 @@ function validAccount (account) {
 		sipAddress: sipAddress.text,
 		serverAddress: serverAddress.text,
 		registrationDuration: registrationDuration.text,
+		publishDuration: publishDuration.text,
 		transport: transport.currentText,
 		route: route.text,
 		conferenceUri: conferenceUri.text,

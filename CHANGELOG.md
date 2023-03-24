@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add/View contact from a message.
 - Mute option for each chatrooms.
 - New Chat Layout.
+- Display last seen for contacts.
 
 ### Fixed
 - Update SDK to 5.2.29

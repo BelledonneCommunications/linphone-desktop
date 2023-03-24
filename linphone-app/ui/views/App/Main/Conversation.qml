@@ -100,6 +100,7 @@ ColumnLayout  {
 				
 				image: Logic.getAvatar()
 				presenceLevel: chatRoomModel && chatRoomModel.presenceStatus
+				presenceTimestamp: chatRoomModel && chatRoomModel.presenceTimestamp
 				
 				//username: Logic.getUsername()
 				username: chatRoomModel?chatRoomModel.username:( conversation._sipAddressObserver ? UtilsCpp.getDisplayName(conversation._sipAddressObserver.peerAddress) : '')
@@ -158,12 +159,14 @@ ColumnLayout  {
 							titleText: avatar.username
 							titleClickable: chatRoomModel && chatRoomModel.isMeAdmin && !chatRoomModel.isOneToOne
 							subtitleText: if(chatRoomModel) {
-											  if(chatRoomModel.groupEnabled) {
-												  return chatRoomModel.participants.displayNamesToString;
-											  }else if(chatRoomModel.isSecure()) {
-												  return chatRoomModel.participants.addressesToString;
-											  }else
-												  return SipAddressesModel.cleanSipAddress(chatRoomModel.sipAddress)
+												if(chatRoomModel.groupEnabled) {
+													return chatRoomModel.participants.displayNamesToString;
+												}else if(avatar.hasPresence) {
+													return avatar.presenceText
+												}else if(chatRoomModel.isSecure())
+													return chatRoomModel.participants.addressesToString;
+												else
+													return SipAddressesModel.cleanSipAddress(chatRoomModel.sipAddress)
 										  }else
 											  return ''
 							

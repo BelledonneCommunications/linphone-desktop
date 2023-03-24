@@ -43,6 +43,14 @@ void SipAddressObserver::setPresenceStatus (const Presence::PresenceStatus &pres
   emit presenceStatusChanged(presenceStatus);
 }
 
+void SipAddressObserver::setPresenceTimestamp(const QDateTime &presenceTimestamp){
+	if (presenceTimestamp == mPresenceTimestamp)
+		return;
+
+	mPresenceTimestamp = presenceTimestamp;
+	emit presenceTimestampChanged(presenceTimestamp);
+}
+
 void SipAddressObserver::setUnreadMessageCount (int unreadMessageCount) {
   if (unreadMessageCount == mUnreadMessageCount)
     return;

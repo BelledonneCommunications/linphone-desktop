@@ -50,6 +50,7 @@ public:
     QString sipAddress;
     QSharedPointer<ContactModel> contact;
     Presence::PresenceStatus presenceStatus;
+    QDateTime presenceTimestamp;
     QHash<QString, ConferenceEntry> localAddressToConferenceEntry;
   };
 
@@ -147,7 +148,7 @@ private:
   void initRefs ();
 
   void updateObservers (const QString &sipAddress, QSharedPointer<ContactModel> contact);
-  void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus);
+  void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus, const QDateTime &presenceTimestamp);
   void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount, int missedCallCount);
 
   // ---------------------------------------------------------------------------
