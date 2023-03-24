@@ -1944,7 +1944,7 @@
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">管理者</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -1974,7 +1974,7 @@
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <source>missingSubject</source>
@@ -2001,7 +2001,7 @@
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">件名</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
@@ -2011,18 +2011,18 @@
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Meeting. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">現在のチャットルームの件名です。空にすることはできません。</translation>
         <extra-Tooltip>Explanation about the subject of the meeting</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your meeting ?&apos; : Ask about setting the meeting as secured.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">チャットを暗号化しますか？</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">参加者を選択</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
@@ -2032,7 +2032,7 @@
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">管理者</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -2259,23 +2259,23 @@
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">参加者を追加</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">チャットルームに招待するため、連絡先リストから参加者を検索します。</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">参加者リスト</translation>
     </message>
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">管理者</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -3922,7 +3922,7 @@
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">キャンセル</translation>
     </message>
     <message>
         <source>startButton</source>
