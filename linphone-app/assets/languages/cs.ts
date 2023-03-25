@@ -2456,22 +2456,22 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>presenceOnline</source>
         <extracomment>&apos;Online⁣&apos;: Presence text</extracomment>
-        <translation type="unfinished">Dostupné</translation>
+        <translation>Online</translation>
     </message>
     <message>
         <source>presenceLastSeenToday</source>
         <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dnes online v %1</translation>
     </message>
     <message>
         <source>presenceLastSeenYesterday</source>
         <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Včera online v %1</translation>
     </message>
     <message>
         <source>presenceLastSeen</source>
         <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Online %1</translation>
     </message>
 </context>
 <context>
@@ -3335,7 +3335,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>publishDurationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Délka publikování stavu (s)</translation>
     </message>
 </context>
 <context>
