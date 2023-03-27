@@ -64,12 +64,13 @@ constexpr int SafeFilePathLimit = 100;
 }
 
 std::shared_ptr<linphone::Address> Utils::interpretUrl(const QString& address){
-	auto interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address), true);
+	bool usePrefix = CoreManager::getInstance()->getAccountSettingsModel()->getUseInternationalPrefixForCallsAndChats();
+	auto interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(address), usePrefix);
 	if(!interpretedAddress){// Try by removing scheme.
 		QStringList splitted = address.split(":");
 		if(splitted.size() > 0 && splitted[0] == "sip"){
 			splitted.removeFirst();
-			interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(splitted.join(":")), true);
+			interpretedAddress = CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString(splitted.join(":")), usePrefix);
 		}
 	}
 	return interpretedAddress;

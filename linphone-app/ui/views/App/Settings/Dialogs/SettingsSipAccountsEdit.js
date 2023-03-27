@@ -59,6 +59,11 @@ function initForm (account) {
   registerEnabled.checked = config.registerEnabled
   publishPresence.checked = config.publishPresence
   avpfEnabled.checked = config.avpfEnabled
+  
+  dialPrefixCallChat.checked = config.dialPrefixCallChat
+  dialPrefix.text = config.dialPrefix
+  dialEscapePlus.checked = config.dialEscapePlus
+  
   iceEnabled.checked = config.iceEnabled
   turnEnabled.checked = config.turnEnabled
   stunServer.text = config.stunServer
@@ -95,6 +100,9 @@ function validAccount (account) {
 		registerEnabled: registerEnabled.checked,
 		publishPresence: publishPresence.checked,
 		avpfEnabled: avpfEnabled.checked,
+		dialPrefix: dialPrefix.text,
+		dialPrefixCallChat: dialPrefixCallChat.checked,
+		dialEscapePlus: dialEscapePlus.checked,
 		iceEnabled: iceEnabled.checked,
 		turnEnabled: turnEnabled.checked,
 		stunServer: stunServer.text,

@@ -172,6 +172,9 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 	map["publishPresence"] = accountParams->publishEnabled();
 	map["avpfEnabled"] = accountParams->getAvpfMode() == linphone::AVPFMode::Enabled;
 	map["registrationState"] = mapLinphoneRegistrationStateToUi(account->getState());
+	map["dialPrefix"] = Utils::coreStringToAppString(accountParams->getInternationalPrefix());
+	map["dialPrefixCallChat"] = accountParams->getUseInternationalPrefixForCallsAndChats();
+	map["dialEscapePlus"] = accountParams->dialEscapePlusEnabled();
 	
 	shared_ptr<linphone::NatPolicy> natPolicy = accountParams->getNatPolicy();
 	bool createdNat = !natPolicy;
@@ -220,6 +223,16 @@ QString AccountSettingsModel::getLimeServerUrl() const{
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Account> account = core->getDefaultAccount();
 	return account ? Utils::coreStringToAppString(account->getParams()->getLimeServerUrl()) : "";
+}
+
+bool AccountSettingsModel::getUseInternationalPrefixForCallsAndChats() const{
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	if(core){
+		shared_ptr<linphone::Account> account = core->getDefaultAccount();
+		if(account)
+			return account->getParams()->getUseInternationalPrefixForCallsAndChats();
+	}
+	return false;
 }
 
 void AccountSettingsModel::setDefaultAccount (const shared_ptr<linphone::Account> &account) {
@@ -351,6 +364,13 @@ bool AccountSettingsModel::addOrUpdateAccount(
 			? linphone::AVPFMode::Enabled
 			: linphone::AVPFMode::Default
 			  );
+	if(data.contains("dialPrefix"))
+		accountParams->setInternationalPrefix(Utils::appStringToCoreString(data["dialPrefix"].toString()));
+	if(data.contains("dialPrefixCallChat"))
+		accountParams->setUseInternationalPrefixForCallsAndChats(data["dialPrefixCallChat"].toBool());
+	if(data.contains("dialEscapePlus"))
+		accountParams->enableDialEscapePlus(data["dialEscapePlus"].toBool());
+	
 	
 	shared_ptr<linphone::NatPolicy> natPolicy = accountParams->getNatPolicy();
 	bool createdNat = !natPolicy;
@@ -401,7 +421,7 @@ bool AccountSettingsModel::addOrUpdateAccount (
 ) {
 	shared_ptr<linphone::Account> account;
 	QString sipAddress = data["sipAddress"].toString();
-	shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(sipAddress.toStdString());
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
 	
 	for (const auto &databaseAccount : CoreManager::getInstance()->getAccountList())
 	  if (databaseAccount->getParams()->getIdentityAddress()->weakEqual(address)) {

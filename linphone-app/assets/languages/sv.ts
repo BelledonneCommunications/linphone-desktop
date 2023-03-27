@@ -3300,6 +3300,36 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>publishDurationLabel</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>dialPrefix</source>
+        <extracomment>&apos;Prefix for your country&apos; : Label for a text option to set the country code on the phone numbers.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dialPrefixTooptip</source>
+        <extracomment>&quot;The prefix to use when using numbers without the &apos;+&apos;&quot; : tooltip for a text option to set the country code on the phone numbers.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dialEscapePlus</source>
+        <extracomment>&quot;Replace &apos;+&apos; by &apos;00&apos;&quot; : Label to an option for escaping the &apos;+&apos; character when dialing.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dialEscapePlusTooltip</source>
+        <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dialPrefixCallChat</source>
+        <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dialPrefixCallChatTooltip</source>
+        <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsTunnel</name>

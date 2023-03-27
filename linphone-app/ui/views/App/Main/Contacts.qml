@@ -120,7 +120,7 @@ ColumnLayout {
 								color: ContactsStyle.contact.presence.colorModel.color
 								elide: Text.ElideRight
 								font.pointSize: ContactsStyle.contact.presence.pointSize
-								text: presenceLevel.presenceText
+								text: presenceLevel.text
 								visible: presenceLevel.visible
 							}
 						}

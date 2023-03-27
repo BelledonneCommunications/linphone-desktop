@@ -76,6 +76,7 @@ public:
 	QString getConferenceUri() const;
 	QString getVideoConferenceUri() const;
 	QString getLimeServerUrl() const;
+	bool getUseInternationalPrefixForCallsAndChats() const;
 	
 	Q_INVOKABLE void setDefaultAccount (const std::shared_ptr<linphone::Account> &account = nullptr);
 	Q_INVOKABLE void setDefaultAccountFromSipAddress (const QString &sipAddress);

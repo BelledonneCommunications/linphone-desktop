@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New Chat Layout.
 - Display last seen for contacts.
 - New language support: Czech
+- An option to set dial prefix and its use on numbers.
 
 ## 5.0.15 - undefined
 

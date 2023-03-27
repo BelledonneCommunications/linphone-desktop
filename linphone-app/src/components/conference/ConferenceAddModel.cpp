@@ -94,9 +94,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
   if (mSipAddresses.contains(sipAddress))
     return false;
 
-  shared_ptr<linphone::Address> address = CoreManager::getInstance()->getCore()->interpretUrl(
-    Utils::appStringToCoreString(sipAddress)
-  );
+  shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
   if (!address)
     return false;
 

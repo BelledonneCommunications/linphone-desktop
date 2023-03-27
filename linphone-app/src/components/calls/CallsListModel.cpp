@@ -136,7 +136,7 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
-	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
 	if (!address)
 		return;
 	
@@ -180,7 +180,7 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 		return;
 	}
 	
-	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(sipAddress));
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
 	if (!address)
 		return;
 	
@@ -215,7 +215,7 @@ QVariantMap CallsListModel::launchChat(const QString &sipAddress, const int& sec
 ChatRoomModel* CallsListModel::createChat (const QString &participantAddress) const{
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(participantAddress));
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(participantAddress);
 	if (!address)
 		return nullptr;
 	
@@ -248,7 +248,7 @@ ChatRoomModel* CallsListModel::createChat (CallModel * model){
 bool CallsListModel::createSecureChat (const QString& subject, const QString &participantAddress) const{
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-	shared_ptr<linphone::Address> address = core->interpretUrl(Utils::appStringToCoreString(participantAddress));
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(participantAddress);
 	if (!address)
 		return false;
 	
@@ -472,7 +472,7 @@ void CallsListModel::terminateAllCalls () const {
 }
 void CallsListModel::terminateCall (const QString& sipAddress) const{
 	auto coreManager = CoreManager::getInstance();
-	shared_ptr<linphone::Address> address = coreManager->getCore()->interpretUrl(Utils::appStringToCoreString(sipAddress));
+	shared_ptr<linphone::Address> address = Utils::interpretUrl(sipAddress);
 	if (!address)
 		qWarning() << "Cannot terminate Call. The address cannot be parsed : " << sipAddress;
 	else{

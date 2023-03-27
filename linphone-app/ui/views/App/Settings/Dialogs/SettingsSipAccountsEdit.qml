@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
 import Common 1.0
 
@@ -251,6 +252,58 @@ DialogPlus {
 							id: avpfEnabled
 							
 							onClicked: checked = !checked
+						}
+					}
+				}
+				FormLine {
+					FormGroup {
+						//: 'Prefix for your country' : Label for a text option to set the country code on the phone numbers.
+						label: qsTr('dialPrefix')
+						
+						NumericField {
+							id: dialPrefix
+							Keys.onEnterPressed:  route.forceActiveFocus()
+							Keys.onReturnPressed:  route.forceActiveFocus()
+							TooltipArea{
+								tooltipParent: dialPrefix
+								//: "The prefix to use when using numbers without the '+'" : tooltip for a text option to set the country code on the phone numbers.
+								text: qsTr('dialPrefixTooptip')
+							}
+						}
+					}
+					FormGroup {
+						//: "Replace '+' by '00'" : Label to an option for escaping the '+' character when dialing.
+						label: qsTr('dialEscapePlus')
+						
+						Switch {
+							id: dialEscapePlus
+							
+							onClicked: checked = !checked
+							TooltipArea{
+								tooltipParent: dialEscapePlus
+								//: 'Replace + in addresses by 00' : tooltip for an option that allow escaping the '+' character in phone number.
+								text: qsTr('dialEscapePlusTooltip')
+							}
+						}
+					}
+					
+				}
+				FormLine{
+					maxItemWidth: width / 2
+					FormGroup {
+					//: 'Apply prefix for outgoing calls and chats' : Label to set an option for applying the specified prefix to outgoings calls and chats.
+						label: qsTr('dialPrefixCallChat')
+						fitLabel: true
+						maxWidth: parent.width
+						Switch {
+							id: dialPrefixCallChat
+							
+							onClicked: checked = !checked
+							TooltipArea{
+								tooltipParent: dialPrefixCallChat
+								//: 'If a number is entered, apply the prefix to number' : tooltip for an option to applying the country prefix to numbers.
+								text: qsTr('dialPrefixCallChatTooltip')
+							}
 						}
 					}
 				}

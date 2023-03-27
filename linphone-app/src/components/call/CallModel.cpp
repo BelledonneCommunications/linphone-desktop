@@ -168,7 +168,7 @@ std::shared_ptr<linphone::Address> CallModel::getConferenceAddress () const{
 		
 		if (mCall->getDir() == linphone::Call::Dir::Incoming){
 			if( remoteContact != "" )
-				conferenceAddress = CoreManager::getInstance()->getCore()->interpretUrl(remoteContact);
+				conferenceAddress = Utils::interpretUrl(Utils::coreStringToAppString(remoteContact));
 		}else
 			conferenceAddress = mCall->getRemoteAddress()->clone();
 	}	

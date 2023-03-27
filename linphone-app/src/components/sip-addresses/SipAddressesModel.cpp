@@ -192,9 +192,7 @@ QString SipAddressesModel::addTransportToSipAddress (const QString &sipAddress, 
 // -----------------------------------------------------------------------------
 
 QString SipAddressesModel::interpretSipAddress (const QString &sipAddress, bool checkUsername) {
-	shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-				Utils::appStringToCoreString(sipAddress)
-				);
+	shared_ptr<linphone::Address> lAddress = Utils::interpretUrl(sipAddress);
 	
 	if (lAddress && (!checkUsername || !lAddress->getUsername().empty()))
 		return Utils::coreStringToAppString(lAddress->asStringUriOnly());

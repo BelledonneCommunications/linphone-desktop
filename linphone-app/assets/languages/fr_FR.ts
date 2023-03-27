@@ -3300,6 +3300,36 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>publishDurationLabel</source>
         <translation>Durée de présence (sec)</translation>
     </message>
+    <message>
+        <source>dialPrefix</source>
+        <extracomment>&apos;Prefix for your country&apos; : Label for a text option to set the country code on the phone numbers.</extracomment>
+        <translation>Préfixe de votre pays</translation>
+    </message>
+    <message>
+        <source>dialPrefixTooptip</source>
+        <extracomment>&quot;The prefix to use when using numbers without the &apos;+&apos;&quot; : tooltip for a text option to set the country code on the phone numbers.</extracomment>
+        <translation>Le préfixe à utiliser dans les numéros de téléphone sans le caractère &apos;+&apos;</translation>
+    </message>
+    <message>
+        <source>dialEscapePlus</source>
+        <extracomment>&quot;Replace &apos;+&apos; by &apos;00&apos;&quot; : Label to an option for escaping the &apos;+&apos; character when dialing.</extracomment>
+        <translation>Remplacer &apos;+&apos; par &apos;00&apos;</translation>
+    </message>
+    <message>
+        <source>dialEscapePlusTooltip</source>
+        <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
+        <translation>Remplacer le caractère &apos;+&apos; par &apos;00&apos; dans les numéros de téléphone</translation>
+    </message>
+    <message>
+        <source>dialPrefixCallChat</source>
+        <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
+        <translation>Applique le préfixe pour les appels sortants et les messages</translation>
+    </message>
+    <message>
+        <source>dialPrefixCallChatTooltip</source>
+        <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
+        <translation>Quand un nombre est saisi, applique le préfixe</translation>
+    </message>
 </context>
 <context>
     <name>SettingsTunnel</name>

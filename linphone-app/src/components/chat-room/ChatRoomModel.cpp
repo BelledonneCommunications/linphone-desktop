@@ -1256,9 +1256,7 @@ void ChatRoomModel::handlePresenceStatusReceived(std::shared_ptr<linphone::Frien
 				if(contact){
 					auto friendsAddresses = contact->getVcardModel()->getSipAddresses();
 					for(auto friendAddress = friendsAddresses.begin() ; !canUpdatePresence && friendAddress != friendsAddresses.end() ; ++friendAddress){
-						shared_ptr<linphone::Address> lAddress = CoreManager::getInstance()->getCore()->interpretUrl(
-									Utils::appStringToCoreString(friendAddress->toString())
-									);
+						shared_ptr<linphone::Address> lAddress = Utils::interpretUrl(friendAddress->toString());
 						canUpdatePresence = lAddress->weakEqual(*itContactAddress);
 					}	
 				}

@@ -231,4 +231,20 @@ Q_DECLARE_METATYPE(LinphoneEnums::RecorderState)
 Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
 Q_DECLARE_METATYPE(LinphoneEnums::TransportType)
 
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::Call>)
+Q_DECLARE_METATYPE(linphone::Call::State)
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::Core>)
+Q_DECLARE_METATYPE(linphone::ConfiguringState)
+Q_DECLARE_METATYPE(std::string)
+Q_DECLARE_METATYPE(linphone::GlobalState)
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::ChatRoom>)
+Q_DECLARE_METATYPE(linphone::ChatRoom::State)
+Q_DECLARE_METATYPE(linphone::RegistrationState)
+Q_DECLARE_METATYPE(linphone::VersionUpdateCheckResult)
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::CallLog>)
+Q_DECLARE_METATYPE(std::shared_ptr<const linphone::CallStats>)
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::EventLog>)
+Q_DECLARE_METATYPE(std::shared_ptr<linphone::ChatMessage>)
+
+
 #endif
