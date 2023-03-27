@@ -11,6 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 - Accept/decline CLI commands.
 
+## 5.0.15 - undefined
+
+## Fixed
+- Fix using only username in URI handlers.
+
 ## 5.0.14 - 2023-03-16
 
 ## Fixed
