@@ -655,6 +655,12 @@ bool Utils::isPhoneNumber(const QString& txt){
 	return account && account->isPhoneNumber(Utils::appStringToCoreString(txt));
 }
 
+bool Utils::isUsername(const QString& txt){
+	QRegularExpression regex("^(<?sips?:)?[a-zA-Z0-9+_.\\-]+>?$");
+	QRegularExpressionMatch match = regex.match(txt);
+	return match.hasMatch(); // true
+}
+
 QSize Utils::getImageSize(const QString& url){
 	QString path;
 	QUrl urlDecode(url);

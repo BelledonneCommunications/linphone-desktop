@@ -359,6 +359,8 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
 void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) const {
 	QHash<QString, QString> args;
 	QString qAddress = Utils::coreStringToAppString(address->asString());
+	if(address->getDomain() == "" && qAddress.back() == '@')
+		qAddress.remove(qAddress.size()-1, 1);
 	QUrl url(qAddress);
 	QString query = url.query();
 
@@ -378,7 +380,7 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
 		const string header = address->getHeader(Utils::appStringToCoreString(argName));
 		args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
 	}
-	args["sip-address"] = Utils::coreStringToAppString(address->asString());
+	args["sip-address"] = qAddress;
 	execute(args);
 }
 
@@ -526,15 +528,21 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 				*format = CliFormat;
 			mCommands["show"].execute(args);
 		}else{
-			shared_ptr<linphone::Address> address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand));// Test if command is an address
+			shared_ptr<linphone::Address> address;
+			if(Utils::isUsername(transformedCommand)){
+				address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand+"@to.remove"));
+				if(address)
+					address->setDomain("");
+			}else
+				address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand));// Test if command is an address
 			if (format)
 				*format = UriFormat;
 			qInfo() << QStringLiteral("Detecting URI command: `%1`...").arg(command);
 			QString functionName;
 			if( address) {
 				functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
-						? QStringLiteral("call")
-						: Utils::coreStringToAppString(address->getHeader("method"));
+					? QStringLiteral("call")
+					: Utils::coreStringToAppString(address->getHeader("method"));
 			}else{
 				QStringList fields = command.split('?');
 				if(fields.size() >1){

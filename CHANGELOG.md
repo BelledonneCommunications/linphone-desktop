@@ -18,17 +18,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display last seen for contacts.
 - New language support: Czech
 
-### Fixed
-- Update SDK to 5.2.29
+## 5.0.15 - undefined
 
-## 5.0.13 - undefined
+## Fixed
+- Fix using only username in URI handlers.
+
+## 5.0.14 - 2023-03-16
+
+## Fixed
+- Downgrade Qt back to 5.15.2 because of Qt commercial licence that break other GPL licences.
+- Show file extension image instead of thumbnails if image's size factor is too low/high.
+- Update SDK to 5.2.35 (ZLib vulnerability).
+
+## 5.0.13 - 2023-03-13 - postprone to 5.0.14
 
 ### Fixed
 - Conference layout refreshing on creation.
 - Crash and display of local conferences.
 - Crash on chat rooms with default account.
+- Show display name for local accounts.
+- Update SDK to 5.2.32
 
-## 5.0.12 - 2023-03-01
+## 5.0.12 - 2023-03-01 - postprone to 5.0.14
 
 ### Fixed
 - Some case of unwanted settings folders creation.
@@ -36,7 +47,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unusable Contact sheet.
 - Update SDK to 5.2.28 (cleanup orphan NAT sections and race condition on MSTicker threads).
 
-## 5.0.11 - 2023-02-24
+## 5.0.11 - 2023-02-24 - postprone to 5.0.14
+
 
 ### Fixed
 - Display of non-Ascii avatar

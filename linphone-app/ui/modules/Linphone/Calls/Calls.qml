@@ -148,9 +148,11 @@ ListView {
 		
 		// -------------------------------------------------------------------------
 		property var entryColors: CallsStyle.entry.color
-		color: isDarkMode
-			   ? entryColors.selected.color
-			   : entryColors.normal.color
+		color: entryColors
+				? isDarkMode
+					? entryColors.selected.color
+					: entryColors.normal.color
+				: CallsStyle.entry.color.normal.color
 		subtitleColor: isDarkMode
 						 ? CallsStyle.entry.subtitleColor.selected.color
 						 : CallsStyle.entry.subtitleColor.normal.color
