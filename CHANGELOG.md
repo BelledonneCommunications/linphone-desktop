@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Fixed
 - Fix using only username in URI handlers.
 - Chat flickering on load.
+- Update SDK to 5.2.42
 
 ## 5.0.14 - 2023-03-16
 
