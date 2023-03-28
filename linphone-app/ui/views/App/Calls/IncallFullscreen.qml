@@ -50,7 +50,9 @@ Window {
 	onCallModelChanged: if(!callModel) window.exit()
 	Component.onCompleted: {
 		window.callModel = caller.callModel
+		console.info("[QML] fullscreen window opened")
 	}
+	Component.onDestruction: console.info("[QML] fullscreen window closed")
 	// ---------------------------------------------------------------------------
 
 	Shortcut {
@@ -251,7 +253,10 @@ Window {
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: IncallStyle.buttons.stopFullscreen
-				onClicked: window.exit()
+				onClicked: {
+					console.info("[QML] User request exiting fullscreen")
+					window.exit()
+				}
 			}
 
 		}
