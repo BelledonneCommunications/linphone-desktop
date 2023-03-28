@@ -57,7 +57,6 @@ Rectangle {
 		ScrollableListView {
 			id: chat
 			// -----------------------------------------------------------------------
-			property bool bindToEnd: false
 			property bool displaying: false
 			property bool loadingEntries: (container.proxyModel.chatRoomModel && container.proxyModel.chatRoomModel.entriesLoading) || displaying
 			property bool tryToLoadMoreEntries: loadingEntries || remainingLoadersCount>0
@@ -462,20 +461,5 @@ Rectangle {
 			}// ColumnLayout
 		}// Bottom background
 	}
-	
-	
-	
-	// ---------------------------------------------------------------------------
-	// Scroll at end if necessary.
-	// ---------------------------------------------------------------------------
-	
-	Timer {
-		interval: 100
-		repeat: true
-		running: true
-		
-		onTriggered: chat.bindToEnd && chat.positionViewAtEnd()
-	}
-	
 }
 
