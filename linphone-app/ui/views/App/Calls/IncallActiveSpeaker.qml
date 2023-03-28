@@ -25,9 +25,10 @@ Item {
 	property bool isRightReducedLayout: false
 	property bool isLeftReducedLayout: false
 	property bool cameraEnabled: true
-	property bool isConferenceReady: callModel.isConference && callModel.conferenceModel && callModel.conferenceModel.isReady
+	property bool isConference: callModel && callModel.isConference
+	property bool isConferenceReady: isConference && callModel.conferenceModel && callModel.conferenceModel.isReady
 	
-	property int participantCount: callModel.isConference ? allDevices.count + 1 : 2	// +me. allDevices==0 if !conference
+	property int participantCount: isConference ? allDevices.count + 1 : 2	// +me. allDevices==0 if !conference
 	
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
@@ -45,14 +46,14 @@ Item {
 		callModel: mainItem.callModel
 		currentDevice: isPreview
 							? allDevices.me
-							: callModel.isConference
+							: mainItem.isConference
 								? allDevices.activeSpeaker
 								: null
 		deactivateCamera: !mainItem.cameraEnabled || (isPreview && callModel.pausedByUser)
 							? true
-							: callModel.isConference
+							: mainItem.isConference
 								?  (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused) )
-									|| (!callModel.cameraEnabled && mainItem.participantCount == 1)
+									|| (!(callModel && callModel.cameraEnabled) && mainItem.participantCount == 1)
 									|| (currentDevice && !currentDevice.videoEnabled)// && mainItem.participantCount == 2)
 									|| !mainItem.isConferenceReady
 								: (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused || !callModel.videoEnabled) )
@@ -62,7 +63,7 @@ Item {
 		isCameraFromDevice: isPreview
 		isPaused: isPreview && callModel.pausedByUser
 					? false
-					: callModel.isConference
+					: mainItem.isConference
 						? //callModel && callModel.pausedByUser && mainItem.participantCount != 2 || 
 							(currentDevice && currentDevice.isPaused)
 						: callModel && !callModel.pausedByUser && (callModel.status === CallModel.CallStatusPaused)
@@ -85,7 +86,7 @@ Item {
 		width: 16 * height / 9
 		
 		visible: mainItem.isConferenceReady && allDevices.count >= 1
-				|| (!callModel.isConference && mainItem.callModel.cameraEnabled)// use videoEnabled if we want to show the preview sticker
+				|| (!mainItem.isConference && mainItem.callModel && mainItem.callModel.cameraEnabled)// use videoEnabled if we want to show the preview sticker
 		
 		Loader{
 			anchors.fill: parent
@@ -135,13 +136,13 @@ Item {
 		anchors.bottomMargin: 0
 //---------------
 		width: 16 * miniViews.cellHeight / 9
-		visible: mainItem.isConferenceReady || !callModel.isConference
+		visible: mainItem.isConferenceReady || !mainItem.isConference
 		
 		ScrollableListView{
 			id: miniViews
 			property int cellHeight: 150
 			anchors.fill: parent
-			model : mainItem.callModel.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
+			model : mainItem.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
 			spacing: 0
 			verticalLayoutDirection: ListView.BottomToTop
 			fitCacheToContent: false
@@ -165,11 +166,11 @@ Item {
 						anchors.leftMargin: 3
 						anchors.rightMargin: 3
 						anchors.bottomMargin: 18
-						deactivateCamera: (!mainItem.isConferenceReady || !callModel.isConference)
+						deactivateCamera: (!mainItem.isConferenceReady || !mainItem.isConference)
 											&& (index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser) )
 						currentDevice: modelData.isPreview ? null : modelData
 						callModel: modelData.isPreview ? null : mainItem.callModel
-						isCameraFromDevice:  mainItem.callModel.isConference
+						isCameraFromDevice:  mainItem.isConference
 						isPaused: currentDevice && currentDevice.isPaused
 						showCloseButton: false
 						showCustomButton:  false
