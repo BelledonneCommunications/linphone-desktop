@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.1.0 - undefined
 
+### Fixed
+
+- Chat flickering on load.
+
 ### Added
 - VFS Encryption
 - File viewer in chats (Image/Animated Image/Video/Texts/Pdf) with the option to export the file.

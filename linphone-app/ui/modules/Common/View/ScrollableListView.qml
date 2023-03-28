@@ -12,6 +12,7 @@ ListView {
 	property alias horizontalScrollPolicy : hScrollBar.policy
 	
 	property bool fitCacheToContent: true
+	property bool bindToEnd: false
 	
 	function getVisibleIndex(checkMax) {
 		var center_x = view.x + view.width / 2
@@ -59,10 +60,11 @@ ListView {
 	contentHeight: height - (hScrollBar.visible?hScrollBar.height:0)
 	spacing: 0
 	synchronousDrag: true
-	
+	onBindToEndChanged: if(bindToEnd) positionViewAtEnd()
 	onContentHeightChanged: {
 		if(fitCacheToContent)
 			cacheBuffer= (view.contentHeight > 0 ? view.contentHeight : 0)
+		if(bindToEnd) positionViewAtEnd()
 	}
 	cacheBuffer: height > 0 ? height : 0
 	// ---------------------------------------------------------------------------
