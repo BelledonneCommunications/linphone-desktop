@@ -6,8 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.1.0 - undefined
 
-
-
 ### Added
 - VFS Encryption
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
@@ -15,15 +13,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.0.15 - undefined
 
-## Fixed
+### Fixed
 - Fix using only username in URI handlers.
 - Chat flickering on load.
 - Color of busy indicator when the chat is loading.
 - Update SDK to 5.2.42
 
+### Added
+- New language support: Czech
+
 ## 5.0.14 - 2023-03-16
 
-## Fixed
+### Fixed
 - Downgrade Qt back to 5.15.2 because of Qt commercial licence that break other GPL licences.
 - Show file extension image instead of thumbnails if image's size factor is too low/high.
 - Update SDK to 5.2.35 (ZLib vulnerability).

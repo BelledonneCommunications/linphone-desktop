@@ -475,7 +475,7 @@ endif()
 
 set(LANGUAGES_DIRECTORY "${ASSETS_DIR}/languages")
 set(I18N_FILENAME i18n.qrc)
-set(LANGUAGES da de en es fr_FR hu it ja lt pt_BR ru sv tr uk zh_CN)
+set(LANGUAGES cs da de en es fr_FR hu it ja lt pt_BR ru sv tr uk zh_CN)
 
 # ------------------------------------------------------------------------------
 
