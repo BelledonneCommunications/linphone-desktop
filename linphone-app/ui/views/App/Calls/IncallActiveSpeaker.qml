@@ -43,6 +43,7 @@ Item {
 		anchors.fill: parent
 		anchors.leftMargin: isRightReducedLayout || isLeftReducedLayout? 30 : 140
 		anchors.rightMargin: isRightReducedLayout ? 10 : 140
+		cameraQmlName: 'AS'
 		callModel: mainItem.callModel
 		currentDevice: isPreview
 							? allDevices.me
@@ -94,6 +95,7 @@ Item {
 			sourceComponent: 
 			Sticker{
 				id: previewSticker
+				cameraQmlName: 'AS_Preview'
 				deactivateCamera: !mainItem.cameraEnabled || !mainItem.callModel || callModel.pausedByUser || !mainItem.callModel.cameraEnabled
 				currentDevice: allDevices.me
 				isPreview: true
@@ -166,6 +168,7 @@ Item {
 						anchors.leftMargin: 3
 						anchors.rightMargin: 3
 						anchors.bottomMargin: 18
+						cameraQmlName: 'S_'+index
 						deactivateCamera: (!mainItem.isConferenceReady || !mainItem.isConference)
 											&& (index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser) )
 						currentDevice: modelData.isPreview ? null : modelData

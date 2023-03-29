@@ -19,6 +19,7 @@ Item {
 	property ParticipantDeviceModel currentDevice
 	property CallModel callModel
 	property SoundPlayer linphonePlayer
+	property string qmlName
 	property bool isPreview: (!callModel && !container.currentDevice) || ( container.currentDevice && container.currentDevice.isMe)
 	property bool isFullscreen: false
 	property bool hideCamera: false
@@ -77,6 +78,7 @@ Item {
 		Component {
 			id: camera
 			Camera {
+				qmlName: container.qmlName
 				participantDeviceModel: container.currentDevice
 				linphonePlayer: container.linphonePlayer
 				call: container.isCameraFromDevice ? null : container.callModel

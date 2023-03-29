@@ -33,6 +33,7 @@ DialogPlus {
 			anchors.centerIn: parent
 			height: parent.height
 			width: height
+			qmlName: 'SettingsVideo'
 			showCloseButton: false
 		}
 	}
