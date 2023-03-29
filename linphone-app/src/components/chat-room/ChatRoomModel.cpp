@@ -953,8 +953,11 @@ void ChatRoomModel::initEntries(){
 		qDebug() << "Internal Entries : Built";
 		if(entries.size() >0){
 			beginInsertRows(QModelIndex(),0, entries.size()-1);
-			for(auto e : entries)
+			for(auto e : entries) {
+				if( e->mType == ChatRoomModel::EntryType::MessageEntry)
+					connect(e.objectCast<ChatMessageModel>().get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 				mList.push_back(e);
+			}
 			endInsertRows();
 			updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());
 		}
