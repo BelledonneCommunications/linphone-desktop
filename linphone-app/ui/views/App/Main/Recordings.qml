@@ -263,6 +263,7 @@ Item {
 				active: linphonePlayer
 				sourceComponent: Component{
 					CameraView{
+						qmlName: 'RecordingItem'
 						isPreview: false
 						linphonePlayer: videoView.linphonePlayer
 					}

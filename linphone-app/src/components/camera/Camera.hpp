@@ -48,6 +48,7 @@ class Camera : public QQuickFramebufferObject {
 	Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged);
 	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged);
 	Q_PROPERTY(SoundPlayer * linphonePlayer READ getLinphonePlayer WRITE setLinphonePlayer NOTIFY linphonePlayerChanged)
+	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged)
 
 	typedef enum{
 		None = -1,
@@ -83,6 +84,7 @@ signals:
 	void requestNewRenderer();
 	void videoDefinitionChanged();
 	void linphonePlayerChanged(SoundPlayer * linphonePlayer);
+	void qmlNameChanged();
 	
 private:
 	CallModel *getCallModel () const;
@@ -90,6 +92,7 @@ private:
 	bool getIsReady () const;
 	ParticipantDeviceModel * getParticipantDeviceModel() const;
 	SoundPlayer * getLinphonePlayer() const;
+	QString getQmlName() const;
 	
 	void setCallModel (CallModel *callModel);
 	void setIsPreview (bool status);
@@ -97,6 +100,7 @@ private:
 	void setParticipantDeviceModel(ParticipantDeviceModel * participantDeviceModel);
 	void setLinphonePlayer(SoundPlayer *player);
 	void setWindowIdLocation(const WindowIdLocation& location);	
+	void setQmlName(const QString& name);
 	
 	void activatePreview();
 	void deactivatePreview();
@@ -113,6 +117,7 @@ private:
 	CallModel *mCallModel = nullptr;
 	ParticipantDeviceModel *mParticipantDeviceModel = nullptr;
 	SoundPlayer * mLinphonePlayer = nullptr;
+	QString mQmlName;
 
 	WindowIdLocation mWindowIdLocation = None;
 	mutable bool mIsWindowIdSet = false;

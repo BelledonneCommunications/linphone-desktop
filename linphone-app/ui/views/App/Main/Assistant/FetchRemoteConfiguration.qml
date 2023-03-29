@@ -278,6 +278,7 @@ Item{
 					Layout.fillHeight: true
 					Layout.preferredWidth: height
 					Layout.alignment: Qt.AlignCenter
+					cameraQmlName: 'QRCode'
 					showUsername: false
 					showCustomButton: false
 					visible: allQRCodeOptionsView.visible && assistantModel.isReadingQRCode

@@ -150,6 +150,7 @@ Rectangle {
 					anchors.centerIn: parent
 					height: cameraHeight
 					width : cameraWidth
+					cameraQmlName: 'WaitingRoom'
 					callModel:  mainItem.callModel
 					conferenceInfoModel: mainItem.conferenceInfoModel
 											? mainItem.conferenceInfoModel
