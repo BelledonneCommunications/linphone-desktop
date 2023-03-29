@@ -5,223 +5,223 @@
     <name>About</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">OK</translation>
     </message>
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>დაგვეხმარეთ %1-ის თარგმნაში</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>გააქტიურეთ თქვენი %1-ის ანგარიში</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>ანგარიშის გამოყენება</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>ანგარიშის გასააქტიურებლად: მიყევით ინსტრუქციებს, რომელიც გამოგიგზავნეთ %1-ზე, შემდეგ დააჭირეთ ქვემოთ.</translation>
     </message>
 </context>
 <context>
     <name>ActivateAppSipAccountWithPhoneNumber</name>
     <message>
         <source>activateAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>გააქტიურეთ თქვენი %1-ის ანგარიში</translation>
     </message>
     <message>
         <source>confirmAction</source>
-        <translation type="unfinished"></translation>
+        <translation>ანგარიშის გამოყენება</translation>
     </message>
     <message>
         <source>activationSteps</source>
-        <translation type="unfinished"></translation>
+        <translation>SMS, რომელიც შეიცავს დადასტურების კოდს იქნა გაგზავნილი %1-ზე. ტელეფონის ნომრის დამოწმების დასასრულებლად, გთხოვთ, შეიყვანოთ 4-ნიშნა კოდი ქვემოთ.</translation>
     </message>
 </context>
 <context>
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation type="unfinished"></translation>
+        <translation>მუშაობის დროს დებაგის ინფორმაციის ჩაწერა stdout-ში</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>კონფიგურაციის ფაილის %1-ს მითითება გამოსაყენებლად</translation>
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>უფასო (თავისუფალი) SIP ვიდეო ტელეფონი.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
-        <translation type="unfinished"></translation>
+        <translation>გაშვება სისტემურ სინში, ძირითადი ინტერფეისის დამალვა</translation>
     </message>
     <message>
         <source>commandLineOptionConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>ფაილი</translation>
     </message>
     <message>
         <source>commandLineOptionHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>ამ დახმარების ჩვენება</translation>
     </message>
     <message>
         <source>commandLineOptionVersion</source>
-        <translation type="unfinished"></translation>
+        <translation>აპის ვერსიის ჩვენება</translation>
     </message>
     <message>
         <source>commandLineOptionCliHelp</source>
-        <translation type="unfinished"></translation>
+        <translation>აჩვენებს დახმარების მენიუს CLI-სთან %1-ს გამოსაყენებლად</translation>
     </message>
     <message>
         <source>commandLineDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>აპლიკაციისთვის ბრძანების გაგზავნა ბრძანებათა ზოლის მიმართულებით</translation>
     </message>
     <message>
         <source>restore</source>
-        <translation type="unfinished"></translation>
+        <translation>აღდგენა</translation>
     </message>
     <message>
         <source>quit</source>
-        <translation type="unfinished"></translation>
+        <translation>გასვლა</translation>
     </message>
     <message>
         <source>settings</source>
-        <translation type="unfinished"></translation>
+        <translation>პრეფერენციები</translation>
     </message>
     <message>
         <source>about</source>
-        <translation type="unfinished"></translation>
+        <translation>შესახებ</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfig</source>
-        <translation type="unfinished"></translation>
+        <translation>მიუთითეთ %1 კონფიგურაციის ფაილი გადმოსატვირთად. იგი მიუერთდება მიმდინარე კონფიგურაციას.</translation>
     </message>
     <message>
         <source>commandLineOptionFetchConfigArg</source>
-        <translation type="unfinished"></translation>
+        <translation>URL, გზა ან ფაილი</translation>
     </message>
     <message>
         <source>commandLineOptionCall</source>
-        <translation type="unfinished"></translation>
+        <translation>დარეკვა</translation>
     </message>
     <message>
         <source>commandLineOptionCallArg</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP მისამართი</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished"></translation>
+        <translation>განახლებებზე შემოწმება</translation>
     </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>უკან</translation>
     </message>
 </context>
 <context>
     <name>AssistantHome</name>
     <message>
         <source>useAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ანგარიშის გამოყენება</translation>
     </message>
     <message>
         <source>useOtherSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP ანგარიშის გამოყენება</translation>
     </message>
     <message>
         <source>fetchRemoteConfiguration</source>
-        <translation type="unfinished"></translation>
+        <translation>დაშორებული კონფიგურაციის გადმოწერა</translation>
     </message>
     <message>
         <source>homeTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>კეთილი იყოს თქვენი მობრძანება</translation>
     </message>
     <message>
         <source>homeDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>ეს ასისტენტი დაგეხმარებათ დააკონფიგურიროთ და გამოიყენოთ თქვენი SIP ანგარიში.</translation>
     </message>
     <message>
         <source>createAppSipAccount</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 ანგარიშის შექმნა</translation>
     </message>
     <message>
         <source>homeCgu</source>
         <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>მე ვეთანხმები %1-ს %2გამოყენების პირობები%3-ს და %4კონფიდენციალურობის პოლიტიკა%5-ს</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>შევლა ვერ მოხერხდა. გთხოვთ, შეამოწმოთ თქვენი მომხმარებლის სახელი / პაროლი.</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
-        <translation type="unfinished"></translation>
+        <translation>ძალიან მოკლე! (მინ %1 სიმბოლო)</translation>
     </message>
     <message>
         <source>usernameStatusTooLong</source>
-        <translation type="unfinished"></translation>
+        <translation>ძალიან გრძელი! (მაქსიმუმ %1 სიმბოლო)</translation>
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>აღმოჩენილია არასწორი სიმბოლოები. (regex: `%1`)</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
-        <translation type="unfinished"></translation>
+        <translation>არასწორი მომხმარებლის სახელი.</translation>
     </message>
     <message>
         <source>passwordStatusTooShort</source>
-        <translation type="unfinished"></translation>
+        <translation>ძალიან მოკლე! (მინიმუმ %1 სიმბოლო)</translation>
     </message>
     <message>
         <source>passwordStatusTooLong</source>
-        <translation type="unfinished"></translation>
+        <translation>ძალიან გრძელი (მაქსიმუმ %1 სიმბოლო)</translation>
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>აღმოჩენილია არასწორი სიმბოლოები. (regex: `%1`)</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>არ ყოფნის სიმბოლო: `%1`.</translation>
     </message>
     <message>
         <source>requestFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>მოთხოვნის გაგზავნა ვერ მოხერხდა.</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation type="unfinished"></translation>
+        <translation>არასწორი ელ. ფოსტის მისამართი.</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation type="unfinished"></translation>
+        <translation>არასწორი ელ. ფოსტის მისამართი ან არასწორი სიმბოლოები.</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
-        <translation type="unfinished"></translation>
+        <translation>სერვერის შეცდომა: SMS-ის გაგზავნა ვერ მოხერხდა.</translation>
     </message>
     <message>
         <source>accountAlreadyExists</source>
-        <translation type="unfinished"></translation>
+        <translation>ეს ანაგარიში უკვე არსებობს.</translation>
     </message>
     <message>
         <source>smsActivationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>SMS აქტივირება ვერ მოხერხდა!</translation>
     </message>
     <message>
         <source>emailActivationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>გთხოვთ, დაადასტუროთ, რომ თქვენ დაამოწმეთ თქვენი ანგარიში ან სცადეთ თავიდან.</translation>
     </message>
     <message>
         <source>phoneNumberStatusInvalid</source>
