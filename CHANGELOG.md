@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - New language support: Czech
+- Multiple files can be selected as attachement.
 
 ## 5.0.14 - 2023-03-16
 

@@ -83,7 +83,7 @@ Item {
 							
 							folder: shortcuts.home
 							title: qsTr('fileChooserTitle')
-							
+							selectMultiple: true
 							onAccepted: {_emitFiles(fileDialog.fileUrls);fileDialogLoader.active = false}
 							onRejected: fileDialogLoader.active = false
 							Component.onCompleted: fileDialog.open()
