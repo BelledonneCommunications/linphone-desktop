@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>Проверить обновления</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -2419,6 +2423,9 @@
         <translation>ВИД</translation>
     </message>
     <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
+        <translation type="unfinished"></translation>
         <source>vfsTitle</source>
         <extracomment>&apos;VFS&apos;</extracomment>
         <translation>ВФС</translation>

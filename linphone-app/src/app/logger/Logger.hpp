@@ -44,19 +44,24 @@ public:
 
   void enable (bool status);
   QString getLogText()const;
+  void enableFullLogs(const bool& full);
+  bool qtOnlyEnabled() const;
+  void enableQtOnly(const bool& enable);
+  
 
   static void init (const std::shared_ptr<linphone::Config> &config);  
 
   static Logger *getInstance () {
     return mInstance;
   }
-
+  
 private:
   Logger () = default;
 
   static void log (QtMsgType type, const QMessageLogContext &context, const QString &msg);
 
   bool mVerbose = false;
+  bool mQtOnly = false;
 
   static QMutex mMutex;
   static Logger *mInstance;

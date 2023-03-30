@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>Vérifier les mises à jour</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -2406,6 +2410,9 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>AFFICHER</translation>
     </message>
     <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
+        <translation type="unfinished"></translation>
         <source>vfsTitle</source>
         <extracomment>&apos;VFS&apos;</extracomment>
         <translation>VFS</translation>

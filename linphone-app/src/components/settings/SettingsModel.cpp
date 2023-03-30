@@ -578,15 +578,15 @@ QVariantMap SettingsModel::getVideoDefinition () const {
 }
 
 QVariantMap SettingsModel::getCurrentPreviewVideoDefinition () const {
-	auto definition = CoreManager::getInstance()->getCore()->getCurrentPreviewVideoDefinition();
-	if(definition)
-		return createMapFromVideoDefinition(definition);
-	else {
-		QVariantMap map;
-		map["width"] = 0;
-		map["height"] = 0;
-		return map;
+	if(CoreManager::getInstance()->getCore()->videoPreviewEnabled()){
+		auto definition = CoreManager::getInstance()->getCore()->getCurrentPreviewVideoDefinition();
+		if(definition)
+			return createMapFromVideoDefinition(definition);
 	}
+	QVariantMap map;
+	map["width"] = 0;
+	map["height"] = 0;
+	return map;
 }
 
 void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
@@ -1685,6 +1685,16 @@ void SettingsModel::setLogsEnabled (bool status) {
 	emit logsEnabledChanged(status);
 }
 
+bool SettingsModel::getFullLogsEnabled () const {
+	return getFullLogsEnabled(mConfig);
+}
+
+void SettingsModel::setFullLogsEnabled (bool status) {
+	mConfig->setInt(UiSection, "full_logs_enabled", status);
+	Logger::getInstance()->enableFullLogs(status);
+	emit fullLogsEnabledChanged();
+}
+
 // ---------------------------------------------------------------------------
 
 QString SettingsModel::getLogsEmail () const {
@@ -1714,6 +1724,9 @@ bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) 
 	return config ? config->getInt(UiSection, "logs_enabled", false) : true;
 }
 
+bool SettingsModel::getFullLogsEnabled (const shared_ptr<linphone::Config> &config) {
+	return config ? config->getInt(UiSection, "full_logs_enabled", false) : false;
+}
 // ---------------------------------------------------------------------------
 bool SettingsModel::isDeveloperSettingsAvailable() const {
 #ifdef DEBUG

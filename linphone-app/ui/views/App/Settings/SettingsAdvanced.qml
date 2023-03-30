@@ -68,6 +68,16 @@ TabContainer {
 						onClicked: SettingsModel.logsEnabled = !checked
 					}
 				}
+				FormGroup {
+					//: 'Full logs' : label for an option to activate all logs (debug and traces)
+					label: qsTr('fullLogsEnabledLabel')
+					
+					Switch {
+						checked: SettingsModel.fullLogsEnabled
+						
+						onClicked: SettingsModel.fullLogsEnabled = !checked
+					}
+				}
 			}
 		}
 		Row {

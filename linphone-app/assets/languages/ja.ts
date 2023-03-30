@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>アップデートを確認する</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -2374,6 +2378,11 @@
     </message>
     <message>
         <source>viewlogs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

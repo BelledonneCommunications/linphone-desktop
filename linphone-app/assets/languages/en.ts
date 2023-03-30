@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>Check for updates</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation>Print only logs from the application</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -2388,6 +2392,12 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>viewlogs</source>
         <translation>VIEW</translation>
+    </message>
+    <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
+        <translatorcomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</translatorcomment>
+        <translation>Full logs</translation>
     </message>
 </context>
 <context>

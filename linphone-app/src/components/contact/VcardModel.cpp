@@ -100,11 +100,11 @@ VcardModel::VcardModel (shared_ptr<linphone::Vcard> vcard, bool isReadOnly) : QO
 
 VcardModel::~VcardModel () {
 	if (!mIsReadOnly) {
-		qInfo() << QStringLiteral("Destroy detached vcard:") << this;
+		qDebug() << QStringLiteral("Destroy detached vcard:") << this;
 		if (!mAvatarIsReadOnly)
 			removeBelcardPhoto(mVcard->getVcard());
 	} else
-		qInfo() << QStringLiteral("Destroy attached vcard:") << this;
+		qDebug() << QStringLiteral("Destroy attached vcard:") << this;
 }
 
 // -----------------------------------------------------------------------------

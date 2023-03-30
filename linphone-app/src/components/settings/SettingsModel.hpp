@@ -219,6 +219,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged)
 	Q_PROPERTY(QString logsUploadUrl READ getLogsUploadUrl WRITE setLogsUploadUrl NOTIFY logsUploadUrlChanged)
 	Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged)
+	Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
 	Q_PROPERTY(QString logsEmail READ getLogsEmail WRITE setLogsEmail NOTIFY logsEmailChanged)
 	
 	Q_PROPERTY(bool developerSettingsEnabled READ getDeveloperSettingsEnabled WRITE setDeveloperSettingsEnabled NOTIFY developerSettingsEnabledChanged)
@@ -608,6 +609,9 @@ public:
 	bool getLogsEnabled () const;
 	void setLogsEnabled (bool status);
 	
+	bool getFullLogsEnabled () const;
+	void setFullLogsEnabled (bool status);
+	
 	QString getLogsEmail () const;
 	void setLogsEmail (const QString &email);
 	
@@ -617,6 +621,7 @@ public:
 	
 	static QString getLogsFolder (const std::shared_ptr<linphone::Config> &config);
 	static bool getLogsEnabled (const std::shared_ptr<linphone::Config> &config);
+	static bool getFullLogsEnabled (const std::shared_ptr<linphone::Config> &config);
 	
 	// ---------------------------------------------------------------------------
 	Q_INVOKABLE bool isDeveloperSettingsAvailable() const;
@@ -797,6 +802,7 @@ signals:
 	void logsFolderChanged (const QString &folder);
 	void logsUploadUrlChanged (const QString &url);
 	void logsEnabledChanged (bool status);
+	void fullLogsEnabledChanged ();
 	void logsEmailChanged (const QString &email);
 	
 	void contactImporterChanged();
