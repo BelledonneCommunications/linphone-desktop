@@ -51,6 +51,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool fetchRemoteConfigurationEnabled READ getFetchRemoteConfigurationEnabled WRITE setFetchRemoteConfigurationEnabled NOTIFY fetchRemoteConfigurationEnabledChanged)
 	Q_PROPERTY(bool useAppSipAccountEnabled READ getUseAppSipAccountEnabled WRITE setUseAppSipAccountEnabled NOTIFY useAppSipAccountEnabledChanged)
 	Q_PROPERTY(bool useOtherSipAccountEnabled READ getUseOtherSipAccountEnabled WRITE setUseOtherSipAccountEnabled NOTIFY useOtherSipAccountEnabledChanged)
+	Q_PROPERTY(bool autoApplyProvisioningConfigUriHandlerEnabled READ getAutoApplyProvisioningConfigUriHandlerEnabled WRITE setAutoApplyProvisioningConfigUriHandlerEnabled NOTIFY autoApplyProvisioningConfigUriHandlerEnabledChanged)
 	
 	Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged)
 // Webviews config
@@ -277,6 +278,9 @@ public:
 	
 	bool getFetchRemoteConfigurationEnabled () const;
 	void setFetchRemoteConfigurationEnabled (bool status);
+	
+	bool getAutoApplyProvisioningConfigUriHandlerEnabled () const;
+	void setAutoApplyProvisioningConfigUriHandlerEnabled (bool status);
 	
 	bool getUseAppSipAccountEnabled () const;
 	void setUseAppSipAccountEnabled (bool status);
@@ -675,6 +679,7 @@ signals:
 	void fetchRemoteConfigurationEnabledChanged (bool status);
 	void useAppSipAccountEnabledChanged (bool status);
 	void useOtherSipAccountEnabledChanged (bool status);
+	void autoApplyProvisioningConfigUriHandlerEnabledChanged();
 	
 	void assistantSupportsPhoneNumbersChanged (bool status);
 

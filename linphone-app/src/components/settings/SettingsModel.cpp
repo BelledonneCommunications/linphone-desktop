@@ -213,6 +213,16 @@ void SettingsModel::setFetchRemoteConfigurationEnabled (bool status) {
 	emit fetchRemoteConfigurationEnabledChanged(status);
 }
 
+bool SettingsModel::getAutoApplyProvisioningConfigUriHandlerEnabled () const {
+	return !!mConfig->getInt(UiSection, "auto_apply_provisioning_config_uri_handler", 0);
+}
+
+void SettingsModel::setAutoApplyProvisioningConfigUriHandlerEnabled (bool status) {
+	mConfig->setInt(UiSection, "auto_apply_provisioning_config_uri_handler", status);
+	emit autoApplyProvisioningConfigUriHandlerEnabledChanged();
+}
+
+
 // ---------------------------------------------------------------------------
 
 bool SettingsModel::getAssistantSupportsPhoneNumbers () const {

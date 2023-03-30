@@ -594,7 +594,7 @@ ColumnLayout  {
 			anchors.left: filterButtons.right
 			anchors.leftMargin: 50
 			anchors.verticalCenter: parent.verticalCenter
-			color:  BusyIndicatorStyle.alternateColor
+			color:  BusyIndicatorStyle.alternateColor.color
 			running: chatArea.tryingToLoadMoreEntries
 		}
 		

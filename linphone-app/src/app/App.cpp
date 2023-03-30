@@ -165,34 +165,60 @@ static inline string getConfigPathIfExists (const QCommandLineParser &parser) {
 	return configPath;
 }
 
-bool App::setFetchConfig (QCommandLineParser *parser) {
-	bool fetched = false;
-	QString filePath = parser->value("fetch-config");
+QString App::getFetchConfig (QString filePath, bool * error) {
+	*error = false;
 	if( !filePath.isEmpty()){
 		if(QUrl(filePath).isRelative()){// this is a file path
 			filePath = Utils::coreStringToAppString(Paths::getConfigFilePath(filePath, false));
 			if(!filePath.isEmpty())
 				filePath = "file://"+filePath;
 		}
-		if(!filePath.isEmpty()){
-			auto instance = CoreManager::getInstance();
-			if(instance){
-				auto core = instance->getCore();
-				if(core){
-					filePath.replace('\\','/');
-					if(core->setProvisioningUri(Utils::appStringToCoreString(filePath)) == 0){
-						parser->process(cleanParserKeys(parser, QStringList("fetch-config")));// Remove this parameter from the parser
-						fetched = true;
-					}else
-						fetched = false;
-				}
-			}
-		}
-		if(!fetched){
+		if(filePath.isEmpty()){
 			qWarning() <<"Remote provisionning cannot be retrieved. Command have beend cleaned";
-			createParser();
+			*error = true;
 		}
 	}
+	return filePath;
+}
+
+QString App::getFetchConfig (QCommandLineParser *parser) {
+	QString filePath = parser->value("fetch-config");
+	bool error = false;
+	filePath = getFetchConfig(filePath, &error);
+	if(error) {
+		qWarning() <<"Remote provisionning cannot be retrieved. Command have beend cleaned";
+		createParser();
+	}else if( !filePath.isEmpty())
+		mParser->process(cleanParserKeys(mParser, QStringList("fetch-config")));// Remove this parameter from the parser
+	return filePath;
+}
+
+void App::useFetchConfig(const QString& filePath){
+	if( !filePath.isEmpty()){
+		if(CoreManager::getInstance()->getSettingsModel()->getAutoApplyProvisioningConfigUriHandlerEnabled())
+			setFetchConfig(filePath);
+		else
+			emit requestFetchConfig(filePath);
+	}
+}
+
+bool App::setFetchConfig (QString filePath) {
+	bool fetched = false;
+	qDebug() << "setFetchConfig with " << filePath;
+	if(!filePath.isEmpty()){
+		auto instance = CoreManager::getInstance();
+		if(instance){
+			auto core = instance->getCore();
+			if(core){
+				filePath.replace('\\','/');
+				fetched = core->setProvisioningUri(Utils::appStringToCoreString(filePath)) == 0;
+			}
+		}
+	}
+	if(!fetched){
+		qWarning() <<"Remote provisionning cannot be retrieved. Command have beend cleaned";
+	}else
+		restart();
 	return fetched;
 }
 // -----------------------------------------------------------------------------
@@ -255,6 +281,13 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	
 	qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
 	qInfo() << QStringLiteral("Use locale: %1 with language: %2").arg(mLocale.name()).arg(QLocale::languageToString(mLocale.language()));
+	
+	// Deal with received messages and CLI.
+	QObject::connect(this, &App::receivedMessage, this, [](int, const QByteArray &byteArray) {
+		QString command(byteArray);
+		qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
+		Cli::executeCommand(command);
+	});
 }
 
 App::~App () {
@@ -321,6 +354,7 @@ static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char 
 // -----------------------------------------------------------------------------
 
 void App::initContentApp () {
+
 	std::string configPath;
 	shared_ptr<linphone::Config> config;
 	bool mustBeIconified = false;
@@ -329,7 +363,6 @@ void App::initContentApp () {
 	// Destroy qml components and linphone core if necessary.
 	if (mEngine) {
 		needRestart = false;
-		setFetchConfig(mParser);
 		setOpened(false);
 		qInfo() << QStringLiteral("Restarting app...");
 		
@@ -357,12 +390,7 @@ void App::initContentApp () {
 		// Don't quit if last window is closed!!!
 		setQuitOnLastWindowClosed(false);
 		
-		// Deal with received messages and CLI.
-		QObject::connect(this, &App::receivedMessage, this, [](int, const QByteArray &byteArray) {
-			QString command(byteArray);
-			qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
-			Cli::executeCommand(command);
-		});
+		
 		
 #ifndef Q_OS_MACOS
 		mustBeIconified = mParser->isSet("iconified");
@@ -453,8 +481,9 @@ void App::initContentApp () {
 				CoreManager::getInstance(),
 				&CoreManager::coreManagerInitialized, CoreManager::getInstance(),
 				[this, mustBeIconified]() mutable {
-		if(CoreManager::getInstance()->started())
+		if(CoreManager::getInstance()->started()) {
 			openAppAfterInit(mustBeIconified);
+		}	
 	}
 	);
 	
@@ -1062,37 +1091,35 @@ void App::openAppAfterInit (bool mustBeIconified) {
 	
 	checkForUpdates();
 #endif // ifdef ENABLE_UPDATE_CHECK
-	
-	if(setFetchConfig(mParser))
-		restart();
-	else{
-		// Launch call if wanted and clean parser
-		if( mParser->isSet("call") && coreManager->isLastRemoteProvisioningGood()){
-			QString sipAddress = mParser->value("call");
-			mParser->parse(cleanParserKeys(mParser, QStringList("call")));// Clean call from parser
-			if(coreManager->started()){
-				coreManager->getCallsListModel()->launchAudioCall(sipAddress);
-			}else{
-				QObject * context = new QObject();
-				QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized,context,
-								 [sipAddress,coreManager, context]() mutable {
-					if(context){
-						delete context;
-						context = nullptr;
-						coreManager->getCallsListModel()->launchAudioCall(sipAddress);
-					}
-				});
-			}
+	// Launch call if wanted and clean parser
+	if( mParser->isSet("call") && coreManager->isLastRemoteProvisioningGood()){
+		QString sipAddress = mParser->value("call");
+		mParser->parse(cleanParserKeys(mParser, QStringList("call")));// Clean call from parser
+		if(coreManager->started()){
+			coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+		}else{
+			QObject * context = new QObject();
+			QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized,context,
+							 [sipAddress,coreManager, context]() mutable {
+				if(context){
+					delete context;
+					context = nullptr;
+					coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+				}
+			});
 		}
-#ifndef __APPLE__
-		if (!mustBeIconified)
-			smartShowWindow(mainWindow);
-#else
-		Q_UNUSED(mustBeIconified);
-		smartShowWindow(mainWindow);
-#endif
-		setOpened(true);
 	}
+	QString fetchFilePath = getFetchConfig(mParser);
+	mustBeIconified = mustBeIconified && fetchFilePath.isEmpty();
+#ifndef __APPLE__
+	if (!mustBeIconified)
+		smartShowWindow(mainWindow);
+#else
+	Q_UNUSED(mustBeIconified);
+	smartShowWindow(mainWindow);
+#endif
+	setOpened(true);
+	useFetchConfig(fetchFilePath);
 }
 
 // -----------------------------------------------------------------------------

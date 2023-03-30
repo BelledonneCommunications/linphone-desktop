@@ -29,6 +29,7 @@ Item {
     font.pointSize: DialogStyle.description.pointSize
     horizontalAlignment: Text.AlignHCenter
     verticalAlignment: Text.AlignVCenter
-    wrapMode: Text.WordWrap
+    wrapMode: Text.Wrap
+    elide: Text.ElideRight
   }
 }

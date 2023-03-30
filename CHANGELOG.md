@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display last seen for contacts.
 - New language support: Czech
 - An option to set dial prefix and its use on numbers.
+- Fetch remote provisioning from URI handler and with confirmation.
 
 ## 5.0.15 - undefined
 

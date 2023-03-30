@@ -488,7 +488,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 
 // Detect if command is a CLI by testing commands
 	const QString &functionName = parseFunctionName(command);
-	
+	const std::string configURI = string(EXECUTABLE_NAME)+"-config";
 	if(!functionName.isEmpty()){// It is a CLI
 		qInfo() << QStringLiteral("Detecting cli command: `%1`...").arg(command);
 		QHash<QString, QString> args = parseArgs(command);
@@ -505,7 +505,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 		}else{
 			scheme = tempSipAddress[0].toStdString();
 			bool ok = false;
-			for (const string &validScheme : { string("sip"), "sip-"+string(EXECUTABLE_NAME), string("sips"), "sips-"+string(EXECUTABLE_NAME), string("tel"), string("callto"), string(EXECUTABLE_NAME)+ "-config" })
+			for (const string &validScheme : { string("sip"), "sip-"+string(EXECUTABLE_NAME), string("sips"), "sips-"+string(EXECUTABLE_NAME), string("tel"), string("callto"), configURI })
 				if (scheme == validScheme)
 					ok = true;
 			if( !ok){
@@ -515,18 +515,22 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 			tempSipAddress[0] = "sip";
 			transformedCommand = tempSipAddress.join(':');
 		}
-		if( scheme == string(EXECUTABLE_NAME)+"-config" ){
+		if( scheme == configURI ){
 			QHash<QString, QString> args = parseArgs(command);
+			QString fetchUrl;
 			if(args.contains("fetch-config"))
-				args["fetch-config"] = QByteArray::fromBase64(args["fetch-config"].toUtf8() );
+				fetchUrl = QByteArray::fromBase64(args["fetch-config"].toUtf8() );
 			else {
-				QUrl url(command);
-				url.setScheme("https");
-				args["fetch-config"] = url.toString();
+				QUrl url(command.mid(configURI.size()+1));// Remove 'exec-config:'
+				if(url.scheme().isEmpty())
+					url.setScheme("https");
+				fetchUrl = url.toString();
 			}
 			if (format)
 				*format = CliFormat;
-			mCommands["show"].execute(args);
+			QHash<QString, QString> dummy;
+			mCommands["show"].execute(dummy);// Just open the app.
+			App::getInstance()->useFetchConfig(fetchUrl);
 		}else{
 			shared_ptr<linphone::Address> address;
 			if(Utils::isUsername(transformedCommand)){
