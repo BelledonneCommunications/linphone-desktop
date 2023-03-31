@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>Zkontrolovat aktualizace</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1411,6 +1415,11 @@ Adresa URL serveru není nakonfigurována.</translation>
         <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
         <translation>Exportovat jako…</translation>
     </message>
+    <message>
+        <source>loadFile</source>
+        <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HistoryView</name>
@@ -2616,6 +2625,11 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>deleteData</source>
         <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
         <translation>Odstranit data</translation>
+    </message>
+    <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

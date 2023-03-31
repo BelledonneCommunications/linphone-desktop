@@ -45,7 +45,7 @@ ColumnLayout  {
 	function getPeerAddress() {
 		if(chatRoomModel) {
 			if(chatRoomModel.groupEnabled || chatRoomModel.isSecure()) {
-				return chatRoomModel.participants.addressesToString;
+				return chatRoomModel.getPeerAddress();
 			}else {
 				return chatRoomModel.sipAddress;
 			}
@@ -56,7 +56,7 @@ ColumnLayout  {
 	function getFullPeerAddress() {
 		if(chatRoomModel) {
 			if(chatRoomModel.groupEnabled || chatRoomModel.isSecure()) {
-				return chatRoomModel.participants.addressesToString;
+				return chatRoomModel.getFullPeerAddress()
 			}else {
 				return chatRoomModel.sipAddress;
 			}

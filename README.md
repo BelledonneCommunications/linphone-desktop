@@ -25,6 +25,14 @@ Linphone is dual licensed, and is available either :
 
 - [Linphone public wiki](https://wiki.linphone.org/xwiki/wiki/public/view/Linphone/)
 
+### Parameters
+
+`--help` : display available parameters.
+
+`--verbose` : print logs into stdout/stderr.
+
+`--qt-logs-only` : print only logs from the application. It strips SDK logs from the output.
+
 ## Getting started
 
 Here are the general instructions to build Linphone for desktop. The specific instructions for each build platform is described just below.

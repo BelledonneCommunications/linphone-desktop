@@ -94,8 +94,8 @@ DialogPlus{
 	FileDialog {
 		id: loadAsDialog
 		folder: shortcuts.documents
-		//: "Load": Title of a file dialog to export a file.
-		title: 'Load'
+		//: "Load": Title of a file dialog to load a file.
+		title: qsTr('loadFile')
 		selectExisting: true
 		//defaultSuffix: Utils.getExtension(mainItem.filePath)// Doesn't seems to work on all platforms
 		onAccepted: {

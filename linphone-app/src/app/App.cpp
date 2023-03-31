@@ -260,6 +260,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	
 	if (mParser->isSet("verbose"))
 		Logger::getInstance()->setVerbose(true);
+	if (mParser->isSet("qt-logs-only"))
+		Logger::getInstance()->enableQtOnly(true);
 	
 	// List available locales.
 	for (const auto &locale : QDir(Constants::LanguagePath).entryList())
@@ -592,7 +594,8 @@ void App::createParser () {
 						#ifndef Q_OS_MACOS
 							{ "iconified", tr("commandLineOptionIconified") },
 						#endif // ifndef Q_OS_MACOS
-							{ { "V", "verbose" }, tr("commandLineOptionVerbose") }
+							{ { "V", "verbose" }, tr("commandLineOptionVerbose") },
+							{ "qt-logs-only", tr("commandLineOptionQtLogsOnly") },
 						});
 }
 

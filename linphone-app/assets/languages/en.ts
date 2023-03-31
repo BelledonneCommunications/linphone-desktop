@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>Check for updates</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation>Print only logs from the application</translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1401,6 +1405,11 @@ Server URL not configured.</translation>
         <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
         <translation>Export As…</translation>
     </message>
+    <message>
+        <source>loadFile</source>
+        <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
+        <translation>Load</translation>
+    </message>
 </context>
 <context>
     <name>HistoryView</name>
@@ -2603,6 +2612,12 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>deleteData</source>
         <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
         <translation>Delete data</translation>
+    </message>
+    <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
+        <translatorcomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</translatorcomment>
+        <translation>Full logs</translation>
     </message>
 </context>
 <context>

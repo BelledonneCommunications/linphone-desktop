@@ -63,7 +63,7 @@ static inline QByteArray getFormattedCurrentTime () {
 }
 
 // -----------------------------------------------------------------------------
-
+// Called from SDK
 class LinphoneLogger : public linphone::LoggingServiceListener {
 public:
 	LinphoneLogger (const Logger *logger) : mLogger(logger) {}
@@ -75,40 +75,43 @@ private:
 			linphone::LogLevel level,
 			const string &message
 			) override {
-		if (!mLogger->isVerbose())
+		bool isQtLog = domain==Constants::QtDomain;
+		if (!mLogger->isVerbose() || (!isQtLog && mLogger->qtOnlyEnabled()))
 			return;
-		
+		FILE * out = stdout;
 		using LogLevel = linphone::LogLevel;
-		const char *format;
+		QString format = (isQtLog ? PURPLE : YELLOW ) + QString("Core:%s: " RESET "%s\n");
 		switch (level) {
 			case LogLevel::Debug:
-				format = GREEN "[%s][Debug]" YELLOW "Core:%s: " RESET "%s\n";
+				format.prepend(GREEN "[%s][Debug]");
 				break;
 			case LogLevel::Trace:
-				format = BLUE "[%s][Trace]" YELLOW "Core:%s: " RESET "%s\n";
+				format.prepend(BLUE "[%s][Trace]");
 				break;
 			case LogLevel::Message:
-				format = BLUE "[%s][Info]" YELLOW "Core:%s: " RESET "%s\n";
+				format.prepend(BLUE "[%s][Info]");
 				break;
 			case LogLevel::Warning:
-				format = RED "[%s][Warning]" YELLOW "Core:%s: " RESET "%s\n";
+				format.prepend(RED "[%s][Warning]");
+				out = stderr;
 				break;
 			case LogLevel::Error:
-				format = RED "[%s][Error]" YELLOW "Core:%s: " RESET "%s\n";
+				format.prepend(RED "[%s][Error]");
+				out = stderr;
 				break;
 			case LogLevel::Fatal:
-				format = RED "[%s][Fatal]" YELLOW "Core:%s: " RESET "%s\n";
+				format.prepend(RED "[%s][Fatal]");
+				out = stderr;
 				break;
 		}
 		
-		fprintf(
-					stderr,
-					format,
+		fprintf(	out,
+					qPrintable(format),
 					getFormattedCurrentTime().constData(),
 					domain.empty() ? domain.c_str() : EXECUTABLE_NAME,
 					message.c_str()
 					);
-		
+		fflush(out);
 		if (level == LogLevel::Fatal)
 			terminate();
 	};
@@ -117,7 +120,7 @@ private:
 };
 
 // -----------------------------------------------------------------------------
-
+// Called from Qt
 void Logger::log (QtMsgType type, const QMessageLogContext &context, const QString &msg) {
 	const char *format;
 	BctbxLogLevel level;
@@ -163,8 +166,6 @@ void Logger::log (QtMsgType type, const QMessageLogContext &context, const QStri
 	
 	mMutex.lock();
 	
-	fprintf(stdout, format, dateTime.constData(), QThread::currentThread(), contextStr, localMsg.constData());
-	fflush(stdout);
 	if( level == BCTBX_LOG_FATAL)
 		QMessageBox::critical(nullptr, "Linphone will crash", msg); // Print an error message before sending msg to bctoolbox
 	bctbx_log(Constants::QtDomain, level, "QT: %s%s", contextStr, localMsg.constData());
@@ -210,7 +211,26 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 	linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(folder));
 	linphone::Core::setLogCollectionMaxFileSize(Constants::MaxLogsCollectionSize);
 	
+	mInstance->enableFullLogs(SettingsModel::getFullLogsEnabled(config));
 	mInstance->enable(SettingsModel::getLogsEnabled(config));
+	
+}
+
+void Logger::enableFullLogs(const bool& full){
+	if(mLoggingService){
+		mLoggingService->setLogLevel(full ? linphone::LogLevel::Debug : linphone::LogLevel::Message);
+	}
+}
+
+bool Logger::qtOnlyEnabled() const{
+	return mQtOnly;
+}
+
+void Logger::enableQtOnly(const bool& enable){
+	mQtOnly = enable;
+	if(mLoggingService){
+		mLoggingService->setDomain(enable ? Constants::QtDomain : "");
+	}
 }
 
 QString Logger::getLogText()const{

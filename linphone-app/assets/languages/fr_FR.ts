@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>Vérifier les mises à jour</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1401,6 +1405,11 @@ URL du serveur non configurée.</translation>
         <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
         <translation>Exporter vers…</translation>
     </message>
+    <message>
+        <source>loadFile</source>
+        <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HistoryView</name>
@@ -2602,6 +2611,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>vfsDeletion</source>
         <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
         <translation>L&apos;application va supprimer toutes ses données. Veuillez confirmer cette suppression.</translation>
+    </message>
+    <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

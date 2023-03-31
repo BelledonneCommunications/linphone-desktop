@@ -117,6 +117,10 @@
         <source>checkForUpdates</source>
         <translation>Güncellemeleri denetle</translation>
     </message>
+    <message>
+        <source>commandLineOptionQtLogsOnly</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AssistantAbstractView</name>
@@ -1391,6 +1395,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>loadFile</source>
+        <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HistoryView</name>
@@ -2588,6 +2597,11 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsDeletion</source>
         <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fullLogsEnabledLabel</source>
+        <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
