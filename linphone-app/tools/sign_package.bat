@@ -1,10 +1,10 @@
 @echo off
-if [%5]==[] goto simple
-set /p passphrase=<%1
-%2 sign /f %3 /fd SHA256 /p %passphrase% /t %4 %5
+if [%1]==[2] goto simple
+set /p passphrase=<%2
+%3 sign /f %4 /fd SHA256 /p %passphrase% /t %5 %6
 goto :eof
 
 :simple
-%1 sign /fd SHA256 /t %2 %3
+%2 sign /fd SHA256 /t %3 /sha1 %4 %5
 
 :eof
