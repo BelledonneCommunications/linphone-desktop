@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir somente logs da aplicação</translation>
     </message>
 </context>
 <context>
@@ -1421,7 +1421,7 @@ URL do servidor não configurado.</translation>
     <message>
         <source>loadFile</source>
         <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Carregar</translation>
     </message>
 </context>
 <context>
@@ -1838,7 +1838,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>confirmFetchUri</source>
         <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Você deseja fazer o download e aplicar a configuração a partir desta URL?</translation>
     </message>
 </context>
 <context>
@@ -2628,7 +2628,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>fullLogsEnabledLabel</source>
         <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Logs completos</translation>
     </message>
 </context>
 <context>
