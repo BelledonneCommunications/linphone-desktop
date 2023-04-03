@@ -30,7 +30,6 @@ ColumnLayout  {
 	
 	
 	property ChatRoomModel chatRoomModel
-	property string peerAddress : getPeerAddress()
 	property string localAddress : chatRoomModel?chatRoomModel.getLocalAddress() : defaultLocalAddress
 	property string fullPeerAddress : getFullPeerAddress()
 	property string fullLocalAddress : chatRoomModel?chatRoomModel.getFullLocalAddress() : defaultFullLocalAddress
@@ -42,21 +41,10 @@ ColumnLayout  {
 	property bool haveMoreThanOneParticipants: chatRoomModel ? chatRoomModel.participants.count > 2 : false
 	property bool haveLessThanMinParticipantsForCall: chatRoomModel ? chatRoomModel.participants.count <= 5 : false
 	
-	function getPeerAddress() {
-		if(chatRoomModel) {
-			if(chatRoomModel.groupEnabled || chatRoomModel.isSecure()) {
-				return chatRoomModel.getPeerAddress();
-			}else {
-				return chatRoomModel.sipAddress;
-			}
-		}else {
-			return defaultPeerAddress
-		}	
-	}
 	function getFullPeerAddress() {
 		if(chatRoomModel) {
 			if(chatRoomModel.groupEnabled || chatRoomModel.isSecure()) {
-				return chatRoomModel.getFullPeerAddress()
+				return chatRoomModel.getParticipantAddress()
 			}else {
 				return chatRoomModel.sipAddress;
 			}

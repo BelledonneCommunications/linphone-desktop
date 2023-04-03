@@ -494,7 +494,7 @@ QList<QString> ChatRoomModel::getComposers(){
 	return mComposers.values();
 }
 
-QString ChatRoomModel::getParticipantAddress(){
+QString ChatRoomModel::getParticipantAddress() const{
 	if(!isSecure()){
 		auto peerAddress = mChatRoom->getPeerAddress();
 		if( peerAddress)
