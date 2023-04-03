@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - VFS Encryption
-- File viewer in chats (Image/Animated Image/Video/Texts/Pdf) with the option to export the file.
+- File viewer in chats (Image/Animated Image/Video/Texts/Pdf) with the option to export the file for VFS mode.
 - Accept/decline CLI commands.
 - Colored Emojis with its own font family.
 - OAuth2 connection to retrieve remote provisioning (Experimental and not usable without configuration).
@@ -19,6 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New language support: Czech
 - An option to set dial prefix and its use on numbers.
 - Fetch remote provisioning from URI handler and with confirmation.
+
+### Removed
+- Picture zoom on mouse over.
 
 ## 5.0.15 - undefined
 

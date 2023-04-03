@@ -19,8 +19,8 @@ Row {
 	property ChatMessageModel chatMessageModel: contentModel && contentModel.chatMessageModel
 	property ContentModel contentModel
 	property bool isOutgoing : chatMessageModel && ( chatMessageModel.isOutgoing  || chatMessageModel.state == LinphoneEnums.ChatMessageStateIdle);
-	property int fitHeight: ChatStyle.entry.message.file.height
-	property int fitWidth: ChatStyle.entry.message.file.height * 4 / 3 + 2*ChatStyle.entry.message.file.margins
+	property int fitHeight: mainRow.isAnimatedImage  ? ChatStyle.entry.message.file.heightbetter : ChatStyle.entry.message.file.height
+	property int fitWidth: fitHeight * 4 / 3 + 2*ChatStyle.entry.message.file.margins
 	property int borderWidth : 0
 	property color backgroundColor: ChatStyle.entry.message.file.extension.background.colorModel.color
 	property int backgroundRadius: ChatStyle.entry.message.file.extension.radius
@@ -94,6 +94,7 @@ Row {
 					fillMode: Image.PreserveAspectFit
 					height: ChatStyle.entry.message.file.height
 					width: height*4/3
+					Component.onCompleted: mainRow.fitHeight = height
 					
 					Loader{
 						anchors.fill: parent
@@ -121,6 +122,8 @@ Row {
 					fillMode: Image.PreserveAspectFit
 					height: ChatStyle.entry.message.file.heightbetter
 					width: height*4/3
+					
+					Component.onCompleted: mainRow.fitHeight = height
 				}
 			}
 			
@@ -229,58 +232,11 @@ Row {
 									  (mainRow.isAnimatedImage ? animatedImage
 															   :  (mainRow.haveThumbnail ? thumbnailImage : extension )
 									   ) : undefined)
-				
-				ScaleAnimator {
-					id: thumbnailProviderAnimator
-					
-					target: thumbnailProvider
-					
-					duration: ChatStyle.entry.message.file.animation.duration
-					easing.type: Easing.InOutQuad
-					from: 1.0
-				}
-				
+								
 				states: State {
 					name: 'hovered'
 				}
 				
-				transitions: [
-					Transition {
-						from: ''
-						to: 'hovered'
-						
-						ScriptAction {
-							script: {
-								if(thumbnailProvider.sourceComponent != extension){
-									if (thumbnailProviderAnimator.running) {
-										thumbnailProviderAnimator.running = false
-									}
-									thumbnailProvider.z = Constants.zPopup
-									thumbnailProviderAnimator.to = thumbnailProvider.item.scaleAnimatorTo
-									thumbnailProviderAnimator.running = true
-								}
-							}
-						}
-					},
-					Transition {
-						from: 'hovered'
-						to: ''
-						
-						ScriptAction {
-							script: {
-								if(thumbnailProvider.sourceComponent != extension){
-									if (thumbnailProviderAnimator.running) {
-										thumbnailProviderAnimator.running = false
-									}
-									
-									thumbnailProviderAnimator.to = 1.0
-									thumbnailProviderAnimator.running = true
-									thumbnailProvider.z = 0
-								}
-							}
-						}
-					}
-				]
 			}
 		}
 		
@@ -302,10 +258,13 @@ Row {
 					thumbnailProvider.state = ''
 					mainRow.contentModel.downloadFile()
 				}else if (Utils.pointIsInItem(this, thumbnailProvider, mouse)) {
-					window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
+					if(SettingsModel.isVfsEncrypted){
+						window.attachVirtualWindow(Utils.buildCommonDialogUri('FileViewDialog'), {
 													contentModel: mainRow.contentModel,
 												}, function (status) {
 												})
+					}else
+						mainRow.contentModel.openFile()
 				} else if (mainRow.contentModel ) {
 					thumbnailProvider.state = ''
 					mainRow.contentModel.openFile(true)// Show directory
