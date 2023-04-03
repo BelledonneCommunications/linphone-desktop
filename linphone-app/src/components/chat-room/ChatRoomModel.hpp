@@ -116,7 +116,8 @@ public:
 	Q_INVOKABLE QString getFullPeerAddress () const;
 	Q_INVOKABLE QString getFullLocalAddress () const;
 	Q_INVOKABLE QString getConferenceAddress () const;
-	
+	Q_INVOKABLE QString getParticipantAddress() const;	// return peerAddress if not secure else return the first participant SIP address.
+		
 	QString getSubject () const;
 	QString getUsername () const;
 	QString getAvatar () const;
@@ -148,7 +149,6 @@ public:
 	std::list<std::shared_ptr<linphone::Participant>> getParticipants(const bool& withMe = true) const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
-	QString getParticipantAddress();	// return peerAddress if not secure else return the first participant SIP address.
 	int getAllUnreadCount();	// Return unread messages and missed call.
 		
 //---- Setters
