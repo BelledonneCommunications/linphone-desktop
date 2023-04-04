@@ -194,11 +194,13 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 		accountParamsUpdated->setNatPolicy(natPolicy);
 		account->setParams(accountParamsUpdated);
 	}
-	
-	shared_ptr<const linphone::AuthInfo> authInfo = CoreManager::getInstance()->getCore()->findAuthInfo(
+	if(turnUser != ""){
+		shared_ptr<const linphone::AuthInfo> authInfo = CoreManager::getInstance()->getCore()->findAuthInfo(
 				"", turnUser, stunServer
 				);
-	map["turnPassword"] = authInfo ? Utils::coreStringToAppString(authInfo->getPassword()) : QString("");
+		map["turnPassword"] = authInfo ? Utils::coreStringToAppString(authInfo->getPassword()) : QString("");
+	}else
+		map["turnPassword"] = "";
 	
 	return map;
 }
@@ -393,24 +395,26 @@ bool AccountSettingsModel::addOrUpdateAccount(
 	if( createdNat)
 		accountParams->setNatPolicy(natPolicy);
 	
-	shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
-	shared_ptr<const linphone::AuthInfo> authInfo(core->findAuthInfo("", turnUser, stunServer));
-	if (authInfo) {
-		shared_ptr<linphone::AuthInfo> clonedAuthInfo(authInfo->clone());
-		clonedAuthInfo->setUserid(turnUser);
-		clonedAuthInfo->setUsername(turnUser);
-		clonedAuthInfo->setPassword(Utils::appStringToCoreString(data["turnPassword"].toString()));
-		core->addAuthInfo(clonedAuthInfo);
-		core->removeAuthInfo(authInfo);
-	} else
-		core->addAuthInfo(linphone::Factory::get()->createAuthInfo(
-							  turnUser,
-							  turnUser,
-							  Utils::appStringToCoreString(data["turnPassword"].toString()),
-						  "",
-						  stunServer,
-						  ""
-    ));
+	if( turnUser != ""){
+		shared_ptr<linphone::Core> core(CoreManager::getInstance()->getCore());
+		shared_ptr<const linphone::AuthInfo> authInfo(core->findAuthInfo("", turnUser, stunServer));
+		if (authInfo) {
+			shared_ptr<linphone::AuthInfo> clonedAuthInfo(authInfo->clone());
+			clonedAuthInfo->setUserid(turnUser);
+			clonedAuthInfo->setUsername(turnUser);
+			clonedAuthInfo->setPassword(Utils::appStringToCoreString(data["turnPassword"].toString()));
+			core->addAuthInfo(clonedAuthInfo);
+			core->removeAuthInfo(authInfo);
+		} else
+			core->addAuthInfo(linphone::Factory::get()->createAuthInfo(
+								  turnUser,
+								  turnUser,
+								  Utils::appStringToCoreString(data["turnPassword"].toString()),
+							  "",
+							  stunServer,
+							  ""
+		));
+	}
 	if( newPublishPresence)
 		emit publishPresenceChanged();
 	return addOrUpdateAccount(account, accountParams);
