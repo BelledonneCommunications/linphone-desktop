@@ -73,7 +73,9 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(&mVfsUtils, &VfsUtils::keyRead, this, [&](const QString& key, const QString& value){
 		if(key == mVfsUtils.getApplicationVfsEncryptionKey()){
 			if(!getVfsEncrypted()){
-				mConfig->setBool(UiSection, "vfs_encryption_enabled", true);
+				QSettings settings;
+				settings.beginGroup("keychain");
+				settings.setValue("enabled", true);
 				emit vfsEncryptedChanged();
 			}
 		}
@@ -81,14 +83,18 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(&mVfsUtils, &VfsUtils::keyWritten, this, [&](const QString& key){
 		if(key == mVfsUtils.getApplicationVfsEncryptionKey()){
 			if(!getVfsEncrypted()){
-				mConfig->setBool(UiSection, "vfs_encryption_enabled", true);
+				QSettings settings;
+				settings.beginGroup("keychain");
+				settings.setValue("enabled", true);
 				emit vfsEncryptedChanged();
 			}
 		}
 	});
 	connect(&mVfsUtils, &VfsUtils::keyDeleted, this, [&](const QString& key){
 		if(key == mVfsUtils.getApplicationVfsEncryptionKey()){
-			mConfig->setBool(UiSection, "vfs_encryption_enabled", false);
+			QSettings settings;
+			settings.beginGroup("keychain");
+			settings.setValue("enabled", false);
 			emit vfsEncryptedChanged();
 			if(mVfsUtils.needToDeleteUserData())
 				Utils::deleteAllUserData();
@@ -1865,7 +1871,9 @@ bool SettingsModel::getFullLogsEnabled (const shared_ptr<linphone::Config> &conf
 // ---------------------------------------------------------------------------
 
 bool SettingsModel::getVfsEncrypted (){
-	return mConfig->getBool(UiSection, "vfs_encryption_enabled", false);
+	QSettings settings;
+	settings.beginGroup("keychain");
+	return settings.value("enabled", false).toBool();
 }
 
 void SettingsModel::setVfsEncrypted (bool encrypted, const bool deleteUserData){

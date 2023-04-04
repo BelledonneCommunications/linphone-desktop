@@ -43,15 +43,7 @@ AppController::AppController (int &argc, char *argv[]) {
 	Q_ASSERT(!mApp);
 	// Disable QML cache. Avoid malformed cache.
 	qputenv("QML_DISABLE_DISK_CACHE", "true");
-	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-	// Useful to share camera on Fullscreen (other context)
-	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
-	
-	// Do not use APPLICATION_NAME here.
-	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
-	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
-	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
-	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
+	initQtAppDetails();
 #ifdef ENABLE_APP_WEBVIEW
 #if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
 	mApp = new App(argc, argv);
@@ -126,4 +118,16 @@ void AppController::stopApp(){
 	}
 	catch(...){
 	}
+}
+
+void AppController::initQtAppDetails(){
+	QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+	// Useful to share camera on Fullscreen (other context)
+	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
+	
+	// Do not use APPLICATION_NAME here.
+	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
+	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
+	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
+	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
 }

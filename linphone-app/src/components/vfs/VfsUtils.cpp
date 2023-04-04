@@ -24,6 +24,7 @@
 #include <linphone/api/c-factory.h>
 #include <linphone++/factory.hh>
 
+#include "app/AppController.hpp"
 #include <app/paths/Paths.hpp>
 #include <components/settings/SettingsModel.hpp>
 #include <utils/Utils.hpp>
@@ -125,32 +126,54 @@ bool VfsUtils::newEncryptionKey(){
 	vfs.newEncryptionKeyAsync();
 	return vfsSetter.exec() != -1;
 }
-
-bool VfsUtils::updateSDKWithKey() {
-	int argc = 1;
-	const char * argv = "dummy";
-	QCoreApplication vfsSetter(argc,(char**)&argv);
-	VfsUtils vfs;
-	QObject::connect(&vfs, &VfsUtils::keyRead, &vfsSetter, [&vfsSetter, &vfs] (const QString& key, const QString& value){
-		VfsUtils::updateSDKWithKey(value);
-		vfs.mVfsEncrypted = true;
-		vfsSetter.quit();
-	}, Qt::QueuedConnection);
-	QObject::connect(&vfs, &VfsUtils::error, &vfsSetter, [&vfsSetter](const QString& errorText){
-		vfsSetter.quit();
-	}, Qt::QueuedConnection);
-	vfs.readKey(vfs.getApplicationVfsEncryptionKey());
-	vfsSetter.exec();
+bool VfsUtils::updateSDKWithKey(int argc, char *argv[]){
+	QCoreApplication core(argc,argv);
+	AppController::initQtAppDetails();	// Set settings context.
+	QSettings settings;
+	return updateSDKWithKey(&settings);
+}
+bool VfsUtils::updateSDKWithKey(){
+	QSettings settings;
+	return updateSDKWithKey(&settings);
+}
 	
-	
-	if(!vfs.mVfsEncrypted){// Doesn't have key. Check in factory if it is mandatory.
-		auto config = linphone::Factory::get()->createConfigWithFactory("", Paths::getFactoryConfigFilePath());
-		if(config->getBool(SettingsModel::UiSection, "vfs_encryption_enabled", false)){
-			return VfsUtils::newEncryptionKey();// Return false on error.
-		}
+bool VfsUtils::updateSDKWithKey(QSettings * settings){	// Update SDK if key exists. Return true if encrypted.
+	bool isEnabled = false;
+	//Check in factory if it is mandatory.
+	auto config = linphone::Factory::get()->createConfigWithFactory("", Paths::getFactoryConfigFilePath());
+	if(config->getBool(SettingsModel::UiSection, "vfs_encryption_enabled", false)){
+		isEnabled = true;
 	}
 	
-	return vfs.mVfsEncrypted;
+	settings->beginGroup("keychain");
+	bool settingsValue = settings->value("enabled", false).toBool();
+	if( isEnabled && !settingsValue)
+		settings->setValue("enabled", isEnabled);
+	else if(!isEnabled)
+		isEnabled = settingsValue;
+	if( isEnabled){
+		int argc = 1;
+		const char * argv = "dummy";
+		QCoreApplication vfsSetter(argc,(char**)&argv);
+		VfsUtils vfs;
+		QObject::connect(&vfs, &VfsUtils::keyRead, &vfsSetter, [&vfsSetter, &vfs] (const QString& key, const QString& value){
+			VfsUtils::updateSDKWithKey(value);
+			vfs.mVfsEncrypted = true;
+			vfsSetter.quit();
+		}, Qt::QueuedConnection);
+		QObject::connect(&vfs, &VfsUtils::error, &vfsSetter, [&vfsSetter](const QString& errorText){
+			vfsSetter.quit();
+		}, Qt::QueuedConnection);
+		vfs.readKey(vfs.getApplicationVfsEncryptionKey());
+		vfsSetter.exec();
+		
+		if(!vfs.mVfsEncrypted){// Doesn't have key.
+			return VfsUtils::newEncryptionKey();// Return false on error.
+		}
+		
+		return vfs.mVfsEncrypted;
+	}else
+		return false;
 }
 
 void VfsUtils::updateSDKWithKey(const QString& key){

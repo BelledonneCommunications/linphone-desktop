@@ -35,6 +35,7 @@ public:
     return mApp;
   }
   void stopApp();
+  static void initQtAppDetails();
 private:
   App *mApp = nullptr;
 };

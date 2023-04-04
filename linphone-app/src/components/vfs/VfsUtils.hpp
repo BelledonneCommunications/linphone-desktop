@@ -23,7 +23,7 @@
 
 #include <QObject>
 #include <EQt5Keychain/keychain.h>
-
+#include <QSettings>
 // =============================================================================
 
 class VfsUtils : public QObject {
@@ -40,7 +40,9 @@ public:
 	void newEncryptionKeyAsync();	// Generate a key, store it and update SDK. Wait for keyWritten() or error().
 	
 	static bool newEncryptionKey(); // Generate a key, store it and update SDK.
-	static bool updateSDKWithKey();	// Update SDK if key exists. Return true if encrypted.
+	static bool updateSDKWithKey(int argc, char *argv[]);	// Can be calle outside application.
+	static bool updateSDKWithKey(QSettings * settings);	// Update SDK if key exists. Return true if encrypted.
+	static bool updateSDKWithKey();// Need it to pass QSettings
 	static void updateSDKWithKey(const QString& key);// SDK->setVfsEncryption(key) 
 	
 	QString getApplicationVfsEncryptionKey() const;// Get the key in store keys for VFS encryyption

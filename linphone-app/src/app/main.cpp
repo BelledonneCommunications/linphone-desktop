@@ -62,7 +62,7 @@ int main (int argc, char *argv[]) {
 #endif
 
 #ifdef ENABLE_QT_KEYCHAIN
-	bool vfsEncrypted = VfsUtils::updateSDKWithKey();
+	bool vfsEncrypted = VfsUtils::updateSDKWithKey(argc, argv);
 #else
 	bool vfsEncrypted = false;
 #endif
