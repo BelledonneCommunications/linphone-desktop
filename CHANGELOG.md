@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix using only username in URI handlers.
 - Chat flickering on load.
+- Portait thumbnails.
 - Color of busy indicator when the chat is loading.
 - Incoming ephemerals weren't removed without reloading chat rooms.
 - Update SDK to 5.2.42

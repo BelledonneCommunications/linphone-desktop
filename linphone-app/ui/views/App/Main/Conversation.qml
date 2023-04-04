@@ -651,7 +651,6 @@ ColumnLayout  {
 				}
 			}
 			chatRoomModel: conversation.chatRoomModel
-			peerAddress: conversation.peerAddress
 			fullPeerAddress: conversation.fullPeerAddress
 			fullLocalAddress: conversation.fullLocalAddress
 			localAddress: conversation.localAddress// Reload is done on localAddress. Use this order

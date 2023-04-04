@@ -184,9 +184,9 @@ void ContentModel::createThumbnail (const bool& force) {
 				QPainter painter(&image);
 				painter.drawImage(0, 0, originalImage);
 //--------------------
-				double factor = image.width() / image.height();
+				double factor = image.width() / (double)image.height();
 				if(factor < 0.2 || factor > 5){
-					qInfo() << QStringLiteral("Cannot create thumbnails because size factor is too low/much of: `%1`.").arg(path);
+					qInfo() << QStringLiteral("Cannot create thumbnails because size factor (%1) is too low/much of: `%2`.").arg(factor).arg(path);
 				}else {
 					QImage thumbnail = image.scaled(
 								Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
