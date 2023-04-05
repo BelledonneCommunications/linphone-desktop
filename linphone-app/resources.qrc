@@ -80,6 +80,7 @@
 		<file>assets/images/download_custom.svg</file>
 		<file>assets/images/drop_down_custom.svg</file>
 		<file>assets/images/edit_custom.svg</file>
+		<file>assets/images/emoji_custom.svg</file>
 		<file>assets/images/ended_call_custom.svg</file>
 		<file>assets/images/expanded_custom.svg</file>
 		<file>assets/images/file_custom.svg</file>
@@ -250,6 +251,7 @@
 		<file>ui/modules/Common/Misc/MessageBanner.qml</file>
 		<file>ui/modules/Common/Misc/Paned.qml</file>
 		<file>ui/modules/Common/Picker/DatePicker.qml</file>
+		<file>ui/modules/Common/Picker/EmojiPicker.qml</file>
 		<file>ui/modules/Common/Picker/TimePicker.qml</file>
 		<file>ui/modules/Common/Popup/DesktopPopup.qml</file>
 		<file>ui/modules/Common/Popup/Popup.qml</file>
@@ -301,6 +303,7 @@
 		<file>ui/modules/Common/Styles/Misc/MessageBannerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/PanedStyle.qml</file>
 		<file>ui/modules/Common/Styles/Picker/DatePickerStyle.qml</file>
+		<file>ui/modules/Common/Styles/Picker/EmojiPickerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Picker/TimePickerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Popup/PopupStyle.qml</file>
 		<file>ui/modules/Common/Styles/qmldir</file>
@@ -337,6 +340,7 @@
 		<file>ui/modules/Linphone/Chat/ChatAudioPreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatCalendarMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatConferenceInvitationMessage.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatEmojis.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatFileMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatFilePreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatForwardMessage.qml</file>
@@ -394,6 +398,7 @@
 		<file>ui/modules/Linphone/Styles/Chat/ChatStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatAudioMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatAudioPreviewStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Chat/ChatEmojisStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatFilePreviewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatCalendarMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatForwardMessageStyle.qml</file>

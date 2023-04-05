@@ -53,6 +53,7 @@
 #include "utils/Constants.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
 
+#include "components/settings/EmojisSettingsModel.hpp"
 #include "components/timeline/TimelineModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
 #include "components/timeline/TimelineProxyModel.hpp"
@@ -775,6 +776,7 @@ void App::registerSharedTypes () {
 	registerSharedSingletonType<App, &App::getInstance>("App");
 	registerSharedSingletonType<CoreManager, &CoreManager::getInstance>("CoreManager");
 	registerSharedSingletonType<SettingsModel, &CoreManager::getSettingsModel>("SettingsModel");
+	registerSharedSingletonType<EmojisSettingsModel, &CoreManager::getEmojisSettingsModel>("EmojisSettingsModel");
 	registerSharedSingletonType<AccountSettingsModel, &CoreManager::getAccountSettingsModel>("AccountSettingsModel");
 	registerSharedSingletonType<SipAddressesModel, &CoreManager::getSipAddressesModel>("SipAddressesModel");  
 	registerSharedSingletonType<CallsListModel, &CoreManager::getCallsListModel>("CallsListModel");

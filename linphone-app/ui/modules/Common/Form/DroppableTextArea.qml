@@ -7,6 +7,7 @@ import Common 1.0
 import Linphone 1.0
 import Common.Styles 1.0
 import Utils 1.0
+import UtilsCpp 1.0
 
 // =============================================================================
 
@@ -24,6 +25,7 @@ Item {
 	property bool dropEnabled: true
 	property string dropDisabledReason
 	property bool isEphemeral : false
+	property bool emojiVisible: false
 	
 	property int textLeftMargin: (fileChooserButton.visible? fileChooserButton.totalWidth + DroppableTextAreaStyle.fileChooserButton.margins: 0)
 	property int textRightMargin: sendButton.visible ? sendButton.totalWidth + DroppableTextAreaStyle.fileChooserButton.margins : 0
@@ -33,6 +35,7 @@ Item {
 	signal dropped (var files)
 	signal validText (string text)
 	signal audioRecordRequest()
+	signal emojiClicked()
 	
 	// ---------------------------------------------------------------------------
 	
@@ -48,6 +51,10 @@ Item {
 		if (files.length > 0) {
 			dropped(files)
 		}
+	}
+	
+	function insert(text){
+		textArea.insert(textArea.cursorPosition, text)
 	}
 	
 	Rectangle{
@@ -69,7 +76,7 @@ Item {
 				isCustom: true
 				backgroundRadius: 8
 				colorSet: DroppableTextAreaStyle.fileChooserButton
-					
+				
 				visible: droppableTextArea.enabled
 				
 				onClicked: fileDialogLoader.active=true
@@ -110,90 +117,136 @@ Item {
 			}
 			
 			// Text area.
-			Flickable {
-				id:flickableArea
+			Item{
 				Layout.fillWidth: true
 				Layout.fillHeight: true
 				Layout.maximumHeight: parent.height-20
 				Layout.topMargin: 10
 				Layout.bottomMargin: 10
 				Layout.leftMargin: 2
-				//anchors.fill: parent
-				boundsBehavior: Flickable.StopAtBounds
-				clip:true
-				
-				ScrollBar.vertical: ForceScrollBar {
-					id: scrollBar
-					visible:false
-				}
-				
-				TextArea.flickable: TextArea {
-					id: textArea
-					onLineCountChanged: {
-						if(textArea.contentHeight+20<droppableTextArea.minimumHeight) {
-							droppableTextArea.height = droppableTextArea.minimumHeight
-							scrollBar.visible = false
-						}else if(textArea.contentHeight+30<droppableTextArea.maximumHeight) {
-							droppableTextArea.height = textArea.contentHeight+30
-							scrollBar.visible = false
-						}else {
-							var lineHeight = textArea.contentHeight/lineCount
-							
-							droppableTextArea.height = droppableTextArea.maximumHeight - (droppableTextArea.maximumHeight % lineHeight)
-							scrollBar.visible = true
-						}
-					}
-					function handleValidation () {
-							validText(text)
-					}
-
-					background: Rectangle {
-						color: DroppableTextAreaStyle.backgroundColor.color
-						radius: 5
-						clip:true
+				Flickable {
+					id:flickableArea
+					
+					anchors.fill: parent
+					boundsBehavior: Flickable.StopAtBounds
+					clip:true
+					
+					ScrollBar.vertical: ForceScrollBar {
+						id: scrollBar
+						visible:false
 					}
 					
-					color: DroppableTextAreaStyle.text.colorModel.color
-					font.pointSize: DroppableTextAreaStyle.text.pointSize-1
-					rightPadding: fileChooserButton.width +
-								  fileChooserButton.anchors.rightMargin +
-								  DroppableTextAreaStyle.fileChooserButton.margins
-					selectByMouse: true
-					wrapMode: TextArea.Wrap
-					
-					// Workaround. Without this line, the scrollbar is not linked correctly
-					// to the text area.
-					width: parent.width
-					height:flickableArea.height
-					//onHeightChanged: height=flickableArea.height//TextArea change its height from content text. Force it to parent
-					
-					Component.onCompleted: forceActiveFocus()
-					
-					property var isAutoRepeating : false // shutdown repeating key feature to let optional menu appears and do normal stuff (like accents menu)
-					Keys.onReleased: {
-						if( event.isAutoRepeat){// We begin or are currently repeating a key
-							if(!isAutoRepeating){// We start repeat. Check if this is an "ignore" character
-								if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis)// Remove the previous character if it is a printable character
-									textArea.remove(cursorPosition-1, cursorPosition)
+					TextArea.flickable: TextArea {
+						id: textArea
+						onLineCountChanged: {
+							if(textArea.contentHeight+20<droppableTextArea.minimumHeight) {
+								droppableTextArea.height = droppableTextArea.minimumHeight
+								scrollBar.visible = false
+							}else if(textArea.contentHeight+30<droppableTextArea.maximumHeight) {
+								droppableTextArea.height = textArea.contentHeight+30
+								scrollBar.visible = false
+							}else {
+								var lineHeight = textArea.contentHeight/lineCount
+								
+								droppableTextArea.height = droppableTextArea.maximumHeight - (droppableTextArea.maximumHeight % lineHeight)
+								scrollBar.visible = true
 							}
-						}else
-							isAutoRepeating = false// We are no more repeating. Final decision is done on Releasing
-					}
-					Keys.onPressed: {
-						if(event.isAutoRepeat){
-							isAutoRepeating = true// Where are repeating the key. Set the state.
-							if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis){// Ignore character if it is repeating and printable character
+						}
+						function handleValidation () {
+							validText(getText(0, text.length))	// Remove rich format to send plain text
+						}
+						
+						background: Rectangle {
+							color: DroppableTextAreaStyle.backgroundColor.color
+							radius: 5
+							clip:true
+						}
+						
+						color: DroppableTextAreaStyle.text.colorModel.color
+						property font customFont : SettingsModel.textMessageFont
+						font.pointSize: customFont.pointSize
+						font.family: customFont.family
+						textFormat: TextEdit.RichText
+						rightPadding: fileChooserButton.width +
+									  fileChooserButton.anchors.rightMargin +
+									  DroppableTextAreaStyle.fileChooserButton.margins
+						selectByMouse: true
+						wrapMode: TextArea.Wrap
+						
+						// Workaround. Without this line, the scrollbar is not linked correctly
+						// to the text area.
+						width: parent.width
+						height:flickableArea.height
+						//onHeightChanged: height=flickableArea.height//TextArea change its height from content text. Force it to parent
+						
+						Timer{// This timer is used to rewrite rich texts from new text only on idle.
+							id: refreshFormatTimer
+							//This fix having the wrong format while typing next to emojies.
+							property bool blockTextChanged : false
+							property var backupCursorPosition
+							function updateBlockText(){
+								blockTextChanged = false
+								textArea.cursorPosition = backupCursorPosition
+							}
+							interval: 300
+							repeat: false
+							onTriggered: {
+								blockTextChanged = true
+								backupCursorPosition = textArea.cursorPosition
+								textArea.text = UtilsCpp.encodeTextToQmlRichFormat(textArea.getText(0,textArea.text.length)) 
+								Qt.callLater(updateBlockText)
+							}
+						}
+						onTextChanged: {
+							if(!refreshFormatTimer.blockTextChanged){
+								refreshFormatTimer.restart()
+							}
+						}
+						Component.onCompleted: forceActiveFocus()
+						
+						property var isAutoRepeating : false // shutdown repeating key feature to let optional menu appears and do normal stuff (like accents menu)
+						Keys.onReleased: {
+							if(!refreshFormatTimer.blockTextChanged){
+								refreshFormatTimer.restart()
+							}
+							if( event.isAutoRepeat){// We begin or are currently repeating a key
+								if(!isAutoRepeating){// We start repeat. Check if this is an "ignore" character
+									if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis)// Remove the previous character if it is a printable character
+										textArea.remove(cursorPosition-1, cursorPosition)
+								}
+							}else
+								isAutoRepeating = false// We are no more repeating. Final decision is done on Releasing
+						}
+						Keys.onPressed: {
+							if(!refreshFormatTimer.blockTextChanged){
+								refreshFormatTimer.restart()
+							}
+							if(event.isAutoRepeat){
+								isAutoRepeating = true// Where are repeating the key. Set the state.
+								if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis){// Ignore character if it is repeating and printable character
+									event.accepted = true
+								}
+							}else if (event.matches(StandardKey.InsertLineSeparator)) {
+								insert(cursorPosition, '')
+							} else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+								handleValidation()
 								event.accepted = true
 							}
-						}else if (event.matches(StandardKey.InsertLineSeparator)) {
-							insert(cursorPosition, '')
-						} else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-							handleValidation()
-							event.accepted = true
 						}
 					}
 				}
+				ActionButton{
+					anchors.right: parent.right
+					anchors.rightMargin: scrollBar.visible ? scrollBar.width + 5 : 5
+					anchors.verticalCenter: parent.verticalCenter
+					isCustom: true
+					backgroundRadius: 8
+					colorSet: DroppableTextAreaStyle.emoji
+					onClicked: droppableTextArea.emojiClicked()
+					toggled: droppableTextArea.emojiVisible
+				}
 			}
+			
 			
 			// Handle click to select files.
 			ActionButton {
@@ -222,6 +275,7 @@ Item {
 				}
 			}
 		}
+		
 		// Hovered style.
 		Rectangle {
 			id: hoverContent

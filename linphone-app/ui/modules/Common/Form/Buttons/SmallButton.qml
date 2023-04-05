@@ -10,8 +10,11 @@ Button {
   id: button
 
   property alias backgroundColor: background.color
+  property alias textColor: textItem.color
   property alias radius: background.radius
   property int capitalization
+  property alias pointSize: textItem.font.pointSize
+  property alias textFormat: textItem.textFormat
 
   background: Rectangle {
     id: background
@@ -26,6 +29,7 @@ Button {
     radius: SmallButtonStyle.background.radius
   }
   contentItem: Text {
+    id: textItem
     color: SmallButtonStyle.text.colorModel.color
     font.pointSize: SmallButtonStyle.text.pointSize
     font.weight: Font.Bold

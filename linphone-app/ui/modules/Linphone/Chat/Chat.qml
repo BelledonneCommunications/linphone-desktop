@@ -345,14 +345,14 @@ Rectangle {
 				}
 			}
 			
-			
 		}
 		Rectangle {
 			id: bottomChatBackground
 			Layout.fillWidth: true
-			Layout.preferredHeight: textAreaBorders.height + chatMessagePreview.height+messageBlock.height
+			Layout.preferredHeight: textAreaBorders.height + chatMessagePreview.height+messageBlock.height + chatEmojis.height
 			color: ChatStyle.sendArea.backgroundBorder.colorModel.color
 			visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.isReadOnly && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
+			
 			ColumnLayout{
 				anchors.fill: parent				
 				spacing: 0
@@ -373,6 +373,12 @@ Rectangle {
 						replyChatRoomModel: proxyModel.chatRoomModel
 						replyRightMargin: textArea.textRightMargin
 						replyLeftMargin: textArea.textLeftMargin
+						
+				}
+				ChatEmojis{
+					id: chatEmojis
+					onEmojiClicked: textArea.insert(emoji)
+					Layout.fillWidth: true
 				}
 				// -------------------------------------------------------------------------
 				// Send area.
@@ -404,6 +410,7 @@ Rectangle {
 						dropDisabledReason: qsTr('noFileTransferUrl')
 						placeholderText: qsTr('newMessagePlaceholder')
 						recordAudioToggled: RecorderManager.haveVocalRecorder && RecorderManager.getVocalRecorder().state != LinphoneEnums.RecorderStateClosed
+						emojiVisible: chatEmojis.visible
 						
 						onDropped: Logic.handleFilesDropped(files)
 						onTextChanged: Logic.handleTextChanged(text)
@@ -418,6 +425,9 @@ Rectangle {
 							}
 						}
 						onAudioRecordRequest: RecorderManager.resetVocalRecorder()
+						onEmojiClicked: {
+							chatEmojis.visible = !chatEmojis.visible
+						}
 						Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
 						Rectangle{
 							anchors.fill:parent

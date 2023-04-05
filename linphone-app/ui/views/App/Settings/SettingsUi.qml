@@ -100,6 +100,49 @@ TabContainer {
 								Layout.preferredWidth: 25
 							}
 						}
+					}
+				}
+				FormLine {
+					FormGroup {
+						//: 'Emojis' : Label for changing emojis fonts
+						label: qsTr('fontsEmojiChange')
+						RowLayout{
+							ActionButton {
+								isCustom: true
+								backgroundRadius: 90
+								colorSet: SettingsUiStyle.options
+								onClicked: fontEmojisDialog.visible = true
+								Layout.preferredWidth: 25
+								FontDialog {
+									id: fontEmojisDialog
+									//: 'Select a new font' : Popup title for choosing new fonts
+									title: qsTr('fontsPopupTitle')
+									visible:false
+									font: SettingsModel.emojiFont
+									onAccepted: {
+										SettingsModel.emojiFont = fontEmojisDialog.font
+									}
+									onRejected: {
+									}
+								}
+							}
+							Text{
+								Layout.leftMargin: 18
+								Layout.fillWidth: true
+								text: SettingsModel.emojiFont.family +", "+SettingsModel.emojiFont.pointSize
+								font {
+										bold: true
+										pointSize: FormTableStyle.entry.text.pointSize
+								}
+							}
+							ActionButton{
+								isCustom: true
+								backgroundRadius: 90
+								colorSet: SettingsUiStyle.cancel
+								onClicked: SettingsModel.emojiFont = ''
+								Layout.preferredWidth: 25
+							}
+						}
 						
 					}
 				}

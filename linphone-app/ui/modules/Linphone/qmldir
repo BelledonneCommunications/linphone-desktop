@@ -25,6 +25,7 @@ ChatAudioPreview              1.0 Chat/ChatAudioPreview.qml
 ChatCalendarMessage           1.0 Chat/ChatCalendarMessage.qml
 ChatConferenceInvitationMessage 1.0 Chat/ChatConferenceInvitationMessage.qml
 ChatContent                   1.0 Chat/ChatContent.qml
+ChatEmojis                    1.0 Chat/ChatEmojis.qml
 ChatFullContent               1.0 Chat/ChatFullContent.qml
 ChatMessagePreview            1.0 Chat/ChatMessagePreview.qml
 ChatForwardMessage            1.0 Chat/ChatForwardMessage.qml

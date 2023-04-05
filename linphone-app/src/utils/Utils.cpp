@@ -45,6 +45,8 @@
 #include "app/paths/Paths.hpp"
 #include "app/providers/ImageProvider.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/other/colors/ColorListModel.hpp"
+#include "components/other/colors/ColorModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
@@ -734,7 +736,6 @@ bool Utils::isOnlyEmojis(const QString& text){
 }
 
 QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options){
-	
 	QString images;
 	QStringList formattedText;
 	QStringList imageFormat;
@@ -743,6 +744,7 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 	if(options.contains("noLink") && options["noLink"].toBool()){
 		formattedText.append(text);
 	}else{
+		auto primaryColor = App::getInstance()->getColorListModel()->getColor("i")->getColor();
 		auto iriParsed = UriTools::parseIri(text);
 		for(int i = 0 ; i < iriParsed.size() ; ++i){
 			QString iri = iriParsed[i].second.replace('&', "&amp;")
@@ -769,7 +771,7 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 							: ""
 						) + " src=\"" + iriParsed[i].second + "\" /></a>";
 				}else
-					formattedText.append( "<a href=\"" + uri + "\">" + iri + "</a>");
+					formattedText.append( "<a style=\"color:"+ primaryColor.name() +";\" href=\"" + uri + "\">" + iri + "</a>");
 			}
 		}
 	}

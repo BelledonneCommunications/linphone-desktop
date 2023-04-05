@@ -11,6 +11,7 @@ MouseArea {
 	property alias text: tooltip.text
 	property int delay: TooltipStyle.delay
 	property bool force: false
+	property bool hide: false
 	property var tooltipParent: parent
 	property int maxWidth : window? window.width : tooltipParent.width
 	
@@ -33,7 +34,7 @@ MouseArea {
 	hoverEnabled: true
 	scrollGestureEnabled: true
 	
-	onContainsMouseChanged: _visible = containsMouse
+	onContainsMouseChanged: _visible = !hide && containsMouse
 	cursorShape: containsMouse ? hoveringCursor : Qt.ArrowCursor
 	
 	onPressed: {

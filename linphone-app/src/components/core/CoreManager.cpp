@@ -38,6 +38,7 @@
 #include "components/ldap/LdapListModel.hpp"
 #include "components/recorder/RecorderManager.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
+#include "components/settings/EmojisSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
@@ -94,6 +95,7 @@ void CoreManager::initCoreManager(){
 	qInfo() << "Init CoreManager";
 	mAccountSettingsModel = new AccountSettingsModel(this);
 	mSettingsModel = new SettingsModel(this);
+	mEmojisSettingsModel = new EmojisSettingsModel(this);
 	mCallsListModel = new CallsListModel(this);
 	mChatModel = new ChatModel(this);
 	mContactsListModel = new ContactsListModel(this);

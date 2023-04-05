@@ -287,6 +287,7 @@ set(SOURCES
 	src/components/search/SearchSipAddressesModel.cpp
 	src/components/search/SearchSipAddressesProxyModel.cpp
 	src/components/settings/AccountSettingsModel.cpp
+	src/components/settings/EmojisSettingsModel.cpp
 	src/components/settings/SettingsModel.cpp
 	src/components/sip-addresses/SipAddressesModel.cpp
 	src/components/sip-addresses/SipAddressesProxyModel.cpp
@@ -428,6 +429,7 @@ set(HEADERS
 	src/components/search/SearchSipAddressesModel.hpp
 	src/components/search/SearchSipAddressesProxyModel.hpp
 	src/components/settings/AccountSettingsModel.hpp
+	src/components/settings/EmojisSettingsModel.hpp
 	src/components/settings/SettingsModel.hpp
 	src/components/sip-addresses/SipAddressesModel.hpp
 	src/components/sip-addresses/SipAddressesProxyModel.hpp

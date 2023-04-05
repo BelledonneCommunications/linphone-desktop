@@ -1249,6 +1249,19 @@ URL du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>EmojiPicker</name>
+    <message>
+        <source>emojisLastUsed</source>
+        <extracomment>&apos;Last used&apos; : Emoji title for last used section.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>emojisAll</source>
+        <extracomment>&apos;All&apos; Emoji title for all items.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>EphemeralChatRoom</name>
     <message>
         <source>cancelButton</source>
@@ -3580,6 +3593,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>versionCheckTypeNightly</source>
         <extracomment>&apos;Nightly&apos; : Keyword for an option to check the nightly version</extracomment>
         <translation>En développement</translation>
+    </message>
+    <message>
+        <source>fontsEmojiChange</source>
+        <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -43,6 +43,7 @@ class EventCountNotifier;
 class HistoryModel;
 class LdapListModel;
 class RecorderManager;
+class EmojisSettingsModel;
 class SettingsModel;
 class SipAddressesModel;
 class VcardModel;
@@ -118,6 +119,9 @@ public:
 	SettingsModel *getSettingsModel () const {
 		Q_CHECK_PTR(mSettingsModel);
 		return mSettingsModel;
+	}
+	EmojisSettingsModel *getEmojisSettingsModel () const {
+		return mEmojisSettingsModel;
 	}
 	
 	AccountSettingsModel *getAccountSettingsModel () const {
@@ -224,6 +228,7 @@ private:
 	
 	SipAddressesModel *mSipAddressesModel = nullptr;
 	SettingsModel *mSettingsModel = nullptr;
+	EmojisSettingsModel *mEmojisSettingsModel =nullptr;
 	AccountSettingsModel *mAccountSettingsModel = nullptr;
 	
 	EventCountNotifier *mEventCountNotifier = nullptr;

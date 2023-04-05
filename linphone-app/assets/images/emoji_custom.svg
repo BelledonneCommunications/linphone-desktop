@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="80"
+   height="80"
+   viewBox="0 0 80 80"
+   fill="none"
+   version="1.1"
+   id="svg10"
+   sodipodi:docname="emoji_custom.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="3.8564815"
+     inkscape:cx="15.039616"
+     inkscape:cy="54.453781"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg10" />
+  <circle
+     cx="40.000004"
+     cy="40"
+     r="22.916668"
+     stroke="#444444"
+     stroke-width="4.16666"
+     id="circle2" />
+  <circle
+     cx="30.375002"
+     cy="34.541664"
+     r="2.8750002"
+     fill="#444444"
+     id="circle4"
+     style="stroke-width:2.08334" />
+  <circle
+     cx="48.624584"
+     cy="34.541664"
+     r="2.8750002"
+     fill="#444444"
+     id="circle6"
+     style="stroke-width:2.08334" />
+  <path
+     d="m 29.583336,46.25 c 0,0 2.314812,6.250001 10.416667,6.250001 8.101876,0 10.416667,-6.250001 10.416667,-6.250001"
+     stroke="#444444"
+     stroke-width="4.16666"
+     stroke-linecap="round"
+     id="path8" />
+</svg>

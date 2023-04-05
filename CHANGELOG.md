@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.1.0 - undefined
 
+### Fixed
+- Primary color for links in chat.
+- Replace double click on avatar by a simple click for copying address into the SmartSearchBar.
+
 ### Added
 - VFS Encryption
 - File viewer in chats (Image/Animated Image/Video/Texts/Pdf) with the option to export the file for VFS mode.
@@ -19,13 +23,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New language support: Czech
 - An option to set dial prefix and its use on numbers.
 - Fetch remote provisioning from URI handler and with confirmation.
+- Emojis picker.
+- Text edit in chat can now understand rich texts.
 
 ### Removed
 - Picture zoom on mouse over.
 
 ## 5.0.15 - undefined
 
-## Fixed
+### Fixed
 - Fix using only username in URI handlers.
 - Chat flickering on load.
 - Portait thumbnails.

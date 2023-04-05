@@ -44,6 +44,9 @@ var SCHEME_REGEX = new RegExp('^[^:]+:')
 function buildCommonDialogUri (component) {
   return 'qrc:/ui/modules/Common/Dialog/' + component + '.qml'
 }
+function buildCommonUri (component, subComponent) {
+  return 'qrc:/ui/modules/Common/'+subComponent+'/' + component + '.qml'
+}
 
 function buildLinphoneDialogUri (component) {
   return 'qrc:/ui/modules/Linphone/Dialog/' + component + '.qml'

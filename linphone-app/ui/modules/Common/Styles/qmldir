@@ -60,6 +60,7 @@ singleton MessageBannerStyle        1.0 Misc/MessageBannerStyle.qml
 singleton PanedStyle                1.0 Misc/PanedStyle.qml
 
 singleton DatePickerStyle           1.0 Picker/DatePickerStyle.qml
+singleton EmojiPickerStyle          1.0 Picker/EmojiPickerStyle.qml
 singleton TimePickerStyle           1.0 Picker/TimePickerStyle.qml
 
 singleton PopupStyle                1.0 Popup/PopupStyle.qml

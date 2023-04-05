@@ -28,7 +28,7 @@ Item {
 	//property int replyHeight: (chatMessageModel ? replyMessage.height + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 3 + 3 : 0)
 	//property int fitWidth: visible ? Math.max(usernameReplied.implicitWidth + replyMessage.fitWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2 : 0
 	property int replyHeight: (chatMessageModel ? chatContent.height + usernameReplied.implicitHeight + ChatStyle.entry.message.padding * 3 + 3 : 0)
-	property int fitWidth: visible ? Math.max(usernameReplied.implicitWidth, chatContent.bestWidth , headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2 : 0
+	property int fitWidth: visible ? Math.max(usernameReplied.implicitWidth, chatContent.bestWidth +ChatReplyMessageStyle.padding*2, headerArea.fitWidth) + 7 + ChatReplyMessageStyle.padding * 2 : 0
 	property int fitHeight: visible ? headerHeight + replyHeight : 0
 	
 	property font customFont : SettingsModel.textMessageFont

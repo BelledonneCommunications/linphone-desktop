@@ -40,6 +40,7 @@ TransparentTextInput    1.0 Form/TransparentTextInput.qml
 
 ExclusiveButtons        1.0 Form/Buttons/ExclusiveButtons.qml
 FileChooserButton       1.0 Form/Buttons/FileChooserButton.qml
+SmallButton             1.0 Form/Buttons/SmallButton.qml
 TextButtonA             1.0 Form/Buttons/TextButtonA.qml
 TextButtonB             1.0 Form/Buttons/TextButtonB.qml
 TextButtonC             1.0 Form/Buttons/TextButtonC.qml
@@ -92,6 +93,7 @@ MessageBanner           1.0 Misc/MessageBanner.qml
 Paned                   1.0 Misc/Paned.qml
 
 DatePicker              1.0 Picker/DatePicker.qml
+EmojiPicker             1.0 Picker/EmojiPicker.qml
 TimePicker              1.0 Picker/TimePicker.qml
 
 DesktopPopup            1.0 Popup/DesktopPopup.qml
