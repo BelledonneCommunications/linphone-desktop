@@ -66,7 +66,7 @@ QtObject {
 	
 	property QtObject emoji: QtObject {
 		property int margins: 5
-		property int iconSize: 30
+		property int iconSize: 40
 		property string name : 'emoji'
 		property string icon : 'emoji_custom'
 		property var backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'me_n_b_bg')
