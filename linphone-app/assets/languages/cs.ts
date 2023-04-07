@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Tisknout pouze logy z aplikace</translation>
     </message>
 </context>
 <context>
@@ -1431,7 +1431,7 @@ Adresa URL serveru není nakonfigurována.</translation>
     <message>
         <source>loadFile</source>
         <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Načíst&quot;: Název dialogového okna pro načtení souboru.</translation>
     </message>
 </context>
 <context>
@@ -1848,7 +1848,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>confirmFetchUri</source>
         <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chcete stáhnout a použít konfiguraci z této adresy URL?</translation>
     </message>
 </context>
 <context>
@@ -2642,7 +2642,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fullLogsEnabledLabel</source>
         <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Úplné logy</translation>
     </message>
 </context>
 <context>
@@ -3372,32 +3372,32 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>dialPrefix</source>
         <extracomment>&apos;Prefix for your country&apos; : Label for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Předčíslí země</translation>
     </message>
     <message>
         <source>dialPrefixTooptip</source>
         <extracomment>&quot;The prefix to use when using numbers without the &apos;+&apos;&quot; : tooltip for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Předpona pro použití čísel bez znaku &apos;+&apos;</translation>
     </message>
     <message>
         <source>dialEscapePlus</source>
         <extracomment>&quot;Replace &apos;+&apos; by &apos;00&apos;&quot; : Label to an option for escaping the &apos;+&apos; character when dialing.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nahradit znak &apos;+&apos; znakem &apos;00&apos;</translation>
     </message>
     <message>
         <source>dialEscapePlusTooltip</source>
         <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nahradit znak &apos;+&apos; v adresách znakem &apos;00&apos;</translation>
     </message>
     <message>
         <source>dialPrefixCallChat</source>
         <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Použít předčíslí pro odchozí hovory a chaty</translation>
     </message>
     <message>
         <source>dialPrefixCallChatTooltip</source>
         <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pokud je zadáno číslo, aplikuje se na něj předčíslí</translation>
     </message>
 </context>
 <context>
