@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir somente logs da aplicação</translation>
     </message>
 </context>
 <context>
@@ -1367,7 +1367,20 @@ URL do servidor não configurado.</translation>
     <message>
         <source>scanQRCodeWhere</source>
         <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>No seu aplicativo, vá em Assistente - Provisionamento de código QR</translation>
+    </message>
+</context>
+<context>
+    <name>FileViewDialog</name>
+    <message>
+        <source>exportAsTitle</source>
+        <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
+        <translation>Exportar como…</translation>
+    </message>
+    <message>
+        <source>loadFile</source>
+        <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
+        <translation>Carregar</translation>
     </message>
 </context>
 <context>
@@ -1779,7 +1792,12 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>newConferenceUriMissing</source>
         <extracomment>&apos;Video conference URI is not set. You have to change it in your account settings in order to create new meetings.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>A URI não está configurada para videoconferência. Você tem que mudá-lo nas configurações de sua conta a fim de criar novas conferências.</translation>
+    </message>
+    <message>
+        <source>confirmFetchUri</source>
+        <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
+        <translation>Você deseja fazer o download e aplicar a configuração a partir desta URL?</translation>
     </message>
 </context>
 <context>
@@ -2294,6 +2312,29 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
 </context>
 <context>
+    <name>PresenceLevel</name>
+    <message>
+        <source>presenceOnline</source>
+        <extracomment>&apos;Online⁣&apos;: Presence text</extracomment>
+        <translation>Disponível</translation>
+    </message>
+    <message>
+        <source>presenceLastSeenToday</source>
+        <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
+        <translation>Online hoje às % 1</translation>
+    </message>
+    <message>
+        <source>presenceLastSeenYesterday</source>
+        <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
+        <translation>Online ontem às % 1</translation>
+    </message>
+    <message>
+        <source>presenceLastSeen</source>
+        <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
+        <translation>Online às % 1</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
@@ -2396,7 +2437,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>fullLogsEnabledLabel</source>
         <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Logs completos</translation>
     </message>
 </context>
 <context>
@@ -3094,7 +3135,41 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL de servidor de chaves de criptografia E2E inválida</translation>
+    </message>
+    <message>
+        <source>publishDurationLabel</source>
+        <translation>Duração da publicação (seg)</translation>
+    </message>
+    <message>
+        <source>dialPrefix</source>
+        <extracomment>&apos;Prefix for your country&apos; : Label for a text option to set the country code on the phone numbers.</extracomment>
+        <translation>Prefixo para o seu país</translation>
+    </message>
+    <message>
+        <source>dialPrefixTooptip</source>
+        <extracomment>&quot;The prefix to use when using numbers without the &apos;+&apos;&quot; : tooltip for a text option to set the country code on the phone numbers.</extracomment>
+        <translation>O prefixo a ser usado ao usar números sem o &apos;+&apos;</translation>
+    </message>
+    <message>
+        <source>dialEscapePlus</source>
+        <extracomment>&quot;Replace &apos;+&apos; by &apos;00&apos;&quot; : Label to an option for escaping the &apos;+&apos; character when dialing.</extracomment>
+        <translation>Substituir &apos;+&apos; por &apos;00&apos;</translation>
+    </message>
+    <message>
+        <source>dialEscapePlusTooltip</source>
+        <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
+        <translation>Substitua &apos;+&apos; nos endereços por &apos;00&apos;</translation>
+    </message>
+    <message>
+        <source>dialPrefixCallChat</source>
+        <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
+        <translation>Aplicar prefixo para chamadas e bate-papos de saída</translation>
+    </message>
+    <message>
+        <source>dialPrefixCallChatTooltip</source>
+        <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
+        <translation>Se um número for inserido, aplique o prefixo ao número</translation>
     </message>
 </context>
 <context>
