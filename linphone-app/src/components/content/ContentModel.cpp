@@ -22,20 +22,18 @@
 
 #include <QQmlApplicationEngine>
 #include <QDesktopServices>
-#include <QImageReader>
 #include <QMessageBox>
 #include <QPainter>
 
 #include "app/App.hpp"
-#include "app/paths/Paths.hpp"
 #include "app/providers/ThumbnailProvider.hpp"
 
 #include "components/chat-events/ChatMessageModel.hpp"
+#include "components/conferenceInfo/ConferenceInfoModel.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 
-#include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
-#include "utils/Constants.hpp"
-#include "components/Components.hpp"
 
 // =============================================================================
 
@@ -158,89 +156,11 @@ void ContentModel::createThumbnail (const bool& force) {
 	if(force || isFile() || isFileEncrypted() || isFileTransfer()){
 		QString id;
 		QString path = getFilePath();
-		
-		auto appdata = ChatMessageModel::AppDataManager(mChatMessageModel ? QString::fromStdString(mChatMessageModel->getChatMessage()->getAppdata()) : "");
-		
-		if(!appdata.mData.contains(path) 
-				|| !QFileInfo(QString::fromStdString(Paths::getThumbnailsDirPath())+appdata.mData[path]).isFile()){
-			// File don't exist. Create the thumbnail
-			QImage originalImage(path);
-			
-			if( originalImage.isNull()){// Try to determine format from headers
-				QImageReader reader(path);
-				reader.setDecideFormatFromContent(true);
-				QByteArray format = reader.format();
-				if(!format.isEmpty())
-					originalImage = QImage(path, format);
-			}
-			if (!originalImage.isNull()){
-				int rotation = 0;
-				QExifImageHeader exifImageHeader;
-				if (exifImageHeader.loadFromJpeg(path))
-					rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
-// Fill with color to replace transparency with white color instead of black (default).
-				QImage image(originalImage.size(), originalImage.format());
-				image.fill(QColor(Qt::white).rgb());
-				QPainter painter(&image);
-				painter.drawImage(0, 0, originalImage);
-//--------------------
-				double factor = image.width() / (double)image.height();
-				if(factor < 0.2 || factor > 5){
-					qInfo() << QStringLiteral("Cannot create thumbnails because size factor (%1) is too low/much of: `%2`.").arg(factor).arg(path);
-				}else {
-					QImage thumbnail = image.scaled(
-								Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
-								Qt::KeepAspectRatio, Qt::SmoothTransformation
-								);
-					
-					if (rotation != 0) {
-						QTransform transform;
-						if (rotation == 3 || rotation == 4)
-							transform.rotate(180);
-						else if (rotation == 5 || rotation == 6)
-							transform.rotate(90);
-						else if (rotation == 7 || rotation == 8)
-							transform.rotate(-90);
-						thumbnail = thumbnail.transformed(transform);
-						if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
-							thumbnail = thumbnail.mirrored(true, false);
-					}
-					QString uuid = QUuid::createUuid().toString();
-					id = QStringLiteral("%1.jpg").arg(uuid.mid(1, uuid.length() - 2));
-					
-					if (!thumbnail.save(QString::fromStdString(Paths::getThumbnailsDirPath()) + id , "jpg", 100)) {
-						qWarning() << QStringLiteral("Unable to create thumbnail of: `%1`.").arg(path);
-					}else{
-						appdata.mData[path] = id;
-						mAppData.mData[path] = id;
-						if(mChatMessageModel)
-							mChatMessageModel->getChatMessage()->setAppdata(appdata.toString().toStdString());
-					}
-				}
-			}
-		}
-		
 		if( path != ""){
 			setWasDownloaded( !path.isEmpty() && QFileInfo(path).isFile());
-			if(appdata.mData.contains(path) && !appdata.mData[path].isEmpty())
-				setThumbnail(QStringLiteral("image://%1/%2").arg(ThumbnailProvider::ProviderId).arg(appdata.mData[path]));
+			setThumbnail(QStringLiteral("image://%1/%2").arg(ThumbnailProvider::ProviderId).arg(path));
 		}
 	}
-}
-
-void ContentModel::removeThumbnail(){
-	for(QMap<QString, QString>::iterator itData = mAppData.mData.begin() ; itData != mAppData.mData.end() ; ++itData){
-		QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) +itData.value();
-		if( QFileInfo(thumbnailPath).isFile()){
-			QFile(thumbnailPath).remove();
-		}
-	}
-	QString backup;
-	if( mAppData.mData.contains("receivedTime"))
-		backup = mAppData.mData["receivedTime"];
-	mAppData.mData.clear();
-	if( !backup.isEmpty())
-		mAppData.mData["receivedTime"] = backup;
 }
 
 void ContentModel::removeDownloadedFile(){

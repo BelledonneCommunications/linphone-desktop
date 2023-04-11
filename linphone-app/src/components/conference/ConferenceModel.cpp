@@ -27,14 +27,9 @@
 #include <QMessageBox>
 
 #include "app/App.hpp"
-#include "app/paths/Paths.hpp"
-#include "app/providers/ThumbnailProvider.hpp"
-
-
-#include "utils/QExifImageHeader.hpp"
+#include "components/participant/ParticipantListModel.hpp"
 #include "utils/Utils.hpp"
-#include "utils/Constants.hpp"
-#include "components/Components.hpp"
+
 
 void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::activeSpeakerParticipantDevice, this, &ConferenceModel::onActiveSpeakerParticipantDevice);

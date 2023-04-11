@@ -225,7 +225,7 @@ Item{
 				running: grid.auxItemDisplayed<mainItem.maxIndex-grid.auxItemsCount
 				property int lastCount: 0
 				onTriggered: {
-					console.log(grid.auxItemDisplayed - lastCount)
+					console.log("Loaded emojis : " +(grid.auxItemDisplayed - lastCount))
 					lastCount = grid.auxItemDisplayed
 				}
 			}

@@ -43,10 +43,11 @@ public:
 	QString getDescription() const;
 	QString getId() const;
 	
-	
 	void setPath(const QString& path);
 	void setDescription(const QString& description);
 	Q_INVOKABLE void setUrl(const QUrl& url);
+	
+	static QImage createThumbnail(const QString& path);
 	
 signals:
 	void pathChanged();

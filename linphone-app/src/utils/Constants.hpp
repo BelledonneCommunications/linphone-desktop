@@ -125,7 +125,6 @@ public:
 #endif
 	static constexpr char PathPluginsApp[] = "app/";
 	static constexpr char PathSounds[] = "/sounds/" EXECUTABLE_NAME;
-	static constexpr char PathThumbnails[] = "/thumbnails/";
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
 	
 	static constexpr char PathCallHistoryList[] = "/call-history.db";

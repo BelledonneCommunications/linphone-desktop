@@ -44,7 +44,6 @@ constexpr char Constants::PathPlugins[];
 #endif
 constexpr char Constants::PathPluginsApp[];
 constexpr char Constants::PathSounds[];
-constexpr char Constants::PathThumbnails[];
 constexpr char Constants::PathUserCertificates[];
 
 constexpr char Constants::PathCallHistoryList[];

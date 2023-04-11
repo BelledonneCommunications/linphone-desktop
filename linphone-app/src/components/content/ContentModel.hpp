@@ -76,7 +76,6 @@ public:
 	Q_INVOKABLE int getFileDuration() const;
 	
 	void createThumbnail (const bool& force = false);
-	void removeThumbnail ();
 	void removeDownloadedFile();
 	
 	Q_INVOKABLE void downloadFile();

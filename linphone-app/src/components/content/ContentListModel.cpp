@@ -88,7 +88,6 @@ void ContentListModel::remove(ContentModel * model){
 	int count = 0;
 	for(auto it = mList.begin() ; it != mList.end() ; ++count, ++it) {
 		if( it->get() == model) {
-			model->removeThumbnail();
 			removeRow(count, QModelIndex());
 			return;
 		}
@@ -96,10 +95,6 @@ void ContentListModel::remove(ContentModel * model){
 }
 
 void ContentListModel::clear(){
-// Delete thumbnails
-	for(auto contentModel : mList){
-		contentModel.objectCast<ContentModel>()->removeThumbnail();
-	}
 	resetData();
 }
 
@@ -107,7 +102,6 @@ void ContentListModel::removeDownloadedFiles(){
 	for(auto model : mList){
 		auto contentModel = model.objectCast<ContentModel>();
 		contentModel->removeDownloadedFile();
-		contentModel->removeThumbnail();
 	}
 }
 

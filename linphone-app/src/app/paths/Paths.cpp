@@ -298,9 +298,6 @@ string Paths::getRootCaFilePath () {
 	return getReadableFilePath(getAppRootCaFilePath());
 }
 
-string Paths::getThumbnailsDirPath () {
-	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathThumbnails);
-}
 string Paths::getToolsDirPath () {
 	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathTools);
 }

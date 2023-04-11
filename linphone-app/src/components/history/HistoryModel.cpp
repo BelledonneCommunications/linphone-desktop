@@ -31,14 +31,8 @@
 #include <QUrlQuery>
 #include <QImageReader>
 
-#include "app/App.hpp"
-#include "app/paths/Paths.hpp"
-#include "app/providers/ThumbnailProvider.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
-#include "components/notifier/Notifier.hpp"
-#include "components/settings/SettingsModel.hpp"
-#include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
 
 #include "HistoryModel.hpp"

@@ -26,15 +26,7 @@
 #include <QMessageBox>
 
 #include "app/App.hpp"
-#include "app/paths/Paths.hpp"
-#include "app/providers/ThumbnailProvider.hpp"
-
-#include "components/chat-events/ChatMessageModel.hpp"
-
-#include "utils/QExifImageHeader.hpp"
-#include "utils/Utils.hpp"
-#include "utils/Constants.hpp"
-#include "components/Components.hpp"
+#include "components/content/ContentListModel.hpp"
 
 // =============================================================================
 

@@ -263,17 +263,8 @@ void ChatMessageModel::resendMessage (){
 }
 
 void ChatMessageModel::deleteEvent(){
-	if (mChatMessage && mChatMessage->getFileTransferInformation()) {// Remove thumbnail
+	if (mChatMessage && mChatMessage->getFileTransferInformation()) {
 		mChatMessage->cancelFileTransfer();
-		QString appdata = QString::fromStdString(mChatMessage->getAppdata());
-		QStringList fields = appdata.split(':');
-		
-		if(fields[0].size() > 0) {
-			QString thumbnailPath = QString::fromStdString(Paths::getThumbnailsDirPath()) + fields[0];
-			if (!QFile::remove(thumbnailPath))
-				qWarning() << QStringLiteral("Unable to remove `%1`.").arg(thumbnailPath);
-		}
-		mChatMessage->setAppdata("");// Remove completely Thumbnail from the message
 	}
 	if(mChatMessage)
 		mChatMessage->getChatRoom()->deleteMessage(mChatMessage);

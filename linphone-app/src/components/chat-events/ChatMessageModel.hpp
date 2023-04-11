@@ -26,19 +26,7 @@
 #include <QDateTime>
 
 // =============================================================================
-/*
-class Thumbnail{
-public:
-	Thumbnail();
-	QString mId;
-	QString mPath;
-	
-	QString toString()const;
-	void fromString(const QString& );
-	static QString toString(const QVector<Thumbnail>& );
-	static QVector<Thumbnail> fromListString(const QString& );
-};
-*/
+
 #include "components/chat-room/ChatRoomModel.hpp"
 #include "ChatEvent.hpp"
 #include "components/participant-imdn/ParticipantImdnStateListModel.hpp"
@@ -58,7 +46,7 @@ public:
 	ChatMessageModel (std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);
 	virtual ~ChatMessageModel();
 	
-	class AppDataManager{// Used to manage appdata to store persistant data like created thumbnails
+	class AppDataManager{// Used to manage appdata to store persistant data
 	public:
 		AppDataManager(const QString&);
 		QMap<QString, QString> mData;// Path / ID

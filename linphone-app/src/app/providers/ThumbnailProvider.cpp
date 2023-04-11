@@ -19,7 +19,7 @@
  */
 
 #include "app/paths/Paths.hpp"
-#include "utils/Utils.hpp"
+#include "components/other/images/ImageModel.hpp"
 
 #include "ThumbnailProvider.hpp"
 
@@ -31,11 +31,10 @@ ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
   QQmlImageProviderBase::Image,
   QQmlImageProviderBase::ForceAsynchronousImageLoading
 ) {
-  mThumbnailsPath = Utils::coreStringToAppString(Paths::getThumbnailsDirPath());
 }
 
 QImage ThumbnailProvider::requestImage (const QString &id, QSize *size, const QSize &) {
-  QImage image(mThumbnailsPath + id);
-  *size = image.size();
-  return image;
+	QImage image = ImageModel::createThumbnail(id);
+	*size = image.size();
+	return image;
 }

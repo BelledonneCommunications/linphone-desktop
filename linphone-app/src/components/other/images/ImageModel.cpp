@@ -20,12 +20,15 @@
 #include "ImageModel.hpp"
 
 #include <QQmlApplicationEngine>
+#include <QImageReader>
+#include <QPainter>
 #include "app/App.hpp"
 
 #include "utils/Utils.hpp"
 
 #include "components/Components.hpp"
 #include "components/core/CoreManager.hpp"
+#include "utils/QExifImageHeader.hpp"
 
 // =============================================================================
 
@@ -72,4 +75,54 @@ void ImageModel::setDescription(const QString& data){
 
 void ImageModel::setUrl(const QUrl& url){
 	setPath(url.toString(QUrl::RemoveScheme));
+}
+
+QImage ImageModel::createThumbnail(const QString& path){
+	QImage thumbnail;
+	if(QFileInfo(path).isFile()){
+		QImage originalImage(path);
+			
+		if( originalImage.isNull()){// Try to determine format from headers
+			QImageReader reader(path);
+			reader.setDecideFormatFromContent(true);
+			QByteArray format = reader.format();
+			if(!format.isEmpty())
+				originalImage = QImage(path, format);
+		}
+		if (!originalImage.isNull()){
+			int rotation = 0;
+			QExifImageHeader exifImageHeader;
+			if (exifImageHeader.loadFromJpeg(path))
+				rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
+// Fill with color to replace transparency with white color instead of black (default).
+			QImage image(originalImage.size(), originalImage.format());
+			image.fill(QColor(Qt::white).rgb());
+			QPainter painter(&image);
+			painter.drawImage(0, 0, originalImage);
+//--------------------
+			double factor = image.width() / (double)image.height();
+			if(factor < 0.2 || factor > 5){
+				qInfo() << QStringLiteral("Cannot create thumbnails because size factor (%1) is too low/much of: `%2`.").arg(factor).arg(path);
+			}else {
+				thumbnail = image.scaled(
+							Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
+							Qt::KeepAspectRatio, Qt::SmoothTransformation
+							);
+				
+				if (rotation != 0) {
+					QTransform transform;
+					if (rotation == 3 || rotation == 4)
+						transform.rotate(180);
+					else if (rotation == 5 || rotation == 6)
+						transform.rotate(90);
+					else if (rotation == 7 || rotation == 8)
+						transform.rotate(-90);
+					thumbnail = thumbnail.transformed(transform);
+					if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
+						thumbnail = thumbnail.mirrored(true, false);
+				}
+			}
+		}
+	}
+	return thumbnail;
 }

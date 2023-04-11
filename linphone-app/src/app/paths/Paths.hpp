@@ -51,7 +51,6 @@ namespace Paths {
 	std::string getPluginsAppDirPath ();
 	QStringList getPluginsAppFolders();
 	std::string getRootCaFilePath ();
-	std::string getThumbnailsDirPath ();
 	std::string getToolsDirPath ();
 	std::string getUserCertificatesDirPath ();
 	std::string getZrtpDataFilePath ();

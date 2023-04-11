@@ -38,8 +38,6 @@
 #include "ChatRoomListener.hpp"
 
 #include "app/App.hpp"
-#include "app/paths/Paths.hpp"
-#include "app/providers/ThumbnailProvider.hpp"
 #include "components/calls/CallsListModel.hpp"
 #include "components/chat/ChatModel.hpp"
 #include "components/chat-events/ChatCallModel.hpp"
@@ -53,8 +51,6 @@
 #include "components/content/ContentModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
-#include "components/notifier/Notifier.hpp"
-#include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/participant/ParticipantModel.hpp"
 #include "components/participant/ParticipantListModel.hpp"
@@ -64,9 +60,7 @@
 #include "components/timeline/TimelineModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
 #include "components/core/event-count-notifier/AbstractEventCountNotifier.hpp"
-#include "utils/QExifImageHeader.hpp"
 #include "utils/Utils.hpp"
-#include "utils/Constants.hpp"
 #include "utils/LinphoneEnums.hpp"
 
 

@@ -32,9 +32,6 @@ public:
   QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
 
   static const QString ProviderId;
-
-private:
-  QString mThumbnailsPath;
 };
 
 #endif // THUMBNAIL_PROVIDER_H_

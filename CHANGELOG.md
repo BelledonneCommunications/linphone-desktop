@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fetch remote provisioning from URI handler and with confirmation.
 - Emojis picker.
 - Text edit in chat can now understand rich texts.
+- Create thumbnails into memory instead of disk.
 
 ### Removed
 - Picture zoom on mouse over.
