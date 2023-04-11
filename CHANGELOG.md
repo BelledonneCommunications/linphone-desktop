@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Portait thumbnails.
 - Color of busy indicator when the chat is loading.
 - Incoming ephemerals weren't removed without reloading chat rooms.
-- Update SDK to 5.2.42
+- Update SDK to 5.2.50
 
 ### Added
 - New language support: Czech
