@@ -60,7 +60,7 @@ QVector<QPair<bool, QString> > UriTools::parse(const QString& text, const QRegul
 	else{
 		currentIndex += results.back().second.length();
 		if( currentIndex < text.size())
-			results.push_back({false, text.mid(currentIndex)});
+			results.append(parse(text.mid(currentIndex), regex));
 	}
 	return results;
 }
@@ -278,10 +278,9 @@ void UriTools::initRegularExpressions() {
 	// Level 8. --------------------------------------------------------------------
 	
 	// Regex to match URI. It respects the RFC 3986.
-	QString URI = "(?:"
-			+ URI_SCHEME + ":" + "|" + "www\\." + ")"
-			+ URI_HIER_PART + "(?:" + "\\?" + URI_QUERY + ")?" +
-			"(?:" + "#" + URI_FRAGMENT + ")?";
+	QString URI = "(?:" + URI_SCHEME + ":" + "|" + "www\\." + ")"
+			+ URI_HIER_PART + "(?:" + "\\?" + URI_QUERY + ")?"
+			+ "(?:" + "#" + URI_FRAGMENT + ")?";
 	
 	// Regex to match URI. It respects the RFC 3987.
 	QString IRI = "(?:" + URI_SCHEME + ":" + "|" + "www\\." + ")"

@@ -743,6 +743,7 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 	QString images;
 	QStringList formattedText;
 	QStringList imageFormat;
+	bool lastWasUrl = false;
 	for(auto format : QImageReader::supportedImageFormats())
 		imageFormat.append(QString::fromLatin1(format).toUpper());
 	if(options.contains("noLink") && options["noLink"].toBool()){
@@ -750,15 +751,21 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 	}else{
 		auto primaryColor = App::getInstance()->getColorListModel()->getColor("i")->getColor();
 		auto iriParsed = UriTools::parseIri(text);
+		
 		for(int i = 0 ; i < iriParsed.size() ; ++i){
 			QString iri = iriParsed[i].second.replace('&', "&amp;")
 						.replace('<', "\u2063&lt;")
 						.replace('>', "\u2063&gt;")
 						.replace('"', "&quot;")
 						.replace('\'', "&#039;");
-			if(!iriParsed[i].first)
+			if(!iriParsed[i].first){
+				if(lastWasUrl){
+					lastWasUrl = false;
+					if(iri.front() != ' ')
+						iri.push_front(' ');
+				}
 				formattedText.append(iri);
-			else{
+			}else{
 				QString uri = iriParsed[i].second.left(3) == "www" ? "http://"+iriParsed[i].second : iriParsed[i].second ;
 				int extIndex = iriParsed[i].second.lastIndexOf('.');
 				QString ext;
@@ -774,10 +781,15 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 							? QString(" height='auto'")
 							: ""
 						) + " src=\"" + iriParsed[i].second + "\" /></a>";
-				}else
+				}else{
 					formattedText.append( "<a style=\"color:"+ primaryColor.name() +";\" href=\"" + uri + "\">" + iri + "</a>");
+					lastWasUrl = true;
+				}
 			}
 		}
+	}
+	if(lastWasUrl && formattedText.last().back() != ' '){
+		formattedText.push_back(" ");
 	}
 	if(images != "")
 		images = "<div>" + images +"</div>";
