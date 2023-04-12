@@ -96,6 +96,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	auto newSourceModel = new ParticipantDeviceListModel(mCallModel);
 	connectTo(newSourceModel);
 	setSourceModel(newSourceModel);
+	mDeleteSourceModel = true;
 	emit countChanged();
 	emit meChanged();
 }
@@ -106,6 +107,7 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	auto newSourceModel = participant->getParticipantDevices().get();
 	connectTo(newSourceModel);
 	setSourceModel(newSourceModel);
+	mDeleteSourceModel = false;
 	emit countChanged();
 	emit meChanged();
 }
