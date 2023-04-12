@@ -101,7 +101,7 @@ CREATE_PARENT_MODEL_FUNCTION(deleteChatRoom)
 
 
 void ChatRoomProxyModel::compose (const QString& text) {
-	if (mChatRoomModel)
+	if (mChatRoomModel && !text.isEmpty())
 		mChatRoomModel->compose();
 	gCachedText = text;
 }

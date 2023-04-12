@@ -56,6 +56,9 @@ Item {
 	function insert(text){
 		textArea.insert(textArea.cursorPosition, text)
 	}
+	function getText(){
+		return textArea.getText(0, textArea.text.length)
+	}
 	
 	Rectangle{
 		anchors.fill: parent

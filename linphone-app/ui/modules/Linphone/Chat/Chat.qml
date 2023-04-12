@@ -413,12 +413,12 @@ Rectangle {
 						emojiVisible: chatEmojis.visible
 						
 						onDropped: Logic.handleFilesDropped(files)
-						onTextChanged: Logic.handleTextChanged(text)
+						onTextChanged: Logic.handleTextChanged(getText())
 						onValidText: {
 							textArea.text = ''
 							chat.bindToEnd = true
 							if(proxyModel.chatRoomModel) {
-								proxyModel.sendMessage(text)
+								proxyModel.sendMessage(text)//Note : 'text' is coming from validText. It's not the text member.
 							}else{
 								proxyModel.chatRoomModel = CallsListModel.createChat(proxyModel.peerAddress)
 								proxyModel.sendMessage(text)
