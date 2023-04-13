@@ -67,7 +67,8 @@ using namespace std;
 CoreManager *CoreManager::mInstance=nullptr;
 
 CoreManager::CoreManager (QObject *parent, const QString &configPath) :
-	QObject(parent), mHandlers(make_shared<CoreHandlers>(this)) {
+	QObject(parent) {
+	mHandlers = QSharedPointer<CoreHandlers>::create(this);
 	mCore = nullptr;
 	mLastRemoteProvisioningState = linphone::Config::ConfiguringState::Skipped;
 	CoreHandlers *coreHandlers = mHandlers.get();
@@ -84,7 +85,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 }
 
 CoreManager::~CoreManager(){
-	mCore->removeListener(mHandlers);
+	mHandlers->removeListener(mCore);
 	mHandlers = nullptr;// Ordering Call destructor just to be sure (removeListener should be enough)
 	mCore = nullptr;
 }
@@ -270,8 +271,7 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	// Enable LIME on your core to use encryption.
 	mCore->enableLimeX3Dh(mCore->limeX3DhAvailable());
 	// Now see the CoreService.CreateGroupChatRoom to see how to create a secure chat room
-	
-	mCore->addListener(mHandlers);
+	mHandlers->setListener(mCore);
 	mCore->setVideoDisplayFilter("MSQOGL");
 	mCore->usePreviewWindow(true);
 	// Force capture/display.
@@ -433,10 +433,10 @@ void CoreManager::stopIterate(){
 }
 
 void CoreManager::iterate () {
-	lockVideoRender();
+	//lockVideoRender();
 	if(mCore)
 		mCore->iterate();
-	unlockVideoRender();
+	//unlockVideoRender();
 }
 
 // -----------------------------------------------------------------------------

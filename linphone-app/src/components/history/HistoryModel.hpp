@@ -23,6 +23,7 @@
 
 #include <linphone++/linphone.hh>
 #include <QAbstractListModel>
+#include <QSharedPointer>
 
 // =============================================================================
 // Fetch all N messages of the History.
@@ -92,7 +93,7 @@ private:
 
 	mutable QList<HistoryEntryData> mEntries;
 	
-	std::shared_ptr<CoreHandlers> mCoreHandlers;
+	QSharedPointer<CoreHandlers> mCoreHandlers;
 };
 
 #endif // HISTORY_MODEL_H_

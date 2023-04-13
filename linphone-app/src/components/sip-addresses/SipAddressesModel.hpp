@@ -164,7 +164,7 @@ private:
 
   QMultiHash<QString, SipAddressObserver *> mObservers;
 
-  std::shared_ptr<CoreHandlers> mCoreHandlers;
+  QSharedPointer<CoreHandlers> mCoreHandlers;
 };
 
 using LocalAddressToConferenceEntry = QHash<QString, SipAddressesModel::ConferenceEntry>;

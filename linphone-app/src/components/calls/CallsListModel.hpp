@@ -92,7 +92,7 @@ private:
 	void removeCall (const std::shared_ptr<linphone::Call> &call);
 	void removeCallCb (CallModel *callModel);
 	
-	std::shared_ptr<CoreHandlers> mCoreHandlers;
+	QSharedPointer<CoreHandlers> mCoreHandlers;
 };
 
 #endif // CALLS_LIST_MODEL_H_

@@ -326,19 +326,20 @@ void Notifier::notifyReceivedFileMessage (const shared_ptr<linphone::ChatMessage
 }
 
 void Notifier::notifyReceivedCall (const shared_ptr<linphone::Call> &call) {
-	CallModel *callModel = &call->getData<CallModel>("call-model");
-	QVariantMap map;
-	map["call"].setValue(callModel);
-	CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
-			
-	QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
-		if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
-			deleteNotification(QVariant::fromValue(notification));
-	});
-	QObject::connect(callModel, &CallModel::destroyed, notification, [this, notification]() {
-			deleteNotification(QVariant::fromValue(notification));
-	});
-	
+	if(call->dataExists("call-model")){
+		CallModel *callModel = &call->getData<CallModel>("call-model");
+		QVariantMap map;
+		map["call"].setValue(callModel);
+		CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
+				
+		QObject::connect(callModel, &CallModel::statusChanged, notification, [this, notification](CallModel::CallStatus status) {
+			if (status == CallModel::CallStatusEnded || status == CallModel::CallStatusConnected)
+				deleteNotification(QVariant::fromValue(notification));
+		});
+		QObject::connect(callModel, &CallModel::destroyed, notification, [this, notification]() {
+				deleteNotification(QVariant::fromValue(notification));
+		});
+	}
 }
 
 void Notifier::notifyNewVersionAvailable (const QString &version, const QString &url) {

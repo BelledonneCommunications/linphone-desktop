@@ -35,6 +35,7 @@
 #include "utils/Utils.hpp"
 
 #include "CoreHandlers.hpp"
+#include "CoreListener.hpp"
 #include "CoreManager.hpp"
 
 // =============================================================================
@@ -42,13 +43,50 @@
 using namespace std;
 
 // -----------------------------------------------------------------------------
-
+void CoreHandlers::connectTo(CoreListener * listener){
+	connect(listener, &CoreListener::accountRegistrationStateChanged, this, &CoreHandlers::onAccountRegistrationStateChanged);
+	connect(listener, &CoreListener::authenticationRequested, this, &CoreHandlers::onAuthenticationRequested);
+	connect(listener, &CoreListener::callEncryptionChanged, this, &CoreHandlers::onCallEncryptionChanged);
+	connect(listener, &CoreListener::callLogUpdated, this, &CoreHandlers::onCallLogUpdated);
+	connect(listener, &CoreListener::callStateChanged, this, &CoreHandlers::onCallStateChanged);
+	connect(listener, &CoreListener::callStatsUpdated, this, &CoreHandlers::onCallStatsUpdated);
+	connect(listener, &CoreListener::callCreated, this, &CoreHandlers::onCallCreated);
+	connect(listener, &CoreListener::chatRoomRead, this, &CoreHandlers::onChatRoomRead);
+	connect(listener, &CoreListener::chatRoomStateChanged, this, &CoreHandlers::onChatRoomStateChanged);
+	connect(listener, &CoreListener::configuringStatus, this, &CoreHandlers::onConfiguringStatus);
+	connect(listener, &CoreListener::dtmfReceived, this, &CoreHandlers::onDtmfReceived);
+	connect(listener, &CoreListener::globalStateChanged, this, &CoreHandlers::onGlobalStateChanged);
+	connect(listener, &CoreListener::isComposingReceived, this, &CoreHandlers::onIsComposingReceived);
+	connect(listener, &CoreListener::logCollectionUploadStateChanged, this, &CoreHandlers::onLogCollectionUploadStateChanged);
+	connect(listener, &CoreListener::logCollectionUploadProgressIndication, this, &CoreHandlers::onLogCollectionUploadProgressIndication);
+	connect(listener, &CoreListener::messageReceived, this, &CoreHandlers::onMessageReceived);
+	connect(listener, &CoreListener::messagesReceived, this, &CoreHandlers::onMessagesReceived);
+	connect(listener, &CoreListener::notifyPresenceReceivedForUriOrTel, this, &CoreHandlers::onNotifyPresenceReceivedForUriOrTel);
+	connect(listener, &CoreListener::notifyPresenceReceived, this, &CoreHandlers::onNotifyPresenceReceived);
+	connect(listener, &CoreListener::qrcodeFound, this, &CoreHandlers::onQrcodeFound);
+	connect(listener, &CoreListener::transferStateChanged, this, &CoreHandlers::onTransferStateChanged);
+	connect(listener, &CoreListener::versionUpdateCheckResultReceived, this, &CoreHandlers::onVersionUpdateCheckResultReceived);
+	connect(listener, &CoreListener::ecCalibrationResult, this, &CoreHandlers::onEcCalibrationResult);
+	connect(listener, &CoreListener::conferenceInfoReceived, this, &CoreHandlers::onConferenceInfoReceived);
+	
+}
+	
+	
 CoreHandlers::CoreHandlers (CoreManager *coreManager) {
-	Q_UNUSED(coreManager)
+	mCoreListener = std::make_shared<CoreListener>();
+	connectTo(mCoreListener.get());
 }
 
 CoreHandlers::~CoreHandlers () {
 }
+
+void CoreHandlers::setListener(std::shared_ptr<linphone::Core> core){
+	core->addListener(mCoreListener);
+}
+void CoreHandlers::removeListener(std::shared_ptr<linphone::Core> core){
+	core->removeListener(mCoreListener);
+}
+
 
 // -----------------------------------------------------------------------------
 void CoreHandlers::onAccountRegistrationStateChanged (
@@ -118,7 +156,8 @@ void CoreHandlers::onCallStatsUpdated (
 		const shared_ptr<linphone::Call> &call,
 		const shared_ptr<const linphone::CallStats> &stats
 		) {
-	call->getData<CallModel>("call-model").updateStats(stats);
+	if(call->dataExists("call-model"))
+		call->getData<CallModel>("call-model").updateStats(stats);
 }
 
 void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,

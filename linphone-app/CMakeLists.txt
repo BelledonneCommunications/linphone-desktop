@@ -240,6 +240,7 @@ set(SOURCES
 	src/components/content/ContentListModel.cpp
 	src/components/content/ContentProxyModel.cpp
 	src/components/core/CoreHandlers.cpp
+	src/components/core/CoreListener.cpp
 	src/components/core/CoreManager.cpp
 	src/components/core/event-count-notifier/AbstractEventCountNotifier.cpp
 	src/components/file/FileDownloader.cpp
@@ -382,6 +383,7 @@ set(HEADERS
 	src/components/content/ContentListModel.hpp
 	src/components/content/ContentProxyModel.hpp
 	src/components/core/CoreHandlers.hpp
+	src/components/core/CoreListener.hpp
 	src/components/core/CoreManager.hpp
 	src/components/core/event-count-notifier/AbstractEventCountNotifier.hpp
 	src/components/file/FileDownloader.hpp

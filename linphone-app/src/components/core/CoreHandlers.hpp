@@ -26,12 +26,11 @@
 
 // =============================================================================
 
+class CoreListener;
 class CoreManager;
 class QMutex;
 
-class CoreHandlers :
-		public QObject,
-		public linphone::CoreListener {
+class CoreHandlers : public QObject{
 	Q_OBJECT
 	
 public:
@@ -61,138 +60,42 @@ signals:
 	void setLastRemoteProvisioningState(const linphone::Config::ConfiguringState &state);
 	void conferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	void foundQRCode(const std::string & result);
+
+	//--------------------		CORE HANDLER
+	
+public slots:
+
+	void onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> & core,const std::shared_ptr<linphone::Account> & account,linphone::RegistrationState state,const std::string & message);
+	void onAuthenticationRequested (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::AuthInfo> &authInfo,linphone::AuthMethod method);
+	void onCallEncryptionChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,bool on,const std::string &authenticationToken);
+	void onCallLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog);
+	void onCallStateChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,linphone::Call::State state,const std::string &message);
+	void onCallStatsUpdated (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,const std::shared_ptr<const linphone::CallStats> &stats);
+	void onCallCreated(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call);
+	void onChatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom);
+	void onChatRoomStateChanged(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom,linphone::ChatRoom::State state);
+	void onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::Config::ConfiguringState status,const std::string & message);
+	void onDtmfReceived(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call,int dtmf);
+	void onGlobalStateChanged (const std::shared_ptr<linphone::Core> &core,linphone::GlobalState gstate,const std::string &message);
+	void onIsComposingReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room);
+	void onLogCollectionUploadStateChanged (const std::shared_ptr<linphone::Core> &core,linphone::Core::LogCollectionUploadState state,const std::string &info);
+	void onLogCollectionUploadProgressIndication (const std::shared_ptr<linphone::Core> &lc,size_t offset,size_t total);
+	void onMessageReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::shared_ptr<linphone::ChatMessage> &message);
+	void onMessagesReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
+	void onNotifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
+	void onNotifyPresenceReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend);
+	void onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result);
+	void onTransferStateChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,linphone::Call::State state);
+	void onVersionUpdateCheckResultReceived (const std::shared_ptr<linphone::Core> & core,linphone::VersionUpdateCheckResult result,const std::string &version,const std::string &url);
+	void onEcCalibrationResult(const std::shared_ptr<linphone::Core> & core,linphone::EcCalibratorStatus status,int delayMs);
+	void onConferenceInfoReceived(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
+	
+	void setListener(std::shared_ptr<linphone::Core> core);
+	void removeListener(std::shared_ptr<linphone::Core> core);
 	
 private:
-	// ---------------------------------------------------------------------------
-	// Linphone callbacks.
-	// ---------------------------------------------------------------------------
-	void onAccountRegistrationStateChanged(
-			const std::shared_ptr<linphone::Core> & core,
-			const std::shared_ptr<linphone::Account> & account,
-			linphone::RegistrationState state,
-			const std::string & message) override;
-	
-	void onAuthenticationRequested (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::AuthInfo> &authInfo,
-			linphone::AuthMethod method
-			) override;
-	
-	void onCallEncryptionChanged (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::Call> &call,
-			bool on,
-			const std::string &authenticationToken
-			) override;
-	
-	void onCallLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog) override;
-	
-	void onCallStateChanged (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::Call> &call,
-			linphone::Call::State state,
-			const std::string &message
-			) override;
-	
-	void onCallStatsUpdated (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::Call> &call,
-			const std::shared_ptr<const linphone::CallStats> &stats
-			) override;
-	
-	void onCallCreated(
-			const std::shared_ptr<linphone::Core> & lc,
-			const std::shared_ptr<linphone::Call> & call
-			) override;
-			
-	void onChatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom) override;
-	
-	void onChatRoomStateChanged(
-			const std::shared_ptr<linphone::Core> & core, 
-			const std::shared_ptr<linphone::ChatRoom> & chatRoom,
-			linphone::ChatRoom::State state
-			) override;
-	
-	void onConfiguringStatus(
-			const std::shared_ptr<linphone::Core> & core,
-			linphone::Config::ConfiguringState status,
-			const std::string & message) override;
-	
-	void onDtmfReceived(
-			const std::shared_ptr<linphone::Core> & lc,
-			const std::shared_ptr<linphone::Call> & call,
-			int dtmf)override;
-	
-	void onGlobalStateChanged (
-			const std::shared_ptr<linphone::Core> &core,
-			linphone::GlobalState gstate,
-			const std::string &message
-			) override;
-	
-	void onIsComposingReceived (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::ChatRoom> &room
-			) override;
-	
-	void onLogCollectionUploadStateChanged (
-			const std::shared_ptr<linphone::Core> &core,
-			linphone::Core::LogCollectionUploadState state,
-			const std::string &info
-			) override;
-	
-	void onLogCollectionUploadProgressIndication (
-			const std::shared_ptr<linphone::Core> &lc,
-			size_t offset,
-			size_t total
-			) override;
-	
-	void onMessageReceived (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::ChatRoom> &room,
-			const std::shared_ptr<linphone::ChatMessage> &message
-			) override;
-			
-	void onMessagesReceived (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::ChatRoom> &room,
-			const std::list<std::shared_ptr<linphone::ChatMessage>> &messages
-			) override;
-	
-	void onNotifyPresenceReceivedForUriOrTel (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::Friend> &linphoneFriend,
-			const std::string &uriOrTel,
-			const std::shared_ptr<const linphone::PresenceModel> &presenceModel
-			) override;
-	
-	void onNotifyPresenceReceived (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::Friend> &linphoneFriend
-			) override;
-	
-	void onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result) override;
-	
-	void onTransferStateChanged (
-			const std::shared_ptr<linphone::Core> &core,
-			const std::shared_ptr<linphone::Call> &call,
-			linphone::Call::State state
-			) override;
-	
-	void onVersionUpdateCheckResultReceived (
-			const std::shared_ptr<linphone::Core> & core,
-			linphone::VersionUpdateCheckResult result,
-			const std::string &version,
-			const std::string &url
-			) override;
-	
-	void onEcCalibrationResult(
-			const std::shared_ptr<linphone::Core> & core,
-			linphone::EcCalibratorStatus status,
-			int delayMs
-			) override;
-	
-	// Conference Info
-	virtual void onConferenceInfoReceived(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo) override;
+	void connectTo(CoreListener * listener);
+	std::shared_ptr<CoreListener> mCoreListener;	// This need to be a shared_ptr because of adding it to linphone
 };
 
 #endif // CORE_HANDLERS_H_

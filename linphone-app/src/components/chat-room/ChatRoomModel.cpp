@@ -594,7 +594,8 @@ void ChatRoomModel::addMissedCallsCount(std::shared_ptr<linphone::Call> call){
 	auto timeline = CoreManager::getInstance()->getTimelineListModel()->getTimeline(mChatRoom, false);
 	if(!timeline || !timeline->mSelected){
 		setMissedCallsCount(mMissedCallsCount+1);
-		CoreManager::getInstance()->getEventCountNotifier()->handleCallMissed(&call->getData<CallModel>("call-model"));
+		if(call->dataExists("call-model"))
+			CoreManager::getInstance()->getEventCountNotifier()->handleCallMissed(&call->getData<CallModel>("call-model"));
 	}
 }
 

@@ -314,7 +314,7 @@ private:
 	
 	std::shared_ptr<linphone::ChatRoom> mChatRoom;
 	std::shared_ptr<ChatRoomListener> mChatRoomListener;	// This need to be a shared_ptr because of adding it to linphone
-	std::shared_ptr<CoreHandlers> mCoreHandlers;					// This need to be a shared_ptr because of adding it to linphone
+	QSharedPointer<CoreHandlers> mCoreHandlers;
 	
 	QMap<std::shared_ptr<const linphone::Address>, QString> mComposers;	// Store all addresses that are composing with its username
 	

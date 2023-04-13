@@ -26,6 +26,7 @@
 #include <QString>
 #include <QHash>
 #include <QMutex>
+#include <QSharedPointer>
 
 // =============================================================================
 
@@ -68,7 +69,7 @@ public:
 		return mCore;
 	}
 	
-	std::shared_ptr<CoreHandlers> getHandlers () {
+	QSharedPointer<CoreHandlers> getHandlers () {
 		Q_CHECK_PTR(mHandlers);
 		return mHandlers;
 	}
@@ -215,7 +216,7 @@ private:
 	static QString getDownloadUrl ();
 	
 	std::shared_ptr<linphone::Core> mCore;
-	std::shared_ptr<CoreHandlers> mHandlers;	// It is used for handling linphone. Keep it to shared_ptr.
+	QSharedPointer<CoreHandlers> mHandlers;
 	
 	bool mStarted = false;
 	linphone::Config::ConfiguringState mLastRemoteProvisioningState;

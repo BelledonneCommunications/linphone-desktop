@@ -517,11 +517,12 @@ static void joinConference (const shared_ptr<linphone::Call> &call) {
 	
 	ConferenceHelperModel helperModel;
 	ConferenceHelperModel::ConferenceAddModel *addModel = helperModel.getConferenceAddModel();
-	
-	CallModel *callModel = &call->getData<CallModel>("call-model");
-	callModel->accept();
-	addModel->addToConference(call->getRemoteAddress());
-	addModel->update();
+	if(call->dataExists("call-model")){
+		CallModel *callModel = &call->getData<CallModel>("call-model");
+		callModel->accept();
+		addModel->addToConference(call->getRemoteAddress());
+		addModel->update();
+	}
 }
 
 // Global handler on core (is call before call model receive it). Used for model creation.
