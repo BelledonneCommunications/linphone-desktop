@@ -23,8 +23,8 @@ TextEdit {
 	property ContentModel contentModel
 	property string lastTextSelected : ''
 	property font customFont : SettingsModel.textMessageFont
-	property int fitHeight: contentHeight + padding + 8
-	property int fitWidth: implicitWidth + 2	// add 2 because there is a bug on border that lead to not fit text exactly
+	property int fitHeight: contentHeight
+	property int fitWidth: implicitWidth
 	
 	signal rightClicked()
 	
@@ -33,9 +33,8 @@ TextEdit {
 	
 	height: fitHeight
 	width: parent && parent.width || 1
-	visible: contentModel// && contentModel.isText()
+	visible: contentModel
 	clip: false
-	padding: ChatStyle.entry.message.padding
 	textMargin: 0
 	readOnly: true
 	selectByMouse: true
@@ -70,7 +69,6 @@ TextEdit {
 		}
 		deselect()
 	}
-	
 	MouseArea {
 		id: mouseArea
 		property bool keepLastSelection: false

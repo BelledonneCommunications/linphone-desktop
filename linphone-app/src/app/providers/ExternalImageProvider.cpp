@@ -35,8 +35,17 @@ ExternalImageProvider::ExternalImageProvider () : QQuickImageProvider(
 ) {
 }
 
-QImage ExternalImageProvider::requestImage (const QString &id, QSize *size, const QSize &) {
-  QImage image(Utils::getImage(QUrl::fromPercentEncoding(id.toUtf8())));
-  *size = image.size();
-  return image;
+QImage ExternalImageProvider::requestImage (const QString &id, QSize *size, const QSize &requestedSize) {
+	QImage image(Utils::getImage(QUrl::fromPercentEncoding(id.toUtf8())));
+	double requestedFactor = 1.0;
+	double factor = image.width() / (double)image.height();
+	if(requestedSize.isValid())
+		requestedFactor = requestedSize.width() / (double)requestedSize.height();
+	if(factor <0.2){// too height
+		image = image.copy(0,0, image.width(), image.width() / requestedFactor);
+	}else if( factor > 5){// too large
+		image = image.copy(0,0, image.height() * requestedFactor, image.height());
+	}
+	*size = image.size();
+	return image;
 }

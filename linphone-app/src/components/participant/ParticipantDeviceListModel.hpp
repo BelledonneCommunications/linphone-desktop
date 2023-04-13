@@ -38,7 +38,7 @@ class ParticipantDeviceListModel : public ProxyListModel {
 public:
 	ParticipantDeviceListModel (std::shared_ptr<linphone::Participant> participant, QObject *parent = nullptr);
 	ParticipantDeviceListModel (CallModel * callModel, QObject *parent = nullptr);
-	
+	~ParticipantDeviceListModel();
 	void initConferenceModel();
 	void updateDevices(std::shared_ptr<linphone::Participant> participant);
 	void updateDevices(const std::list<std::shared_ptr<linphone::ParticipantDevice>>& devices, const bool& isMe);

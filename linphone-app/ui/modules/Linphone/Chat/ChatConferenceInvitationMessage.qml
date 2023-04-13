@@ -47,10 +47,6 @@ Loader{
 		property int fitWidth: layout.fitWidth + ChatCalendarMessageStyle.leftMargin+ChatCalendarMessageStyle.rightMargin
 		
 		anchors.fill: parent
-		anchors.leftMargin: ChatCalendarMessageStyle.widthMargin
-		anchors.rightMargin: ChatCalendarMessageStyle.widthMargin
-		anchors.topMargin: ChatCalendarMessageStyle.topMargin
-		anchors.bottomMargin: ChatCalendarMessageStyle.bottomMargin
 		
 		clip: false
 		

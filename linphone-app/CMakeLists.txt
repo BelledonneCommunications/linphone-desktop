@@ -132,7 +132,7 @@ if( WIN32)
 endif()
 set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 
-set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network Test Qml)
+set(QT5_PACKAGES Core Gui Quick Widgets QuickControls2 Svg LinguistTools Concurrent Network Test Qml Multimedia)
 
 if(ENABLE_APP_OAUTH2)
 	list(APPEND QT5_PACKAGES NetworkAuth)

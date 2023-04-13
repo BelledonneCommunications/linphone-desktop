@@ -164,6 +164,7 @@
 		<file>assets/images/stop_fullscreen_custom.svg</file>
 		<file>assets/images/timer_custom.svg</file>
 		<file>assets/images/tel_keypad_voicemail_custom.svg</file>
+		<file>assets/images/thumbnail_video_custom.svg</file>
 		<file>assets/images/tooltip_arrow_bottom_custom.svg</file>
 		<file>assets/images/tooltip_arrow_left_custom.svg</file>
 		<file>assets/images/tooltip_arrow_right_custom.svg</file>
@@ -412,6 +413,7 @@
 		<file>ui/modules/Linphone/Styles/Dialog/OnlineInstallerDialogStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Dialog/SipAddressDialogStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Dialog/ZrtpTokenAuthenticationDialogStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/File/FileViewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/History/HistoryStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Menus/SipAddressesMenuStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Menus/IncallMenuStyle.qml</file>

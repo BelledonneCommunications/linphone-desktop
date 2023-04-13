@@ -28,6 +28,25 @@
 #include <QColor>
 
 #include "utils/LinphoneEnums.hpp"
+#include <QAbstractVideoSurface>
+
+
+class VideoFrameGrabber : public QAbstractVideoSurface {
+	Q_OBJECT
+	public:
+		VideoFrameGrabber(QObject *parent = 0);
+
+		QList<QVideoFrame::PixelFormat> supportedPixelFormats(
+            QAbstractVideoBuffer::HandleType handleType = QAbstractVideoBuffer::NoHandle) const override;
+		bool isFormatSupported(const QVideoSurfaceFormat &format) const override;
+
+		bool start(const QVideoSurfaceFormat &format) override;
+		void stop() override;
+		bool present(const QVideoFrame &frame) override;
+
+	signals:
+		void frameAvailable(QImage frame);
+};
 
 class ImageModel : public QObject {
     Q_OBJECT

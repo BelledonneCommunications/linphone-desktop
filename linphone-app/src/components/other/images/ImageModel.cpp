@@ -22,6 +22,7 @@
 #include <QQmlApplicationEngine>
 #include <QImageReader>
 #include <QPainter>
+#include <QMediaPlayer>
 #include "app/App.hpp"
 
 #include "utils/Utils.hpp"
@@ -29,6 +30,75 @@
 #include "components/Components.hpp"
 #include "components/core/CoreManager.hpp"
 #include "utils/QExifImageHeader.hpp"
+
+#include <QVideoSurfaceFormat>
+
+VideoFrameGrabber::VideoFrameGrabber( QObject *parent)
+    : QAbstractVideoSurface(parent){
+}
+
+QList<QVideoFrame::PixelFormat> VideoFrameGrabber::supportedPixelFormats(QAbstractVideoBuffer::HandleType handleType) const {
+    Q_UNUSED(handleType);
+    return QList<QVideoFrame::PixelFormat>()
+        << QVideoFrame::Format_ARGB32
+        << QVideoFrame::Format_ARGB32_Premultiplied
+        << QVideoFrame::Format_RGB32
+        << QVideoFrame::Format_RGB24
+        << QVideoFrame::Format_RGB565
+        << QVideoFrame::Format_RGB555
+        << QVideoFrame::Format_ARGB8565_Premultiplied
+        << QVideoFrame::Format_BGRA32
+        << QVideoFrame::Format_BGRA32_Premultiplied
+        << QVideoFrame::Format_BGR32
+        << QVideoFrame::Format_BGR24
+        << QVideoFrame::Format_BGR565
+        << QVideoFrame::Format_BGR555
+        << QVideoFrame::Format_BGRA5658_Premultiplied
+        << QVideoFrame::Format_AYUV444
+        << QVideoFrame::Format_AYUV444_Premultiplied
+        << QVideoFrame::Format_YUV444
+        << QVideoFrame::Format_YUV420P
+        << QVideoFrame::Format_YV12
+        << QVideoFrame::Format_UYVY
+        << QVideoFrame::Format_YUYV
+        << QVideoFrame::Format_NV12
+        << QVideoFrame::Format_NV21
+        << QVideoFrame::Format_IMC1
+        << QVideoFrame::Format_IMC2
+        << QVideoFrame::Format_IMC3
+        << QVideoFrame::Format_IMC4
+        << QVideoFrame::Format_Y8
+        << QVideoFrame::Format_Y16
+        << QVideoFrame::Format_Jpeg
+        << QVideoFrame::Format_CameraRaw
+        << QVideoFrame::Format_AdobeDng;
+}
+
+bool VideoFrameGrabber::isFormatSupported(const QVideoSurfaceFormat &format) const {
+    const QImage::Format imageFormat = QVideoFrame::imageFormatFromPixelFormat(format.pixelFormat());
+    const QSize size = format.frameSize();
+
+    return imageFormat != QImage::Format_Invalid
+            && !size.isEmpty()
+            && format.handleType() == QAbstractVideoBuffer::NoHandle;
+}
+
+bool VideoFrameGrabber::start(const QVideoSurfaceFormat &format){
+	return QAbstractVideoSurface::start(format);
+}
+
+void VideoFrameGrabber::stop() {
+    QAbstractVideoSurface::stop();
+}
+
+bool VideoFrameGrabber::present(const QVideoFrame &frame){
+    if (frame.isValid()) {
+        emit frameAvailable(frame.image());
+        return true;
+    }else
+		return false;
+}
+
 
 // =============================================================================
 
@@ -88,6 +158,25 @@ QImage ImageModel::createThumbnail(const QString& path){
 			QByteArray format = reader.format();
 			if(!format.isEmpty())
 				originalImage = QImage(path, format);
+			else if(Utils::isVideo(path)){
+				QMediaPlayer player;
+				player.setMedia(QUrl::fromLocalFile(path));
+				player.setPosition(player.duration() / 2);
+				VideoFrameGrabber grabber;
+				player.setVideoOutput(&grabber);
+				QObject * context = new QObject();
+				QObject::connect(&grabber, &VideoFrameGrabber::frameAvailable, context, [&context,&originalImage, &player](QImage frame) mutable{
+					originalImage = frame.copy();
+					player.stop();
+					context->deleteLater();// This will destroy context and initializer
+					context = nullptr;
+				}, Qt::DirectConnection);
+				player.play();
+				do{
+					qApp->processEvents();
+				}while(player.state() != QMediaPlayer::State::StoppedState);
+				if(context) context->deleteLater();
+			}
 		}
 		if (!originalImage.isNull()){
 			int rotation = 0;
@@ -101,26 +190,27 @@ QImage ImageModel::createThumbnail(const QString& path){
 			painter.drawImage(0, 0, originalImage);
 //--------------------
 			double factor = image.width() / (double)image.height();
-			if(factor < 0.2 || factor > 5){
-				qInfo() << QStringLiteral("Cannot create thumbnails because size factor (%1) is too low/much of: `%2`.").arg(factor).arg(path);
-			}else {
-				thumbnail = image.scaled(
+			Qt::AspectRatioMode aspectRatio = Qt::KeepAspectRatio;
+			if(factor < 0.2 || factor > 5)
+				aspectRatio = Qt::KeepAspectRatioByExpanding;
+			thumbnail = image.scaled(
 							Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
-							Qt::KeepAspectRatio, Qt::SmoothTransformation
+							aspectRatio , Qt::SmoothTransformation
 							);
+			if(aspectRatio == Qt::KeepAspectRatioByExpanding)
+				thumbnail = thumbnail.copy(0,0,Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight);
 				
-				if (rotation != 0) {
-					QTransform transform;
-					if (rotation == 3 || rotation == 4)
-						transform.rotate(180);
-					else if (rotation == 5 || rotation == 6)
-						transform.rotate(90);
-					else if (rotation == 7 || rotation == 8)
-						transform.rotate(-90);
-					thumbnail = thumbnail.transformed(transform);
-					if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
-						thumbnail = thumbnail.mirrored(true, false);
-				}
+			if (rotation != 0) {
+				QTransform transform;
+				if (rotation == 3 || rotation == 4)
+					transform.rotate(180);
+				else if (rotation == 5 || rotation == 6)
+					transform.rotate(90);
+				else if (rotation == 7 || rotation == 8)
+					transform.rotate(-90);
+				thumbnail = thumbnail.transformed(transform);
+				if (rotation == 2 || rotation == 4 || rotation == 5 || rotation == 7)
+					thumbnail = thumbnail.mirrored(true, false);
 			}
 		}
 	}

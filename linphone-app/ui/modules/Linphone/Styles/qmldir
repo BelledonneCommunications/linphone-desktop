@@ -37,6 +37,7 @@ singleton OnlineInstallerDialogStyle           1.0 Dialog/OnlineInstallerDialogS
 singleton SipAddressDialogStyle                1.0 Dialog/SipAddressDialogStyle.qml
 singleton ZrtpTokenAuthenticationDialogStyle   1.0 Dialog/ZrtpTokenAuthenticationDialogStyle.qml
 
+singleton FileViewStyle                        1.0 File/FileViewStyle.qml
 
 singleton HistoryStyle                         1.0 History/HistoryStyle.qml
 

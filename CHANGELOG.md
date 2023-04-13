@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Primary color for links in chat.
 - Replace double click on avatar by a simple click for copying address into the SmartSearchBar.
+- Bubble chat layout.
 
 ### Added
 - VFS Encryption
@@ -26,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Emojis picker.
 - Text edit in chat can now understand rich texts.
 - Create thumbnails into memory instead of disk.
+- Display video thumbnails.
+- Crop thumbnail and pictures if distored.
+
 
 ### Removed
 - Picture zoom on mouse over.

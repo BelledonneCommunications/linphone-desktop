@@ -49,12 +49,10 @@ Item{
 				width: height * ChatFilePreviewStyle.filePreview.format
 				anchors.verticalCenter: parent ? parent.verticalCenter : ScrollableListView.verticalCenter
 				anchors.verticalCenterOffset: 7
+				contentModel: $modelData
 				thumbnail: $modelData.thumbnail
 				name: $modelData.name
 				animationScale: 1.1
-				onClickOnFile: {
-					$modelData.openFile()
-				}
 				ActionButton{
 					anchors.bottom: parent.top
 					anchors.bottomMargin: -height/2

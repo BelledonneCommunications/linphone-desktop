@@ -50,6 +50,9 @@ ParticipantDeviceListModel::ParticipantDeviceListModel (CallModel * callModel, Q
 	}
 }
 
+ParticipantDeviceListModel::~ParticipantDeviceListModel(){
+}
+
 void ParticipantDeviceListModel::initConferenceModel(){
 	if(!mInitialized && mCallModel){
 		auto conferenceModel = mCallModel->getConferenceSharedModel();

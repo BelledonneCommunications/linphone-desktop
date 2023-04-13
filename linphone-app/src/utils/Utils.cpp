@@ -650,6 +650,10 @@ bool Utils::isSupportedForDisplay(const QString& path){
 	return !QMimeDatabase().mimeTypeForFile(path).name().contains("application");// "for pdf : "application/pdf". Note : Make an exception when supported.
 }
 
+bool Utils::canHaveThumbnail(const QString& path){
+	return isImage(path) || isAnimatedImage(path) || isPdf(path) || isVideo(path);
+}
+
 bool Utils::isPhoneNumber(const QString& txt){
 	auto core = CoreManager::getInstance()->getCore();
 	if(!core)

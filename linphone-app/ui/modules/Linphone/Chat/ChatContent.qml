@@ -23,10 +23,10 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 	id: mainItem
 	property ChatMessageModel chatMessageModel: null
 	property int availableWidth	//const
-	property int fileWidth: ChatStyle.entry.message.file.height * 4 / 3 + 2*ChatStyle.entry.message.file.margins
+	property int fileWidth: FileViewStyle.height * 4 / 3 + 2*ChatStyle.entry.message.file.margins
 	
 	// Readonly
-	property int bestWidth: Math.min(availableWidth, Math.max(filesBestWidth, conferencesBestWidth, textsBestWidth, voicesBestWidth))
+	property int bestWidth: Math.min(availableWidth, Math.max(filesCount*filesBestWidth, conferencesBestWidth, textsBestWidth, voicesBestWidth))
 	property int filesBestWidth: 0
 	property int filesCount: 0
 	property int conferencesCount: 0
@@ -49,11 +49,12 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 	property int fileBackgroundRadius: ChatStyle.entry.message.file.extension.radius
 	
 	active: chatMessageModel
-	
+		
 	sourceComponent: Component{
 		Column{
 			id: mainComponent
 			spacing: 0
+			padding: 10
 			function updateFilesBestWidth(){
 				var newBestWidth = 0
 				var count = 0
@@ -63,12 +64,9 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 						var a = item.fitWidth
 						if(a) {
 							++count
-							newBestWidth = Math.max(newBestWidth,a)
+							newBestWidth = Math.max(newBestWidth,a+2*ChatStyle.entry.message.file.margins)
 						}
 					}
-				}
-				if(count > 1){
-					newBestWidth = Math.max(newBestWidth, mainItem.fileWidth*count)
 				}
 				mainItem.filesCount = count
 				mainItem.filesBestWidth = newBestWidth
@@ -87,7 +85,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 			}
 			ListView {
 				id: messagesVoicesList
-				width: parent.width
+				width: parent.width-2*mainComponent.padding
 				visible: count > 0
 				spacing: 0
 				clip: false
@@ -115,7 +113,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 // CONFERENCE
 			ListView {
 				id: messagesConferencesList
-				width: parent.width
+				width: parent.width-2*mainComponent.padding
 				visible: count > 0
 				spacing: 0
 				clip: false
@@ -151,14 +149,14 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 				id: messageFilesList
 				property alias count: repeater.count
 				visible: count > 0
-				clip: false	
+				clip: false
+				width: parent.width-2*mainComponent.padding
 				
-				property int availableSection: mainItem.availableWidth / mainItem.fileWidth
-				property int bestFitSection: mainItem.bestWidth / mainItem.fileWidth
+				property int availableSection: mainItem.availableWidth / mainItem.filesBestWidth
+				property int bestFitSection: mainItem.bestWidth / mainItem.filesBestWidth
 				columns: Math.max(1, Math.min(availableSection , bestFitSection))
 				columnSpacing: 0
-				rowSpacing: 0
-				width: parent.width
+				rowSpacing: ChatStyle.entry.message.file.spacing
 				Repeater{
 					id: repeater
 					model: ContentProxyModel{
@@ -166,6 +164,12 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 						chatMessageModel: mainItem.chatMessageModel
 					}
 					ChatFileMessage{
+						Layout.fillHeight: true
+						Layout.fillWidth: true
+						Layout.preferredHeight: fitHeight
+						Layout.preferredWidth: fitWidth
+						Layout.maximumWidth: fitWidth
+						Layout.maximumHeight: fitHeight
 						contentModel: $modelData
 						onIsHoveringChanged: mainItem.isFileHoveringChanged(isHovering)
 						borderWidth: mainItem.fileBorderWidth
@@ -178,7 +182,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 // TEXTS
 			ListView {
 				id: messagesTextsList
-				width: parent.width
+				width: parent.width-2*mainComponent.padding
 				visible: count > 0
 				spacing: 0
 				clip: false
@@ -192,11 +196,14 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 				function updateBestWidth(){
 					var newWidth = mainComponent.updateListBestWidth(messagesTextsList)
 					mainItem.textsCount = newWidth[0]
-					mainItem.textsBestWidth = newWidth[1]
+					// Padding is takken account because it is used for the whole bubble.
+					// We add 1 pixel to avoid implicit new line computation (Guess : float computation from Qt)
+					mainItem.textsBestWidth = newWidth[1] + 2*mainComponent.padding + 1
 				}
 				Component.onCompleted: messagesTextsList.updateBestWidth()
 				delegate: 
 					ChatTextMessage {
+					width: parent.width
 					contentModel: $modelData
 					onLastTextSelectedChanged: mainItem.lastTextSelectedChanged(lastTextSelected)
 					color: mainItem.useTextColor
