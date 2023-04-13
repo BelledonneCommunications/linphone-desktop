@@ -649,19 +649,6 @@ URL du serveur non configurée.</translation>
     </message>
 </context>
 <context>
-    <name>ChatFileMessage</name>
-    <message>
-        <source>fileTransferCancel</source>
-        <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation>Annuler</translation>
-    </message>
-    <message>
-        <source>fileTransferDownload</source>
-        <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation>Télécharger</translation>
-    </message>
-</context>
-<context>
     <name>ChatForwardMessage</name>
     <message>
         <source>Forwarded</source>
@@ -1409,6 +1396,19 @@ URL du serveur non configurée.</translation>
         <source>scanQRCodeWhere</source>
         <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
         <translation>Allez dans l&apos;assistant de l&apos;application - QR code</translation>
+    </message>
+</context>
+<context>
+    <name>FileView</name>
+    <message>
+        <source>fileTransferCancel</source>
+        <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>fileTransferDownload</source>
+        <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
+        <translation>Télécharger</translation>
     </message>
 </context>
 <context>
