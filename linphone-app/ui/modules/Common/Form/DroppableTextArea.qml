@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.12
 import Common 1.0
 import Linphone 1.0
 import Common.Styles 1.0
+import Units 1.0
 import Utils 1.0
 
 // =============================================================================
@@ -155,7 +156,9 @@ Item {
 					}
 					
 					color: DroppableTextAreaStyle.text.color
-					font.pointSize: DroppableTextAreaStyle.text.pointSize-1
+					property font customFont : SettingsModel.textMessageFont
+					font.family: customFont.family
+					font.pointSize: Units.dp * customFont.pointSize
 					rightPadding: fileChooserButton.width +
 								  fileChooserButton.anchors.rightMargin +
 								  DroppableTextAreaStyle.fileChooserButton.margins
