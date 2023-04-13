@@ -63,8 +63,8 @@ public:
 	
 	AccountSettingsModel (QObject *parent = Q_NULLPTR);
 	
-	std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
-	void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
+	std::shared_ptr<linphone::Address> getUsedSipAddress () const;
+	void setUsedSipAddress (const std::shared_ptr<linphone::Address> &address);
 	
 	QString getUsedSipAddressAsStringUriOnly () const;
 	QString getUsedSipAddressAsString () const;

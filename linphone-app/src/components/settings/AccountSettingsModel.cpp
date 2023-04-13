@@ -79,13 +79,13 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 
 // -----------------------------------------------------------------------------
 
-shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
+shared_ptr<linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Account> account = core->getDefaultAccount();
-	return account ? account->getParams()->getIdentityAddress() : core->createPrimaryContactParsed();
+	return account ? account->getParams()->getIdentityAddress()->clone() : core->createPrimaryContactParsed();
 }
 
-void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
+void AccountSettingsModel::setUsedSipAddress (const shared_ptr<linphone::Address> &address) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Account> account = core->getDefaultAccount();
 	if( account){

@@ -205,7 +205,7 @@ void ParticipantListModel::add(const std::shared_ptr<const linphone::Participant
 }
 
 void ParticipantListModel::add(const std::shared_ptr<const linphone::Address> & participantAddress){
-	add((mChatRoomModel ? mChatRoomModel->getChatRoom()->findParticipant(participantAddress) : mConferenceModel->getConference()->findParticipant(participantAddress)));
+	add((mChatRoomModel ? mChatRoomModel->getChatRoom()->findParticipant(participantAddress->clone()) : mConferenceModel->getConference()->findParticipant(participantAddress)));
 }
 
 void ParticipantListModel::remove (ParticipantModel *model) {
