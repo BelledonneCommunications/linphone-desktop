@@ -30,11 +30,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display video thumbnails.
 - Crop thumbnail and pictures if distored.
 
-
 ### Removed
 - Picture zoom on mouse over.
 
-## 5.0.15 - undefined
+## 5.0.16 - undefined
+
+### Fixed
+- Section date timezone in chat.
+
+## 5.0.15 - 2023-04-11
 
 ### Fixed
 - Fix using only username in URI handlers.

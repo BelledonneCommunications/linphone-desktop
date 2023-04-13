@@ -9,6 +9,8 @@ import LinphoneEnums 1.0
 
 import App.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 Item{
 	
@@ -139,7 +141,7 @@ Item{
 								horizontalAlignment: Text.AlignHCenter
 								verticalAlignment: Text.AlignVCenter
 								
-								text: new Date(section).toLocaleDateString(App.locale)
+								text: Utils.exactDate(new Date(section)).toLocaleDateString(App.locale)
 							}
 						}
 					}

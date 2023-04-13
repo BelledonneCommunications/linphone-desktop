@@ -102,7 +102,7 @@ Rectangle {
               horizontalAlignment: Text.AlignHCenter
               verticalAlignment: Text.AlignVCenter
 
-              text: new Date(section).toLocaleDateString(App.locale)
+              text: Utils.exactDate(new Date(section)).toLocaleDateString(App.locale)
             }
           }
         }
