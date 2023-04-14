@@ -49,28 +49,6 @@ job-debian9-ninja-gcc-novideo:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
   extends: job-debian9-ninja-gcc
 
-
-job-debian9-ninja-clang:
-  tags: [ "docker-debian9" ]
-  only:
-    variables:
-      - $NIGHTLY_MASTER
-  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
-  variables:
-    CMAKE_OPTIONS: -DENABLE_DOC=ON -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
-    CMAKE_GENERATOR: Ninja
-    CC: clang
-    CXX: clang++
-  extends: .job-linux-desktop
-
-job-debian9-ninja-clang-novideo:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
-  variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
-  extends: job-debian9-ninja-clang
-
 job-debian9-makefile-gcc:
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
