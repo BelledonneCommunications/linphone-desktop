@@ -9,6 +9,8 @@ import Common.Styles 1.0
 import Utils 1.0
 import UtilsCpp 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 
 Item {
@@ -124,9 +126,10 @@ Item {
 			
 			// Text area.
 			Item{
+				id: textLayout
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				Layout.maximumHeight: parent.height-20
+				Layout.maximumHeight: parent.height
 				Layout.topMargin: 10
 				Layout.bottomMargin: 10
 				Layout.leftMargin: 2
@@ -145,15 +148,16 @@ Item {
 					TextArea.flickable: TextArea {
 						id: textArea
 						onLineCountChanged: {
-							if(textArea.contentHeight+20<droppableTextArea.minimumHeight) {
+							var padding = 20 + textArea.topPadding + textArea.bottomPadding
+							var contentHeight = textArea.contentHeight + padding
+							if(contentHeight < droppableTextArea.minimumHeight) {
 								droppableTextArea.height = droppableTextArea.minimumHeight
 								scrollBar.visible = false
-							}else if(textArea.contentHeight+30<droppableTextArea.maximumHeight) {
-								droppableTextArea.height = textArea.contentHeight+30
+							}else if(contentHeight<droppableTextArea.maximumHeight) {
+								droppableTextArea.height = contentHeight
 								scrollBar.visible = false
 							}else {
 								var lineHeight = textArea.contentHeight/lineCount
-								
 								droppableTextArea.height = droppableTextArea.maximumHeight - (droppableTextArea.maximumHeight % lineHeight)
 								scrollBar.visible = true
 							}
