@@ -79,7 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.0.11 - 2023-02-24 - postprone to 5.0.14
 
-
 ### Fixed
 - Crash on ending call in conference.
 - Icon transparency generations on icon.ico

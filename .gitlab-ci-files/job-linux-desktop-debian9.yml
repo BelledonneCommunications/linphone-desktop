@@ -71,7 +71,7 @@ job-debian9-ninja-clang-novideo:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
   extends: job-debian9-ninja-clang
 
-job-debian9-makefile-clang:
+job-debian9-makefile-gcc:
   tags: [ "docker-debian9" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
   only:
@@ -81,8 +81,8 @@ job-debian9-makefile-clang:
   variables:
     CMAKE_OPTIONS: -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
     CMAKE_GENERATOR: Unix Makefiles
-    CC: clang
-    CXX: clang++
+    CC: gcc
+    CXX: g++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
     APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
   script:
@@ -109,7 +109,7 @@ job-debian9-makefile-clang:
 # Package - Nightly
 #################################################
 
-job-debian9-makefile-clang-package:
+job-debian9-makefile-gcc-package:
   stage: package
   tags: [ "docker-test-liblinphone" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
@@ -122,8 +122,8 @@ job-debian9-makefile-clang-package:
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
     CMAKE_GENERATOR: Unix Makefiles
-    CC: clang
-    CXX: clang++
+    CC: gcc
+    CXX: g++
     APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$LINUX_PLATFORM/$APP_FOLDER
   extends: .job-linux-desktop
@@ -155,11 +155,11 @@ job-debian9-makefile-clang-package:
 # Deploy - Nightly
 #################################################
 
-job-debian9-makefile-clang-deploy:
+job-debian9-makefile-gcc-deploy:
   stage: deploy
   tags: [ "deploy" ]
   needs:
-    - job-debian9-makefile-clang-package
+    - job-debian9-makefile-gcc-package
   only:
      variables:
        - $NIGHTLY_MASTER
@@ -173,11 +173,11 @@ job-debian9-makefile-clang-deploy:
       fi
 
 
-job-debian9-makefile-clang-plugins-deploy:
+job-debian9-makefile-gcc-plugins-deploy:
   stage: deploy
   tags: [ "deploy" ]
   needs:
-    - job-debian9-makefile-clang
+    - job-debian9-makefile-gcc
   only:
      variables:
        - $DEPLOY_PLUGINS
