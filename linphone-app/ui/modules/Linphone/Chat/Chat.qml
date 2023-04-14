@@ -377,7 +377,7 @@ Rectangle {
 				}
 				ChatEmojis{
 					id: chatEmojis
-					onEmojiClicked: textArea.insert(emoji)
+					onEmojiClicked: textArea.insertEmoji(emoji)
 					Layout.fillWidth: true
 				}
 				// -------------------------------------------------------------------------

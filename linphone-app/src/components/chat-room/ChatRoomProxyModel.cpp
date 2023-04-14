@@ -87,7 +87,7 @@ ChatRoomProxyModel::~ChatRoomProxyModel(){
 
 CREATE_PARENT_MODEL_FUNCTION(removeAllEntries)
 
-CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(sendMessage, const QString &)
+
 CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM(forwardMessage, ChatMessageModel *)
 
 CREATE_PARENT_MODEL_FUNCTION_WITH_ID(removeRow)
@@ -99,6 +99,11 @@ CREATE_PARENT_MODEL_FUNCTION(deleteChatRoom)
 #undef CREATE_PARENT_MODEL_FUNCTION_WITH_PARAM
 #undef CREATE_PARENT_MODEL_FUNCTION_WITH_ID
 
+void ChatRoomProxyModel::sendMessage(const QString &text){
+	QString trim = text.trimmed();
+	if (mChatRoomModel && !trim.isEmpty())
+		mChatRoomModel->sendMessage(trim);
+}
 
 void ChatRoomProxyModel::compose (const QString& text) {
 	if (mChatRoomModel && !text.isEmpty())

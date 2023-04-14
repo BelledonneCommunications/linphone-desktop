@@ -705,7 +705,7 @@ bool Utils::codepointIsEmoji(uint code){
                (code >= 0x1f000 && code <= 0x1faff) || code == 0x200d || code == 0xfe0f;
 }
 
-QString Utils::replaceEmoji(const QString &body){
+QString Utils::encodeEmojiToQmlRichFormat(const QString &body){
 	QString fmtBody = "";
 	QVector<uint> utf32_string = body.toUcs4();
 	
@@ -738,6 +738,7 @@ bool Utils::isOnlyEmojis(const QString& text){
 			return false;
 	return true;
 }
+
 
 QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options){
 	QString images;
@@ -794,7 +795,7 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 	if(images != "")
 		images = "<div>" + images +"</div>";
 	
-	return images + "<p style=\"white-space:pre-wrap;\">" + replaceEmoji(formattedText.join("")) + "</p>";
+	return images + "<p style=\"white-space:pre-wrap;\">" + encodeEmojiToQmlRichFormat(formattedText.join("")) + "</p>";
 }
 
 QString Utils::getFileContent(const QString& filePath){

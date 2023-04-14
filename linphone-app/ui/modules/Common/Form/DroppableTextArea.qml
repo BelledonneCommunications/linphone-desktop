@@ -59,7 +59,10 @@ Item {
 	function getText(){
 		return textArea.getText(0, textArea.text.length)
 	}
-	
+	function insertEmoji(code){
+		code = UtilsCpp.encodeEmojiToQmlRichFormat(code)
+		textArea.insert(textArea.cursorPosition, code+' ')	// Add a space or next text will be entered inside <font> of emoji.
+	}
 	Rectangle{
 		anchors.fill: parent
 		color: DroppableTextAreaStyle.outsideBackgroundColor.color
@@ -182,44 +185,10 @@ Item {
 						height:flickableArea.height
 						//onHeightChanged: height=flickableArea.height//TextArea change its height from content text. Force it to parent
 						
-						Timer{// This timer is used to rewrite rich texts from new text only on idle.
-							id: refreshFormatTimer
-							//This fix having the wrong format while typing next to emojies.
-							property bool blockTextChanged : false	// Block text changed signal when the format is converted.
-							property bool textChanged: false		// The text has been changed while timer is running (it's true when only key has been pressed like control keys)
-							property bool restartFromInput : false	// Keep in mind that the current time loop has been reset by user inputs.
-							
-							interval: restartFromInput ? 1000 : 300 // Longer wait if user is currently entering text
-							repeat: false
-							onTriggered: {
-								if(textChanged){
-									blockTextChanged = true	// Block onTextChanged
-									var backupCursorPosition = textArea.cursorPosition
-									var lastLength = textArea.length
-									textArea.text = UtilsCpp.encodeTextToQmlRichFormat(textArea.getText(0,textArea.text.length))// It will send onTextChanged
-									backupCursorPosition += (textArea.length - lastLength)
-									textArea.cursorPosition = backupCursorPosition
-									// Reset states
-									blockTextChanged = false
-									textChanged = false
-									restartFromInput = false
-								}
-							}
-						}
-						onTextChanged: {
-							if(!refreshFormatTimer.blockTextChanged){
-								refreshFormatTimer.textChanged = true
-								refreshFormatTimer.restart()
-							}
-						}
 						Component.onCompleted: forceActiveFocus()
 						
 						property var isAutoRepeating : false // shutdown repeating key feature to let optional menu appears and do normal stuff (like accents menu)
 						Keys.onReleased: {
-							if(!refreshFormatTimer.blockTextChanged){
-								refreshFormatTimer.restartFromInput = true
-								refreshFormatTimer.restart()
-							}
 							if( event.isAutoRepeat){// We begin or are currently repeating a key
 								if(!isAutoRepeating){// We start repeat. Check if this is an "ignore" character
 									if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis)// Remove the previous character if it is a printable character
@@ -229,10 +198,6 @@ Item {
 								isAutoRepeating = false// We are no more repeating. Final decision is done on Releasing
 						}
 						Keys.onPressed: {
-							if(!refreshFormatTimer.blockTextChanged){
-								refreshFormatTimer.restartFromInput = true
-								refreshFormatTimer.restart()
-							}
 							if(event.isAutoRepeat){
 								isAutoRepeating = true// Where are repeating the key. Set the state.
 								if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis){// Ignore character if it is repeating and printable character

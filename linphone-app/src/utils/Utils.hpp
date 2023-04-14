@@ -78,8 +78,8 @@ public:
 	Q_INVOKABLE static QPoint getCursorPosition();
 	Q_INVOKABLE static QString getFileChecksum(const QString& filePath);
 	static bool codepointIsEmoji(uint code);
-	static QString replaceEmoji(const QString &body);
 	Q_INVOKABLE static bool isOnlyEmojis(const QString& text);
+	Q_INVOKABLE static QString encodeEmojiToQmlRichFormat(const QString &body);
 	Q_INVOKABLE static QString encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options = QVariantMap());
 	Q_INVOKABLE static QString getFileContent(const QString& filePath);
 	

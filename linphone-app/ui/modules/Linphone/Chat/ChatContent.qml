@@ -133,7 +133,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 				delegate: ChatConferenceInvitationMessage{
 					id: calendarMessage
 					contentModel: $modelData
-					width: parent.width
+					width: parent && parent.width
 					availableWidth: mainItem.availableWidth
 					gotoButtonMode: 1
 					onExpandToggle: isExpanded=!isExpanded
@@ -203,7 +203,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 				Component.onCompleted: messagesTextsList.updateBestWidth()
 				delegate: 
 					ChatTextMessage {
-					width: parent.width
+					width: parent && parent.width
 					contentModel: $modelData
 					onLastTextSelectedChanged: mainItem.lastTextSelectedChanged(lastTextSelected)
 					color: mainItem.useTextColor

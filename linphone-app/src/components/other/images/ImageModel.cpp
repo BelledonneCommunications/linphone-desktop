@@ -159,23 +159,20 @@ QImage ImageModel::createThumbnail(const QString& path){
 			if(!format.isEmpty())
 				originalImage = QImage(path, format);
 			else if(Utils::isVideo(path)){
-				QMediaPlayer player;
+				QObject context;
+				QMediaPlayer player(&context);
 				player.setMedia(QUrl::fromLocalFile(path));
 				player.setPosition(player.duration() / 2);
-				VideoFrameGrabber grabber;
+				VideoFrameGrabber grabber(&context);
 				player.setVideoOutput(&grabber);
-				QObject * context = new QObject();
-				QObject::connect(&grabber, &VideoFrameGrabber::frameAvailable, context, [&context,&originalImage, &player](QImage frame) mutable{
+				QObject::connect(&grabber, &VideoFrameGrabber::frameAvailable, &context, [&context,&originalImage, &player](QImage frame) mutable{
 					originalImage = frame.copy();
 					player.stop();
-					context->deleteLater();// This will destroy context and initializer
-					context = nullptr;
 				}, Qt::DirectConnection);
 				player.play();
 				do{
 					qApp->processEvents();
 				}while(player.state() != QMediaPlayer::State::StoppedState);
-				if(context) context->deleteLater();
 			}
 		}
 		if (!originalImage.isNull()){
