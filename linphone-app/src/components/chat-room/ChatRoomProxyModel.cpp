@@ -101,8 +101,10 @@ CREATE_PARENT_MODEL_FUNCTION(deleteChatRoom)
 
 void ChatRoomProxyModel::sendMessage(const QString &text){
 	QString trim = text.trimmed();
-	if (mChatRoomModel && !trim.isEmpty())
+	if (mChatRoomModel && !trim.isEmpty()){
+		trim.replace(QChar::LineSeparator, QChar::LineFeed);// U+2028 is not recognized on Android app.
 		mChatRoomModel->sendMessage(trim);
+	}
 }
 
 void ChatRoomProxyModel::compose (const QString& text) {

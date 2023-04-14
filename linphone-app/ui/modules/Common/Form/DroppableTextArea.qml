@@ -208,7 +208,6 @@ Item {
 									event.accepted = true
 								}
 							}else if (event.matches(StandardKey.InsertLineSeparator)) {
-								insert(cursorPosition, '')
 							} else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
 								handleValidation()
 								event.accepted = true
