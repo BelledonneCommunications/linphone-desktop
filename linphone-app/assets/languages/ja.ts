@@ -119,7 +119,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションからのログのみを表示</translation>
     </message>
 </context>
 <context>
@@ -642,7 +642,7 @@
     <message>
         <source>deliveryError</source>
         <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 への送信中のエラー</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
@@ -861,7 +861,7 @@
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Meetings&apos; : Conference list title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ミーティング</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
@@ -1056,7 +1056,7 @@
     <message>
         <source>conversationMenuEphemeral</source>
         <extracomment>&apos;Ephemeral messages&apos; : Item menu to enable ephemeral mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>期限付きメッセージ</translation>
     </message>
     <message>
         <source>groupChatCallButton</source>
@@ -1211,7 +1211,7 @@
     <message>
         <source>paused</source>
         <extracomment>&apos;paused&apos; : Pause state on sticker, next to username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>一時停止中</translation>
     </message>
 </context>
 <context>
@@ -1234,12 +1234,12 @@
     <message>
         <source>emojisLastUsed</source>
         <extracomment>&apos;Last used&apos; : Emoji title for last used section.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>最近使用した絵文字</translation>
     </message>
     <message>
         <source>emojisAll</source>
         <extracomment>&apos;All&apos; Emoji title for all items.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>すべて</translation>
     </message>
 </context>
 <context>
