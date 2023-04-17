@@ -2452,16 +2452,17 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Tillgänglig</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Upptagen</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Stör inte</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Frånkopplad</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">Frånvarande</translation>
     </message>
 </context>
 <context>

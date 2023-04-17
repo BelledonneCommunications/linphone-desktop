@@ -74,7 +74,7 @@ QVariantList OwnPresenceModel::getStatuses () const {
 
   addBuildStatus(statuses, Presence::Online);
   addBuildStatus(statuses, Presence::Busy);
-  addBuildStatus(statuses, Presence::DoNotDisturb);
+  //addBuildStatus(statuses, Presence::DoNotDisturb); // Do not propose this status as it is not fully supported
   //addBuildStatus(statuses, Presence::Offline);	// Do not propose this status as it is not fully supported
 
   return statuses;

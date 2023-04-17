@@ -2465,16 +2465,17 @@
         <translation>Доступен</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Занят</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Не беспокоить</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Офлайн</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">Отсутствующий</translation>
     </message>
 </context>
 <context>

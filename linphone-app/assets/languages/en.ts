@@ -2453,16 +2453,17 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Available</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Busy</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Do not disturb</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Offline</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation>Away</translation>
     </message>
 </context>
 <context>

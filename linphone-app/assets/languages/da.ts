@@ -2452,16 +2452,17 @@ Klik her: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Tilgængelig</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Optaget</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Forstyr ikke</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Offline</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">Fraværende</translation>
     </message>
 </context>
 <context>

@@ -2439,16 +2439,17 @@
         <translation>利用可能</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>話中</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>不在</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>オフライン</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">不在</translation>
     </message>
 </context>
 <context>

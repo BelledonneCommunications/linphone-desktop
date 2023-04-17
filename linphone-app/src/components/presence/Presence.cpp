@@ -32,7 +32,7 @@ Presence::PresenceLevel Presence::getPresenceLevel (const linphone::Consolidated
     case linphone::ConsolidatedPresence::Busy:
       return Orange;
     case linphone::ConsolidatedPresence::DoNotDisturb:
-      return Red;
+      return Orange;// Use Red when DND is fully supported.
     default:
       break;
   }
@@ -47,14 +47,13 @@ QString Presence::getPresenceStatusAsString (const linphone::ConsolidatedPresenc
   switch (status) {
     case linphone::ConsolidatedPresence::Online:
       return tr("presenceOnline");
-    case linphone::ConsolidatedPresence::Busy:
-      return tr("presenceBusy");
-    case linphone::ConsolidatedPresence::DoNotDisturb:
-      return tr("presenceDoNotDisturb");
+    case linphone::ConsolidatedPresence::Busy: case linphone::ConsolidatedPresence::DoNotDisturb:
+    //: 'Away' : presence label when user is away.
+      return tr("presenceAway");
     default:
       break;
   }
-
+  QString dummy = tr("presenceDoNotDisturb");// Dnd is not yet fully supported. Keep this line in order to not loss translations.
   return tr("presenceOffline");
 }
 

@@ -2452,16 +2452,17 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Verfügbar</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Besetzt</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Nicht stören</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Offline</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">Abwesend</translation>
     </message>
 </context>
 <context>

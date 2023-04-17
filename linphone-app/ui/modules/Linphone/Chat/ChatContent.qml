@@ -203,7 +203,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 				Component.onCompleted: messagesTextsList.updateBestWidth()
 				delegate: 
 					ChatTextMessage {
-					width: parent && parent.width
+					width: parent ? parent.width : 0
 					contentModel: $modelData
 					onLastTextSelectedChanged: mainItem.lastTextSelectedChanged(lastTextSelected)
 					color: mainItem.useTextColor

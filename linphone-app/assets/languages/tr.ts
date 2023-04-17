@@ -2439,16 +2439,17 @@ Buraya tıklayın: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Uygun</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Meşgul</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Rahatsız etme</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Çevrim dışı</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">Mevcut olmayan</translation>
     </message>
 </context>
 <context>

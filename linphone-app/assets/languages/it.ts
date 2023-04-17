@@ -2452,16 +2452,17 @@ Clicca: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Disponibile</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Occupato</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Non disturbare</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Offline</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">Assente</translation>
     </message>
 </context>
 <context>

@@ -2465,16 +2465,17 @@ Spustelėkite čia: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Pasiekiamas</translation>
     </message>
     <message>
-        <source>presenceBusy</source>
-        <translation>Užsiėmęs</translation>
-    </message>
-    <message>
         <source>presenceDoNotDisturb</source>
         <translation>Netrukdyti</translation>
     </message>
     <message>
         <source>presenceOffline</source>
         <translation>Atsijungęs</translation>
+    </message>
+    <message>
+        <source>presenceAway</source>
+        <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
+        <translation type="unfinished">Nėra</translation>
     </message>
 </context>
 <context>
