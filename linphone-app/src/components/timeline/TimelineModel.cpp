@@ -174,7 +174,7 @@ void TimelineModel::setSelected(const bool& selected){
 }
 
 void TimelineModel::delaySelected(){
-	if( mChatRoomModel->getState() == LinphoneEnums::ChatRoomStateCreated){
+	if( mChatRoomModel->getState() == LinphoneEnums::ChatRoomStateCreated || mChatRoomModel->getState() == LinphoneEnums::ChatRoomStateTerminated){
 		QTimer::singleShot(200, [&](){// Delay process in order to let GUI time for Timeline building/linking before doing actions
 			setSelected(true);
 		});
