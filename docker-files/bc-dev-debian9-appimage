@@ -16,8 +16,9 @@ RUN sudo apt-get update && sudo apt-get install -y pigz
 #xkbcommon is needed for special keyboard features
 #flite1-dev, libspeechd-dev speech-dispatcher are needed for text to speech
 #libfontconfig1-dev is needed to load correct fonts (support of ideograms, etc..)
+#libgstreamer-plugins-base1.0 multimedia module (video playback)
 #needed for xcb : libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libx11-xcb-dev libxcb-glx0-dev libxkbcommon-x11-dev
-RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libx11-xcb* libxcb* qdbus-qt5 libqt5dbus5 libdbus-1-dev libdbus-glib-1-dev libatspi2.0-0 libatspi2.0-dev
+RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libx11-xcb* libxcb* qdbus-qt5 libqt5dbus5 libdbus-1-dev libdbus-glib-1-dev libatspi2.0-0 libatspi2.0-dev libgstreamer-plugins-base1.0
 RUN sudo apt-get update && sudo apt-get install -y libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev 
 
 #needed fot qt to find dbus
