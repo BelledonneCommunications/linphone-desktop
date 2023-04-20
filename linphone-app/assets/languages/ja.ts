@@ -1784,7 +1784,7 @@
     </message>
     <message>
         <source>smartSearchBarTooltip</source>
-        <translation>インテリジェントな検索バーを使用してオーディオとビデオを直接開始 を呼び出したり、メッセージを送信したり、新しい連絡先を追加したりできます。 入力するだけです あなたの友人のSIPアドレスまたはユーザー名。</translation>
+        <translation>インテリジェントな検索バーを使用して、音声通話やビデオ通話、メッセージの送信や新しい連絡先の追加を直接操作できます。あなたの友人のSIPアドレスやユーザー名を入力するだけです。</translation>
     </message>
     <message>
         <source>newConferenceButton</source>
@@ -1923,19 +1923,19 @@
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>件名を入力する必要があります。</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the chat creation.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>最低でも%1人の参加者が必要です。</numerusform>
         </translation>
     </message>
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missong in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議ベースのチャットルームを作成するには、アカウント設定で会議URIを設定する必要があります。</translation>
     </message>
     <message>
         <source>newChatRoomTitle</source>
@@ -1966,7 +1966,7 @@
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the chat room.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>連絡先を検索するか、チャットルームに追加してください。</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -1977,23 +1977,23 @@
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>この参加者を選択から削除する</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>必須</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">件名を入力</translation>
     </message>
     <message>
         <source>LastContactsTitle</source>
         <extracomment>&apos;Last contacts&apos; : Header for showing last contacts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>最近の連絡先</translation>
     </message>
 </context>
 <context>
@@ -2006,13 +2006,13 @@
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>件名を入力する必要があります。</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the meeting creation.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>最低でも%1人の参加者が必要です。</numerusform>
         </translation>
     </message>
     <message>
@@ -2023,7 +2023,7 @@
     <message>
         <source>newConferenceTitle</source>
         <extracomment>&apos;Start a video conference&apos; : Title of a popup about creation of a video conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ビデオ会議を開始</translation>
     </message>
     <message>
         <source>subjectLabel</source>
@@ -2033,7 +2033,7 @@
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">件名を入力</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
@@ -2065,7 +2065,7 @@
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>この参加者を選択から削除する</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
@@ -2076,7 +2076,7 @@
     <message>
         <source>launchButton</source>
         <extracomment>&apos;Launch&apos; : Launch button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>開始</translation>
     </message>
     <message>
         <source>updateButton</source>
@@ -2086,7 +2086,7 @@
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the meeting&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議を更新</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
@@ -2096,7 +2096,7 @@
     <message>
         <source>newConferenceDate</source>
         <extracomment>&apos;Date&apos; : Date label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>日付</translation>
     </message>
     <message>
         <source>newConferenceTimeTitle</source>
@@ -2106,7 +2106,7 @@
     <message>
         <source>newConferenceDurationTitle</source>
         <extracomment>&apos;Duration&apos; : Duration label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>期間</translation>
     </message>
     <message>
         <source>newConferenceTimezoneTitle</source>
@@ -2116,7 +2116,7 @@
     <message>
         <source>newConferenceDescriptionTitle</source>
         <extracomment>&apos;Add a description&apos; : Label of a text field about the description of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>概要を追加</translation>
     </message>
     <message>
         <source>newConferenceDescriptionPlaceholder</source>
@@ -2126,7 +2126,7 @@
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the meeting&apos; : Explanation about the description of the meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">この概要では、会議について説明します</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
@@ -2136,7 +2136,7 @@
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
         <extracomment>&apos;Send invite via Email&apos; : Label for checkbox for sending invitations with mailer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>メールで招待状を送信</translation>
     </message>
     <message>
         <source>busyOperations</source>
@@ -2154,7 +2154,7 @@
     <message>
         <source>conferenceCreatedEvent</source>
         <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">グループに参加しました</translation>
     </message>
     <message>
         <source>conferenceCreatedTerminated</source>
@@ -2164,7 +2164,7 @@
     <message>
         <source>conferenceParticipantAddedEvent</source>
         <extracomment>&apos;%1 has joined&apos; : Little message to show on the event when someone join the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1人が参加しました</translation>
     </message>
     <message>
         <source>conferenceParticipantRemovedEvent</source>
@@ -2174,7 +2174,7 @@
     <message>
         <source>conferenceParticipantSetAdminEvent</source>
         <extracomment>&apos;%1 is now an admin&apos; : Little message to show on the event when someone get the admin status. %1 is somebody</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 は現在管理者です</translation>
     </message>
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
@@ -3304,7 +3304,7 @@
     <message>
         <source>videoConferenceURI</source>
         <extracomment>&quot;Video Conference URI&quot; : Label of a text edit for filling Video conference URI.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ビデオ会議URI</translation>
     </message>
     <message>
         <source>limeServerUrl</source>
