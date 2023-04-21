@@ -24,16 +24,31 @@ Loader{
 	property ParticipantImdnStateProxyModel imdnStatesModel: ParticipantImdnStateProxyModel {
 		chatMessageModel: loader.chatMessageModel
 	}
-	height: visible ? (ChatStyle.composingText.height-5)*(loader.imdnStatesModel.count/2 + 1) : 0
+	height: visible ? loader.cellHeight * Math.ceil(loader.imdnStatesModel.count/ columnCount): 0
 	visible:false
 	active: visible
+	property int fitWidth: 0
+	property int cellWidth: fitWidth > 0 ? Math.min(width/2, fitWidth): width/2
+	property int cellHeight: ChatStyle.composingText.height-5
+	property int reset : 0
+	property int columnCount: width / cellWidth + reset
+	
+	Timer{// BUG: Force Qt to refresh the layout because its layout while loading is wrong.
+		id: refreshLayout
+		interval: 10
+		onTriggered: {++loader.reset;--loader.reset}
+	}
 	sourceComponent: 
 		GridView{
 		id: deliveryLayout
 		
-		cellWidth: parent.width/2; cellHeight: ChatStyle.composingText.height-5
+		cellWidth: loader.cellWidth ; cellHeight: loader.cellHeight
+		
 		interactive: false
 		model: loader.imdnStatesModel
+		layoutDirection: chatMessageModel.isOutgoing ? Qt.RightToLeft : Qt.LeftToRight
+		verticalLayoutDirection: chatMessageModel.isOutgoing ? GridView.BottomToTop : GridView.TopToBottom
+		Component.onCompleted: refreshLayout.start()
 		function getText(state, displayName, stateChangeTime){
 			if(state == LinphoneEnums.ChatMessageStateDelivered)
 				//: 'Send to %1 - %2' Little message to indicate the state of a message
@@ -59,12 +74,17 @@ Loader{
 				return qsTr('deliveryError').arg(displayName)
 		}
 		delegate:Text{
-			height: ChatStyle.composingText.height-5
-			width: GridView.width
+			id: textArea
+			height: loader.cellHeight
+			width: loader.cellWidth
 			text: deliveryLayout.getText($modelData.state, $modelData.displayName, UtilsCpp.toDateTimeString($modelData.stateChangeTime))
 			color: ChatStyle.entry.event.text.colorModel.color
 			font.pointSize: Units.dp * 8
 			elide: Text.ElideMiddle
+			TextMetrics{
+				text: textArea.text
+				Component.onCompleted: loader.fitWidth = Math.max(loader.fitWidth, width)
+			}
 		}
 	}
 }
