@@ -565,17 +565,17 @@
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation>この会議を削除しますか？</translation>
+        <translation>このミーティングを削除しますか？</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
-        <translation>この会議を削除しますか？</translation>
+        <translation>このミーティングを削除しますか？</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
-        <translation>会議がキャンセルされました</translation>
+        <translation>ミーティングがキャンセルされました</translation>
     </message>
 </context>
 <context>
@@ -593,7 +593,7 @@
     <message>
         <source>icsMeetingInvite</source>
         <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
-        <translation>会議への招待</translation>
+        <translation>ミーティングへの招待</translation>
     </message>
     <message numerus="yes">
         <source>icsParticipants</source>
@@ -605,12 +605,12 @@
     <message>
         <source>icsUpdatedMeetingInvite</source>
         <extracomment>&apos;Meeting has been updated&apos; : ICS title for an updated invitation.</extracomment>
-        <translation>会議が更新されました</translation>
+        <translation>ミーティングが更新されました</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS title for a cancelled invitation.</extracomment>
-        <translation>会議がキャンセルされました</translation>
+        <translation>ミーティングがキャンセルされました</translation>
     </message>
 </context>
 <context>
@@ -777,7 +777,7 @@
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>会議を開始する.</translation>
+        <translation>ミーティングを開始する.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -831,21 +831,21 @@
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation>会議</translation>
+        <translation>ミーティング</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation>会議</translation>
+        <translation>ミーティング</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>会議の参加者を管理します。</translation>
+        <translation>ミーティングの参加者を管理します。</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -1489,7 +1489,7 @@
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>あなたは現在会議から外れています。</translation>
+        <translation>あなたは現在ミーティングから外れています。</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1514,7 +1514,7 @@
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
-        <translation>会議は始まっていません。しばらくお待ちください…</translation>
+        <translation>ミーティングは始まっていません。しばらくお待ちください…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
@@ -1529,7 +1529,7 @@
     <message>
         <source>aloneInConference</source>
         <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
-        <translation>会議に復帰しました</translation>
+        <translation>ミーティングに復帰しました</translation>
     </message>
     <message>
         <source>incallWaitConnectedMessage</source>
@@ -1542,7 +1542,7 @@
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation>あなたは現在会議から外れています。</translation>
+        <translation>あなたは現在ミーティングから外れています。</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1567,7 +1567,7 @@
     <message>
         <source>incallWaitMessage</source>
         <extracomment>&apos;The meeting is not ready. Please Wait...&apos; : Waiting message for starting a meeting.</extracomment>
-        <translation>会議は始まっていません。しばらくお待ちください…</translation>
+        <translation>ミーティングは始まっていません。しばらくお待ちください…</translation>
     </message>
     <message>
         <source>callWarningRecord</source>
@@ -2038,13 +2038,13 @@
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Meeting. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished">現在のチャットルームの件名です。空にすることはできません。</translation>
+        <translation>現在のミーティングの件名です。空にすることはできません。</translation>
         <extra-Tooltip>Explanation about the subject of the meeting</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your meeting ?&apos; : Ask about setting the meeting as secured.</extracomment>
-        <translation type="unfinished">チャットを暗号化しますか？</translation>
+        <translation>ミーティングを暗号化しますか？</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
@@ -2054,7 +2054,7 @@
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>連絡先を検索するか、ミーティングに追加してください。</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -2071,7 +2071,7 @@
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>必須</translation>
     </message>
     <message>
         <source>launchButton</source>
@@ -2086,12 +2086,12 @@
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the meeting&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation>会議を更新</translation>
+        <translation>ミーティングを更新</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ミーティングを予約しますか？</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2126,7 +2126,7 @@
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the meeting&apos; : Explanation about the description of the meeting</extracomment>
-        <translation type="unfinished">この概要では、会議について説明します</translation>
+        <translation>この概要では、ミーティングについて説明します</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
@@ -2738,7 +2738,7 @@
     </message>
     <message>
         <source>autoAnswerWithVideoLabel</source>
-        <translation>自動応答(映像)</translation>
+        <translation>自動応答(ビデオ)</translation>
     </message>
     <message>
         <source>chatEnabledLabel</source>
@@ -3119,7 +3119,7 @@
     <name>SettingsSipAccounts</name>
     <message>
         <source>defaultIdentityTitle</source>
-        <translation>デフォルトのアイデンティティ</translation>
+        <translation>既定のアイデンティティ</translation>
     </message>
     <message>
         <source>defaultUsernameLabel</source>
@@ -3620,7 +3620,7 @@
     </message>
     <message>
         <source>videoSizeLabel</source>
-        <translation>映像解像度</translation>
+        <translation>ビデオの解像度</translation>
     </message>
     <message>
         <source>videoCodecsTitle</source>
@@ -3641,7 +3641,7 @@
     <message>
         <source>videoDisplayTitle</source>
         <extracomment>&apos;Video display&apos; : Title for display parameters</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ビデオの表示</translation>
     </message>
     <message>
         <source>videoHybrid</source>
@@ -3661,7 +3661,7 @@
     <message>
         <source>videoLayout</source>
         <extracomment>&apos;Default video layout&apos; : Label to choose the default layout in video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>既定のビデオレイアウト</translation>
     </message>
     <message>
         <source>videoActiveSpeakerLayout</source>
@@ -3717,7 +3717,7 @@
     </message>
     <message>
         <source>videoTab</source>
-        <translation>映像</translation>
+        <translation>ビデオ</translation>
     </message>
     <message>
         <source>callsAndChatTab</source>
