@@ -1246,12 +1246,12 @@ Adresa URL serveru není nakonfigurována.</translation>
     <message>
         <source>emojisLastUsed</source>
         <extracomment>&apos;Last used&apos; : Emoji title for last used section.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Naposledy použitý</translation>
     </message>
     <message>
         <source>emojisAll</source>
         <extracomment>&apos;All&apos; Emoji title for all items.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vše</translation>
     </message>
 </context>
 <context>
@@ -1818,7 +1818,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>hideTimeline</source>
         <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation>Skrýt časovou osu</translation>
+        <translation>Skrýt události</translation>
     </message>
     <message>
         <source>openTimeline</source>
@@ -2666,7 +2666,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>ringLabel</source>
-        <translation>Zvonění</translation>
+        <translation>Zvuk vyzvánění</translation>
     </message>
     <message>
         <source>echoCancellationLabel</source>
@@ -2686,7 +2686,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation>Zisk nahrávání</translation>
+        <translation>Zesílení nahrávání</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
@@ -2836,7 +2836,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>waitRegistrationForCallLabel</source>
         <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
-        <translation>Volat po registraci</translation>
+        <translation>Volat po registraci proxy</translation>
     </message>
     <message>
         <source>chatNotificationsEnabledLabel</source>
@@ -3070,7 +3070,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation>povolit ICE</translation>
+        <translation>Povolit ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -3078,7 +3078,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation>povolit TURN</translation>
+        <translation>Povolit TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
@@ -3094,11 +3094,11 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>sipUdpPortLabel</source>
-        <translation>Nastavení naslouchajícího portu SIP/UDP</translation>
+        <translation>Nastavit port SIP/UDP</translation>
     </message>
     <message>
         <source>sipTcpPortLabel</source>
-        <translation>Nastavit naslouchající port SIP/TCP</translation>
+        <translation>Nastavit port SIP/TCP</translation>
     </message>
     <message>
         <source>audioRtpUdpPortLabel</source>
@@ -3106,7 +3106,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>videoRtpUdpPortLabel</source>
-        <translation>port video RTP UDP</translation>
+        <translation>Port video RTP UDP</translation>
     </message>
     <message>
         <source>dscpFieldsTitle</source>
@@ -3209,7 +3209,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>defaultDisplayNameLabel</source>
-        <translation>Zobrazené jméno</translation>
+        <translation>Zobrazované jméno</translation>
     </message>
     <message>
         <source>assistantTitle</source>
@@ -3315,7 +3315,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>enableIceLabel</source>
-        <translation>povolit ICE</translation>
+        <translation>Povolit ICE</translation>
     </message>
     <message>
         <source>stunServerLabel</source>
@@ -3323,7 +3323,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>enableTurnLabel</source>
-        <translation>povolit TURN</translation>
+        <translation>Povolit TURN</translation>
     </message>
     <message>
         <source>turnUserLabel</source>
@@ -3635,14 +3635,14 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsEmojiChange</source>
         <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Emotikony</translation>
     </message>
 </context>
 <context>
     <name>SettingsVideo</name>
     <message>
         <source>videoInputDeviceLabel</source>
-        <translation>Vstupní video zařízení</translation>
+        <translation>Video zařízení</translation>
     </message>
     <message>
         <source>videoFramerateLabel</source>
