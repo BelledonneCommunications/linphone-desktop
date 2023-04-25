@@ -2081,7 +2081,7 @@
     <message>
         <source>updateButton</source>
         <extracomment>&apos;Update&apos; : Update button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>更新</translation>
     </message>
     <message>
         <source>updateConferenceTitle</source>
@@ -2101,7 +2101,7 @@
     <message>
         <source>newConferenceTimeTitle</source>
         <extracomment>&apos;Time&apos; : Time label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>時間</translation>
     </message>
     <message>
         <source>newConferenceDurationTitle</source>
@@ -2111,7 +2111,7 @@
     <message>
         <source>newConferenceTimezoneTitle</source>
         <extracomment>&apos;Timezone&apos; : Timezone label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>タイムゾーン</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTitle</source>
@@ -2121,7 +2121,7 @@
     <message>
         <source>newConferenceDescriptionPlaceholder</source>
         <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>概要</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTooltip</source>
@@ -2131,7 +2131,7 @@
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
         <extracomment>&apos;Send invite via %1&apos; : Label for checkbox for sending invitations with the application. %1 is the application name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 経由で招待状を送信</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
@@ -2141,7 +2141,7 @@
     <message>
         <source>busyOperations</source>
         <extracomment>&apos;Operations in progress, please wait&apos; : Waiting message till the end of operations when creating a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>操作が進行中です、しばらくお待ちください</translation>
     </message>
     <message>
         <source>confirmFormExit</source>
@@ -2159,7 +2159,7 @@
     <message>
         <source>conferenceCreatedTerminated</source>
         <extracomment>&apos;You have left the group&apos; : Little message to show on the event when the user leave the chat group.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>グループから退出しました</translation>
     </message>
     <message>
         <source>conferenceParticipantAddedEvent</source>
@@ -2169,7 +2169,7 @@
     <message>
         <source>conferenceParticipantRemovedEvent</source>
         <extracomment>&apos;%1 has left&apos; : Little message to show on the event when someone leave the chat group</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1人が退出しました</translation>
     </message>
     <message>
         <source>conferenceParticipantSetAdminEvent</source>
@@ -2179,7 +2179,7 @@
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
         <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 は現在管理者ではありません</translation>
     </message>
     <message>
         <source>conferenceSecurityEvent</source>
@@ -2199,7 +2199,7 @@
     <message>
         <source>conferenceSubjectChangedEvent</source>
         <extracomment>&apos;New subject : %1&apos; : Little message to show on the event when the subject of the chat room has been changed. %1 is the new subject.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>新しい件名: %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
@@ -2227,7 +2227,7 @@
     <message>
         <source>newChatRoomMessages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>新しいメッセージを受信しました！</translation>
     </message>
     <message>
         <source>newConferenceInvitation</source>
@@ -2308,7 +2308,7 @@
     <message>
         <source>participantsListRemoveTooltip</source>
         <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>この参加者をリストから削除する</translation>
     </message>
 </context>
 <context>
@@ -2316,44 +2316,44 @@
     <message>
         <source>participantsAdminHeader</source>
         <extracomment>&apos;(Admin)&apos; : One word for Admin(istrator)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>(管理者)</translation>
         <extra-Context>Little Header in one word for a column in participant</extra-Context>
     </message>
     <message>
         <source>participantsMe</source>
         <extracomment>&apos;Me&apos; : One word for myself.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>わたし</translation>
     </message>
 </context>
 <context>
     <name>PdfWidget</name>
     <message>
         <source>PDF Viewer</source>
-        <translation type="unfinished"></translation>
+        <translation>PDFビューワー</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>表示</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>拡大</translation>
     </message>
     <message>
         <source>Ctrl+=</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctr+=</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>縮小</translation>
     </message>
     <message>
         <source>Ctrl+-</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+-</translation>
     </message>
     <message>
         <source>Previous Page</source>
-        <translation type="unfinished"></translation>
+        <translation>前のページ</translation>
     </message>
     <message>
         <source>PgUp</source>
@@ -2361,7 +2361,7 @@
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished"></translation>
+        <translation>次のページ</translation>
     </message>
     <message>
         <source>PgDown</source>
@@ -2373,63 +2373,63 @@
     </message>
     <message>
         <source>Zoom...</source>
-        <translation type="unfinished"></translation>
+        <translation>ズーム…</translation>
     </message>
     <message>
         <source>Fit Width</source>
-        <translation type="unfinished"></translation>
+        <translation>横幅に合わせる</translation>
     </message>
     <message>
         <source>Fit Page</source>
-        <translation type="unfinished"></translation>
+        <translation>ページに合わせる</translation>
     </message>
     <message>
         <source>25%</source>
-        <translation type="unfinished"></translation>
+        <translation>25%</translation>
     </message>
     <message>
         <source>50%</source>
-        <translation type="unfinished"></translation>
+        <translation>50%</translation>
     </message>
     <message>
         <source>70%</source>
-        <translation type="unfinished"></translation>
+        <translation>70%</translation>
     </message>
     <message>
         <source>85%</source>
-        <translation type="unfinished"></translation>
+        <translation>85%</translation>
     </message>
     <message>
         <source>100%</source>
-        <translation type="unfinished"></translation>
+        <translation>100%</translation>
     </message>
     <message>
         <source>125%</source>
-        <translation type="unfinished"></translation>
+        <translation>125%</translation>
     </message>
     <message>
         <source>150%</source>
-        <translation type="unfinished"></translation>
+        <translation>150%</translation>
     </message>
     <message>
         <source>175%</source>
-        <translation type="unfinished"></translation>
+        <translation>175%</translation>
     </message>
     <message>
         <source>200%</source>
-        <translation type="unfinished"></translation>
+        <translation>200%</translation>
     </message>
     <message>
         <source>300%</source>
-        <translation type="unfinished"></translation>
+        <translation>300%</translation>
     </message>
     <message>
         <source>400%</source>
-        <translation type="unfinished"></translation>
+        <translation>400%</translation>
     </message>
     <message>
         <source>Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>エクスポート…</translation>
     </message>
 </context>
 <context>
