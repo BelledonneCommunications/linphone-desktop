@@ -2476,7 +2476,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>presenceAway</source>
         <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
-        <translation type="unfinished">Nepřítomný</translation>
+        <translation>Nepřítomný</translation>
     </message>
 </context>
 <context>
