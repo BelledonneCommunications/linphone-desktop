@@ -138,8 +138,8 @@ Row {
 			bold: true
 			pointSize: HistoryStyle.entry.event.text.pointSize
 		}
-		height: parent.height		
-		text: $historyEntry.title 
+		height: parent.height
+		text: $historyEntry && $historyEntry.title
 				? $historyEntry.title
 				: _sipAddressObserver 
 					? ( UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress || $historyEntry.sipAddress) || _sipAddressObserver)
