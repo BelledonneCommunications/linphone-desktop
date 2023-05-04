@@ -155,8 +155,9 @@ Item {
 				spacing: FileViewStyle.spacing
 				Icon{
 					id: fileIcon
+					property bool isImage: UtilsCpp.isImage(mainItem.name)
 					Layout.alignment: Qt.AlignCenter
-					icon: extensionText.text != '' ?  FileViewStyle.extension.icon : FileViewStyle.extension.unknownIcon
+					icon: fileIcon.isImage ? FileViewStyle.extension.imageIcon : FileViewStyle.extension.icon
 					iconSize: FileViewStyle.extension.iconSize
 					Layout.fillHeight: true
 					Layout.fillWidth: true
@@ -173,7 +174,7 @@ Item {
 						font.bold: true
 						font.pointSize: extensionMetrics.font.pointSize
 						clip: true
-						text: (mainItem.contentModel?Utils.getExtension(mainItem.name).toUpperCase():'')
+						text: (!fileIcon.isImage && mainItem.contentModel?Utils.getExtension(mainItem.name).toUpperCase():'')
 						horizontalAlignment: Text.AlignHCenter
 						verticalAlignment: Text.AlignVCenter
 						TextMetrics{

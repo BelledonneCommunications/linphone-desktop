@@ -103,7 +103,7 @@ QtObject {
 		property var foregroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_d', icon, 's_d_b_fg')
 	}
 	property QtObject extension: QtObject {
-		property string unknownIcon:  'file_unknown_custom'
+		property string icon:  'file_extension_custom'
 		property int iconSize: 60
 	}
 }

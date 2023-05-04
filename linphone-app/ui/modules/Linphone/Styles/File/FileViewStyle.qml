@@ -46,8 +46,8 @@ QtObject {
 	}
 	
 	property QtObject extension: QtObject {
-		property string icon:  'file_extension_custom'
-		property string unknownIcon:  'file_unknown_custom'
+		property string icon: 'file_extension_custom'
+		property string imageIcon: 'file_image_custom'
 		property int iconSize: 60
 		property int internalSize: 37
 		property int radius: 0

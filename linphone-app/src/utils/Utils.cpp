@@ -622,6 +622,7 @@ bool Utils::isMe(const std::shared_ptr<const linphone::Address>& address){
 }
 
 bool Utils::isAnimatedImage(const QString& path){
+	if(path.isEmpty()) return false;
 	QFileInfo info(path);
 	if( !info.exists())
 		return false;
@@ -630,27 +631,32 @@ bool Utils::isAnimatedImage(const QString& path){
 }
 
 bool Utils::isImage(const QString& path){
+	if(path.isEmpty()) return false;
 	QFileInfo info(path);
-	if( !info.exists())
-		return false;
+	if( !info.exists()){
+		return QMimeDatabase().mimeTypeForFile(info, QMimeDatabase::MatchExtension).name().contains("image");
+	}
 	QImageReader reader(path);
 	return reader.imageCount() == 1;
 }
 
-
 bool Utils::isVideo(const QString& path){
+	if(path.isEmpty()) return false;
 	return QMimeDatabase().mimeTypeForFile(path).name().contains("video");
 }
 
 bool Utils::isPdf(const QString& path){
+	if(path.isEmpty()) return false;
 	return QMimeDatabase().mimeTypeForFile(path).name().contains("application/pdf");
 }
 
 bool Utils::isSupportedForDisplay(const QString& path){
+	if(path.isEmpty()) return false;
 	return !QMimeDatabase().mimeTypeForFile(path).name().contains("application");// "for pdf : "application/pdf". Note : Make an exception when supported.
 }
 
 bool Utils::canHaveThumbnail(const QString& path){
+	if(path.isEmpty()) return false;
 	return isImage(path) || isAnimatedImage(path) || isPdf(path) || isVideo(path);
 }
 
@@ -732,6 +738,7 @@ QString Utils::encodeEmojiToQmlRichFormat(const QString &body){
 }
 
 bool Utils::isOnlyEmojis(const QString& text){
+	if(text.isEmpty()) return false;
 	QVector<uint> utf32_string = text.toUcs4();
 	for (auto &code : utf32_string)
 		if( !Utils::codepointIsEmoji(code))
@@ -794,8 +801,11 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 	}
 	if(images != "")
 		images = "<div>" + images +"</div>";
-	
-	return images + "<p style=\"white-space:pre-wrap;\">" + encodeEmojiToQmlRichFormat(formattedText.join("")) + "</p>";
+	QString encodeEmojis = encodeEmojiToQmlRichFormat(formattedText.join(""));
+	if( encodeEmojis.isEmpty() && images.isEmpty())
+		return "";
+	else
+		return images + "<p style=\"white-space:pre-wrap;\">" + encodeEmojiToQmlRichFormat(formattedText.join("")) + "</p>";
 }
 
 QString Utils::getFileContent(const QString& filePath){

@@ -57,7 +57,7 @@ QtObject {
 		property QtObject openImage: QtObject {
 			property int iconSize: buttons.size/2
 			property string name : 'openImage'
-			property string icon : 'file_unknown_custom'
+			property string icon : 'file_image_custom'
 			property color backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_inv_bg').color
 			property color backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_inv_bg').color
 			property color backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_inv_bg').color

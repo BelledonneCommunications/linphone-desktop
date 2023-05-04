@@ -316,7 +316,7 @@ DialogPlus{
 				Icon{
 					id: fileIcon
 					anchors.centerIn: parent
-					icon: FileViewDialogStyle.extension.unknownIcon
+					icon: FileViewDialogStyle.extension.icon
 					iconSize: FileViewDialogStyle.extension.iconSize
 				}
 			}

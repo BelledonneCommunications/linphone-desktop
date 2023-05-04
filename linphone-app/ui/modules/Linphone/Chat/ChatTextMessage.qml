@@ -23,17 +23,16 @@ TextEdit {
 	property ContentModel contentModel
 	property string lastTextSelected : ''
 	property font customFont : SettingsModel.textMessageFont
-	property int fitHeight: contentHeight
+	property int fitHeight: visible ? contentHeight : 0
 	property int fitWidth: implicitWidth
 	
 	signal rightClicked()
-	
 	
 	property int removeWarningFromBindingLoop : implicitWidth	// Just a dummy variable to remove meaningless binding loop on implicitWidth
 	
 	height: fitHeight
 	width: parent && parent.width || 1
-	visible: contentModel
+	visible: contentModel && contentModel.text != ''
 	clip: false
 	textMargin: 0
 	readOnly: true
