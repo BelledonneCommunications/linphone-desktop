@@ -976,7 +976,7 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">会議ベースのチャットルームを作成するには、アカウント設定で会議URIを設定する必要があります。</translation>
     </message>
 </context>
 <context>
@@ -1004,7 +1004,7 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">会議ベースのチャットルームを作成するには、アカウント設定で会議URIを設定する必要があります。</translation>
     </message>
 </context>
 <context>
@@ -2018,7 +2018,7 @@
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the meeting URI in your account settings to create a meeting based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">会議ベースのチャットルームを作成するには、アカウント設定で会議URIを設定する必要があります。</translation>
     </message>
     <message>
         <source>newConferenceTitle</source>
@@ -2232,6 +2232,11 @@
     <message>
         <source>newConferenceInvitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVoiceMessage</source>
+        <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

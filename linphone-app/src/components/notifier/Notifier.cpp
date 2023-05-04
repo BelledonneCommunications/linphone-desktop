@@ -281,12 +281,16 @@ void Notifier::notifyReceivedMessages (const list<shared_ptr<linphone::ChatMessa
 		shared_ptr<linphone::ChatMessage> message = messages.front();
 		
 		if( messages.size() == 1){
-			if(! message->getFileTransferInformation() ){
+			auto fileContent = message->getFileTransferInformation();
+			if(!fileContent  ){
 				foreach(auto content, message->getContents()){
 					if(content->isText())
 						txt += content->getUtf8Text().c_str();
 				}
-			}else
+			}else if( fileContent->isVoiceRecording())
+			//: 'Voice message received!' : message to warn the user in a notofication for voice messages.
+				txt = tr("newVoiceMessage");
+			else
 				txt = tr("newFileMessage");
 			if(txt.isEmpty() && message->hasConferenceInvitationContent())
 			//: 'Conference invitation received!' : Notification about receiving an invitation to a conference.
