@@ -188,7 +188,8 @@ bool ChatRoomProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
 		return true;
 	if(!a)
 		return false;
-	return a->getReceivedTimestamp() < b->getReceivedTimestamp();
+	return a->getReceivedTimestamp() < b->getReceivedTimestamp() ||
+			(a->getReceivedTimestamp() == b->getReceivedTimestamp() && a->getTimestamp() < b->getTimestamp());
 }
 // -----------------------------------------------------------------------------
 
@@ -288,6 +289,7 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		
 		mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoomModel);
 		setSourceModel(mChatRoomModel.get());
+		sort(0);
 		if (mChatRoomModel) {
 			
 			ChatRoomModel *ChatRoomModel = mChatRoomModel.get();

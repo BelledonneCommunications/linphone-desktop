@@ -123,12 +123,12 @@ Rectangle {
 			
 			delegate: Rectangle {
 				id: entry
-				property bool isNotice : $chatEntry.type === ChatRoomModel.NoticeEntry
-				property bool isCall : $chatEntry.type === ChatRoomModel.CallEntry
-				property bool isMessage : $chatEntry.type === ChatRoomModel.MessageEntry
+				property bool isNotice : $chatEntry && ($chatEntry.type === ChatRoomModel.NoticeEntry)
+				property bool isCall : $chatEntry && ($chatEntry.type === ChatRoomModel.CallEntry)
+				property bool isMessage : $chatEntry && ($chatEntry.type === ChatRoomModel.MessageEntry)
 				property var previousItem : proxyModel.count > 0 && index >0 ? proxyModel.getAt(index-1) : null
 				property var nextItem : proxyModel.count > 0 ? proxyModel.getAt(index+1) : null	// bind to count
-				property bool displayDate: !Utils.equalDate(new Date($chatEntry.timestamp), new Date())
+				property bool displayDate: $chatEntry && !Utils.equalDate(new Date($chatEntry.timestamp), new Date())
 				property bool isTopGrouped: isGrouped(entry.previousItem, $chatEntry) || false
 				property bool isBottomGrouped: isGrouped($chatEntry, entry.nextItem) || false
 				
@@ -177,7 +177,7 @@ Rectangle {
 						RowLayout{
 							id: headerLayout
 							Layout.fillWidth: true
-							Layout.alignment: Qt.AlignTop | ($chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
+							Layout.alignment: Qt.AlignTop | ($chatEntry && $chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
 							Layout.leftMargin: ChatStyle.entry.metaWidth// + ChatStyle.entry.message.extraContent.spacing
 							Layout.rightMargin: ChatStyle.entry.message.outgoing.areaSize
 							spacing:0
@@ -185,7 +185,7 @@ Rectangle {
 							visible: !entry.isTopGrouped
 							Text {
 								id:timeDisplay
-								Layout.alignment: Qt.AlignTop | ($chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
+								Layout.alignment: Qt.AlignTop | ($chatEntry && $chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
 								Layout.preferredHeight: implicitHeight// ChatStyle.entry.lineHeight
 								//Layout.preferredWidth: ChatStyle.entry.time.width
 								
@@ -200,14 +200,14 @@ Rectangle {
 								verticalAlignment: Text.AlignVCenter
 								
 								TooltipArea {
-									text: UtilsCpp.toDateTimeString($chatEntry.timestamp)
+									text: $chatEntry ? UtilsCpp.toDateTimeString($chatEntry.timestamp) : ''
 								}
 								visible:!isNotice
 							}
 							Text{
 								id:authorName
 								//Layout.leftMargin: timeDisplay.width + ChatStyle.entry.metaWidth + ChatStyle.entry.message.extraContent.spacing
-								property var displayName: $chatEntry.fromDisplayName ? $chatEntry.fromDisplayName : $chatEntry.name
+								property var displayName: $chatEntry ? $chatEntry.fromDisplayName ? $chatEntry.fromDisplayName : $chatEntry.name : ''
 								text : displayName != undefined ? displayName : ''
 								
 								color: ChatStyle.entry.event.text.colorModel.color

@@ -38,7 +38,7 @@ function initView () {
 }
 
 function getComponentFromEntry (chatEntry) {
-	
+	if(!chatEntry) return ''
 	if (chatEntry.type === Linphone.ChatRoomModel.CallEntry) {
 		return 'Event.qml'
 	}

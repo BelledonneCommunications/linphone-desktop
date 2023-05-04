@@ -111,11 +111,11 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 		mTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessage->getTime() * 1000);
 		auto appdata = ChatMessageModel::AppDataManager(QString::fromStdString(chatMessage->getAppdata()));
 		if(!appdata.mData.contains("receivedTime")){
-			appdata.mData["receivedTime"] = QString::number(mTimestamp.toSecsSinceEpoch());
+			mReceivedTimestamp = QDateTime::currentDateTime();
+			appdata.mData["receivedTime"] = QString::number(mReceivedTimestamp.toMSecsSinceEpoch());
 			chatMessage->setAppdata(Utils::appStringToCoreString(appdata.toString()));
-			mReceivedTimestamp = mTimestamp;
 		}else
-			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch(appdata.mData["receivedTime"].toULongLong() * 1000);
+			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch(appdata.mData["receivedTime"].toULongLong());
 	}
 	mWasDownloaded = false;
 

@@ -233,7 +233,7 @@ void CoreHandlers::onMessagesReceived (
 			auto chatRoom = message->getChatRoom();
 			auto dbMessage = chatRoom->findMessage(message->getMessageId());
 			auto appdata = ChatMessageModel::AppDataManager(QString::fromStdString(dbMessage->getAppdata()));
-			appdata.mData["receivedTime"] = QString::number(QDateTime::currentMSecsSinceEpoch()/1000);
+			appdata.mData["receivedTime"] = QString::number(QDateTime::currentMSecsSinceEpoch());
 			dbMessage->setAppdata(Utils::appStringToCoreString(appdata.toString()));
 		}
 		if( !message || message->isOutgoing()  )

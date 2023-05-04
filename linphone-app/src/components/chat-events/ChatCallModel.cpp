@@ -41,7 +41,7 @@ ChatCallModel::ChatCallModel ( std::shared_ptr<linphone::CallLog> callLog, const
 	}else{
 		mTimestamp = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
 		if(hasReceived)
-			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch((mCallLog->getData<time_t>("receivedTime") + callLog->getDuration()) * 1000);
+			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch(mCallLog->getData<time_t>("receivedTime") + (callLog->getDuration() * 1000));
 		else
 			mReceivedTimestamp = mTimestamp;
 	}
