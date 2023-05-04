@@ -313,7 +313,7 @@ Rectangle {
 				anchors.bottomMargin: 10
 				anchors.right: parent.right
 				anchors.rightMargin: 35
-				visible: chat.isIndexAfter(chat.count-1)
+				visible: !chat.endIsDisplayed
 				onVisibleChanged: updateMarkAsRead()
 				Component.onCompleted: updateMarkAsRead()
 				function updateMarkAsRead(){

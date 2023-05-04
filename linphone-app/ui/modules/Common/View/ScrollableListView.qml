@@ -13,30 +13,7 @@ ListView {
 	
 	property bool fitCacheToContent: true
 	property bool bindToEnd: false
-	
-	function getVisibleIndex(checkMax) {
-		var center_x = view.x + view.width / 2
-		var index = -1
-		var yCheck = 0
-		var direction = checkMax ? -1 : 1
-		var yStart = view.y + view.contentY + (checkMax ? view.height : 0)
-		var yStep = 5
-		while(index<0 && yCheck < view.height){
-			index = indexAt( center_x, yStart + yCheck * direction)
-			yCheck += yStep
-		}
-		return index
-	}
-	function getVisibleIndexRange() {
-		return [getVisibleIndex(0), getVisibleIndex(1)]
-	}
-	function isIndexVisible(index){
-		return getVisibleIndex(0) <= index && index <= getVisibleIndex(1)
-	}
-	function isIndexAfter(index){
-		return getVisibleIndex(1) < index
-	}
-	
+	property bool endIsDisplayed: !vScrollBar.visible ||( vScrollBar.visualPosition + vScrollBar.visualSize) >= 1.0
 	// ---------------------------------------------------------------------------
 	
 	ScrollBar.vertical: ForceScrollBar {
