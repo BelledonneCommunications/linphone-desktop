@@ -1481,17 +1481,21 @@ QFont SettingsModel::getTextMessageFont() const{
 
 void SettingsModel::setTextMessageFont(const QFont& font){
 	QString family;
-	if(font == QFont())
+	int pointSize;
+	if(font == QFont()){
 		family = Constants::DefaultFont;
-	else
+		pointSize = Constants::DefaultFontPointSize;
+	}else{
 		family = font.family();
+		pointSize = font.pointSize();
+	}
 	mConfig->setString(UiSection, "text_message_font", Utils::appStringToCoreString(family));
-	setTextMessageFontSize(font.pointSize());
+	setTextMessageFontSize(pointSize);
 	emit textMessageFontChanged(font);
 }
 
 int SettingsModel::getTextMessageFontSize() const{
-	return mConfig->getInt(UiSection, "text_message_font_size", 10);
+	return mConfig->getInt(UiSection, "text_message_font_size", Constants::DefaultFontPointSize);
 }
 
 void SettingsModel::setTextMessageFontSize(const int& size){
@@ -1507,16 +1511,21 @@ QFont SettingsModel::getEmojiFont() const{
 
 void SettingsModel::setEmojiFont(const QFont& font){
 	QString family;
-	if(font == QFont())
+	int pointSize;
+	if(font == QFont()){
 		family = Constants::DefaultEmojiFont;
-	else
+		pointSize = Constants::DefaultEmojiFontPointSize;
+	}else{
 		family = font.family();
+		pointSize = font.pointSize();
+	}
 	mConfig->setString(UiSection, "emoji_font", Utils::appStringToCoreString(family));
+	setEmojiFontSize(pointSize);
 	emit emojiFontChanged(font);
 }
 
 int SettingsModel::getEmojiFontSize() const{
-	return mConfig->getInt(UiSection, "emoji_font_size", 10);
+	return mConfig->getInt(UiSection, "emoji_font_size", Constants::DefaultEmojiFontPointSize);
 }
 
 void SettingsModel::setEmojiFontSize(const int& size){
