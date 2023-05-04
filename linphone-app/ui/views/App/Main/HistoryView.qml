@@ -64,6 +64,7 @@ ColumnLayout  {
 								? UtilsCpp.getDisplayName(historyView._sipAddressObserver.peerAddress)
 								: null
 				visible: peerAddress
+				isOneToOne: !historyView.entry || !historyView.entry.wasConference
 			}
 			
 			ContactDescription {
@@ -86,7 +87,7 @@ ColumnLayout  {
 				ActionBar {
 					anchors.verticalCenter: parent.verticalCenter
 					iconSize: HistoryViewStyle.bar.actions.call.iconSize
-					visible: historyView.entry ? !historyView.entry.wasConference : false
+					visible: historyView.entry || false
 					
 					ActionButton {
 						isCustom: true
@@ -110,7 +111,7 @@ ColumnLayout  {
 						backgroundRadius: 90
 						colorSet: HistoryViewStyle.chat
 						
-						visible: peerAddress && SettingsModel.standardChatEnabled && SettingsModel.getShowStartChatButton() 
+						visible: peerAddress && SettingsModel.standardChatEnabled && SettingsModel.getShowStartChatButton() && !historyView.entry.wasConference
 						
 						onClicked: CallsListModel.launchChat(historyView.peerAddress, 0)
 					}
@@ -118,7 +119,7 @@ ColumnLayout  {
 						isCustom: true
 						backgroundRadius: 1000
 						colorSet: HistoryViewStyle.chat
-						visible: peerAddress && SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton()
+						visible: peerAddress && SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton() && !historyView.entry.wasConference
 						onClicked: CallsListModel.launchChat(historyView.peerAddress, 1)
 						Icon{
 							icon:'secure_level_1'
