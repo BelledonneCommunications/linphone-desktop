@@ -3388,6 +3388,16 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
         <translation>If a number is entered, apply the prefix to number</translation>
     </message>
+    <message>
+        <source>advancedTitle</source>
+        <extracomment>&apos;Advanced&apos; : Option title for advanced option in account parameters.</extracomment>
+        <translation>Advanced</translation>
+    </message>
+    <message>
+        <source>enableBundleMode</source>
+        <extracomment>&apos;Bundle mode&apos; : Option title to enable the RTP bundle mode.</extracomment>
+        <translation>Bundle mode</translation>
+    </message>
 </context>
 <context>
     <name>SettingsTunnel</name>

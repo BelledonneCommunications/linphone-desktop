@@ -69,6 +69,8 @@ function initForm (account) {
   stunServer.text = config.stunServer
   turnPassword.text = config.turnPassword
   turnUser.text = config.turnUser
+  
+  rtpBundleEnabled.checked = config.rtpBundleEnabled  
 
   if (account) {
     dialog._sipAddressOk = true
@@ -107,7 +109,8 @@ function validAccount (account) {
 		turnEnabled: turnEnabled.checked,
 		stunServer: stunServer.text,
 		turnUser: turnUser.text,
-		turnPassword: turnPassword.text
+		turnPassword: turnPassword.text,
+		rtpBundleEnabled: rtpBundleEnabled.checked
 	  }
 	  
   if (gAccount && Linphone.AccountSettingsModel.addOrUpdateAccount(gAccount, data)
@@ -132,7 +135,9 @@ function handleVideoConferenceUriChanged (uri) {
 }
 
 function handleLimeServerUrlChanged (uri) {
-  dialog._limeServerUrlOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)	
+  dialog._limeServerUrlOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)
+  if(!dialog._limeServerUrlOk)
+	console.log("Bad URI: " +uri)
 }
 
 function handleServerAddressChanged (address) {

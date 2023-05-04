@@ -175,6 +175,7 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 	map["dialPrefix"] = Utils::coreStringToAppString(accountParams->getInternationalPrefix());
 	map["dialPrefixCallChat"] = accountParams->getUseInternationalPrefixForCallsAndChats();
 	map["dialEscapePlus"] = accountParams->dialEscapePlusEnabled();
+	map["rtpBundleEnabled"] = accountParams->rtpBundleEnabled();
 	
 	shared_ptr<linphone::NatPolicy> natPolicy = accountParams->getNatPolicy();
 	bool createdNat = !natPolicy;
@@ -182,6 +183,7 @@ QVariantMap AccountSettingsModel::getAccountDescription (const shared_ptr<linpho
 		natPolicy = CoreManager::getInstance()->getCore()->createNatPolicy();
 	map["iceEnabled"] = natPolicy->iceEnabled();
 	map["turnEnabled"] = natPolicy->turnEnabled();
+	
 	
 	const string &turnUser(natPolicy->getStunServerUsername());
 	const string &stunServer(natPolicy->getStunServer());
@@ -355,7 +357,7 @@ bool AccountSettingsModel::addOrUpdateAccount(
 	if(data.contains("avpfInterval"))
 		accountParams->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
 	if(data.contains("registerEnabled"))
-		accountParams->enableRegister(data.contains("registerEnabled") ? data["registerEnabled"].toBool() : true);
+		accountParams->enableRegister(data["registerEnabled"].toBool());
 	if(data.contains("publishPresence")) {
 		newPublishPresence = accountParams->publishEnabled() != data["publishPresence"].toBool();
 		accountParams->enablePublish(data["publishPresence"].toBool());
@@ -372,6 +374,8 @@ bool AccountSettingsModel::addOrUpdateAccount(
 		accountParams->setUseInternationalPrefixForCallsAndChats(data["dialPrefixCallChat"].toBool());
 	if(data.contains("dialEscapePlus"))
 		accountParams->enableDialEscapePlus(data["dialEscapePlus"].toBool());
+	if(data.contains("rtpBundleEnabled"))
+		accountParams->enableRtpBundle(data["rtpBundleEnabled"].toBool());
 	
 	
 	shared_ptr<linphone::NatPolicy> natPolicy = accountParams->getNatPolicy();

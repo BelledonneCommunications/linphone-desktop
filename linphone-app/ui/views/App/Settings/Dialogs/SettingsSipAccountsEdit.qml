@@ -381,6 +381,28 @@ DialogPlus {
 					}
 				}
 			}
+			// -----------------------------------------------------------------------
+			// Advanced
+			// -----------------------------------------------------------------------
+			
+			Form {
+				//: 'Advanced' : Option title for advanced option in account parameters.
+				title: qsTr('advancedTitle')
+				width: parent.width
+				
+				FormLine {
+					FormGroup {
+						//: 'Bundle mode' : Option title to enable the RTP bundle mode.
+						label: qsTr('enableBundleMode')
+						
+						Switch {
+							id: rtpBundleEnabled
+							
+							onClicked: checked = !checked
+						}
+					}
+				}
+			}
 		}
 	}
 }
