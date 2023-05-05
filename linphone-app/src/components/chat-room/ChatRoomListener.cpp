@@ -44,6 +44,9 @@ void ChatRoomListener::onMessagesReceived(const std::shared_ptr<linphone::ChatRo
 void ChatRoomListener::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	emit newEvent(chatRoom, eventLog);
 }
+void ChatRoomListener::onNewEvents(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::EventLog>> & eventLogs){
+	emit newEvents(chatRoom, eventLogs);
+}
 void ChatRoomListener::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	emit chatMessageReceived(chatRoom, eventLog);
 }

@@ -20,11 +20,35 @@
 
 #include <QQmlApplicationEngine>
 
-#include "app/App.hpp"
-
 #include "ChatEvent.hpp"
 
+#include "app/App.hpp"
+#include "utils/Utils.hpp"
+
+
+
+
 // =============================================================================
+
+ChatEvent::AppDataManager::AppDataManager(const QString& appdata){
+	if(!appdata.isEmpty()){
+		for(QString pair : appdata.split(';')){
+			QStringList fields = pair.split(':');
+			if(fields.size() > 1)
+				mData[fields[1]] = fields[0];
+			else
+				qWarning() << "Bad or too old appdata. It need a compatibility parsing : " << appdata;
+		}
+	}
+}
+
+QString ChatEvent::AppDataManager::toString(){
+	QStringList pairs;
+	for(QMap<QString,QString>::iterator it = mData.begin() ; it != mData.end() ; ++it){
+		pairs << it.value() + ":" + it.key();
+	}
+	return pairs.join(';');
+}
 
 ChatEvent::ChatEvent (ChatRoomModel::EntryType type, QObject * parent) : QObject(parent){
 	mType = type;

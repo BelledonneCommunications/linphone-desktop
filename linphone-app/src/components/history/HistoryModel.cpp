@@ -44,10 +44,7 @@ using namespace std;
 static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
 	dest["type"] = HistoryModel::CallEntry;
 	dest["timestamp"] = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
-	if(callLog->dataExists("receivedTime"))
-		dest["receivedTimestamp"] = QDateTime::fromMSecsSinceEpoch(callLog->getData<time_t>("receivedTime"));
-	else
-		dest["receivedTimestamp"] = dest["timestamp"];
+	dest["receivedTimestamp"] = dest["timestamp"];
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = true;
@@ -63,10 +60,7 @@ static inline void fillCallStartEntry (QVariantMap &dest, const shared_ptr<linph
 static inline void fillCallEndEntry (QVariantMap &dest, const shared_ptr<linphone::CallLog> &callLog) {
 	dest["type"] = HistoryModel::CallEntry;
 	dest["timestamp"] = QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000);
-	if(callLog->dataExists("receivedTime"))
-		dest["receivedTimestamp"] = QDateTime::fromMSecsSinceEpoch(callLog->getData<time_t>("receivedTime") + (callLog->getDuration() * 1000));
-	else
-		dest["receivedTimestamp"] = dest["timestamp"];
+	dest["receivedTimestamp"] = dest["timestamp"];
 	dest["isOutgoing"] = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	dest["status"] = static_cast<HistoryModel::CallStatus>(callLog->getStatus());
 	dest["isStart"] = false;

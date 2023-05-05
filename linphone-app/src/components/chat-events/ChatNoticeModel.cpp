@@ -34,10 +34,7 @@ ChatNoticeModel::ChatNoticeModel ( std::shared_ptr<linphone::EventLog> eventLog,
 	mEventLogType = LinphoneEnums::EventLogType::EventLogTypeNone;
 	setEventLogType(LinphoneEnums::fromLinphone(mEventLog->getType()));
 	mTimestamp = QDateTime::fromMSecsSinceEpoch(eventLog->getCreationTime() * 1000);
-	if(mEventLog->dataExists("receivedTime"))
-		mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch(mEventLog->getData<time_t>("receivedTime"));
-	else
-		mReceivedTimestamp = mTimestamp;
+	mReceivedTimestamp = mTimestamp;
 }
 
 ChatNoticeModel::ChatNoticeModel ( NoticeType noticeType, const QDateTime& timestamp, const QDateTime& receivedTimestamp, const QString& txt, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::NoticeEntry, parent) {

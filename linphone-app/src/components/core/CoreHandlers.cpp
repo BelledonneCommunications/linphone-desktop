@@ -229,13 +229,7 @@ void CoreHandlers::onMessagesReceived (
 	
 	appSettings.beginGroup("chatrooms");
 	for(auto message : messages){
-		if(message){
-			auto chatRoom = message->getChatRoom();
-			auto dbMessage = chatRoom->findMessage(message->getMessageId());
-			auto appdata = ChatMessageModel::AppDataManager(QString::fromStdString(dbMessage->getAppdata()));
-			appdata.mData["receivedTime"] = QString::number(QDateTime::currentMSecsSinceEpoch());
-			dbMessage->setAppdata(Utils::appStringToCoreString(appdata.toString()));
-		}
+		if(message) ChatMessageModel::initReceivedTimestamp(message);
 		if( !message || message->isOutgoing()  )
 			continue;
 		// 1. Do not notify if chat is not activated.

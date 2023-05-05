@@ -41,6 +41,14 @@ public:
 	
 	virtual void deleteEvent();
 	
+	class AppDataManager{// Used to manage appdata to store persistant data
+	public:
+		AppDataManager(const QString&);
+		QMap<QString, QString> mData;// Path / ID
+		
+		QString toString();
+	};
+	
 protected: 
 	QDateTime mTimestamp;
 	QDateTime mReceivedTimestamp;

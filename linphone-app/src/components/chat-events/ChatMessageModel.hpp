@@ -46,15 +46,6 @@ public:
 	ChatMessageModel (std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);
 	virtual ~ChatMessageModel();
 	
-	class AppDataManager{// Used to manage appdata to store persistant data
-	public:
-		AppDataManager(const QString&);
-		QMap<QString, QString> mData;// Path / ID
-		
-		QString toString();
-	};
-	
-	
 	Q_PROPERTY(QString fromDisplayName READ getFromDisplayName CONSTANT)
 	Q_PROPERTY(QString fromDisplayNameReplyMessage READ getFromDisplayNameReplyMessage CONSTANT)
 	Q_PROPERTY(QString fromSipAddress READ getFromSipAddress CONSTANT)
@@ -116,12 +107,14 @@ public:
 	virtual void setTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime()) override;
 	virtual void setReceivedTimestamp(const QDateTime& timestamp = QDateTime::currentDateTime()) override;
 	
-	//----------------------------------------------------------------------------	
+	//----------------------------------------------------------------------------
 	
 	Q_INVOKABLE void resendMessage ();
 	
 	virtual void deleteEvent() override;
 	void updateFileTransferInformation();
+	static QDateTime initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message); // return received timestamp
+	
 	//		Linphone callbacks  
 	void onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer) ;
 	void onFileTransferSendChunk(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size, const std::shared_ptr<linphone::Buffer> & buffer) ;

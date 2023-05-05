@@ -76,6 +76,7 @@ void ChatRoomModel::connectTo(ChatRoomListener * listener){
 	connect(listener, &ChatRoomListener::messageReceived, this, &ChatRoomModel::onMessageReceived);
 	connect(listener, &ChatRoomListener::messagesReceived, this, &ChatRoomModel::onMessagesReceived);
 	connect(listener, &ChatRoomListener::newEvent, this, &ChatRoomModel::onNewEvent);
+	connect(listener, &ChatRoomListener::newEvents, this, &ChatRoomModel::onNewEvents);
 	connect(listener, &ChatRoomListener::chatMessageReceived, this, &ChatRoomModel::onChatMessageReceived);
 	connect(listener, &ChatRoomListener::chatMessagesReceived, this, &ChatRoomModel::onChatMessagesReceived);
 	connect(listener, &ChatRoomListener::chatMessageSending, this, &ChatRoomModel::onChatMessageSending);
@@ -980,8 +981,11 @@ void ChatRoomModel::initEntries(){
 		if(entries.size() >0){
 			beginInsertRows(QModelIndex(),0, entries.size()-1);
 			for(auto e : entries) {
-				if( e->mType == ChatRoomModel::EntryType::MessageEntry)
+				if( e->mType == ChatRoomModel::EntryType::MessageEntry){
 					connect(e.objectCast<ChatMessageModel>().get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
+					auto model = e.objectCast<ChatMessageModel>().get();
+					qDebug() << "Adding" << model->getReceivedTimestamp().toString("yyyy/MM/dd hh:mm:ss.zzz") << model->getTimestamp().toString("yyyy/MM/dd hh:mm:ss.zzz") << model->getChatMessage()->getUtf8Text().c_str();
+				}
 				mList.push_back(e);
 			}
 			endInsertRows();
@@ -1145,6 +1149,7 @@ QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::s
 	if(mIsInitialized && !exists(message)){
 		model = ChatMessageModel::create(message);
 		if(model){
+			qDebug() << "Adding at end" << model->getReceivedTimestamp().toString("hh:mm:ss.zzz") << model->getTimestamp().toString("hh:mm:ss.zzz") << message->getUtf8Text().c_str();
 			connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 			add(model);
@@ -1282,11 +1287,14 @@ void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRo
 }
 
 void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
+	if(message) ChatMessageModel::initReceivedTimestamp(message);
 	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
 	updateLastUpdateTime();
 }
 
 void ChatRoomModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::ChatMessage>> & messages){
+	for(auto message : messages)
+		if(message) ChatMessageModel::initReceivedTimestamp(message);
 	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
 	updateLastUpdateTime();
 }
@@ -1303,9 +1311,27 @@ void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatR
 	}
 }
 
+void ChatRoomModel::onNewEvents(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::EventLog>> & eventLogs){
+	int missCount = 0;
+	bool updatePeerAddress = false;
+	for(auto eventLog : eventLogs)
+		if(eventLog){
+			if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnded )
+				++missCount;
+			if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated )
+				updatePeerAddress = true;
+		}
+	if(missCount > 0)
+		setMissedCallsCount(mMissedCallsCount+missCount);
+	if(updatePeerAddress)
+		emit fullPeerAddressChanged();
+	updateLastUpdateTime();
+}
+
 void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
 	auto message = eventLog->getChatMessage();
 	if(message){
+		ChatMessageModel::initReceivedTimestamp(message);
 		insertMessageAtEnd(message);
 		updateLastUpdateTime();
 		emit messageReceived(message);
@@ -1316,6 +1342,7 @@ void ChatRoomModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatR
 	for(auto eventLog : eventLogs){
 		auto message = eventLog->getChatMessage();
 		if(message){
+			ChatMessageModel::initReceivedTimestamp(message);
 			insertMessageAtEnd(message);
 			updateLastUpdateTime();
 			emit messageReceived(message);
@@ -1326,6 +1353,7 @@ void ChatRoomModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatR
 void ChatRoomModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	auto message = eventLog->getChatMessage();
 	if(message){
+		ChatMessageModel::initReceivedTimestamp(message);
 		insertMessageAtEnd(message);
 		updateLastUpdateTime();
 		emit messageReceived(message);
