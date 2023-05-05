@@ -74,6 +74,7 @@ public:
 	Q_INVOKABLE static bool canHaveThumbnail(const QString& path);
 	Q_INVOKABLE static bool isPhoneNumber(const QString& txt);
 	Q_INVOKABLE static bool isUsername(const QString& txt);	// Check with Regex
+	Q_INVOKABLE static bool isValidUrl(const QString& url);
 	Q_INVOKABLE QSize getImageSize(const QString& url);
 	Q_INVOKABLE static QPoint getCursorPosition();
 	Q_INVOKABLE static QString getFileChecksum(const QString& filePath);

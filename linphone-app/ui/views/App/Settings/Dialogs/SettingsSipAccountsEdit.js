@@ -134,12 +134,6 @@ function handleVideoConferenceUriChanged (uri) {
   dialog._videoConferenceUriOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)	
 }
 
-function handleLimeServerUrlChanged (uri) {
-  dialog._limeServerUrlOk = uri=='' || Linphone.SipAddressesModel.addressIsValid(uri)
-  if(!dialog._limeServerUrlOk)
-	console.log("Bad URI: " +uri)
-}
-
 function handleServerAddressChanged (address) {
   if (address.length === 0) {
     dialog._serverAddressOk = false

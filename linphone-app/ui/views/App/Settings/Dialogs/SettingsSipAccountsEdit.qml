@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import UtilsCpp 1.0
 
 import App.Styles 1.0
 
@@ -177,7 +178,7 @@ DialogPlus {
 							//: "invalid E2E encryption keys server URL" : Error text about E2E encryption keys server URL.
 							error: dialog._limeServerUrlOk ? '' : qsTr("invalidLimeServerUrl")
 							
-							onTextChanged: Logic.handleLimeServerUrlChanged(text)
+							onTextChanged: dialog._limeServerUrlOk = text == '' || UtilsCpp.isValidUrl(text)
 							Keys.onEnterPressed:  nextItemInFocusChain().forceActiveFocus()
 							Keys.onReturnPressed:  nextItemInFocusChain().forceActiveFocus()
 						}

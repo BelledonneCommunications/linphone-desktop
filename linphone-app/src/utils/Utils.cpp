@@ -674,6 +674,10 @@ bool Utils::isUsername(const QString& txt){
 	return match.hasMatch(); // true
 }
 
+bool Utils::isValidUrl(const QString& url){
+	return QUrl(url).isValid();
+}
+
 QSize Utils::getImageSize(const QString& url){
 	QString path;
 	QUrl urlDecode(url);

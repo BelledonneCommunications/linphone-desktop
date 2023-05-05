@@ -341,7 +341,7 @@ bool AccountSettingsModel::addOrUpdateAccount(
 		accountParams->setExpires(data["registrationDuration"].toInt());
 	if(data.contains("publishDuration"))
 		accountParams->setPublishExpires(data["publishDuration"].toInt());
-	if(data.contains("route")) {
+	if(data.contains("route") && data["route"].toString() != "") {
 		std::list<std::shared_ptr<linphone::Address>> routes;
 		routes.push_back(Utils::interpretUrl(data["route"].toString()));
 		accountParams->setRoutesAddresses(routes);
