@@ -411,9 +411,13 @@ Rectangle {
 						placeholderText: qsTr('newMessagePlaceholder')
 						recordAudioToggled: RecorderManager.haveVocalRecorder && RecorderManager.getVocalRecorder().state != LinphoneEnums.RecorderStateClosed
 						emojiVisible: chatEmojis.visible
-						
 						onDropped: Logic.handleFilesDropped(files)
-						onTextChanged: Logic.handleTextChanged(getText())
+						property bool componentReady: false
+						onTextChanged: {// This slot can be call before the item has been completed because of Rich text. So the cache must not take it account.
+								if(componentReady) {
+									proxyModel.cachedText=text
+								}
+							}
 						onValidText: {
 							textArea.text = ''
 							chat.bindToEnd = true
@@ -428,7 +432,7 @@ Rectangle {
 						onEmojiClicked: {
 							chatEmojis.visible = !chatEmojis.visible
 						}
-						Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length}
+						Component.onCompleted: {text = proxyModel.cachedText; cursorPosition=text.length;componentReady=true}
 						Rectangle{
 							anchors.fill:parent
 							color:'white'

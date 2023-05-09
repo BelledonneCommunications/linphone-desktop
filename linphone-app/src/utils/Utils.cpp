@@ -638,7 +638,6 @@ bool Utils::isImage(const QString& path){
 	}else if(!QMimeDatabase().mimeTypeForFile(info).name().contains("image/"))
 		return false;
 	QImageReader reader(path);
-	qWarning() << reader.imageCount();
 	return reader.canRead() && reader.imageCount() == 1;
 }
 

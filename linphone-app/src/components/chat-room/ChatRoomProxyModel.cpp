@@ -110,7 +110,6 @@ void ChatRoomProxyModel::sendMessage(const QString &text){
 void ChatRoomProxyModel::compose (const QString& text) {
 	if (mChatRoomModel && !text.isEmpty())
 		mChatRoomModel->compose();
-	gCachedText = text;
 }
 
 int ChatRoomProxyModel::getEntryTypeFilter () {
@@ -253,6 +252,10 @@ QVariant ChatRoomProxyModel::getAt(int row){
 
 QString ChatRoomProxyModel::getCachedText() const{
 	return gCachedText;
+}
+
+void ChatRoomProxyModel::setCachedText(const QString& text){
+	gCachedText = text;
 }
 
 void ChatRoomProxyModel::setIsCall(const bool& isCall){

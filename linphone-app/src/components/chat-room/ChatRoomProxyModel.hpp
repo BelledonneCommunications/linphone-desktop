@@ -40,7 +40,7 @@ class ChatRoomProxyModel : public SortFilterProxyModel {
 	Q_PROPERTY(QString fullLocalAddress READ getFullLocalAddress WRITE setFullLocalAddress NOTIFY fullLocalAddressChanged)
 	Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel WRITE setChatRoomModel NOTIFY chatRoomModelChanged)
 	Q_PROPERTY(QList<QString> composers READ getComposers NOTIFY isRemoteComposingChanged)
-	Q_PROPERTY(QString cachedText READ getCachedText)
+	Q_PROPERTY(QString cachedText READ getCachedText WRITE setCachedText NOTIFY cachedTextChanged)
 	
 	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
 	Q_PROPERTY(bool markAsReadEnabled READ markAsReadEnabled WRITE enableMarkAsRead NOTIFY markAsReadEnabledChanged)// Focus is at end of the list. Used to reset message count if not at end
@@ -95,6 +95,7 @@ signals:
 	void entryTypeFilterChanged (int type);
 	void filterTextChanged();
 	void isCallChanged();
+	void cachedTextChanged();
 	
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
@@ -122,6 +123,7 @@ private:
 	QList<QString> getComposers () const;
 	
 	QString getCachedText() const;
+	void setCachedText(const QString& text);
 	
 	void reload (ChatRoomModel *chatRoomModel);
 	
