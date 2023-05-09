@@ -624,25 +624,27 @@ bool Utils::isMe(const std::shared_ptr<const linphone::Address>& address){
 bool Utils::isAnimatedImage(const QString& path){
 	if(path.isEmpty()) return false;
 	QFileInfo info(path);
-	if( !info.exists())
+	if( !info.exists() || !QMimeDatabase().mimeTypeForFile(info).name().contains("image/"))
 		return false;
 	QImageReader reader(path);
-	return reader.supportsAnimation() && reader.imageCount() > 1;
+	return reader.canRead() && reader.supportsAnimation() && reader.imageCount() > 1;
 }
 
 bool Utils::isImage(const QString& path){
 	if(path.isEmpty()) return false;
 	QFileInfo info(path);
 	if( !info.exists()){
-		return QMimeDatabase().mimeTypeForFile(info, QMimeDatabase::MatchExtension).name().contains("image");
-	}
+		return QMimeDatabase().mimeTypeForFile(info, QMimeDatabase::MatchExtension).name().contains("image/");
+	}else if(!QMimeDatabase().mimeTypeForFile(info).name().contains("image/"))
+		return false;
 	QImageReader reader(path);
-	return reader.imageCount() == 1;
+	qWarning() << reader.imageCount();
+	return reader.canRead() && reader.imageCount() == 1;
 }
 
 bool Utils::isVideo(const QString& path){
 	if(path.isEmpty()) return false;
-	return QMimeDatabase().mimeTypeForFile(path).name().contains("video");
+	return QMimeDatabase().mimeTypeForFile(path).name().contains("video/");
 }
 
 bool Utils::isPdf(const QString& path){

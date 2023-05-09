@@ -160,19 +160,45 @@ QImage ImageModel::createThumbnail(const QString& path){
 				originalImage = QImage(path, format);
 			else if(Utils::isVideo(path)){
 				QObject context;
+				int mediaStep = 0;
 				QMediaPlayer player(&context);
-				player.setMedia(QUrl::fromLocalFile(path));
-				player.setPosition(player.duration() / 2);
 				VideoFrameGrabber grabber(&context);
-				player.setVideoOutput(&grabber);
+// Media connections
+				QObject::connect(&player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), &context, [&context, &mediaStep, path](QMediaPlayer::Error error) mutable{
+					mediaStep = -1;
+				});
+				QObject::connect(&player, &QMediaPlayer::mediaStatusChanged, &context, [&context, &player, &mediaStep](QMediaPlayer::MediaStatus status) mutable{
+					switch(status){
+					case QMediaPlayer::LoadedMedia : if(mediaStep == 0){
+							if( player.isVideoAvailable() )
+								mediaStep = 1;
+							else
+								mediaStep = -1;
+						}
+						break;
+					case QMediaPlayer::UnknownMediaStatus:
+					case QMediaPlayer::InvalidMedia:
+					case QMediaPlayer::EndOfMedia:
+						mediaStep = -1;
+						break;
+					default:{}
+					}
+				});
 				QObject::connect(&grabber, &VideoFrameGrabber::frameAvailable, &context, [&context,&originalImage, &player](QImage frame) mutable{
 					originalImage = frame.copy();
 					player.stop();
 				}, Qt::DirectConnection);
-				player.play();
+// Processing
+				player.setVideoOutput(&grabber);
+				player.setMedia(QUrl::fromLocalFile(path));
 				do{
 					qApp->processEvents();
-				}while(player.state() != QMediaPlayer::State::StoppedState);
+					if(mediaStep == 1){
+						mediaStep = 2;
+						player.setPosition(player.duration() / 2);
+						player.play();
+					}
+				}while(mediaStep >= 0 );
 			}
 		}
 		if (!originalImage.isNull()){

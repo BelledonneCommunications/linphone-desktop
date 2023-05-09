@@ -984,7 +984,7 @@ void ChatRoomModel::initEntries(){
 				if( e->mType == ChatRoomModel::EntryType::MessageEntry){
 					connect(e.objectCast<ChatMessageModel>().get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 					auto model = e.objectCast<ChatMessageModel>().get();
-					qDebug() << "Adding" << model->getReceivedTimestamp().toString("yyyy/MM/dd hh:mm:ss.zzz") << model->getTimestamp().toString("yyyy/MM/dd hh:mm:ss.zzz") << model->getChatMessage()->getUtf8Text().c_str();
+					qDebug() << "Adding" << model->getReceivedTimestamp().toString("yyyy/MM/dd hh:mm:ss.zzz") << model->getTimestamp().toString("yyyy/MM/dd hh:mm:ss.zzz") << QString(model->getChatMessage()->getUtf8Text().c_str()).left(5);
 				}
 				mList.push_back(e);
 			}
@@ -1149,7 +1149,7 @@ QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::s
 	if(mIsInitialized && !exists(message)){
 		model = ChatMessageModel::create(message);
 		if(model){
-			qDebug() << "Adding at end" << model->getReceivedTimestamp().toString("hh:mm:ss.zzz") << model->getTimestamp().toString("hh:mm:ss.zzz") << message->getUtf8Text().c_str();
+			qDebug() << "Adding at end" << model->getReceivedTimestamp().toString("hh:mm:ss.zzz") << model->getTimestamp().toString("hh:mm:ss.zzz") << QString(message->getUtf8Text().c_str()).left(5);
 			connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
 			add(model);
