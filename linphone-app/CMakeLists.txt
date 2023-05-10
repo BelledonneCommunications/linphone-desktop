@@ -725,18 +725,7 @@ if(ENABLE_QT_KEYCHAIN)
 	list(APPEND LIBRARIES_LIST ${QtKeyChain_LIBRARIES})
 endif()
 
-if(WIN32)
-	foreach(LIBRARY ${LIBRARIES_LIST})# Search for lib full path
-		find_library(FIND_LIBRARY_ITEM_${LIBRARY} NAMES ${LIBRARY} lib${LIBRARY} REQUIRED)#find_library need a specific variable name each time
-		if(FIND_LIBRARY_ITEM_${LIBRARY})
-			list(APPEND LIBRARIES ${FIND_LIBRARY_ITEM_${LIBRARY}})
-		else()
-			message(SEND_ERROR "${LIBRARY} not found!")
-		endif()
-	endforeach()
-else()
-	list(APPEND LIBRARIES ${LIBRARIES_LIST})
-endif()
+list(APPEND LIBRARIES ${LIBRARIES_LIST})
 
 if(ENABLE_BUILD_VERBOSE)
 	message("LIBRARIES : ${LIBRARIES}")
@@ -777,10 +766,9 @@ target_link_libraries(${APP_LIBRARY} ${APP_PLUGIN})
 target_link_libraries(${TARGET_NAME} ${LIBRARIES})
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
-if(WIN32)
-	find_library(LDAP_LIBRARIES NAMES ldap libldap HINTS "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
-	find_library(LBER_LIBRARIES NAMES lber liblber HINTS "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
-	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES} ${LBER_LIBRARIES})
+if(WIN32 AND ENABLE_LDAP)
+	find_package(OpenLDAP REQUIRED)
+	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${OPENLDAP_LIBRARIES})
 endif()
 
 add_dependencies(${APP_LIBRARY} update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})
