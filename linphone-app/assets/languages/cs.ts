@@ -2506,6 +2506,10 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
         <translation>Online %1</translation>
     </message>
+    <message>
+        <source>presenceAway</source>
+        <translation type="unfinished">Nepřítomný</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

@@ -18,6 +18,8 @@ Item {
 			return qsTr('presenceOnline');
 		else if(visible){
 			var d = new Date(timestamp)
+			if(isNaN(d))
+				return qsTr('presenceAway')
 			var yesterday = new Date()
 			yesterday.setDate(yesterday.getDate() - 1)
 			if (Utils.equalDate(d, new Date()))

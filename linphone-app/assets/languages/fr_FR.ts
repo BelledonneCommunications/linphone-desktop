@@ -2492,6 +2492,10 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
         <translation>En ligne le %1</translation>
     </message>
+    <message>
+        <source>presenceAway</source>
+        <translation type="unfinished">Absent</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
