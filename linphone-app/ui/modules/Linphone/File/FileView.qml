@@ -255,7 +255,7 @@ Item {
 		id: waitingProvider
 		
 		anchors.fill: parent
-		sourceComponent: thumbnailProvider.sourceComponent == thumbnailImage && thumbnailProvider.item.status != Image.Ready
+		sourceComponent: thumbnailProvider.sourceComponent == thumbnailImage && (thumbnailProvider.item.status != Image.Ready || thumbnailProvider.item.sourceSize.height == 0)
 							? extension 
 							: undefined
 		states: State {

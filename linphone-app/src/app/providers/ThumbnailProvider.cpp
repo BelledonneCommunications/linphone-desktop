@@ -27,14 +27,21 @@
 
 const QString ThumbnailProvider::ProviderId = "thumbnail";
 
-ThumbnailProvider::ThumbnailProvider () : QQuickImageProvider(
-  QQmlImageProviderBase::Image,
-  QQmlImageProviderBase::ForceAsynchronousImageLoading
-) {
+ThumbnailAsyncImageResponse::ThumbnailAsyncImageResponse(const QString &id, const QSize &requestedSize) {
+	mPath = id;
+	connect(&mListener, &VideoFrameGrabberListener::imageGrabbed, this, &ThumbnailAsyncImageResponse::imageGrabbed);
+	ImageModel::retrieveImageAsync(id, &mListener);
 }
 
-QImage ThumbnailProvider::requestImage (const QString &id, QSize *size, const QSize &) {
-	QImage image = ImageModel::createThumbnail(id);
-	*size = image.size();
-	return image;
+void ThumbnailAsyncImageResponse::imageGrabbed(QImage image) {
+	mImage = ImageModel::createThumbnail(mPath, image);
+	emit finished();
+}
+
+QQuickTextureFactory *ThumbnailAsyncImageResponse::textureFactory() const {
+	return QQuickTextureFactory::textureFactoryForImage(mImage);
+}
+QQuickImageResponse *ThumbnailProvider::requestImageResponse(const QString &id, const QSize &requestedSize){
+	ThumbnailAsyncImageResponse *response = new ThumbnailAsyncImageResponse(id, requestedSize);
+	return response;
 }

@@ -261,6 +261,7 @@ set(SOURCES
 	src/components/other/images/ImageModel.cpp
 	src/components/other/images/ImageListModel.cpp
 	src/components/other/images/ImageProxyModel.cpp
+	src/components/other/images/VideoFrameGrabber.cpp
 	src/components/other/text-to-speech/TextToSpeech.cpp
 	src/components/other/timeZone/TimeZoneModel.cpp
 	src/components/other/timeZone/TimeZoneListModel.cpp
@@ -402,6 +403,7 @@ set(HEADERS
 	src/components/other/images/ImageModel.hpp
 	src/components/other/images/ImageListModel.hpp
 	src/components/other/images/ImageProxyModel.hpp
+	src/components/other/images/VideoFrameGrabber.hpp
 	src/components/other/desktop-tools/DesktopTools.hpp
 	src/components/other/text-to-speech/TextToSpeech.hpp
 	src/components/other/timeZone/TimeZoneModel.hpp

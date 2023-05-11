@@ -29,35 +29,20 @@
 
 #include "utils/LinphoneEnums.hpp"
 #include <QAbstractVideoSurface>
+#include <QMediaPlayer>
 
-
-class VideoFrameGrabber : public QAbstractVideoSurface {
-	Q_OBJECT
-	public:
-		VideoFrameGrabber(QObject *parent = 0);
-
-		QList<QVideoFrame::PixelFormat> supportedPixelFormats(
-            QAbstractVideoBuffer::HandleType handleType = QAbstractVideoBuffer::NoHandle) const override;
-		bool isFormatSupported(const QVideoSurfaceFormat &format) const override;
-
-		bool start(const QVideoSurfaceFormat &format) override;
-		void stop() override;
-		bool present(const QVideoFrame &frame) override;
-
-	signals:
-		void frameAvailable(QImage frame);
-};
+class VideoFrameGrabberListener;
 
 class ImageModel : public QObject {
-    Q_OBJECT
-
+	Q_OBJECT
+	
 public:
-    ImageModel (const QString& id, const QString& path, const QString& description, QObject * parent = nullptr);
+	ImageModel (const QString& id, const QString& path, const QString& description, QObject * parent = nullptr);
 	
 	Q_PROPERTY(QString path MEMBER mPath WRITE setPath NOTIFY pathChanged)
 	Q_PROPERTY(QString description MEMBER mDescription WRITE setDescription NOTIFY descriptionChanged)
 	Q_PROPERTY(QString id MEMBER mId NOTIFY idChanged)
-  
+	
 	QString getPath() const;
 	QString getDescription() const;
 	QString getId() const;
@@ -66,13 +51,14 @@ public:
 	void setDescription(const QString& description);
 	Q_INVOKABLE void setUrl(const QUrl& url);
 	
-	static QImage createThumbnail(const QString& path);
+	static QImage createThumbnail(const QString& path, QImage originalImage);	// Build the thumbnail from an image.
+	static void retrieveImageAsync(const QString& path, VideoFrameGrabberListener* requester);	// Get an image from the path. When it is ready, the signal imageGrabbed() is send to the listener. It can be direct if this is not a media file.
 	
 signals:
 	void pathChanged();
 	void descriptionChanged();
 	void idChanged();
-
+	
 private:
 	QString mId;
 	QString mPath;

@@ -21,17 +21,32 @@
 #ifndef THUMBNAIL_PROVIDER_H_
 #define THUMBNAIL_PROVIDER_H_
 
-#include <QQuickImageProvider>
+#include <QQuickAsyncImageProvider>
 
+#include "components/other/images/VideoFrameGrabber.hpp"
+
+// Thumbnails are created asynchronously with QQuickAsyncImageProvider and not QQuickImageProvider.
+// This ensure to have async objects like QMediaPlayer and QAbstractVideoSurface while keeping them in the main thread (mandatory for VideoSurface).
+// If not, there seems to have some deadlocks in Qt library when GUI objects are deleted while still playing media.
 // =============================================================================
-
-class ThumbnailProvider : public QQuickImageProvider {
+class ThumbnailAsyncImageResponse : public QQuickImageResponse {
 public:
-  ThumbnailProvider ();
+	ThumbnailAsyncImageResponse(const QString &id, const QSize &requestedSize);
+	
+	QQuickTextureFactory *textureFactory() const override;	// Convert QImage into texture. If Image is null, then sourceSize will be egal to 0. So there will be no errors.
+	
+	void imageGrabbed(QImage image);
+	
+	QImage mImage;
+	QString mPath;
+	VideoFrameGrabberListener mListener;
+};
 
-  QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
-
-  static const QString ProviderId;
+class ThumbnailProvider : public QQuickAsyncImageProvider {
+public:
+	virtual QQuickImageResponse *requestImageResponse(const QString &id, const QSize &requestedSize) override;
+	
+	static const QString ProviderId;
 };
 
 #endif // THUMBNAIL_PROVIDER_H_
