@@ -45,6 +45,7 @@ ParticipantDeviceModel::ParticipantDeviceModel (CallModel * callModel, std::shar
 		connectTo(mParticipantDeviceListener.get());
 		device->addListener(mParticipantDeviceListener);
 		mState = device->getState();
+		mIsSpeaking = device->getIsSpeaking();
 	}
 	mCall = callModel;
 	if(mCall)
