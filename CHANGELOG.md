@@ -11,13 +11,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 - Accept/decline CLI commands.
 
-## 5.0.16 - undefined
+## 5.0.16 - 2023-05-12
 
 ### Fixed
 - Section date timezone in chat.
 - Use custom font for chat compose area.
 - Calling conference from history.
 - Speaking border display.
+- Replace double click on avatar by a simple click for copying address into the SmartSearchBar.
 - Update SDK to 5.2.60 (Active Speaker fix)
 
 ## 5.0.15 - 2023-04-11

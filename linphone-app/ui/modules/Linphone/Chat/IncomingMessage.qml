@@ -52,9 +52,9 @@ RowLayout {
 			TooltipArea{
 				delay:0
 				text:avatar.username+'\n'+$chatEntry.fromSipAddress
-				tooltipParent:mainRow
+				maxWidth: mainRow.width
 				isClickable: true
-				onDoubleClicked: {
+				onClicked: {
 					window.mainSearchBar.text = $chatEntry.fromSipAddress
 					}
 			}
