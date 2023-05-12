@@ -2263,7 +2263,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přijata hlasová zpráva!</translation>
     </message>
 </context>
 <context>
@@ -3412,12 +3412,12 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>advancedTitle</source>
         <extracomment>&apos;Advanced&apos; : Option title for advanced option in account parameters.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rozšířené</translation>
     </message>
     <message>
         <source>enableBundleMode</source>
         <extracomment>&apos;Bundle mode&apos; : Option title to enable the RTP bundle mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bundle režim</translation>
     </message>
 </context>
 <context>
