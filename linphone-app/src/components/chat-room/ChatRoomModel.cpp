@@ -1288,14 +1288,14 @@ void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRo
 }
 
 void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
-	if(message) ChatMessageModel::initReceivedTimestamp(message);
+	if(message) ChatMessageModel::initReceivedTimestamp(message, true);
 	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
 	updateLastUpdateTime();
 }
 
 void ChatRoomModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::ChatMessage>> & messages){
 	for(auto message : messages)
-		if(message) ChatMessageModel::initReceivedTimestamp(message);
+		if(message) ChatMessageModel::initReceivedTimestamp(message, true);
 	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
 	updateLastUpdateTime();
 }
@@ -1332,7 +1332,7 @@ void ChatRoomModel::onNewEvents(const std::shared_ptr<linphone::ChatRoom> & chat
 void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
 	auto message = eventLog->getChatMessage();
 	if(message){
-		ChatMessageModel::initReceivedTimestamp(message);
+		ChatMessageModel::initReceivedTimestamp(message, true);
 		insertMessageAtEnd(message);
 		updateLastUpdateTime();
 		emit messageReceived(message);
@@ -1343,7 +1343,7 @@ void ChatRoomModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatR
 	for(auto eventLog : eventLogs){
 		auto message = eventLog->getChatMessage();
 		if(message){
-			ChatMessageModel::initReceivedTimestamp(message);
+			ChatMessageModel::initReceivedTimestamp(message, true);
 			insertMessageAtEnd(message);
 			updateLastUpdateTime();
 			emit messageReceived(message);
@@ -1354,7 +1354,7 @@ void ChatRoomModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatR
 void ChatRoomModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	auto message = eventLog->getChatMessage();
 	if(message){
-		ChatMessageModel::initReceivedTimestamp(message);
+		ChatMessageModel::initReceivedTimestamp(message, true);
 		insertMessageAtEnd(message);
 		updateLastUpdateTime();
 		emit messageReceived(message);

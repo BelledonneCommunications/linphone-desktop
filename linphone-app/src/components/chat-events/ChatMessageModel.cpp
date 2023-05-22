@@ -90,7 +90,7 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 		mContent = txt;
 		
 		mTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessage->getTime() * 1000);
-		mReceivedTimestamp = ChatMessageModel::initReceivedTimestamp(chatMessage);
+		mReceivedTimestamp = ChatMessageModel::initReceivedTimestamp(chatMessage, false);
 	}
 	mWasDownloaded = false;
 
@@ -250,10 +250,10 @@ void ChatMessageModel::updateFileTransferInformation(){
 	mContentListModel->updateContents(this);
 }
 
-QDateTime ChatMessageModel::initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message){
+QDateTime ChatMessageModel::initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message, bool isNew){
 	auto appdata = ChatEvent::AppDataManager(QString::fromStdString(message->getAppdata()));
 	if(!appdata.mData.contains("receivedTime")){// Already set : Do not overwrite.
-		appdata.mData["receivedTime"] = QString::number(QDateTime::currentMSecsSinceEpoch());
+		appdata.mData["receivedTime"] = QString::number(isNew ? QDateTime::currentMSecsSinceEpoch() : message->getTime()*1000);
 		qDebug() << "New message received at " << QDateTime::fromMSecsSinceEpoch(appdata.mData["receivedTime"].toLongLong()).toString("yyyy/MM/dd hh:mm:ss.zzz");
 		message->setAppdata(Utils::appStringToCoreString(appdata.toString()));
 	}
