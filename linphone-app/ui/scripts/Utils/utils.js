@@ -492,13 +492,6 @@ function fromUTC(date){
                 date.getUTCDate(), date.getUTCHours(),
                 date.getUTCMinutes(), date.getUTCSeconds()));
 }
-// return EXACTLY what date has been set (not take account of Locale timezones, eg. Date(2000,0,1) will print january and not december if timezone lead there.)
-// Use this function for toLocaleString/toLocaleDateString or other
-function exactDate(date) {
-    var timeOffset = date.getTimezoneOffset() * 60000	// getTimezoneOffset == UTC - locale
-    var exactDate = new Date(date.valueOf() + timeOffset)	// Revert back JS timezone to get initial UTC
-    return exactDate
-}
 // -----------------------------------------------------------------------------
 
 function formatSize (size) {

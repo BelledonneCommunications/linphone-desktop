@@ -155,7 +155,7 @@ Rectangle {
 							horizontalAlignment: Text.AlignHCenter
 							verticalAlignment: Text.AlignVCenter
 							
-							text: Utils.exactDate(new Date(section)).toLocaleDateString(App.locale)
+							text: UtilsCpp.toDateString(section)
 						}
 					}
 				}

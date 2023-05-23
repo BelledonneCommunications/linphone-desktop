@@ -8,27 +8,29 @@ import Units 1.0
 Item{
 	id: mainItem
 		
-	property date selectedTime
+	property string selectedTime
 	property int border: 25
 	
 	property int centerPosition: Math.min(height, width)/2
 	property int middleMinSize: centerPosition - border	// Minus border
 	
-	signal newDate(date date)
-	signal clicked(date date)
+	signal newTime(string time)
+	signal clicked(string time)
 	
-	onNewDate: selectedTime = date
+	onNewTime: selectedTime = time
 	
-	function getDate(hText, mText){
-		var d = new Date()
-		if(hText || outer.currentItem)
-			d.setHours(hText ? hText : outer.currentItem.text)
-		if(mText || inner.currentItem)
-			d.setMinutes(mText ? mText : inner.currentItem.text)
-		d.setSeconds(0)
-		return d;
+	function getTime(hText, mText){
+		return (hText ? hText : outer.currentItem.text)+':'+(mText ? mText : inner.currentItem.text)
 	}
-	
+	function getHours(time){
+		var partsArray = time.split(':');
+		return partsArray[0]
+	}
+	function getMinutes(time){
+		var partsArray = time.split(':');
+		return partsArray[1]
+	}
+
 	PathView {
 		id: outer
 		model: 24
@@ -39,9 +41,9 @@ Item{
 		currentIndex:	0
 		Connections{// startX/Y begin from currentIndex. It must be set to 0 at first.
 			target: mainItem
-			onSelectedTimeChanged: outer.currentIndex = mainItem.selectedTime.getHours() % 24
+			onSelectedTimeChanged: outer.currentIndex = mainItem.getHours(mainItem.selectedTime) % 24
 		}
-		Component.onCompleted: currentIndex = mainItem.selectedTime.getHours() % 24
+		Component.onCompleted: currentIndex = mainItem.getHours(mainItem.selectedTime) % 24
 		
 		highlight: Rectangle {
 			id: rect
@@ -68,7 +70,7 @@ Item{
 			}
 			MouseArea {
 				anchors.fill: parent
-				onClicked: mainItem.selectedTime = mainItem.getDate(parent.text, undefined)
+				onClicked: mainItem.selectedTime = mainItem.getTime(parent.text, undefined)
 			}
 		}
 		
@@ -100,9 +102,9 @@ Item{
 		currentIndex:	0
 		Connections{// startX/Y begin from currentIndex. It must be set to 0 at first.
 			target: mainItem
-			onSelectedTimeChanged: inner.currentIndex = mainItem.selectedTime.getMinutes() / 5
+			onSelectedTimeChanged: inner.currentIndex = mainItem.getMinutes(mainItem.selectedTime) / 5
 		}
-		Component.onCompleted: currentIndex = mainItem.selectedTime.getMinutes() / 5
+		Component.onCompleted: currentIndex = mainItem.getMinutes(mainItem.selectedTime) / 5
 		
 		highlight: Rectangle {
 			width: 30 * 1.5
@@ -128,7 +130,7 @@ Item{
 			
 			MouseArea {
 				anchors.fill: parent
-				onClicked: mainItem.selectedTime = mainItem.getDate(undefined, parent.text)
+				onClicked: mainItem.selectedTime = mainItem.getTime(undefined, parent.text)
 			}
 		}
 		
@@ -176,7 +178,7 @@ Item{
 	MouseArea {
 		anchors.fill: selectedTimeArea
 		onClicked: {
-			mainItem.selectedTime = mainItem.getDate()
+			mainItem.selectedTime = mainItem.getTime()
 			mainItem.clicked(mainItem.selectedTime)
 		}
 	}
