@@ -72,7 +72,6 @@ void LdapListModel::add(){
 	connect(ldap.get(), &LdapModel::indexChanged, this, &LdapListModel::indexChanged);
 	ldap->init();
 	ProxyListModel::add(ldap);
-	emit layoutChanged();
 }
 
 void LdapListModel::remove (LdapModel *ldap) {

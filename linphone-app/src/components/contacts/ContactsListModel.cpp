@@ -63,7 +63,7 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 		return false;
 		
 	auto friendsList = CoreManager::getInstance()->getCore()->getFriendsLists();
-
+	emit layoutAboutToBeChanged();
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i) {
@@ -79,7 +79,7 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 	}
 	
 	endRemoveRows();
-	
+	emit layoutChanged();
 	return true;
 }
 
@@ -139,8 +139,6 @@ ContactModel *ContactsListModel::addContact (VcardModel *vcardModel) {
 	
 	// Make sure new subscribe is issued.
 	friendsList->updateSubscriptions();
-	
-	emit layoutChanged();
 	
 	emit contactAdded(contact);
 	

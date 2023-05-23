@@ -62,14 +62,18 @@ public:
 // Add functions
 	virtual void add(T item){
 		int row = mList.count();
+		emit layoutAboutToBeChanged();
 		beginInsertRows(QModelIndex(), row, row);
 		mList << item;
 		endInsertRows();
+		emit layoutChanged();
 	}
 	virtual void add(QList<T> items){
+		emit layoutAboutToBeChanged();
 		beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size()-1);
 		mList << items;
 		endInsertRows();
+		emit layoutChanged();
 	}
 	
 	virtual void prepend(T item){
@@ -93,10 +97,12 @@ public:
 		int limit = row + count - 1;
 		if (row < 0 || count < 0 || limit >= mList.count())
 			return false;
+		emit layoutAboutToBeChanged();
 		beginRemoveRows(parent, row, limit);
 		for (int i = 0; i < count; ++i)
 			mList.takeAt(row);
 		endRemoveRows();
+		emit layoutChanged();
 		return true;
 	}
 	

@@ -582,7 +582,6 @@ void CallsListModel::addCall (const shared_ptr<linphone::Call> &call) {
 		connect(callModel.get(), &CallModel::statusChanged, this, &CallsListModel::handleCallStatusChanged);
 		
 		add(callModel);
-		emit layoutChanged();
 		
 		if (call->getDir() == linphone::Call::Dir::Outgoing) {
 			QQuickWindow *callsWindow = App::getInstance()->getCallsWindow();
@@ -617,7 +616,6 @@ void CallsListModel::addDummyCall () {
 	connect(callModel.get(), &CallModel::statusChanged, this, &CallsListModel::handleCallStatusChanged);
 	
 	add(callModel);
-	emit layoutChanged();
 }
 
 void CallsListModel::removeCall (const shared_ptr<linphone::Call> &call) {

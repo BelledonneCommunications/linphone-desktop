@@ -93,7 +93,6 @@ void ColorListModel::add(QSharedPointer<ColorModel> color){
 	
 	mData.insert(color->getName(), QVariant::fromValue(color.get()));
 	ProxyListModel::add(color);
-	emit layoutChanged();
 }
 
 QString ColorListModel::buildDescription(QString description){

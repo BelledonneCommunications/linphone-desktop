@@ -256,14 +256,14 @@ bool SipAddressesModel::removeRows (int row, int count, const QModelIndex &paren
 	
 	if (row < 0 || count < 0 || limit >= mRefs.count())
 		return false;
-	
+	emit layoutAboutToBeChanged();
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i)
 		mPeerAddressToSipAddressEntry.remove(mRefs.takeAt(row)->sipAddress);
 	
 	endRemoveRows();
-	
+	emit layoutChanged();
 	return true;
 }
 
@@ -545,7 +545,7 @@ void SipAddressesModel::addOrUpdateSipAddress (const QString &sipAddress, T data
 	addOrUpdateSipAddress(sipAddressEntry, data);
 	
 	int row = mRefs.count();
-	
+	emit layoutAboutToBeChanged();
 	beginInsertRows(QModelIndex(), row, row);
 	
 	mPeerAddressToSipAddressEntry[sipAddress] = move(sipAddressEntry);
