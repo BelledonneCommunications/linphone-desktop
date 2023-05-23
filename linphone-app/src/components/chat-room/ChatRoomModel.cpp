@@ -238,7 +238,7 @@ bool ChatRoomModel::removeRows (int row, int count, const QModelIndex &parent) {
 	
 	if (row < 0 || count < 0 || limit >= mList.count())
 		return false;
-	
+	emit layoutAboutToBeChanged();
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i) {
@@ -253,6 +253,7 @@ bool ChatRoomModel::removeRows (int row, int count, const QModelIndex &parent) {
 	else if (limit == mList.count())
 		emit lastEntryRemoved();
 	emit focused();// Removing rows is like having focus. Don't wait asynchronous events.
+	emit layoutChanged();
 	return true;
 }
 
@@ -870,9 +871,6 @@ void ChatRoomModel::updateNewMessageNotice(const int& count){
 			prepend(mUnreadMessageNotice);
 			qDebug() << "New message notice timestamp to :" << lastUnreadMessage.toString() << " recv at " << lastReceivedMessage.toString();
 		}
-// Seems to be a Qt bug : If layoutChanged() is not send, some delegates after notice will be wrong (their $chatEntry will be updated with undefined while not being really updated on next check)
-// Reproduce case with a ChatMessage after a Notice: On Notice deletion, this chatMessage will update its text with an undefined $chatEntry. But when checking the value of its $chatEntry after this event(make a MouseArea with a click event), it will be the correct one (and not the undefined).
-		emit layoutChanged();
 	}
 }
 
@@ -981,6 +979,7 @@ void ChatRoomModel::initEntries(){
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);
 		qDebug() << "Internal Entries : Built";
 		if(entries.size() >0){
+			emit layoutAboutToBeChanged();
 			beginInsertRows(QModelIndex(),0, entries.size()-1);
 			for(auto e : entries) {
 				if( e->mType == ChatRoomModel::EntryType::MessageEntry){
@@ -991,6 +990,7 @@ void ChatRoomModel::initEntries(){
 				mList.push_back(e);
 			}
 			endInsertRows();
+			emit layoutChanged();
 			updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());
 		}
 		qDebug() << "Internal Entries : End";
@@ -1073,13 +1073,16 @@ int ChatRoomModel::loadMoreEntries(){
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mLastEntriesStep, this);
 		
 		if(entries.size() >0){
-			if(mPostModelChangedEvents)
+			if(mPostModelChangedEvents){
+				emit layoutAboutToBeChanged();
 				beginInsertRows(QModelIndex(), 0, entries.size()-1);
+			}
 			for(auto entry : entries)
 				mList.prepend(entry);
-			if(mPostModelChangedEvents)
+			if(mPostModelChangedEvents){
 				endInsertRows();
-			//emit layoutChanged();
+				emit layoutChanged();
+			}
 			updateLastUpdateTime();
 		}
 		newEntries = entries.size();
@@ -1111,9 +1114,11 @@ void ChatRoomModel::insertCall (const std::shared_ptr<linphone::CallLog> &callLo
 		QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true);
 		if(model){
 			int row = mList.count();
+			emit layoutAboutToBeChanged();
 			beginInsertRows(QModelIndex(), row, row);
 			mList << model;
 			endInsertRows();
+			emit layoutChanged();
 			if (callLog->getStatus() == linphone::Call::Status::Success) {
 				model = ChatCallModel::create(callLog, false);
 				if(model)
@@ -1141,7 +1146,6 @@ void ChatRoomModel::insertCalls (const QList<std::shared_ptr<linphone::CallLog> 
 		}
 		if(entries.size() > 0){
 			prepend(entries);
-			emit layoutChanged();
 		}
 	}
 }
@@ -1173,7 +1177,6 @@ void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMe
 		if(entries.size() > 0){
 			prepend(entries);
 			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
-			emit layoutChanged();
 		}
 	}
 }
@@ -1197,7 +1200,6 @@ void ChatRoomModel::insertNotices (const QList<std::shared_ptr<linphone::EventLo
 		}
 		if(entries.size() > 0){
 			prepend(entries);
-			emit layoutChanged();
 		}
 	}
 }

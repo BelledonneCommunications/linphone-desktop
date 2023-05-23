@@ -62,8 +62,6 @@ void ImageListModel::add(QSharedPointer<ImageModel> image){
 	mData.insert(image->getId(), QVariant::fromValue(image.get()));
 	
 	ProxyListModel::add(image);
-	
-	emit layoutChanged();
 }
 
 void ImageListModel::useConfig (const std::shared_ptr<linphone::Config> &config) {

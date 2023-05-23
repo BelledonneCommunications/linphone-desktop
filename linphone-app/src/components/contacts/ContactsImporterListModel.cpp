@@ -74,7 +74,7 @@ bool ContactsImporterListModel::removeRows (int row, int count, const QModelInde
 
 	if (row < 0 || count < 0 || limit >= mList.count())
 		return false;
-
+	emit layoutAboutToBeChanged();
 	beginRemoveRows(parent, row, limit);
 
 	for (int i = 0; i < count; ++i) {
@@ -82,7 +82,7 @@ bool ContactsImporterListModel::removeRows (int row, int count, const QModelInde
 	}
 
 	endRemoveRows();
-
+	emit layoutChanged();
 	return true;
 }
 
@@ -115,8 +115,6 @@ ContactsImporterModel *ContactsImporterListModel::createContactsImporter(QVarian
 			contactsImporter->setFields(newData);
 		
 			addContactsImporter(contactsImporter);
-			emit layoutChanged();
-		
 			emit contactsImporterAdded(contactsImporter);
 		}
 	}

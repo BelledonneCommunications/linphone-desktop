@@ -153,6 +153,8 @@ void ParticipantListModel::updateParticipants () {
 			}
 			if( itDbParticipant == dbParticipants.end()){
 				int row = itParticipant - mList.begin();
+				if(!changed)
+					emit layoutAboutToBeChanged();
 				beginRemoveRows(QModelIndex(), row, row);
 				itParticipant = mList.erase(itParticipant);
 				endRemoveRows();
@@ -196,7 +198,6 @@ void ParticipantListModel::add (QSharedPointer<ParticipantModel> participant){
 	connect(this, &ParticipantListModel::securityLevelChanged, participant.get(), &ParticipantModel::onSecurityLevelChanged);
 	connect(participant.get(),&ParticipantModel::updateAdminStatus, this, &ParticipantListModel::setAdminStatus);
 	ProxyListModel::add(participant);
-	emit layoutChanged();
 	emit participantsChanged();
 }
 

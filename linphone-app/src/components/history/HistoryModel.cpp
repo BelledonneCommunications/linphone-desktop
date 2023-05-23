@@ -127,7 +127,7 @@ bool HistoryModel::removeRows (int row, int count, const QModelIndex &parent) {
 	
 	if (row < 0 || count < 0 || limit >= mEntries.count())
 		return false;
-	
+	emit layoutAboutToBeChanged();
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i) {
@@ -143,6 +143,7 @@ bool HistoryModel::removeRows (int row, int count, const QModelIndex &parent) {
 		emit lastEntryRemoved();
 	emit CoreManager::getInstance()->callLogsCountChanged();
 	emit focused();// Removing rows is like having focus. Don't wait asynchronous events.
+	emit layoutChanged();
 	return true;
 }
 
@@ -235,7 +236,7 @@ void HistoryModel::insertCall (const shared_ptr<linphone::CallLog> &callLog) {
 		});
 		
 		int row = int(distance(mEntries.begin(), it));
-		
+		emit layoutAboutToBeChanged();
 		beginInsertRows(QModelIndex(), row, row);
 		it = mEntries.insert(it, entry);
 		endInsertRows();

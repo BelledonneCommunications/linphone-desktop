@@ -79,7 +79,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const shared_pt
     return false;
 
   int row = rowCount();
-
+  emit layoutAboutToBeChanged();
   beginInsertRows(QModelIndex(), row, row);
   addToConferencePrivate(linphoneAddress->clone());
   endInsertRows();
@@ -99,6 +99,7 @@ bool ConferenceHelperModel::ConferenceAddModel::addToConference (const QString &
     return false;
 
   int row = rowCount();
+  emit layoutAboutToBeChanged();
   beginInsertRows(QModelIndex(), row, row);
 
   qInfo() << QStringLiteral("Add sip address to conference: `%1`.").arg(sipAddress);
@@ -127,7 +128,7 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
     return false;
 
   int row = mRefs.indexOf(&(*it));
-
+  emit layoutAboutToBeChanged();
   beginRemoveRows(QModelIndex(), row, row);
 
   qInfo() << QStringLiteral("Remove sip address from conference: `%1`.").arg(sipAddress);
@@ -136,7 +137,7 @@ bool ConferenceHelperModel::ConferenceAddModel::removeFromConference (const QStr
   mSipAddresses.remove(sipAddress);
 
   endRemoveRows();
-
+  emit layoutChanged();
   mConferenceHelperModel->invalidate();
 
   return true;

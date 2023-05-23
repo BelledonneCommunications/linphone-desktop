@@ -48,7 +48,6 @@ void TunnelConfigListModel::updateTunnelConfigs(std::shared_ptr<linphone::Tunnel
 		mList << QSharedPointer<TunnelConfigModel>::create(config);
 	}
 	endResetModel();
-	emit layoutChanged();
 }
 
 bool TunnelConfigListModel::apply(std::shared_ptr<linphone::Tunnel> tunnel){
@@ -62,9 +61,11 @@ bool TunnelConfigListModel::apply(std::shared_ptr<linphone::Tunnel> tunnel){
 
 void TunnelConfigListModel::addTunnelConfig(){
 	int row = rowCount();
+	emit layoutAboutToBeChanged();
 	beginInsertRows(QModelIndex(),row,row);
 	mList << QSharedPointer<TunnelConfigModel>::create(linphone::Factory::get()->createTunnelConfig());
 	endInsertRows();
+	emit layoutChanged();
 }
 
 void TunnelConfigListModel::removeTunnelConfig(std::shared_ptr<linphone::Tunnel> tunnel, TunnelConfigModel * model){
