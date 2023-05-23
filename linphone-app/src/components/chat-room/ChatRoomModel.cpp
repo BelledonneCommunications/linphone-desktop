@@ -852,25 +852,27 @@ public:
 void ChatRoomModel::updateNewMessageNotice(const int& count){
 	if( mChatRoom ) {
 		if(mUnreadMessageNotice ) {
-				removeEntry(mUnreadMessageNotice.get());
+				remove(mUnreadMessageNotice);
 				mUnreadMessageNotice = nullptr;
 		}
 		if(count > 0){
 			QDateTime lastUnreadMessage = QDateTime::currentDateTime();
+			QDateTime lastReceivedMessage = lastUnreadMessage;
 			enableMarkAsRead(false);
 // Get chat messages
 			for (auto &message : mChatRoom->getHistory(mLastEntriesStep)) {
 				if( !message->isRead()) {
 					lastUnreadMessage = min(lastUnreadMessage, QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000 - 1 ));	//-1 to be sure that event will be before the message
+					lastReceivedMessage = min(lastReceivedMessage, ChatMessageModel::initReceivedTimestamp(message, false).addMSecs(-1));
 				}
 			}			
-			mUnreadMessageNotice = ChatNoticeModel::create(ChatNoticeModel::NoticeType::NoticeUnreadMessages, lastUnreadMessage,lastUnreadMessage, QString::number(count));
-			beginInsertRows(QModelIndex(), 0, 0);
-			mList.prepend(mUnreadMessageNotice);
-			endInsertRows();
-			qDebug() << "New message notice timestamp to :" << lastUnreadMessage.toString();
+			mUnreadMessageNotice = ChatNoticeModel::create(ChatNoticeModel::NoticeType::NoticeUnreadMessages, lastUnreadMessage,lastReceivedMessage, QString::number(count));
+			prepend(mUnreadMessageNotice);
+			qDebug() << "New message notice timestamp to :" << lastUnreadMessage.toString() << " recv at " << lastReceivedMessage.toString();
 		}
-		//emit layoutChanged();
+// Seems to be a Qt bug : If layoutChanged() is not send, some delegates after notice will be wrong (their $chatEntry will be updated with undefined while not being really updated on next check)
+// Reproduce case with a ChatMessage after a Notice: On Notice deletion, this chatMessage will update its text with an undefined $chatEntry. But when checking the value of its $chatEntry after this event(make a MouseArea with a click event), it will be the correct one (and not the undefined).
+		emit layoutChanged();
 	}
 }
 
@@ -956,7 +958,7 @@ void ChatRoomModel::initEntries(){
 		QList<EntrySorterHelper> prepareEntries;
 	// Get chat messages
 		for (auto &message : mChatRoom->getHistory(mFirstLastEntriesStep)) {
-			prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
+			prepareEntries << EntrySorterHelper(ChatMessageModel::initReceivedTimestamp(message, false).toTime_t() ,MessageEntry, message);
 		}
 	// Get events
 		for(auto &eventLog : mChatRoom->getHistoryEvents(mFirstLastEntriesStep))
@@ -1033,7 +1035,7 @@ int ChatRoomModel::loadMoreEntries(){
 				++itEntries;
 			}
 			if(!haveEntry)
-				prepareEntries << EntrySorterHelper(message->getTime() ,MessageEntry, message);
+				prepareEntries << EntrySorterHelper(ChatMessageModel::initReceivedTimestamp(message, false).toTime_t() ,MessageEntry, message);
 		}
 	
 	// Calls
