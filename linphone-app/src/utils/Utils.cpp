@@ -129,7 +129,7 @@ QString Utils::toTimeString(QDateTime date, const QString& format){
 }
 
 QString Utils::toDateString(QDateTime date, const QString& format){
-	return getOffsettedUTC(date).toString(format);
+	return QLocale().toString(getOffsettedUTC(date), (!format.isEmpty() ? format : QLocale().dateFormat()) );
 }
 
 QString Utils::getDisplayName(const QString& address){

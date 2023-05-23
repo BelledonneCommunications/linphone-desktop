@@ -143,7 +143,7 @@ Item{
 								text: {
 									if(cellItem.day < 0){
 										// Magic date to set day names in this order : 'S', 'M', 'T', 'W', 'T', 'F', 'S' in Locale
-										return Utils.exactDate(new Date(2000,9,index+1)).toLocaleString(App.locale, 'ddd')[0].toUpperCase()
+										return App.locale.dayName(index)[0].toUpperCase()
 									}else if(cellItem.cellDate.getMonth() == month && (!hideOldDates || new Date(year, month, cellItem.date+1) >= new Date()))	// new Date use time too
 										return cellItem.date
 									else

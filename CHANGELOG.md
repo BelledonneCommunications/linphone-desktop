@@ -33,6 +33,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Picture zoom on mouse over.
 
+## 5.0.17 - undefined
+
+### Fixed
+- Section date timezone and conferences timezone.
+
 ## 5.0.16 - 2023-05-12
 
 ### Fixed

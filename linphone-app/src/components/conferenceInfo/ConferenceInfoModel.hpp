@@ -37,7 +37,7 @@ class ConferenceInfoModel : public QObject {
 	Q_OBJECT
 	
 public:
-	Q_PROPERTY(TimeZoneModel * timeZoneModel READ getTimeZoneModel WRITE setTimeZoneModel NOTIFY timeZoneModelChanged)
+	Q_PROPERTY(TimeZoneModel * timeZoneModel READ getTimeZoneModel CONSTANT)
 	Q_PROPERTY(QDateTime dateTime READ getDateTimeSystem WRITE setDateTime NOTIFY dateTimeChanged)
 	Q_PROPERTY(QDateTime dateTimeUtc READ getDateTimeUtc NOTIFY dateTimeChanged)
 	Q_PROPERTY(int duration READ getDuration WRITE setDuration NOTIFY durationChanged)
@@ -62,7 +62,8 @@ public:
 	static std::shared_ptr<linphone::ConferenceInfo> findConferenceInfo(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	
 //-------------------------------
-
+	Q_INVOKABLE void initDateTime();
+	
 	QDateTime getDateTimeUtc() const;
 	QDateTime getDateTimeSystem() const;
 	int getDuration() const;
@@ -91,8 +92,8 @@ public:
 	void setIsScheduled(const bool& on);
 	void setInviteMode(const int& modes);
 	
+	Q_INVOKABLE void setDateTime(const QDate& date, const QTime& time, TimeZoneModel * model);
 	Q_INVOKABLE void setParticipants(ParticipantListModel * participants);
-	Q_INVOKABLE void setTimeZoneModel(TimeZoneModel * model);
 	void setConferenceInfo(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	
 // Tools
@@ -107,7 +108,6 @@ public:
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> & failedInvitations);
 	
 signals:
-	void timeZoneModelChanged();
 	void dateTimeChanged();
 	void durationChanged();
 	void organizerChanged();
@@ -129,7 +129,6 @@ signals:
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;
 	QSharedPointer<ConferenceScheduler> mConferenceScheduler= nullptr;
-	QTimeZone mTimeZone;
 	
 	bool mIsScheduled = true;
 	int mInviteMode = 0;
