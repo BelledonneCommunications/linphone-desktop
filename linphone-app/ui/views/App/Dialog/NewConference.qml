@@ -21,7 +21,7 @@ DialogPlus {
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: {
 		dateField.setDate(conferenceManager.conferenceInfoModel.dateTime);
-		timeField.setTime(conferenceManager.conferenceInfoModel.dateTime);
+		timeField.setTime(UtilsCpp.toTimeString(conferenceManager.conferenceInfoModel.dateTime , 'hh:mm'));
 		selectedParticipants.setAddresses(conferenceInfoModel)
 	}
 	property bool forceSchedule : false
@@ -130,17 +130,14 @@ DialogPlus {
 				}
 				conferenceManager.creationState = 1
 				if( scheduledSwitch.checked){
-					var startDateTime = Utils.buildDate(dateField.getDate(), timeField.getTime())
-					conferenceInfoModel.isScheduled = true
-					startDateTime.setSeconds(0)
-					conferenceInfoModel.timeZoneModel = timeZoneField.model.getAt(timeZoneField.currentIndex)
-					conferenceInfoModel.dateTime = startDateTime
+					conferenceInfoModel.setDateTime(dateField.getDate(), timeField.getTime()+':00', timeZoneField.model.getAt(timeZoneField.currentIndex) )
 					conferenceInfoModel.duration = durationField.model[durationField.currentIndex].value
-				}else
+				}else{
 					conferenceInfoModel.isScheduled = false
+					conferenceInfoModel.initDateTime()
+				}
 				conferenceInfoModel.subject = subject.text
 				conferenceInfoModel.description = description.text
-				
 				
 				conferenceInfoModel.setParticipants(selectedParticipants.participantListModel)
 				conferenceInfoModel.inviteMode = getInviteMode();
@@ -247,8 +244,10 @@ DialogPlus {
 							checked: conferenceInfoModel.isScheduled
 							
 							onClicked: {
-								if( !conferenceManager.forceSchedule)
-									checked = !checked
+								if( !conferenceManager.forceSchedule){
+									conferenceInfoModel.isScheduled = !checked
+									conferenceInfoModel.initDateTime()
+								}
 							}
 							indicatorStyle: SwitchStyle.aux
 						}
@@ -270,8 +269,6 @@ DialogPlus {
 						Layout.fillHeight: true
 						Layout.margins: 10
 						columns: 4
-						property var locale: App.locale
-						property date currentDate: new Date()
 						property int cellWidth: (parent.width-15-20)/columns
 						
 						
@@ -293,15 +290,13 @@ DialogPlus {
 							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor.color; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						TextField{id: dateField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor.color; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
-							property date currentDate: new Date()
 							function getDate(){
-								return currentDate
+								return text
 							}
 							function setDate(date){
-								currentDate = date
-								text = Utils.exactDate(date).toLocaleDateString(scheduleForm.locale, Qt.ISODate)
+								text = UtilsCpp.toDateString(date, 'yyyy/MM/dd')
 							}
-							text: conferenceManager.conferenceInfoModel ? Utils.exactDate(conferenceManager.conferenceInfoModel.dateTime).toLocaleDateString(scheduleForm.locale, Qt.ISODate) : ''
+							text: conferenceManager.conferenceInfoModel ? UtilsCpp.toDateString(conferenceManager.conferenceInfoModel.dateTime, 'yyyy/MM/dd') : ''
 							icon: 'drop_down_custom'
 							MouseArea{
 								anchors.fill: parent
@@ -319,15 +314,12 @@ DialogPlus {
 						TextField{id: timeField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor.color; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
 							function getTime(){
-								return Date.fromLocaleTimeString(scheduleForm.locale, timeField._text, 'hh:mm')
+								return timeField.text
 							}
-							function setTime(date){
-								_text = date.toLocaleTimeString(scheduleForm.locale, 'hh:mm')
-								text = UtilsCpp.toTimeString(date, 'hh:mm')// Display the unchanged time
+							function setTime(time){
+								text = time
 							}
-							// hidden time to be used from JS : JS Local time can be wrong on Windows because of daylights that are not takken account.
-							property string _text: conferenceManager.conferenceInfoModel? conferenceManager.conferenceInfoModel.dateTime.toLocaleTimeString(scheduleForm.locale, 'hh:mm') : ''
-							text: conferenceManager.conferenceInfoModel? UtilsCpp.toTimeString(conferenceManager.conferenceInfoModel.dateTimeUtc, 'hh:mm') : ''
+							text: conferenceManager.conferenceInfoModel? UtilsCpp.toTimeString(conferenceManager.conferenceInfoModel.dateTime , 'hh:mm') : ''
 							
 							icon: 'drop_down_custom'
 							onEditingFinished: if(rightStackView.currentItemType === 2) {
@@ -341,9 +333,9 @@ DialogPlus {
 								anchors.right: parent.right
 								width: parent.width-50
 								onClicked: {
-										window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {showTimePicker:true, selectedTime: new Date(timeField.getTime())}
+										window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {showTimePicker:true, selectedTime: timeField.getTime()}
 										, function (status) {
-												if(status){
+												if(status && status.selectedTime){
 													timeField.setTime(status.selectedTime)
 												}
 											}
@@ -373,31 +365,6 @@ DialogPlus {
 							textRole: "displayText"
 							selectionWidth: 500
 							rootItem: conferenceManager
-						}
-						
-						function updateDateTime(){
-								var storedDate
-								if( dateField.text != '' && timeField.text != ''){
-									storedDate = Utils.buildDate(dateField.getDate(), timeField.getTime() )
-								}else
-									storedDate = new Date()
-								var currentDate = new Date()
-								if(currentDate >= storedDate){
-									var nextStoredDate = UtilsCpp.addMinutes(new Date(), 1)
-									dateField.setDate(nextStoredDate)
-									timeField.setTime(nextStoredDate)
-									if(rightStackView.currentItemType === 2) rightStackView.currentItem.selectedTime = nextStoredDate
-								}
-						}
-						Timer{
-							running: scheduleForm.visible && conferenceManager.isNew
-							repeat: true
-							interval: 1000
-							triggeredOnStart: true
-							onTriggered: {
-								if(conferenceManager.isNew)
-									scheduleForm.updateDateTime()
-							}
 						}
 					}
 					

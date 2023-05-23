@@ -61,7 +61,7 @@ public:
 	static QDateTime getOffsettedUTC(const QDateTime& date);
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
 	Q_INVOKABLE static QString toTimeString(QDateTime date, const QString& format = "hh:mm:ss");
-	Q_INVOKABLE static QString toDateString(QDateTime date, const QString& format = "yyyy/MM/dd");
+	Q_INVOKABLE static QString toDateString(QDateTime date, const QString& format = "");
 	Q_INVOKABLE static QString getDisplayName(const QString& address);
 	Q_INVOKABLE static QString getInitials(const QString& username);	// Support UTF32
 	Q_INVOKABLE static QString toString(const LinphoneEnums::TunnelMode& mode);
