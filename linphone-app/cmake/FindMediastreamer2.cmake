@@ -27,12 +27,12 @@
 #  MEDIASTREAMER2_LIBRARIES - The library needed to use mediasteamer2
 #  MEDIASTREAMER2_PLUGINS_LOCATION - The location of the mediastreamer2 plugins
 
-if(TARGET mediastreamer)
+if(TARGET mediastreamer2)
 
-	set(MEDIASTREAMER2_LIBRARIES mediastreamer)
-	get_target_property(MEDIASTREAMER2_INCLUDE_DIRS mediastreamer INTERFACE_INCLUDE_DIRECTORIES)
+	set(MEDIASTREAMER2_LIBRARIES mediastreamer2)
+	get_target_property(MEDIASTREAMER2_INCLUDE_DIRS mediastreamer2 INTERFACE_INCLUDE_DIRECTORIES)
 	define_property(TARGET PROPERTY "MS2_PLUGINS" BRIEF_DOCS "Stores the location of mediastreamer2 plugins" FULL_DOCS "Stores the location of mediastreamer2 plugins")
-	get_target_property(MEDIASTREAMER2_PLUGINS_LOCATION mediastreamer MS2_PLUGINS)
+	get_target_property(MEDIASTREAMER2_PLUGINS_LOCATION mediastreamer2 MS2_PLUGINS)
 
 
 	include(FindPackageHandleStandardArgs)

@@ -26,10 +26,10 @@
 #  LINPHONECXX_INCLUDE_DIRS - the linphonecxx include directory
 #  LINPHONECXX_LIBRARIES - The library needed to use linphonecxx
 
-if(TARGET linphone++)
+if(TARGET liblinphone++)
 
-	set(LINPHONECXX_LIBRARIES linphone++)
-	get_target_property(LINPHONECXX_INCLUDE_DIRS linphone++ INTERFACE_INCLUDE_DIRECTORIES)
+	set(LINPHONECXX_LIBRARIES liblinphone++)
+	get_target_property(LINPHONECXX_INCLUDE_DIRS liblinphone++ INTERFACE_INCLUDE_DIRECTORIES)
 
 
 	include(FindPackageHandleStandardArgs)

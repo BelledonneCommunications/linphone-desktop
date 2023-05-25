@@ -26,10 +26,10 @@
 #  LINPHONE_INCLUDE_DIRS - the linphone include directory
 #  LINPHONE_LIBRARIES - The library needed to use linphone
 
-if(TARGET linphone)
+if(TARGET liblinphone)
 
-	set(LINPHONE_LIBRARIES linphone)
-	get_target_property(LINPHONE_INCLUDE_DIRS linphone INTERFACE_INCLUDE_DIRECTORIES)
+	set(LINPHONE_LIBRARIES liblinphone)
+	get_target_property(LINPHONE_INCLUDE_DIRS liblinphone INTERFACE_INCLUDE_DIRECTORIES)
 
 
 	include(FindPackageHandleStandardArgs)
