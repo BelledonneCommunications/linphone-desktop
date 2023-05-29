@@ -7,7 +7,6 @@ import Utils 1.0
 
 import App.Styles 1.0
 // =============================================================================
-Item{
 	
 	AssistantAbstractView {
 		id: mainItem
@@ -138,7 +137,7 @@ Item{
 				Layout.alignment: Qt.AlignCenter
 				text: 'OAuth2'
 				visible: assistantModel.isOAuth2Available()
-				onClicked: {requestBlock.execute(); assistantModel.requestOauth2()}
+				onClicked: {requestBlock.start(); assistantModel.requestOauth2()}
 				capitalization: Font.AllUppercase
 			}
 			Text{
@@ -291,10 +290,9 @@ Item{
 				Layout.fillHeight: true
 			}
 		}
-	}
-	Component.onCompleted: {
+		Component.onCompleted: {
 		if( !CoreManager.isLastRemoteProvisioningGood() )
 			//: 'Last remote provisioning failed' : Test to warn the user that the last fetch of remote provisioning has failed.
 			requestBlock.stop(qsTr('lastProvisioningFailed'))
 	}
-}
+	}

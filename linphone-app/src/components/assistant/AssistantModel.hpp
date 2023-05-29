@@ -43,6 +43,7 @@ class AssistantModel : public QObject {
 	Q_PROPERTY(QString activationCode READ getActivationCode WRITE setActivationCode NOTIFY activationCodeChanged);
 	Q_PROPERTY(QString configFilename READ getConfigFilename WRITE setConfigFilename NOTIFY configFilenameChanged);
 	Q_PROPERTY(bool isReadingQRCode READ getIsReadingQRCode WRITE setIsReadingQRCode NOTIFY isReadingQRCodeChanged);
+	Q_PROPERTY(bool isProcessing READ getIsProcessing WRITE setIsProcessing NOTIFY isProcessingChanged);
 	
 public:
 	AssistantModel (QObject *parent = Q_NULLPTR);
@@ -81,6 +82,7 @@ signals:
 	void usernameChanged (const QString &username, const QString &error);
 	void displayNameChanged (const QString &displayName, const QString &error);
 	void activationCodeChanged (const QString &activationCode);
+	void isProcessingChanged();
 	
 	void activateStatusChanged (const QString &error);
 	void createStatusChanged (const QString &error);
@@ -102,8 +104,6 @@ signals:
 	void qRCodeAttached();
 	void qRCodeNotAttached(QString message, int errorCode);
 	void apiReceived(QString apiKey);
-	
-	
 	
 private:
 	QString getEmail () const;
@@ -133,12 +133,17 @@ private:
 	bool getIsReadingQRCode() const;
 	void setIsReadingQRCode(bool isReading);
 	
+	bool getIsProcessing() const;
+	void setIsProcessing(bool isProcessing);
+	
+	
 	QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreator::UsernameStatus status) const;
 	
 	QString mCountryCode;
 	QString mConfigFilename;
 	QString mToken;
 	bool mIsReadingQRCode;
+	bool mIsProcessing;
 	
 	std::shared_ptr<linphone::AccountCreator> mAccountCreator;
 	std::shared_ptr<Handlers> mHandlers;

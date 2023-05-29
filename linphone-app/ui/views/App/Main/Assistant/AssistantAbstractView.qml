@@ -32,8 +32,8 @@ Item {
 	
 	// ---------------------------------------------------------------------------
 	
-	height: (maximized?stack.height:AssistantAbstractViewStyle.content.height)
-	width: (maximized?stack.width:AssistantAbstractViewStyle.content.width)
+	//height: (maximized?stack.height:AssistantAbstractViewStyle.content.height)
+	//width: (maximized?stack.width:AssistantAbstractViewStyle.content.width)
 	anchors.horizontalCenter: maximized || !parent? undefined : parent.horizontalCenter
 	anchors.verticalCenter: maximized || !parent? undefined : parent.verticalCenter
 	
@@ -86,8 +86,8 @@ Item {
 		anchors.top:description.bottom
 		anchors.topMargin:(description.visible || title.visible?AssistantAbstractViewStyle.info.spacing:0)
 		anchors.bottom:buttons.top
-		anchors.horizontalCenter: parent.horizontalCenter
-		width: parent.width
+		anchors.left: parent.left
+		anchors.right: parent.right
 	}
 	
 	// ---------------------------------------------------------------------------
@@ -99,7 +99,7 @@ Item {
 		
 		anchors {
 			bottom: parent.bottom
-			bottomMargin:AssistantAbstractViewStyle.info.spacing
+			bottomMargin: AssistantAbstractViewStyle.info.spacing
 			horizontalCenter: parent.horizontalCenter
 			
 		}

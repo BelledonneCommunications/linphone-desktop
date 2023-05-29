@@ -98,7 +98,7 @@ TabContainer {
 				
 				onClicked: {
 					Logic.cleanLogs()
-					sendLogsBlock.setText('')
+					sendLogsBlock.stop('')
 				}
 			}
 			
@@ -106,7 +106,7 @@ TabContainer {
 				enabled: !sendLogsBlock.loading && SettingsModel.logsEnabled
 				text: qsTr('sendLogs')
 				
-				onClicked: sendLogsBlock.execute()
+				onClicked: sendLogsBlock.start()
 			}
 		}
 		RequestBlock {
@@ -122,7 +122,7 @@ TabContainer {
 				onLogsUploaded: Logic.handleLogsUploaded(url)
 			}
 		}
-		onVisibleChanged: sendLogsBlock.setText('')
+		onVisibleChanged: sendLogsBlock.stop('')
 		
 		// -------------------------------------------------------------------------
 		//								LDAP
