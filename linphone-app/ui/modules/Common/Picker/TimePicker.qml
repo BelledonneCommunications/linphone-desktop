@@ -30,11 +30,11 @@ Item{
 	}
 	function getHours(time){
 		var partsArray = time.split(':');
-		return partsArray[0].length > 1 ? partsArray[0] : '0'+partsArray[0]
+		return partsArray[0] && partsArray[0].length > 1 ? partsArray[0] : '0'+partsArray[0]
 	}
 	function getMinutes(time){
 		var partsArray = time.split(':');
-		return partsArray[1].length > 1 ? partsArray[1] : '0'+partsArray[1]
+		return partsArray[1] && partsArray[1].length > 1 ? partsArray[1] : '0'+partsArray[1]
 	}
 
 	PathView {
