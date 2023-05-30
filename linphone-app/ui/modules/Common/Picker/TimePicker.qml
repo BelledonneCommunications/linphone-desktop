@@ -20,15 +20,21 @@ Item{
 	onNewTime: selectedTime = time
 	
 	function getTime(hText, mText){
-		return (hText ? hText : outer.currentItem.text)+':'+(mText ? mText : inner.currentItem.text)
+		var h = (hText ? hText : outer.currentItem.text)
+		if(h.length == 1)
+			h = '0'+h
+		var m = (mText ? mText : inner.currentItem.text)
+		if(m.length == 1)
+			m = '0'+m
+		return h+':'+m
 	}
 	function getHours(time){
 		var partsArray = time.split(':');
-		return partsArray[0]
+		return partsArray[0] && partsArray[0].length > 1 ? partsArray[0] : '0'+partsArray[0]
 	}
 	function getMinutes(time){
 		var partsArray = time.split(':');
-		return partsArray[1]
+		return partsArray[1] && partsArray[1].length > 1 ? partsArray[1] : '0'+partsArray[1]
 	}
 
 	PathView {
