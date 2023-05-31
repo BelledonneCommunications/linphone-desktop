@@ -360,7 +360,7 @@ Loader{
 						colorSet: ChatCalendarMessageStyle.editButton
 						backgroundRadius: width/2
 						visible: UtilsCpp.isMe(mainItem.conferenceInfoModel.organizer) 
-								&& mainItem.conferenceInfoModel.endDateTime >= new Date()
+								&& !mainItem.conferenceInfoModel.isEnded
 								&& !mainItem.isCancelled
 						onClicked: {
 							window.detachVirtualWindow()
