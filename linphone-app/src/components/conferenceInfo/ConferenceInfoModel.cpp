@@ -81,6 +81,12 @@ ConferenceInfoModel::ConferenceInfoModel (QObject * parent) : QObject(parent){
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceSchedulerStateChanged);
+	
+	mCheckEndTimer.callOnTimeout(this, [this]()mutable{setIsEnded(getIsEnded());});
+	mCheckEndTimer.setInterval(10000);	// 10s of reaction in order to not overload processes if many calendar
+	mIsEnded = getIsEnded();
+	if(!mIsEnded)
+		mCheckEndTimer.start();
 }
 
 // Callable from C++
@@ -100,9 +106,16 @@ ConferenceInfoModel::ConferenceInfoModel (std::shared_ptr<linphone::ConferenceIn
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::inviteModeChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceInfoStateChanged);
 	connect(this, &ConferenceInfoModel::conferenceInfoChanged, this, &ConferenceInfoModel::conferenceSchedulerStateChanged);
+	
+	mCheckEndTimer.callOnTimeout(this, [this]()mutable{setIsEnded(getIsEnded());});
+	mCheckEndTimer.setInterval(10000);	// 10s of reaction in order to not overload processes if many calendar.
+	mIsEnded = getIsEnded();
+	if(!mIsEnded)
+		mCheckEndTimer.start();
 }
 
 ConferenceInfoModel::~ConferenceInfoModel () {
+	mCheckEndTimer.stop();
 }
 
 std::shared_ptr<linphone::ConferenceInfo> ConferenceInfoModel::getConferenceInfo(){
@@ -139,6 +152,10 @@ int ConferenceInfoModel::getDuration() const{
 }
 
 QDateTime ConferenceInfoModel::getEndDateTime() const{
+	return getDateTimeSystem().addSecs(getDuration()*60);
+}
+
+QDateTime ConferenceInfoModel::getEndDateTimeUtc() const{
 	return getDateTimeUtc().addSecs(getDuration()*60);
 }
 
@@ -173,6 +190,14 @@ QString ConferenceInfoModel::getUri() const{
 
 bool ConferenceInfoModel::isScheduled() const{
 	return mIsScheduled;
+}
+
+bool ConferenceInfoModel::isEnded() const{
+	return mIsEnded;
+}
+
+bool ConferenceInfoModel::getIsEnded() const{
+	return getEndDateTimeUtc() < QDateTime::currentDateTimeUtc();
 }
 
 int ConferenceInfoModel::getInviteMode() const{
@@ -234,6 +259,7 @@ LinphoneEnums::ConferenceSchedulerState ConferenceInfoModel::getConferenceSchedu
 // Datetime is in Custom (Locale/UTC/System). Convert into UTC for conference info
 void ConferenceInfoModel::setDateTime(const QDateTime& dateTime){
 	mConferenceInfo->setDateTime(dateTime.toMSecsSinceEpoch() / 1000);// toMSecsSinceEpoch() is UTC
+	setIsEnded(getIsEnded());
 	emit dateTimeChanged();
 }
 
@@ -244,6 +270,7 @@ void ConferenceInfoModel::setDateTime(const QDate& date, const QTime& time, Time
 
 void ConferenceInfoModel::setDuration(const int& duration){
 	mConferenceInfo->setDuration(duration);
+	setIsEnded(getIsEnded());
 	emit durationChanged();
 }
 
@@ -271,6 +298,17 @@ void ConferenceInfoModel::setIsScheduled(const bool& on){
 	if( mIsScheduled != on){
 		mIsScheduled = on;
 		emit isScheduledChanged();
+	}
+}
+
+void ConferenceInfoModel::setIsEnded(const bool& end){
+	if( mIsEnded != end){
+		mIsEnded = end;
+		if(mIsEnded)
+			mCheckEndTimer.stop();// No need to run the timer.
+		else
+			mCheckEndTimer.start();
+		emit isEndedChanged();
 	}
 }
 
