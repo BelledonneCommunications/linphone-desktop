@@ -165,16 +165,16 @@ vs2019-win64-package:
 
 vs2019-win64-upload:
   stage: deploy
-  tags: [ "windows"]
+  tags: [ "windows-powershell"]
   rules:
     - if: $NIGHTLY_MASTER
     - if: $DEPLOY_WINDOWS
   needs:
     - vs2019-win64-package
   script:
-    - scp "build-desktop/OUTPUT/Packages/*.exe" "%DEPLOY_SERVER%:%UPLOAD_ROOT_PATH%/%WINDOWS_PLATFORM%/%APP_FOLDER%
-    - scp "build-desktop/OUTPUT/RELEASE" "%DEPLOY_SERVER%:%UPLOAD_ROOT_PATH%/%WINDOWS_PLATFORM%/
-    - scp "build-desktop/OUTPUT/RELEASE" "%MAIN_DEPLOY_SERVER%:%UPLOAD_ROOT_PATH%/%WINDOWS_PLATFORM%/
+    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
 
 vs2019-win64-plugins-upload:
