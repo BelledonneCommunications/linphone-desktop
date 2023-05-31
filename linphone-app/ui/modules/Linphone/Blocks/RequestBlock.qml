@@ -10,14 +10,16 @@ Column {
 	id: block
 	
 	property var action
-	readonly property alias loading: block._loading
 	
-	property bool _loading: false
+	property bool loading: false
 	
 	// ----------------------------------------------------------------------------
 	
+	function start () {
+		block.loading = true
+		action()
+	}
 	function execute () {
-		block._loading = true
 		action()
 	}
 	function setText(txt){
@@ -27,7 +29,7 @@ Column {
 	
 	function stop (error) {
 		errorBlock.text = error
-		block._loading = false
+		block.loading = false
 	}
 	
 	// ----------------------------------------------------------------------------

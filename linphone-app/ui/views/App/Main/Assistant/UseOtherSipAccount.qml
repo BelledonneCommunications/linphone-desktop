@@ -6,9 +6,9 @@ import Linphone 1.0
 import ConstantsCpp 1.0
 
 import App.Styles 1.0
+import Common.Styles 1.0
 
 // =============================================================================
-Item{
 	
 	AssistantAbstractView {
 		id: mainItem
@@ -22,12 +22,6 @@ Item{
 		
 		title: qsTr('useOtherSipAccountTitle')
 		
-		width: mainStack.currentItem.implicitWidth
-		height: mainStack.currentItem.implicitHeight 
-									+ (requestBlock.implicitHeight > 0 ? requestBlock.implicitHeight : 0)
-									+ mainItem.decorationHeight
-		anchors.horizontalCenter: parent.horizontalCenter
-		anchors.verticalCenter: parent.verticalCenter
 		
 		property bool showWarning : true
 		// ---------------------------------------------------------------------------
@@ -37,12 +31,13 @@ Item{
 			width: currentItem.implicitWidth>0 ? currentItem.implicitWidth : currentItem.width
 			height: currentItem.implicitHeight>0 ? currentItem.implicitHeight : currentItem.height
 			initialItem: warningComponent
+			anchors.horizontalCenter: parent.horizontalCenter
 		}
 		Component{
 			id: warningComponent
 				Column{
 				spacing: UseAppSipAccountStyle.warningBlock.spacing
-				width: AssistantAbstractViewStyle.content.width
+				width: FormHGroupStyle.content.maxWidth + FormHGroupStyle.spacing
 					Text {
 					elide: Text.ElideRight
 					font.pointSize: UseAppSipAccountStyle.warningBlock.pointSize
@@ -84,7 +79,7 @@ Item{
 					horizontalAlignment: Text.AlignHCenter
 					wrapMode: Text.WordWrap
 					color: UseAppSipAccountStyle.warningBlock.colorModel.color
-					linkColor: UseAppSipAccountStyle.warningBlock.contactUrl.color
+					linkColor: UseAppSipAccountStyle.warningBlock.contactUrl.colorModel.color
 					text: '<a href="'+ConstantsCpp.ContactUrl+'">'+ConstantsCpp.ContactUrl+'</a>'
 					
 					visible: ConstantsCpp.ContactUrl != ''
@@ -105,7 +100,7 @@ Item{
 		Component {
 			id: formComponent
 			Column {
-				width: AssistantAbstractViewStyle.content.width
+				width: FormHGroupStyle.content.maxWidth + FormHGroupStyle.spacing
 				property bool isValid: username.text.length &&
 								   sipDomain.text.length &&
 								   password.text.length
@@ -121,7 +116,8 @@ Item{
 					
 				Form {
 					orientation: Qt.Vertical
-					width: parent.width
+					width: FormHGroupStyle.content.maxWidth + FormHGroupStyle.spacing
+					anchors.horizontalCenter: parent.horizontalCenter
 					
 					FormLine {
 						FormGroup {
@@ -180,12 +176,13 @@ Item{
 				width: parent.width
 				anchors.top: mainStack.bottom
 				anchors.topMargin: UseAppSipAccountStyle.warningBlock.spacing
+				loading: assistantModel.isProcessing
 				
 				action: (function () {
 					if(mainItem.showWarning) {
 						mainItem.showWarning = false
 						mainStack.push(formComponent);
-						requestBlock.stop('')
+						requestBlock.setText('')
 					}else{
 						if (!assistantModel.addOtherSipAccount({
 																   username: mainStack.currentItem.usernameText,
@@ -194,9 +191,9 @@ Item{
 																   password: mainStack.currentItem.passwordText,
 																   transport: mainStack.currentItem.getTransport()
 															   })) {
-							requestBlock.stop(qsTr('addOtherSipAccountError'))
+							requestBlock.setText(qsTr('addOtherSipAccountError'))
 						} else {
-							requestBlock.stop('')
+							requestBlock.setText('')
 							window.setView('Home')
 						}
 					}
@@ -208,4 +205,3 @@ Item{
 			configFilename: 'use-other-sip-account.rc'
 		}
 	}
-}

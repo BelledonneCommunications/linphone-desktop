@@ -38,6 +38,8 @@
 
 #include <QtDebug>
 #include <QTimer>
+#include <QDesktopServices>
+#include <QJsonDocument>
 
 // =============================================================================
 
@@ -75,6 +77,7 @@ private:
 			else
 				emit mAssistant->createStatusChanged(tr("accountAlreadyExists"));
 		}
+		mAssistant->setIsProcessing(false);
 	}
 	
 	void onIsAccountExist (
@@ -92,6 +95,51 @@ private:
 			else
 				emit mAssistant->loginStatusChanged(tr("loginWithUsernameFailed"));
 		}
+		mAssistant->setIsProcessing(false);
+	}
+	
+	virtual void onAccountCreationRequestToken(const std::shared_ptr<linphone::AccountCreator> & creator, linphone::AccountCreator::Status status, const std::string & response) override{
+		if( status == linphone::AccountCreator::Status::RequestOk){
+			QJsonDocument doc = QJsonDocument::fromJson(response.c_str());
+			bool error = false;
+			QVariantMap description = doc.toVariant().toMap();
+			if( description.contains("token") && description.contains("validation_url")){
+				QString url = description.value("validation_url").toString();
+				QString token = description.value("token").toString();
+				creator->setAccountCreationRequestToken(token.toStdString());
+				if(!QDesktopServices::openUrl(url)){
+					qCritical() << "Cannot open validation url for the account creation request token";
+					emit mAssistant->createStatusChanged("Cannot open validation url for the account creation request token");
+					mAssistant->setIsProcessing(false);
+				}else {
+					emit mAssistant->createStatusChanged("Waiting for validation at " + url);
+					creator->requestAccountCreationTokenUsingRequestToken();
+				}
+			}else{
+				qCritical() << "The answer of account creation request token doesn't have token and validation_url fields";
+				emit mAssistant->createStatusChanged("The answer of account creation request token doesn't have token and validation_url fields");
+				mAssistant->setIsProcessing(false);
+			}
+		}else{
+			qCritical() << "Cannot get request token for account creation (" << (int)status << ")";
+			emit mAssistant->createStatusChanged("Cannot get request token for account creation (" +QString::number((int)status) + ")");
+			mAssistant->setIsProcessing(false);
+		}
+	}
+	
+	virtual void onAccountCreationTokenUsingRequestToken(const std::shared_ptr<linphone::AccountCreator> & creator, linphone::AccountCreator::Status status, const std::string & response) override{
+		if(status ==  linphone::AccountCreator::Status::RequestOk){
+			QJsonDocument doc = QJsonDocument::fromJson(response.c_str());
+			bool error = false;
+			QVariantMap description = doc.toVariant().toMap();
+			creator->setToken(description.value("token").toString().toStdString());
+			emit mAssistant->createStatusChanged("Creating account");
+			creator->createAccount();// it will automatically use the account creation token.
+		}else
+			QTimer::singleShot(2000, [creator](){
+				creator->requestAccountCreationTokenUsingRequestToken();
+			});
+		
 	}
 	
 	void onActivateAccount (
@@ -130,6 +178,7 @@ private:
 			else
 				emit mAssistant->activateStatusChanged(tr("emailActivationFailed"));
 		}
+		mAssistant->setIsProcessing(false);
 	}
 	
 	void onRecoverAccount (
@@ -148,6 +197,7 @@ private:
 			else
 				emit mAssistant->recoverStatusChanged(tr("loginWithPhoneNumberFailed"));
 		}
+		mAssistant->setIsProcessing(false);
 	}
 	
 private:
@@ -161,6 +211,7 @@ AssistantModel::AssistantModel (QObject *parent) : QObject(parent) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	connect(CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::foundQRCode, this, &AssistantModel::onQRCodeFound);
 	mIsReadingQRCode = false;
+	mIsProcessing = false;
 	mAccountCreator = core->createAccountCreator(
 				core->getConfig()->getString("assistant", "xmlrpc_url", Constants::DefaultXmlrpcUri)
 				);
@@ -180,6 +231,7 @@ AssistantModel::~AssistantModel(){
 // -----------------------------------------------------------------------------
 
 void AssistantModel::activate () {
+	setIsProcessing(true);
 	if (mAccountCreator->getEmail().empty())
 		mAccountCreator->activateAccount();
 	else
@@ -187,10 +239,13 @@ void AssistantModel::activate () {
 }
 
 void AssistantModel::create () {
-	mAccountCreator->createAccount();
+	setIsProcessing(true);
+	emit createStatusChanged("Requesting validation url");
+	mAccountCreator->requestAccountCreationRequestToken();
 }
 
 void AssistantModel::login () {
+	setIsProcessing(true);
 	if (!mCountryCode.isEmpty()) {
 		mAccountCreator->recoverAccount();
 		return;
@@ -208,6 +263,7 @@ void AssistantModel::login () {
 	map["username"] = getUsername();
 	map["password"] = getPassword();
 	emit loginStatusChanged(addOtherSipAccount(map) ? QString("") : tr("unableToAddAccount"));
+	setIsProcessing(false);
 }
 
 void AssistantModel::reset () {
@@ -569,6 +625,17 @@ void AssistantModel::setIsReadingQRCode(bool isReading){
 		}
 		mIsReadingQRCode = isReading;
 		emit isReadingQRCodeChanged();
+	}
+}
+
+bool AssistantModel::getIsProcessing() const{
+	return mIsProcessing;
+}
+
+void AssistantModel::setIsProcessing(bool isProcessing){
+	if(mIsProcessing != isProcessing){
+		mIsProcessing = isProcessing;
+		emit isProcessingChanged();
 	}
 }
 

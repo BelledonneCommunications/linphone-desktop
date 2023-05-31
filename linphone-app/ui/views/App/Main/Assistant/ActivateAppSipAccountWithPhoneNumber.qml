@@ -50,6 +50,7 @@ AssistantAbstractView {
 
       action: assistantModel.activate
       width: parent.width
+      loading: assistantModel.isProcessing
     }
   }
 
@@ -61,7 +62,7 @@ AssistantAbstractView {
     target: assistantModel
 
     onActivateStatusChanged: {
-      requestBlock.stop(error)
+      requestBlock.setText(error)
       if (!error.length) {
         function quitToHome (window) {
           window.unlockView()

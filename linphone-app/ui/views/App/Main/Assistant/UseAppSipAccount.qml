@@ -6,6 +6,7 @@ import Utils 1.0
 import ConstantsCpp 1.0
 
 import App.Styles 1.0
+import Common.Styles 1.0
 
 // =============================================================================
 
@@ -31,7 +32,8 @@ AssistantAbstractView {
 			id: loader
 			
 			source: 'UseAppSipAccountWith' + (view.usePhoneNumber ? 'PhoneNumber' : 'Username') + '.qml'
-			width: parent.width
+			width: FormHGroupStyle.content.maxWidth + FormHGroupStyle.spacing
+			anchors.horizontalCenter: parent.horizontalCenter
 		}
 		
 		CheckBoxText {
@@ -40,10 +42,11 @@ AssistantAbstractView {
 			text: qsTr('useUsernameToLogin')
 			visible: SettingsModel.assistantSupportsPhoneNumbers
 			width: UseAppSipAccountStyle.checkBox.width
+			anchors.left: loader.left
 			
 			onClicked: {
 				assistantModel.reset()
-				requestBlock.stop('')
+				requestBlock.setText('')
 				
 				if (!checked) {
 					assistantModel.setCountryCode(telephoneNumbersModel.defaultIndex)
@@ -51,7 +54,7 @@ AssistantAbstractView {
 			}
 		}
 		Text {
-			anchors.right:parent.right
+			anchors.right: loader.right
 			visible: ConstantsCpp.PasswordRecoveryUrl
 			elide: Text.ElideRight
 			font.pointSize: AboutStyle.copyrightBlock.url.pointSize
@@ -77,6 +80,7 @@ AssistantAbstractView {
 			
 			action: assistantModel.login
 			width: parent.width
+			loading: assistantModel.isProcessing
 		}
 	}
 	
@@ -109,7 +113,7 @@ AssistantAbstractView {
 		}
 		
 		onLoginStatusChanged: {
-			requestBlock.stop(error)
+			requestBlock.setText(error)
 			if (!error.length) {
 				var codecInfo = VideoCodecsModel.getCodecInfo('H264')
 				if (codecInfo.downloadUrl) {
@@ -124,11 +128,11 @@ AssistantAbstractView {
 		
 		onRecoverStatusChanged: {
 			if (!view.usePhoneNumber) {
-				requestBlock.stop('')
+				requestBlock.setText('')
 				return
 			}
 			
-			requestBlock.stop(error)
+			requestBlock.setText(error)
 			if (!error.length) {
 				window.lockView({
 									descriptionText: qsTr('quitWarning')

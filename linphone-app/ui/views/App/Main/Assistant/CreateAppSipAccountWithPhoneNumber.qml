@@ -3,6 +3,7 @@ import QtQuick 2.7
 import Common 1.0
 import Linphone 1.0
 
+import Common.Styles 1.0
 // =============================================================================
 
 AssistantAbstractView {
@@ -32,8 +33,8 @@ AssistantAbstractView {
 
     Form {
       orientation: Qt.Vertical
-      width: parent.width
-
+      width: FormHGroupStyle.content.maxWidth + FormHGroupStyle.spacing
+      anchors.horizontalCenter: parent.horizontalCenter
       FormLine {
         FormGroup {
           label: qsTr('countryLabel')
@@ -98,6 +99,7 @@ AssistantAbstractView {
 
       action: assistantModel.create
       width: parent.width
+      loading: assistantModel.isProcessing
     }
   }
 
@@ -116,7 +118,7 @@ AssistantAbstractView {
     onUsernameChanged: usernameError = error
 
     onCreateStatusChanged: {
-      requestBlock.stop(error)
+      requestBlock.setText(error)
       if (error.length) {
         return
       }

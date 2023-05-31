@@ -1366,6 +1366,8 @@ void ChatRoomModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoo
 }
 
 void ChatRoomModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
+	auto message = eventLog->getChatMessage();
+	if(message) ChatMessageModel::initReceivedTimestamp(message, true);	// Just in case
 	updateLastUpdateTime();
 }
 
