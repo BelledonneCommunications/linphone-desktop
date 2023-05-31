@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Section date timezone and conferences timezone.
+- Update SDK to 5.2.67 (Mac crash on resources)
 
 ## 5.0.16 - 2023-05-12
 
