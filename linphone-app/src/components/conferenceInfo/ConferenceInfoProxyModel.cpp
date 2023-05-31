@@ -56,11 +56,11 @@ bool ConferenceInfoProxyModel::filterAcceptsRow (int sourceRow, const QModelInde
 		if(ics){
 			if(ics->getDuration() == 0)
 				return false;
-			QDateTime currentDateTime = QDateTime::currentDateTime();
+			QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
 			if( mFilterType == 0){
-				return ics->getEndDateTime() < currentDateTime;
+				return ics->getEndDateTimeUtc() < currentDateTime;
 			}else if( mFilterType == 1){
-				return ics->getEndDateTime() >= currentDateTime;
+				return ics->getEndDateTimeUtc() >= currentDateTime;
 			}else if( mFilterType == 2){
 				return !Utils::isMe(ics->getOrganizer());
 			}else

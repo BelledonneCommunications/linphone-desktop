@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QSharedPointer>
 #include <QTimeZone>
+#include <QTimer>
 
 #include "utils/LinphoneEnums.hpp"
 
@@ -48,6 +49,7 @@ public:
 	Q_PROPERTY(QString displayNamesToString READ displayNamesToString NOTIFY participantsChanged)
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
+	Q_PROPERTY(bool isEnded READ isEnded WRITE setIsEnded NOTIFY isEndedChanged)
 	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
 	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
 	Q_PROPERTY(int allParticipantCount READ getAllParticipantCount NOTIFY participantsChanged)
@@ -68,12 +70,15 @@ public:
 	QDateTime getDateTimeSystem() const;
 	int getDuration() const;
 	QDateTime getEndDateTime() const;
+	QDateTime getEndDateTimeUtc() const;
 	QString getOrganizer() const;	
 	QString getSubject() const;
 	QString getDescription() const;
 	Q_INVOKABLE QString displayNamesToString()const;
 	QString getUri() const;
 	bool isScheduled() const;
+	bool isEnded() const;
+	bool getIsEnded() const;
 	int getInviteMode() const;
 	Q_INVOKABLE QVariantList getParticipants() const;
 	Q_INVOKABLE QVariantList getAllParticipants() const;
@@ -90,6 +95,7 @@ public:
 	void setOrganizer(const QString& organizerAddress);
 	void setDescription(const QString& description);
 	void setIsScheduled(const bool& on);
+	void setIsEnded(const bool& end);
 	void setInviteMode(const int& modes);
 	
 	Q_INVOKABLE void setDateTime(const QDate& date, const QTime& time, TimeZoneModel * model);
@@ -116,6 +122,7 @@ signals:
 	void participantsChanged();
 	void uriChanged();
 	void isScheduledChanged();
+	void isEndedChanged();
 	void inviteModeChanged();
 	void conferenceInfoStateChanged();
 	void conferenceSchedulerStateChanged();
@@ -131,6 +138,8 @@ private:
 	QSharedPointer<ConferenceScheduler> mConferenceScheduler= nullptr;
 	
 	bool mIsScheduled = true;
+	bool mIsEnded = false;
+	QTimer mCheckEndTimer;
 	int mInviteMode = 0;
 	bool mRemoveRequested = false;// true if user has request its deletion from DB
 	linphone::ConferenceScheduler::State  mLastConferenceSchedulerState = linphone::ConferenceScheduler::State::Idle;// Workaround for missing getter in scheduler.
