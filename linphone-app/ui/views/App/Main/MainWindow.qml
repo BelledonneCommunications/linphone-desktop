@@ -400,7 +400,7 @@ ApplicationWindow {
 						anchors.fill: parent
 						
 						source: 'Home.qml'
-						Component.onCompleted: if (AccountSettingsModel.accounts.length < 2) source= 'Assistant.qml' // default proxy = 1. Do not use this set diretly in source because of bindings that will override next setSource
+						Component.onCompleted: if(accountStatus.noAccountConfigured) source= 'Assistant.qml' // default proxy = 1. Do not use this set diretly in source because of bindings that will override next setSource
 					}
 					TelKeypad {
 						anchors.right: parent.right

@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Section date timezone and conferences timezone.
+- Couldn't select the default account without selecting another one before.
+- Display a message about not having a configured account instead of displaying the local one. Local address can still be accessible from settings if activated.
+- Display Assistant at home if no account has been set.
 - Update SDK to 5.2.67 (Mac crash on resources)
 
 ## 5.0.16 - 2023-05-12

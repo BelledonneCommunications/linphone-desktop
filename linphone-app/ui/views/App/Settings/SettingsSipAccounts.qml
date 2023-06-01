@@ -24,6 +24,7 @@ TabContainer {
 			width: parent.width
 			
 			FormLine {
+				visible: SettingsModel.showLocalSipAccount
 				FormGroup {
 					label: qsTr('defaultDisplayNameLabel')
 					
@@ -36,6 +37,7 @@ TabContainer {
 			}
 			
 			FormLine {
+				visible: SettingsModel.showLocalSipAccount
 				FormGroup {
 					label: qsTr('defaultUsernameLabel')
 					
@@ -48,6 +50,7 @@ TabContainer {
 			}
 			
 			FormLine {
+				visible: SettingsModel.showLocalSipAccount
 				FormGroup {
 					label: qsTr('defaultSipAddressLabel')
 					
