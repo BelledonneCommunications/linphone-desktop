@@ -290,9 +290,10 @@ void CoreManager::createLinphoneCore (const QString &configPath) {
 	setOtherPaths();
 	mCore->enableFriendListSubscription(true);
 	mCore->enableRecordAware(true);
-	mCore->setAccountCreatorBackend(linphone::AccountCreatorBackend::FlexiAPI);
-	if(mCore->getAccountCreatorUrl() == "")
+	if(mCore->getAccountCreatorUrl() == ""){
+		mCore->setAccountCreatorBackend(linphone::AccountCreator::Backend::FlexiAPI);
 		mCore->setAccountCreatorUrl(Constants::DefaultFlexiAPIURL);
+	}
 	if( mCore->getAccountList().size() == 0)
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
 }
