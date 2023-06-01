@@ -55,8 +55,6 @@ project(linphoneqt)
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
 
-set(CMAKE_CXX_STANDARD 17)
-
 # Avoid cmake warning if CMP0071 is not set.
 if (POLICY CMP0071)
     cmake_policy(SET CMP0071 NEW)

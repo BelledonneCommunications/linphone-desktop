@@ -95,6 +95,7 @@
       - build-desktop\ninja_buildlog.txt
       - build-desktop\invertSearch.ps1
       - build-desktop\OUTPUT\*
+      - build-desktop\linphone-sdk\openh264-prefix\src\openh264-stamp\*
     when: always
     expire_in: 1 week
     
