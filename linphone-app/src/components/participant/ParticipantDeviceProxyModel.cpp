@@ -50,8 +50,8 @@ bool ParticipantDeviceProxyModel::filterAcceptsRow (
 bool ParticipantDeviceProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
   const ParticipantDeviceModel *deviceA = sourceModel()->data(left).value<ParticipantDeviceModel *>();
   const ParticipantDeviceModel *deviceB = sourceModel()->data(right).value<ParticipantDeviceModel *>();
-
-  return deviceA->getTimeOfJoining() > deviceB->getTimeOfJoining();
+  // 'me' at end (for grid).
+	return deviceB->isMe() || left.row() < right.row();
 }
 //---------------------------------------------------------------------------------
 
@@ -97,6 +97,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	connectTo(newSourceModel);
 	setSourceModel(newSourceModel);
 	mDeleteSourceModel = true;
+	sort(0);
 	emit countChanged();
 	emit meChanged();
 }
@@ -108,6 +109,7 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	connectTo(newSourceModel);
 	setSourceModel(newSourceModel);
 	mDeleteSourceModel = false;
+	sort(0);
 	emit countChanged();
 	emit meChanged();
 }

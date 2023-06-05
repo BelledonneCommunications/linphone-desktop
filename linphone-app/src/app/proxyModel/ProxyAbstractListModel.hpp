@@ -62,24 +62,26 @@ public:
 // Add functions
 	virtual void add(T item){
 		int row = mList.count();
-		emit layoutAboutToBeChanged();
 		beginInsertRows(QModelIndex(), row, row);
 		mList << item;
 		endInsertRows();
-		emit layoutChanged();
+		auto lastIndex = index(mList.size()-1,0);
+		emit dataChanged(lastIndex,lastIndex );
 	}
 	virtual void add(QList<T> items){
-		emit layoutAboutToBeChanged();
+		auto firstIndex = index(mList.size()-1,0);
 		beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size()-1);
 		mList << items;
 		endInsertRows();
-		emit layoutChanged();
+		auto lastIndex = index(mList.size()-1,0);
+		emit dataChanged(firstIndex,lastIndex);
 	}
 	
 	virtual void prepend(T item){
 		beginInsertRows(QModelIndex(), 0, 0);
 		mList.prepend(item);
 		endInsertRows();
+		emit dataChanged(index(0),index(0));
 	}
 	
 	virtual void prepend(QList<T> items){
@@ -87,6 +89,7 @@ public:
 		items << mList;
 		mList = items;
 		endInsertRows();
+		emit dataChanged(index(0),index(items.size()-1));
 	}
 	
 // Remove functions
@@ -97,12 +100,11 @@ public:
 		int limit = row + count - 1;
 		if (row < 0 || count < 0 || limit >= mList.count())
 			return false;
-		emit layoutAboutToBeChanged();
 		beginRemoveRows(parent, row, limit);
 		for (int i = 0; i < count; ++i)
 			mList.takeAt(row);
 		endRemoveRows();
-		emit layoutChanged();
+		emit dataChanged(index(row), index(limit));
 		return true;
 	}
 	

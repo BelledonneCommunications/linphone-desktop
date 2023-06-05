@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Primary color for links in chat.
 - Bubble chat layout.
+- Camera stickers and conference layout stabilization.
 
 ### Added
 - VFS Encryption.

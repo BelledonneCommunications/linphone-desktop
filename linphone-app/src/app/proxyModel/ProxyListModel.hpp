@@ -65,12 +65,13 @@ public:
 
 	template <class T>
 	void add(QList<QSharedPointer<T>> items){
-		emit layoutAboutToBeChanged();
+		auto firstIndex = index(mList.size()-1,0);
 		beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size() - 1);
 		for(auto i : items)
 			mList << i.template objectCast<QObject>();
 		endInsertRows();
-		emit layoutChanged();
+		auto lastIndex = index(mList.size()-1,0);
+		emit dataChanged(firstIndex,lastIndex);
 	}
 	
 	template <class T>
@@ -80,12 +81,11 @@ public:
 	
 	template <class T>
 	void prepend(QList<QSharedPointer<T>> items){
-		emit layoutAboutToBeChanged();
 		beginInsertRows(QModelIndex(), 0, items.size()-1);
 		items << mList;
 		mList = items;
 		endInsertRows();
-		emit layoutChanged();
+		emit dataChanged(index(0),index(items.size()-1));
 	}
 	
 	virtual bool remove(QObject *itemToRemove) override{
