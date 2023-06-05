@@ -69,7 +69,8 @@ void ParticipantDeviceListModel::initConferenceModel(){
 			connect(conferenceModel.get(), &ConferenceModel::conferenceStateChanged, this, &ParticipantDeviceListModel::onConferenceStateChanged);
 			connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaCapabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaCapabilityChanged);
 			connect(conferenceModel.get(), &ConferenceModel::participantDeviceMediaAvailabilityChanged, this, &ParticipantDeviceListModel::onParticipantDeviceMediaAvailabilityChanged);
-			connect(conferenceModel.get(), &ConferenceModel::participantDeviceIsSpeakingChanged, this, &ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged);	
+			connect(conferenceModel.get(), &ConferenceModel::participantDeviceIsSpeakingChanged, this, &ParticipantDeviceListModel::onParticipantDeviceIsSpeakingChanged);
+			mActiveSpeaker = get(conferenceModel->getConference()->getActiveSpeakerParticipantDevice());
 			mInitialized = true;
 		}
 	}
@@ -112,6 +113,7 @@ bool ParticipantDeviceListModel::add(std::shared_ptr<linphone::ParticipantDevice
 			deviceModel->updateVideoEnabled();
 			return false;
 		}else if(deviceToAddAddr->equal(deviceModel->getDevice()->getAddress())){// Address is the same (same device) but the model is using another linphone object. Replace it.
+			qDebug() << "Replacing device : Device exists but the model is using another linphone object.";
 			deviceModel->updateVideoEnabled();
 			removeRow(row);
 			break;

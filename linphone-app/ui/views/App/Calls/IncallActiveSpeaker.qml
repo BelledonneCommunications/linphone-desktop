@@ -130,6 +130,7 @@ Item {
 		}
 	}
 	Item{
+		id: miniViewArea
 		anchors.right: parent.right
 		anchors.top: parent.top
 		anchors.bottom: preview.top
@@ -151,9 +152,9 @@ Item {
 			property int oldCount : 0// Count changed can be called without a change... (bug?). Use oldCount to avoid it.
 			onCountChanged: {if(oldCount != count){ oldCount = count ; Qt.callLater(forceRefresh)}}
 			onHeightChanged: Qt.callLater(forceRefresh)
-			function forceRefresh(){// Force a content refresh via layout direction. Qt is buggy when managing sizes in ListView.
-				miniViews.verticalLayoutDirection = ListView.TopToBottom
-				miniViews.verticalLayoutDirection = ListView.BottomToTop
+			function forceRefresh(){// Force a content refresh via margins. Qt is buggy when managing sizes in ListView.
+				++miniViewArea.anchors.topMargin
+				--miniViewArea.anchors.topMargin
 			}
 			Component.onCompleted: {Qt.callLater(forceRefresh)}
 			delegate:Item{

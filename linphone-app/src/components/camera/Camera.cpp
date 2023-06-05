@@ -109,7 +109,7 @@ void Camera::resetWindowId() const{
 			if(mLinphonePlayer && mLinphonePlayer->getLinphonePlayer())
 				mLinphonePlayer->getLinphonePlayer()->setWindowId(nullptr);
 		}
-		qInfo() << "[Camera] (" << mQmlName << ") Removed " << oldRenderer << " at " << mWindowIdLocation << " for " << this;
+		qInfo() << "[Camera] (" << mQmlName << ") Removed " << oldRenderer << " at " << mWindowIdLocation << " for " << this << " Device(" << mParticipantDeviceModel << ")";
 		mIsWindowIdSet = false;
 	}
 }
@@ -226,7 +226,7 @@ QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 		
 	}else{
 		mIsWindowIdSet = true;
-		qInfo() << "[Camera] (" << mQmlName << ") Added " << renderer << " at " << mWindowIdLocation << " for " << this;
+		qInfo() << "[Camera] (" << mQmlName << ") Added " << renderer << " at " << mWindowIdLocation << " for " << this << " Device(" << mParticipantDeviceModel << ")";
 		QTimer::singleShot(1, this, &Camera::isReady);// Workaround for const createRenderer.
 	}
 	return renderer;
