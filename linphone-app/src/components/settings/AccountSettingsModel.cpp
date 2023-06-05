@@ -75,6 +75,7 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primaryUsernameChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primarySipAddressChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::accountsChanged);
+	mSelectedAccount = coreManager->getCore()->getDefaultAccount();
 }
 
 // -----------------------------------------------------------------------------

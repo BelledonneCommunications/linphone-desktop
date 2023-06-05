@@ -18,6 +18,7 @@ Item {
 	signal clicked
 	property alias cursorShape:mouseArea.cursorShape
 	property alias betterIcon : presenceLevel.betterIcon
+	property bool noAccountConfigured: AccountSettingsModel.accounts.length <= ((SettingsModel.showLocalSipAccount ? 1 : 0))
 	
 	// ---------------------------------------------------------------------------
 	MouseArea {
@@ -42,7 +43,7 @@ Item {
 				Layout.bottomMargin: AccountStatusStyle.presenceLevel.bottomMargin
 				Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
 				Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
-				
+				visible: !accountStatus.noAccountConfigured
 				PresenceLevel {
 					id:presenceLevel
 					anchors.fill:parent
@@ -68,20 +69,24 @@ Item {
 			
 			Text {
 				id:username
-				Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
+				Layout.fillWidth: true
+				Layout.alignment: accountStatus.noAccountConfigured ?  Qt.AlignVCenter | Qt.AlignLeft: Qt.AlignBottom | Qt.AlignLeft
 				color: AccountStatusStyle.username.colorModel.color
 				elide: Text.ElideRight
 				font.bold: true
 				font.pointSize: AccountStatusStyle.username.pointSize
-				text: UtilsCpp.encodeTextToQmlRichFormat(AccountSettingsModel.username)
-				textFormat: Text.RichText
+				//: 'No account configured' : Status text when there is no configured account.
+				text: accountStatus.noAccountConfigured  ? qsTr('noAccount'): AccountSettingsModel.username
 				verticalAlignment: Text.AlignBottom
+				wrapMode: Text.WordWrap
+				maximumLineCount: 3
 			}
 			Item {
 				Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
 				Layout.bottomMargin: 5
 				Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
 				Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
+				visible: !accountStatus.noAccountConfigured
 				MessageCounter {
 					id: messageCounter
 					anchors.fill: parent
@@ -101,6 +106,7 @@ Item {
 		Text {
 			Layout.preferredHeight:parent.height / 2
 			Layout.preferredWidth:parent.width
+			visible: !accountStatus.noAccountConfigured
 			color: AccountStatusStyle.sipAddress.colorModel.color
 			elide: Text.ElideRight
 			font.pointSize: AccountStatusStyle.sipAddress.pointSize
