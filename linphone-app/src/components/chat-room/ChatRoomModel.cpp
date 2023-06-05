@@ -238,7 +238,7 @@ bool ChatRoomModel::removeRows (int row, int count, const QModelIndex &parent) {
 	
 	if (row < 0 || count < 0 || limit >= mList.count())
 		return false;
-	emit layoutAboutToBeChanged();
+	
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i) {
@@ -253,7 +253,7 @@ bool ChatRoomModel::removeRows (int row, int count, const QModelIndex &parent) {
 	else if (limit == mList.count())
 		emit lastEntryRemoved();
 	emit focused();// Removing rows is like having focus. Don't wait asynchronous events.
-	emit layoutChanged();
+	emit dataChanged(index(row), index(limit));
 	return true;
 }
 
@@ -979,7 +979,7 @@ void ChatRoomModel::initEntries(){
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);
 		qDebug() << "Internal Entries : Built";
 		if(entries.size() >0){
-			emit layoutAboutToBeChanged();
+			auto firstIndex = index(mList.size()-1,0);
 			beginInsertRows(QModelIndex(),0, entries.size()-1);
 			for(auto e : entries) {
 				if( e->mType == ChatRoomModel::EntryType::MessageEntry){
@@ -990,7 +990,8 @@ void ChatRoomModel::initEntries(){
 				mList.push_back(e);
 			}
 			endInsertRows();
-			emit layoutChanged();
+			auto lastIndex = index(mList.size()-1,0);
+			emit dataChanged(firstIndex,lastIndex);
 			updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());
 		}
 		qDebug() << "Internal Entries : End";
@@ -1074,14 +1075,14 @@ int ChatRoomModel::loadMoreEntries(){
 		
 		if(entries.size() >0){
 			if(mPostModelChangedEvents){
-				emit layoutAboutToBeChanged();
+				
 				beginInsertRows(QModelIndex(), 0, entries.size()-1);
 			}
 			for(auto entry : entries)
 				mList.prepend(entry);
 			if(mPostModelChangedEvents){
 				endInsertRows();
-				emit layoutChanged();
+				emit dataChanged(index(0),index(entries.size()-1));
 			}
 			updateLastUpdateTime();
 		}
@@ -1114,11 +1115,11 @@ void ChatRoomModel::insertCall (const std::shared_ptr<linphone::CallLog> &callLo
 		QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true);
 		if(model){
 			int row = mList.count();
-			emit layoutAboutToBeChanged();
 			beginInsertRows(QModelIndex(), row, row);
 			mList << model;
 			endInsertRows();
-			emit layoutChanged();
+			auto lastIndex = index(mList.size()-1,0);
+			emit dataChanged(lastIndex,lastIndex );
 			if (callLog->getStatus() == linphone::Call::Status::Success) {
 				model = ChatCallModel::create(callLog, false);
 				if(model)
