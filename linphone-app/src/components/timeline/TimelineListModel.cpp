@@ -105,7 +105,7 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 	
 	if (row < 0 || count < 0 || limit >= mList.count())
 		return false;
-	emit layoutAboutToBeChanged();
+	
 	beginRemoveRows(parent, row, limit);
 	
 	for (int i = 0; i < count; ++i){
@@ -122,7 +122,7 @@ bool TimelineListModel::removeRows (int row, int count, const QModelIndex &paren
 				
 		}
 	emit countChanged();
-	emit layoutChanged();
+	emit dataChanged(index(row), index(limit));
 	return true;
 }
 
