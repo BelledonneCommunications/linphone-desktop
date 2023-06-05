@@ -14,6 +14,14 @@
     </message>
 </context>
 <context>
+    <name>AccountStatus</name>
+    <message>
+        <source>noAccount</source>
+        <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ActivateAppSipAccountWithEmail</name>
     <message>
         <source>activateAppSipAccount</source>
