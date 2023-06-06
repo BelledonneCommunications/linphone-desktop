@@ -108,7 +108,7 @@ Item{
 			//: 'Last used' : Emoji title for last used section.
 			text: qsTr('emojisLastUsed')
 			property font customFont : SettingsModel.textMessageFont
-			font.pointSize: customFont.pointSize
+			font.pointSize: Units.dp * customFont.pointSize
 			font.family: customFont.family
 			font.weight: Font.Bold
 			visible: gridPreferred.model.length > 0
@@ -142,7 +142,7 @@ Item{
 					height: gridPreferred.emojiSize
 					width: gridPreferred.emojiSize
 					Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-					font.pointSize: 20
+					font.pointSize: Units.dp * 20
 					font.family: customFont.family
 					property int code: gridPreferred.model[index]
 					property string stringCodePoint: code >=0 ? String.fromCodePoint(code) : ''
@@ -169,7 +169,7 @@ Item{
 			//: 'All' Emoji title for all items.
 			text: qsTr('emojisAll')
 			property font customFont : SettingsModel.textMessageFont
-			font.pointSize: customFont.pointSize
+			font.pointSize: Units.dp * customFont.pointSize
 			font.family: customFont.family
 			font.weight: Font.Bold
 		}
@@ -200,7 +200,7 @@ Item{
 					height: grid.emojiSize
 					width: grid.emojiSize
 					Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-					font.pointSize: 20
+					font.pointSize: Units.dp * 20
 					font.family: customFont.family
 					property int code: mainItem.getEmojiCode(index)
 					property string stringCodePoint: code >=0 ? String.fromCodePoint(code) : ''
@@ -250,7 +250,7 @@ Item{
 						height: grid.emojiSize
 						width: grid.emojiSize
 						Layout.alignment: Qt.AlignTop | Qt.AlignLeft
-						font.pointSize: 20
+						font.pointSize: Units.dp * 20
 						font.family: customFont.family
 						property int code: mainItem.getEmojiCode(index+grid.auxItemsCount)
 						property string stringCodePoint: code >=0 ? String.fromCodePoint(code) : ''
