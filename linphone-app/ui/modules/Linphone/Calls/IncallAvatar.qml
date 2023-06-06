@@ -48,7 +48,7 @@ Avatar {
 		color: CallStyle.container.pause.text.colorModel.color
 		
 		// `|| 1` => `pointSize` must be greater than 0.
-		font.pointSize: (width / CallStyle.container.pause.text.pointSizeFactor) || 1
+		font.pointSize: Units.dp * (width / CallStyle.container.pause.text.pointSizeFactor) || 1
 		
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
