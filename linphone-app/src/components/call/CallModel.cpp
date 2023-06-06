@@ -68,7 +68,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	if(mCall)
 		mCall->setData("call-model", *this);
 	updateIsInConference();
-	if(mCall) {
+	if(mCall && mCall->getState() != linphone::Call::State::End) {
 		mCallListener = std::make_shared<CallListener>();
 		connectTo(mCallListener.get());
 		mCall->addListener(mCallListener);
@@ -244,7 +244,7 @@ ConferenceInfoModel * CallModel::getConferenceInfoModel(){
 }
 
 QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
-	if(mCall->getConference() && !mConferenceModel){
+	if(mCall->getState() != linphone::Call::State::End && mCall->getConference() && !mConferenceModel){
 		mConferenceModel = ConferenceModel::create(mCall->getConference());
 		connect(mConferenceModel.get(), &ConferenceModel::participantAdminStatusChanged, this, &CallModel::onParticipantAdminStatusChanged);
 		emit conferenceModelChanged();
@@ -487,7 +487,7 @@ void CallModel::stopRecording () {
 // -----------------------------------------------------------------------------
 
 void CallModel::handleCallEncryptionChanged (const shared_ptr<linphone::Call> &call) {
-	if (call == mCall){
+	if (call == mCall && mCall->getState() != linphone::Call::State::End){
 		if(!setEncryption(static_cast<CallEncryption>(mCall->getCurrentParams()->getMediaEncryption())))
 			emit securityUpdated();
 	}
@@ -607,7 +607,7 @@ void CallModel::accept (bool withVideo) {
 // -----------------------------------------------------------------------------
 
 void CallModel::updateIsInConference () {
-	if (mIsInConference != (mCall &&  mCall->getCurrentParams()->getLocalConferenceMode() )) {
+	if (mIsInConference != (mCall && mCall->getState() != linphone::Call::State::End && mCall->getCurrentParams()->getLocalConferenceMode() )) {
 		mIsInConference = !mIsInConference;
 	}
 	emit isInConferenceChanged(mIsInConference);
@@ -782,7 +782,7 @@ void CallModel::setMicroMuted (bool status) {
 // -----------------------------------------------------------------------------
 
 bool CallModel::getCameraEnabled () const{
-	return mCall && (((int)mCall->getCurrentParams()->getVideoDirection() & (int)linphone::MediaDirection::SendOnly) == (int)linphone::MediaDirection::SendOnly);
+	return mCall && mCall->getState() != linphone::Call::State::End && (((int)mCall->getCurrentParams()->getVideoDirection() & (int)linphone::MediaDirection::SendOnly) == (int)linphone::MediaDirection::SendOnly);
 }
 
 void CallModel::setCameraEnabled (bool status){
@@ -854,6 +854,8 @@ bool CallModel::getLocalVideoEnabled () const {
 
 bool CallModel::getVideoEnabled () const {
 	if(mCall){
+		if(mCall->getState() == linphone::Call::State::End )
+			return false;
 		shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
 		return params && params->videoEnabled();
 	}else
@@ -1102,7 +1104,7 @@ bool CallModel::setEncryption(const CallModel::CallEncryption& encryption){
 }
 
 void CallModel::updateEncryption(){
-	if(mCall){
+	if(mCall && mCall->getState() != linphone::Call::State::End){
 		auto currentParams =  mCall->getCurrentParams();
 		if( currentParams){
 			setEncryption(static_cast<CallEncryption>(currentParams->getMediaEncryption()));
@@ -1190,7 +1192,7 @@ static inline QVariantMap createStat (const QString &key, const QString &value) 
 }
 
 void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList) {
-	if(mCall){
+	if(mCall && mCall->getState() != linphone::Call::State::End){
 		shared_ptr<const linphone::CallParams> params = mCall->getCurrentParams();
 		shared_ptr<const linphone::PayloadType> payloadType;
 		
@@ -1264,7 +1266,7 @@ void CallModel::updateStats (const shared_ptr<const linphone::CallStats> &callSt
 	}
 }
 void CallModel::updateEncrypionStats (const shared_ptr<const linphone::CallStats> &callStats, QVariantList &statsList) {
-	if( callStats->getType() == linphone::StreamType::Audio) {// just in case
+	if( callStats->getType() == linphone::StreamType::Audio && mCall->getState() != linphone::Call::State::End) {// just in case
 		statsList.clear();
 		if(isSecured()) {
 		//: 'Media encryption' : label in encryption section of call statistics

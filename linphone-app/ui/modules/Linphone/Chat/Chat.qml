@@ -123,14 +123,16 @@ Rectangle {
 			
 			delegate: Rectangle {
 				id: entry
-				property bool isNotice : $chatEntry && ($chatEntry.type === ChatRoomModel.NoticeEntry)
-				property bool isCall : $chatEntry && ($chatEntry.type === ChatRoomModel.CallEntry)
-				property bool isMessage : $chatEntry && ($chatEntry.type === ChatRoomModel.MessageEntry)
+				property var chatEntry: $chatEntry
+				property bool isNotice : chatEntry && (chatEntry.type === ChatRoomModel.NoticeEntry)
+				property bool isCall : chatEntry && (chatEntry.type === ChatRoomModel.CallEntry)
+				property bool isMessage : chatEntry && (chatEntry.type === ChatRoomModel.MessageEntry)
 				property var previousItem : proxyModel.count > 0 && index >0 ? proxyModel.getAt(index-1) : null
 				property var nextItem : proxyModel.count > 0 ? proxyModel.getAt(index+1) : null	// bind to count
-				property bool displayDate: $chatEntry && !Utils.equalDate(new Date($chatEntry.timestamp), new Date())
-				property bool isTopGrouped: isGrouped(entry.previousItem, $chatEntry) || false
-				property bool isBottomGrouped: isGrouped($chatEntry, entry.nextItem) || false
+				property bool displayDate: chatEntry && !Utils.equalDate(new Date(chatEntry.timestamp), new Date())
+				property bool isTopGrouped: isGrouped(entry.previousItem, chatEntry) || false
+				property bool isBottomGrouped: isGrouped(chatEntry, entry.nextItem) || false
+				
 				
 				onIsBottomGroupedChanged: if(loader.item) loader.item.isBottomGrouped = isBottomGrouped
 				onIsTopGroupedChanged: if(loader.item) loader.item.isTopGrouped = isTopGrouped
@@ -154,10 +156,7 @@ Rectangle {
 				
 				width: chat.contentWidth	// Fill all space
 				clip: false
-				
-				
 				// ---------------------------------------------------------------------
-				
 				MouseArea {
 					id: mouseArea
 					
@@ -177,48 +176,49 @@ Rectangle {
 						RowLayout{
 							id: headerLayout
 							Layout.fillWidth: true
-							Layout.alignment: Qt.AlignTop | ($chatEntry && $chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
+							Layout.alignment: Qt.AlignTop | (entry.chatEntry && entry.chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
 							Layout.leftMargin: ChatStyle.entry.metaWidth// + ChatStyle.entry.message.extraContent.spacing
 							Layout.rightMargin: ChatStyle.entry.message.outgoing.areaSize
 							spacing:0
 							// Display time.
 							visible: !entry.isTopGrouped
+							
 							Text {
 								id:timeDisplay
-								Layout.alignment: Qt.AlignTop | ($chatEntry && $chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
+								Layout.alignment: Qt.AlignTop | (entry.chatEntry && entry.chatEntry.isOutgoing ? Qt.AlignRight : Qt.AlignLeft)
 								Layout.preferredHeight: implicitHeight// ChatStyle.entry.lineHeight
 								//Layout.preferredWidth: ChatStyle.entry.time.width
 								
 								color: ChatStyle.entry.event.text.colorModel.color
 								font.pointSize: ChatStyle.entry.time.pointSize
-								property bool displayYear: entry.displayDate && (new Date($chatEntry.timestamp)).getFullYear() != (new Date()).getFullYear()
-								text: $chatEntry
-											? (entry.displayDate ? UtilsCpp.toDateString($chatEntry.timestamp, (displayYear ? 'yyyy/':'') + 'MM/dd') + ' ' : '')
-													+ UtilsCpp.toTimeString($chatEntry.timestamp, 'hh:mm') + (authorName.visible ? ' - ' : '')
+								property bool displayYear: entry.displayDate && (new Date(entry.chatEntry.timestamp)).getFullYear() != (new Date()).getFullYear()
+								text: entry.chatEntry
+											? (entry.displayDate ? UtilsCpp.toDateString(entry.chatEntry.timestamp, (displayYear ? 'yyyy/':'') + 'MM/dd') + ' ' : '')
+													+ UtilsCpp.toTimeString(entry.chatEntry.timestamp, 'hh:mm') + (authorName.visible ? ' - ' : '')
 											: ''
 								
 								verticalAlignment: Text.AlignVCenter
 								
 								TooltipArea {
-									text: $chatEntry ? UtilsCpp.toDateTimeString($chatEntry.timestamp) : ''
+									text: entry.chatEntry ? UtilsCpp.toDateTimeString(entry.chatEntry.timestamp) : ''
 								}
-								visible:!isNotice
+								visible:!entry.isNotice
 							}
 							Text{
 								id:authorName
 								//Layout.leftMargin: timeDisplay.width + ChatStyle.entry.metaWidth + ChatStyle.entry.message.extraContent.spacing
-								property var displayName: $chatEntry ? $chatEntry.fromDisplayName ? $chatEntry.fromDisplayName : $chatEntry.name : ''
+								property var displayName: entry.chatEntry ? entry.chatEntry.fromDisplayName ? entry.chatEntry.fromDisplayName : entry.chatEntry.name : ''
 								text : displayName != undefined ? displayName : ''
 								
 								color: ChatStyle.entry.event.text.colorModel.color
 								font.pointSize: ChatStyle.entry.event.text.pointSize
-								visible: isMessage 
-										 && $chatEntry != undefined
-										 && !$chatEntry.isOutgoing // Only outgoing
+								visible: entry.isMessage
+										 && entry.chatEntry
+										 && !entry.chatEntry.isOutgoing // Only outgoing
 										 && (!entry.previousItem  //No previous entry
 											 || entry.previousItem.type != ChatRoomModel.MessageEntry // Previous entry is a message
-											 || entry.previousItem.fromSipAddress != $chatEntry.fromSipAddress // Different user
-											 || (new Date(entry.previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0) // Same day == section
+											 || entry.previousItem.fromSipAddress != entry.chatEntry.fromSipAddress // Different user
+											 || (new Date(entry.previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date(entry.chatEntry.timestamp)).setHours(0, 0, 0, 0) // Same day == section
 											 )
 							}
 						}
@@ -227,7 +227,7 @@ Rectangle {
 							id: loader
 							height: (item !== null && typeof(item)!== 'undefined')? item.height: 0
 							Layout.fillWidth: true
-							source: Logic.getComponentFromEntry($chatEntry)
+							source: Logic.getComponentFromEntry(entry.chatEntry)
 							property int loaderIndex: 0	// index of loader from remaining loaders
 							property int remainingIndex : loaderIndex % ((chat.remainingLoadersCount) / chat.syncLoaderBatch) != 0	// Check loader index to remaining loader.
 							onRemainingIndexChanged: if( remainingIndex == 0 && asynchronous) asynchronous = false
@@ -255,7 +255,7 @@ Rectangle {
 							//: "Selection copied to clipboard" : when a user copy a text from the menu, this message show up.
 							onCopySelectionDone: container.noticeBannerText = qsTr("selectedTextCopied")
 							onReplyClicked: {
-								proxyModel.chatRoomModel.reply = $chatEntry
+								proxyModel.chatRoomModel.reply = entry.chatEntry
 							}
 							onForwardClicked:{
 								window.attachVirtualWindow(Qt.resolvedUrl('../Dialog/SipAddressDialog.qml')
@@ -264,13 +264,13 @@ Rectangle {
 										addressSelectedCallback: function (sipAddress) {
 																	var chat = CallsListModel.createChatRoom( '', proxyModel.chatRoomModel.haveEncryption, [sipAddress], false )
 																	if(chat){
-																		chat.chatRoomModel.forwardMessage($chatEntry)
+																		chat.chatRoomModel.forwardMessage(entry.chatEntry)
 																		TimelineListModel.select(chat.chatRoomModel)
 																	}
 																},
 										chatRoomSelectedCallback: function (chatRoomModel){
 																	if(chatRoomModel){
-																		chatRoomModel.forwardMessage($chatEntry)
+																		chatRoomModel.forwardMessage(entry.chatEntry)
 																		TimelineListModel.select(chatRoomModel)
 																	}
 									}

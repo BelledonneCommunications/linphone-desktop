@@ -89,9 +89,15 @@ ColumnLayout{
 			if( columns != bestLayout[1])
 				columns = bestLayout[1]
 		}
+		function updateCells(){
+			cellWidth = Math.min(computedWidth, computedHeight)
+			cellHeight = Math.min(computedWidth, computedHeight)
+		}
 		onItemCountChanged: updateLayout()
 		property int computedWidth: (mainLayout.width - grid.margin ) / columns
 		property int computedHeight: (mainLayout.height - grid.margin ) / rows 
+		onComputedHeightChanged: Qt.callLater(updateCells)
+		onComputedWidthChanged: Qt.callLater(updateCells)
 		cellWidth: Math.min(computedWidth, computedHeight)
 		cellHeight: Math.min(computedWidth, computedHeight)
 		
