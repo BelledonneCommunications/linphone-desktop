@@ -30,10 +30,6 @@
 
 function initView () {
 	chat.bindToEnd = true
-	if(chat.atYBeginning && !chat.loadingEntries){//Check if we are at beginning
-		chat.displaying = true
-		container.proxyModel.loadMoreEntriesAsync()
-	}
 	chat.positionViewAtEnd()
 }
 
