@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Afficher seulement les logs applicatifs</translation>
     </message>
 </context>
 <context>
@@ -185,7 +185,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -201,7 +201,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -1248,12 +1248,12 @@ URL du serveur non configurée.</translation>
     <message>
         <source>emojisLastUsed</source>
         <extracomment>&apos;Last used&apos; : Emoji title for last used section.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Derniers utilisés</translation>
     </message>
     <message>
         <source>emojisAll</source>
         <extracomment>&apos;All&apos; Emoji title for all items.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tous</translation>
     </message>
 </context>
 <context>
@@ -1281,7 +1281,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1429,7 +1429,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>loadFile</source>
         <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Charger</translation>
     </message>
 </context>
 <context>
@@ -1507,7 +1507,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You have paused the call.&apos; : Pause message in call.</extracomment>
-        <translation>Vous êtes actuellement en dehors de l&apos;appel de groupe.</translation>
+        <translation>Vous avez mis l&apos;appel en pause.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1557,7 +1557,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>incallRemotePauseWarning</source>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>L&apos;appel a été mis en pause par le correspondant.</translation>
     </message>
 </context>
 <context>
@@ -1851,7 +1851,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>confirmFetchUri</source>
         <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</translation>
     </message>
 </context>
 <context>
@@ -2116,7 +2116,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation>Voulez-vous programmer cette réunion&#x202f;?</translation>
+        <translation>Voulez-vous programmer cette réunion ?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2480,7 +2480,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>presenceAway</source>
         <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
-        <translation type="unfinished">Absent</translation>
+        <translation>Absent</translation>
     </message>
 </context>
 <context>
@@ -2507,7 +2507,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presenceAway</source>
-        <translation type="unfinished">Absent</translation>
+        <translation>Absent</translation>
     </message>
 </context>
 <context>
@@ -2623,12 +2623,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application&#xa0;? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
+        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application ? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain d&apos;activer le chiffrement&#xa0;? Cette action est irréversible sans perdre TOUTES vos données.</translation>
+        <translation>Êtes-vous certain d&apos;activer le chiffrement ? Cette action est irréversible sans perdre TOUTES vos données.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -2651,7 +2651,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fullLogsEnabledLabel</source>
         <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Logs complets</translation>
     </message>
 </context>
 <context>
@@ -2902,7 +2902,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3388,12 +3388,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>advancedTitle</source>
         <extracomment>&apos;Advanced&apos; : Option title for advanced option in account parameters.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres avancés</translation>
     </message>
     <message>
         <source>enableBundleMode</source>
         <extracomment>&apos;Bundle mode&apos; : Option title to enable the RTP bundle mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mode groupé</translation>
     </message>
 </context>
 <context>
@@ -3630,7 +3630,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>fontsEmojiChange</source>
         <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Émojis</translation>
     </message>
 </context>
 <context>
@@ -3897,7 +3897,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation&#x202f;?</translation>
+        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation ?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
@@ -4019,15 +4019,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation>Échec lors de la suppression de la clef&#xa0;: %1</translation>
+        <translation>Échec lors de la suppression de la clef : %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation>Échec lors de la lecture de la clef&#xa0;: %1</translation>
+        <translation>Échec lors de la lecture de la clef : %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation>Échec lors de l&apos;écriture de la clef&#xa0;: %1</translation>
+        <translation>Échec lors de l&apos;écriture de la clef : %1</translation>
     </message>
 </context>
 <context>
