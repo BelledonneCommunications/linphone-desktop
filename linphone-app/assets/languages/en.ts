@@ -2508,7 +2508,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presenceAway</source>
-        <translation type="unfinished">Away</translation>
+        <translation>Away</translation>
     </message>
 </context>
 <context>
