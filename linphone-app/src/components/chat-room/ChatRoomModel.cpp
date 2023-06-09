@@ -939,7 +939,7 @@ void ChatRoomModel::resetData(){
 void ChatRoomModel::initEntries(){
 	if( mList.size() > mLastEntriesStep)
 		resetData();
-	if(mList.size() == 0) {
+	if(mList.size() <= (mUnreadMessageNotice ? 1 : 0)) {
 		qDebug() << "Internal Entries : Init";
 	// On call : reinitialize all entries. This allow to free up memory
 		QList<QSharedPointer<ChatEvent> > entries;
