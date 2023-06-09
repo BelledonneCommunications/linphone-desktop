@@ -195,7 +195,7 @@ Rectangle {
 							Layout.rightMargin: ChatStyle.entry.message.outgoing.areaSize
 							spacing:0
 							// Display time.
-							visible: !entry.isTopGrouped
+							visible: !entry.isTopGrouped// && !entry.isNotice
 							
 							Text {
 								id:timeDisplay
@@ -216,7 +216,6 @@ Rectangle {
 								TooltipArea {
 									text: entry.chatEntry ? UtilsCpp.toDateTimeString(entry.chatEntry.timestamp) : ''
 								}
-								visible:!entry.isNotice
 							}
 							Text{
 								id:authorName
@@ -226,14 +225,7 @@ Rectangle {
 								
 								color: ChatStyle.entry.event.text.colorModel.color
 								font.pointSize: ChatStyle.entry.event.text.pointSize
-								visible: entry.isMessage
-										 && entry.chatEntry
-										 && !entry.chatEntry.isOutgoing // Only outgoing
-										 && (!entry.previousItem  //No previous entry
-											 || entry.previousItem.type != ChatRoomModel.MessageEntry // Previous entry is a message
-											 || entry.previousItem.fromSipAddress != entry.chatEntry.fromSipAddress // Different user
-											 || (new Date(entry.previousItem.timestamp)).setHours(0, 0, 0, 0) != (new Date(entry.chatEntry.timestamp)).setHours(0, 0, 0, 0) // Same day == section
-											 )
+								visible: entry.chatEntry && !entry.chatEntry.isOutgoing && text != ''
 							}
 						}
 						// Display content.
