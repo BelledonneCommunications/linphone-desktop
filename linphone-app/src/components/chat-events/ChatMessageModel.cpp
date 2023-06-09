@@ -116,14 +116,24 @@ QSharedPointer<ContentModel> ChatMessageModel::getContentModel(std::shared_ptr<l
 
 //-----------------------------------------------------------------------------------------------------------------------
 
-QString ChatMessageModel::getFromDisplayName() const{
-	return mChatMessage ? Utils::getDisplayName(mChatMessage->getFromAddress()) : "";
+QString ChatMessageModel::getFromDisplayName(){
+	if(!mFromDisplayNameCache.isEmpty())
+		return mFromDisplayNameCache;
+	if(!mChatMessage)
+		return "";
+	mFromDisplayNameCache = Utils::getDisplayName(mChatMessage->getFromAddress());
+	return mFromDisplayNameCache;
 }
 
-QString ChatMessageModel::getFromDisplayNameReplyMessage() const{
-	if( isReply())
-		return Utils::getDisplayName(mChatMessage->getReplyMessageSenderAddress());
-	else
+QString ChatMessageModel::getFromDisplayNameReplyMessage(){
+	if( isReply()){
+		if(!fromDisplayNameReplyMessage.isEmpty())
+			return fromDisplayNameReplyMessage;
+		if(!mChatMessage)
+			return "";
+		fromDisplayNameReplyMessage = Utils::getDisplayName(mChatMessage->getReplyMessageSenderAddress());
+		return fromDisplayNameReplyMessage;
+	}else
 		return "";
 }
 

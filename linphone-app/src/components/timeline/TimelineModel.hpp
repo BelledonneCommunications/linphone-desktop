@@ -26,6 +26,7 @@
 #include <QObject>
 #include <QDateTime>
 #include <QSharedPointer>
+#include <QMap>
 
 #include <linphone++/chat_room.hh>
 
@@ -39,9 +40,9 @@ class TimelineModel : public QObject {
   Q_OBJECT
 
 public:
-	static QSharedPointer<TimelineModel> create(TimelineListModel * mainList, std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs = std::list<std::shared_ptr<linphone::CallLog>>(), QObject *parent = Q_NULLPTR);
+	static QSharedPointer<TimelineModel> create(TimelineListModel * mainList, std::shared_ptr<linphone::ChatRoom> chatRoom, const QMap<QString,QMap<QString, std::shared_ptr<linphone::CallLog>>>& lastCalls = QMap<QString,QMap<QString, std::shared_ptr<linphone::CallLog>>>(), QObject *parent = Q_NULLPTR);
 	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, QObject *parent = Q_NULLPTR);
-	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const std::list<std::shared_ptr<linphone::CallLog>>& callLogs, QObject *parent = Q_NULLPTR);
+	TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, const QMap<QString,QMap<QString, std::shared_ptr<linphone::CallLog>>>& lastCalls, QObject *parent = Q_NULLPTR);
 	TimelineModel(const TimelineModel * model);
 	virtual ~TimelineModel();
 	

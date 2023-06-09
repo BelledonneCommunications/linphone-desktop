@@ -584,6 +584,7 @@ ColumnLayout  {
 			anchors.verticalCenter: parent.verticalCenter
 			color:  BusyIndicatorStyle.alternateColor.color
 			running: chatArea.tryingToLoadMoreEntries
+			onRunningChanged: console.log("Chat is busy: " +running)
 		}
 		
 		// -------------------------------------------------------------------------

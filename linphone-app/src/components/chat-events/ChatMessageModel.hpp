@@ -79,8 +79,8 @@ public:
 	
 	//----------------------------------------------------------------------------
 	
-	QString getFromDisplayName() const;
-	QString getFromDisplayNameReplyMessage() const;
+	QString getFromDisplayName();
+	QString getFromDisplayNameReplyMessage();
 	QString getFromSipAddress() const;
 	QString getToDisplayName() const;
 	QString getToSipAddress() const;
@@ -152,6 +152,9 @@ private:
 	QSharedPointer<ContentModel> mFileTransfertContent;
 	QSharedPointer<ParticipantImdnStateListModel> mParticipantImdnStateListModel;
 	QSharedPointer<ChatMessageModel> mReplyChatMessageModel;
+
+	QString mFromDisplayNameCache;
+	QString fromDisplayNameReplyMessage;
 };
 Q_DECLARE_METATYPE(ChatMessageModel*)
 Q_DECLARE_METATYPE(QSharedPointer<ChatMessageModel>)

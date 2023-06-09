@@ -137,7 +137,7 @@ QSharedPointer<TimelineModel> TimelineListModel::getTimeline(std::shared_ptr<lin
 				return timeline;
 			}
 		}
-		if(create){
+		if(create){			
 			QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 			if(model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
@@ -294,18 +294,32 @@ void TimelineListModel::updateTimelines () {
 	// Add new.
 // Call logs optimization : store all the list and check on it for each chat room instead of loading call logs on each chat room. See TimelineModel()
 	std::list<std::shared_ptr<linphone::CallLog>> callLogs = coreManager->getCore()->getCallLogs();
-//	
+	QList<QSharedPointer<TimelineModel>> models;
+	QMap<QString,QMap<QString, std::shared_ptr<linphone::CallLog>>> optimizedCallLogs;
+	for(auto callLog : callLogs){
+		QString localAddress = Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly());
+		QString peerAddress = Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());
+		auto itLocal = optimizedCallLogs.find(localAddress);
+		if(itLocal == optimizedCallLogs.end()){
+			optimizedCallLogs[localAddress][peerAddress] = callLog;
+		}else{
+			auto itPeer = itLocal->find(peerAddress);
+			if(itPeer == itLocal->end())
+				optimizedCallLogs[localAddress][peerAddress] = callLog;
+		}
+	}
+
 	for(auto dbChatRoom : allChatRooms){
 		auto haveTimeline = getTimeline(dbChatRoom, false);
 		if(!haveTimeline && dbChatRoom){// Create a new Timeline if needed
-			
-			QSharedPointer<TimelineModel> model = TimelineModel::create(this, dbChatRoom, callLogs);
+			QSharedPointer<TimelineModel> model = TimelineModel::create(this, dbChatRoom, optimizedCallLogs);
 			if( model){
 				connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-				add(model);
+				models << model;
 			}
 		}
 	}
+	add(models);
 	CoreManager::getInstance()->updateUnreadMessageCount();
 }
 
@@ -315,6 +329,17 @@ void TimelineListModel::add (QSharedPointer<TimelineModel> timeline){
 	connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
 	connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
 	ProxyListModel::add(timeline);
+	emit countChanged();
+}
+
+void TimelineListModel::add (QList<QSharedPointer<TimelineModel>> timelines){
+	for(auto timeline : timelines){
+		auto chatRoomModel = timeline->getChatRoomModel();
+		auto chatRoom = chatRoomModel->getChatRoom();
+		connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
+		connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
+	}
+	ProxyListModel::add(timelines);
 	emit countChanged();
 }
 

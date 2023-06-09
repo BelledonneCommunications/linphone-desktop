@@ -51,6 +51,7 @@ public:
 	QSharedPointer<ChatRoomModel> getChatRoomModel(ChatRoomModel * chatRoom);
   
 	void add (QSharedPointer<TimelineModel> timeline);	// Use to add a timeline that is not in Linphone list (like empty chat rooms that were hide by configuration)
+	void add (QList<QSharedPointer<TimelineModel>> timelines);
 
 	Q_INVOKABLE void select(ChatRoomModel * chatRoomModel);
 	void setSelectedCount(int selectedCount);

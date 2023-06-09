@@ -25,6 +25,7 @@
 #include "components/contact/VcardModel.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/friend/FriendListListener.hpp"
+#include "utils/Utils.hpp"
 
 #include "ContactsListModel.hpp"
 
@@ -69,7 +70,9 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 	for (int i = 0; i < count; ++i) {
 		QSharedPointer<ContactModel> contact = mList.takeAt(row).objectCast<ContactModel>();
 		for(auto address : contact->getVcardModel()->getSipAddresses()){
-			mOptimizedSearch.remove(address.toString());
+			auto addressStr = address.toString();
+			mOptimizedSearch.remove(addressStr);
+			mDisplayNameCache.remove(addressStr);
 		}
 		
 		for(auto l : friendsList)
@@ -86,8 +89,9 @@ bool ContactsListModel::removeRows (int row, int count, const QModelIndex &paren
 // -----------------------------------------------------------------------------
 
 QSharedPointer<ContactModel> ContactsListModel::findContactModelFromSipAddress (const QString &sipAddress) const {
-	if(mOptimizedSearch.contains(sipAddress))
-		return mOptimizedSearch[sipAddress];
+	auto result = mOptimizedSearch.find(sipAddress);
+	if(result != mOptimizedSearch.end())
+		return result.value();
 	else
 		return nullptr;
 }
@@ -170,16 +174,31 @@ void ContactsListModel::addContact (QSharedPointer<ContactModel> contact) {
 	});
 	QObject::connect(contact.get(), &ContactModel::sipAddressAdded, this, [this, contact](const QString &sipAddress) {
 		mOptimizedSearch[sipAddress] = contact;
+		mDisplayNameCache.remove(sipAddress);
 		emit sipAddressAdded(contact, sipAddress);
 	});
 	QObject::connect(contact.get(), &ContactModel::sipAddressRemoved, this, [this, contact](const QString &sipAddress) {
 		mOptimizedSearch.remove(sipAddress);
+		mDisplayNameCache.remove(sipAddress);
 		emit sipAddressRemoved(contact, sipAddress);
 	});
 	add<ContactModel>(contact);
 	for(auto address : contact->getVcardModel()->getSipAddresses()){
-		mOptimizedSearch[address.toString()] = contact;
+		auto addressStr = address.toString();
+		mOptimizedSearch[addressStr] = contact;
+		mDisplayNameCache.remove(addressStr);
 	}
+}
+QString ContactsListModel::findDisplayNameFromCache(const QString& address) const{
+	auto cached = mDisplayNameCache.find(address);
+	if(cached != mDisplayNameCache.end())
+		return cached.value();
+	else
+		return "";
+}
+
+void ContactsListModel::addDisplayNameToCache(const QString& address, const QString& displayName){
+	mDisplayNameCache[address] = displayName;
 }
 
 void ContactsListModel::update(){
