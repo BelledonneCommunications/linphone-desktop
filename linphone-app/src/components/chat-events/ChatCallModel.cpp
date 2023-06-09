@@ -22,6 +22,7 @@
 
 #include "app/App.hpp"
 #include "components/core/CoreManager.hpp"
+#include "utils/Utils.hpp"
 
 #include "ChatCallModel.hpp"
 
@@ -58,6 +59,16 @@ QSharedPointer<ChatCallModel> ChatCallModel::create(std::shared_ptr<linphone::Ca
 std::shared_ptr<linphone::CallLog> ChatCallModel::getCallLog(){
 	return mCallLog;
 }
+
+QString ChatCallModel::getFromDisplayName(){
+	if(!mFromDisplayNameCache.isEmpty())
+		return mFromDisplayNameCache;
+	if(!mCallLog)
+		return "";
+	mFromDisplayNameCache = Utils::getDisplayName(mCallLog->getFromAddress());
+	return mFromDisplayNameCache;
+}
+
 //--------------------------------------------------------------------------------------------------------------------------
 void ChatCallModel::setIsStart(const bool& data){
 		if(data != mIsStart) {

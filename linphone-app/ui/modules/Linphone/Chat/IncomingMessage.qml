@@ -47,13 +47,7 @@ RowLayout {
 				if (index <= 0) {
 					return true // 1. First message, so visible.
 				}
-				var previousEntry = proxyModel.getAt(index - 1)
-				return !$chatEntry.isOutgoing && (// Only outgoing
-							!previousEntry	//No previous entry
-							|| previousEntry.type != ChatRoomModel.MessageEntry	// Previous entry is a message
-							|| previousEntry.fromSipAddress != $chatEntry.fromSipAddress	// Different user
-							|| (new Date(previousEntry.timestamp)).setHours(0, 0, 0, 0) != (new Date($chatEntry.timestamp)).setHours(0, 0, 0, 0)	// Same day == section
-								)
+				return !$chatEntry.isOutgoing && !mainRow.isTopGrouped
 			}
 			TooltipArea{
 				delay:0
