@@ -81,7 +81,7 @@ Rectangle {
 			anchors.fill: parent
 		}
 		anchors.fill: parent
-		visible: callModel.pausedByUser
+		visible: callModel.pausedByUser || (callModel.isOneToOne && callModel.pausedByRemote)
 		color: IncallStyle.pauseArea.backgroundColor.color
 		z: 1
 		ColumnLayout{
@@ -94,14 +94,18 @@ Rectangle {
 			ActionButton{
 				Layout.alignment: Qt.AlignCenter
 				isCustom: true
-				colorSet: IncallStyle.pauseArea.play
+				colorSet: callModel.pausedByUser ? IncallStyle.pauseArea.play : IncallStyle.pauseArea.pause
 				backgroundRadius: width/2
+				enabled: callModel.pausedByUser
 				onClicked: callModel.pausedByUser = !callModel.pausedByUser
 			}
 			Text{
 				Layout.alignment: Qt.AlignCenter
-				//: 'You are currently out of the conference.' : Pause message in video conference.
-				text: qsTr('incallPauseWarning')
+				text: callModel.pausedByUser
+				//: 'You have paused the call.' : Pause message in call.
+						? qsTr('incallPauseWarning')
+				//: 'Call has been paused by remote.' : Remote pause message in call.
+						: qsTr('incallRemotePauseWarning')
 				font.pointSize: IncallStyle.pauseArea.title.pointSize
 				font.weight: IncallStyle.pauseArea.title.weight
 				color: IncallStyle.pauseArea.title.colorModel.color
@@ -109,8 +113,11 @@ Rectangle {
 			Text{
 				Layout.topMargin: 10
 				Layout.alignment: Qt.AlignCenter
+				
+				text: callModel.pausedByUser
 				//: 'Click on play button to join it back.' : Explain what to do when being in pause in conference.
-				text: qsTr('incallPauseHint')
+							? qsTr('incallPauseHint')
+							: ''
 				font.pointSize: IncallStyle.pauseArea.description.pointSize
 				font.weight: IncallStyle.pauseArea.description.weight
 				color: IncallStyle.pauseArea.description.colorModel.color

@@ -33,7 +33,7 @@ Avatar {
 	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	
 	backgroundColor: CallStyle.container.avatar.backgroundColor.color
-	foregroundColor: mainItem.isPaused ? CallStyle.container.pause.color : 'transparent'
+	foregroundColor: mainItem.isPaused ? CallStyle.container.pause.colorModel.color : 'transparent'
 	
 	image: {
 		if (_sipAddressObserver) {

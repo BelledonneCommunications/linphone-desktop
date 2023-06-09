@@ -1496,7 +1496,7 @@
     </message>
     <message>
         <source>incallPauseWarning</source>
-        <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
+        <extracomment>&apos;You have paused the call.&apos; : Pause message in call.</extracomment>
         <translation>あなたは現在ミーティングから外れています。</translation>
     </message>
     <message>
@@ -1543,6 +1543,11 @@
         <source>incallWaitConnectedMessage</source>
         <extracomment>&apos;The call is not ready. Please Wait...&apos; : Waiting message for starting a call.</extracomment>
         <translation>通話は始まっていません。しばらくお待ちください…</translation>
+    </message>
+    <message>
+        <source>incallRemotePauseWarning</source>
+        <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

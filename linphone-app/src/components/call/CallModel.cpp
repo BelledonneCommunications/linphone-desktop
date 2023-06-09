@@ -512,7 +512,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 			setCallErrorFromReason(call->getReason());
 			stopAutoAnswerTimer();
 			stopRecording();
-			mPausedByRemote = false;
+			setPausedByRemote(false);
 			break;
 			
 		case linphone::Call::State::StreamsRunning: {
@@ -521,7 +521,7 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 				startRecording();
 				mWasConnected = true;
 			}
-			mPausedByRemote = false;
+			setPausedByRemote(false);
 			updateConferenceVideoLayout();
 			setCallId(QString::fromStdString(mCall->getCallLog()->getCallId()));
 			updateEncryption();
@@ -530,12 +530,12 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 		case linphone::Call::State::Connected: getConferenceSharedModel();
 		case linphone::Call::State::Referred:
 		case linphone::Call::State::Released:
-			mPausedByRemote = false;
+			setPausedByRemote(false);
 			break;
 			
 		case linphone::Call::State::PausedByRemote:
 			mNotifyCameraFirstFrameReceived = true;
-			mPausedByRemote = true;
+			setPausedByRemote(true);
 			break;
 			
 		case linphone::Call::State::Pausing:
@@ -838,6 +838,16 @@ void CallModel::setPausedByUser (bool status) {
 	}
 }
 
+bool CallModel::getPausedByRemote () const {
+	return mPausedByRemote;
+}
+
+void CallModel::setPausedByRemote (bool status) {
+	if(mPausedByRemote != status){
+		mPausedByRemote = status;
+		emit pausedByRemoteChanged();
+	}
+}
 // -----------------------------------------------------------------------------
 bool CallModel::getRemoteVideoEnabled () const {
 	shared_ptr<const linphone::CallParams> params = mCall->getRemoteParams();
