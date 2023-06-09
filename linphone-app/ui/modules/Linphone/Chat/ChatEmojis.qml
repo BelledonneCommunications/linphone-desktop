@@ -27,7 +27,7 @@ Item{
 		id: loader
 		property bool toLoad : false
 		anchors.fill: parent
-		active: true
+		active: false
 		asynchronous: true
 		//visible: status == Loader.Ready
 		sourceComponent:

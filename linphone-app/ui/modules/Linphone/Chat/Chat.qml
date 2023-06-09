@@ -103,7 +103,7 @@ Rectangle {
 				if(!chat.isMoving && chat.atYBeginning && !chat.loadingEntries){// Moving has stopped. Check if we are at beginning
 					chat.displaying = true
 					console.log("Trying to load more entries")
-					Qt.callLater(container.proxyModel.loadMoreEntriesAsync())
+					Qt.callLater(container.proxyModel.loadMoreEntriesAsync)
 				}
 			}
 			// -----------------------------------------------------------------------
