@@ -128,7 +128,7 @@ Rectangle {
 								: (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
 									? item.organizer
 										? item.organizer
-										: entry.sipAddress || entry.fullPeerAddress || entry.peerAddress || ''
+										: entry.sipAddress || entry.peerAddress || entry.fullPeerAddress || ''
 									: entry.participants
 										? entry.participants.addressesToString
 										: ''
