@@ -201,9 +201,13 @@ void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& 
 	CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	
 	auto call = core->inviteAddressWithParams(address, params);
-	call->setSpeakerMuted(!enableSpeaker);
-	qInfo() << "Launch " << (enableVideo ? "video" : "audio") << " call; camera: " << enableCamera<< " speaker:" << enableSpeaker << ", micro:" << params->micEnabled() << ", layout:" << (int)layout;
-	CallModel::prepareTransfert(call, prepareTransfertAddress);
+	if(!call)
+		qWarning() << "Cannot initiate call. Maybe another one is currently done: delay the call.";
+	else{
+		call->setSpeakerMuted(!enableSpeaker);
+		qInfo() << "Launch " << (enableVideo ? "video" : "audio") << " call; camera: " << enableCamera<< " speaker:" << enableSpeaker << ", micro:" << params->micEnabled() << ", layout:" << (int)layout;
+		CallModel::prepareTransfert(call, prepareTransfertAddress);
+	}
 }
 
 QVariantMap CallsListModel::launchChat(const QString &sipAddress, const int& securityLevel) const{
