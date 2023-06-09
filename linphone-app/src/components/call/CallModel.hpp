@@ -71,6 +71,7 @@ class CallModel : public QObject {
 	Q_PROPERTY(float microVolumeGain READ getMicroVolumeGain WRITE setMicroVolumeGain NOTIFY microVolumeGainChanged)
 	
 	Q_PROPERTY(bool pausedByUser READ getPausedByUser WRITE setPausedByUser NOTIFY statusChanged)
+	Q_PROPERTY(bool pausedByRemote READ getPausedByRemote WRITE setPausedByRemote NOTIFY pausedByRemoteChanged)
 	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged)
 	Q_PROPERTY(bool localVideoEnabled READ getLocalVideoEnabled WRITE setVideoEnabled NOTIFY statusChanged)
 	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE setCameraEnabled NOTIFY statusChanged)
@@ -231,6 +232,7 @@ signals:
 	void isPQZrtpChanged();
 	void speakerVolumeGainChanged (float volume);
 	void microVolumeGainChanged (float volume);
+	void pausedByRemoteChanged();
 	
 	void cameraFirstFrameReceived (unsigned int width, unsigned int height);
 	
@@ -279,6 +281,9 @@ public:
 	
 	bool getPausedByUser () const;
 	void setPausedByUser (bool status);
+	
+	bool getPausedByRemote () const;
+	void setPausedByRemote (bool status);
 	
 	bool getLocalVideoEnabled () const;
 	
