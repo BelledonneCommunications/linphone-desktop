@@ -157,6 +157,7 @@ function getParams (call) {
 }
 
 function updateSelectedCall (call, index) {
+	console.debug('updateSelectedCall: '+call + ' / ' +index)
 	if(index != undefined){
 		calls._selectedCall = call ? call : null
 		if (index != null) {
@@ -185,6 +186,7 @@ function setIndexWithCall (call) {
 	
 	for (var i = 0; i < count; i++) {
 		if (call === model.data(model.index(i, 0))) {
+			console.debug('setIndexWithCall: '+call + ' / ' +i)
 			updateSelectedCall(call, i)
 			return
 		}
@@ -212,16 +214,19 @@ function handleCountChanged (count) {
 		if(model){// Choose one call
 			var candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusConnected)
 			if(candidate && candidate.callModel.isOutgoing) {
+				console.debug('handleCountChanged: '+candidate.callModel+ ' / ' +candidate.index)
 				updateSelectedCall(candidate.callModel, candidate.index)
 				return;
 			}
 			candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusOutgoing)
 			if(candidate){
+				console.debug('handleCountChanged: '+candidate.callModel+ ' / ' +candidate.index)
 				updateSelectedCall(candidate.callModel, candidate.index)
 				return;
 			}
 			candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusPaused)
 			if(candidate){
+				console.debug('handleCountChanged: '+candidate.callModel+ ' / ' +candidate.index)
 				updateSelectedCall(candidate.callModel, candidate.index)
 				return;
 			}else
@@ -231,11 +236,13 @@ function handleCountChanged (count) {
 		if(model){// Select a call that has been localy initiated.
 			var candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusConnected)
 			if(candidate && candidate.callModel.isOutgoing) {
+				console.debug('handleCountChanged: '+candidate.callModel+ ' / ' +candidate.index)
 				updateSelectedCall(candidate.callModel, candidate.index)
 				return;
 			}
 			candidate = getCallToStatusCondition(model, Linphone.CallModel.CallStatusOutgoing)
 			if(candidate){
+				console.debug('handleCountChanged: '+candidate.callModel+ ' / ' +candidate.index)
 				updateSelectedCall(candidate.callModel, candidate.index)
 				return;
 			}
@@ -269,7 +276,8 @@ function handleRowsInserted (_, first, last) {
 		var call = model.data(model.index(index, 0))
 		
 		if (call.isOutgoing && !call.isInConference) {
-			updateSelectedCall(call)
+			console.debug('handleRowsInserted: '+call+ ' / ' +index +' / ' +model.index(index, 0))
+			updateSelectedCall(call, index)
 			return
 		}
 	}
@@ -278,7 +286,8 @@ function handleRowsInserted (_, first, last) {
 	if (first === 0 && model.rowCount() === 1) {
 		var call = model.data(model.index(0, 0))
 		if (!call.isInConference) {
-			updateSelectedCall(model.data(model.index(0, 0)))
+			console.debug('handleRowsInserted: '+model.data(model.index(0, 0))+ ' / 0 / ' +model.index(0, 0))
+			updateSelectedCall(model.data(model.index(0, 0)),0)
 		}
 	}
 }

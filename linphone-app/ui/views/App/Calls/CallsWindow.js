@@ -69,31 +69,40 @@ function openWaitingRoom(model){
 function getContent (call, conferenceInfoModel) {
 	if (call == null) {
 		if(conferenceInfoModel) {
+			console.debug('New Content:' +waitingRoom)
 			return waitingRoom
 		}
 		else{
+			console.debug('New Content: null')
 			return null
 		}
 	}
 	
 	var status = call.status
 	if (status == null) {
-		return calls.conferenceModel.count > 0 ? conference : null
+		var contentView = calls.conferenceModel.count > 0 ? conference : null
+		console.debug('New Content: ' +contentView)
+		return contentView
 	}
 	var CallModel = Linphone.CallModel
 	if (status === CallModel.CallStatusIncoming) {
+		console.debug('New Content: ' +incall)
 		return incall;
 	}
 	if( window.conferenceInfoModel != call.conferenceInfoModel) {
 		Qt.callLater(function(){window.conferenceInfoModel = call.conferenceInfoModel})
+		console.debug('New Content: ' +middlePane.sourceComponent)
 		return middlePane.sourceComponent	// unchange. Wait for later decision on conference model (avoid binding loop on sourceComponent)
 	}else{
 		if(call.isConference){
+			console.debug('New Content: ' +incall)
 			return incall
 		}
 		if (status === CallModel.CallStatusOutgoing || (status === CallModel.CallStatusEnded && call.callError != '' )) {
+			console.debug('New Content: ' +waitingRoom)
 			return waitingRoom
 		}
+		console.debug('New Content: ' +incall)
 		return incall
 	}
 }
