@@ -1517,7 +1517,7 @@ Adresa URL serveru není nakonfigurována.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You have paused the call.&apos; : Pause message in call.</extracomment>
-        <translation>V současné době jste mimo schůzku.</translation>
+        <translation>Pozastavili jste hovor.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1567,7 +1567,7 @@ Adresa URL serveru není nakonfigurována.</translation>
     <message>
         <source>incallRemotePauseWarning</source>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hovor byl vzdáleně pozastaven.</translation>
     </message>
 </context>
 <context>
@@ -2521,7 +2521,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>presenceAway</source>
-        <translation type="unfinished">Nepřítomný</translation>
+        <translation>Nepřítomný</translation>
     </message>
 </context>
 <context>
