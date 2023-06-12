@@ -125,9 +125,9 @@ ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoo
 	
 	// Get messages.
 	mList.clear();
-	
-	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
-	setMissedCallsCount(0);
+
+	mUnreadMessagesCount = mChatRoom->getUnreadMessagesCount();
+	mMissedCallsCount = 0;
 	
 	QElapsedTimer timer;
 	timer.start();

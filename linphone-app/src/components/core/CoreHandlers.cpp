@@ -31,6 +31,7 @@
 #include "components/notifier/Notifier.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
 #include "utils/Utils.hpp"
 

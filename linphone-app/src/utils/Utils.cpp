@@ -52,6 +52,7 @@
 #include "components/contact/VcardModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
+#include "components/sip-addresses/SipAddressesModel.hpp"
 
 
 #ifdef _WIN32
@@ -542,47 +543,7 @@ void Utils::copyDir(QString from, QString to) {
 QString Utils::getDisplayName(const std::shared_ptr<const linphone::Address>& address){
 	QString displayName;
 	if(address){
-		std::shared_ptr<linphone::Address> cleanAddress = address->clone();
-		cleanAddress->clean();
-		QString qtAddress = Utils::coreStringToAppString(cleanAddress->asStringUriOnly());
-		displayName = CoreManager::getInstance()->getContactsListModel()->findDisplayNameFromCache(qtAddress);
-		
-		if(displayName.isEmpty()){
-			auto model = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(qtAddress);
-			if(model && model->getVcardModel())
-				displayName = model->getVcardModel()->getUsername();
-			else{
-				// Try to get display from full address
-				displayName = QString::fromStdString(address->getDisplayName());
-				if( displayName == ""){
-					// Try to get display name from proxies
-					auto accounts = CoreManager::getInstance()->getCore()->getAccountList();
-					for(auto accountIt = accounts.begin() ; displayName=="" && accountIt != accounts.end() ; ++accountIt){
-						auto params = accountIt->get()->getParams();
-						if(params){
-							auto accountAddress = params->getIdentityAddress();
-							if(accountAddress && accountAddress->weakEqual(address)){
-								displayName = Utils::coreStringToAppString(accountAddress->getDisplayName());
-							}
-						}
-					}
-					if(displayName == ""){
-						// Try to get display name from logs
-						auto callHistory = CoreManager::getInstance()->getCore()->getCallLogs();
-						auto callLog = std::find_if(callHistory.begin(), callHistory.end(), [address](std::shared_ptr<linphone::CallLog>& cl){
-								return cl->getRemoteAddress()->weakEqual(address);
-						});
-						if(callLog != callHistory.end())
-							displayName = QString::fromStdString((*callLog)->getRemoteAddress()->getDisplayName());
-						if(displayName == "")
-							displayName = QString::fromStdString(address->getDisplayName());
-						if(displayName == "")
-							displayName = Utils::coreStringToAppString(address->getUsername());
-					}
-				}
-				CoreManager::getInstance()->getContactsListModel()->addDisplayNameToCache(qtAddress, displayName);
-			}
-		}
+		displayName = CoreManager::getInstance()->getSipAddressesModel()->getDisplayName(address);
 	}
 	return displayName;
 }

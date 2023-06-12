@@ -48,13 +48,10 @@ public:
 	
 	QSharedPointer<ContactModel> findContactModelFromSipAddress (const QString &sipAddress) const;
 	QSharedPointer<ContactModel> findContactModelFromUsername (const QString &username) const;
-	QString findDisplayNameFromCache(const QString& address)const;
 	
 	Q_INVOKABLE ContactModel *getContactModelFromAddress (const QString& address) const;
 	Q_INVOKABLE ContactModel *addContact (VcardModel *vcardModel);
 	Q_INVOKABLE void removeContact (ContactModel *contact);
-	
-	void addDisplayNameToCache(const QString& address, const QString& displayName);
 	
 	Q_INVOKABLE void cleanAvatars ();
 	Q_INVOKABLE void update ();
@@ -82,8 +79,6 @@ private:
 	QMap<QString, QSharedPointer<ContactModel>>	mOptimizedSearch;
 	std::list<std::shared_ptr<linphone::FriendList>> mLinphoneFriends;
 	std::shared_ptr<FriendListListener> mFriendListListener;
-	
-	QMap<QString, QString> mDisplayNameCache;
 };
 
 #endif // CONTACTS_LIST_MODEL_H_

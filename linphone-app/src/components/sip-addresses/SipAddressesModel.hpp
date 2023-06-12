@@ -26,6 +26,7 @@
 #include <QSharedPointer>
 
 #include "SipAddressObserver.hpp"
+#include "utils/Utils.hpp"
 
 // =============================================================================
 
@@ -46,15 +47,32 @@ public:
     QDateTime timestamp;
   };
 
+  class DisplayNames{
+  public:
+	DisplayNames(QString address = "");
+	DisplayNames(const std::shared_ptr<const linphone::Address>& lAddress);
+	QString mFromContact;
+	QString mFromAccount;
+	QString mFromCallLogs;
+	QString mFromDisplayAddress;
+	QString mFromUsernameAddress;
+	QString get();
+	void updateFromCall(const std::shared_ptr<const linphone::Address>& address);
+	void updateFromChatMessage(const std::shared_ptr<const linphone::Address>& address);// not implemented
+  };
+
   struct SipAddressEntry {
     QString sipAddress;
     QSharedPointer<ContactModel> contact;
     Presence::PresenceStatus presenceStatus;
     QDateTime presenceTimestamp;
     QHash<QString, ConferenceEntry> localAddressToConferenceEntry;
+    DisplayNames displayNames;
   };
 
   SipAddressesModel (QObject *parent = Q_NULLPTR);
+  
+  void initSipAddresses ();
   
   void reset();
 
@@ -75,6 +93,7 @@ public:
 
   Q_INVOKABLE static QString getTransportFromSipAddress (const QString &sipAddress);
   Q_INVOKABLE static QString addTransportToSipAddress (const QString &sipAddress, const QString &transport);
+  QString getDisplayName(const std::shared_ptr<const linphone::Address>& address);
 
   Q_INVOKABLE static QString interpretSipAddress (const QString &sipAddress, bool checkUsername = true);
   Q_INVOKABLE static QString interpretSipAddress (const QUrl &sipAddress);
@@ -86,6 +105,11 @@ public:
   Q_INVOKABLE static QString cleanSipAddress (const QString &sipAddress);
 
   // ---------------------------------------------------------------------------
+  //NMN TODO bind to missedCall event and implement void addOrUpdateSipAddress
+
+  template<class T>
+  void addOrUpdateSipAddress (const QString &sipAddress, const std::shared_ptr<const linphone::Address> peerAddress, T data);
+  
 signals:
   void sipAddressReset();// The model has been reset
  
@@ -103,6 +127,7 @@ private:
 
   void handleContactAdded (QSharedPointer<ContactModel> contact);
   void handleContactRemoved (QSharedPointer<ContactModel> contact);
+  void handleContactUpdated (QSharedPointer<ContactModel> contact);
 
   void handleSipAddressAdded (QSharedPointer<ContactModel> contact, const QString &sipAddress);
   void handleSipAddressRemoved (QSharedPointer<ContactModel> contact, const QString &sipAddress);
@@ -129,17 +154,9 @@ private:
   void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::Call> &call);
   void addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const std::shared_ptr<linphone::ChatMessage> &message);
 
-
-  //NMN TODO bind to missedCall event and implement void addOrUpdateSipAddress
-
-  template<class T>
-  void addOrUpdateSipAddress (const QString &sipAddress, T data);
-
   // ---------------------------------------------------------------------------
 
   void removeContactOfSipAddress (const QString &sipAddress);
-
-  void initSipAddresses ();
 
   void initSipAddressesFromChat ();
   void initSipAddressesFromCalls ();
@@ -153,10 +170,10 @@ private:
 
   // ---------------------------------------------------------------------------
 
-  SipAddressEntry *getSipAddressEntry (const QString &peerAddress) {
+  SipAddressEntry *getSipAddressEntry (const QString &peerAddress, const std::shared_ptr<const linphone::Address>& lAddress) {
     auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
     if (it == mPeerAddressToSipAddressEntry.end())
-      it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
+      it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {}, {}, DisplayNames(lAddress) });
     return &(*it);
   }
   QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;

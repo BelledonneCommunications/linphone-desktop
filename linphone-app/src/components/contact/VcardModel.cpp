@@ -282,6 +282,25 @@ QVariantList VcardModel::getSipAddresses () const {
 	return list;
 }
 
+QList<std::shared_ptr<linphone::Address>> VcardModel::getLinphoneSipAddresses () const {
+	QList<std::shared_ptr<linphone::Address>> list;
+	if(mVcard->getVcard()){
+		shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+		for (const auto &address : mVcard->getVcard()->getImpp()) {
+			string value = address->getValue();
+			shared_ptr<linphone::Address> linphoneAddress = core->createAddress(value);
+
+			if (linphoneAddress)
+				list << linphoneAddress;
+			else
+				qWarning() << QStringLiteral("Unable to parse sip address: `%1`")
+							  .arg(QString::fromStdString(value));
+		}
+
+	}
+	return list;
+}
+
 bool VcardModel::addSipAddress (const QString &sipAddress) {
 	CHECK_VCARD_IS_WRITABLE(this);
 
