@@ -195,7 +195,7 @@ Rectangle {
 							Layout.rightMargin: ChatStyle.entry.message.outgoing.areaSize
 							spacing:0
 							// Display time.
-							visible: !entry.isTopGrouped// && !entry.isNotice
+							visible: !entry.isTopGrouped && !entry.isNotice
 							
 							Text {
 								id:timeDisplay
@@ -235,7 +235,7 @@ Rectangle {
 							Layout.fillWidth: true
 							source: Logic.getComponentFromEntry(entry.chatEntry)
 							z:1
-							asynchronous: true
+							asynchronous: index != chat.count - 1
 							property int loaderIndex: 0
 							function updateSync(){
 								if( asynchronous && loaderIndex > 0 && chat.remainingLoadersCount - loaderIndex - chat.syncLoaderBatch <= 0 ) asynchronous = false// Sync load the end
