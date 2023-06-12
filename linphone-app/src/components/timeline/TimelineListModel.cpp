@@ -34,6 +34,7 @@
 #include "TimelineListModel.hpp"
 
 #include <QDebug>
+#include <QElapsedTimer>
 
 
 // =============================================================================
@@ -240,6 +241,10 @@ void TimelineListModel::onSelectedHasChanged(bool selected){
 }
 
 void TimelineListModel::updateTimelines () {
+	QElapsedTimer timer, stepsTimer;
+	timer.start();
+	
+	stepsTimer.start();
 	CoreManager *coreManager = CoreManager::getInstance();
 	std::list<std::shared_ptr<linphone::ChatRoom>> allChatRooms = coreManager->getCore()->getChatRooms();
 
@@ -259,7 +264,7 @@ void TimelineListModel::updateTimelines () {
 		}
 		return false;
 	}); 
-	
+	qInfo() << "Timelines cleaning :" << stepsTimer.restart() << "ms.";
 //Remove no more chat rooms
 	auto itTimeline = mList.begin();
 	while(itTimeline != mList.end()) {
@@ -291,6 +296,7 @@ void TimelineListModel::updateTimelines () {
 		}else
 			++itTimeline;
 	}
+	qInfo() << "Timelines removing expired :" << stepsTimer.restart() << "ms.";
 	// Add new.
 // Call logs optimization : store all the list and check on it for each chat room instead of loading call logs on each chat room. See TimelineModel()
 	std::list<std::shared_ptr<linphone::CallLog>> callLogs = coreManager->getCore()->getCallLogs();
@@ -308,7 +314,7 @@ void TimelineListModel::updateTimelines () {
 				optimizedCallLogs[localAddress][peerAddress] = callLog;
 		}
 	}
-
+	qInfo() << "Timelines optimization for build :" << stepsTimer.restart() << "ms.";
 	for(auto dbChatRoom : allChatRooms){
 		auto haveTimeline = getTimeline(dbChatRoom, false);
 		if(!haveTimeline && dbChatRoom){// Create a new Timeline if needed
@@ -319,8 +325,11 @@ void TimelineListModel::updateTimelines () {
 			}
 		}
 	}
+	qInfo() << "Timelines adding :" << stepsTimer.restart() << "ms.";
 	add(models);
+	qInfo() << "Timelines adding GUI :" << stepsTimer.restart() << "ms.";
 	CoreManager::getInstance()->updateUnreadMessageCount();
+	qInfo() << "Timelines initialized in:" << timer.elapsed() << "ms.";
 }
 
 void TimelineListModel::add (QSharedPointer<TimelineModel> timeline){

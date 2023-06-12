@@ -25,6 +25,8 @@
 
 #include <QObject>
 
+#include <linphone++/linphone.hh>
+
 // =============================================================================
 
 namespace linphone {
@@ -69,6 +71,7 @@ public:
   // ---------------------------------------------------------------------------
 
   QVariantList getSipAddresses () const;
+  QList<std::shared_ptr<linphone::Address>> getLinphoneSipAddresses () const;
   QVariantMap getAddress () const;
   QVariantList getEmails () const;
   QVariantList getCompanies () const;

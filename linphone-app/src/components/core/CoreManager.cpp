@@ -94,15 +94,16 @@ CoreManager::~CoreManager(){
 
 void CoreManager::initCoreManager(){
 	qInfo() << "Init CoreManager";
+	mContactsListModel = new ContactsListModel(this);
+	mSipAddressesModel = new SipAddressesModel(this);	// at first in order to prioritzed on handler signals.
 	mAccountSettingsModel = new AccountSettingsModel(this);
 	mSettingsModel = new SettingsModel(this);
 	mEmojisSettingsModel = new EmojisSettingsModel(this);
 	mCallsListModel = new CallsListModel(this);
 	mChatModel = new ChatModel(this);
-	mContactsListModel = new ContactsListModel(this);
+	
 	mContactsImporterListModel = new ContactsImporterListModel(this);
 	mLdapListModel = new LdapListModel(this);
-	mSipAddressesModel = new SipAddressesModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
 	mTimelineListModel = new TimelineListModel(this);
 	mEventCountNotifier->updateUnreadMessageCount();
