@@ -69,12 +69,14 @@ public:
 		emit dataChanged(lastIndex,lastIndex );
 	}
 	virtual void add(QList<T> items){
-		auto firstIndex = index(mList.size()-1,0);
-		beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size()-1);
-		mList << items;
-		endInsertRows();
-		auto lastIndex = index(mList.size()-1,0);
-		emit dataChanged(firstIndex,lastIndex);
+		if(items.size() > 0) {
+			QModelIndex firstIndex = mList.size() > 0 ? index(mList.size()-1,0) : index(0,0);
+			beginInsertRows(QModelIndex(), mList.size(), mList.size() + items.size()-1);
+			mList << items;
+			endInsertRows();
+			auto lastIndex = index(mList.size()-1,0);
+			emit dataChanged(firstIndex,lastIndex);
+		}
 	}
 	
 	virtual void prepend(T item){
@@ -85,11 +87,13 @@ public:
 	}
 	
 	virtual void prepend(QList<T> items){
-		beginInsertRows(QModelIndex(), 0, items.size()-1);
-		items << mList;
-		mList = items;
-		endInsertRows();
-		emit dataChanged(index(0),index(items.size()-1));
+		if(items.size() > 0){
+			beginInsertRows(QModelIndex(), 0, items.size()-1);
+			items << mList;
+			mList = items;
+			endInsertRows();
+			emit dataChanged(index(0),index(items.size()-1));
+		}
 	}
 	
 // Remove functions

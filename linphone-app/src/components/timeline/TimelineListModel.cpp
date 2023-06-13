@@ -45,7 +45,6 @@ TimelineListModel::TimelineListModel (QObject *parent) : ProxyListModel(parent) 
 	connect(coreHandlers, &CoreHandlers::chatRoomRead, this, &TimelineListModel::onChatRoomRead);
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
 	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::update);
-	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::updated);
 	
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &TimelineListModel::onCallStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &TimelineListModel::onCallCreated);
@@ -61,7 +60,6 @@ TimelineListModel::TimelineListModel(const TimelineListModel* model){
 	connect(coreHandlers, &CoreHandlers::chatRoomRead, this, &TimelineListModel::onChatRoomRead);
 	connect(coreHandlers, &CoreHandlers::chatRoomStateChanged, this, &TimelineListModel::onChatRoomStateChanged);
 	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::update);
-	connect(coreHandlers, &CoreHandlers::messagesReceived, this, &TimelineListModel::updated);
 	
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &TimelineListModel::onCallStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::callCreated, this, &TimelineListModel::onCallCreated);
@@ -71,7 +69,8 @@ TimelineListModel::TimelineListModel(const TimelineListModel* model){
 	for(auto item : model->mList) {
 		auto newItem = qobject_cast<TimelineModel*>(item)->clone();
 		connect(newItem.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-		connect(newItem.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
+		connect(newItem.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onTimelineDeleted);
+		connect(newItem.get(), &TimelineModel::dataChanged, this, &TimelineListModel::onTimelineDataChanged);
 		mList << newItem;
 	}
 }
@@ -325,7 +324,7 @@ void TimelineListModel::updateTimelines () {
 			}
 		}
 	}
-	qInfo() << "Timelines adding :" << stepsTimer.restart() << "ms.";
+	qInfo() << "Timelines adding :" << stepsTimer.restart() << "ms for " << models.size() << " new timelines";
 	add(models);
 	qInfo() << "Timelines adding GUI :" << stepsTimer.restart() << "ms.";
 	CoreManager::getInstance()->updateUnreadMessageCount();
@@ -335,8 +334,9 @@ void TimelineListModel::updateTimelines () {
 void TimelineListModel::add (QSharedPointer<TimelineModel> timeline){
 	auto chatRoomModel = timeline->getChatRoomModel();
 	auto chatRoom = chatRoomModel->getChatRoom();
-	connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
-	connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
+	connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onTimelineDeleted);
+	connect(timeline.get(), &TimelineModel::dataChanged, this, &TimelineListModel::onTimelineDataChanged);
+	
 	ProxyListModel::add(timeline);
 	emit countChanged();
 }
@@ -345,11 +345,13 @@ void TimelineListModel::add (QList<QSharedPointer<TimelineModel>> timelines){
 	for(auto timeline : timelines){
 		auto chatRoomModel = timeline->getChatRoomModel();
 		auto chatRoom = chatRoomModel->getChatRoom();
-		connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onChatRoomDeleted);
-		connect(chatRoomModel, &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineListModel::updated);
+		connect(timeline.get(), &TimelineModel::chatRoomDeleted, this, &TimelineListModel::onTimelineDeleted);
+		connect(timeline.get(), &TimelineModel::dataChanged, this, &TimelineListModel::onTimelineDataChanged);
 	}
-	ProxyListModel::add(timelines);
-	emit countChanged();
+	if(timelines.size() > 0) {
+		ProxyListModel::add(timelines);
+		emit countChanged();
+	}
 }
 
 void TimelineListModel::removeChatRoomModel(QSharedPointer<ChatRoomModel> model){
@@ -467,6 +469,14 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 	}
 }
 
-void TimelineListModel::onChatRoomDeleted(){
+void TimelineListModel::onTimelineDeleted(){
 	remove(sender());// This will call removeRows()
+}
+
+void TimelineListModel::onTimelineDataChanged(){
+	int row = -1;
+	get(sender(), &row);
+	if(row >= 0){
+		emit dataChanged(index(row),index(row));
+	}
 }

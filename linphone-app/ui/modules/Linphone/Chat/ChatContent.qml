@@ -53,7 +53,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 	sourceComponent: Component{
 		Column{
 			id: mainComponent
-			spacing: 0
+			spacing: 5
 			padding: 10
 			function updateFilesBestWidth(){
 				var newBestWidth = 0
@@ -164,12 +164,14 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 						chatMessageModel: mainItem.chatMessageModel
 					}
 					ChatFileMessage{
+						id: fileMessage
 						Layout.fillHeight: true
 						Layout.fillWidth: true
 						Layout.preferredHeight: fitHeight
 						Layout.preferredWidth: fitWidth
 						Layout.maximumWidth: fitWidth
 						Layout.maximumHeight: fitHeight
+						Layout.alignment: Qt.AlignHCenter
 						contentModel: $modelData
 						onIsHoveringChanged: mainItem.isFileHoveringChanged(isHovering)
 						borderWidth: mainItem.fileBorderWidth

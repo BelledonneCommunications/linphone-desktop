@@ -282,7 +282,7 @@ void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &a
 	}
 // "message-expires" is used to keep contact for messages. Setting to 0 will remove the contact for messages too.
 // Check if a "message-expires" exists and set it to 0
-	QStringList parameters = Utils::coreStringToAppString(account->getParams()->getContactParameters()).split(";");
+	QStringList parameters = Utils::coreStringToAppString(account->getParams()->getContactParameters()).split(";", Qt::SkipEmptyParts);
 	for(int i = 0 ; i < parameters.size() ; ++i){
 		QStringList fields = parameters[i].split("=");
 		if( fields.size() > 1 && fields[0].simplified() == "message-expires"){
@@ -352,13 +352,38 @@ bool AccountSettingsModel::addOrUpdateAccount(
 	txt = data["videoConferenceUri"].toString();
 	accountParams->setAudioVideoConferenceFactoryAddress(Utils::interpretUrl(txt));
 	accountParams->setLimeServerUrl(Utils::appStringToCoreString(data["limeServerUrl"].toString()));
-		
+
+	QString contactParameters = Utils::coreStringToAppString(accountParams->getContactParameters());
 	if(data.contains("contactParams"))
-		accountParams->setContactParameters(Utils::appStringToCoreString(data["contactParams"].toString()));
+		contactParameters = data["contactParams"].toString();
 	if(data.contains("avpfInterval"))
 		accountParams->setAvpfRrInterval(uint8_t(data["avpfInterval"].toInt()));
-	if(data.contains("registerEnabled"))
-		accountParams->enableRegister(data["registerEnabled"].toBool());
+	if(data.contains("registerEnabled")){
+		bool registerEnabled = data["registerEnabled"].toBool();
+		
+		bool findMessageExpires = false;
+		QStringList parameters = contactParameters.split(";", Qt::SkipEmptyParts);
+		for(int i = 0 ; i < parameters.size() ; ++i){
+			QStringList fields = parameters[i].split("=");
+			if( fields.size() > 1 && fields[0].simplified() == "message-expires"){
+				findMessageExpires = true;
+				if(!registerEnabled)// replace message-expires by 0 in order to not get new incoming messages.
+					parameters[i] = Constants::DefaultContactParametersOnRemove;
+				else if(!accountParams->registerEnabled() && fields[1].toInt() == 0)
+					parameters[i] = Constants::DefaultContactParameters;
+			}
+		}
+		if(!findMessageExpires){
+			if(!registerEnabled)// message-expires was not found we need to disable the account.
+				parameters.push_back(Constants::DefaultContactParametersOnRemove);
+			else if(!accountParams->registerEnabled())// Switch on
+				parameters.push_back(Constants::DefaultContactParameters);
+		}
+		accountParams->setContactParameters(Utils::appStringToCoreString(parameters.join(";")));
+		accountParams->enableRegister(registerEnabled);
+	}else{
+		accountParams->setContactParameters(Utils::appStringToCoreString(contactParameters));
+	}
 	if(data.contains("publishPresence")) {
 		newPublishPresence = accountParams->publishEnabled() != data["publishPresence"].toBool();
 		accountParams->enablePublish(data["publishPresence"].toBool());
