@@ -108,6 +108,7 @@ public slots:
 	void onDefaultAccountChanged();
 	void onChatRoomDeleted();
 	void onChatRoomStateChanged();
+	void onChatRoomLastUpdateTimeChanged();
 	
 signals:
 	void fullPeerAddressChanged();
@@ -118,7 +119,9 @@ signals:
 	void selectedChanged(bool selected);
 	void conferenceLeft();
 	void chatRoomDeleted();
+	void dataChanged();
 	void updatingChanged();
+	
 	
 private:
 

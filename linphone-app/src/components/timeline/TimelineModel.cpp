@@ -88,6 +88,7 @@ TimelineModel::TimelineModel (std::shared_ptr<linphone::ChatRoom> chatRoom, cons
 		QObject::connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &TimelineModel::onDefaultAccountChanged);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::chatRoomDeleted, this, &TimelineModel::onChatRoomDeleted);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::updatingChanged, this, &TimelineModel::updatingChanged);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineModel::onChatRoomLastUpdateTimeChanged);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::stateChanged, this, &TimelineModel::onChatRoomStateChanged);
 	}
 	if(chatRoom){
@@ -107,6 +108,7 @@ TimelineModel::TimelineModel(const TimelineModel * model){
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::chatRoomDeleted, this, &TimelineModel::onChatRoomDeleted);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::updatingChanged, this, &TimelineModel::updatingChanged);
 		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::stateChanged, this, &TimelineModel::onChatRoomStateChanged);
+		QObject::connect(mChatRoomModel.get(), &ChatRoomModel::lastUpdateTimeChanged, this, &TimelineModel::onChatRoomLastUpdateTimeChanged);
 	}
 	if(mChatRoomModel->getChatRoom()){
 		mChatRoomListener = model->mChatRoomListener;
@@ -199,6 +201,10 @@ void TimelineModel::disconnectChatRoomListener(){
 		mChatRoomModel->getChatRoom()->removeListener(mChatRoomListener);
 		mChatRoomListener = nullptr;
 	}
+}
+
+void TimelineModel::onChatRoomLastUpdateTimeChanged(){
+	emit dataChanged();
 }
 
 //----------------------------------------------------------

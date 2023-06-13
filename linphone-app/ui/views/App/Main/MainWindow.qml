@@ -366,6 +366,7 @@ ApplicationWindow {
 						Layout.fillWidth: true
 						model: TimelineProxyModel{
 							listSource: TimelineProxyModel.Main
+							onListSourceChanged: console.log("listSourceChanged")
 						}
 						
 						onEntrySelected:{

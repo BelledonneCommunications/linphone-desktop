@@ -75,7 +75,6 @@ void TimelineProxyModel::setListSource(const TimelineListSource& source){
 			model = source == Main ? CoreManager::getInstance()->getTimelineListModel() : CoreManager::getInstance()->getTimelineListModel()->clone();
 		
 			connect(model, SIGNAL(selectedCountChanged(int)), this, SIGNAL(selectedCountChanged(int)));
-			connect(model, &TimelineListModel::updated, this, &TimelineProxyModel::invalidate);
 			connect(model, &TimelineListModel::selectedChanged, this, &TimelineProxyModel::selectedChanged);
 			connect(model, &TimelineListModel::countChanged, this, &TimelineProxyModel::countChanged);
 		
