@@ -172,8 +172,10 @@ private:
 
   SipAddressEntry *getSipAddressEntry (const QString &peerAddress, const std::shared_ptr<const linphone::Address>& lAddress) {
     auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
-    if (it == mPeerAddressToSipAddressEntry.end())
-      it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {}, {}, DisplayNames(lAddress) });
+    if (it == mPeerAddressToSipAddressEntry.end()){
+		it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {}, {}, DisplayNames(lAddress) });
+		mRefs << &(*it);
+     }
     return &(*it);
   }
   QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;

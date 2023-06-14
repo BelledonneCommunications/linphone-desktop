@@ -220,18 +220,16 @@ void CoreManager::cleanLogs () const {
 
 void CoreManager::setDatabasesPaths () {
 	SET_DATABASE_PATH(Friends, Paths::getFriendsListFilePath());
-	linphone_core_set_call_logs_database_path(mCore->cPtr(), Paths::getCallHistoryFilePath().c_str());// Setting the message database let SDK to migrate data
 	if(QFile::exists(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()))){
 		linphone_core_set_chat_database_path(mCore->cPtr(), Paths::getMessageHistoryFilePath().c_str());// Setting the message database let SDK to migrate data
 		QFile::remove(Utils::coreStringToAppString(Paths::getMessageHistoryFilePath()));
 	}
 }
 
-#undef SET_DATABASE_PATH
-
 // -----------------------------------------------------------------------------
 
 void CoreManager::setOtherPaths () {
+	SET_DATABASE_PATH(CallLogs, Paths::getCallHistoryFilePath());// Setting the call logs database let SDK to migrate data
 	if (mCore->getZrtpSecretsFile().empty() || !Paths::filePathExists(mCore->getZrtpSecretsFile(), true))
 		mCore->setZrtpSecretsFile(Paths::getZrtpSecretsFilePath());// Use application path if Linphone default is not available
 	qInfo() << "Using ZrtpSecrets path : " << QString::fromStdString(mCore->getZrtpSecretsFile());
@@ -255,6 +253,8 @@ void CoreManager::setResourcesPaths () {
 }
 
 // -----------------------------------------------------------------------------
+
+#undef SET_DATABASE_PATH
 
 void CoreManager::createLinphoneCore (const QString &configPath) {
 	qInfo() << QStringLiteral("Launch async core creation.");

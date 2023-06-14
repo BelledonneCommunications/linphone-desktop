@@ -667,10 +667,11 @@ void SipAddressesModel::initSipAddresses () {
 	qInfo() << "Sip addresses model from Chats :" << stepsTimer.restart() << "ms.";
 	initSipAddressesFromCalls();
 	qInfo() << "Sip addresses model from Calls :" << stepsTimer.restart() << "ms.";
-	initRefs();
-	qInfo() << "Sip addresses model from Refs :" << stepsTimer.restart() << "ms.";
 	initSipAddressesFromContacts();
 	qInfo() << "Sip addresses model from Contacts :" << stepsTimer.restart() << "ms.";
+	mRefs.clear();
+	initRefs();
+	qInfo() << "Sip addresses model init Refs :" << stepsTimer.restart() << "ms.";
 	qInfo() << "Sip addresses model initialized in:" << timer.elapsed() << "ms.";
 }
 
