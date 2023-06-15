@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Primary color for links in chat.
 - Bubble chat layout.
 - Camera stickers and conference layout stabilization.
+- Robot voice with some devices (SDK fix).
 
 ### Added
 - VFS Encryption.
@@ -30,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Create thumbnails into memory instead of disk.
 - Display video thumbnails.
 - Crop thumbnail and pictures if distored.
-- Update SDK to 5.2.72
+- Update SDK to 5.2.75
 
 ### Removed
 - Picture zoom on mouse over.
