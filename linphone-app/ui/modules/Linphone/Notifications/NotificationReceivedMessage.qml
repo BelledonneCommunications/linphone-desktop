@@ -5,6 +5,7 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 import UtilsCpp 1.0
+import Units 1.0
 
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
@@ -56,23 +57,36 @@ Notification {
 				color: NotificationReceivedMessageStyle.messageContainer.colorModel.color
 				radius: NotificationReceivedMessageStyle.messageContainer.radius
 				
-				Text {
+				TextEdit {
+					id: messageText
+					property font customFont : SettingsModel.textMessageFont
+					property string fullText: notification.notificationData.message
 					anchors {
 						fill: parent
 						margins: NotificationReceivedMessageStyle.messageContainer.margins
 					}
 					
 					color: NotificationReceivedMessageStyle.messageContainer.text.colorModel.color
-					elide: Text.ElideRight
+					
 					
 					font {
 						italic: true
-						pointSize: NotificationReceivedMessageStyle.messageContainer.text.pointSize
+						family: customFont.family
+						pointSize: Units.dp * (customFont.pointSize - 1)
 					}
 					
 					verticalAlignment: Text.AlignVCenter
-					text: notification.notificationData.message
+					text: UtilsCpp.encodeTextToQmlRichFormat(metrics.elidedText)
+					textFormat: Text.RichText
 					wrapMode: Text.Wrap
+
+					TextMetrics {
+						id: metrics
+						font: messageText.font
+						text: messageText.fullText
+						elideWidth: messageText.width
+						elide: Qt.ElideRight
+					}
 				}
 			}
 		}
