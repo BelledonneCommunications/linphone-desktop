@@ -22,7 +22,6 @@ QtObject {
 		
 		property QtObject text: QtObject {
 			property var colorModel: ColorsList.add(sectionName+'_message_container_text', 'l')
-			property int pointSize: Units.dp * 9
 		}
 	}
 }

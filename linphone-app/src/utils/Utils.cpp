@@ -719,14 +719,16 @@ bool Utils::isOnlyEmojis(const QString& text){
 
 
 QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap& options){
-	QString images;
-	QStringList formattedText;
+	/*QString images;
 	QStringList imageFormat;
-	bool lastWasUrl = false;
 	for(auto format : QImageReader::supportedImageFormats())
 		imageFormat.append(QString::fromLatin1(format).toUpper());
+	*/
+	QStringList formattedText;
+	bool lastWasUrl = false;
+	
 	if(options.contains("noLink") && options["noLink"].toBool()){
-		formattedText.append(text);
+		formattedText.append(encodeEmojiToQmlRichFormat(text));
 	}else{
 		auto primaryColor = App::getInstance()->getColorListModel()->getColor("i")->getColor();
 		auto iriParsed = UriTools::parseIri(text);
@@ -743,9 +745,10 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 					if(iri.front() != ' ')
 						iri.push_front(' ');
 				}
-				formattedText.append(iri);
+				formattedText.append(encodeEmojiToQmlRichFormat(iri));
 			}else{
 				QString uri = iriParsed[i].second.left(3) == "www" ? "http://"+iriParsed[i].second : iriParsed[i].second ;
+				/* TODO : preview from link
 				int extIndex = iriParsed[i].second.lastIndexOf('.');
 				QString ext;
 				if( extIndex >= 0)
@@ -759,24 +762,19 @@ QString Utils::encodeTextToQmlRichFormat(const QString& text, const QVariantMap&
 							options.contains("imagesWidth")
 							? QString(" height='auto'")
 							: ""
-						) + " src=\"" + iriParsed[i].second + "\" /></a>";
+						) + " src=\"" + iriParsed[i].second + "\" />"+uri+"</a>";
 				}else{
+				*/
 					formattedText.append( "<a style=\"color:"+ primaryColor.name() +";\" href=\"" + uri + "\">" + iri + "</a>");
 					lastWasUrl = true;
-				}
+				/*}*/
 			}
 		}
 	}
 	if(lastWasUrl && formattedText.last().back() != ' '){
 		formattedText.push_back(" ");
 	}
-	if(images != "")
-		images = "<div>" + images +"</div>";
-	QString encodeEmojis = encodeEmojiToQmlRichFormat(formattedText.join(""));
-	if( encodeEmojis.isEmpty() && images.isEmpty())
-		return "";
-	else
-		return images + "<p style=\"white-space:pre-wrap;\">" + encodeEmojiToQmlRichFormat(formattedText.join("")) + "</p>";
+	return "<p style=\"white-space:pre-wrap;\">" + formattedText.join("") + "</p>";
 }
 
 QString Utils::getFileContent(const QString& filePath){
