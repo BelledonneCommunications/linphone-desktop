@@ -103,6 +103,7 @@ void ChatRoomProxyModel::sendMessage(const QString &text){
 	QString trim = text.trimmed();
 	if (mChatRoomModel){
 		trim.replace(QChar::LineSeparator, QChar::LineFeed);// U+2028 is not recognized on Android app.
+		trim.replace(QChar::ParagraphSeparator, QChar::LineFeed);// U+2029 is not recognized on Android app.	
 		mChatRoomModel->sendMessage(trim);
 	}
 }
