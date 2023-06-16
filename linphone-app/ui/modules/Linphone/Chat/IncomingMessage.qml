@@ -43,12 +43,8 @@ RowLayout {
 			width: ChatStyle.entry.message.incoming.avatarSize
 			
 			// The avatar is only visible for the first message of a incoming messages sequence.
-			visible: {
-				if (index <= 0) {
-					return true // 1. First message, so visible.
-				}
-				return !$chatEntry.isOutgoing && !mainRow.isTopGrouped
-			}
+			visible: index <= 0 ? true // 1. First message, so visible.
+								: $chatEntry && !$chatEntry.isOutgoing && !mainRow.isTopGrouped || false
 			TooltipArea{
 				delay:0
 				text:avatar.username+'\n'+$chatEntry.fromSipAddress

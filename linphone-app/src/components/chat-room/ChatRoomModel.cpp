@@ -857,7 +857,8 @@ void ChatRoomModel::updateNewMessageNotice(const int& count){
 				}
 			}			
 			mUnreadMessageNotice = ChatNoticeModel::create(ChatNoticeModel::NoticeType::NoticeUnreadMessages, lastUnreadMessage,lastReceivedMessage, QString::number(count));
-			prepend(mUnreadMessageNotice);
+			if(mIsInitialized)
+				prepend(mUnreadMessageNotice);
 			qDebug() << "New message notice timestamp to :" << lastUnreadMessage.toString() << " recv at " << lastReceivedMessage.toString();
 		}
 	}
@@ -931,14 +932,16 @@ void ChatRoomModel::removeBindingCall(){
 }
 
 void ChatRoomModel::resetData(){
-	if( mBindingCalls == 0)
+	if( mBindingCalls == 0) {
 		ProxyListModel::resetData();
+		mIsInitialized = false;
+	}
 }
 
 void ChatRoomModel::initEntries(){
 	if( mList.size() > mLastEntriesStep)
 		resetData();
-	if(mList.size() <= (mUnreadMessageNotice ? 1 : 0)) {
+	if(!mIsInitialized) {
 		qDebug() << "Internal Entries : Init";
 	// On call : reinitialize all entries. This allow to free up memory
 		QList<QSharedPointer<ChatEvent> > entries;
@@ -981,11 +984,11 @@ void ChatRoomModel::initEntries(){
 			endInsertRows();
 			auto lastIndex = index(mList.size()-1,0);
 			emit dataChanged(firstIndex,lastIndex);
-			updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());
+			updateNewMessageNotice(mChatRoom->getUnreadMessagesCount());// it will prepend notice if needed.
 		}
-		qDebug() << "Internal Entries : End";
+		qDebug() << "Internal Entries (" << mList.size() << ") : End ";
+		mIsInitialized = true;
 	}
-	mIsInitialized = true;
 }
 void ChatRoomModel::setEntriesLoading(const bool& loading){
 	if( mEntriesLoading != loading){

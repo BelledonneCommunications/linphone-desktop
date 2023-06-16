@@ -291,10 +291,8 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 		}
 		
 		mChatRoomModel = CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoomModel);
-		setSourceModel(mChatRoomModel.get());
-		sort(0);
+
 		if (mChatRoomModel) {
-			
 			ChatRoomModel *ChatRoomModel = mChatRoomModel.get();
 			QObject::connect(ChatRoomModel, &ChatRoomModel::isRemoteComposingChanged, this, &ChatRoomProxyModel::handleIsRemoteComposingChanged);
 			QObject::connect(ChatRoomModel, &ChatRoomModel::messageReceived, this, &ChatRoomProxyModel::handleMessageReceived);
@@ -304,6 +302,8 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 			QObject::connect(ChatRoomModel, &ChatRoomModel::chatRoomDeleted, this, &ChatRoomProxyModel::chatRoomDeleted);
 			mChatRoomModel->initEntries();// This way, we don't load huge chat rooms (that lead to freeze GUI)
 		}
+		setSourceModel(mChatRoomModel.get());
+		sort(0);
 	}
 }
 
