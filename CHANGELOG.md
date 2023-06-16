@@ -6,10 +6,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.1.0 - undefined
 
+### Fixed
+- Primary color for links in chat.
+- Bubble chat layout.
+- Camera stickers and conference layout stabilization.
+
 ### Added
 - VFS Encryption
 - File viewer in chats (Image/Animated Image/Video/Texts) with the option to export the file.
 - Accept/decline CLI commands.
+- Colored Emojis with its own font family.
+- OAuth2 connection to retrieve remote provisioning (Experimental and not usable without configuration).
+- Create an account with a manual validation (external captcha as of 5.1.0).
+- Add/View contact from a message.
+- Mute option for each chatrooms.
+- New Chat Layout.
+- Display last seen for contacts.
+- New language support: Czech
+- An option to set dial prefix and its use on numbers.
+- Fetch remote provisioning from URI handler and with confirmation.
+- Emojis picker.
+- Text edit in chat can now understand rich texts.
+- Create thumbnails into memory instead of disk.
+- Display video thumbnails.
+- Crop thumbnail and pictures if distored.
+
+## 5.0.18 - 2023-06-16
+
+### Fixed
+- Robot voice with some devices (SDK fix).
+- Crash from Lime db failure (SDK fix).
+- Loading optimization (SDK fix).
+- Update SDK to 5.2.75
 
 ## 5.0.17 - 2023-06-01
 
