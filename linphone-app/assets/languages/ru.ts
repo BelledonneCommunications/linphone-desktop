@@ -18,7 +18,7 @@
     <message>
         <source>noAccount</source>
         <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Аккаунт не настроен</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Печатать только журналы из приложения</translation>
     </message>
 </context>
 <context>
@@ -710,12 +710,12 @@
     <message>
         <source>menuViewContact</source>
         <extracomment>&apos;View contact&apos; : Menu item to view the contact.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Просмотреть контакт</translation>
     </message>
     <message>
         <source>menuAddContact</source>
         <extracomment>&apos;Add to contacts&apos; : Menu item to add the contact to address book.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Добавить в контакты</translation>
     </message>
 </context>
 <context>
@@ -1111,12 +1111,12 @@
     <message>
         <source>conversationMenuDeactivate</source>
         <extracomment>&apos;Disable notifications&apos; : Item menu to disable chat&apos;s notifications</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Включить уведомления</translation>
     </message>
     <message>
         <source>conversationMenuActivate</source>
         <extracomment>&apos;Enable notifications&apos; : Item menu to enable chat&apos;s notifications</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Включить уведомления</translation>
     </message>
 </context>
 <context>
@@ -1254,12 +1254,12 @@
     <message>
         <source>emojisLastUsed</source>
         <extracomment>&apos;Last used&apos; : Emoji title for last used section.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Последний используемый</translation>
     </message>
     <message>
         <source>emojisAll</source>
         <extracomment>&apos;All&apos; Emoji title for all items.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Все</translation>
     </message>
 </context>
 <context>
@@ -1439,7 +1439,7 @@
     <message>
         <source>loadFile</source>
         <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>нагрузка</translation>
     </message>
 </context>
 <context>
@@ -1517,7 +1517,7 @@
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You have paused the call.&apos; : Pause message in call.</extracomment>
-        <translation>В настоящее время вы вне встречи.</translation>
+        <translation>Вы приостановили звонок.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1567,7 +1567,7 @@
     <message>
         <source>incallRemotePauseWarning</source>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Звонок был приостановлен удалённо.</translation>
     </message>
 </context>
 <context>
@@ -1861,7 +1861,7 @@
     <message>
         <source>confirmFetchUri</source>
         <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Вы хотите загрузить и применить конфигурацию с этого URL-адреса?</translation>
     </message>
 </context>
 <context>
@@ -2271,12 +2271,12 @@
     <message>
         <source>newConferenceInvitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Приглашение на конференцию получено!</translation>
     </message>
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Голосовое сообщение получено!</translation>
     </message>
 </context>
 <context>
@@ -2373,31 +2373,31 @@
     <name>PdfWidget</name>
     <message>
         <source>PDF Viewer</source>
-        <translation type="unfinished"></translation>
+        <translation>Просмотрщик PDF</translation>
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Вид</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Приблизить</translation>
     </message>
     <message>
         <source>Ctrl+=</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctr+=</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Уменьшить</translation>
     </message>
     <message>
         <source>Ctrl+-</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+-</translation>
     </message>
     <message>
         <source>Previous Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущая страница</translation>
     </message>
     <message>
         <source>PgUp</source>
@@ -2405,7 +2405,7 @@
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Следущая страница</translation>
     </message>
     <message>
         <source>PgDown</source>
@@ -2413,67 +2413,67 @@
     </message>
     <message>
         <source>Continuous</source>
-        <translation type="unfinished"></translation>
+        <translation>Непрерывный</translation>
     </message>
     <message>
         <source>Zoom...</source>
-        <translation type="unfinished"></translation>
+        <translation>Увеличить…</translation>
     </message>
     <message>
         <source>Fit Width</source>
-        <translation type="unfinished"></translation>
+        <translation>По ширине</translation>
     </message>
     <message>
         <source>Fit Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Подогнать страницу</translation>
     </message>
     <message>
         <source>25%</source>
-        <translation type="unfinished"></translation>
+        <translation>25%</translation>
     </message>
     <message>
         <source>50%</source>
-        <translation type="unfinished"></translation>
+        <translation>50%</translation>
     </message>
     <message>
         <source>70%</source>
-        <translation type="unfinished"></translation>
+        <translation>70%</translation>
     </message>
     <message>
         <source>85%</source>
-        <translation type="unfinished"></translation>
+        <translation>85%</translation>
     </message>
     <message>
         <source>100%</source>
-        <translation type="unfinished"></translation>
+        <translation>100%</translation>
     </message>
     <message>
         <source>125%</source>
-        <translation type="unfinished"></translation>
+        <translation>125%</translation>
     </message>
     <message>
         <source>150%</source>
-        <translation type="unfinished"></translation>
+        <translation>150%</translation>
     </message>
     <message>
         <source>175%</source>
-        <translation type="unfinished"></translation>
+        <translation>175%</translation>
     </message>
     <message>
         <source>200%</source>
-        <translation type="unfinished"></translation>
+        <translation>200%</translation>
     </message>
     <message>
         <source>300%</source>
-        <translation type="unfinished"></translation>
+        <translation>300%</translation>
     </message>
     <message>
         <source>400%</source>
-        <translation type="unfinished"></translation>
+        <translation>400%</translation>
     </message>
     <message>
         <source>Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Экспортировать как…</translation>
     </message>
 </context>
 <context>
@@ -2493,7 +2493,7 @@
     <message>
         <source>presenceAway</source>
         <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
-        <translation type="unfinished">Отсутствующий</translation>
+        <translation>Прочь</translation>
     </message>
 </context>
 <context>
@@ -2501,26 +2501,26 @@
     <message>
         <source>presenceOnline</source>
         <extracomment>&apos;Online⁣&apos;: Presence text</extracomment>
-        <translation type="unfinished">Доступен</translation>
+        <translation>Онлайн⁣</translation>
     </message>
     <message>
         <source>presenceLastSeenToday</source>
         <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Онлайн сегодня на %1</translation>
     </message>
     <message>
         <source>presenceLastSeenYesterday</source>
         <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Онлайн вчера в %1</translation>
     </message>
     <message>
         <source>presenceLastSeen</source>
         <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>В сети %1</translation>
     </message>
     <message>
         <source>presenceAway</source>
-        <translation type="unfinished">Отсутствующий</translation>
+        <translation>Прочь</translation>
     </message>
 </context>
 <context>
@@ -2664,7 +2664,7 @@
     <message>
         <source>fullLogsEnabledLabel</source>
         <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Полные журналы</translation>
     </message>
 </context>
 <context>
@@ -3366,47 +3366,47 @@
     </message>
     <message>
         <source>publishDurationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Продолжительность публикации (сек)</translation>
     </message>
     <message>
         <source>dialPrefix</source>
         <extracomment>&apos;Prefix for your country&apos; : Label for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Префикс для вашей страны</translation>
     </message>
     <message>
         <source>dialPrefixTooptip</source>
         <extracomment>&quot;The prefix to use when using numbers without the &apos;+&apos;&quot; : tooltip for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Префикс для использования при использовании чисел без &apos;+&apos;</translation>
     </message>
     <message>
         <source>dialEscapePlus</source>
         <extracomment>&quot;Replace &apos;+&apos; by &apos;00&apos;&quot; : Label to an option for escaping the &apos;+&apos; character when dialing.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Заменить &apos;+&apos; на &apos;00&apos;</translation>
     </message>
     <message>
         <source>dialEscapePlusTooltip</source>
         <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Замените &apos;+&apos; в адресах на &apos;00&apos;</translation>
     </message>
     <message>
         <source>dialPrefixCallChat</source>
         <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Применять префикс для исходящих звонков и чатов</translation>
     </message>
     <message>
         <source>dialPrefixCallChatTooltip</source>
         <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Если введён номер, примените префикс к номеру</translation>
     </message>
     <message>
         <source>advancedTitle</source>
         <extracomment>&apos;Advanced&apos; : Option title for advanced option in account parameters.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Дополнительно</translation>
     </message>
     <message>
         <source>enableBundleMode</source>
         <extracomment>&apos;Bundle mode&apos; : Option title to enable the RTP bundle mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Пакетный режим</translation>
     </message>
 </context>
 <context>
@@ -3643,7 +3643,7 @@
     <message>
         <source>fontsEmojiChange</source>
         <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>смайлики</translation>
     </message>
 </context>
 <context>
