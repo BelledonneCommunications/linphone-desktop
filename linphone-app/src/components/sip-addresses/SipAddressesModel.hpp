@@ -152,12 +152,14 @@ private:
 
   // ---------------------------------------------------------------------------
 
-  SipAddressEntry *getSipAddressEntry (const QString &peerAddress) {
-    auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
-    if (it == mPeerAddressToSipAddressEntry.end())
-      it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
-    return &(*it);
-  }
+	SipAddressEntry *getSipAddressEntry (const QString &peerAddress) {
+		auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
+		if (it == mPeerAddressToSipAddressEntry.end()){
+			it = mPeerAddressToSipAddressEntry.insert(peerAddress, { peerAddress, nullptr, Presence::Offline, {} });
+			mRefs << &(*it);
+		}
+		return &(*it);
+	}
   QHash<QString, SipAddressEntry> mPeerAddressToSipAddressEntry;
   QList<const SipAddressEntry *> mRefs;
 
