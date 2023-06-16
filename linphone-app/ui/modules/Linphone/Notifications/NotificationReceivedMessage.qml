@@ -97,11 +97,12 @@ Notification {
 		
 		onClicked: notification._close(function () {
 			AccountSettingsModel.setDefaultAccountFromSipAddress(notification.localAddress)
+			var chatroom = notification.timelineModel.getChatRoomModel()
+			console.debug("Load conversation from notification: "+chatroom)
+			//notification.notificationData.window.setView('Conversation', {
+				//											 chatRoomModel: chatroom
+					//									 })
 			notification.timelineModel.selected = true
-			console.debug("Load conversation from notification")
-			notification.notificationData.window.setView('Conversation', {
-															 chatRoomModel:notification.timelineModel.getChatRoomModel()
-														 })
 			App.smartShowWindow(notification.notificationData.window)
 		})
 	}
