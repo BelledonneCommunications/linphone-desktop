@@ -18,7 +18,7 @@
     <message>
         <source>noAccount</source>
         <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>アカウントが設定されていません</translation>
     </message>
 </context>
 <context>
@@ -327,7 +327,7 @@
     </message>
     <message>
         <source>callStatsJitterBuffer</source>
-        <translation>Jitter buffer</translation>
+        <translation>ジッターバッファー</translation>
     </message>
     <message>
         <source>callStatsSentVideoDefinition</source>
@@ -1841,7 +1841,7 @@
     <message>
         <source>confirmFetchUri</source>
         <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>このURLから設定をダウンロードして適用しますか？</translation>
     </message>
 </context>
 <context>
@@ -2159,7 +2159,7 @@
     <message>
         <source>confirmFormExit</source>
         <extracomment>&apos;Do you want to close this form ?&apos; : confirmation text for exiting the creatoin form</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>このフォームを閉じますか？</translation>
     </message>
 </context>
 <context>
@@ -2197,7 +2197,7 @@
     <message>
         <source>conferenceSecurityEvent</source>
         <extracomment>&apos;Security level degraded by %1&apos;: Little message to show on the event when a security level has been lost.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 によりセキュリティレベルが低下しました</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
@@ -2222,8 +2222,8 @@
     <message numerus="yes">
         <source>unreadMessageNotice</source>
         <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 はメッセージを読んでいません</numerusform>
         </translation>
     </message>
 </context>
@@ -2245,12 +2245,12 @@
     <message>
         <source>newConferenceInvitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">会議の招待状が届きました！</translation>
     </message>
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">音声メッセージを受信しました！</translation>
     </message>
 </context>
 <context>
@@ -2375,7 +2375,7 @@
     </message>
     <message>
         <source>PgUp</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PgUp</translation>
     </message>
     <message>
         <source>Next Page</source>
@@ -2383,7 +2383,7 @@
     </message>
     <message>
         <source>PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">PgDown</translation>
     </message>
     <message>
         <source>Continuous</source>
@@ -2502,17 +2502,17 @@
     <message>
         <source>LinphoneEnums_TunnelModeEnable</source>
         <extracomment>&apos;Enable&apos; : One word for button action to enable tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>有効</translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeDisable</source>
         <extracomment>&apos;Disable&apos; : One word for button action to disable tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>無効</translation>
     </message>
     <message>
         <source>LinphoneEnums_TunnelModeAuto</source>
         <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>自動</translation>
     </message>
 </context>
 <context>
@@ -2530,7 +2530,7 @@
     <message>
         <source>recordingsDelete</source>
         <extracomment>&apos;Are you sure you want to delete this item?&apos; : Confirmation message for removing a record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>このアイテムを削除してもよろしいですか？</translation>
     </message>
 </context>
 <context>
@@ -2591,31 +2591,31 @@
     <message>
         <source>noPlugin</source>
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">読み込むプラグインがありません</translation>
     </message>
     <message>
         <source>viewlogs</source>
-        <translation type="unfinished"></translation>
+        <translation>表示</translation>
     </message>
     <message>
         <source>vfsTitle</source>
         <extracomment>&apos;VFS&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>VFS</translation>
     </message>
     <message>
         <source>vfsEncryption</source>
         <extracomment>&apos;Encrypt all the application&apos; : Label to encrypt application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションを暗号化する</translation>
     </message>
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">暗号化を解除してもよろしいですか？アプリケーションが終了しすべてのデータが失われます。解除する前にアプリケーションのデータを削除する必要があります。</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>暗号化してもよろしいですか？すべてのデータを削除することなく暗号化の解除をすることはできません。</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -2624,21 +2624,21 @@
     <message>
         <source>deleteData</source>
         <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>データを削除</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>確認</translation>
     </message>
     <message>
         <source>vfsDeletion</source>
         <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>アプリケーションのデータファイルが削除されます。よろしいですか？</translation>
     </message>
     <message>
         <source>fullLogsEnabledLabel</source>
         <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのログ</translation>
     </message>
 </context>
 <context>
@@ -2709,7 +2709,7 @@
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
-        <translation type="unfinished"></translation>
+        <translation>エコーが検出されませんでした</translation>
     </message>
 </context>
 <context>
@@ -2821,7 +2821,7 @@
     <message>
         <source>hideEmptyChatRoomsLabel</source>
         <extracomment>&apos;Hide empty chat rooms&apos; : Label for a switch to choose if Linphone hide empty chat rooms</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>空のチャットルームを非表示にする</translation>
     </message>
     <message>
         <source>waitRegistrationForCallLabel</source>
@@ -2831,34 +2831,34 @@
     <message>
         <source>chatNotificationsEnabledLabel</source>
         <extracomment>&apos;Enable notifications&apos;: settings label for enabling notifications.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>通知を有効にする</translation>
     </message>
     <message>
         <source>AutoDownload</source>
         <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>自動ダウンロード</translation>
     </message>
     <message>
         <source>autoDownloadNever</source>
         <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ダウンロードしない</translation>
     </message>
     <message>
         <source>autoDownloadAlways</source>
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>常にダウンロードする</translation>
     </message>
     <message>
         <source>callScreenshotEnabledLabel</source>
         <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>スクリーンショットを有効にする</translation>
     </message>
 </context>
 <context>
     <name>SettingsLdap</name>
     <message>
         <source>newServer</source>
-        <translation type="unfinished"></translation>
+        <translation>新規サーバー</translation>
     </message>
 </context>
 <context>
@@ -2869,7 +2869,7 @@
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>確認</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -2885,19 +2885,19 @@
     </message>
     <message>
         <source>serverLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>サーバーURL</translation>
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">LDAPサーバー。例: ローカルホストサーバーの ldap:/// もしくは ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>バインドDN</translation>
     </message>
     <message>
         <source>bindDNTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>バインドDNは、LDAPの認証に使用される認証情報です。&lt;br&gt;例: cn=ausername,ou=people,dc=bc,dc=com</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -2905,7 +2905,7 @@
     </message>
     <message>
         <source>useTLSLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TLSを使用する</translation>
     </message>
     <message>
         <source>useTLSTooltip</source>
@@ -2913,7 +2913,7 @@
     </message>
     <message>
         <source>useSalLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SALを使用する</translation>
     </message>
     <message>
         <source>useSalTooltip</source>
@@ -2926,15 +2926,15 @@
     </message>
     <message>
         <source>AutoMode</source>
-        <translation type="unfinished"></translation>
+        <translation>自動</translation>
     </message>
     <message>
         <source>offMode</source>
-        <translation type="unfinished"></translation>
+        <translation>オフ</translation>
     </message>
     <message>
         <source>onMode</source>
-        <translation type="unfinished"></translation>
+        <translation>オン</translation>
     </message>
     <message>
         <source>verifyTLSTooltip</source>
@@ -2942,7 +2942,7 @@
     </message>
     <message>
         <source>searchTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>検索</translation>
     </message>
     <message>
         <source>baseObjectLabel</source>
@@ -2958,23 +2958,23 @@
     </message>
     <message>
         <source>filterLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>フィルター</translation>
     </message>
     <message>
         <source>filterTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>連絡先の検索ではこのフィルターをベースにしています。&lt;br&gt;規定値: (sn=%s)</translation>
     </message>
     <message>
         <source>maxResultsLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">最大検索数</translation>
     </message>
     <message>
         <source>maxResultsTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>検索要求時の最大検索数です。</translation>
     </message>
     <message>
         <source>timeoutLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>タイムアウト</translation>
     </message>
     <message>
         <source>timeoutTooltip</source>
@@ -2986,7 +2986,7 @@
     </message>
     <message>
         <source>nameAttributesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">名前要素</translation>
     </message>
     <message>
         <source>nameAttributesTooltip</source>
@@ -2994,7 +2994,7 @@
     </message>
     <message>
         <source>sipAttributesLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP属性</translation>
     </message>
     <message>
         <source>sipAttributesTooltip</source>
@@ -3002,12 +3002,12 @@
     </message>
     <message>
         <source>domainLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>ドメイン</translation>
     </message>
     <message>
         <source>domainTooltip</source>
         <extracomment>&apos;Add the domain to the sip address(username@domain).&apos; Tooltip to explain that this field is used to complete a result with this domain.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIPアドレスにドメインを追加します(sip:username@domain)。</translation>
     </message>
     <message>
         <source>miscLabel</source>
@@ -3015,11 +3015,11 @@
     </message>
     <message>
         <source>debugLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>デバッグ</translation>
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">トランザクション実行時にログファイルに冗長なログを取得します(TLS接続のデバッグに便利です)。</translation>
     </message>
 </context>
 <context>
@@ -3220,7 +3220,7 @@
     <message>
         <source>webviewLoginUrlLabel</source>
         <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ログインURL</translation>
     </message>
 </context>
 <context>
@@ -3345,7 +3345,7 @@
     <message>
         <source>dialPrefix</source>
         <extracomment>&apos;Prefix for your country&apos; : Label for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>国別プレフィックス</translation>
     </message>
     <message>
         <source>dialPrefixTooptip</source>
@@ -3355,27 +3355,27 @@
     <message>
         <source>dialEscapePlus</source>
         <extracomment>&quot;Replace &apos;+&apos; by &apos;00&apos;&quot; : Label to an option for escaping the &apos;+&apos; character when dialing.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&apos;+&apos;を&apos;00&apos;に置き換える</translation>
     </message>
     <message>
         <source>dialEscapePlusTooltip</source>
         <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">アドレスの&apos;+&apos;を&apos;00&apos;に置き換える</translation>
     </message>
     <message>
         <source>dialPrefixCallChat</source>
         <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">通話の発信とチャットにプレフィックスを適用する</translation>
     </message>
     <message>
         <source>dialPrefixCallChatTooltip</source>
         <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">番号が入力された場合、番号のプレフィックスを適用する</translation>
     </message>
     <message>
         <source>advancedTitle</source>
         <extracomment>&apos;Advanced&apos; : Option title for advanced option in account parameters.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>詳細設定</translation>
     </message>
     <message>
         <source>enableBundleMode</source>
@@ -3393,17 +3393,17 @@
     <message>
         <source>tunnelDomain</source>
         <extracomment>&apos;Domain&apos; : Field title of a textfield to set domain.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ドメイン</translation>
     </message>
     <message>
         <source>tunnelUsername</source>
         <extracomment>&apos;Username&apos; : Field title of a textfield to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>tunnelSIP</source>
         <extracomment>&apos;SIP&apos; : Field title of a switch to set SIP mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -3413,37 +3413,37 @@
     <message>
         <source>setHTTPProxy</source>
         <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">HTTPプロキシを設定</translation>
     </message>
     <message>
         <source>proxyHttpHost</source>
         <extracomment>&apos;Host&apos; : Placeholder to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ホスト</translation>
     </message>
     <message>
         <source>proxyHttpPort</source>
         <extracomment>&apos;Port&apos; : Placehoilder to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ポート</translation>
     </message>
     <message>
         <source>proxyHttpUsername</source>
         <extracomment>&apos;Username&apos; : Placeholder to set username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>proxyHttpPassword</source>
         <extracomment>&apos;Password&apos; : Placeholder to set password.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>パスワード</translation>
     </message>
     <message>
         <source>proxyHttpApply</source>
         <extracomment>&apos;Apply&apos; : Button to set proxy from changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>適用</translation>
     </message>
     <message>
         <source>serverMode</source>
         <extracomment>&apos;Mode&apos; : Field title on form to set tunnel mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>モード</translation>
     </message>
     <message>
         <source>serverDualMode</source>
@@ -3453,17 +3453,17 @@
     <message>
         <source>serverTitle</source>
         <extracomment>&apos;Server&apos; : Title form to set a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>サーバー</translation>
     </message>
     <message>
         <source>serverHostname</source>
         <extracomment>&apos;Hostname&apos; : Field title on form to set hostname.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ホスト名</translation>
     </message>
     <message>
         <source>serverPort</source>
         <extracomment>&apos;Port&apos; : Field title on form to set port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ポート</translation>
     </message>
     <message>
         <source>serverDualHostname</source>
@@ -3488,12 +3488,12 @@
     <message>
         <source>tunnelAddServer</source>
         <extracomment>&apos;Add server&apos; : Button for adding a server</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>サーバーを追加</translation>
     </message>
     <message>
         <source>tunnelApply</source>
         <extracomment>&apos;Apply&apos; : Button to apply changes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>適用</translation>
     </message>
 </context>
 <context>
@@ -3572,7 +3572,7 @@
     <message>
         <source>checkForUpdateLabel</source>
         <extracomment>&apos;Check for updates&apos; : Label switch for enabling check for updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>アップデートを確認</translation>
     </message>
     <message>
         <source>mipmapLabel</source>
@@ -3602,22 +3602,22 @@
     <message>
         <source>versionCheckTypeRelease</source>
         <extracomment>&apos;Release&apos; : Keyword for an option to check the release version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>リリース</translation>
     </message>
     <message>
         <source>versionCheckTypeCustom</source>
         <extracomment>&apos;Custom&apos; : Keyword for an option to check the custom version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>カスタム</translation>
     </message>
     <message>
         <source>versionCheckTypeNightly</source>
         <extracomment>&apos;Nightly&apos; : Keyword for an option to check the nightly version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nightly</translation>
     </message>
     <message>
         <source>fontsEmojiChange</source>
         <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>絵文字</translation>
     </message>
 </context>
 <context>
@@ -3703,12 +3703,12 @@
     <message>
         <source>videoMosaicLayout</source>
         <extracomment>&apos;Mosaic&apos; : Mosaic layout invideo conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>モザイク</translation>
     </message>
     <message>
         <source>videoGridModeLabel</source>
         <extracomment>&apos;Mosaic&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>モザイク</translation>
     </message>
     <message>
         <source>videoActiveSpeakerModeLabel</source>
@@ -3723,7 +3723,7 @@
     <message>
         <source>videoModeLabel</source>
         <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>カメラモード</translation>
     </message>
 </context>
 <context>
@@ -3774,7 +3774,7 @@
     <message>
         <source>tunnelTab</source>
         <extracomment>&apos;Tunnel&apos; : Tab title for tunnel section in settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>トンネル</translation>
     </message>
 </context>
 <context>
@@ -3786,12 +3786,12 @@
     <message>
         <source>contactsSearchPlaceholder</source>
         <extracomment>&apos;Search in contacts&apos; : Placeholder for a search a contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>連絡先から検索</translation>
     </message>
     <message>
         <source>contactsSearchTooltip</source>
         <extracomment>&apos;Search an address in your contacts or use a custom one.&apos; : tooltip</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">連絡先からアドレスを検索するか、カスタムアドレスを使用します。</translation>
     </message>
     <message>
         <source>timelineSelectionHeader</source>
@@ -3811,17 +3811,17 @@
     <message>
         <source>timelineFilter</source>
         <extracomment>A title for filtering mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>フィルター</translation>
     </message>
     <message>
         <source>timelineFilterAll</source>
         <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>すべて</translation>
     </message>
     <message>
         <source>timelineFilterCustom</source>
         <extracomment>&apos;Custom&apos; The mode for timelines filtering.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>カスタム</translation>
     </message>
     <message>
         <source>timelineFilterSimpleRooms</source>
@@ -3836,7 +3836,7 @@
     <message>
         <source>timelineFilterChatGroups</source>
         <extracomment>&apos;Chat groups&apos; : Filter item. Selecting it will show all chat groups (with more than one participant).</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>チャットグループ</translation>
     </message>
     <message>
         <source>timelineFilterEphemerals</source>
@@ -3846,12 +3846,12 @@
     <message>
         <source>timelineSearchPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>リストから検索</translation>
     </message>
     <message>
         <source>timelineFilterAllSecureLevelRooms</source>
         <extracomment>&apos;All security levels&apos; : Filter item. Selecting it will not do any filter on security level.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>すべてのセキュリティレベル</translation>
     </message>
     <message>
         <source>timelineFilterStandardRooms</source>
@@ -3913,7 +3913,7 @@
     <message>
         <source>passwordRecovery</source>
         <extracomment>&apos;Forgotten password?&apos; : text for an url shortcut to change the password</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>パスワードを忘れた場合</translation>
     </message>
 </context>
 <context>
@@ -3984,7 +3984,7 @@
     <message>
         <source>understandAction</source>
         <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>理解しました</translation>
     </message>
     <message>
         <source>warningFeatures</source>
@@ -3994,7 +3994,7 @@
     <message>
         <source>warningThirdParty</source>
         <extracomment>&apos;These features are hidden when you register with a third party SIP account.&apos; : Warning text for using third party account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>サードパーティーのSIPアカウントで登録している場合、いくつかの機能は非表示になります。</translation>
     </message>
     <message>
         <source>warningContact</source>
@@ -4006,15 +4006,15 @@
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>キーの削除に失敗: %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>キーの読み込みに失敗: %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>キーの書き込みに失敗: %1</translation>
     </message>
 </context>
 <context>
@@ -4027,7 +4027,7 @@
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>開始</translation>
     </message>
     <message>
         <source>endCallStatus</source>
@@ -4042,7 +4042,7 @@
     <message>
         <source>incomingCallStatus</source>
         <extracomment>&quot;Incoming call&quot; : status of the call in waiting room when user receive a call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>着信</translation>
     </message>
 </context>
 <context>
@@ -4980,50 +4980,50 @@
     <message numerus="yes">
         <source>formatYears</source>
         <extracomment>&apos;%1 year&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 年</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 ヶ月</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 週間</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 日</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 時間</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 分</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatSeconds</source>
         <extracomment>&apos;%1 second&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 秒</numerusform>
         </translation>
     </message>
 </context>
