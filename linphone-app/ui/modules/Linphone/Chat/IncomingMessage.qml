@@ -45,13 +45,16 @@ RowLayout {
 			// The avatar is only visible for the first message of a incoming messages sequence.
 			visible: index <= 0 ? true // 1. First message, so visible.
 								: $chatEntry && !$chatEntry.isOutgoing && !mainRow.isTopGrouped || false
+
 			TooltipArea{
 				delay:0
 				text:avatar.username+'\n'+$chatEntry.fromSipAddress
 				maxWidth: mainRow.width
 				isClickable: true
 				onClicked: {
-					window.mainSearchBar.text = $chatEntry.fromSipAddress
+					window.mainSearchBar.text = UtilsCpp.toDisplayString($chatEntry.fromSipAddress)
+				}
+			}
 					}
 			}
 		}

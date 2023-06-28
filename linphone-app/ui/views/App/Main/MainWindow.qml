@@ -9,6 +9,7 @@ import Utils 1.0
 
 import App.Styles 1.0
 import ColorsList 1.0
+import UtilsCpp 1.0
 
 import 'MainWindow.js' as Logic
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
@@ -139,7 +140,7 @@ ApplicationWindow {
 						Layout.fillWidth: false
 						
 						TooltipArea {
-							text: AccountSettingsModel.sipAddress
+							text: UtilsCpp.toDisplayString(AccountSettingsModel.sipAddress)
 							hoveringCursor: Qt.PointingHandCursor
 						}
 						
