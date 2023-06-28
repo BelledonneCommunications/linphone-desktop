@@ -208,6 +208,7 @@ Rectangle {
 			visible: !mainItem.conferenceInfoModel
 			spacing: 10
 			Text{
+				id: displayName
 				Layout.alignment: Qt.AlignCenter
 				text: mainItem._sipAddressObserver ? UtilsCpp.getDisplayName(mainItem._sipAddressObserver.peerAddress) : ''
 				color: WaitingRoomStyle.callee.colorModel.color
@@ -218,12 +219,12 @@ Rectangle {
 			}
 			Text{
 				Layout.fillWidth: true
-				text: mainItem.callModel && SipAddressesModel.cleanSipAddress(mainItem.callModel.peerAddress)
+				text: mainItem.callModel && UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(mainItem.callModel.peerAddress))
 				color: WaitingRoomStyle.callee.colorModel.color
 				font.pointSize:  WaitingRoomStyle.callee.addressPointSize
 				horizontalAlignment: Text.AlignHCenter
 				verticalAlignment: Text.AlignVCenter
-				visible: mainItem.callModel && !mainItem.conferenceInfoModel
+				visible: mainItem.callModel && !mainItem.conferenceInfoModel && text != displayName.text
 			}
 		}
 		// -------------------------------------------------------------------------

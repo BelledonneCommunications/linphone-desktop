@@ -123,7 +123,8 @@ Rectangle {
 						? item.subject
 						: item.username
 			subtitleText: entry && item.showSubtitle
-							? item.subtitle
+							? UtilsCpp.toDisplayString(
+								item.subtitle
 								? item.subtitle
 								: (entry.isOneToOne == undefined || entry.isOneToOne) && (entry.haveEncryption == undefined || !entry.haveEncryption)
 									? item.organizer
@@ -132,6 +133,7 @@ Rectangle {
 									: entry.participants
 										? entry.participants.addressesToString
 										: ''
+							)
 							: ''
 		}
 		

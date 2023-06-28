@@ -133,6 +133,20 @@ QString Utils::toDateString(QDateTime date, const QString& format){
 	return QLocale().toString(getOffsettedUTC(date), (!format.isEmpty() ? format : QLocale().dateFormat()) );
 }
 
+// Return custom address to be displayed on UI.
+// In order to return only the username and to remove all domains from the GUI, you may just change the default mode.
+QString Utils::toDisplayString(const QString& str, SipDisplayMode displayMode){
+	if(displayMode == SIP_DISPLAY_ALL) return str;
+	std::shared_ptr<linphone::Address> addr = linphone::Factory::get()->createAddress(str.toStdString());
+	QString displayString;
+	if( addr && ( (displayMode & SIP_DISPLAY_USERNAME) == SIP_DISPLAY_USERNAME))
+		displayString = Utils::coreStringToAppString(addr->getUsername());
+	if(displayString.isEmpty())
+		return str;
+	else
+		return displayString;
+}
+
 QString Utils::getDisplayName(const QString& address){
 	return getDisplayName(interpretUrl(address));
 }

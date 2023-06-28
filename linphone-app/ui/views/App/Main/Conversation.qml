@@ -154,7 +154,7 @@ ColumnLayout  {
 												}else if(chatRoomModel.isSecure())
 													return chatRoomModel.participants.addressesToString;
 												else
-													return SipAddressesModel.cleanSipAddress(chatRoomModel.sipAddress)
+													return UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(chatRoomModel.sipAddress))
 										  }else
 											  return ''
 							

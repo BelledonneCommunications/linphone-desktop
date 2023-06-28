@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.3
 import Common 1.0
 import Common.Styles 1.0
 
+import UtilsCpp 1.0
 // =============================================================================
 
 Controls.ItemDelegate {
@@ -64,7 +65,7 @@ Controls.ItemDelegate {
 				pointSize: CommonItemDelegateStyle.contentItem.text.pointSize
 			}
 			
-			text: item.flattenedModel[container.textRole] || modelData
+			text: UtilsCpp.toDisplayString(item.flattenedModel[container.textRole] || modelData)
 		}
 		
 		Item {

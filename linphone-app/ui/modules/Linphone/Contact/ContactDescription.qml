@@ -95,7 +95,7 @@ Column {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		height: (parent.height-parent.topPadding-parent.bottomPadding)/parent.visibleChildren.length
-		visible: subtitle.fullText != ''
+		visible: subtitle.fullText != '' && subtitle.fullText != title.fullText
 		TextEdit {
 			id:subtitle
 			property string fullText

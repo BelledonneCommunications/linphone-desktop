@@ -43,6 +43,7 @@ class VcardModel : public QObject {
   Q_PROPERTY(QVariantMap address READ getAddress NOTIFY vcardUpdated);
   //Q_PROPERTY(QString sipAddress 
   Q_PROPERTY(QVariantList sipAddresses READ getSipAddresses NOTIFY vcardUpdated);
+  Q_PROPERTY(QVariantList sipUsernames READ getSipUsernames NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList companies READ getCompanies NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList emails READ getEmails NOTIFY vcardUpdated);
   Q_PROPERTY(QVariantList urls READ getUrls NOTIFY vcardUpdated);
@@ -71,6 +72,7 @@ public:
   // ---------------------------------------------------------------------------
 
   QVariantList getSipAddresses () const;
+  QVariantList getSipUsernames () const;
   QList<std::shared_ptr<linphone::Address>> getLinphoneSipAddresses () const;
   QVariantMap getAddress () const;
   QVariantList getEmails () const;
