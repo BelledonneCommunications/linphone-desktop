@@ -55,8 +55,6 @@ RowLayout {
 					window.mainSearchBar.text = UtilsCpp.toDisplayString($chatEntry.fromSipAddress)
 				}
 			}
-					}
-			}
 		}
 	}
 	
