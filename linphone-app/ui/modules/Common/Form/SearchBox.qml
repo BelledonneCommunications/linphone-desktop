@@ -22,6 +22,7 @@ Item {
 	property alias tooltipText : tooltip.text
 	property alias text : searchField.text
 	property alias isMandatory: searchField.isMandatory
+	property alias closePolicy: menu.closePolicy
 	
 	default property alias _content: menu._content
 	
@@ -56,14 +57,15 @@ Item {
 		var model = searchBox.view.model
 		Utils.assert(model.setFilter != null, '`model.setFilter` must be defined.')
 		model.setFilter(text)
-		if(!searchField.activeFocus)
-			searchField.focus = true
-		if(!_isOpen){
-			searchBox.menuRequested()
-			searchBox.openMenu()
+		if(text){
+			if(!searchField.activeFocus)
+				searchField.focus = true
+			if(!_isOpen){
+				searchBox.menuRequested()
+				searchBox.openMenu()
+			}
 		}
 	}
-	
 	
 	// ---------------------------------------------------------------------------
 	
@@ -95,10 +97,16 @@ Item {
 				enterButtonPressed()
 			}
 			onActiveFocusChanged: {
-				if (activeFocus && !_isOpen) {
-					_filter(text)
-					searchBox.menuRequested()
-					searchBox.openMenu()
+				if (activeFocus){
+					if(!_isOpen) {
+						_filter(text)
+						if(text){
+							searchBox.menuRequested()
+							searchBox.openMenu()
+						}
+					}
+				}else if(_isOpen && !text){
+					searchBox.closeMenu()
 				}
 			}
 			
@@ -135,7 +143,7 @@ Item {
 	MouseArea
 	{// Just take hover events and set popup to do its automatic close if mouse is not inside field/popup area
 		anchors.fill: parent
-		onContainsMouseChanged: menu.popup.closePolicy=(containsMouse?Controls.Popup.NoAutoClose:Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside)
+		//onContainsMouseChanged: menu.popup.closePolicy=(containsMouse?Controls.Popup.NoAutoClose:Controls.Popup.CloseOnEscape | Controls.Popup.CloseOnPressOutside)
 		hoverEnabled:true
 		preventStealing: true
 		propagateComposedEvents:true

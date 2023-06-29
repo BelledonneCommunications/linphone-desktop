@@ -110,7 +110,7 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 		
 	});
 #endif
-	configureRlsUri();
+	updateRlsUri();
 }
 
 SettingsModel::~SettingsModel()
@@ -1097,7 +1097,7 @@ void SettingsModel::setLimeState (const bool& state) {
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getContactsEnabled () const {
-	return !!mConfig->getInt(UiSection, "contacts_enabled", 1);
+	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "contacts_enabled"), 1);
 }
 
 void SettingsModel::setContactsEnabled (bool status) {
@@ -1408,57 +1408,30 @@ bool SettingsModel::getRlsUriEnabled () const {
 }
 
 void SettingsModel::setRlsUriEnabled (bool status) {
+	if(getRlsUriEnabled () != status){
+		mConfig->setInt(UiSection, "rls_uri_enabled", status);
+		emit rlsUriEnabledChanged(status);
+	}
+}
+
+QString SettingsModel::getRlsUri() const{
+	return Utils::coreStringToAppString(mConfig->getString("sip", "rls_uri", ""));
+}
+
+void SettingsModel::setRlsUri (const QString& rlsUri){
+	bool status = !rlsUri.isEmpty();
 	mConfig->setInt(UiSection, "rls_uri_enabled", status);
-	mConfig->setString("sip", "rls_uri", status ? Constants::DefaultRlsUri : "");
+	mConfig->setString("sip", "rls_uri", Utils::appStringToCoreString(rlsUri));
+	emit rlsUriChanged();
 	emit rlsUriEnabledChanged(status);
 }
 
-static string getRlsUriDomain () {
-	static string domain;
-	if (!domain.empty())
-		return domain;
-
-	shared_ptr<linphone::Address> linphoneAddress = CoreManager::getInstance()->getCore()->createAddress(Constants::DefaultRlsUri);
-	Q_CHECK_PTR(linphoneAddress);
-	domain = linphoneAddress->getDomain();
-	return domain;
-}
-
-void SettingsModel::configureRlsUri () {
-	// Ensure rls uri is empty.
-	if (!getRlsUriEnabled()) {
-		mConfig->setString("sip", "rls_uri", "");
-		return;
+void SettingsModel::updateRlsUri(){
+	if( getRlsUriEnabled() && getRlsUri().isEmpty()){// if enabled, uri should not be empty : set default. This allow to take account of old configuration.
+		setRlsUri(Constants::DefaultRlsUri);
 	}
-
-	// Set rls uri if necessary.
-	const string domain = getRlsUriDomain();
-	for (const auto &account : CoreManager::getInstance()->getAccountList())
-		if (account->getParams()->getDomain() == domain) {
-			mConfig->setString("sip", "rls_uri", Constants::DefaultRlsUri);
-			return;
-		}
-
-	mConfig->setString("sip", "rls_uri", "");
 }
 
-void SettingsModel::configureRlsUri (const std::string& domain) {
-	if (!getRlsUriEnabled()) {
-		mConfig->setString("sip", "rls_uri", "");
-		return;
-	}
-
-	const string currentDomain = getRlsUriDomain();
-	if (domain == currentDomain) {
-		mConfig->setString("sip", "rls_uri", Constants::DefaultRlsUri);
-		return;
-	}
-
-	mConfig->setString("sip", "rls_uri", "");
-}
-void SettingsModel::configureRlsUri (const shared_ptr<const linphone::Account> &account) {
-	configureRlsUri(account->getParams()->getDomain());
-}
 //------------------------------------------------------------------------------
 
 bool SettingsModel::tunnelAvailable() const{
@@ -1717,6 +1690,17 @@ bool SettingsModel::useMinimalTimelineFilter() const{
 void SettingsModel::setUseMinimalTimelineFilter(const bool& useMinimal) {
 	mConfig->setInt(UiSection, "use_minimal_timeline_filter", useMinimal);
 	emit useMinimalTimelineFilterChanged();
+}
+
+Utils::SipDisplayMode SettingsModel::getSipDisplayMode() const{
+	return static_cast<Utils::SipDisplayMode>(mConfig->getInt(UiSection, getEntryFullName(UiSection, "sip_display_mode"), (int)Utils::SipDisplayMode::SIP_DISPLAY_ALL));
+}
+
+void SettingsModel::setSipDisplayMode(Utils::SipDisplayMode mode){
+	if(!isReadOnly(UiSection, "sip_display_mode")) {
+		mConfig->setInt(UiSection, "sip_display_mode", (int)mode);
+		emit sipDisplayModeChanged();
+	}
 }
 
 // =============================================================================

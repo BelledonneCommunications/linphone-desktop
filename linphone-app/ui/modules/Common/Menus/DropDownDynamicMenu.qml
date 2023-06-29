@@ -19,7 +19,7 @@ Item {
 	property int maxMenuHeight
 	
 	default property alias _content: menuContent.data
-	property alias popup : popup
+	property alias closePolicy : popup.closePolicy
 	
 	// ---------------------------------------------------------------------------
 	

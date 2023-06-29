@@ -18,9 +18,6 @@ SearchBox {
 	property alias header : view.headerItem
 	property alias actions : view.actions
 	property alias showHeader : view.showHeader
-	property string previousText: text
-	onTextChanged: if( text != '') previousText = text;
-	
 	property alias participantListModel : searchModel.participantListModel
 	
 	function addAddressToIgnore(entry){

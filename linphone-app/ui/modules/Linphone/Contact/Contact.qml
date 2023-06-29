@@ -133,7 +133,7 @@ Rectangle {
 									: entry.participants
 										? entry.participants.addressesToString
 										: ''
-							)
+							, SettingsModel.sipDisplayMode)
 							: ''
 		}
 		

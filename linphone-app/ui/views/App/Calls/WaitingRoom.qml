@@ -167,13 +167,11 @@ Rectangle {
 					*/					
 					avatarRatio: 2/3
 					
-					showCustomButton: !mainItem.callModel
 					showUsername: false
-					customButtonColorSet : WaitingRoomStyle.buttons.options
-					customButtonToggled: multimediaLoader.active
+					
+					
 					
 					onVideoDefinitionChanged: previewDefinition = SettingsModel.getCurrentPreviewVideoDefinition()
-					onCustomButtonClicked: multimediaLoader.active = !multimediaLoader.active
 				}
 			}
 			Loader{
@@ -219,7 +217,7 @@ Rectangle {
 			}
 			Text{
 				Layout.fillWidth: true
-				text: mainItem.callModel && UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(mainItem.callModel.peerAddress))
+				text: mainItem.callModel && UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(mainItem.callModel.peerAddress), SettingsModel.sipDisplayMode)
 				color: WaitingRoomStyle.callee.colorModel.color
 				font.pointSize:  WaitingRoomStyle.callee.addressPointSize
 				horizontalAlignment: Text.AlignHCenter
@@ -343,11 +341,27 @@ Rectangle {
 					}
 				}
 			}
+			
+			ActionButton{
+				id: optionsButton
+				anchors.centerIn: parent
+				anchors.horizontalCenterOffset: contentsStack.cameraWidth/2 - modeChoice.width/2
+				
+				visible: !mainItem.callModel
+				isCustom: true
+				colorSet: WaitingRoomStyle.buttons.options
+				backgroundRadius: width/2
+				toggled: multimediaLoader.active
+				onClicked: multimediaLoader.active = !multimediaLoader.active
+			}
+			
 			ActionButton{
 				id: modeChoice
 				property int selectedMode: SettingsModel.videoConferenceLayout
-				anchors.centerIn: parent
-				anchors.horizontalCenterOffset: contentsStack.cameraWidth/2 - modeChoice.width/2
+				anchors.verticalCenter: optionsButton.verticalCenter
+				anchors.right: optionsButton.left
+				anchors.rightMargin: 10
+				
 				visible: !mainItem.callModel && SettingsModel.videoEnabled
 				toggled: layoutMenu.visible
 				isCustom: true
@@ -397,6 +411,7 @@ Rectangle {
 					}
 				}
 			}
+			
 		}
 	}
 }

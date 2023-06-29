@@ -74,7 +74,7 @@ ColumnLayout  {
 				
 				subtitleText: historyView.entry && historyView.entry.wasConference
 								? ''
-								: UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(historyView.peerAddress))
+								: UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(historyView.peerAddress), SettingsModel.sipDisplayMode)
 				subtitleColor: HistoryViewStyle.bar.description.subtitleColor.color
 				titleText: avatar.username
 				titleColor: HistoryViewStyle.bar.description.titleColor.color

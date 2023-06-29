@@ -11,12 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bubble chat layout.
 - Camera stickers and conference layout stabilization.
 - Robot voice with some devices (SDK fix).
+- Smart search bar behavior on empty text and focus changing.
 
 ### Added
 - VFS Encryption.
 - File viewer in chats (Image/Animated Image/Video/Texts/Pdf) with the option to export the file for VFS mode.
 - Accept/decline CLI commands.
 - Colored Emojis with its own font family.
+- Option to set RLS URI in settings.
+- Option to display only usernames when showing SIP addresses.
 - OAuth2 connection to retrieve remote provisioning (Experimental and not usable without configuration).
 - Create an account with a manual validation (external captcha as of 5.1.0).
 - Add/View contact from a message.
@@ -31,7 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Create thumbnails into memory instead of disk.
 - Display video thumbnails.
 - Crop thumbnail and pictures if distored.
-- Update SDK to 5.2.75
+- Enable registration from accounts list.
+- Update SDK to 5.2.81
 
 ### Removed
 - Picture zoom on mouse over.

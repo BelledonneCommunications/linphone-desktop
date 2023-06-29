@@ -111,7 +111,7 @@ Item {
 			color: AccountStatusStyle.sipAddress.colorModel.color
 			elide: Text.ElideRight
 			font.pointSize: AccountStatusStyle.sipAddress.pointSize
-			text: UtilsCpp.toDisplayString(AccountSettingsModel.sipAddress)
+			text: UtilsCpp.toDisplayString(AccountSettingsModel.sipAddress, SettingsModel.sipDisplayMode)
 			verticalAlignment: Text.AlignTop
 		}
 	}//ColumnLayout

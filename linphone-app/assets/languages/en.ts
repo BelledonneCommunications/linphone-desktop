@@ -1112,6 +1112,26 @@ Server URL not configured.</translation>
         <extracomment>&apos;Enable notifications&apos; : Item menu to enable chat&apos;s notifications</extracomment>
         <translation>Enable notifications</translation>
     </message>
+    <message>
+        <source>groupCallConfirmTitle</source>
+        <extracomment>&apos;Group call&apos; : Title for a group call confirmation.</extracomment>
+        <translation>Group call</translation>
+    </message>
+    <message>
+        <source>groupCallConfirmDescription</source>
+        <extracomment>&apos;Do you want to start a group call?&lt;br/&gt;Everyone in this group will receive a call to join the meeting.&quot;</extracomment>
+        <translation>Do you want to start a group call?&lt;br/&gt;Everyone in this group will receive a call to join the meeting.</translation>
+    </message>
+    <message>
+        <source>cancelButton</source>
+        <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
+        <translation>Cancel</translation>
+    </message>
+    <message>
+        <source>startButton</source>
+        <extracomment>&apos;Start&apos; : Start button</extracomment>
+        <translation>Start</translation>
+    </message>
 </context>
 <context>
     <name>CreateAppSipAccount</name>
@@ -1799,6 +1819,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>contactsEntry</source>
+        <extracomment>&apos;Contacts&apos; : Contacts section label in main waindow.</extracomment>
         <translation>CONTACTS</translation>
     </message>
     <message>
@@ -1852,6 +1873,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>confirmFetchUri</source>
         <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
         <translation>Do you want to download and apply configuration from this URL?</translation>
+    </message>
+    <message>
+        <source>localContactsEntry</source>
+        <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
+        <translation>Local contacts</translation>
     </message>
 </context>
 <context>
@@ -3159,14 +3185,6 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Use RLS URI</translation>
     </message>
     <message>
-        <source>rlsUriAuto</source>
-        <translation>AUTO</translation>
-    </message>
-    <message>
-        <source>rlsUriDisabled</source>
-        <translation>NEVER</translation>
-    </message>
-    <message>
         <source>showNetworkSettingsLabel</source>
         <translation>Show network settings</translation>
     </message>
@@ -3656,6 +3674,16 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>fontsEmojiChange</source>
         <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
         <translation>Emojis</translation>
+    </message>
+    <message>
+        <source>displayUsernamesLabel</source>
+        <extracomment>&apos;Display only usernames&apos; : Option text to display only usernames from SIP addresses.</extracomment>
+        <translation>Display only usernames</translation>
+    </message>
+    <message>
+        <source>displayUsernamesTooltip</source>
+        <extracomment>&apos;Display only usernames from SIP addresses&apos; : tooltip for addresses display mode where username is only shown.</extracomment>
+        <translation>Display only usernames from SIP addresses</translation>
     </message>
 </context>
 <context>

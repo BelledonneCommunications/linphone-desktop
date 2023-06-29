@@ -25,6 +25,7 @@
 #include "components/contact/VcardModel.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/friend/FriendListListener.hpp"
+#include "utils/Utils.hpp"
 
 #include "ContactsListModel.hpp"
 
@@ -103,7 +104,7 @@ QSharedPointer<ContactModel> ContactsListModel::findContactModelFromUsername (co
 
 // -----------------------------------------------------------------------------
 ContactModel *ContactsListModel::getContactModelFromAddress (const QString& address) const{
-	auto contact = findContactModelFromSipAddress(address);
+	auto contact = findContactModelFromSipAddress(Utils::cleanSipAddress(address));
 	return contact.get();
 }
 

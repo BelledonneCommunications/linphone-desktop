@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Linphone 1.0
@@ -102,8 +103,21 @@ DialogPlus {
                 else
                     AccountSettingsModel.setDefaultAccount()
               }
-
-              MessageCounter {
+             
+              leftActionsLoader.sourceComponent:
+				  Switch{
+					Layout.fillHeight: true
+					Layout.fillWidth: true
+					Layout.preferredWidth: width
+					
+					visible: flattenedModel.registerEnabled != undefined
+					checked: visible && flattenedModel.registerEnabled
+					onClicked: {
+						AccountSettingsModel.enableRegister(flattenedModel.account, !checked)
+						checked = !checked
+					}
+				  }
+               MessageCounter {
                 anchors.fill: parent
                 count: flattenedModel.unreadMessageCount+flattenedModel.missedCallCount
               }

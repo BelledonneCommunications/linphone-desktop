@@ -57,7 +57,6 @@ private:
 		auto account = CoreManager::getInstance()->getCore()->getAccountByIdkey(proxyConfig->getIdkey());
 		if(account){
 			CoreManager::getInstance()->addingAccount(account->getParams());
-			CoreManager::getInstance()->getSettingsModel()->configureRlsUri(account);
 			CoreManager::getInstance()->getAccountSettingsModel()->setDefaultAccount(account);
 		}
 	}
