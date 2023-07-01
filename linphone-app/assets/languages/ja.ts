@@ -2525,7 +2525,7 @@
     <message>
         <source>recordingsVocalLabel</source>
         <extracomment>&apos;Vocal&apos; : Label for recording type that is a vocal message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ボーカル</translation>
     </message>
     <message>
         <source>recordingsDelete</source>
@@ -2693,19 +2693,19 @@
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>調整</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationInProgress</source>
-        <translation type="unfinished"></translation>
+        <translation>…調整中…</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation type="unfinished"></translation>
+        <translation>%1ミリ秒で調整済み</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
-        <translation type="unfinished"></translation>
+        <translation>調整に失敗しました</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
@@ -2881,7 +2881,7 @@
     </message>
     <message>
         <source>connectionTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>接続</translation>
     </message>
     <message>
         <source>serverLabel</source>
@@ -2946,11 +2946,11 @@
     </message>
     <message>
         <source>baseObjectLabel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">検索元</translation>
     </message>
     <message>
         <source>baseObjectPlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">検索元</translation>
     </message>
     <message>
         <source>baseObjectTooltip</source>
@@ -2978,11 +2978,11 @@
     </message>
     <message>
         <source>timeoutTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">接続と検索のタイムアウトの時間（秒）。積極的である必要があります。&lt;br&gt;デフォルトは5秒です。</translation>
     </message>
     <message>
         <source>parsingTitle</source>
-        <translation type="unfinished"></translation>
+        <translation>解析</translation>
     </message>
     <message>
         <source>nameAttributesLabel</source>
@@ -3011,7 +3011,7 @@
     </message>
     <message>
         <source>miscLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>その他</translation>
     </message>
     <message>
         <source>debugLabel</source>
@@ -3331,12 +3331,12 @@
     <message>
         <source>limeServerUrl</source>
         <extracomment>&apos;E2E encryption keys server URL&apos; : Label of a text edit for filling the Lime server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>エンドツーエンド暗号鍵サーバーURL</translation>
     </message>
     <message>
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>無効なエンドツーエンド暗号鍵サーバーURL</translation>
     </message>
     <message>
         <source>publishDurationLabel</source>
