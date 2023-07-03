@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Colored Emojis with its own font family.
 - Option to set RLS URI in settings.
 - Option to display only usernames when showing SIP addresses.
+- Option to change the max results of the Magic Search bar.
 - OAuth2 connection to retrieve remote provisioning (Experimental and not usable without configuration).
 - Create an account with a manual validation (external captcha as of 5.1.0).
 - Add/View contact from a message.
@@ -35,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display video thumbnails.
 - Crop thumbnail and pictures if distored.
 - Enable registration from accounts list.
-- Update SDK to 5.2.81
+- Update SDK to 5.2.84
 
 ### Removed
 - Picture zoom on mouse over.
