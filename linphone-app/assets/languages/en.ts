@@ -3685,6 +3685,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Display only usernames from SIP addresses&apos; : tooltip for addresses display mode where username is only shown.</extracomment>
         <translation>Display only usernames from SIP addresses</translation>
     </message>
+    <message>
+        <source>magicSearchMaxResultsLabel</source>
+        <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
+        <translation>Max results on search</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>

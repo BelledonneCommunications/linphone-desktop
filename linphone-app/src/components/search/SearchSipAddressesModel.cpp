@@ -34,6 +34,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/history/HistoryModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "SearchResultModel.hpp"
@@ -62,9 +63,10 @@ SearchSipAddressesModel::~SearchSipAddressesModel(){
 // -----------------------------------------------------------------------------
 
 void SearchSipAddressesModel::setFilter(const QString& filter){
-	if(!filter.isEmpty())
+	if(!filter.isEmpty()){
+		mMagicSearch->setSearchLimit((int)CoreManager::getInstance()->getSettingsModel()->getMagicSearchMaxResults());
 		mMagicSearch->getContactsListAsync(filter.toStdString(),"", (int)linphone::MagicSearchSource::All, linphone::MagicSearchAggregation::None);
-	else{
+	}else{
 		beginResetModel();
 		mList.clear();
 		endResetModel();

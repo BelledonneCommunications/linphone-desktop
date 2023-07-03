@@ -45,7 +45,9 @@ AssistantAbstractView {
 			anchors.left: loader.left
 			
 			onClicked: {
+				var displayNameBackup = assistantModel.displayName
 				assistantModel.reset()
+				assistantModel.displayName = displayNameBackup
 				requestBlock.setText('')
 				
 				if (!checked) {

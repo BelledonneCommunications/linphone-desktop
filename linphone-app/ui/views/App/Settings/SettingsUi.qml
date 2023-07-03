@@ -302,6 +302,19 @@ TabContainer {
 						}
 					}
 				}
+				FormGroup {
+				//: 'Max results on search' : Label for setting the max results returned by the Magic Search bar.
+					label: qsTr('magicSearchMaxResultsLabel')
+
+					NumericField {
+						minValue: 0
+						maxValue: 100000
+						step: 5
+						text: SettingsModel.magicSearchMaxResults
+			
+						onEditingFinished: SettingsModel.magicSearchMaxResults = text
+					}
+				}
 			}
 			FormLine {
 				maxItemWidth: parent.width
