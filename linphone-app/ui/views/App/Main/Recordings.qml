@@ -29,7 +29,7 @@ Item {
 			//: 'No recordings' : Title of an empty list of records.
 			text: qsTr('titleNoRecordings')
 			visible : recordingsProxyModel.count === 0
-			color: RecordingsStyle.title.color
+			color: RecordingsStyle.title.colorModel.color
 			font.pointSize: RecordingsStyle.title.pointSize
 		}
 		Component {
@@ -131,7 +131,7 @@ Item {
 									text: lineLoader.title
 									horizontalAlignment: Text.AlignLeft
 									font.pointSize: RecordingsStyle.filename.pointSize
-									color: RecordingsStyle.filename.color
+									color: RecordingsStyle.filename.colorModel.color
 								}
 								Text {
 									id: durationText
@@ -141,7 +141,7 @@ Item {
 										  +Utils.formatElapsedTime($modelData.duration/1000)
 									horizontalAlignment: Text.AlignRight
 									font.pointSize: RecordingsStyle.filename.pointSize
-									color: RecordingsStyle.filename.color
+									color: RecordingsStyle.filename.colorModel.color
 								}
 							}
 							Slider {
@@ -224,7 +224,7 @@ Item {
 							Layout.leftMargin : 30
 							text: lineLoader.title
 							font.pointSize: RecordingsStyle.filename.pointSize
-							color: RecordingsStyle.filename.color
+							color: RecordingsStyle.filename.colorModel.color
 						}
 						ActionButton {
 							Layout.rightMargin : 30
