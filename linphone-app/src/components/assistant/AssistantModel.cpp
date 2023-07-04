@@ -256,11 +256,23 @@ void AssistantModel::login () {
 		return;
 	}
 	
-	// No verification if no xmlrpc url. Use addOtherSipAccount directly.
+	// No verification if no xmlrpc url.
+	auto account = mAccountCreator->createAccountInCore();
+	if(account){
+		AccountSettingsModel *accountSettingsModel = CoreManager::getInstance()->getAccountSettingsModel();
+		if (accountSettingsModel->addOrUpdateAccount(account, account->getParams()->clone())) {
+			accountSettingsModel->setDefaultAccount(account);
+		}
+		emit loginStatusChanged("");
+		return;
+	}
+	
+	// Cannot create new account from account creator. Use addOtherSipAccount directly.
 	QVariantMap map;
 	map["sipDomain"] = Utils::coreStringToAppString(config->getString("assistant", "domain", ""));
 	map["username"] = getUsername();
 	map["password"] = getPassword();
+	map["transport"] = LinphoneEnums::toString(LinphoneEnums::fromLinphone(mAccountCreator->getTransport()));
 	emit loginStatusChanged(addOtherSipAccount(map) ? QString("") : tr("unableToAddAccount"));
 	setIsProcessing(false);
 }
@@ -286,7 +298,11 @@ bool AssistantModel::addOtherSipAccount (const QVariantMap &map) {
 	std::string accountIdKey = map["accountIdKey"].toString().toStdString();
 	if( accountIdKey  != "")
 		account = core->getAccountByIdkey(accountIdKey);
-	shared_ptr<linphone::AccountParams> accountParams = core->createAccountParams();
+	shared_ptr<linphone::AccountParams> accountParams;
+	if(account)
+		accountParams = account->getParams()->clone();
+	else
+		accountParams = core->createAccountParams();
 	
 	
 	const QString domain = map["sipDomain"].toString();

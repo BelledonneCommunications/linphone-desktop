@@ -296,10 +296,11 @@ void AccountSettingsModel::removeAccount (const shared_ptr<linphone::Account> &a
 	}
 	auto accountParams = account->getParams()->clone();
 	accountParams->setContactParameters(Utils::appStringToCoreString(parameters.join(";")));	
+	bool isRegistered = account->getState() == linphone::RegistrationState::Ok;
 	if (account->setParams(accountParams) == -1) {
 		qWarning() << QStringLiteral("Unable to reset message-expiry property before removing account: `%1`.")
 				  .arg(QString::fromStdString(account->getParams()->getIdentityAddress()->asString()));
-	}else if(account->getParams()->registerEnabled()) { // Wait for update
+	}else if(isRegistered && account->getParams()->registerEnabled()) { // Wait for update
 		mRemovingAccounts.push_back(account);
 	}else{// Registration is not enabled : Removing without wait.
 		CoreManager::getInstance()->getCore()->removeAccount(account);
