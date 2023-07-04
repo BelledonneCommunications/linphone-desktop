@@ -18,7 +18,7 @@
     <message>
         <source>noAccount</source>
         <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nessun account configurato</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Stampa solo i log dell&apos;applicazione</translation>
     </message>
 </context>
 <context>
