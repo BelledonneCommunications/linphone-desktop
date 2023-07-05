@@ -917,6 +917,7 @@ URL du serveur non configurée.</translation>
     </message>
     <message>
         <source>sipAccounts</source>
+        <extracomment>&apos;SIP ACCOUNT(S)&apos; : label for sip accounts in contact</extracomment>
         <translation>COMPTE(S) SIP</translation>
     </message>
     <message>
@@ -991,6 +992,11 @@ URL du serveur non configurée.</translation>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
         <translation>Vous devez définir l&apos;URI de la réunion dans les paramètres de votre compte pour créer une conférence.</translation>
+    </message>
+    <message>
+        <source>usernames</source>
+        <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
