@@ -911,6 +911,7 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
     </message>
     <message>
         <source>sipAccounts</source>
+        <extracomment>&apos;SIP ACCOUNT(S)&apos; : label for sip accounts in contact</extracomment>
         <translation>SIP HESAPLARI</translation>
     </message>
     <message>
@@ -985,6 +986,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
         <translation>Toplantı tabanlı konuşma odası oluşturmak için hesap ayarlarınızda toplantı URI&apos;si belirlemelisiniz.</translation>
+    </message>
+    <message>
+        <source>usernames</source>
+        <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

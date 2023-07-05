@@ -312,7 +312,11 @@ ColumnLayout  {
 					minValues: _contact ? 1 : 0
 					placeholder: qsTr('sipAccountsPlaceholder')
 					readOnly: !_edition
-					title: qsTr('sipAccounts')
+					title: SettingsModel.sipDisplayMode == UtilsCpp.SIP_DISPLAY_USERNAME
+					//: 'USERNAME(S)' : label for sip accounts when only username is displayed n contact
+						? qsTr('usernames')
+					//: 'SIP ACCOUNT(S)' : label for sip accounts in contact
+						: qsTr('sipAccounts')
 					
 					onChanged: Logic.handleSipAddressChanged(addresses, index, oldValue, newValue)
 					onRemoved: _vcard.removeSipAddress(value)
