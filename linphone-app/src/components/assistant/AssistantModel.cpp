@@ -132,8 +132,14 @@ private:
 			bool error = false;
 			QVariantMap description = doc.toVariant().toMap();
 			creator->setToken(description.value("token").toString().toStdString());
-			emit mAssistant->createStatusChanged("Creating account");
-			creator->createAccount();// it will automatically use the account creation token.
+			// it will automatically use the account creation token.
+			if (!mAssistant->mCountryCode.isEmpty()) {
+				emit mAssistant->createStatusChanged("Recovering account");
+				creator->recoverAccount();
+			}else{
+				emit mAssistant->createStatusChanged("Creating account");
+				creator->createAccount();
+			}
 		}else
 			QTimer::singleShot(2000, [creator](){
 				creator->requestAccountCreationTokenUsingRequestToken();
@@ -245,8 +251,8 @@ void AssistantModel::create () {
 
 void AssistantModel::login () {
 	setIsProcessing(true);
-	if (!mCountryCode.isEmpty()) {
-		mAccountCreator->recoverAccount();
+	if (!mCountryCode.isEmpty()) {// Recovering account from phone
+		mAccountCreator->requestAccountCreationRequestToken();
 		return;
 	}
 	
