@@ -174,7 +174,7 @@ QSharedPointer<ParticipantDeviceModel> ParticipantDeviceListModel::getMe(int * i
 	int row = 0;
 	for(auto item : mList){
 		auto device = item.objectCast<ParticipantDeviceModel>();
-		if( device->isMe()){
+		if( device->isMe() && device->isLocal()){
 			if(index)
 				*index = row;
 			return device;

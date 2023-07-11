@@ -44,14 +44,14 @@ bool ParticipantDeviceProxyModel::filterAcceptsRow (
 	auto listModel = qobject_cast<ParticipantDeviceListModel*>(sourceModel());
 	const QModelIndex index = listModel->index(sourceRow, 0, sourceParent);
 	const ParticipantDeviceModel *device = index.data().value<ParticipantDeviceModel *>();
-	return device && (isShowMe() || !device->isMe());
+	return device && (isShowMe() || !(device->isMe() && device->isLocal()));
 }
 
 bool ParticipantDeviceProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
   const ParticipantDeviceModel *deviceA = sourceModel()->data(left).value<ParticipantDeviceModel *>();
   const ParticipantDeviceModel *deviceB = sourceModel()->data(right).value<ParticipantDeviceModel *>();
   // 'me' at end (for grid).
-	return deviceB->isMe() || left.row() < right.row();
+	return deviceB->isLocal() || !deviceA->isLocal() && deviceB->isMe() || left.row() < right.row();
 }
 //---------------------------------------------------------------------------------
 

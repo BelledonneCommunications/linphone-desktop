@@ -66,6 +66,8 @@ public:
 	std::shared_ptr<const linphone::Address> getUsedSipAddress () const;
 	void setUsedSipAddress (const std::shared_ptr<const linphone::Address> &address);
 	
+	std::shared_ptr<linphone::Account> findAccount(std::shared_ptr<const linphone::Address> address) const ;
+	
 	QString getUsedSipAddressAsStringUriOnly () const;
 	QString getUsedSipAddressAsString () const;
 	
