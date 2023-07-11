@@ -20,12 +20,13 @@
 #
 # - Find the OpenLDAP include file and library
 #
+#  LINPHONE_TARGETS - Add usable targets into this list.
 #  OPENLDAP_FOUND - system has OpenLDAP
 #  OPENLDAP_INCLUDE_DIRS - the OpenLDAP include directory
 #  OPENLDAP_LIBRARIES - The libraries needed to use OpenLDAP
 
 if(TARGET ldap)
-
+	list(APPEND LINPHONE_TARGETS ldap)
 	set(OPENLDAP_LIBRARIES ldap)
 	get_target_property(OPENLDAP_INCLUDE_DIRS ldap INTERFACE_INCLUDE_DIRECTORIES)
 

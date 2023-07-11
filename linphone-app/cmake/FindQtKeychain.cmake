@@ -27,18 +27,15 @@
 #  QtKeychain_LIBRARIES - The library needed to use linphonecxx
 
 if(TARGET ${QTKEYCHAIN_TARGET_NAME})
-
+	list(APPEND LINPHONE_TARGETS ${QTKEYCHAIN_TARGET_NAME})
 	set(QtKeychain_LIBRARIES ${QTKEYCHAIN_TARGET_NAME})
 	get_target_property(QtKeychain_INCLUDE_DIRS ${QTKEYCHAIN_TARGET_NAME} INTERFACE_INCLUDE_DIRECTORIES)
 	set(QtKeychain_USE_BUILD_INTERFACE TRUE)
-
-
 	include(FindPackageHandleStandardArgs)
 	find_package_handle_standard_args(QtKeychain
 		DEFAULT_MSG
 		QtKeychain_INCLUDE_DIRS QtKeychain_LIBRARIES
 	)
-
 	mark_as_advanced(QtKeychain_INCLUDE_DIRS QtKeychain_LIBRARIES)
-
 endif()
+

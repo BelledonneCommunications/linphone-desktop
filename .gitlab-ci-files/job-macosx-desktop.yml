@@ -40,13 +40,14 @@
 # On each push
 #################################################
 
+#TODO: reactivate pcrypto when liboqs is fixed for 'Vortex' CPU.
 job-macosx-ninja:
   except:
     refs:
       - schedules
   variables:
     CMAKE_GENERATOR: Ninja
-    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=OFF
   extends: .job-macosx-desktop
 
 #################################################
@@ -60,7 +61,7 @@ job-macosx-makefile:
       - $DEPLOY_PLUGINS
   variables:
     CMAKE_GENERATOR: Unix Makefiles
-    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=OFF
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
   extends: .job-macosx-desktop
 
@@ -69,7 +70,7 @@ job-macosx-ninja-novideo:
     variables:
       - $NIGHTLY_MASTER
   variables:
-    CMAKE_OPTIONS: -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=OFF
     CMAKE_GENERATOR: Ninja
   extends: .job-macosx-desktop
 

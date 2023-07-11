@@ -22,12 +22,19 @@
 #
 # - Find the linphonecxx include files and library
 #
+#  LINPHONE_TARGETS - Add usable targets into this list.
 #  LINPHONECXX_FOUND - system has lib linphonecxx
 #  LINPHONECXX_INCLUDE_DIRS - the linphonecxx include directory
 #  LINPHONECXX_LIBRARIES - The library needed to use linphonecxx
 
-if(TARGET liblinphone++)
+if(NOT TARGET liblinphone++)
+    set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
+    include(GNUInstallDirs)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/LinphoneCxx/cmake/LinphoneCxxTargets.cmake)
+endif()
 
+if(TARGET liblinphone++)
+	list(APPEND LINPHONE_TARGETS liblinphone++)
 	set(LINPHONECXX_LIBRARIES liblinphone++)
 	get_target_property(LINPHONECXX_INCLUDE_DIRS liblinphone++ INTERFACE_INCLUDE_DIRECTORIES)
 

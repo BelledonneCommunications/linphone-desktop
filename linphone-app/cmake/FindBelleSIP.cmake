@@ -1,5 +1,5 @@
 ############################################################################
-# FindBelcard.cmake
+# FindBelr.cmake
 # Copyright (C) 2023  Belledonne Communications, Grenoble France
 #
 ############################################################################
@@ -23,28 +23,29 @@
 # - Find the belcard include files and library
 #
 #  LINPHONE_TARGETS - Add usable targets into this list.
-#  Belcard_FOUND - system has lib belcard
-#  Belcard_INCLUDE_DIRS - the belcard include directory
-#  Belcard_LIBRARIES - The library needed to use belcard
+#  BelleSIP_FOUND - system has lib belcard
+#  BelleSIP_INCLUDE_DIRS - the belcard include directory
+#  BelleSIP_LIBRARIES - The library needed to use belcard
 
-if(NOT TARGET belcard)
+if(NOT TARGET belle-sip)
     set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
     include(GNUInstallDirs)
-    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/belcard/cmake/belcardTargets.cmake)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_LIBDIR}/cmake/BelleSIP/BelleSIPTargets.cmake)
 endif()
 
-if(TARGET belcard)
-	list(APPEND LINPHONE_TARGETS belcard)
-	set(Belcard_LIBRARIES belcard)
-	get_target_property(Belcard_INCLUDE_DIRS belcard INTERFACE_INCLUDE_DIRECTORIES)
+if(TARGET belle-sip)
+	list(APPEND LINPHONE_TARGETS belle-sip)
+
+    set(BelleSIP_LIBRARIES belle-sip)
+    get_target_property(BelleSIP_INCLUDE_DIRS belle-sip INTERFACE_INCLUDE_DIRECTORIES)
 
 
-	include(FindPackageHandleStandardArgs)
-	find_package_handle_standard_args(Belcard
-		DEFAULT_MSG
-		Belcard_INCLUDE_DIRS Belcard_LIBRARIES
-	)
+    include(FindPackageHandleStandardArgs)
+    find_package_handle_standard_args(BelleSIP
+            DEFAULT_MSG
+            BelleSIP_INCLUDE_DIRS BelleSIP_LIBRARIES
+    )
 
-	mark_as_advanced(Belcard_INCLUDE_DIRS Belcard_LIBRARIES)
-	
+    mark_as_advanced(BelleSIP_INCLUDE_DIRS BelleSIP_LIBRARIES)
+
 endif()

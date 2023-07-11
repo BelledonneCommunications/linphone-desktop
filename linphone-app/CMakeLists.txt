@@ -23,9 +23,9 @@
 cmake_minimum_required(VERSION 3.22)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-
-find_package(BcToolbox)
-if(NOT BCTOOLBOX_FOUND)
+set(LINPHONE_TARGETS)
+find_package(BCToolbox)
+if(NOT BCToolbox_FOUND)
 	find_package(bctoolbox CONFIG)
 endif()
 set(FULL_VERSION )
@@ -64,6 +64,10 @@ list(APPEND CMAKE_MODULE_PATH "${LINPHONE_OUTPUT_DIR}/lib/cmake")
 list(APPEND CMAKE_PREFIX_PATH "${QTKEYCHAIN_OUTPUT_DIR}/lib64/cmake")
 list(APPEND CMAKE_PREFIX_PATH "${QTKEYCHAIN_OUTPUT_DIR}/lib/cmake")
 
+if(APPLE)
+	list(APPEND CMAKE_FRAMEWORK_PATH "${LINPHONE_OUTPUT_DIR}/Frameworks")
+endif()
+
 set(APP_LIBRARY app-library)
 set(APP_PLUGIN app-plugin)
 include(application_info.cmake)
@@ -86,33 +90,33 @@ if(WIN32)
 		set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY_${OUTPUTCONFIG} ${EXECUTABLE_OUTPUT_DIR} )
 	endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 endif()
+if(TARGET sdk)#if not exist, this build is coming from crosscompiling (aka already dependent of sdk)
+	list(APPEND LINPHONE_TARGETS sdk)
+	set(LINPHONE_PACKAGES Belr Belcard Ortp Mediastreamer2 BelleSIP Linphone LinphoneCxx)
+endif()
 
-find_package(Ortp)
-if(NOT ORTP_FOUND)
-	find_package(ortp CONFIG)
+set(ENABLE_ADVANCED_IM ON CACHE BOOLEAN "Enable IM")
+set(ENABLE_DB_STORAGE ON CACHE BOOLEAN "Enable Storage")
+
+if(ENABLE_ADVANCED_IM OR ENABLE_DB_STORAGE OR ENABLE_PQCRYPTO)
+	list(PREPEND LINPHONE_PACKAGES Lime)
 endif()
-find_package(Mediastreamer2)
-if(NOT MEDIASTREAMER2_FOUND)
-	find_package(Mediastreamer2 CONFIG)
-endif()
-find_package(Belcard)
-if(NOT BELCARD_FOUND)
-	find_package(belcard CONFIG)
-endif()
-find_package(Linphone)
-if(NOT LINPHONE_FOUND)
-	find_package(Linphone CONFIG)
-endif()
-find_package(LinphoneCxx)
-if(NOT LINPHONECXX_FOUND)
-	find_package(LinphoneCxx CONFIG)
-endif()
+foreach(PACKAGE ${LINPHONE_PACKAGES})
+	message(STATUS "Trying to find ${PACKAGE}")
+	find_package(${PACKAGE})
+	if(NOT ${PACKAGE}_FOUND)
+		find_package(${PACKAGE} CONFIG)
+	endif()
+endforeach()
+
+
 
 if(ENABLE_QT_KEYCHAIN)
 	find_package(QtKeychain)
 	if(NOT QtKeychain_FOUND)
 		find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG REQUIRED)
 	endif()
+	
 	add_compile_definitions("ENABLE_QT_KEYCHAIN")
 	if(QtKeychain_USE_BUILD_INTERFACE)
 		add_compile_definitions("QTKEYCHAIN_USE_BUILD_INTERFACE")
@@ -640,14 +644,13 @@ if(ENABLE_BUILD_VERBOSE)#useful to copy these Paths to QML previewers
 	message("QML_IMPORT_PATH=${QML_IMPORT_PATH}" )
 	message("Qt5 Paths : Qt5_DIR=$ENV{Qt5_DIR}, PATH=$ENV{PATH}")
 endif()
-if(APPLE)
-	if(MS2_PLUGINS_LOCATION)
-		set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
-	else()
-		set(MSPLUGINS_DIR "Frameworks/mediastreamer2.framework/Versions/A/Libraries")
-	endif()
+
+if(MEDIASTREAMER2_PLUGINS_LOCATION)
+	set(MSPLUGINS_DIR ${MEDIASTREAMER2_PLUGINS_LOCATION})
+elseif(APPLE)
+	set(MSPLUGINS_DIR "Frameworks/mediastreamer2.framework/Versions/A/Libraries")
 else()
-	set(MSPLUGINS_DIR "plugins/mediastreamer")
+	set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
 endif()
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 # ------------------------------------------------------------------------------
@@ -715,14 +718,13 @@ endif()
 target_compile_definitions(${APP_PLUGIN} PUBLIC "-DENABLE_APP_EXPORT_PLUGIN")
 set_target_properties(${APP_PLUGIN} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 
-list(APPEND INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}")
+list(APPEND INCLUDED_DIRECTORIES "${LINPHONECXX_INCLUDE_DIRS}" "${BCToolbox_INCLUDE_DIRS}" "${MEDIASTREAMER2_INCLUDE_DIRS}")
 list(APPEND INCLUDED_DIRECTORIES "${CMAKE_INSTALL_PREFIX}/include")
 
-set(LIBRARIES_LIST ${BCTOOLBOX_CORE_LIBRARIES} ${BELCARD_LIBRARIES}  ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
+set(LIBRARIES_LIST ${BCToolbox_CORE_LIBRARIES} ${Belr_LIBRARIES} ${Belcard_LIBRARIES} ${BelleSIP_LIBRARIES} ${LINPHONE_LIBRARIES} ${LINPHONECXX_LIBRARIES} ${MEDIASTREAMER2_LIBRARIES} ${ORTP_LIBRARIES} ${OPUS_LIBRARIES})
 
 if(ENABLE_QT_KEYCHAIN)
-	list(APPEND INCLUDED_DIRECTORIES ${QtKeyChain_INCLUDE_DIRS})
-	list(APPEND LIBRARIES_LIST ${QtKeyChain_LIBRARIES})
+	list(APPEND LIBRARIES_LIST ${QtKeychain_LIBRARIES})
 endif()
 
 list(APPEND LIBRARIES ${LIBRARIES_LIST})
@@ -751,14 +753,36 @@ if(ENABLE_QT_KEYCHAIN)
 endif()
 
 
+function(add_framework_library FW_NAME)
+	find_library(FRAMEWORK_${FW_NAME} NAMES ${FW_NAME} PATHS ${LINPHONE_OUTPUT_DIR} PATH_SUFFIXES Frameworks NO_DEFAULT_PATH)
+	message(STATUS "Found: ${FRAMEWORK_${FW_NAME}}/${FW_NAME} / ${FW_NAME}")
+
+	set(LIBRARIES ${LIBRARIES} "${FRAMEWORK_${FW_NAME}}/${FW_NAME}" PARENT_SCOPE)
+endfunction()
+
 if (APPLE)
-	list(APPEND LIBRARIES "-framework Cocoa -framework IOKit -framework AVFoundation")
+		list(APPEND LIBRARIES "-framework Cocoa" "-framework IOKit" "-framework AVFoundation")
+		add_framework_library(linphone++)
+		add_framework_library(belcard)
+		add_framework_library(bctoolbox)
+		add_framework_library(linphone)
+		add_framework_library(mediastreamer2)
 	# -framework linphone") #This doesn't work yet
 endif ()
 
 target_include_directories(${APP_LIBRARY} SYSTEM PUBLIC ${INCLUDED_DIRECTORIES})
 target_include_directories(${APP_PLUGIN} SYSTEM PUBLIC ${INCLUDED_DIRECTORIES})
 target_include_directories(${TARGET_NAME} SYSTEM PUBLIC ${INCLUDED_DIRECTORIES})
+
+if(ENABLE_QT_KEYCHAIN)
+	target_include_directories(${APP_LIBRARY} SYSTEM PUBLIC $<TARGET_PROPERTY:${QTKEYCHAIN_TARGET_NAME},INTERFACE_INCLUDE_DIRECTORIES>)
+	target_include_directories(${APP_PLUGIN} SYSTEM PUBLIC  $<TARGET_PROPERTY:${QTKEYCHAIN_TARGET_NAME},INTERFACE_INCLUDE_DIRECTORIES>)
+	target_include_directories(${TARGET_NAME} SYSTEM PUBLIC $<TARGET_PROPERTY:${QTKEYCHAIN_TARGET_NAME},INTERFACE_INCLUDE_DIRECTORIES>)
+endif()
+
+link_directories(BEFORE "${LINPHONE_OUTPUT_DIR}/lib")
+target_link_directories(${APP_LIBRARY} PUBLIC "${LINPHONE_OUTPUT_DIR}/lib")
+target_link_directories(${APP_PLUGIN} PUBLIC "${LINPHONE_OUTPUT_DIR}/lib")
 
 target_link_libraries(${APP_LIBRARY} ${LIBRARIES})
 target_link_libraries(${APP_PLUGIN} ${LIBRARIES})
@@ -770,6 +794,9 @@ if(WIN32 AND ENABLE_LDAP)
 	find_package(OpenLDAP REQUIRED)
 	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${OPENLDAP_LIBRARIES})
 endif()
+
+add_dependencies(${APP_LIBRARY} ${LINPHONE_TARGETS})
+add_dependencies(${APP_PLUGIN} ${LINPHONE_TARGETS})
 
 add_dependencies(${APP_LIBRARY} update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})
 add_dependencies(${TARGET_NAME} ${APP_LIBRARY} ${APP_PLUGIN})
@@ -798,9 +825,9 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ".")
 
 
 add_subdirectory(build)
-# GMA: TODO add_subdirectory(cmake_builder/linphone_package)
+add_subdirectory(cmake_builder/linphone_package)
 
-# GMA: TODO deployqt_hack(${TARGET_NAME} ${LINPHONE_QML_DIR})
+deployqt_hack(${TARGET_NAME} ${LINPHONE_QML_DIR})
 
 
 # ------------------------------------------------------------------------------

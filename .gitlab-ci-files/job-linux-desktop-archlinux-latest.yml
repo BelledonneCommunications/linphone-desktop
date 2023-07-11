@@ -100,7 +100,7 @@ job-archlinux-latest-ninja-clang-novideo:
 #       - $NIGHTLY_MASTER
 #       - $DEPLOY_LINUX
 #  variables:
-#    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON
+#    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DENABLE_GPL_THIRD_PARTIES=ON
 #  extends: job-archlinux-latest-makefile-clang
 #  artifacts:
 #    paths:

@@ -108,8 +108,18 @@ endif ()
 # Specific deployment.
 # ==============================================================================
 set(APP_QT_CONF_DPI "1")
-if (WIN32)	
-	if(ENABLE_QT_KEYCHAIN)
+if (WIN32)
+	file(GLOB LIB_FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/*.dll")
+	if( ENABLE_OPENH264)# Remove openH264 lib from the installation. this codec will be download by user
+		foreach(item ${LIB_FILES})
+			get_filename_component(LIBRARY_FILENAME ${item} NAME)
+			if("${LIBRARY_FILENAME}" MATCHES "^openh264.*.dll$")
+				list(REMOVE_ITEM LIB_FILES ${item})
+			endif()
+		endforeach(item)
+	endif()
+	
+#[[	if(ENABLE_QT_KEYCHAIN)
 		file(GLOB LIB_FILES "${QTKEYCHAIN_OUTPUT_DIR}/${CMAKE_INSTALL_BINDIR}/*.dll")
 		install(FILES ${LIB_FILES} DESTINATION "${CMAKE_INSTALL_BINDIR}/")
 	endif()
@@ -143,6 +153,7 @@ if (WIN32)
 	if(ENABLE_APP_PACKAGE_ROOTCA)
 		install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/Linphone/rootca.pem" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}/")
 	endif()
+]]
 	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphonerc-factory" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}")
 	set(APP_QT_CONF_DPI "0")
 	set(APP_QT_CONF_PATH "")
@@ -243,6 +254,7 @@ elseif (APPLE)
 	endif ()
 #  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
 else()# Not Windows and Apple
+#[[	file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.so")
 	foreach (LIBRARY ${SHARED_LIBRARIES})
 		get_filename_component(LIBRARY_FILENAME ${LIBRARY} NAME)
 		message("Changing RPATH of ${LIBRARY_FILENAME} from '${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}' to '$ORIGIN/../${CMAKE_INSTALL_LIBDIR}'")
@@ -297,6 +309,7 @@ else()# Not Windows and Apple
 	endif()
 	file(GLOB PLUGINS_FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins/*")
 	install(FILES ${PLUGINS_FILES} DESTINATION "plugins/mediastreamer/" )
+]]
 # Install desktop/icon files.
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphone.desktop.cmake" "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" @ONLY)	
 	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.desktop" DESTINATION "${CMAKE_INSTALL_DATADIR}/applications" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
@@ -361,6 +374,7 @@ endif ()
 # ==============================================================================
 #                               CPack.
 # ==============================================================================
+
 if(${ENABLE_APP_PACKAGING})
 	set(CPACK_BINARY_STGZ OFF)
 	set(CPACK_BINARY_TGZ OFF)
@@ -496,7 +510,7 @@ function(deployqt_hack target qml_dir)
 #Note: CMAKE_CURRENT_SOURCE_DIR point to linphone-app because deployqt_hack is called there.
 	add_custom_command(TARGET ${target} POST_BUILD 
 		COMMAND "${CMAKE_COMMAND}" "-E" "copy_directory" "${CMAKE_CURRENT_SOURCE_DIR}/ui" "${qml_dir}"
-		WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/..")
+                WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
 	if(NOT ENABLE_APP_WEBVIEW)
 		set(RM_COMMAND "rm")
 		if(CMAKE_VERSION VERSION_LESS 3.17)
@@ -504,7 +518,7 @@ function(deployqt_hack target qml_dir)
 		endif()
 		add_custom_command(TARGET ${target} POST_BUILD 
 			COMMAND "${CMAKE_COMMAND}" "-E" "${RM_COMMAND}" "-f" "${qml_dir}/views/App/Main/Assistant/CreateAppSipAccountWithWebView.qml"
-			WORKING_DIRECTORY "${CMAKE_INSTALL_PREFIX}/..")
+                        WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
 	endif()
 		
 	if(WIN32)

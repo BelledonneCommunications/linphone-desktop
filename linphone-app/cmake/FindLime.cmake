@@ -1,5 +1,5 @@
 ############################################################################
-# FindBelcard.cmake
+# FindLime.cmake
 # Copyright (C) 2023  Belledonne Communications, Grenoble France
 #
 ############################################################################
@@ -23,28 +23,26 @@
 # - Find the belcard include files and library
 #
 #  LINPHONE_TARGETS - Add usable targets into this list.
-#  Belcard_FOUND - system has lib belcard
-#  Belcard_INCLUDE_DIRS - the belcard include directory
-#  Belcard_LIBRARIES - The library needed to use belcard
+#  Lime_FOUND - system has lib belcard
+#  Lime_INCLUDE_DIRS - the belcard include directory
+#  Lime_LIBRARIES - The library needed to use belcard
 
-if(NOT TARGET belcard)
+if(NOT TARGET lime)
     set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
     include(GNUInstallDirs)
-    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/belcard/cmake/belcardTargets.cmake)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/lime/cmake/limeTargets.cmake)
 endif()
 
-if(TARGET belcard)
-	list(APPEND LINPHONE_TARGETS belcard)
-	set(Belcard_LIBRARIES belcard)
-	get_target_property(Belcard_INCLUDE_DIRS belcard INTERFACE_INCLUDE_DIRECTORIES)
+if(TARGET lime)
+	list(APPEND LINPHONE_TARGETS lime)
+    set(Lime_LIBRARIES lime)
+    get_target_property(Lime_INCLUDE_DIRS lime INTERFACE_INCLUDE_DIRECTORIES)
 
+    include(FindPackageHandleStandardArgs)
+    find_package_handle_standard_args(Lime
+            DEFAULT_MSG
+            Lime_INCLUDE_DIRS Lime_LIBRARIES
+    )
 
-	include(FindPackageHandleStandardArgs)
-	find_package_handle_standard_args(Belcard
-		DEFAULT_MSG
-		Belcard_INCLUDE_DIRS Belcard_LIBRARIES
-	)
-
-	mark_as_advanced(Belcard_INCLUDE_DIRS Belcard_LIBRARIES)
-	
+    mark_as_advanced(Lime_INCLUDE_DIRS Lime_LIBRARIES)
 endif()

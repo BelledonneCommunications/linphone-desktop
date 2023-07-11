@@ -22,18 +22,24 @@
 #
 # - Find the mediastreamer2 include files and library
 #
+#  LINPHONE_TARGETS - Add usable targets into this list.
 #  MEDIASTREAMER2_FOUND - system has lib mediastreamer2
 #  MEDIASTREAMER2_INCLUDE_DIRS - the mediasteamer2 include directory
 #  MEDIASTREAMER2_LIBRARIES - The library needed to use mediasteamer2
 #  MEDIASTREAMER2_PLUGINS_LOCATION - The location of the mediastreamer2 plugins
 
-if(TARGET mediastreamer2)
+if(NOT TARGET mediastreamer2)
+    set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
+    include(GNUInstallDirs)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/Mediastreamer2/cmake/Mediastreamer2Targets.cmake)
+endif()
 
+if(TARGET mediastreamer2)
+	list(APPEND LINPHONE_TARGETS mediastreamer2)
 	set(MEDIASTREAMER2_LIBRARIES mediastreamer2)
 	get_target_property(MEDIASTREAMER2_INCLUDE_DIRS mediastreamer2 INTERFACE_INCLUDE_DIRECTORIES)
 	define_property(TARGET PROPERTY "MS2_PLUGINS" BRIEF_DOCS "Stores the location of mediastreamer2 plugins" FULL_DOCS "Stores the location of mediastreamer2 plugins")
 	get_target_property(MEDIASTREAMER2_PLUGINS_LOCATION mediastreamer2 MS2_PLUGINS)
-
 
 	include(FindPackageHandleStandardArgs)
 	find_package_handle_standard_args(Mediastreamer2

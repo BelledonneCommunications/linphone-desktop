@@ -65,7 +65,7 @@ SearchSipAddressesModel::~SearchSipAddressesModel(){
 void SearchSipAddressesModel::setFilter(const QString& filter){
 	if(!filter.isEmpty()){
 		mMagicSearch->setSearchLimit((int)CoreManager::getInstance()->getSettingsModel()->getMagicSearchMaxResults());
-		mMagicSearch->getContactsListAsync(filter.toStdString(),"", (int)linphone::MagicSearchSource::All, linphone::MagicSearchAggregation::None);
+		mMagicSearch->getContactsListAsync(filter.toStdString(),"", (int)linphone::MagicSearch::Source::All, linphone::MagicSearch::Aggregation::None);
 	}else{
 		beginResetModel();
 		mList.clear();

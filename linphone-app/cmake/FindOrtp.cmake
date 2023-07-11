@@ -22,22 +22,27 @@
 #
 # - Find the ortp include files and library
 #
+#  LINPHONE_TARGETS - Add usable targets into this list.
 #  ORTP_FOUND - system has lib ortp
 #  ORTP_INCLUDE_DIRS - the ortp include directory
 #  ORTP_LIBRARIES - The library needed to use ortp
+if(NOT TARGET ortp)
+    set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
+    include(GNUInstallDirs)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_LIBDIR}/cmake/ortp/ortpTargets.cmake)
+endif()
 
 if(TARGET ortp)
+	list(APPEND LINPHONE_TARGETS ortp)
+    set(ORTP_LIBRARIES ortp)
+    get_target_property(ORTP_INCLUDE_DIRS ortp INTERFACE_INCLUDE_DIRECTORIES)
 
-	set(ORTP_LIBRARIES ortp)
-	get_target_property(ORTP_INCLUDE_DIRS ortp INTERFACE_INCLUDE_DIRECTORIES)
+    include(FindPackageHandleStandardArgs)
+    find_package_handle_standard_args(Ortp
+            DEFAULT_MSG
+            ORTP_INCLUDE_DIRS ORTP_LIBRARIES
+    )
 
-
-	include(FindPackageHandleStandardArgs)
-	find_package_handle_standard_args(Ortp
-		DEFAULT_MSG
-		ORTP_INCLUDE_DIRS ORTP_LIBRARIES
-	)
-
-	mark_as_advanced(ORTP_INCLUDE_DIRS ORTP_LIBRARIES)
+    mark_as_advanced(ORTP_INCLUDE_DIRS ORTP_LIBRARIES)
 
 endif()
