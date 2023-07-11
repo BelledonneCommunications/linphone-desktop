@@ -82,7 +82,7 @@ Item {
 				maximumLineCount: 3
 			}
 			Item {
-				Layout.alignment: Qt.AlignBottom | Qt.AlignLeft
+				Layout.alignment: !subtitle.visible ?  Qt.AlignVCenter | Qt.AlignLeft: Qt.AlignBottom | Qt.AlignLeft
 				Layout.bottomMargin: 5
 				Layout.preferredHeight: AccountStatusStyle.presenceLevel.size
 				Layout.preferredWidth: AccountStatusStyle.presenceLevel.size
