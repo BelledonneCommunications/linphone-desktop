@@ -45,7 +45,7 @@ Item{
     }
 	Rectangle {
         id: backgroundArea
-        color: mainItem.colorModel.color
+        color: mainItem.color
         anchors.fill: parent
         radius: CameraViewStyle.radius
         Component {
@@ -120,7 +120,7 @@ Item{
 			height: CameraViewStyle.pauseView.button.iconSize
 			width: height
 			radius: width/2
-			color: CameraViewStyle.pauseView.button.backgroundNormalColor.colorModel.color
+			color: CameraViewStyle.pauseView.button.backgroundNormalColor.color
 			Icon{
 				anchors.centerIn: parent
 				icon: CameraViewStyle.pauseView.button.icon
@@ -170,7 +170,7 @@ Item{
 		height: CameraViewStyle.isMuted.button.iconSize
 		width: height
 		radius: width/2
-		color: CameraViewStyle.isMuted.button.backgroundNormalColor.colorModel.color
+		color: CameraViewStyle.isMuted.button.backgroundNormalColor.color
 		Icon{
 			anchors.centerIn: parent
 			icon: CameraViewStyle.isMuted.button.icon
