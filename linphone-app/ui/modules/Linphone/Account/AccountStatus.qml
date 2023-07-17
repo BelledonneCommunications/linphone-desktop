@@ -70,7 +70,8 @@ Item {
 			Text {
 				id:username
 				Layout.fillWidth: true
-				Layout.alignment: !subtitle.visible ?  Qt.AlignVCenter | Qt.AlignLeft: Qt.AlignBottom | Qt.AlignLeft
+				Layout.preferredHeight: accountStatus.noAccountConfigured ? -1 : parent.height / 2
+				Layout.alignment: !subtitle.visible ?  Qt.AlignVCenter | Qt.AlignLeft : Qt.AlignBottom | Qt.AlignLeft
 				color: AccountStatusStyle.username.colorModel.color
 				elide: Text.ElideRight
 				font.bold: true
