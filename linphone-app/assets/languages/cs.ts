@@ -513,41 +513,40 @@
 <context>
     <name>Chat</name>
     <message>
-        <source>newMessagePlaceholder</source>
-        <translation>Zadejte zprávu</translation>
-    </message>
-    <message>
-        <source>noFileTransferUrl</source>
-        <translation>Soubor nelze odeslat .
-Adresa URL serveru není nakonfigurována.</translation>
-    </message>
-    <message numerus="yes">
-        <source>chatTyping</source>
-        <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation>
-            <numerusform>%1 píše…</numerusform>
-            <numerusform>%1 píší…</numerusform>
-            <numerusform>%1 píše…</numerusform>
-        </translation>
-    </message>
-    <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation>Zkopírováno do schránky</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation>Výběr zkopírován do schránky</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation>Zvolte, kam chcete zprávu přeposlat</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation>Pozvánka byla zkopírována</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>chatTyping</source>
+        <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>noFileTransferUrl</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newMessagePlaceholder</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

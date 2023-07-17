@@ -212,7 +212,7 @@ Presence::PresenceStatus ContactModel::getPresenceStatus () const {
 
 QDateTime ContactModel::getPresenceTimestamp() const{
 	if(mLinphoneFriend->getPresenceModel()){
-			time_t timestamp = mLinphoneFriend->getPresenceModel()->getTimestamp();
+			time_t timestamp = mLinphoneFriend->getPresenceModel()->getLatestActivityTimestamp();
 			if(timestamp == -1)
 				return QDateTime();
 			else
