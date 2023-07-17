@@ -18,7 +18,7 @@
     <message>
         <source>noAccount</source>
         <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Konto eingerichtet</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Logdateien nur von der Anwendung drucken</translation>
     </message>
 </context>
 <context>
@@ -421,7 +421,7 @@
     <message>
         <source>callStatsSasAlgo</source>
         <extracomment>&apos;SAS algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SAS Algorythmus</translation>
     </message>
 </context>
 <context>
@@ -569,27 +569,27 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>icsconferenceAddressTitle</source>
         <extracomment>&apos;Meeting address&apos; : Title for the meeting address.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besprechungsadresse</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beitreten</translation>
     </message>
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wirklich dieses Treffen löschen?</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wirklich dieses Treffen stornieren?</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Das Treffen wurde storniert</translation>
     </message>
 </context>
 <context>
@@ -602,7 +602,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>icsJoinButton</source>
         <extracomment>&apos;Join&apos; : Action button to join the meeting.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beitreten</translation>
     </message>
     <message>
         <source>icsMeetingInvite</source>
