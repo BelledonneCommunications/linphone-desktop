@@ -696,6 +696,10 @@ bool Utils::codepointIsEmoji(uint code){
                (code >= 0x1f000 && code <= 0x1faff) || code == 0x200d || code == 0xfe0f;
 }
 
+bool Utils::codepointIsVisible(uint code) {
+	return code > 0x00020;
+}
+
 QString Utils::encodeEmojiToQmlRichFormat(const QString &body){
 	QString fmtBody = "";
 	QVector<uint> utf32_string = body.toUcs4();
@@ -726,7 +730,7 @@ bool Utils::isOnlyEmojis(const QString& text){
 	if(text.isEmpty()) return false;
 	QVector<uint> utf32_string = text.toUcs4();
 	for (auto &code : utf32_string)
-		if( !Utils::codepointIsEmoji(code))
+		if(codepointIsVisible(code) && !Utils::codepointIsEmoji(code))
 			return false;
 	return true;
 }
