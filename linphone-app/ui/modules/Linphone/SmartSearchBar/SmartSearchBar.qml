@@ -64,9 +64,8 @@ SearchBox {
 				secure: 0,
 				visible: true,
 				handler: function (entry) {
-					var sipAddress = entry.sipAddress	// closeMenu() will remove entry. Keep it in memory
+					searchBox.launchVideoCall(entry.sipAddress)
 					searchBox.closeMenu()
-					searchBox.launchVideoCall(sipAddress)
 				},
 				visible: SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 			}, {
@@ -74,18 +73,16 @@ SearchBox {
 				secure: 0,
 				visible: true,
 				handler: function (entry) {
-					var sipAddress = entry.sipAddress	// closeMenu() will remove entry. Keep it in memory
+					searchBox.launchCall(entry.sipAddress)
 					searchBox.closeMenu()
-					searchBox.launchCall(sipAddress)
 				},
 				visible: SettingsModel.outgoingCallsEnabled
 			}, {
 				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 0,
 				handler: function (entry) {
-					var sipAddress = entry.sipAddress	// closeMenu() will remove entry. Keep it in memory
+					searchBox.launchChat(entry.sipAddress)
 					searchBox.closeMenu()
-					searchBox.launchChat(sipAddress)
 				},
 				visible: SettingsModel.standardChatEnabled,
 				zz: 'toto'
@@ -94,9 +91,8 @@ SearchBox {
 				secure: 1,
 				visible: SettingsModel.secureChatEnabled && AccountSettingsModel.conferenceUri != '',
 				handler: function (entry) {
-					var sipAddress = entry.sipAddress	// closeMenu() will remove entry. Keep it in memory
+					searchBox.launchSecureChat(entry.sipAddress)
 					searchBox.closeMenu()
-					searchBox.launchSecureChat(sipAddress)
 				}
 			}
 			
@@ -117,9 +113,8 @@ SearchBox {
 		}
 		
 		onEntryClicked: {
-			var entryBackup = entry
+			searchBox.entryClicked(entry)
 			searchBox.closeMenu()
-			searchBox.entryClicked(entryBackup)
 		}
 	}
 }
