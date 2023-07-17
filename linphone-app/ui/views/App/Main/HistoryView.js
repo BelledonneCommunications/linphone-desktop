@@ -34,6 +34,7 @@ function removeAllEntries () {
   }, function (status) {
     if (status) {
       historyProxyModel.removeAllEntries()
+      window.setView('Home')
     }
   })
 }
