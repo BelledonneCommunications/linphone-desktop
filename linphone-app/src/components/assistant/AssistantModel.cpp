@@ -187,9 +187,9 @@ private:
 	}
 	
 	void onRecoverAccount (
-			const shared_ptr<linphone::AccountCreator> &,
+			const shared_ptr<linphone::AccountCreator> &accountCreator,
 			linphone::AccountCreator::Status status,
-			const string &
+			const string &response
 			) override {
 		if (status == linphone::AccountCreator::Status::RequestOk) {
 			CoreManager::getInstance()->getSipAddressesModel()->reset();
@@ -204,7 +204,21 @@ private:
 		}
 		mAssistant->setIsProcessing(false);
 	}
-	
+	virtual void onLoginLinphoneAccount(
+			const std::shared_ptr<linphone::AccountCreator> & creator,
+			linphone::AccountCreator::Status status,
+			const std::string & response) override {
+		if( status == linphone::AccountCreator::Status::RequestOk){
+			createAccount(creator);
+			CoreManager::getInstance()->getSipAddressesModel()->reset();
+			emit mAssistant->activateStatusChanged(QString(""));
+		} else {
+			if (status == linphone::AccountCreator::Status::RequestFailed)
+				emit mAssistant->activateStatusChanged(tr("requestFailed"));
+			else
+				emit mAssistant->activateStatusChanged(tr("smsActivationFailed"));
+		}
+	}
 private:
 	AssistantModel *mAssistant;
 };
@@ -237,9 +251,11 @@ AssistantModel::~AssistantModel(){
 
 void AssistantModel::activate () {
 	setIsProcessing(true);
-	if (mAccountCreator->getEmail().empty())
-		mAccountCreator->activateAccount();
-	else
+	if (mAccountCreator->getEmail().empty()){
+		if(mAccountCreator->getUsername().empty())
+			mAccountCreator->setUsername(mAccountCreator->getPhoneNumber());
+		mAccountCreator->loginLinphoneAccount();// It will detect if phone is an alias or not. 
+	}else
 		mAccountCreator->isAccountActivated();
 }
 
@@ -251,6 +267,8 @@ void AssistantModel::create () {
 
 void AssistantModel::login () {
 	setIsProcessing(true);
+	if(mAccountCreator->getUsername().empty())
+		mAccountCreator->setUsername(mAccountCreator->getPhoneNumber());
 	if (!mCountryCode.isEmpty()) {// Recovering account from phone
 		mAccountCreator->requestAccountCreationRequestToken();
 		return;
