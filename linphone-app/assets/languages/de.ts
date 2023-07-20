@@ -548,6 +548,11 @@ Server URL ist nicht konfiguriert.</translation>
         <source>conferencesCopiedICS</source>
         <translation>Die Einladung wurde kopiert</translation>
     </message>
+    <message>
+        <source>confirmForward</source>
+        <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatCalendarMessage</name>

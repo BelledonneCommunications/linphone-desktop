@@ -95,13 +95,13 @@ char *Utils::rstrstr (const char *a, const char *b) {
 
 // -----------------------------------------------------------------------------
 
-bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability){
+bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability, bool defaultCapability){
 	auto addressCleaned = cleanSipAddress(address);
 	auto contact = CoreManager::getInstance()->getContactsListModel()->findContactModelFromSipAddress(addressCleaned);
 	if(contact)
 		return contact->hasCapability(capability);
 	else
-		return false;
+		return defaultCapability;
 }
 
 QDateTime Utils::addMinutes(QDateTime date, const int& min){

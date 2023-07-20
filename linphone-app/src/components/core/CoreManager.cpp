@@ -319,7 +319,10 @@ void CoreManager::migrate () {
 	shared_ptr<linphone::Config> config = mCore->getConfig();
 	auto oldLimeServerUrl = mCore->getLimeX3DhServerUrl();// core url is deprecated : If core url exists, it must be copied to all linphone accounts.
 	int rcVersion = config->getInt(SettingsModel::UiSection, Constants::RcVersionName, 0);
-	if (oldLimeServerUrl.empty() && rcVersion == Constants::RcVersionCurrent)
+	if( !oldLimeServerUrl.empty()) {
+		mCore->setLimeX3DhServerUrl("");
+		mCore->enableLimeX3Dh(true);
+	}else if( rcVersion == Constants::RcVersionCurrent)
 		return;
 	if (rcVersion > Constants::RcVersionCurrent) {
 		qWarning() << QStringLiteral("RC file version (%1) is more recent than app rc file version (%2)!!!")
@@ -329,10 +332,6 @@ void CoreManager::migrate () {
 	
 	qInfo() << QStringLiteral("Migrate from old rc file (%1 to %2).")
 			   .arg(rcVersion).arg(Constants::RcVersionCurrent);
-	if( !oldLimeServerUrl.empty()) {
-		mCore->setLimeX3DhServerUrl("");
-		mCore->enableLimeX3Dh(true);
-	}
 	bool setLimeServerUrl = false;
 	for(const auto &account : getAccountList()){
 		auto params = account->getParams();

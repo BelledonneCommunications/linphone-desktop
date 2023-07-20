@@ -475,7 +475,7 @@ DialogPlus {
 									secure: SettingsModel.secureChatEnabled,
 									visible: true,
 									secureIconVisibleHandler : function(entry) {
-										return entry && entry.sipAddress ? UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh) : false
+										return entry && entry.sipAddress ? UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh, true) : false
 									},
 									handler: function (entry) {
 										if(entry){

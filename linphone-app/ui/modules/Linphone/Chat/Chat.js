@@ -26,6 +26,8 @@
 .import Linphone 1.0 as Linphone
 .import UtilsCpp 1.0 as UtilsCpp
 
+.import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 
 function initView () {
@@ -74,4 +76,27 @@ function sendMessage (text) {
 	chat.bindToEnd = true
 	if(container.proxyModel)
 		container.proxyModel.sendMessage(text)
+}
+
+function forwardMessage(chatRoomModel, chatEntry, chatRoomConfig){
+	Qt.callLater(function (){// This avoid to detach virtual window while selecting chatroom/user. This can be the case when we got an address from the smartsearch bar that need to close itself before doing this stuff.
+		window.detachVirtualWindow()
+		window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+			flat: true,
+			//: 'Do you want to forward this message?' : text to confirm to forward a message
+			descriptionText: '<b>'+qsTr('confirmForward'),
+			}, function (status) {
+				if (status) {
+					if(!chatRoomModel) {
+						var chat = CallsListModel.createChatRoom( chatRoomConfig.subject, chatRoomConfig.haveEncryption, chatRoomConfig.participants, chatRoomConfig.toSelect)
+						if(chat)
+							chatRoomModel = chat.chatRoomModel
+					}
+					if(chatRoomModel){
+						chatRoomModel.forwardMessage(chatEntry)
+						Linphone.TimelineListModel.select(chatRoomModel)
+					}
+				}
+			})
+		})
 }
