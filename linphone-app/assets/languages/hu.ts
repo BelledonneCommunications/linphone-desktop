@@ -1742,6 +1742,11 @@ A kiszolgáló URL-je nincs konfigurálva.</translation>
         <translation>Ehhez hívja fel a kapcsolatot és kövesse a hitelesítési folyamatot.</translation>
         <extra-Context>Explanation process</extra-Context>
     </message>
+    <message>
+        <source>dontAskAgain</source>
+        <extracomment>&quot;Don&apos;t ask again&quot; : Checkbox text to avoid showing the popup information on encryptions.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>InviteFriends</name>
@@ -3661,6 +3666,11 @@ Kattintson ide: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>magicSearchMaxResultsLabel</source>
         <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>restoreAskingPopups</source>
+        <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
