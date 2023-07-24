@@ -205,18 +205,24 @@ ColumnLayout  {
 						MouseArea{
 							anchors.fill:parent
 							visible: conversation.chatRoomModel && !conversation.chatRoomModel.isReadOnly && (SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled)
-							onClicked : {
+							function showParticipantsDevice(){
 								window.detachVirtualWindow()
-								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
+								window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ParticipantsDevices.qml')
+															,{chatRoomModel:chatRoomModel
+															, window:window})
+							}
+							onClicked : {
+								if(!SettingsModel.dontAskAgainInfoEncryption){
+									window.detachVirtualWindow()
+									window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/InfoEncryption.qml')
 														   ,{securityLevel:securityLevel}
 														   , function (status) {
 															   if(status){
-																   window.detachVirtualWindow()
-																   window.attachVirtualWindow(Qt.resolvedUrl('Dialogs/ParticipantsDevices.qml')
-																							  ,{chatRoomModel:chatRoomModel
-																								  , window:window})		
+																	showParticipantsDevice()
 															   }
 														   })
+								} else
+									showParticipantsDevice()
 							}
 						}
 					}

@@ -225,6 +225,10 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(Utils::SipDisplayMode sipDisplayMode READ getSipDisplayMode WRITE setSipDisplayMode NOTIFY sipDisplayModeChanged)
 	Q_PROPERTY(int magicSearchMaxResults READ getMagicSearchMaxResults WRITE setMagicSearchMaxResults NOTIFY magicSearchMaxResultsChanged)
 	
+	Q_PROPERTY(bool dontAskAgainInfoEncryption READ getDontAskAgainInfoEncryption WRITE setDontAskAgainInfoEncryption NOTIFY dontAskAgainInfoEncryptionChanged)
+	Q_PROPERTY(bool haveDontAskAgainChoices READ getHaveDontAskAgainChoices NOTIFY haveDontAskAgainChoicesChanged)
+	
+	
 	// Advanced. -----------------------------------------------------------------
 	
 	Q_PROPERTY(QString logsFolder READ getLogsFolder WRITE setLogsFolder NOTIFY logsFolderChanged)
@@ -483,6 +487,9 @@ public:
 	
 	bool getPostQuantumAvailable() const;
 	
+	bool getDontAskAgainInfoEncryption() const;
+	void setDontAskAgainInfoEncryption(bool show);
+	
 	bool getLimeState () const;
 	void setLimeState (const bool& state);
 	
@@ -621,6 +628,10 @@ public:
 	
 	int getMagicSearchMaxResults() const;
 	void setMagicSearchMaxResults(int maxResults);
+	
+// Show all "don't ask again" checkboxes and popups.
+	bool getHaveDontAskAgainChoices() const;
+	Q_INVOKABLE void resetDontAskAgainChoices();
 	
 	// Advanced. ---------------------------------------------------------------------------
 	
@@ -848,6 +859,9 @@ signals:
 	void versionCheckTypeChanged();
 	
 	void magicSearchMaxResultsChanged();
+	
+	void dontAskAgainInfoEncryptionChanged();
+	void haveDontAskAgainChoicesChanged();
 	
 	// Advanced. -----------------------------------------------------------------
 	

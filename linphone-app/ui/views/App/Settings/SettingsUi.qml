@@ -217,15 +217,20 @@ TabContainer {
 			visible: SettingsModel.contactsEnabled || SettingsModel.developerSettingsEnabled
 			width: parent.width
 		}
-		
-		TextButtonB {
-			anchors.right: parent.right
-			text: qsTr('cleanAvatars')
-			visible: SettingsModel.contactsEnabled || SettingsModel.developerSettingsEnabled
-			
-			onClicked: Logic.cleanAvatars()
+		RowLayout{
+			width: parent.width
+			Item{
+				Layout.fillHeight: true
+				Layout.fillWidth: true
+			}
+			TextButtonB {
+				id: cleanAvatarsButton
+				text: qsTr('cleanAvatars')
+				visible: SettingsModel.contactsEnabled || SettingsModel.developerSettingsEnabled
+				
+				onClicked: Logic.cleanAvatars()
+			}
 		}
-		
 		// -------------------------------------------------------------------------
 		// Other.
 		// -------------------------------------------------------------------------
@@ -353,6 +358,21 @@ TabContainer {
 																			: SettingsModel.VersionCheckType_Custom)
 						}
 					}
+				}
+			}
+			RowLayout{
+				width: parent.width
+				Item{
+					Layout.fillHeight: true
+					Layout.fillWidth: true
+				}
+			
+				TextButtonB {
+					visible: SettingsModel.haveDontAskAgainChoices
+					//: 'Restore asking popups' : Text button for restoring asking popups.
+					text: qsTr('restoreAskingPopups')
+					
+					onClicked: SettingsModel.resetDontAskAgainChoices()
 				}
 			}
 		}

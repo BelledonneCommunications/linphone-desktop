@@ -1752,6 +1752,11 @@ Server URL not configured.</translation>
         <translation>To do so, call the contact and follow the authentification process.</translation>
         <extra-Context>Explanation process</extra-Context>
     </message>
+    <message>
+        <source>dontAskAgain</source>
+        <extracomment>&quot;Don&apos;t ask again&quot; : Checkbox text to avoid showing the popup information on encryptions.</extracomment>
+        <translation>Don&apos;t ask again</translation>
+    </message>
 </context>
 <context>
     <name>InviteFriends</name>
@@ -3700,6 +3705,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>magicSearchMaxResultsLabel</source>
         <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
         <translation>Max results on search</translation>
+    </message>
+    <message>
+        <source>restoreAskingPopups</source>
+        <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
+        <translation>Restore asking popups</translation>
     </message>
 </context>
 <context>

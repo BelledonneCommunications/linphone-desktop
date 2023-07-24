@@ -31,10 +31,7 @@ DialogPlus {
 			)
 			textButtonStyle: InfoEncryptionStyle.okButton
 			onClicked: {
-				if(addressToCall != ''){
-					CallsListModel.launchSecureAudioCall(addressToCall, LinphoneEnums.MediaEncryptionZrtp)
-				}
-				exit(1)
+				dialog.ok()
 			}
 		}
 	]
@@ -49,6 +46,13 @@ DialogPlus {
 	
 	height: InfoEncryptionStyle.height
 	width: InfoEncryptionStyle.width
+	
+	function ok(){
+		if(addressToCall != ''){
+			CallsListModel.launchSecureAudioCall(addressToCall, LinphoneEnums.MediaEncryptionZrtp)
+		}
+		exit(1)
+	}
 	
 	// ---------------------------------------------------------------------------
 	ColumnLayout {
@@ -98,6 +102,17 @@ DialogPlus {
 			//: "To do so, call the contact and follow the authentification process."
 			//~ Context Explanation process
 			text:  qsTr('encryptionProcessExplanation')
+		}
+		CheckBoxText{
+			id: dontAskAgainCheckBox
+			Layout.bottomMargin: 10
+			Layout.alignment: Qt.AlignVCenter | Qt.AlignRight
+			visible: dialog.addressToCall == ''
+			checked: SettingsModel.dontAskAgainInfoEncryption
+			onCheckedChanged: SettingsModel.dontAskAgainInfoEncryption = checked
+			
+			//: "Don't ask again" : Checkbox text to avoid showing the popup information on encryptions.
+			text: qsTr('dontAskAgain')
 		}
 	}
 }
