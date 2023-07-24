@@ -15,7 +15,7 @@
     <entry name="reg_identity" overwrite="true">sip:?@sip.linphone.org</entry>
     <entry name="reg_proxy" overwrite="true">&lt;sip:sip.linphone.org;transport=tls&gt;</entry>
     <entry name="reg_sendregister" overwrite="true">1</entry>
-    <entry name="nat_policy_ref" overwrite="true">nat_policy_default_values</entry>
+    <entry name="nat_policy_ref" overwrite="true">default_nat_policy_values</entry>
     <entry name="realm" overwrite="true">sip.linphone.org</entry>
     <entry name="contact_parameters" overwrite="true">message-expires=2419200</entry>
 	<entry name="conference_factory_uri" overwrite="true">sip:conference-factory@sip.linphone.org</entry>
@@ -24,7 +24,7 @@
 	<entry name="rtp_bundle" overwrite="true">1</entry>
 	<entry name="lime_server_url" overwrite="true">https://lime.linphone.org/lime-server/lime-server.php</entry>
   </section>
-  <section name="nat_policy_default_values">
+  <section name="default_nat_policy_values">
     <entry name="stun_server" overwrite="true">stun.linphone.org</entry>
     <entry name="protocols" overwrite="true">stun,ice</entry>
   </section>

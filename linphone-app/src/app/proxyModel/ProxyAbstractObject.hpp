@@ -29,6 +29,7 @@ class ProxyAbstractObject : public QAbstractListModel{
 	Q_OBJECT
 public:
 	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
+	Q_PROPERTY(int length READ getCount NOTIFY countChanged)
 
 	ProxyAbstractObject(QObject * parent = nullptr) : QAbstractListModel(parent){
 		connect(this, &ProxyAbstractObject::rowsInserted, this, &ProxyAbstractObject::countChanged);

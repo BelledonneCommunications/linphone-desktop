@@ -21,12 +21,11 @@
 #ifndef TELEPHONE_NUMBERS_MODEL_H_
 #define TELEPHONE_NUMBERS_MODEL_H_
 
-#include <QAbstractListModel>
 #include <QLocale>
-
+#include "app/proxyModel/ProxyAbstractObject.hpp"
 // =============================================================================
 
-class TelephoneNumbersModel : public QAbstractListModel {
+class TelephoneNumbersModel : public ProxyAbstractObject {
 	Q_OBJECT
 	
 	Q_PROPERTY(int defaultIndex READ getDefaultIndex CONSTANT)
@@ -38,7 +37,8 @@ public:
 	
 	QHash<int, QByteArray> roleNames () const override;
 	QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	
+	Q_INVOKABLE QVariant getAt(int);
+	 
 private:
 	int getDefaultIndex () const;
 	

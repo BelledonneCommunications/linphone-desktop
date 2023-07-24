@@ -100,6 +100,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(QVariantMap videoDefinition READ getVideoDefinition WRITE setVideoDefinition NOTIFY videoDefinitionChanged)
 	
 	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY videoEnabledChanged)
+	Q_PROPERTY(bool videoAvailable READ getVideoAvailable NOTIFY videoAvailableChanged)
 	
 	Q_PROPERTY(bool showVideoCodecs READ getShowVideoCodecs WRITE setShowVideoCodecs NOTIFY showVideoCodecsChanged)
 	
@@ -387,8 +388,10 @@ public:
 	Q_INVOKABLE QVariantMap getCurrentPreviewVideoDefinition () const;
 	void setVideoDefinition (const QVariantMap &definition);
 	
-	bool getVideoEnabled() const;
+	bool getVideoEnabled() const;	// Enabled from settings
 	void setVideoEnabled(const bool& enable);
+	bool getVideoAvailable() const; // Enabled and have enough codecs.
+	bool haveAtLeastOneVideoCodec() const;
 	
 	bool getShowVideoCodecs () const;
 	void setShowVideoCodecs (bool status);
@@ -742,6 +745,7 @@ signals:
 	
 	// Video. --------------------------------------------------------------------
 	void videoEnabledChanged();
+	void videoAvailableChanged();
 	void videoDevicesChanged (const QStringList &devices);
 	void videoDeviceChanged (const QString &device);
 	
@@ -757,6 +761,8 @@ signals:
 	void activeSpeakerCameraModeChanged();
 	void callCameraModeChanged();
 	void videoConferenceLayoutChanged();
+	
+	void haveAtLeastOneVideoCodecChanged();
 	
 	// Chat & calls. -------------------------------------------------------------
 	

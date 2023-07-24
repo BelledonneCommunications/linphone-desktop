@@ -55,6 +55,7 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	mConfig = coreManager->getCore()->getConfig();
 	
 	connect(this, &SettingsModel::dontAskAgainInfoEncryptionChanged, this, &SettingsModel::haveDontAskAgainChoicesChanged);
+	connect(this, &SettingsModel::haveAtLeastOneVideoCodecChanged, this, &SettingsModel::videoAvailableChanged);
 
 	QObject::connect(coreManager->getHandlers().get(), &CoreHandlers::callCreated,
 			 this, &SettingsModel::handleCallCreated);
@@ -676,6 +677,19 @@ bool SettingsModel::getShowVideoCodecs () const {
 void SettingsModel::setShowVideoCodecs (bool status) {
 	mConfig->setInt(UiSection, "show_video_codecs", status);
 	emit showVideoCodecsChanged(status);
+}
+
+bool SettingsModel::getVideoAvailable() const{
+	return getVideoEnabled() && haveAtLeastOneVideoCodec();
+}
+
+bool SettingsModel::haveAtLeastOneVideoCodec() const{
+	auto codecs = CoreManager::getInstance()->getCore()->getVideoPayloadTypes();
+	for (auto &codec : codecs){
+		if(codec->enabled() && codec->isUsable())
+			return true;
+	}
+	return false;
 }
 
 // =============================================================================

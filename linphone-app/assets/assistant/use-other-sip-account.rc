@@ -22,7 +22,7 @@
     <entry name="audio_video_conference_factory_uri" overwrite="true"></entry>
     <entry name="lime_server_url" overwrite="true"></entry>
   </section>
-  <section name="nat_policy_default_values">
+  <section name="default_nat_policy_values">
     <entry name="stun_server" overwrite="true"></entry>
     <entry name="protocols" overwrite="true"></entry>
   </section>

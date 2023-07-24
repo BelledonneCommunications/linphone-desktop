@@ -129,7 +129,7 @@ Rectangle{
 										: IncallMenuStyle.settingsIcons.activeSpeakerIcon
 								: IncallMenuStyle.settingsIcons.audioOnlyIcon)
 						, nextPage:layoutMenu
-						, visible: mainItem.callModel && mainItem.callModel.isConference && SettingsModel.videoEnabled},
+						, visible: mainItem.callModel && mainItem.callModel.isConference && SettingsModel.videoAvailable},
 
 						{ titleIndex: 2
 						, icon: IncallMenuStyle.settingsIcons.participantsIcon

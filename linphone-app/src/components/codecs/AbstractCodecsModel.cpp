@@ -20,6 +20,7 @@
 
 #include "app/paths/Paths.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "AbstractCodecsModel.hpp"
@@ -45,6 +46,8 @@ void AbstractCodecsModel::enableCodec (int id, bool status) {
   shared_ptr<linphone::PayloadType> codec = getCodecFromMap(map);
   if (codec) {
     codec->enable(status);
+    if(codec->getType() == PAYLOAD_VIDEO)
+		emit CoreManager::getInstance()->getSettingsModel()->haveAtLeastOneVideoCodecChanged();
     map["enabled"] = codec->enabled();
     emit dataChanged(index(id, 0), index(id, 0));
   }

@@ -53,11 +53,17 @@ public:
 	
 private:
 	void createAccount (const shared_ptr<linphone::AccountCreator> &creator) {
-		shared_ptr<linphone::ProxyConfig> proxyConfig = creator->createProxyConfig();
-		auto account = CoreManager::getInstance()->getCore()->getAccountByIdkey(proxyConfig->getIdkey());
+		auto account = creator->createAccountInCore();
 		if(account){
+			AccountSettingsModel *accountSettingsModel = CoreManager::getInstance()->getAccountSettingsModel();
 			CoreManager::getInstance()->addingAccount(account->getParams());
-			CoreManager::getInstance()->getAccountSettingsModel()->setDefaultAccount(account);
+			auto accountParams = account->getParams()->clone();
+			auto natPolicy = accountParams->getNatPolicy();
+			if(natPolicy)
+				accountParams->setNatPolicy(natPolicy->clone());// Be sure to have a 'ref' entry on a nat_policy. When using default values, the 'ref' entry is lost where it should be pointing to default. We get one by cloning the policy.
+			if (accountSettingsModel->addOrUpdateAccount(account, accountParams)) {
+				accountSettingsModel->setDefaultAccount(account);
+			}
 		}
 	}
 	
@@ -133,7 +139,7 @@ private:
 			QVariantMap description = doc.toVariant().toMap();
 			creator->setToken(description.value("token").toString().toStdString());
 			// it will automatically use the account creation token.
-			if (!mAssistant->mCountryCode.isEmpty()) {
+			if (mAssistant->mUsePhoneNumber) {
 				emit mAssistant->createStatusChanged("Recovering account");
 				creator->recoverAccount();
 			}else{
@@ -144,7 +150,6 @@ private:
 			QTimer::singleShot(2000, [creator](){
 				creator->requestAccountCreationTokenUsingRequestToken();
 			});
-		
 	}
 	
 	void onActivateAccount (
@@ -269,7 +274,8 @@ void AssistantModel::login () {
 	setIsProcessing(true);
 	if(mAccountCreator->getUsername().empty())
 		mAccountCreator->setUsername(mAccountCreator->getPhoneNumber());
-	if (!mCountryCode.isEmpty()) {// Recovering account from phone
+	if (mUsePhoneNumber) {
+		emit createStatusChanged("Requesting validation url");
 		mAccountCreator->requestAccountCreationRequestToken();
 		return;
 	}
@@ -555,12 +561,29 @@ QString AssistantModel::getCountryCode () const {
 
 void AssistantModel::setCountryCode (const QString &countryCode) {
 	mCountryCode = countryCode;
+	mAccountCreator->setPhoneNumber(Utils::appStringToCoreString(mPhoneNumber), Utils::appStringToCoreString(mCountryCode));
 	emit countryCodeChanged(countryCode);
+	emit computedPhoneNumberChanged();
 }
 
 // -----------------------------------------------------------------------------
 
+bool AssistantModel::getUsePhoneNumber() const{
+	return mUsePhoneNumber;
+}
+
+void AssistantModel::setUsePhoneNumber(bool use) {
+	if(mUsePhoneNumber != use){
+		mUsePhoneNumber = use;
+		emit usePhoneNumberChanged();
+	}
+}
+
 QString AssistantModel::getPhoneNumber () const {
+	return mPhoneNumber;
+}
+
+QString AssistantModel::getComputedPhoneNumber () const{
 	return Utils::coreStringToAppString(mAccountCreator->getPhoneNumber());
 }
 
@@ -588,8 +611,20 @@ void AssistantModel::setPhoneNumber (const QString &phoneNumber) {
 		default:
 			break;
 	}
-	
+	mPhoneNumber = phoneNumber;
 	emit phoneNumberChanged(phoneNumber, error);
+	emit computedPhoneNumberChanged();
+}
+
+QString AssistantModel::getPhoneCountryCode() const {
+	return mPhoneCountryCode;
+}
+
+void AssistantModel::setPhoneCountryCode(const QString &code) {
+	if( mPhoneCountryCode != code) {
+		mPhoneCountryCode = code;
+		emit phoneCountryCodeChanged();
+	}
 }
 
 // -----------------------------------------------------------------------------
