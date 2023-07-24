@@ -107,6 +107,10 @@ ScrollableListView {
 										haveEncryption:false,
 										securityLevel:1
 									})
+							MouseArea {
+								anchors.fill: parent
+								onClicked: sipAddressesView.entryClicked(contact.entry, -1)
+							}
 						}
 						
 						ActionBar {

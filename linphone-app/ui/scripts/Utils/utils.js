@@ -263,7 +263,7 @@ function _indexFinder (array, cb, context) {
   var length = array.length
 
   for (var i = 0; i < length; i++) {
-    if (cb(array[i], i, array)) {
+    if (cb( (array.getAt ? array.getAt(i) : array[i]), i, array)) {
       return i
     }
   }

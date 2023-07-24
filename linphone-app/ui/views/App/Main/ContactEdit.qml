@@ -160,7 +160,7 @@ ColumnLayout  {
 						backgroundRadius: 90
 						colorSet: ContactEditStyle.videoCall
 						
-						visible: SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
+						visible: SettingsModel.videoAvailable && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 						
 						onClicked: sipAddressesMenu.open(sipAddressesMenu.startVideoCall)
 					}

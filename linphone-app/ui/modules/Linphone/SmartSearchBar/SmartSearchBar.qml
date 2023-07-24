@@ -67,7 +67,7 @@ SearchBox {
 					searchBox.launchVideoCall(entry.sipAddress)
 					searchBox.closeMenu()
 				},
-				visible: SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
+				visible: SettingsModel.videoAvailable && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 			}, {
 				colorSet: SipAddressesViewStyle.call,
 				secure: 0,

@@ -456,6 +456,13 @@ void App::initContentApp () {
 #else
 	mEngine->rootContext()->setContextProperty("applicationLicence", "");
 #endif
+#ifdef APPLICATION_LICENCE_URL
+	mEngine->rootContext()->setContextProperty("applicationLicenceUrl", APPLICATION_LICENCE_URL);
+#else
+	mEngine->rootContext()->setContextProperty("applicationLicenceUrl", "");
+#endif
+
+
 #ifdef COPYRIGHT_RANGE_DATE
  	mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
 #else

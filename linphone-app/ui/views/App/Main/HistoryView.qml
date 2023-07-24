@@ -94,7 +94,7 @@ ColumnLayout  {
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: HistoryViewStyle.videoCall
-						visible: peerAddress && SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
+						visible: peerAddress && SettingsModel.videoAvailable && SettingsModel.outgoingCallsEnabled && SettingsModel.showStartVideoCallButton
 						
 						onClicked: CallsListModel.launchVideoCall(historyView.peerAddress)
 					}

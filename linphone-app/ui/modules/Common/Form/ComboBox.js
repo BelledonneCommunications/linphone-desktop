@@ -66,9 +66,8 @@ function getSelectedEntryText () {
   // With a `QAbstractListModel`, `text` is empty. QML bug?
   var model = comboBox.model
   if (model.data) {
-    var item = model.data(model.index(comboBox.currentIndex, 0))
-    var textRole = comboBox.textRole
-    return textRole.length > 0 ? item[textRole] : item
+    var item = model.data(model.index(comboBox.currentIndex, 0), comboBox.textRole)
+    return item ? item : ''
   }
 
   return ''

@@ -253,7 +253,7 @@ const QList<QPair<QLocale::Country, QString>> TelephoneNumbersModel::mCountryCod
 
 // -----------------------------------------------------------------------------
 
-TelephoneNumbersModel::TelephoneNumbersModel (QObject *parent) : QAbstractListModel(parent) {}
+TelephoneNumbersModel::TelephoneNumbersModel (QObject *parent) : ProxyAbstractObject(parent) {}
 
 int TelephoneNumbersModel::rowCount (const QModelIndex &) const {
 	return mCountryCodes.count();
@@ -275,11 +275,22 @@ QVariant TelephoneNumbersModel::data (const QModelIndex &index, int role) const 
 	if (role == Qt::DisplayRole) {
 		return countryCode.second;
 	}else if(role == Qt::DisplayRole+1)
-		return QStringLiteral("%1 (+%2)")
-				.arg(Utils::getCountryName(countryCode.first))
-				.arg(countryCode.second);
+		return QStringLiteral("%1")
+				.arg(Utils::getCountryName(countryCode.first));
 	
 	return QVariant();
+}
+
+QVariant TelephoneNumbersModel::getAt(int row){
+	if (row < 0 || row >= mCountryCodes.count())
+		return QVariant();
+	QVariantMap result;
+	auto roles = roleNames();
+	const QPair<QLocale::Country, QString> &countryCode = mCountryCodes[row];
+	result[roles[Qt::DisplayRole]] = countryCode.second;
+	result[roles[Qt::DisplayRole+1]] =  QStringLiteral("%1")
+				.arg(Utils::getCountryName(countryCode.first));
+	return result;
 }
 
 int TelephoneNumbersModel::getDefaultIndex () const {

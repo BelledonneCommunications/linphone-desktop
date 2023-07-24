@@ -12,7 +12,7 @@ import Common.Styles 1.0
 
 AssistantAbstractView {
 	id: view
-	readonly property bool usePhoneNumber: SettingsModel.assistantSupportsPhoneNumbers && !checkBox.checked
+	readonly property alias usePhoneNumber: assistantModel.usePhoneNumber
 	
 	mainAction: requestBlock.execute
 	mainActionEnabled: {
@@ -94,26 +94,34 @@ AssistantAbstractView {
 		id: assistantModel
 		
 		function setCountryCode (index) {
-			var model = telephoneNumbersModel
-			assistantModel.countryCode = index !== -1 ?  model.data(model.index(index, 0),"countryCode") || '' : ''
+			if( index >= 0) {
+				var model = telephoneNumbersModel
+			//assistantModel.countryCode = index !== -1 ?  model.data(model.index(index, 0),"countryCode") || '' : ''
+				assistantModel.countryCode = model.data(model.index(index, 0),"countryCode")
+			}
 		}
 		
 		configFilename: 'use-app-sip-account.rc'
-		
-		countryCode: setCountryCode(view.usePhoneNumber ? telephoneNumbersModel.defaultIndex : -1)
+		usePhoneNumber: SettingsModel.assistantSupportsPhoneNumbers && !checkBox.checked
+		//countryCode: setCountryCode(view.usePhoneNumber ? telephoneNumbersModel.defaultIndex : -1)
 		
 		onPasswordChanged: {
-			if (!view.usePhoneNumber) {
+			if (!usePhoneNumber) {
 				loader.item.passwordError = error
 			}
 		}
 		
 		onPhoneNumberChanged: {
-			if (view.usePhoneNumber) {
+			if (usePhoneNumber) {
 				loader.item.phoneNumberError = error
 			}
 		}
-		
+		onCreateStatusChanged: {
+			requestBlock.setText(error)
+			if (error.length) {
+				return
+			}
+		}
 		onLoginStatusChanged: {
 			requestBlock.setText(error)
 			if (!error.length) {
@@ -144,6 +152,7 @@ AssistantAbstractView {
 								   })
 			}
 		}
+		Component.onCompleted: setCountryCode(telephoneNumbersModel.defaultIndex)
 	}
 	
 	TelephoneNumbersModel {

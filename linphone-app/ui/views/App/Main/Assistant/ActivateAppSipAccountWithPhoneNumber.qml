@@ -22,13 +22,13 @@ AssistantAbstractView {
   Column {
     anchors.centerIn: parent
     spacing: ActivateAppSipAccountWithPhoneNumberStyle.spacing
-    width: parent.width
+    width: parent.width - 10
 
     Text {
       color: ActivateAppSipAccountWithPhoneNumberStyle.activationSteps.colorModel.color
       font.pointSize: ActivateAppSipAccountWithPhoneNumberStyle.activationSteps.pointSize
       horizontalAlignment: Text.AlignHCenter
-      text: qsTr('activationSteps').replace('%1', assistantModel.phoneNumber)
+      text: qsTr('activationSteps').replace('%1', assistantModel.computedPhoneNumber)
       width: parent.width
       wrapMode: Text.WordWrap
     }

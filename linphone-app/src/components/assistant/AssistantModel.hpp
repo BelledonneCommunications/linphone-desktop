@@ -32,18 +32,23 @@ class OAuth2Model;
 class AssistantModel : public QObject {
 	class Handlers;
 	
-	Q_OBJECT;
+	Q_OBJECT
 	
-	Q_PROPERTY(QString email READ getEmail WRITE setEmail NOTIFY emailChanged);
-	Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged);
-	Q_PROPERTY(QString countryCode READ getCountryCode WRITE setCountryCode NOTIFY countryCodeChanged);
-	Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged);
-	Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged);
-	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged);
-	Q_PROPERTY(QString activationCode READ getActivationCode WRITE setActivationCode NOTIFY activationCodeChanged);
-	Q_PROPERTY(QString configFilename READ getConfigFilename WRITE setConfigFilename NOTIFY configFilenameChanged);
-	Q_PROPERTY(bool isReadingQRCode READ getIsReadingQRCode WRITE setIsReadingQRCode NOTIFY isReadingQRCodeChanged);
-	Q_PROPERTY(bool isProcessing READ getIsProcessing WRITE setIsProcessing NOTIFY isProcessingChanged);
+	Q_PROPERTY(QString email READ getEmail WRITE setEmail NOTIFY emailChanged)
+	Q_PROPERTY(QString password READ getPassword WRITE setPassword NOTIFY passwordChanged)
+	Q_PROPERTY(QString countryCode READ getCountryCode WRITE setCountryCode NOTIFY countryCodeChanged)
+	Q_PROPERTY(QString phoneNumber READ getPhoneNumber WRITE setPhoneNumber NOTIFY phoneNumberChanged)
+	Q_PROPERTY(QString phoneCountryCode READ getPhoneCountryCode WRITE setPhoneCountryCode NOTIFY phoneCountryCodeChanged)
+	Q_PROPERTY(QString computedPhoneNumber READ getComputedPhoneNumber NOTIFY computedPhoneNumberChanged)
+	
+	Q_PROPERTY(QString username READ getUsername WRITE setUsername NOTIFY usernameChanged)
+	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged)
+	Q_PROPERTY(QString activationCode READ getActivationCode WRITE setActivationCode NOTIFY activationCodeChanged)
+	Q_PROPERTY(QString configFilename READ getConfigFilename WRITE setConfigFilename NOTIFY configFilenameChanged)
+	Q_PROPERTY(bool isReadingQRCode READ getIsReadingQRCode WRITE setIsReadingQRCode NOTIFY isReadingQRCodeChanged)
+	Q_PROPERTY(bool isProcessing READ getIsProcessing WRITE setIsProcessing NOTIFY isProcessingChanged)
+	Q_PROPERTY(bool usePhoneNumber READ getUsePhoneNumber WRITE setUsePhoneNumber NOTIFY usePhoneNumberChanged)
+	
 	
 public:
 	AssistantModel (QObject *parent = Q_NULLPTR);
@@ -78,7 +83,10 @@ signals:
 	void emailChanged (const QString &email, const QString &error);
 	void passwordChanged (const QString &password, const QString &error);
 	void countryCodeChanged (const QString &countryCode);
+	void usePhoneNumberChanged();
 	void phoneNumberChanged (const QString &phoneNumber, const QString &error);
+	void phoneCountryCodeChanged();
+	void computedPhoneNumberChanged();
 	void usernameChanged (const QString &username, const QString &error);
 	void displayNameChanged (const QString &displayName, const QString &error);
 	void activationCodeChanged (const QString &activationCode);
@@ -115,8 +123,15 @@ private:
 	QString getCountryCode () const;
 	void setCountryCode (const QString &countryCode);
 	
+	bool getUsePhoneNumber() const;
+	void setUsePhoneNumber(bool use);
+	
 	QString getPhoneNumber () const;
+	QString getComputedPhoneNumber () const;
 	void setPhoneNumber (const QString &phoneNumber);
+	
+	QString getPhoneCountryCode () const;
+	void setPhoneCountryCode (const QString &code);
 	
 	QString getUsername () const;
 	void setUsername (const QString &username);
@@ -142,8 +157,11 @@ private:
 	QString mCountryCode;
 	QString mConfigFilename;
 	QString mToken;
+	QString mPhoneCountryCode;
+	QString mPhoneNumber;
 	bool mIsReadingQRCode;
 	bool mIsProcessing;
+	bool mUsePhoneNumber = false;
 	
 	std::shared_ptr<linphone::AccountCreator> mAccountCreator;
 	std::shared_ptr<Handlers> mHandlers;

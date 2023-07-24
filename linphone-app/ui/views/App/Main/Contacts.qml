@@ -142,7 +142,7 @@ ColumnLayout {
 									isCustom: true
 									backgroundRadius: 90
 									colorSet: ContactsStyle.videoCall
-									visible: SettingsModel.videoEnabled && SettingsModel.outgoingCallsEnabled && SettingsModel.getShowStartVideoCallButton()
+									visible: SettingsModel.videoAvailable && SettingsModel.outgoingCallsEnabled && SettingsModel.getShowStartVideoCallButton()
 									
 									onClicked: actions.itemAt(0).open()
 								}
@@ -168,7 +168,7 @@ ColumnLayout {
 									isCustom: true
 									backgroundRadius: 90
 									colorSet: SettingsModel.getShowStartChatButton() ? ContactsStyle.chat : ContactsStyle.history
-									visible: SettingsModel.secureChatEnabled
+									visible: SettingsModel.secureChatEnabled && $modelData && $modelData.hasCapability(LinphoneEnums.FriendCapabilityLimeX3Dh)
 									enabled: AccountSettingsModel.conferenceUri != ''
 									Icon{
 										icon:'secure_level_1'

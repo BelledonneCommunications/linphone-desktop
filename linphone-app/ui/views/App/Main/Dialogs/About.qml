@@ -103,6 +103,11 @@ DialogPlus {
 				width: parent.width
 				
 				horizontalAlignment: Text.AlignHCenter
+				MouseArea{
+					anchors.fill: parent
+					visible: applicationLicenceUrl
+					onClicked: Qt.openUrlExternally(applicationLicenceUrl)
+				}
 			}
 			Text {
 				elide: Text.ElideRight
