@@ -631,19 +631,19 @@
     <message>
         <source>deliveryDelivered</source>
         <extracomment>&apos;Send to %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2 に送信</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been sent but not received.</extra-Context>
     </message>
     <message>
         <source>deliveryDeliveredToUser</source>
         <extracomment>&apos;Retrieved by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2 が受信</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state is that the message has been retrieved</extra-Context>
     </message>
     <message>
         <source>deliveryDisplayed</source>
         <extracomment>&apos;Read by %1 - %2&apos; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 - %2 が既読</translation>
         <extra-Context>%1 is someone, %2 is a date/time. The state that the message has been read.</extra-Context>
     </message>
     <message>
@@ -1399,7 +1399,7 @@
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>最後のリモートプロビジョニングに失敗</translation>
     </message>
     <message>
         <source>generateLabel</source>
@@ -1424,7 +1424,7 @@
     <message>
         <source>scanQRCodeWhere</source>
         <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>アプリの「アシスタント」から「リモート設定を取得する」、「QRコード」を選択してください</translation>
     </message>
 </context>
 <context>
@@ -1450,7 +1450,7 @@
     <message>
         <source>loadFile</source>
         <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>読み込み</translation>
     </message>
 </context>
 <context>
@@ -1578,7 +1578,7 @@
     <message>
         <source>incallRemotePauseWarning</source>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>通話はリモートで一時停止されています。</translation>
     </message>
 </context>
 <context>
@@ -1718,7 +1718,7 @@
     <message>
         <source>callButton</source>
         <extracomment>&apos;CALL&apos; : Button that lead to a call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>通話</translation>
     </message>
     <message>
         <source>okButton</source>
@@ -2244,12 +2244,12 @@
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>一時的なメッセージが有効化されました: %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageDisabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been disabled&apos;: Little message to show on the event when ephemeral has been deactivated.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>一時的なメッセージが無効化されました</translation>
     </message>
     <message>
         <source>conferenceSubjectChangedEvent</source>
@@ -2259,7 +2259,7 @@
     <message>
         <source>conferenceEphemeralMessageLifetimeChangedEvent</source>
         <extracomment>&apos;Ephemeral messages have been updated: %1&apos; : Little message to show on the event when ephemeral has been updated. %1 is a date time</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>一時的なメッセージがアップデートされました: %1</translation>
     </message>
     <message numerus="yes">
         <source>unreadMessageNotice</source>
@@ -2522,17 +2522,17 @@
     <message>
         <source>presenceLastSeenToday</source>
         <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>今日の %1 時までオンラインでした</translation>
     </message>
     <message>
         <source>presenceLastSeenYesterday</source>
         <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>昨日の %1 時までオンラインでした</translation>
     </message>
     <message>
         <source>presenceLastSeen</source>
         <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1 までオンラインでした</translation>
     </message>
     <message>
         <source>presenceAway</source>
@@ -2735,19 +2735,19 @@
     </message>
     <message>
         <source>echoCancellationCalibrationLabel</source>
-        <translation>調整</translation>
+        <translation>キャリブレーション</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationInProgress</source>
-        <translation>…調整中…</translation>
+        <translation>…キャリブレーション中…</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationDone</source>
-        <translation>%1ミリ秒で調整済み</translation>
+        <translation>%1ミリ秒キャリブレーションしました</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationFailed</source>
-        <translation>調整に失敗しました</translation>
+        <translation>キャリブレーションに失敗しました</translation>
     </message>
     <message>
         <source>calibratingEchoCancellationNone</source>
@@ -2868,7 +2868,7 @@
     <message>
         <source>waitRegistrationForCallLabel</source>
         <extracomment>&apos;Call when registered&apos; : Label on switch to choose if calls are make when the current proxy is registered</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>登録時に発信する</translation>
     </message>
     <message>
         <source>chatNotificationsEnabledLabel</source>
@@ -2919,11 +2919,11 @@
     </message>
     <message>
         <source>displayNameTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>リストに表示するサーバーの表示名。</translation>
     </message>
     <message>
         <source>connectionTitle</source>
-        <translation>接続</translation>
+        <translation>接続性</translation>
     </message>
     <message>
         <source>serverLabel</source>
@@ -2964,7 +2964,7 @@
     </message>
     <message>
         <source>verifyTLSLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>TLSで証明書を検証</translation>
     </message>
     <message>
         <source>AutoMode</source>
@@ -3020,7 +3020,7 @@
     </message>
     <message>
         <source>timeoutTooltip</source>
-        <translation type="unfinished">接続と検索のタイムアウトの時間（秒）。積極的である必要があります。&lt;br&gt;デフォルトは5秒です。</translation>
+        <translation>接続と検索のタイムアウトする時間(秒)です。早めである必要があります。&lt;br&gt;デフォルトは5秒です。</translation>
     </message>
     <message>
         <source>parsingTitle</source>
@@ -3249,7 +3249,7 @@
     <message>
         <source>webviewRegistrationUrlLabel</source>
         <extracomment>&apos;Registration URL&apos; : Label for registration URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>登録URL</translation>
     </message>
     <message>
         <source>webviewLoginUrlLabel</source>
@@ -3350,12 +3350,12 @@
     <message>
         <source>conferenceURI</source>
         <extracomment>&quot;Conference URI&quot; : Label of a text edit for filling Conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議URI</translation>
     </message>
     <message>
         <source>invalidConferenceURI</source>
         <extracomment>&quot;invalid conference URI&quot; : Error text about conference URI</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>無効な会議URI</translation>
     </message>
     <message>
         <source>videoConferenceURI</source>
@@ -3365,16 +3365,16 @@
     <message>
         <source>limeServerUrl</source>
         <extracomment>&apos;E2E encryption keys server URL&apos; : Label of a text edit for filling the Lime server URL.</extracomment>
-        <translation>エンドツーエンド暗号鍵サーバーURL</translation>
+        <translation>E2E暗号化キーサーバーURL</translation>
     </message>
     <message>
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
-        <translation>無効なエンドツーエンド暗号鍵サーバーURL</translation>
+        <translation>無効なE2E暗号化キーサーバーURL</translation>
     </message>
     <message>
         <source>publishDurationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>発行期間(秒)</translation>
     </message>
     <message>
         <source>dialPrefix</source>
@@ -3384,7 +3384,7 @@
     <message>
         <source>dialPrefixTooptip</source>
         <extracomment>&quot;The prefix to use when using numbers without the &apos;+&apos;&quot; : tooltip for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>&apos;+&apos;ではなく数字を使用するときのプレフィックス</translation>
     </message>
     <message>
         <source>dialEscapePlus</source>
@@ -3502,17 +3502,17 @@
     <message>
         <source>serverDualHostname</source>
         <extracomment>&apos;Dual hostname URL&apos; : Field title on form to set the second hostname for dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>デュアルホスト名URL</translation>
     </message>
     <message>
         <source>serverDualPort</source>
         <extracomment>&apos;Dual port&apos; : Field title on form to set the second port for the dual configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>デュアルポート</translation>
     </message>
     <message>
         <source>serverRemoteUDPMirrorPort</source>
         <extracomment>&apos;Remote UDP mirror port&apos; : Field title on form to set the remote UDP mirror port.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>リモートUDPミラーポート</translation>
     </message>
     <message>
         <source>serverDelay</source>
@@ -3626,12 +3626,12 @@
     <message>
         <source>minimalTimelineFilterLabel</source>
         <extracomment>&apos;Minimal Timeline filter&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>最小タイムラインフィルター</translation>
     </message>
     <message>
         <source>minimalTimelineFilterTooltip</source>
         <extracomment>&apos;Show a minimal version of what to display in timeline.&apos; :</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>タイムラインに表示する内容の最小版を表示します。</translation>
     </message>
     <message>
         <source>versionCheckTypeRelease</source>
@@ -3742,7 +3742,7 @@
     <message>
         <source>videoBlackBars</source>
         <extracomment>&apos;Black bars&apos; : Camera mode for a fit view with black bars to keep ratio.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>黒帯</translation>
     </message>
     <message>
         <source>videoLayout</source>
@@ -3752,7 +3752,7 @@
     <message>
         <source>videoActiveSpeakerLayout</source>
         <extracomment>&apos;Active speaker&apos; : Active speaker layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>アクティブスピーカー</translation>
     </message>
     <message>
         <source>videoMosaicLayout</source>
@@ -3767,12 +3767,12 @@
     <message>
         <source>videoActiveSpeakerModeLabel</source>
         <extracomment>&apos;Active speaker&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>アクティブスピーカー</translation>
     </message>
     <message>
         <source>videoCallsModeLabel</source>
         <extracomment>&apos;Calls&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>通話</translation>
     </message>
     <message>
         <source>videoModeLabel</source>
@@ -3895,7 +3895,7 @@
     <message>
         <source>timelineFilterEphemerals</source>
         <extracomment>&apos;Ephemerals&apos; : Filter item. Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>一時的</translation>
     </message>
     <message>
         <source>timelineSearchPlaceholderText</source>
@@ -3925,7 +3925,7 @@
     <message>
         <source>timelineFilterNoEphemerals</source>
         <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>一時的を含まない</translation>
     </message>
     <message>
         <source>timelineFilterConferences</source>
@@ -3938,7 +3938,7 @@
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>本当にこのタイムラインを削除して離脱してもよろしいですか？</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
@@ -4043,7 +4043,7 @@
     <message>
         <source>warningFeatures</source>
         <extracomment>&apos;Some features require a %1 account, such as group messaging or ephemeral messaging.&apos; : Warning text about features. %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>グループメッセージや一時的なメッセージなど、いくつかの機能では %1 アカウントが要求されます。</translation>
     </message>
     <message>
         <source>warningThirdParty</source>
@@ -4053,7 +4053,7 @@
     <message>
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>商用プロジェクトで使用可能にする場合は、弊社までお問い合わせください。</translation>
     </message>
 </context>
 <context>
@@ -4086,7 +4086,7 @@
     <message>
         <source>endCallStatus</source>
         <extracomment>&quot;Call ended&quot; : status of the call in waiting room when the call end.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>通話終了</translation>
     </message>
     <message>
         <source>outgoingCallStatus</source>
