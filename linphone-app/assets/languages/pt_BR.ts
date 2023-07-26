@@ -10,7 +10,7 @@
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation>Nos ajude a traduzir %1</translation>
+        <translation>Ajude-nos a traduzir o %1</translation>
     </message>
 </context>
 <context>
@@ -1568,7 +1568,7 @@ URL do servidor não configurado.</translation>
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation>Esta chamada está sendo gravada.</translation>
+        <translation>Essa chamada está sendo gravada.</translation>
     </message>
     <message>
         <source>incallWaitParticipantMessage</source>
@@ -4010,7 +4010,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation>Nome de exibição(opcional)</translation>
+        <translation>Nome de exibição (opcional)</translation>
     </message>
 </context>
 <context>
