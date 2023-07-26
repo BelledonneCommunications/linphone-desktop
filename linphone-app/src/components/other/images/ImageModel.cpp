@@ -121,22 +121,30 @@ QImage ImageModel::createThumbnail(const QString& path, QImage originalImage){
 	return thumbnail;
 }
 
-void ImageModel::retrieveImageAsync(const QString& path, VideoFrameGrabberListener* requester){
+void ImageModel::retrieveImageAsync(QString path, VideoFrameGrabberListener* requester){
 	QImage thumbnail;
 	if(QFileInfo(path).isFile()){
+		bool removeExportedFile = CoreManager::getInstance()->getSettingsModel()->getVfsEncrypted();
+		if(removeExportedFile) {
+			std::shared_ptr<linphone::Content> content = linphone::Factory::get()->createContentFromFile(Utils::appStringToCoreString(path));
+			path = Utils::coreStringToAppString(content->exportPlainFile());
+		}
 		QImage originalImage(path);
 		if( originalImage.isNull()){// Try to determine format from headers
 			QImageReader reader(path);
 			reader.setDecideFormatFromContent(true);
 			QByteArray format = reader.format();
-			if(!format.isEmpty())
+			if(!format.isEmpty()){
 				originalImage = QImage(path, format);
-			else if(Utils::isVideo(path)){
-				VideoFrameGrabber *grabber = new VideoFrameGrabber();
+			}else if(Utils::isVideo(path)){
+				VideoFrameGrabber *grabber = new VideoFrameGrabber(removeExportedFile);
+				removeExportedFile = false;
 				connect(grabber, &VideoFrameGrabber::grabFinished, requester, &VideoFrameGrabberListener::imageGrabbed);
 				grabber->requestFrame(path);
 			}
 		}
+		if(removeExportedFile)
+			QFile(path).remove();
 		if(!originalImage.isNull()){
 			emit requester->imageGrabbed(originalImage);
 		}

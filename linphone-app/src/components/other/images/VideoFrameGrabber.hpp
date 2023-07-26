@@ -38,7 +38,8 @@ signals:
 class VideoFrameGrabber : public QAbstractVideoSurface {
 	Q_OBJECT
 public:
-	VideoFrameGrabber(QObject *parent = 0);
+	VideoFrameGrabber(bool deleteFile = false, QObject *parent = 0);
+	~VideoFrameGrabber();
 	
 	void requestFrame(const QString& path);	// Function to call.
 	
@@ -55,6 +56,7 @@ public:
 	QMediaPlayer player;
 	bool mLoadedMedia = false;
 	bool mResultSent = false;
+	bool mDeleteFile = false;
 	QString mPath;
 	QImage mResult;
 	

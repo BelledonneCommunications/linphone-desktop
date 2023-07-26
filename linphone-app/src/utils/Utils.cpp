@@ -613,7 +613,7 @@ bool Utils::isAnimatedImage(const QString& path){
 bool Utils::isImage(const QString& path){
 	if(path.isEmpty()) return false;
 	QFileInfo info(path);
-	if( !info.exists()){
+	if( !info.exists() || CoreManager::getInstance()->getSettingsModel()->getVfsEncrypted()){
 		return QMimeDatabase().mimeTypeForFile(info, QMimeDatabase::MatchExtension).name().contains("image/");
 	}else if(!QMimeDatabase().mimeTypeForFile(info).name().contains("image/"))
 		return false;

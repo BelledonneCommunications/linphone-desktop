@@ -52,7 +52,7 @@ public:
 	Q_INVOKABLE void setUrl(const QUrl& url);
 	
 	static QImage createThumbnail(const QString& path, QImage originalImage);	// Build the thumbnail from an image.
-	static void retrieveImageAsync(const QString& path, VideoFrameGrabberListener* requester);	// Get an image from the path. When it is ready, the signal imageGrabbed() is send to the listener. It can be direct if this is not a media file.
+	static void retrieveImageAsync(QString path, VideoFrameGrabberListener* requester);	// Get an image from the path. When it is ready, the signal imageGrabbed() is send to the listener. It can be direct if this is not a media file.
 	
 signals:
 	void pathChanged();
