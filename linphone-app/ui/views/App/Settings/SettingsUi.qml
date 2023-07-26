@@ -288,6 +288,22 @@ TabContainer {
 				}
 			}
 			FormLine {
+				FormGroup {
+					//: 'Display only usernames' : Option text to display only usernames from SIP addresses.
+					label: qsTr('displayUsernamesLabel')
+					
+					Switch {
+						checked: SettingsModel.sipDisplayMode === UtilsCpp.SIP_DISPLAY_USERNAME
+						
+						onClicked: SettingsModel.sipDisplayMode = (checked ? UtilsCpp.SIP_DISPLAY_ALL : UtilsCpp.SIP_DISPLAY_USERNAME)
+						TooltipArea{
+						//: 'Display only usernames from SIP addresses' : tooltip for addresses display mode where username is only shown.
+							text: qsTr('displayUsernamesTooltip')
+						}
+					}
+				}
+			}
+			FormLine {
 				maxItemWidth: parent.width
 				visible: SettingsModel.isCheckForUpdateAvailable()
 				FormGroup {

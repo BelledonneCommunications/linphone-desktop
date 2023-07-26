@@ -19,8 +19,7 @@
  */
 
 #include "components/core/CoreManager.hpp"
-#include "components/settings/AccountSettingsModel.hpp"
-#include "components/sip-addresses/SipAddressesModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "components/conference/ConferenceModel.hpp"
 #include "utils/Utils.hpp"
 
@@ -93,7 +92,7 @@ QString ParticipantListModel::addressesToString()const{
 	for(auto item : mList){
 		auto participant = item.objectCast<ParticipantModel>();
 		if( participant->getParticipant())// is Participant. We test it because this participant is not accepted by chat room yet.
-			txt << Utils::toDisplayString(Utils::coreStringToAppString(participant->getParticipant()->getAddress()->asStringUriOnly()));
+			txt << Utils::toDisplayString(Utils::coreStringToAppString(participant->getParticipant()->getAddress()->asStringUriOnly()), CoreManager::getInstance()->getSettingsModel()->getSipDisplayMode());
 	}
 	txt.removeFirst();// Remove me
 	return txt.join(", ");

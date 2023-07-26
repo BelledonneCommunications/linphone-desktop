@@ -52,7 +52,7 @@ RowLayout {
 				maxWidth: mainRow.width
 				isClickable: true
 				onClicked: {
-					window.mainSearchBar.text = UtilsCpp.toDisplayString($chatEntry.fromSipAddress)
+					window.mainSearchBar.text = UtilsCpp.toDisplayString($chatEntry.fromSipAddress, SettingsModel.sipDisplayMode)
 				}
 			}
 		}

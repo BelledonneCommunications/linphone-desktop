@@ -100,7 +100,7 @@ Controls.TextField {
 		}
 		MouseArea{
 			anchors.fill:	parent
-			onClicked: textField.text = ''
+			onClicked: {textField.focus = true ; textField.text = ''}
 		}
 	}
 	bottomPadding: (statusItem.visible?statusItem.implicitHeight:2)

@@ -233,7 +233,7 @@ Rectangle {
 					horizontalAlignment: Qt.AlignHCenter
 					visible: !conferenceModel && callModel && !callModel.isConference && text != title.text
 					text: !conferenceModel && callModel
-								? UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(callModel.peerAddress))
+								? UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(callModel.peerAddress), SettingsModel.sipDisplayMode)
 								: ''
 					color: IncallStyle.title.colorModel.color
 					font.pointSize: IncallStyle.title.addressPointSize

@@ -30,6 +30,7 @@
 #include "components/core/CoreHandlers.hpp"
 #include "components/contacts/ContactsImporterModel.hpp"
 #include "utils/LinphoneEnums.hpp"
+#include "utils/Utils.hpp"
 
 #ifdef ENABLE_QT_KEYCHAIN
 #include "components/vfs/VfsUtils.hpp"
@@ -194,6 +195,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(int dscpVideo READ getDscpVideo WRITE setDscpVideo NOTIFY dscpVideoChanged)
 	
 	Q_PROPERTY(bool rlsUriEnabled READ getRlsUriEnabled WRITE setRlsUriEnabled NOTIFY rlsUriEnabledChanged)
+	Q_PROPERTY(QString rlsUri READ getRlsUri WRITE setRlsUri NOTIFY rlsUriChanged)
 	
 	// UI. -----------------------------------------------------------------------
 	
@@ -220,6 +222,7 @@ class SettingsModel : public QObject {
 	
 	Q_PROPERTY(bool mipmapEnabled READ isMipmapEnabled WRITE setMipmapEnabled NOTIFY mipmapEnabledChanged)
 	Q_PROPERTY(bool useMinimalTimelineFilter READ useMinimalTimelineFilter WRITE setUseMinimalTimelineFilter NOTIFY useMinimalTimelineFilterChanged)
+	Q_PROPERTY(Utils::SipDisplayMode sipDisplayMode READ getSipDisplayMode WRITE setSipDisplayMode NOTIFY sipDisplayModeChanged)
 	
 	// Advanced. -----------------------------------------------------------------
 	
@@ -549,9 +552,9 @@ public:
 	bool getRlsUriEnabled () const;
 	void setRlsUriEnabled (bool status);
 	
-	void configureRlsUri ();
-	void configureRlsUri (const std::string& domain);
-	void configureRlsUri (const std::shared_ptr<const linphone::Account> &account);
+	QString getRlsUri() const;
+	void setRlsUri (const QString& rlsUri);
+	void updateRlsUri();
 	
 	Q_INVOKABLE bool tunnelAvailable() const;
 	Q_INVOKABLE TunnelModel * getTunnel() const;
@@ -611,6 +614,9 @@ public:
 	
 	bool useMinimalTimelineFilter() const;
 	void setUseMinimalTimelineFilter(const bool& useMinimal);
+	
+	Utils::SipDisplayMode getSipDisplayMode() const;
+	void setSipDisplayMode(Utils::SipDisplayMode mode);
 	
 	// Advanced. ---------------------------------------------------------------------------
 	
@@ -809,6 +815,7 @@ signals:
 	void dscpVideoChanged (int dscp);
 	
 	void rlsUriEnabledChanged (bool status);
+	void rlsUriChanged ();
 		
 	// UI. -----------------------------------------------------------------------
 	
@@ -829,6 +836,8 @@ signals:
 	void exitOnCloseChanged (bool value);
 	void mipmapEnabledChanged();
 	void useMinimalTimelineFilterChanged();
+	
+	void sipDisplayModeChanged();
 	
 	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();

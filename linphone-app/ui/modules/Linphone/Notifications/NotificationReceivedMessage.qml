@@ -44,7 +44,7 @@ Notification {
 				property ChatRoomModel chatRoomModel : notification.timelineModel.getChatRoomModel()
 				property var sipObserver: SipAddressesModel.getSipAddressObserver(notification.fullPeerAddress, notification.fullLocalAddress)
 				subtitle: chatRoomModel.isOneToOne
-							? UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(notification.fullPeerAddress))
+							? UtilsCpp.toDisplayString(SipAddressesModel.cleanSipAddress(notification.fullPeerAddress), SettingsModel.sipDisplayMode)
 							: UtilsCpp.getDisplayName(notification.fullPeerAddress) 
 				entry: chatRoomModel ? chatRoomModel : sipObserver
 				Component.onDestruction: sipObserver=null// Need to set it to null because of not calling destructor if not.

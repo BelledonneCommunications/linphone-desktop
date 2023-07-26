@@ -129,16 +129,12 @@ TabContainer {
       FormLine {
         FormGroup {
           label: qsTr('rlsUriLabel')
-
-          ExclusiveButtons {
-            selectedButton: Number(!SettingsModel.rlsUriEnabled)
-            texts: [
-              qsTr('rlsUriAuto'),
-              qsTr('rlsUriDisabled')
-            ]
-
-            onClicked: SettingsModel.rlsUriEnabled = !button
-          }
+          
+           TextField {
+				id: rlsUri
+				text: SettingsModel.rlsUri
+				onEditingFinished: SettingsModel.rlsUri = text
+			}
         }
       }
     }

@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 
 import Common 1.0
 import Common.Styles 1.0
+import Linphone 1.0
 
 import UtilsCpp 1.0
 // =============================================================================
@@ -16,6 +17,7 @@ Controls.ItemDelegate {
 	property var itemIcon
 	
 	default property alias _content: content.data
+	property alias leftActionsLoader: leftActionsLoader
 	
 	hoverEnabled: true
 	background: Rectangle {
@@ -53,7 +55,9 @@ Controls.ItemDelegate {
 			
 			visible: icon.length > 0
 		}
-		
+		Loader{
+			id: leftActionsLoader
+		}
 		Text {
 			Layout.fillWidth: true
 			
@@ -65,7 +69,7 @@ Controls.ItemDelegate {
 				pointSize: CommonItemDelegateStyle.contentItem.text.pointSize
 			}
 			
-			text: UtilsCpp.toDisplayString(item.flattenedModel[container.textRole] || modelData)
+			text: UtilsCpp.toDisplayString(item.flattenedModel[container.textRole] || modelData, SettingsModel.sipDisplayMode)
 		}
 		
 		Item {

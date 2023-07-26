@@ -61,6 +61,7 @@ ScrollableListView {
 			return height
 		}
 		width: parent.width
+		visible: sipAddressesView.genSipAddress
 		
 		// Workaround to handle mouse.
 		// Without it, the mouse can be given to items list when mouse is hover header.
@@ -69,7 +70,6 @@ ScrollableListView {
 		
 		Column {
 			anchors.fill: parent
-			
 			spacing: 0
 			
 			// -----------------------------------------------------------------------

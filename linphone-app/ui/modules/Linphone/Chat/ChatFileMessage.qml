@@ -38,7 +38,7 @@ Item {
 			id: fileView
 			anchors.fill: parent
 			contentModel: mainRow.contentModel
-			thumbnail: mainRow.contentModel.thumbnail
+			thumbnail: mainRow.contentModel ? mainRow.contentModel.thumbnail : ''
 			name: mainRow.contentModel && mainRow.contentModel.name
 			filePath: mainRow.contentModel && mainRow.contentModel.filePath
 			isTransferring: mainRow.chatMessageModel && (mainRow.chatMessageModel.state == LinphoneEnums.ChatMessageStateFileTransferInProgress || mainRow.chatMessageModel.state == LinphoneEnums.ChatMessageStateInProgress )
