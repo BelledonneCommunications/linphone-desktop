@@ -401,7 +401,7 @@
     <message>
         <source>callStatsCipherAlgo</source>
         <extracomment>&apos;Cipher algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo Cipher</translation>
     </message>
     <message>
         <source>callStatsKeyAgreementAlgo</source>
@@ -812,11 +812,11 @@ URL del server non configurato.</translation>
     </message>
     <message>
         <source>acceptFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Accetta l&apos;attuale chiamata.</translation>
     </message>
     <message>
         <source>declineFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Rifiuta l&apos;attuale chiamata.</translation>
     </message>
 </context>
 <context>
@@ -850,7 +850,7 @@ URL del server non configurato.</translation>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation>CONFERENZA</translation>
+        <translation>MEETING</translation>
     </message>
 </context>
 <context>
