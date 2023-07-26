@@ -67,7 +67,8 @@ Rectangle {
 			
 // Load optimizations
 			property int remainingLoadersCount: 0
-			property int syncLoaderBatch: 20	// batch of simultaneous loaders on synchronous mode
+			property int visibleItemsEstimation: chat.height / (2 * textMetrics.height)	// Title + body
+			property int syncLoaderBatch: visibleItemsEstimation	// batch of simultaneous loaders on synchronous mode
 //------------------------------------
 
 			signal refreshContents()
@@ -93,6 +94,11 @@ Rectangle {
 				running: false
 				onTriggered: chat.refreshContents()
 			}
+			TextMetrics{
+				id: textMetrics
+				font: SettingsModel.textMessageFont
+				text: "X"
+			}
 			
 			Layout.fillHeight: true
 			Layout.fillWidth: true
@@ -110,6 +116,9 @@ Rectangle {
 			Component.onCompleted: {
 					Logic.initView()
 					refreshContentsTimer.start()
+					console.debug("Chat loading with "+chat.visibleItemsEstimation+" visible items. "+chat.count)
+					if(chat.visibleItemsEstimation >= chat.count)
+						Qt.callLater(container.proxyModel.loadMoreEntriesAsync)
 			}
 			onMovementStarted: {Logic.handleMovementStarted(); chat.isMoving = true}
 			onMovementEnded: {Logic.handleMovementEnded(); chat.isMoving = false}
@@ -235,7 +244,8 @@ Rectangle {
 							Layout.fillWidth: true
 							source: Logic.getComponentFromEntry(entry.chatEntry)
 							z:1
-							asynchronous: index != chat.count - 1
+							
+							asynchronous: index < chat.count - 1 - chat.visibleItemsEstimation
 							property int loaderIndex: 0
 							function updateSync(){
 								if( asynchronous && loaderIndex > 0 && chat.remainingLoadersCount - loaderIndex - chat.syncLoaderBatch <= 0 ) asynchronous = false// Sync load the end
