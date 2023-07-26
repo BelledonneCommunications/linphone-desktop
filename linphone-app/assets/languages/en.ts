@@ -548,6 +548,11 @@ Server URL not configured.</translation>
         <source>conferencesCopiedICS</source>
         <translation>The invitation has been copied</translation>
     </message>
+    <message>
+        <source>confirmForward</source>
+        <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
+        <translation>Do you want to forward this message?</translation>
+    </message>
 </context>
 <context>
     <name>ChatCalendarMessage</name>
@@ -996,7 +1001,7 @@ Server URL not configured.</translation>
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>USERNAMES(S)</translation>
     </message>
 </context>
 <context>

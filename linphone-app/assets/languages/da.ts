@@ -548,6 +548,11 @@ Server url ikke konfigureret.</translation>
         <source>conferencesCopiedICS</source>
         <translation>Samtales ICS er kopieret</translation>
     </message>
+    <message>
+        <source>confirmForward</source>
+        <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ChatCalendarMessage</name>

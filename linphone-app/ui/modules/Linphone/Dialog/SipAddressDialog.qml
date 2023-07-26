@@ -55,19 +55,18 @@ DialogPlus {
 					secure: 0,
 					visible: true,
 					secureIconVisibleHandler : function(entry) {
-						return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh)
+						return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh, true)
 					},
 					handler: function (entry) {
 						console.debug("Call selected: " +entry + "/"+entry.sipAddress)
-						mainItem.addressSelectedCallback(entry.sipAddress)
-						exit(1)
+						smartSearchBar.entryClicked(entry)
 					},
 				}]
 			
 			onEntryClicked: {
-					console.debug("Call selected: " +entry + "/"+entry.sipAddress)
+					console.debug("Call selected from button: " +entry + "/"+entry.sipAddress)
 					mainItem.addressSelectedCallback(entry.sipAddress)
-					exit(1)
+					mainItem.exit(1)
 			}
 		}
 		 Text {
@@ -90,7 +89,19 @@ DialogPlus {
 			Timeline {
 				id: timeline
 				showHistoryButton: false
+				optionsTogglable: false
 				anchors.fill: parent
+				actions:[
+					{
+						colorSet: SipAddressDialogStyle.select,
+						visible: true,
+						handler: function (entry) {
+							if( entry) {
+								entry.selected = true
+							}
+						}
+					}
+				]
 				model: TimelineProxyModel{
 					listSource: TimelineProxyModel.Copy
 				}

@@ -17,8 +17,10 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 Rectangle {
 	id: mainItem
 	property TimelineModel timelineModel
+	property bool optionsTogglable: true	// Right click => display/hide options
 	property bool optionsToggled: false
 	property int modelIndex: 0
+	property var actions: []
 	
 	height: TimelineStyle.contact.height
 	width: parent ? parent.width : 0
@@ -99,7 +101,7 @@ Rectangle {
 				onClicked: {
 					if(mouse.button == Qt.LeftButton){
 						mainItem.timelineModel.selected = true
-					}else{
+					}else if(mainItem.optionsTogglable){
 						mainItem.optionsToggled = !mainItem.optionsToggled
 					}
 				}
@@ -151,6 +153,33 @@ Rectangle {
 			}
 		}
 	}
+	RowLayout{
+		anchors.fill: parent
+		anchors.rightMargin: 5
+		visible: mainItem.actions.length > 0
+		Item{// Spacer
+			Layout.fillHeight: true
+			Layout.fillWidth: true
+		}
+		Repeater {
+			model: mainItem.actions
+			
+			ActionButton {
+				isCustom: true
+				backgroundRadius: 90
+				colorSet: modelData.colorSet
+				
+				visible: modelData.visible
+				
+				onClicked: {
+					mainItem.actions[index].handler(	// Do not use modelData on functions
+						mainItem.timelineModel
+					)
+				}
+				
+			}
+		}
+	}
 	Item{
 		id: optionsView
 		
@@ -165,9 +194,11 @@ Rectangle {
 				Layout.fillHeight: true
 				Layout.fillWidth: true
 				onClicked: {
-					mainItem.optionsToggled = !mainItem.optionsToggled
+					if(mainItem.optionsTogglable)
+						mainItem.optionsToggled = !mainItem.optionsToggled
 				}
 			}
+			
 			Rectangle{
 				Layout.fillHeight: true
 				Layout.preferredWidth: optionsLayout.width

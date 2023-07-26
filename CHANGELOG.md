@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Bubble chat layout.
 - Camera stickers and conference layout stabilization.
 - Robot voice with some devices (SDK fix).
+- Crash after adding an account (SDK fix).
 - Smart search bar behavior on empty text and focus changing.
 
 ### Added
@@ -36,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display video thumbnails.
 - Crop thumbnail and pictures if distored.
 - Enable registration from accounts list.
-- Update SDK to 5.2.90
+- Update SDK to 5.2.92
 
 ### Removed
 - Picture zoom on mouse over.

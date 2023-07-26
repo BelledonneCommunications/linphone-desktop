@@ -25,7 +25,8 @@ Rectangle {
 	property bool showHistoryButton : CoreManager.callLogsCount
 	property bool isFilterVisible: searchView.visible || showFilterView
 	property bool showFiltersButtons: view.count > 0 || timeline.isFilterVisible || timeline.model.filterFlags > 0
-	
+	property bool optionsTogglable: true
+	property var actions: []
 	// ---------------------------------------------------------------------------
 	
 	signal entrySelected (TimelineModel entry)
@@ -363,7 +364,8 @@ Rectangle {
 			delegate: TimelineItem{
 				timelineModel: $modelData
 				modelIndex: index
-				
+				optionsTogglable: timeline.optionsTogglable
+				actions: timeline.actions
 				Connections{
 					target: $modelData
 					onSelectedChanged:{

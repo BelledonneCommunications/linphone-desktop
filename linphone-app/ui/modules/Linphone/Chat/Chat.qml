@@ -288,18 +288,12 @@ Rectangle {
 									//: 'Choose where to forward the message' : Dialog title for choosing where to forward the current message.
 									, {title: qsTr('forwardDialogTitle'),
 										addressSelectedCallback: function (sipAddress) {
-																	var chat = CallsListModel.createChatRoom( '', proxyModel.chatRoomModel.haveEncryption, [sipAddress], false )
-																	if(chat){
-																		chat.chatRoomModel.forwardMessage(entry.chatEntry)
-																		TimelineListModel.select(chat.chatRoomModel)
-																	}
+																	Logic.forwardMessage(undefined, entry.chatEntry, {subject:'', haveEncryption: proxyModel.chatRoomModel.haveEncryption, participants: [sipAddress], toSelect: false} )
 																},
 										chatRoomSelectedCallback: function (chatRoomModel){
-																	if(chatRoomModel){
-																		chatRoomModel.forwardMessage(entry.chatEntry)
-																		TimelineListModel.select(chatRoomModel)
-																	}
-									}
+																	if(chatRoomModel)
+																		Logic.forwardMessage(chatRoomModel, entry.chatEntry)
+										}
 								})
 							}
 							
