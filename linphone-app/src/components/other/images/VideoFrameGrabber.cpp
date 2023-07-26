@@ -21,12 +21,14 @@
 #include "VideoFrameGrabber.hpp"
 
 #include <QVideoSurfaceFormat>
+#include <QFile>
 
 VideoFrameGrabberListener::VideoFrameGrabberListener(){
 }
 
-VideoFrameGrabber::VideoFrameGrabber( QObject *parent)
+VideoFrameGrabber::VideoFrameGrabber(bool deleteFile, QObject *parent)
 	: QAbstractVideoSurface(parent){
+	mDeleteFile = deleteFile;
 	QObject::connect(&player, QOverload<QMediaPlayer::Error>::of(&QMediaPlayer::error), this, [this](QMediaPlayer::Error error) mutable{
 		end();
 	}, Qt::DirectConnection);
@@ -59,6 +61,10 @@ VideoFrameGrabber::VideoFrameGrabber( QObject *parent)
 	player.setVideoOutput(this);
 }
 
+VideoFrameGrabber::~VideoFrameGrabber(){
+	if(mDeleteFile)
+		QFile(mPath).remove();
+}
 
 void VideoFrameGrabber::requestFrame(const QString& path){
 	mLoadedMedia = false;
