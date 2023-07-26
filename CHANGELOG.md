@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Create thumbnails into memory instead of disk.
 - Display video thumbnails.
 - Crop thumbnail and pictures if distored.
-- Update SDK to 5.2.66
+- Update SDK to 5.2.72
 
 ### Removed
 - Picture zoom on mouse over.
