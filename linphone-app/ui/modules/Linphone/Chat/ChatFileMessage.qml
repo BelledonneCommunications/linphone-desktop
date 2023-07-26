@@ -42,6 +42,7 @@ Item {
 			name: mainRow.contentModel && mainRow.contentModel.name
 			filePath: mainRow.contentModel && mainRow.contentModel.filePath
 			isTransferring: mainRow.chatMessageModel && (mainRow.chatMessageModel.state == LinphoneEnums.ChatMessageStateFileTransferInProgress || mainRow.chatMessageModel.state == LinphoneEnums.ChatMessageStateInProgress )
+			isOutgoing: mainRow.chatMessageModel && mainRow.chatMessageModel.isOutgoing
 		}
 	}
 }

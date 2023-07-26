@@ -212,5 +212,5 @@ bool ParticipantProxyModel::lessThan (const QModelIndex &left, const QModelIndex
 	const ParticipantModel* a = sourceModel()->data(left).value<ParticipantModel*>();
 	const ParticipantModel* b = sourceModel()->data(right).value<ParticipantModel*>();
 	
-	return a->getCreationTime() > b->getCreationTime();
+	return a->getCreationTime() > b->getCreationTime() || b->isMe();
 }

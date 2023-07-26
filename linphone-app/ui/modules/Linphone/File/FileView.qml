@@ -34,6 +34,7 @@ Item {
 	
 	property bool isTransferring
 	property bool isHovering: thumbnailProvider.state == 'hovered'
+	property bool isOutgoing: false
 	
 	signal clickOnFile()
 	

@@ -86,7 +86,17 @@ shared_ptr<linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
 	return account ? account->getParams()->getIdentityAddress()->clone() : core->createPrimaryContactParsed();
 }
 
-void AccountSettingsModel::setUsedSipAddress (const shared_ptr<linphone::Address> &address) {
+ std::shared_ptr<linphone::Account> AccountSettingsModel::findAccount(shared_ptr<const linphone::Address> address) const {
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	list<shared_ptr<linphone::Account>> accounts = CoreManager::getInstance()->getAccountList();
+	for(auto account : accounts){
+		if(account->getContactAddress()->weakEqual(address))
+			return account;
+	}
+	return nullptr;
+}
+
+void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Account> account = core->getDefaultAccount();
 	if( account){

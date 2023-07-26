@@ -50,6 +50,8 @@ ParticipantDeviceModel::ParticipantDeviceModel (CallModel * callModel, std::shar
 	if(mCall)
 		connect(mCall, &CallModel::statusChanged, this, &ParticipantDeviceModel::onCallStatusChanged);
 	mIsVideoEnabled = false;
+	if(mCall && mParticipantDevice)
+		updateIsLocal();
 	updateVideoEnabled();
 }
 
@@ -132,6 +134,13 @@ void ParticipantDeviceModel::setIsSpeaking(bool speaking){
 	}
 }
 
+void ParticipantDeviceModel::setIsLocal(bool local){
+	if(mIsLocal != local){
+		mIsLocal = local;
+		emit isLocalChanged();
+	}
+}
+
 void ParticipantDeviceModel::setState(LinphoneEnums::ParticipantDeviceState state){
 	auto newState = LinphoneEnums::toLinphone(state);
 	if(mState != newState){
@@ -145,9 +154,9 @@ void ParticipantDeviceModel::updateVideoEnabled(){
 		(	mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendRecv
 			|| mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendOnly
 		)
-	 || isMe()) && !mIsPaused;
+	 || (isMe() && isLocal())) && !mIsPaused;
 	 if( mIsVideoEnabled != enabled && mCall && mCall->getCall()->getState() ==  linphone::Call::State::StreamsRunning) {
-		qDebug() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str() : "") << ", me=" << isMe() << ", CallState=" << (mCall ? (int)mCall->getCall()->getState() : -1);
+		qDebug() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str() : "") << ", me=" << isMe() << ", isLocal=" << isLocal() << ", CallState=" << (mCall ? (int)mCall->getCall()->getState() : -1);
 		mIsVideoEnabled = enabled;
 		emit videoEnabledChanged();
 	}
@@ -155,6 +164,17 @@ void ParticipantDeviceModel::updateVideoEnabled(){
 
 bool ParticipantDeviceModel::isMe() const{
 	return mIsMe;
+}
+
+bool ParticipantDeviceModel::isLocal()const{
+	return mIsLocal;
+}
+
+void ParticipantDeviceModel::updateIsLocal(){
+	auto deviceAddress = mParticipantDevice->getAddress();
+	auto callAddress = mCall->getConferenceSharedModel()->getConference()->getMe()->getAddress();
+	auto gruuAddress = CoreManager::getInstance()->getAccountSettingsModel()->findAccount(callAddress)->getContactAddress();
+	setIsLocal(deviceAddress->equal(gruuAddress));
 }
 
 void ParticipantDeviceModel::onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device){

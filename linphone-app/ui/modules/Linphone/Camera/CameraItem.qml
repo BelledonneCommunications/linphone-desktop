@@ -20,19 +20,19 @@ Item {
 	property CallModel callModel
 	property SoundPlayer linphonePlayer
 	property string qmlName
-	property bool isPreview: (!callModel && !container.currentDevice) || ( container.currentDevice && container.currentDevice.isMe)
+	property bool isPreview: (!callModel && !container.currentDevice) || ( container.currentDevice && container.currentDevice.isMe && container.currentDevice.isLocal)
 	property bool isFullscreen: false
 	property bool hideCamera: false
 	property bool isPaused: false
 	property bool deactivateCamera: true
 	property bool isVideoEnabled: !deactivateCamera && (!callModel || callModel.videoEnabled)
 									&& (!container.currentDevice || ( callModel && container.currentDevice &&
-																		( (!container.currentDevice.isMe && container.currentDevice.videoEnabled)
-																			|| (container.currentDevice.isMe && callModel.cameraEnabled))))
+																		( (! (container.currentDevice.isMe && container.currentDevice.isLocal) && container.currentDevice.videoEnabled)
+																			|| (container.currentDevice.isMe && container.currentDevice.isLocal && callModel.cameraEnabled))))
 
 	property bool a : callModel && callModel.videoEnabled
 	property bool b: container.currentDevice && container.currentDevice.videoEnabled
-	property bool c: container.currentDevice && container.currentDevice.isMe
+	property bool c: container.currentDevice && container.currentDevice.isMe && container.currentDevice.isLocal
 	property bool d : callModel && callModel.cameraEnabled
 	property bool isReady: cameraLoader.item && cameraLoader.item.isReady
 	
