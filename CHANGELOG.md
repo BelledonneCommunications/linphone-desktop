@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display video thumbnails.
 - Crop thumbnail and pictures if distored.
 - Enable registration from accounts list.
-- Update SDK to 5.2.89
+- Update SDK to 5.2.90
 
 ### Removed
 - Picture zoom on mouse over.
