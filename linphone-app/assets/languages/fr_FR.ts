@@ -551,7 +551,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>confirmForward</source>
         <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Souhaitez-vous transférer ce message ?</translation>
     </message>
 </context>
 <context>
@@ -1001,7 +1001,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nom(s) d&apos;utilisateur</translation>
     </message>
 </context>
 <context>
@@ -1755,7 +1755,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>dontAskAgain</source>
         <extracomment>&quot;Don&apos;t ask again&quot; : Checkbox text to avoid showing the popup information on encryptions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ne plus demander</translation>
     </message>
 </context>
 <context>
@@ -3679,12 +3679,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>magicSearchMaxResultsLabel</source>
         <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de résultat maximal pour une recherche</translation>
     </message>
     <message>
         <source>restoreAskingPopups</source>
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Restaurer les popups de confirmation</translation>
     </message>
 </context>
 <context>
