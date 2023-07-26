@@ -1001,7 +1001,7 @@ Server URL not configured.</translation>
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
-        <translation>USERNAMES(S)</translation>
+        <translation>USERNAME(S)</translation>
     </message>
 </context>
 <context>
