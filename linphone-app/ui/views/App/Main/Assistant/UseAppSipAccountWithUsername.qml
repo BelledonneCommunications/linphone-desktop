@@ -17,7 +17,8 @@ Form {
 			label: qsTr('displayNameLabel')
 			
 			TextField {
-				onTextChanged: assistantModel.displayName = text
+				text: assistantModel.displayName
+				onTextChanged: if( assistantModel.displayName != text) assistantModel.displayName = text
 			}
 		}
 	}
@@ -28,8 +29,8 @@ Form {
 			
 			TextField {
 				id: username
-				
-				onTextChanged: assistantModel.username = text
+				text: assistantModel.username
+				onTextChanged: if( assistantModel.username != text) assistantModel.username = text
 			}
 		}
 	}

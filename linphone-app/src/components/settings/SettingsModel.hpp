@@ -223,6 +223,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool mipmapEnabled READ isMipmapEnabled WRITE setMipmapEnabled NOTIFY mipmapEnabledChanged)
 	Q_PROPERTY(bool useMinimalTimelineFilter READ useMinimalTimelineFilter WRITE setUseMinimalTimelineFilter NOTIFY useMinimalTimelineFilterChanged)
 	Q_PROPERTY(Utils::SipDisplayMode sipDisplayMode READ getSipDisplayMode WRITE setSipDisplayMode NOTIFY sipDisplayModeChanged)
+	Q_PROPERTY(int magicSearchMaxResults READ getMagicSearchMaxResults WRITE setMagicSearchMaxResults NOTIFY magicSearchMaxResultsChanged)
 	
 	// Advanced. -----------------------------------------------------------------
 	
@@ -618,6 +619,9 @@ public:
 	Utils::SipDisplayMode getSipDisplayMode() const;
 	void setSipDisplayMode(Utils::SipDisplayMode mode);
 	
+	int getMagicSearchMaxResults() const;
+	void setMagicSearchMaxResults(int maxResults);
+	
 	// Advanced. ---------------------------------------------------------------------------
 	
 	
@@ -842,6 +846,8 @@ signals:
 	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();
 	void versionCheckTypeChanged();
+	
+	void magicSearchMaxResultsChanged();
 	
 	// Advanced. -----------------------------------------------------------------
 	

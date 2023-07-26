@@ -15,7 +15,8 @@ Form {
 			label: qsTr('displayNameLabel')
 			
 			TextField {
-				onTextChanged: assistantModel.displayName = text
+				text: assistantModel.displayName
+				onTextChanged: if( assistantModel.displayName != text) assistantModel.displayName = text
 			}
 		}
 	}
@@ -50,8 +51,8 @@ Form {
 				id: phoneNumber
 				
 				inputMethodHints: Qt.ImhDialableCharactersOnly
-				
-				onTextChanged: assistantModel.phoneNumber = text
+				text: assistantModel.phoneNumber
+				onTextChanged: if( assistantModel.phoneNumber != text) assistantModel.phoneNumber = text
 			}
 		}
 	}

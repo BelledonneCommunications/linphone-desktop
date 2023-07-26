@@ -1703,6 +1703,17 @@ void SettingsModel::setSipDisplayMode(Utils::SipDisplayMode mode){
 	}
 }
 
+int SettingsModel::getMagicSearchMaxResults() const {
+	return mConfig->getInt(UiSection, "magic_search_max_results", 30);
+}
+
+void SettingsModel::setMagicSearchMaxResults(int maxResults) {
+	if(getMagicSearchMaxResults() != maxResults){
+		mConfig->setInt(UiSection, "magic_search_max_results", maxResults);
+		emit magicSearchMaxResultsChanged();
+	}
+}
+
 // =============================================================================
 // Advanced.
 // =============================================================================
