@@ -90,7 +90,7 @@ shared_ptr<const linphone::Address> AccountSettingsModel::getUsedSipAddress () c
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	list<shared_ptr<linphone::Account>> accounts = CoreManager::getInstance()->getAccountList();
 	for(auto account : accounts){
-		if(account->getContactAddress()->weakEqual(address))
+		if(account && account->getContactAddress() && account->getContactAddress()->weakEqual(address))
 			return account;
 	}
 	return nullptr;
