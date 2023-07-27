@@ -515,43 +515,44 @@
     <message>
         <source>allTextCopied</source>
         <extracomment>&quot;Copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zkopírováno do schránky</translation>
     </message>
     <message>
         <source>selectedTextCopied</source>
         <extracomment>&quot;Selection copied to clipboard&quot; : when a user copy a text from the menu, this message show up.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Výběr zkopírován do schránky</translation>
     </message>
     <message>
         <source>forwardDialogTitle</source>
         <extracomment>&apos;Choose where to forward the message&apos; : Dialog title for choosing where to forward the current message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zvolte, kam chcete zprávu přeposlat</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation type="unfinished"></translation>
+        <translation>Pozvánka byla zkopírována</translation>
     </message>
     <message numerus="yes">
         <source>chatTyping</source>
         <extracomment>&apos;%1 is typing...&apos; indicate that someone is composing in chat</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 píše…</numerusform>
+            <numerusform>%1 píšou…</numerusform>
+            <numerusform>%1 píše…</numerusform>
         </translation>
     </message>
     <message>
         <source>noFileTransferUrl</source>
-        <translation type="unfinished"></translation>
+        <translation>Soubor nelze odeslat .
+Adresa URL není nakonfigurována.</translation>
     </message>
     <message>
         <source>newMessagePlaceholder</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadejte svoji zprávu</translation>
     </message>
     <message>
         <source>confirmForward</source>
         <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chcete tuto zprávu přeposlat?</translation>
     </message>
 </context>
 <context>
@@ -944,7 +945,7 @@
     </message>
     <message>
         <source>avatarChooserTitle</source>
-        <translation>Vybrat karikaturu</translation>
+        <translation>Vybrat avatara</translation>
     </message>
     <message>
         <source>companies</source>
@@ -1006,7 +1007,7 @@
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>UŽIVATEL(Ů)</translation>
     </message>
 </context>
 <context>
@@ -1131,22 +1132,22 @@
     <message>
         <source>groupCallConfirmTitle</source>
         <extracomment>&apos;Group call&apos; : Title for a group call confirmation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Skupinový hovor</translation>
     </message>
     <message>
         <source>groupCallConfirmDescription</source>
         <extracomment>&apos;Do you want to start a group call?&lt;br/&gt;Everyone in this group will receive a call to join the meeting.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Opravdu chcete spustit skupinový hovor?&lt;br/&gt;Všichni členové této skupiny obdrží výzvu, aby se připojili ke schůzce.</translation>
     </message>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Start button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Start</translation>
     </message>
 </context>
 <context>
@@ -1764,7 +1765,7 @@
     <message>
         <source>dontAskAgain</source>
         <extracomment>&quot;Don&apos;t ask again&quot; : Checkbox text to avoid showing the popup information on encryptions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Znovu se neptat</translation>
     </message>
 </context>
 <context>
@@ -1902,7 +1903,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>localContactsEntry</source>
         <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Místní kontakty</translation>
     </message>
 </context>
 <context>
@@ -3705,22 +3706,22 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>displayUsernamesLabel</source>
         <extracomment>&apos;Display only usernames&apos; : Option text to display only usernames from SIP addresses.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit pouze uživatele</translation>
     </message>
     <message>
         <source>displayUsernamesTooltip</source>
         <extracomment>&apos;Display only usernames from SIP addresses&apos; : tooltip for addresses display mode where username is only shown.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazit pouze uživatele se SIP účtem</translation>
     </message>
     <message>
         <source>magicSearchMaxResultsLabel</source>
         <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Maximální výsledky vyhledávání</translation>
     </message>
     <message>
         <source>restoreAskingPopups</source>
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Obnovení vyskakovacích oken</translation>
     </message>
 </context>
 <context>
