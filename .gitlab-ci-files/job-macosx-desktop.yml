@@ -24,7 +24,7 @@
 
 .job-macosx-desktop:
   stage: build
-  tags: [ "macmini-m1-xcode13" ]
+  tags: [ "macmini-m1-bis-xcode13" ]
   script:
     - *build_all_script
   variables:
@@ -92,7 +92,7 @@ job-macosx-ninja-novideo:
 # WAIT for QT6 for arm64
 job-macosx-makefile-package:
   stage: package
-  tags: [ "macmini-m1-xcode13" ]
+  tags: [ "macmini-m1-bis-xcode13" ]
   dependencies: []
   only:
      variables:
@@ -115,7 +115,7 @@ job-macosx-makefile-package:
 
 job-macosx-codesigning:
   stage: signing
-  tags: [ "macmini-m1-xcode13" ]
+  tags: [ "macmini-m1-bis-xcode13" ]
   needs:
     - job-macosx-makefile-package
   only:
@@ -140,7 +140,7 @@ job-macosx-codesigning:
 
 job-macosx-makefile-deploy:
   stage: deploy
-  tags: [ "macmini-m1-xcode13" ]
+  tags: [ "macmini-m1-bis-xcode13" ]
   needs:
     - job-macosx-codesigning
   only:
@@ -158,7 +158,7 @@ job-macosx-makefile-deploy:
 
 job-macosx-makefile-plugins-deploy:
   stage: deploy
-  tags: [ "macmini-m1-xcode13" ]
+  tags: [ "macmini-m1-bis-xcode13" ]
   needs:
     - job-macosx-makefile
   only:
