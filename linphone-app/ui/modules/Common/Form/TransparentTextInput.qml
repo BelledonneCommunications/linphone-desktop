@@ -40,7 +40,7 @@ Item {
 				 'transparent'
 		height: parent.height
 		width: {
-			var width = textInput.contentWidth + parent.padding * 2
+			var width = Math.max(textInput.contentWidth, placeholder.contentWidth) + parent.padding * 2
 			return width < parent.width ? width : parent.width
 		}
 		

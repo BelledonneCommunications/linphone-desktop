@@ -625,7 +625,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS title for a cancelled invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Das Treffen wurde storniert</translation>
     </message>
 </context>
 <context>
@@ -1001,6 +1001,11 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>displayName</source>
+        <extracomment>&apos;Display Name&apos; : placeholder for setting display name on a contact</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>

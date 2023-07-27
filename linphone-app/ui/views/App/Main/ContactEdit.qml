@@ -133,6 +133,8 @@ ColumnLayout  {
 				forceFocus: true
 				readOnly: !_edition
 				text: avatar.username
+				//: 'Display Name' : placeholder for setting display name on a contact
+				placeholder: qsTr('displayName')
 				font.family: SettingsModel.textMessageFont.family
 				
 				onEditingFinished: Logic.setUsername(text)

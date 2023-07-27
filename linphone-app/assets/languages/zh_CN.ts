@@ -997,6 +997,11 @@
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>displayName</source>
+        <extracomment>&apos;Display Name&apos; : placeholder for setting display name on a contact</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Contacts</name>

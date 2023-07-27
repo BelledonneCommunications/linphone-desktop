@@ -70,7 +70,7 @@ Item {
 			Text {
 				id:username
 				Layout.fillWidth: true
-				Layout.preferredHeight: accountStatus.noAccountConfigured ? -1 : parent.height / 2
+				Layout.preferredHeight: accountStatus.noAccountConfigured ? -1 : subtitle.visible ? parent.height / 2 : parent.height
 				Layout.alignment: !subtitle.visible ?  Qt.AlignVCenter | Qt.AlignLeft : Qt.AlignBottom | Qt.AlignLeft
 				color: AccountStatusStyle.username.colorModel.color
 				elide: Text.ElideRight
@@ -78,7 +78,7 @@ Item {
 				font.pointSize: AccountStatusStyle.username.pointSize
 				//: 'No account configured' : Status text when there is no configured account.
 				text: accountStatus.noAccountConfigured  ? qsTr('noAccount'): AccountSettingsModel.username
-				verticalAlignment: Text.AlignBottom
+				verticalAlignment: subtitle.visible ? Text.AlignBottom : Text.AlignVCenter
 				wrapMode: Text.WordWrap
 				maximumLineCount: 3
 			}
@@ -106,7 +106,7 @@ Item {
 		
 		Text {
 			id: subtitle
-			Layout.preferredHeight:parent.height / 2
+			Layout.preferredHeight: visible ? parent.height / 2 : 0
 			Layout.preferredWidth:parent.width
 			visible: !accountStatus.noAccountConfigured && text != username.text
 			color: AccountStatusStyle.sipAddress.colorModel.color
