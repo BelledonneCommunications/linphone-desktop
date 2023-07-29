@@ -28,7 +28,7 @@ MenuBar {
 		}
 		
 		MenuItem {
-			visible: SettingsModel.callRecorderEnabled
+			visible: CoreManager.initialized && SettingsModel.callRecorderEnabled
 			//: 'Recordings' : Label for the recordings menu.
 			text: qsTr('recordings')
 			role: MenuItem.ApplicationSpecificRole
