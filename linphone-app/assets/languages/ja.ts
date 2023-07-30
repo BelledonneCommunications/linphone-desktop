@@ -550,7 +550,7 @@
     <message>
         <source>confirmForward</source>
         <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>このメッセージを転送しますか？</translation>
     </message>
 </context>
 <context>
@@ -995,7 +995,7 @@
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>displayName</source>
@@ -1085,7 +1085,7 @@
     <message>
         <source>groupChatCallButton</source>
         <extracomment>&quot;Call all chat room&apos;s participants&quot; : tooltip on a button for calling all participant in the current chat room</extracomment>
-        <translation type="unfinished">チャットルームの参加者全員を呼び出す</translation>
+        <translation>チャットルームの参加者全員を呼び出す</translation>
     </message>
     <message>
         <source>searchMessagesPlaceholder</source>
@@ -1125,22 +1125,22 @@
     <message>
         <source>groupCallConfirmTitle</source>
         <extracomment>&apos;Group call&apos; : Title for a group call confirmation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>グループ通話</translation>
     </message>
     <message>
         <source>groupCallConfirmDescription</source>
         <extracomment>&apos;Do you want to start a group call?&lt;br/&gt;Everyone in this group will receive a call to join the meeting.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>グループ通話を開始しますか？&lt;br/&gt;このグループの全員に、ミーティング参加の連絡が入ります。</translation>
     </message>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Start button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>開始</translation>
     </message>
 </context>
 <context>
@@ -1174,7 +1174,7 @@
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>ユーザ名</translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>emailLabel</source>
@@ -1217,7 +1217,7 @@
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>ユーザ名</translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
@@ -1242,7 +1242,7 @@
     <message>
         <source>dateTimeDialogTime</source>
         <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
-        <translation type="unfinished">時刻を選択</translation>
+        <translation>時刻を選択</translation>
     </message>
     <message>
         <source>dateTimeDialogDateTime</source>
@@ -1750,7 +1750,7 @@
     <message>
         <source>dontAskAgain</source>
         <extracomment>&quot;Don&apos;t ask again&quot; : Checkbox text to avoid showing the popup information on encryptions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>再度表示しない</translation>
     </message>
 </context>
 <context>
@@ -1888,7 +1888,7 @@
     <message>
         <source>localContactsEntry</source>
         <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ローカルの連絡先</translation>
     </message>
 </context>
 <context>
@@ -1938,7 +1938,7 @@
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished">録音</translation>
+        <translation>録音</translation>
     </message>
 </context>
 <context>
@@ -2048,7 +2048,7 @@
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">件名を入力</translation>
+        <translation>件名を入力</translation>
     </message>
     <message>
         <source>LastContactsTitle</source>
@@ -2093,7 +2093,7 @@
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">件名を入力</translation>
+        <translation>件名を入力</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
@@ -2214,7 +2214,7 @@
     <message>
         <source>conferenceCreatedEvent</source>
         <extracomment>&apos;You have joined the group&apos; : Little message to show on the event when the user join the chat group.</extracomment>
-        <translation type="unfinished">グループに参加しました</translation>
+        <translation>グループに参加しました</translation>
     </message>
     <message>
         <source>conferenceCreatedTerminated</source>
@@ -2292,12 +2292,12 @@
     <message>
         <source>newConferenceInvitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
-        <translation type="unfinished">会議の招待状が届きました！</translation>
+        <translation>会議の招待状が届きました！</translation>
     </message>
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation type="unfinished">音声メッセージを受信しました！</translation>
+        <translation>音声メッセージを受信しました！</translation>
     </message>
 </context>
 <context>
@@ -2422,7 +2422,7 @@
     </message>
     <message>
         <source>PgUp</source>
-        <translation type="unfinished">PgUp</translation>
+        <translation>PgUp</translation>
     </message>
     <message>
         <source>Next Page</source>
@@ -2430,11 +2430,11 @@
     </message>
     <message>
         <source>PgDown</source>
-        <translation type="unfinished">PgDown</translation>
+        <translation>PgDown</translation>
     </message>
     <message>
         <source>Continuous</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">連続</translation>
     </message>
     <message>
         <source>Zoom...</source>
@@ -2638,7 +2638,7 @@
     <message>
         <source>noPlugin</source>
         <extracomment>&apos;No Plugins to load&apos; : Text in combobox</extracomment>
-        <translation type="unfinished">読み込むプラグインがありません</translation>
+        <translation>読み込むプラグインがありません</translation>
     </message>
     <message>
         <source>viewlogs</source>
@@ -2657,7 +2657,7 @@
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation type="unfinished">暗号化を解除してもよろしいですか？アプリケーションが終了しすべてのデータが失われます。解除する前にアプリケーションのデータを削除する必要があります。</translation>
+        <translation>暗号化を解除してもよろしいですか？アプリケーションが終了しすべてのデータが失われます。解除する前にアプリケーションのデータを削除する必要があります。</translation>
     </message>
     <message>
         <source>vfsActivation</source>
@@ -2936,7 +2936,7 @@
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation type="unfinished">LDAPサーバー。例: ローカルホストサーバーの ldap:/// もしくは ldap://ldap.example.org/</translation>
+        <translation>LDAPサーバー。例: ローカルホストサーバーの ldap:/// もしくは ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -2965,7 +2965,7 @@
     <message>
         <source>useSalTooltip</source>
         <extracomment>&apos;The dns resolution is done by %1 using Sal. It will pass an IP to LDAP. By doing that, the TLS negociation could not check the hostname. You may deactivate the verifications if wanted to force the connection.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>DNSの解決は、SALを使用して%1で実行されます。 IPをLDAPに渡します。これにより、TLSネゴシエーションはホスト名を確認できません。接続を強制する場合は、検証を無効にすることができます。</translation>
     </message>
     <message>
         <source>verifyTLSLabel</source>
@@ -2985,7 +2985,7 @@
     </message>
     <message>
         <source>verifyTLSTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>LDAPサーバーに接続するときにTLSサーバー証明書を検証する必要があるかどうかを指定します。</translation>
     </message>
     <message>
         <source>searchTitle</source>
@@ -3013,7 +3013,7 @@
     </message>
     <message>
         <source>maxResultsLabel</source>
-        <translation type="unfinished">最大検索数</translation>
+        <translation>最大検索数</translation>
     </message>
     <message>
         <source>maxResultsTooltip</source>
@@ -3033,11 +3033,11 @@
     </message>
     <message>
         <source>nameAttributesLabel</source>
-        <translation type="unfinished">名前要素</translation>
+        <translation>名前要素</translation>
     </message>
     <message>
         <source>nameAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>これらの属性を確認して、コンマで区切られた名前の連絡先を構築します。最初のものが最優先です。&lt;br&gt;デフォルト値: sn</translation>
     </message>
     <message>
         <source>sipAttributesLabel</source>
@@ -3045,7 +3045,7 @@
     </message>
     <message>
         <source>sipAttributesTooltip</source>
-        <translation type="unfinished"></translation>
+        <translation>これらの属性を確認して、連絡先のアドレスにSIPユーザー名を作成します。属性はコンマで区切られており、最初のものが最優先です。&lt;br&gt;デフォルト値: mobile,telephoneNumber,homePhone,sn</translation>
     </message>
     <message>
         <source>domainLabel</source>
@@ -3066,7 +3066,7 @@
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation type="unfinished">トランザクション実行時にログファイルに冗長なログを取得します(TLS接続のデバッグに便利です)。</translation>
+        <translation>トランザクション実行時にログファイルに冗長なログを取得します(TLS接続のデバッグに有用です)。</translation>
     </message>
 </context>
 <context>
@@ -3184,7 +3184,7 @@
     </message>
     <message>
         <source>defaultUsernameLabel</source>
-        <translation>ユーザ名</translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>defaultSipAddressLabel</source>
@@ -3399,17 +3399,17 @@
     <message>
         <source>dialEscapePlusTooltip</source>
         <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
-        <translation type="unfinished">アドレスの&apos;+&apos;を&apos;00&apos;に置き換える</translation>
+        <translation>アドレスの&apos;+&apos;を&apos;00&apos;に置き換える</translation>
     </message>
     <message>
         <source>dialPrefixCallChat</source>
         <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
-        <translation type="unfinished">通話の発信とチャットにプレフィックスを適用する</translation>
+        <translation>通話の発信とチャットにプレフィックスを適用する</translation>
     </message>
     <message>
         <source>dialPrefixCallChatTooltip</source>
         <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
-        <translation type="unfinished">番号が入力された場合、番号のプレフィックスを適用する</translation>
+        <translation>番号が入力された場合、番号のプレフィックスを適用する</translation>
     </message>
     <message>
         <source>advancedTitle</source>
@@ -3419,7 +3419,7 @@
     <message>
         <source>enableBundleMode</source>
         <extracomment>&apos;Bundle mode&apos; : Option title to enable the RTP bundle mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">バンドルモード</translation>
     </message>
 </context>
 <context>
@@ -3427,7 +3427,7 @@
     <message>
         <source>tunnelStatus</source>
         <extracomment>&apos;Tunnel Status&apos; : Field title to introduce the status of the tunnel (activated or not)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>トンネルの状態</translation>
     </message>
     <message>
         <source>tunnelDomain</source>
@@ -3447,12 +3447,12 @@
     <message>
         <source>cancel</source>
         <extracomment>&apos;Cancel&apos; : Button to cancel the action.</extracomment>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>setHTTPProxy</source>
         <extracomment>&apos;Set HTTP proxy&apos; : Button to set the new proxy.</extracomment>
-        <translation type="unfinished">HTTPプロキシを設定</translation>
+        <translation>HTTPプロキシを設定</translation>
     </message>
     <message>
         <source>proxyHttpHost</source>
@@ -3522,7 +3522,7 @@
     <message>
         <source>serverDelay</source>
         <extracomment>&apos;Delay&apos; : Field title on form to set the delay of the tunnel.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>遅延</translation>
     </message>
     <message>
         <source>tunnelAddServer</source>
@@ -3616,17 +3616,17 @@
     <message>
         <source>mipmapLabel</source>
         <extracomment>&apos;Enable Mipmap&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mipmapを有効にする</translation>
     </message>
     <message>
         <source>mipmapTooltip1</source>
         <extracomment>&apos;This property holds whether the image uses mipmap filtering when scaled or transformed.&apos; : first line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>このプロパティは、画像がスケーリングまたは変換されたときにmipmapフィルタリングを使用するかどうかを保持します。</translation>
     </message>
     <message>
         <source>mipmapTooltip2</source>
         <extracomment>&apos;Mipmap filtering gives better visual quality when scaling down compared to smooth, but it may come at a performance cost (both when initializing the image and during rendering).&apos; : Second line of a tooltip about Mipmap mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mipmapフィルタリングは、スムーズと比較してスケールダウン時の視覚的品質を向上させますが、パフォーマンスコストがかかる場合があります(画像の初期化時とレンダリング時の両方)。</translation>
     </message>
     <message>
         <source>minimalTimelineFilterLabel</source>
@@ -3661,22 +3661,22 @@
     <message>
         <source>displayUsernamesLabel</source>
         <extracomment>&apos;Display only usernames&apos; : Option text to display only usernames from SIP addresses.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ユーザー名のみ表示</translation>
     </message>
     <message>
         <source>displayUsernamesTooltip</source>
         <extracomment>&apos;Display only usernames from SIP addresses&apos; : tooltip for addresses display mode where username is only shown.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIPアドレスのユーザー名のみ表示</translation>
     </message>
     <message>
         <source>magicSearchMaxResultsLabel</source>
         <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>検索の最大検索数</translation>
     </message>
     <message>
         <source>restoreAskingPopups</source>
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>質問ポップアップの復元</translation>
     </message>
 </context>
 <context>
@@ -3737,12 +3737,12 @@
     <message>
         <source>videoHybrid</source>
         <extracomment>&apos;Hybrid&apos; : Hybrid mode for camera.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ハイブリッド</translation>
     </message>
     <message>
         <source>videoOccupyAllSpace</source>
         <extracomment>&apos;Occupy all space&apos; : Camera mode for a centered cropping view.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">画面全体</translation>
     </message>
     <message>
         <source>videoBlackBars</source>
@@ -3840,7 +3840,7 @@
     <name>SipAddressDialog</name>
     <message>
         <source>cancel</source>
-        <translation type="unfinished">キャンセル</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <source>contactsSearchPlaceholder</source>
@@ -3850,12 +3850,12 @@
     <message>
         <source>contactsSearchTooltip</source>
         <extracomment>&apos;Search an address in your contacts or use a custom one.&apos; : tooltip</extracomment>
-        <translation type="unfinished">連絡先からアドレスを検索するか、カスタムアドレスを使用します。</translation>
+        <translation>連絡先からアドレスを検索するか、カスタムアドレスを使用します。</translation>
     </message>
     <message>
         <source>timelineSelectionHeader</source>
         <extracomment>&apos;Conversations&apos; : header for a selection in conversation list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会話</translation>
     </message>
 </context>
 <context>
@@ -3885,12 +3885,12 @@
     <message>
         <source>timelineFilterSimpleRooms</source>
         <extracomment>&apos;Simple rooms&apos; : Filter item. Selecting it will show all secure chat groups (with more than one participant).</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>シンプルなルーム</translation>
     </message>
     <message>
         <source>timelineFilterSecureRooms</source>
         <extracomment>&apos;Secure rooms&apos; : Filter item. Selecting it will show all secure rooms.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>セキュアなルーム</translation>
     </message>
     <message>
         <source>timelineFilterChatGroups</source>
@@ -3915,7 +3915,7 @@
     <message>
         <source>timelineFilterStandardRooms</source>
         <extracomment>&apos;Standard rooms&apos; : Filter item. Selecting it will show all simple rooms.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>スタンダードなルーム</translation>
     </message>
     <message>
         <source>timelineFilterAnyChatRooms</source>
@@ -3925,7 +3925,7 @@
     <message>
         <source>timelineFilterAnyEphemerals</source>
         <extracomment>&apos;Ephemerals on/off&apos; : Filter item. Selecting it will not do any filter on ephemerals activation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">一時的 ON/OFF</translation>
     </message>
     <message>
         <source>timelineFilterNoEphemerals</source>
@@ -3935,7 +3935,7 @@
     <message>
         <source>timelineFilterConferences</source>
         <extracomment>&apos;Conferences&apos; : Filter item. Selecting it will show all conferences.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>会議</translation>
     </message>
 </context>
 <context>
@@ -3948,7 +3948,7 @@
     <message>
         <source>deleteTimelineTooltip</source>
         <extracomment>&apos;After confirmation, it will erase all history, leave the chat room if it is a group chat and delete it in database.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>確認後、すべての履歴を消去し、グループチャットの場合はチャットルームを離れ、データベースで削除します。</translation>
     </message>
 </context>
 <context>
@@ -3994,7 +3994,7 @@
     <name>UseAppSipAccountWithUsername</name>
     <message>
         <source>usernameLabel</source>
-        <translation>ユーザ名</translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>passwordLabel</source>
@@ -4018,7 +4018,7 @@
     </message>
     <message>
         <source>usernameLabel</source>
-        <translation>ユーザ名</translation>
+        <translation>ユーザー名</translation>
     </message>
     <message>
         <source>displayNameLabel</source>
