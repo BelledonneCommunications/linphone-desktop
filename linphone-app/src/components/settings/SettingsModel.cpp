@@ -235,12 +235,14 @@ void SettingsModel::setAutoApplyProvisioningConfigUriHandlerEnabled (bool status
 // ---------------------------------------------------------------------------
 
 bool SettingsModel::getAssistantSupportsPhoneNumbers () const {
-	return !!mConfig->getInt(UiSection, "assistant_supports_phone_numbers", 1);
+	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "assistant_supports_phone_numbers") , 1);
 }
 
 void SettingsModel::setAssistantSupportsPhoneNumbers (bool status) {
-	mConfig->setInt(UiSection, "assistant_supports_phone_numbers", status);
-	emit assistantSupportsPhoneNumbersChanged(status);
+	if(!isReadOnly(UiSection, "assistant_supports_phone_numbers")) {
+		mConfig->setInt(UiSection, "assistant_supports_phone_numbers", status);
+		emit assistantSupportsPhoneNumbersChanged(status);
+	}
 }
 
 bool SettingsModel::useWebview() const{

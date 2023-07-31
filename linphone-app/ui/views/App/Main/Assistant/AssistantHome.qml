@@ -118,12 +118,24 @@ ColumnLayout {
 				onClicked:{ assistant.pushView($view, $props) }
 			}
 		}
-		
+		Connections{
+			target: SettingsModel
+			onAssistantSupportsPhoneNumbersChanged: {
+				if(!SettingsModel.useWebview()){
+					buttonsModel.get(0).$view = !SettingsModel.assistantSupportsPhoneNumbers ? 'CreateAppSipAccountWithEmail' : 'CreateAppSipAccount'
+				}
+			}
+		}
 		model: ListModel {
+			id: buttonsModel
 			Component.onCompleted: {
 				insert(0, {
 						   $text: qsTr('createAppSipAccount'),
-						   $view: SettingsModel.useWebview() ? 'CreateAppSipAccountWithWebView' : 'CreateAppSipAccount',
+						   $view: SettingsModel.useWebview()
+									? 'CreateAppSipAccountWithWebView'
+									: !SettingsModel.assistantSupportsPhoneNumbers
+										? 'CreateAppSipAccountWithEmail'
+										: 'CreateAppSipAccount',
 						   $viewType: 'CreateAppSipAccount',
 						   $props: SettingsModel.useWebview() ? {defaultUrl: SettingsModel.assistantRegistrationUrl, defaultLogoutUrl:SettingsModel.assistantLogoutUrl, configFilename: 'create-app-sip-account.rc'}
 																: {}
