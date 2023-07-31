@@ -260,11 +260,7 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	std::list <shared_ptr<linphone::Address> > participants;
 	std::shared_ptr<const linphone::Address> localAddress;
 	participants.push_back(address);
-	int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
-	if(ephemeralTime>0)
-		params->setEphemeralLifetime(ephemeralTime);
 	params->enableEncryption(true);
-	
 	params->setSubject(Utils::appStringToCoreString(subject));
 	params->enableEncryption(true);
 	params->enableGroup(true);
@@ -272,8 +268,11 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	qInfo() << "Create secure ChatRoom: " << subject << ", from " << QString::fromStdString(localAddress->asString()) << " and with " <<participantAddress;;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
 	if(chatRoom) {
-		chatRoom->setEphemeralLifetime(ephemeralTime);
-		chatRoom->enableEphemeral(ephemeralTime>0);
+		int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
+		if( ephemeralTime>0){
+			chatRoom->setEphemeralLifetime(ephemeralTime);
+			chatRoom->enableEphemeral(true);
+		}
 	}
 // Still needed?
 //	if( chatRoom != nullptr){
@@ -325,9 +324,6 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 			qWarning() << "Failed to add participant to conference, bad address : " << (participant ? participant->getSipAddress() : p.toString());
 	}
 	params->enableEncryption(securityLevel>0);
-	int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
-	if(securityLevel > 0 && ephemeralTime>0)
-		params->setEphemeralLifetime(ephemeralTime);
 	
 	if( securityLevel<=0)
 		params->setBackend(linphone::ChatRoomBackend::Basic);
@@ -376,8 +372,11 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	if( !chatRoom)
 		qWarning() << "Chat room cannot be created";
 	else if(securityLevel > 0) {
-		chatRoom->setEphemeralLifetime(ephemeralTime);
-		chatRoom->enableEphemeral(ephemeralTime>0);
+		int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
+		if( ephemeralTime>0){
+			chatRoom->setEphemeralLifetime(ephemeralTime);
+			chatRoom->enableEphemeral(true);
+		}
 	}
 	result["created"] = (chatRoom != nullptr);
 	
