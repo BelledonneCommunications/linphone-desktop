@@ -225,8 +225,8 @@ Window {
 					
 					Connections {
 						target: SettingsModel
-						onStandardChatEnabledChanged: if(!chatRoomModel.haveEncryption) proxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
-						onSecureChatEnabledChanged: if(chatRoomModel.haveEncryption) proxyModel.setEntryTypeFilter(SettingsModel.secureChatEnabled ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
+						onStandardChatEnabledChanged: if(chatRoomModel && !chatRoomModel.haveEncryption) proxyModel.setEntryTypeFilter(status ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
+						onSecureChatEnabledChanged: if(chatRoomModel && chatRoomModel.haveEncryption) proxyModel.setEntryTypeFilter(SettingsModel.secureChatEnabled ? ChatRoomModel.GenericEntry : ChatRoomModel.CallEntry  | ChatRoomModel.NoticeEntry)
 					}
 				}
 			}

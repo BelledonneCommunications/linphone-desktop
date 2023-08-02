@@ -64,7 +64,7 @@ public:
 	Q_PROPERTY(int unreadMessagesCount MEMBER mUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY unreadMessagesCountChanged)
 	Q_PROPERTY(int missedCallsCount MEMBER mMissedCallsCount WRITE setMissedCallsCount NOTIFY missedCallsCountChanged)
 	
-	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
+	Q_PROPERTY(int securityLevel READ getSecurityLevel WRITE setSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(bool groupEnabled READ isGroupEnabled NOTIFY groupEnabledChanged)
 	Q_PROPERTY(bool isConference READ isConference CONSTANT)
 	Q_PROPERTY(bool isOneToOne READ isOneToOne CONSTANT)
@@ -133,6 +133,8 @@ public:
 	bool markAsReadEnabled() const;
 	Q_INVOKABLE bool isSecure() const;
 	int getSecurityLevel() const;
+	void updateSecurityLevel();
+	void setSecurityLevel(int level);
 	bool isGroupEnabled() const;
 	bool isConference() const;
 	bool isOneToOne() const;
@@ -323,6 +325,7 @@ private:
 	QSharedPointer<ChatNoticeModel> mUnreadMessageNotice;
 	int mBindingCalls = 0;
 	bool mPostModelChangedEvents = true;
+	int mSecurityLevel = 0;
 	
 	QWeakPointer<ChatRoomModel> mSelf;
 };

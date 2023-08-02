@@ -70,6 +70,7 @@ Rectangle {
 			displayUnreadMessageCount: true
 			
 			entry: callControls.entry
+			onAvatarClicked: callControls.clicked()
 		}
 		
 		Item {
