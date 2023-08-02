@@ -33,6 +33,7 @@ SearchResultModel::SearchResultModel(std::shared_ptr<const linphone::Friend> lin
 		mAddress = address->clone();
 	else if(linphoneFriend && linphoneFriend->getAddress())
 		mAddress = linphoneFriend->getAddress()->clone();
+	mAddress->clean();
 }
 
 QString SearchResultModel::getAddressString() const{

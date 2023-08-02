@@ -172,7 +172,7 @@ ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoo
 			}
 		}
 		setLastUpdateTime(QDateTime::fromMSecsSinceEpoch(std::max(mChatRoom->getLastUpdateTime(), callDate )*1000));
-
+		mSecurityLevel = (int)mChatRoom->getSecurityLevel();
 	}else
 		mParticipantListModel = nullptr;
 }
@@ -444,8 +444,20 @@ bool ChatRoomModel::isSecure() const{
 			|| mChatRoom->getSecurityLevel() == linphone::ChatRoom::SecurityLevel::Safe);
 }
 
-int ChatRoomModel::getSecurityLevel() const{
-	return mChatRoom ? (int)mChatRoom->getSecurityLevel() : 0;
+int ChatRoomModel::getSecurityLevel() const {
+	return mSecurityLevel;
+}
+
+void ChatRoomModel::updateSecurityLevel(){
+	if(mChatRoom ) {
+		setSecurityLevel((int)mChatRoom->getSecurityLevel());
+	}
+}
+void ChatRoomModel::setSecurityLevel(int level){
+	if( mSecurityLevel != level){
+		mSecurityLevel = level;
+		emit securityLevelChanged(mSecurityLevel);
+	}
 }
 
 bool ChatRoomModel::isGroupEnabled() const{
@@ -1276,7 +1288,7 @@ void ChatRoomModel::onSecurityEvent(const std::shared_ptr<linphone::ChatRoom> & 
 	if( e != events.end() )
 		insertNotice(*e);
 	updateLastUpdateTime();
-	emit securityLevelChanged((int)chatRoom->getSecurityLevel());
+	updateSecurityLevel();
 }
 void ChatRoomModel::onSubjectChanged(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
 	auto events = chatRoom->getHistoryEvents(0);
@@ -1318,6 +1330,7 @@ void ChatRoomModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom>
 	emit usernameChanged();
 	emit conferenceJoined(eventLog);
 	emit isReadOnlyChanged();
+	emit isMeAdminChanged();
 }
 
 void ChatRoomModel::onConferenceLeft(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){

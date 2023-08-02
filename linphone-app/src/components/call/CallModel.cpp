@@ -63,6 +63,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	connect(this, &CallModel::callIdChanged, this, &CallModel::chatRoomModelChanged);// When the call Id change, the chat room change.
 	connect(this, &CallModel::encryptionChanged, this, &CallModel::securityUpdated);
 	connect(this, &CallModel::isPQZrtpChanged, this, &CallModel::securityUpdated);
+	connect(this, &CallModel::securityUpdated, this, &CallModel::onSecurityUpdated);
 	
 	mCall = call;
 	if(mCall)
@@ -1022,6 +1023,12 @@ void CallModel::onParticipantAdminStatusChanged(const std::shared_ptr<const linp
 	if(mConferenceModel && participant == mConferenceModel->getConference()->getMe()) {
 		emit meAdminChanged();
 	}
+}
+
+void CallModel::onSecurityUpdated(){
+	ChatRoomModel * model = getChatRoomModel();
+	if(model)
+		model->updateSecurityLevel();
 }
 
 void CallModel::setRemoteDisplayName(const std::string& name){
