@@ -91,8 +91,11 @@ QString ParticipantListModel::addressesToString()const{
 	QStringList txt;
 	for(auto item : mList){
 		auto participant = item.objectCast<ParticipantModel>();
-		if( participant->getParticipant())// is Participant. We test it because this participant is not accepted by chat room yet.
-			txt << Utils::toDisplayString(Utils::coreStringToAppString(participant->getParticipant()->getAddress()->asStringUriOnly()), CoreManager::getInstance()->getSettingsModel()->getSipDisplayMode());
+		if( participant->getParticipant()) {// is Participant. We test it because this participant is not accepted by chat room yet.
+			auto address = participant->getParticipant()->getAddress()->clone();
+			address->clean();
+			txt << Utils::toDisplayString(Utils::coreStringToAppString(address->asStringUriOnly()), CoreManager::getInstance()->getSettingsModel()->getSipDisplayMode());
+		}
 	}
 	txt.removeFirst();// Remove me
 	return txt.join(", ");
