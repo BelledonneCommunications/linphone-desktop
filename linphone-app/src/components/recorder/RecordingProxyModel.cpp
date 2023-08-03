@@ -48,8 +48,13 @@ RecordingProxyModel::RecordingProxyModel (QObject *parent) : SortFilterProxyMode
 
 void RecordingProxyModel::remove(FileMediaModel * fileModel){
 	QFile file(fileModel->getFilePath());
-	if(file.remove())
-		qobject_cast<RecordingListModel*>(sourceModel())->remove(fileModel);
+	auto listModel = qobject_cast<RecordingListModel*>(sourceModel());
+	auto model = listModel->get(fileModel);
+	if(model){
+		listModel->remove(fileModel);
+		if(!file.remove())
+			listModel->add(model);
+	}
 }
 
 bool RecordingProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {

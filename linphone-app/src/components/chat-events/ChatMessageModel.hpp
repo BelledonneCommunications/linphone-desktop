@@ -119,7 +119,7 @@ public:
 	
 	virtual void deleteEvent() override;
 	void updateFileTransferInformation();
-	static QDateTime initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message, bool isNew); // return received timestamp
+	static QDateTime initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message, bool isNew, bool force = false); // return received timestamp
 	
 	//		Linphone callbacks  
 	void onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer) ;

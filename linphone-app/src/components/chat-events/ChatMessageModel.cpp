@@ -288,9 +288,9 @@ void ChatMessageModel::updateFileTransferInformation(){
 	mContentListModel->updateContents(this);
 }
 
-QDateTime ChatMessageModel::initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message, bool isNew){
+QDateTime ChatMessageModel::initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message, bool isNew, bool force){
 	auto appdata = ChatEvent::AppDataManager(QString::fromStdString(message->getAppdata()));
-	if(!appdata.mData.contains("receivedTime")){// If already set : Do not overwrite.
+	if(force || !appdata.mData.contains("receivedTime")){// If already set : Do not overwrite.
 		appdata.mData["receivedTime"] = QString::number(isNew ? QDateTime::currentMSecsSinceEpoch() : message->getTime()*1000);
 		qDebug() << (isNew ? "New" : "Old") << " message received at " << QDateTime::fromMSecsSinceEpoch(appdata.mData["receivedTime"].toLongLong()).toString("yyyy/MM/dd hh:mm:ss.zzz") << QDateTime::fromMSecsSinceEpoch(message->getTime()*1000).toString("yyyy/MM/dd hh:mm:ss.zzz");
 		message->setAppdata(Utils::appStringToCoreString(appdata.toString()));

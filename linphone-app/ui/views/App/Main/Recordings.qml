@@ -191,7 +191,11 @@ Item {
 															   descriptionText: qsTr('recordingsDelete'),
 														   }, function (status) {
 															   if (status) {
-																   recordingsProxyModel.remove($modelData)
+																	if(vocalPlayer.item)
+																		vocalPlayer.item.stop()
+																	if(vocalPlayer.active)
+																		vocalPlayer.active = false
+																	recordingsProxyModel.remove($modelData)
 															   }
 														   })
 								
