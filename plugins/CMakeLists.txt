@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (c) 2017-2020 Belledonne Communications SARL.
+#  Copyright (c) 2017-2023 Belledonne Communications SARL.
 # 
 #  This file is part of linphone-desktop
 #  (see https://www.linphone.org).
@@ -19,7 +19,8 @@
 #  along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-cmake_minimum_required(VERSION 3.1)
+
+cmake_minimum_required(VERSION 3.22)
 
 project(app-plugins)
 
@@ -35,8 +36,6 @@ macro(get_all_subdirs result curdir)
 	set(${result} ${dirlist})
 endmacro()
 get_all_subdirs(SUBDIRS ${CMAKE_CURRENT_SOURCE_DIR})
-
-set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};${CMAKE_INSTALL_PREFIX}/include")
 
 foreach(subdir ${SUBDIRS})
 	message("Adding ${subdir} plugin")

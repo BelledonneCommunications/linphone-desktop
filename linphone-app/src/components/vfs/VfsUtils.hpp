@@ -22,8 +22,13 @@
 #define VFS_UTILS_H_
 
 #include <QObject>
+#ifdef QTKEYCHAIN_USE_BUILD_INTERFACE
+#include <keychain.h>
+#else
 #include <EQt5Keychain/keychain.h>
+#endif
 #include <QSettings>
+
 // =============================================================================
 
 class VfsUtils : public QObject {

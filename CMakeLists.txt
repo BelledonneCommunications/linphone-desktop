@@ -66,7 +66,6 @@ endif ()
 #------------------------------------------------------------------------------
 # Prepare gobal CMAKE configuration specific to the current project
 
-# GMA: set(QTKEYCHAIN_TARGET_NAME "EQt5Keychain")
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
 	set(CMAKE_INSTALL_PREFIX "${CMAKE_BINARY_DIR}/OUTPUT" CACHE PATH "Default linphone-app installation prefix" FORCE)
 	set(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT FALSE)
@@ -116,6 +115,7 @@ set(ENABLE_QRCODE OFF) # Experimental
 set(ENABLE_SANITIZER OFF)
 set(ENABLE_STRICT OFF)
 set(ENABLE_TESTS_COMPONENT OFF)
+set(ENABLE_THEORA OFF)
 set(ENABLE_TOOLS OFF)
 set(ENABLE_VIDEO ON)
 if(WIN32)
@@ -134,18 +134,25 @@ if(NOT Qt5_FOUND)
 	message(FATAL_ERROR "Minimum supported Qt5 version is 5.10!")
 endif()
 
+if(NOT LINPHONE_QT_ONLY)
 
-function(add_linphone_sdk)
-	set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
-	add_subdirectory("linphone-sdk")
-endfunction()
-add_linphone_sdk()
+	function(add_linphone_sdk)
+		set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
+		add_subdirectory("linphone-sdk")
+	endfunction()
+	add_linphone_sdk()
+
+	if(ENABLE_QT_KEYCHAIN)
+		set(QTKEYCHAIN_TARGET_NAME "EQt5Keychain")
+		add_subdirectory("external/qtkeychain")
+	endif()
+
+endif()
 
 function(add_linphone_app)
 	if(APPLE)
 		add_compile_definitions("ENABLE_FAT_BINARY=ON") # Disable XCFrameworks as it is not supported.
 	elseif(UNIX)
-		# GMA: set(CMAKE_INSTALL_RPATH "$ORIGIN:$ORIGIN/lib64:$ORIGIN/../lib64:$ORIGIN/lib:$ORIGIN/../lib:${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}")
 		set(CMAKE_INSTALL_RPATH "$ORIGIN:$ORIGIN/lib64:$ORIGIN/../lib64:$ORIGIN/lib:$ORIGIN/../lib")
 	endif()
 
@@ -154,122 +161,6 @@ endfunction()
 add_linphone_app()
 
 
-# if(ENABLE_BUILD_APP_PLUGINS)
-# 	file(GLOB children "plugins/*")
-# 	set(dirlist "")
-# 	foreach(child ${children})
-# 		if(IS_DIRECTORY ${curdir}/${child} AND (ENABLE_BUILD_EXAMPLES OR NOT ${child} MATCHES "example"))
-# 			list(APPEND dirlist ${child})
-# 		endif()
-# 	endforeach()
-# 	list(LENGTH dirlist count)
-# 	if(NOT count)
-# 		set(ENABLE_BUILD_APP_PLUGINS OFF)
-# 		message(STATUS "No plugins found for the application to build")
-# 	endif()
-# endif()
-
-
-# if(NOT LINPHONE_QT_ONLY)
-# #add_subdirectory(external/qtkeychain)
-# 	if(ENABLE_QT_KEYCHAIN)
-# 		ExternalProject_Add(app-qtkeychain PREFIX "${CMAKE_BINARY_DIR}/qtkeychain"
-# 			SOURCE_DIR "${CMAKE_SOURCE_DIR}/external/qtkeychain"
-# 			INSTALL_DIR "${QTKEYCHAIN_OUTPUT_DIR}"
-# 			BINARY_DIR "${SDK_BUILD_DIR}/qtkeychain"
-# 			BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-# 			LIST_SEPARATOR | # Use the alternate list separator
-# 			CMAKE_ARGS ${APP_OPTIONS} ${QTKEYCHAIN_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-# 			BUILD_ALWAYS NO #${DO_BUILD}
-# 		)
-# 	endif()
-# 	ExternalProject_Add(sdk PREFIX "${CMAKE_BINARY_DIR}/sdk"
-# 		SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-sdk"
-# 		INSTALL_DIR "${LINPHONE_OUTPUT_DIR}"
-# 		STAMP_DIR "${SDK_BUILD_DIR}/stamp"
-# 		BINARY_DIR "${SDK_BUILD_DIR}"
-# 		STEP_TARGETS build
-# 		BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-# 		INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
-# 		LIST_SEPARATOR | # Use the alternate list separator
-# 		CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-# 		BUILD_ALWAYS NO #${DO_BUILD}
-# 	)
-# 	ExternalProject_Add_Step(sdk force_build
-# 		COMMENT "Forcing build for 'sdk'"
-# 		DEPENDEES configure
-# 		DEPENDERS build
-# 		ALWAYS 1
-# 	)
-# endif()
-# include(FindPkgConfig)
-
-# set(APP_DEPENDS sdk)# Used if NOT LINPHONE_QT_ONLY
-# if(ENABLE_QT_KEYCHAIN)
-# 	list(APPEND APP_DEPENDS app-qtkeychain)
-# endif()
-
-# find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG QUIET)
-
-# if(NOT (LinphoneCxx_FOUND) OR NOT (Linphone_FOUND) OR NOT (bctoolbox_FOUND) OR NOT (belcard_FOUND) OR NOT (Mediastreamer2_FOUND) OR NOT (ortp_FOUND)
-# 	OR ( ENABLE_QT_KEYCHAIN AND NOT(${QTKEYCHAIN_TARGET_NAME}_FOUND) )
-# 	OR FORCE_APP_EXTERNAL_PROJECTS
-# )
-# 	message("Projects are set as External projects. You can start building them by using for example : cmake --build . --target install")
-# 	ExternalProject_Add(linphone-qt PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
-# 		SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
-# 		INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-# 		BINARY_DIR "${CMAKE_BINARY_DIR}/linphone-app"
-# 		DEPENDS ${APP_DEPENDS}
-# 		BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-# 		INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
-# 		LIST_SEPARATOR | # Use the alternate list separator
-# 		CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-# 	# ${APP_OPTIONS}
-# 		BUILD_ALWAYS ON
-# 	)
-# 	if( ENABLE_BUILD_APP_PLUGINS)
-# 		ExternalProject_Add(app-plugins PREFIX "${CMAKE_BINARY_DIR}/plugins-app"
-# 			SOURCE_DIR "${CMAKE_SOURCE_DIR}/plugins"
-# 			INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-# 			BINARY_DIR "${CMAKE_BINARY_DIR}/plugins-app"
-# 			DEPENDS linphone-qt
-# 			BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-# 			INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
-# 			LIST_SEPARATOR | # Use the alternate list separator
-# 			CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-# 		)
-# 	endif()
-# 	install(CODE "message(STATUS \"Running install\")")
-# 	set(AUTO_REGENERATION auto_regeneration)
-# 	if(	ENABLE_BUILD_APP_PLUGINS)
-# 		add_custom_target(${AUTO_REGENERATION} ALL
-# 			COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
-# 			DEPENDS app-plugins)
-# 	else()
-# 		add_custom_target(${AUTO_REGENERATION} ALL
-# 			COMMAND ${CMAKE_COMMAND} ${CMAKE_CURRENT_SOURCE_DIR}
-# 			DEPENDS linphone-qt)
-# 	endif()
-# else()
-# 	message("Adding Linphone Desktop in an IDE-friendly state")
-# 	set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
-# 	add_subdirectory(${CMAKE_SOURCE_DIR}/linphone-app)
-# 	if(NOT LINPHONE_QT_ONLY)
-# 		add_dependencies(app-library ${APP_DEPENDS})
-# 	endif()
-# 	if( ENABLE_BUILD_APP_PLUGINS)
-# 		add_subdirectory(${CMAKE_SOURCE_DIR}/plugins "plugins-app")
-# 	endif()
-# endif()
-# ExternalProject_Add(linphone-qt-only PREFIX "${CMAKE_BINARY_DIR}/linphone-app"
-#     SOURCE_DIR "${CMAKE_SOURCE_DIR}/linphone-app"
-#     INSTALL_DIR "${APPLICATION_OUTPUT_DIR}"
-#     BINARY_DIR "${CMAKE_BINARY_DIR}/linphone-app"
-#     BUILD_COMMAND ${CMAKE_COMMAND} --build <BINARY_DIR> --config $<CONFIG> ${PROJECT_BUILD_COMMAND}
-# #    INSTALL_COMMAND ${CMAKE_COMMAND} -E echo "Install step is already done at build time."
-#     LIST_SEPARATOR | # Use the alternate list separator
-#     CMAKE_ARGS ${APP_OPTIONS} ${USER_ARGS} -DCMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR> -DCMAKE_PREFIX_PATH=${PREFIX_PATH}
-#     EXCLUDE_FROM_ALL ON
-#     #BUILD_ALWAYS ON
-# )
+if(ENABLE_BUILD_APP_PLUGINS)
+	add_subdirectory("plugins" "plugins-app")
+endif()
