@@ -18,6 +18,7 @@ build-*-Debug
 build-*-Default
 prepare.conf.user
 build/*
+CMakeUserPresets.json
 
 # Tags -------------------------------------------------------------------------
 

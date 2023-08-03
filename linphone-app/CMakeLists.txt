@@ -1,6 +1,6 @@
 ################################################################################
 #
-#  Copyright (c) 2017-2021 Belledonne Communications SARL.
+#  Copyright (c) 2017-2023 Belledonne Communications SARL.
 # 
 #  This file is part of linphone-desktop
 #  (see https://www.linphone.org).
@@ -19,9 +19,15 @@
 #  along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-cmake_minimum_required(VERSION 3.1)
 
-find_package(bctoolbox CONFIG)
+cmake_minimum_required(VERSION 3.22)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+find_package(BcToolbox)
+if(NOT BCTOOLBOX_FOUND)
+	find_package(bctoolbox CONFIG)
+endif()
 set(FULL_VERSION )
 bc_compute_full_version(FULL_VERSION)
 set(version_major )
@@ -81,16 +87,31 @@ if(WIN32)
 	endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 endif()
 
-find_package(LinphoneCxx CONFIG)
-find_package(Linphone CONFIG)
-find_package(belcard CONFIG)
-find_package(Mediastreamer2 CONFIG)
-find_package(ortp CONFIG)
-
-if(ENABLE_QT_KEYCHAIN)
-	find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG REQUIRED)
-	add_definitions(-DENABLE_QT_KEYCHAIN)
+find_package(Ortp)
+if(NOT ORTP_FOUND)
+	find_package(ortp CONFIG)
 endif()
+find_package(Mediastreamer2)
+if(NOT MEDIASTREAMER2_FOUND)
+	find_package(Mediastreamer2 CONFIG)
+endif()
+find_package(Belcard)
+if(NOT BELCARD_FOUND)
+	find_package(belcard CONFIG)
+endif()
+find_package(Linphone)
+if(NOT LINPHONE_FOUND)
+	find_package(Linphone CONFIG)
+endif()
+find_package(LinphoneCxx)
+if(NOT LINPHONECXX_FOUND)
+	find_package(LinphoneCxx CONFIG)
+endif()
+
+# if(ENABLE_QT_KEYCHAIN)
+# 	find_package(${QTKEYCHAIN_TARGET_NAME} CONFIG REQUIRED)
+# 	add_definitions(-DENABLE_QT_KEYCHAIN)
+# endif()
 
 if(ENABLE_BUILD_VERBOSE)
 	message("INSTALL_PREFIX=${CMAKE_INSTALL_PREFIX} FRAMEWORK_PATH=${CMAKE_FRAMEWORK_PATH}, PREFIX_PATH=${CMAKE_PREFIX_PATH}")
@@ -587,11 +608,11 @@ endforeach ()
 # Init git hooks.
 # ------------------------------------------------------------------------------
 
-if (NOT WIN32)
+if(NOT WIN32)
 	add_custom_target(
 		check_qml DEPENDS ${QML_SOURCES}
 		COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/../tools/check_qml_syntax"
-		)
+	)
 endif()
 
 execute_process(COMMAND ${CMAKE_COMMAND} -E copy
@@ -756,7 +777,7 @@ if(WIN32)
 	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${LDAP_LIBRARIES} ${LBER_LIBRARIES})
 endif()
 
-add_dependencies(${APP_LIBRARY}  update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})
+add_dependencies(${APP_LIBRARY} update_translations ${TARGET_NAME}-git-version ${APP_PLUGIN})
 add_dependencies(${TARGET_NAME} ${APP_LIBRARY} ${APP_PLUGIN})
 
 
@@ -783,9 +804,9 @@ install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ".")
 
 
 add_subdirectory(build)
-add_subdirectory(cmake_builder/linphone_package)
+# GMA: TODO add_subdirectory(cmake_builder/linphone_package)
 
-deployqt_hack(${TARGET_NAME} ${LINPHONE_QML_DIR})
+# GMA: TODO deployqt_hack(${TARGET_NAME} ${LINPHONE_QML_DIR})
 
 
 # ------------------------------------------------------------------------------
