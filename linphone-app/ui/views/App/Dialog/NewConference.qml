@@ -179,7 +179,7 @@ DialogPlus {
 		: qsTr('updateConferenceTitle')
 	
 	height: window.height - 100
-	width: window.width - 100
+	width: window.width - 50
 	expandHeight: true
 	
 	// ---------------------------------------------------------------------------
@@ -346,7 +346,13 @@ DialogPlus {
 						ComboBox{
 							id: durationField
 							Layout.preferredWidth: parent.cellWidth;
-							currentIndex: conferenceManager.conferenceInfoModel && conferenceManager.conferenceInfoModel.duration >= 1800 ? conferenceManager.conferenceInfoModel.duration / 1800 - 1 : 1
+							currentIndex: !conferenceManager.conferenceInfoModel
+											? 1
+											: conferenceManager.conferenceInfoModel.duration >= 240
+												? 3
+												: Number(Utils.findIndex(model, function (duration) {
+													return duration.value === conferenceManager.conferenceInfoModel.duration
+												}))
 							model: [{text:Utils.formatDuration(30*60), value:30}
 										,{text:Utils.formatDuration(60*60), value:60}
 										,{text:Utils.formatDuration(120*60), value:120}
@@ -475,7 +481,8 @@ DialogPlus {
 									secure: SettingsModel.secureChatEnabled,
 									visible: true,
 									secureIconVisibleHandler : function(entry) {
-										return entry && entry.sipAddress ? UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh, true) : false
+										return false;
+										//return entry && entry.sipAddress ? UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh, true) : false
 									},
 									handler: function (entry) {
 										if(entry){

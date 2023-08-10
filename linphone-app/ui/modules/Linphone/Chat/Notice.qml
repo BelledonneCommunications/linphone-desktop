@@ -52,7 +52,7 @@ RowLayout{
 			return qsTr('conferenceParticipantSetAdminEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantUnsetAdmin) {
-			//: '%1 is no more an admin' : Little message to show on the event when somebody lost its admin status. %1 is somebody
+			//: '%1 is no longer an admin' : Little message to show on the event when somebody lost its admin status. %1 is somebody
 			return qsTr('conferencePArticipantUnsetAdminEvent');
 		}
 		if (status == LinphoneEnums.EventLogTypeConferenceParticipantDeviceAdded) {

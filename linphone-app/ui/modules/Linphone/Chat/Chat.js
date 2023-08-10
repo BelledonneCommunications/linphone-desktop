@@ -88,7 +88,7 @@ function forwardMessage(chatRoomModel, chatEntry, chatRoomConfig){
 			}, function (status) {
 				if (status) {
 					if(!chatRoomModel) {
-						var chat = CallsListModel.createChatRoom( chatRoomConfig.subject, chatRoomConfig.haveEncryption, chatRoomConfig.participants, chatRoomConfig.toSelect)
+						var chat = Linphone.CallsListModel.createChatRoom( chatRoomConfig.subject, chatRoomConfig.haveEncryption, chatRoomConfig.participants, chatRoomConfig.toSelect)
 						if(chat)
 							chatRoomModel = chat.chatRoomModel
 					}

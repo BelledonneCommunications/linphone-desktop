@@ -2262,7 +2262,7 @@
     </message>
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
-        <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+        <extracomment>&apos;%1 is no longer an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

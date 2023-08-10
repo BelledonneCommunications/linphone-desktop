@@ -120,7 +120,7 @@ Item{
 						
 						Rectangle { // index is 0 to 48
 							anchors.centerIn: parent
-							width: Math.max(text.implicitWidth, text.implicitHeight) + 20
+							width: Math.min(parent.width, Math.max(text.implicitWidth, text.implicitHeight) + 20)
 							height: width
 							//border.width: 0.3 * radius
 							border.width: 2

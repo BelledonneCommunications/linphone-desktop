@@ -134,7 +134,7 @@ void ConferenceInfoModel::initDateTime(){
 		setDuration(0);
 	}else{
 		setDateTime(QDateTime::currentDateTimeUtc());
-		setDuration(1200);
+		setDuration(120);
 	}
 }
 
@@ -185,7 +185,7 @@ QString ConferenceInfoModel::displayNamesToString()const{
 
 QString ConferenceInfoModel::getUri() const{
 	auto address = mConferenceInfo->getUri();
-	return address->isValid() && !address->getDomain().empty() ? QString::fromStdString(address->asStringUriOnly()) : "";
+	return address && address->isValid() && !address->getDomain().empty() ? QString::fromStdString(address->asStringUriOnly()) : "";
 }
 
 bool ConferenceInfoModel::isScheduled() const{
