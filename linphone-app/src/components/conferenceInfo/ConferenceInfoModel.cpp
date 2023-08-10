@@ -134,7 +134,7 @@ void ConferenceInfoModel::initDateTime(){
 		setDuration(0);
 	}else{
 		setDateTime(QDateTime::currentDateTimeUtc());
-		setDuration(120);
+		setDuration(60);
 	}
 }
 
