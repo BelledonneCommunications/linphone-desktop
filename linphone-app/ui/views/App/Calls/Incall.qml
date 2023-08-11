@@ -458,12 +458,11 @@ Rectangle {
 							? IncallStyle.buttons.postQuantumSecure
 							: IncallStyle.buttons.secure2
 						: IncallStyle.buttons.secure
-		onColorSetChanged:console.log(colorSet.icon)
 		onClicked: if(callModel.encryption === CallModel.CallEncryptionZrtp){
 			window.attachVirtualWindow(Utils.buildLinphoneDialogUri('ZrtpTokenAuthenticationDialog'), {call:callModel})
 		}
 					
-		tooltipText: Logic.makeReadableSecuredString(callModel.isSecured, callModel.securedString)
+		tooltipText: Logic.makeReadableSecuredString(callModel.encryption !== CallModel.CallEncryptionNone, callModel.securedString)
 	}
 	RowLayout{
 		visible: callModel.remoteRecording
