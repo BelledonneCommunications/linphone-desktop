@@ -92,6 +92,8 @@ Row {
 	height: ChatStyle.entry.lineHeight
 	spacing: ChatStyle.entry.message.extraContent.spacing
 	
+	layoutDirection: $chatEntry.isOutgoing ? Qt.RightToLeft : Qt.LeftToRight
+	
 	Icon {
 		height: parent.height
 		icon: mainItem.iconData ? mainItem.iconData.icon : null
