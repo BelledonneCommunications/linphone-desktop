@@ -62,7 +62,7 @@ public:
 	static constexpr char DownloadUrl[] = "https://www.linphone.org/technical-corner/linphone";
 	static constexpr char VersionCheckReleaseUrl[] = "https://linphone.org/releases";
 	static constexpr char VersionCheckNightlyUrl[] = "https://linphone.org/snapshots";
-	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login";
+	static constexpr char PasswordRecoveryUrl[] = "https://subscribe.linphone.org/login/email";
 	static constexpr char CguUrl[] = "https://www.linphone.org/general-terms";
 	static constexpr char PrivatePolicyUrl[] = "https://www.linphone.org/privacy-policy";
 	static constexpr char ContactUrl[] = "https://www.linphone.org/contact";
