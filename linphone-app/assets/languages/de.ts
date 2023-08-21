@@ -55,7 +55,7 @@
     <name>App</name>
     <message>
         <source>commandLineOptionVerbose</source>
-        <translation>Während der Verwendung nach stdout debug informationen ausgeben</translation>
+        <translation>Während der Verwendung Debuginformationen auf stdout ausgeben</translation>
     </message>
     <message>
         <source>commandLineOptionConfig</source>
@@ -551,7 +551,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>confirmForward</source>
         <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie diese Nachricht weiterleiten?</translation>
     </message>
 </context>
 <context>
@@ -579,17 +579,17 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>deleteConferenceInfo</source>
         <extracomment>&apos;Do you really want do delete this meeting?&apos; : Warning message to confirm the deletion of a meeting.</extracomment>
-        <translation>Wirklich dieses Treffen löschen?</translation>
+        <translation>Diese Besprechung wirklich löschen?</translation>
     </message>
     <message>
         <source>cancelConferenceInfo</source>
         <extracomment>&apos;Do you really want do cancel this meeting?&apos; : Warning message to confirm the cancellation of a meeting.</extracomment>
-        <translation>Wirklich dieses Treffen stornieren?</translation>
+        <translation>Diese Besprechung wirklich absagen?</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS Title for cancelled meetings</extracomment>
-        <translation>Das Treffen wurde storniert</translation>
+        <translation>Besprechung wurde abgesagt</translation>
     </message>
 </context>
 <context>
@@ -597,7 +597,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>icsDescription</source>
         <extracomment>&apos;Description&apos; : Title for the meeting description.</extracomment>
-        <translation type="unfinished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <source>icsJoinButton</source>
@@ -607,25 +607,25 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>icsMeetingInvite</source>
         <extracomment>&apos;Meeting invite&apos; : ICS title that is an invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besprechungseinladung</translation>
     </message>
     <message numerus="yes">
         <source>icsParticipants</source>
         <extracomment>&apos;%1 participant&apos; : number(=%1) of participant.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Teilnehmer</numerusform>
+            <numerusform>%1 Teilnehmer</numerusform>
         </translation>
     </message>
     <message>
         <source>icsUpdatedMeetingInvite</source>
         <extracomment>&apos;Meeting has been updated&apos; : ICS title for an updated invitation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besprechung wurde aktualisiert</translation>
     </message>
     <message>
         <source>icsCancelledMeetingInvite</source>
         <extracomment>&apos;Meeting has been cancelled&apos; : ICS title for a cancelled invitation.</extracomment>
-        <translation type="unfinished">Das Treffen wurde storniert</translation>
+        <translation>Besprechung wurde abgesagt</translation>
     </message>
 </context>
 <context>
@@ -657,7 +657,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>deliveryError</source>
         <extracomment>&quot;Error while sending to %1&quot; Little message to indicate the state of a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Senden an %1</translation>
         <extra-Context>%1 is someone. The state is that the message hasn&apos;t been delivered because of an error.</extra-Context>
     </message>
 </context>
@@ -666,7 +666,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>Forwarded</source>
         <extracomment>&apos;Forwarded&apos; : Header on a message that contains a forward.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Weitergeleitet</translation>
     </message>
 </context>
 <context>
@@ -713,12 +713,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>menuViewContact</source>
         <extracomment>&apos;View contact&apos; : Menu item to view the contact.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kontakt ansehen</translation>
     </message>
     <message>
         <source>menuAddContact</source>
         <extracomment>&apos;Add to contacts&apos; : Menu item to add the contact to address book.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zu Kontakten hinzufügen</translation>
     </message>
 </context>
 <context>
@@ -792,11 +792,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>callFunctionDescription</source>
-        <translation>Initiiere Anruf zur SIP-Adresse.</translation>
+        <translation>Startet einen Anruf zur SIP-Adresse.</translation>
     </message>
     <message>
         <source>initiateConferenceFunctionDescription</source>
-        <translation>Initiiere eine Konferenz.</translation>
+        <translation>Startet eine Besprechung.</translation>
     </message>
     <message>
         <source>joinConferenceFunctionDescription</source>
@@ -812,11 +812,11 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>acceptFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Nimmt den aktuellen Anruf an.</translation>
     </message>
     <message>
         <source>declineFunctionDescription</source>
-        <translation type="unfinished"></translation>
+        <translation>Lehnt den aktuellen Anruf ab.</translation>
     </message>
 </context>
 <context>
@@ -850,21 +850,21 @@ Server URL ist nicht konfiguriert.</translation>
     <name>Conference</name>
     <message>
         <source>conferenceTitle</source>
-        <translation>KONFERENZ</translation>
+        <translation>BESPRECHUNG</translation>
     </message>
 </context>
 <context>
     <name>ConferenceControls</name>
     <message>
         <source>conference</source>
-        <translation>KONFERENZ</translation>
+        <translation>BESPRECHUNG</translation>
     </message>
 </context>
 <context>
     <name>ConferenceManager</name>
     <message>
         <source>conferenceManagerDescription</source>
-        <translation>Verwalten Sie die Teilnehmer Ihrer Konferenz.</translation>
+        <translation>Verwalten Sie die Teilnehmer Ihrer Besprechung.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -880,27 +880,27 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>conferencesTitle</source>
         <extracomment>&apos;Meetings&apos; : Conference list title.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besprechungen</translation>
     </message>
     <message>
         <source>conferencesEndedFilter</source>
         <extracomment>&apos;Finished&apos; : Filter meetings on end status.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beendet</translation>
     </message>
     <message>
         <source>conferencesScheduledFilter</source>
         <extracomment>&apos;Scheduled&apos; : Filter meetings on scheduled status.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Geplant</translation>
     </message>
     <message>
         <source>conferencesCopiedURL</source>
         <extracomment>&apos;The meeting URL has been copied&apos; : Message text in a banner to warn the user that the URL have been copied to the clipboard.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besprechungs-URL wurde kopiert</translation>
     </message>
     <message>
         <source>conferencesDeleted</source>
         <extracomment>&apos;The meeting has been deleted&apos; : Message text in a banner to warn the user that the meeting has been deleted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Diese Besprechungen wurde gelöscht</translation>
     </message>
 </context>
 <context>
@@ -1001,7 +1001,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>BENUTZERNAME(N)</translation>
     </message>
     <message>
         <source>displayName</source>
@@ -1101,52 +1101,52 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>conversationMenuDelete</source>
         <extracomment>&apos;Delete history&apos; : Item menu to delete the chat&apos;s history</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verlauf löschen</translation>
     </message>
     <message>
         <source>conversationMenuViewContact</source>
         <extracomment>&apos;View contact&apos; : Item menu to view the contact in address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kontakt anzeigen</translation>
     </message>
     <message>
         <source>conversationMenuAddContact</source>
         <extracomment>&apos;Add contact&apos; : Item menu to add the contact to address book</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kontakt hinzufügen</translation>
     </message>
     <message>
         <source>conversationMenuScheduleMeeting</source>
         <extracomment>&apos;Schedule a meeting&apos; : Item menu to schedule a meeting with the chat participants.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eine Besprechung planen</translation>
     </message>
     <message>
         <source>conversationMenuDeactivate</source>
         <extracomment>&apos;Disable notifications&apos; : Item menu to disable chat&apos;s notifications</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen ausschalten</translation>
     </message>
     <message>
         <source>conversationMenuActivate</source>
         <extracomment>&apos;Enable notifications&apos; : Item menu to enable chat&apos;s notifications</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen einschalten</translation>
     </message>
     <message>
         <source>groupCallConfirmTitle</source>
         <extracomment>&apos;Group call&apos; : Title for a group call confirmation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gruppenanruf</translation>
     </message>
     <message>
         <source>groupCallConfirmDescription</source>
         <extracomment>&apos;Do you want to start a group call?&lt;br/&gt;Everyone in this group will receive a call to join the meeting.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie einen Gruppenanruf starten?&lt;br/&gt;Jeder in dieser Gruppe erhält einen Anruf, um der Besprechung beizutreten.</translation>
     </message>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished">ABBRECHEN</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Start button</extracomment>
-        <translation type="unfinished">START</translation>
+        <translation>Starten</translation>
     </message>
 </context>
 <context>
@@ -1243,17 +1243,17 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>dateTimeDialogDate</source>
         <extracomment>&apos;Select date&apos; : Menu title to show select date.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Datum wählen</translation>
     </message>
     <message>
         <source>dateTimeDialogTime</source>
         <extracomment>&apos;Select time&apos; : Menu title to show select time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zeit wählen</translation>
     </message>
     <message>
         <source>dateTimeDialogDateTime</source>
         <extracomment>&apos;Select date and time&apos; : Menu title to show select date and time.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Datum und Zeit wählen</translation>
     </message>
 </context>
 <context>
@@ -1261,7 +1261,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>paused</source>
         <extracomment>&apos;paused&apos; : Pause state on sticker, next to username.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>unterbrochen</translation>
     </message>
 </context>
 <context>
@@ -1284,12 +1284,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>emojisLastUsed</source>
         <extracomment>&apos;Last used&apos; : Emoji title for last used section.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zuletzt verwendet</translation>
     </message>
     <message>
         <source>emojisAll</source>
         <extracomment>&apos;All&apos; Emoji title for all items.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Alle</translation>
     </message>
 </context>
 <context>
@@ -1414,32 +1414,32 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Letzte Fernkonfiguration fehlgeschlagen</translation>
     </message>
     <message>
         <source>generateLabel</source>
         <extracomment>&apos;generate&apos; : title button to generate a code.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Generieren</translation>
     </message>
     <message>
         <source>or</source>
         <extracomment>&apos;or&apos; : conjunction to choose between options.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>oder</translation>
     </message>
     <message>
         <source>remoteProvisioningHow</source>
         <extracomment>&apos;Click on %1 to obtain your remote provisioning QR code&apos; : Describe how to get a remote provisioning QR code by clicking on %1 button (1% is the text in button)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf %1, um Ihren QR Code für die Fernkonfiguration zu erhalten</translation>
     </message>
     <message>
         <source>scanQRCode</source>
         <extracomment>&apos;Scan the QR code with your phone&apos; : Explain how to use the QRCode by flasing it.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Scannen Sie den QR Code mit Ihrem Telefon</translation>
     </message>
     <message>
         <source>scanQRCodeWhere</source>
         <extracomment>&apos;In your app go in assistant - QR code provisioning&apos; : Describe where to flash the QRCode in the mobile application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gehen Sie in Ihrer App auf Assistent - QR Code Provisionierung/Fernkonfiguration</translation>
     </message>
 </context>
 <context>
@@ -1447,12 +1447,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>fileTransferCancel</source>
         <extracomment>&apos;Cancel&apos; : Message link to cancel a transfer (upload/download)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>fileTransferDownload</source>
         <extracomment>&apos;Download&apos; : Message link to download a file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Download</translation>
     </message>
 </context>
 <context>
@@ -1460,12 +1460,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>exportAsTitle</source>
         <extracomment>&quot;Export As...&quot;: Title of a file dialog to export a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als…</translation>
     </message>
     <message>
         <source>loadFile</source>
         <extracomment>&quot;Load&quot;: Title of a file dialog to load a file.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Laden</translation>
     </message>
 </context>
 <context>
@@ -1543,7 +1543,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You have paused the call.&apos; : Pause message in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sie haben den Anruf unterbrochen.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1553,12 +1553,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aufzeichnung starten</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aufzeichnung beenden</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
@@ -1573,7 +1573,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Anruf wird aufgezeichnet.</translation>
     </message>
     <message>
         <source>incallWaitParticipantMessage</source>
@@ -1611,12 +1611,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallStartRecordTooltip</source>
         <extracomment>&apos;Start recording&apos; : Tootltip when straing record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aufzeichnung starten</translation>
     </message>
     <message>
         <source>incallStopRecordTooltip</source>
         <extracomment>&apos;Stop Recording&apos; : Tooltip when stopping record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aufzeichnung beenden</translation>
     </message>
     <message>
         <source>incallSnapshotTooltip</source>
@@ -1631,7 +1631,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Anruf wird aufgezeichnet.</translation>
     </message>
 </context>
 <context>
@@ -1639,27 +1639,27 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallMenuMultimedia</source>
         <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Multimedia-Parameter</translation>
     </message>
     <message>
         <source>incallMenuLayout</source>
         <extracomment>&apos;Change layout&apos; : Menu title to change the conference layout.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Layout ändern</translation>
     </message>
     <message>
         <source>incallMenuInvite</source>
         <extracomment>&apos;Invite participants&apos; : Menu title to invite participants in admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Teilnehmer einladen</translation>
     </message>
     <message>
         <source>incallMenuParticipants</source>
         <extracomment>&apos;Participants list&apos; : Menu title to show participants in non-admin mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Teilnehmerliste</translation>
     </message>
     <message>
         <source>incallMenuTitle</source>
         <extracomment>&apos;Settings&apos; : Main menu title for settings.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <source>incallMenuGridLayout</source>
@@ -1760,7 +1760,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>dontAskAgain</source>
         <extracomment>&quot;Don&apos;t ask again&quot; : Checkbox text to avoid showing the popup information on encryptions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nicht mehr fragen</translation>
     </message>
 </context>
 <context>
@@ -1787,7 +1787,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>defaultMessage</source>
-        <translation>%1 möchte Sie bei %2 einladen !</translation>
+        <translation>%1 möchte Sie zu %2 einladen !</translation>
     </message>
     <message>
         <source>defaultSubject</source>
@@ -1795,7 +1795,7 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>forcedMessage</source>
-        <translation>Laden Sie die Anwendung auf Ihren Computer um kostenlos mit anderen Linphone Benutzern zu telefonieren und zu chatten.
+        <translation>Laden Sie die Anwendung auf Ihren Computer, um kostenlos mit anderen Linphone Benutzern zu telefonieren und zu chatten.
 
 Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 </translation>
@@ -1878,7 +1878,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>mainWindowConferencesTitle</source>
         <extracomment>&apos;Meetings&apos; : Meeting title for main window.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besprechungen</translation>
     </message>
     <message>
         <source>newChatRoomUriMissing</source>
@@ -1923,7 +1923,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aufzeichnungen</translation>
     </message>
 </context>
 <context>
@@ -1938,7 +1938,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>quit</source>
-        <translation>Aufhören</translation>
+        <translation>Schließen</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
@@ -1948,7 +1948,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aufzeichnungen</translation>
     </message>
 </context>
 <context>
@@ -1970,12 +1970,12 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>MultimediaParametersDialog</name>
     <message>
         <source>ok</source>
-        <translation type="unfinished">OK</translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <source>menuMultimedia</source>
         <extracomment>&apos;Multimedia parameters&apos; : Menu title to show multimedia devices configuration.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Multimedia-Parameter</translation>
     </message>
 </context>
 <context>
@@ -2059,7 +2059,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation>Betreff eingeben</translation>
+        <translation>Thema eingeben</translation>
     </message>
     <message>
         <source>LastContactsTitle</source>
@@ -2072,12 +2072,12 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished">ABBRECHEN</translation>
+        <translation>ABBRECHEN</translation>
     </message>
     <message>
         <source>missingSubject</source>
         <extracomment>&apos;You need to fill a subject.&apos; : Tooltip to warn a user on missing field.</extracomment>
-        <translation type="unfinished">Sie müssen ein Thema eintragen.</translation>
+        <translation>Sie müssen ein Thema eintragen.</translation>
     </message>
     <message numerus="yes">
         <source>missingParticipants</source>
@@ -2095,17 +2095,17 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceTitle</source>
         <extracomment>&apos;Start a video conference&apos; : Title of a popup about creation of a video conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eine Videokonferenz starten</translation>
     </message>
     <message>
         <source>subjectLabel</source>
         <extracomment>&apos;Subject&apos; : Label of a text field about the subject of the conference</extracomment>
-        <translation type="unfinished">Betreff</translation>
+        <translation>Thema</translation>
     </message>
     <message>
         <source>subjectPlaceholder</source>
         <extracomment>&apos;Give a subject&apos; : Placeholder in a form about setting a subject</extracomment>
-        <translation type="unfinished">Betreff eingeben</translation>
+        <translation>Thema eingeben</translation>
     </message>
     <message>
         <source>subjectTooltip</source>
@@ -2121,7 +2121,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantSelectionPlaceholder</source>
         <extracomment>&apos;Select participants&apos; : Placeholder for a search on participant to add them in selection.</extracomment>
-        <translation type="unfinished">Wähle Teilnehmer</translation>
+        <translation>Teilnehmer auswählen</translation>
     </message>
     <message>
         <source>participantSelectionTooltip</source>
@@ -2131,7 +2131,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Administrator</translation>
+        <translation>Administrator</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
@@ -2143,82 +2143,82 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>requiredField</source>
         <extracomment>&apos;Required&apos; : Word relative to a star to explain that it is a requirement (Field form)</extracomment>
-        <translation type="unfinished">Erforderlich</translation>
+        <translation>Erforderlich</translation>
     </message>
     <message>
         <source>launchButton</source>
         <extracomment>&apos;Launch&apos; : Launch button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>START</translation>
     </message>
     <message>
         <source>updateButton</source>
         <extracomment>&apos;Update&apos; : Update button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <source>updateConferenceTitle</source>
         <extracomment>&apos;Update the meeting&apos; : Title of a popup about updating configuration of a video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Besprechung aktualisieren</translation>
     </message>
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie Ihre Besprechung planen?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
         <extracomment>&apos;Date&apos; : Date label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Datum</translation>
     </message>
     <message>
         <source>newConferenceTimeTitle</source>
         <extracomment>&apos;Time&apos; : Time label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Uhrzeit</translation>
     </message>
     <message>
         <source>newConferenceDurationTitle</source>
         <extracomment>&apos;Duration&apos; : Duration label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dauer</translation>
     </message>
     <message>
         <source>newConferenceTimezoneTitle</source>
         <extracomment>&apos;Timezone&apos; : Timezone label.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zeitzone</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTitle</source>
         <extracomment>&apos;Add a description&apos; : Label of a text field about the description of the conference</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung hinzufügen</translation>
     </message>
     <message>
         <source>newConferenceDescriptionPlaceholder</source>
         <extracomment>&apos;Description&apos; : Placeholder in a form about setting a description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <source>newConferenceDescriptionTooltip</source>
         <extracomment>&apos;This description will describe the meeting&apos; : Explanation about the description of the meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Text beschreibt die Besprechung</translation>
     </message>
     <message>
         <source>newConferenceSendLinphoneInviteLabel</source>
         <extracomment>&apos;Send invite via %1&apos; : Label for checkbox for sending invitations with the application. %1 is the application name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sende Einladung via %1</translation>
     </message>
     <message>
         <source>newConferenceSendEmailInviteLabel</source>
         <extracomment>&apos;Send invite via Email&apos; : Label for checkbox for sending invitations with mailer.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sende Einladung via E-Mail</translation>
     </message>
     <message>
         <source>busyOperations</source>
         <extracomment>&apos;Operations in progress, please wait&apos; : Waiting message till the end of operations when creating a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vorgang läuft, bitte warten</translation>
     </message>
     <message>
         <source>confirmFormExit</source>
         <extracomment>&apos;Do you want to close this form ?&apos; : confirmation text for exiting the creatoin form</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wollen Sie dieses Formular schließen?</translation>
     </message>
 </context>
 <context>
@@ -2281,9 +2281,9 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message numerus="yes">
         <source>unreadMessageNotice</source>
         <extracomment>&apos;%1 unread messages&apos; : Little message to show on an event where unread messages begin.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 ungelesene Nachricht</numerusform>
+            <numerusform>%1 ungelesene Nachrichten</numerusform>
         </translation>
     </message>
 </context>
@@ -2300,17 +2300,17 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newChatRoomMessages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Neue Nachrichten erhalten!</translation>
     </message>
     <message>
         <source>newConferenceInvitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Besprechungseinladung erhalten!</translation>
     </message>
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sprachnachricht erhalten!</translation>
     </message>
 </context>
 <context>
@@ -2369,7 +2369,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addParticipantTooltip</source>
         <extracomment>&apos;Search participants in your contact list in order to invite them into the chat room.&apos;</extracomment>
-        <translation type="unfinished">Suche nach Teilnehmern in der Kontaktliste um sie in den Chatraum einzuladen.</translation>
+        <translation>Suche nach Teilnehmern in Ihrer Kontaktliste, um sie in den Chatraum einzuladen.</translation>
         <extra-Tooltip>Explanation for inviting the selected participants into chat room</extra-Tooltip>
     </message>
     <message>
@@ -2380,13 +2380,13 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>adminStatus</source>
         <extracomment>&apos;Admin&apos; : Admin(istrator)</extracomment>
-        <translation type="unfinished">Administrator</translation>
+        <translation>Administrator</translation>
         <extra-one>word for admin status</extra-one>
     </message>
     <message>
         <source>participantsListRemoveTooltip</source>
         <extracomment>&apos;Remove this participant from the list&apos; : Tootltip to explain that the action will lead to remove the participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Entferne diesen Teilnehmer von der Liste</translation>
     </message>
 </context>
 <context>
@@ -2400,7 +2400,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantsMe</source>
         <extracomment>&apos;Me&apos; : One word for myself.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ich</translation>
     </message>
 </context>
 <context>
@@ -2411,103 +2411,103 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>View</source>
-        <translation type="unfinished"></translation>
+        <translation>Ansehen</translation>
     </message>
     <message>
         <source>Zoom In</source>
-        <translation type="unfinished"></translation>
+        <translation>Einzoomen</translation>
     </message>
     <message>
         <source>Ctrl+=</source>
-        <translation type="unfinished"></translation>
+        <translation>Strg+=</translation>
     </message>
     <message>
         <source>Zoom Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Auszoomen</translation>
     </message>
     <message>
         <source>Ctrl+-</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+-</translation>
     </message>
     <message>
         <source>Previous Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorherige Seite</translation>
     </message>
     <message>
         <source>PgUp</source>
-        <translation type="unfinished"></translation>
+        <translation>BildAuf</translation>
     </message>
     <message>
         <source>Next Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächste Seite</translation>
     </message>
     <message>
         <source>PgDown</source>
-        <translation type="unfinished"></translation>
+        <translation>BildAb</translation>
     </message>
     <message>
         <source>Continuous</source>
-        <translation type="unfinished"></translation>
+        <translation>Fortlaufend</translation>
     </message>
     <message>
         <source>Zoom...</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom…</translation>
     </message>
     <message>
         <source>Fit Width</source>
-        <translation type="unfinished"></translation>
+        <translation>Breite einpassen</translation>
     </message>
     <message>
         <source>Fit Page</source>
-        <translation type="unfinished"></translation>
+        <translation>Seite einpassen</translation>
     </message>
     <message>
         <source>25%</source>
-        <translation type="unfinished"></translation>
+        <translation>25%</translation>
     </message>
     <message>
         <source>50%</source>
-        <translation type="unfinished"></translation>
+        <translation>50%</translation>
     </message>
     <message>
         <source>70%</source>
-        <translation type="unfinished"></translation>
+        <translation>70%</translation>
     </message>
     <message>
         <source>85%</source>
-        <translation type="unfinished"></translation>
+        <translation>85%</translation>
     </message>
     <message>
         <source>100%</source>
-        <translation type="unfinished"></translation>
+        <translation>100%</translation>
     </message>
     <message>
         <source>125%</source>
-        <translation type="unfinished"></translation>
+        <translation>125%</translation>
     </message>
     <message>
         <source>150%</source>
-        <translation type="unfinished"></translation>
+        <translation>150%</translation>
     </message>
     <message>
         <source>175%</source>
-        <translation type="unfinished"></translation>
+        <translation>175%</translation>
     </message>
     <message>
         <source>200%</source>
-        <translation type="unfinished"></translation>
+        <translation>200%</translation>
     </message>
     <message>
         <source>300%</source>
-        <translation type="unfinished"></translation>
+        <translation>300%</translation>
     </message>
     <message>
         <source>400%</source>
-        <translation type="unfinished"></translation>
+        <translation>400%</translation>
     </message>
     <message>
         <source>Export as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als…</translation>
     </message>
 </context>
 <context>
@@ -2535,26 +2535,26 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>presenceOnline</source>
         <extracomment>&apos;Online⁣&apos;: Presence text</extracomment>
-        <translation type="unfinished">Verfügbar</translation>
+        <translation>Online</translation>
     </message>
     <message>
         <source>presenceLastSeenToday</source>
         <extracomment>&apos;Online today at %1&apos; : Presence text for today (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Online heute um %1</translation>
     </message>
     <message>
         <source>presenceLastSeenYesterday</source>
         <extracomment>&apos;Online yesterday at %1&apos; : Presence text for yesterday (%1 is the hour)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Online gestern um %1</translation>
     </message>
     <message>
         <source>presenceLastSeen</source>
         <extracomment>&apos;Online on %1&apos; : Presence text for latter days (%1 is a date)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Online am %1</translation>
     </message>
     <message>
         <source>presenceAway</source>
-        <translation type="unfinished">Abwesend</translation>
+        <translation>Abwesend</translation>
     </message>
 </context>
 <context>
@@ -2580,17 +2580,17 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>titleNoRecordings</source>
         <extracomment>&apos;No recordings&apos; : Title of an empty list of records.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Keine Aufzeichnungen</translation>
     </message>
     <message>
         <source>recordingsVocalLabel</source>
         <extracomment>&apos;Vocal&apos; : Label for recording type that is a vocal message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sprache</translation>
     </message>
     <message>
         <source>recordingsDelete</source>
         <extracomment>&apos;Are you sure you want to delete this item?&apos; : Confirmation message for removing a record.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie diesen Eintrag löschen möchten?</translation>
     </message>
 </context>
 <context>
@@ -2601,7 +2601,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsFolderLabel</source>
-        <translation>Protokolleordner</translation>
+        <translation>Protokollordner</translation>
     </message>
     <message>
         <source>sendLogs</source>
@@ -2609,11 +2609,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>logsUploadUrlLabel</source>
-        <translation>Server URL für Log-Upload</translation>
+        <translation>Server URL für Protokoll-Upload</translation>
     </message>
     <message>
         <source>logsUploadFailed</source>
-        <translation>Logs konnten nicht hochgeladen werden.</translation>
+        <translation>Protokolle konnten nicht hochgeladen werden.</translation>
     </message>
     <message>
         <source>logsEnabledLabel</source>
@@ -2625,7 +2625,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>cleanLogsDescription</source>
-        <translation>Sind Sie sicher, dass sie alle Logs löschen möchten?</translation>
+        <translation>Sind Sie sicher, dass sie alle Protokolle löschen möchten?</translation>
     </message>
     <message>
         <source>developerSettingsTitle</source>
@@ -2655,7 +2655,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>viewlogs</source>
-        <translation type="unfinished"></translation>
+        <translation>ANSEHEN</translation>
     </message>
     <message>
         <source>vfsTitle</source>
@@ -2665,40 +2665,40 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsEncryption</source>
         <extracomment>&apos;Encrypt all the application&apos; : Label to encrypt application</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gesamte Anwendung verschlüsseln</translation>
     </message>
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie die Verschlüsselung deaktivieren möchten? Die Anwendung wird beendet und alle Ihre Daten sind verloren. Sie müssen Sie löschen, bevor Sie die Anwendung verwenden können.</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie die Verschlüsselung aktivieren möchten? Sie können dies nicht rückgängig machen, ohne ALLE Ihre Daten zu verlieren.</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>deleteData</source>
         <extracomment>&apos;Delete data&apos; : Action to delete all data.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Daten löschen</translation>
     </message>
     <message>
         <source>confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestätigen</translation>
     </message>
     <message>
         <source>vfsDeletion</source>
         <extracomment>&apos;The application will delete your application data files. Do you confirm ?&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Anwendung wird alle Ihre Dateien mit Anwendungsdaten löschen. Stimmen Sie zu?</translation>
     </message>
     <message>
         <source>fullLogsEnabledLabel</source>
         <extracomment>&apos;Full logs&apos; : label for an option to activate all logs (debug and traces)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vollständige Protokolle</translation>
     </message>
 </context>
 <context>
@@ -2741,11 +2741,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>captureGainLabel</source>
-        <translation>Capture Gain</translation>
+        <translation>Aufnahme-Verstärkung</translation>
     </message>
     <message>
         <source>audioTestLabel</source>
-        <translation>Erfassungsebene</translation>
+        <translation>Aufnahmepegel</translation>
     </message>
     <message>
         <source>audioSettingsInCallWarning</source>
@@ -3079,7 +3079,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>debugTooltip</source>
-        <translation>Bei LDAP-Anfragen ausführliche Logeinträge Logdatei schreiben (hilfreich um TLS-Verbindungen zu untersuchen).</translation>
+        <translation>Bei LDAP-Anfragen ausführliche Einträge in Protokolldatei schreiben (hilfreich um TLS-Verbindungen zu untersuchen).</translation>
     </message>
 </context>
 <context>
@@ -4000,7 +4000,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeigename (optional)</translation>
     </message>
 </context>
 <context>
@@ -4015,7 +4015,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>displayNameLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzeigename (optional)</translation>
     </message>
 </context>
 <context>
@@ -4056,7 +4056,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>understandAction</source>
         <extracomment>&apos;I understand&apos; : Popup confirmation for a warning</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ich verstehe</translation>
     </message>
     <message>
         <source>warningFeatures</source>
@@ -4094,7 +4094,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button.</extracomment>
-        <translation type="unfinished">ABBRECHEN</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>startButton</source>
@@ -4104,17 +4104,17 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>endCallStatus</source>
         <extracomment>&quot;Call ended&quot; : status of the call in waiting room when the call end.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Anruf beendet</translation>
     </message>
     <message>
         <source>outgoingCallStatus</source>
         <extracomment>&quot;Outgoing call&quot; : status of the call in waiting room when user is calling.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ausgehender Anruf</translation>
     </message>
     <message>
         <source>incomingCallStatus</source>
         <extracomment>&quot;Incoming call&quot; : status of the call in waiting room when user receive a call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ankommender Anruf</translation>
     </message>
 </context>
 <context>
@@ -4122,11 +4122,11 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>confirmSas</source>
         <extracomment>&apos;To raise the security level, you can check the following codes with your correspondent.&apos; : Explanation to do a security check.</extracomment>
-        <translation>Bestätige folgende SAS mit der Gegenstelle.</translation>
+        <translation>Um das Sicherheitsniveau zu erhöhen, können Sie die folgenden Codes mit Ihrem Kontakt abgleichen.</translation>
     </message>
     <message>
         <source>codeA</source>
-        <translation>Sagen:</translation>
+        <translation>Sagen Sie:</translation>
     </message>
     <message>
         <source>codeB</source>
@@ -5047,62 +5047,62 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>utils</name>
     <message>
         <source>downloadCodecDescription</source>
-        <translation type="unfinished">Möchten Sie %1 (%2) herunterladen?</translation>
+        <translation>Möchten Sie %1 (%2) herunterladen?</translation>
     </message>
     <message numerus="yes">
         <source>formatYears</source>
         <extracomment>&apos;%1 year&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Jahr</numerusform>
+            <numerusform>%1 Jahre</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMonths</source>
         <extracomment>&apos;%1 month&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Monat</numerusform>
+            <numerusform>%1 Monate</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatWeeks</source>
         <extracomment>&apos;%1 week&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Woche</numerusform>
+            <numerusform>%1 Wochen</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatDays</source>
         <extracomment>&apos;%1 day&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Tag</numerusform>
+            <numerusform>%1 Tage</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatHours</source>
         <extracomment>&apos;%1 hour&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Stunde</numerusform>
+            <numerusform>%1 Stunden</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatMinutes</source>
         <extracomment>&apos;%1 minute&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Minute</numerusform>
+            <numerusform>%1 Minuten</numerusform>
         </translation>
     </message>
     <message numerus="yes">
         <source>formatSeconds</source>
         <extracomment>&apos;%1 second&apos;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 Sekunde</numerusform>
+            <numerusform>%1 Sekunden</numerusform>
         </translation>
     </message>
 </context>
