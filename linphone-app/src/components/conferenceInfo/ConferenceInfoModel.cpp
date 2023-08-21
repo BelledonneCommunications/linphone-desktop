@@ -185,7 +185,7 @@ QString ConferenceInfoModel::displayNamesToString()const{
 
 QString ConferenceInfoModel::getUri() const{
 	auto address = mConferenceInfo->getUri();
-	return address->isValid() && !address->getDomain().empty() ? QString::fromStdString(address->asStringUriOnly()) : "";
+	return address && address->isValid() && !address->getDomain().empty() ? QString::fromStdString(address->asStringUriOnly()) : "";
 }
 
 bool ConferenceInfoModel::isScheduled() const{

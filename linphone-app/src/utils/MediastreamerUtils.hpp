@@ -78,7 +78,7 @@ namespace MediastreamerUtils {
 		bool isRunning() const {
 			return running;
 		}
-	protected:
+
 		void init();
 		void destroy();
 

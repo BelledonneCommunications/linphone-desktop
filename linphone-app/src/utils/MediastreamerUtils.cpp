@@ -50,13 +50,30 @@ SimpleCaptureGraph::~SimpleCaptureGraph()
 {
 	destroy();
 }
+static void device_notify_cb(void *user_data, MSFilter *f, unsigned int event, void *eventdata) {
+	if (event == MS_FILTER_OUTPUT_FMT_CHANGED) {
+		SimpleCaptureGraph * graph = (SimpleCaptureGraph *)user_data;
+		int captureRate, playbackRate, captureChannels, playbackChannels;
+		ms_filter_call_method(graph->audioCapture,MS_FILTER_GET_SAMPLE_RATE,&captureRate);
+		ms_filter_call_method(graph->audioSink,MS_FILTER_GET_SAMPLE_RATE,&playbackRate);
+		ms_filter_call_method(graph->audioCapture,MS_FILTER_GET_NCHANNELS,&captureChannels);
+		ms_filter_call_method(graph->audioSink,MS_FILTER_GET_NCHANNELS,&playbackChannels);
+		
+		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_SAMPLE_RATE,&captureRate);
+		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_OUTPUT_SAMPLE_RATE,&playbackRate);
+		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_NCHANNELS,&captureChannels);
+		ms_filter_call_method(graph->resamplerFilter,MS_FILTER_SET_OUTPUT_NCHANNELS,&playbackChannels);
+	}
+}
 
 void SimpleCaptureGraph::init() {
 	if (!audioCapture) {
 		audioCapture = ms_snd_card_create_reader(captureCard);
+		ms_filter_add_notify_callback(audioCapture, device_notify_cb,this,FALSE);
 	}
 	if (!audioSink) {
 		audioSink = ms_snd_card_create_writer(playbackCard);
+		ms_filter_add_notify_callback(audioSink, device_notify_cb,this,FALSE);
 	}
 	if (!captureVolumeFilter) {
 		captureVolumeFilter = ms_factory_create_filter(msFactory, MS_VOLUME_ID);

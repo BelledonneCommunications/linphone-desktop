@@ -25,6 +25,7 @@
 #include "components/contact/VcardModel.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/friend/FriendListListener.hpp"
+#include "utils/Utils.hpp"
 
 #include "ContactsListModel.hpp"
 

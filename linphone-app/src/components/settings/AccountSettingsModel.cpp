@@ -96,7 +96,7 @@ shared_ptr<linphone::Address> AccountSettingsModel::getUsedSipAddress () const {
 	return nullptr;
 }
 
-void AccountSettingsModel::setUsedSipAddress (const shared_ptr<const linphone::Address> &address) {
+void AccountSettingsModel::setUsedSipAddress (const shared_ptr<linphone::Address> &address) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	shared_ptr<linphone::Account> account = core->getDefaultAccount();
 	if( account){
