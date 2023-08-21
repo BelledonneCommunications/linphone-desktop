@@ -2344,7 +2344,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation>Message vocal reçu!</translation>
+        <translation>Message vocal reçu !</translation>
     </message>
     <message>
         <source>voiceMessageReact</source>
@@ -3728,7 +3728,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>displayUsernamesLabel</source>
         <extracomment>&apos;Display only usernames&apos; : Option text to display only usernames from SIP addresses.</extracomment>
-        <translation>Noms d&apos;utilisateurs uniquement.</translation>
+        <translation>Noms d&apos;utilisateurs uniquement</translation>
     </message>
     <message>
         <source>displayUsernamesTooltip</source>
