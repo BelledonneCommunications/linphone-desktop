@@ -4,7 +4,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 5.1.0 - undefined
+
+## 5.1.1 - 2023-08-24
+
+### Fixed
+- Windows freeze on Accessibility and with Qt < 5.15.10
+- Update SDK to 5.2.97
+
+## 5.1.0 - 2023-08-23
 
 ### Fixed
 - Primary color for links in chat.
@@ -42,7 +49,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Picture zoom on mouse over.
 
-## 5.0.17 - undefined
+## 5.0.18 - 2023-06-16
+
+### Fixed
+- Robot voice with some devices (SDK fix).
+- Crash from Lime db failure (SDK fix).
+- Loading optimization (SDK fix).
+- Update SDK to 5.2.75
+
+## 5.0.17 - 2023-06-01
 
 ### Fixed
 - Section date timezone and conferences timezone.
