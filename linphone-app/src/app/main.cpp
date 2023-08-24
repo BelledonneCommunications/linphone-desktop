@@ -20,6 +20,7 @@
 
 #include "AppController.hpp"
 #include <qloggingcategory.h>
+
 #ifdef QT_QML_DEBUG
 #include <QQmlDebuggingEnabler>
 #endif
@@ -36,6 +37,15 @@ FILE * gStream = NULL;
 #include "components/vfs/VfsUtils.hpp"
 #endif
 
+#if _WIN32 && QT_VERSION < QT_VERSION_CHECK(5, 15, 10)
+// From 5.15.2 to 5.15.10, Accessibility freeze the application on Windows: Deactivate handlers.
+#define ACCESSBILITY_WORKAROUND
+#include <QAccessibleEvent>
+#include <QAccessible>
+void DummyUpdateHandler(QAccessibleEvent* event) {}
+void DummyRootObjectHandler(QObject*) {}
+#endif
+
 // =============================================================================
 
 void cleanStream(){
@@ -47,8 +57,6 @@ void cleanStream(){
 	}
 #endif
 }
-
-
 
 int main (int argc, char *argv[]) {
 #ifdef __APPLE__
@@ -83,7 +91,12 @@ int main (int argc, char *argv[]) {
 	}
 	
 	qInfo() << QStringLiteral("Running app...");
-	
+
+#ifdef ACCESSBILITY_WORKAROUND
+	QAccessible::installUpdateHandler(DummyUpdateHandler);
+	QAccessible::installRootObjectHandler(DummyRootObjectHandler);
+#endif
+
 	int ret;
 	do {
 		app->initContentApp();
