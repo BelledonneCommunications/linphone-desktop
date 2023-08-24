@@ -451,7 +451,7 @@ Rectangle {
 		iconIsCustom: ! (callModel.isSecured)
 		backgroundRadius: width/2
 		
-		colorSet: callModel.encryption === CallModel.CallEncryptionNone
+		colorSet: !callModel || callModel.encryption === CallModel.CallEncryptionNone
 					? IncallStyle.buttons.unsecure
 					: callModel.isSecured
 						? SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp && callModel.isPQZrtp == CallModel.CallPQStateOn
@@ -462,7 +462,7 @@ Rectangle {
 			window.attachVirtualWindow(Utils.buildLinphoneDialogUri('ZrtpTokenAuthenticationDialog'), {call:callModel})
 		}
 					
-		tooltipText: Logic.makeReadableSecuredString(callModel.encryption !== CallModel.CallEncryptionNone, callModel.securedString)
+		tooltipText: callModel ? Logic.makeReadableSecuredString(callModel.encryption !== CallModel.CallEncryptionNone, callModel.securedString) : ''
 	}
 	RowLayout{
 		visible: callModel.remoteRecording

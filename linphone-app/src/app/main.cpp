@@ -37,8 +37,8 @@ FILE * gStream = NULL;
 #include "components/vfs/VfsUtils.hpp"
 #endif
 
-#if _WIN32 && QT_VERSION < QT_VERSION_CHECK(5, 15, 10)
-// From 5.15.2 to 5.15.10, Accessibility freeze the application on Windows: Deactivate handlers.
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 10)
+// From 5.15.2 to 5.15.10, sometimes, Accessibility freeze the application : Deactivate handlers.
 #define ACCESSBILITY_WORKAROUND
 #include <QAccessibleEvent>
 #include <QAccessible>
