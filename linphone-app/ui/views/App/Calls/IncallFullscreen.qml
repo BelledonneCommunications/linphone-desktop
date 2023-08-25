@@ -400,18 +400,19 @@ Window {
 			isCustom: true
 			iconIsCustom: ! (conference.isSecured && SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp)
 			backgroundRadius: width/2
-			
-			colorSet: conference.isSecured
-							? SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp && callModel.isPQZrtp == CallModel.CallPQStateOn
-								? IncallStyle.buttons.postQuantumSecure
-								: IncallStyle.buttons.secure
-							: IncallStyle.buttons.unsecure
+			colorSet: !callModel || callModel.encryption === CallModel.CallEncryptionNone
+					? IncallStyle.buttons.unsecure
+					: callModel.isSecured
+						? SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp && callModel.isPQZrtp == CallModel.CallPQStateOn
+							? IncallStyle.buttons.postQuantumSecure
+							: IncallStyle.buttons.secure2
+						: IncallStyle.buttons.secure
 						
 			onClicked: if(callModel.encryption === CallModel.CallEncryptionZrtp){
 				window.attachVirtualWindow(Utils.buildLinphoneDialogUri('ZrtpTokenAuthenticationDialog'), {call:callModel})
 			}
 						
-			tooltipText: Logic.makeReadableSecuredString(conference.isSecured, callModel ? callModel.securedString : '')
+			tooltipText: callModel ? Logic.makeReadableSecuredString(callModel.encryption !== CallModel.CallEncryptionNone, callModel.securedString) : ''
 		}
 		RowLayout{
 			visible: callModel && callModel.remoteRecording
@@ -483,7 +484,7 @@ Window {
 							interval: 50
 							repeat: true
 							running: parent.enabled
-							onTriggered: parent.value = callModel.speakerVu
+							onTriggered: if(callModel) parent.value = callModel.speakerVu
 						}
 					}
 					ActionSwitch {

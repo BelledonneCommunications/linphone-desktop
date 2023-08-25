@@ -129,6 +129,7 @@ Item {
 			onRequestResetPosition: resetPosition()
 		}
 	}
+	
 	Item{
 		id: miniViewArea
 		anchors.right: parent.right
@@ -140,6 +141,12 @@ Item {
 //---------------
 		width: 16 * miniViews.cellHeight / 9
 		visible: mainItem.isConferenceReady || !mainItem.isConference
+		property int heightLeft: parent.height - preview.height
+		onHeightLeftChanged: {Qt.callLater(miniViewArea.forceRefresh)}
+		function forceRefresh(){// Force a content refresh via margins. Qt is buggy when managing sizes in ListView.
+			++miniViewArea.anchors.topMargin
+			--miniViewArea.anchors.topMargin
+		}
 		
 		ScrollableListView{
 			id: miniViews
@@ -150,13 +157,8 @@ Item {
 			verticalLayoutDirection: ListView.BottomToTop
 			fitCacheToContent: false
 			property int oldCount : 0// Count changed can be called without a change... (bug?). Use oldCount to avoid it.
-			onCountChanged: {if(oldCount != count){ oldCount = count ; Qt.callLater(forceRefresh)}}
-			onHeightChanged: Qt.callLater(forceRefresh)
-			function forceRefresh(){// Force a content refresh via margins. Qt is buggy when managing sizes in ListView.
-				++miniViewArea.anchors.topMargin
-				--miniViewArea.anchors.topMargin
-			}
-			Component.onCompleted: {Qt.callLater(forceRefresh)}
+			onCountChanged: {if(oldCount != count){ oldCount = count ; Qt.callLater(miniViewArea.forceRefresh)}}
+			Component.onCompleted: {Qt.callLater(miniViewArea.forceRefresh)}
 			delegate:Item{
 					height: visible ? miniViews.cellHeight + 15 : 0
 					width: visible ? miniViews.width : 0

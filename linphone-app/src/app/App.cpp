@@ -336,6 +336,7 @@ void App::processArguments(QHash<QString,QString> args){
 }
 
 static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char *path) {
+	QString qPath(path);
 	qInfo() << QStringLiteral("Creating subwindow: `%1`.").arg(path);
 	
 	QQmlComponent component(engine, QUrl(path));
@@ -351,7 +352,23 @@ static QQuickWindow *createSubWindow (QQmlApplicationEngine *engine, const char 
 	QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
 	object->setParent(engine);
 	
-	return qobject_cast<QQuickWindow *>(object);
+	
+	int totalDuration = 0;
+	int loops = 0;
+	QElapsedTimer timer;
+	timer.start();
+	auto window = qobject_cast<QQuickWindow *>(object);
+	QObject::connect(window, &QQuickWindow::beforeRendering, [totalDuration, loops, timer, path]() mutable{
+		totalDuration += timer.elapsed();
+		++loops;
+		if (totalDuration > 10*1000) {
+			qDebug() << path << " : " << (1000.0 * loops) / totalDuration << "fps";
+			totalDuration = 0;
+			loops = 0;
+		}
+		timer.restart();
+	});
+	return window;
 }
 
 // -----------------------------------------------------------------------------
