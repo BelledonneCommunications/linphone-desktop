@@ -237,6 +237,7 @@ Loader{
 							color: ChatCalendarMessageStyle.participants.colorModel.color
 							font.pointSize: ChatCalendarMessageStyle.participants.pointSize
 							elide: Text.ElideRight
+							visible: SettingsModel.sipDisplayMode != UtilsCpp.SIP_DISPLAY_USERNAME
 						}
 					}
 				}
