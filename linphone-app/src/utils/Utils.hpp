@@ -34,6 +34,7 @@
 
 class QAction;
 class QWidget;
+class DateModel;
 
 // =============================================================================
 
@@ -64,12 +65,29 @@ public:
 	
 	// Qt interfaces	
 	Q_INVOKABLE static bool hasCapability(const QString& address, const LinphoneEnums::FriendCapability& capability, bool defaultCapability = true);
+//***** DATE TIME
 	Q_INVOKABLE static QDateTime addMinutes(QDateTime date, const int& min);
 	static QDateTime getOffsettedUTC(const QDateTime& date);
 	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
 	Q_INVOKABLE static QString toTimeString(QDateTime date, const QString& format = "hh:mm:ss");
 	Q_INVOKABLE static QString toDateString(QDateTime date, const QString& format = "");
+	Q_INVOKABLE static QString toDateString(QDate date, const QString& format = "");
 	Q_INVOKABLE static QString toDisplayString(const QString& str, SipDisplayMode displayMode = SIP_DISPLAY_ALL);
+	Q_INVOKABLE static QDate getCurrentDate();
+	Q_INVOKABLE static DateModel* getCurrentDateModel();
+	Q_INVOKABLE static QDate getMinDate();
+	Q_INVOKABLE static DateModel* getMinDateModel();
+	Q_INVOKABLE static QDate toDate(const QString& str, const QString& format = "yyyy/MM/dd");
+	Q_INVOKABLE static QDate getDate(int year, int month, int day);
+	Q_INVOKABLE static DateModel* toDateModel(const QString& str, const QString& format = "yyyy/MM/dd");
+	Q_INVOKABLE static DateModel* getDateModel(int year, int month, int day);
+	Q_INVOKABLE static int getFullYear(const QDate& date);
+	Q_INVOKABLE static int getMonth(const QDate& date);
+	Q_INVOKABLE static int getDay(const QDate& date);
+	Q_INVOKABLE static int getDayOfWeek(const QDate& date);
+	Q_INVOKABLE static bool equals(const QDate& d1, const QDate& d2);	// Override JS '==' operator
+	Q_INVOKABLE static bool isGreatherThan(const QDate& d1, const QDate& d2); // Override JS '>=' operator
+//*****
 	static void cleanDisplayNameCache(const QString& address = "");// if "", clean all cache
 	Q_INVOKABLE static QString getDisplayName(const QString& address);
 	Q_INVOKABLE static QString getInitials(const QString& username);	// Support UTF32

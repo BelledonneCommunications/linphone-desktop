@@ -20,7 +20,7 @@ DialogPlus {
 	property bool isNew: !conferenceInfoModel || conferenceInfoModel.uri === ''
 	property ConferenceInfoModel conferenceInfoModel: ConferenceInfoModel{}
 	onConferenceInfoModelChanged: {
-		dateField.setDate(conferenceManager.conferenceInfoModel.dateTime);
+		dateField.setDateString(UtilsCpp.toDateString(conferenceManager.conferenceInfoModel.dateTime, 'yyyy/MM/dd'));
 		timeField.setTime(UtilsCpp.toTimeString(conferenceManager.conferenceInfoModel.dateTime , 'hh:mm'));
 		selectedParticipants.setAddresses(conferenceInfoModel)
 	}
@@ -130,7 +130,7 @@ DialogPlus {
 				}
 				conferenceManager.creationState = 1
 				if( scheduledSwitch.checked){
-					conferenceInfoModel.setDateTime(dateField.getDate(), timeField.getTime()+':00', timeZoneField.model.getAt(timeZoneField.currentIndex) )
+					conferenceInfoModel.setDateTime(UtilsCpp.toDate(dateField.getDateString(), 'yyyy/MM/dd'), timeField.getTime()+':00', timeZoneField.model.getAt(timeZoneField.currentIndex) )
 					conferenceInfoModel.duration = durationField.model[durationField.currentIndex].value
 				}else{
 					conferenceInfoModel.isScheduled = false
@@ -181,7 +181,7 @@ DialogPlus {
 	height: window.height - 100
 	width: window.width - 50
 	expandHeight: true
-	
+	Component.onDestruction: gc()	// Free DateModels from memory
 	// ---------------------------------------------------------------------------
 	RowLayout {
 		height: parent.height
@@ -290,21 +290,21 @@ DialogPlus {
 							Layout.preferredWidth: parent.cellWidth; wrapMode: Text.WordWrap; color: NewConferenceStyle.titles.textColor.color; font.weight: NewConferenceStyle.titles.weight; font.pointSize: NewConferenceStyle.titles.pointSize }
 						TextField{id: dateField; Layout.preferredWidth: parent.cellWidth
 							color: NewConferenceStyle.fields.textColor.color; font.weight: NewConferenceStyle.fields.weight; font.pointSize: NewConferenceStyle.fields.pointSize
-							function getDate(){
+							function getDateString(){
 								return text
 							}
-							function setDate(date){
-								text = UtilsCpp.toDateString(date, 'yyyy/MM/dd')
+							function setDateString(dateString){
+								text = dateString
 							}
 							text: conferenceManager.conferenceInfoModel ? UtilsCpp.toDateString(conferenceManager.conferenceInfoModel.dateTime, 'yyyy/MM/dd') : ''
 							icon: 'drop_down_custom'
 							MouseArea{
 								anchors.fill: parent
 								onClicked: {
-									window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {hideOldDates:true, showDatePicker:true, selectedDate: new Date(dateField.getDate())}
+									window.attachVirtualWindow(Utils.buildCommonDialogUri('DateTimeDialog'), {hideOldDates:true, showDatePicker:true, selectedDate: UtilsCpp.toDateModel(dateField.getDateString(), 'yyyy/MM/dd')}
 										, function (status) {
 											if(status){
-												dateField.setDate(status.selectedDate)
+												dateField.setDateString(status.selectedDate.toDateString('yyyy/MM/dd'))
 											}
 										}
 									)

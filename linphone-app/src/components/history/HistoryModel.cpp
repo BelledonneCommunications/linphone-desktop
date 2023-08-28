@@ -111,8 +111,9 @@ QVariant HistoryModel::data (const QModelIndex &index, int role) const {
 		auto &data = mEntries[row].first;
 		return QVariant::fromValue(data);
 	}
-	case Roles::SectionDate:
-		return QVariant::fromValue(mEntries[row].first["receivedTimestamp"].toDate());
+	case Roles::SectionDate:{
+		return QVariant::fromValue(Utils::toDateString(mEntries[row].first["receivedTimestamp"].toDateTime()));
+	}
 	}
 	
 	return QVariant();

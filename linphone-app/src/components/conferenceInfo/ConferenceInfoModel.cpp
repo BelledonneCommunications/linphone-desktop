@@ -133,7 +133,7 @@ void ConferenceInfoModel::initDateTime(){
 		setDateTime(QDateTime::fromMSecsSinceEpoch(0));
 		setDuration(0);
 	}else{
-		setDateTime(QDateTime::currentDateTimeUtc());
+		setDateTime(QDateTime::currentDateTime());
 		setDuration(60);
 	}
 }
@@ -144,7 +144,7 @@ QDateTime ConferenceInfoModel::getDateTimeUtc() const{
 }
 
 QDateTime ConferenceInfoModel::getDateTimeSystem() const{
-	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000, QTimeZone::systemTimeZone());
+	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000, Qt::LocalTime);
 }
 
 int ConferenceInfoModel::getDuration() const{

@@ -141,7 +141,7 @@ Item{
 								horizontalAlignment: Text.AlignHCenter
 								verticalAlignment: Text.AlignVCenter
 								
-								text: UtilsCpp.toDateString(section)
+								text: section
 							}
 						}
 					}
