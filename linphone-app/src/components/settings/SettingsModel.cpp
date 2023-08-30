@@ -114,6 +114,8 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	});
 #endif
 	updateRlsUri();
+	shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+	factory->setDownloadDir(Utils::appStringToCoreString(getDownloadFolder()));
 }
 
 SettingsModel::~SettingsModel()
@@ -1509,7 +1511,7 @@ void SettingsModel::setTextMessageFontSize(const int& size){
 
 QFont SettingsModel::getEmojiFont() const{
 	QString family = Utils::coreStringToAppString(mConfig->getString(UiSection, "emoji_font", Utils::appStringToCoreString(QFont(Constants::DefaultEmojiFont).family())));
-	int pointSize = getTextMessageFontSize();
+	int pointSize = getEmojiFontSize();
 	return QFont(family,pointSize);
 }
 
@@ -1583,7 +1585,10 @@ QString SettingsModel::getDownloadFolder () const {
 
 void SettingsModel::setDownloadFolder (const QString &folder) {
 	QString cleanedFolder = QDir::cleanPath(folder) + QDir::separator();
-	mConfig->setString(UiSection, "download_folder", Utils::appStringToCoreString(cleanedFolder));
+	auto lFolder = Utils::appStringToCoreString(cleanedFolder);
+	mConfig->setString(UiSection, "download_folder", lFolder);
+	shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+	factory->setDownloadDir(lFolder);
 	emit downloadFolderChanged(cleanedFolder);
 }
 

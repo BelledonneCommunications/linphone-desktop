@@ -39,7 +39,11 @@ public:
 	static constexpr char DefaultLocale[] = "en";
 	static constexpr char DefaultFont[] = "Noto Sans";
 	static constexpr int DefaultFontPointSize = 10;
+#ifdef __APPLE__
+	static constexpr char DefaultEmojiFont[] = "Apple Color Emoji";
+#else
 	static constexpr char DefaultEmojiFont[] = "Noto Color Emoji";
+#endif
 	static constexpr int DefaultEmojiFontPointSize = 10;
 	
 	static constexpr size_t MaxLogsCollectionSize = 10485760*5; // 50MB.
