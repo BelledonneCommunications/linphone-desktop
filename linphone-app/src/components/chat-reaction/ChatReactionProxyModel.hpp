@@ -36,19 +36,8 @@ public:
 	Q_PROPERTY(int reactionCount READ getChatReactionCount NOTIFY chatReactionCountChanged)
 	Q_PROPERTY(ChatReactionListModel::GROUP_BY_TYPE groupBy READ getGroupBy WRITE setGroupBy NOTIFY groupByChanged)
 	Q_PROPERTY(QString filter READ getFilter WRITE setFilter NOTIFY filterChanged)
-	/*
-	Q_PROPERTY(FilterContentType filter READ getFilter WRITE setFilter NOTIFY filterChanged)
+	Q_PROPERTY(QStringList bodies READ getBodies NOTIFY bodiesChanged)
 	
-	enum FilterContentType {
-		All,
-		File,
-		Text,
-		Voice,
-		Conference,
-		Unknown
-	};
-	Q_ENUM(FilterContentType)
-	*/
 	ChatMessageModel * getChatMessageModel() const;
 	void setChatMessageModel(ChatMessageModel * message);
 	Q_INVOKABLE void setChatMessageModel(ChatMessageModel * message, ChatReactionListModel::GROUP_BY_TYPE groupByMode);
@@ -61,16 +50,15 @@ public:
 	
 	QString getFilter() const;
 	void setFilter(const QString& filter);
-	//Q_INVOKABLE void setContentListModel(ContentListModel * model);
-	//Q_INVOKABLE void addFile(const QString& path);
-	//Q_INVOKABLE void remove(ContentModel * model);
-	//Q_INVOKABLE void clear();
+	
+	QStringList getBodies() const;
 	
 signals:
 	void chatMessageModelChanged();
 	void chatReactionCountChanged();
 	void groupByChanged();
 	void filterChanged();
+	void bodiesChanged();
 	
 	
 protected:

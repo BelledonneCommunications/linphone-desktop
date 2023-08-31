@@ -262,7 +262,7 @@ void ChatMessageModel::sendChatReaction(const QString& reaction){
 		return;	// TODO : remove return when sending empty emoji will be supported.
 	}
 	chatReaction->send();
-	mChatReactionListModel->updateChatReaction(chatReaction);
+	emit newMessageReaction(mChatMessage, chatReaction);
 }
 
 void ChatMessageModel::deleteEvent(){
@@ -327,7 +327,7 @@ void ChatMessageModel::onMsgStateChanged (const std::shared_ptr<linphone::ChatMe
 }
 
 void ChatMessageModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
-	mChatReactionListModel->updateChatReaction(reaction);
+	emit newMessageReaction(message, reaction);
 }
 
 void ChatMessageModel::onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){

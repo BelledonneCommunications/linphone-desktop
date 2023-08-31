@@ -146,6 +146,7 @@ signals:
 	void fileContentChanged();
 	void remove(ChatMessageModel* model);
 	
+	void newMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
 	
 private:
 	void connectTo(ChatMessageListener * listener);

@@ -27,11 +27,15 @@
 // =============================================================================
 
 ChatReactionListModel::ChatReactionListModel (ChatMessageModel * message, QObject* parent) : ProxyAbstractListModel<QVariantMap>(parent) {
-	mParent = message;
 	setChatMessageModel(message);
 }
 
 void ChatReactionListModel::setChatMessageModel(ChatMessageModel * message) {
+	if(mParent)
+		disconnect(message, &ChatMessageModel::newMessageReaction, this, &ChatReactionListModel::onNewMessageReaction);
+	mParent = message;
+	if(mParent)
+		connect(message, &ChatMessageModel::newMessageReaction, this, &ChatReactionListModel::onNewMessageReaction);
 	if(message){
 		auto reactions = message->getChatMessage()->getReactions();
 		mReactions.clear();
@@ -45,6 +49,7 @@ void ChatReactionListModel::setChatMessageModel(ChatMessageModel * message) {
 			}
 		}
 		updateList();
+		emit bodiesChanged();
 	}
 }
 
@@ -69,41 +74,18 @@ QSharedPointer<ChatReactionModel> ChatReactionListModel::add(std::shared_ptr<lin
 }
 	
 
-void ChatReactionListModel::remove(ChatReactionModel * model){/*
-	int count = 0;
-	for(auto it = mList.begin() ; it != mList.end() ; ++count, ++it) {
-		if( it->get() == model) {
-			removeRow(count, QModelIndex());
-			return;
-		}
-	}*/
+void ChatReactionListModel::remove(ChatReactionModel * model){
 }
 
 void ChatReactionListModel::clear(){
 	resetData();
 }
 
-/*
-QSharedPointer<ChatReactionModel> ChatReactionListModel::getChatReactionModel(const std::shared_ptr<const linphone::ChatMessageReaction>& reaction){
-	for(auto item : mList){
-		auto c = item.objectCast<ChatReactionModel>();
-		if(c->get() == content)
-			return c;
-	}
-	if(content->isFileTransfer() || content->isFile() || content->isFileEncrypted()){
-		for(auto item : mList){// Content object can be different for file (like while data transfer)
-			auto c = item.objectCast<ContentModel>();
-			if(c->getContent()->getFilePath() == content->getFilePath())
-				return c;
-		}
-	}
-	return nullptr;
-}
-*/
 void ChatReactionListModel::updateChatReaction(const std::shared_ptr<const linphone::ChatMessageReaction>& reaction) {
 	QString address = Utils::coreStringToAppString(reaction->getFromAddress()->asStringUriOnly());
 	auto itReaction = mReactions.find(address);
 	int oldReactionCount = mReactions.size();
+	auto oldBodies = getBodies();
 	if( itReaction == mReactions.end()) {// New
 		auto reactionModel = QSharedPointer<ChatReactionModel>::create(reaction);
 		auto body = reactionModel->getBody();
@@ -127,6 +109,7 @@ void ChatReactionListModel::updateChatReaction(const std::shared_ptr<const linph
 	updateList();
 	if(oldReactionCount != mReactions.size())
 		emit chatReactionCountChanged();
+	emit bodiesChanged();
 }
 void ChatReactionListModel::updateList(){
 	QList<QVariantMap> data;
@@ -177,54 +160,19 @@ void ChatReactionListModel::setGroupBy(ChatReactionListModel::GROUP_BY_TYPE mode
 	}
 }
 
-
-/*
-
-void ContentListModel::updateContent(std::shared_ptr<linphone::Content> oldContent, std::shared_ptr<linphone::Content> newContent){
-	int row = 0;
-	for(auto content = mList.begin() ; content != mList.end() ; ++content, ++row){
-		auto contentModel = content->objectCast<ContentModel>();
-		if( contentModel->getContent() == oldContent){
-			mList.replace(row, QSharedPointer<ContentModel>::create(newContent, contentModel->getChatMessageModel()));
-			emit dataChanged(index(row,0), index(row,0));
-			return;
+QStringList ChatReactionListModel::getBodies() const {
+	auto bodies = mBodies.keys();
+	auto reactions = Constants::getReactionsList();
+	std::sort(bodies.begin(), bodies.end(), [&](const QString& a, const QString& b){
+		for(auto reaction : reactions){
+			if( a == reaction) return true;
+			if( b == reaction) return false;
 		}
-	}
+		return a < b;
+	});
+	return bodies;
 }
 
-void ContentListModel::updateContents(ChatMessageModel * messageModel){
-	std::list<std::shared_ptr<linphone::Content>> contents = messageModel->getChatMessage()->getContents() ;
-	int count = 0;
-	beginResetModel();
-	for(auto content : contents){
-		if( count >= mList.size()){// New content
-			mList.insert(count, QSharedPointer<ContentModel>::create(content, messageModel));
-		}else if(mList.at(count).objectCast<ContentModel>()->getContent() != content){	// This content is not at its place
-			int c = count + 1;
-			while( c < mList.size() && mList.at(c).objectCast<ContentModel>()->getContent() != content)
-				++c;
-			if( c < mList.size()){// Found => swap position
-#if QT_VERSION < QT_VERSION_CHECK(5, 13, 0)
-				mList.swap(count, c);
-#else
-				mList.swapItemsAt(count, c);
-#endif
-			}else{// content is new
-				mList.insert(count, QSharedPointer<ContentModel>::create(content, messageModel));	
-			}
-		}
-		++count;
-	}
-	if(count < mList.size())// Remove all old contents
-		mList.erase(mList.begin()+count, mList.end());
-	endResetModel();
+void ChatReactionListModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
+	updateChatReaction(reaction);
 }
-
-void ContentListModel::updateAllTransferData(){
-	emit updateTransferDataRequested();
-}
-
-void ContentListModel::downloaded(){
-	for(auto content : mList)
-		content.objectCast<ContentModel>()->createThumbnail();
-}*/

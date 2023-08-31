@@ -29,6 +29,7 @@ ChatReactionProxyModel::ChatReactionProxyModel (QObject * parent) : SortFilterPr
 	mContents = QSharedPointer<ChatReactionListModel>::create();
 	connect(mContents.get(), &ChatReactionListModel::chatReactionCountChanged, this, &ChatReactionProxyModel::chatReactionCountChanged);
 	connect(mContents.get(), &ChatReactionListModel::groupByChanged, this, &ChatReactionProxyModel::groupByChanged);
+	connect(mContents.get(), &ChatReactionListModel::bodiesChanged, this, &ChatReactionProxyModel::bodiesChanged);
 	setSourceModel(mContents.get());
 	sort(0);
 }
@@ -90,13 +91,13 @@ void ChatReactionProxyModel::setFilter(const QString& filter) {
 	}
 }
 
-/*
-void ChatReactionProxyModel::setContentListModel(ContentListModel * model){
-	setSourceModel(model);
-	sort(0);
-	emit chatMessageModelChanged();
+QStringList ChatReactionProxyModel::getBodies() const {
+	auto model = qobject_cast<ChatReactionListModel*>(sourceModel());
+	if(model) {
+		return model->getBodies();
+	}else
+		return QStringList();
 }
-*/
 
 bool ChatReactionProxyModel::filterAcceptsRow (
 		int sourceRow,
@@ -122,46 +123,8 @@ bool ChatReactionProxyModel::filterAcceptsRow (
 
 /*
 bool ChatReactionProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-	const ContentModel *contentA = sourceModel()->data(left).value<ContentModel *>();
-	const ContentModel *contentB = sourceModel()->data(right).value<ContentModel *>();
-	bool aIsForward = contentA->getChatMessageModel() && contentA->getChatMessageModel()->isForward();
-	bool aIsReply = contentA->getChatMessageModel() && contentA->getChatMessageModel()->isReply();
-	bool aIsVoiceRecording = contentA->isVoiceRecording();
-	bool aIsFile = contentA->isFile() || contentA->isFileEncrypted() || contentA->isFileTransfer();
-	bool aIsText = contentA->isText() ;
-	bool bIsForward = contentB->getChatMessageModel() && contentB->getChatMessageModel()->isForward();
-	bool bIsReply = contentB->getChatMessageModel() && contentB->getChatMessageModel()->isReply();
-	bool bIsVoiceRecording = contentB->isVoiceRecording();
-	bool bIsFile = contentB->isFile() || contentB->isFileEncrypted() || contentB->isFileTransfer();
-	bool bIsText = contentB->isText() ;
+	auto a = sourceModel()->data(left).value<QVariantMap>();
+	auto b = sourceModel()->data(right).value<QVariantMap>();
 	
-	return !bIsForward && (aIsForward
-			|| !bIsReply && (aIsReply
-				|| !bIsVoiceRecording && (aIsVoiceRecording
-					|| !bIsFile && (aIsFile
-						|| aIsText && !bIsText
-						)
-					)
-				)
-			);
 }
 */
-/*
-void ChatReactionProxyModel::remove(ContentModel * model){
-	qobject_cast<ContentListModel*>(sourceModel())->remove(model);
-}
-
-void ChatReactionProxyModel::clear(){
-	qobject_cast<ContentListModel*>(sourceModel())->clear();
-}
-
-ContentProxyModel::FilterContentType ChatReactionProxyModel::getFilter() const{
-	return mFilter;
-}
-void ChatReactionProxyModel::setFilter(const FilterContentType& contentType){
-	if(contentType != mFilter){
-		mFilter = contentType;
-		emit filterChanged();
-		invalidate();
-	}
-}*/

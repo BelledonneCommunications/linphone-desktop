@@ -28,9 +28,6 @@ Rectangle{
 	}
 
 	color: ChatReactionsDetailsStyle.backgroundColorModel.color
-	onVisibleChanged: if(visible){
-		tabBar.currentIndex = 0
-	}
 	MouseArea{
 		anchors.fill: parent
 		onClicked: mainItem.visible = false
@@ -45,11 +42,23 @@ Rectangle{
 		ColumnLayout{
 			anchors.fill: parent
 			spacing: 0
-			TabBar {
+			Loader{
+				id: loader
 				Layout.fillWidth: true
-				id: tabBar
-				TabButton {
-						Layout.fillWidth: true
+				active: mainItem.visible
+				function refresh(){
+					active = false
+					active = true
+				}
+				Connections{
+					target: chatReactionsList
+					onChatMessageModelChanged: loader.refresh()
+					onBodiesChanged: loader.refresh()
+				}
+				sourceComponent: TabBar {
+					id: tabBar
+					Component.onCompleted: currentIndex = 0
+					TabButton {
 						//: "%1<br>reactions" : count of all chat reactions with a jump line between count and text.
 						text: UtilsCpp.encodeTextToQmlRichFormat(qsTr('reactionsCount', '', chatReactionsList.reactionCount).arg(chatReactionsList.reactionCount), {noLink:1}).toUpperCase()
 						// noLink=1 to avoid <br> convertion
@@ -59,24 +68,20 @@ Rectangle{
 						stretchContent: false
 						style: TabButtonStyle.popup
 					}
-				Repeater{
-					model: ['❤️','👍','😂','😮','😢']
-					delegate: TabButton {
-						width: visible ? undefined : 0
-						property int reactionCount: 0
-						visible: reactionCount > 0
-						text: UtilsCpp.encodeTextToQmlRichFormat(modelData + ' '+reactionCount)
-						textFont.family: mainItem.textFont.family
-						textFont.pointSize: ChatReactionsDetailsStyle.tabBar.pointSize
-						
-						onIsSelectedChanged: if(isSelected) chatReactionsList.filter = modelData
-						displaySelector: true
-						stretchContent: false
-						style: TabButtonStyle.popup
-						
-						Connections{
-							target: chatReactionsList
-							onChatMessageModelChanged: reactionCount = chatReactionsList.getChatReactionCount(modelData)
+					Repeater{
+						model: chatReactionsList.bodies
+						delegate: TabButton {
+							width: visible ? undefined : 0
+							property int reactionCount: chatReactionsList.getChatReactionCount(modelData)
+							visible: reactionCount > 0
+							text: UtilsCpp.encodeTextToQmlRichFormat(modelData + ' '+reactionCount)
+							textFont.family: mainItem.textFont.family
+							textFont.pointSize: ChatReactionsDetailsStyle.tabBar.pointSize
+							
+							onIsSelectedChanged: if(isSelected) chatReactionsList.filter = modelData
+							displaySelector: true
+							stretchContent: false
+							style: TabButtonStyle.popup
 						}
 					}
 				}

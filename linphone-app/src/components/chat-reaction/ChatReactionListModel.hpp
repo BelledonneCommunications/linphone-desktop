@@ -52,6 +52,8 @@ public:
 	ChatReactionListModel::GROUP_BY_TYPE getGroupBy() const;
 	void setGroupBy(ChatReactionListModel::GROUP_BY_TYPE mode);
 	
+	QStringList getBodies() const;
+	
 	//QSharedPointer<ChatReactionModel> getChatReactionModel(const std::shared_ptr<const linphone::ChatMessageReaction>& reaction);
 	
 	bool exists(std::shared_ptr<linphone::ChatMessageReaction> reaction) const;
@@ -61,13 +63,16 @@ public:
 	void updateChatReaction(ChatMessageModel * messageModel);
 	
 	void updateList();
+	
+	void onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
 signals:
 	void chatReactionsChanged();
 	void chatReactionCountChanged();
 	void groupByChanged();
+	void bodiesChanged();
 	
 private:
-	ChatMessageModel * mParent;
+	ChatMessageModel * mParent = nullptr;
 	QMap<QString, QSharedPointer<ChatReactionModel>> mReactions;
 	QMap<QString, QVector<QSharedPointer<ChatReactionModel>>> mBodies;
 	GROUP_BY_TYPE mGroupBy = EMOJIES;

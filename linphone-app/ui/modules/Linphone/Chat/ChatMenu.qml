@@ -10,6 +10,7 @@ import Linphone.Styles 1.0
 import TextToSpeech 1.0
 import Utils 1.0
 import Units 1.0
+import ConstantsCpp 1.0
 import UtilsCpp 1.0
 import LinphoneEnums 1.0
 
@@ -53,7 +54,7 @@ Item {
 				Layout.fillWidth: true
 				spacing:0
 				Repeater{
-					model: ['❤️','👍','😂','😮','😢']
+					model: ConstantsCpp.reactionsList
 					delegate: Text{
 						Layout.fillWidth: true
 						horizontalAlignment: Text.AlignHCenter

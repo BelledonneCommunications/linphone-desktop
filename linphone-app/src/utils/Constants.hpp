@@ -45,6 +45,7 @@ public:
 	static constexpr char DefaultEmojiFont[] = "Noto Color Emoji";
 #endif
 	static constexpr int DefaultEmojiFontPointSize = 10;
+	static QStringList getReactionsList();
 	
 	static constexpr size_t MaxLogsCollectionSize = 10485760*5; // 50MB.
 	
@@ -93,6 +94,7 @@ public:
 	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
 	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
+	Q_PROPERTY(QStringList reactionsList READ getReactionsList CONSTANT)
 
 // For Webviews
 	static constexpr char DefaultAssistantRegistrationUrl[] = "https://subscribe.linphone.org/register";
