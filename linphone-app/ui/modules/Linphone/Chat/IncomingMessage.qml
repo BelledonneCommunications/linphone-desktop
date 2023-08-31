@@ -9,7 +9,7 @@ import UtilsCpp 1.0
 // =============================================================================
 
 RowLayout {
-	id:mainRow
+	id: mainRow
 	
 	Layout.fillWidth: true
 	
@@ -25,6 +25,7 @@ RowLayout {
 	signal conferenceIcsCopied()
 	signal addContactClicked(string contactAddress)
 	signal viewContactClicked(string contactAddress)
+	signal reactionsClicked(ChatMessageModel message)
   
 	implicitHeight: message.height
 	spacing: 0
@@ -70,6 +71,7 @@ RowLayout {
 		onConferenceIcsCopied: mainRow.conferenceIcsCopied()
 		onAddContactClicked: mainRow.addContactClicked(contactAddress)
 		onViewContactClicked: mainRow.viewContactClicked(contactAddress)
+		onReactionsClicked: mainRow.reactionsClicked(message)
 		
 		Layout.fillWidth: true
 		Layout.rightMargin: 10

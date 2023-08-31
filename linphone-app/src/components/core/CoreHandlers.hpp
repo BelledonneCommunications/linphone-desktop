@@ -53,6 +53,7 @@ signals:
 	void isComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 	void logsUploadStateChanged (linphone::Core::LogCollectionUploadState state, const std::string &info);
 	void messagesReceived (const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
+	void newMessageReaction(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
 	void presenceReceived (const QString &sipAddress, const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 	void presenceStatusReceived(std::shared_ptr<linphone::Friend> contact);
 	void registrationStateChanged (const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state);
@@ -82,6 +83,7 @@ public slots:
 	void onLogCollectionUploadProgressIndication (const std::shared_ptr<linphone::Core> &lc,size_t offset,size_t total);
 	void onMessageReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::shared_ptr<linphone::ChatMessage> &message);
 	void onMessagesReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
+	void onNewMessageReaction(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
 	void onNotifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 	void onNotifyPresenceReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend);
 	void onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result);

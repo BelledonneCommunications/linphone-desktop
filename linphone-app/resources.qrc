@@ -346,6 +346,7 @@
 		<file>ui/modules/Linphone/Chat/ChatFilePreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatForwardMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatMessagePreview.qml</file>
+		<file>ui/modules/Linphone/Chat/ChatReactionsDetails.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatReplyMessage.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatReplyPreview.qml</file>
 		<file>ui/modules/Linphone/Chat/ChatTextMessage.qml</file>
@@ -403,6 +404,7 @@
 		<file>ui/modules/Linphone/Styles/Chat/ChatFilePreviewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatCalendarMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatForwardMessageStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Chat/ChatReactionsDetailsStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Chat/ChatReplyMessageStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Codecs/CodecsViewerStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Contact/AvatarStyle.qml</file>

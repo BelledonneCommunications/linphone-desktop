@@ -74,9 +74,11 @@ public:
 	Q_INVOKABLE void resetMessageCount();
 	
 	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index in displayed list (-1 if not found)
+	Q_INVOKABLE int loadTillMessageId(const QString& messageId);
 	
 public slots:
 	void onMoreEntriesLoaded(const int& count);
+	void onTillMessagesLoaded(const int& messageIndex);
 	
 signals:
 	void peerAddressChanged (const QString &peerAddress);
@@ -91,6 +93,8 @@ signals:
 	void chatRoomDeleted();
 	
 	void moreEntriesLoaded (int n);
+	void tillMessagesLoaded(int messageIndex);
+	void displayMessageIdRequested(const QString& messageId);
 	
 	void entryTypeFilterChanged (int type);
 	void filterTextChanged();

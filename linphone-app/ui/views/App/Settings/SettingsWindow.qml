@@ -116,7 +116,7 @@ ApplicationWindow {
 					Layout.fillWidth: true
 					Layout.preferredHeight: TabButtonStyle.text.height
 					
-					color: TabButtonStyle.backgroundColor.normal.color
+					color: TabButtonStyle.menu.backgroundColor.normal.color
 					
 					MouseArea {
 						anchors.fill: parent
@@ -134,7 +134,7 @@ ApplicationWindow {
 			Rectangle{
 				id: hideBar
 				anchors.fill: parent
-				color: TabButtonStyle.backgroundColor.normal.color
+				color: TabButtonStyle.menu.backgroundColor.normal.color
 				visible: logViewer.active
 			}
 		}

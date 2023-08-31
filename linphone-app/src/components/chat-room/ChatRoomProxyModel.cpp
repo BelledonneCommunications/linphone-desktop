@@ -126,6 +126,11 @@ void ChatRoomProxyModel::loadMoreEntriesAsync(){
 void ChatRoomProxyModel::onMoreEntriesLoaded(const int& count){
 	emit moreEntriesLoaded(count);
 }
+
+void ChatRoomProxyModel::onTillMessagesLoaded(const int& index){
+	int messageIndex = mapFromSource(static_cast<ChatRoomModel*>(sourceModel())->index(index, 0)).row();
+	emit moreEntriesLoaded(messageIndex);
+}
 void ChatRoomProxyModel::loadMoreEntries() {
 	if(mChatRoomModel ) {
 		mChatRoomModel->loadMoreEntries();
@@ -283,7 +288,9 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
+			QObject::disconnect(ChatRoomModel, &ChatRoomModel::tillMessagesLoaded, this, &ChatRoomProxyModel::onTillMessagesLoaded);
 			QObject::disconnect(ChatRoomModel, &ChatRoomModel::chatRoomDeleted, this, &ChatRoomProxyModel::chatRoomDeleted);
+			QObject::disconnect(ChatRoomModel, &ChatRoomModel::displayMessageIdRequested, this, &ChatRoomProxyModel::displayMessageIdRequested);
 			if(mIsCall)
 				mChatRoomModel->removeBindingCall();
 		}
@@ -300,7 +307,9 @@ void ChatRoomProxyModel::reload (ChatRoomModel *chatRoomModel) {
 			QObject::connect(ChatRoomModel, &ChatRoomModel::messageSent, this, &ChatRoomProxyModel::handleMessageSent);		
 			QObject::connect(ChatRoomModel, &ChatRoomModel::markAsReadEnabledChanged, this, &ChatRoomProxyModel::markAsReadEnabledChanged);
 			QObject::connect(ChatRoomModel, &ChatRoomModel::moreEntriesLoaded, this, &ChatRoomProxyModel::onMoreEntriesLoaded);
+			QObject::connect(ChatRoomModel, &ChatRoomModel::tillMessagesLoaded, this, &ChatRoomProxyModel::onTillMessagesLoaded);
 			QObject::connect(ChatRoomModel, &ChatRoomModel::chatRoomDeleted, this, &ChatRoomProxyModel::chatRoomDeleted);
+			QObject::connect(ChatRoomModel, &ChatRoomModel::displayMessageIdRequested, this, &ChatRoomProxyModel::displayMessageIdRequested);
 			mChatRoomModel->initEntries();// This way, we don't load huge chat rooms (that lead to freeze GUI)
 		}
 		setSourceModel(mChatRoomModel.get());
@@ -336,9 +345,17 @@ int ChatRoomProxyModel::loadTillMessage(ChatMessageModel * message){
 	return messageIndex;
 }
 
+int ChatRoomProxyModel::loadTillMessageId(const QString& messageId){
+	int messageIndex = mChatRoomModel->loadTillMessageId(messageId);
+	if( messageIndex>= 0 ) {
+		messageIndex = mapFromSource(static_cast<ChatRoomModel*>(sourceModel())->index(messageIndex, 0)).row();
+	}
+	qDebug() << "Message index from chat room proxy : " << messageIndex;
+	return messageIndex;
+}
+
 ChatRoomModel *ChatRoomProxyModel::getChatRoomModel () const{
 	return mChatRoomModel.get();
-	
 }
 
 void ChatRoomProxyModel::setChatRoomModel (ChatRoomModel *chatRoomModel){

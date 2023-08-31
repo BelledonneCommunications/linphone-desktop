@@ -46,6 +46,33 @@ Item {
 		id: messageMenu
 		menuStyle : MenuStyle.aux
 		MenuItem {
+			id: reactionBar
+			property font customFont : SettingsModel.emojiFont
+			menuItemStyle : MenuItemStyle.aux
+			contentItem: RowLayout{
+				Layout.fillWidth: true
+				spacing:0
+				Repeater{
+					model: ['❤️','👍','😂','😮','😢']
+					delegate: Text{
+						Layout.fillWidth: true
+						horizontalAlignment: Text.AlignHCenter
+						verticalAlignment: Text.AlignVCenter
+						text:  modelData
+						font.family: reactionBar.customFont.family
+						font.pointSize: Units.dp  * reactionBar.customFont.pointSize * 2
+						MouseArea{
+							anchors.fill: parent
+							onClicked: {
+								chatMessageModel.sendChatReaction(modelData)
+								messageMenu.close()
+							}
+						}
+					}
+				}
+			}
+		}
+		MenuItem {
 			//: 'Copy all' : Text menu to copy all message text into clipboard
 			text: (container.lastTextSelected == '' ? qsTr('menuCopyAll')
 													  //: 'Copy' : Text menu to copy selected text in message into clipboard

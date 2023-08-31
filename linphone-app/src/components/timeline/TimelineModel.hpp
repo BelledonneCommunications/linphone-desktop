@@ -30,8 +30,7 @@
 
 #include <linphone++/chat_room.hh>
 
-#include "../contact/ContactModel.hpp"
-
+class ChatMessageModel;
 class ChatRoomModel;
 class ChatRoomListener;
 class TimelineListModel;

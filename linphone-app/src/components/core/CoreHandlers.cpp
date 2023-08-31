@@ -62,6 +62,7 @@ void CoreHandlers::connectTo(CoreListener * listener){
 	connect(listener, &CoreListener::logCollectionUploadProgressIndication, this, &CoreHandlers::onLogCollectionUploadProgressIndication);
 	connect(listener, &CoreListener::messageReceived, this, &CoreHandlers::onMessageReceived);
 	connect(listener, &CoreListener::messagesReceived, this, &CoreHandlers::onMessagesReceived);
+	connect(listener, &CoreListener::newMessageReaction, this, &CoreHandlers::onNewMessageReaction);
 	connect(listener, &CoreListener::notifyPresenceReceivedForUriOrTel, this, &CoreHandlers::onNotifyPresenceReceivedForUriOrTel);
 	connect(listener, &CoreListener::notifyPresenceReceived, this, &CoreHandlers::onNotifyPresenceReceived);
 	connect(listener, &CoreListener::qrcodeFound, this, &CoreHandlers::onQrcodeFound);
@@ -310,6 +311,56 @@ void CoreHandlers::onMessagesReceived (
 		qInfo() << "Notification received but was not selected to popup. Reasons : \n" << notNotifyReasons.join("\n");
 	// 3. Notify with sound.
 	if( messagesToNotify.size() > 0) {
+		if (!coreManager->getSettingsModel()->getChatNotificationsEnabled() || !settingsModel->getChatNotificationSoundEnabled())
+			return;
+	
+		if ( !app->hasFocus() || !CoreManager::getInstance()->getTimelineListModel()->getChatRoomModel(chatRoom, false) )
+			core->playLocal(Utils::appStringToCoreString(settingsModel->getChatNotificationSoundPath()));
+	}
+}
+
+void CoreHandlers::onNewMessageReaction(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
+	QList<QPair<shared_ptr<linphone::ChatMessage>, std::shared_ptr<const linphone::ChatMessageReaction> >> reactionsToNotify;
+	CoreManager *coreManager = CoreManager::getInstance();
+	SettingsModel *settingsModel = coreManager->getSettingsModel();
+	const App *app = App::getInstance();
+	QStringList notNotifyReasons;
+	QSettings appSettings;
+	
+	appSettings.beginGroup("chatrooms");
+	
+	if( !message || CoreManager::getInstance()->getAccountSettingsModel()->findAccount(reaction->getFromAddress()))
+		return;
+	// 1. Do not notify if chat is not activated.
+	if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoom::EncryptionBackend::None && !settingsModel->getStandardChatEnabled()
+		|| chatRoom->getCurrentParams()->getEncryptionBackend() != linphone::ChatRoom::EncryptionBackend::None && !settingsModel->getSecureChatEnabled())
+		return;
+		
+	// 2. Do not notify if the chatroom's notification has been deactivated.
+	appSettings.beginGroup(ChatRoomModel::getChatRoomId(chatRoom));
+	if(!appSettings.value("notifications", true).toBool()){
+		appSettings.endGroup();
+		return;
+	}else{
+		appSettings.endGroup();
+	}
+	// 3. Notify with Notification popup.
+	if (coreManager->getSettingsModel()->getChatNotificationsEnabled() 
+			&& (!app->hasFocus() || !Utils::isMe(chatRoom->getLocalAddress())))
+		reactionsToNotify.push_back({message, reaction});
+	else{
+		notNotifyReasons.push_back(
+			"NotifEnabled=" + QString::number(coreManager->getSettingsModel()->getChatNotificationsEnabled())
+			+" focus=" +QString::number(app->hasFocus())
+			+" isMe=" +QString::number(Utils::isMe(chatRoom->getLocalAddress()))
+		);
+	}
+	if( reactionsToNotify.size() > 0)
+		app->getNotifier()->notifyReceivedReactions(reactionsToNotify);
+	else if( notNotifyReasons.size() > 0)
+		qInfo() << "Notification received but was not selected to popup. Reasons : \n" << notNotifyReasons.join("\n");
+	// 3. Notify with sound.
+	if( reactionsToNotify.size() > 0) {
 		if (!coreManager->getSettingsModel()->getChatNotificationsEnabled() || !settingsModel->getChatNotificationSoundEnabled())
 			return;
 	

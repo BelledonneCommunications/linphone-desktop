@@ -28,6 +28,7 @@
 
 #include "app/App.hpp"
 #include "components/call/CallModel.hpp"
+#include "components/chat-events/ChatMessageModel.hpp"
 #include "components/core/CoreManager.hpp"
 #include "components/timeline/TimelineModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
@@ -307,6 +308,49 @@ void Notifier::notifyReceivedMessages (const list<shared_ptr<linphone::ChatMessa
 		}
 		map["localAddress"] = Utils::coreStringToAppString(message->getToAddress()->asStringUriOnly());
 		map["fullLocalAddress"] = Utils::coreStringToAppString(message->getToAddress()->asString());
+		map["window"].setValue(App::getInstance()->getMainWindow());
+		CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
+	}
+}
+
+void Notifier::notifyReceivedReactions(const QList<QPair<std::shared_ptr<linphone::ChatMessage>, std::shared_ptr<const linphone::ChatMessageReaction>>> &reactions) {
+	QVariantMap map;
+	QString txt;
+	
+	if( reactions.size() > 0){
+		ChatMessageModel *redirection = nullptr;
+		QPair<shared_ptr<linphone::ChatMessage>,std::shared_ptr<const linphone::ChatMessageReaction>> reaction = reactions.front();
+		shared_ptr<linphone::ChatMessage> message = reaction.first;
+		shared_ptr<linphone::ChatRoom> chatRoom(message->getChatRoom());
+		auto timelineModel = CoreManager::getInstance()->getTimelineListModel()->getTimeline(chatRoom, true);
+		map["messageId"] = Utils::coreStringToAppString(message->getMessageId());
+		if( reactions.size() == 1){
+			QString messageTxt;
+			auto fileContent = message->getFileTransferInformation();
+			if(!fileContent  ){
+				foreach(auto content, message->getContents()){
+					if(content->isText())
+						messageTxt += content->getUtf8Text().c_str();
+				}
+			}else if( fileContent->isVoiceRecording())
+				messageTxt += "Voice message";
+			else
+				messageTxt += "File";
+			if(messageTxt.isEmpty() && message->hasConferenceInvitationContent())
+				messageTxt += "Conference invitation";
+			txt = QString("Has reacted by %2 to: %3").arg(Utils::coreStringToAppString(reaction.second->getBody())).arg(messageTxt);
+			
+		}else
+			txt = "New message reactions received";
+		map["message"] = txt;
+		
+		map["timelineModel"].setValue(timelineModel.get());
+		if( reactions.size() == 1) {// Display only sender on mono message.
+			map["peerAddress"] = Utils::coreStringToAppString(reaction.second->getFromAddress()->asStringUriOnly());
+			map["fullPeerAddress"] = Utils::coreStringToAppString(reaction.second->getFromAddress()->asString());
+		}
+		map["localAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly());
+		map["fullLocalAddress"] = Utils::coreStringToAppString(chatRoom->getLocalAddress()->asString());
 		map["window"].setValue(App::getInstance()->getMainWindow());
 		CREATE_NOTIFICATION(Notifier::ReceivedMessage, map)
 	}

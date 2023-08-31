@@ -33,6 +33,8 @@
 
 class ChatMessageModel;
 class ChatMessageListener;
+class ChatReactionModel;
+class ChatReactionListModel;
 class ParticipantImdnStateProxyModel;
 class ParticipantImdnStateListModel;
 class ContentModel;
@@ -93,6 +95,7 @@ public:
 	Q_INVOKABLE ParticipantImdnStateProxyModel * getProxyImdnStates();
 	QSharedPointer<ParticipantImdnStateListModel> getParticipantImdnStates() const;
 	QSharedPointer<ContentListModel> getContents() const;
+	QSharedPointer<ChatReactionListModel> getChatReactions() const;
 	
 	bool isReply() const;
 	ChatMessageModel * getReplyChatMessageModel() const;
@@ -110,6 +113,7 @@ public:
 	//----------------------------------------------------------------------------
 	
 	Q_INVOKABLE void resendMessage ();
+	Q_INVOKABLE void sendChatReaction(const QString& reaction);
 	
 	virtual void deleteEvent() override;
 	void updateFileTransferInformation();
@@ -121,6 +125,7 @@ public:
 	std::shared_ptr<linphone::Buffer> onFileTransferSend (const std::shared_ptr<linphone::ChatMessage> &,const std::shared_ptr<linphone::Content> &,size_t,size_t);
 	void onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &, size_t offset, size_t);
 	void onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state);
+	void onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
 	void onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state);	
 	void onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> & message);
 	void onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message);
@@ -152,6 +157,7 @@ private:
 	QSharedPointer<ContentModel> mFileTransfertContent;
 	QSharedPointer<ParticipantImdnStateListModel> mParticipantImdnStateListModel;
 	QSharedPointer<ChatMessageModel> mReplyChatMessageModel;
+	QSharedPointer<ChatReactionListModel> mChatReactionListModel;
 
 	QString mFromDisplayNameCache;
 	QString fromDisplayNameReplyMessage;

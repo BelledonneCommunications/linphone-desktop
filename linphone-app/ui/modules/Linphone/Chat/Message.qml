@@ -42,10 +42,11 @@ Item {
 	signal conferenceIcsCopied()
 	signal addContactClicked(string contactAddress)
 	signal viewContactClicked(string contactAddress)
+	signal reactionsClicked(ChatMessageModel message);
 	
 	// ---------------------------------------------------------------------------
 	property string lastTextSelected
-	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + chatContent.height
+	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + chatContent.height + reactionItem.height-10
 	Rectangle {
 		id: rectangle
 		property int availableWidth: parent.width
@@ -55,7 +56,7 @@ Item {
 		anchors.left: !$chatEntry.isOutgoing ? parent.left : undefined
 		anchors.right: $chatEntry.isOutgoing ? parent.right : undefined
 		
-		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0)
+		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0) - (reactionItem.height-10)
 		radius: ChatStyle.entry.message.radius
 		clip: false
 		color: colorModel.color
@@ -142,6 +143,71 @@ Item {
 		anchors.rightMargin: 50
 		
 		chatMessageModel: $chatEntry
+	}
+	Rectangle{
+		id: reactionItem
+		anchors.top: rectangle.bottom
+		anchors.left: !$chatEntry.isOutgoing ? rectangle.left : undefined
+		anchors.right: $chatEntry.isOutgoing ? rectangle.right : undefined
+		anchors.topMargin: -10
+		anchors.leftMargin: 5
+		anchors.rightMargin: 5
+		height: visible ? reactionList.height +10 : 0
+		width: visible ? reactionLayout.width + 10 : 0
+		color: rectangle.color
+		radius: rectangle.radius
+		visible: reactionList.count > 0
+		property font customFont : SettingsModel.textMessageFont
+		property font customEmojiFont : SettingsModel.emojiFont
+		
+		RowLayout{
+			id: reactionLayout
+			anchors.centerIn: parent
+			ListView{
+				id: reactionList
+				Layout.preferredWidth: contentItem.childrenRect.width
+				Layout.preferredHeight: reactionMetrics.height
+				TextMetrics{
+					id: reactionMetrics
+					text: '😮'
+					font.family: reactionItem.customEmojiFont.family
+					font.pointSize: Units.dp  * reactionItem.customEmojiFont.pointSize * 2
+				}
+				orientation: ListView.Horizontal
+				model: ChatReactionProxyModel{
+					id: chatReactionProxyModel
+					chatMessageModel: $chatEntry
+				}
+				spacing: 10
+				delegate:
+					Text{
+						width: reactionMetrics.width
+						height: reactionList.height
+						horizontalAlignment: Text.AlignHCenter
+						verticalAlignment: Text.AlignVCenter
+						font.family: reactionItem.customEmojiFont.family
+						font.pointSize: Units.dp  * reactionItem.customEmojiFont.pointSize * 2
+						text: $modelData.body || ''
+					}
+			}
+			
+			Text{
+				Layout.preferredWidth: contentWidth
+				Layout.preferredHeight: reactionList.height
+				Layout.alignment: Qt.AlignVCenter
+				horizontalAlignment: Text.AlignHCenter
+				verticalAlignment: Text.AlignVCenter
+				font.family: reactionItem.customFont.family
+				font.pointSize: Units.dp * reactionItem.customFont.pointSize
+				visible: chatReactionProxyModel.count != chatReactionProxyModel.reactionCount
+				
+				text: chatReactionProxyModel.reactionCount
+			}
+		}
+		MouseArea{
+			anchors.fill: parent
+			onClicked: container.reactionsClicked($chatEntry)
+		}
 	}
 	
 	ActionButton {

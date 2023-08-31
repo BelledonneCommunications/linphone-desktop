@@ -81,6 +81,9 @@ void CoreListener::onMessageReceived (const std::shared_ptr<linphone::Core> &cor
 void CoreListener::onMessagesReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::list<std::shared_ptr<linphone::ChatMessage>> &messages){
 	emit messagesReceived (core,room,messages);
 }
+void CoreListener::onNewMessageReaction(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
+	emit newMessageReaction (core,chatRoom,message, reaction);
+}
 void CoreListener::onNotifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel){
 	emit notifyPresenceReceivedForUriOrTel (core,linphoneFriend,uriOrTel,presenceModel);
 }

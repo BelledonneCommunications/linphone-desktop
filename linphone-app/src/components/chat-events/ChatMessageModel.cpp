@@ -38,6 +38,8 @@
 
 #include "app/App.hpp"
 #include "app/paths/Paths.hpp"
+#include "components/chat-reaction/ChatReactionModel.hpp"
+#include "components/chat-reaction/ChatReactionListModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/content/ContentListModel.hpp"
@@ -61,6 +63,7 @@ void ChatMessageModel::connectTo(ChatMessageListener * listener){
 	connect(listener, &ChatMessageListener::fileTransferSend, this, &ChatMessageModel::onFileTransferSend);
 	connect(listener, &ChatMessageListener::fileTransferProgressIndication, this, &ChatMessageModel::onFileTransferProgressIndication);
 	connect(listener, &ChatMessageListener::msgStateChanged, this, &ChatMessageModel::onMsgStateChanged);
+	connect(listener, &ChatMessageListener::newMessageReaction, this, &ChatMessageModel::onNewMessageReaction);
 	connect(listener, &ChatMessageListener::participantImdnStateChanged, this, &ChatMessageModel::onParticipantImdnStateChanged);
 	connect(listener, &ChatMessageListener::ephemeralMessageTimerStarted, this, &ChatMessageModel::onEphemeralMessageTimerStarted);
 	connect(listener, &ChatMessageListener::ephemeralMessageDeleted, this, &ChatMessageModel::onEphemeralMessageDeleted);
@@ -95,6 +98,7 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 	mWasDownloaded = false;
 
 	mContentListModel = QSharedPointer<ContentListModel>::create(this);
+	mChatReactionListModel = QSharedPointer<ChatReactionListModel>::create(this);
 }
 
 ChatMessageModel::~ChatMessageModel(){
@@ -188,6 +192,10 @@ QSharedPointer<ContentListModel> ChatMessageModel::getContents() const{
 	return mContentListModel;
 }
 
+QSharedPointer<ChatReactionListModel> ChatMessageModel::getChatReactions() const {
+	return mChatReactionListModel;
+}
+
 bool ChatMessageModel::isReply() const{
 	return mChatMessage && mChatMessage->isReply();
 }
@@ -245,6 +253,16 @@ void ChatMessageModel::resendMessage (){
 		default:
 			qWarning() << QStringLiteral("Unable to resend message: %1. Bad state.").arg(getState());
 	}
+}
+
+void ChatMessageModel::sendChatReaction(const QString& reaction){
+	auto chatReaction = mChatMessage->createReaction(Utils::appStringToCoreString(reaction));
+	if( mChatReactionListModel->exists(chatReaction)) {
+		chatReaction = mChatMessage->createReaction("");
+		return;	// TODO : remove return when sending empty emoji will be supported.
+	}
+	chatReaction->send();
+	mChatReactionListModel->updateChatReaction(chatReaction);
 }
 
 void ChatMessageModel::deleteEvent(){
@@ -307,6 +325,11 @@ void ChatMessageModel::onMsgStateChanged (const std::shared_ptr<linphone::ChatMe
 	}
 	emit stateChanged();
 }
+
+void ChatMessageModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
+	mChatReactionListModel->updateChatReaction(reaction);
+}
+
 void ChatMessageModel::onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
 	
 }

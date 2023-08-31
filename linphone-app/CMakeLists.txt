@@ -242,6 +242,9 @@ set(SOURCES
 	src/components/chat-events/ChatMessageListener.cpp
 	src/components/chat-events/ChatMessageModel.cpp
 	src/components/chat-events/ChatNoticeModel.cpp
+	src/components/chat-reaction/ChatReactionModel.cpp
+	src/components/chat-reaction/ChatReactionListModel.cpp
+	src/components/chat-reaction/ChatReactionProxyModel.cpp
 	src/components/chat-room/ChatRoomInitializer.cpp
 	src/components/chat-room/ChatRoomListener.cpp
 	src/components/chat-room/ChatRoomModel.cpp
@@ -384,6 +387,9 @@ set(HEADERS
 	src/components/chat-events/ChatMessageListener.hpp
 	src/components/chat-events/ChatMessageModel.hpp
 	src/components/chat-events/ChatNoticeModel.hpp
+	src/components/chat-reaction/ChatReactionModel.hpp
+	src/components/chat-reaction/ChatReactionListModel.hpp
+	src/components/chat-reaction/ChatReactionProxyModel.hpp
 	src/components/chat-room/ChatRoomInitializer.hpp
 	src/components/chat-room/ChatRoomListener.hpp
 	src/components/chat-room/ChatRoomModel.hpp

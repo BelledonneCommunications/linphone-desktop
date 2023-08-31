@@ -184,7 +184,10 @@ public:
 	Q_INVOKABLE int loadMoreEntries();	// return new entries count
 	void onCallEnded(std::shared_ptr<linphone::Call> call);
 	void updateNewMessageNotice(const int& count);
+	QSharedPointer<ChatMessageModel> getChatMessageModel(const std::shared_ptr<linphone::ChatMessage> message) const;
 	Q_INVOKABLE int loadTillMessage(ChatMessageModel * message);// Load all entries till message and return its index. -1 if not found.
+	Q_INVOKABLE int loadTillMessageId(const QString& messageId);
+	int loadTillMessage(std::shared_ptr<linphone::ChatMessage> linphoneMessage);
 	static bool isTerminated(const std::shared_ptr<linphone::ChatRoom>& chatRoom);
 	bool exists(const std::shared_ptr<linphone::ChatMessage> message) const;
 	
@@ -256,9 +259,11 @@ signals:
 	bool isRemoteComposingChanged ();
 	void entriesLoadingChanged(const bool& loading);
 	void moreEntriesLoaded(const int& count);
+	void tillMessagesLoaded(int messageIndex);
 	
 	void allEntriesRemoved (QSharedPointer<ChatRoomModel> model);
 	void lastEntryRemoved ();
+	void displayMessageIdRequested(const QString& messageId);
 	
 	void messageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 	void messageReceived (const std::shared_ptr<linphone::ChatMessage> &message);

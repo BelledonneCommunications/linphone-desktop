@@ -14,45 +14,53 @@ Controls.TabButton {
 	
 	property int iconSize: TabButtonStyle.icon.size
 	property string iconName
+	property alias textFont: textItem.font
 	
-	readonly property bool _isSelected: parent.parent.currentItem === button
+	readonly property bool isSelected: parent.parent.currentItem === button
 	
+	property bool displaySelector: false
+	property bool stretchContent: true
+	property QtObject style: TabButtonStyle.menu
 	// ---------------------------------------------------------------------------
 	
 	function _getBackgroundColor () {
-		if (_isSelected) {
-			return TabButtonStyle.backgroundColor.selected.color
+		if(!button.style)
+			return ''
+		if (isSelected) {
+			return button.style.backgroundColor.selected.color
 		}
 		
 		return button.enabled
 				? (
 					  button.down
-					  ? TabButtonStyle.backgroundColor.pressed.color
+					  ? button.style.backgroundColor.pressed.color
 					  : (
 							button.hovered
-							? TabButtonStyle.backgroundColor.hovered.color
-							: TabButtonStyle.backgroundColor.normal.color
+							? button.style.backgroundColor.hovered.color
+							: button.style.backgroundColor.normal.color
 							)
 					  )
-				: TabButtonStyle.backgroundColor.disabled.color
+				: button.style.backgroundColor.disabled.color
 	}
 	
 	function _getTextColor () {
-		if (_isSelected) {
-			return TabButtonStyle.text.color.selected.color
+		if(!button.style)
+			return ''
+		if (isSelected) {
+			return button.style.text.color.selected.color
 		}
 		
 		return button.enabled
 				? (
 					  button.down
-					  ? TabButtonStyle.text.color.pressed.color
+					  ? button.style.text.color.pressed.color
 					  : (
 							button.hovered
-							? TabButtonStyle.text.color.hovered.color
-							: TabButtonStyle.text.color.normal.color
+							? button.style.text.color.hovered.color
+							: button.style.text.color.normal.color
 							)
 					  )
-				: TabButtonStyle.text.color.disabled.color
+				: button.style.text.color.disabled.color
 	}
 	
 	// ---------------------------------------------------------------------------
@@ -60,22 +68,35 @@ Controls.TabButton {
 	background: Rectangle {
 		color: _getBackgroundColor()
 		implicitHeight: TabButtonStyle.text.height
+		Rectangle{
+			anchors.bottom: parent.bottom
+			anchors.left: parent.left
+			anchors.right: parent.right
+			height: 2
+			visible: button.displaySelector && button.isSelected
+			color: button.style ? button.style.selector.color : ''
+		}
 	}
 	
 	contentItem: RowLayout {
 		height: button.height
 		width: button.width
 		spacing: TabButtonStyle.spacing
-		
+		Item{
+			Layout.fillWidth: visible
+			Layout.fillHeight: true
+			visible: !button.stretchContent
+		}
 		Icon {
 			id: icon
 			
 			Layout.fillHeight: true
-			Layout.leftMargin: TabButtonStyle.text.leftPadding
+			Layout.leftMargin: visible ? TabButtonStyle.text.leftPadding : 0
 			overwriteColor: textItem.color
 			
 			icon: button.iconName
-			iconSize: button.iconSize
+			iconSize: visible ? button.iconSize : 0
+			visible: button.iconName
 		}
 		
 		Text {
@@ -93,11 +114,18 @@ Controls.TabButton {
 			elide: Text.ElideRight
 			
 			height: parent.height
+			
 			horizontalAlignment: Text.AlignHCenter
 			verticalAlignment: Text.AlignVCenter
 			
 			rightPadding: TabButtonStyle.text.rightPadding
 			text: button.text
+			textFormat: Text.RichText
+		}
+		Item{
+			Layout.fillWidth: visible
+			Layout.fillHeight: true
+			visible: !button.stretchContent
 		}
 	}
 	

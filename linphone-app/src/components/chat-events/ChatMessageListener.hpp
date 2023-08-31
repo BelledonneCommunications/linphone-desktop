@@ -41,6 +41,7 @@ public:
 	virtual std::shared_ptr<linphone::Buffer> onFileTransferSend(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, size_t offset, size_t size) override;
 	virtual void onFileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &, size_t offset, size_t) override;
 	virtual void onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state) override;
+	virtual void onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction) override;
 	virtual void onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state) override;
 	virtual void onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> & message) override;
 	virtual void onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message) override;
@@ -50,6 +51,7 @@ signals:
 	std::shared_ptr<linphone::Buffer> fileTransferSend (const std::shared_ptr<linphone::ChatMessage> &,const std::shared_ptr<linphone::Content> &,size_t,size_t);
 	void fileTransferProgressIndication (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &, size_t offset, size_t);
 	void msgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state);
+	void newMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
 	void participantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state);
 	void ephemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> & message);
 	void ephemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message);

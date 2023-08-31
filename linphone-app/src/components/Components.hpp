@@ -30,6 +30,7 @@
 #include "components/chat-events/ChatCallModel.hpp"
 #include "components/chat-events/ChatMessageModel.hpp"
 #include "components/chat-events/ChatNoticeModel.hpp"
+#include "components/chat-reaction/ChatReactionProxyModel.hpp"
 #include "chat-room/ChatRoomProxyModel.hpp"
 #include "codecs/AudioCodecsModel.hpp"
 #include "codecs/VideoCodecsModel.hpp"

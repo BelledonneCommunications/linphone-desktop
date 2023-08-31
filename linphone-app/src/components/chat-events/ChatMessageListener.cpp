@@ -49,6 +49,9 @@ void ChatMessageListener::onFileTransferProgressIndication (const std::shared_pt
 void ChatMessageListener::onMsgStateChanged (const std::shared_ptr<linphone::ChatMessage> &message, linphone::ChatMessage::State state){
 	emit msgStateChanged(message, state);
 }
+void ChatMessageListener::onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction) {
+	emit newMessageReaction(message, reaction);
+}
 void ChatMessageListener::onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state){
 	emit participantImdnStateChanged(message, state);
 }

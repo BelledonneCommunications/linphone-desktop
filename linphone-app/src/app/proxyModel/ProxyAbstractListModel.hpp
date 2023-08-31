@@ -112,11 +112,11 @@ public:
 		return true;
 	}
 	
-	virtual void clearData(){
+	virtual void clearData() override{
 		mList.clear();
 	}
 	
-	virtual void resetData(){
+	virtual void resetData() override{
 		beginResetModel();
 		clearData();
 		endResetModel();

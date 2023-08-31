@@ -27,6 +27,7 @@ Item {
 	signal conferenceIcsCopied()
 	signal addContactClicked(string contactAddress)
 	signal viewContactClicked(string contactAddress)
+	signal reactionsClicked(ChatMessageModel message)
 	
 	implicitHeight: message.height
 	RowLayout{
@@ -43,6 +44,7 @@ Item {
 			onConferenceIcsCopied: mainItem.conferenceIcsCopied()
 			onAddContactClicked: mainItem.addContactClicked(contactAddress)
 			onViewContactClicked: mainItem.viewContactClicked(contactAddress)
+			onReactionsClicked: mainItem.reactionsClicked(message)
 			
 			backgroundColorModel: ChatStyle.entry.message.outgoing.backgroundColor
 			Layout.fillWidth: true

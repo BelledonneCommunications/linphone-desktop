@@ -36,21 +36,45 @@ Rectangle {
 	
 	color: ChatStyle.colorModel.color
 	clip: true
+	
+	Item{// Let some time to have a better cell sizes
+		id: moveToEvent
+		property int indexToMove: -1
+		property bool toReposition: indexToMove>=0 && !container.tryingToLoadMoreEntries
+		
+		function reposition(){
+			chat.positionViewAtIndex(indexToMove, ListView.Center)
+			repositionerDelay.indexToMove = indexToMove
+			indexToMove = -1
+			repositionerDelay.restart()
+		}
+		onToRepositionChanged: if(toReposition){
+				console.debug('Moving to ' + indexToMove)
+				Qt.callLater(reposition);
+			}
+	}
 	Timer{// Let some time to have a better cell sizes
 		id: repositionerDelay
-		property int indexToMove
+		property int indexToMove: -1
 		interval: 100
-		onTriggered: chat.positionViewAtIndex(indexToMove, ListView.Center)
+		onTriggered: {
+				chat.positionViewAtIndex(indexToMove, ListView.Center)
+			}
 	}
+	
 	function positionViewAtIndex(index){
-		chat.bindToEnd = false
-		chat.positionViewAtIndex(index, ListView.Center)
-		repositionerDelay.indexToMove = index
-		repositionerDelay.restart()
+		if(index>=0) {
+			chat.bindToEnd = false
+			chat.positionViewAtIndex(index, ListView.Center)
+			moveToEvent.indexToMove = index
+		}
 	}
 	
 	function goToMessage(message){
 		positionViewAtIndex(container.proxyModel.loadTillMessage(message))
+	}
+	function goToMessageId(messageId){
+		positionViewAtIndex(container.proxyModel.loadTillMessageId(messageId))
 	}
 	
 	ColumnLayout {
@@ -61,10 +85,11 @@ Rectangle {
 			id: chat
 			// -----------------------------------------------------------------------
 			property bool displaying: false
+			property bool entriesLoading: container.proxyModel.chatRoomModel && container.proxyModel.chatRoomModel.entriesLoading
+			onEntriesLoadingChanged: console.log("entriesLoading="+entriesLoading)
 			property bool loadingEntries: (container.proxyModel.chatRoomModel && container.proxyModel.chatRoomModel.entriesLoading) || displaying
 			property bool tryToLoadMoreEntries: loadingEntries || remainingLoadersCount>0
 			property bool isMoving : false	// replace moving read-only property to allow using movement signals.
-			
 // Load optimizations
 			property int remainingLoadersCount: 0
 			property int visibleItemsEstimation: chat.height / (2 * textMetrics.height)	// Title + body
@@ -74,8 +99,9 @@ Rectangle {
 			signal refreshContents()
 						
 			onLoadingEntriesChanged: {
-				if( loadingEntries && !displaying)
+				if( loadingEntries && !displaying && container.proxyModel.chatRoomModel.entriesLoading) {
 					displaying = true
+				}
 			}
 			onBindToEndChanged: if( bindToEnd){
 				markAsReadTimer.start()
@@ -116,7 +142,7 @@ Rectangle {
 			Component.onCompleted: {
 					Logic.initView()
 					refreshContentsTimer.start()
-					console.debug("Chat loading with "+chat.visibleItemsEstimation+" visible items. "+chat.count)
+					console.debug("Chat loading with "+chat.visibleItemsEstimation+" visible items. Count="+chat.count)
 					if(chat.visibleItemsEstimation >= chat.count)
 						Qt.callLater(container.proxyModel.loadMoreEntriesAsync)
 			}
@@ -136,6 +162,11 @@ Rectangle {
 				onMoreEntriesLoaded: {
 					Logic.handleMoreEntriesLoaded(n)// move view to n - 1 item
 					chat.displaying = false
+				}
+				onTillMessagesLoaded: positionViewAtIndex(messageIndex)
+				onDisplayMessageIdRequested: {
+					console.log("Display Message requested "+messageId)
+					container.goToMessageId(messageId)
 				}
 			}
 			
@@ -303,6 +334,7 @@ Rectangle {
 							onConferenceIcsCopied: container.noticeBannerText = qsTr('conferencesCopiedICS')
 							onAddContactClicked: container.addContactClicked(contactAddress)
 							onViewContactClicked: container.viewContactClicked(contactAddress)
+							onReactionsClicked: chatReactionsDetails.show(message)
 						}
 					}
 				}
@@ -464,6 +496,11 @@ Rectangle {
 				}// Send Area
 			}// ColumnLayout
 		}// Bottom background
+	}
+	ChatReactionsDetails {
+		id: chatReactionsDetails
+		anchors.fill: parent
+		visible: false 
 	}
 }
 

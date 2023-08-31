@@ -52,6 +52,7 @@ public:
 	virtual void onLogCollectionUploadProgressIndication (const std::shared_ptr<linphone::Core> &lc,size_t offset,size_t total) override;
 	virtual void onMessageReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::shared_ptr<linphone::ChatMessage> &message) override;
 	virtual void onMessagesReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) override;
+	virtual void onNewMessageReaction(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction) override;
 	virtual void onNotifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel) override;
 	virtual void onNotifyPresenceReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend) override;
 	virtual void onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result) override;
@@ -78,6 +79,7 @@ signals:
 	void logCollectionUploadProgressIndication (const std::shared_ptr<linphone::Core> &lc,size_t offset,size_t total);
 	void messageReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::shared_ptr<linphone::ChatMessage> &message);
 	void messagesReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
+	void newMessageReaction(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
 	void notifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 	void notifyPresenceReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend);
 	void qrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result);

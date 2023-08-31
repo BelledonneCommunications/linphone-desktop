@@ -23,6 +23,7 @@ Notification {
 	readonly property string localAddress: notificationData && notificationData.localAddress || ''
 	readonly property string fullPeerAddress: notificationData && notificationData.fullPeerAddress ||  ''
 	readonly property string fullLocalAddress: notificationData && notificationData.fullLocalAddress || ''
+	readonly property string messageId: notificationData && notificationData.messageId || ''
 	
 	// ---------------------------------------------------------------------------
 	
@@ -99,10 +100,10 @@ Notification {
 			AccountSettingsModel.setDefaultAccountFromSipAddress(notification.localAddress)
 			var chatroom = notification.timelineModel.getChatRoomModel()
 			console.debug("Load conversation from notification: "+chatroom)
-			//notification.notificationData.window.setView('Conversation', {
-				//											 chatRoomModel: chatroom
-					//									 })
-			notification.timelineModel.selected = true
+			if(!notification.timelineModel.selected)// Check to avoid reloading
+				notification.timelineModel.selected = true
+			if(chatroom && notification.messageId)
+				chatroom.displayMessageIdRequested(notification.messageId)
 			App.smartShowWindow(notification.notificationData.window)
 		})
 	}

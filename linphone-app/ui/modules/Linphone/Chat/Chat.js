@@ -55,6 +55,7 @@ function handleFilesDropped (files) {
 
 function handleMoreEntriesLoaded (n) {
 	chat.positionViewAtIndex(n - 1, QtQuick.ListView.Beginning)
+	//moveToEvent.indexToMove = n > 0 ? n - 1 : 0
 }
 
 function handleMovementEnded () {

@@ -867,24 +867,39 @@ void ChatRoomModel::updateNewMessageNotice(const int& count){
 
 int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
 	if( message){
-		qDebug() << "Load history till message : " << message->getChatMessage()->getMessageId().c_str();
 		auto linphoneMessage = message->getChatMessage();
+		return loadTillMessage(message);
+	}else
+		return -1;
+}
+ 
+int ChatRoomModel::loadTillMessage(std::shared_ptr<linphone::ChatMessage> linphoneMessage){
+	if(linphoneMessage)
+		return loadTillMessageId(Utils::coreStringToAppString(linphoneMessage->getMessageId()));
+	else
+		return -1;
+}
+
+int ChatRoomModel::loadTillMessageId(const QString& messageId){
+	if(!messageId.isEmpty()){
+		std::string lMessageId = Utils::appStringToCoreString(messageId);
+		qDebug() << "Load history till message : " << messageId;
 	// First find on current list
-		auto entry = std::find_if(mList.begin(), mList.end(), [linphoneMessage](const QSharedPointer<QObject>& entry ){
+		auto entry = std::find_if(mList.begin(), mList.end(), [lMessageId](const QSharedPointer<QObject>& entry ){
 			auto chatEventEntry = entry.objectCast<ChatEvent>();
-			return chatEventEntry->mType == ChatRoomModel::EntryType::MessageEntry && chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage() == linphoneMessage;
+			return chatEventEntry->mType == ChatRoomModel::EntryType::MessageEntry && chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage()->getMessageId() == lMessageId;
 		});
 	// if not find, load more entries and find it in new entries.
 		if( entry == mList.end()){
 			mPostModelChangedEvents = false;
 			beginResetModel();
 			int newEntries = loadMoreEntries();
-			while( newEntries > 0){// no more new entries
+			while( newEntries > 0){// at  0 = no more new entries
 				int entryCount = 0;
 				entry = mList.begin();
 				auto chatEventEntry = entry->objectCast<ChatEvent>();
 				while(entryCount < newEntries && 
-					(chatEventEntry->mType != ChatRoomModel::EntryType::MessageEntry || chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage() != linphoneMessage)
+					(chatEventEntry->mType != ChatRoomModel::EntryType::MessageEntry || chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage()->getMessageId() != lMessageId)
 				){
 					++entryCount;
 					++entry;
@@ -892,23 +907,34 @@ int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
 						chatEventEntry = entry->objectCast<ChatEvent>();
 				}
 				if( entryCount < newEntries){// We got it
-					qDebug() << "Find message at " << entryCount << " after loading new entries";
+					qDebug() << "Find message at " << entryCount << " after loading new entries " << mEntriesLoading;
 					mPostModelChangedEvents = true;
 					endResetModel();
+					emit tillMessagesLoaded(entryCount);
 					return entryCount;
 				}else
 					newEntries = loadMoreEntries();// continue
 			}
 			mPostModelChangedEvents = true;
 			endResetModel();
+			emit tillMessagesLoaded(newEntries);
 		}else{
 			int entryCount = entry - mList.begin();
 			qDebug() << "Find message at " << entryCount;
+			emit tillMessagesLoaded(entryCount);
 			return entryCount;
 		}
-		qWarning() << "Message has not been found in history";
 	}
+	qWarning() << "Message has not been found in history";
 	return -1;
+}
+
+QSharedPointer<ChatMessageModel> ChatRoomModel::getChatMessageModel(const std::shared_ptr<linphone::ChatMessage> message) const {
+	auto entry = std::find_if(mList.begin(), mList.end(), [message](const QSharedPointer<QObject>& entry ){
+			auto chatEventEntry = entry.objectCast<ChatEvent>();
+			return chatEventEntry->mType == ChatRoomModel::EntryType::MessageEntry && chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage() == message;
+		});
+	return entry != mList.end() ? entry->objectCast<ChatMessageModel>(): nullptr;
 }
 
 bool ChatRoomModel::isTerminated(const std::shared_ptr<linphone::ChatRoom>& chatRoom){
@@ -916,12 +942,8 @@ bool ChatRoomModel::isTerminated(const std::shared_ptr<linphone::ChatRoom>& chat
 }
 
 bool ChatRoomModel::exists(const std::shared_ptr<linphone::ChatMessage> message) const{
-	auto entry = std::find_if(mList.begin(), mList.end(), [message](const QSharedPointer<QObject>& entry ){
-			auto chatEventEntry = entry.objectCast<ChatEvent>();
-			return chatEventEntry->mType == ChatRoomModel::EntryType::MessageEntry && chatEventEntry.objectCast<ChatMessageModel>()->getChatMessage() == message;
-		});
 	// if not find, load more entries and find it in new entries.
-	return entry != mList.end();
+	return getChatMessageModel(message) != nullptr;
 }
 
 void ChatRoomModel::addBindingCall(){	// If a call is binding to this chat room, we avoid cleaning data (Add=+1, remove=-1)

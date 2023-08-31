@@ -18,6 +18,7 @@ singleton ChatEmojisStyle                      1.0 Chat/ChatEmojisStyle.qml
 singleton ChatFilePreviewStyle                 1.0 Chat/ChatFilePreviewStyle.qml
 singleton ChatCalendarMessageStyle             1.0 Chat/ChatCalendarMessageStyle.qml
 singleton ChatForwardMessageStyle              1.0 Chat/ChatForwardMessageStyle.qml
+singleton ChatReactionsDetailsStyle            1.0 Chat/ChatReactionsDetailsStyle.qml
 singleton ChatReplyMessageStyle                1.0 Chat/ChatReplyMessageStyle.qml
 
 singleton CallControlsStyle                    1.0 Calls/CallControlsStyle.qml

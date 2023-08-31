@@ -753,6 +753,17 @@ URL du serveur non configurée.</translation>
     </message>
 </context>
 <context>
+    <name>ChatReactionsDetails</name>
+    <message numerus="yes">
+        <source>reactionsCount</source>
+        <extracomment>&quot;%1&lt;br&gt;reactions&quot; : count of all chat reactions with a jump line between count and text.</extracomment>
+        <translation>
+            <numerusform>%1&lt;br&gt;réaction</numerusform>
+            <numerusform>%1&lt;br&gt;réactions</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
     <name>ChatReplyMessage</name>
     <message>
         <source>headerReply</source>
