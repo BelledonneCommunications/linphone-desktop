@@ -2318,6 +2318,26 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
         <translation>Message vocal reçu!</translation>
     </message>
+    <message>
+        <source>voiceMessageReact</source>
+        <extracomment>&apos;Voice message&apos; : Voice message type that has been reacted.</extracomment>
+        <translation>Message vocal</translation>
+    </message>
+    <message>
+        <source>conferenceInvitationReact</source>
+        <extracomment>&apos;Conference invitation&apos; : Conference invitation message type that has been reacted.</extracomment>
+        <translation>Invitation</translation>
+    </message>
+    <message>
+        <source>reactionMessage</source>
+        <extracomment>&apos;&apos;Has reacted by %1 to: %2&apos; : Reaction message. %1=Reaction(emoji), %2=type of message(Voice Message/Conference invitation/ Message text)</extracomment>
+        <translation>a réagi par %1 à: %2</translation>
+    </message>
+    <message>
+        <source>newReactionsMessages</source>
+        <extracomment>&apos;New reactions received!&apos; : Notification that warn the user of new reactions.</extracomment>
+        <translation>Nouvelles réactions reçues!</translation>
+    </message>
 </context>
 <context>
     <name>OnlineInstallerDialog</name>

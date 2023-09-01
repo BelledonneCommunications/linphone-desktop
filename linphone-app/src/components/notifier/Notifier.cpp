@@ -23,6 +23,7 @@
 #include <QQuickWindow>
 #include <QQuickItem>
 #include <QQuickView>
+#include <QFileInfo>
 #include <QScreen>
 #include <QTimer>
 
@@ -333,15 +334,21 @@ void Notifier::notifyReceivedReactions(const QList<QPair<std::shared_ptr<linphon
 						messageTxt += content->getUtf8Text().c_str();
 				}
 			}else if( fileContent->isVoiceRecording())
-				messageTxt += "Voice message";
-			else
-				messageTxt += "File";
+			//: 'Voice message' : Voice message type that has been reacted.
+				messageTxt += tr("voiceMessageReact");
+			else {
+				QFileInfo file(Utils::coreStringToAppString(fileContent->getFilePath()));
+				messageTxt += file.fileName();
+			}
 			if(messageTxt.isEmpty() && message->hasConferenceInvitationContent())
-				messageTxt += "Conference invitation";
-			txt = QString("Has reacted by %2 to: %3").arg(Utils::coreStringToAppString(reaction.second->getBody())).arg(messageTxt);
+			//: 'Conference invitation' : Conference invitation message type that has been reacted.
+				messageTxt += tr("conferenceInvitationReact");
+			//: ''Has reacted by %1 to: %2' : Reaction message. %1=Reaction(emoji), %2=type of message(Voice Message/Conference invitation/ Message text)
+			txt = tr("reactionMessage").arg(Utils::coreStringToAppString(reaction.second->getBody())).arg(messageTxt);
 			
 		}else
-			txt = "New message reactions received";
+		//: 'New reactions received!' : Notification that warn the user of new reactions.
+			txt = tr("newReactionsMessages");
 		map["message"] = txt;
 		
 		map["timelineModel"].setValue(timelineModel.get());
