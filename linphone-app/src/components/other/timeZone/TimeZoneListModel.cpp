@@ -73,10 +73,19 @@ QVariant TimeZoneListModel::data (const QModelIndex &index, int role) const {
 }
 
 int TimeZoneListModel::get (const QTimeZone& timeZone) const {
-	const auto it = find_if(
+	auto it = find_if(
 				mList.cbegin(), mList.cend(), [&timeZone](QSharedPointer<QObject> item) {
 		return item.objectCast<TimeZoneModel>()->getTimeZone() == timeZone;
 	}
 	);
+	if(it == mList.cend()) {
+		auto today = QDateTime::currentDateTime();
+		it = find_if(
+				mList.cbegin(), mList.cend(), [&timeZone, today](QSharedPointer<QObject> item) {
+				auto tz = item.objectCast<TimeZoneModel>()->getTimeZone();
+			   return (timeZone.country() == QLocale::AnyCountry || tz.country() == timeZone.country()) && tz.standardTimeOffset(today) == timeZone.standardTimeOffset(today);
+		   }
+		   );
+	}
 	return it != mList.cend() ? int(distance(mList.cbegin(), it)) : 0;
 }

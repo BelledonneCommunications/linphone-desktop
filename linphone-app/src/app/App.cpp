@@ -52,6 +52,7 @@
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
+#include "components/other/date/DateModel.hpp"
 
 #include "components/settings/EmojisSettingsModel.hpp"
 #include "components/timeline/TimelineModel.hpp"
@@ -284,6 +285,9 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	
 	qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
 	qInfo() << QStringLiteral("Use locale: %1 with language: %2").arg(mLocale.name()).arg(QLocale::languageToString(mLocale.language()));
+	qInfo() << QStringLiteral("System timezone: code=%1 / country=%2 / Offset=%3 / ID=%4").arg(QTimeZone::systemTimeZone().country()).arg(Utils::getCountryName(QTimeZone::systemTimeZone().country()))
+			   .arg(QTimeZone::systemTimeZone().standardTimeOffset(QDateTime::currentDateTime()))
+			   .arg(QString(QTimeZone::systemTimeZoneId()));
 	
 	// Deal with received messages and CLI.
 	QObject::connect(this, &App::receivedMessage, this, [](int, const QByteArray &byteArray) {
@@ -730,6 +734,7 @@ void App::registerTypes () {
 	registerType<ContactsListProxyModel>("ContactsListProxyModel");
 	registerType<ContactsImporterListProxyModel>("ContactsImporterListProxyModel");
 	registerType<ContentProxyModel>("ContentProxyModel");
+	registerType<DateModel>("DateModel");
 	registerType<FileDownloader>("FileDownloader");
 	registerType<FileExtractor>("FileExtractor");
 	registerType<HistoryProxyModel>("HistoryProxyModel");

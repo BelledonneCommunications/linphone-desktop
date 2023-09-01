@@ -47,6 +47,7 @@
 #include "components/core/CoreManager.hpp"
 #include "components/other/colors/ColorListModel.hpp"
 #include "components/other/colors/ColorModel.hpp"
+#include "components/other/date/DateModel.hpp"
 #include "components/contacts/ContactsListModel.hpp"
 #include "components/contact/ContactModel.hpp"
 #include "components/contact/VcardModel.hpp"
@@ -104,6 +105,8 @@ bool Utils::hasCapability(const QString& address, const LinphoneEnums::FriendCap
 		return defaultCapability;
 }
 
+//--------------------------------------------------------------------------------------
+
 QDateTime Utils::addMinutes(QDateTime date, const int& min){
 	return date.addSecs(min*60);
 }
@@ -112,7 +115,7 @@ QDateTime Utils::getOffsettedUTC(const QDateTime& date){
 	QDateTime utc = date.toUTC();// Get a date free of any offsets.
 	auto timezone = date.timeZone();
 	utc = utc.addSecs(timezone.offsetFromUtc(date));// add offset from date timezone
-	utc.setTimeSpec(Qt::UTC);// ensure to have an UTC date
+	utc.setTimeSpec(Qt::OffsetFromUTC);// ensure to have an UTC date
 	return utc;
 }
 
@@ -133,6 +136,10 @@ QString Utils::toDateString(QDateTime date, const QString& format){
 	return QLocale().toString(getOffsettedUTC(date), (!format.isEmpty() ? format : QLocale().dateFormat()) );
 }
 
+QString Utils::toDateString(QDate date, const QString& format){
+	return QLocale().toString(date, (!format.isEmpty() ? format : QLocale().dateFormat()) );
+}
+
 // Return custom address to be displayed on UI.
 // In order to return only the username and to remove all domains from the GUI, you may just change the default mode.
 QString Utils::toDisplayString(const QString& str, SipDisplayMode displayMode){
@@ -146,6 +153,74 @@ QString Utils::toDisplayString(const QString& str, SipDisplayMode displayMode){
 	else
 		return displayString;
 }
+
+QDate Utils::getCurrentDate() {
+	return QDate::currentDate();
+}
+
+DateModel* Utils::getCurrentDateModel() {
+	return new DateModel(QDate::currentDate());
+}
+
+QDate Utils::getMinDate() {
+	return QDate(1,1,1);
+}
+DateModel* Utils::getMinDateModel() {
+	return new DateModel(QDate(1,1,1));
+}
+QDate Utils::toDate(const QString& str, const QString& format) {
+	return QDate::fromString(str, format);
+}
+DateModel* Utils::toDateModel(const QString& str, const QString& format) {
+	return new DateModel(toDate(str, format));
+}
+QDate Utils::getDate(int year, int month, int day) {
+	auto d = QDate(year, month, day);
+	if(!d.isValid() ){
+		auto first = QDate(year, month, 1);
+		if(first.isValid()) {
+			d = first.addDays(day-1);
+		}
+	}
+	return d;
+}
+
+DateModel* Utils::getDateModel(int year, int month, int day) {
+	auto d = QDate(year, month, day);
+	if(!d.isValid() ){
+		auto first = QDate(year, month, 1);
+		if(first.isValid()) {
+			d = first.addDays(day-1);
+		}
+	}
+	return new DateModel(d);
+}
+
+int Utils::getFullYear(const QDate& date) {
+	return date.year();
+}
+
+int Utils::getMonth(const QDate& date) {
+	return date.month();
+}
+
+int Utils::getDay(const QDate& date) {
+	return date.day();
+}
+
+int Utils::getDayOfWeek(const QDate& date) {
+	return date.dayOfWeek();
+}
+
+bool Utils::equals(const QDate& d1, const QDate& d2){
+	return d1 == d2;
+}
+
+bool Utils::isGreatherThan(const QDate& d1, const QDate& d2) {
+	return d1 >= d2;
+}
+
+//--------------------------------------------------------------------------------------
 
 QString Utils::getDisplayName(const QString& address){
 	return getDisplayName(interpretUrl(address));

@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Chat reactions
 
+## 5.1.3 - Undefined
+
+### Fixed
+- Wrong dates from DatePicker.
+- Update SDK to 5.2.98
+
 ## 5.1.2 - 2023-08-25
 
 ### Fixed
