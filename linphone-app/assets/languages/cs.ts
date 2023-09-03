@@ -791,10 +791,10 @@ Adresa URL není nakonfigurována.</translation>
     <message numerus="yes">
         <source>reactionsCount</source>
         <extracomment>&quot;%1&lt;br&gt;reactions&quot; : count of all chat reactions with a jump line between count and text.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1&lt;br&gt;reakce</numerusform>
+            <numerusform>%1&lt;br&gt;reakce</numerusform>
+            <numerusform>%1&lt;br&gt;reakcí</numerusform>
         </translation>
     </message>
 </context>
@@ -2363,22 +2363,22 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>voiceMessageReact</source>
         <extracomment>&apos;Voice message&apos; : Voice message type that has been reacted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hlasová zpráva</translation>
     </message>
     <message>
         <source>conferenceInvitationReact</source>
         <extracomment>&apos;Conference invitation&apos; : Conference invitation message type that has been reacted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pozvánka na konferenci</translation>
     </message>
     <message>
         <source>reactionMessage</source>
         <extracomment>&apos;&apos;Has reacted by %1 to: %2&apos; : Reaction message. %1=Reaction(emoji), %2=type of message(Voice Message/Conference invitation/ Message text)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reagoval %1 na: %2</translation>
     </message>
     <message>
         <source>newReactionsMessages</source>
         <extracomment>&apos;New reactions received!&apos; : Notification that warn the user of new reactions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Přijaty nové reakce!</translation>
     </message>
 </context>
 <context>
