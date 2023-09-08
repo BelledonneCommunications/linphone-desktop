@@ -60,11 +60,6 @@ EventCountNotifier::EventCountNotifier (QObject *parent) : AbstractEventCountNot
   mBlinkTimer = new QTimer(this);
   mBlinkTimer->setInterval(IconCounterBlinkInterval);
   QObject::connect(mBlinkTimer, &QTimer::timeout, this, &EventCountNotifier::update);
-
-  Utils::connectOnce(
-    App::getInstance(), &App::focusWindowChanged,
-    this, &EventCountNotifier::updateUnreadMessageCount
-  );
 }
 
 EventCountNotifier::~EventCountNotifier () {

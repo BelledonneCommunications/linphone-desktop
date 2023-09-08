@@ -4,6 +4,7 @@ import QtQml.Models 2.15
 
 import Common 1.0
 import Linphone 1.0
+import Linphone.Styles 1.0
 
 import Units 1.0
 
@@ -23,6 +24,8 @@ Rectangle{
 	visible: reactionList.count > 0
 	property font customFont : SettingsModel.textMessageFont
 	property font customEmojiFont : SettingsModel.emojiFont
+	border.width: 1
+	border.color: ChatStyle.colorModel.color
 	
 	RowLayout{
 		id: reactionLayout

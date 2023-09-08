@@ -11,7 +11,7 @@
     </defs>
     <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="statut_avatar_busy_l">
-            <path d="M7.9995,16 C3.581,16 0,12.4185 0,8 C0,3.582 3.581,0 7.9995,0 C12.418,0 16,3.582 16,8 C16,12.4185 12.418,16 7.9995,16 Z" id="statut_avatar_busy_s" class="color-i-fill" fill="#FE5E00"></path>
+            <path d="M7.9995,16 C3.581,16 0,12.4185 0,8 C0,3.582 3.581,0 7.9995,0 C12.418,0 16,3.582 16,8 C16,12.4185 12.418,16 7.9995,16 Z" id="statut_avatar_busy_s" fill="#FF0000"></path>
             <use id="statut_avatar_busy_s" stroke="#00FFFFFF" mask="url(#mask-2)" stroke-width="4" xlink:href="#path-1"></use>
         </g>
     </g>

@@ -27,7 +27,7 @@ QtObject {
 		property int pointSize: Units.dp * 11
 	}
 	property QtObject messageCounter: QtObject {
-		property int bottomMargin: 4
-		property int size: 16
+		property int iconSize: 15
+		property int pointSize: Units.dp * 9
 	}
 }

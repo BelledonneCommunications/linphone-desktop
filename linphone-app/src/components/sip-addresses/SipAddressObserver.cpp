@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2023 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -49,12 +49,4 @@ void SipAddressObserver::setPresenceTimestamp(const QDateTime &presenceTimestamp
 
 	mPresenceTimestamp = presenceTimestamp;
 	emit presenceTimestampChanged(presenceTimestamp);
-}
-
-void SipAddressObserver::setUnreadMessageCount (int unreadMessageCount) {
-  if (unreadMessageCount == mUnreadMessageCount)
-    return;
-
-  mUnreadMessageCount = unreadMessageCount;
-  emit unreadMessageCountChanged(unreadMessageCount);
 }

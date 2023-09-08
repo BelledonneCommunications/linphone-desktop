@@ -5,6 +5,7 @@ import Common 1.0
 import Linphone 1.0
 import Linphone.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 // =============================================================================
 
 Item {
@@ -17,7 +18,7 @@ Item {
 
   implicitHeight: counterIcon.height + ContactMessageCounterStyle.verticalMargins * 2
   implicitWidth: counterIcon.width + ContactMessageCounterStyle.horizontalMargins * 2
-  visible: count > 0 ?(entry.unreadMessagesCount !== null || entry.missedCallsCount !== null) && displayCounter:false
+  visible: count > 0 ?(entry.unreadMessagesCount !== null) && displayCounter:false
 
   MessageCounter {
     id: counterIcon
@@ -28,10 +29,10 @@ Item {
 
     icon: messageCounter.isComposing
       ? ('chat_is_composing_' + counterIcon.composingIndex)
-      : 'chat_count'
+      : ''
     visible: messageCounter.count > 0 || messageCounter.isComposing
     
-    count: messageCounter.entry?Number(messageCounter.entry.unreadMessagesCount) + Number(messageCounter.entry.missedCallsCount):0
+    count: messageCounter.entry?Number(messageCounter.entry.unreadMessagesCount):0
 
     Timer {
       interval: 500

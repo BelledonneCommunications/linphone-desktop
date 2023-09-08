@@ -31,8 +31,10 @@
 #include <QUrlQuery>
 #include <QImageReader>
 
+#include "CallHistoryModel.hpp"
 #include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 #include "HistoryModel.hpp"
@@ -83,10 +85,19 @@ HistoryModel::HistoryModel (QObject *parent) :QAbstractListModel(parent){
 	setSipAddresses();
 	CoreHandlers *coreHandlers = mCoreHandlers.get();
 	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &HistoryModel::handleCallStateChanged);
+}
+
+HistoryModel::HistoryModel (CallHistoryModel * callHistoryModel, QObject *parent) :QAbstractListModel(parent){
+	CoreManager *coreManager = CoreManager::getInstance();
 	
+	mCoreHandlers = coreManager->getHandlers();
+	setSipAddresses(callHistoryModel);
+	CoreHandlers *coreHandlers = mCoreHandlers.get();
+	QObject::connect(coreHandlers, &CoreHandlers::callStateChanged, this, &HistoryModel::handleCallStateChanged);
 }
 
 HistoryModel::~HistoryModel () {
+	qWarning() << "Destroying HistoryModel";
 }
 
 QHash<int, QByteArray> HistoryModel::roleNames () const {
@@ -148,23 +159,110 @@ bool HistoryModel::removeRows (int row, int count, const QModelIndex &parent) {
 	return true;
 }
 
-void HistoryModel::setSipAddresses () {
+static bool hasSameParameters(const QStringList& a, const QStringList& b){
+	if(a.size() != b.size())
+		return false;
+	int i = 0;
+	while(i < a.size()) {
+		if(b.contains(a[i]))
+			++i;
+		else
+			break;
+	}
+	return i >= a.size();
+}
+// Why complicated?
+// - Address parameters can be stored in different order and getCallHistory() reorder address parameters => need to get on pure address without parameters.
+// - A call to/from someone (no gruu and no conf-id) can a conference call => the pair remotre address + URI need to be check (watchout of parameters order)
+void HistoryModel::setSipAddresses (CallHistoryModel *callModel) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	beginResetModel();
 	mEntries.clear();
 	
 	QElapsedTimer timer;
 	timer.start();
 	
 	// Get calls.
-	for (auto &callLog : core->getCallLogs())
-		insertCall(callLog);
+	if(!callModel)
+		for (auto &callLog : core->getCallLogs())
+			insertCall(callLog);
+	else{
+		mRemoteAddress = callModel->getRemoteAddress();
+		auto address = Utils::interpretUrl(mRemoteAddress);// already cleaned
+		auto conferenceInfoModel = callModel->getConferenceInfoModel();
+		QStringList conferenceInfoModelParams;
+		if(conferenceInfoModel) {
+			mConferenceUri = conferenceInfoModel->getUri();
+			conferenceInfoModelParams = mConferenceUri.split(";");
+		}
+		for (auto &callLog : core->getCallHistory(address, CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress())) {
+			bool toInsert = false;
+			auto callLogConferenceInfoModel = callLog->getConferenceInfo();
+			if(conferenceInfoModel && callLogConferenceInfoModel) {
+				QStringList logConfUriParams = Utils::coreStringToAppString(callLogConferenceInfoModel->getUri()->asStringUriOnly()).split(";");
+				if(hasSameParameters(conferenceInfoModelParams, logConfUriParams)) {// Uri addresses are equal
+					toInsert = true;
+				}
+			}else if(!conferenceInfoModel && !callLogConferenceInfoModel)
+				toInsert = true;
+			if(toInsert)
+				insertCall(callLog);
+		}
+		
+		
+		/*
+		QString uriOnly = Utils::coreStringToAppString(address->asStringUriOnly());
+		QStringList parameters = uriOnly.split(";");
+		auto conferenceInfoModel = callModel->getConferenceInfoModel();
+		QStringList conferenceInfoModelParams;
+		if(conferenceInfoModel) {
+			conferenceInfoModelParams = conferenceInfoModel->getUri().split(";");
+		}
+		for (auto &callLog : core->getCallHistory(Utils::interpretUrl(parameters[0]), CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress())) {
+		
+		
+		if(parameters.size() > 2) {	// We have to check address with mixed parameters order from the result of getCallHistory()
+			for (auto &callLog : core->getCallHistory(Utils::interpretUrl(parameters[0]), CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress())) {
+				QStringList logParams = Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly()).split(";");
+				if(hasSameParameters(parameters, logParams)) {// Remote address are equal
+					bool toInsert = false;
+					auto callLogConferenceInfoModel = callLog->getConferenceInfo();
+					if(conferenceInfoModel && callLogConferenceInfoModel) {
+						QStringList logConfUriParams = Utils::coreStringToAppString(callLogConferenceInfoModel->getUri()->asStringUriOnly()).split(";");
+						if(hasSameParameters(conferenceInfoModelParams, logConfUriParams)) {// Uri addresses are equal
+							toInsert = true;
+						}
+					}else if(!conferenceInfoModel && !callLogConferenceInfoModel)
+						toInsert = true;
+					if(toInsert)
+						insertCall(callLog);
+				}
+			}
+		}else {
+			for (auto &callLog : core->getCallHistory(address, CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress())) {
+				auto callLogConferenceInfoModel = callLog->getConferenceInfo();
+				bool toInsert = false;
+				if(conferenceInfoModel && callLogConferenceInfoModel) {
+					QStringList logConfUriParams = Utils::coreStringToAppString(callLogConferenceInfoModel->getUri()->asStringUriOnly()).split(";");
+					if(hasSameParameters(conferenceInfoModelParams, logConfUriParams)) {// Uri addresses are equal
+						toInsert = true;
+					}
+				}else if(!conferenceInfoModel && !callLogConferenceInfoModel)
+					toInsert = true;
+				if(toInsert)
+				
+				
+					insertCall(callLog);
+			}
+		}*/
+	}
 	
 	qInfo() << QStringLiteral("HistoryModel loaded in %3 milliseconds.").arg(timer.elapsed());
-	
+	endResetModel();
 }
 void HistoryModel::reload(){
 	beginResetModel();
-	setSipAddresses();
+	//setSipAddresses();
 	endResetModel();
 }
 // -----------------------------------------------------------------------------
@@ -267,7 +365,25 @@ void HistoryModel::resetMessageCount () {
 // -----------------------------------------------------------------------------
 
 void HistoryModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, linphone::Call::State state) {
-	if (state == linphone::Call::State::End || state == linphone::Call::State::Error)
-		insertCall(call->getCallLog());
+	if (state == linphone::Call::State::End || state == linphone::Call::State::Error) {
+		auto address = Utils::interpretUrl(mRemoteAddress);// already cleaned
+		QStringList conferenceInfoModelParams = mConferenceUri.split(";");
+		bool toInsert = false;
+		auto callLog = call->getCallLog();
+		auto callLogConferenceInfoModel = callLog->getConferenceInfo();
+		if(mRemoteAddress.isEmpty())
+			toInsert = true;
+		else if(address->weakEqual(callLog->getRemoteAddress()) && callLog->getLocalAddress()->weakEqual(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress())) {
+			if(!mConferenceUri.isEmpty() && callLogConferenceInfoModel) {
+				QStringList logConfUriParams = Utils::coreStringToAppString(callLogConferenceInfoModel->getUri()->asStringUriOnly()).split(";");
+				if(hasSameParameters(conferenceInfoModelParams, logConfUriParams)) {// Uri addresses are equal
+					toInsert = true;
+				}
+			}else if(mConferenceUri.isEmpty() && !callLogConferenceInfoModel)
+				toInsert = true;
+		}
+		if(toInsert)
+			insertCall(callLog);
+	}
 }
 

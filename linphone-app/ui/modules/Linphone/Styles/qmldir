@@ -60,6 +60,7 @@ singleton StickerStyle                         1.0 Sticker/StickerStyle.qml
 
 singleton TelKeypadStyle                       1.0 TelKeypad/TelKeypadStyle.qml
 
+singleton CallTimelineStyle                    1.0 Timeline/CallTimelineStyle.qml
 singleton TimelineStyle                        1.0 Timeline/TimelineStyle.qml
 
 singleton ParticipantsListViewStyle            1.0 View/ParticipantsListViewStyle.qml

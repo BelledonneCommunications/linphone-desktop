@@ -34,7 +34,7 @@ Item{
 				anchors.fill: parent
 				verticalAlignment: Qt.AlignVCenter
 				
-				anchors.leftMargin: 40
+				anchors.leftMargin: 28
 				
 				color: ConferencesStyle.bar.text.colorModel.color
 				font {
@@ -43,6 +43,25 @@ Item{
 				}
 				//: 'Meetings' : Conference list title.
 				text: qsTr('conferencesTitle')
+			}
+			TextButtonB {
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.right: parent.right
+				anchors.rightMargin: 10
+				addHeight: 10
+				addWidth: 80
+				//: 'Create Meeting' : Button label to create a meeting
+				text: qsTr('createMeeting')
+				capitalization: Font.Capitalize
+				onClicked: {
+					window.detachVirtualWindow()
+					window.attachVirtualWindow(Utils.buildAppDialogUri('NewConference')
+													   ,{}, function (status) {
+														if( status){
+															setView('Conferences')
+														}
+													   })
+				}
 			}
 		}
 		Rectangle {

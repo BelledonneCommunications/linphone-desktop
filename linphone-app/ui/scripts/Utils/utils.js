@@ -522,6 +522,12 @@ function genRandomNumber (min, max) {
   return Math.random() * (max - min) + min
 }
 
+function genRandomColor(){
+	return '#'+ Math.floor(Math.random()*255).toString(16)
+									  +Math.floor(Math.random()*255).toString(16)
+									  +Math.floor(Math.random()*255).toString(16)
+}
+
 // -----------------------------------------------------------------------------
 
 // Generate a random number between a set of intervals.

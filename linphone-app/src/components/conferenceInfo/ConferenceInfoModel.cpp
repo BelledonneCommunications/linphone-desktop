@@ -53,7 +53,10 @@ using namespace std;
 
 // -----------------------------------------------------------------------------
 QSharedPointer<ConferenceInfoModel> ConferenceInfoModel::create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo){
-	return QSharedPointer<ConferenceInfoModel>::create(conferenceInfo);
+	if(conferenceInfo)
+		return QSharedPointer<ConferenceInfoModel>::create(conferenceInfo);
+	else
+		return nullptr;
 }
 
 // Callable from QML

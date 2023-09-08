@@ -78,6 +78,7 @@ CoreManager::CoreManager (QObject *parent, const QString &configPath) :
 	QObject::connect(coreHandlers, &CoreHandlers::coreStopped, this, &CoreManager::stopIterate, Qt::QueuedConnection);
 	QObject::connect(coreHandlers, &CoreHandlers::logsUploadStateChanged, this, &CoreManager::handleLogsUploadStateChanged);
 	QObject::connect(coreHandlers, &CoreHandlers::callLogUpdated, this, &CoreManager::callLogsCountChanged);
+	QObject::connect(coreHandlers, &CoreHandlers::eventCountChanged, this, &CoreManager::eventCountChanged);
 	
 	QTimer::singleShot(10, [this, configPath](){// Delay the creation in order to have the CoreManager instance set before
 		createLinphoneCore(configPath);
@@ -97,6 +98,8 @@ void CoreManager::initCoreManager(){
 	mContactsListModel = new ContactsListModel(this);
 	mSipAddressesModel = new SipAddressesModel(this);	// at first in order to prioritzed on handler signals.
 	mAccountSettingsModel = new AccountSettingsModel(this);
+	connect(this, &CoreManager::eventCountChanged, mAccountSettingsModel, &AccountSettingsModel::missedCallsCountChanged);
+	connect(this, &CoreManager::eventCountChanged, mAccountSettingsModel, &AccountSettingsModel::unreadMessagesCountChanged);
 	mSettingsModel = new SettingsModel(this);
 	mEmojisSettingsModel = new EmojisSettingsModel(this);
 	mCallsListModel = new CallsListModel(this);
@@ -106,8 +109,6 @@ void CoreManager::initCoreManager(){
 	mLdapListModel = new LdapListModel(this);
 	mEventCountNotifier = new EventCountNotifier(this);
 	mTimelineListModel = new TimelineListModel(this);
-	mEventCountNotifier->updateUnreadMessageCount();
-	QObject::connect(mEventCountNotifier, &EventCountNotifier::eventCountChanged,this, &CoreManager::eventCountChanged);
 	migrate();
 	mStarted = true;
 	
@@ -179,10 +180,16 @@ void CoreManager::forceRefreshRegisters () {
 	qInfo() << QStringLiteral("Refresh registers.");
 	mCore->refreshRegisters();
 }
-void CoreManager::updateUnreadMessageCount(){
-	mEventCountNotifier->updateUnreadMessageCount();
-}
 
+void CoreManager::resetMissedCallsCount(){
+	auto account = CoreManager::getInstance()->getCore()->getDefaultAccount();
+	if(account)
+		account->resetMissedCallsCount();
+	else
+		CoreManager::getInstance()->getCore()->resetMissedCallsCount();
+	emit eventCountChanged();
+}
+		
 void CoreManager::stateChanged(Qt::ApplicationState pState){
 	if(mCbsTimer){
 		if(pState == Qt::ApplicationActive)
@@ -402,12 +409,6 @@ int CoreManager::getEventCount () const {
 }
 int CoreManager::getCallLogsCount() const{
 	return mCore->getCallLogs().size();
-}
-int CoreManager::getMissedCallCount(const QString &peerAddress, const QString &localAddress)const{
-	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCount(peerAddress, localAddress) : 0;
-}
-int CoreManager::getMissedCallCountFromLocal( const QString &localAddress)const{
-	return mEventCountNotifier ? mEventCountNotifier->getMissedCallCountFromLocal(localAddress) : 0;
 }
 
 std::list<std::shared_ptr<linphone::Account>> CoreManager::getAccountList()const{

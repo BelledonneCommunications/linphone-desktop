@@ -79,10 +79,10 @@ bool ContactsListProxyModel::filterAcceptsRow (
 
   mWeights[contact] = uint(round(computeContactWeight(contact)));
 
-  return mWeights[contact] > 0 && (
-    !mUseConnectedFilter ||
-    contact->getPresenceLevel() != Presence::PresenceLevel::White
-  );
+  return mWeights[contact] > 0
+		&& (!mUseConnectedFilter || contact->getPresenceLevel() != Presence::PresenceLevel::White)
+		&& (!mUseOnlineFilter || contact->getPresenceLevel() == Presence::PresenceLevel::Green)
+		;
 }
 
 bool ContactsListProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
@@ -147,6 +147,13 @@ float ContactsListProxyModel::computeContactWeight (const ContactModel *contact)
 void ContactsListProxyModel::setConnectedFilter (bool useConnectedFilter) {
   if (useConnectedFilter != mUseConnectedFilter) {
     mUseConnectedFilter = useConnectedFilter;
+    invalidate();
+  }
+}
+
+void ContactsListProxyModel::setOnlineFilter (bool useOnlineFilter) {
+  if (useOnlineFilter != mUseOnlineFilter) {
+    mUseOnlineFilter = useOnlineFilter;
     invalidate();
   }
 }

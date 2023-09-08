@@ -9,9 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Download path and emojis size settings
 - Mac emoji font.
+- Better SVG preview in thumbnails.
+- Unstable forward message menu.
 
 ### Added
+- Dedicated call history view.
 - Chat reactions
+- Update UI layouts.
+
+## Removed
+- Call events from chats.
+- Missed call count in application side (done by SDK).
 
 ## 5.1.3 - Undefined
 

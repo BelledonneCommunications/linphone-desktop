@@ -74,6 +74,7 @@ public:
 	Q_PROPERTY(bool isForward READ isForward CONSTANT)
 	Q_PROPERTY(QString getForwardInfo READ getForwardInfo CONSTANT)
 	Q_PROPERTY(QString getForwardInfoDisplayName READ getForwardInfoDisplayName CONSTANT)
+	Q_PROPERTY(QString myReaction READ getMyReaction NOTIFY myReactionChanged)
 	
 	
 	std::shared_ptr<linphone::ChatMessage> getChatMessage();
@@ -86,6 +87,7 @@ public:
 	QString getFromSipAddress() const;
 	QString getToDisplayName() const;
 	QString getToSipAddress() const;
+	QString getMyReaction() const;
 	ContactModel * getContactModel() const;
 	bool isEphemeral() const;
 	Q_INVOKABLE qint64 getEphemeralExpireTime() const;
@@ -129,6 +131,7 @@ public:
 	void onParticipantImdnStateChanged(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ParticipantImdnState> & state);	
 	void onEphemeralMessageTimerStarted(const std::shared_ptr<linphone::ChatMessage> & message);
 	void onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message);
+	void onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address);
 	
 	//----------------------------------------------------------------------------
 	bool mWasDownloaded;
@@ -145,8 +148,10 @@ signals:
 	void isOutgoingChanged();
 	void fileContentChanged();
 	void remove(ChatMessageModel* model);
+	void myReactionChanged();
 	
 	void newMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
+	void reactionRemoved(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address);
 	
 private:
 	void connectTo(ChatMessageListener * listener);

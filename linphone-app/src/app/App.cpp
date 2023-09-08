@@ -51,6 +51,8 @@
 #include "translator/DefaultTranslator.hpp"
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
+#include "components/history/CallHistoryModel.hpp"
+#include "components/history/CallHistoryProxyModel.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
 #include "components/other/date/DateModel.hpp"
 
@@ -747,6 +749,7 @@ void App::registerTypes () {
 	registerType<TemporaryFile>("TemporaryFile");
 	registerType<TimeZoneProxyModel>("TimeZoneProxyModel");
 	
+	registerType<CallHistoryProxyModel>("CallHistoryProxyModel");
 	registerType<ColorProxyModel>("ColorProxyModel");
 	registerType<ImageColorsProxyModel>("ImageColorsProxyModel");
 	registerType<ImageProxyModel>("ImageProxyModel");
@@ -765,6 +768,7 @@ void App::registerTypes () {
 	
 	
 	registerUncreatableType<CallModel>("CallModel");
+	registerUncreatableType<CallHistoryModel>("CallHistoryModel");
 	registerUncreatableType<ChatCallModel>("ChatCallModel");
 	registerUncreatableType<ChatMessageModel>("ChatMessageModel");
 	registerUncreatableType<ChatNoticeModel>("ChatNoticeModel");

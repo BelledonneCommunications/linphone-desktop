@@ -30,7 +30,7 @@ Item {
 								image.colorOverwriteEnabled = false
 	height: iconHeight > 0 ? iconHeight : iconSize
 	width: iconWidth > 0 ? iconWidth : iconSize
-	
+	visible: icon != ''
 	Image {
 		id:image
 		anchors.fill: parent

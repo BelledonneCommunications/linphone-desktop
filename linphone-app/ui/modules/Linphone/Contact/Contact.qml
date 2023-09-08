@@ -19,6 +19,8 @@ Rectangle {
 	// entry should have these functions : presenceStatus, sipAddress, username, avatar (image)
 	
 	property alias subtitleColor: description.subtitleColor
+	property alias subtitleIconData: description.subtitleIconData
+	property alias subtitleText: description.subtitleText
 	property alias titleColor: description.titleColor
 	property alias statusText : description.statusText
 	property alias isDarkMode: avatar.isDarkMode
@@ -76,7 +78,8 @@ Rectangle {
 								? ''
 								: item.username
 						: item.username
-			isOneToOne: entry==undefined || entry.isOneToOne==undefined || entry.isOneToOne
+			isOneToOne: entry==undefined || (entry.isOneToOne==undefined || entry.isOneToOne) && !entry.conferenceInfoModel || false
+			//Component.onCompleted: console.log(username + " / " +entry + " / " +entry.conferenceInfoModel)
 			
 			Icon{
 				anchors.top:parent.top

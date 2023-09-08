@@ -452,6 +452,34 @@
     </message>
 </context>
 <context>
+    <name>CallTimeline</name>
+    <message>
+        <source>callListTitle</source>
+        <extracomment>&apos;Call list&apos; : Call histories title</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incomingFilter</source>
+        <extracomment>&apos;Incoming&apos; : Filter label for incoming call</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>outgoingFilter</source>
+        <extracomment>&apos;Outgoing&apos; : Filter label for outgoing call</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>missedFilter</source>
+        <extracomment>&apos;Missed&apos; : Filter label for missed call</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>searchListPlaceholderText</source>
+        <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in a list</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CallTransfer</name>
     <message>
         <source>cancel</source>
@@ -920,6 +948,11 @@
         <extracomment>&apos;The meeting has been deleted&apos; : Message text in a banner to warn the user that the meeting has been deleted.</extracomment>
         <translation>Встреча была удалена</translation>
     </message>
+    <message>
+        <source>createMeeting</source>
+        <extracomment>&apos;Create Meeting&apos; : Button label to create a meeting</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ConfirmDialog</name>
@@ -1030,11 +1063,8 @@
     </message>
     <message>
         <source>selectAllContacts</source>
+        <extracomment>&apos;All&apos; : Filter label to display all items.</extracomment>
         <translation>Все</translation>
-    </message>
-    <message>
-        <source>selectConnectedContacts</source>
-        <translation>Подключенные</translation>
     </message>
     <message>
         <source>addContact</source>
@@ -1049,21 +1079,24 @@
         <extracomment>&apos;You need to set the conference URI in your account settings to create a conference based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
         <translation>Вам необходимо установить URI конференции в настройках вашего аккаунта, чтобы создать чат-комнату на основе конференции.</translation>
     </message>
+    <message>
+        <source>localContactsEntry</source>
+        <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>contactsEntry</source>
+        <extracomment>&apos;Contacts&apos; : Contacts section label in main waindow.</extracomment>
+        <translation type="unfinished">КОНТАКТЫ</translation>
+    </message>
+    <message>
+        <source>selectOnlineContacts</source>
+        <extracomment>&apos;Online&apos; : Filter label to display only online contacts.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Conversation</name>
-    <message>
-        <source>displayCallsAndMessages</source>
-        <translation>ВСЕ</translation>
-    </message>
-    <message>
-        <source>displayCalls</source>
-        <translation>ЗВОНКИ</translation>
-    </message>
-    <message>
-        <source>displayMessages</source>
-        <translation>СООБЩЕНИЯ</translation>
-    </message>
     <message>
         <source>removeAllEntriesDescription</source>
         <translation>Вы уверены, что хотите очистить эту историю?</translation>
@@ -1856,11 +1889,6 @@
         <translation>Найти контакт, начать звонок или чат…</translation>
     </message>
     <message>
-        <source>contactsEntry</source>
-        <extracomment>&apos;Contacts&apos; : Contacts section label in main waindow.</extracomment>
-        <translation>КОНТАКТЫ</translation>
-    </message>
-    <message>
         <source>autoAnswerStatus</source>
         <translation>авто</translation>
     </message>
@@ -1878,24 +1906,9 @@
         <translation>Начать чат-комнату</translation>
     </message>
     <message>
-        <source>hideTimeline</source>
-        <extracomment>&apos;Hide Timeline&apos; : Tooltip for a button that hide the timeline</extracomment>
-        <translation>Скрыть шкалу времени</translation>
-    </message>
-    <message>
-        <source>openTimeline</source>
-        <extracomment>&apos;Open Timeline&apos; : Tooltip for a button that open the timeline</extracomment>
-        <translation>Открыть шкалу времени</translation>
-    </message>
-    <message>
         <source>openHome</source>
         <extracomment>&apos;Open Home&apos; : Tooltip for a button that open the home view</extracomment>
         <translation>Открыть главную</translation>
-    </message>
-    <message>
-        <source>mainWindowConferencesTitle</source>
-        <extracomment>&apos;Meetings&apos; : Meeting title for main window.</extracomment>
-        <translation>Встречи</translation>
     </message>
     <message>
         <source>newChatRoomUriMissing</source>
@@ -1913,8 +1926,23 @@
         <translation>Вы хотите загрузить и применить конфигурацию с этого URL-адреса?</translation>
     </message>
     <message>
-        <source>localContactsEntry</source>
-        <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
+        <source>openCalls</source>
+        <extracomment>&apos;Open call history&apos; : Tooltip for a button that open the call history view</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>openChats</source>
+        <extracomment>&apos;Open chats&apos; : Tooltip for a button that open the conversations view</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>openContacts</source>
+        <extracomment>&apos;Open contacts&apos; : Tooltip for a button that open the contacts view</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>openMeetings</source>
+        <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3921,26 +3949,6 @@
 <context>
     <name>Timeline</name>
     <message>
-        <source>timelineFilter</source>
-        <extracomment>A title for filtering mode.</extracomment>
-        <translation>Фильтр</translation>
-    </message>
-    <message>
-        <source>timelineFilterAll</source>
-        <extracomment>&apos;All&apos; The mode for timelines filtering.</extracomment>
-        <translation>Все</translation>
-    </message>
-    <message>
-        <source>timelineFilterCustom</source>
-        <extracomment>&apos;Custom&apos; The mode for timelines filtering.</extracomment>
-        <translation>Пользовательский</translation>
-    </message>
-    <message>
-        <source>timelineFilterSimpleRooms</source>
-        <extracomment>&apos;Simple rooms&apos; : Filter item. Selecting it will show all secure chat groups (with more than one participant).</extracomment>
-        <translation>Простые комнаты</translation>
-    </message>
-    <message>
         <source>timelineFilterSecureRooms</source>
         <extracomment>&apos;Secure rooms&apos; : Filter item. Selecting it will show all secure rooms.</extracomment>
         <translation>Безопасные комнаты</translation>
@@ -3951,44 +3959,14 @@
         <translation>Чат-группы</translation>
     </message>
     <message>
-        <source>timelineFilterEphemerals</source>
-        <extracomment>&apos;Ephemerals&apos; : Filter item. Selecting it will show all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation>Недолговечные</translation>
-    </message>
-    <message>
         <source>timelineSearchPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in the timeline list</extracomment>
         <translation>Поиск в списке</translation>
     </message>
     <message>
-        <source>timelineFilterAllSecureLevelRooms</source>
-        <extracomment>&apos;All security levels&apos; : Filter item. Selecting it will not do any filter on security level.</extracomment>
-        <translation>Все уровни безопасности</translation>
-    </message>
-    <message>
-        <source>timelineFilterStandardRooms</source>
-        <extracomment>&apos;Standard rooms&apos; : Filter item. Selecting it will show all simple rooms.</extracomment>
-        <translation>Стандартные комнаты</translation>
-    </message>
-    <message>
-        <source>timelineFilterAnyChatRooms</source>
-        <extracomment>&apos;Any conversations&apos; : Filter item. Selecting it will not do any filter on the type of conversations.</extracomment>
-        <translation>Любые разговоры</translation>
-    </message>
-    <message>
-        <source>timelineFilterAnyEphemerals</source>
-        <extracomment>&apos;Ephemerals on/off&apos; : Filter item. Selecting it will not do any filter on ephemerals activation.</extracomment>
-        <translation>Недолговечные вкл/выкл</translation>
-    </message>
-    <message>
-        <source>timelineFilterNoEphemerals</source>
-        <extracomment>&apos;No Ephemerals&apos; : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.</extracomment>
-        <translation>Без недолговечных</translation>
-    </message>
-    <message>
-        <source>timelineFilterConferences</source>
-        <extracomment>&apos;Conferences&apos; : Filter item. Selecting it will show all conferences.</extracomment>
-        <translation>Конференции</translation>
+        <source>chatsTitle</source>
+        <extracomment>&apos;Messages&apos; : Title for conversations</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

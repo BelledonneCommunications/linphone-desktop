@@ -32,10 +32,13 @@ class QWindow;
 class HistoryProxyModel : public QSortFilterProxyModel {
 	class HistoryModelFilter;
 	
-	Q_OBJECT;
+	Q_OBJECT
 	
 public:
+	Q_PROPERTY(CallHistoryModel *callHistoryModel MEMBER mCallHistoryModel WRITE setCallHistoryModel NOTIFY callHistoryModelChanged)
 	HistoryProxyModel (QObject *parent = Q_NULLPTR);
+	
+	void setCallHistoryModel(CallHistoryModel * model);
 	
 	Q_INVOKABLE void loadMoreEntries ();
 	Q_INVOKABLE void setEntryTypeFilter (HistoryModel::EntryType type = HistoryModel::EntryType::CallEntry);
@@ -48,17 +51,18 @@ public:
 	Q_INVOKABLE void reload();
 	
 signals:
-	
 	void moreEntriesLoaded (int n);
-	
 	void entryTypeFilterChanged (HistoryModel::EntryType type);
+	void callHistoryModelChanged();
 	
 protected:
 	bool filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override;
 	
 private:
 	
 	void handleIsActiveChanged (QWindow *window);
+	CallHistoryModel * mCallHistoryModel = nullptr;
 
 	int mMaxDisplayedEntries = EntriesChunkSize;
 	

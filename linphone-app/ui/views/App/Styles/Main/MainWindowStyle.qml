@@ -33,6 +33,10 @@ QtObject {
 	property QtObject menu: QtObject {
 		property int height: 50
 		property int width: 250
+		property int leftMargin: 15
+		property int rightMargin: 15
+		property int spacing: 10
+		property int buttonSize: 38
 		
 		property QtObject direction: QtObject {
 			property string icon: 'panel_arrow_custom'
@@ -71,23 +75,26 @@ QtObject {
 		property int height: 70
 		property int leftMargin: 18
 		property int rightMargin: 18
-		property int spacing: 16
+		property int spacing: 10
 		
 		property var background: Rectangle {
 			property var colorModel: ColorsList.add(sectionName+'_toolbar_bg', 'f')
 			color: colorModel.color
 		}
 	}
+	
 	property QtObject buttons: QtObject {
 		property QtObject home: QtObject {
-			property int iconSize: 40
+			property int iconSize: menu.buttonSize
 			property string name : 'home'
 			property string icon : 'home_custom'
 			property var backgroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg')
 			property var backgroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg')
+			property var backgroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'ma_h_b_bg')
 			property var backgroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg')
 			property var foregroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'ma_n_b_fg')
 			property var foregroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'ma_h_b_fg')
+			property var foregroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'ma_h_b_fg')
 			property var foregroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg')
 		}
 		property QtObject telKeyad: QtObject {
@@ -109,10 +116,12 @@ QtObject {
 			property string icon : 'new_chat_group_custom'
 			property var backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg')
 			property var backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg')
+			property var backgroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'ma_h_b_bg')
 			property var backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg')
 			property var backgroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_d', icon, 'ma_d_b_bg')
 			property var foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'ma_n_b_fg')
 			property var foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'ma_h_b_fg')
+			property var foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'ma_h_b_fg')
 			property var foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg')
 			property var foregroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_d', icon, 'ma_d_b_fg')
 		}
@@ -122,15 +131,17 @@ QtObject {
 			property string icon : 'conference_custom'
 			property var backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg')
 			property var backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg')
+			property var backgroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'ma_h_b_bg')
 			property var backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg')
 			property var backgroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_d', icon, 'ma_d_b_bg')
 			property var foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'ma_n_b_fg')
 			property var foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'ma_h_b_fg')
+			property var foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'ma_h_b_fg')
 			property var foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg')
 			property var foregroundDisabledColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_d', icon, 'ma_d_b_fg')
 		}
 		property QtObject burgerMenu: QtObject {
-			property int iconSize: 40
+			property int iconSize: menu.buttonSize
 			property string name : 'burgerMenu'
 			property string icon : 'burger_menu_custom'
 			property var backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'l_n_b_bg')
@@ -142,5 +153,73 @@ QtObject {
 			property var foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'l_h_b_fg')
 			property var foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'l_p_b_fg')
 		}
+		property QtObject settingsMenu: QtObject {
+			property int iconSize: menu.buttonSize
+			property string name : 'settingsMenu'
+			property string icon : 'options_custom'
+			property var backgroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'l_n_b_bg')
+			property var backgroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'l_u_b_bg')
+			property var backgroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'l_h_b_bg')
+			property var backgroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'l_p_b_bg')
+			property var foregroundNormalColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'l_n_b_fg')
+			property var foregroundUpdatingColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'l_u_b_fg')
+			property var foregroundHoveredColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'l_h_b_fg')
+			property var foregroundPressedColor : ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'l_p_b_fg')
+		}
+		property QtObject callHistoryMenu: QtObject {
+			property int iconSize: menu.buttonSize
+			property string name : 'callHistory'
+			property string icon : 'call_history_custom'
+			property var backgroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg')
+			property var backgroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg')
+			property var backgroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'ma_h_b_bg')
+			property var backgroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg')
+			property var foregroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'ma_n_b_fg')
+			property var foregroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'ma_h_b_fg')
+			property var foregroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'ma_h_b_fg')
+			property var foregroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg')
+		}
+		property QtObject chatMenu: QtObject {
+			property int iconSize: menu.buttonSize
+			property string name : 'chat'
+			property string icon : 'chat_custom'
+			property var backgroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg')
+			property var backgroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg')
+			property var backgroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'ma_h_b_bg')
+			property var backgroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg')
+			property var foregroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'ma_n_b_fg')
+			property var foregroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'ma_h_b_fg')
+			property var foregroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'ma_h_b_fg')
+			property var foregroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg')
+		}
+		
+		property QtObject contactsMenu: QtObject {
+			property int iconSize: menu.buttonSize
+			property string name : 'contacts'
+			property string icon : 'contact_custom'
+			property var backgroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg')
+			property var backgroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg')
+			property var backgroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'ma_h_b_bg')
+			property var backgroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg')
+			property var foregroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'ma_n_b_fg')
+			property var foregroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'ma_h_b_fg')
+			property var foregroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'ma_h_b_fg')
+			property var foregroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg')
+		}
+		
+		property QtObject meetingsMenu: QtObject {
+			property int iconSize: menu.buttonSize
+			property string name : 'meetings'
+			property string icon : 'meetings_custom'
+			property var backgroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_n', icon, 'ma_n_b_bg')
+			property var backgroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_h', icon, 'ma_h_b_bg')
+			property var backgroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_u', icon, 'ma_h_b_bg')
+			property var backgroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_bg_p', icon, 'ma_p_b_bg')
+			property var foregroundNormalColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_n', icon, 'ma_n_b_fg')
+			property var foregroundHoveredColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_h', icon, 'ma_h_b_fg')
+			property var foregroundUpdatingColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_u', icon, 'ma_h_b_fg')
+			property var foregroundPressedColor: ColorsList.addImageColor(sectionName+'_'+name+'_fg_p', icon, 'ma_p_b_fg')
+		}
+		
 	}
 }

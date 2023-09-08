@@ -119,11 +119,11 @@ QDateTime Utils::getOffsettedUTC(const QDateTime& date){
 	return utc;
 }
 
-QString Utils::toDateTimeString(QDateTime date){
+QString Utils::toDateTimeString(QDateTime date, const QString& format){
 	if(date.date() == QDate::currentDate())
 		return toTimeString(date);
 	else{
-		return getOffsettedUTC(date).toString("yyyy/MM/dd hh:mm:ss");
+		return getOffsettedUTC(date).toString(format);
 	}
 }
 
@@ -223,7 +223,8 @@ bool Utils::isGreatherThan(const QDate& d1, const QDate& d2) {
 //--------------------------------------------------------------------------------------
 
 QString Utils::getDisplayName(const QString& address){
-	return getDisplayName(interpretUrl(address));
+	QString displayName = getDisplayName(interpretUrl(address));
+	return displayName.isEmpty() ? address : displayName;
 }
 
 QString Utils::getInitials(const QString& username){

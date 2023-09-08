@@ -56,6 +56,7 @@ public:
 	virtual void onNotifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel) override;
 	virtual void onNotifyPresenceReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend) override;
 	virtual void onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result) override;
+	virtual void onReactionRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address) override;
 	virtual void onTransferStateChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,linphone::Call::State state) override;
 	virtual void onVersionUpdateCheckResultReceived (const std::shared_ptr<linphone::Core> & core,linphone::VersionUpdateCheckResult result,const std::string &version,const std::string &url) override;
 	virtual void onEcCalibrationResult(const std::shared_ptr<linphone::Core> & core,linphone::EcCalibratorStatus status,int delayMs) override;
@@ -83,6 +84,7 @@ signals:
 	void notifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel);
 	void notifyPresenceReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend);
 	void qrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result);
+	void reactionRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address);
 	void transferStateChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,linphone::Call::State state);
 	void versionUpdateCheckResultReceived (const std::shared_ptr<linphone::Core> & core,linphone::VersionUpdateCheckResult result,const std::string &version,const std::string &url);
 	void ecCalibrationResult(const std::shared_ptr<linphone::Core> & core,linphone::EcCalibratorStatus status,int delayMs);

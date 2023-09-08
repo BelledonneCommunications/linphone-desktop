@@ -155,15 +155,13 @@ public:
 	Q_INVOKABLE VcardModel *createDetachedVcardModel () const;
 	
 	Q_INVOKABLE void forceRefreshRegisters ();
-	void updateUnreadMessageCount();
+	void resetMissedCallsCount();// Reset current default account or core if no default.
 	void stateChanged(Qt::ApplicationState pState);
 	
 	Q_INVOKABLE void sendLogs () const;
 	Q_INVOKABLE void cleanLogs () const;
 	
 	int getCallLogsCount() const;
-	int getMissedCallCount(const QString &peerAddress, const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
-	int getMissedCallCountFromLocal(const QString &localAddress) const;// Get missed call count from a chat (useful for showing bubbles on Timelines)
 	
 	std::list<std::shared_ptr<linphone::Account>> getAccountList()const;
 	

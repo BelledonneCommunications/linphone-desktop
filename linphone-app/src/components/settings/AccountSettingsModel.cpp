@@ -58,10 +58,9 @@ static inline AccountSettingsModel::RegistrationState mapLinphoneRegistrationSta
 
 AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 	CoreManager *coreManager = CoreManager::getInstance();
-	QObject::connect(
-				coreManager->getHandlers().get(), &CoreHandlers::registrationStateChanged,
-				this, &AccountSettingsModel::handleRegistrationStateChanged
-				);
+	QObject::connect(coreManager->getHandlers().get(), &CoreHandlers::registrationStateChanged, this, &AccountSettingsModel::handleRegistrationStateChanged);
+	QObject::connect(coreManager, &CoreManager::callLogsCountChanged, this, &AccountSettingsModel::missedCallsCountChanged);
+	
 	//QObject::connect(coreManager, &CoreManager::eventCountChanged, this, [this]() { emit accountSettingsUpdated(); });
 	
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::usernameChanged);
@@ -75,6 +74,8 @@ AccountSettingsModel::AccountSettingsModel (QObject *parent) : QObject(parent) {
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primaryUsernameChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::primarySipAddressChanged);
 	QObject::connect(this, &AccountSettingsModel::accountSettingsUpdated, this, &AccountSettingsModel::accountsChanged);
+	QObject::connect(this, &AccountSettingsModel::accountsChanged, this, &AccountSettingsModel::missedCallsCountChanged);
+	QObject::connect(this, &AccountSettingsModel::accountsChanged, this, &AccountSettingsModel::unreadMessagesCountChanged);
 	mSelectedAccount = coreManager->getCore()->getDefaultAccount();
 }
 
@@ -250,6 +251,19 @@ bool AccountSettingsModel::getUseInternationalPrefixForCallsAndChats() const{
 	}
 	return false;
 }
+
+int AccountSettingsModel::getMissedCallsCount() const {
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	shared_ptr<linphone::Account> account = core->getDefaultAccount();
+	return account ? account->getMissedCallsCount() : core->getMissedCallsCount();
+}
+
+int AccountSettingsModel::getUnreadMessagesCount() const {
+	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
+	shared_ptr<linphone::Account> account = core->getDefaultAccount();
+	return account ? account->getUnreadChatMessageCount() : core->getUnreadChatMessageCount();
+}
+
 
 void AccountSettingsModel::setDefaultAccount (const shared_ptr<linphone::Account> &account) {
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
@@ -602,8 +616,8 @@ QVariantList AccountSettingsModel::getAccounts () const {
 		QVariantMap account;
 		account["sipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asStringUriOnly());
 		account["fullSipAddress"] = Utils::coreStringToAppString(core->createPrimaryContactParsed()->asString());
-		account["unreadMessageCount"] = settingsModel->getStandardChatEnabled() || settingsModel->getSecureChatEnabled() ?  core->getUnreadChatMessageCountFromLocal(core->createPrimaryContactParsed()) : 0;
-		account["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(account["sipAddress"].toString());
+		account["unreadMessageCount"] = settingsModel->getStandardChatEnabled() || settingsModel->getSecureChatEnabled() ?  core->getUnreadChatMessageCount() : 0;
+		account["missedCallCount"] = core->getMissedCallsCount();
 		account["account"].setValue(nullptr);
 		accounts << account;
 	}
@@ -615,7 +629,7 @@ QVariantList AccountSettingsModel::getAccounts () const {
 		accountMap["fullSipAddress"] = Utils::coreStringToAppString(params->getIdentityAddress()->asString());
 		accountMap["account"].setValue(account);
 		accountMap["unreadMessageCount"] = settingsModel->getStandardChatEnabled() || settingsModel->getSecureChatEnabled() ? account->getUnreadChatMessageCount() : 0;
-		accountMap["missedCallCount"] = CoreManager::getInstance()->getMissedCallCountFromLocal(accountMap["sipAddress"].toString());
+		accountMap["missedCallCount"] = account->getMissedCallsCount();
 		accountMap["registerEnabled"] = params->registerEnabled();
 		accounts << accountMap;
 	}

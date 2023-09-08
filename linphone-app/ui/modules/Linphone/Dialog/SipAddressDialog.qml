@@ -58,15 +58,15 @@ DialogPlus {
 						return UtilsCpp.hasCapability(entry.sipAddress,  LinphoneEnums.FriendCapabilityLimeX3Dh, true)
 					},
 					handler: function (entry) {
-						console.debug("Call selected: " +entry + "/"+entry.sipAddress)
+						console.debug("Entry selected: " +entry + "/"+entry.sipAddress)
 						smartSearchBar.entryClicked(entry)
+						smartSearchBar.closeMenu()
 					},
 				}]
 			
 			onEntryClicked: {
-					console.debug("Call selected from button: " +entry + "/"+entry.sipAddress)
+					console.debug("Entry selected from button: " +entry + "/"+entry.sipAddress)
 					mainItem.addressSelectedCallback(entry.sipAddress)
-					mainItem.exit(1)
 			}
 		}
 		 Text {
@@ -108,7 +108,6 @@ DialogPlus {
 				onEntrySelected:{
 					if( entry) {
 						mainItem.chatRoomSelectedCallback(entry.chatRoomModel)
-						exit(1)
 					}
 				}
 			}

@@ -104,15 +104,21 @@ function manageAccounts () {
 function updateSelectedEntry (view, props) {
   var item = mainLoader.item
 
-  var menu = item.menu
+  var mainMenu = item.mainMenu
   var timeline = item.timeline
 
   if (view === 'Home') {
-    menu.resetSelectedEntry()
+	mainMenu.currentMenu = 0
+  } else if (view === 'Calls') {
+	mainMenu.currentMenu = 1
+  } else if (view === 'Conversations') {
+	mainMenu.currentMenu = 2
   } else if (view === 'Contacts') {
-    item.contactsEntry.select()
+	mainMenu.currentMenu = 3
   } else if (view === 'Conferences') {
-    item.conferencesEntry.select()
+	mainMenu.currentMenu = 4
+  }else{
+	mainMenu.currentMenu = -1
   }
 }
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2023 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -25,8 +25,6 @@
 #include "components/calls/CallsListModel.hpp"
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
-#include "components/sip-addresses/SipAddressesModel.hpp"
-#include "components/contacts/ContactsListModel.hpp"
 #include "utils/Utils.hpp"
 
 
@@ -327,7 +325,6 @@ void TimelineListModel::updateTimelines () {
 	qInfo() << "Timelines adding :" << stepsTimer.restart() << "ms for " << models.size() << " new timelines";
 	add(models);
 	qInfo() << "Timelines adding GUI :" << stepsTimer.restart() << "ms.";
-	CoreManager::getInstance()->updateUnreadMessageCount();
 	qInfo() << "Timelines initialized in:" << timer.elapsed() << "ms.";
 }
 
@@ -460,7 +457,6 @@ void TimelineListModel::onCallCreated(const std::shared_ptr<linphone::Call> &cal
 		}
 		if(!found){// Create a default chat room
 			QVariantList participants;
-			//participants << Utils::coreStringToAppString(callLog->getRemoteAddress()->asStringUriOnly());	// This allow chatting to a specific device but the current design is not adapted to show them
 			auto remoteAddress = callLog->getRemoteAddress()->clone();
 			remoteAddress->clean();
 			participants << Utils::coreStringToAppString(remoteAddress->asStringUriOnly());

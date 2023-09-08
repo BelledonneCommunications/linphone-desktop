@@ -68,6 +68,7 @@ void ChatMessageModel::connectTo(ChatMessageListener * listener){
 	connect(listener, &ChatMessageListener::ephemeralMessageTimerStarted, this, &ChatMessageModel::onEphemeralMessageTimerStarted);
 	connect(listener, &ChatMessageListener::ephemeralMessageDeleted, this, &ChatMessageModel::onEphemeralMessageDeleted);
 	connect(listener, &ChatMessageListener::participantImdnStateChanged, this->getParticipantImdnStates().get(), &ParticipantImdnStateListModel::onParticipantImdnStateChanged);
+	connect(listener, &ChatMessageListener::reactionRemoved, this, &ChatMessageModel::onReactionRemoved);
 }
 // =============================================================================
 
@@ -151,6 +152,12 @@ QString ChatMessageModel::getToDisplayName() const{
 
 QString ChatMessageModel::getToSipAddress() const{
 	return mChatMessage ? Utils::cleanSipAddress(Utils::coreStringToAppString(mChatMessage->getToAddress()->asStringUriOnly())) : "";
+}
+
+QString ChatMessageModel::getMyReaction() const {
+	if(!mChatMessage) return "";
+	auto myReaction = mChatMessage->getOwnReaction();
+	return myReaction ? Utils::coreStringToAppString(myReaction->getBody()) : "";
 }
 
 ContactModel * ChatMessageModel::getContactModel() const{
@@ -256,13 +263,16 @@ void ChatMessageModel::resendMessage (){
 }
 
 void ChatMessageModel::sendChatReaction(const QString& reaction){
-	auto chatReaction = mChatMessage->createReaction(Utils::appStringToCoreString(reaction));
-	if( mChatReactionListModel->exists(chatReaction)) {
-		chatReaction = mChatMessage->createReaction("");
-		return;	// TODO : remove return when sending empty emoji will be supported.
+	auto myReaction = mChatMessage->getOwnReaction();
+	if( myReaction && Utils::coreStringToAppString(myReaction->getBody()) == reaction) {
+		auto chatReaction = mChatMessage->createReaction("");
+		chatReaction->send();
+		//emit reactionRemoved(mChatMessage, chatReaction->getFromAddress());	// Do not emit because we want to display what the server got
+	}else{
+		auto chatReaction = mChatMessage->createReaction(Utils::appStringToCoreString(reaction));
+		chatReaction->send();
+		//emit newMessageReaction(mChatMessage, chatReaction);// Do not emit because we want to display what the server got
 	}
-	chatReaction->send();
-	emit newMessageReaction(mChatMessage, chatReaction);
 }
 
 void ChatMessageModel::deleteEvent(){
@@ -327,6 +337,8 @@ void ChatMessageModel::onMsgStateChanged (const std::shared_ptr<linphone::ChatMe
 }
 
 void ChatMessageModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
+	if(reaction->getFromAddress()->weakEqual(message->getLocalAddress()))
+		emit myReactionChanged();
 	emit newMessageReaction(message, reaction);
 }
 
@@ -341,6 +353,12 @@ void ChatMessageModel::onEphemeralMessageDeleted(const std::shared_ptr<linphone:
 	if(!isOutgoing())
 		mContentListModel->removeDownloadedFiles();
 	emit remove(this);
+}
+
+void ChatMessageModel::onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address) {
+	if(address->weakEqual(message->getLocalAddress()))
+		emit myReactionChanged();
+	emit reactionRemoved(message, address);
 }
 //-------------------------------------------------------------------------------------------------------
 

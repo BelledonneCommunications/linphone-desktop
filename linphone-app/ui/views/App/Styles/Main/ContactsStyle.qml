@@ -12,14 +12,16 @@ QtObject {
 	property int spacing: 20
 	
 	property QtObject filter: QtObject {
-		property string icon: 'filter_custom'
+		property string icon: 'search_custom'
 		property var colorModel: ColorsList.add(sectionName+'_filter_icon', 'c')
 	}
 	property QtObject bar: QtObject {
 		property var backgroundColor: ColorsList.add(sectionName+'_bar_bg', 'e')
+		property var foregroundColor: ColorsList.add(sectionName+'_bar_fg', 'd')
 		property int height: 60
 		property int leftMargin: 18
 		property int rightMargin: 18
+		property int pointSize: Units.dp * 11
 	}
 	
 	property QtObject contact: QtObject {

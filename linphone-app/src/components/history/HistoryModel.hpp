@@ -30,6 +30,7 @@
 // =============================================================================
 
 class CoreHandlers;
+class CallHistoryModel;
 
 class HistoryModel : public QAbstractListModel {
 	
@@ -59,6 +60,7 @@ public:
 	Q_ENUM(CallStatus)
 
 	HistoryModel (QObject *parent = Q_NULLPTR);
+	HistoryModel (CallHistoryModel *callHistoryModel, QObject *parent = Q_NULLPTR);
 	virtual ~HistoryModel ();
 
 	int rowCount (const QModelIndex &index = QModelIndex()) const override;
@@ -71,6 +73,8 @@ public:
 
 	void removeEntry (int id);
 	void removeAllEntries ();
+	
+	void setSipAddresses (CallHistoryModel * callModel = nullptr);
 	
 	void resetMessageCount ();
 	
@@ -86,13 +90,14 @@ signals:
 private:
 	typedef QPair<QVariantMap, std::shared_ptr<void>> HistoryEntryData;
 	
-	void setSipAddresses ();
+	
 	void removeEntry (HistoryEntryData &entry);
 	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);
 
 	mutable QList<HistoryEntryData> mEntries;
-	
+	QString mRemoteAddress;
+	QString mConferenceUri;
 	QSharedPointer<CoreHandlers> mCoreHandlers;
 };
 

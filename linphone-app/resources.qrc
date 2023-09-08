@@ -432,6 +432,7 @@
 		<file>ui/modules/Linphone/Styles/Sticker/DecorationStickerStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Sticker/StickerStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/TelKeypad/TelKeypadStyle.qml</file>
+		<file>ui/modules/Linphone/Styles/Timeline/CallTimelineStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/Timeline/TimelineStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/View/ParticipantsListViewStyle.qml</file>
 		<file>ui/modules/Linphone/Styles/View/ParticipantsViewStyle.qml</file>
@@ -439,6 +440,8 @@
 		<file>ui/modules/Linphone/TelKeypad/TelKeypadButton.qml</file>
 		<file>ui/modules/Linphone/TelKeypad/TelKeypad.js</file>
 		<file>ui/modules/Linphone/TelKeypad/TelKeypad.qml</file>
+		<file>ui/modules/Linphone/Timeline/CallTimeline.qml</file>
+		<file>ui/modules/Linphone/Timeline/CallTimelineItem.qml</file>
 		<file>ui/modules/Linphone/Timeline/Timeline.js</file>
 		<file>ui/modules/Linphone/Timeline/Timeline.qml</file>
 		<file>ui/modules/Linphone/Timeline/TimelineItem.qml</file>
@@ -477,12 +480,14 @@
 		<file>ui/views/App/Main/Assistant/UseAppSipAccountWithPhoneNumber.qml</file>
 		<file>ui/views/App/Main/Assistant/UseAppSipAccountWithUsername.qml</file>
 		<file>ui/views/App/Main/Assistant/UseOtherSipAccount.qml</file>
+		<file>ui/views/App/Main/Calls.qml</file>
 		<file>ui/views/App/Main/Conferences.qml</file>
 		<file>ui/views/App/Main/ContactEdit.js</file>
 		<file>ui/views/App/Main/ContactEdit.qml</file>
 		<file>ui/views/App/Main/Contacts.qml</file>
 		<file>ui/views/App/Main/Conversation.js</file>
 		<file>ui/views/App/Main/Conversation.qml</file>
+		<file>ui/views/App/Main/Conversations.qml</file>
 		<file>ui/views/App/Main/Dialogs/About.qml</file>
 		<file>ui/views/App/Main/Dialogs/AuthenticationRequest.js</file>
 		<file>ui/views/App/Main/Dialogs/AuthenticationRequest.qml</file>

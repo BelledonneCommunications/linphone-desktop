@@ -65,6 +65,7 @@ public:
 	void updateList();
 	
 	void onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction);
+	void onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address);
 signals:
 	void chatReactionsChanged();
 	void chatReactionCountChanged();

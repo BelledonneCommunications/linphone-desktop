@@ -31,7 +31,7 @@ Rectangle {
 
       // -----------------------------------------------------------------------
 
-      property bool bindToEnd: false
+      property bool bindToStart: false
       property bool tryToLoadMoreEntries: true
 
       // -----------------------------------------------------------------------
@@ -196,6 +196,6 @@ Rectangle {
     repeat: true
     running: true
 
-    onTriggered: history.bindToEnd && history.positionViewAtEnd()
+    onTriggered: history.bindToStart && history.positionViewAtBeginning()
   }
 }

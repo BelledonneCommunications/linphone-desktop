@@ -34,18 +34,19 @@ class TimelineProxyModel : public QSortFilterProxyModel {
 	
 public:
 	enum TimelineFilter {
-		StandardChatRoom=1,
-		SecureChatRoom=2,
-		SimpleChatRoom=4,
-		GroupChatRoom=8,
-		EphemeralChatRoom=16,
-		NoEphemeralChatRoom=32,
-		
+		SecureChatRoom = 1,
+		GroupChatRoom = 2,
 		AllChatRooms = 0
 	};
 	Q_ENUM(TimelineFilter)
 	
-	enum TimelineListSource{
+	enum TimelineMode {
+		Chats,
+		Calls
+	};
+	Q_ENUM(TimelineMode)
+	
+		enum TimelineListSource{
 		Undefined, 
 		Main,	// Timeline list comes from the singleton stored in CoreManager.
 		Copy	// Timeline list is created from Main but have no attach to the main list (aside of root items).
@@ -59,10 +60,12 @@ public:
 	Q_PROPERTY(int filterFlags MEMBER mFilterFlags WRITE setFilterFlags NOTIFY filterFlagsChanged)
 	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
 	Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+	Q_PROPERTY(TimelineMode mode MEMBER mMode WRITE setMode NOTIFY modeChanged)
 		
 	Q_INVOKABLE void unselectAll();
 	Q_INVOKABLE void setFilterFlags(const int& filterFlags);
 	Q_INVOKABLE void setFilterText(const QString& text);
+	Q_INVOKABLE void setMode(const TimelineMode& mode);
 	
 	TimelineListSource getListSource() const;
 	void setListSource(const TimelineListSource& source);
@@ -74,6 +77,7 @@ signals:
 	void filterFlagsChanged();
 	void filterTextChanged();
 	void listSourceChanged();
+	void modeChanged();
 	
 protected:
 	
@@ -87,6 +91,7 @@ protected:
 private:
 	int mFilterFlags = 0;
 	QString mFilterText;
+	TimelineMode mMode = Chats;
 	TimelineListSource mListSource = Undefined;
 };
 

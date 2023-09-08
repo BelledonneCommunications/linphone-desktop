@@ -100,7 +100,8 @@ Rectangle {
 				preventStealing: false
 				onClicked: {
 					if(mouse.button == Qt.LeftButton){
-						mainItem.timelineModel.selected = true
+						if(mainItem.timelineModel)
+							mainItem.timelineModel.selected = true
 					}else if(mainItem.optionsTogglable){
 						mainItem.optionsToggled = !mainItem.optionsToggled
 					}
@@ -172,9 +173,10 @@ Rectangle {
 				visible: modelData.visible
 				
 				onClicked: {
-					mainItem.actions[index].handler(	// Do not use modelData on functions
-						mainItem.timelineModel
-					)
+					if( mainItem.timelineModel)
+						mainItem.actions[index].handler(	// Do not use modelData on functions
+							mainItem.timelineModel
+						)
 				}
 				
 			}
@@ -225,7 +227,7 @@ Rectangle {
 						id: deleteButton
 						Layout.alignment: Qt.AlignCenter
 						Layout.rightMargin: 6
-						
+						visible: mainItem.timelineModel
 						isCustom: true
 						colorSet: contactView.isSelected ? TimelineStyle.selectedDeleteAction : TimelineStyle.deleteAction
 						onClicked: window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
@@ -233,7 +235,8 @@ Rectangle {
 																  descriptionText: qsTr('deleteTimeline'),
 															  }, function (status) {
 																  if (status) {
-																	  mainItem.timelineModel.chatRoomModel.deleteChatRoom()
+																		if( mainItem.timelineModel)
+																			mainItem.timelineModel.chatRoomModel.deleteChatRoom()
 																  }
 															  })
 						TooltipArea {

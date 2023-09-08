@@ -31,11 +31,8 @@ class ContactsListModel;
 class ContactsListProxyModel : public QSortFilterProxyModel {
   Q_OBJECT;
 
-  Q_PROPERTY(
-    bool useConnectedFilter
-    READ isConnectedFilterUsed
-    WRITE setConnectedFilter
-  );
+  Q_PROPERTY(bool useConnectedFilter READ isConnectedFilterUsed WRITE setConnectedFilter);
+  Q_PROPERTY(bool useOnlineFilter READ isOnlineFilterUsed WRITE setOnlineFilter);
 
 public:
   ContactsListProxyModel (QObject *parent = Q_NULLPTR);
@@ -53,11 +50,16 @@ private:
   bool isConnectedFilterUsed () const {
     return mUseConnectedFilter;
   }
+  bool isOnlineFilterUsed () const {
+    return mUseOnlineFilter;
+  }
 
   void setConnectedFilter (bool useConnectedFilter);
+  void setOnlineFilter (bool useOnlineFilter);
 
   QString mFilter;
   bool mUseConnectedFilter = false;
+  bool mUseOnlineFilter = false;
 
   // It's just a cache to save values computed by `filterAcceptsRow`
   // and reused by `lessThan`.

@@ -46,33 +46,45 @@ Item {
 	Menu {
 		id: messageMenu
 		menuStyle : MenuStyle.aux
-		MenuItem {
+		RowLayout{
 			id: reactionBar
 			property font customFont : SettingsModel.emojiFont
-			menuItemStyle : MenuItemStyle.aux
-			contentItem: RowLayout{
-				Layout.fillWidth: true
-				spacing:0
-				Repeater{
+			width: parent.width
+			height: 50
+			anchors.margins: 10	// Let parent border displayed
+			spacing: 0
+			
+			Repeater{
 					model: ConstantsCpp.reactionsList
-					delegate: Text{
+					delegate: MenuItem{
+						isTabBar: true
 						Layout.fillWidth: true
-						horizontalAlignment: Text.AlignHCenter
-						verticalAlignment: Text.AlignVCenter
-						text:  modelData
-						font.family: reactionBar.customFont.family
-						font.pointSize: Units.dp  * reactionBar.customFont.pointSize * 2
-						MouseArea{
+						Layout.fillHeight: true
+						Layout.topMargin: 5
+						Layout.bottomMargin: 5
+						Layout.leftMargin: 2
+						Layout.rightMargin: 2
+						
+						radius: messageMenu.radius
+						down: chatMessageModel && modelData && modelData == chatMessageModel.myReaction
+						onTriggered: {
+									chatMessageModel.sendChatReaction(modelData)
+									messageMenu.close()
+								}
+						Text{
+							id: bodyItem
 							anchors.fill: parent
-							onClicked: {
-								chatMessageModel.sendChatReaction(modelData)
-								messageMenu.close()
-							}
+							horizontalAlignment: Text.AlignHCenter
+							verticalAlignment: Text.AlignVCenter
+							text:  modelData
+							font.family: reactionBar.customFont.family
+							font.pointSize: Units.dp  * reactionBar.customFont.pointSize * 2
 						}
 					}
 				}
-			}
+			
 		}
+		
 		MenuItem {
 			//: 'Copy all' : Text menu to copy all message text into clipboard
 			text: (container.lastTextSelected == '' ? qsTr('menuCopyAll')

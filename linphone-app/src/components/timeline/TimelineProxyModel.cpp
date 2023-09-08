@@ -61,6 +61,13 @@ void TimelineProxyModel::setFilterText(const QString& text){
 		emit filterTextChanged();
 	}
 }
+
+void TimelineProxyModel::setMode(const TimelineMode& mode) {
+	if(mMode != mode) {
+		mMode = mode;
+		emit modeChanged();
+	}
+}
 	
 TimelineProxyModel::TimelineListSource TimelineProxyModel::getListSource() const{
 	return mListSource;
@@ -115,15 +122,12 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 		return false;
 	bool show = (mFilterFlags==0);// Show all at 0 (no hide all)
 	bool isGroup = timeline->getChatRoomModel()->isGroupEnabled();
-	bool isEphemeral = timeline->getChatRoomModel()->isEphemeralEnabled();
 
 	if( mFilterFlags > 0) {
-		show = !(( ( (mFilterFlags & TimelineFilter::SimpleChatRoom) == TimelineFilter::SimpleChatRoom) && isGroup)
-				|| ( ( (mFilterFlags & TimelineFilter::SecureChatRoom) == TimelineFilter::SecureChatRoom) && !haveEncryption)
-				|| ( ( (mFilterFlags & TimelineFilter::GroupChatRoom) == TimelineFilter::GroupChatRoom) && !isGroup)
-				|| ( ( (mFilterFlags & TimelineFilter::StandardChatRoom) == TimelineFilter::StandardChatRoom) && haveEncryption)
-				|| ( ( (mFilterFlags & TimelineFilter::EphemeralChatRoom) == TimelineFilter::EphemeralChatRoom) && !isEphemeral)
-				|| ( ( (mFilterFlags & TimelineFilter::NoEphemeralChatRoom) == TimelineFilter::NoEphemeralChatRoom) && isEphemeral));
+		show = !(
+					( ((mFilterFlags & TimelineFilter::SecureChatRoom) == TimelineFilter::SecureChatRoom) && !haveEncryption)
+					|| ( ((mFilterFlags & TimelineFilter::GroupChatRoom) == TimelineFilter::GroupChatRoom) && !isGroup)
+				);
 	}
 		
 	if(show && mFilterText != ""){
@@ -142,8 +146,8 @@ bool TimelineProxyModel::lessThan (const QModelIndex &left, const QModelIndex &r
 		return false;
 	const TimelineModel* a = sourceModel()->data(left).value<TimelineModel*>();
 	const TimelineModel* b = sourceModel()->data(right).value<TimelineModel*>();
-	bool aHaveUnread = a->getChatRoomModel()->getAllUnreadCount() > 0;
-	bool bHaveUnread = b->getChatRoomModel()->getAllUnreadCount() > 0;
+	bool aHaveUnread = a->getChatRoomModel()->getUnreadMessagesCount() > 0;
+	bool bHaveUnread = b->getChatRoomModel()->getUnreadMessagesCount() > 0;
 	return (aHaveUnread && !bHaveUnread)
 			|| (aHaveUnread == bHaveUnread && a->getChatRoomModel()->mLastUpdateTime > b->getChatRoomModel()->mLastUpdateTime);
 }

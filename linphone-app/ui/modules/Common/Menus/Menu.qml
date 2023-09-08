@@ -9,8 +9,10 @@ import Common.Styles 1.0
 Controls.Menu {
 	id: menu
 	property var menuStyle : MenuStyle.normal
+	property alias radius: brackgroundArea.radius
 	width: menuStyle.width ? menuStyle.width : parent.width
 	background: Rectangle {
+		id: brackgroundArea
 		implicitWidth: menu.width
 		color: menuStyle.colorModel.color
 		radius: menuStyle.radius

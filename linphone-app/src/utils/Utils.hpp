@@ -68,7 +68,7 @@ public:
 //***** DATE TIME
 	Q_INVOKABLE static QDateTime addMinutes(QDateTime date, const int& min);
 	static QDateTime getOffsettedUTC(const QDateTime& date);
-	Q_INVOKABLE static QString toDateTimeString(QDateTime date);
+	Q_INVOKABLE static QString toDateTimeString(QDateTime date, const QString& format = "yyyy/MM/dd hh:mm:ss");
 	Q_INVOKABLE static QString toTimeString(QDateTime date, const QString& format = "hh:mm:ss");
 	Q_INVOKABLE static QString toDateString(QDateTime date, const QString& format = "");
 	Q_INVOKABLE static QString toDateString(QDate date, const QString& format = "");

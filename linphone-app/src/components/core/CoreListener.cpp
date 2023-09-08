@@ -93,6 +93,10 @@ void CoreListener::onNotifyPresenceReceived (const std::shared_ptr<linphone::Cor
 void CoreListener::onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result){
 	emit qrcodeFound(core, result);
 }
+void CoreListener::onReactionRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address) {
+	emit reactionRemoved(core, chatRoom, message, address);
+}
+
 void CoreListener::onTransferStateChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,linphone::Call::State state){
 	emit transferStateChanged (core,call,state);
 }

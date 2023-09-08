@@ -582,28 +582,13 @@ ColumnLayout  {
 		topWidth: ConversationStyle.filters.border.topWidth
 		visible: chatRoomModel && (!chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 		
-		ExclusiveButtons {
-			id: filterButtons
-			anchors {
-				left: parent.left
-				leftMargin: ConversationStyle.filters.leftMargin
-				verticalCenter: parent.verticalCenter
-			}
-			
-			texts: [
-				qsTr('displayCallsAndMessages'),
-				qsTr('displayCalls'),
-				qsTr('displayMessages')
-			]
-			
-			onClicked: Logic.updateChatFilter(button)
-		}
+
 		BusyIndicator{
 			id: chatLoading
 			width: 20
 			height: 20
-			anchors.left: filterButtons.right
-			anchors.leftMargin: 50
+			anchors.left: parent.left
+			anchors.leftMargin: parent.width/3
 			anchors.verticalCenter: parent.verticalCenter
 			color:  BusyIndicatorStyle.alternateColor.color
 			running: chatArea.tryingToLoadMoreEntries
@@ -654,6 +639,7 @@ ColumnLayout  {
 				}
 				width: parent.width-14
 				icon: text != '' ? 'close_custom' : 'search_custom'
+				iconSize: 30
 				overwriteColor: ConversationStyle.filters.iconColor.color
 				//: 'Search in messages' : this is a placeholder when searching something in the timeline list
 				placeholderText: qsTr('searchMessagesPlaceholder')

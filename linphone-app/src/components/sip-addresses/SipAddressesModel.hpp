@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2023 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -37,12 +37,10 @@ class CoreHandlers;
 class HistoryModel;
 
 class SipAddressesModel : public QAbstractListModel {
-  Q_OBJECT;
+  Q_OBJECT
 
 public:
   struct ConferenceEntry {
-    int unreadMessageCount;
-    int missedCallCount;
     bool isComposing;
     QDateTime timestamp;
   };
@@ -81,8 +79,6 @@ public:
   QHash<int, QByteArray> roleNames () const override;
   QVariant data (const QModelIndex &index, int role = Qt::DisplayRole) const override;
   
-  //Q_PROPERTY(QList<QVariant> resultExceptions READ getResultExceptions WRITE setResultExceptions NOTIFY resultExceptionsChanged)
-
   Q_INVOKABLE QVariantMap find (const QString &sipAddress) const;
   Q_INVOKABLE ContactModel *mapSipAddressToContact (const QString &sipAddress) const;
   Q_INVOKABLE SipAddressObserver *getSipAddressObserver (const QString &peerAddress, const QString &localAddress);
@@ -113,9 +109,6 @@ public:
 signals:
   void sipAddressReset();// The model has been reset
  
-public slots:
-  void handleAllCallCountReset ();
-
 private:
   bool removeRow (int row, const QModelIndex &parent = QModelIndex());
   bool removeRows (int row, int count, const QModelIndex &parent = QModelIndex()) override;
@@ -140,8 +133,6 @@ private:
   void handleAllEntriesRemoved (ChatRoomModel *chatRoomModel);
   void handleLastEntryRemoved (ChatRoomModel *chatRoomModel);
   
-  void handleMessageCountReset (ChatRoomModel *chatRoomModel);
-
   void handleMessageSent (const std::shared_ptr<linphone::ChatMessage> &message);
 
   void handleIsComposingChanged (const std::shared_ptr<linphone::ChatRoom> &chatRoom);
@@ -166,7 +157,6 @@ private:
 
   void updateObservers (const QString &sipAddress, QSharedPointer<ContactModel> contact);
   void updateObservers (const QString &sipAddress, const Presence::PresenceStatus &presenceStatus, const QDateTime &presenceTimestamp);
-  void updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount, int missedCallCount);
 
   // ---------------------------------------------------------------------------
 

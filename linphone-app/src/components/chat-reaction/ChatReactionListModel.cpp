@@ -31,11 +31,15 @@ ChatReactionListModel::ChatReactionListModel (ChatMessageModel * message, QObjec
 }
 
 void ChatReactionListModel::setChatMessageModel(ChatMessageModel * message) {
-	if(mParent)
+	if(mParent) {
 		disconnect(message, &ChatMessageModel::newMessageReaction, this, &ChatReactionListModel::onNewMessageReaction);
+		disconnect(message, &ChatMessageModel::reactionRemoved, this, &ChatReactionListModel::onReactionRemoved);
+	}
 	mParent = message;
-	if(mParent)
+	if(mParent) {
 		connect(message, &ChatMessageModel::newMessageReaction, this, &ChatReactionListModel::onNewMessageReaction);
+		connect(message, &ChatMessageModel::reactionRemoved, this, &ChatReactionListModel::onReactionRemoved);
+	}
 	if(message){
 		auto reactions = message->getChatMessage()->getReactions();
 		mReactions.clear();
@@ -175,4 +179,13 @@ QStringList ChatReactionListModel::getBodies() const {
 
 void ChatReactionListModel::onNewMessageReaction(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
 	updateChatReaction(reaction);
+}
+void ChatReactionListModel::onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address) {
+	mReactions.remove(Utils::coreStringToAppString(address->asStringUriOnly()));
+	mBodies.clear();
+	for(auto it : mReactions)
+		mBodies[it->getBody()].push_back(it);
+	updateList();
+	emit chatReactionCountChanged();
+	emit bodiesChanged();
 }

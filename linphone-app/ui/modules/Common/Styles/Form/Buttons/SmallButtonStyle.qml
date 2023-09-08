@@ -8,8 +8,8 @@ import ColorsList 1.0
 
 QtObject {
 	property string sectionName: 'SmallButton'
-	property int leftPadding: 5
-	property int rightPadding: 5
+	property int leftPadding: 10
+	property int rightPadding: 10
 	
 	property QtObject background: QtObject {
 		property int height: 22

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2023 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -177,10 +177,6 @@ SipAddressObserver *SipAddressesModel::getSipAddressObserver (const QString &pee
 		model->setContact(it->contact);
 		model->setPresenceStatus(it->presenceStatus);
 		model->setPresenceTimestamp(it->presenceTimestamp);
-		
-		auto it2 = it->localAddressToConferenceEntry.find(cleanedLocalAddress);
-		if (it2 != it->localAddressToConferenceEntry.end())
-			model->setUnreadMessageCount(it2->unreadMessageCount+it2->missedCallCount);
 	}
 	
 	mObservers.insert(cleanedPeerAddress, model);
@@ -327,17 +323,11 @@ void SipAddressesModel::handleChatRoomModelCreated (const QSharedPointer<ChatRoo
 	QObject::connect(ptr, &ChatRoomModel::lastEntryRemoved, this, [this, ptr] {
 		handleLastEntryRemoved(ptr);
 	});
-	QObject::connect(ptr, &ChatRoomModel::messageCountReset, this, [this, ptr] {
-		handleMessageCountReset(ptr);
-	});
 	
 	QObject::connect(ptr, &ChatRoomModel::messageSent, this, &SipAddressesModel::handleMessageSent);
 }
 
 void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
-	QObject::connect(historyModel, &HistoryModel::callCountReset, this, [this] {
-		handleAllCallCountReset();
-	});
 }
 
 void SipAddressesModel::handleContactAdded (QSharedPointer<ContactModel> contact) {
@@ -485,38 +475,6 @@ void SipAddressesModel::handleLastEntryRemoved (ChatRoomModel *chatRoomModel) {
 	emit dataChanged(index(row, 0), index(row, 0));
 }
 
-void SipAddressesModel::handleAllCallCountReset () {
-	for( auto peer = mPeerAddressToSipAddressEntry.begin() ; peer != mPeerAddressToSipAddressEntry.end() ; ++peer){
-		for( auto local = peer->localAddressToConferenceEntry.begin() ; local != peer->localAddressToConferenceEntry.end() ; ++local){
-			local->missedCallCount = 0;
-			updateObservers(peer.key(), local.key(), local->unreadMessageCount, local->missedCallCount);
-		}
-		int row = mRefs.indexOf(&(*peer));
-		emit dataChanged(index(row, 0), index(row, 0));
-	}
-}
-
-void SipAddressesModel::handleMessageCountReset (ChatRoomModel *chatRoomModel) {
-	const QString &peerAddress = Utils::cleanSipAddress(chatRoomModel->getPeerAddress());
-	auto it = mPeerAddressToSipAddressEntry.find(peerAddress);
-	if (it == mPeerAddressToSipAddressEntry.end())
-		return;
-	
-	const QString &localAddress = Utils::cleanSipAddress(chatRoomModel->getLocalAddress());
-	auto it2 = it->localAddressToConferenceEntry.find(localAddress);
-	if (it2 == it->localAddressToConferenceEntry.end())
-		return;
-	
-	it2->unreadMessageCount = 0;
-	it2->missedCallCount = 0;
-	
-	int row = mRefs.indexOf(&(*it));
-	Q_ASSERT(row != -1);
-	emit dataChanged(index(row, 0), index(row, 0));
-	
-	updateObservers(peerAddress, localAddress, 0, 0);
-}
-
 void SipAddressesModel::handleMessageSent (const shared_ptr<linphone::ChatMessage> &message) {
 	if(message->getChatRoom() && message->getChatRoom()->getPeerAddress()){
 		auto lPeerAddress = message->getChatRoom()->getPeerAddress();
@@ -573,12 +531,10 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
 	conferenceEntry.timestamp = callLog->getStatus() == linphone::Call::Status::Success
 			? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)
 			: QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
-	conferenceEntry.missedCallCount = CoreManager::getInstance()->getMissedCallCount(peerAddress, localAddress);
 	QString oldDisplayName = sipAddressEntry.displayNames.get();
 	sipAddressEntry.displayNames.updateFromCall(lPeerAddress);
 	if(oldDisplayName != sipAddressEntry.displayNames.get())
 		emit CoreManager::getInstance()->getContactsListModel()->contactUpdated(nullptr);
-	updateObservers(sipAddressEntry.sipAddress, localAddress, conferenceEntry.unreadMessageCount,conferenceEntry.missedCallCount);
 }
 
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const shared_ptr<linphone::ChatMessage> &message) {
@@ -595,10 +551,7 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
 	
 	ConferenceEntry &conferenceEntry = sipAddressEntry.localAddressToConferenceEntry[localAddress];
 	conferenceEntry.timestamp = QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000);
-	conferenceEntry.unreadMessageCount = count ;
-	conferenceEntry.missedCallCount = CoreManager::getInstance()->getMissedCallCount(peerAddress, localAddress);
 	sipAddressEntry.displayNames.updateFromChatMessage(lPeerAddress);
-	updateObservers(sipAddressEntry.sipAddress, localAddress, count,conferenceEntry.missedCallCount);
 }
 
 template<typename T>
@@ -685,8 +638,6 @@ void SipAddressesModel::initSipAddressesFromChat () {
 		QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(chatRoom->getLocalAddress()->asStringUriOnly())));
 		
 		getSipAddressEntry(peerAddress, lPeerAddress)->localAddressToConferenceEntry[localAddress] = {
-			chatRoom->getUnreadMessagesCount(),
-			CoreManager::getInstance()->getMissedCallCount(peerAddress, localAddress),
 			false,
 			QDateTime::fromMSecsSinceEpoch(lastMessage->getTime() * 1000)
 		};
@@ -716,7 +667,7 @@ void SipAddressesModel::initSipAddressesFromCalls () {
 		auto &localToConferenceEntry = sipAddressEntry->localAddressToConferenceEntry;
 		auto it = localToConferenceEntry.find(localAddress);
 		if (it == localToConferenceEntry.end()) {
-			localToConferenceEntry[localAddress] = { 0,0, false, move(timestamp) };
+			localToConferenceEntry[localAddress] = { false, move(timestamp) };
 			sipAddressEntry->displayNames.mFromCallLogs = QString::fromStdString(callLog->getRemoteAddress()->getDisplayName());
 		}else if (it->timestamp.isNull() || timestamp > it->timestamp){
 			it->timestamp = move(timestamp);
@@ -746,14 +697,5 @@ void SipAddressesModel::updateObservers (const QString &sipAddress, const Presen
 	for (auto &observer : mObservers.values(sipAddress)){
 		observer->setPresenceStatus(presenceStatus);
 		observer->setPresenceTimestamp(presenceTimestamp);
-	}
-}
-
-void SipAddressesModel::updateObservers (const QString &peerAddress, const QString &localAddress, int messageCount, int missedCallCount) {
-	for (auto &observer : mObservers.values(peerAddress)) {
-		if (observer->getLocalAddress() == localAddress) {
-			observer->setUnreadMessageCount(messageCount+missedCallCount);
-			return;
-		}
 	}
 }

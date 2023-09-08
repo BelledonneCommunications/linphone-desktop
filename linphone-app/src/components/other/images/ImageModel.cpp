@@ -23,6 +23,7 @@
 #include <QImageReader>
 #include <QPainter>
 #include <QMediaPlayer>
+#include <QSvgRenderer>
 #include "app/App.hpp"
 
 #include "utils/Utils.hpp"
@@ -88,22 +89,36 @@ QImage ImageModel::createThumbnail(const QString& path, QImage originalImage){
 		QExifImageHeader exifImageHeader;
 		if (exifImageHeader.loadFromJpeg(path))
 			rotation = int(exifImageHeader.value(QExifImageHeader::ImageTag::Orientation).toShort());
-		// Fill with color to replace transparency with white color instead of black (default).
-		QImage image(originalImage.size(), originalImage.format());
-		image.fill(QColor(Qt::white).rgb());
-		QPainter painter(&image);
-		painter.drawImage(0, 0, originalImage);
-		//--------------------
-		double factor = image.width() / (double)image.height();
+		double factor = originalImage.width() / (double)originalImage.height();
 		Qt::AspectRatioMode aspectRatio = Qt::KeepAspectRatio;
 		if(factor < 0.2 || factor > 5)
 			aspectRatio = Qt::KeepAspectRatioByExpanding;
-		thumbnail = image.scaled(
-					Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
-					aspectRatio , Qt::SmoothTransformation
-					);
-		if(aspectRatio == Qt::KeepAspectRatioByExpanding)
-			thumbnail = thumbnail.copy(0,0,Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight);
+		QImageReader reader(path);
+		if(reader.format() == "svg"){
+			QSvgRenderer svgRenderer(path);
+			if(svgRenderer.isValid()){
+				thumbnail = QImage(Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight, originalImage.format());
+				thumbnail.fill(QColor(Qt::transparent));
+				QPainter painter(&thumbnail);
+				svgRenderer.setAspectRatioMode(aspectRatio);
+				svgRenderer.render(&painter);
+			}
+		}
+		if(thumbnail.isNull()){
+			QImage image(originalImage.size(), originalImage.format());
+			// Fill with color to replace transparency with white color instead of black (default).
+			image.fill(QColor(Qt::white).rgb());
+			QPainter painter(&image);
+			painter.drawImage(0, 0, originalImage);
+			//--------------------
+			thumbnail = image.scaled(
+						Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight,
+						aspectRatio , Qt::SmoothTransformation
+						);
+			if(aspectRatio == Qt::KeepAspectRatioByExpanding)// Cut
+				thumbnail = thumbnail.copy(0,0,Constants::ThumbnailImageFileWidth, Constants::ThumbnailImageFileHeight);
+		}
+		
 		
 		if (rotation != 0) {
 			QTransform transform;

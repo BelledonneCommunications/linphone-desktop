@@ -24,6 +24,7 @@
 #include "components/core/CoreManager.hpp"
 
 #include "HistoryProxyModel.hpp"
+#include "CallHistoryModel.hpp"
 #include "components/sip-addresses/SipAddressesModel.hpp"
 
 // =============================================================================
@@ -55,6 +56,13 @@ protected:
 		return data["type"].toInt() == mEntryTypeFilter;
 	}
 	
+	bool lessThan (const QModelIndex &left, const QModelIndex &right) const override {
+		if( !sourceModel())
+			return false;
+		auto a = sourceModel()->data(left).value<QVariantMap>();
+		auto b = sourceModel()->data(right).value<QVariantMap>();
+		return a["receivedTimestamp"] > b["receivedTimestamp"];
+	}
 private:
 	HistoryModel::EntryType mEntryTypeFilter = HistoryModel::EntryType::GenericEntry;
 };
@@ -64,8 +72,7 @@ private:
 HistoryProxyModel::HistoryProxyModel (QObject *parent) : QSortFilterProxyModel(parent) {
 	
 	setSourceModel(new HistoryModelFilter(this));
-	reload();
-	
+	sort(0);
 	App *app = App::getInstance();
 	QObject::connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
 		handleIsActiveChanged(App::getInstance()->getMainWindow());
@@ -78,20 +85,22 @@ HistoryProxyModel::HistoryProxyModel (QObject *parent) : QSortFilterProxyModel(p
 		});
 }
 
+void HistoryProxyModel::setCallHistoryModel(CallHistoryModel * model) {
+	if(mCallHistoryModel != model){
+		mCallHistoryModel = model;
+		reload();
+		emit callHistoryModelChanged();
+	}
+}
 // -----------------------------------------------------------------------------
 
 void HistoryProxyModel::removeAllEntries(){
-	auto model = CoreManager::getInstance()->getHistoryModel();
-	if (!model)
-		return;
-	model->removeAllEntries();
+	static_cast<HistoryModel*>(static_cast<HistoryModelFilter *>(sourceModel())->sourceModel())->removeAllEntries();
+	emit mCallHistoryModel->hasBeenRemoved();
 }
 void HistoryProxyModel::removeEntry (int id){
-	auto model = CoreManager::getInstance()->getHistoryModel();
-	if (!model)
-		return;
 	QModelIndex sourceIndex = mapToSource(index(id, 0));
-	model->removeEntry(static_cast<HistoryModelFilter *>(sourceModel())->mapToSource(sourceIndex).row() );
+	static_cast<HistoryModel*>(static_cast<HistoryModelFilter *>(sourceModel())->sourceModel())->removeEntry(static_cast<HistoryModelFilter *>(sourceModel())->mapToSource(sourceIndex).row() );
 }
 // -----------------------------------------------------------------------------
 
@@ -128,19 +137,31 @@ bool HistoryProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &) co
 	return sourceModel()->rowCount() - sourceRow <= mMaxDisplayedEntries;
 }
 
+bool HistoryProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const{
+		if( !sourceModel())
+			return false;
+		auto a = sourceModel()->data(left).value<QVariantMap>();
+		auto b = sourceModel()->data(right).value<QVariantMap>();
+		return a["receivedTimestamp"] > b["receivedTimestamp"];
+	}
+	
 // -----------------------------------------------------------------------------
 
 void HistoryProxyModel::reload () {
 	mMaxDisplayedEntries = EntriesChunkSize;
-	auto model = CoreManager::getInstance()->getHistoryModel();
+	//auto model = CoreManager::getInstance()->getHistoryModel();
 	//model->reload();
-	static_cast<HistoryModelFilter *>(sourceModel())->setSourceModel(model);
+	static_cast<HistoryModelFilter *>(sourceModel())->setSourceModel(new HistoryModel(mCallHistoryModel));
+	invalidate();
 }
 void HistoryProxyModel::resetMessageCount(){
+	static_cast<HistoryModel*>(static_cast<HistoryModelFilter *>(sourceModel())->sourceModel())->resetMessageCount();
+/*
 	auto model = CoreManager::getInstance()->getHistoryModel();
 	if( model){
 		model->resetMessageCount();
 	}
+	*/
 }
 // -----------------------------------------------------------------------------
 

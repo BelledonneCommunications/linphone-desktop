@@ -61,6 +61,8 @@ signals:
 	void setLastRemoteProvisioningState(const linphone::Config::ConfiguringState &state);
 	void conferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	void foundQRCode(const std::string & result);
+	
+	void eventCountChanged();
 
 	//--------------------		CORE HANDLER
 	

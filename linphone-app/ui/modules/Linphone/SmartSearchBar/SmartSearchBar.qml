@@ -84,8 +84,7 @@ SearchBox {
 					searchBox.launchChat(entry.sipAddress)
 					searchBox.closeMenu()
 				},
-				visible: SettingsModel.standardChatEnabled,
-				zz: 'toto'
+				visible: SettingsModel.standardChatEnabled
 			}, {
 				colorSet: SettingsModel.getShowStartChatButton() ? SipAddressesViewStyle.chat : SipAddressesViewStyle.history,
 				secure: 1,

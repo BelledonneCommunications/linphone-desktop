@@ -14,9 +14,10 @@ import 'HistoryView.js' as Logic
 ColumnLayout  {
 	id: historyView
 	
-	property var entry
+	property var entry: callHistoryModel
 	property string peerAddress : entry ? entry.sipAddress : ''
 	property string fullPeerAddress : entry ? entry.sipAddress : ''
+	property alias callHistoryModel: historyProxyModel.callHistoryModel
 	
 	
 	property var _sipAddressObserver: peerAddress?SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), ''):null
@@ -114,14 +115,24 @@ ColumnLayout  {
 						
 						visible: peerAddress && SettingsModel.standardChatEnabled && SettingsModel.getShowStartChatButton() && !historyView.entry.wasConference
 						
-						onClicked: CallsListModel.launchChat(historyView.peerAddress, 0)
+						onClicked: {
+							var model = CallsListModel.launchChat(historyView.peerAddress, 0)
+							if(model && model.chatRoomModel) {
+								window.setView('Conversations')
+							}
+						}
 					}
 					ActionButton {
 						isCustom: true
 						backgroundRadius: 1000
 						colorSet: HistoryViewStyle.chat
 						visible: peerAddress && SettingsModel.secureChatEnabled && SettingsModel.getShowStartChatButton() && !historyView.entry.wasConference
-						onClicked: CallsListModel.launchChat(historyView.peerAddress, 1)
+						onClicked: {
+							var model = CallsListModel.launchChat(historyView.peerAddress, 1)
+							if(model && model.chatRoomModel) {
+								window.setView('Conversations')
+							}
+						}
 						Icon{
 							icon:'secure_level_1'
 							iconSize: parent.height/2

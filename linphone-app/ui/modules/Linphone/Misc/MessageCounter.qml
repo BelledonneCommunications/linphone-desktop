@@ -7,7 +7,7 @@ import Linphone.Styles 1.0
 
 Item{
 	id: messageCounter
-	property bool showOnlyNumber: false
+	property bool showOnlyNumber: backgroundIcon.icon == ''
 	property int count: 0
 	property alias icon: backgroundIcon.icon
 	property alias iconSize: amountIcon.iconSize
@@ -20,15 +20,15 @@ Item{
 	
 	Icon {
 		id: backgroundIcon
-		icon: 'chat_count'
-		iconSize: MessageCounterStyle.iconSize.message
+		icon: ''
+		iconSize: visible ? MessageCounterStyle.iconSize.message : 0
 		visible: !messageCounter.showOnlyNumber
 	}
 	Icon {
 		id: amountIcon
 		anchors {
-			horizontalCenter: parent.right
-			verticalCenter: parent.bottom
+			horizontalCenter: messageCounter.showOnlyNumber ? parent.horizontalCenter : parent.right
+			verticalCenter: messageCounter.showOnlyNumber ? parent.verticalCenter : parent.bottom
 		}
 		
 		icon: 'chat_amount'
@@ -39,6 +39,7 @@ Item{
 			anchors.centerIn: parent
 			color: MessageCounterStyle.text.colorModel.color
 			font.pointSize: messageCounter.pointSize
+			font.weight: Font.Bold
 			text: (messageCounter.count>99 ? '+' : messageCounter.count)
 		}
 	}

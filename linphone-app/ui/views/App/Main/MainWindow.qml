@@ -72,13 +72,10 @@ ApplicationWindow {
 		
 		sourceComponent: ColumnLayout {
 			// Workaround to get these properties in `MainWindow.js`.
-			readonly property alias contactsEntry: contactsEntry
-			readonly property alias conferencesEntry: conferencesEntry
-			
 			readonly property alias contentLoader: contentLoader
-			readonly property alias menu: menu
+			readonly property alias mainMenu: mainMenu
 			
-			readonly property alias timeline: timeline
+			//readonly property alias timeline: timeline
 			readonly property alias mainSearchBar: toolBar.mainSearchBar
 			
 			spacing: 0
@@ -110,28 +107,14 @@ ApplicationWindow {
 					}
 					spacing: MainWindowStyle.toolBar.spacing
 					
-					ActionButton {
-						icon: (leftPanel.visible?'panel_shown':'panel_hidden')
+					Avatar {
+						id: avatar
+						Layout.preferredHeight: smartSearchBar.height
+						Layout.preferredWidth: height
 						
-						//: 'Hide Timeline' : Tooltip for a button that hide the timeline
-						tooltipText : (leftPanel.visible?qsTr('hideTimeline')
-														  //: 'Open Timeline' : Tooltip for a button that open the timeline
-														:qsTr('openTimeline'))
-						iconSize: MainWindowStyle.panelButtonSize
-						//autoIcon: true
-						onClicked: leftPanel.visible = !leftPanel.visible
+						presenceLevel: OwnPresenceModel.presenceStatus===Presence.Offline?Presence.White:( SettingsModel.rlsUriEnabled ? OwnPresenceModel.presenceLevel : Presence.Green)
+						username: UtilsCpp.getDisplayName(AccountSettingsModel.username)
 					}
-					ActionButton {
-						id: home
-						isCustom: true
-						backgroundRadius: 4
-						colorSet: MainWindowStyle.buttons.home
-						//: 'Open Home' : Tooltip for a button that open the home view
-						tooltipText : qsTr('openHome')
-						//autoIcon: true
-						onClicked: setView('Home')
-					}
-					
 					AccountStatus {
 						id: accountStatus
 						betterIcon:true
@@ -198,11 +181,22 @@ ApplicationWindow {
 						}
 						
 						onLaunchCall: CallsListModel.launchAudioCall(sipAddress, '')
-						onLaunchChat: CallsListModel.launchChat( sipAddress,0 )
-						onLaunchSecureChat: CallsListModel.launchChat( sipAddress,1 )
+						onLaunchChat: {
+							var model = CallsListModel.launchChat( sipAddress,0 )
+							if(model && model.chatRoomModel) {
+								window.setView('Conversations')
+							}
+						}
+						onLaunchSecureChat: {
+							var model = CallsListModel.launchChat( sipAddress,1 )
+							if(model && model.chatRoomModel) {
+								window.setView('Conversations')
+							}
+						}
 						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress, '')
 					}
 					ActionButton {
+						Layout.leftMargin: 30
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: MainWindowStyle.buttons.telKeyad
@@ -210,7 +204,6 @@ ApplicationWindow {
 						toggled: telKeypad.visible
 					}					
 					ActionButton {
-						Layout.leftMargin: 30
 						isCustom: true
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newChatGroup
@@ -257,23 +250,6 @@ ApplicationWindow {
 							text: qsTr('newConferenceUriMissing')
 						}
 					}
-					
-					ActionButton {
-						isCustom: true
-						backgroundRadius: 4
-						colorSet: MainWindowStyle.buttons.burgerMenu
-						visible: Qt.platform.os !== 'osx'
-						
-						toggled: menuBar.isOpenned
-						onClicked: toggled ? menuBar.close() : menuBar.open()// a bit useless as Menu will depopup on losing focus but this code is kept for giving idea
-						MainWindowMenuBar {
-							id: menuBar
-							onDisplayRecordings: {
-								timeline.model.unselectAll()
-								setView('Recordings')
-							}
-						}
-					}
 				}
 			}
 
@@ -288,115 +264,114 @@ ApplicationWindow {
 				spacing: 0
 				
 				// Main menu.
-				ColumnLayout {
-					id:leftPanel
-					Layout.maximumWidth: MainWindowStyle.menu.width
-					Layout.preferredWidth: MainWindowStyle.menu.width
+				Rectangle{
+					id: mainMenu
+					property int currentMenu: 0
 					
-					spacing: 0
-					
-					ApplicationMenu {
-						id: menu
+					Layout.fillHeight: true
+					Layout.preferredWidth: MainWindowStyle.menu.leftMargin + MainWindowStyle.menu.rightMargin + MainWindowStyle.menu.buttonSize
+					color: '#F3F3F3'
+					ColumnLayout {
+						anchors.fill: parent	
+						spacing: 2*MainWindowStyle.menu.spacing
+						anchors.topMargin: MainWindowStyle.menu.spacing
+						anchors.bottomMargin: MainWindowStyle.menu.spacing
+						anchors.leftMargin: MainWindowStyle.menu.leftMargin
+						anchors.rightMargin: MainWindowStyle.menu.rightMargin
 						
-						defaultSelectedEntry: null
 						
-						entryHeight: MainWindowStyle.menu.height+10
-						entryWidth: MainWindowStyle.menu.width
-						
-						ApplicationMenuEntry {
-							id: contactsEntry
-							
-							icon: MainWindowStyle.menu.contacts.icon
-							iconSize: MainWindowStyle.menu.contacts.iconSize
-							overwriteColor: isSelected ? MainWindowStyle.menu.contacts.selectedColor.color : MainWindowStyle.menu.contacts.colorModel.color
-							name: LdapListModel.count > 0
-							//: 'Local contacts' : Contacts section label in main window when we have to specify that they are local to the application.
-															? qsTr('localContactsEntry').toUpperCase() 
-							//: 'Contacts' : Contacts section label in main waindow.
-															: qsTr('contactsEntry').toUpperCase()
-							
-							visible: SettingsModel.contactsEnabled
-							
-							onSelected: {
+						ActionButton {
+							id: homeButton
+							isCustom: true
+							backgroundRadius: 4
+							colorSet: MainWindowStyle.buttons.home
+							//: 'Open Home' : Tooltip for a button that open the home view
+							tooltipText : qsTr('openHome')
+							//autoIcon: true
+							toggled: mainMenu.currentMenu == 0
+							onClicked: window.setView('Home')
+						}
+						ActionButton {
+							isCustom: true
+							backgroundRadius: 4
+							colorSet: MainWindowStyle.buttons.callHistoryMenu
+							//: 'Open call history' : Tooltip for a button that open the call history view
+							tooltipText : qsTr('openCalls')
+							//autoIcon: true
+							toggled: mainMenu.currentMenu == 1
+							onClicked: {
+								window.setView('Calls')
+							}
+							MessageCounter {
+								id: callCounter
+								anchors.horizontalCenter: parent.right
+								anchors.verticalCenter: parent.top
+								count: AccountSettingsModel.missedCallsCount
+							}
+						}
+						ActionButton {
+							isCustom: true
+							backgroundRadius: 4
+							colorSet: MainWindowStyle.buttons.chatMenu
+							//: 'Open chats' : Tooltip for a button that open the conversations view
+							tooltipText : qsTr('openChats')
+							//autoIcon: true
+							toggled: mainMenu.currentMenu == 2
+							onClicked: {
+								onClicked: window.setView('Conversations')
+							}
+							MessageCounter {
+								id: messageCounter
+								anchors.horizontalCenter: parent.right
+								anchors.verticalCenter: parent.top
+								count: AccountSettingsModel.unreadMessagesCount
+							}
+						}
+						ActionButton {
+							isCustom: true
+							backgroundRadius: 4
+							colorSet: MainWindowStyle.buttons.contactsMenu
+							//: 'Open contacts' : Tooltip for a button that open the contacts view
+							tooltipText : qsTr('openContacts')
+							//autoIcon: true
+							toggled: mainMenu.currentMenu == 3
+							onClicked: {
 								ContactsListModel.update()
-								timeline.model.unselectAll()
-								setView('Contacts')
-							}
-							onClicked:{
-								ContactsListModel.update()
-								setView('Contacts')
-							}
-							Icon{
-								anchors.right:parent.right
-								anchors.verticalCenter: parent.verticalCenter
-								anchors.rightMargin: 10
-								icon: MainWindowStyle.menu.direction.icon
-								overwriteColor: contactsEntry.overwriteColor
-								iconSize: MainWindowStyle.menu.direction.iconSize
-								
+								window.setView('Contacts')
 							}
 						}
-						
-						ApplicationMenuEntry {
-							id: conferencesEntry
+						ActionButton {
+							isCustom: true
+							backgroundRadius: 4
+							colorSet: MainWindowStyle.buttons.meetingsMenu
+							//: 'Open meetings' : Tooltip for a button that open the meetings list
+							tooltipText : qsTr('openMeetings')
+							//autoIcon: true
+							toggled: mainMenu.currentMenu == 4
+							onClicked: {
+								window.setView('Conferences')
+							}
+						}
+						Item{
+							Layout.fillHeight: true
+						}
+						ActionButton {
+							isCustom: true
+							backgroundRadius: 4
+							colorSet: MainWindowStyle.buttons.settingsMenu
+							visible: Qt.platform.os !== 'osx'
 							
-							icon: MainWindowStyle.menu.conferences.icon
-							iconSize: MainWindowStyle.menu.conferences.iconSize
-							overwriteColor: isSelected ? MainWindowStyle.menu.conferences.selectedColor.color : MainWindowStyle.menu.conferences.colorModel.color
-							//: 'Meetings' : Meeting title for main window.
-							name: qsTr('mainWindowConferencesTitle').toUpperCase()
-							visible: SettingsModel.videoConferenceEnabled && SettingsModel.conferenceEnabled
-							
-							onSelected: {
-								timeline.model.unselectAll()
-								setView('Conferences')
-							}
-							onClicked:{
-								setView('Conferences')
-							}
-							Icon{
-								anchors.right:parent.right
-								anchors.verticalCenter: parent.verticalCenter
-								anchors.rightMargin: 10
-								icon: MainWindowStyle.menu.direction.icon
-								overwriteColor: conferencesEntry.overwriteColor
-								iconSize: MainWindowStyle.menu.direction.iconSize
-							}
-						}
-					}
-					
-					// History.
-					Timeline {
-						id: timeline
-						
-						Layout.fillHeight: true
-						Layout.fillWidth: true
-						model: TimelineProxyModel{
-							listSource: TimelineProxyModel.Main
-							onListSourceChanged: console.log("listSourceChanged")
-						}
-						
-						onEntrySelected:{
-							if( entry ) {
-								if( entry.selected){
-									console.debug("Load conversation from entry selected on timeline")
-									window.setView('Conversation', {
-												chatRoomModel:entry.chatRoomModel
-											   })
+							toggled: menuBar.isOpenned
+							onClicked: toggled ? menuBar.close() : menuBar.open()// a bit useless as Menu will depopup on losing focus but this code is kept for giving idea
+							MainWindowMenuBar {
+								id: menuBar
+								onDisplayRecordings: {
+									setView('Recordings')
 								}
-							}else{
-								
-								window.setView('Home', {})
 							}
-							menu.resetSelectedEntry()
-						}
-						onShowHistoryRequest: {
-							timeline.model.unselectAll()
-							window.setView('HistoryView')
 						}
 					}
 				}
-				
 				// Main content.
 				Item{
 					Layout.fillHeight: true
@@ -427,8 +402,6 @@ ApplicationWindow {
 		active:Qt.platform.os === 'osx'
 		sourceComponent:MainWindowTopMenuBar{
 			onDisplayRecordings: {
-				if(mainLoader.item)
-					mainLoader.item.timeline.model.unselectAll()
 				setView('Recordings')
 			}
 		}

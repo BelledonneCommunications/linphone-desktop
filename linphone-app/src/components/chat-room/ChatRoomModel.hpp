@@ -61,8 +61,7 @@ public:
 	
 	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QDateTime lastUpdateTime MEMBER mLastUpdateTime WRITE setLastUpdateTime NOTIFY lastUpdateTimeChanged)
-	Q_PROPERTY(int unreadMessagesCount MEMBER mUnreadMessagesCount WRITE setUnreadMessagesCount NOTIFY unreadMessagesCountChanged)
-	Q_PROPERTY(int missedCallsCount MEMBER mMissedCallsCount WRITE setMissedCallsCount NOTIFY missedCallsCountChanged)
+	Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount NOTIFY unreadMessagesCountChanged)
 	
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(bool groupEnabled READ isGroupEnabled NOTIFY groupEnabledChanged)
@@ -124,6 +123,7 @@ public:
 	int getPresenceStatus() const;
 	QDateTime getPresenceTimestamp() const;
 	LinphoneEnums::ChatRoomState getState() const;
+	int getUnreadMessagesCount() const;
 	bool isReadOnly() const;
 	bool isEphemeralEnabled() const;
 	long getEphemeralLifetime() const;
@@ -149,7 +149,6 @@ public:
 	std::list<std::shared_ptr<linphone::Participant>> getParticipants(const bool& withMe = true) const;
 	std::shared_ptr<linphone::ChatRoom> getChatRoom();
 	QList<QString> getComposers();
-	int getAllUnreadCount();	// Return unread messages and missed call.
 		
 //---- Setters
 	void setSubject(QString& subject);
@@ -157,9 +156,6 @@ public:
 	void updateLastUpdateTime();
 	void setEntriesLoading(const bool& loading);
 	
-	void setUnreadMessagesCount(const int& count);	
-	void setMissedCallsCount(const int& count);
-	void addMissedCallsCount(std::shared_ptr<linphone::Call> call);
 	void setEphemeralEnabled(bool enabled);
 	void setEphemeralLifetime(long lifetime);
 	void enableMarkAsRead(const bool& enable);
@@ -196,8 +192,6 @@ public:
 	virtual void resetData() override;
 	
 	QDateTime mLastUpdateTime;
-	int mUnreadMessagesCount = 0;
-	int mMissedCallsCount = 0;
 	bool mIsInitialized = false;
 	
 	bool mDeleteChatRoom = false;	// Use as workaround because of core->deleteChatRoom() that call destructor without takking account of count ref : call it in ChatRoomModel destructor	
@@ -206,9 +200,6 @@ public:
 	bool mMarkAsReadEnabled = true;
 	bool mEntriesLoading = false;
 	
-	
-	void insertCall (const std::shared_ptr<linphone::CallLog> &callLog);
-	void insertCalls (const QList<std::shared_ptr<linphone::CallLog> > &calls);
 	QSharedPointer<ChatMessageModel> insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
 	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
 	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
@@ -280,7 +271,6 @@ signals:
 	void presenceStatusChanged();
 	void lastUpdateTimeChanged();
 	void unreadMessagesCountChanged();
-	void missedCallsCountChanged();
 	
 	void securityLevelChanged(int securityLevel);
 	void groupEnabledChanged(bool groupEnabled);

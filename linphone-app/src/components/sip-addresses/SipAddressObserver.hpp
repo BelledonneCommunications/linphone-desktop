@@ -41,7 +41,6 @@ class SipAddressObserver : public QObject {
 	Q_PROPERTY(ContactModel *contact READ getContact NOTIFY contactChanged);
 	Q_PROPERTY(Presence::PresenceStatus presenceStatus READ getPresenceStatus NOTIFY presenceStatusChanged);
 	Q_PROPERTY(QDateTime presenceTimestamp READ getPresenceTimestamp NOTIFY presenceTimestampChanged);
-	Q_PROPERTY(int unreadMessageCount READ getUnreadMessageCount NOTIFY unreadMessageCountChanged);
 
 	Q_PROPERTY(bool isOneToOne MEMBER isOneToOne CONSTANT);
 	Q_PROPERTY(bool haveEncryption MEMBER haveEncryption CONSTANT);
@@ -57,7 +56,6 @@ signals:
 	void contactChanged (QSharedPointer<ContactModel>);
 	void presenceStatusChanged (const Presence::PresenceStatus &presenceStatus);
 	void presenceTimestampChanged (const QDateTime &presenceTimestamp);
-	void unreadMessageCountChanged (int unreadMessageCount);
 
 private:
 	QString getPeerAddress () const {
@@ -89,20 +87,12 @@ private:
 	void setPresenceTimestamp (const QDateTime &presenceTimestamp);
 
 	// ---------------------------------------------------------------------------
-
-	int getUnreadMessageCount () const {
-		return mUnreadMessageCount;
-	}
-
-	void setUnreadMessageCount (int unreadMessageCount);
-
 	QString mPeerAddress;
 	QString mLocalAddress;
 
 	QSharedPointer<ContactModel> mContact;
 	Presence::PresenceStatus mPresenceStatus = Presence::PresenceStatus::Offline;
 	QDateTime mPresenceTimestamp;
-	int mUnreadMessageCount = 0;
 };
 
 Q_DECLARE_METATYPE(SipAddressObserver *);

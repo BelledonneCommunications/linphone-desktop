@@ -142,6 +142,8 @@ void CoreHandlers::onCallStateChanged (
 		const string &
 		) {
 	emit callStateChanged(call, state);
+	if (state == linphone::Call::State::End || state == linphone::Call::State::Error)
+		emit eventCountChanged();
 	
 	SettingsModel *settingsModel = CoreManager::getInstance()->getSettingsModel();
 	if (

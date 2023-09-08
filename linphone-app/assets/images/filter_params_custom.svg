@@ -1,105 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg
-   version="1.1"
-   id="Layer_1"
-   x="0px"
-   y="0px"
    width="80"
    height="80"
    viewBox="0 0 80 80"
-   xml:space="preserve"
+   fill="none"
+   version="1.1"
+   id="svg27"
    sodipodi:docname="filter_params_custom.svg"
-   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg"><defs
-   id="defs25" /><sodipodi:namedview
-   id="namedview23"
-   pagecolor="#ffffff"
-   bordercolor="#666666"
-   borderopacity="1.0"
-   inkscape:pageshadow="2"
-   inkscape:pageopacity="0.0"
-   inkscape:pagecheckerboard="0"
-   showgrid="false"
-   inkscape:zoom="13.640625"
-   inkscape:cx="33.319588"
-   inkscape:cy="40.687286"
-   inkscape:window-width="1920"
-   inkscape:window-height="1131"
-   inkscape:window-x="0"
-   inkscape:window-y="0"
-   inkscape:window-maximized="1"
-   inkscape:current-layer="Layer_1" />
-<style
-   type="text/css"
-   id="style2">
-	.st0{fill:#000000;}
-</style>
-
-
-
-
-
-
-
-
-<g
-   id="g870"
-   transform="matrix(0,0.20833333,-0.22727273,0,69.090912,13.333333)"><rect
-     x="108"
-     y="64"
-     class="st0"
-     width="116"
-     height="16"
-     id="rect4" /><rect
-     x="32"
-     y="64"
-     class="st0"
-     width="24"
-     height="16"
-     id="rect6" /><path
-     class="st0"
-     d="m 84,56 c 8.8,0 16,7.2 16,16 0,8.8 -7.2,16 -16,16 -8.8,0 -16,-7.2 -16,-16 0,-8.8 7.2,-16 16,-16 m 0,-16 c -17.7,0 -32,14.3 -32,32 0,17.7 14.3,32 32,32 17.7,0 32,-14.3 32,-32 0,-17.7 -14.3,-32 -32,-32 z"
-     id="path8" /><rect
-     x="132"
-     y="176"
-     class="st0"
-     width="92"
-     height="16"
-     id="rect10" /><rect
-     x="32"
-     y="176"
-     class="st0"
-     width="48"
-     height="16"
-     id="rect12" /><path
-     class="st0"
-     d="m 108,168 c 8.8,0 16,7.2 16,16 0,8.8 -7.2,16 -16,16 -8.8,0 -16,-7.2 -16,-16 0,-8.8 7.2,-16 16,-16 m 0,-16 c -17.7,0 -32,14.3 -32,32 0,17.7 14.3,32 32,32 17.7,0 32,-14.3 32,-32 0,-17.7 -14.3,-32 -32,-32 z"
-     id="path14" /><rect
-     x="32"
-     y="120"
-     class="st0"
-     width="116"
-     height="16"
-     id="rect16" /><rect
-     x="200"
-     y="120"
-     class="st0"
-     width="24"
-     height="16"
-     id="rect18" /><path
-     class="st0"
-     d="m 172,112 c 8.8,0 16,7.2 16,16 0,8.8 -7.2,16 -16,16 -8.8,0 -16,-7.2 -16,-16 0,-8.8 7.2,-16 16,-16 m 0,-16 c -17.7,0 -32,14.3 -32,32 0,17.7 14.3,32 32,32 17.7,0 32,-14.3 32,-32 0,-17.7 -14.3,-32 -32,-32 z"
-     id="path20" /></g>
-<path
-   style="fill:#000000;stroke-width:1.24628"
-   d="m 26.480571,39.100741 c -1.240541,-0.237768 -2.354137,-1.20884 -2.70286,-2.356933 -0.35178,-1.158159 -0.01556,-2.390762 0.876927,-3.214894 0.771356,-0.712275 1.553169,-1.015741 2.61684,-1.015741 1.471109,0 2.706656,0.729807 3.313172,1.95701 0.236125,0.477766 0.275153,0.632062 0.302022,1.194042 0.02517,0.526467 0.0012,0.734641 -0.130367,1.129851 -0.556222,1.671447 -2.400071,2.666163 -4.275734,2.306665 z"
-   id="path905" /><path
-   style="fill:#000000;stroke-width:1.24628"
-   d="m 39.130367,52.415919 c -1.751718,-0.380575 -3.023331,-2.107078 -2.740129,-3.720347 0.318831,-1.816233 2.097722,-3.045769 4.097474,-2.832096 1.959774,0.209401 3.422761,1.981513 3.115711,3.774055 -0.33496,1.955482 -2.388809,3.231208 -4.473056,2.778388 z"
-   id="path944" /><path
-   style="fill:#000000;stroke-width:1.24628"
-   d="m 51.897251,34.09053 c -1.291519,-0.28101 -2.396632,-1.29209 -2.713659,-2.482754 -0.438408,-1.646541 0.609221,-3.377901 2.385004,-3.941568 0.683573,-0.216979 1.70512,-0.214333 2.351222,0.0061 2.486916,0.848431 3.243723,3.649845 1.466208,5.42736 -0.882409,0.882409 -2.229224,1.264928 -3.488775,0.990873 z"
-   id="path983" /></svg>
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview29"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="4.9104638"
+     inkscape:cx="88.077221"
+     inkscape:cy="32.176187"
+     inkscape:window-width="1963"
+     inkscape:window-height="1209"
+     inkscape:window-x="26"
+     inkscape:window-y="23"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg27" />
+  <g
+     filter="url(#filter0_b_26_3850)"
+     id="g14"
+     transform="matrix(2.7586207,0,0,2.7586207,11.034483,16.034483)">
+    <path
+       d="M 5,2 V 16.3347"
+       stroke="#000000"
+       stroke-width="1.5"
+       stroke-linecap="round"
+       id="path2" />
+    <path
+       d="M 15,2 V 16.3347"
+       stroke="#000000"
+       stroke-width="1.5"
+       stroke-linecap="round"
+       id="path4" />
+    <path
+       d="M 10,2 V 16.3347"
+       stroke="#000000"
+       stroke-width="1.5"
+       stroke-linecap="round"
+       id="path6" />
+    <circle
+       cx="5"
+       cy="5.72189"
+       r="1.25"
+       fill="#000000"
+       stroke="#000000"
+       stroke-width="1.5"
+       id="circle8" />
+    <circle
+       cx="15"
+       cy="5.72189"
+       r="1.25"
+       fill="#000000"
+       stroke="#000000"
+       stroke-width="1.5"
+       id="circle10" />
+    <circle
+       cx="10"
+       cy="12.7219"
+       r="1.25"
+       fill="#000000"
+       stroke="#000000"
+       stroke-width="1.5"
+       id="circle12" />
+  </g>
+  <defs
+     id="defs25">
+    <filter
+       id="filter0_b_26_3850"
+       x="-4"
+       y="-4"
+       width="29"
+       height="26"
+       filterUnits="userSpaceOnUse"
+       color-interpolation-filters="sRGB">
+      <feFlood
+         flood-opacity="0"
+         result="BackgroundImageFix"
+         id="feFlood16" />
+      <feGaussianBlur
+         in="BackgroundImageFix"
+         stdDeviation="2"
+         id="feGaussianBlur18" />
+      <feComposite
+         in2="SourceAlpha"
+         operator="in"
+         result="effect1_backgroundBlur_26_3850"
+         id="feComposite20" />
+      <feBlend
+         mode="normal"
+         in="SourceGraphic"
+         in2="effect1_backgroundBlur_26_3850"
+         result="shape"
+         id="feBlend22" />
+    </filter>
+  </defs>
+</svg>

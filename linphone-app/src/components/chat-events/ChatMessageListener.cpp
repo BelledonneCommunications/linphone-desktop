@@ -61,3 +61,6 @@ void ChatMessageListener::onEphemeralMessageTimerStarted(const std::shared_ptr<l
 void ChatMessageListener::onEphemeralMessageDeleted(const std::shared_ptr<linphone::ChatMessage> & message){
 	emit ephemeralMessageDeleted(message);
 }
+void ChatMessageListener::onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address) {
+	emit reactionRemoved(message, address);
+}

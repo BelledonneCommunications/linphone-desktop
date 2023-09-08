@@ -7,16 +7,19 @@ import Linphone.Styles 1.0
 import Utils 1.0
 import UtilsCpp 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
+
 // =============================================================================
 
 Row {
 	id: mainItem
 	signal entryClicked(var entry)
 	
-	property var _sipAddressObserver: $historyEntry.sipAddress ? SipAddressesModel.getSipAddressObserver($historyEntry.sipAddress, '') : $historyEntry.title
+	property var sipAddressObserver: $historyEntry.sipAddress ? SipAddressesModel.getSipAddressObserver($historyEntry.sipAddress, '') : $historyEntry.title
+	
 	property QtObject iconData
 	property string translation
-	Component.onDestruction: _sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
+	Component.onDestruction: sipAddressObserver=null// Need to set it to null because of not calling destructor if not.
 	Component.onCompleted: {
 		if ($historyEntry.status == LinphoneEnums.CallStatusSuccess) {
 			if(!$historyEntry.isStart){
@@ -141,8 +144,8 @@ Row {
 		height: parent.height
 		text: $historyEntry && $historyEntry.title
 				? $historyEntry.title
-				: _sipAddressObserver 
-					? ( UtilsCpp.getDisplayName(_sipAddressObserver.peerAddress || $historyEntry.sipAddress) || _sipAddressObserver)
+				: sipAddressObserver 
+					? UtilsCpp.getDisplayName(sipAddressObserver.peerAddress || $historyEntry.sipAddress) || sipAddressObserver
 					: ''
 		verticalAlignment: Text.AlignVCenter
 		MouseArea{

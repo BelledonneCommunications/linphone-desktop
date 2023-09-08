@@ -51,6 +51,9 @@ class AccountSettingsModel : public QObject {
 	Q_PROPERTY(QString defaultAccountDomain READ getDefaultAccountDomain NOTIFY defaultAccountChanged)
 	
 	Q_PROPERTY(QVariantList accounts READ getAccounts NOTIFY accountsChanged)
+	Q_PROPERTY(int missedCallsCount READ getMissedCallsCount NOTIFY missedCallsCountChanged)
+	Q_PROPERTY(int unreadMessagesCount READ getUnreadMessagesCount NOTIFY unreadMessagesCountChanged)
+	
 	
 public:
 	enum RegistrationState {
@@ -80,6 +83,8 @@ public:
 	QString getVideoConferenceUri() const;
 	QString getLimeServerUrl() const;
 	bool getUseInternationalPrefixForCallsAndChats() const;
+	int getMissedCallsCount() const;
+	int getUnreadMessagesCount() const;
 	
 	Q_INVOKABLE void setDefaultAccount (const std::shared_ptr<linphone::Account> &account = nullptr);
 	Q_INVOKABLE void setDefaultAccountFromSipAddress (const QString &sipAddress);
@@ -120,6 +125,8 @@ signals:
 	void defaultAccountChanged();
 	void publishPresenceChanged();
 	void defaultRegistrationChanged();
+	void missedCallsCountChanged();
+	void unreadMessagesCountChanged();
 	
 private:
 	QString getUsername () const;

@@ -21,13 +21,8 @@
 #include <QtDebug>
 
 #include "components/call/CallModel.hpp"
-#include "components/calls/CallsListModel.hpp"
-#include "components/chat-room/ChatRoomModel.hpp"
-#include "components/core/CoreHandlers.hpp"
 #include "components/core/CoreManager.hpp"
-#include "components/history/HistoryModel.hpp"
 #include "components/settings/SettingsModel.hpp"
-#include "utils/Utils.hpp"
 
 #include "AbstractEventCountNotifier.hpp"
 
@@ -37,116 +32,23 @@ using namespace std;
 
 AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObject(parent) {
   CoreManager *coreManager = CoreManager::getInstance();
-  QObject::connect(
-    coreManager, &CoreManager::chatRoomModelCreated,
-    this, &AbstractEventCountNotifier::handleChatRoomModelCreated
-  );
-  QObject::connect(
-    coreManager, &CoreManager::historyModelCreated,
-    this, &AbstractEventCountNotifier::handleHistoryModelCreated
-  );
-  QObject::connect(
-    coreManager->getHandlers().get(), &CoreHandlers::messagesReceived,
-    this, &AbstractEventCountNotifier::updateUnreadMessageCount
-  );
-  QObject::connect(
-    coreManager->getSettingsModel(), &SettingsModel::standardChatEnabledChanged,
-    this, &AbstractEventCountNotifier::internalnotifyEventCount
-  );
-  QObject::connect(
-    coreManager->getSettingsModel(), &SettingsModel::secureChatEnabledChanged,
-    this, &AbstractEventCountNotifier::internalnotifyEventCount
-  );
-  QObject::connect(coreManager->getSettingsModel(), &SettingsModel::standardChatEnabledChanged,    this, &AbstractEventCountNotifier::updateUnreadMessageCount);
-  QObject::connect(coreManager->getSettingsModel(), &SettingsModel::secureChatEnabledChanged,    this, &AbstractEventCountNotifier::updateUnreadMessageCount);
-  /*
-  QObject::connect(
-    coreManager->getCallsListModel(), &CallsListModel::callMissed,
-    this, &AbstractEventCountNotifier::handleCallMissed
-  );*/
+  connect(coreManager, &CoreManager::eventCountChanged, this, &AbstractEventCountNotifier::eventCountChanged);
+  connect(this, &AbstractEventCountNotifier::eventCountChanged, this, &AbstractEventCountNotifier::internalNotifyEventCount);
 }
 
 // -----------------------------------------------------------------------------
 
-void AbstractEventCountNotifier::updateUnreadMessageCount () {
+int AbstractEventCountNotifier::getEventCount () const {
 	auto coreManager = CoreManager::getInstance();
-	if(!coreManager->getSettingsModel()->getStandardChatEnabled() && !coreManager->getSettingsModel()->getSecureChatEnabled())
-		mUnreadMessageCount = 0;
-	else
-		mUnreadMessageCount = CoreManager::getInstance()->getCore()->getUnreadChatMessageCountFromActiveLocals();
-	internalnotifyEventCount();
-}
-
-void AbstractEventCountNotifier::internalnotifyEventCount () {
-  int n = mUnreadMessageCount + getMissedCallCount();
-  qInfo() << QStringLiteral("Notify event count: %1.").arg(n);
-  n = n > 99 ? 99 : n;
-
-  notifyEventCount(CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled() || CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled()? n : 0);
-  emit eventCountChanged();
-}
-
-// Get missed call from a chat (useful for showing bubbles on Timelines)
-int AbstractEventCountNotifier::getMissedCallCount(const QString &peerAddress, const QString &localAddress) const{
-	auto it = mMissedCalls.find({ Utils::cleanSipAddress(peerAddress), Utils::cleanSipAddress(localAddress) });
-	if (it != mMissedCalls.cend()) 
-		return *it;
-	else
-		return 0;
-}
-// Get missed call from a chat (useful for showing bubbles on Timelines)
-int AbstractEventCountNotifier::getMissedCallCountFromLocal(const QString &localAddress) const{
-	QString cleanAddress = Utils::cleanSipAddress(localAddress);
-	int count = 0;
-	for(auto it = mMissedCalls.cbegin() ; it != mMissedCalls.cend() ; ++it){
-		if(it.key().second == cleanAddress)
-			count += *it;
-	}
+	int count = coreManager->getCore()->getMissedCallsCount();
+	if(	coreManager->getSettingsModel()->getStandardChatEnabled() || coreManager->getSettingsModel()->getSecureChatEnabled())
+		count += coreManager->getCore()->getUnreadChatMessageCount();
 	return count;
 }
-// -----------------------------------------------------------------------------
 
-void AbstractEventCountNotifier::handleChatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel) {
-  ChatRoomModel *chatRoomModelPtr = chatRoomModel.get();
-  QObject::connect(
-    chatRoomModelPtr, &ChatRoomModel::messageCountReset,
-    this, &AbstractEventCountNotifier::updateUnreadMessageCount
-  );
-  QObject::connect(
-    chatRoomModelPtr, &ChatRoomModel::focused,
-    this, [this, chatRoomModelPtr]() { handleResetMissedCalls(chatRoomModelPtr); }
-  );
-  QObject::connect(
-    chatRoomModelPtr, &ChatRoomModel::messageCountReset,
-    this, [this, chatRoomModelPtr]() { handleResetMissedCalls(chatRoomModelPtr); }
-  );
-}
-
-void AbstractEventCountNotifier::handleHistoryModelCreated (HistoryModel *historyModel) {
-  QObject::connect(historyModel, &HistoryModel::callCountReset
-    , this, &AbstractEventCountNotifier::handleResetAllMissedCalls);
-}
-
-void AbstractEventCountNotifier::handleResetAllMissedCalls () {
-  mMissedCalls.clear();
-  internalnotifyEventCount();
-}
-
-
-void AbstractEventCountNotifier::handleResetMissedCalls (ChatRoomModel *chatRoomModel) {
-  auto it = mMissedCalls.find({ Utils::cleanSipAddress(chatRoomModel->getPeerAddress()), Utils::cleanSipAddress(chatRoomModel->getLocalAddress()) });
-  if (it != mMissedCalls.cend()) {
-    mMissedCalls.erase(it);
-    internalnotifyEventCount();
-  }
-}
-
-void AbstractEventCountNotifier::handleCallMissed (CallModel *callModel) {
-  ++mMissedCalls[{ Utils::cleanSipAddress(callModel->getPeerAddress()), Utils::cleanSipAddress(callModel->getLocalAddress()) }];
-  internalnotifyEventCount();
-}
-
-void AbstractEventCountNotifier::handleCallMissed (const QString& localAddress, const QString& peerAddress) {
-  ++mMissedCalls[{ peerAddress, localAddress }];
-  internalnotifyEventCount();
+void AbstractEventCountNotifier::internalNotifyEventCount () {
+  int n = getEventCount();
+  qInfo() << QStringLiteral("Notify event count: %1.").arg(n);
+  n = n > 99 ? 99 : n;
+  notifyEventCount(n);
 }

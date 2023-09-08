@@ -65,6 +65,8 @@ Sticker                       1.0 Sticker/Sticker.qml
 
 TelKeypad                     1.0 TelKeypad/TelKeypad.qml
 
+CallTimeline                  1.0 Timeline/CallTimeline.qml
+CallTimelineItem              1.0 Timeline/CallTimelineItem.qml
 Timeline                      1.0 Timeline/Timeline.qml
 TimelineItem                  1.0 Timeline/TimelineItem.qml
 

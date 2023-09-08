@@ -23,6 +23,7 @@
 #include <algorithm>
 
 #include <QDateTime>
+#include <QDebug>
 #include <QDesktopServices>
 #include <QElapsedTimer>
 #include <QFileInfo>
@@ -126,9 +127,6 @@ ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoo
 	// Get messages.
 	mList.clear();
 
-	mUnreadMessagesCount = mChatRoom->getUnreadMessagesCount();
-	mMissedCallsCount = 0;
-	
 	QElapsedTimer timer;
 	timer.start();
 	CoreHandlers *coreHandlers = mCoreHandlers.get();
@@ -145,7 +143,8 @@ ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoo
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::avatarChanged);
 
 	connect(this, &ChatRoomModel::fullPeerAddressChanged, this, &ChatRoomModel::usernameChanged);
-	connect(this, &ChatRoomModel::stateChanged, this, &ChatRoomModel::updatingChanged);
+	connect(this, &ChatRoomModel::messageCountReset, this, &ChatRoomModel::unreadMessagesCountChanged);
+	connect(this, &ChatRoomModel::unreadMessagesCountChanged, coreManager, &CoreManager::eventCountChanged);
 	
 	if(mChatRoom){
 		mParticipantListModel = QSharedPointer<ParticipantListModel>::create(this);
@@ -408,6 +407,10 @@ LinphoneEnums::ChatRoomState ChatRoomModel::getState() const {
 	return mChatRoom ? LinphoneEnums::fromLinphone(mChatRoom->getState()) : LinphoneEnums::ChatRoomStateNone;
 }
 
+int ChatRoomModel::getUnreadMessagesCount() const{
+	return mChatRoom ? mChatRoom->getUnreadMessagesCount() : 0;
+}
+
 bool ChatRoomModel::isReadOnly() const{
 	return mChatRoom && mChatRoom->isReadOnly();	
 }
@@ -531,10 +534,6 @@ QString ChatRoomModel::getParticipantAddress() const{
 	}	
 }
 
-int ChatRoomModel::getAllUnreadCount(){
-	return mUnreadMessagesCount + mMissedCallsCount;
-}
-
 //------------------------------------------------------------------------------------------------
 
 void ChatRoomModel::setSubject(QString& subject){
@@ -561,31 +560,6 @@ void ChatRoomModel::updateLastUpdateTime(){
 				lastCallTime = chatEvent->getTimestamp();
 		}	
 		setLastUpdateTime(lastCallTime);
-	}
-}
-
-void ChatRoomModel::setUnreadMessagesCount(const int& count){
-	updateNewMessageNotice(count);
-	if(count != mUnreadMessagesCount){
-		mUnreadMessagesCount = count;
-		emit unreadMessagesCountChanged();
-	}
-}
-
-void ChatRoomModel::setMissedCallsCount(const int& count){
-	if(count != mMissedCallsCount){
-		mMissedCallsCount = count;
-		emit missedCallsCountChanged();
-	}
-}
-
-void ChatRoomModel::addMissedCallsCount(std::shared_ptr<linphone::Call> call){
-	insertCall(call->getCallLog());
-	auto timeline = CoreManager::getInstance()->getTimelineListModel()->getTimeline(mChatRoom, false);
-	if(!timeline || !timeline->mSelected){
-		setMissedCallsCount(mMissedCallsCount+1);
-		if(call->dataExists("call-model"))
-			CoreManager::getInstance()->getEventCountNotifier()->handleCallMissed(&call->getData<CallModel>("call-model"));
 	}
 }
 
@@ -658,22 +632,6 @@ void ChatRoomModel::leaveChatRoom (){
 
 
 void ChatRoomModel::updateParticipants(const QVariantList& participants){
-	/*
-	std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
-	std::list <shared_ptr<linphone::Address> > chatRoomParticipants;
-	std::shared_ptr<const linphone::Address> localAddress;
-	for(auto p : participants){
-		ParticipantModel* participant = p.value<ParticipantModel*>();
-		auto address = Utils::interpretUrl(participant->getSipAddress());
-		if( address)
-			chatRoomParticipants.push_back( address );
-	}
-	if(mChatRoom->canHandleParticipants()) {
-		mChatRoom->addParticipants(newParticipants);
-		mChatRoom->removeParticipants(removeParticipants);
-	}
-	
-	linphone::ChatRoom;*/
 }
 
 // -----------------------------------------------------------------------------
@@ -751,12 +709,8 @@ void ChatRoomModel::resetMessageCount () {
 			if (mChatRoom->getUnreadMessagesCount() > 0){
 				mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
 			}
-			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
-		}else
-			setUnreadMessagesCount(0);
-		setMissedCallsCount(0);
+		}
 		emit messageCountReset();
-		CoreManager::getInstance()->updateUnreadMessageCount();
 	}
 }
 //-------------------------------------------------
@@ -976,21 +930,7 @@ void ChatRoomModel::initEntries(){
 	// Get events
 		for(auto &eventLog : mChatRoom->getHistoryEvents(mFirstLastEntriesStep))
 			prepareEntries << EntrySorterHelper(eventLog->getCreationTime() , NoticeEntry, eventLog);
-	// Get calls.
-		bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
-		bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
-		bool noChat = !secureChatEnabled && !standardChatEnabled;
 	
-		if(noChat || (isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
-			|| standardChatEnabled && !isSecure())) ) {
-			auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
-			// callhistory is sorted from newest to oldest
-			int count = 0;
-			for (auto callLog = callHistory.begin() ; count < mFirstLastEntriesStep && callLog != callHistory.end() ; ++callLog, ++count ){
-				if(!(*callLog)->wasConference())
-					prepareEntries << EntrySorterHelper((*callLog)->getStartDate(), CallEntry, *callLog);
-			}
-		}
 		EntrySorterHelper::getLimitedSelection(&entries, prepareEntries, mFirstLastEntriesStep, this);
 		qDebug() << "Internal Entries : Built";
 		if(entries.size() >0){
@@ -1053,27 +993,7 @@ int ChatRoomModel::loadMoreEntries(){
 			if(!haveEntry)
 				prepareEntries << EntrySorterHelper(ChatMessageModel::initReceivedTimestamp(message, false).toTime_t() ,MessageEntry, message);
 		}
-	
-	// Calls
-		bool secureChatEnabled = CoreManager::getInstance()->getSettingsModel()->getSecureChatEnabled();
-		bool standardChatEnabled = CoreManager::getInstance()->getSettingsModel()->getStandardChatEnabled();
-		bool noChat = !secureChatEnabled && !standardChatEnabled;
-	
-		if( noChat || (isOneToOne() && (secureChatEnabled && !standardChatEnabled && isSecure()
-			|| standardChatEnabled && !isSecure())) ) {
-			auto callHistory = CallsListModel::getCallHistory(getParticipantAddress(), Utils::coreStringToAppString(mChatRoom->getLocalAddress()->asStringUriOnly()));
-			int count = 0;
-			auto itCallHistory = callHistory.begin();
-			while(count < entriesCounts[1] && itCallHistory != callHistory.end()){
-				++itCallHistory;
-				++count;
-			}
-			count = 0;
-			while( count < mLastEntriesStep && itCallHistory != callHistory.end()){
-				prepareEntries << EntrySorterHelper((*itCallHistory)->getStartDate(), CallEntry, *itCallHistory);
-				++itCallHistory;
-			}
-		}
+
 	// Notices
 		for (auto &eventLog : mChatRoom->getHistoryRangeEvents(entriesCounts[2], entriesCounts[2]+mLastEntriesStep)){
 			auto itEntries = mList.begin();
@@ -1114,57 +1034,11 @@ int ChatRoomModel::loadMoreEntries(){
 //-------------------------------------------------
 
 void ChatRoomModel::onCallEnded(std::shared_ptr<linphone::Call> call){
-	if( call->getCallLog()->getStatus() == linphone::Call::Status::Missed)
-		addMissedCallsCount(call);
-	else{
-		insertCall(call->getCallLog());
-	}
 	// When a call is end, a new log WILL be written in database. It may have information on display name.
 	QTimer::singleShot(100, this, &ChatRoomModel::fullPeerAddressChanged);
 }
 
 // -----------------------------------------------------------------------------
-
-void ChatRoomModel::insertCall (const std::shared_ptr<linphone::CallLog> &callLog) {
-	if(mIsInitialized){
-		QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true);
-		if(model){
-			int row = mList.count();
-			beginInsertRows(QModelIndex(), row, row);
-			mList << model;
-			endInsertRows();
-			auto lastIndex = index(mList.size()-1,0);
-			emit dataChanged(lastIndex,lastIndex );
-			if (callLog->getStatus() == linphone::Call::Status::Success) {
-				model = ChatCallModel::create(callLog, false);
-				if(model)
-					add(model);
-			}
-			updateLastUpdateTime();
-		}
-	}
-}
-
-void ChatRoomModel::insertCalls (const QList<std::shared_ptr<linphone::CallLog> > &calls) {
-	if(mIsInitialized){
-		QList<QSharedPointer<QObject> > entries;
-		for(auto callLog : calls) {
-			QSharedPointer<ChatCallModel> model = ChatCallModel::create(callLog, true);
-			if(model){
-				entries << model;
-				if (callLog->getStatus() == linphone::Call::Status::Success) {
-					model = ChatCallModel::create(callLog, false);
-					if(model){
-						entries << model;
-					}
-				}
-			}
-		}
-		if(entries.size() > 0){
-			prepend(entries);
-		}
-	}
-}
 
 QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message) {
 	QSharedPointer<ChatMessageModel> model;
@@ -1173,7 +1047,7 @@ QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::s
 		if(model){
 			qDebug() << "Adding at end" << model->getReceivedTimestamp().toString("hh:mm:ss.zzz") << model->getTimestamp().toString("hh:mm:ss.zzz") << QString(message->getUtf8Text().c_str()).left(5);
 			connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
-			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
+			emit unreadMessagesCountChanged();
 			add(model);
 		}
 	}
@@ -1192,7 +1066,7 @@ void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMe
 		}
 		if(entries.size() > 0){
 			prepend(entries);
-			setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());
+			emit unreadMessagesCountChanged();
 		}
 	}
 }
@@ -1235,29 +1109,8 @@ QString ChatRoomModel::getChatRoomId(const std::shared_ptr<linphone::ChatRoom>& 
 }
 
 // -----------------------------------------------------------------------------
-/*
-void ChatRoomModel::removeUnreadMessagesNotice() {
-	
-}*/
-// -----------------------------------------------------------------------------
 
 void ChatRoomModel::handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) {
-
-/*
-	if (state == linphone::Call::State::End || state == linphone::Call::State::Error){
-		shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-		std::shared_ptr<linphone::ChatRoomParams> params = core->createDefaultChatRoomParams();
-		std::list<std::shared_ptr<linphone::Address>> participants;
-		
-		auto chatRoom = core->searchChatRoom(params, mChatRoom->getLocalAddress()
-											 , call->getRemoteAddress()
-											 , participants);
-		if( mChatRoom == chatRoom){
-			insertCall(call->getCallLog());
-			setMissedCallsCount(mMissedCallsCount+1);
-		}
-	}
-	*/
 }
 
 void ChatRoomModel::handleCallCreated(const shared_ptr<linphone::Call> &call){
@@ -1269,8 +1122,6 @@ void ChatRoomModel::handlePresenceStatusReceived(std::shared_ptr<linphone::Frien
 		bool canUpdatePresence = false;
 		auto contactAddresses = contact->getAddresses();
 		for( auto itContactAddress = contactAddresses.begin() ; !canUpdatePresence && itContactAddress != contactAddresses.end() ; ++itContactAddress){
-			//auto cleanContactAddress = (*itContactAddress)->clone();
-			//cleanContactAddress->clean();
 			canUpdatePresence = mChatRoom->getLocalAddress()->weakEqual(*itContactAddress);
 			if(!canUpdatePresence && !isGroupEnabled() && mChatRoom->getNbParticipants() == 1){
 				auto participants = getParticipants(false);
@@ -1285,7 +1136,6 @@ void ChatRoomModel::handlePresenceStatusReceived(std::shared_ptr<linphone::Frien
 			}
 		}
 		if(canUpdatePresence) {
-			//emit presenceStatusChanged((int)contact->getPresenceModel()->getConsolidatedPresence());
 			emit presenceStatusChanged();
 		}
 	}
@@ -1308,23 +1158,21 @@ void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRo
 
 void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
 	if(message) ChatMessageModel::initReceivedTimestamp(message, true);
-	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
+	emit unreadMessagesCountChanged();
 	updateLastUpdateTime();
 }
 
 void ChatRoomModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::ChatMessage>> & messages){
 	for(auto message : messages)
 		if(message) ChatMessageModel::initReceivedTimestamp(message, true);
-	setUnreadMessagesCount(chatRoom->getUnreadMessagesCount());
+	emit unreadMessagesCountChanged();
 	updateLastUpdateTime();
 }
 
 
 void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	if(eventLog){
-		if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnded ){
-			setMissedCallsCount(mMissedCallsCount+1);
-		}else if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated ){
+		if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated ){
 			emit fullPeerAddressChanged();
 		}
 		updateLastUpdateTime();
@@ -1332,17 +1180,12 @@ void ChatRoomModel::onNewEvent(const std::shared_ptr<linphone::ChatRoom> & chatR
 }
 
 void ChatRoomModel::onNewEvents(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::EventLog>> & eventLogs){
-	int missCount = 0;
 	bool updatePeerAddress = false;
 	for(auto eventLog : eventLogs)
 		if(eventLog){
-			if( eventLog->getType() == linphone::EventLog::Type::ConferenceCallEnded )
-				++missCount;
 			if( eventLog->getType() == linphone::EventLog::Type::ConferenceCreated )
 				updatePeerAddress = true;
 		}
-	if(missCount > 0)
-		setMissedCallsCount(mMissedCallsCount+missCount);
 	if(updatePeerAddress)
 		emit fullPeerAddressChanged();
 	updateLastUpdateTime();
@@ -1470,7 +1313,7 @@ void ChatRoomModel::onConferenceJoined(const std::shared_ptr<linphone::ChatRoom>
 		if(e != events.end() )
 			insertNotice(*e);
 	}
-	setUnreadMessagesCount(mChatRoom->getUnreadMessagesCount());	// Update message count. In the case of joining conference, the conference id was not valid thus, the missing count was not about the chat room but a global one.
+	emit unreadMessagesCountChanged();// Update message count. In the case of joining conference, the conference id was not valid thus, the missing count was not about the chat room but a global one.
 	updateLastUpdateTime();
 	emit usernameChanged();
 	emit conferenceJoined(eventLog);

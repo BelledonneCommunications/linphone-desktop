@@ -9,6 +9,7 @@ import LinphoneEnums 1.0
 
 import App.Styles 1.0
 
+import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 // =============================================================================
 
 ColumnLayout {
@@ -41,10 +42,26 @@ ColumnLayout {
 				rightMargin: ContactsStyle.bar.rightMargin
 			}
 			spacing: ContactsStyle.spacing
+			Text {
+				Layout.preferredHeight: parent.height
+				Layout.preferredWidth: contentWidth
+				Layout.leftMargin: 10
+				color: ContactsStyle.bar.foregroundColor.color
+				font.pointSize: ContactsStyle.bar.pointSize
+				font.weight: Font.Bold
+				font.capitalization: Font.Capitalize
+				text: LdapListModel.count > 0
+				//: 'Local contacts' : Contacts section label in main window when we have to specify that they are local to the application.
+											? qsTr('localContactsEntry')
+				//: 'Contacts' : Contacts section label in main waindow.
+											: qsTr('contactsEntry')
+				verticalAlignment: Text.AlignVCenter
+			}
 			
 			TextField {
 				Layout.fillWidth: true
 				icon: ContactsStyle.filter.icon
+				iconSize: 35
 				overwriteColor: ContactsStyle.filter.colorModel.color
 				placeholderText: qsTr('searchContactPlaceholder')
 				
@@ -53,16 +70,24 @@ ColumnLayout {
 			
 			ExclusiveButtons {
 				texts: [
+				//: 'All' : Filter label to display all items.
 					qsTr('selectAllContacts'),
-					qsTr('selectConnectedContacts')
+				//: 'Online' : Filter label to display only online contacts.
+					qsTr('selectOnlineContacts')
 				]
-				
-				onClicked: contacts.useConnectedFilter = !!button
+				capitalization: Font.AllUppercase
+				onClicked: contacts.useOnlineFilter = !!button
 			}
-			
+			Item{
+				Layout.fillHeight: true
+				Layout.fillWidth: true
+			}
 			TextButtonB {
-				addHeight: 15
-				text: qsTr('addContact')
+				Layout.leftMargin: 20
+				addHeight: 10
+				addWidth: 80
+				text: qsTr('addContact').toLowerCase()
+				capitalization: Font.Capitalize
 				onClicked: window.setView('ContactEdit')
 			}
 		}
@@ -209,17 +234,26 @@ ColumnLayout {
 							target: lastChatRoom
 							onStateChanged: if(state === 1) {
 												console.debug("Load conversation from contacts")
-												window.setView('Conversation', {
-																   chatRoomModel: lastChatRoom
-															   })
+												window.setView('Conversation')
 											}
 						}
 						
 						readonly property var handlers: [
 							CallsListModel.launchVideoCall,
 							CallsListModel.launchAudioCall,
-							function (sipAddress) {CallsListModel.launchChat( sipAddress,0 )},
-							function (sipAddress) {CallsListModel.launchChat( sipAddress,1 )}
+							function (sipAddress) {
+								var model = CallsListModel.launchChat( sipAddress,0 )
+								if(model && model.chatRoomModel) {
+									lastChatRoom = model.chatRoomModel
+									window.setView('Conversations')
+								}
+							},
+							function (sipAddress) {
+								var model = CallsListModel.launchChat( sipAddress,1 )
+								if(model && model.chatRoomModel) {
+									lastChatRoom = model.chatRoomModel
+									window.setView('Conversations')
+								}}
 						]
 						
 						model: handlers

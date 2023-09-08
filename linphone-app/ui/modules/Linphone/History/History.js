@@ -29,13 +29,13 @@
 
 function initView () {
   history.tryToLoadMoreEntries = false
-  history.bindToEnd = true
+  history.bindToStart = true
 }
 
 function loadMoreEntries () {
-  if (history.atYBeginning && !history.tryToLoadMoreEntries) {
+  if (history.atYEnd && !history.tryToLoadMoreEntries) {
     history.tryToLoadMoreEntries = true
-    history.positionViewAtBeginning()
+    history.positionViewAtEnd()
     container.proxyModel.loadMoreEntries()
   }
 }
@@ -55,11 +55,11 @@ function handleMoreEntriesLoaded (n) {
 }
 
 function handleMovementEnded () {
-  if (history.atYEnd) {
-    history.bindToEnd = true
+  if (history.atYBeginning) {
+    history.bindToStart = true
   }
 }
 
 function handleMovementStarted () {
-  history.bindToEnd = false
+  history.bindToStart = false
 }

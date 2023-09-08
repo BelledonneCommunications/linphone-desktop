@@ -282,6 +282,9 @@ set(SOURCES
 	src/components/file/TemporaryFile.cpp
 	src/components/file/FileMediaModel.cpp
 	src/components/friend/FriendListListener.cpp
+	src/components/history/CallHistoryModel.cpp
+	src/components/history/CallHistoryListModel.cpp
+	src/components/history/CallHistoryProxyModel.cpp
 	src/components/history/HistoryModel.cpp
 	src/components/history/HistoryProxyModel.cpp
 	src/components/ldap/LdapModel.cpp
@@ -429,6 +432,9 @@ set(HEADERS
 	src/components/file/TemporaryFile.hpp
 	src/components/file/FileMediaModel.hpp
 	src/components/friend/FriendListListener.hpp
+	src/components/history/CallHistoryModel.hpp
+	src/components/history/CallHistoryListModel.hpp
+	src/components/history/CallHistoryProxyModel.hpp
 	src/components/history/HistoryModel.hpp
 	src/components/history/HistoryProxyModel.hpp
 	src/components/ldap/LdapModel.hpp

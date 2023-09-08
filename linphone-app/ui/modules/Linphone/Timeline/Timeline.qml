@@ -29,7 +29,7 @@ Rectangle {
 	property var actions: []
 	// ---------------------------------------------------------------------------
 	
-	signal entrySelected (TimelineModel entry)
+	signal entrySelected (var entry)
 	signal showHistoryRequest()
 	
 	// ---------------------------------------------------------------------------
@@ -39,7 +39,6 @@ Rectangle {
 	ColumnLayout {
 		anchors.fill: parent
 		spacing: 0
-		
 		
 		// -------------------------------------------------------------------------
 		
@@ -56,254 +55,47 @@ Rectangle {
 		// -------------------------------------------------------------------------
 		// Legend.
 		// -------------------------------------------------------------------------
-		
 		Rectangle {
 			id: legendArea
-			Layout.fillWidth: true
-			Layout.preferredHeight: TimelineStyle.legend.height
+			Layout.preferredWidth: timeline.width
+			Layout.preferredHeight: 50
 			Layout.alignment: Qt.AlignTop
-			color: showHistory.containsMouse?TimelineStyle.legend.backgroundColor.hovered.color:TimelineStyle.legend.backgroundColor.normal.color
-			visible: showHistoryButton || showFiltersButtons
-			
-			MouseArea{// no more showing history
-				id:showHistory
-				anchors.fill:parent
-				visible: showFiltersButtons
-				onClicked: {
-					timeline.showFilterView = !timeline.showFilterView
-				}
-			}
+			color: TimelineStyle.legend.backgroundColor.normal.color
 			RowLayout{
-				anchors.fill:parent
-				spacing:TimelineStyle.legend.spacing
+				anchors.fill: parent
 				Text {
 					Layout.preferredHeight: parent.height
 					Layout.fillWidth: true
-					Layout.leftMargin: TimelineStyle.legend.leftMargin
-					visible: showFiltersButtons
+					Layout.leftMargin: 10
 					color: TimelineStyle.legend.colorModel.color
 					font.pointSize: TimelineStyle.legend.pointSize
-					//: A title for filtering mode.
-					text: qsTr('timelineFilter')+' : ' 
-						  +(timeline.model.filterFlags == 0 || timeline.model.filterFlags == TimelineProxyModel.AllChatRooms
-							//: 'All' The mode for timelines filtering. 
-							? qsTr('timelineFilterAll')
-							  //: 'Custom' The mode for timelines filtering. 
-							: qsTr('timelineFilterCustom'))
+					font.weight: Font.Bold
+					//: 'Messages' : Title for conversations
+					text: qsTr('chatsTitle')
 					verticalAlignment: Text.AlignVCenter
 				}
 				
-				Icon {
+				ActionButton {
 					id:filterButton
 					Layout.alignment: Qt.AlignRight
-					icon: 'filter_params_custom'
-					iconSize: TimelineStyle.legend.iconSize
-					overwriteColor: TimelineStyle.legend.colorModel.color
-					visible: showFiltersButtons
-					MouseArea{
-						anchors.fill:parent
-						onClicked:{
-							timeline.showFilterView = !timeline.showFilterView
+					isCustom: true
+					colorSet: TimelineStyle.filterAction
+					toggled: view.model.filterFlags != 0 && view.model.filterFlags != TimelineProxyModel.AllChatRooms
+					onClicked: filterMenu.open()
+					Menu{
+						id: filterMenu
+						MenuItem{
+							id: secureFilter
+							//: 'Secure rooms' : Filter item. Selecting it will show all secure rooms.
+							text: qsTr('timelineFilterSecureRooms')
+							checkable: true
 						}
-					}
-				}
-				MouseArea{
-					Layout.alignment: Qt.AlignRight
-					Layout.fillHeight: true
-					Layout.preferredWidth: TimelineStyle.legend.iconSize
-					visible: showFiltersButtons
-					onClicked:{
-						searchView.visible = !searchView.visible
-					}
-				
-					Icon {
-						id:searchButton
-						anchors.verticalCenter: parent.verticalCenter
-						anchors.horizontalCenter: parent.horizontalCenter
-						property bool searching: searchView.visible
-						icon: (searchView.visible? 'close_custom': 'search_custom')
-						iconSize: TimelineStyle.legend.iconSize
-						overwriteColor: TimelineStyle.legend.colorModel.color
-					}
-				}
-				MouseArea{
-					Layout.alignment: Qt.AlignRight
-					Layout.rightMargin: TimelineStyle.legend.lastRightMargin
-					Layout.fillHeight: true
-					Layout.preferredWidth: TimelineStyle.legend.iconSize
-					visible: timeline.showHistoryButton 
-					onClicked:{
-						showHistoryRequest()
-					}
-					Icon {
-						id:callHistoryButton
-						anchors.verticalCenter: parent.verticalCenter
-						anchors.horizontalCenter: parent.horizontalCenter
-						property bool searching: searchView.visible
-						icon: 'call_history_custom'
-						iconSize: TimelineStyle.legend.iconSize
-						overwriteColor: TimelineStyle.legend.colorModel.color
-					}
-				}
-			}
-		}
-		// -------------------------------------------------------------------------
-		// Filter.
-		// -------------------------------------------------------------------------
-		Rectangle{
-			id:exhaustiveFilterView
-			Layout.fillWidth: true
-			Layout.preferredHeight: filterChoices.height
-			Layout.alignment: Qt.AlignCenter
-			border.color: TimelineStyle.filterField.borderColor.color
-			border.width: 2
-			visible: timeline.showFilterView && !SettingsModel.useMinimalTimelineFilter
-			
-			ColumnLayout{
-				id:filterChoices
-				anchors.leftMargin: 20
-				anchors.left:parent.left
-				anchors.right:parent.right
-				spacing:-4
-				function getFilterFlags(){
-					return secureFilter.model.get(secureFilter.currentIndex).value | groupFilter.model.get(groupFilter.currentIndex).value | ephemeralsFilter.model.get(ephemeralsFilter.currentIndex).value;
-				}
-				ComboBox {
-					Layout.fillWidth: true
-					id:secureFilter
-					currentIndex: 0
-					onCurrentIndexChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
-					textRole: "key"
-					model:  ListModel {
-						ListElement { 
-					//: 'All security levels' : Filter item. Selecting it will not do any filter on security level.
-							key: qsTr('timelineFilterAllSecureLevelRooms'); value: 0}
-						ListElement { 
-					//: 'Standard rooms' : Filter item. Selecting it will show all simple rooms.	
-							key: qsTr('timelineFilterStandardRooms'); value: TimelineProxyModel.StandardChatRoom}
-						ListElement { 
-					//: 'Secure rooms' : Filter item. Selecting it will show all secure rooms.
-							key: qsTr('timelineFilterSecureRooms'); value: TimelineProxyModel.SecureChatRoom}
-					}
-					
-					haveBorder: false
-					haveMargin: false
-					backgroundColor: 'transparent'
-					visible: SettingsModel.secureChatEnabled && SettingsModel.standardChatEnabled
-				}
-				ComboBox {
-					Layout.fillWidth: true
-					id:groupFilter
-					currentIndex: 0
-					onCurrentIndexChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
-					textRole: "key"
-					model:  ListModel {
-						ListElement { 
-					//: 'Any conversations' : Filter item. Selecting it will not do any filter on the type of conversations.
-							key: qsTr('timelineFilterAnyChatRooms'); value: 0}
-						ListElement { 
-					//: 'Simple rooms' : Filter item. Selecting it will show all secure chat groups (with more than one participant).
-							key: qsTr('timelineFilterSimpleRooms'); value: TimelineProxyModel.SimpleChatRoom}
-						ListElement { 
-					//: 'Chat groups' : Filter item. Selecting it will show all chat groups (with more than one participant).
-							key: qsTr('timelineFilterChatGroups'); value: TimelineProxyModel.GroupChatRoom}
-					}
-					
-					haveBorder: false
-					haveMargin: false
-					backgroundColor: 'transparent'
-					visible: SettingsModel.secureChatEnabled || SettingsModel.standardChatEnabled
-				}
-				ComboBox {
-					Layout.fillWidth: true
-					id:ephemeralsFilter
-					currentIndex: 0
-					onCurrentIndexChanged: timeline.model.filterFlags = filterChoices.getFilterFlags()
-					textRole: "key"
-					model:  ListModel {
-						ListElement { 
-					//: 'Ephemerals on/off' : Filter item. Selecting it will not do any filter on ephemerals activation.
-							key: qsTr('timelineFilterAnyEphemerals'); value: 0}
-						ListElement { 
-					//: 'No Ephemerals' : Filter item. Selecting it will hide all chat rooms where the ephemeral mode has been enabled.
-							key: qsTr('timelineFilterNoEphemerals'); value: TimelineProxyModel.NoEphemeralChatRoom}
-						ListElement { 
-					//: 'Ephemerals' : Filter item. Selecting it will show all chat rooms where the ephemeral mode has been enabled.
-							key: qsTr('timelineFilterEphemerals'); value: TimelineProxyModel.EphemeralChatRoom}
-					}
-					
-					haveBorder: false
-					haveMargin: false
-					backgroundColor: 'transparent'
-					visible: SettingsModel.secureChatEnabled || SettingsModel.standardChatEnabled
-				}
-			}
-		}
-		Rectangle{
-			id:minimalFilterView
-			Layout.fillWidth: true
-			Layout.preferredHeight: minimalFilterChoices.height
-			Layout.alignment: Qt.AlignCenter
-			border.color: TimelineStyle.filterField.borderColor.color
-			border.width: 2
-			visible: timeline.showFilterView && SettingsModel.useMinimalTimelineFilter
-			
-			ColumnLayout{
-				id:minimalFilterChoices
-				anchors.leftMargin: 20
-				anchors.left:parent.left
-				anchors.right:parent.right
-				spacing:-4
-				function getFilterFlags(){
-					return securedCheckBox.getValue() | groupCheckBox.getValue() | conferenceCheckBox.getValue();
-				}
-				CheckBoxText {
-					id: securedCheckBox
-					Layout.fillWidth: true
-					visible: SettingsModel.secureChatEnabled && SettingsModel.standardChatEnabled
-					//: 'Secure rooms' : Filter item. Selecting it will show all secure rooms.
-					text: qsTr('timelineFilterSecureRooms')
-					
-					onClicked: {
-						timeline.model.filterFlags = minimalFilterChoices.getFilterFlags()
-					}
-					function getValue(){
-						if( checked)
-							return TimelineProxyModel.SecureChatRoom
-						else
-							return 0
-					}
-				}
-				CheckBoxText {
-					id: groupCheckBox
-					Layout.fillWidth: true
-					visible: SettingsModel.secureChatEnabled || SettingsModel.standardChatEnabled
-					//: 'Chat groups' : Filter item. Selecting it will show all chat groups (with more than one participant).
-					text: qsTr('timelineFilterChatGroups')
-					
-					onClicked: {
-						timeline.model.filterFlags = minimalFilterChoices.getFilterFlags()
-					}
-					function getValue(){
-						if( checked)
-							return TimelineProxyModel.GroupChatRoom
-						else
-							return 0
-					}
-				}
-				
-				CheckBoxText {
-					id: conferenceCheckBox
-					Layout.fillWidth: true
-					visible: false
-					//: 'Conferences' : Filter item. Selecting it will show all conferences.
-					text: qsTr('timelineFilterConferences')
-					
-					onClicked: {
-						timeline.model.filterFlags = minimalFilterChoices.getFilterFlags()
-					}
-					function getValue(){
-							return 0
+						MenuItem{
+							id: chatGroupFilter
+							//: 'Chat groups' : Filter item. Selecting it will show all chat groups (with more than one participant).
+							text: qsTr('timelineFilterChatGroups')
+							checkable: true
+						}
 					}
 				}
 			}
@@ -314,25 +106,16 @@ Rectangle {
 		Rectangle{
 			id:searchView
 			Layout.fillWidth: true
-			Layout.preferredHeight: 40
+			Layout.preferredHeight: 50
 			Layout.alignment: Qt.AlignCenter
-			border.color: TimelineStyle.searchField.borderColor.color
-			border.width: 2
-			visible:false
-			onVisibleChanged: if(visible){
-									timeline.model.filterText = searchBar.text
-									searchBar.forceActiveFocus()
-								}else{
-									timeline.model.filterText =  ''
-								}
-			
+			color: legendArea.color
 			TextField {
 				id:searchBar
 				anchors.fill: parent
-				anchors.rightMargin: 7
-				anchors.leftMargin: 7
+				anchors.rightMargin: 10
+				anchors.leftMargin: 10
 				anchors.topMargin: 5
-				anchors.bottomMargin: 5
+				anchors.bottomMargin: 10
 				width: parent.width - 14				
 				icon: text == '' ? 'search_custom' : 'close_custom'
 				iconSize: 30
@@ -360,12 +143,18 @@ Rectangle {
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 			currentIndex: -1
+			model: TimelineProxyModel{
+					listSource: TimelineProxyModel.Main
+					filterFlags: (secureFilter.checked ? TimelineProxyModel.SecureChatRoom : 0)
+							| (chatGroupFilter.checked ? TimelineProxyModel.GroupChatRoom : 0)
+			}
 			
 			delegate: TimelineItem{
 				timelineModel: $modelData
 				modelIndex: index
 				optionsTogglable: timeline.optionsTogglable
 				actions: timeline.actions
+							
 				Connections{
 					target: $modelData
 					onSelectedChanged:{
