@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Wrong dates from DatePicker.
 - Update SDK to 5.2.98
+- Date from scheduling a meeting from chat room.
 
 ## 5.1.2 - 2023-08-25
 

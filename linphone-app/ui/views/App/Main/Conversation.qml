@@ -503,6 +503,7 @@ ColumnLayout  {
 						onClicked: {
 							conferenceInfoModel.resetConferenceInfo()
 							conferenceInfoModel.isScheduled = true
+							conferenceInfoModel.initDateTime()
 							conferenceInfoModel.subject = chatRoomModel.subject
 							conferenceInfoModel.setParticipants(conversation.chatRoomModel.participants)
 							
