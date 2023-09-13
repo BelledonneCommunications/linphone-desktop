@@ -501,6 +501,9 @@ public:
 	
 	int getIncomingCallTimeout() const;
 	
+	int getCreateEphemeralChatRooms() const;
+	void setCreateEphemeralChatRooms(int seconds);// <=0 deactivate
+	
 	// Network. ------------------------------------------------------------------
 	
 	bool getShowNetworkSettings () const;
@@ -594,7 +597,7 @@ public:
 	void setDownloadFolder (const QString &folder);
 	
 	QString getRemoteProvisioningRootUrl() const;
-	QString getRemoteProvisioning () const;
+	Q_INVOKABLE QString getRemoteProvisioning () const;
 	void setRemoteProvisioning (const QString &remoteProvisioning);
 	
 	Q_INVOKABLE bool isQRCodeAvailable() const;
@@ -803,6 +806,8 @@ signals:
 	void limeStateChanged (bool state);
 	
 	void contactsEnabledChanged (bool status);
+	
+	void createEphemeralsChatRoomsChanged();
 	
 	// Network. ------------------------------------------------------------------
 	

@@ -268,7 +268,6 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	
 	qInfo() << "Create secure ChatRoom: " << subject << ", from " << QString::fromStdString(localAddress->asString()) << " and with " <<participantAddress;;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
-
 	if(chatRoom) {
 		int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
 		if( ephemeralTime>0){

@@ -1144,6 +1144,17 @@ void SettingsModel::setContactsEnabled (bool status) {
 int SettingsModel::getIncomingCallTimeout() const {
 	return CoreManager::getInstance()->getCore()->getIncTimeout();
 }
+
+int SettingsModel::getCreateEphemeralChatRooms() const{
+	return mConfig->getInt(UiSection, "create_ephemeral_chat_rooms", 0);
+}
+
+void SettingsModel::setCreateEphemeralChatRooms(int seconds) {
+	if(!isReadOnly(UiSection, "create_ephemeral_chat_rooms"))
+		mConfig->setInt(UiSection, "create_ephemeral_chat_rooms", seconds);
+	emit createEphemeralsChatRoomsChanged();
+}
+
 // =============================================================================
 // Network.
 // =============================================================================
