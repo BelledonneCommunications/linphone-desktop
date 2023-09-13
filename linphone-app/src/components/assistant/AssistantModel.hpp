@@ -74,6 +74,13 @@ public:
 	
 	void checkLinkingAccount();
 	
+	typedef enum{
+		Idle = 0,
+		AccountCreation,
+		AccountLogin
+	}Action;
+	Action mNextAction;
+	
 public slots:
 	void onQRCodeFound(const std::string & result);
 	void onApiReceived(QString apiKey);
@@ -162,6 +169,7 @@ private:
 	bool mIsReadingQRCode;
 	bool mIsProcessing;
 	bool mUsePhoneNumber = false;
+	
 	
 	std::shared_ptr<linphone::AccountCreator> mAccountCreator;
 	std::shared_ptr<Handlers> mHandlers;

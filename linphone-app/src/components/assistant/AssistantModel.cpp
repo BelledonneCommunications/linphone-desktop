@@ -74,6 +74,8 @@ private:
 			) override {
 		if (status == linphone::AccountCreator::Status::AccountCreated){
 			emit mAssistant->createStatusChanged(QString(""));
+			createAccount(accountCreator);
+			CoreManager::getInstance()->getSipAddressesModel()->reset();
 		}else {
 			if (status == linphone::AccountCreator::Status::RequestFailed)
 				emit mAssistant->createStatusChanged(tr("requestFailed"));
@@ -90,17 +92,105 @@ private:
 			linphone::AccountCreator::Status status,
 			const string &
 			) override {
-		if (status == linphone::AccountCreator::Status::AccountExist || status == linphone::AccountCreator::Status::AccountExistWithAlias) {
-			createAccount(creator);
-			CoreManager::getInstance()->getSipAddressesModel()->reset();
-			emit mAssistant->loginStatusChanged(QString(""));
-		} else {
-			if (status == linphone::AccountCreator::Status::RequestFailed)
+		switch(status){
+		case linphone::AccountCreator::Status::AccountNotExist :
+			if(mAssistant->mNextAction == AccountCreation) {
+				if (mAssistant->mUsePhoneNumber) {
+					creator->isAliasUsed();
+				}else {
+					mAssistant->mNextAction = Idle;
+					creator->createAccount();
+				}
+			}else if(mAssistant->mNextAction == AccountLogin){
+				if (mAssistant->mUsePhoneNumber) {
+					creator->isAliasUsed();
+				}else {
+					mAssistant->mNextAction = Idle;
+					emit mAssistant->loginStatusChanged(QString("Account doesn't exist"));
+					mAssistant->setIsProcessing(false);
+				}
+			}else
+				mAssistant->setIsProcessing(false);
+		break;
+		case linphone::AccountCreator::Status::AccountExist:
+		case linphone::AccountCreator::Status::AccountExistWithAlias :
+			if(mAssistant->mNextAction == AccountCreation) {
+				mAssistant->mNextAction = Idle;
+				emit mAssistant->createStatusChanged(tr("accountAlreadyExists"));
+				mAssistant->setIsProcessing(false);
+			}else if(mAssistant->mNextAction == AccountLogin) {
+				mAssistant->mNextAction = Idle;
+				if (mAssistant->mUsePhoneNumber) {
+					emit mAssistant->createStatusChanged("Recovering account");
+					creator->recoverAccount();
+				}else{
+					emit mAssistant->loginStatusChanged(QString(""));
+					createAccount(creator);
+					CoreManager::getInstance()->getSipAddressesModel()->reset();
+					mAssistant->setIsProcessing(false);
+				}
+			}else {
+				emit mAssistant->loginStatusChanged(QString(""));
+				mAssistant->setIsProcessing(false);
+			}
+			
+		break;
+		case linphone::AccountCreator::Status::RequestFailed :
 				emit mAssistant->loginStatusChanged(tr("requestFailed"));
-			else
+				mAssistant->setIsProcessing(false);
+			break;
+		default:
 				emit mAssistant->loginStatusChanged(tr("loginWithUsernameFailed"));
+				mAssistant->setIsProcessing(false);
 		}
-		mAssistant->setIsProcessing(false);
+		
+	}
+	void onIsAliasUsed (
+			const shared_ptr<linphone::AccountCreator> &creator,
+			linphone::AccountCreator::Status status,
+			const string &
+			) override {
+		switch(status){
+		case linphone::AccountCreator::Status::AccountNotExist :
+			if(mAssistant->mNextAction == AccountCreation) {
+				mAssistant->mNextAction = Idle;
+				creator->createAccount();
+			}else{
+				emit mAssistant->loginStatusChanged(QString("Account doesn't exist"));
+				mAssistant->setIsProcessing(false);
+			}
+		break;
+		case linphone::AccountCreator::Status::AccountExist:
+		case linphone::AccountCreator::Status::AliasExist:
+		case linphone::AccountCreator::Status::AccountExistWithAlias :
+			if(mAssistant->mNextAction == AccountCreation) {
+				mAssistant->mNextAction = Idle;
+				emit mAssistant->createStatusChanged(tr("accountAlreadyExists"));
+				mAssistant->setIsProcessing(false);
+			}else if(mAssistant->mNextAction == AccountLogin) {
+				mAssistant->mNextAction = Idle;
+				if (mAssistant->mUsePhoneNumber) {
+					emit mAssistant->createStatusChanged("Recovering account");
+					creator->recoverAccount();
+				}else{
+					emit mAssistant->loginStatusChanged(QString(""));
+					createAccount(creator);
+					CoreManager::getInstance()->getSipAddressesModel()->reset();
+					mAssistant->setIsProcessing(false);
+				}
+			}else {
+				emit mAssistant->loginStatusChanged(QString(""));
+				mAssistant->setIsProcessing(false);
+			}
+		break;
+		case linphone::AccountCreator::Status::RequestFailed :
+				emit mAssistant->loginStatusChanged(tr("requestFailed"));
+				mAssistant->setIsProcessing(false);
+			break;
+		default:
+				emit mAssistant->loginStatusChanged(tr("loginWithUsernameFailed"));
+				mAssistant->setIsProcessing(false);
+		}
 	}
 	
 	virtual void onAccountCreationRequestToken(const std::shared_ptr<linphone::AccountCreator> & creator, linphone::AccountCreator::Status status, const std::string & response) override{
@@ -140,11 +230,16 @@ private:
 			creator->setToken(description.value("token").toString().toStdString());
 			// it will automatically use the account creation token.
 			if (mAssistant->mUsePhoneNumber) {
-				emit mAssistant->createStatusChanged("Recovering account");
-				creator->recoverAccount();
+				emit mAssistant->createStatusChanged("Checking phone account status");
+				mAssistant->mNextAction = AccountLogin;
+				creator->isAccountExist();
+				//emit mAssistant->createStatusChanged("Recovering account");
+				//creator->recoverAccount();
 			}else{
-				emit mAssistant->createStatusChanged("Creating account");
-				creator->createAccount();
+				emit mAssistant->createStatusChanged("Checking account status");
+				mAssistant->mNextAction = AccountCreation;
+				creator->isAccountExist();
+				//creator->createAccount();
 			}
 		}else
 			QTimer::singleShot(2000, [creator](){
@@ -197,7 +292,8 @@ private:
 			const string &response
 			) override {
 		if (status == linphone::AccountCreator::Status::RequestOk) {
-			CoreManager::getInstance()->getSipAddressesModel()->reset();
+			//createAccount(accountCreator);
+			//CoreManager::getInstance()->getSipAddressesModel()->reset();
 			emit mAssistant->recoverStatusChanged(QString(""));
 		} else {
 			if (status == linphone::AccountCreator::Status::RequestFailed)
@@ -266,6 +362,9 @@ void AssistantModel::activate () {
 
 void AssistantModel::create () {
 	setIsProcessing(true);
+	mNextAction = AccountCreation;
+	if(mAccountCreator->getUsername().empty())
+		mAccountCreator->setUsername(mAccountCreator->getPhoneNumber());
 	emit createStatusChanged("Requesting validation url");
 	mAccountCreator->requestAccountCreationRequestToken();
 }
@@ -276,12 +375,14 @@ void AssistantModel::login () {
 		mAccountCreator->setUsername(mAccountCreator->getPhoneNumber());
 	if (mUsePhoneNumber) {
 		emit createStatusChanged("Requesting validation url");
+		mNextAction = AccountLogin;
 		mAccountCreator->requestAccountCreationRequestToken();
 		return;
 	}
 	
 	shared_ptr<linphone::Config> config(CoreManager::getInstance()->getCore()->getConfig());
 	if (!config->getString("assistant", "xmlrpc_url", "").empty()) {
+		mNextAction = AccountLogin;
 		mAccountCreator->isAccountExist();
 		return;
 	}
