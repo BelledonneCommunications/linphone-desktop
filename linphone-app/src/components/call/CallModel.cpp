@@ -940,7 +940,7 @@ void CallModel::sendDtmf (const QString &dtmf) {
 // -----------------------------------------------------------------------------
 
 void CallModel::verifyAuthenticationToken (bool verify) {
-	if(mCall)
+	if(mCall && getStatus() != CallStatusEnded)
 		mCall->setAuthenticationTokenVerified(verify);
 	emit securityUpdated();
 }

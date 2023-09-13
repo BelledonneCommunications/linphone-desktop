@@ -57,7 +57,7 @@ Item {
 	
 	Shortcut {
 		id: recordingsShortcut
-		onActivated: menuParent.displayRecordings()
+		onActivated: if(CoreManager.initialized && SettingsModel.callRecorderEnabled) menuParent.displayRecordings()
 	}
 	
 	// ---------------------------------------------------------------------------
@@ -75,6 +75,7 @@ Item {
 		}
 		
 		MenuItem{
+			visible: CoreManager.initialized && SettingsModel.callRecorderEnabled
 			//: 'Recordings' : Label for the recordings menu.
 			text: qsTr('recordings')
 			onTriggered: recordingsShortcut.onActivated()

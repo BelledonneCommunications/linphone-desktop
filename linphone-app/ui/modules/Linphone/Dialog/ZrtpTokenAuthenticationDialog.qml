@@ -17,6 +17,7 @@ DialogPlus {
 	property alias localSas: localSasText.text
 	property alias remoteSas : remoteSasText.text
 	
+
 	buttons: [
 		TextButtonA {
 				//: 'Later' : Button label to do something in another time.
@@ -46,6 +47,12 @@ DialogPlus {
 	radius: 10
 	onCallChanged: if(!call) exit(0)
 	Component.onCompleted: if( !localSas || !remoteSas) mainItem.exit(0)
+
+
+	Connections {
+		target: call
+		onStatusChanged: if (status === CallModel.CallStatusEnded) exit(0)
+	}
 		
 	ColumnLayout {
 		id:columnLayout
