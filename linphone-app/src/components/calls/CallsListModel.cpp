@@ -262,13 +262,20 @@ bool CallsListModel::createSecureChat (const QString& subject, const QString &pa
 	std::shared_ptr<const linphone::Address> localAddress;
 	participants.push_back(address);
 	params->enableEncryption(true);
-	
 	params->setSubject(Utils::appStringToCoreString(subject));
 	params->enableEncryption(true);
 	params->enableGroup(true);
 	
 	qInfo() << "Create secure ChatRoom: " << subject << ", from " << QString::fromStdString(localAddress->asString()) << " and with " <<participantAddress;;
 	std::shared_ptr<linphone::ChatRoom> chatRoom = core->createChatRoom(params, localAddress, participants);
+
+	if(chatRoom) {
+		int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
+		if( ephemeralTime>0){
+			chatRoom->setEphemeralLifetime(ephemeralTime);
+			chatRoom->enableEphemeral(true);
+		}
+	}
 // Still needed?
 //	if( chatRoom != nullptr){
 //		auto timelineList = CoreManager::getInstance()->getTimelineListModel();
@@ -366,6 +373,13 @@ QVariantMap CallsListModel::createChatRoom(const QString& subject, const int& se
 	}
 	if( !chatRoom)
 		qWarning() << "Chat room cannot be created";
+	else if(securityLevel > 0) {
+		int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
+		if( ephemeralTime>0){
+			chatRoom->setEphemeralLifetime(ephemeralTime);
+			chatRoom->enableEphemeral(true);
+		}
+	}
 	result["created"] = (chatRoom != nullptr);
 	
 	return result;

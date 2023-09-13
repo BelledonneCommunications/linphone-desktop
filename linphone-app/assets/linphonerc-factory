@@ -20,4 +20,8 @@ update_presence_model_timestamp_before_publish_expires_refresh=1
 max_conference_size=vga
 
 [ui]
+
 use_qrcode=0
+
+[account_creator]
+backend=1
