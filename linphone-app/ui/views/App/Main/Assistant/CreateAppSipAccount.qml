@@ -1,6 +1,8 @@
 import QtQuick 2.7
 
 import Common 1.0
+import ConstantsCpp 1.0
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -22,6 +24,7 @@ import App.Styles 1.0
 			width: CreateAppSipAccountStyle.buttons.button.width
 			
 			TextButtonA {
+				visible: SettingsModel.assistantSupportsPhoneNumbers
 				text: qsTr('withPhoneNumber')
 				
 				height: CreateAppSipAccountStyle.buttons.button.height
