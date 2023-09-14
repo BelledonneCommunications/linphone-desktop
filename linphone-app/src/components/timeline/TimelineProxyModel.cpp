@@ -104,7 +104,12 @@ void TimelineProxyModel::setListSource(const TimelineListSource& source){
 		emit listSourceChanged();
 	}
 }
-	
+
+TimelineModel *TimelineProxyModel::getSelectedTimeline() const {
+	auto model = qobject_cast<TimelineListModel*>(sourceModel());
+	return model ? model->getFirstSelected() : nullptr;
+}
+
 // -----------------------------------------------------------------------------
 
 bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sourceParent) const {

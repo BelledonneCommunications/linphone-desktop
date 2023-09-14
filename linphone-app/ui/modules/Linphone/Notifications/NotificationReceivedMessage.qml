@@ -105,6 +105,7 @@ Notification {
 			if(chatroom && notification.messageId)
 				chatroom.displayMessageIdRequested(notification.messageId)
 			App.smartShowWindow(notification.notificationData.window)
+			notification.notificationData.window.setView('Conversations')
 		})
 	}
 }

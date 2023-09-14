@@ -61,11 +61,15 @@ public:
 	Q_PROPERTY(QString filterText MEMBER mFilterText WRITE setFilterText NOTIFY filterTextChanged)
 	Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
 	Q_PROPERTY(TimelineMode mode MEMBER mMode WRITE setMode NOTIFY modeChanged)
+	Q_PROPERTY(TimelineModel *selectedTimeline READ getSelectedTimeline NOTIFY selectedChanged)
 		
 	Q_INVOKABLE void unselectAll();
 	Q_INVOKABLE void setFilterFlags(const int& filterFlags);
 	Q_INVOKABLE void setFilterText(const QString& text);
 	Q_INVOKABLE void setMode(const TimelineMode& mode);
+	
+	TimelineModel *getSelectedTimeline() const;
+	
 	
 	TimelineListSource getListSource() const;
 	void setListSource(const TimelineListSource& source);

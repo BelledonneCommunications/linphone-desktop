@@ -203,6 +203,16 @@ QSharedPointer<ChatRoomModel> TimelineListModel::getChatRoomModel(ChatRoomModel 
 	return nullptr;
 }
 
+TimelineModel * TimelineListModel::getFirstSelected() {
+	if(mSelectedCount == 0)
+		return nullptr;
+	for(auto timeline : mList){
+		auto model = timeline.objectCast<TimelineModel>();
+		if(model->mSelected)
+			return model.get();
+	}
+}
+
 //-------------------------------------------------------------------------------------------------
 
 void TimelineListModel::setSelectedCount(int selectedCount){

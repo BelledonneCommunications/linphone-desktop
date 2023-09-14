@@ -234,7 +234,7 @@ ColumnLayout {
 							target: lastChatRoom
 							onStateChanged: if(state === 1) {
 												console.debug("Load conversation from contacts")
-												window.setView('Conversation')
+												window.setView('Conversations')
 											}
 						}
 						

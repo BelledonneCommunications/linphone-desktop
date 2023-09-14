@@ -46,6 +46,14 @@ RowLayout{
 			//timeline.model.unselectAll()
 			//window.setView('HistoryView')
 		}
+		Component.onCompleted: {
+			var selectedTimeline = timeline.model.selectedTimeline;
+			if( selectedTimeline){
+				content.setSource('Conversation.qml', {
+								chatRoomModel:selectedTimeline.chatRoomModel
+							   })
+			}
+		}
 	}
 	Loader{
 		id: content
