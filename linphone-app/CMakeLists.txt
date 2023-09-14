@@ -375,7 +375,6 @@ set(HEADERS
 	src/app/proxyModel/SortFilterProxyModel.hpp
 	#src/app/proxyModel/ProxyMapModel.hpp
 	#src/app/proxyModel/ProxyModel.hpp
-	src/app/single-application/SingleApplication.hpp
 	src/app/translator/DefaultTranslator.hpp
 	src/components/assistant/AssistantModel.hpp
 	src/components/authentication/AuthenticationNotifier.hpp
@@ -511,11 +510,16 @@ set(PLUGIN_HEADERS
 set( UIS)
 
 list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
+## Single Application
+list(APPEND HEADERS src/app/single-application/singleapplication.h
+					src/app/single-application/singleapplication_p.h)
+list(APPEND SOURCES src/app/single-application/singleapplication.cpp
+					src/app/single-application/singleapplication_p.cpp)
 set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
 	list(APPEND SOURCES
-		src/app/single-application/SingleApplication.cpp
+		#src/app/single-application/SingleApplication.cpp
 		src/components/core/event-count-notifier/EventCountNotifierMacOs.m
 		src/components/other/desktop-tools/DesktopToolsMacOs.cpp
 		src/components/other/desktop-tools/DesktopToolsMacOsNative.mm
@@ -523,31 +527,31 @@ if (APPLE)
 		src/components/other/desktop-tools/state-process/StateProcessMacOs.mm
 		)
 	list(APPEND HEADERS
-		src/app/single-application/SingleApplicationPrivate.hpp
+		#src/app/single-application/SingleApplicationPrivate.hpp
 		src/components/core/event-count-notifier/EventCountNotifierMacOs.hpp
 		src/components/other/desktop-tools/DesktopToolsMacOs.hpp
 		)
 elseif (WIN32)
 	list(APPEND SOURCES
-		src/app/single-application/SingleApplication.cpp
+		#src/app/single-application/SingleApplication.cpp
 		src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.cpp
 		src/components/other/desktop-tools/DesktopToolsWindows.cpp
 		)
 	list(APPEND HEADERS
-		src/app/single-application/SingleApplicationPrivate.hpp
+		#src/app/single-application/SingleApplicationPrivate.hpp
 		src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp
 		src/components/other/desktop-tools/DesktopToolsWindows.hpp
 		)
 else ()
 	list(APPEND SOURCES
-		src/app/single-application/SingleApplicationDBus.cpp
+		#src/app/single-application/SingleApplicationDBus.cpp
 		src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.cpp
 		src/components/other/desktop-tools/DesktopToolsLinux.cpp
 		src/components/other/desktop-tools/screen-saver/ScreenSaverDBus.cpp
 		src/components/other/desktop-tools/screen-saver/ScreenSaverXdg.cpp
 		)
 	list(APPEND HEADERS
-		src/app/single-application/SingleApplicationDBusPrivate.hpp
+		#src/app/single-application/SingleApplicationDBusPrivate.hpp
 		src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp
 		src/components/other/desktop-tools/DesktopToolsLinux.hpp
 		src/components/other/desktop-tools/screen-saver/ScreenSaverDBus.hpp

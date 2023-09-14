@@ -23,7 +23,9 @@
 
 #include <memory>
 
-#include "single-application/SingleApplication.hpp"
+#include "single-application/singleapplication.h"
+
+#include <QApplication>
 
 // =============================================================================
 
