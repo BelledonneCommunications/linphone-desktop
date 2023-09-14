@@ -54,13 +54,16 @@ public:
 	AssistantModel (QObject *parent = Q_NULLPTR);
 	virtual ~AssistantModel();
 	
+	bool getIsProcessing() const;
+	void setIsProcessing(bool isProcessing);
+	
 	Q_INVOKABLE void activate ();
 	Q_INVOKABLE void create ();
 	Q_INVOKABLE void login ();
 	
 	Q_INVOKABLE void reset ();
 	
-	Q_INVOKABLE bool addOtherSipAccount (const QVariantMap &map);
+	Q_INVOKABLE std::shared_ptr<linphone::Account> addOtherSipAccount (const QVariantMap &map);
 	
 	Q_INVOKABLE void createTestAccount();
 	Q_INVOKABLE void generateQRCode();
@@ -154,9 +157,6 @@ private:
 	
 	bool getIsReadingQRCode() const;
 	void setIsReadingQRCode(bool isReading);
-	
-	bool getIsProcessing() const;
-	void setIsProcessing(bool isProcessing);
 	
 	
 	QString mapAccountCreatorUsernameStatusToString (linphone::AccountCreator::UsernameStatus status) const;

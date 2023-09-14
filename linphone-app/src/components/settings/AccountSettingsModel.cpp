@@ -147,9 +147,7 @@ bool AccountSettingsModel::addOrUpdateAccount (std::shared_ptr<linphone::Account
 		
 		coreManager->addingAccount(account->getParams());
 	}
-	
 	emit accountSettingsUpdated();
-	
 	return true;
 }
 

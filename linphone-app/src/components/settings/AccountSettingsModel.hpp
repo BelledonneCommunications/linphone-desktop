@@ -85,6 +85,8 @@ public:
 	bool getUseInternationalPrefixForCallsAndChats() const;
 	int getMissedCallsCount() const;
 	int getUnreadMessagesCount() const;
+	QString getUsername () const;
+	void setUsername (const QString &username);
 	
 	Q_INVOKABLE void setDefaultAccount (const std::shared_ptr<linphone::Account> &account = nullptr);
 	Q_INVOKABLE void setDefaultAccountFromSipAddress (const QString &sipAddress);
@@ -129,8 +131,6 @@ signals:
 	void unreadMessagesCountChanged();
 	
 private:
-	QString getUsername () const;
-	void setUsername (const QString &username);
 	
 	RegistrationState getRegistrationState () const;
 	

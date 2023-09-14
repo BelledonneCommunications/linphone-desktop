@@ -259,6 +259,46 @@
         <source>unableToAddAccount</source>
         <translation>Не вдалося додати цю обліківку.</translation>
     </message>
+    <message>
+        <source>noAccountExists</source>
+        <extracomment>&quot;Account doesn&apos;t exist&quot; : Warning message when no account has been found</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>recoveringAccount</source>
+        <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot open validation url for the account creation request token</source>
+        <extracomment>&quot;Cannot open validation URL for the account creation request token&quot; : Warning message.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>waitingValidation</source>
+        <extracomment>&apos;Waiting for validation at %1&apos; : User message for validation. %1 is an URL.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>wrongTokenRequest</source>
+        <extracomment>&apos;The answer of account creation request token doesn&apos;t have token and validation_url fields&apos; : Status message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tokenError</source>
+        <extracomment>&apos;Cannot get request token for account creation (%1)&apos; : Status messsage. %1 is a code number.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>requestingValidationUrl</source>
+        <extracomment>&apos;Requesting validation URL&apos; : Status message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loginStep</source>
+        <extracomment>&apos;Connecting&apos; : Status message</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AuthenticationRequest</name>
@@ -2646,6 +2686,10 @@
         <source>LinphoneEnums_TunnelModeAuto</source>
         <extracomment>&apos;Auto&apos; : One word for button action to set the auto tunnel mode.</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>loginWithUsernameFailed</source>
+        <translation type="unfinished">Не вдалося увійти. Будь ласка, перевірте правильність уведення імени користувача та паролю.</translation>
     </message>
 </context>
 <context>
