@@ -359,7 +359,6 @@ ApplicationWindow {
 							isCustom: true
 							backgroundRadius: 4
 							colorSet: MainWindowStyle.buttons.settingsMenu
-							visible: Qt.platform.os !== 'osx'
 							
 							toggled: menuBar.isOpenned
 							onClicked: toggled ? menuBar.close() : menuBar.open()// a bit useless as Menu will depopup on losing focus but this code is kept for giving idea

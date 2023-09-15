@@ -50,7 +50,7 @@ function getComponentFromEntry (historyEntry) {
 }
 
 function handleMoreEntriesLoaded (n) {
-  history.positionViewAtIndex(n - 1, QtQuick.ListView.Beginning)
+  history.positionViewAtIndex(history.count - n, QtQuick.ListView.Beginning)
   history.tryToLoadMoreEntries = false
 }
 
