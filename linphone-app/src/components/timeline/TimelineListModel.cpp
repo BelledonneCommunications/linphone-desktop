@@ -403,10 +403,17 @@ void TimelineListModel::onChatRoomRead(const std::shared_ptr<linphone::ChatRoom>
 void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::ChatRoom> &chatRoom,linphone::ChatRoom::State state){
 	if( state == linphone::ChatRoom::State::Created
 			&& !getTimeline(chatRoom, false)){// Create a new Timeline if needed
+		if( chatRoom->hasCapability((int)linphone::ChatRoomCapabilities::Conference) && !chatRoom->ephemeralEnabled()) {
+			int ephemeralTime = CoreManager::getInstance()->getSettingsModel()->getCreateEphemeralChatRooms();
+			if( ephemeralTime>0){
+				chatRoom->setEphemeralLifetime(ephemeralTime);
+				chatRoom->enableEphemeral(true);
+			}
+		}
 		QSharedPointer<TimelineModel> model = TimelineModel::create(this, chatRoom);
 		if(model){
 			connect(model.get(), SIGNAL(selectedChanged(bool)), this, SLOT(onSelectedHasChanged(bool)));
-			add(model);			
+			add(model);
 		}
 	}else if(state == linphone::ChatRoom::State::Deleted || state == linphone::ChatRoom::State::Terminated){
 		auto timeline = getTimeline(chatRoom, false);

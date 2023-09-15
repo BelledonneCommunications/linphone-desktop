@@ -1,7 +1,8 @@
 import QtQuick 2.7
 
 import Common 1.0
-
+import Linphone 1.0
+import UtilsCpp 1.0
 import App.Styles 1.0
 
 import 'AuthenticationRequest.js' as Logic
@@ -12,7 +13,7 @@ DialogPlus {
   id: dialog
 
   property alias realm: realm.text
-  property alias sipAddress: identity.text
+  property alias sipAddress: identity.hiddenText
   property alias userId: userId.text
 
   property var authInfo
@@ -52,13 +53,15 @@ DialogPlus {
 
         TextField {
           id: identity
-
+			property string hiddenText
+			text: UtilsCpp.toDisplayString(identity.hiddenText, SettingsModel.sipDisplayMode)
           readOnly: true
         }
       }
     }
 
     FormLine {
+      visible: SettingsModel.sipDisplayMode == UtilsCpp.SIP_DISPLAY_ALL
       FormGroup {
         label: qsTr('realmLabel')
 

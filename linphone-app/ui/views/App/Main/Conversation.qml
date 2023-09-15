@@ -36,7 +36,7 @@ ColumnLayout  {
 	
 	property int securityLevel : chatRoomModel ? chatRoomModel.securityLevel : 1
 	
-	property SipAddressObserver _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:peerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
+	property SipAddressObserver _sipAddressObserver: SipAddressesModel.getSipAddressObserver((fullPeerAddress?fullPeerAddress:defaultPeerAddress), (fullLocalAddress?fullLocalAddress:localAddress))
 	
 	property bool haveMoreThanOneParticipants: chatRoomModel ? chatRoomModel.participants.count > 2 : false
 	property bool haveLessThanMinParticipantsForCall: chatRoomModel ? chatRoomModel.participants.count <= 5 : false

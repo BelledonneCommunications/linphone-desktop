@@ -448,7 +448,7 @@ Rectangle {
 		height: IncallStyle.buttons.secure.buttonSize
 		width: height
 		isCustom: true
-		iconIsCustom: ! (callModel.isSecured && SettingsModel.isPostQuantumAvailable && callModel.encryption === CallModel.CallEncryptionZrtp)
+		iconIsCustom: ! (callModel.isSecured)
 		backgroundRadius: width/2
 		
 		colorSet: !callModel || callModel.encryption === CallModel.CallEncryptionNone

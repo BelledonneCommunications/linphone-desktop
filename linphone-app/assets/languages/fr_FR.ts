@@ -2329,7 +2329,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
-        <extracomment>&apos;%1 is no more an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
+        <extracomment>&apos;%1 is no longer an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
         <translation>%1 n&apos;est plus admin</translation>
     </message>
     <message>
