@@ -20,13 +20,11 @@
 #
 ############################################################################
 #
-# - Find the mediastreamer2 include files and library
+# This module will set the following variables in your project:
 #
-#  LINPHONE_TARGETS - Add usable targets into this list.
-#  MEDIASTREAMER2_FOUND - system has lib mediastreamer2
-#  MEDIASTREAMER2_INCLUDE_DIRS - the mediasteamer2 include directory
-#  MEDIASTREAMER2_LIBRARIES - The library needed to use mediasteamer2
-#  MEDIASTREAMER2_PLUGINS_LOCATION - The location of the mediastreamer2 plugins
+#  Mediastreamer2_FOUND - The mediastreamer2 library has been found
+#  Mediastreamer2_TARGET - The name of the CMake target for the mediastreamer2 library
+#  Mediastreamer2_PLUGINS_DIR - The directory where to install mediastreamer2 plugins
 
 if(NOT TARGET mediastreamer2)
     set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
@@ -34,19 +32,18 @@ if(NOT TARGET mediastreamer2)
     include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/Mediastreamer2/cmake/Mediastreamer2Targets.cmake)
 endif()
 
+set(_Mediastreamer2_REQUIRED_VARS Mediastreamer2_TARGET Mediastreamer2_PLUGINS_DIR)
+set(_Mediastreamer2_CACHE_VARS ${_Mediastreamer2_REQUIRED_VARS})
+
 if(TARGET mediastreamer2)
-	list(APPEND LINPHONE_TARGETS mediastreamer2)
-	set(MEDIASTREAMER2_LIBRARIES mediastreamer2)
-	get_target_property(MEDIASTREAMER2_INCLUDE_DIRS mediastreamer2 INTERFACE_INCLUDE_DIRECTORIES)
-	define_property(TARGET PROPERTY "MS2_PLUGINS" BRIEF_DOCS "Stores the location of mediastreamer2 plugins" FULL_DOCS "Stores the location of mediastreamer2 plugins")
-	get_target_property(MEDIASTREAMER2_PLUGINS_LOCATION mediastreamer2 MS2_PLUGINS)
-
-	include(FindPackageHandleStandardArgs)
-	find_package_handle_standard_args(Mediastreamer2
-		DEFAULT_MSG
-		MEDIASTREAMER2_INCLUDE_DIRS MEDIASTREAMER2_LIBRARIES
-	)
-
-	mark_as_advanced(MEDIASTREAMER2_INCLUDE_DIRS MEDIASTREAMER2_LIBRARIES)
-
+	set(Mediastreamer2_TARGET mediastreamer2)
+	get_target_property(Mediastreamer2_PLUGINS_DIR ${Mediastreamer2_TARGET} MS2_PLUGINS_DIR)
 endif()
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Mediastreamer2
+	REQUIRED_VARS ${_Mediastreamer2_REQUIRED_VARS}
+	HANDLE_COMPONENTS
+)
+mark_as_advanced(${_Mediastreamer2_CACHE_VARS})
+

@@ -1,5 +1,5 @@
 ############################################################################
-# FindOrtp.cmake
+# FindLinphoneCxx.cmake
 # Copyright (C) 2023  Belledonne Communications, Grenoble France
 #
 ############################################################################
@@ -20,29 +20,26 @@
 #
 ############################################################################
 #
-# - Find the ortp include files and library
-#
-#  LINPHONE_TARGETS - Add usable targets into this list.
-#  ORTP_FOUND - system has lib ortp
-#  ORTP_INCLUDE_DIRS - the ortp include directory
-#  ORTP_LIBRARIES - The library needed to use ortp
-if(NOT TARGET ortp)
+#  LibLinphoneCxx_FOUND - The liblinphone library has been found
+#  LibLinphoneCxx_TARGET - The name of the CMake target for the liblinphone library
+
+if(NOT TARGET liblinphone++)
     set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
     include(GNUInstallDirs)
-    include(${EXPORT_PATH}/${CMAKE_INSTALL_LIBDIR}/cmake/ortp/ortpTargets.cmake)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/LinphoneCxx/cmake/LinphoneCxxTargets.cmake)
 endif()
 
-if(TARGET ortp)
-	list(APPEND LINPHONE_TARGETS ortp)
-    set(ORTP_LIBRARIES ortp)
-    get_target_property(ORTP_INCLUDE_DIRS ortp INTERFACE_INCLUDE_DIRECTORIES)
+set(_LibLinphoneCxx_REQUIRED_VARS LibLinphoneCxx_TARGET)
+set(_LibLinphoneCxx_CACHE_VARS ${_LibLinphoneCxx_REQUIRED_VARS})
 
-    include(FindPackageHandleStandardArgs)
-    find_package_handle_standard_args(Ortp
-            DEFAULT_MSG
-            ORTP_INCLUDE_DIRS ORTP_LIBRARIES
-    )
-
-    mark_as_advanced(ORTP_INCLUDE_DIRS ORTP_LIBRARIES)
-
+if(TARGET liblinphone++)
+	set(LibLinphoneCxx_TARGET liblinphone++)
 endif()
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(LibLinphoneCxx
+	REQUIRED_VARS ${_LibLinphoneCxx_REQUIRED_VARS}
+	HANDLE_COMPONENTS
+)
+mark_as_advanced(${_LibLinphoneCxx_CACHE_VARS})
+

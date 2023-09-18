@@ -19,58 +19,42 @@
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #
 ############################################################################
+
+# This module will set the following variables in your project:
 #
-# - Find the bctoolbox include files and library
-#  LINPHONE_TARGETS - Add usable targets into this list.
-#  BCToolbox_FOUND - System has lib bctoolbox
-#  BCToolbox_INCLUDE_DIRS - The bctoolbox include directories
-#  BCToolbox_LIBRARIES - The libraries needed to use bctoolbox
-#  BCToolbox_CMAKE_DIR - The bctoolbox cmake directory
-#  BCToolbox_CORE_FOUND - System has core bctoolbox
-#  BCToolbox_CORE_INCLUDE_DIRS - The core bctoolbox include directories
-#  BCToolbox_CORE_LIBRARIES - The core bctoolbox libraries
-#  BCToolbox_TESTER_FOUND - System has bctoolbox tester
-#  BCToolbox_TESTER_INCLUDE_DIRS - The bctoolbox tester include directories
-#  BCToolbox_TESTER_LIBRARIES - The bctoolbox tester libraries 
+#  BCToolbox_FOUND - The bctoolbox library has been found
+#  BCToolbox_TARGET - The name of the CMake target for the bctoolbox library
+#  BCToolbox_CMAKE_DIR - The bctoolbox CMake directory
+#  BCToolbox_CMAKE_UTILS - The path to the bctoolbox CMake utils script
+#  BCToolbox_tester_FOUND - The bctoolbox-tester library has been found
+#  BCToolbox_tester_TARGET - The name of the CMake target for the bctoolbox-tester library
+
 
 if(NOT TARGET bctoolbox)
     set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
     include(GNUInstallDirs)
     set(BCToolbox_CMAKE_DIR ${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/bctoolbox/cmake)
     include(${BCToolbox_CMAKE_DIR}/bctoolboxTargets.cmake)
-else()
-    get_target_property(BCToolbox_SOURCE_DIR bctoolbox SOURCE_DIR)
-    set(BCToolbox_CMAKE_DIR "${BCToolbox_SOURCE_DIR}/../cmake")
 endif()
+
+set(_BCToolbox_REQUIRED_VARS BCToolbox_TARGET BCToolbox_CMAKE_DIR BCToolbox_CMAKE_UTILS)
+set(_BCToolbox_CACHE_VARS ${_BCToolbox_REQUIRED_VARS})
 
 if(TARGET bctoolbox)
-	list(APPEND LINPHONE_TARGETS bctoolbox)
-	include(${BCToolbox_CMAKE_DIR}/BCToolboxCMakeUtils.cmake)
-    set(BCToolbox_CORE_LIBRARIES bctoolbox)
-    get_target_property(BCToolbox_CORE_INCLUDE_DIRS bctoolbox INTERFACE_INCLUDE_DIRECTORIES)
-    set(BCToolbox_CORE_FOUND TRUE)
-
-    if(TARGET bctoolbox-tester)
-            set(BCToolbox_TESTER_LIBRARIES bctoolbox-tester)
-            get_target_property(BCToolbox_TESTER_INCLUDE_DIRS bctoolbox-tester INTERFACE_INCLUDE_DIRECTORIES)
-            set(BCToolbox_TESTER_FOUND TRUE)
-            set(BCToolbox_TESTER_COMPONENT_VARIABLES BCToolbox_TESTER_FOUND BCToolbox_TESTER_INCLUDE_DIRS BCToolbox_TESTER_LIBRARIES)
-    endif()
-    set(BCToolbox_LIBRARIES ${BCToolbox_CORE_LIBRARIES} ${BCToolbox_TESTER_LIBRARIES})
-    set(BCToolbox_INCLUDE_DIRS ${BCToolbox_CORE_INCLUDE_DIRS} ${BCToolbox_TESTER_INCLUDE_DIRS})
-
-
-    include(FindPackageHandleStandardArgs)
-    find_package_handle_standard_args(BCToolbox
-            DEFAULT_MSG
-            BCToolbox_INCLUDE_DIRS BCToolbox_LIBRARIES BCToolbox_CMAKE_DIR
-            BCToolbox_CORE_FOUND BCToolbox_CORE_INCLUDE_DIRS BCToolbox_CORE_LIBRARIES
-            ${BCToolbox_TESTER_COMPONENT_VARIABLES}
-    )
-
-    mark_as_advanced(
-            BCToolbox_INCLUDE_DIRS BCToolbox_LIBRARIES BCToolbox_CMAKE_DIR
-            BCToolbox_CORE_FOUND BCToolbox_CORE_INCLUDE_DIRS BCToolbox_CORE_LIBRARIES
-            ${BCToolbox_TESTER_COMPONENT_VARIABLES}
-    )
+	set(BCToolbox_TARGET bctoolbox)
+	get_target_property(_BCToolbox_SOURCE_DIR ${BCToolbox_TARGET} SOURCE_DIR)
+	set(BCToolbox_CMAKE_DIR "${_BCToolbox_SOURCE_DIR}/../cmake")
+	set(BCToolbox_CMAKE_UTILS "${BCToolbox_CMAKE_DIR}/BCToolboxCMakeUtils.cmake")
+	if(TARGET bctoolbox-tester)
+		set(BCToolbox_tester_FOUND TRUE)
+		set(BCToolbox_tester_TARGET bctoolbox-tester)
+		list(APPEND _BCToolbox_CACHE_VARS BCToolbox_tester_TARGET)
+	endif()
 endif()
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(BCToolbox
+	REQUIRED_VARS ${_BCToolbox_REQUIRED_VARS}
+	HANDLE_COMPONENTS
+)
+mark_as_advanced(${_BCToolbox_CACHE_VARS})

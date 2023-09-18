@@ -18,67 +18,110 @@
 #
 ############################################################################
 #
-# - Find the OpenLDAP include file and library
+# This module will set the following variables in your project:
 #
-#  LINPHONE_TARGETS - Add usable targets into this list.
-#  OPENLDAP_FOUND - system has OpenLDAP
-#  OPENLDAP_INCLUDE_DIRS - the OpenLDAP include directory
-#  OPENLDAP_LIBRARIES - The libraries needed to use OpenLDAP
+#  OpenLDAP_FOUND - The ldap library has been found
+#  OpenLDAP_TARGETS - The list of the names of the CMake targets for the openldap libraries
+#  OpenLDAP_TARGET - The name of the CMake target for the ldap library
+#  OpenLDAP_lber_TARGET - The name of the CMake target for the lber library
+
+
+include(FindPackageHandleStandardArgs)
+
+set(_OpenLDAP_REQUIRED_VARS OpenLDAP_TARGETS OpenLDAP_TARGET)
+set(_OpenLDAP_CACHE_VARS ${_OpenLDAP_REQUIRED_VARS})
 
 if(TARGET ldap)
-	list(APPEND LINPHONE_TARGETS ldap)
-	set(OPENLDAP_LIBRARIES ldap)
-	get_target_property(OPENLDAP_INCLUDE_DIRS ldap INTERFACE_INCLUDE_DIRECTORIES)
+
+	set(OpenLDAP_TARGET ldap)
+	set(OpenLDAP_TARGETS ldap)
+	if(TARGET lber)
+		set(OpenLDAP_lber_TARGET lber)
+		list(APPEND OpenLDAP_TARGETS lber)
+		list(APPEND _OpenLDAP_CACHE_VARS OpenLDAP_lber_TARGET)
+	endif()
 
 else()
 
-	#Note : There are double find* because of priority given to the HINTS first. The second call will keep the result if there is one.
-	#INCLUDES
-	find_path(OPENLDAP_INCLUDE_DIRS
+	# Note : There are double find* because of priority given to the HINTS first. The second call will keep the result if there is one.
+
+	find_path(_OpenLDAP_INCLUDE_DIRS
 		NAMES ldap.h
-		PATH_SUFFIXES include/openldap
 		HINTS "${CMAKE_INSTALL_PREFIX}"
+		PATH_SUFFIXES include/openldap
 		NO_DEFAULT_PATH
 	)
-	find_path(OPENLDAP_INCLUDE_DIRS
+	find_path(_OpenLDAP_INCLUDE_DIRS
 		NAMES ldap.h
-		PATH_SUFFIXES include/openldap
 		HINTS "${CMAKE_INSTALL_PREFIX}"
+		PATH_SUFFIXES include/openldap
 	)
 
-	#LDAP
-	find_library(LDAP_LIB
+	find_library(_OpenLDAP_LIBRARY
 		NAMES ldap libldap
 		HINTS "${CMAKE_INSTALL_PREFIX}"
 		PATH_SUFFIXES lib
 		NO_DEFAULT_PATH
 	)
-	find_library(LDAP_LIB
+	find_library(_OpenLDAP_LIBRARY
 		NAMES ldap libldap
 		HINTS "${CMAKE_INSTALL_PREFIX}"
 		PATH_SUFFIXES lib
 	)
 
-	#LBER
-	find_library(LBER_LIB
+	find_library(_OpenLDAP_lber_LIBRARY
 		NAMES lber liblber
 		HINTS "${CMAKE_INSTALL_PREFIX}"
 		PATH_SUFFIXES lib
 		NO_DEFAULT_PATH
 	)
-	find_library(LBER_LIB
+	find_library(_OpenLDAP_lber_LIBRARY
 		NAMES lber liblber
 		HINTS "${CMAKE_INSTALL_PREFIX}"
 		PATH_SUFFIXES lib
 	)
-	set(OPENLDAP_LIBRARIES ${LDAP_LIB} ${LBER_LIB})
+
+	if(_OpenLDAP_INCLUDE_DIRS AND _OpenLDAP_LIBRARY)
+		add_library(ldap UNKNOWN IMPORTED)
+		if(WIN32)
+			set_target_properties(ldap PROPERTIES
+				INTERFACE_INCLUDE_DIRECTORIES "${_OpenLDAP_INCLUDE_DIRS}"
+				IMPORTED_IMPLIB "${_OpenLDAP_LIBRARY}"
+			)
+		else()
+			set_target_properties(ldap PROPERTIES
+				INTERFACE_INCLUDE_DIRECTORIES "${_OpenLDAP_INCLUDE_DIRS}"
+				IMPORTED_LOCATION "${_OpenLDAP_LIBRARY}"
+			)
+		endif()
+		set(OpenLDAP_TARGET ldap)
+		set(OpenLDAP_TARGETS ldap)
+
+		if(_OpenLDAP_lber_LIBRARY)
+			add_library(lber UNKNOWN IMPORTED)
+			if(WIN32)
+				set_target_properties(lber PROPERTIES
+					INTERFACE_INCLUDE_DIRECTORIES "${_OpenLDAP_INCLUDE_DIRS}"
+					IMPORTED_IMPLIB "${_OpenLDAP_lber_LIBRARY}"
+				)
+			else()
+				set_target_properties(lber PROPERTIES
+					INTERFACE_INCLUDE_DIRECTORIES "${_OpenLDAP_INCLUDE_DIRS}"
+					IMPORTED_LOCATION "${_OpenLDAP_lber_LIBRARY}"
+				)
+			endif()
+			set(OpenLDAP_lber_TARGET lber)
+			set(OpenLDAP_lber_FOUND TRUE)
+			list(APPEND OpenLDAP_TARGETS lber)
+			list(APPEND _OpenLDAP_CACHE_VARS OpenLDAP_lber_TARGET)
+		endif()
+	endif()
 
 endif()
 
-include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(OpenLDAP
-	DEFAULT_MSG
-	OPENLDAP_INCLUDE_DIRS OPENLDAP_LIBRARIES
+	REQUIRED_VARS ${_OpenLDAP_REQUIRED_VARS}
+	HANDLE_COMPONENTS
 )
+mark_as_advanced(${_OpenLDAP_CACHE_VARS})
 
-mark_as_advanced(OPENLDAP_INCLUDE_DIRS OPENLDAP_LIBRARIES)

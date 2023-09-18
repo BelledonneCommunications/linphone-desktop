@@ -21,9 +21,13 @@
 #ifndef VFS_UTILS_H_
 #define VFS_UTILS_H_
 
+#include "config.h"
 #include <QObject>
 #ifdef QTKEYCHAIN_USE_BUILD_INTERFACE
 #include <keychain.h>
+#elif defined(QTKEYCHAIN_TARGET_NAME)
+#define KEYCHAIN_HEADER <QTKEYCHAIN_TARGET_NAME/keychain.h>
+#include KEYCHAIN_HEADER
 #else
 #include <EQt5Keychain/keychain.h>
 #endif

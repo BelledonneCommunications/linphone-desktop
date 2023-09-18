@@ -1,6 +1,6 @@
 ############################################################################
-# FindMinizip.cmake
-# Copyright (C) 2018  Belledonne Communications, Grenoble France
+# FindLinphone.cmake
+# Copyright (C) 2023  Belledonne Communications, Grenoble France
 #
 ############################################################################
 #
@@ -20,29 +20,27 @@
 #
 ############################################################################
 #
-# - Find the minizip include file and library
-#
-#  MINIZIP_FOUND - system has minizip
-#  MINIZIP_INCLUDE_DIRS - the minizip include directory
-#  MINIZIP_LIBRARIES - The libraries needed to use minizip
+#  LibLinphone_FOUND - The liblinphone library has been found
+#  LibLinphone_TARGET - The name of the CMake target for the liblinphone library
+#  LibLinphone_PLUGINS_DIR - The directory where to install liblinphone plugins
 
-find_path(MINIZIP_INCLUDE_DIRS
-	NAMES mz.h
-	PATH_SUFFIXES include
-)
-
-if(MINIZIP_INCLUDE_DIRS)
-	set(HAVE_MZ_H 1)
+if(NOT TARGET liblinphone)
+    set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
+    include(GNUInstallDirs)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/linphone/cmake/linphoneTargets.cmake)
 endif()
 
-find_library(MINIZIP_LIBRARIES
-	NAMES minizip minizipd
-)
+set(_LibLinphone_REQUIRED_VARS LibLinphone_TARGET LibLinphone_PLUGINS_DIR)
+set(_LibLinphone_CACHE_VARS ${_LibLinphone_REQUIRED_VARS})
+
+if(TARGET liblinphone)
+	set(LibLinphone_TARGET liblinphone)
+	get_target_property(LibLinphone_PLUGINS_DIR ${LibLinphone_TARGET} LIBLINPHONE_PLUGINS_DIR)
+endif()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(Minizip
-	DEFAULT_MSG
-	MINIZIP_INCLUDE_DIRS MINIZIP_LIBRARIES HAVE_MZ_H
+find_package_handle_standard_args(LibLinphone
+	REQUIRED_VARS ${_LibLinphone_REQUIRED_VARS}
+	HANDLE_COMPONENTS
 )
-
-mark_as_advanced(MINIZIP_INCLUDE_DIRS MINIZIP_LIBRARIES HAVE_MZ_H)
+mark_as_advanced(${_LibLinphone_CACHE_VARS})

@@ -20,31 +20,25 @@
 #
 ############################################################################
 #
-# - Find the belcard include files and library
-#
-#  LINPHONE_TARGETS - Add usable targets into this list.
-#  Belcard_FOUND - system has lib belcard
-#  Belcard_INCLUDE_DIRS - the belcard include directory
-#  Belcard_LIBRARIES - The library needed to use belcard
+#  Belcard_FOUND - The liblinphone library has been found
+#  Belcard_TARGET - The name of the CMake target
 
 if(NOT TARGET belcard)
     set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
     include(GNUInstallDirs)
-    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/belcard/cmake/belcardTargets.cmake)
+    include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/Belcard/cmake/BelcardTargets.cmake)
 endif()
+
+set(_Belcard_REQUIRED_VARS Belcard_TARGET)
+set(_Belcard_CACHE_VARS ${_Belcard_REQUIRED_VARS})
 
 if(TARGET belcard)
-	list(APPEND LINPHONE_TARGETS belcard)
-	set(Belcard_LIBRARIES belcard)
-	get_target_property(Belcard_INCLUDE_DIRS belcard INTERFACE_INCLUDE_DIRECTORIES)
-
-
-	include(FindPackageHandleStandardArgs)
-	find_package_handle_standard_args(Belcard
-		DEFAULT_MSG
-		Belcard_INCLUDE_DIRS Belcard_LIBRARIES
-	)
-
-	mark_as_advanced(Belcard_INCLUDE_DIRS Belcard_LIBRARIES)
-	
+	set(Belcard_TARGET belcard)
 endif()
+
+include(FindPackageHandleStandardArgs)
+find_package_handle_standard_args(Belcard
+	REQUIRED_VARS ${_Belcard_REQUIRED_VARS}
+	HANDLE_COMPONENTS
+)
+mark_as_advanced(${_Belcard_CACHE_VARS})
