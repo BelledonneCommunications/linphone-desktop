@@ -70,8 +70,9 @@ Rectangle {
 					color: TimelineStyle.legend.colorModel.color
 					font.pointSize: TimelineStyle.legend.pointSize
 					font.weight: Font.Bold
+					font.capitalization: Font.Capitalize
 					//: 'Messages' : Title for conversations
-					text: qsTr('chatsTitle')
+					text: qsTr('chatsTitle').toLowerCase()
 					verticalAlignment: Text.AlignVCenter
 				}
 				

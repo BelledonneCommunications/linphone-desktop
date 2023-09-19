@@ -46,7 +46,7 @@ Item {
 	
 	// ---------------------------------------------------------------------------
 	property string lastTextSelected
-	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + chatContent.height + reactionLoader.height-10
+	implicitHeight: (deliveryLayout.visible? deliveryLayout.height : 0) +(ephemeralTimerRow.visible? 16 : 0) + chatContent.height + (reactionLoader.active?reactionLoader.height-10 : 0)
 	Rectangle {
 		id: rectangle
 		property int availableWidth: parent.width
@@ -56,7 +56,7 @@ Item {
 		anchors.left: !$chatEntry.isOutgoing ? parent.left : undefined
 		anchors.right: $chatEntry.isOutgoing ? parent.right : undefined
 		
-		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0) - (reactionLoader.height-10)
+		height: parent.height - (deliveryLayout.visible? deliveryLayout.height : 0) - (reactionLoader.active ? reactionLoader.height-10 : 0)
 		radius: ChatStyle.entry.message.radius
 		clip: false
 		color: colorModel.color

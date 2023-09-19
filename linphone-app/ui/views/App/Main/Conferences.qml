@@ -40,9 +40,10 @@ Item{
 				font {
 					bold: true
 					pointSize: ConferencesStyle.bar.text.pointSize
+					capitalization: Font.Capitalize
 				}
 				//: 'Meetings' : Conference list title.
-				text: qsTr('conferencesTitle')
+				text: qsTr('conferencesTitle').toLowerCase()
 			}
 			TextButtonB {
 				anchors.verticalCenter: parent.verticalCenter

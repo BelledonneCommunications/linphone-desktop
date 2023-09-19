@@ -39,8 +39,9 @@ ColumnLayout{
 				color: CallTimelineStyle.colorModel.color
 				font.pointSize: CallTimelineStyle.pointSize
 				font.weight: Font.Bold
+				font.capitalization: Font.Capitalize
 				//: 'Call list' : Call histories title
-				text: qsTr('callListTitle')
+				text: qsTr('callListTitle').toLowerCase()
 				verticalAlignment: Text.AlignVCenter
 			}
 			

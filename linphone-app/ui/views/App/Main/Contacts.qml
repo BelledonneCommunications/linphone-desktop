@@ -52,9 +52,9 @@ ColumnLayout {
 				font.capitalization: Font.Capitalize
 				text: LdapListModel.count > 0
 				//: 'Local contacts' : Contacts section label in main window when we have to specify that they are local to the application.
-											? qsTr('localContactsEntry')
+											? qsTr('localContactsEntry').toLowerCase()
 				//: 'Contacts' : Contacts section label in main waindow.
-											: qsTr('contactsEntry')
+											: qsTr('contactsEntry').toLowerCase()
 				verticalAlignment: Text.AlignVCenter
 			}
 			
