@@ -511,10 +511,16 @@ set( UIS)
 
 list(APPEND SOURCES include/LinphoneApp/PluginExample.json)
 ## Single Application
-list(APPEND HEADERS src/app/single-application/singleapplication.h
-					src/app/single-application/singleapplication_p.h)
-list(APPEND SOURCES src/app/single-application/singleapplication.cpp
-					src/app/single-application/singleapplication_p.cpp)
+if(APPLE OR WIN32)
+	list(APPEND HEADERS src/app/single-application/singleapplication.h
+						src/app/single-application/singleapplication_p.h)
+	list(APPEND SOURCES src/app/single-application/singleapplication.cpp
+						src/app/single-application/singleapplication_p.cpp)
+else() # Use QDBus for Linux
+	list(APPEND HEADERS src/app/single-application/singleapplication.h
+						src/app/single-application/SingleApplicationDBusPrivate.hpp)
+	list(APPEND SOURCES src/app/single-application/SingleApplicationDBus.cpp)
+endif()
 set(MAIN_FILE src/app/main.cpp)
 
 if (APPLE)
