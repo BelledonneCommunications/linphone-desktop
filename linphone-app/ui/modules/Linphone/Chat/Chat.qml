@@ -1,5 +1,5 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2
+import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 
 import Common 1.0
@@ -76,11 +76,10 @@ Rectangle {
 	function goToMessageId(messageId){
 		positionViewAtIndex(container.proxyModel.loadTillMessageId(messageId))
 	}
-	
-	ColumnLayout {
+	SplitView{
 		anchors.fill: parent
 		spacing: 0
-		
+		orientation: Qt.Vertical
 		ScrollableListView {
 			id: chat
 			// -----------------------------------------------------------------------
@@ -126,8 +125,8 @@ Rectangle {
 				text: "X"
 			}
 			
-			Layout.fillHeight: true
-			Layout.fillWidth: true
+			SplitView.fillHeight: true
+			SplitView.fillWidth: true
 			clip: false
 			highlightFollowsCurrentItem: false
 			// Use moving event => this is a user action.
@@ -396,12 +395,11 @@ Rectangle {
 					pointSize: Units.dp * 7
 				}
 			}
-			
 		}
 		Rectangle {
 			id: bottomChatBackground
-			Layout.fillWidth: true
-			Layout.preferredHeight: textAreaBorders.height + chatMessagePreview.height+messageBlock.height + chatEmojis.height
+			SplitView.fillWidth: true
+			SplitView.minimumHeight: textAreaBorders.minimumHeight + chatMessagePreview.height+messageBlock.height + chatEmojis.minimumHeight
 			color: ChatStyle.sendArea.backgroundBorder.colorModel.color
 			visible: proxyModel.chatRoomModel && !proxyModel.chatRoomModel.isReadOnly && (!proxyModel.chatRoomModel.haveEncryption && SettingsModel.standardChatEnabled || proxyModel.chatRoomModel.haveEncryption && SettingsModel.secureChatEnabled)
 			
@@ -420,6 +418,7 @@ Rectangle {
 				ChatMessagePreview{
 						id: chatMessagePreview
 						Layout.fillWidth: true
+						Layout.fillHeight: true
 						Layout.leftMargin: ChatStyle.sendArea.backgroundBorder.width
 						maxHeight: container.height - textAreaBorders.height
 						replyChatRoomModel: proxyModel.chatRoomModel
@@ -429,8 +428,11 @@ Rectangle {
 				}
 				ChatEmojis{
 					id: chatEmojis
+					property int minimumHeight: visible ? 150 : 0
 					onEmojiClicked: textArea.insertEmoji(emoji)
 					Layout.fillWidth: true
+					Layout.fillHeight: true
+					Layout.minimumHeight: minimumHeight
 				}
 				// -------------------------------------------------------------------------
 				// Send area.
@@ -438,8 +440,10 @@ Rectangle {
 				
 				Borders {
 					id: textAreaBorders
+					property int minimumHeight: visible ? ChatStyle.sendArea.height + ChatStyle.sendArea.border.width : 0
 					Layout.fillWidth: true
-					Layout.preferredHeight: textArea.height
+					Layout.fillHeight: true
+					Layout.minimumHeight: minimumHeight
 					Layout.leftMargin: ChatStyle.sendArea.backgroundBorder.width
 					borderColor: ChatStyle.sendArea.border.colorModel.color
 					topWidth: ChatStyle.sendArea.border.width
@@ -450,11 +454,8 @@ Rectangle {
 						enabled:proxyModel && proxyModel.chatRoomModel ? !proxyModel.chatRoomModel.isReadOnly:false
 						isEphemeral : proxyModel && proxyModel.chatRoomModel ? proxyModel.chatRoomModel.ephemeralEnabled:false
 						
-						anchors.left: parent.left
-						anchors.right: parent.right
-						anchors.bottom: parent.bottom
+						anchors.fill: parent
 						
-						height: visible ? ChatStyle.sendArea.height + ChatStyle.sendArea.border.width : 0
 						minimumHeight:ChatStyle.sendArea.height + ChatStyle.sendArea.border.width
 						maximumHeight:container.height/2
 						

@@ -169,10 +169,11 @@ set(ENABLE_CXX_WRAPPER ON CACHE BOOL "Build the C++ wrapper for Liblinphone." FO
 set(ENABLE_THEORA OFF)
 set(ENABLE_QT_GL ${ENABLE_VIDEO})
 
-find_package(Qt5 5.12 COMPONENTS Core REQUIRED)
+# Qt5.13 because of Spitview
+find_package(Qt5 5.13 COMPONENTS Core REQUIRED)
 
 if(NOT Qt5_FOUND)
-	message(FATAL_ERROR "Minimum supported Qt5 version is 5.12!")
+	message(FATAL_ERROR "Minimum supported Qt5 version is 5.13!")
 endif()
 
 set(LINPHONEAPP_BUILD_TYPE "Default" CACHE STRING "Type of build")

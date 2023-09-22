@@ -17,7 +17,6 @@ import 'Chat.js' as Logic
 Item{
 	id: mainItem
 	visible: false
-	height: visible ? 150 : 0
 	//Layout.preferredHeight: visible ? 150 : 0
 	//Layout.maximumHeight:  visible ? 150 : 0
 	signal emojiClicked(var emoji)

@@ -96,10 +96,6 @@ Item {
 					count: CoreManager.eventCount
 					iconSize: AccountStatusStyle.messageCounter.iconSize
 					pointSize: AccountStatusStyle.messageCounter.pointSize
-					MouseArea{
-						anchors.fill: parent
-						onClicked: window.setView('HistoryView')
-					}
 				}
 			}
 		}//RowLayout

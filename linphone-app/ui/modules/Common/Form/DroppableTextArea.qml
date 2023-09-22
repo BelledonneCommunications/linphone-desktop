@@ -163,8 +163,31 @@ Item {
 								scrollBar.visible = true
 							}
 						}
+						Timer{
+							id: clearDelay
+							property bool cleared: true
+							interval: 20
+							repeat: false
+							onTriggered: if(!cleared && textArea.getText(0, textArea.text.length) == '') {
+										textArea.textFormat= TextEdit.PlainText
+										textArea.clear()
+										textArea.textFormat=TextEdit.RichText
+										cleared = true
+							}
+							
+						}
+						onTextChanged: {
+							if(clearDelay.cleared) {
+								var plainText = getText(0, text.length)
+								if( plainText == '') {
+									clearDelay.cleared = false
+									clearDelay.restart()
+								}
+							}
+						}
 						function handleValidation () {
-							validText(getText(0, text.length))	// Remove rich format to send plain text
+							var plainText = getText(0, text.length)
+							validText(plainText)	// Remove rich format to send plain text
 						}
 						
 						background: Rectangle {
