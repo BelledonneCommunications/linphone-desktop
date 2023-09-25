@@ -32,13 +32,15 @@
 #include <QTimeZone>
 #include <QUrl>
 
+#include "config.h"
+
 #ifdef PDF_ENABLED
 #include <QtPdf/QPdfDocument>
 #include <QtPdfWidgets/QPdfView>
 #include "components/pdf/PdfWidget.hpp"
 #endif
 
-#include "config.h"
+
 #include "Utils.hpp"
 #include "UriTools.hpp"
 #include "app/App.hpp"

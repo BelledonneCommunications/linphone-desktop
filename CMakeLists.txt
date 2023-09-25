@@ -67,10 +67,14 @@ set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 #set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/desktop")	# Fromp 5.3, this install output is no more usable. We have to install all into the same folder as the final folder.
 #set(QTKEYCHAIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/qtkeychain")
 
-#set(LINPHONE_OUTPUT_DIR "${APPLICATION_OUTPUT_DIR}")
+if(NOT LINPHONE_OUTPUT_DIR)# set this variable only if you don't build the module
+	set(LINPHONE_OUTPUT_DIR "${APPLICATION_OUTPUT_DIR}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
+endif()
 #set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/linphone-sdk/mac")
 #set(LINPHONE__DIR "${CMAKE_BINARY_DIR}/linphone-sdk/linphone-sdk/mac")
-set(QTKEYCHAIN_OUTPUT_DIR "${APPLICATION_OUTPUT_DIR}")
+if( NOT QTKEYCHAIN_OUTPUT_DIR) # set this variable only if you don't build the module
+	set(QTKEYCHAIN_OUTPUT_DIR "${APPLICATION_OUTPUT_DIR}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
+endif()
 
 
 
@@ -105,13 +109,13 @@ set(OPTION_LIST "")
 #function doesn't work with strings value
 function(add_option _OPTION_LIST OPTION DESC VALUE)
 	option(${OPTION} ${DESC} ${VALUE})
-	list(APPEND _OPTION_LIST ${${_OPTION_LIST}} "-D${OPTION}=${VALUE}")
+	list(APPEND _OPTION_LIST ${${_OPTION_LIST}} "-D${OPTION}=${${OPTION}}")
 	set(${${_OPTION_LIST}} ${_OPTION_LIST} PARENT_SCOPE)
 endfunction()
 
 function(add_cache _OPTION_LIST OPTION DESC VALUE)
 	set(${OPTION} ${VALUE} CACHE STRING ${DESC})
-	list(APPEND _OPTION_LIST ${${_OPTION_LIST}} "-D${OPTION}=${VALUE}")
+	list(APPEND _OPTION_LIST ${${_OPTION_LIST}} "-D${OPTION}=${${OPTION}}")
 	set(${${_OPTION_LIST}} ${_OPTION_LIST} PARENT_SCOPE)
 endfunction()
 
@@ -119,15 +123,15 @@ add_option(OPTION_LIST ENABLE_APP_LICENSE "Enable the license in packages." ON)
 add_option(OPTION_LIST ENABLE_APP_OAUTH2 "Build with OAuth2 support for remote provisioning." OFF) # Experimental.
 add_option(OPTION_LIST ENABLE_APP_PACKAGING "Enable packaging" OFF)
 add_option(OPTION_LIST ENABLE_APP_PACKAGE_ROOTCA "Embed the rootca file into the package" ON)
-add_option(OPTION_LIST ENABLE_APP_PDF_VIEWER "Enable Pdf viewer" ON)
-add_option(OPTION_LIST ENABLE_APP_WEBVIEW "Enable webviews." OFF) # Webview is not fully supported because of deployments. Used for subscription.
+add_option(OPTION_LIST ENABLE_APP_PDF_VIEWER "Enable Pdf viewer. Only enable if the version of Qt have the module. Cannot be activated because of Qt find_package() make an error on unbound pdf." OFF)
+add_option(OPTION_LIST ENABLE_APP_WEBVIEW "Enable webviews. Webview is not fully supported because of deployments. Used for subscription." OFF)
 add_option(OPTION_LIST ENABLE_BUILD_APP_PLUGINS "Enable the build of plugins" ON)
 add_option(OPTION_LIST ENABLE_BUILD_EXAMPLES "Enable the build of examples" OFF)
 add_option(OPTION_LIST ENABLE_BUILD_VERBOSE "Enable the build generation to be more verbose" OFF)
 add_option(OPTION_LIST ENABLE_CONSOLE_UI "Turn on or off compilation of console interface." OFF)
 add_option(OPTION_LIST ENABLE_DAEMON "Enable the linphone daemon interface." OFF)
 add_option(OPTION_LIST ENABLE_DOC "Enable API documentation generation." OFF)
-add_option(OPTION_LIST ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support." OFF)# No more needed
+add_option(OPTION_LIST ENABLE_FFMPEG "Build mediastreamer2 with ffmpeg video support. No more needed." OFF)
 add_option(OPTION_LIST ENABLE_LDAP "Enable LDAP support." YES)
 add_option(OPTION_LIST ENABLE_NON_FREE_CODECS "Enable the use of non free codecs" YES)
 add_option(OPTION_LIST ENABLE_NON_FREE_FEATURES "Enable the use of non free codecs" ${ENABLE_NON_FREE_CODECS})
@@ -192,8 +196,7 @@ if(NOT APPLE OR MONO_ARCH)
 	add_custom_target(linphone-deps)
 	if(NOT LINPHONE_QT_ONLY)
 			function(add_linphone_sdk)
-					set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
-					#set(CMAKE_BINARY_DIR ${APPLICATION_OUTPUT_DIR})
+					#set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}") #CMAKE_INSTALL_PREFIX not working for add_subdirectory. It will use the global install prefix.
 					set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
 					add_subdirectory("linphone-sdk")
 			endfunction()
@@ -201,18 +204,11 @@ if(NOT APPLE OR MONO_ARCH)
 
 			if(ENABLE_QT_KEYCHAIN)
 					function(add_linphone_keychain)
-							set(CMAKE_INSTALL_PREFIX "${QTKEYCHAIN_OUTPUT_DIR}")
+							#set(CMAKE_INSTALL_PREFIX "${QTKEYCHAIN_OUTPUT_DIR}")
 							add_subdirectory("external/qtkeychain")
 					endfunction()
 					add_linphone_keychain()
 			endif()
-			get_target_property(LINPHONE_BIN_DIR sdk LOCATION)
-	endif()
-
-	if(NOT LINPHONE_OUTPUT_DIR AND NOT LINPHONE_BIN_DIR)
-		set(LINPHONE_OUTPUT_DIR ${APPLICATION_OUTPUT_DIR})
-	else()
-		set(LINPHONE_OUTPUT_DIR ${LINPHONE_BIN_DIR})
 	endif()
 	function(add_linphone_app)
 			set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
