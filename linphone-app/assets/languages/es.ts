@@ -18,7 +18,7 @@
     <message>
         <source>noAccount</source>
         <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>No hay ninguna cuenta configurada</translation>
     </message>
 </context>
 <context>
@@ -127,7 +127,7 @@
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir solo logs de la aplicación</translation>
     </message>
 </context>
 <context>
@@ -262,42 +262,42 @@
     <message>
         <source>noAccountExists</source>
         <extracomment>&quot;Account doesn&apos;t exist&quot; : Warning message when no account has been found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La cuenta no existe</translation>
     </message>
     <message>
         <source>recoveringAccount</source>
         <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Recuperando cuenta</translation>
     </message>
     <message>
         <source>Cannot open validation url for the account creation request token</source>
         <extracomment>&quot;Cannot open validation URL for the account creation request token&quot; : Warning message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>No fue posible abrir la URL de validación para el token de solicitud de creación de cuenta</translation>
     </message>
     <message>
         <source>waitingValidation</source>
         <extracomment>&apos;Waiting for validation at %1&apos; : User message for validation. %1 is an URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Esperando la validación en %1</translation>
     </message>
     <message>
         <source>wrongTokenRequest</source>
         <extracomment>&apos;The answer of account creation request token doesn&apos;t have token and validation_url fields&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La respuesta a la solicitud de token para la creación de cuenta no tiene los campos token ni validation_url</translation>
     </message>
     <message>
         <source>tokenError</source>
         <extracomment>&apos;Cannot get request token for account creation (%1)&apos; : Status messsage. %1 is a code number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>No se puede obtener el token de solicitud para crear la cuenta (%1)</translation>
     </message>
     <message>
         <source>requestingValidationUrl</source>
         <extracomment>&apos;Requesting validation URL&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Solicitando URL de validación</translation>
     </message>
     <message>
         <source>loginStep</source>
         <extracomment>&apos;Connecting&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conectando</translation>
     </message>
 </context>
 <context>
@@ -431,37 +431,37 @@
     </message>
     <message>
         <source>callErrorHangUp</source>
-        <translation type="unfinished"></translation>
+        <translation>La contraparte remota colgó la llamada.</translation>
     </message>
     <message>
         <source>callStatsMediaEncryption</source>
         <extracomment>&apos;Media encryption&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Encripción de los datos multimedia</translation>
     </message>
     <message>
         <source>callStatsCipherAlgo</source>
         <extracomment>&apos;Cipher algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo de cifrado</translation>
     </message>
     <message>
         <source>callStatsKeyAgreementAlgo</source>
         <extracomment>&apos;Key agreement algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo de establecimiento de llaves</translation>
     </message>
     <message>
         <source>callStatsHashAlgo</source>
         <extracomment>&apos;Hash algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo hash</translation>
     </message>
     <message>
         <source>callStatsAuthAlgo</source>
         <extracomment>&apos;Authentication algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo de autenticación</translation>
     </message>
     <message>
         <source>callStatsSasAlgo</source>
         <extracomment>&apos;SAS algorithm&apos; : label in encryption section of call statistics</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Algoritmo SAS</translation>
     </message>
 </context>
 <context>
@@ -488,7 +488,7 @@
     <message>
         <source>mediaEncryptionLabel</source>
         <extracomment>&apos;Media encryption&apos; : title in call statistics for the encryption section</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Encripción de los datos multimedia</translation>
     </message>
 </context>
 <context>
@@ -496,27 +496,27 @@
     <message>
         <source>callListTitle</source>
         <extracomment>&apos;Call list&apos; : Call histories title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lista de llamadas</translation>
     </message>
     <message>
         <source>incomingFilter</source>
         <extracomment>&apos;Incoming&apos; : Filter label for incoming call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Entrante</translation>
     </message>
     <message>
         <source>outgoingFilter</source>
         <extracomment>&apos;Outgoing&apos; : Filter label for outgoing call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Saliente</translation>
     </message>
     <message>
         <source>missedFilter</source>
         <extracomment>&apos;Missed&apos; : Filter label for missed call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Perdida</translation>
     </message>
     <message>
         <source>searchListPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in a list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Buscar en la lista</translation>
     </message>
 </context>
 <context>
@@ -614,7 +614,7 @@ URL del servidor no configurada.</translation>
     </message>
     <message>
         <source>conferencesCopiedICS</source>
-        <translation>La conferencia ICS ha sido copiada</translation>
+        <translation>La invitación ha sido copiada</translation>
     </message>
     <message>
         <source>confirmForward</source>
