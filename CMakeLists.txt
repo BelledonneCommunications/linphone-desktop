@@ -39,9 +39,32 @@ endforeach()
 if(ENABLE_BUILD_VERBOSE)
 	message("User Args : ${USER_ARGS}")
 endif()
+
+project(linphoneqt)
+
+include(GNUInstallDirs)
+include(CheckCXXCompilerFlag)
+include(linphone-app/application_info.cmake)
+
+set(CMAKE_CXX_STANDARD 17)
+if(LINPHONEAPP_INSTALL_PREFIX)
+	set(APPLICATION_OUTPUT_DIR "${LINPHONEAPP_INSTALL_PREFIX}")
+else()
+	set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
+endif()
+
+
+set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
+
 if( APPLE )
 	set(LINPHONESDK_BUILD_TYPE "Default")#Using Mac will remove all SDK targets.
 	set(ENABLE_FAT_BINARY "ON") # Disable XCFrameworks as it is not supported.
+
+	set(CMAKE_INSTALL_BINDIR "${APPLICATION_NAME}.app/Contents/MacOS")
+	set(CMAKE_INSTALL_LIBDIR "${APPLICATION_NAME}.app/Contents/Frameworks")
+	set(CMAKE_INSTALL_INCLUDEDIR "${APPLICATION_NAME}.app/Contents/Resources/include")
+	set(CMAKE_INSTALL_DATAROOTDIR "${APPLICATION_NAME}.app/Contents/Resources/share")
+
 	if( NOT CMAKE_OSX_DEPLOYMENT_TARGET)
 		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
 	endif()
@@ -54,26 +77,16 @@ if( APPLE )
 	set(CMAKE_SYSTEM_PROCESSOR "x86_64")
 elseif(WIN32)
     set(LINPHONESDK_BUILD_TYPE "Default")
+else()
 endif()
 
-project(linphoneqt)
-
-include(GNUInstallDirs)
-include(CheckCXXCompilerFlag)
-
-set(CMAKE_CXX_STANDARD 17)
-set(APPLICATION_OUTPUT_DIR "${CMAKE_BINARY_DIR}/OUTPUT")
-set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
-#set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/desktop")	# Fromp 5.3, this install output is no more usable. We have to install all into the same folder as the final folder.
-#set(QTKEYCHAIN_OUTPUT_DIR "${CMAKE_BINARY_DIR}/qtkeychain")
 
 if(NOT LINPHONE_OUTPUT_DIR)# set this variable only if you don't build the module
-	set(LINPHONE_OUTPUT_DIR "${APPLICATION_OUTPUT_DIR}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
+	set(LINPHONE_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
 endif()
-#set(LINPHONE_OUTPUT_DIR "${CMAKE_BINARY_DIR}/linphone-sdk/linphone-sdk/mac")
-#set(LINPHONE__DIR "${CMAKE_BINARY_DIR}/linphone-sdk/linphone-sdk/mac")
+
 if( NOT QTKEYCHAIN_OUTPUT_DIR) # set this variable only if you don't build the module
-	set(QTKEYCHAIN_OUTPUT_DIR "${APPLICATION_OUTPUT_DIR}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
+	set(QTKEYCHAIN_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
 endif()
 
 
@@ -196,7 +209,6 @@ if(NOT APPLE OR MONO_ARCH)
 	add_custom_target(linphone-deps)
 	if(NOT LINPHONE_QT_ONLY)
 			function(add_linphone_sdk)
-					#set(CMAKE_INSTALL_PREFIX "${LINPHONE_OUTPUT_DIR}") #CMAKE_INSTALL_PREFIX not working for add_subdirectory. It will use the global install prefix.
 					set(CMAKE_POLICY_DEFAULT_CMP0077 NEW) # Prevent project from overriding the options we just set here
 					add_subdirectory("linphone-sdk")
 			endfunction()
@@ -204,8 +216,7 @@ if(NOT APPLE OR MONO_ARCH)
 
 			if(ENABLE_QT_KEYCHAIN)
 					function(add_linphone_keychain)
-							#set(CMAKE_INSTALL_PREFIX "${QTKEYCHAIN_OUTPUT_DIR}")
-							add_subdirectory("external/qtkeychain")
+						add_subdirectory("external/qtkeychain")
 					endfunction()
 					add_linphone_keychain()
 			endif()
@@ -221,6 +232,19 @@ if(NOT APPLE OR MONO_ARCH)
 	if(ENABLE_BUILD_APP_PLUGINS)
 			add_subdirectory("plugins" "plugins-app")
 	endif()
+
+	if(NOT LINPHONE_QT_ONLY)
+# Move root folders to app
+		file(MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}")
+		file(MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}")
+		file(MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}")
+		file(MAKE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}")
+		install(CODE "execute_process(COMMAND rsync -a --force \"${CMAKE_INSTALL_PREFIX}/Frameworks\"  \"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}\" )") #Use rsync to bypass symlinks override issues of frameworks. copy_directory will fail without explicit error...
+		install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory \"${CMAKE_INSTALL_PREFIX}/include/\" \"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/\")")
+		install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory \"${CMAKE_INSTALL_PREFIX}/share/\" \"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/\")")
+		install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory \"${CMAKE_INSTALL_PREFIX}/mkspecs/\" \"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/\")")
+	endif()
+
 else()
     include(cmake/TasksMacos.cmake)
 endif()

@@ -24,7 +24,7 @@ cmake_minimum_required(VERSION 3.22)
 
 
 #Linphone targets
-set(LINPHONE_PACKAGES LibLinphoneCxx Mediastreamer2 Belcard LibLinphone)
+set(LINPHONE_PACKAGES LinphoneCxx Mediastreamer2 Belcard LibLinphone)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -111,8 +111,8 @@ foreach(PACKAGE ${LINPHONE_PACKAGES})
 	endif()
 endforeach()
 
-set(PLUGIN_TARGETS ${LibLinphoneCxx_TARGET})
-set(APP_TARGETS ${LibLinphoneCxx_TARGET}
+set(PLUGIN_TARGETS ${LinphoneCxx_TARGET})
+set(APP_TARGETS ${LinphoneCxx_TARGET}
 				${BCToolbox_TARGET}#Logger/App
 				${Mediastreamer2_TARGET}#MediastreamerUtils
 				${Belcard_TARGET}#VCard Model
@@ -708,7 +708,7 @@ configure_file("${CMAKE_CURRENT_SOURCE_DIR}/src/config.h.cmake" "${CMAKE_CURRENT
 include_directories(src/)
 include_directories("${LINPHONE_OUTPUT_DIR}/include/OpenGL")
 include_directories("${LINPHONE_OUTPUT_DIR}/include/")
-include_directories("${APPLICATION_OUTPUT_DIR}/include/")
+include_directories("${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/")
 include_directories("${QTKEYCHAIN_OUTPUT_DIR}/include/")
 
 if (CMAKE_INSTALL_RPATH)
@@ -741,7 +741,7 @@ if (WIN32)
 	endif()
 elseif (APPLE)
 	add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
-	install(TARGETS linphone-qt RUNTIME DESTINATION "${APPLICATION_NAME}.app/Contents/MacOS") # using ${TARGET_NAME} lead to cmake error on target name. Use directly linphone-qt.
+	install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}") # using ${TARGET_NAME} lead to cmake error on target name. Use directly linphone-qt.
 else ()
 	add_executable(${TARGET_NAME} $<TARGET_OBJECTS:${APP_LIBRARY}> ${MAIN_FILE} ${QRC_BIG_RESOURCES})
 	install(TARGETS linphone-qt RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}")
@@ -817,13 +817,13 @@ set(TOOLS_DIR "${CMAKE_BINARY_DIR}/programs")
 set(LINPHONE_BUILDER_SIGNING_IDENTITY ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 
 add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
-add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/include/" "${CMAKE_INSTALL_PREFIX}/include/")
+add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_CURRENT_SOURCE_DIR}/include/" "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/")
 add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
 add_custom_command(TARGET ${APP_PLUGIN} POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_LINKER_FILE:${APP_PLUGIN}> "${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_LIBDIR}/")
 #add_custom_command(TARGET ${TARGET_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E copy "${CMAKE_CURRENT_SOURCE_DIR}/include/LinphoneApp/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/")
 
 #configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/*" "${CMAKE_INSTALL_PREFIX}/include/LinphoneApp/" COPYONLY)
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION ".")
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")
 
 
 add_subdirectory(build)

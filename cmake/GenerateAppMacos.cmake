@@ -23,22 +23,52 @@ include("${LINPHONESDK_DIR}/cmake/LinphoneSdkUtils.cmake")
 
 
 linphone_sdk_convert_comma_separated_list_to_cmake_list("${LINPHONEAPP_MACOS_ARCHS}" _MACOS_ARCHS)
-
-
-# Create the desktop directory that will contain the merged content of all architectures
-execute_process(
-	COMMAND "${CMAKE_COMMAND}" "-E" "remove_directory" "${CMAKE_INSTALL_PREFIX}"
-	COMMAND "${CMAKE_COMMAND}" "-E" "make_directory" "${CMAKE_INSTALL_PREFIX}"
-)
-
-# Copy and merge content of all architectures in the desktop directory
 list(GET _MACOS_ARCHS 0 _FIRST_ARCH)
-execute_process(# Do not use copy_directory because of symlinks
-	COMMAND "cp" "-R"  "${LINPHONEAPP_NAME}-${_FIRST_ARCH}/OUTPUT/" "${CMAKE_INSTALL_PREFIX}"
-	WORKING_DIRECTORY "${LINPHONEAPP_BUILD_DIR}"
+
+set(MAIN_INSTALL_DIR ${CMAKE_INSTALL_PREFIX}/${LINPHONEAPP_NAME})	#OUTPUT/linphone-app/macos
+
+################################
+# Create the desktop directory that will contain the merged content of all architectures
+################################
+
+execute_process(
+	COMMAND "${CMAKE_COMMAND}" "-E" "remove_directory" "${MAIN_INSTALL_DIR}"
+	COMMAND "${CMAKE_COMMAND}" "-E" "make_directory" "${MAIN_INSTALL_DIR}"
 )
 
-#message(FATAL_ERROR "${LINPHONEAPP_NAME}/${LINPHONEAPP_PLATFORM}-${_FIRST_ARCH}/ == ${CMAKE_INSTALL_PREFIX} == ${LINPHONEAPP_BUILD_DIR}")
+################################
+# Copy outside folders that should be in .app package
+################################
+
+function( copy_outside_folders _ARCH)
+# Prepare .app
+	execute_process(COMMAND rsync -a --force "${MAIN_INSTALL_DIR}-${_ARCH}/Frameworks/" "${MAIN_INSTALL_DIR}-${_ARCH}/${CMAKE_INSTALL_LIBDIR}/")
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${MAIN_INSTALL_DIR}-${_ARCH}/include/" "${MAIN_INSTALL_DIR}-${_ARCH}/${CMAKE_INSTALL_INCLUDEDIR}/")
+# move share
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${MAIN_INSTALL_DIR}-${_ARCH}/share/" "${MAIN_INSTALL_DIR}-${_ARCH}/${CMAKE_INSTALL_DATAROOTDIR}/")
+# move mkspecs
+	execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${MAIN_INSTALL_DIR}-${_ARCH}/mkspecs/" "${MAIN_INSTALL_DIR}-${_ARCH}/${CMAKE_INSTALL_DATAROOTDIR}/")
+endfunction()
+
+set(_COPIED FALSE)
+foreach(_ARCH IN LISTS ${_MACOS_ARCHS})
+	set(_COPIED TRUE)
+	message(STATUS "Copying outside folders for ${_ARCH}")
+	copy_outside_folders(${_ARCH})
+endforeach()
+
+if(NOT _COPIED)	# this is a bug on cmake as there is one element but foreach doesn't do loop.
+	message(STATUS "Copying outside folders for ${_FIRST_ARCH}")
+	copy_outside_folders(${_FIRST_ARCH})
+endif()
+
+################################
+# Copy and merge content of all architectures in the desktop directory
+################################
+# Do not use copy_directory because of symlinks
+message(STATUS "Copying ${_FIRST_ARCH} into main")
+execute_process(COMMAND rsync -a --force "${MAIN_INSTALL_DIR}-${_FIRST_ARCH}/" "${MAIN_INSTALL_DIR}" WORKING_DIRECTORY "${LINPHONEAPP_BUILD_DIR}")
+
 #if(NOT ENABLE_FAT_BINARY)
 #	execute_process(
 #		COMMAND "${CMAKE_COMMAND}" "-E" "remove_directory" "${CMAKE_INSTALL_PREFIX}/Frameworks"
@@ -46,9 +76,12 @@ execute_process(# Do not use copy_directory because of symlinks
 #	)
 #endif()
 
-#####		MIX
+################################
+#####		MIX (TODO)
+################################
+message(STATUS "Mixing")
 # Get all files in output
-file(GLOB_RECURSE _BINARIES RELATIVE "${LINPHONEAPP_BUILD_DIR}/${LINPHONEAPP_NAME}-${_FIRST_ARCH}/OUTPUT/" "${LINPHONEAPP_BUILD_DIR}/${LINPHONEAPP_NAME}-${_FIRST_ARCH}/OUTPUT/*")
+file(GLOB_RECURSE _BINARIES RELATIVE "${MAIN_INSTALL_DIR}-${_FIRST_ARCH}/" "${MAIN_INSTALL_DIR}-${_FIRST_ARCH}/*")
 
 if(NOT ENABLE_FAT_BINARY)
 	# Remove all .framework inputs from the result
@@ -56,10 +89,10 @@ if(NOT ENABLE_FAT_BINARY)
 endif()
 
 foreach(_FILE IN LISTS ${_BINARIES})
-	get_filename_component(ABSOLUTE_FILE "${LINPHONEAPP_NAME}-${_FIRST_ARCH}/OUTPUT/${_FILE}" ABSOLUTE)
+	get_filename_component(ABSOLUTE_FILE "${MAIN_INSTALL_DIR}-${_FIRST_ARCH}/${_FILE}" ABSOLUTE)
 	if(NOT IS_SYMLINK ${ABSOLUTE_FILE})
 		# Check if lipo can detect an architecture
-		execute_process(COMMAND lipo -archs "${LINPHONEAPP_NAME}-${_FIRST_ARCH}/OUTPUT/${_FILE}"
+		execute_process(COMMAND lipo -archs "${MAIN_INSTALL_DIR}-${_FIRST_ARCH}/${_FILE}"
 			OUTPUT_VARIABLE FILE_ARCHITECTURE
 			OUTPUT_STRIP_TRAILING_WHITESPACE
 			WORKING_DIRECTORY "${LINPHONEAPP_BUILD_DIR}"
@@ -69,12 +102,12 @@ foreach(_FILE IN LISTS ${_BINARIES})
 			# There is at least one architecture : Use this candidate to mix with another architecture
 			set(_ALL_ARCH_FILES)
 			foreach(_ARCH IN LISTS ${_ARCHS})
-				list(APPEND _ALL_ARCH_FILES "${LINPHONEAPP_NAME}-${_ARCH}/OUTPUT/${_FILE}")
+				list(APPEND _ALL_ARCH_FILES "${MAIN_INSTALL_DIR}-${_ARCH}/${_FILE}")
 			endforeach()
 			string(REPLACE ";" " " _ARCH_STRING "${_ARCHS}")
 			message(STATUS "Mixing ${_FILE} for archs [${_ARCH_STRING}]")
 			execute_process(
-				COMMAND "lipo" "-create" "-output" "${CMAKE_INSTALL_PREFIX}/${_FILE}" ${_ALL_ARCH_FILES}
+				COMMAND "lipo" "-create" "-output" "${MAIN_INSTALL_DIR}/${_FILE}" ${_ALL_ARCH_FILES}
 				WORKING_DIRECTORY "${LINPHONEAPP_BUILD_DIR}"
 			)
 		endif()
@@ -83,7 +116,7 @@ endforeach()
 #[[
 if(NOT ENABLE_FAT_BINARY)
 	# Generate XCFrameworks
-	file(GLOB _FRAMEWORKS "${LINPHONEAPP_BUILD_DIR}/${LINPHONEAPP_NAME}-${_FIRST_ARCH}/OUTPUT/Frameworks/*.framework")
+	file(GLOB _FRAMEWORKS "${LINPHONEAPP_BUILD_DIR}/${MAIN_INSTALL_DIR}-${_FIRST_ARCH}/Frameworks/*.framework")
 	foreach(_FRAMEWORK IN LISTS _FRAMEWORKS)
 		get_filename_component(_FRAMEWORK_NAME "${_FRAMEWORK}" NAME_WE)
 		set(_ALL_ARCH_FRAMEWORKS)

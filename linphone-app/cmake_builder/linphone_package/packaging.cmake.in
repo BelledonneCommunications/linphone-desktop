@@ -84,5 +84,8 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
       message(FATAL_ERROR "Failed to sign the package! ${SIGNING_RESULT} ${RESULT_VARIABLE}")
     endif()
   endif ()
-
+  execute_process( COMMAND mkdir -p "@CMAKE_INSTALL_PREFIX@/Packages/" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
+  execute_process( COMMAND cp -rf @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@ "@CMAKE_INSTALL_PREFIX@/Packages/" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
 endif ()
+
+

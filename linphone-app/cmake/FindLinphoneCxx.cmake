@@ -20,8 +20,8 @@
 #
 ############################################################################
 #
-#  LibLinphoneCxx_FOUND - The liblinphone library has been found
-#  LibLinphoneCxx_TARGET - The name of the CMake target for the liblinphone library
+#  LinphoneCxx_FOUND - The liblinphone library has been found
+#  LinphoneCxx_TARGET - The name of the CMake target for the liblinphone library
 
 if(NOT TARGET liblinphone++)
     set(EXPORT_PATH ${LINPHONE_OUTPUT_DIR})
@@ -29,17 +29,17 @@ if(NOT TARGET liblinphone++)
     include(${EXPORT_PATH}/${CMAKE_INSTALL_DATADIR}/LinphoneCxx/cmake/LinphoneCxxTargets.cmake)
 endif()
 
-set(_LibLinphoneCxx_REQUIRED_VARS LibLinphoneCxx_TARGET)
-set(_LibLinphoneCxx_CACHE_VARS ${_LibLinphoneCxx_REQUIRED_VARS})
+set(_LinphoneCxx_REQUIRED_VARS LinphoneCxx_TARGET)
+set(_LinphoneCxx_CACHE_VARS ${_LinphoneCxx_REQUIRED_VARS})
 
 if(TARGET liblinphone++)
-	set(LibLinphoneCxx_TARGET liblinphone++)
+	set(LinphoneCxx_TARGET liblinphone++)
 endif()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(LibLinphoneCxx
-	REQUIRED_VARS ${_LibLinphoneCxx_REQUIRED_VARS}
+find_package_handle_standard_args(LinphoneCxx
+	REQUIRED_VARS ${_LinphoneCxx_REQUIRED_VARS}
 	HANDLE_COMPONENTS
 )
-mark_as_advanced(${_LibLinphoneCxx_CACHE_VARS})
+mark_as_advanced(${_LinphoneCxx_CACHE_VARS})
 

@@ -205,10 +205,10 @@ elseif (APPLE)
 	set(APP_QT_CONF_PATH "[Paths]\nPlugins = PlugIns\nImports = Resources/qml\nQml2Imports = Resources/qml")
 
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/../../assets/qt.conf.in" "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" @ONLY)
-	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/")
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../qt.conf" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/..")
 	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../Info.plist" DESTINATION "${APPLICATION_NAME}.app/Contents")
-	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.icns" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources")
-	install(CODE "execute_process(COMMAND rsync -a \"${LINPHONE_OUTPUT_DIR}/Frameworks\"  \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/\" )") #Use rsync to bypass symlinks override issues of frameworks
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.icns" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/..")
+	#install(CODE "execute_process(COMMAND rsync -a \"${LINPHONE_OUTPUT_DIR}/Frameworks\"  \"\${CMAKE_INSTALL_PREFIX}\" )") #Use rsync to bypass symlinks override issues of frameworks
 	file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.dylib")
 	if( ENABLE_OPENH264 )# Remove openH264 lib from the installation. this codec will be download by user
 		foreach(item ${SHARED_LIBRARIES})
@@ -218,14 +218,14 @@ elseif (APPLE)
 			endif()
 		endforeach(item)
 	endif()
-	install(FILES ${SHARED_LIBRARIES} DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
-	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/images" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_DATAROOTDIR}" USE_SOURCE_PERMISSIONS OPTIONAL)
-	if(ENABLE_APP_PACKAGE_ROOTCA)
-		install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/linphone/rootca.pem" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}")
-	endif()
-	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphonerc-factory" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}")
+	install(FILES ${SHARED_LIBRARIES} DESTINATION "${CMAKE_INSTALL_LIBDIR}")
+	install(DIRECTORY "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/images" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}" USE_SOURCE_PERMISSIONS OPTIONAL)
+	#if(ENABLE_APP_PACKAGE_ROOTCA)
+	#	install(FILES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_DATAROOTDIR}/linphone/rootca.pem" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}")
+	#endif()
+	install(FILES "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/linphonerc-factory" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}")
 	
-	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/assistant" DESTINATION "${APPLICATION_NAME}.app/Contents/Resources/${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}" USE_SOURCE_PERMISSIONS)
+	install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/assistant" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/${EXECUTABLE_NAME}" USE_SOURCE_PERMISSIONS)
 	file(GLOB SHARED_LIBRARIES "${CMAKE_CURRENT_BINARY_DIR}/../../${APPLICATION_NAME}.app/Contents/Frameworks/lib*.dylib")
 	
 	foreach (LIBRARY ${SHARED_LIBRARIES})
@@ -238,18 +238,18 @@ elseif (APPLE)
 		#install(FILES ${SHARED_LIBRARIES} DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks")
 	endif()
 	install(TARGETS ${APP_PLUGIN} 
-		ARCHIVE DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks"
-		LIBRARY DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks" 
-		RUNTIME DESTINATION "${APPLICATION_NAME}.app/Contents/Frameworks"
+		ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+		RUNTIME DESTINATION "${CMAKE_INSTALL_BINDIR}"
 	)
-	install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
-	install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents/MacOS/${EXECUTABLE_NAME}\")")
+	install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../Frameworks/\" \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}\")")
+	install(CODE "execute_process(COMMAND install_name_tool -add_rpath \"@executable_path/../lib/\" \"\${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_BINDIR}/${EXECUTABLE_NAME}\")")
 	
-	if (LINPHONE_BUILDER_SIGNING_IDENTITY)
-		set(SIGNING_SEARCH_DIR "${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Content")
-		install(CODE "execute_process(COMMAND bash \"${CMAKE_CURRENT_SOURCE_DIR}/../../tools/sign_package.sh\" codesign \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app/Contents\" )")
-		install(CODE "execute_process(COMMAND \"codesign\" \"--entitlements\" \"${CMAKE_CURRENT_BINARY_DIR}/../../entitlements.xml\" \"--force\" \"--deep\" \"--options\" \"runtime,library\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app\")")
-	endif ()
+	#if (LINPHONE_BUILDER_SIGNING_IDENTITY)
+		#set(SIGNING_SEARCH_DIR "${CMAKE_INSTALL_PREFIX}")
+		#install(CODE "execute_process(COMMAND bash \"${CMAKE_CURRENT_SOURCE_DIR}/../../tools/sign_package.sh\" codesign \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"\${CMAKE_INSTALL_PREFIX}\" )")
+		#install(CODE "execute_process(COMMAND \"codesign\" \"--entitlements\" \"${CMAKE_CURRENT_BINARY_DIR}/../../entitlements.xml\" \"--force\" \"--deep\" \"--timestamp\" \"--options\" \"runtime,library\" \"--verbose\" \"-s\" \"${LINPHONE_BUILDER_SIGNING_IDENTITY}\" \"${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app\")")
+	#endif ()
 #  install(DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/${APPLICATION_NAME}.app" DESTINATION "." USE_SOURCE_PERMISSIONS)
 else()# Not Windows and Apple
 #[[	file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.so")
@@ -368,6 +368,17 @@ if (MSVC)
 endif ()
 
 
+install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory \"${CMAKE_INSTALL_PREFIX}/include/\" \"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_INCLUDEDIR}/\")")
+#install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory \"${CMAKE_INSTALL_PREFIX}/include/\")")
+# move share
+install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory \"${CMAKE_INSTALL_PREFIX}/share/\" \"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/\")")
+#install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory \"${CMAKE_INSTALL_PREFIX}/share/\")")
+# move mkspecs
+install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory \"${CMAKE_INSTALL_PREFIX}/mkspecs/\" \"${CMAKE_INSTALL_PREFIX}/${CMAKE_INSTALL_DATAROOTDIR}/\")")
+#install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory \"${CMAKE_INSTALL_PREFIX}/mkspecs/\")")
+# remove other folders
+#install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory \"${CMAKE_INSTALL_PREFIX}/cmake/\")")
+#install(CODE "execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory \"${CMAKE_INSTALL_PREFIX}/lib/\")")
 
 # ==============================================================================
 #                               CPack.
@@ -391,10 +402,11 @@ if(${ENABLE_APP_PACKAGING})
 	else()
 		unset(CPACK_RESOURCE_FILE_LICENSE)
 	endif()
-	set(CPACK_RESOURCE_FILE_LICENSE_PROVIDED ENABLE_APP_LICENSE)
-
-	set(CPACK_PACKAGE_INSTALL_DIRECTORY "${APPLICATION_NAME}")
-	set(CPACK_PACKAGE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/Packages")
+	set(CPACK_RESOURCE_FILE_LICENSE_PROVIDED ${ENABLE_APP_LICENSE})
+	#set(CPACK_PACKAGING_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
+	#set(CPACK_PACKAGE_INSTALL_DIRECTORY "${APPLICATION_OUTPUT_DIR}")
+	#set(CPACK_PACKAGE_DIRECTORY "${CMAKE_INSTALL_PREFIX}/Packages")
+	#set(CPACK_PACKAGE_DIRECTORY "${CMAKE_BINARY_DIR}/Packages/${APPLICATION_NAME}.app/Contents")
 	set(CPACK_PACKAGE_ICON "${CMAKE_CURRENT_SOURCE_DIR}/../../assets/icon.ico")
 	set(PERFORM_SIGNING 0)
 	
@@ -404,8 +416,13 @@ if(${ENABLE_APP_PACKAGING})
 		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone_dmg.scpt.in" "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt" @ONLY)
 		set(CPACK_DMG_DS_STORE_SETUP_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/linphone_dmg.scpt")
 		set(CPACK_BINARY_DRAGNDROP ON)
-		set(CPACK_BUNDLE_APPLE_CERT_APP LINPHONE_BUILDER_SIGNING_IDENTITY)
+		set(CPACK_BUNDLE_APPLE_CERT_APP ${LINPHONE_BUILDER_SIGNING_IDENTITY})
 		set(PACKAGE_EXT "dmg")
+
+		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cleanCpack.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cleanCpack.cmake" @ONLY)
+		set(CPACK_PRE_BUILD_SCRIPTS  "${CMAKE_CURRENT_BINARY_DIR}/cleanCPack.cmake")
+
+
 		message(STATUS "Set DragNDrop CPack generator in OUTPUT/Packages")
 	elseif(NOT(WIN32))
 		set(DO_APPIMAGE YES)
@@ -548,6 +565,6 @@ function(deployqt_hack target qml_dir)
 		if (NOT DEPLOYQT_PROGRAM)
 			message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
 		endif()
-		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} \${CMAKE_INSTALL_PREFIX}/${APPLICATION_NAME}.app -qmldir=${qml_dir} -no-strip )")
+		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${qml_dir} -no-strip )")
 	endif()
 endfunction()
