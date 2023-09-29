@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 512 512"
+   fill="none"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="linphone_logo.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs12" />
+  <sodipodi:namedview
+     id="namedview10"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     showgrid="false"
+     inkscape:zoom="1.6269531"
+     inkscape:cx="256"
+     inkscape:cy="255.69268"
+     inkscape:window-width="1920"
+     inkscape:window-height="1163"
+     inkscape:window-x="1920"
+     inkscape:window-y="500"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <rect
+     width="512"
+     height="512"
+     rx="50"
+     fill="#FF5E00"
+     id="rect2" />
+  <path
+     d="M136.974 166.579C136.974 166.579 107.974 206.579 112.474 224.58C112.319 223.882 131.474 203.579 131.474 203.579C132.474 209.079 178.974 222.58 178.974 222.58C185.148 226.515 187.276 229.341 188.474 235.58V259.58C204.537 269.574 219.292 272.89 254.974 275.08C292.887 273.464 308.546 270.106 322.474 259.58C322.474 259.58 320.974 241.079 322.474 234.579C323.974 228.079 327.303 224.362 332.474 222.58C351.767 218.166 361.29 213.337 379.474 204.079L399.474 224.58C396.435 202.04 391.212 189.564 375.474 167.58C362.98 153.302 354.969 145.814 338.474 133.58C320.542 122.984 310.592 118.939 292.974 114.08C262.394 107.818 245.536 107.837 215.974 114.08C197.861 119.541 188.833 123.661 175.474 133.58C175.474 133.58 124.974 104.579 118.474 109.579C111.974 114.579 136.974 166.579 136.974 166.579Z"
+     fill="white"
+     id="path4" />
+  <path
+     d="M171.5 321.5C148.272 311.332 135.686 303.651 114 286.5C119.214 308.087 124.076 319.453 136 338.5C148.706 355.695 156.513 363.368 171.5 374C187.708 385.124 197.428 389.987 216 396C232.684 400.01 241.987 401.288 258.5 401.5C275.337 400.657 284.074 398.822 298.5 395.5C314.412 389.159 322.518 385.161 336 377.5C358.355 390.12 386 404.5 390 398.5C394 392.5 372 344 372 344C386.673 322.985 392.675 308.833 398.5 285C378.414 300.757 365.365 309.951 340.5 321.5C309.742 333.632 291.828 337.528 258.5 338.5C219.673 337.823 200.725 333.981 171.5 321.5Z"
+     fill="white"
+     id="path6" />
+</svg>

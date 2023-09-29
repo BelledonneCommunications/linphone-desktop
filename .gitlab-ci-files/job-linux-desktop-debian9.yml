@@ -1,0 +1,179 @@
+
+
+job-debian9-ninja-gcc:
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
+  except:
+    refs:
+      - schedules
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+
+job-debian9-ninja-gcc-smallsdk:
+  except:
+    refs:
+      - schedules
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO -DENABLE_PQCRYPTO=OFF
+  extends: job-debian9-ninja-gcc
+
+
+#################################################
+#               Nightly
+#################################################
+
+job-debian9-makefile-gcc:
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+
+job-debian9-ninja-gcc-novideo:
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
+  extends: job-debian9-ninja-gcc
+
+job-debian9-makefile-gcc:
+  tags: [ "docker-debian9" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $DEPLOY_PLUGINS
+  variables:
+    CMAKE_OPTIONS: -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+    APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
+  script:
+    - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - gpg --import file.key
+    - rm -f file.key
+    - echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - base64 -w 0 file.key | base64 -d | gpg --import --no-tty --batch --yes
+    - rm -f file.key
+    - cmake --version
+    - export CC=$CC
+    - export CXX=$CXX
+    - mkdir -p build/OUTPUT
+    - echo $CI_BUILD_TYPE
+    - echo $CMAKE_GENERATOR
+    - echo $DEFAULT_LINUX_CMAKE_OPTIONS
+    - echo $CMAKE_SANITIZER_OPTIONS
+    - cd build
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
+    - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
+  extends: .job-linux-desktop
+
+#################################################
+# Package - Nightly
+#################################################
+
+job-debian9-makefile-gcc-package:
+  stage: package
+  tags: [ "docker-test-liblinphone" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
+  dependencies: []
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $PACKAGE_LINUX
+       - $DEPLOY_LINUX
+  variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    CMAKE_GENERATOR: Unix Makefiles
+    CC: gcc
+    CXX: g++
+    APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
+    RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$LINUX_PLATFORM/$APP_FOLDER
+  extends: .job-linux-desktop
+  script:
+    - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - gpg --import file.key
+    - rm -f file.key
+    - echo "$GPG_SIGNING_KEY" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
+    - base64 -w 0 file.key | base64 -d | gpg --import --no-tty --batch --yes
+    - rm -f file.key
+    - cmake --version
+    - export CC=$CC
+    - export CXX=$CXX
+    - mkdir -p build/OUTPUT
+    - echo $CI_BUILD_TYPE
+    - echo $CMAKE_GENERATOR
+    - echo $DEFAULT_LINUX_CMAKE_OPTIONS
+    - echo $CMAKE_SANITIZER_OPTIONS
+    - cd build
+    - if [[ $MAKE_RELEASE_FILE_URL == "" ]]; then export RELEASE_FILE=""; fi
+    - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS $RELEASE_FILE
+    - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
+  artifacts:
+    paths:
+      - build/OUTPUT/*
+    expire_in: 1 week
+
+#################################################
+# Deploy - Nightly
+#################################################
+
+job-debian9-makefile-gcc-deploy:
+  stage: deploy
+  tags: [ "deploy" ]
+  needs:
+    - job-debian9-makefile-gcc-package
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $DEPLOY_LINUX
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
+    - |-
+      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+        rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+      fi
+
+
+job-debian9-makefile-gcc-plugins-deploy:
+  stage: deploy
+  tags: [ "deploy" ]
+  needs:
+    - job-debian9-makefile-gcc
+  only:
+     variables:
+       - $DEPLOY_PLUGINS
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.so $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER/plugins/
+
+#################################################
+# Debug
+#################################################
+
+
+job-debian9-debug:
+  stage: deploy
+  tags: [ "docker-test-debian9-liblinphone-nuc" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-debian9-appimage:$DEBIAN_9_QT_IMAGE_VERSION
+  dependencies: []
+  only:
+    variables:
+      - $DEBUG_DEBIAN9
+  script:
+    - sleep 10m

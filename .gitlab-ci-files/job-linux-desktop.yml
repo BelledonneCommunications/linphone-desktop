@@ -1,0 +1,26 @@
+#################################################
+# BUILD
+#################################################
+
+.build_all_linux_script: &build_all_linux_script |
+  cmake --version
+  export CC=$CC
+  export CXX=$CXX
+  mkdir -p build/OUTPUT
+  echo $CI_BUILD_TYPE
+  echo $CMAKE_GENERATOR
+  echo $DEFAULT_LINUX_CMAKE_OPTIONS
+  echo $CMAKE_SANITIZER_OPTIONS
+  cd build
+  cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
+  cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
+  
+.job-linux-desktop:
+  stage: build
+  extends: .linux-prepare
+  script:
+    - *build_all_linux_script
+  artifacts:
+    paths:
+      - build/OUTPUT
+    expire_in: 1 week

@@ -1,0 +1,193 @@
+#################################################
+# BUILD
+#################################################
+
+.windows-vs2019:
+  extends: .job-prepare
+  stage: build
+  tags: [ "windows-powershell" ]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_WINDOWS == null
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_WINDOWS == null
+  variables:
+    CMAKE_OPTIONS: -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    LINPHONESDK_PLATFORM: Desktop
+    OUTPUT_ZIP_FOLDER: win64
+    MINGW_TYPE: mingw64
+    CMAKE_GENERATOR: "Visual Studio 16 2019"
+    CMAKE_ARCHITECTURE : -A x64
+  script:
+    - Set-Variable -Name "PATH_TEMP" -Value ($(Get-ChildItem -Path Env:\PATH).value)
+    - echo $env:Path
+    #Remove MinGW of MSYS from PATH and add MINGW_TYPE for MSYS2
+    # We double the "\" to escape paths as -replace uses regular expressions
+    - $PATH_TEMP = $PATH_TEMP -replace "C:\\MinGW\\bin;" -replace "C:\\Strawberry\\c\\bin;" -replace "C:\\Program Files\\NASM"
+    - echo $PATH_TEMP
+    - $env:Path = ($PATH_TEMP + ";C:\msys64\" + $MINGW_TYPE + "\bin;" + $env:SIGNTOOL_ROOT + "\x64;C:\msys64;C:\msys64\usr\bin;")
+    - If ($MINGW_TYPE -eq "mingw64") {Import-BatchEnvironment "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Auxiliary\Build\vcvars64.bat"} Else {Import-BatchEnvironment "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\VsDevCmd.bat"}
+    - If ($MINGW_TYPE -eq "mingw64") {$env:Path = ($env:Path + ";C:\Qt\" + $env:QT_WIN_VER + "\msvc2019_64\bin")} Else {$env:Path = ($env:Path + ";C:\Qt\" + $env:QT_WIN_VER + "\msvc2019\bin")}
+    - if ($MAKE_RELEASE_FILE_URL) { } else { $RELEASE_FILE = "" }
+    - echo $env:Path
+    - If ( Test-Path -Path "build-desktop" ) {Remove-Item -recurse -force -path "build-desktop" }
+    - mkdir build-desktop
+    - cd build-desktop
+    #we launch the msvc-cl wrapper located in python scripts folder
+    #this wrapper relays only needed calls to the real compiler
+    #cache stats display
+    - C:\PROGRA~1\Python37\Scripts\cl -s
+    - Write-Output $CMAKE_ARCHITECTURE
+    - Write-Output $SCHEDULE_CMAKE_OPTIONS
+    - Write-Output $MAKEFILE_JOBS
+    - Write-Output $CMAKE_C_COMPILER
+    - Write-Output $CMAKE_CXX_COMPILER
+    - Write-Output $CMAKE_RC_COMPILER
+    - Write-Output $DEFAULT_CMAKE_OPTIONS
+    - Write-Output $CMAKE_OPTIONS
+    - Write-Output $CMAKE_ARCHITECTURE
+    - Write-Output $SCHEDULE_CMAKE_OPTIONS
+    - Write-Output $CMAKE_GENERATOR
+    - Write-Output $LINPHONESDK_PLATFORM
+    - Write-Output $MINGW_TYPE
+    - Write-Output $CLI_OUTPUT_INFO_NINJA
+    - Write-Output $Write-Output
+    - Write-Output $NINJA_BUILD_PARALLEL_LEVEL
+    - Write-Output $PARALLEL_OPTIONS
+    - Write-Output $NINJA_OPTIMIZATION
+    - Write-Output $NINJA_EXPLICIT_COMPILER_SET
+    - Write-Output $DISPLAY_NINJA_LOG
+    - Write-Output $SEARCH_NINJA_ERROR
+    - Write-Output $DISPLAY_SEARCH_STATUS
+    - Write-Output $SET_EXIT_CODE_BASED_ON_SEARCH_STATUS
+    - Write-Output $SHOW_SEARCH_STATUS_SCRIPT
+    - Write-Output $LAUNCH_SEARCH_STATUS_SCRIPT
+    #We are forced to use Invoke-Expression to explain to powershell that we don't want it to touch to spaces in arguments
+    #If we don't use it, '-A Win32' will be interpreted as "-A ' Win32'" thus making the build fail
+    - echo $LastExitCode
+    - Invoke-Expression "& cmake .. -G '$CMAKE_GENERATOR' -DLINPHONESDK_PLATFORM=$LINPHONESDK_PLATFORM -DENABLE_CSHARP_WRAPPER=YES -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $NINJA_BUILD_PARALLEL_LEVEL $NINJA_EXPLICIT_COMPILER_SET $DEFAULT_CMAKE_OPTIONS $DEFAULT_WINDOWS_CMAKE_OPTIONS $CMAKE_OPTIONS $CMAKE_ARCHITECTURE $SCHEDULE_CMAKE_OPTIONS $RELEASE_FILE"
+    - echo $LastExitCode
+    - 'if (-not ($LastExitCode -eq 0)) {throw "Error: Configure failed"}'
+    - $CLI_OUTPUT_INFO_NINJA
+    #Warning : Ninja doesn't return an error code on Linker error.
+    #Store outputs in a file log
+    #Only in powershell 7 (Gitlab 14+)
+    # - cmake --build . --target install --config RelWithDebInfo --parallel $MAKEFILE_JOBS | Select-String -NotMatch -Raw -Pattern "inclusion du fichier"
+    - Write-Output $PARALLEL_OPTIONS
+    - Write-Output $NINJA_OPTIMIZATION
+    # /!\ By design, we must keep $NINJA_OPTIMIZATION as the last option of the line, because it contains an output redirect
+    - echo $LastExitCode
+    - Invoke-Expression "cmake --build . --target $BUILD_TARGET --config $CI_BUILD_TYPE $PARALLEL_OPTIONS  $NINJA_OPTIMIZATION"
+    - if ($EXITS_ON_ERROR_MSVC) { Invoke-Expression "$EXITS_ON_ERROR_MSVC" } else { Write-Output "EXITS_ON_ERROR_MSVC is null" }
+    - if ($DISPLAY_NINJA_LOG) { Invoke-Expression "$DISPLAY_NINJA_LOG" } else { Write-Output "DISPLAY_NINJA_LOG is null" }
+    - if ($SEARCH_NINJA_ERROR) { Invoke-Expression "$SEARCH_NINJA_ERROR" } else { Write-Output "SEARCH_NINJA_ERROR is null" }
+    - if ($DISPLAY_SEARCH_STATUS) { Invoke-Expression "$DISPLAY_SEARCH_STATUS" } else { Write-Output "DISPLAY_SEARCH_STATUS is null" }
+    - if ($SET_EXIT_CODE_BASED_ON_SEARCH_STATUS) { Invoke-Expression "$SET_EXIT_CODE_BASED_ON_SEARCH_STATUS" } else { Write-Output "SET_EXIT_CODE_BASED_ON_SEARCH_STATUS is null" }
+    - if ($SHOW_SEARCH_STATUS_SCRIPT) { Invoke-Expression "$SHOW_SEARCH_STATUS_SCRIPT" } else { Write-Output "SHOW_SEARCH_STATUS_SCRIPT is null" }
+    - if ($LAUNCH_SEARCH_STATUS_SCRIPT) { Invoke-Expression "$LAUNCH_SEARCH_STATUS_SCRIPT" -ErrorAction stop } else { Write-Output "LAUNCH_SEARCH_STATUS_SCRIPT is null" }
+    - C:\PROGRA~1\Python37\Scripts\cl -s
+    - cd linphone-sdk
+    - mkdir $OUTPUT_ZIP_FOLDER
+    - Copy-Item -Path "*.zip" -Destination "$CI_PROJECT_DIR/build-desktop/linphone-sdk/$OUTPUT_ZIP_FOLDER" -Recurse
+
+################
+  artifacts:
+    paths:
+      - build-desktop\ninja_buildlog.txt
+      - build-desktop\ninja_buildlog.txt
+      - build-desktop\invertSearch.ps1
+      - build-desktop\OUTPUT\*
+    when: always
+    expire_in: 1 week
+    
+.windows-vs2019-msvc:
+  extends: .windows-vs2019
+  variables:
+    CMAKE_OPTIONS: -DENABLE_UNIT_TESTS=ON -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    LINPHONESDK_PLATFORM: Desktop
+    CMAKE_GENERATOR: "Visual Studio 16 2019"
+    BUILD_TARGET: install
+    PARALLEL_OPTIONS: "-- /maxcpucount /nodeReuse:true /p:TrackFileAccess=false"
+    EXITS_ON_ERROR_MSVC: 'if (-not ($$LastExitCode -eq 0)) {throw "Error: Build failed"}'
+
+.windows-vs2019-scheduled:
+  extends: .windows-vs2019-msvc
+  rules:
+    - if: $NIGHTLY_MASTER
+    - if: $NIGHTLY_RELEASE
+    - if: $ENABLE_WINDOWS_TESTS
+  before_script:
+    #cache disabled on scheduled builds since we dot not need the fastest build
+    - Set-Variable -Name "CLCACHE_DISABLE" -Value 1
+
+######################################################
+# JOBS
+######################################################
+
+vs2019-msvc-win64-windows:
+  extends: .windows-vs2019-msvc
+  variables:
+    CMAKE_C_COMPILER : cl.exe
+    CMAKE_CXX_COMPILER : cl.exe
+    CMAKE_RC_COMPILER : rc.exe
+
+######################################################
+# NIGHTLY
+######################################################
+
+##      ON SCHEDULE     ##
+
+vs2019-win64-scheduled-windows:
+  extends: .windows-vs2019-scheduled
+  rules:
+    - if: $NIGHTLY_MASTER
+    - if: $NIGHTLY_RELEASE
+    - if: $DEPLOY_RUN_WINDOWS
+
+#################################################
+#               PACKAGE
+#################################################
+
+#Remove . when packaging process is ready to use
+vs2019-win64-package:
+  stage: package
+  extends: .windows-vs2019-msvc
+  dependencies: []
+  rules:
+    - if: $NIGHTLY_MASTER
+    - if: $NIGHTLY_RELEASE
+    - if: $PACKAGE_WINDOWS
+    - if: $DEPLOY_WINDOWS
+  variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
+  
+#################################################
+#               DEPLOY
+#################################################
+
+vs2019-win64-upload:
+  stage: deploy
+  tags: [ "windows-powershell"]
+  rules:
+    - if: $NIGHTLY_MASTER
+    - if: $DEPLOY_WINDOWS
+  needs:
+    - vs2019-win64-package
+  script:
+    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+
+vs2019-win64-plugins-upload:
+  stage: deploy
+  tags: [ "windows"]
+  rules:
+    - if: $DEPLOY_PLUGINS
+  needs:
+    - vs2019-win64-scheduled-windows
+  script:
+    - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
+
+
+
+
+    

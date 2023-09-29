@@ -1,0 +1,15 @@
+This package is part of the noto project.  Visit
+google.com/get/noto for more information.
+
+Built on 2017-04-03 from the following noto repository:
+-----
+Repo: noto-fonts
+Tag: v2017-03-06-phase3-initial
+Date: 2017-03-06 15:25:38 GMT
+Commit:60aa0da2ee84b11e78725b4577edc2e80b009d56
+
+Initial phase 3.
+
+This is the first release of noto-fonts that includes phase 3 fonts in
+the hinted/unhinted subdirectories.  The new fonts are Armenian,
+Cherokee, and Hebrew.

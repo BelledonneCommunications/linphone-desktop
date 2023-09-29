@@ -1,0 +1,133 @@
+
+job-debian10-ninja-gcc:
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian10:$DEBIAN_10_IMAGE_VERSION
+  except:
+    refs:
+      - schedules
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+#################################################
+#           Nightly
+#################################################
+
+job-debian10-makefile-gcc:
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian10:$DEBIAN_10_IMAGE_VERSION
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CC: gcc
+    CXX: g++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+
+
+job-debian10-ninja-gcc-novideo:
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian10:$DEBIAN_10_IMAGE_VERSION
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=OFF
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+
+job-debian10-ninja-gcc-smallsdk:
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian10:$DEBIAN_10_IMAGE_VERSION
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO -DENABLE_PQCRYPTO=OFF
+    CMAKE_GENERATOR: Ninja
+    CC: gcc
+    CXX: g++
+  extends: .job-linux-desktop
+
+
+job-debian10-ninja-clang:
+  tags: [ "docker-debian10" ]
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian10:$DEBIAN_10_IMAGE_VERSION
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CC: clang
+    CXX: clang++
+  extends: .job-linux-desktop
+
+
+job-debian10-ninja-clang-novideo:
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO
+  extends: job-debian10-ninja-clang  
+
+job-debian10-makefile-clang:
+  tags: [ "docker-debian10" ]
+  image: gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-debian10:$DEBIAN_10_IMAGE_VERSION
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $DEPLOY_LINUX
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    CC: clang
+    CXX: clang++
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .job-linux-desktop
+  
+#################################################
+# Package - Nightly
+#################################################
+
+job-debian10-makefile-clang-package:
+  stage: package
+  tags: [ "docker-debian10" ]
+  dependencies: []
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $DEPLOY_LINUX
+  variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+  extends: job-debian10-makefile-clang
+  artifacts:
+    paths:
+      - build/OUTPUT/Packages/Linphone*.AppImage
+    expire_in: 1 week
+
+#################################################
+# Deploy - Nightly
+#################################################
+
+job-debian10-makefile-clang-deploy:
+  stage: deploy
+  tags: [ "docker-debian10" ]
+  dependencies:
+    - job-debian10-makefile-clang-package
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $DEPLOY_LINUX
+  script:
+    - scp build/OUTPUT/Packages/Linphone*.AppImage $DEPLOY_SERVER:$APPIMAGE_UPLOAD_DIRECTORY/

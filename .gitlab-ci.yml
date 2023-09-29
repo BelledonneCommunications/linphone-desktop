@@ -1,0 +1,60 @@
+#################################################
+# Base configuration
+#################################################
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+  MAKEFILE_JOBS: 5
+  CCACHE_SIZE: 2G
+#this option is used to speedup submodule building times, when we don't need to trace debug (like SDK where it is already tested in its project)
+  LBC_NODEBUG_OPTIONS : --parallel $MAKEFILE_JOBS
+  DEFAULT_LINUX_CMAKE_OPTIONS: -DCMAKE_BUILD_PARALLEL_LEVEL=$MAKEFILE_JOBS
+  DEFAULT_MACOS_CMAKE_OPTIONS: -DCMAKE_BUILD_PARALLEL_LEVEL=$MAKEFILE_JOBS
+  DEFAULT_WINDOWS_CMAKE_OPTIONS: -DCMAKE_BUILD_PARALLEL_LEVEL=$MAKEFILE_JOBS
+
+#  DEFAULT_LINUX_CMAKE_OPTIONS: -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES
+#  DEFAULT_MACOS_CMAKE_OPTIONS: -DCMAKE_OSX_DEPLOYMENT_TARGET=10.11 -DENABLE_UPDATE_CHECK=YES
+#  DEFAULT_WINDOWS_CMAKE_OPTIONS: -DENABLE_NON_FREE_CODECS=YES -DENABLE_OPENH264=YES -DENABLE_UPDATE_CHECK=YES
+
+ #activated by default, if there is a problem, see the default
+  #build options in CMakeBuilder
+  #CMAKE_OPTIONS: -DENABLE_LIME_X3DH=YES
+
+# Docker image version
+  ARCHLINUX_IMAGE_VERSION: latestupdated
+  CENTOS_7_QT_IMAGE_VERSION: 20211012_add_qtwebview
+  DEBIAN_9_QT_IMAGE_VERSION: 20230417_qtopen_gstreamer
+  DEBIAN_10_IMAGE_VERSION: 20210217_python3
+  UBUNTU_ROLLING_IMAGE_VERSION: 20211012_add_qtwebview
+
+
+workflow:
+  rules:
+    - if: $CI_COMMIT_BRANCH && $CI_OPEN_MERGE_REQUESTS && $CI_PIPELINE_SOURCE == "push"
+      when: never
+    #Launch merge request pipeline is there is a merge request open
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $CI_MERGE_REQUEST_TITLE !~ /^Draft:.*/
+    #Launch pipeline if there is a schedule event
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+
+#################################################
+# Platforms to test
+#################################################
+
+.job-prepare:
+  variables:
+    ALL_JOB_VARIABLE: ""
+
+include:
+#  - '.gitlab-ci-files/job-linux-prepare.yml'
+#  - '.gitlab-ci-files/job-linux-desktop.yml'
+#  - '.gitlab-ci-files/job-linux-desktop-debian9.yml'
+#  - '.gitlab-ci-files/job-windows-desktop.yml'
+#  - '.gitlab-ci-files/job-macosx-desktop.yml'
+
+
+#stages:
+#  - build
+#  - package
+#  - signing
+#  - deploy

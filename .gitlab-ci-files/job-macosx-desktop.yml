@@ -1,0 +1,168 @@
+#Build template to use in other job scripts without having to copy same code
+#format = .className: &referenceName | scripts
+#Use = scripts: -*referenceName
+#Example : see .job-macosx-desktop for the default script and job-macosx-makefile-package for override
+
+.build_all_script: &build_all_script |
+  ccache -s
+  export Qt5_DIR=~/Qt/$QT_MAC_VER/lib/cmake/Qt5
+  export PATH=~/Qt/$QT_MAC_VER/bin:$PATH
+  if [ -d "build" ]; then rm -rf build; fi;
+  mkdir -p build/OUTPUT
+  cd build
+  #SDK Building
+  echo $CI_BUILD_TYPE
+  echo $CMAKE_GENERATOR
+  echo $DEFAULT_MACOS_CMAKE_OPTIONS
+  echo $CMAKE_OPTIONS
+  echo $ADDITIONAL_BUILD_OPTIONS
+  cmake .. -G "$CMAKE_GENERATOR" -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_MACOS_CMAKE_OPTIONS $XCODE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS -DLINPHONE_BUILDER_SIGNING_IDENTITY="$MACOS_SIGNING_IDENTITY" -DLINPHONESDK_MACOS_ARCHS="$LINPHONESDK_MACOS_ARCHS" -DLINPHONESDK_OPENSSL_ROOT_DIR_X86_64="$LINPHONESDK_OPENSSL_ROOT_DIR_X86_64" -DLINPHONESDK_OPENSSL_ROOT_DIR_ARM64="$LINPHONESDK_OPENSSL_ROOT_DIR_ARM64" $RELEASE_FILE
+  cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
+  ccache -s
+
+.job-macosx-desktop:
+  stage: build
+  tags: [ "macmini-m1-bis-xcode13" ]
+  script:
+    - *build_all_script
+  variables:
+    LINPHONESDK_MACOS_ARCHS: "x86_64"
+    LINPHONESDK_OPENSSL_ROOT_DIR_X86_64: "/usr/local/opt/openssl@1.1"
+    LINPHONESDK_OPENSSL_ROOT_DIR_ARM64: "/opt/homebrew/opt/openssl@1.1"
+  artifacts:
+    paths:
+      - build/OUTPUT
+    when: always
+    expire_in: 1 week
+
+#################################################
+# On each push
+#################################################
+
+job-macosx-ninja:
+  except:
+    refs:
+      - schedules
+  variables:
+    CMAKE_GENERATOR: Ninja
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+  extends: .job-macosx-desktop
+
+#################################################
+# Nightly
+#################################################
+
+job-macosx-makefile:
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+      - $DEPLOY_PLUGINS
+  variables:
+    CMAKE_GENERATOR: Unix Makefiles
+    CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
+    ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
+  extends: .job-macosx-desktop
+
+job-macosx-ninja-novideo:
+  only:
+    variables:
+      - $NIGHTLY_MASTER
+  variables:
+    CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_PQCRYPTO=ON
+    CMAKE_GENERATOR: Ninja
+  extends: .job-macosx-desktop
+
+#job-macosx-xcode:
+#  extends: .job-macosx-desktop
+#  variables:
+#    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
+#   CMAKE_GENERATOR: Xcode
+#    ADDITIONAL_BUILD_OPTIONS: -IDEBuildOperationMaxNumberOfConcurrentCompileTasks=$MAX_NUMBER_TASK
+# only:
+#   variables:
+#     - $NIGHTLY_MASTER
+#     - $DEPLOY_RUN_MACOSX
+#      
+
+#################################################
+# Package - Nightly
+#################################################
+# WAIT for QT6 for arm64
+job-macosx-makefile-package:
+  stage: package
+  tags: [ "macmini-m1-bis-xcode13" ]
+  dependencies: []
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $PACKAGE_MACOSX
+       - $DEPLOY_MACOSX
+  variables:
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON
+    RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$MACOSX_PLATFORM/$APP_FOLDER
+    LINPHONESDK_MACOS_ARCHS: "x86_64"
+  extends: job-macosx-makefile
+  script:
+    - if [[ $MAKE_RELEASE_FILE_URL == "" ]]; then export RELEASE_FILE=""; fi
+    - *build_all_script
+  artifacts:
+    when: always
+    paths:
+      - build/OUTPUT/*
+    when: always
+    expire_in: 1 week
+
+job-macosx-codesigning:
+  stage: signing
+  tags: [ "macmini-m1-bis-xcode13" ]
+  needs:
+    - job-macosx-makefile-package
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $PACKAGE_MACOSX
+       - $DEPLOY_MACOSX
+  script:
+    - cd build
+    - codesign --options runtime,library --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/Packages/*.dmg
+    - ./../tools/app_notarization.sh
+  artifacts:
+    when: always
+    paths:
+      - build/OUTPUT/*
+    when: always
+    expire_in: 1 week
+
+#################################################
+# Deploy - Nightly
+#################################################
+
+job-macosx-makefile-deploy:
+  stage: deploy
+  tags: [ "macmini-m1-bis-xcode13" ]
+  needs:
+    - job-macosx-codesigning
+  only:
+     variables:
+       - $NIGHTLY_MASTER
+       - $DEPLOY_MACOSX
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+    - |-
+      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
+        rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM
+      fi
+
+
+job-macosx-makefile-plugins-deploy:
+  stage: deploy
+  tags: [ "macmini-m1-bis-xcode13" ]
+  needs:
+    - job-macosx-makefile
+  only:
+     variables:
+       - $DEPLOY_PLUGINS
+  script:
+    - rsync -rlv --ignore-existing build/OUTPUT/plugins/app/*.dylib $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER/plugins
+

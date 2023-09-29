@@ -1,0 +1,46 @@
+# Temporary files --------------------------------------------------------------
+
+*~
+.*
+\#*\#
+.#.*
+!.gitignore
+!.gitlab-ci*
+!.gitmodules
+# Project configuration --------------------------------------------------------
+
+*.pro.user
+Project.sln.lnk
+WORK
+OUTPUT
+Makefile
+CMakeLists.txt.user
+build*
+build-*-Debug
+build-*-Default
+prepare.conf.user
+build/*
+
+# Tags -------------------------------------------------------------------------
+
+GPATH
+GRTAGS
+GTAGS
+
+.ctags
+.clang_complete
+
+# QMLC/JSC ---------------------------------------------------------------------
+
+*.qmlc
+*.jsc
+
+# RPM --------------------------------------------------------------------------
+
+linphone-qt/
+rpm-*/
+
+# OTHER ------------------------------------------------------------------------
+
+vgcore.*
+linphone.spec
