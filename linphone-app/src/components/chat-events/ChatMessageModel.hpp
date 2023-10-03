@@ -44,9 +44,12 @@ class ContentProxyModel;
 class ChatMessageModel : public ChatEvent {
 	Q_OBJECT
 public:
-	static QSharedPointer<ChatMessageModel> create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);// Call it instead constructor
-	ChatMessageModel (std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent = nullptr);
+	static QSharedPointer<ChatMessageModel> create(const std::shared_ptr<const linphone::EventLog>& chatMessageLog, QObject * parent = nullptr);// Call it instead constructor
+	static QSharedPointer<ChatMessageModel> create(const std::shared_ptr<linphone::ChatMessage>& chatMessage, QObject * parent = nullptr);// Call it instead constructor
+	ChatMessageModel (const std::shared_ptr<linphone::ChatMessage>& chatMessage, const std::shared_ptr<const linphone::EventLog>& chatMessageLog, QObject * parent = nullptr);
 	virtual ~ChatMessageModel();
+	
+	void init(const std::shared_ptr<linphone::ChatMessage>& chatMessage, const std::shared_ptr<const linphone::EventLog>& chatMessageLog);
 	
 	Q_PROPERTY(QString fromDisplayName READ getFromDisplayName CONSTANT)
 	Q_PROPERTY(QString fromDisplayNameReplyMessage READ getFromDisplayNameReplyMessage CONSTANT)
@@ -119,7 +122,6 @@ public:
 	
 	virtual void deleteEvent() override;
 	void updateFileTransferInformation();
-	static QDateTime initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message, bool isNew, bool force = false); // return received timestamp
 	
 	//		Linphone callbacks  
 	void onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer) ;

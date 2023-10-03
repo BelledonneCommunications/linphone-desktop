@@ -20,6 +20,9 @@
 *
 *******************************************************************************/
 
+#ifndef CONFIG_H
+#define CONFIG_H
+
 #cmakedefine APPLICATION_DESCRIPTION "${APPLICATION_DESCRIPTION}"
 #cmakedefine APPLICATION_ID "${APPLICATION_ID}"
 #cmakedefine APPLICATION_NAME "${APPLICATION_NAME}"
@@ -36,3 +39,4 @@
 #cmakedefine QTKEYCHAIN_TARGET_NAME ${QTKEYCHAIN_TARGET_NAME}
 #cmakedefine PDF_ENABLED
 
+#endif

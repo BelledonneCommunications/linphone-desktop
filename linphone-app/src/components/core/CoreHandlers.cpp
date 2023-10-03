@@ -272,7 +272,6 @@ void CoreHandlers::onMessagesReceived (
 	
 	appSettings.beginGroup("chatrooms");
 	for(auto message : messages){
-		if(message) ChatMessageModel::initReceivedTimestamp(message, true);
 		if( !message || message->isOutgoing()  )
 			continue;
 		// 1. Do not notify if chat is not activated.

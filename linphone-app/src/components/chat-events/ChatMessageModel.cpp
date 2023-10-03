@@ -72,8 +72,17 @@ void ChatMessageModel::connectTo(ChatMessageListener * listener){
 }
 // =============================================================================
 
-ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::MessageEntry, parent) {
+ChatMessageModel::ChatMessageModel (const std::shared_ptr<linphone::ChatMessage>& chatMessage, const std::shared_ptr<const linphone::EventLog>& chatMessageLog, QObject * parent) : ChatEvent(ChatRoomModel::EntryType::MessageEntry, parent) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it
+	init(chatMessage, chatMessageLog);
+}
+
+ChatMessageModel::~ChatMessageModel(){
+	if(mChatMessage)
+		mChatMessage->removeListener(mChatMessageListener);
+}
+
+void ChatMessageModel::init(const std::shared_ptr<linphone::ChatMessage>& chatMessage, const std::shared_ptr<const linphone::EventLog>& chatMessageLog){
 	if(chatMessage){
 		mParticipantImdnStateListModel = QSharedPointer<ParticipantImdnStateListModel>::create(chatMessage);
 		mChatMessageListener = std::make_shared<ChatMessageListener>();
@@ -83,7 +92,7 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 		if( mChatMessage->isReply()){
 			auto replyMessage = mChatMessage->getReplyMessage();
 			if( replyMessage)// Reply message could be inexistant (for example : when locally deleted)
-				mReplyChatMessageModel = create(replyMessage, parent);
+				mReplyChatMessageModel = create(replyMessage, this->parent());
 		}
 		std::list<std::shared_ptr<linphone::Content>> contents = chatMessage->getContents();
 		QString txt;
@@ -94,7 +103,10 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 		mContent = txt;
 		
 		mTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessage->getTime() * 1000);
-		mReceivedTimestamp = ChatMessageModel::initReceivedTimestamp(chatMessage, false);
+		if(chatMessageLog)
+			mReceivedTimestamp = QDateTime::fromMSecsSinceEpoch(chatMessageLog->getCreationTime() * 1000);
+		else
+			mReceivedTimestamp = mTimestamp;
 	}
 	mWasDownloaded = false;
 
@@ -102,12 +114,13 @@ ChatMessageModel::ChatMessageModel ( std::shared_ptr<linphone::ChatMessage> chat
 	mChatReactionListModel = QSharedPointer<ChatReactionListModel>::create(this);
 }
 
-ChatMessageModel::~ChatMessageModel(){
-	if(mChatMessage)
-		mChatMessage->removeListener(mChatMessageListener);
+QSharedPointer<ChatMessageModel> ChatMessageModel::create(const std::shared_ptr<const linphone::EventLog>& chatMessageLog, QObject * parent){
+	auto model = QSharedPointer<ChatMessageModel>::create(chatMessageLog->getChatMessage(), chatMessageLog, parent);
+	return model;
 }
-QSharedPointer<ChatMessageModel> ChatMessageModel::create(std::shared_ptr<linphone::ChatMessage> chatMessage, QObject * parent){
-	auto model = QSharedPointer<ChatMessageModel>::create(chatMessage, parent);
+
+QSharedPointer<ChatMessageModel> ChatMessageModel::create(const std::shared_ptr<linphone::ChatMessage>& chatMessage, QObject * parent){
+	auto model = QSharedPointer<ChatMessageModel>::create(chatMessage, nullptr, parent);
 	return model;
 }
 
@@ -286,16 +299,6 @@ void ChatMessageModel::deleteEvent(){
 
 void ChatMessageModel::updateFileTransferInformation(){
 	mContentListModel->updateContents(this);
-}
-
-QDateTime ChatMessageModel::initReceivedTimestamp(const std::shared_ptr<linphone::ChatMessage> &message, bool isNew, bool force){
-	auto appdata = ChatEvent::AppDataManager(QString::fromStdString(message->getAppdata()));
-	if(force || !appdata.mData.contains("receivedTime")){// If already set : Do not overwrite.
-		appdata.mData["receivedTime"] = QString::number(isNew ? QDateTime::currentMSecsSinceEpoch() : message->getTime()*1000);
-		qDebug() << (isNew ? "New" : "Old") << " message received at " << QDateTime::fromMSecsSinceEpoch(appdata.mData["receivedTime"].toLongLong()).toString("yyyy/MM/dd hh:mm:ss.zzz") << QDateTime::fromMSecsSinceEpoch(message->getTime()*1000).toString("yyyy/MM/dd hh:mm:ss.zzz");
-		message->setAppdata(Utils::appStringToCoreString(appdata.toString()));
-	}
-	return QDateTime::fromMSecsSinceEpoch(appdata.mData["receivedTime"].toLongLong());
 }
 
 void ChatMessageModel::onFileTransferRecv(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<linphone::Content> & content, const std::shared_ptr<const linphone::Buffer> & buffer){

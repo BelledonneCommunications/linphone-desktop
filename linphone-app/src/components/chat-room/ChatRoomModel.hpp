@@ -202,8 +202,8 @@ public:
 	bool mMarkAsReadEnabled = true;
 	bool mEntriesLoading = false;
 	
-	QSharedPointer<ChatMessageModel> insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message);
-	void insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages);
+	QSharedPointer<ChatMessageModel> insertMessageAtEnd (const std::shared_ptr<const linphone::EventLog> &messageLog);
+	void insertMessages (const QList<std::shared_ptr<const linphone::EventLog> > &messageLogs);
 	void insertNotice (const std::shared_ptr<linphone::EventLog> &enventLog);
 	void insertNotices (const QList<std::shared_ptr<linphone::EventLog>> &eventLogs);
 	

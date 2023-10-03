@@ -785,7 +785,7 @@ public:
 			itEntries = entries.begin();
 		for(; itEntries !=  entries.end() ; ++itEntries){
 			if( (*itEntries).mType== ChatRoomModel::EntryType::MessageEntry)
-				*resultEntries << ChatMessageModel::create(std::dynamic_pointer_cast<linphone::ChatMessage>(itEntries->mObject));
+				*resultEntries << ChatMessageModel::create(std::dynamic_pointer_cast<linphone::EventLog>(itEntries->mObject));
 			else if( (*itEntries).mType == ChatRoomModel::EntryType::CallEntry) {
 				auto entry = ChatCallModel::create(std::dynamic_pointer_cast<linphone::CallLog>(itEntries->mObject), true);
 				if(entry) {
@@ -817,10 +817,11 @@ void ChatRoomModel::updateNewMessageNotice(const int& count){
 			QDateTime lastReceivedMessage = lastUnreadMessage;
 			enableMarkAsRead(false);
 // Get chat messages
-			for (auto &message : mChatRoom->getHistory(mLastEntriesStep)) {
-				if( !message->isRead()) {
+			for (auto &messageLog : mChatRoom->getHistoryMessageEvents(mLastEntriesStep)) {
+				auto message = messageLog->getChatMessage();
+				if( message && !message->isRead()) {
 					lastUnreadMessage = min(lastUnreadMessage, QDateTime::fromMSecsSinceEpoch(message->getTime() * 1000 - 1 ));	//-1 to be sure that event will be before the message
-					lastReceivedMessage = min(lastReceivedMessage, ChatMessageModel::initReceivedTimestamp(message, false).addMSecs(-1));
+					lastReceivedMessage = min(lastReceivedMessage, QDateTime::fromMSecsSinceEpoch(messageLog->getCreationTime() * 1000 - 1));
 				}
 			}			
 			mUnreadMessageNotice = ChatNoticeModel::create(ChatNoticeModel::NoticeType::NoticeUnreadMessages, lastUnreadMessage,lastReceivedMessage, QString::number(count));
@@ -936,8 +937,8 @@ void ChatRoomModel::initEntries(){
 		QList<QSharedPointer<ChatEvent> > entries;
 		QList<EntrySorterHelper> prepareEntries;
 	// Get chat messages
-		for (auto &message : mChatRoom->getHistory(mFirstLastEntriesStep)) {
-			prepareEntries << EntrySorterHelper(ChatMessageModel::initReceivedTimestamp(message, false).toTime_t() ,MessageEntry, message);
+		for (auto &messageLog : mChatRoom->getHistoryMessageEvents(mFirstLastEntriesStep)) {
+			prepareEntries << EntrySorterHelper(messageLog->getCreationTime() ,MessageEntry, messageLog);
 		}
 	// Get events
 		for(auto &eventLog : mChatRoom->getHistoryEvents(mFirstLastEntriesStep))
@@ -994,7 +995,8 @@ int ChatRoomModel::loadMoreEntries(){
 		}
 		
 	// Messages
-		for (auto &message : mChatRoom->getHistoryRange(entriesCounts[0], entriesCounts[0]+mLastEntriesStep)){
+		for (auto &messageLog : mChatRoom->getHistoryRangeMessageEvents(entriesCounts[0], entriesCounts[0]+mLastEntriesStep)){
+			auto message = messageLog->getChatMessage();
 			auto itEntries = mList.begin();
 			bool haveEntry = false;
 			while(!haveEntry && itEntries != mList.end()){
@@ -1003,7 +1005,7 @@ int ChatRoomModel::loadMoreEntries(){
 				++itEntries;
 			}
 			if(!haveEntry)
-				prepareEntries << EntrySorterHelper(ChatMessageModel::initReceivedTimestamp(message, false).toTime_t() ,MessageEntry, message);
+				prepareEntries << EntrySorterHelper(messageLog->getCreationTime() ,MessageEntry, messageLog);
 		}
 
 	// Notices
@@ -1052,12 +1054,12 @@ void ChatRoomModel::onCallEnded(std::shared_ptr<linphone::Call> call){
 
 // -----------------------------------------------------------------------------
 
-QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<linphone::ChatMessage> &message) {
+QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::shared_ptr<const linphone::EventLog> &messageLog) {
 	QSharedPointer<ChatMessageModel> model;
-	if(mIsInitialized && !exists(message)){
-		model = ChatMessageModel::create(message);
+	if(mIsInitialized && !exists(messageLog->getChatMessage())){
+		model = ChatMessageModel::create(messageLog);
 		if(model){
-			qDebug() << "Adding at end" << model->getReceivedTimestamp().toString("hh:mm:ss.zzz") << model->getTimestamp().toString("hh:mm:ss.zzz") << QString(message->getUtf8Text().c_str()).left(5);
+			qDebug() << "Adding at end" << model->getReceivedTimestamp().toString("hh:mm:ss.zzz") << model->getTimestamp().toString("hh:mm:ss.zzz") << QString(messageLog->getChatMessage()->getUtf8Text().c_str()).left(5);
 			connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 			emit unreadMessagesCountChanged();
 			add(model);
@@ -1066,11 +1068,11 @@ QSharedPointer<ChatMessageModel> ChatRoomModel::insertMessageAtEnd (const std::s
 	return model;
 }
 
-void ChatRoomModel::insertMessages (const QList<std::shared_ptr<linphone::ChatMessage> > &messages) {
+void ChatRoomModel::insertMessages (const QList<std::shared_ptr<const linphone::EventLog> > &messageLogs) {
 	if(mIsInitialized){
 		QList<QSharedPointer<QObject> > entries;
-		for(auto message : messages) {
-			QSharedPointer<ChatMessageModel> model = ChatMessageModel::create(message);
+		for(auto messageLog : messageLogs) {
+			QSharedPointer<ChatMessageModel> model = ChatMessageModel::create(messageLog);
 			if(model){
 				connect(model.get(), &ChatMessageModel::remove, this, &ChatRoomModel::removeEntry);
 				entries << model;
@@ -1169,14 +1171,11 @@ void ChatRoomModel::onIsComposingReceived(const std::shared_ptr<linphone::ChatRo
 }
 
 void ChatRoomModel::onMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message){
-	if(message) ChatMessageModel::initReceivedTimestamp(message, true);
 	emit unreadMessagesCountChanged();
 	updateLastUpdateTime();
 }
 
 void ChatRoomModel::onMessagesReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::list<std::shared_ptr<linphone::ChatMessage>> & messages){
-	for(auto message : messages)
-		if(message) ChatMessageModel::initReceivedTimestamp(message, true);
 	emit unreadMessagesCountChanged();
 	updateLastUpdateTime();
 }
@@ -1206,8 +1205,7 @@ void ChatRoomModel::onNewEvents(const std::shared_ptr<linphone::ChatRoom> & chat
 void ChatRoomModel::onChatMessageReceived(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog) {
 	auto message = eventLog->getChatMessage();
 	if(message){
-		ChatMessageModel::initReceivedTimestamp(message, true);
-		insertMessageAtEnd(message);
+		insertMessageAtEnd(eventLog);
 		updateLastUpdateTime();
 		emit messageReceived(message);
 	}
@@ -1217,8 +1215,7 @@ void ChatRoomModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatR
 	for(auto eventLog : eventLogs){
 		auto message = eventLog->getChatMessage();
 		if(message){
-			ChatMessageModel::initReceivedTimestamp(message, true);
-			insertMessageAtEnd(message);
+			insertMessageAtEnd(eventLog);
 			updateLastUpdateTime();
 			emit messageReceived(message);
 		}
@@ -1228,8 +1225,7 @@ void ChatRoomModel::onChatMessagesReceived(const std::shared_ptr<linphone::ChatR
 void ChatRoomModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	auto message = eventLog->getChatMessage();
 	if(message){
-		ChatMessageModel::initReceivedTimestamp(message, true, true);
-		insertMessageAtEnd(message);
+		insertMessageAtEnd(eventLog);
 		updateLastUpdateTime();
 		emit messageReceived(message);
 	}
@@ -1237,7 +1233,6 @@ void ChatRoomModel::onChatMessageSending(const std::shared_ptr<linphone::ChatRoo
 
 void ChatRoomModel::onChatMessageSent(const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<const linphone::EventLog> & eventLog){
 	auto message = eventLog->getChatMessage();
-	if(message) ChatMessageModel::initReceivedTimestamp(message, true);	// Just in case
 	updateLastUpdateTime();
 }
 
