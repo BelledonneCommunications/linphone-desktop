@@ -1,6 +1,7 @@
 Qt6 application.
 
-(export PATH=$PATH:~/Qt/6.5.2/gcc_64/bin)
+export PATH=$PATH:~/Qt/6.5.2/gcc_64/bin
+optional: export Qt6_DIR=~/Qt/6.5.2/gcc_64/lib/cmake/Qt6
 
 mkdir build
 cd build
@@ -24,6 +25,7 @@ cmake --build .  --target install --parallel 10
 		- icon: generated icons
 		- image: all images of the application. The format should be in svg and in monocolor to allow realtime updates.
 		- lang: TS files used with Weblate.
+	- tool: internal library for generic tools.
 
 - cmake : Build and Installation scripts.
 

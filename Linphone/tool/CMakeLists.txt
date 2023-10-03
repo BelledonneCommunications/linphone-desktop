@@ -1,8 +1,8 @@
 list(APPEND _LINPHONEAPP_SOURCES
-	model/core/CoreModel.cpp
-	model/core/CoreListener.cpp
-	
-	model/setting/SettingsModel.cpp
+	tool/Constants.cpp
+	tool/Utils.cpp
 )
 
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)
+
+
