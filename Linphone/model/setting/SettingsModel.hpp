@@ -21,23 +21,24 @@
 #ifndef SETTINGS_MODEL_H_
 #define SETTINGS_MODEL_H_
 
-#include <linphone++/linphone.hh>
+#include <QFont>
 #include <QObject>
 #include <QVariantMap>
-#include <QFont>
-
+#include <linphone++/linphone.hh>
 
 class SettingsModel : public QObject {
 	Q_OBJECT
 public:
-	SettingsModel (QObject *parent = Q_NULLPTR);
-	virtual ~SettingsModel ();
-	
-	bool isReadOnly(const std::string& section, const std::string& name) const;
-	std::string getEntryFullName(const std::string& section, const std::string& name) const;	// Return the full name of the entry : 'name/readonly' or 'name'
-	
+	SettingsModel(QObject *parent = Q_NULLPTR);
+	virtual ~SettingsModel();
+
+	bool isReadOnly(const std::string &section, const std::string &name) const;
+	std::string
+	getEntryFullName(const std::string &section,
+	                 const std::string &name) const; // Return the full name of the entry : 'name/readonly' or 'name'
+
 	static const std::string UiSection;
-	
+
 	std::shared_ptr<linphone::Config> mConfig;
 };
 #endif // SETTINGS_MODEL_H_

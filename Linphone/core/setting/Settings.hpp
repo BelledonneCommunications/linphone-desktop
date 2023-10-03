@@ -21,17 +21,16 @@
 #ifndef SETTINGS_H_
 #define SETTINGS_H_
 
+#include <QCommandLineParser>
 #include <QObject>
 #include <QVariantMap>
-#include <QCommandLineParser>
-
 
 class Settings : public QObject {
 	Q_OBJECT
 public:
-	Settings (QObject *parent = Q_NULLPTR);
-	virtual ~Settings ();
-	
+	Settings(QObject *parent = Q_NULLPTR);
+	virtual ~Settings();
+
 	QString getConfigPath(const QCommandLineParser &parser = QCommandLineParser());
 };
 #endif

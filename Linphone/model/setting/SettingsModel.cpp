@@ -18,25 +18,22 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "SettingsModel.hpp"
-
 
 // =============================================================================
 
 const std::string SettingsModel::UiSection("ui");
 
-SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
+SettingsModel::SettingsModel(QObject *parent) : QObject(parent) {
 }
 
 SettingsModel::~SettingsModel() {
 }
 
-
-bool SettingsModel::isReadOnly(const std::string& section, const std::string& name) const {
-	return mConfig->hasEntry(section, name+"/readonly");
+bool SettingsModel::isReadOnly(const std::string &section, const std::string &name) const {
+	return mConfig->hasEntry(section, name + "/readonly");
 }
 
-std::string SettingsModel::getEntryFullName(const std::string& section, const std::string& name) const {
-	return isReadOnly(section, name)?name+"/readonly" : name;
+std::string SettingsModel::getEntryFullName(const std::string &section, const std::string &name) const {
+	return isReadOnly(section, name) ? name + "/readonly" : name;
 }

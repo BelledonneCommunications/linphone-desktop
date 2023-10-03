@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# This hook verifies that the changes are formatted using clang-format.
+# It has to be installed in:
+#  - .git/hooks/pre-commit for a root project
+#  - .git/modules/<submodule-name>/hooks/pre-commit for a submodule
+
+if ! [ -x "$(command -v clang-format)" ]; then
+	echo "Pre commit hook: Please install clang-format (coding style checker) - could not find clang-format in PATH."
+	exit 1
+fi
+
+CHANGED_FILES="$(git diff --name-only --cached --diff-filter=ACMR | grep -E '\.(c|cc|cpp|h|hh)$')"
+
+if [[ -n "$CHANGED_FILES" ]]; then
+	if ! clang-format --style=file -Werror -n $CHANGED_FILES > /dev/null 2>&1; then
+		echo "*****************"
+		echo ""
+		echo "Pre commit hook: Staged file(s) contains non correctly formatted code. Please correct it using one of the following:"
+		echo "1) Configure your IDE to format automatically on save (entire file)"
+		echo "2) Use clang-format to correctly format source code using:"
+		echo "   clang-format --style=file -i <file-to-format>"
+		echo ""
+		echo "*** Aborting commit.***"
+		exit 1
+	fi
+fi

@@ -18,17 +18,15 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #include "Settings.hpp"
 
 #include <QUrl>
 
 #include "core/path/Paths.hpp"
 
-
 // =============================================================================
 
-Settings::Settings (QObject *parent) : QObject(parent) {
+Settings::Settings(QObject *parent) : QObject(parent) {
 }
 
 Settings::~Settings() {
@@ -37,12 +35,11 @@ Settings::~Settings() {
 QString Settings::getConfigPath(const QCommandLineParser &parser) {
 	QString filePath = parser.isSet("config") ? parser.value("config") : "";
 	QString configPath;
-	if(!QUrl(filePath).isRelative()){
-		//configPath = FileDownloader::synchronousDownload(filePath, Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
+	if (!QUrl(filePath).isRelative()) {
+		// configPath = FileDownloader::synchronousDownload(filePath,
+		// Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
 	}
-	if( configPath == "")
-		configPath = Paths::getConfigFilePath(filePath, false);
-	if( configPath == "" )
-		configPath = Paths::getConfigFilePath("", false);
+	if (configPath == "") configPath = Paths::getConfigFilePath(filePath, false);
+	if (configPath == "") configPath = Paths::getConfigFilePath("", false);
 	return configPath;
 }

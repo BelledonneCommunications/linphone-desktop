@@ -251,3 +251,4 @@ else()
     include(cmake/TasksMacos.cmake)
 endif()
 
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/cmake/hook/pre-commit" DESTINATION "${CMAKE_CURRENT_SOURCE_DIR}/.git/hooks/")

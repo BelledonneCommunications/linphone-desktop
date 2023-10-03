@@ -26,37 +26,37 @@
 // =============================================================================
 
 namespace Paths {
-	bool filePathExists (const QString &path, const bool isWritable = false);
-	
-	QString getAppLocalDirPath ();
-	QString getAssistantConfigDirPath ();
-	QString getAvatarsDirPath ();
-	QString getCallHistoryFilePath ();
-	QString getCapturesDirPath ();
-	QString getCodecsDirPath ();
-	QString getConfigDirPath (bool writable = true);
-	QString getConfigFilePath (const QString &configPath = QString(), bool writable = true);
-	QString getDatabaseFilePath ();
-	QString getDownloadDirPath ();
-	QString getFactoryConfigFilePath ();
-	QString getFriendsListFilePath ();
-	QString getLimeDatabasePath ();
-	QString getLogsDirPath ();
-	QString getMessageHistoryFilePath ();
-	QString getPackageDataDirPath ();
-	QString getPackageMsPluginsDirPath ();
-	QString getPackagePluginsAppDirPath ();
-	QString getPackageSoundsResourcesDirPath ();
-	QString getPackageTopDirPath ();
-	QString getPluginsAppDirPath ();
-	QStringList getPluginsAppFolders();
-	QString getRootCaFilePath ();
-	QString getToolsDirPath ();
-	QString getUserCertificatesDirPath ();
-	QString getZrtpDataFilePath ();
-	QString getZrtpSecretsFilePath ();
-	
-	void migrate ();
-}
+bool filePathExists(const QString &path, const bool isWritable = false);
+
+QString getAppLocalDirPath();
+QString getAssistantConfigDirPath();
+QString getAvatarsDirPath();
+QString getCallHistoryFilePath();
+QString getCapturesDirPath();
+QString getCodecsDirPath();
+QString getConfigDirPath(bool writable = true);
+QString getConfigFilePath(const QString &configPath = QString(), bool writable = true);
+QString getDatabaseFilePath();
+QString getDownloadDirPath();
+QString getFactoryConfigFilePath();
+QString getFriendsListFilePath();
+QString getLimeDatabasePath();
+QString getLogsDirPath();
+QString getMessageHistoryFilePath();
+QString getPackageDataDirPath();
+QString getPackageMsPluginsDirPath();
+QString getPackagePluginsAppDirPath();
+QString getPackageSoundsResourcesDirPath();
+QString getPackageTopDirPath();
+QString getPluginsAppDirPath();
+QStringList getPluginsAppFolders();
+QString getRootCaFilePath();
+QString getToolsDirPath();
+QString getUserCertificatesDirPath();
+QString getZrtpDataFilePath();
+QString getZrtpSecretsFilePath();
+
+void migrate();
+} // namespace Paths
 
 #endif // PATHS_H_

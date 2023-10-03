@@ -22,25 +22,26 @@
 
 #include <QCoreApplication>
 #include <QDir>
+#include <QFile>
 #include <QSysInfo>
 #include <QTimer>
-#include <QFile>
+
+#include "tool/Utils.hpp"
 
 // =============================================================================
 
-CoreModel::CoreModel (const QString &configPath, QObject *parent) :
-	QThread(parent) {
+CoreModel::CoreModel(const QString &configPath, QObject *parent) : QThread(parent) {
 	mConfigPath = configPath;
 }
 
-CoreModel::~CoreModel(){
+CoreModel::~CoreModel() {
 }
 
 void CoreModel::run() {
-	mCore = linphone::Factory::get()->createCore("","",nullptr);
-	
+	mCore = linphone::Factory::get()->createCore(Utils::appStringToCoreString(mConfigPath), "", nullptr);
+
 	mCore->start();
-	while(!mEnd){
+	while (!mEnd) {
 		mCore->iterate();
 	}
 	mCore->stop();
@@ -49,7 +50,6 @@ void CoreModel::run() {
 
 // -----------------------------------------------------------------------------
 
-std::shared_ptr<linphone::Core> CoreModel::getCore () {
+std::shared_ptr<linphone::Core> CoreModel::getCore() {
 	return mCore;
 }
-

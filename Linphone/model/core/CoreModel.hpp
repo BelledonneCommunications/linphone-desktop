@@ -21,30 +21,29 @@
 #ifndef CORE_MODEL_H_
 #define CORE_MODEL_H_
 
-#include <linphone++/linphone.hh>
 #include <QObject>
-#include <QString>
 #include <QSharedPointer>
+#include <QString>
 #include <QThread>
+#include <linphone++/linphone.hh>
 
 // =============================================================================
-
 
 class CoreModel : public QThread {
 	Q_OBJECT
 public:
 	CoreModel(const QString &configPath, QObject *parent);
 	~CoreModel();
-	
-	std::shared_ptr<linphone::Core> getCore ();
-	
+
+	std::shared_ptr<linphone::Core> getCore();
+
 	virtual void run();
-	
-	static CoreModel *getInstance ();
-	
+
+	static CoreModel *getInstance();
+
 	bool mEnd = false;
 	QString mConfigPath;
-	
+
 	std::shared_ptr<linphone::Core> mCore;
 };
 

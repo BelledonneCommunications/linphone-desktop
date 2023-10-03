@@ -26,7 +26,7 @@ constexpr char Constants::DefaultFont[];
 constexpr int Constants::DefaultFontPointSize;
 constexpr char Constants::DefaultEmojiFont[];
 constexpr int Constants::DefaultEmojiFontPointSize;
-QStringList Constants::getReactionsList(){
+QStringList Constants::getReactionsList() {
 	return {"❤️", "👍", "😂", "😮", "😢"};
 }
 constexpr char Constants::QtDomain[];
@@ -88,8 +88,6 @@ constexpr char Constants::OAuth2Password[];
 constexpr char Constants::OAuth2Scope[];
 constexpr char Constants::DefaultOAuth2RemoteProvisioningHeader[];
 
-
-
 #if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 constexpr char Constants::H264Description[];
 #endif // if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
@@ -143,4 +141,3 @@ constexpr char Constants::LinphoneBZip2_exe[];
 constexpr char Constants::LinphoneBZip2_dll[];
 constexpr char Constants::DefaultRlsUri[];
 constexpr char Constants::DefaultLogsEmail[];
-

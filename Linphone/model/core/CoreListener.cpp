@@ -22,89 +22,140 @@
 
 // =============================================================================
 
-
 // -----------------------------------------------------------------------------
 
-CoreListener::CoreListener(QObject * parent): QObject(parent){
+CoreListener::CoreListener(QObject *parent) : QObject(parent) {
 }
-CoreListener::~CoreListener(){
+CoreListener::~CoreListener() {
 }
 
-void CoreListener::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> & core,const std::shared_ptr<linphone::Account> & account,linphone::RegistrationState state,const std::string & message){
-	emit accountRegistrationStateChanged(core,account,state,message);
+void CoreListener::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                                     const std::shared_ptr<linphone::Account> &account,
+                                                     linphone::RegistrationState state,
+                                                     const std::string &message) {
+	emit accountRegistrationStateChanged(core, account, state, message);
 }
-void CoreListener::onAuthenticationRequested (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::AuthInfo> &authInfo,linphone::AuthMethod method){
-	emit authenticationRequested (core,authInfo,method);
+void CoreListener::onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
+                                             const std::shared_ptr<linphone::AuthInfo> &authInfo,
+                                             linphone::AuthMethod method) {
+	emit authenticationRequested(core, authInfo, method);
 }
-void CoreListener::onCallEncryptionChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,bool on,const std::string &authenticationToken){
-	emit callEncryptionChanged (core,call,on,authenticationToken);
+void CoreListener::onCallEncryptionChanged(const std::shared_ptr<linphone::Core> &core,
+                                           const std::shared_ptr<linphone::Call> &call,
+                                           bool on,
+                                           const std::string &authenticationToken) {
+	emit callEncryptionChanged(core, call, on, authenticationToken);
 }
-void CoreListener::onCallLogUpdated(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::CallLog> & callLog){
+void CoreListener::onCallLogUpdated(const std::shared_ptr<linphone::Core> &core,
+                                    const std::shared_ptr<linphone::CallLog> &callLog) {
 	emit callLogUpdated(core, callLog);
 }
-void CoreListener::onCallStateChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,linphone::Call::State state,const std::string &message){
-	emit callStateChanged (core,call,state,message);
+void CoreListener::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                      const std::shared_ptr<linphone::Call> &call,
+                                      linphone::Call::State state,
+                                      const std::string &message) {
+	emit callStateChanged(core, call, state, message);
 }
-void CoreListener::onCallStatsUpdated (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,const std::shared_ptr<const linphone::CallStats> &stats){
-	emit callStatsUpdated (core,call,stats);
+void CoreListener::onCallStatsUpdated(const std::shared_ptr<linphone::Core> &core,
+                                      const std::shared_ptr<linphone::Call> &call,
+                                      const std::shared_ptr<const linphone::CallStats> &stats) {
+	emit callStatsUpdated(core, call, stats);
 }
-void CoreListener::onCallCreated(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call){
-	emit callCreated(lc,call);
+void CoreListener::onCallCreated(const std::shared_ptr<linphone::Core> &lc,
+                                 const std::shared_ptr<linphone::Call> &call) {
+	emit callCreated(lc, call);
 }
-void CoreListener::onChatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom){
+void CoreListener::onChatRoomRead(const std::shared_ptr<linphone::Core> &core,
+                                  const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
 	emit chatRoomRead(core, chatRoom);
 }
-void CoreListener::onChatRoomStateChanged(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom,linphone::ChatRoom::State state){
-	emit chatRoomStateChanged(core, chatRoom,state);
+void CoreListener::onChatRoomStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                          const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+                                          linphone::ChatRoom::State state) {
+	emit chatRoomStateChanged(core, chatRoom, state);
 }
-void CoreListener::onConferenceInfoReceived(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo){
+void CoreListener::onConferenceInfoReceived(const std::shared_ptr<linphone::Core> &core,
+                                            const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
 	emit conferenceInfoReceived(core, conferenceInfo);
 }
-void CoreListener::onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::Config::ConfiguringState status,const std::string & message){
-	emit configuringStatus(core,status,message);
+void CoreListener::onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
+                                       linphone::Config::ConfiguringState status,
+                                       const std::string &message) {
+	emit configuringStatus(core, status, message);
 }
-void CoreListener::onDtmfReceived(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call,int dtmf){
-	emit dtmfReceived(lc,call,dtmf);
+void CoreListener::onDtmfReceived(const std::shared_ptr<linphone::Core> &lc,
+                                  const std::shared_ptr<linphone::Call> &call,
+                                  int dtmf) {
+	emit dtmfReceived(lc, call, dtmf);
 }
-void CoreListener::onEcCalibrationResult(const std::shared_ptr<linphone::Core> & core,linphone::EcCalibratorStatus status,int delayMs){
-	emit ecCalibrationResult(core,status,delayMs);
+void CoreListener::onEcCalibrationResult(const std::shared_ptr<linphone::Core> &core,
+                                         linphone::EcCalibratorStatus status,
+                                         int delayMs) {
+	emit ecCalibrationResult(core, status, delayMs);
 }
-void CoreListener::onGlobalStateChanged (const std::shared_ptr<linphone::Core> &core,linphone::GlobalState gstate,const std::string &message){
-	emit globalStateChanged (core,gstate,message);
+void CoreListener::onGlobalStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                        linphone::GlobalState gstate,
+                                        const std::string &message) {
+	emit globalStateChanged(core, gstate, message);
 }
-void CoreListener::onIsComposingReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room){
-	emit isComposingReceived (core,room);
+void CoreListener::onIsComposingReceived(const std::shared_ptr<linphone::Core> &core,
+                                         const std::shared_ptr<linphone::ChatRoom> &room) {
+	emit isComposingReceived(core, room);
 }
-void CoreListener::onLogCollectionUploadStateChanged (const std::shared_ptr<linphone::Core> &core,linphone::Core::LogCollectionUploadState state,const std::string &info){
-	emit logCollectionUploadStateChanged (core,state,info);
+void CoreListener::onLogCollectionUploadStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                                     linphone::Core::LogCollectionUploadState state,
+                                                     const std::string &info) {
+	emit logCollectionUploadStateChanged(core, state, info);
 }
-void CoreListener::onLogCollectionUploadProgressIndication (const std::shared_ptr<linphone::Core> &lc,size_t offset,size_t total){
-	emit logCollectionUploadProgressIndication (lc,offset,total);
+void CoreListener::onLogCollectionUploadProgressIndication(const std::shared_ptr<linphone::Core> &lc,
+                                                           size_t offset,
+                                                           size_t total) {
+	emit logCollectionUploadProgressIndication(lc, offset, total);
 }
-void CoreListener::onMessageReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::shared_ptr<linphone::ChatMessage> &message){
-	emit messageReceived (core,room,message);
+void CoreListener::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
+                                     const std::shared_ptr<linphone::ChatRoom> &room,
+                                     const std::shared_ptr<linphone::ChatMessage> &message) {
+	emit messageReceived(core, room, message);
 }
-void CoreListener::onMessagesReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room,const std::list<std::shared_ptr<linphone::ChatMessage>> &messages){
-	emit messagesReceived (core,room,messages);
+void CoreListener::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
+                                      const std::shared_ptr<linphone::ChatRoom> &room,
+                                      const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
+	emit messagesReceived(core, room, messages);
 }
-void CoreListener::onNewMessageReaction(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::ChatMessageReaction> & reaction){
-	emit newMessageReaction (core,chatRoom,message, reaction);
+void CoreListener::onNewMessageReaction(const std::shared_ptr<linphone::Core> &core,
+                                        const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+                                        const std::shared_ptr<linphone::ChatMessage> &message,
+                                        const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
+	emit newMessageReaction(core, chatRoom, message, reaction);
 }
-void CoreListener::onNotifyPresenceReceivedForUriOrTel (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend,const std::string &uriOrTel,const std::shared_ptr<const linphone::PresenceModel> &presenceModel){
-	emit notifyPresenceReceivedForUriOrTel (core,linphoneFriend,uriOrTel,presenceModel);
+void CoreListener::onNotifyPresenceReceivedForUriOrTel(
+    const std::shared_ptr<linphone::Core> &core,
+    const std::shared_ptr<linphone::Friend> &linphoneFriend,
+    const std::string &uriOrTel,
+    const std::shared_ptr<const linphone::PresenceModel> &presenceModel) {
+	emit notifyPresenceReceivedForUriOrTel(core, linphoneFriend, uriOrTel, presenceModel);
 }
-void CoreListener::onNotifyPresenceReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Friend> &linphoneFriend){
-	emit notifyPresenceReceived (core,linphoneFriend);
+void CoreListener::onNotifyPresenceReceived(const std::shared_ptr<linphone::Core> &core,
+                                            const std::shared_ptr<linphone::Friend> &linphoneFriend) {
+	emit notifyPresenceReceived(core, linphoneFriend);
 }
-void CoreListener::onQrcodeFound(const std::shared_ptr<linphone::Core> & core, const std::string & result){
+void CoreListener::onQrcodeFound(const std::shared_ptr<linphone::Core> &core, const std::string &result) {
 	emit qrcodeFound(core, result);
 }
-void CoreListener::onReactionRemoved(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom, const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address) {
+void CoreListener::onReactionRemoved(const std::shared_ptr<linphone::Core> &core,
+                                     const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+                                     const std::shared_ptr<linphone::ChatMessage> &message,
+                                     const std::shared_ptr<const linphone::Address> &address) {
 	emit reactionRemoved(core, chatRoom, message, address);
 }
-void CoreListener::onTransferStateChanged (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::Call> &call,linphone::Call::State state){
-	emit transferStateChanged (core,call,state);
+void CoreListener::onTransferStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                          const std::shared_ptr<linphone::Call> &call,
+                                          linphone::Call::State state) {
+	emit transferStateChanged(core, call, state);
 }
-void CoreListener::onVersionUpdateCheckResultReceived (const std::shared_ptr<linphone::Core> & core,linphone::VersionUpdateCheckResult result,const std::string &version,const std::string &url){
-	emit versionUpdateCheckResultReceived (core,result,version,url);
+void CoreListener::onVersionUpdateCheckResultReceived(const std::shared_ptr<linphone::Core> &core,
+                                                      linphone::VersionUpdateCheckResult result,
+                                                      const std::string &version,
+                                                      const std::string &url) {
+	emit versionUpdateCheckResultReceived(core, result, version, url);
 }

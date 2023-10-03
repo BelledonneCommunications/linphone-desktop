@@ -4,9 +4,6 @@
 .*
 \#*\#
 .#.*
-!.gitignore
-!.gitlab-ci*
-!.gitmodules
 # Project configuration --------------------------------------------------------
 
 *.pro.user
@@ -44,3 +41,10 @@ rpm-*/
 
 vgcore.*
 linphone.spec
+
+# Exceptions -------------------------------------------------------------------
+
+!.clang-format
+!.gitignore
+!.gitlab-ci*
+!.gitmodules
