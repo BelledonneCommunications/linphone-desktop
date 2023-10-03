@@ -1,10 +1,15 @@
 
 list(APPEND _LINPHONEAPP_QML_FILES
-	view/qml/App/Main.qml
+	view/App/Main.qml
 	
-	view/qml/Item/Button.qml
+	view/Item/Button.qml
 	
-	view/qml/Page/Login.qml
+	view/Page/LoginPage.qml
+)
+
+list(APPEND _LINPHONEAPP_SOURCES
+	view/Page/LoginPage.cpp
 )
 
 set(_LINPHONEAPP_QML_FILES ${_LINPHONEAPP_QML_FILES} PARENT_SCOPE)
+set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)

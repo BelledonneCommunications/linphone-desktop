@@ -1,6 +1,7 @@
 Qt6 application.
 
 export PATH=$PATH:~/Qt/6.5.2/gcc_64/bin
+
 optional: export Qt6_DIR=~/Qt/6.5.2/gcc_64/lib/cmake/Qt6
 
 mkdir build

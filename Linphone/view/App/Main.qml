@@ -12,7 +12,7 @@ Window {
 	ColumnLayout{
 		anchors.fill: parent
 		
-		Login{
+		LoginPage{
 			height: 100
 			width: 640
 		}

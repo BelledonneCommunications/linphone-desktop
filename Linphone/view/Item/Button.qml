@@ -27,10 +27,10 @@ Control.Button {
 	}
 	
 	hoverEnabled: true
-	
+	/*
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
 		onPressed:  mouse.accepted = false
-	}
+	}*/
 }
