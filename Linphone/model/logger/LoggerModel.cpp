@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2020 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -19,14 +19,13 @@
  */
 
 #include <QDateTime>
+
 #include <QLoggingCategory>
 #include <QMessageBox>
-#include <QThread>
 #include <linphone++/linphone.hh>
 
 #include "config.h"
 
-//#include "components/settings/SettingsModel.hpp"
 #include "LoggerListener.hpp"
 #include "LoggerModel.hpp"
 #include "tool/Constants.hpp"
