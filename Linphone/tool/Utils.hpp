@@ -128,9 +128,10 @@ public:
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return str.toStdString();
 		else return qPrintable(str);
 	}
-	/*
 	// Reverse function of strstr.
-	static char *rstrstr (const char *a, const char *b);
+	static char *rstrstr(const char *a, const char *b);
+
+	/*
 	// Return the path if it is an image else an empty path.
 	static QImage getImage(const QString &pUri);
 	// Returns the same path given in parameter if `filePath` exists.

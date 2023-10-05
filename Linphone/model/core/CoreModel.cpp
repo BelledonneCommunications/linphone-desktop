@@ -20,6 +20,7 @@
 
 #include "CoreModel.hpp"
 
+#include <QApplication>
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
@@ -30,25 +31,26 @@
 
 // =============================================================================
 
-CoreModel::CoreModel(const QString &configPath, QObject *parent) : QThread(parent) {
+CoreModel::CoreModel(const QString &configPath, QObject *parent) : QObject(parent) {
 	mConfigPath = configPath;
+	mLogger = std::make_shared<LoggerModel>(this);
+	mLogger->init();
 }
 
 CoreModel::~CoreModel() {
 }
 
-void CoreModel::run() {
-	mCore = linphone::Factory::get()->createCore(Utils::appStringToCoreString(mConfigPath), "", nullptr);
-
+void CoreModel::start() {
+	auto configPath = Utils::appStringToCoreString(mConfigPath);
+	mCore = linphone::Factory::get()->createCore(configPath, "", nullptr);
+	mCore->enableAutoIterate(true);
 	mCore->start();
-	while (!mEnd) {
-		mCore->iterate();
-	}
-	mCore->stop();
-	mCore = nullptr;
 }
-
 // -----------------------------------------------------------------------------
+
+CoreModel *CoreModel::getInstance() {
+	return nullptr;
+}
 
 std::shared_ptr<linphone::Core> CoreModel::getCore() {
 	return mCore;

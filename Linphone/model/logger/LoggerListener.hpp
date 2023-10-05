@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2024 Belledonne Communications SARL.
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,39 +18,27 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CORE_MODEL_H_
-#define CORE_MODEL_H_
+#ifndef LOGGER_LISTENER_H_
+#define LOGGER_LISTENER_H_
 
-#include <QObject>
-#include <QSharedPointer>
-#include <QString>
-#include <QThread>
+#include <QMutex>
+#include <memory>
+
 #include <linphone++/linphone.hh>
 
-#include "model/logger/LoggerModel.hpp"
-
 // =============================================================================
-
-class CoreModel : public QObject {
-	Q_OBJECT
+class LoggerListener : public linphone::LoggingServiceListener {
 public:
-	CoreModel(const QString &configPath, QObject *parent);
-	~CoreModel();
+	LoggerListener();
 
-	std::shared_ptr<linphone::Core> getCore();
+private:
+	virtual void onLogMessageWritten(const std::shared_ptr<linphone::LoggingService> &logService,
+	                                 const std::string &domain,
+	                                 linphone::LogLevel level,
+	                                 const std::string &message) override;
 
-	void start();
-
-	static CoreModel *getInstance();
-
-	bool mEnd = false;
-	QString mConfigPath;
-
-	std::shared_ptr<linphone::Core> mCore;
-	std::shared_ptr<LoggerModel> mLogger;
-
-signals:
-	void loggerInitialized();
+	bool mIsVerbose = true;
+	bool mQtOnlyEnabled = false;
 };
 
 #endif

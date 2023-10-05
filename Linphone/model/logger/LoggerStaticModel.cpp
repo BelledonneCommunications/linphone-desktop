@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2024 Belledonne Communications SARL.
+ * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -18,39 +18,20 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef CORE_MODEL_H_
-#define CORE_MODEL_H_
+#include "LoggerStaticModel.hpp"
+#include <QMetaMethod>
+// -----------------------------------------------------------------------------
 
-#include <QObject>
-#include <QSharedPointer>
-#include <QString>
-#include <QThread>
-#include <linphone++/linphone.hh>
+static LoggerStaticModel gLogger;
 
-#include "model/logger/LoggerModel.hpp"
+LoggerStaticModel::LoggerStaticModel(QObject *parent) : QObject(parent) {
+	qInstallMessageHandler(LoggerStaticModel::onQtLog);
+}
 
-// =============================================================================
+LoggerStaticModel *LoggerStaticModel::getInstance() {
+	return &gLogger;
+}
 
-class CoreModel : public QObject {
-	Q_OBJECT
-public:
-	CoreModel(const QString &configPath, QObject *parent);
-	~CoreModel();
-
-	std::shared_ptr<linphone::Core> getCore();
-
-	void start();
-
-	static CoreModel *getInstance();
-
-	bool mEnd = false;
-	QString mConfigPath;
-
-	std::shared_ptr<linphone::Core> mCore;
-	std::shared_ptr<LoggerModel> mLogger;
-
-signals:
-	void loggerInitialized();
-};
-
-#endif
+void LoggerStaticModel::onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+	emit gLogger.logReceived(type, context.file, context.line, msg);
+}

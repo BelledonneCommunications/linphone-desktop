@@ -163,8 +163,8 @@ public:
 
 	static constexpr char AssistantViewName[] = "Assistant";
 
-	static constexpr char QtDomain[] = "qt";
-	static constexpr char SrcPattern[] = "/src/";
+	static constexpr char AppDomain[] = "app";
+	static constexpr char SrcPattern[] = "/Linphone/";
 	static constexpr char LinphoneLocaleEncoding[] = "UTF-8"; // Alternative is to use "locale"
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;

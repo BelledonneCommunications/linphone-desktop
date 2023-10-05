@@ -6,7 +6,10 @@
 #include "view/Page/LoginPage.hpp"
 
 App::App(QObject *parent) : QObject(parent) {
+	mLinphoneThread = new Thread(this);
 	init();
+	qDebug() << "Starting Thread";
+	mLinphoneThread->start();
 }
 
 //-----------------------------------------------------------
@@ -15,8 +18,9 @@ App::App(QObject *parent) : QObject(parent) {
 
 void App::init() {
 	// Core
-	mCoreModel = QSharedPointer<CoreModel>::create("", this);
-	mCoreModel->start();
+	mCoreModel = QSharedPointer<CoreModel>::create("", mLinphoneThread);
+
+	connect(mLinphoneThread, &QThread::started, mCoreModel.get(), &CoreModel::start);
 	// QML
 	mEngine = new QQmlApplicationEngine(this);
 	mEngine->addImportPath(":/");

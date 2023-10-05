@@ -33,7 +33,7 @@ set(APP_TARGETS ${LinphoneCxx_TARGET})
 
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
-set(QT_PACKAGES Core Quick Qml)# Search Core at first for initialize Qt scripts for next find_packages.
+set(QT_PACKAGES Core Quick Qml Widgets)# Search Core at first for initialize Qt scripts for next find_packages.
 #find_package(Qt6 REQUIRED COMPONENTS Core)	
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
 
@@ -42,11 +42,10 @@ set(_LINPHONEAPP_SOURCES main.cpp)
 set(_LINPHONEAPP_QML_FILES)
 
 add_subdirectory(data)
+add_subdirectory(tool)
 add_subdirectory(model)
 add_subdirectory(view)
 add_subdirectory(core)
-
-
 
 qt6_add_executable(Linphone
     ${_LINPHONEAPP_SOURCES}
@@ -58,7 +57,6 @@ qt6_add_qml_module(Linphone
     VERSION 1.0
     QML_FILES ${_LINPHONEAPP_QML_FILES}
 )
-
 
 set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER org.linphone

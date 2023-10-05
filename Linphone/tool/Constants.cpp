@@ -29,7 +29,7 @@ constexpr int Constants::DefaultEmojiFontPointSize;
 QStringList Constants::getReactionsList() {
 	return {"❤️", "👍", "😂", "😮", "😢"};
 }
-constexpr char Constants::QtDomain[];
+constexpr char Constants::AppDomain[];
 constexpr size_t Constants::MaxLogsCollectionSize;
 constexpr char Constants::SrcPattern[];
 constexpr char Constants::LinphoneLocaleEncoding[];

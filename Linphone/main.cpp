@@ -1,4 +1,4 @@
-#include <QGuiApplication>
+#include <QApplication>
 #include <QQmlApplicationEngine>
 
 #include <QLocale>
@@ -7,7 +7,7 @@
 #include "core/App.hpp"
 
 int main(int argc, char *argv[]) {
-	QGuiApplication app(argc, argv);
+	QApplication app(argc, argv);
 
 	QTranslator translator;
 	const QStringList uiLanguages = QLocale::system().uiLanguages();

@@ -2,6 +2,10 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/core/CoreModel.cpp
 	model/core/CoreListener.cpp
 	
+	model/logger/LoggerModel.cpp
+	model/logger/LoggerListener.cpp
+	model/logger/LoggerStaticModel.cpp
+	
 	model/setting/SettingsModel.cpp
 )
 

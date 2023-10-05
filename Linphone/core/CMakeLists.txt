@@ -2,6 +2,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/App.cpp
 	core/path/Paths.cpp
 	core/setting/Settings.cpp
+	core/thread/Thread.cpp
 	
 )
 

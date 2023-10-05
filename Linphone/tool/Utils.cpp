@@ -40,27 +40,28 @@
 #include <QtPdfWidgets/QPdfView>
 #endif
 
-#include "UriTools.hpp"
+//#include "UriTools.hpp"
 #include "Utils.hpp"
-#include "app/App.hpp"
-#include "app/paths/Paths.hpp"
-#include "app/providers/ImageProvider.hpp"
-#include "components/contact/ContactModel.hpp"
-#include "components/contact/VcardModel.hpp"
-#include "components/contacts/ContactsListModel.hpp"
-#include "components/core/CoreManager.hpp"
-#include "components/other/colors/ColorListModel.hpp"
-#include "components/other/colors/ColorModel.hpp"
-#include "components/other/date/DateModel.hpp"
-#include "components/settings/AccountSettingsModel.hpp"
-#include "components/settings/SettingsModel.hpp"
-#include "components/sip-addresses/SipAddressesModel.hpp"
 
 #ifdef _WIN32
 #include <time.h>
 #endif
 
 // =============================================================================
+
+char *Utils::rstrstr(const char *a, const char *b) {
+	size_t a_len = strlen(a);
+	size_t b_len = strlen(b);
+
+	if (b_len > a_len) return nullptr;
+
+	for (const char *s = a + a_len - b_len; s >= a; --s) {
+		if (!strncmp(s, b, b_len)) return const_cast<char *>(s);
+	}
+
+	return nullptr;
+}
+
 /*
 namespace {
 constexpr int SafeFilePathLimit = 100;
@@ -78,20 +79,6 @@ CoreManager::getInstance()->getCore()->interpretUrl(Utils::appStringToCoreString
         }
     }
     return interpretedAddress;
-}
-char *Utils::rstrstr (const char *a, const char *b) {
-    size_t a_len = strlen(a);
-    size_t b_len = strlen(b);
-
-    if (b_len > a_len)
-        return nullptr;
-
-    for (const char *s = a + a_len - b_len; s >= a; --s) {
-        if (!strncmp(s, b, b_len))
-            return const_cast<char *>(s);
-    }
-
-    return nullptr;
 }
 
 // -----------------------------------------------------------------------------
