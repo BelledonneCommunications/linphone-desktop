@@ -10,7 +10,7 @@
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_WINDOWS == null
     - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_WINDOWS == null
   variables:
-    CMAKE_OPTIONS: -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     LINPHONESDK_PLATFORM: Desktop
     OUTPUT_ZIP_FOLDER: win64
     MINGW_TYPE: mingw64
@@ -84,9 +84,6 @@
     - if ($SHOW_SEARCH_STATUS_SCRIPT) { Invoke-Expression "$SHOW_SEARCH_STATUS_SCRIPT" } else { Write-Output "SHOW_SEARCH_STATUS_SCRIPT is null" }
     - if ($LAUNCH_SEARCH_STATUS_SCRIPT) { Invoke-Expression "$LAUNCH_SEARCH_STATUS_SCRIPT" -ErrorAction stop } else { Write-Output "LAUNCH_SEARCH_STATUS_SCRIPT is null" }
     - C:\PROGRA~1\Python37\Scripts\cl -s
-    - cd linphone-sdk
-    - mkdir $OUTPUT_ZIP_FOLDER
-    - Copy-Item -Path "*.zip" -Destination "$CI_PROJECT_DIR/build-desktop/linphone-sdk/$OUTPUT_ZIP_FOLDER" -Recurse
 
 ################
   artifacts:
@@ -95,13 +92,14 @@
       - build-desktop\ninja_buildlog.txt
       - build-desktop\invertSearch.ps1
       - build-desktop\OUTPUT\*
+      - build-desktop\external\linphone-sdk\openh264-prefix\src\openh264-stamp\*
     when: always
     expire_in: 1 week
     
 .windows-vs2019-msvc:
   extends: .windows-vs2019
   variables:
-    CMAKE_OPTIONS: -DENABLE_UNIT_TESTS=ON -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DENABLE_UNIT_TESTS=ON -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     LINPHONESDK_PLATFORM: Desktop
     CMAKE_GENERATOR: "Visual Studio 16 2019"
     BUILD_TARGET: install
@@ -157,35 +155,35 @@ vs2019-win64-package:
     - if: $PACKAGE_WINDOWS
     - if: $DEPLOY_WINDOWS
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
   
 #################################################
 #               DEPLOY
 #################################################
 
-vs2019-win64-upload:
-  stage: deploy
-  tags: [ "windows-powershell"]
-  rules:
-    - if: $NIGHTLY_MASTER
-    - if: $DEPLOY_WINDOWS
-  needs:
-    - vs2019-win64-package
-  script:
-    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
-    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
-    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+#vs2019-win64-upload:
+#  stage: deploy
+#  tags: [ "windows-powershell"]
+#  rules:
+#    - if: $NIGHTLY_MASTER
+#    - if: $DEPLOY_WINDOWS
+#  needs:
+#    - vs2019-win64-package
+#  script:
+#    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+#    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+#    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
-vs2019-win64-plugins-upload:
-  stage: deploy
-  tags: [ "windows"]
-  rules:
-    - if: $DEPLOY_PLUGINS
-  needs:
-    - vs2019-win64-scheduled-windows
-  script:
-    - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
+#vs2019-win64-plugins-upload:
+#  stage: deploy
+#  tags: [ "windows"]
+#  rules:
+#    - if: $DEPLOY_PLUGINS
+#  needs:
+#    - vs2019-win64-scheduled-windows
+#  script:
+#    - scp "build-desktop/OUTPUT/plugins/app/*.dll" "%DEPLOY_SERVER%:%WINDOWS_UPLOAD_DIRECTORY%/plugins"
 
 
 

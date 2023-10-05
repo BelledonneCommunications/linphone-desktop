@@ -26,6 +26,7 @@ variables:
   DEBIAN_9_QT_IMAGE_VERSION: 20230417_qtopen_gstreamer
   DEBIAN_10_IMAGE_VERSION: 20210217_python3
   UBUNTU_ROLLING_IMAGE_VERSION: 20211012_add_qtwebview
+  UBUNTU_1804_IMAGE_VERSION: 20230706_add_deps_for_av1
 
 
 workflow:
@@ -48,13 +49,13 @@ workflow:
 include:
 #  - '.gitlab-ci-files/job-linux-prepare.yml'
 #  - '.gitlab-ci-files/job-linux-desktop.yml'
-#  - '.gitlab-ci-files/job-linux-desktop-debian9.yml'
-#  - '.gitlab-ci-files/job-windows-desktop.yml'
-#  - '.gitlab-ci-files/job-macosx-desktop.yml'
+#  - '.gitlab-ci-files/job-linux-desktop-ubuntu-1804.yml'
+  - '.gitlab-ci-files/job-windows-desktop.yml'
+  - '.gitlab-ci-files/job-macosx-desktop.yml'
 
 
-#stages:
-#  - build
-#  - package
-#  - signing
-#  - deploy
+stages:
+  - build
+  - package
+  - signing
+  - deploy

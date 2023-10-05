@@ -37,10 +37,15 @@ set(QT_PACKAGES Core Quick Qml Widgets)# Search Core at first for initialize Qt 
 find_package(Qt6 REQUIRED COMPONENTS Core)	
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
 
-#qt6_standard_project_setup()
-set(CMAKE_AUTOMOC ON) 
-set(CMAKE_AUTORCC ON) 
-set(CMAKE_AUTOUIC ON)
+
+if(${Qt6_VERSION} VERSION_LESS "6.3.0")
+	set(CMAKE_AUTOMOC ON)
+	set(CMAKE_AUTORCC ON)
+	set(CMAKE_AUTOUIC ON)
+else()
+	qt6_standard_project_setup()
+endif()
+
 set(_LINPHONEAPP_SOURCES main.cpp)
 set(_LINPHONEAPP_QML_FILES)
 

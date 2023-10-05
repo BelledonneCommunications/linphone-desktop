@@ -64,7 +64,8 @@ void LoggerModel::onLog(QtMsgType type, QString contextFile, int contextLine, QS
 		contextStr = QStringLiteral("%1:%2: ").arg(fileToDisplay).arg(contextLine);
 	}
 #else
-	Q_UNUSED(context);
+	Q_UNUSED(contextFile)
+	Q_UNUSED(contextLine)
 #endif
 
 	auto serviceMsg = Utils::appStringToCoreString(contextStr + msg);
