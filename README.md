@@ -4,10 +4,10 @@ export PATH=$PATH:~/Qt/6.5.2/gcc_64/bin
 
 optional: export Qt6_DIR=~/Qt/6.5.2/gcc_64/lib/cmake/Qt6
 
-mkdir build
-cd build
-cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_BUILD_PARALLEL_LEVEL=10
-cmake --build .  --target install --parallel 10
+mkdir build \
+cd build \
+cmake .. -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_BUILD_PARALLEL_LEVEL=10 \
+cmake --build .  --target install --parallel 10 \
 
 
 - Linphone : Application code.
@@ -34,3 +34,24 @@ cmake --build .  --target install --parallel 10
 	- linphone-sdk
 
 
+
+- Qt install on Linux :
+```
+sudo apt install qt6-base-dev
+```
+- Problème à l'exécution : module "QtQuick.\*" is not installed
+
+- Install required packages : 
+
+    - qml-qt6
+    - qml6-module-qtquick
+    - qml6-module-qtquick-layouts
+    - qml6-module-qtqml-workerscript
+    - qml6-module-qtquick-controls
+    - qml6-module-qtquick-templates
+
+    and any other package missing when running exe\
+    with
+```
+sudo apt update && sudo apt install 
+```

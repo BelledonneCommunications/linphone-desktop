@@ -34,10 +34,13 @@ set(APP_TARGETS ${LinphoneCxx_TARGET})
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
 set(QT_PACKAGES Core Quick Qml Widgets)# Search Core at first for initialize Qt scripts for next find_packages.
-#find_package(Qt6 REQUIRED COMPONENTS Core)	
+find_package(Qt6 REQUIRED COMPONENTS Core)	
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
 
-qt6_standard_project_setup()
+#qt6_standard_project_setup()
+set(CMAKE_AUTOMOC ON) 
+set(CMAKE_AUTORCC ON) 
+set(CMAKE_AUTOUIC ON)
 set(_LINPHONEAPP_SOURCES main.cpp)
 set(_LINPHONEAPP_QML_FILES)
 
