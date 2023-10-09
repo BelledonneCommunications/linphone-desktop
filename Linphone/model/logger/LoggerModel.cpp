@@ -31,11 +31,14 @@
 #include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
 
-#include "LoggerStaticModel.hpp"
+#include "core/logger/QtLogger.hpp"
 // -----------------------------------------------------------------------------
 
 LoggerModel::LoggerModel(QObject *parent) : QObject(parent) {
-	connect(LoggerStaticModel::getInstance(), &LoggerStaticModel::logReceived, this, &LoggerModel::onLog,
+	connect(QtLogger::getInstance(), &QtLogger::logReceived, this, &LoggerModel::onLog, Qt::QueuedConnection);
+	connect(QtLogger::getInstance(), &QtLogger::requestVerboseEnabled, this, &LoggerModel::enableVerbose,
+	        Qt::QueuedConnection);
+	connect(QtLogger::getInstance(), &QtLogger::requestQtOnlyEnabled, this, &LoggerModel::enableQtOnly,
 	        Qt::QueuedConnection);
 }
 
@@ -43,11 +46,34 @@ LoggerModel::~LoggerModel() {
 }
 
 bool LoggerModel::isVerbose() const {
-	return mVerbose;
+	return mListener ? mListener->mVerboseEnabled : false;
 }
 
-void LoggerModel::setVerbose(bool verbose) {
-	mVerbose = verbose;
+void LoggerModel::enableVerbose(bool verbose) {
+	if (mListener && mListener->mVerboseEnabled != verbose) {
+		mListener->mVerboseEnabled = verbose;
+		emit verboseEnabledChanged();
+	}
+}
+
+void LoggerModel::enableFullLogs(const bool &full) {
+	auto service = linphone::LoggingService::get();
+	if (service) service->setLogLevel(full ? linphone::LogLevel::Debug : linphone::LogLevel::Message);
+}
+
+bool LoggerModel::qtOnlyEnabled() const {
+	return mListener ? mListener->mQtOnlyEnabled : false;
+}
+
+void LoggerModel::enableQtOnly(const bool &enable) {
+	if (mListener) {
+		if (mListener->mQtOnlyEnabled != enable) {
+			mListener->mQtOnlyEnabled = enable;
+			auto service = linphone::LoggingService::get();
+			if (service) service->setDomain(enable ? Constants::AppDomain : "");
+			emit qtOnlyEnabledChanged();
+		}
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -122,25 +148,6 @@ void LoggerModel::init() {
 	linphone::Core::setLogCollectionMaxFileSize(Constants::MaxLogsCollectionSize);
 
 	enable(true);
-}
-
-void LoggerModel::enableFullLogs(const bool &full) {
-	auto service = linphone::LoggingService::get();
-	if (service) {
-		service->setLogLevel(full ? linphone::LogLevel::Debug : linphone::LogLevel::Message);
-	}
-}
-
-bool LoggerModel::qtOnlyEnabled() const {
-	return mQtOnly;
-}
-
-void LoggerModel::enableQtOnly(const bool &enable) {
-	mQtOnly = enable;
-	auto service = linphone::LoggingService::get();
-	if (service) {
-		service->setDomain(enable ? Constants::AppDomain : "");
-	}
 }
 
 QString LoggerModel::getLogText() const {

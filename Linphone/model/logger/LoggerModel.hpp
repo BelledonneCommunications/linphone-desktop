@@ -35,7 +35,7 @@ public:
 	~LoggerModel();
 
 	bool isVerbose() const;
-	void setVerbose(bool verbose);
+	void enableVerbose(bool verbose);
 	void enable(bool status);
 	QString getLogText() const;
 	void enableFullLogs(const bool &full);
@@ -51,13 +51,11 @@ public slots:
 
 signals:
 	void logReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
+	void verboseEnabledChanged();
+	void qtOnlyEnabledChanged();
 
 private:
 	static void log(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-
-	bool mVerbose = false;
-	bool mQtOnly = false;
-
 	std::shared_ptr<LoggerListener> mListener;
 };
 

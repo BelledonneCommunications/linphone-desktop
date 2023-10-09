@@ -4,7 +4,6 @@ list(APPEND _LINPHONEAPP_SOURCES
 	
 	model/logger/LoggerModel.cpp
 	model/logger/LoggerListener.cpp
-	model/logger/LoggerStaticModel.cpp
 	
 	model/setting/SettingsModel.cpp
 )

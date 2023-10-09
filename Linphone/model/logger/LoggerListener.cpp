@@ -62,7 +62,7 @@ void LoggerListener::onLogMessageWritten(const std::shared_ptr<linphone::Logging
                                          linphone::LogLevel level,
                                          const std::string &message) {
 	bool isAppLog = domain == Constants::AppDomain;
-	if (!mIsVerbose || (!isAppLog && mQtOnlyEnabled)) return;
+	if (!mVerboseEnabled || (!isAppLog && mQtOnlyEnabled)) return;
 	FILE *out = stdout;
 	// TypeColor Date  SourceColor [Domain] TypeColor Type Reset Message
 	QString format = "%1 %2 %3[%4]%1 %5" RESET " %6\n";

@@ -34,9 +34,11 @@ set(APP_TARGETS ${LinphoneCxx_TARGET})
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
 set(QT_PACKAGES Core Quick Qml Widgets)# Search Core at first for initialize Qt scripts for next find_packages.
+if (UNIX AND NOT APPLE)
+	list(APPEND QT_PACKAGES DBus)
+endif()
 find_package(Qt6 REQUIRED COMPONENTS Core)	
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
-
 
 if(${Qt6_VERSION} VERSION_LESS "6.3.0")
 	set(CMAKE_AUTOMOC ON)

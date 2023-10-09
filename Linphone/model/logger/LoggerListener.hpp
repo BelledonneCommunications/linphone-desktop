@@ -30,15 +30,15 @@
 class LoggerListener : public linphone::LoggingServiceListener {
 public:
 	LoggerListener();
+	
+	bool mVerboseEnabled = false;
+	bool mQtOnlyEnabled = false;
 
 private:
 	virtual void onLogMessageWritten(const std::shared_ptr<linphone::LoggingService> &logService,
 	                                 const std::string &domain,
 	                                 linphone::LogLevel level,
 	                                 const std::string &message) override;
-
-	bool mIsVerbose = true;
-	bool mQtOnlyEnabled = false;
 };
 
 #endif

@@ -18,20 +18,28 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "LoggerStaticModel.hpp"
+#include "QtLogger.hpp"
 #include <QMetaMethod>
 // -----------------------------------------------------------------------------
 
-static LoggerStaticModel gLogger;
+static QtLogger gLogger;
 
-LoggerStaticModel::LoggerStaticModel(QObject *parent) : QObject(parent) {
-	qInstallMessageHandler(LoggerStaticModel::onQtLog);
+QtLogger::QtLogger(QObject *parent) : QObject(parent) {
+	qInstallMessageHandler(QtLogger::onQtLog);
 }
 
-LoggerStaticModel *LoggerStaticModel::getInstance() {
+QtLogger *QtLogger::getInstance() {
 	return &gLogger;
 }
 
-void LoggerStaticModel::onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
+void QtLogger::onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
 	emit gLogger.logReceived(type, context.file, context.line, msg);
+}
+
+void QtLogger::enableVerbose(bool verbose) {
+	emit gLogger.requestVerboseEnabled(verbose);
+}
+
+void QtLogger::enableQtOnly(bool qtOnly) {
+	emit gLogger.requestQtOnlyEnabled(qtOnly);
 }

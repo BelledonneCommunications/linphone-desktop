@@ -19,14 +19,16 @@
  */
 
 #include <QQmlApplicationEngine>
+#include <QCommandLineParser>
 #include <QSharedPointer>
 
 #include "core/thread/Thread.hpp"
+#include "core/singleapplication/singleapplication.h"
 #include "model/core/CoreModel.hpp"
 
-class App : public QObject {
+class App : public SingleApplication {
 public:
-	App(QObject *parent = nullptr);
+	App(int &argc, char *argv[]);
 
 	void init();
 	void initCppInterfaces();
@@ -36,4 +38,9 @@ public:
 	QQmlApplicationEngine *mEngine = nullptr;
 	Thread *mLinphoneThread = nullptr;
 	QSharedPointer<CoreModel> mCoreModel;
+	
+private: 
+	void createCommandParser();
+	
+	QCommandLineParser *mParser = nullptr;
 };

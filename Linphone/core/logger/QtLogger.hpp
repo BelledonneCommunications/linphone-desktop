@@ -27,16 +27,21 @@
 // =============================================================================
 
 // Only one instance. Use getInstance() and logReceived() to bind logs coming from Qt.
-class LoggerStaticModel : public QObject {
+class QtLogger : public QObject {
 	Q_OBJECT
 public:
-	LoggerStaticModel(QObject *parent = nullptr);
+	QtLogger(QObject *parent = nullptr);
 
-	static LoggerStaticModel *getInstance();
+	static QtLogger *getInstance();
 	static void onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	static void enableVerbose(bool verbose);
+	static void enableQtOnly(bool qtOnly);
+	
 
 signals:
 	void logReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
+	void requestVerboseEnabled(bool verbose);
+	void requestQtOnlyEnabled(bool qtOnly);
 };
 
 #endif

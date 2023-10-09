@@ -22,13 +22,16 @@
 
 #include <QCoreApplication>
 
+#include "core/logger/QtLogger.hpp"
+#include "core/singleapplication/singleapplication.h"
 #include "tool/Constants.hpp"
 #include "view/Page/LoginPage.hpp"
 
-App::App(QObject *parent) : QObject(parent) {
+App::App(int &argc, char *argv[])
+    : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	mLinphoneThread = new Thread(this);
 	init();
-	qDebug() << "Starting Thread";
+	qDebug() << "[App] Starting Thread";
 	mLinphoneThread->start();
 }
 
@@ -37,8 +40,19 @@ App::App(QObject *parent) : QObject(parent) {
 //-----------------------------------------------------------
 
 void App::init() {
-	// Core
+	// Core. Manage the logger so it must be instantiate at first.
 	mCoreModel = QSharedPointer<CoreModel>::create("", mLinphoneThread);
+
+	// Console Commands
+	createCommandParser();
+	mParser->parse(this->arguments());
+	// TODO : Update languages for command translations.
+
+	createCommandParser(); // Recreate parser in order to use translations from config.
+	mParser->process(*this);
+
+	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
+	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 
 	connect(mLinphoneThread, &QThread::started, mCoreModel.get(), &CoreModel::start);
 	// QML
@@ -61,4 +75,28 @@ void App::initCppInterfaces() {
 	qmlRegisterSingletonType<LoginPage>(
 	    Constants::MainQmlUri, 1, 0, "LoginPageCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new LoginPage(engine); });
+}
+
+//------------------------------------------------------------
+void App::createCommandParser() {
+	if (!mParser) delete mParser;
+
+	mParser = new QCommandLineParser();
+	mParser->setApplicationDescription(tr("applicationDescription"));
+	mParser->addPositionalArgument("command", tr("commandLineDescription").replace("%1", APPLICATION_NAME),
+	                               "[command]");
+	mParser->addOptions({
+	    {{"h", "help"}, tr("commandLineOptionHelp")},
+	    {"cli-help", tr("commandLineOptionCliHelp").replace("%1", APPLICATION_NAME)},
+	    {{"v", "version"}, tr("commandLineOptionVersion")},
+	    {"config", tr("commandLineOptionConfig").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionConfigArg")},
+	    {"fetch-config", tr("commandLineOptionFetchConfig").replace("%1", EXECUTABLE_NAME),
+	     tr("commandLineOptionFetchConfigArg")},
+	    {{"c", "call"}, tr("commandLineOptionCall").replace("%1", EXECUTABLE_NAME), tr("commandLineOptionCallArg")},
+#ifndef Q_OS_MACOS
+	    {"iconified", tr("commandLineOptionIconified")},
+#endif // ifndef Q_OS_MACOS
+	    {{"V", "verbose"}, tr("commandLineOptionVerbose")},
+	    {"qt-logs-only", tr("commandLineOptionQtLogsOnly")},
+	});
 }

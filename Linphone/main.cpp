@@ -7,7 +7,7 @@
 #include "core/App.hpp"
 
 int main(int argc, char *argv[]) {
-	QApplication app(argc, argv);
+	App app(argc, argv);
 
 	QTranslator translator;
 	const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -18,7 +18,7 @@ int main(int argc, char *argv[]) {
 			break;
 		}
 	}
-	App a;
+
 	int result = app.exec();
 	return result;
 }
