@@ -142,6 +142,7 @@ ChatRoomModel::ChatRoomModel (const std::shared_ptr<linphone::ChatRoom>& chatRoo
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::fullPeerAddressChanged);
 	QObject::connect(coreManager->getContactsListModel(), &ContactsListModel::contactUpdated, this, &ChatRoomModel::avatarChanged);
 
+	connect(this, &ChatRoomModel::stateChanged, this, &ChatRoomModel::updatingChanged);
 	connect(this, &ChatRoomModel::fullPeerAddressChanged, this, &ChatRoomModel::usernameChanged);
 	connect(this, &ChatRoomModel::messageCountReset, this, &ChatRoomModel::unreadMessagesCountChanged);
 	connect(this, &ChatRoomModel::unreadMessagesCountChanged, coreManager, &CoreManager::eventCountChanged);

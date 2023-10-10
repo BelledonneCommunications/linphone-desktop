@@ -37,7 +37,7 @@ Linphone is dual licensed, and is available either :
 
 Here are the general instructions to build Linphone for desktop. The specific instructions for each build platform is described just below.
 You will need the tools :
-- `cmake` >= 3.15 : download it in https://cmake.org/download/
+- `cmake` >= 3.22 : download it in https://cmake.org/download/
 - `python` : https://www.python.org/downloads/release/python-381/
 - `pip` : it is already embedded inside Python, so there should be nothing to do about it
 - `yasm` : https://yasm.tortall.net/Download.html
