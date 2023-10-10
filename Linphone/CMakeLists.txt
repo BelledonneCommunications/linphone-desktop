@@ -2,21 +2,9 @@ cmake_minimum_required(VERSION 3.16)
 
 project(Linphone VERSION 0.1 LANGUAGES CXX)
 
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
-include(application_info.cmake)
-if(APPLE)
-	if(MS2_PLUGINS_LOCATION)
-		set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
-	else()
-		set(MSPLUGINS_DIR "Frameworks/mediastreamer2.framework/Versions/A/Libraries")
-	endif()
-else()
-	set(MSPLUGINS_DIR "plugins/mediastreamer")
-endif()
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
-
+################################################################
+#						PACKAGES
+################################################################
 set(LINPHONE_PACKAGES LinphoneCxx)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/Modules")
 foreach(PACKAGE ${LINPHONE_PACKAGES})
@@ -40,6 +28,27 @@ endif()
 find_package(Qt6 REQUIRED COMPONENTS Core)	
 find_package(Qt6 REQUIRED COMPONENTS ${QT_PACKAGES})
 
+################################################################
+#						CONFIGS
+################################################################
+if(NOT WIN32)
+	add_compile_options(-Werror=deprecated-declarations)
+endif()
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
+include(application_info.cmake)
+
+if(APPLE)
+	if(MS2_PLUGINS_LOCATION)
+		set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
+	else()
+		set(MSPLUGINS_DIR "Frameworks/mediastreamer2.framework/Versions/A/Libraries")
+	endif()
+else()
+	set(MSPLUGINS_DIR "plugins/mediastreamer")
+endif()
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
+
 if(${Qt6_VERSION} VERSION_LESS "6.3.0")
 	set(CMAKE_AUTOMOC ON)
 	set(CMAKE_AUTORCC ON)
@@ -47,6 +56,14 @@ if(${Qt6_VERSION} VERSION_LESS "6.3.0")
 else()
 	qt6_standard_project_setup()
 endif()
+
+
+
+
+################################################################
+#						SOURCES
+################################################################
+
 
 set(_LINPHONEAPP_SOURCES main.cpp)
 set(_LINPHONEAPP_QML_FILES)
@@ -68,6 +85,10 @@ qt6_add_qml_module(Linphone
     QML_FILES ${_LINPHONEAPP_QML_FILES}
 )
 
+################################################################
+#						TARGETS LINKS
+################################################################
+
 set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER org.linphone
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
@@ -88,6 +109,10 @@ endforeach()
 foreach(T ${QT_PACKAGES})
 	target_link_libraries(${TARGET_NAME} PRIVATE Qt6::${T})
 endforeach()
+
+################################################################
+#						INSTALL
+################################################################
 
 install(TARGETS ${TARGET_NAME}
     BUNDLE DESTINATION .
