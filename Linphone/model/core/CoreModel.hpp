@@ -42,15 +42,24 @@ public:
 	void start();
 
 	static CoreModel *getInstance();
+	
+	void setConfigPath(QString path);
+	
 
 	bool mEnd = false;
-	QString mConfigPath;
 
 	std::shared_ptr<linphone::Core> mCore;
 	std::shared_ptr<LoggerModel> mLogger;
 
 signals:
 	void loggerInitialized();
+private:
+	QString mConfigPath;
+	
+	void setPathBeforeCreation();
+	void setPathsAfterCreation();
+	void setPathAfterStart();
+	
 };
 
 #endif

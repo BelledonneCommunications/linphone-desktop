@@ -27,6 +27,7 @@
 #include <QSysInfo>
 #include <QTimer>
 
+#include "core/path/Paths.hpp"
 #include "tool/Utils.hpp"
 
 // =============================================================================
@@ -41,10 +42,14 @@ CoreModel::~CoreModel() {
 }
 
 void CoreModel::start() {
-	auto configPath = Utils::appStringToCoreString(mConfigPath);
-	mCore = linphone::Factory::get()->createCore(configPath, "", nullptr);
-	mCore->enableAutoIterate(true);
+	setPathBeforeCreation();
+	mCore =
+	    linphone::Factory::get()->createCore(Utils::appStringToCoreString(Paths::getConfigFilePath(mConfigPath)),
+	                                         Utils::appStringToCoreString(Paths::getFactoryConfigFilePath()), nullptr);
+	setPathsAfterCreation();
 	mCore->start();
+	setPathAfterStart();
+	mCore->enableAutoIterate(true);
 }
 // -----------------------------------------------------------------------------
 
@@ -54,4 +59,57 @@ CoreModel *CoreModel::getInstance() {
 
 std::shared_ptr<linphone::Core> CoreModel::getCore() {
 	return mCore;
+}
+
+//-------------------------------------------------------------------------------
+void CoreModel::setConfigPath(QString path) {
+	if (mConfigPath != path) {
+		mConfigPath = path;
+		if (!mCore) {
+			qWarning() << "[CoreModel] Setting config path after core creation is not yet supported";
+		}
+	}
+}
+
+//-------------------------------------------------------------------------------
+//				PATHS
+//-------------------------------------------------------------------------------
+#define SET_FACTORY_PATH(TYPE, PATH)                                                                                   \
+	do {                                                                                                               \
+		qInfo() << QStringLiteral("[CoreModel] Set `%1` factory path: `%2`").arg(#TYPE).arg(PATH);                     \
+		factory->set##TYPE##Dir(Utils::appStringToCoreString(PATH));                                                   \
+	} while (0);
+
+void CoreModel::setPathBeforeCreation() {
+	std::shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+	SET_FACTORY_PATH(Msplugins, Paths::getPackageMsPluginsDirPath());
+	SET_FACTORY_PATH(TopResources, Paths::getPackageTopDirPath());
+	SET_FACTORY_PATH(SoundResources, Paths::getPackageSoundsResourcesDirPath());
+	SET_FACTORY_PATH(DataResources, Paths::getPackageDataDirPath());
+	SET_FACTORY_PATH(Data, Paths::getAppLocalDirPath());
+	SET_FACTORY_PATH(Download, Paths::getDownloadDirPath());
+	SET_FACTORY_PATH(Config, Paths::getConfigDirPath(true));
+}
+
+void CoreModel::setPathsAfterCreation() {
+	QString friendsDb = Paths::getFriendsListFilePath();
+	qInfo() << QStringLiteral("[CoreModel] Set Database `Friends` path: `%1`").arg(friendsDb);
+	mCore->setFriendsDatabasePath(Utils::appStringToCoreString(friendsDb));
+}
+
+void CoreModel::setPathAfterStart() {
+	// Use application path if Linphone default is not available
+	if (mCore->getZrtpSecretsFile().empty() ||
+	    !Paths::filePathExists(Utils::coreStringToAppString(mCore->getZrtpSecretsFile()), true))
+		mCore->setZrtpSecretsFile(Utils::appStringToCoreString(Paths::getZrtpSecretsFilePath()));
+	qInfo() << "[CoreModel] Using ZrtpSecrets path : " << QString::fromStdString(mCore->getZrtpSecretsFile());
+	// Use application path if Linphone default is not available
+	if (mCore->getUserCertificatesPath().empty() ||
+	    !Paths::filePathExists(Utils::coreStringToAppString(mCore->getUserCertificatesPath()), true))
+		mCore->setUserCertificatesPath(Utils::appStringToCoreString(Paths::getUserCertificatesDirPath()));
+	qInfo() << "[CoreModel] Using UserCertificate path : " << QString::fromStdString(mCore->getUserCertificatesPath());
+	// Use application path if Linphone default is not available
+	if (mCore->getRootCa().empty() || !Paths::filePathExists(Utils::coreStringToAppString(mCore->getRootCa())))
+		mCore->setRootCa(Utils::appStringToCoreString(Paths::getRootCaFilePath()));
+	qInfo() << "[CoreModel] Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
 }

@@ -40,6 +40,6 @@ QString Settings::getConfigPath(const QCommandLineParser &parser) {
 		// Utils::coreStringToAppString(Paths::getConfigDirPath(false)), true));
 	}
 	if (configPath == "") configPath = Paths::getConfigFilePath(filePath, false);
-	if (configPath == "") configPath = Paths::getConfigFilePath("", false);
+	if (configPath == "" && !filePath.isEmpty()) configPath = Paths::getConfigFilePath("", false);
 	return configPath;
 }
