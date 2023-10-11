@@ -190,7 +190,7 @@ QString Paths::getAppLocalDirPath() {
 }
 
 QString Paths::getAssistantConfigDirPath() {
-	return getReadableDirPath(getAppAssistantConfigDirPath());
+	return "://data/assistant/";
 }
 
 QString Paths::getAvatarsDirPath() {

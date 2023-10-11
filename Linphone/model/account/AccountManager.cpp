@@ -21,6 +21,7 @@
 #include "AccountManager.hpp"
 
 #include <QDebug>
+#include <QTemporaryFile>
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
@@ -31,9 +32,11 @@ AccountManager::AccountManager(QObject *parent) : QObject(parent) {
 
 std::shared_ptr<linphone::Account> AccountManager::createAccount(const QString &assistantFile) {
 	auto core = CoreModel::getInstance()->getCore();
-	QString assistantPath = Paths::getAssistantConfigDirPath() + assistantFile;
+	QString assistantPath = "://data/assistant/" + assistantFile;
 	qInfo() << QStringLiteral("[AccountManager] Set config on assistant: `%1`.").arg(assistantPath);
-	core->getConfig()->loadFromXmlFile(Utils::appStringToCoreString(assistantPath));
+	QFile resource(assistantPath);
+	auto file = QTemporaryFile::createNativeFile(resource);
+	core->getConfig()->loadFromXmlFile(Utils::appStringToCoreString(file->fileName()));
 	return core->createAccount(core->createAccountParams());
 }
 

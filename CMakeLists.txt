@@ -44,7 +44,7 @@ project(linphoneqt)
 
 include(GNUInstallDirs)
 include(CheckCXXCompilerFlag)
-#include(linphone-app/application_info.cmake)
+include(Linphone/application_info.cmake)
 
 set(CMAKE_CXX_STANDARD 17)
 if(LINPHONEAPP_INSTALL_PREFIX)
@@ -66,7 +66,7 @@ if( APPLE )
 	set(CMAKE_INSTALL_DATAROOTDIR "${APPLICATION_NAME}.app/Contents/Resources/share")
 
 	if( NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.9" CACHE STRING "Minimum OS X deployment version")
+		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")#Qt: 'path' is unavailable: introduced in macOS 10.15
 	endif()
 	if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "arm64")# TODO: add universal build
 		set(LINPHONESDK_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build for: comma-separated list of values in [x86_64]")
@@ -79,7 +79,6 @@ elseif(WIN32)
     set(LINPHONESDK_BUILD_TYPE "Default")
 else()
 endif()
-
 
 if(NOT LINPHONE_OUTPUT_DIR)# set this variable only if you don't build the module
 	set(LINPHONE_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
