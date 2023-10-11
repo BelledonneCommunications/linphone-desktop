@@ -18,30 +18,28 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef QT_LOGGER_H_
-#define QT_LOGGER_H_
+#ifndef ACCOUNT_MANAGER_H_
+#define ACCOUNT_MANAGER_H_
 
-#include <QMetaMethod>
 #include <QObject>
+#include <linphone++/linphone.hh>
 
-// =============================================================================
+#include "AccountListener.hpp"
 
-// Only one instance. Use getInstance() and logReceived() to bind logs coming from Qt.
-class QtLogger : public QObject {
-	Q_OBJECT
+class AccountManager: public QObject {
+Q_OBJECT
 public:
-	QtLogger(QObject *parent = nullptr);
-
-	static QtLogger *getInstance();
-	static void onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-	static void enableVerbose(bool verbose);
-	static void enableQtOnly(bool qtOnly);
+	AccountManager(QObject *parent = nullptr);
 	
-
+	bool login(QString username, QString password);
+	
+	std::shared_ptr<linphone::Account> createAccount(const QString& assistantFile);
+	
+	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> & account, linphone::RegistrationState state, const std::string & message);
 signals:
-	void logReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
-	void requestVerboseEnabled(bool verbose);
-	void requestQtOnlyEnabled(bool qtOnly);
+	void logged(bool isLoggued);
+private:
+	std::shared_ptr<AccountListener> mAccountListener;
 };
 
 #endif

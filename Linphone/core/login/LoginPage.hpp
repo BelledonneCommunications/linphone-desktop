@@ -18,17 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "LoginPage.hpp"
-#include <QTimer>
+#include <QObject>
 
-LoginPage::LoginPage(QObject *parent) : QObject(parent) {
-}
+class LoginPage : public QObject {
+	Q_OBJECT
 
-bool LoginPage::isLogged() {
-	static bool testLog = false;
-	QTimer::singleShot(2000, [&]() mutable {
-		testLog = true;
-		emit isLoggedChanged();
-	});
-	return testLog;
-}
+public:
+	LoginPage(QObject *parent = nullptr);
+
+	Q_PROPERTY(bool isLogged READ isLogged NOTIFY isLoggedChanged)
+	
+	Q_INVOKABLE void login(const QString& username, const QString& password);
+
+	bool isLogged() const;
+	void setIsLogged(bool status);
+
+signals:
+	void isLoggedChanged();
+private:
+	bool mIsLogged = false;
+};

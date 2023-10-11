@@ -1,4 +1,7 @@
 list(APPEND _LINPHONEAPP_SOURCES
+	model/account/AccountListener.cpp
+	model/account/AccountManager.cpp
+
 	model/core/CoreModel.cpp
 	model/core/CoreListener.cpp
 	

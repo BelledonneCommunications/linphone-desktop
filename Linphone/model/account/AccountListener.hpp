@@ -18,18 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef ACCOUNT_LISTENER_H_
+#define ACCOUNT_LISTENER_H_
+
 #include <QObject>
+#include <linphone++/linphone.hh>
 
-class LoginPage : public QObject {
+class AccountListener : public QObject, public linphone::AccountListener {
 	Q_OBJECT
-
 public:
-	LoginPage(QObject *parent = nullptr);
+	AccountListener(QObject *parent = nullptr);
 
-	Q_PROPERTY(bool isLogged READ isLogged NOTIFY isLoggedChanged)
-
-	bool isLogged();
+	virtual void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
+	                                        linphone::RegistrationState state,
+	                                        const std::string &message) override;
 
 signals:
-	void isLoggedChanged();
+	void registrationStateChanged(const std::shared_ptr<linphone::Account> & account, linphone::RegistrationState state, const std::string & message);
 };
+
+#endif

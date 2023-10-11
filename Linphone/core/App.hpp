@@ -29,18 +29,35 @@
 class App : public SingleApplication {
 public:
 	App(int &argc, char *argv[]);
+	static App* getInstance();
+	
+// App::postModelAsync(<lambda>) => run lambda in model thread and continue.
+// App::postModelSync(<lambda>) => run lambda in current thread and block connection.
+	template<typename Func, typename... Args>
+	static auto postModelAsync(Func&& callable, Args&& ...args) {
+		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable, args...);
+	}
+	template<typename Func>
+	static auto postModelAsync(Func&& callable) {
+		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable);
+	}
+	template<typename Func>
+	static auto postModelSync(Func&& callable) {
+		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable
+			, QThread::currentThread() != CoreModel::getInstance()->thread() ? Qt::BlockingQueuedConnection : Qt::DirectConnection);
+	}
 
+	void clean();
 	void init();
 	void initCppInterfaces();
 
 	void onLoggerInitialized();
 
 	QQmlApplicationEngine *mEngine = nullptr;
-	Thread *mLinphoneThread = nullptr;
-	QSharedPointer<CoreModel> mCoreModel;
 	
 private: 
 	void createCommandParser();
 	
 	QCommandLineParser *mParser = nullptr;
+	Thread *mLinphoneThread = nullptr;
 };

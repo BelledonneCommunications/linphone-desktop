@@ -1,6 +1,7 @@
 list(APPEND _LINPHONEAPP_SOURCES
 	core/App.cpp
 	core/logger/QtLogger.cpp
+	core/login/LoginPage.cpp
 	core/path/Paths.cpp
 	core/setting/Settings.cpp
 	core/thread/Thread.cpp

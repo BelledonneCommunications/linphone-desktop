@@ -13,7 +13,7 @@ Item{
 		RowLayout{
 			Button{
 				text: 'Sign In'
-				onClicked: console.log("Click!")
+				onClicked: LoginPageCpp.login("myusername", "passy")
 			}
 			Button{
 				text: 'Sign Out'

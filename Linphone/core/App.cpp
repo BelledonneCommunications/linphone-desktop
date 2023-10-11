@@ -23,9 +23,9 @@
 #include <QCoreApplication>
 
 #include "core/logger/QtLogger.hpp"
+#include "core/login/LoginPage.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "tool/Constants.hpp"
-#include "view/Page/LoginPage.hpp"
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
@@ -35,14 +35,18 @@ App::App(int &argc, char *argv[])
 	mLinphoneThread->start();
 }
 
+App *App::getInstance() {
+	return dynamic_cast<App *>(QApplication::instance());
+}
+
 //-----------------------------------------------------------
 //		Initializations
 //-----------------------------------------------------------
 
 void App::init() {
 	// Core. Manage the logger so it must be instantiate at first.
-	mCoreModel = QSharedPointer<CoreModel>::create("", mLinphoneThread);
-
+	auto coreModel = CoreModel::create("", mLinphoneThread);
+	connect(mLinphoneThread, &QThread::started, coreModel.get(), &CoreModel::start);
 	// Console Commands
 	createCommandParser();
 	mParser->parse(this->arguments());
@@ -54,7 +58,6 @@ void App::init() {
 	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 
-	connect(mLinphoneThread, &QThread::started, mCoreModel.get(), &CoreModel::start);
 	// QML
 	mEngine = new QQmlApplicationEngine(this);
 	mEngine->addImportPath(":/");
@@ -78,6 +81,13 @@ void App::initCppInterfaces() {
 }
 
 //------------------------------------------------------------
+
+void App::clean() {
+	mLinphoneThread->exit();
+	mLinphoneThread->wait();
+	delete mLinphoneThread;
+}
+
 void App::createCommandParser() {
 	if (!mParser) delete mParser;
 

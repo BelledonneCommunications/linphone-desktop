@@ -27,21 +27,39 @@
 #include <QSysInfo>
 #include <QTimer>
 
+#include "core/App.hpp"
 #include "core/path/Paths.hpp"
 #include "tool/Utils.hpp"
 
 // =============================================================================
 
-CoreModel::CoreModel(const QString &configPath, QObject *parent) : QObject(parent) {
+QSharedPointer<CoreModel> CoreModel::gCoreModel;
+
+CoreModel::CoreModel(const QString &configPath, QThread *parent) : QObject() {
+	connect(parent, &QThread::finished, this, [this]() {
+		// Model thread
+		if (mCore && mCore->getGlobalState() == linphone::GlobalState::On) mCore->stop();
+		gCoreModel = nullptr;
+	});
 	mConfigPath = configPath;
 	mLogger = std::make_shared<LoggerModel>(this);
 	mLogger->init();
+	moveToThread(parent);
 }
 
 CoreModel::~CoreModel() {
 }
 
+QSharedPointer<CoreModel> CoreModel::create(const QString &configPath, QThread *parent) {
+	auto model = QSharedPointer<CoreModel>::create(configPath, parent);
+	gCoreModel = model;
+	return model;
+}
+
 void CoreModel::start() {
+	mIterateTimer = new QTimer(this);
+	mIterateTimer->setInterval(30);
+	connect(mIterateTimer, &QTimer::timeout, [this]() { mCore->iterate(); });
 	setPathBeforeCreation();
 	mCore =
 	    linphone::Factory::get()->createCore(Utils::appStringToCoreString(Paths::getConfigFilePath(mConfigPath)),
@@ -49,12 +67,12 @@ void CoreModel::start() {
 	setPathsAfterCreation();
 	mCore->start();
 	setPathAfterStart();
-	mCore->enableAutoIterate(true);
+	mIterateTimer->start();
 }
 // -----------------------------------------------------------------------------
 
-CoreModel *CoreModel::getInstance() {
-	return nullptr;
+QSharedPointer<CoreModel> CoreModel::getInstance() {
+	return gCoreModel;
 }
 
 std::shared_ptr<linphone::Core> CoreModel::getCore() {
