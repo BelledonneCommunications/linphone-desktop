@@ -15,12 +15,12 @@ ColumnLayout {
 	// ---------------------------------------------------------------------------
 	// Info.
 	// ---------------------------------------------------------------------------
-	
+	property bool isVisible: SettingsModel.getShowForcedAssistantPage() < 0
 	Item {
 		id: infoItem
 		Layout.fillHeight: true
 		Layout.fillWidth: true
-		
+		visible: parent.isVisible
 		ColumnLayout {
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 0
@@ -80,7 +80,7 @@ ColumnLayout {
 		Layout.bottomMargin: 10
 		Layout.maximumWidth: infoItem.width
 		Layout.alignment: Qt.AlignHCenter
-		visible: applicationVendor != '' && ConstantsCpp.CguUrl != '' && ConstantsCpp.PrivatePolicyUrl != ''				
+		visible: applicationVendor != '' && ConstantsCpp.CguUrl != '' && ConstantsCpp.PrivatePolicyUrl != '' && parent.isVisible				
 		checked: SettingsModel.cguAccepted
 		onCheckedChanged: SettingsModel.cguAccepted = checked
 		
@@ -101,6 +101,7 @@ ColumnLayout {
 		cellHeight: height / 2
 		cellWidth: width / 2
 		enabled: cguCheckBox.checked
+		visible: parent.isVisible
 		
 		delegate: Item {
 			height: buttons.cellHeight
@@ -116,6 +117,11 @@ ColumnLayout {
 				text: $text.replace('%1', Qt.application.name.toUpperCase())
 				
 				onClicked:{ assistant.pushView($view, $props) }
+				Component.onCompleted: {
+					if (SettingsModel.getShowForcedAssistantPage() == index) {
+						assistant.pushView($view, $props)
+					}
+				}
 			}
 		}
 		Connections{

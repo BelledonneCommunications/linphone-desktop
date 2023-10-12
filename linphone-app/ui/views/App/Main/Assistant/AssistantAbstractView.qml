@@ -2,6 +2,7 @@ import QtQuick 2.7
 import QtQuick.Layouts 1.3
 
 import Common 1.0
+import Linphone 1.0
 
 import App.Styles 1.0
 
@@ -19,7 +20,7 @@ Item {
 	property alias description: description.text
 	property alias title: title.text
 	
-	property bool backEnabled: true
+	property bool backEnabled: SettingsModel.getShowForcedAssistantPage() < 0
 	property bool maximized: false	// Used to stretch content to fit all the view (the title will be set to top)
 	
 	default property alias _content: content.data

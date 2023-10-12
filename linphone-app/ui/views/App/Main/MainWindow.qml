@@ -70,6 +70,14 @@ ApplicationWindow {
 		active: false
 		anchors.fill: parent
 		
+		onLoaded: switch(SettingsModel.getShowDefaultPage()) {
+					case 1 : window.setView('Calls'); break;
+					case 2 : window.setView('Conversations'); break;
+					case 3 : ContactsListModel.update(); window.setView('Contacts'); break;
+					case 4 : window.setView('Conferences'); break;
+				default:{}
+				}
+		
 		sourceComponent: ColumnLayout {
 			// Workaround to get these properties in `MainWindow.js`.
 			readonly property alias contentLoader: contentLoader
@@ -266,8 +274,12 @@ ApplicationWindow {
 				// Main menu.
 				Rectangle{
 					id: mainMenu
-					property int currentMenu: 0
-					
+					property int currentMenu: contentLoader.source == 'qrc:/ui/views/App/Main/Home.qml' || contentLoader.source == 'qrc:/ui/views/App/Main/Assistant.qml' ? 0
+											: contentLoader.source == 'qrc:/ui/views/App/Main/Calls.qml' ? 1
+											: contentLoader.source == 'qrc:/ui/views/App/Main/Conversations.qml' ? 2
+											: contentLoader.source == 'qrc:/ui/views/App/Main/Contacts.qml' ? 3
+											: contentLoader.source == 'qrc:/ui/views/App/Main/Conferences.qml' ? 4
+											: -1
 					Layout.fillHeight: true
 					Layout.preferredWidth: MainWindowStyle.menu.leftMargin + MainWindowStyle.menu.rightMargin + MainWindowStyle.menu.buttonSize
 					color: '#F3F3F3'
@@ -382,7 +394,7 @@ ApplicationWindow {
 						
 						anchors.fill: parent
 						
-						source: 'Home.qml'
+						source: SettingsModel.getShowHomePage() ? 'Home.qml' : 'Assistant.qml'
 						Component.onCompleted: if(accountStatus.noAccountConfigured) source= 'Assistant.qml' // default proxy = 1. Do not use this set diretly in source because of bindings that will override next setSource
 					}
 					TelKeypad {

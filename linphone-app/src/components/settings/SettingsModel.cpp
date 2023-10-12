@@ -1723,6 +1723,18 @@ bool SettingsModel::getShowStartVideoCallButton ()const{
 	return !!mConfig->getInt(UiSection, "show_start_video_button", 1);
 }
 
+int SettingsModel::getShowDefaultPage() const {
+    return mConfig->getInt(UiSection, "show_default_page", -1);
+}
+
+int SettingsModel::getShowForcedAssistantPage() const {
+    return mConfig->getInt(UiSection, "show_forced_assistant_page", -1);
+}
+
+bool SettingsModel::getShowHomePage() const {
+    return !!mConfig->getInt(UiSection, "show_home_page", true);
+}
+
 bool SettingsModel::isMipmapEnabled() const{
 	return !!mConfig->getInt(UiSection, "mipmap_enabled", 0);
 }

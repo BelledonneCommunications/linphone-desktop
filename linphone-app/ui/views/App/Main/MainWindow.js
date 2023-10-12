@@ -55,6 +55,7 @@ function unlockView () {
 }
 
 function setView (view, props, callback) {
+	if(view == 'Home' && !Linphone.SettingsModel.getShowHomePage()) view = 'Assistant';
   function apply (view, props, showWindow, callback) {
 	if(showWindow)
 		Linphone.App.smartShowWindow(window)
@@ -102,24 +103,6 @@ function manageAccounts () {
 // -----------------------------------------------------------------------------
 
 function updateSelectedEntry (view, props) {
-  var item = mainLoader.item
-
-  var mainMenu = item.mainMenu
-  var timeline = item.timeline
-
-  if (view === 'Home') {
-	mainMenu.currentMenu = 0
-  } else if (view === 'Calls') {
-	mainMenu.currentMenu = 1
-  } else if (view === 'Conversations') {
-	mainMenu.currentMenu = 2
-  } else if (view === 'Contacts') {
-	mainMenu.currentMenu = 3
-  } else if (view === 'Conferences') {
-	mainMenu.currentMenu = 4
-  }else{
-	mainMenu.currentMenu = -1
-  }
 }
 
 // -----------------------------------------------------------------------------

@@ -23,14 +23,14 @@ import Common.Styles 1.0
 		title: qsTr('useOtherSipAccountTitle')
 		
 		
-		property bool showWarning : true
+		property bool showWarning : SettingsModel.getShowForcedAssistantPage() < 0 
 		// ---------------------------------------------------------------------------
 		
 		StackView {
 			id: mainStack
 			width: currentItem.implicitWidth>0 ? currentItem.implicitWidth : currentItem.width
 			height: currentItem.implicitHeight>0 ? currentItem.implicitHeight : currentItem.height
-			initialItem: warningComponent
+			initialItem: showWarning ? warningComponent : formComponent
 			anchors.horizontalCenter: parent.horizontalCenter
 		}
 		Component{

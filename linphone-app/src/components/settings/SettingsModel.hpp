@@ -622,6 +622,9 @@ public:
 	Q_INVOKABLE bool getShowLocalSipAccount () const;
 	Q_INVOKABLE bool getShowStartChatButton () const;
 	Q_INVOKABLE bool getShowStartVideoCallButton () const;
+	Q_INVOKABLE int getShowDefaultPage() const; // -1 : default
+	Q_INVOKABLE int getShowForcedAssistantPage() const; // -1 : no force
+	Q_INVOKABLE bool getShowHomePage() const;
 	
 	bool isMipmapEnabled() const;
 	void setMipmapEnabled(const bool& enabled);
