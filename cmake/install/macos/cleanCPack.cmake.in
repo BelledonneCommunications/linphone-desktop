@@ -1,0 +1,49 @@
+################################################################################
+#
+#  Copyright (c) 2017-2024 Belledonne Communications SARL.
+# 
+#  This file is part of linphone-desktop
+#  (see https://www.linphone.org).
+# 
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+# 
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+# 
+#  You should have received a copy of the GNU General Public License
+#  along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+################################################################################
+
+#	This script is used for CPack to remove root folders that comes from SDK.
+#	As CPack call install() from SDK, its files are into cmake_install_prefix too.
+#	It is neccessary to use it because CPack doesn't take account of some install()  (those that do the move)
+
+set(DO_SIGNING @LINPHONE_BUILDER_SIGNING_IDENTITY@)
+
+execute_process(COMMAND rsync -a --force "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/Frameworks/" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/@CMAKE_INSTALL_LIBDIR@/") #Use rsync to bypass symlinks override issues of frameworks. copy_directory will fail without explicit error...
+#execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/Frameworks/" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/@CMAKE_INSTALL_LIBDIR@/")
+execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/Frameworks/")
+
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/include/" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/@CMAKE_INSTALL_INCLUDEDIR@/")
+execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/include/")
+# move share
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/share/" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/@CMAKE_INSTALL_DATAROOTDIR@/")
+execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/share/")
+# move mkspecs
+execute_process(COMMAND ${CMAKE_COMMAND} -E copy_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/mkspecs/" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/@CMAKE_INSTALL_DATAROOTDIR@/")
+execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/mkspecs/")
+# remove other folders
+execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/cmake/")
+execute_process(COMMAND ${CMAKE_COMMAND} -E remove_directory "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE/lib/")
+
+#CPack doesn't sign all files.
+if (DO_SIGNING)
+	execute_process(COMMAND bash "@CMAKE_SOURCE_DIR@/cmake/install/sign_package.sh" codesign "@LINPHONE_BUILDER_SIGNING_IDENTITY@" "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/ALL_IN_ONE")
+	#execute_process(COMMAND codesign --entitlements" "@CMAKE_CURRENT_BINARY_DIR@/../../entitlements.xml" "--force" "--deep" "--timestamp" "--options" "runtime,library" "--verbose" "-s" "@LINPHONE_BUILDER_SIGNING_IDENTITY@" "@APPLICATION_OUTPUT_DIR@/@APPLICATION_NAME@.app")
+endif()

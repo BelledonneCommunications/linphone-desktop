@@ -122,8 +122,8 @@ job-macosx-codesigning:
        - $DEPLOY_MACOSX
   script:
     - cd build
-    - codesign --timestamp --options runtime,library --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/linphone-app/macos/Packages/Linphone*.dmg
-    - ./../tools/app_notarization.sh
+    - codesign --timestamp --options runtime,library --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/Linphone/macos/Packages/Linphone*.dmg
+    - ./../cmake/install/macos/app_notarization.sh
   artifacts:
     when: always
     paths:
