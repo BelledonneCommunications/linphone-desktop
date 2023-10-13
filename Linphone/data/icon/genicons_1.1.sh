@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 ##
-## Copyright (c) 2010-2020 Belledonne Communications SARL.
+## Copyright (c) 2010-2024 Belledonne Communications SARL.
 ##
 ## This file is part of linphone-desktop
 ## (see https://www.linphone.org).
@@ -22,7 +22,7 @@
 for i in 16 22 24 32 64 128 256
 do
   mkdir -p hicolor/${i}x${i}/apps
-  inkscape -z --export-type=png --export-filename=hicolor/${i}x${i}/apps/icon.png -w $i -h $i ../images/linphone_logo.svg
+  inkscape -z --export-type=png --export-filename=hicolor/${i}x${i}/apps/icon.png -w $i -h $i ../image/logo.svg
 done
-convert -density 256x256 -background transparent ../images/linphone_logo.svg -define icon:auto-resize -colors 256 ../icon.ico
-png2icns ../../cmake_builder/linphone_package/macos/linphone.icns hicolor/16x16/apps/icon.png hicolor/32x32/apps/icon.png hicolor/128x128/apps/icon.png hicolor/256x256/apps/icon.png
+convert -density 256x256 -background transparent ../image/logo.svg -define icon:auto-resize -colors 256 ../icon.ico
+png2icns ../../../cmake/install/macos/linphone.icns hicolor/16x16/apps/icon.png hicolor/32x32/apps/icon.png hicolor/128x128/apps/icon.png hicolor/256x256/apps/icon.png

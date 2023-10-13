@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>English</string>
+	<key>CFBundleAllowMixedLocalizations</key>
+	<true/>
+	<key>CFBundleName</key>
+	<string>@APPLICATION_NAME@</string>
+	<key>CFBundleDisplayName</key>
+	<string>@APPLICATION_NAME@</string>
+	<key>CFBundleExecutable</key>
+	<string>@EXECUTABLE_NAME@</string>
+	<key>CFBundleGetInfoString</key>
+	<string>@PACKAGE_VERSION@, (C) @COPYRIGHT_RANGE_DATE@ @APPLICATION_NAME@ @APPLICATION_URL@</string>
+	<key>CFBundleIconFile</key>
+	<string>@EXECUTABLE_NAME@.icns</string>
+	<key>CFBundleIdentifier</key>
+	<string>@APPLICATION_ID@</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>@PACKAGE_VERSION@</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>@PACKAGE_VERSION@</string>
+	<key>NSHumanReadableCopyright</key>
+	<string>Copyright @COPYRIGHT_RANGE_DATE@ @APPLICATION_VENDOR@</string>
+	<key>LSMinimumSystemVersion</key>
+	<string>@CMAKE_OSX_DEPLOYMENT_TARGET@</string>
+	<key>NSAppSleepDisabled</key>
+	<string>YES</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>@APPLICATION_ID@</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>sip</string>
+				<string>sip-@EXECUTABLE_NAME@</string>
+				<string>sips</string>
+				<string>sips-@EXECUTABLE_NAME@</string>
+				<string>tel</string>
+				<string>callto</string>
+				<string>@EXECUTABLE_NAME@-config</string>
+			</array>
+		</dict>
+	</array>
+	<key>NSPrincipalClass</key>
+	<string>NSApplication</string>
+	<key>NSHighResolutionCapable</key>
+	<string>True</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Streaming Video between devices</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Streaming Audio between devices</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Store attachment and allow camera record when selected</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Store attachment and allow camera record when selected</string>
+	<key>NSDesktopFolderUsageDescription</key>
+	<string>Storing configuration files</string>
+	<key>NSDocumentsFolderUsageDescription</key>
+	<string>Can use Documents folder to put logs</string>
+	<key>NSDownloadsFolderUsageDescription</key>
+	<string>Getting files from Download folder for sending attachment</string>
+	<key>NSAppleEventsUsageDescription</key>
+	<string>Used for sending notifications and working with Appnap</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Use for wireless headsets</string>
+	<key>kTCCServiceMediaLibrary</key>
+	<string>Used media library as attachement or for the ringer</string>
+	<key>com.apple.security.device.camera</key>
+	<true/>
+	<key>com.apple.security.device.microphone</key>
+	<true/>
+	<key>com.apple.security.device.audio-input</key>
+	<true/>
+	<key>com.apple.security.personal-information.photos-library</key>
+	<true/>
+</dict>
+</plist>

@@ -1,0 +1,91 @@
+############################################################################
+# packaging.cmake
+# Copyright (C) 2017-2024  Belledonne Communications, Grenoble France
+#
+############################################################################
+#
+# This program is free software; you can redistribute it and/or
+# modify it under the terms of the GNU General Public License
+# as published by the Free Software Foundation; either version 2
+# of the License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+#
+############################################################################
+set(DO_TGZ @CPACK_BINARY_TGZ@)
+set(DO_TZ @CPACK_BINARY_TZ@)
+set(DO_STGZ @CPACK_BINARY_STGZ@)
+set(DO_DRAGNDROP @CPACK_BINARY_DRAGNDROP@)
+set(DO_GENERATOR @DO_GENERATOR@)
+set(DO_APPIMAGE @DO_APPIMAGE@)
+
+
+if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
+  if(DO_TGZ)
+    execute_process( COMMAND ${CMAKE_CPACK_COMMAND} -G TGZ RESULT_VARIABLE CPACK_COMMAND_RESULT)
+    if(CPACK_COMMAND_RESULT)
+      message(FATAL_ERROR "Failed to create TGZ package!")
+    endif()
+  endif()
+  if(DO_TZ)
+    execute_process( COMMAND ${CMAKE_CPACK_COMMAND} -G TZ RESULT_VARIABLE CPACK_COMMAND_RESULT)
+    if(CPACK_COMMAND_RESULT)
+      message(FATAL_ERROR "Failed to create TZ package!")
+    endif()
+  endif()
+  if(DO_STGZ)
+    execute_process( COMMAND ${CMAKE_CPACK_COMMAND} -G STGZ RESULT_VARIABLE CPACK_COMMAND_RESULT)
+    if(CPACK_COMMAND_RESULT)
+      message(FATAL_ERROR "Failed to create STGZ package!")
+    endif()
+  endif()
+  if(DO_DRAGNDROP)
+    execute_process( COMMAND ${CMAKE_CPACK_COMMAND} -G DragNDrop RESULT_VARIABLE CPACK_COMMAND_RESULT)
+    if(CPACK_COMMAND_RESULT)
+      message(FATAL_ERROR "Failed to create DragAndDrop package!")
+    endif()
+  endif()
+  if(DO_GENERATOR)
+    execute_process( COMMAND ${CMAKE_CPACK_COMMAND} -G @CPACK_GENERATOR@ -C @CMAKE_BUILD_TYPE@ RESULT_VARIABLE CPACK_COMMAND_RESULT)
+    if(CPACK_COMMAND_RESULT)
+      message(FATAL_ERROR "Failed to create @CPACK_GENERATOR@ package!")
+    endif()
+  endif()
+  if(DO_APPIMAGE)
+    set(ENV{QML_SOURCES_PATHS} "@LINPHONE_QML_DIR@")
+    set(ENV{QML_MODULES_PATHS} "@LINPHONE_QML_DIR@")
+    execute_process( COMMAND mkdir -p "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
+    execute_process( COMMAND cp -rf "@LINPHONE_QML_DIR@" "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
+    execute_process( COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/create_appimage.sh" @EXECUTABLE_NAME@ @CPACK_PACKAGE_FILE_NAME@ @QT_PATH@ @LINPHONE_BUILDER_SIGNING_IDENTITY@ RESULT_VARIABLE CPACK_COMMAND_RESULT WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/.." )
+    if(CPACK_COMMAND_RESULT)
+      message(FATAL_ERROR "Failed to create AppImage package with this command : '@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh @EXECUTABLE_NAME@ @QT_PATH@ @LINPHONEAPP_VERSION@' at @CMAKE_INSTALL_PREFIX@/..\nMaybe the .appimage already exists and is running. Please remove the file before packaging if it is the case.")
+    endif()
+  endif()
+  if (@PERFORM_SIGNING@)
+    if(@PASSPHRASE_FILE@)
+        execute_process(
+            COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/sign_package.bat" 1 "@PASSPHRASE_FILE@" "@SIGNTOOL_COMMAND@" "@PFX_FILE@" "@TIMESTAMP_URL@" @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+            RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
+        )
+    else()
+        execute_process(
+            COMMAND "@CMAKE_CURRENT_SOURCE_DIR@/../../tools/sign_package.bat" 2 "@SIGNTOOL_COMMAND@" "@TIMESTAMP_URL@" @SIGN_HASH@ @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+            RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
+        )
+    endif()
+    if(SIGNING_RESULT)
+      message(FATAL_ERROR "Failed to sign the package! ${SIGNING_RESULT} ${RESULT_VARIABLE}")
+    endif()
+  endif ()
+  execute_process( COMMAND mkdir -p "@CMAKE_INSTALL_PREFIX@/Packages/" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
+  execute_process( COMMAND bash -c "cp -rf @CMAKE_BINARY_DIR@/*.@PACKAGE_EXT@ @CMAKE_INSTALL_PREFIX@/Packages" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
+endif ()
+
+
