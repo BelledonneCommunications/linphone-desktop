@@ -1496,6 +1496,11 @@ URL do servidor não configurado.</translation>
         <translation>É necessário reiniciar o aplicativo. Deseja reiniciar agora?</translation>
     </message>
     <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
+        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+    </message>
+    <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
         <translation>O último provisionamento remoto falhou</translation>

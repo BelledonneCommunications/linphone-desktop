@@ -432,7 +432,8 @@ ApplicationWindow {
 	Connections{
 		target: App
 		onRequestFetchConfig: {
-			window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+			if (AccountSettingsModel.accounts.length <= ((SettingsModel.showLocalSipAccount ? 1 : 0))) {
+						window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
 										flat: true,
 										//: 'Do you want to download and apply configuration from this URL?' : text to confirm to fetch a specified URL
 										descriptionText: '<b>'+qsTr('confirmFetchUri')
@@ -442,6 +443,26 @@ ApplicationWindow {
 												App.setFetchConfig(filePath)
 											}
 										})
+			} else {
+							window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+											   descriptionText: qsTr('remoteProvisioningWarnAccountOverwrite'),
+										   }, function (confirm) {
+											   if (confirm) {
+													window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+															flat: true,
+															//: 'Do you want to download and apply configuration from this URL?' : text to confirm to fetch a specified URL
+															descriptionText: '<b>'+qsTr('confirmFetchUri')
+															+'</b><br/><br/>'+filePath,
+															}, function (status) {
+															if (status) {
+																App.setFetchConfig(filePath)
+															}
+														})
+											   } else {
+												   window.setView('Home')
+											   }
+											})
+			}
 		}
 	}
 }

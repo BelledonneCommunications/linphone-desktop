@@ -1496,6 +1496,10 @@ Server URL not configured.</translation>
         <translation>It is necessary to restart the application. Do you want to restart now?</translation>
     </message>
     <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <translation>An account is already provisioned. This action will erase the existing account.</translation>
+    </message>
+    <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
         <translation>Last remote provisioning failed</translation>

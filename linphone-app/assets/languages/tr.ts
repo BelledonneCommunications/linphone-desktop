@@ -1485,6 +1485,11 @@ Sunucu url&apos;si yapılandırılmadı.</translation>
         <translation>Uygulamanın yeniden başlaması gerekiyor. Şimdi yeniden başlatmak ister misiniz?</translation>
     </message>
     <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
+        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+    </message>
+    <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
         <translation>Son uzaktan ön hazırlık başarısız</translation>

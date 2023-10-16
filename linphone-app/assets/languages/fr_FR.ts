@@ -1496,6 +1496,10 @@ URL du serveur non configurée.</translation>
         <translation>Voulez-vous redémarrer maintenant pour prendre en compte ces modifications ?</translation>
     </message>
     <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <translation>Un compte est déjà configuré. Cette action effacera le compte existant.</translation>
+    </message>
+    <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
         <translation>La dernière configuration n&apos;a pas pu être récupérée</translation>

@@ -1496,6 +1496,11 @@ Serverwebbadressen är inte konfigurerad.</translation>
         <translation>Det är nödvändigt att starta om programmet. Vill du starta om nu?</translation>
     </message>
     <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
+        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+    </message>
+    <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
         <translation type="unfinished"></translation>

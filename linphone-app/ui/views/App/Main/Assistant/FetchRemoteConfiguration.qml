@@ -46,10 +46,28 @@ import App.Styles 1.0
 			onOauth2StatusChanged: requestBlock.setText(status)
 			onOauth2RequestFailed: requestBlock.stop(error)
 			onOauth2AuthenticationGranted: requestBlock.stop('')
-			onProvisioningTokenReceived: {url.text = token
-											SettingsModel.remoteProvisioning = url.text
-											assistantModel.qrcode = ''
-											requestBlock.stop('')}
+			onProvisioningTokenReceived: {
+				if (AccountSettingsModel.accounts.length <= ((SettingsModel.showLocalSipAccount ? 1 : 0))) {
+					url.text = token
+					SettingsModel.remoteProvisioning = url.text
+					assistantModel.qrcode = ''
+					requestBlock.stop('')
+				} else {
+					window.detachVirtualWindow()
+					window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+											   descriptionText: qsTr('remoteProvisioningWarnAccountOverwrite'),
+										   }, function (confirm) {
+											   if (confirm) {
+													url.text = token
+													SettingsModel.remoteProvisioning = url.text
+													assistantModel.qrcode = ''
+													requestBlock.stop('')
+											   } else {
+												   window.setView('Home')
+											   }
+											})
+				}
+			}
 			
 			onQRCodeAttached: requestBlock.stop('Attached')
 			onQRCodeNotAttached: requestBlock.stop(message)
@@ -97,8 +115,22 @@ import App.Styles 1.0
 					Layout.preferredHeight: fitHeight
 					addHeight: 15
 					
-					onClicked: SettingsModel.remoteProvisioning = url.text
-					
+					onClicked:{
+						if (AccountSettingsModel.accounts.length <= ((SettingsModel.showLocalSipAccount ? 1 : 0))) {
+							SettingsModel.remoteProvisioning = url.text
+						} else {
+							window.detachVirtualWindow()
+							window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+											   descriptionText: qsTr('remoteProvisioningWarnAccountOverwrite'),
+										   }, function (confirm) {
+											   if (confirm) {
+													SettingsModel.remoteProvisioning = url.text
+											   } else {
+												   window.setView('Home')
+											   }
+											})
+						}
+					}
 					text: qsTr('confirmAction')
 					enabled: url.text.length > 0
 				}
