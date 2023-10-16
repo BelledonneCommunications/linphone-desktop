@@ -3,7 +3,7 @@
 #################################################
 
 .windows-vs2019:
-  extends: .job-prepare
+  extends: .prepare
   stage: build
   tags: [ "windows-powershell" ]
   rules:

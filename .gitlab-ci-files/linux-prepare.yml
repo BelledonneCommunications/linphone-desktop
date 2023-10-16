@@ -5,7 +5,7 @@
     paths:
       - ccache/
 
-  extends: .job-prepare
+  extends: .prepare
 
   before_script:
     ##
@@ -28,6 +28,9 @@
     - ccache -s
     - find $CI_PROJECT_DIR -name '.git' -exec bash -c 'git config --global --add safe.directory ${0%/.git}' {} \;
     - git describe --debug || true
+    - cd external/linphone-sdk
+    - git describe --debug || true
+    - cd ../..
 
   after_script:
     - if ! [ -z ${TUNNEL_USER_KEY+x} ]; then rm -rf ~/.ssh || true; fi

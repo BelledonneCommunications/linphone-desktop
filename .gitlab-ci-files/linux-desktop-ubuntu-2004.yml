@@ -1,19 +1,17 @@
-
-
 .factorize_ubuntu2004: &docker_image_platform_and_runner_tag
   tags: [ "docker" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-20-04-lts:$UBUNTU_2004_IMAGE_VERSION
 
-job-ubuntu2004-ninja-gcc:
-  except:
-    refs:
-      - schedules
+ubuntu2004-ninja-gcc:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_LINUX == null
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_LINUX == null
   variables:
     CMAKE_GENERATOR: Ninja
     CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
-  extends: .job-linux-desktop
+  extends: .linux-desktop
   <<: *docker_image_platform_and_runner_tag
 
 
@@ -21,44 +19,44 @@ job-ubuntu2004-ninja-gcc:
 #               Nightly
 #################################################
 
-job-ubuntu2004-makefile-gcc:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
+ubuntu2004-makefile-gcc:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     CMAKE_OPTIONS: -DENABLE_PQCRYPTO=ON
     CC: gcc
     CXX: g++
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
-  extends: .job-linux-desktop
+  extends: .linux-desktop
   <<: *docker_image_platform_and_runner_tag
 
-job-ubuntu2004-ninja-clang:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
+ubuntu2004-ninja-clang:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
   variables:
     CMAKE_OPTIONS: -DENABLE_DOC=ON -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     CMAKE_GENERATOR: Ninja
     CC: clang
     CXX: clang++
-  extends: .job-linux-desktop
+  extends: .linux-desktop
   <<: *docker_image_platform_and_runner_tag
 
-job-ubuntu2004-ninja-clang-small:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
+ubuntu2004-ninja-clang-small:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=NO -DENABLE_ADVANCED_IM=NO -DENABLE_DB_STORAGE=NO -DENABLE_PQCRYPTO=OFF
-  extends: job-ubuntu2004-ninja-clang
+  extends: ubuntu2004-ninja-clang
 
-job-ubuntu2004-makefile-gcc:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
-      - $DEPLOY_PLUGINS
+ubuntu2004-makefile-gcc:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $DEPLOY_PLUGINS
   variables:
     CMAKE_OPTIONS: -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     CMAKE_GENERATOR: Unix Makefiles
@@ -86,30 +84,30 @@ job-ubuntu2004-makefile-gcc:
     - cd build
     - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
     - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
-  extends: .job-linux-desktop
+  extends: .linux-desktop
   <<: *docker_image_platform_and_runner_tag
 
 #################################################
 # Package - Nightly
 #################################################
 
-job-ubuntu2004-makefile-gcc-package:
+ubuntu2004-makefile-gcc-package:
   stage: package
   tags: [ "docker-test-liblinphone" ]
   image: gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-20-04-lts:$UBUNTU_2004_IMAGE_VERSION
   dependencies: []
-  only:
-     variables:
-       - $NIGHTLY_MASTER
-       - $PACKAGE_LINUX
-       - $DEPLOY_LINUX
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $PACKAGE_LINUX
+    - if: $DEPLOY_LINUX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_BUILDER_SIGNING_IDENTITY=$GPG_SIGNING_KEYID -DENABLE_G729=ON -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$LINUX_PLATFORM/$APP_FOLDER -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     CMAKE_GENERATOR: Unix Makefiles
     CC: gcc
     CXX: g++
     APPIMAGETOOL_SIGN_PASSPHRASE: $GPG_SIGNING_PASS
-  extends: .job-linux-desktop
+  extends: .linux-desktop
   script:
     - echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
     - gpg --import file.key
@@ -139,11 +137,11 @@ job-ubuntu2004-makefile-gcc-package:
 # Deploy - Nightly
 #################################################
 
-#job-ubuntu2004-makefile-gcc-deploy:
+#ubuntu2004-makefile-gcc-deploy:
 #  stage: deploy
 #  tags: [ "deploy" ]
 #  needs:
-#    - job-ubuntu2004-makefile-gcc-package
+#    - ubuntu2004-makefile-gcc-package
 #  only:
 #     variables:
 #       - $NIGHTLY_MASTER
@@ -154,11 +152,11 @@ job-ubuntu2004-makefile-gcc-package:
 #    - rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
 
 
-#job-ubuntu2004-makefile-gcc-plugins-deploy:
+#ubuntu2004-makefile-gcc-plugins-deploy:
 #  stage: deploy
 #  tags: [ "deploy" ]
 #  needs:
-#    - job-ubuntu2004-makefile-gcc
+#    - ubuntu2004-makefile-gcc
 #  only:
 #     variables:
 #       - $DEPLOY_PLUGINS

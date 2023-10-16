@@ -1,7 +1,7 @@
 #Build template to use in other job scripts without having to copy same code
 #format = .className: &referenceName | scripts
 #Use = scripts: -*referenceName
-#Example : see .job-macosx-desktop for the default script and job-macosx-makefile-package for override
+#Example : see .macosx-desktop for the default script and macosx-makefile-package for override
 
 .build_all_script: &build_all_script |
   ccache -s
@@ -22,9 +22,12 @@
   cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS -- $ADDITIONAL_BUILD_OPTIONS
   ccache -s
 
-.job-macosx-desktop:
+.macosx-desktop:
   stage: build
   tags: [ "macos-xcode13" ]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
   script:
     - *build_all_script
   artifacts:
@@ -38,41 +41,40 @@
 #################################################
 
 #TODO: reactivate pcrypto when liboqs is fixed for 'Vortex' CPU.
-job-macosx-ninja:
-  except:
-    refs:
-      - schedules
+macosx-ninja:
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == "merge_request_event") && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
   variables:
     CMAKE_GENERATOR: Ninja
     CMAKE_OPTIONS: -DENABLE_PQCRYPTO=OFF
-  extends: .job-macosx-desktop
+  extends: .macosx-desktop
 
 #################################################
 # Nightly
 #################################################
 
-job-macosx-makefile:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
-      - $DEPLOY_PLUGINS
+macosx-makefile:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $DEPLOY_PLUGINS
   variables:
     CMAKE_GENERATOR: Unix Makefiles
     CMAKE_OPTIONS: -DENABLE_PQCRYPTO=OFF
     ADDITIONAL_BUILD_OPTIONS: -j$MAKEFILE_JOBS
-  extends: .job-macosx-desktop
+  extends: .macosx-desktop
 
-job-macosx-ninja-novideo:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
+macosx-ninja-novideo:
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=OFF
     CMAKE_GENERATOR: Ninja
-  extends: .job-macosx-desktop
+  extends: .macosx-desktop
 
-#job-macosx-xcode:
-#  extends: .job-macosx-desktop
+#macosx-xcode:
+#  extends: .macosx-desktop
 #  variables:
 #    XCODE_OPTIONS: -DLINPHONESDK_MACOS_BASE_URL=$MACOS_SNAPSHOTS_URL
 #   CMAKE_GENERATOR: Xcode
@@ -87,19 +89,19 @@ job-macosx-ninja-novideo:
 # Package - Nightly
 #################################################
 # WAIT for QT6 for arm64
-job-macosx-makefile-package:
+macosx-makefile-package:
   stage: package
   tags: [ "macos-xcode13" ]
   dependencies: []
-  only:
-     variables:
-       - $NIGHTLY_MASTER
-       - $PACKAGE_MACOSX
-       - $DEPLOY_MACOSX
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $PACKAGE_MACOSX
+    - if: $DEPLOY_MACOSX
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=ON -DENABLE_GPL_THIRD_PARTIES=ON -DENABLE_G729=ON
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$MACOSX_PLATFORM/$APP_FOLDER
-  extends: job-macosx-makefile
+  extends: macosx-makefile
   script:
     - if [[ $MAKE_RELEASE_FILE_URL == "" ]]; then export RELEASE_FILE=""; fi
     - *build_all_script
@@ -110,16 +112,16 @@ job-macosx-makefile-package:
     when: always
     expire_in: 1 week
 
-job-macosx-codesigning:
+macosx-codesigning:
   stage: signing
   tags: [ "macos-xcode13" ]
   needs:
-    - job-macosx-makefile-package
-  only:
-     variables:
-       - $NIGHTLY_MASTER
-       - $PACKAGE_MACOSX
-       - $DEPLOY_MACOSX
+    - macosx-makefile-package
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $PACKAGE_MACOSX
+    - if: $DEPLOY_MACOSX
   script:
     - cd build
     - codesign --timestamp --options runtime,library --verbose -s "$MACOS_SIGNING_IDENTITY" OUTPUT/Linphone/macos/Packages/Linphone*.dmg
@@ -135,11 +137,11 @@ job-macosx-codesigning:
 # Deploy - Nightly
 #################################################
 
-#job-macosx-makefile-deploy:
+#macosx-makefile-deploy:
 #  stage: deploy
 #  tags: [ "macos-xcode13" ]
 #  needs:
-#    - job-macosx-codesigning
+#    - macosx-codesigning
 #  only:
 #     variables:
 #       - $NIGHTLY_MASTER
@@ -153,11 +155,11 @@ job-macosx-codesigning:
 #      fi
 
 
-#job-macosx-makefile-plugins-deploy:
+#macosx-makefile-plugins-deploy:
 #  stage: deploy
 #  tags: [ "macos-xcode13" ]
 #  needs:
-#    - job-macosx-makefile
+#    - macosx-makefile
 #  only:
 #     variables:
 #       - $DEPLOY_PLUGINS
