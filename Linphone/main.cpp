@@ -19,7 +19,10 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	int result = app.exec();
+	int result = 0;
+	while (result >= 0) {
+		result = app.exec();
+	}
 	app.clean();
 	return result;
 }

@@ -45,17 +45,22 @@ public:
 	void init();
 	void init(const std::shared_ptr<linphone::Config> &config);
 
-	static void onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg);
-public slots:
-	void onLog(QtMsgType type, QString file, int contextLine, QString msg);
+
+	void onQtLog(QtMsgType type, QString file, int contextLine, QString msg);// Received from Qt
+	void onLinphoneLog(const std::shared_ptr<linphone::LoggingService> &,
+                                         const std::string &domain,
+                                         linphone::LogLevel level,
+                                         const std::string &message);// Received from SDK
 
 signals:
-	void logReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
+	void linphoneLogReceived(const std::string &domain, linphone::LogLevel level, const std::string &message);	// Send to Qt
 	void verboseEnabledChanged();
 	void qtOnlyEnabledChanged();
 
 private:
 	static void log(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	bool mVerboseEnabled = false;
+	bool mQtOnlyEnabled = false;
 	std::shared_ptr<LoggerListener> mListener;
 };
 

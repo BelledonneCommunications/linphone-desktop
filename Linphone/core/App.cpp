@@ -31,8 +31,6 @@ App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	mLinphoneThread = new Thread(this);
 	init();
-	qDebug() << "[App] Starting Thread";
-	mLinphoneThread->start();
 }
 
 App *App::getInstance() {
@@ -58,6 +56,11 @@ void App::init() {
 	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 
+	if (!mLinphoneThread->isRunning()) {
+		qDebug() << "[App] Starting Thread";
+		mLinphoneThread->start();
+	}
+
 	// QML
 	mEngine = new QQmlApplicationEngine(this);
 	mEngine->addImportPath(":/");
@@ -68,7 +71,10 @@ void App::init() {
 	QObject::connect(
 	    mEngine, &QQmlApplicationEngine::objectCreated, this,
 	    [url](QObject *obj, const QUrl &objUrl) {
-		    if (!obj && url == objUrl) QCoreApplication::exit(-1);
+		    if (!obj && url == objUrl) {
+			    qCritical() << "[App] Main.qml couldn't be load. The app will exit";
+			    exit(-1);
+		    }
 	    },
 	    Qt::QueuedConnection);
 	mEngine->load(url);
@@ -83,6 +89,9 @@ void App::initCppInterfaces() {
 //------------------------------------------------------------
 
 void App::clean() {
+	// Wait 500ms to let time for log te be stored.
+	mLinphoneThread->wait(250);
+	qApp->processEvents(QEventLoop::AllEvents, 250);
 	mLinphoneThread->exit();
 	mLinphoneThread->wait();
 	delete mLinphoneThread;

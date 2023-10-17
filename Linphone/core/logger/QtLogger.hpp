@@ -24,22 +24,38 @@
 #include <QMetaMethod>
 #include <QObject>
 
-// =============================================================================
+#include <linphone++/linphone.hh>
 
+// =============================================================================
+//
+//      Qt          SDK
+//fatal |            |
+//   -- *----------> |
+//  |                |
+//  |   | <--------- *
+//  |   |            |
+//   -> |            |
+//      V            V
+//     OUT          FILE
+//
 // Only one instance. Use getInstance() and logReceived() to bind logs coming from Qt.
 class QtLogger : public QObject {
 	Q_OBJECT
 public:
 	QtLogger(QObject *parent = nullptr);
-
+	~QtLogger();
 	static QtLogger *getInstance();
-	static void onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 	static void enableVerbose(bool verbose);
 	static void enableQtOnly(bool qtOnly);
 	
+	void printLog(QString * qMessage, const std::string &domain, linphone::LogLevel level, const std::string &message);
+	
+// Log Sources
+	static void onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg);
+	void onLinphoneLog(const std::string &domain, linphone::LogLevel level, const std::string &message);
 
 signals:
-	void logReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
+	void qtLogReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
 	void requestVerboseEnabled(bool verbose);
 	void requestQtOnlyEnabled(bool qtOnly);
 };

@@ -21,19 +21,23 @@
 #ifndef LOGGER_LISTENER_H_
 #define LOGGER_LISTENER_H_
 
-#include <QMutex>
+#include <QObject>
 #include <memory>
 
 #include <linphone++/linphone.hh>
 
 // =============================================================================
-class LoggerListener : public linphone::LoggingServiceListener {
+class LoggerListener : public QObject,  public linphone::LoggingServiceListener {
+Q_OBJECT
 public:
 	LoggerListener();
 	
-	bool mVerboseEnabled = false;
-	bool mQtOnlyEnabled = false;
-
+	static QString printLog(bool isAppLog, const std::string &domain, linphone::LogLevel level, const std::string &message);
+signals:
+	void logReceived(const std::shared_ptr<linphone::LoggingService> &logService,
+	                                 const std::string &domain,
+	                                 linphone::LogLevel level,
+	                                 const std::string &message);
 private:
 	virtual void onLogMessageWritten(const std::shared_ptr<linphone::LoggingService> &logService,
 	                                 const std::string &domain,

@@ -20,96 +20,14 @@
 
 #include "LoggerListener.hpp"
 
-#include <QCoreApplication>
-#include <QDateTime>
-#include <QMessageBox>
-#include <QString>
-
-#include "tool/Constants.hpp"
-#include "tool/Utils.hpp"
-
-// =============================================================================
-
-#if defined(__linux__) || defined(__APPLE__)
-#define BLUE "\x1B[1;34m"
-#define YELLOW "\x1B[1;33m"
-#define GREEN "\x1B[1;32m"
-#define PURPLE "\x1B[1;35m"
-#define RED "\x1B[1;31m"
-#define RESET "\x1B[0m"
-#else
-#define BLUE ""
-#define YELLOW ""
-#define GREEN ""
-#define PURPLE ""
-#define RED ""
-#define RESET ""
-#endif // if defined(__linux__) || defined(__APPLE__)
-
 // -----------------------------------------------------------------------------
 
-static inline QByteArray getFormattedCurrentTime() {
-	return QDateTime::currentDateTime().toString("yyyy-MM-dd hh:mm:ss:zzz").toLocal8Bit();
+LoggerListener::LoggerListener() : QObject(nullptr) {
 }
 
-// -----------------------------------------------------------------------------
-
-LoggerListener::LoggerListener() {
-}
-
-void LoggerListener::onLogMessageWritten(const std::shared_ptr<linphone::LoggingService> &,
+void LoggerListener::onLogMessageWritten(const std::shared_ptr<linphone::LoggingService> &logService,
                                          const std::string &domain,
                                          linphone::LogLevel level,
                                          const std::string &message) {
-	bool isAppLog = domain == Constants::AppDomain;
-	if (!mVerboseEnabled || (!isAppLog && mQtOnlyEnabled)) return;
-	FILE *out = stdout;
-	// TypeColor Date  SourceColor [Domain] TypeColor Type Reset Message
-	QString format = "%1 %2 %3[%4]%1 %5" RESET " %6\n";
-	QString colorType;
-	QString type;
-	QString qMessage = Utils::coreStringToAppString(message);
-	switch (level) {
-		case linphone::LogLevel::Debug:
-			colorType = GREEN;
-			type = "DEBUG";
-			break;
-		case linphone::LogLevel::Trace:
-			colorType = BLUE;
-			type = "TRACE";
-			break;
-		case linphone::LogLevel::Message:
-			colorType = BLUE;
-			type = "MESSAGE";
-			break;
-		case linphone::LogLevel::Warning:
-			colorType = RED;
-			type = "WARNING";
-			out = stderr;
-			break;
-		case linphone::LogLevel::Error:
-			colorType = RED;
-			type = "ERROR";
-			out = stderr;
-			break;
-		case linphone::LogLevel::Fatal:
-			colorType = RED;
-			type = "FATAL";
-			out = stderr;
-			break;
-	}
-	QString messageToDisplay = format.arg(colorType)
-	                               .arg(getFormattedCurrentTime())
-	                               .arg(isAppLog ? PURPLE : YELLOW)
-	                               .arg(Utils::coreStringToAppString(domain))
-	                               .arg(type)
-	                               .arg(qMessage);
-	fprintf(out, "%s", qPrintable(messageToDisplay));
-	fflush(out);
-	if (level == linphone::LogLevel::Fatal) {
-		QMetaObject::invokeMethod(qApp, [qMessage]() {
-			QMessageBox::critical(nullptr, EXECUTABLE_NAME " will crash", qMessage);
-			std::terminate();
-		});
-	}
+	emit logReceived(logService, domain, level, message);
 }

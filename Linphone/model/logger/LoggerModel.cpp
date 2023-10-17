@@ -19,9 +19,9 @@
  */
 
 #include <QDateTime>
-
 #include <QLoggingCategory>
 #include <QMessageBox>
+#include <QString>
 #include <linphone++/linphone.hh>
 
 #include "config.h"
@@ -35,23 +35,26 @@
 // -----------------------------------------------------------------------------
 
 LoggerModel::LoggerModel(QObject *parent) : QObject(parent) {
-	connect(QtLogger::getInstance(), &QtLogger::logReceived, this, &LoggerModel::onLog, Qt::QueuedConnection);
+	connect(QtLogger::getInstance(), &QtLogger::qtLogReceived, this, &LoggerModel::onQtLog, Qt::QueuedConnection);
 	connect(QtLogger::getInstance(), &QtLogger::requestVerboseEnabled, this, &LoggerModel::enableVerbose,
 	        Qt::QueuedConnection);
 	connect(QtLogger::getInstance(), &QtLogger::requestQtOnlyEnabled, this, &LoggerModel::enableQtOnly,
 	        Qt::QueuedConnection);
+	connect(this, &LoggerModel::linphoneLogReceived, QtLogger::getInstance(), &QtLogger::onLinphoneLog,
+	        Qt::QueuedConnection);
 }
 
 LoggerModel::~LoggerModel() {
+	linphone::LoggingService::get()->removeListener(mListener);
 }
 
 bool LoggerModel::isVerbose() const {
-	return mListener ? mListener->mVerboseEnabled : false;
+	return mVerboseEnabled;
 }
 
 void LoggerModel::enableVerbose(bool verbose) {
-	if (mListener && mListener->mVerboseEnabled != verbose) {
-		mListener->mVerboseEnabled = verbose;
+	if (mVerboseEnabled != verbose) {
+		mVerboseEnabled = verbose;
 		emit verboseEnabledChanged();
 	}
 }
@@ -62,24 +65,21 @@ void LoggerModel::enableFullLogs(const bool &full) {
 }
 
 bool LoggerModel::qtOnlyEnabled() const {
-	return mListener ? mListener->mQtOnlyEnabled : false;
+	return mQtOnlyEnabled;
 }
 
 void LoggerModel::enableQtOnly(const bool &enable) {
-	if (mListener) {
-		if (mListener->mQtOnlyEnabled != enable) {
-			mListener->mQtOnlyEnabled = enable;
-			auto service = linphone::LoggingService::get();
-			if (service) service->setDomain(enable ? Constants::AppDomain : "");
-			emit qtOnlyEnabledChanged();
-		}
+	if (mQtOnlyEnabled != enable) {
+		mQtOnlyEnabled = enable;
+		auto service = linphone::LoggingService::get();
+		if (service) service->setDomain(enable ? Constants::AppDomain : "");
+		emit qtOnlyEnabledChanged();
 	}
 }
 
 // -----------------------------------------------------------------------------
 // Called from Qt
-void LoggerModel::onLog(QtMsgType type, QString contextFile, int contextLine, QString msg) {
-	connect(this, &LoggerModel::logReceived, this, &LoggerModel::onLog, Qt::QueuedConnection);
+void LoggerModel::onQtLog(QtMsgType type, QString contextFile, int contextLine, QString msg) {
 	auto service = linphone::LoggingService::get();
 	QString contextStr = "";
 #ifdef QT_MESSAGELOGCONTEXT
@@ -116,6 +116,16 @@ void LoggerModel::onLog(QtMsgType type, QString contextFile, int contextLine, QS
 	}
 }
 
+// Call from Linphone
+void LoggerModel::onLinphoneLog(const std::shared_ptr<linphone::LoggingService> &,
+                                const std::string &domain,
+                                linphone::LogLevel level,
+                                const std::string &message) {
+	bool isAppLog = domain == Constants::AppDomain;
+	if (!mVerboseEnabled || (!isAppLog && mQtOnlyEnabled)) return;
+	emit linphoneLogReceived(domain, level, message);
+}
+
 // -----------------------------------------------------------------------------
 
 void LoggerModel::enable(bool status) {
@@ -134,7 +144,7 @@ void LoggerModel::init(const std::shared_ptr<linphone::Config> &config) {
 void LoggerModel::init() {
 	QLoggingCategory::setFilterRules("qt.qml.connections.warning=false");
 	mListener = std::make_shared<LoggerListener>();
-
+	connect(mListener.get(), &LoggerListener::logReceived, this, &LoggerModel::onLinphoneLog);
 	{
 		std::shared_ptr<linphone::LoggingService> loggingService = linphone::LoggingService::get();
 		loggingService->setDomain(Constants::AppDomain);
