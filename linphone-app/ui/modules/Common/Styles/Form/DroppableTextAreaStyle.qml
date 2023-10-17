@@ -3,6 +3,8 @@ import QtQml 2.2
 
 import Units 1.0
 import ColorsList 1.0
+import Clipboard 1.0
+
 
 // =============================================================================
 
@@ -91,5 +93,11 @@ QtObject {
 	property QtObject text: QtObject {
 		property var colorModel: ColorsList.add(sectionName+'_Chat_text', 'd')
 		property int pointSize: Units.dp * 10
+	}
+	
+	property QtObject spellChecker: QtObject {
+		property QtObject underlineWave: QtObject {
+			property var colorModel: ColorsList.add(sectionName+'_Chat_spell', 'error')
+		}
 	}
 }

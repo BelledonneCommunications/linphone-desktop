@@ -54,6 +54,8 @@ singleton ApplicationMenuStyle      1.0 Menus/ApplicationMenuStyle.qml
 singleton DropDownStaticMenuStyle   1.0 Menus/DropDownStaticMenuStyle.qml
 singleton MenuItemStyle             1.0 Menus/MenuItemStyle.qml
 singleton MenuStyle                 1.0 Menus/MenuStyle.qml
+singleton MenuSeparatorStyle        1.0 Menus/MenuSeparatorStyle.qml
+
 
 singleton ForceScrollBarStyle       1.0 Misc/ForceScrollBarStyle.qml
 singleton MessageBannerStyle        1.0 Misc/MessageBannerStyle.qml

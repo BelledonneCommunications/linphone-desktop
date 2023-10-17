@@ -9,6 +9,7 @@ import Common.Styles 1.0
 import Units 1.0
 import Utils 1.0
 import UtilsCpp 1.0
+import Clipboard 1.0
 
 import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 
@@ -184,6 +185,7 @@ Item {
 									clearDelay.restart()
 								}
 							}
+							spellChecker.highlightDocument()
 						}
 						function handleValidation () {
 							var plainText = getText(0, text.length)
@@ -213,7 +215,46 @@ Item {
 						height:flickableArea.height
 						//onHeightChanged: height=flickableArea.height//TextArea change its height from content text. Force it to parent
 						
-						Component.onCompleted: forceActiveFocus()
+						property int previousFlickableAreaWidth
+						onWidthChanged: {
+							if (previousFlickableAreaWidth != flickableArea.width) {
+								spellChecker.clearHighlighting()
+								spellChecker.highlightDocument()
+							}
+							previousFlickableAreaWidth = flickableArea.width
+						}
+						
+						SpellChecker {
+							id: spellChecker
+    					}
+    					
+						SpellCheckerMenu {
+    						id: spellCheckerMenu
+    					}
+    					
+						Repeater {
+							id: spellCheckerUnderliner
+							model: spellChecker.redLines
+							Rectangle {
+								clip: true
+								height: 5
+								x: textArea.leftPadding + parseFloat(modelData.split(',')[0])
+								y: textArea.topPadding + parseFloat(modelData.split(',')[1])-3
+								width: parseFloat(modelData.split(',')[2])
+								color: 'transparent'
+								Text {
+									anchors.top: parent.top
+									text: modelData.split(',')[3]
+									color: DroppableTextAreaStyle.spellChecker.underlineWave.colorModel.color
+								}
+							}
+						}
+    					
+						Component.onCompleted: {
+							forceActiveFocus()
+							spellChecker.setTextDocument(textDocument)
+							spellCheckerMenu.spellChecker = spellChecker
+						}
 						
 						property var isAutoRepeating : false // shutdown repeating key feature to let optional menu appears and do normal stuff (like accents menu)
 						Keys.onReleased: {
@@ -222,7 +263,9 @@ Item {
 									if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis)// Remove the previous character if it is a printable character
 										textArea.remove(cursorPosition-1, cursorPosition)
 								}
-							}else
+							} else if (event.matches(StandardKey.Paste)) {
+									Clipboard.restore()
+							} else
 								isAutoRepeating = false// We are no more repeating. Final decision is done on Releasing
 						}
 						Keys.onPressed: {
@@ -231,10 +274,27 @@ Item {
 								if(event.key > Qt.Key_Any && event.key <= Qt.Key_ydiaeresis){// Ignore character if it is repeating and printable character
 									event.accepted = true
 								}
-							}else if (event.matches(StandardKey.InsertLineSeparator)) {
+							} else if (event.matches(StandardKey.InsertLineSeparator)) {
 							} else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
 								handleValidation()
 								event.accepted = true
+							} else if (event.matches(StandardKey.Paste)) {
+								Clipboard.backup() // Restored on Keys.onReleased
+								Clipboard.text = Clipboard.getChatFormattedText()
+								event.accepted = false
+							}
+						}
+						onPressed: {
+							if (event.button == Qt.RightButton) {
+								var wordPosition = spellChecker.wordPosition(event.x,event.y)
+								if (wordPosition != -1) {
+									var wordValid = spellChecker.isWordAtPositionValid(wordPosition)
+									if (!wordValid) {
+										cursorPosition = wordPosition
+										selectWord()
+										spellCheckerMenu.open(selectedText,wordPosition)
+									}
+								}
 							}
 						}
 					}

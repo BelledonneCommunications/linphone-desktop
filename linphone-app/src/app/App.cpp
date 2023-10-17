@@ -55,6 +55,7 @@
 #include "components/history/CallHistoryProxyModel.hpp"
 #include "components/other/desktop-tools/DesktopTools.hpp"
 #include "components/other/date/DateModel.hpp"
+#include "components/other/spell-checker/SpellChecker.hpp"
 
 #include "components/settings/EmojisSettingsModel.hpp"
 #include "components/timeline/TimelineModel.hpp"
@@ -758,6 +759,7 @@ void App::registerTypes () {
 	registerType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
 	registerType<SoundPlayer>("SoundPlayer");
 	registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
+	registerType<SpellChecker>("SpellChecker");
 	
 	registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
 	registerSingletonType<OwnPresenceModel>("OwnPresenceModel");

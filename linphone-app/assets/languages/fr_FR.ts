@@ -5163,4 +5163,23 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         </translation>
     </message>
 </context>
+<context>
+    <name>SpellCheckerMenu</name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <translation>Voulez-vous dire ?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <translation>Ajouter au Dictionnaire</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <translation>Ignorer une fois</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <translation>Ignorer tout</translation>
+    </message>
+</context>
 </TS>

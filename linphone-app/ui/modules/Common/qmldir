@@ -86,6 +86,8 @@ DropDownStaticMenu      1.0 Menus/DropDownStaticMenu.qml
 DropDownStaticMenuEntry 1.0 Menus/DropDownStaticMenuEntry.qml
 Menu                    1.0 Menus/Menu.qml
 MenuItem                1.0 Menus/MenuItem.qml
+MenuSeparator           1.0 Menus/MenuSeparator.qml
+
 
 Borders                 1.0 Misc/Borders.qml
 ForceScrollBar          1.0 Misc/ForceScrollBar.qml

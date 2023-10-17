@@ -199,6 +199,7 @@
 		<file>ui/modules/Common/Form/ComboBox.qml</file>
 		<file>ui/modules/Common/Form/CommonItemDelegate.qml</file>
 		<file>ui/modules/Common/Form/DroppableTextArea.qml</file>
+		<file>ui/modules/Common/Form/SpellCheckerMenu.qml</file>
 		<file>ui/modules/Common/Form/Fields/HexField.qml</file>
 		<file>ui/modules/Common/Form/Fields/NumericField.qml</file>
 		<file>ui/modules/Common/Form/Fields/PasswordField.qml</file>
@@ -246,6 +247,7 @@
 		<file>ui/modules/Common/Menus/DropDownStaticMenuEntry.qml</file>
 		<file>ui/modules/Common/Menus/DropDownStaticMenu.qml</file>
 		<file>ui/modules/Common/Menus/MenuItem.qml</file>
+		<file>ui/modules/Common/Menus/MenuSeparator.qml</file>
 		<file>ui/modules/Common/Menus/Menu.qml</file>
 		<file>ui/modules/Common/Misc/Borders.qml</file>
 		<file>ui/modules/Common/Misc/ForceScrollBar.qml</file>
@@ -300,6 +302,7 @@
 		<file>ui/modules/Common/Styles/Menus/DropDownStaticMenuStyle.qml</file>
 		<file>ui/modules/Common/Styles/Menus/MenuItemStyle.qml</file>
 		<file>ui/modules/Common/Styles/Menus/MenuStyle.qml</file>
+		<file>ui/modules/Common/Styles/Menus/MenuSeparatorStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/ForceScrollBarStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/MessageBannerStyle.qml</file>
 		<file>ui/modules/Common/Styles/Misc/PanedStyle.qml</file>

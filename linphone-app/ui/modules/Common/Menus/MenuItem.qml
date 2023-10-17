@@ -26,7 +26,8 @@ Controls.MenuItem {
 	property int offsetBottomMargin : 0
 	property bool displaySelection: true
 	property bool isTabBar: false
-	
+	property bool fontItalic: false
+
 	height:visible?undefined:0
 	
 	Component.onCompleted: if(!isTabBar) menu.width = Math.max(menu.width, implicitWidth)
@@ -87,6 +88,7 @@ Controls.MenuItem {
 			font {
 				weight: menuItemStyle.text.weight
 				pointSize: menuItemStyle.text.pointSize
+				italic: fontItalic
 			}
 			
 			text: button.text

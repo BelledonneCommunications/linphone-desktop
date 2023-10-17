@@ -329,6 +329,7 @@ set(SOURCES
 	src/components/other/timeZone/TimeZoneListModel.cpp
 	src/components/other/timeZone/TimeZoneProxyModel.cpp
 	src/components/other/units/Units.cpp
+	src/components/other/spell-checker/SpellChecker.cpp
 	src/components/participant/ParticipantModel.cpp
 	src/components/participant/ParticipantListModel.cpp
 	src/components/participant/ParticipantProxyModel.cpp
@@ -479,6 +480,7 @@ set(HEADERS
 	src/components/other/timeZone/TimeZoneListModel.hpp
 	src/components/other/timeZone/TimeZoneProxyModel.hpp
 	src/components/other/units/Units.hpp
+	src/components/other/spell-checker/SpellChecker.hpp
 	src/components/participant/ParticipantModel.hpp
 	src/components/participant/ParticipantListModel.hpp
 	src/components/participant/ParticipantProxyModel.hpp
@@ -554,6 +556,7 @@ if (APPLE)
 		src/components/other/desktop-tools/DesktopToolsMacOsNative.mm
 		src/components/other/desktop-tools/screen-saver/ScreenSaverMacOs.m
 		src/components/other/desktop-tools/state-process/StateProcessMacOs.mm
+		src/components/other/spell-checker/SpellCheckerMacOsNative.mm
 		)
 	list(APPEND HEADERS
 		#src/app/single-application/SingleApplicationPrivate.hpp
@@ -565,6 +568,7 @@ elseif (WIN32)
 		#src/app/single-application/SingleApplication.cpp
 		src/components/core/event-count-notifier/EventCountNotifierSystemTrayIcon.cpp
 		src/components/other/desktop-tools/DesktopToolsWindows.cpp
+		src/components/other/spell-checker/SpellCheckerWindowsNative.cpp
 		)
 	list(APPEND HEADERS
 		#src/app/single-application/SingleApplicationPrivate.hpp
@@ -578,6 +582,7 @@ else ()
 		src/components/other/desktop-tools/DesktopToolsLinux.cpp
 		src/components/other/desktop-tools/screen-saver/ScreenSaverDBus.cpp
 		src/components/other/desktop-tools/screen-saver/ScreenSaverXdg.cpp
+		src/components/other/spell-checker/SpellCheckerLinux.cpp
 		)
 	list(APPEND HEADERS
 		#src/app/single-application/SingleApplicationDBusPrivate.hpp
