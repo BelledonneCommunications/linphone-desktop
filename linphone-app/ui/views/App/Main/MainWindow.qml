@@ -56,6 +56,7 @@ ApplicationWindow {
 	Connections {
 		target: CoreManager
 		onCoreManagerInitialized: mainLoader.active = true
+		onRemoteProvisioningFailed: if(mainLoader.active) Logic.warnProvisioningFailed(window)
 	}
 	
 	Shortcut {
@@ -70,13 +71,18 @@ ApplicationWindow {
 		active: false
 		anchors.fill: parent
 		
-		onLoaded: switch(SettingsModel.getShowDefaultPage()) {
-					case 1 : window.setView('Calls'); break;
-					case 2 : window.setView('Conversations'); break;
-					case 3 : ContactsListModel.update(); window.setView('Contacts'); break;
-					case 4 : window.setView('Conferences'); break;
-				default:{}
-				}
+		onLoaded: {
+			if(!CoreManager.isLastRemoteProvisioningGood()) {
+				Logic.warnProvisioningFailed(window)
+			}
+			switch(SettingsModel.getShowDefaultPage()) {
+				case 1 : window.setView('Calls'); break;
+				case 2 : window.setView('Conversations'); break;
+				case 3 : ContactsListModel.update(); window.setView('Contacts'); break;
+				case 4 : window.setView('Conferences'); break;
+			default:{}
+			}
+		}
 		
 		sourceComponent: ColumnLayout {
 			// Workaround to get these properties in `MainWindow.js`.

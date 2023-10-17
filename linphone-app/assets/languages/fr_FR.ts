@@ -1502,7 +1502,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation>La dernière configuration n&apos;a pas pu être récupérée</translation>
+        <translation>Erreur de récupération de la configuration distante. Le lien de configuration a peut-être déjà été utilisé ou a expiré. Merci de contacter un administrateur si ce lien vous a été fourni.</translation>
     </message>
     <message>
         <source>generateLabel</source>

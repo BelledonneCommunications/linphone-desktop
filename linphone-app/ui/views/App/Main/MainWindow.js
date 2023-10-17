@@ -116,3 +116,9 @@ function handleAuthenticationRequested (authInfo, realm, sipAddress, userId) {
     virtualWindowHash:Qt.md5('Dialogs/AuthenticationRequest.qml'+realm+sipAddress+userId)
   })
 }
+
+// -----------------------------------------------------------------------------
+
+function warnProvisioningFailed(window) {
+	Utils.infoDialog(window, qsTr('lastProvisioningFailed'))
+}

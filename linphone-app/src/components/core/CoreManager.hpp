@@ -192,6 +192,7 @@ signals:
 	
 	void eventCountChanged ();
 	void callLogsCountChanged();
+	void remoteProvisioningFailed();
 	
 private:
 	CoreManager (QObject *parent, const QString &configPath);

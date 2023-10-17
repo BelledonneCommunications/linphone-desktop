@@ -728,3 +728,11 @@ function printObject(o) {
   else
     return out;
 }
+
+function infoDialog(window, message) {
+	window.attachVirtualWindow(buildCommonDialogUri('ConfirmDialog'), {
+		buttonTexts : ['',qsTr('okButton')],
+		descriptionText: message,
+		showButtonOnly: 1
+	}, function (status) {})
+}

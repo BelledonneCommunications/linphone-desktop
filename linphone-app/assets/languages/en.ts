@@ -1502,7 +1502,7 @@ Server URL not configured.</translation>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation>Last remote provisioning failed</translation>
+        <translation>Remote provisioning failed. The link might be used or expired. If it was provided to you, please contact your administrator.</translation>
     </message>
     <message>
         <source>generateLabel</source>

@@ -464,6 +464,8 @@ QString CoreManager::getDownloadUrl () {
 
 void CoreManager::setLastRemoteProvisioningState(const linphone::Config::ConfiguringState& state){
 	mLastRemoteProvisioningState = state;
+	if (state == linphone::Config::ConfiguringState::Failed)
+		emit remoteProvisioningFailed();
 }
 
 bool CoreManager::isLastRemoteProvisioningGood(){
