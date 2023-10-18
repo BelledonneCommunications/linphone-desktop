@@ -2391,7 +2391,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>newVersionAvailable</source>
         <translation>K dispozici je nová verze (%1)!</translation>
     </message>
-    <message>
+	<message>
         <source>newFileMessage</source>
         <translation>Obdržena nová příloha!</translation>
     </message>

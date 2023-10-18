@@ -1923,6 +1923,26 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 <context>
     <name>MainWindow</name>
     <message>
+		  <source>newVersionCheckError</source>
+		  <translation>An error occured checking for a new version. Try again later or contact support if problem persists.</translation>
+    </message>
+    <message>
+		  <source>newVersionAvailableInstructions</source>
+		  <translation>To upgrade to the new version, download the package and install it over the existing one</translation>
+    </message>
+    <message>
+		  <source>downloadUpdate</source>
+		  <translation>Download</translation>
+    </message>
+    <message>
+		  <source>noNewVersionAvailable</source>
+		  <translation>Your application is up to date.</translation>
+    </message>
+    <message>
+		  <source>newVersionInstalled</source>
+		  <translation>New application version successfully installed.</translation>
+    </message>
+    <message>
         <source>mainSearchBarPlaceholder</source>
         <translation>Search contact, start a call or a chat…</translation>
     </message>

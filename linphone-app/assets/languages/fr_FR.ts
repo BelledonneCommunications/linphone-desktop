@@ -1923,6 +1923,26 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 <context>
     <name>MainWindow</name>
     <message>
+		  <source>newVersionCheckError</source>
+		  <translation>Une erreur est survenue. Merci de réessayer plus tard ou de contacter le support.</translation>
+    </message>
+    <message>
+		  <source>newVersionAvailableInstructions</source>
+		  <translation>Pour mettre à jour télécharger l&apos;application et lancer l&apos;installeur.</translation>
+    </message>
+    <message>
+		  <source>downloadUpdate</source>
+		  <translation>Télécharger</translation>
+    </message>
+    <message>
+		  <source>noNewVersionAvailable</source>
+		  <translation>Votre application est à jour.</translation>
+    </message>
+    <message>
+		  <source>newVersionInstalled</source>
+		  <translation>La nouvelle version de l&apos;application a été installée avec succès.</translation>
+    </message>
+    <message>
         <source>mainSearchBarPlaceholder</source>
         <translation>Chercher un contact, appeler ou envoyer un message…</translation>
     </message>

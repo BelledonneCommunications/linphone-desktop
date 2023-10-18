@@ -22,6 +22,7 @@ ApplicationWindow {
 	property string _currentView
 	property var _lockedInfo
 	property SmartSearchBar mainSearchBar : (mainLoader.item ? mainLoader.item.mainSearchBar : null)
+	property var notifyNewVersionInstallWhenLoaded : false
 	
 	// ---------------------------------------------------------------------------
 	
@@ -56,7 +57,18 @@ ApplicationWindow {
 	Connections {
 		target: CoreManager
 		onCoreManagerInitialized: mainLoader.active = true
-		onRemoteProvisioningFailed: if(mainLoader.active) Logic.warnProvisioningFailed(window)
+        onRemoteProvisioningFailed: if(mainLoader.active) Logic.warnProvisioningFailed(window)
+		onUserInitiatedVersionUpdateCheckResult: switch(result) {
+													case 0 : Utils.infoDialog(window, qsTr('newVersionCheckError')); break;
+													case 1 : Logic.proposeDownloadUpdate(window, version, url); break;
+													case 2 : Utils.infoDialog(window, qsTr('noNewVersionAvailable')+"\n"+Qt.application.version); break;
+													case 3 : if (mainLoader.active)
+																Utils.infoDialog(window, qsTr('newVersionInstalled')+"\n"+Qt.application.version)
+															else
+																notifyNewVersionInstallWhenLoaded = true
+															break;
+													default : {}
+												}
 	}
 	
 	Shortcut {
@@ -72,16 +84,20 @@ ApplicationWindow {
 		anchors.fill: parent
 		
 		onLoaded: {
-			if(!CoreManager.isLastRemoteProvisioningGood()) {
-				Logic.warnProvisioningFailed(window)
-			}
-			switch(SettingsModel.getShowDefaultPage()) {
-				case 1 : window.setView('Calls'); break;
-				case 2 : window.setView('Conversations'); break;
-				case 3 : ContactsListModel.update(); window.setView('Contacts'); break;
-				case 4 : window.setView('Conferences'); break;
-			default:{}
-			}
+                if(!CoreManager.isLastRemoteProvisioningGood()) {
+                    Logic.warnProvisioningFailed(window)
+                }
+				if (notifyNewVersionInstallWhenLoaded) {
+					notifyNewVersionInstallWhenLoaded = false
+					Utils.infoDialog(window, qsTr('newVersionInstalled')+"\n"+Qt.application.version)
+				}
+				switch(SettingsModel.getShowDefaultPage()) {
+					case 1 : window.setView('Calls'); break;
+					case 2 : window.setView('Conversations'); break;
+					case 3 : ContactsListModel.update(); window.setView('Contacts'); break;
+					case 4 : window.setView('Conferences'); break;
+				default:{}
+				}
 		}
 		
 		sourceComponent: ColumnLayout {

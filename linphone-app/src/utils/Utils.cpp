@@ -21,7 +21,6 @@
 #include <QAction>
 #include <QBitmap>
 #include <QFileInfo>
-#include <QCoreApplication>
 #include <QCryptographicHash>
 #include <QCursor>
 #include <QDir>

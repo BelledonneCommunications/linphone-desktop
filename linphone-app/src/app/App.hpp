@@ -122,6 +122,7 @@ public:
   Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
 
   Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
+  bool mCheckForUpdateUserInitiated;
   Q_INVOKABLE static void checkForUpdates(bool force = false);
 
 // Check module availability when no dependencies are needed (else use SettingsModel)

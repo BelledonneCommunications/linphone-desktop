@@ -1689,6 +1689,15 @@ void SettingsModel::setVersionCheckUrl(const QString& url){
 	}
 }
 
+QString SettingsModel::getLastRunningVersionOfApp(){
+	auto version = mConfig->getString("app_version", "last_running", "unknown");
+	return Utils::coreStringToAppString(version);
+}
+
+void SettingsModel::setLastRunningVersionOfApp(const QString& version){
+	mConfig->setString("app_version", "last_running", Utils::appStringToCoreString(version));
+}
+
 SettingsModel::VersionCheckType SettingsModel::getVersionCheckType() const{
 	return (SettingsModel::VersionCheckType) mConfig->getInt(UiSection, "version_check_type", (int)VersionCheckType_Release);
 }

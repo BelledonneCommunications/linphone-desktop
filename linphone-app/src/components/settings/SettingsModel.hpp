@@ -614,6 +614,9 @@ public:
 	QString getVersionCheckUrl();
 	void setVersionCheckUrl(const QString& url);
 	
+	QString getLastRunningVersionOfApp();
+	void setLastRunningVersionOfApp (const QString& version);
+	
 	VersionCheckType getVersionCheckType() const;
 	void setVersionCheckType(const VersionCheckType& type);
 	Q_INVOKABLE bool haveVersionNightlyUrl()const;

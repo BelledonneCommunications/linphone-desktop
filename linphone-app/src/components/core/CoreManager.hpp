@@ -192,8 +192,9 @@ signals:
 	
 	void eventCountChanged ();
 	void callLogsCountChanged();
-	void remoteProvisioningFailed();
-	
+    void remoteProvisioningFailed();
+	void userInitiatedVersionUpdateCheckResult(int result, QString version = nullptr, QString url = nullptr);
+
 private:
 	CoreManager (QObject *parent, const QString &configPath);
 	~CoreManager ();

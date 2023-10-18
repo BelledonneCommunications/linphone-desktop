@@ -122,3 +122,14 @@ function handleAuthenticationRequested (authInfo, realm, sipAddress, userId) {
 function warnProvisioningFailed(window) {
 	Utils.infoDialog(window, qsTr('lastProvisioningFailed'))
 }
+
+function proposeDownloadUpdate(window, version, url) {
+	window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+		descriptionText:qsTr('newVersionAvailable').replace("%1", version)+"\n"+qsTr('newVersionAvailableInstructions'),
+		buttonTexts : [qsTr('cancel'),qsTr('downloadUpdate')]
+	}, function (status) {
+		if (status) {
+			Qt.openUrlExternally(url)
+		}
+	})
+}

@@ -298,6 +298,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 		qInfo() << QStringLiteral("Received command from other application: `%1`.").arg(command);
 		Cli::executeCommand(command);
 	});
+	mCheckForUpdateUserInitiated = false;
 }
 
 App::~App () {
@@ -1162,6 +1163,12 @@ void App::openAppAfterInit (bool mustBeIconified) {
 #endif
 	setOpened(true);
 	useFetchConfig(fetchFilePath);
+	
+	QString lastRunningVersion = CoreManager::getInstance()->getSettingsModel()->getLastRunningVersionOfApp();
+	if (lastRunningVersion != "unknown" && lastRunningVersion != applicationVersion()) {
+		emit CoreManager::getInstance()->userInitiatedVersionUpdateCheckResult(3, "", "");
+	}
+	CoreManager::getInstance()->getSettingsModel()->setLastRunningVersionOfApp(applicationVersion());
 }
 
 // -----------------------------------------------------------------------------
@@ -1187,10 +1194,11 @@ void App::checkForUpdate() {
 	checkForUpdates(false);
 }
 void App::checkForUpdates(bool force) {
-	if(force || CoreManager::getInstance()->getSettingsModel()->isCheckForUpdateEnabled())
+	if(force || CoreManager::getInstance()->getSettingsModel()->isCheckForUpdateEnabled()) {
+		getInstance()->mCheckForUpdateUserInitiated = force;
 		CoreManager::getInstance()->getCore()->checkForUpdate(
-					Utils::appStringToCoreString(applicationVersion())
-					);
+			Utils::appStringToCoreString(applicationVersion()));
+	}
 }
 
 bool App::isPdfAvailable(){
