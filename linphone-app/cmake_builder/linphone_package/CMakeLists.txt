@@ -538,14 +538,13 @@ function(deployqt_hack target qml_dir)
 			COMMAND "${CMAKE_COMMAND}" "-E" "${RM_COMMAND}" "-f" "${qml_dir}/views/App/Main/Assistant/CreateAppSipAccountWithWebView.qml"
                         WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
 	endif()
-		
+
 	if(WIN32)
 #Windeployqt hack for CPack. WindeployQt cannot be used only with a simple 'install(CODE "execute_process' or CPack will not have all required files.
 		find_program(DEPLOYQT_PROGRAM windeployqt HINTS "${_qt_bin_dir}")
 		if (NOT DEPLOYQT_PROGRAM)
 			message(FATAL_ERROR "Could not find the windeployqt program. Make sure it is in the PATH.")
 		endif ()
-		
 		add_custom_command(TARGET ${target} POST_BUILD
 							COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_CURRENT_BINARY_DIR}/winqt/"
 							COMMAND "${CMAKE_COMMAND}" -E
@@ -567,6 +566,6 @@ function(deployqt_hack target qml_dir)
 		if (NOT DEPLOYQT_PROGRAM)
 			message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
 		endif()
-		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${qml_dir} -no-strip )")
+		#install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${qml_dir} -no-strip )")
 	endif()
 endfunction()
