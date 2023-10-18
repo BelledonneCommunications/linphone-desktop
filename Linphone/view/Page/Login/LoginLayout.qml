@@ -32,7 +32,7 @@ Item {
 						fillMode: Image.PreserveAspectFit
 						source: AppIcons.info
 					}
-					onClicked: console.debug("[LoginLayout] open about popup")
+					onClicked: console.debug("[LoginLayout] Userr: open about popup")
 				}
 
 				Text {
@@ -60,7 +60,7 @@ Item {
 			Image {
 				Layout.minimumHeight: 80
 				Layout.fillWidth: true
-				source: AppIcons.belldonne
+				source: AppIcons.belledonne
 				fillMode: Image.Stretch
 			}
 

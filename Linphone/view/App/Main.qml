@@ -28,12 +28,27 @@ Window {
 		id: loginPage
 		LoginPage {
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
+			onGoToRegister: mainWindowStackView.replace(registerPage)
 		}
 	}
 	Component {
 		id: sipLoginPage
 		SIPLoginPage {
 			onReturnToLogin: mainWindowStackView.pop()
+			onGoToRegister: mainWindowStackView.replace(registerPage)
+		}
+	}
+	Component {
+		id: registerPage
+		RegisterPage {
+			onReturnToLogin: mainWindowStackView.replace(loginPage)
+			onRegisterCalled: mainWindowStackView.push(checkingPage)
+		}
+	}
+	Component {
+		id: checkingPage
+		RegisterCheckingPage {
+			onReturnToRegister: mainWindowStackView.pop()
 		}
 	}
 } 

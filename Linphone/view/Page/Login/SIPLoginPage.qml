@@ -8,6 +8,7 @@ LoginLayout {
 
 	id: sipLoginPage
 	signal returnToLogin()
+	signal goToRegister()
 
 	titleContent: RowLayout {
 		Control.Button {
@@ -18,7 +19,10 @@ LoginLayout {
 				source: AppIcons.returnArrow
 				fillMode: Image.PreserveAspectFit
 			}
-			onClicked: sipLoginPage.returnToLogin()
+			onClicked: {
+				console.debug("[LoginItem] User: return")
+				sipLoginPage.returnToLogin()
+			}
 		}
 		Image {
 			fillMode: Image.PreserveAspectFit
@@ -26,7 +30,6 @@ LoginLayout {
 		}
 		Text {
 			text: "Use a SIP Account"
-			color: DefaultStyle.titleColor
 			font.pointSize: DefaultStyle.title2FontPointSize
 			font.bold: true
 			scaleLettersFactor: 1.1
@@ -37,13 +40,16 @@ LoginLayout {
 		Text {
 			Layout.rightMargin: 15
 			text: "No account yet ?"
-			color: DefaultStyle.defaultTextColor
 			font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
 			inversedColors: true
 			text: "Register"
+			onClicked: {
+				console.debug("[SIPLoginPage] User: go to register page")
+				sipLoginPage.goToRegister()
+			}
 		}
 	}
 
@@ -92,6 +98,8 @@ LoginLayout {
 							text: 'I prefere create an account'
 							inversedColors: true
 							onClicked: {
+								console.debug("[LoginItem] User: click register")
+								sipLoginPage.goToRegister()
 							}
 						}
 
@@ -136,7 +144,11 @@ LoginLayout {
 						ComboBox {
 							label: "Transport"
 							backgroundWidth: 250
-							modelList: ["TCP", "UDP", "TLS"]
+							modelList:[
+								{text:"TCP"},
+								{text:"UDP"},
+								{text:"TLS"}
+							]
 						}
 
 						Button {
@@ -144,6 +156,7 @@ LoginLayout {
 
 							text: 'Log in'
 							onClicked: {
+								console.debug("[LoginItem] User: Log in")
 								LoginPageCpp.login(username.inputText, password.inputText);
 							}
 						}

@@ -44,9 +44,11 @@ LoginLayout {
 			contentItem: Text {
 				text: "Skip"
 				font.underline: true
-				color: DefaultStyle.defaultTextColor
 			}
-			onClicked: welcomePage.startButtonPressed();
+			onClicked: {
+				console.debug("[LoginItem] User: Click skip")
+				welcomePage.startButtonPressed()
+			}
 		}
 	}
 	centerContent: ColumnLayout {
@@ -73,14 +75,12 @@ LoginLayout {
 								text: "Linphone"
 								font.bold: true
 								font.pixelSize: 20
-								color: DefaultStyle.defaultTextColor
 								scaleLettersFactor: 1.1
 							}
 							Text {
 								Layout.maximumWidth: 361
 								wrapMode: Text.WordWrap
 								font.pixelSize: 11
-								color: DefaultStyle.defaultTextColor
 								text: "Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>. "
 							}
 						}
@@ -95,13 +95,11 @@ LoginLayout {
 								text: "Sécurisé"
 								font.bold: true
 								font.pixelSize: 20
-								color: DefaultStyle.defaultTextColor
 							}
 							Text {
 								Layout.maximumWidth: 361
 								wrapMode: Text.WordWrap
 								font.pixelSize: 11
-								color: DefaultStyle.defaultTextColor
 								text: "Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>."
 							}
 						}
@@ -116,13 +114,11 @@ LoginLayout {
 								text: "Open Source"
 								font.bold: true
 								font.pixelSize: 20
-								color: DefaultStyle.defaultTextColor
 							}
 							Text {
 								Layout.maximumWidth: 361
 								wrapMode: Text.WordWrap
 								font.pixelSize: 11
-								color: DefaultStyle.defaultTextColor
 								text: "Une application open source et un <b>service gratuit</b> depuis <b>2001</b>"
 							}
 						}

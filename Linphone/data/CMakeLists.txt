@@ -1,18 +1,20 @@
 list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	data/assistant/create-app-sip-account.rc
 	data/assistant/use-other-sip-account.rc
-	"data/image/info-logo.svg" 
+	"data/image/info.svg" 
 	"data/image/belledonne.svg"
-	"data/image/profil.svg"
+	"data/image/user-circle.svg"
 	"data/image/logo.svg" 
-	"data/image/login-image.svg" 
-	"data/image/show.svg"
-	"data/image/welcome-linphone-logo.svg"
-	"data/image/welcome-lock.svg"
-	"data/image/welcome-opensource.svg"
-	"data/image/hide.svg"
-	"data/image/down-arrow.svg"
-	"data/image/return-arrow.svg"
+	"data/image/login_image.svg" 
+	"data/image/eye-slash.svg"
+	"data/image/linphone.svg"
+	"data/image/secured.svg"
+	"data/image/open_source.svg"
+	"data/image/eye.svg"
+	"data/image/caret-down.svg"
+	"data/image/caret-left.svg"
+	"data/image/verif_page_image.svg"
+	"data/image/check.svg"
 )
 
 set(_LINPHONEAPP_RC_FILES ${_LINPHONEAPP_RC_FILES} PARENT_SCOPE)

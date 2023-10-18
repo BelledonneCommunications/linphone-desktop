@@ -108,12 +108,6 @@ void App::initCppInterfaces() {
 	LinphoneEnums::registerMetaTypes();
 }
 
-void App::registerToolTypes() {
-	qmlRegisterSingletonType<Constants>(
-	    "ConstantsCpp", 1, 0, "ConstantsCpp",
-	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Constants(engine); });
-}
-
 //------------------------------------------------------------
 
 void App::clean() {

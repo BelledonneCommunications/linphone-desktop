@@ -6,6 +6,7 @@ import Linphone
 LoginLayout {
 	id: mainItem
 	signal useSIPButtonClicked()
+	signal goToRegister()
 
 	titleContent: RowLayout {
 		Image {
@@ -14,7 +15,6 @@ LoginLayout {
 		}
 		Text {
 			text: "Login"
-			color: DefaultStyle.titleColor
 			font.pointSize: DefaultStyle.title2FontPointSize
 			font.bold: true
 			scaleLettersFactor: 1.1
@@ -25,13 +25,16 @@ LoginLayout {
 		Text {
 			Layout.rightMargin: 15
 			text: "No account yet ?"
-			color: DefaultStyle.defaultTextColor
 			font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
 			inversedColors: true
 			text: "Register"
+			onClicked: {
+				console.debug("[LoginPage] User: go to register")
+				mainItem.goToRegister()
+			}
 		}
 	}
 
