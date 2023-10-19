@@ -160,8 +160,9 @@ void CoreHandlers::onCallStatsUpdated (
 		const shared_ptr<linphone::Call> &call,
 		const shared_ptr<const linphone::CallStats> &stats
 		) {
-	if(call->dataExists("call-model"))
+	if(call && call->dataExists("call-model")) {
 		call->getData<CallModel>("call-model").updateStats(stats);
+	}
 }
 
 void CoreHandlers::onCallCreated(const shared_ptr<linphone::Core> &,

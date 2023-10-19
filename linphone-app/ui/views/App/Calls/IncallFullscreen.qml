@@ -25,11 +25,19 @@ Window {
 	// ---------------------------------------------------------------------------
 
 	property alias callModel: conference.callModel
+	property ConferenceModel conferenceModel: callModel && callModel.conferenceModel
 	property var caller
 	property bool hideButtons: !hideButtonsTimer.realRunning
 	property bool cameraIsReady : false
 	property bool previewIsReady : false
-
+	property bool isReady : window.callModel && window.callModel.status != CallModel.CallStatusIdle
+								&& (!window.callModel.isConference
+									|| (window.conferenceModel && window.conferenceModel.isReady)
+								) && conferenceLayout.item && conferenceLayout.status == Loader.Ready
+	onIsReadyChanged: if(!isRead) {
+		console.info('[QML] Call becomes not ready : exit fullscreen')
+		window.exit()
+	}
 	// ---------------------------------------------------------------------------
 
 	function exit (cb) {

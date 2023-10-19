@@ -290,7 +290,7 @@ Rectangle {
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.fullscreen
-			visible: mainItem.callModel.videoEnabled
+			visible: mainItem.callModel.videoEnabled && mainItem.isReady
 			onClicked: {
 				console.info("[QML] User request fullscreen")
 				Logic.showFullscreen(window, mainItem, 'IncallFullscreen.qml', title.mapToGlobal(0,0))
