@@ -1509,12 +1509,12 @@ Adresa URL není nakonfigurována.</translation>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
         <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
-        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+        <translation>Účet je již vytvořen. Tato akce vymaže stávající účet. : Upozorněte na to uživatele.</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation>Poslední vzdálené zajištění selhalo</translation>
+        <translation>Vzdálené poskytování nastavení selhalo. Odkaz může být použit nebo jeho platnost vypršela. Pokud vám byl poskytnut, obraťte se na správce.</translation>
     </message>
     <message>
         <source>generateLabel</source>
@@ -5207,6 +5207,25 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
             <numerusform>%1 vteřiny</numerusform>
             <numerusform>%1 vteřin</numerusform>
         </translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <translation>Chtěl jste říct?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <translation>Přidat do slovníku</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <translation>Ignorovat</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <translation>Ignorovat vždy</translation>
     </message>
 </context>
 </TS>
