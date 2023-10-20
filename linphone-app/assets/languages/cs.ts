@@ -2391,7 +2391,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>newVersionAvailable</source>
         <translation>K dispozici je nová verze (%1)!</translation>
     </message>
-	<message>
+    <message>
         <source>newFileMessage</source>
         <translation>Obdržena nová příloha!</translation>
     </message>
@@ -5211,6 +5211,42 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 </context>
 <context>
     <name></name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <translation>Chtěl jste říct?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <translation>Přidat do slovníku</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <translation>Ignorovat</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <translation>Ignorovat vždy</translation>
+    </message>
+    <message>
+        <source>newVersionCheckError</source>
+        <translation>Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation>Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
+    </message>
+    <message>
+        <source>downloadUpdate</source>
+        <translation>Stáhnout</translation>
+    </message>
+    <message>
+        <source>noNewVersionAvailable</source>
+        <translation>Vaše aplikace je aktuální.</translation>
+    </message>
+    <message>
+        <source>newVersionInstalled</source>
+        <translation>Nová verze aplikace byla úspěšně nainstalována.</translation>
+    </message>
     <message>
         <source>spellCheckingMenuDidYouMean</source>
         <translation>Chtěl jste říct?</translation>
