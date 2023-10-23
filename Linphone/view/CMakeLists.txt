@@ -1,10 +1,27 @@
 
 list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Main.qml
+	view/App/Layout/LoginLayout.qml
 	
 	view/Item/Button.qml
-	
-	view/Page/LoginPage.qml
+	view/Item/Carousel.qml
+	view/Item/ComboBox.qml
+	view/Item/RectangleTest.qml
+	view/Item/Text.qml
+	view/Item/TextInput.qml
+
+	view/Item/Form/LoginForm.qml
+
+	view/Page/Login/LoginPage.qml
+	view/Page/Login/SIPLoginPage.qml
+	view/Page/Login/WelcomePage.qml
+
+)
+
+list(APPEND _LINPHONEAPP_QML_SINGLETONS
+	view/Style/AppIcons.qml
+	view/Style/DefaultStyle.qml
 )
 
 set(_LINPHONEAPP_QML_FILES ${_LINPHONEAPP_QML_FILES} PARENT_SCOPE)
+set(_LINPHONEAPP_QML_SINGLETONS ${_LINPHONEAPP_QML_SINGLETONS} PARENT_SCOPE)

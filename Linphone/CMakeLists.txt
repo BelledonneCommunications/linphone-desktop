@@ -21,7 +21,7 @@ set(APP_TARGETS ${LinphoneCxx_TARGET})
 
 
 set(QT_DEFAULT_MAJOR_VERSION 6)
-set(QT_PACKAGES Core Quick Qml Widgets)# Search Core at first for initialize Qt scripts for next find_packages.
+set(QT_PACKAGES Core Quick Qml Widgets Svg Multimedia)# Search Core at first for initialize Qt scripts for next find_packages.
 if (UNIX AND NOT APPLE)
 	list(APPEND QT_PACKAGES DBus)
 endif()
@@ -68,6 +68,7 @@ endif()
 set(_LINPHONEAPP_SOURCES main.cpp)
 set(_LINPHONEAPP_QML_FILES)
 set(_LINPHONEAPP_RC_FILES)
+set(_LINPHONEAPP_QML_SINGLETONS)
 
 add_subdirectory(data)
 add_subdirectory(tool)
@@ -79,17 +80,17 @@ qt6_add_executable(Linphone
     ${_LINPHONEAPP_SOURCES}
 )
 
+set_source_files_properties(${_LINPHONEAPP_QML_SINGLETONS} PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 qt6_add_qml_module(Linphone
     URI Linphone
     RESOURCE_PREFIX ""
     VERSION 1.0
-    QML_FILES ${_LINPHONEAPP_QML_FILES}
+    QML_FILES ${_LINPHONEAPP_QML_FILES} ${_LINPHONEAPP_QML_SINGLETONS}
 )
 
-qt_add_resources(Linphone
-	PREFIX "/"
-	FILES ${_LINPHONEAPP_RC_FILES}
-)
+qt6_add_resources(Linphone "resources" PREFIX "/" FILES ${_LINPHONEAPP_RC_FILES})
+
 ################################################################
 #						TARGETS LINKS
 ################################################################
@@ -101,10 +102,10 @@ set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
     OUTPUT_NAME "${EXECUTABLE_NAME}"
-	ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}
-	LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}
-	RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}
-
+# Added for Qt to set the correct path on run configurations.
+    ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}"
+    LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_LIBDIR}"
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/${CMAKE_INSTALL_BINDIR}"
 )
 if(MSVC)
 	set_target_properties(${TARGET_NAME} PROPERTIES PDB_NAME "${EXECUTABLE_NAME}_app")

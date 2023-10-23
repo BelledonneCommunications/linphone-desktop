@@ -18,33 +18,35 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QQmlApplicationEngine>
 #include <QCommandLineParser>
+#include <QQmlApplicationEngine>
 #include <QSharedPointer>
 
-#include "core/thread/Thread.hpp"
 #include "core/singleapplication/singleapplication.h"
+#include "core/thread/Thread.hpp"
 #include "model/core/CoreModel.hpp"
 
 class App : public SingleApplication {
 public:
 	App(int &argc, char *argv[]);
-	static App* getInstance();
-	
-// App::postModelAsync(<lambda>) => run lambda in model thread and continue.
-// App::postModelSync(<lambda>) => run lambda in current thread and block connection.
-	template<typename Func, typename... Args>
-	static auto postModelAsync(Func&& callable, Args&& ...args) {
+	static App *getInstance();
+
+	// App::postModelAsync(<lambda>) => run lambda in model thread and continue.
+	// App::postModelSync(<lambda>) => run lambda in current thread and block connection.
+	template <typename Func, typename... Args>
+	static auto postModelAsync(Func &&callable, Args &&...args) {
 		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable, args...);
 	}
-	template<typename Func>
-	static auto postModelAsync(Func&& callable) {
+	template <typename Func>
+	static auto postModelAsync(Func &&callable) {
 		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable);
 	}
-	template<typename Func>
-	static auto postModelSync(Func&& callable) {
-		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable
-			, QThread::currentThread() != CoreModel::getInstance()->thread() ? Qt::BlockingQueuedConnection : Qt::DirectConnection);
+	template <typename Func>
+	static auto postModelSync(Func &&callable) {
+		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable,
+		                          QThread::currentThread() != CoreModel::getInstance()->thread()
+		                              ? Qt::BlockingQueuedConnection
+		                              : Qt::DirectConnection);
 	}
 
 	void clean();
@@ -54,10 +56,10 @@ public:
 	void onLoggerInitialized();
 
 	QQmlApplicationEngine *mEngine = nullptr;
-	
-private: 
+
+private:
 	void createCommandParser();
-	
+
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
 };

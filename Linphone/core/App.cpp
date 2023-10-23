@@ -21,11 +21,14 @@
 #include "App.hpp"
 
 #include <QCoreApplication>
+#include <QGuiApplication>
+#include <QQmlContext>
 
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "tool/Constants.hpp"
+#include "tool/providers/ImageProvider.hpp"
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
@@ -64,8 +67,9 @@ void App::init() {
 	// QML
 	mEngine = new QQmlApplicationEngine(this);
 	mEngine->addImportPath(":/");
-
+	mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
 	initCppInterfaces();
+	mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
 
 	const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
 	QObject::connect(
@@ -84,6 +88,9 @@ void App::initCppInterfaces() {
 	qmlRegisterSingletonType<LoginPage>(
 	    Constants::MainQmlUri, 1, 0, "LoginPageCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new LoginPage(engine); });
+	qmlRegisterSingletonType<Constants>(
+	    "ConstantsCpp", 1, 0, "ConstantsCpp",
+	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Constants(engine); });
 }
 
 //------------------------------------------------------------

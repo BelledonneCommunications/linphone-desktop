@@ -40,6 +40,7 @@ public:
 	static constexpr char DefaultLocale[] = "en";
 	static constexpr char DefaultFont[] = "Noto Sans";
 	static constexpr int DefaultFontPointSize = 10;
+
 #ifdef __APPLE__
 	static constexpr char DefaultEmojiFont[] = "Apple Color Emoji";
 #else
@@ -94,6 +95,7 @@ public:
 	Q_PROPERTY(QString PrivatePolicyUrl MEMBER PrivatePolicyUrl CONSTANT)
 	Q_PROPERTY(QString ContactUrl MEMBER ContactUrl CONSTANT)
 	Q_PROPERTY(QString TranslationUrl MEMBER TranslationUrl CONSTANT)
+	Q_PROPERTY(QString DefaultFont MEMBER DefaultFont CONSTANT)
 	Q_PROPERTY(int maxMosaicParticipants MEMBER MaxMosaicParticipants CONSTANT)
 	Q_PROPERTY(QStringList reactionsList READ getReactionsList CONSTANT)
 

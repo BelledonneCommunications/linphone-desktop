@@ -18,45 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SINGLE_APPLICATION_DBUS_PRIVATE_H_
-#define SINGLE_APPLICATION_DBUS_PRIVATE_H_
+#ifndef AVATAR_PROVIDER_H_
+#define AVATAR_PROVIDER_H_
 
-#include <QDBusAbstractAdaptor>
-#include <QDBusConnection>
-
-#include "singleapplication.h"
+#include <QQuickImageProvider>
 
 // =============================================================================
 
-struct InstancesInfo {
-	bool primary;
-	quint32 secondary;
-};
-
-class SingleApplicationPrivate : public QDBusAbstractAdaptor {
-	Q_OBJECT
-	Q_CLASSINFO("D-Bus Interface", "org.linphone.DBus.SingleApplication")
-
+class AvatarProvider : public QQuickImageProvider {
 public:
-	SingleApplicationPrivate(SingleApplication *q_ptr);
+	AvatarProvider();
 
-	QDBusConnection getBus() const;
+	QImage requestImage(const QString &id, QSize *size, const QSize &requestedSize) override;
 
-	void startPrimary();
-	void startSecondary();
-
-	static void terminate(int signum);
-
-	SingleApplication *q_ptr;
-	SingleApplication::Options options;
-	quint32 instanceNumber;
-
-	// Explicit public slot. Cannot be private, must be exported as a method via D-Bus.
-public slots:
-	void handleMessageReceived(quint32 instanceId, QByteArray message);
+	static const QString ProviderId;
 
 private:
-	Q_DECLARE_PUBLIC(SingleApplication)
+	QString mAvatarsPath;
 };
 
-#endif // SINGLE_APPLICATION_DBUS_PRIVATE_H_
+#endif // AVATAR_PROVIDER_H_
