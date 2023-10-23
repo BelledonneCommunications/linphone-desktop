@@ -81,6 +81,8 @@ ubuntu2004-makefile-gcc:
     - echo $CMAKE_SANITIZER_OPTIONS
     - eval "$(qtchooser -qt=$QT_LINUX_VER -print-env)"
     - export PATH=${QTTOOLDIR}:$PATH
+    - export Qt6_DIR=${QTLIBDIR}/cmake/Qt6
+    - echo "Using Qt $QT_LINUX_VER at ${QTLIBDIR}"
     - cd build
     - cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS
     - cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS

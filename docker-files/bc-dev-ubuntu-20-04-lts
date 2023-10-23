@@ -1,5 +1,5 @@
 ###############################################################################
-# Dockerfile used to make gitlab.linphone.org:4567/bc/public/linphone-sdk/bc-dev-ubuntu-20-04-lts:20231004
+# Dockerfile used to make gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-20-04-lts:20231024_add_multimedia
 ###############################################################################
 
 FROM ubuntu:20.04
@@ -7,16 +7,18 @@ FROM ubuntu:20.04
 # Qt on Ubuntu 20.04 is too old. Use a downloader.
 ARG QT_VERSION=5.15.2
 ARG QT6_VERSION=6.5.3
-ARG QT_MODULES=qtwebengine qtnetworkauth qtquick3d
+#Do not use it. It seems that it cannot be used from python command.
+#ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia
 
 MAINTAINER Julien Wadel <julien.wadel@belledonne-communications.com>
 
-# Use a french mirror
-RUN sed -i -E 's/(archive|security)\.ubuntu\.com/fr.archive.ubuntu.com/' /etc/apt/sources.list
+# Use a Swiss mirror
+RUN sed -i -E 's/(archive|security)\.ubuntu\.com/ch.archive.ubuntu.com/' /etc/apt/sources.list
 
 # add fallbacks for timeout connections.
-#Swiss
-RUN echo "deb http://ch.archive.ubuntu.com/ubuntu/ bionic main restricted" >> /etc/apt/sources.list
+
+#France
+RUN echo "deb http://fr.archive.ubuntu.com/ubuntu/ bionic main restricted" >> /etc/apt/sources.list
 RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main restricted" >> /etc/apt/sources.list
 RUN echo "deb http://ch.archive.ubuntu.com/ubuntu/ bionic-updates main restricted" >> /etc/apt/sources.list
 #Belgium
@@ -93,17 +95,16 @@ RUN sudo pip3 install --upgrade setuptools
 RUN sudo pip3 install ez_setup
 
 ## Install Qt download tool
+# installation is split because there is a way where some modules are not downloaded in the first attempt.
 RUN sudo pip3 install py7zr aqtinstall
-RUN sudo python3 -m aqt install $QT_VERSION linux desktop -O /opt/Qt -m $QT_MODULES
-RUN sudo python3 -m aqt install $QT6_VERSION linux desktop -O /opt/Qt -m $QT_MODULES
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d qtmultimedia
 
 RUN sudo chown -R bc:bc /opt/Qt/
 
 RUN qtchooser -install $QT_VERSION /opt/Qt/$QT_VERSION/gcc_64/bin/qmake
 RUN qtchooser -install $QT6_VERSION /opt/Qt/$QT6_VERSION/gcc_64/bin/qmake
-
-RUN eval "$(qtchooser -qt=$QT_VERSION -print-env)"
-ENV Qt5_DIR=${QTLIBDIR}/cmake/Qt5
-ENV PATH=${QTTOOLDIR}:$PATH
 
 CMD bash
