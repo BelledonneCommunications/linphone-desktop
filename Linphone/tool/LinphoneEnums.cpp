@@ -18,9 +18,11 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QString>
-
 #include "LinphoneEnums.hpp"
+#include "Constants.hpp"
+
+#include <QQmlEngine>
+#include <QString>
 
 // =============================================================================
 
@@ -36,23 +38,11 @@ void LinphoneEnums::registerMetaTypes() {
 	qRegisterMetaType<LinphoneEnums::MediaEncryption>();
 	qRegisterMetaType<LinphoneEnums::ParticipantDeviceState>();
 	qRegisterMetaType<LinphoneEnums::RecorderState>();
+	qRegisterMetaType<LinphoneEnums::RegistrationState>();
 	qRegisterMetaType<LinphoneEnums::TunnelMode>();
 	qRegisterMetaType<LinphoneEnums::TransportType>();
-
-	qRegisterMetaType<std::shared_ptr<linphone::Call>>();
-	qRegisterMetaType<linphone::Call::State>();
-	qRegisterMetaType<std::shared_ptr<linphone::Core>>();
-	qRegisterMetaType<linphone::Config::ConfiguringState>();
-	qRegisterMetaType<std::string>();
-	qRegisterMetaType<linphone::GlobalState>();
-	qRegisterMetaType<std::shared_ptr<linphone::ChatRoom>>();
-	qRegisterMetaType<linphone::ChatRoom::State>();
-	qRegisterMetaType<linphone::RegistrationState>();
-	qRegisterMetaType<linphone::VersionUpdateCheckResult>();
-	qRegisterMetaType<std::shared_ptr<linphone::CallLog>>();
-	qRegisterMetaType<std::shared_ptr<const linphone::CallStats>>();
-	qRegisterMetaType<std::shared_ptr<linphone::EventLog>>();
-	qRegisterMetaType<std::shared_ptr<linphone::ChatMessage>>();
+	qmlRegisterUncreatableMetaObject(LinphoneEnums::staticMetaObject, Constants::MainQmlUri, 1, 0, "LinphoneEnums",
+	                                 "Only enums");
 }
 
 linphone::MediaEncryption LinphoneEnums::toLinphone(const LinphoneEnums::MediaEncryption &data) {
@@ -99,7 +89,7 @@ LinphoneEnums::CallStatus LinphoneEnums::fromLinphone(const linphone::Call::Stat
 }
 
 linphone::Conference::Layout LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceLayout &layout) {
-	if (layout != LinphoneEnums::ConferenceLayoutAudioOnly) return static_cast<linphone::Conference::Layout>(layout);
+	if (layout != LinphoneEnums::ConferenceLayout::AudioOnly) return static_cast<linphone::Conference::Layout>(layout);
 	else return linphone::Conference::Layout::Grid; // Audio Only mode
 }
 
@@ -145,6 +135,14 @@ LinphoneEnums::RecorderState LinphoneEnums::fromLinphone(const linphone::Recorde
 	return static_cast<LinphoneEnums::RecorderState>(data);
 }
 
+linphone::RegistrationState LinphoneEnums::toLinphone(const LinphoneEnums::RegistrationState &data) {
+	return static_cast<linphone::RegistrationState>(data);
+}
+
+LinphoneEnums::RegistrationState LinphoneEnums::fromLinphone(const linphone::RegistrationState &data) {
+	return static_cast<LinphoneEnums::RegistrationState>(data);
+}
+
 linphone::TransportType LinphoneEnums::toLinphone(const LinphoneEnums::TransportType &type) {
 	return static_cast<linphone::TransportType>(type);
 }
@@ -153,19 +151,19 @@ LinphoneEnums::TransportType LinphoneEnums::fromLinphone(const linphone::Transpo
 }
 QString LinphoneEnums::toString(const LinphoneEnums::TransportType &type) {
 	switch (type) {
-		case TransportTypeTcp:
+		case TransportType::Tcp:
 			return "TCP";
-		case TransportTypeUdp:
+		case TransportType::Udp:
 			return "UDP";
-		case TransportTypeTls:
+		case TransportType::Tls:
 			return "TLS";
-		case TransportTypeDtls:
+		case TransportType::Dtls:
 			return "DTLS";
 	}
 }
 void LinphoneEnums::fromString(const QString &transportType, LinphoneEnums::TransportType *transport) {
-	if (transportType.toUpper() == QLatin1String("TCP")) *transport = TransportTypeTcp;
-	else if (transportType.toUpper() == QLatin1String("UDP")) *transport = TransportTypeUdp;
-	else if (transportType.toUpper() == QLatin1String("TLS")) *transport = TransportTypeTls;
-	else *transport = TransportTypeDtls;
+	if (transportType.toUpper() == QLatin1String("TCP")) *transport = TransportType::Tcp;
+	else if (transportType.toUpper() == QLatin1String("UDP")) *transport = TransportType::Udp;
+	else if (transportType.toUpper() == QLatin1String("TLS")) *transport = TransportType::Tls;
+	else *transport = TransportType::Dtls;
 }

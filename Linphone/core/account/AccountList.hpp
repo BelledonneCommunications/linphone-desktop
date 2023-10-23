@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -18,19 +18,18 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Utils.hpp"
+#ifndef ACCOUNT_LIST_H_
+#define ACCOUNT_LIST_H_
 
+#include "../proxy/ListProxy.hpp"
+#include <QLocale>
 // =============================================================================
 
-char *Utils::rstrstr(const char *a, const char *b) {
-	size_t a_len = strlen(a);
-	size_t b_len = strlen(b);
+class AccountList : public ListProxy {
+	Q_OBJECT
+public:
+	AccountList(QObject *parent = Q_NULLPTR);
+	~AccountList();
+};
 
-	if (b_len > a_len) return nullptr;
-
-	for (const char *s = a + a_len - b_len; s >= a; --s) {
-		if (!strncmp(s, b, b_len)) return const_cast<char *>(s);
-	}
-
-	return nullptr;
-}
+#endif

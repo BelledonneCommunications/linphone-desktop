@@ -18,19 +18,33 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Utils.hpp"
+#ifndef ACCOUNT_PROXY_H_
+#define ACCOUNT_PROXY_H_
+
+#include "../proxy/SortFilterProxy.hpp"
 
 // =============================================================================
 
-char *Utils::rstrstr(const char *a, const char *b) {
-	size_t a_len = strlen(a);
-	size_t b_len = strlen(b);
+class AccountProxy : public SortFilterProxy {
+	Q_OBJECT
 
-	if (b_len > a_len) return nullptr;
+	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 
-	for (const char *s = a + a_len - b_len; s >= a; --s) {
-		if (!strncmp(s, b, b_len)) return const_cast<char *>(s);
-	}
+public:
+	AccountProxy(QObject *parent = Q_NULLPTR);
+	~AccountProxy();
 
-	return nullptr;
-}
+	QString getFilterText() const;
+	void setFilterText(const QString &filter);
+
+signals:
+	void filterTextChanged();
+
+protected:
+	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+
+	QString mFilterText;
+};
+
+#endif

@@ -47,7 +47,7 @@ bool AccountManager::login(QString username, QString password) {
 	auto params = account->getParams()->clone();
 	// Sip address.
 	auto identity = params->getIdentityAddress()->clone();
-	if (mAccountListener) return false;
+	if (mAccountModel) return false;
 
 	identity->setUsername(Utils::appStringToCoreString(username));
 	if (params->setIdentityAddress(identity)) {
@@ -62,10 +62,8 @@ bool AccountManager::login(QString username, QString password) {
 	                                          "",                                     // Realm.
 	                                          identity->getDomain()                   // Domain.
 	                                          ));
-
-	mAccountListener = std::make_shared<AccountListener>(this);
-	account->addListener(mAccountListener);
-	connect(mAccountListener.get(), &AccountListener::registrationStateChanged, this,
+	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account);
+	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
 	        &AccountManager::onRegistrationStateChanged);
 	core->addAccount(account);
 	return true;
@@ -78,13 +76,13 @@ void AccountManager::onRegistrationStateChanged(const std::shared_ptr<linphone::
 	switch (state) {
 		case linphone::RegistrationState::Failed:
 			core->removeAccount(account);
-			account->removeListener(mAccountListener);
-			mAccountListener = nullptr;
+			emit mAccountModel->removeListener();
+			mAccountModel = nullptr;
 			emit logged(false);
 			break;
 		case linphone::RegistrationState::Ok:
-			account->removeListener(mAccountListener);
-			mAccountListener = nullptr;
+			emit mAccountModel->removeListener();
+			mAccountModel = nullptr;
 			emit logged(true);
 			break;
 		default: {

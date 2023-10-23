@@ -1,6 +1,7 @@
 list(APPEND _LINPHONEAPP_SOURCES
 	tool/Constants.cpp
 	tool/Utils.cpp
+	tool/LinphoneEnums.cpp
 
 	tool/providers/ImageProvider.cpp
 )

@@ -18,19 +18,29 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "Utils.hpp"
+#include "AccountList.hpp"
+#include "Account.hpp"
+#include "core/App.hpp"
+#include <QSharedPointer>
+#include <linphone++/linphone.hh>
 
 // =============================================================================
 
-char *Utils::rstrstr(const char *a, const char *b) {
-	size_t a_len = strlen(a);
-	size_t b_len = strlen(b);
+AccountList::AccountList(QObject *parent) : ListProxy(parent) {
 
-	if (b_len > a_len) return nullptr;
+	App::postModelAsync([=]() {
+		QList<QSharedPointer<Account>> accounts;
+		// Model thread.
+		auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
+		for (auto it : linphoneAccounts) {
+			auto model = QSharedPointer<Account>(new Account(it), &QObject::deleteLater);
+			model->moveToThread(this->thread());
+			accounts.push_back(model);
+		}
+		// Invoke for adding stuffs in caller thread
+		QMetaObject::invokeMethod(this, [this, accounts]() { add(accounts); });
+	});
+}
 
-	for (const char *s = a + a_len - b_len; s >= a; --s) {
-		if (!strncmp(s, b, b_len)) return const_cast<char *>(s);
-	}
-
-	return nullptr;
+AccountList::~AccountList() {
 }

@@ -18,15 +18,27 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "AccountListener.hpp"
+#include "AccountModel.hpp"
 
 #include <QDebug>
 
-AccountListener::AccountListener(QObject *parent) : QObject(parent) {
+AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QObject *parent)
+    : ::Listener<linphone::Account, linphone::AccountListener>(account, parent) {
 }
 
-void AccountListener::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
-                                                 linphone::RegistrationState state,
-                                                 const std::string &message) {
+AccountModel::~AccountModel() {
+}
+
+void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
+                                              linphone::RegistrationState state,
+                                              const std::string &message) {
 	emit registrationStateChanged(account, state, message);
+}
+
+void AccountModel::setPictureUri(std::string uri) {
+	auto account = std::dynamic_pointer_cast<linphone::Account>(mMonitor);
+	auto params = account->getParams()->clone();
+	params->setPictureUri(uri);
+	account->setParams(params);
+	emit pictureUriChanged(uri);
 }

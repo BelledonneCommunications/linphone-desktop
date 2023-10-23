@@ -24,22 +24,25 @@
 #include <QObject>
 #include <linphone++/linphone.hh>
 
-#include "AccountListener.hpp"
+#include "AccountModel.hpp"
 
-class AccountManager: public QObject {
-Q_OBJECT
+class AccountManager : public QObject {
+	Q_OBJECT
 public:
 	AccountManager(QObject *parent = nullptr);
-	
+
 	bool login(QString username, QString password);
-	
-	std::shared_ptr<linphone::Account> createAccount(const QString& assistantFile);
-	
-	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> & account, linphone::RegistrationState state, const std::string & message);
+
+	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);
+
+	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
+	                                linphone::RegistrationState state,
+	                                const std::string &message);
 signals:
 	void logged(bool isLoggued);
+
 private:
-	std::shared_ptr<AccountListener> mAccountListener;
+	std::shared_ptr<AccountModel> mAccountModel;
 };
 
 #endif

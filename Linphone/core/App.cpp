@@ -18,18 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#include "tool/LinphoneEnums.hpp"
+
 #include "App.hpp"
 
 #include <QCoreApplication>
 #include <QGuiApplication>
 #include <QQmlContext>
 
+#include "core/account/Account.hpp"
+#include "core/account/AccountProxy.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "tool/Constants.hpp"
+
 #include "tool/providers/ImageProvider.hpp"
 
 App::App(int &argc, char *argv[])
@@ -96,6 +101,10 @@ void App::initCppInterfaces() {
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
+	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
+	qmlRegisterUncreatableType<Account>(Constants::MainQmlUri, 1, 0, "Account", QLatin1String("Uncreatable"));
+
+	LinphoneEnums::registerMetaTypes();
 }
 
 //------------------------------------------------------------

@@ -18,23 +18,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ACCOUNT_LISTENER_H_
-#define ACCOUNT_LISTENER_H_
+#ifndef ACCOUNT_MODEL_H_
+#define ACCOUNT_MODEL_H_
+
+#include "model/listener/Listener.hpp"
 
 #include <QObject>
 #include <linphone++/linphone.hh>
 
-class AccountListener : public QObject, public linphone::AccountListener {
+class AccountModel : public ::Listener<linphone::Account, linphone::AccountListener>, public linphone::AccountListener {
 	Q_OBJECT
 public:
-	AccountListener(QObject *parent = nullptr);
+	AccountModel(const std::shared_ptr<linphone::Account> &account, QObject *parent = nullptr);
+	~AccountModel();
 
 	virtual void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                                        linphone::RegistrationState state,
 	                                        const std::string &message) override;
 
+	void setPictureUri(std::string uri);
+
 signals:
-	void registrationStateChanged(const std::shared_ptr<linphone::Account> & account, linphone::RegistrationState state, const std::string & message);
+	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
+	                              linphone::RegistrationState state,
+	                              const std::string &message);
+
+	void pictureUriChanged(std::string uri);
 };
 
 #endif
