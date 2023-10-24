@@ -15,7 +15,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Login/LoginPage.qml
 	view/Page/Login/SIPLoginPage.qml
 	view/Page/Login/WelcomePage.qml
-
+	
+# Prototypes
+	view/Prototype/PhoneNumberItem.qml
 )
 
 list(APPEND _LINPHONEAPP_QML_SINGLETONS

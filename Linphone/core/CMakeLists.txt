@@ -3,8 +3,16 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/logger/QtLogger.cpp
 	core/login/LoginPage.cpp
 	core/path/Paths.cpp
+	core/phone-number/PhoneNumber.cpp
+	core/phone-number/PhoneNumberList.cpp
+	core/phone-number/PhoneNumberProxy.cpp
+	
 	core/setting/Settings.cpp
 	core/thread/Thread.cpp
+	
+	core/proxy/ListProxy.cpp
+	core/proxy/Proxy.cpp
+	core/proxy/SortFilterProxy.cpp
 )
 
 ## Single Application

@@ -26,6 +26,8 @@
 
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
+#include "core/phone-number/PhoneNumber.hpp"
+#include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "tool/Constants.hpp"
 #include "tool/providers/ImageProvider.hpp"
@@ -91,6 +93,9 @@ void App::initCppInterfaces() {
 	qmlRegisterSingletonType<Constants>(
 	    "ConstantsCpp", 1, 0, "ConstantsCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Constants(engine); });
+
+	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
+	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
 }
 
 //------------------------------------------------------------
