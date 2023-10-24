@@ -76,12 +76,16 @@
 	<key>kTCCServiceMediaLibrary</key>
 	<string>Used media library as attachement or for the ringer</string>
 	<key>com.apple.security.device.camera</key>
+	<string>Used for video call</string>
 	<true/>
 	<key>com.apple.security.device.microphone</key>
+	<string>Used for call and voice messages</string>
 	<true/>
 	<key>com.apple.security.device.audio-input</key>
+	<string>Used for call and voice messages</string>
 	<true/>
 	<key>com.apple.security.personal-information.photos-library</key>
+	<string>Used to display pictures and avatar</string>
 	<true/>
 </dict>
 </plist>
