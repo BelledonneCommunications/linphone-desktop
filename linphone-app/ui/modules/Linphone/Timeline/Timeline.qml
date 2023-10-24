@@ -149,18 +149,22 @@ Rectangle {
 					filterFlags: (secureFilter.checked ? TimelineProxyModel.SecureChatRoom : 0)
 							| (chatGroupFilter.checked ? TimelineProxyModel.GroupChatRoom : 0)
 			}
-			
-			delegate: TimelineItem{
-				timelineModel: $modelData
-				modelIndex: index
-				optionsTogglable: timeline.optionsTogglable
-				actions: timeline.actions
-							
-				Connections{
-					target: $modelData
-					onSelectedChanged:{
-						if(selected) {
-							view.currentIndex = index;
+			delegate: Loader{
+				width: view.contentWidth
+				asynchronous: index > 20
+				active: true
+				sourceComponent: TimelineItem{
+					timelineModel: $modelData
+					modelIndex: index
+					optionsTogglable: timeline.optionsTogglable
+					actions: timeline.actions
+										
+					Connections{
+						target: $modelData
+						onSelectedChanged:{
+							if(selected) {
+								view.currentIndex = index;
+							}
 						}
 					}
 				}

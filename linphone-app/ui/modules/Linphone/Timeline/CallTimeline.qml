@@ -122,16 +122,20 @@ ColumnLayout{
 							| (outgoingFilter.checked ? CallHistoryProxyModel.Outgoing : 0)
 							| (missedFilter.checked ? CallHistoryProxyModel.Missed : 0)
 		}
-		
-		delegate: CallTimelineItem{
-			callHistoryModel: $modelData
-			modelIndex: index
-			Connections{
-				target: $modelData
-				onSelectedChanged:{
-					if(selected) {
-						view.currentIndex = index;
-						mainItem.entrySelected(model)
+		delegate: Loader{
+				width: view.contentWidth
+				asynchronous: index > 20
+				active: true
+				sourceComponent: CallTimelineItem{
+				callHistoryModel: $modelData
+				modelIndex: index
+				Connections{
+					target: $modelData
+					onSelectedChanged:{
+						if(selected) {
+							view.currentIndex = index;
+							mainItem.entrySelected(model)
+						}
 					}
 				}
 			}
