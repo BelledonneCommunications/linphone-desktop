@@ -92,7 +92,7 @@ Rectangle {
 
     Item {
       id: content
-
+      visible: children.length > 0
 	  Layout.fillHeight: (expandHeight ? true : !dialog.contentIsEmpty)
       Layout.fillWidth: true
       Layout.topMargin: (showMargins ? titleBar.showBar ? 1 : 2 : 0) * DialogStyle.content.topMargin
