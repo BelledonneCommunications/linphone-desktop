@@ -20,8 +20,7 @@ Window {
 		id: welcomePage
 		WelcomePage {
 			onStartButtonPressed: {
-				mainWindowStackView.pop(welcomePage)
-				mainWindowStackView.push(loginPage)
+				mainWindowStackView.replace(loginPage)// Replacing the first item will destroy the old.
 			}
 		}
 	}
