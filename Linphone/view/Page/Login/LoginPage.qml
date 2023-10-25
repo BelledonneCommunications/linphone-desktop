@@ -35,6 +35,8 @@ LoginLayout {
 		}
 	}
 
-	centerContent: LoginForm {}
+	centerContent: LoginForm {
+		onUseSIPButtonClicked: root.useSIPButtonClicked()
+	}
 }
  

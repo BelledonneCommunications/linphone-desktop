@@ -63,8 +63,6 @@ LoginLayout {
 				Component {
 					id: firstItem
 					ColumnLayout {
-						// Layout.fillWidth: true
-						// Layout.fillHeight: true
 
 						Text {
 							Layout.preferredWidth: 361
@@ -111,8 +109,6 @@ LoginLayout {
 				Component {
 					id: secondItem
 					ColumnLayout {
-						// Layout.fillWidth: true
-						// Layout.fillHeight: true
 						TextInput {
 							id: username
 							label: "Username"
