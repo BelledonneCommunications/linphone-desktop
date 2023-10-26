@@ -5,7 +5,7 @@ import QtQuick.Controls 2.2 as Control
 import Linphone
 
 ColumnLayout {
-	id: carouselRoot
+	id: mainItem
 
 	property list<Component> itemsList
 	property int currentIndex: carouselStackLayout.currentIndex
@@ -30,9 +30,9 @@ ColumnLayout {
 		Component.onCompleted: {
 			// The animation is not working until the slide
 			// has been displayed once
-			for (var i = 0; i < carouselRoot.itemsList.length; ++i) {
-				// const newObject = Qt.createQmlObject(carouselRoot.itemsList[i], carouselStackLayout);
-				carouselRoot.itemsList[i].createObject(carouselStackLayout)
+			for (var i = 0; i < mainItem.itemsList.length; ++i) {
+				// const newObject = Qt.createQmlObject(mainItem.itemsList[i], carouselStackLayout);
+				mainItem.itemsList[i].createObject(carouselStackLayout)
 				var button = carouselButton.createObject(carouselButtonsLayout, {slideIndex: i, stackLayout: carouselStackLayout})
 				button.buttonClicked.connect(goToSlideAtIndex)
 				currentIndex = i
@@ -73,7 +73,7 @@ ColumnLayout {
 			var currentItem = items[currentIndex]
 			var crossFaderAnim = crossFader.createObject(parent, {fadeInTarget: currentItem, mirrored: (previousIndex > currentIndex)})
 			crossFaderAnim.restart()
-			carouselRoot.currentIndex = currentIndex
+			mainItem.currentIndex = currentIndex
 		}
 	}
 	RowLayout {

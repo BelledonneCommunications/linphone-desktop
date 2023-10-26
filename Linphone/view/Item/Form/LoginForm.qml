@@ -4,7 +4,7 @@ import QtQuick.Controls as Control
 import Linphone
 
 ColumnLayout {
-	id: root
+	id: mainItem
 	Layout.alignment: Qt.AlignBottom
 	signal useSIPButtonClicked()
 	RowLayout {
@@ -50,7 +50,7 @@ ColumnLayout {
 					Layout.topMargin: 40
 					inversedColors: true
 					text: "Use SIP Account"
-					onClicked: {root.useSIPButtonClicked()}
+					onClicked: {mainItem.useSIPButtonClicked()}
 				}
 			}
 		}

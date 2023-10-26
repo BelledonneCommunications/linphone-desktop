@@ -4,7 +4,7 @@ import QtQuick.Controls as Control
 import Linphone
 
 LoginLayout {
-	id: root
+	id: mainItem
 	signal useSIPButtonClicked()
 
 	titleContent: RowLayout {
@@ -36,7 +36,7 @@ LoginLayout {
 	}
 
 	centerContent: LoginForm {
-		onUseSIPButtonClicked: root.useSIPButtonClicked()
+		onUseSIPButtonClicked: mainItem.useSIPButtonClicked()
 	}
 }
  
