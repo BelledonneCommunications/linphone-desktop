@@ -469,9 +469,9 @@ Rectangle {
 						onTextChanged: {// This slot can be call before the item has been completed because of Rich text. So the cache must not take it account.
 								if(componentReady) {
 									proxyModel.cachedText=text
-									Logic.handleTextChanged(textArea.getText())
 								}
 							}
+						onComposing: proxyModel.compose(getText())
 						onValidText: {
 							textArea.text = ''
 							chat.bindToEnd = true

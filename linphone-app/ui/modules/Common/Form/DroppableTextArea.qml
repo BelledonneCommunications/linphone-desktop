@@ -40,6 +40,7 @@ Item {
 	signal validText (string text)
 	signal audioRecordRequest()
 	signal emojiClicked()
+	signal composing()
 	
 	// ---------------------------------------------------------------------------
 	
@@ -267,6 +268,7 @@ Item {
 									Clipboard.restore()
 							} else
 								isAutoRepeating = false// We are no more repeating. Final decision is done on Releasing
+							droppableTextArea.composing()
 						}
 						Keys.onPressed: {
 							if(event.isAutoRepeat){
@@ -296,6 +298,7 @@ Item {
 									}
 								}
 							}
+							droppableTextArea.composing()
 						}
 					}
 				}

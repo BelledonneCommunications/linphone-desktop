@@ -68,9 +68,6 @@ function handleMovementStarted () {
 	chat.bindToEnd = false
 }
 
-function handleTextChanged (text) {
-	container.proxyModel.compose(text)
-}
 
 function sendMessage (text) {
 	textArea.text = ''
