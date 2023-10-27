@@ -29,21 +29,28 @@ class PhoneNumberProxy : public SortFilterProxy {
 	Q_OBJECT
 
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
+	Q_PROPERTY(QString defaultCountryCallingCode READ getDefaultCountryCallingCode NOTIFY defaultCountryCallingCodeChanged)
 
 public:
 	PhoneNumberProxy(QObject *parent = Q_NULLPTR);
 
 	QString getFilterText() const;
 	void setFilterText(const QString &filter);
+	QString getDefaultCountryCallingCode() const;
+	void setDefaultCountryCallingCode(const QString &filter);
+
+	Q_INVOKABLE int findIndexByCountryCallingCode(const QString& countryCallingCode);
 
 signals:
 	void filterTextChanged();
+	void defaultCountryCallingCodeChanged();
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
+	QString mDefaultCountryCallingCode;
 };
 
 #endif

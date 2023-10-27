@@ -39,6 +39,33 @@ void PhoneNumberProxy::setFilterText(const QString &filter) {
 	}
 }
 
+QString PhoneNumberProxy::getDefaultCountryCallingCode() const {
+	return mDefaultCountryCallingCode;
+}
+
+void PhoneNumberProxy::setDefaultCountryCallingCode(const QString &code) {
+	if (mDefaultCountryCallingCode != code) {
+		mDefaultCountryCallingCode = code;
+		invalidate();
+		emit defaultCountryCallingCodeChanged();
+	}
+}
+
+int PhoneNumberProxy::findIndexByCountryCallingCode(const QString &countryCallingCode) {
+	auto model = qobject_cast<PhoneNumberList *>(sourceModel());
+	if (!model) return -1;
+	if (countryCallingCode.isEmpty()) return -1;
+
+	auto list = model->getSharedList<PhoneNumber>();
+	auto it = std::find_if(list.begin(), list.end(), [countryCallingCode](const QSharedPointer<QObject> &a) {
+		return a.objectCast<PhoneNumber>()->mCountryCallingCode == countryCallingCode;
+	});
+	auto proxyModelIndex = mapFromSource(model->index(it - list.begin()));
+	return proxyModelIndex.row();
+
+	return -1;
+}
+
 bool PhoneNumberProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	bool show = (mFilterText.isEmpty() || mFilterText == "*");
 	if (!show) {

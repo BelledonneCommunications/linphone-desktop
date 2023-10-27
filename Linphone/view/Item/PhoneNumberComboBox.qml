@@ -8,6 +8,7 @@ ColumnLayout {
 	property string label: ""
 	property int backgroundWidth: 100
 	readonly property string currentText: combobox.model.getAt(combobox.currentIndex) ? combobox.model.getAt(combobox.currentIndex).countryCallingCode : ""
+	property alias defaultCallingCode:  phoneNumberModel.defaultCountryCallingCode
 
 	Text {
 		visible: label.length > 0
@@ -22,7 +23,13 @@ ColumnLayout {
 
 	Control.ComboBox {
 		id: combobox
-		model: PhoneNumberProxy{}
+		model: PhoneNumberProxy {
+			id: phoneNumberModel
+			onCountChanged: {
+				var defaultIndex = findIndexByCountryCallingCode(defaultCallingCode)
+				combobox.currentIndex = defaultIndex < 0 ? 0 : defaultIndex
+			}
+		}
 		background: Loader {
 			sourceComponent: backgroundRectangle
 		}
@@ -108,7 +115,6 @@ ColumnLayout {
 							visible: parent.containsMouse
 						}
 						onPressed: {
-							listView.currentIndex = index
 							combobox.currentIndex = index
 							listPopup.close()
 						}
