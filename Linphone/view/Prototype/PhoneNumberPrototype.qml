@@ -14,7 +14,7 @@ ListView{
 			anchors.fill: parent
 			Text{
 				text: $modelData.flag
-				font.family: 'Noto Color Emoji'
+				font.family: DefaultStyle.emojiFont
 			}
 			Text{
 				text: $modelData.country

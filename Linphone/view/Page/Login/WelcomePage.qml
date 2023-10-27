@@ -5,7 +5,7 @@ import QtQuick.Controls 2.2 as Control
 import Linphone
 
 LoginLayout {
-	id: welcomePage
+	id: mainItem
 	signal startButtonPressed()
 
 	titleContent: RowLayout {
@@ -47,7 +47,7 @@ LoginLayout {
 			}
 			onClicked: {
 				console.debug("[LoginItem] User: Click skip")
-				welcomePage.startButtonPressed()
+				mainItem.startButtonPressed()
 			}
 		}
 	}
@@ -135,7 +135,7 @@ LoginLayout {
 			text: carousel.currentIndex < (carousel.itemsList.length - 1) ? "Next" : "Start"
 			onClicked: { 
 				if (carousel.currentIndex < 2) carousel.goToSlide(carousel.currentIndex + 1);
-				else welcomePage.startButtonPressed();
+				else mainItem.startButtonPressed();
 			}
 		}
 		Item {

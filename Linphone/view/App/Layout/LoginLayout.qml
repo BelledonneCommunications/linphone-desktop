@@ -32,11 +32,11 @@ Item {
 						fillMode: Image.PreserveAspectFit
 						source: AppIcons.info
 					}
-					onClicked: console.debug("[LoginLayout] open about popup")
+					onClicked: console.debug("[LoginLayout]User: open about popup")
 				}
 
 				Text {
-					Layout.alignment: Qt.AlignRight |Qt.AlignVCenter
+					Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 					text: "About"
 					font.pixelSize: 12
 					color: DefaultStyle.grayColor

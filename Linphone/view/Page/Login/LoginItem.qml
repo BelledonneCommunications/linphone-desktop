@@ -44,7 +44,8 @@ RowLayout {
 			text: "Use SIP Account"
 			onClicked: {
 				console.debug("[LoginItem] User: click use Sip")
-				root.useSIP()}
+				root.useSIP()
+			}
 		}
 	}
 	Item {

@@ -4,12 +4,12 @@ import QtQuick.Controls 2.2 as Control
 import Linphone
   
 Control.TabBar {
-	id: bar
+	id: mainItem
+	property var model
+	readonly property int originX: count > 0 
+							? itemAt(0).x 
+							: 0
 	spacing: 40
-
-	function appendTab(label) {
-		var newTab = tab.createObject(bar, {title: label, index: bar.count})
-	}
 
 	background: Item {
 		anchors.fill: parent
@@ -26,18 +26,20 @@ Control.TabBar {
 			height: 4
 			color: DefaultStyle.orangeColor
 			anchors.bottom: parent.bottom
-			x: bar.currentItem ? bar.currentItem.x : 0
-			width: bar.currentItem ? bar.currentItem.width : 0
+			x: mainItem.currentItem 
+					? mainItem.currentItem.x - mainItem.originX
+					: 0
+			width: mainItem.currentItem ? mainItem.currentItem.width : 0
 			clip: true
 			Behavior on x { NumberAnimation {duration: 100}}
+			Behavior on width {NumberAnimation {duration: 100}}
 		}
 	}
 
-	Component {
-		id: tab
+	Repeater {
+		model: mainItem.model
 		Control.TabButton {
-			property string title
-			property int index
+			required property string modelData
 			width: txtMeter. advanceWidth
 
 			background: Item {
@@ -57,7 +59,7 @@ Control.TabBar {
 			TextMetrics {
 				id: txtMeter
 				font: tabText.font
-				text: title
+				text: modelData
 			}
 		}
 	}

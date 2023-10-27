@@ -4,6 +4,7 @@ import QtQuick 2.15
 QtObject {
 
 	property string defaultFont: "Noto Sans"
+	property string emojiFont: "Noto Color Emoji"
 	property color orangeColor: "#FE5E00"
 	property color buttonBackground: "#FE5E00"
 	property color buttonInversedBackground: "white"

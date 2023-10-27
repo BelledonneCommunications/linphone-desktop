@@ -5,23 +5,22 @@ import Linphone
 import ConstantsCpp 1.0
 
 LoginLayout {
-
-	id: sipLoginPage
+	id: mainItem
 	signal returnToLogin()
 	signal goToRegister()
-
 	titleContent: RowLayout {
 		Control.Button {
+			Layout.preferredHeight: 40
+    		Layout.preferredWidth: 40
+			icon.width: 40
+			icon.height: 40
+			icon.source: AppIcons.returnArrow
 			background: Rectangle {
 				color: "transparent"
 			}
-			contentItem: Image {
-				source: AppIcons.returnArrow
-				fillMode: Image.PreserveAspectFit
-			}
 			onClicked: {
 				console.debug("[LoginItem] User: return")
-				sipLoginPage.returnToLogin()
+				mainItem.returnToLogin()
 			}
 		}
 		Image {
@@ -48,7 +47,7 @@ LoginLayout {
 			text: "Register"
 			onClicked: {
 				console.debug("[SIPLoginPage] User: go to register page")
-				sipLoginPage.goToRegister()
+				mainItem.goToRegister()
 			}
 		}
 	}
@@ -99,7 +98,7 @@ LoginLayout {
 							inversedColors: true
 							onClicked: {
 								console.debug("[LoginItem] User: click register")
-								sipLoginPage.goToRegister()
+								mainItem.goToRegister()
 							}
 						}
 
@@ -156,7 +155,7 @@ LoginLayout {
 
 							text: 'Log in'
 							onClicked: {
-								console.debug("[LoginItem] User: Log in")
+								console.debug("[SIPLoginPage] User: Log in")
 								LoginPageCpp.login(username.inputText, password.inputText);
 							}
 						}

@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.0
 import Linphone
   
 ColumnLayout {
-	id: cellLayout
+	id: mainItem
 
 	property string label: ""
 	property string defaultText : ""
@@ -19,7 +19,7 @@ ColumnLayout {
 	Text {
 		visible: label.length > 0
 		verticalAlignment: Text.AlignVCenter
-		text: cellLayout.label + (cellLayout.mandatory ? "*" : "")
+		text: mainItem.label + (mainItem.mandatory ? "*" : "")
 		color: DefaultStyle.formItemLabelColor
 		font {
 			pointSize: DefaultStyle.formItemLabelSize
@@ -29,10 +29,10 @@ ColumnLayout {
 
 	Rectangle {
 		Component.onCompleted: {
-			if (cellLayout.fillWidth)
+			if (mainItem.fillWidth)
 				Layout.fillWidth = true
 		}
-		implicitWidth: cellLayout.textInputWidth
+		implicitWidth: mainItem.textInputWidth
 		implicitHeight: 30
 		radius: 20
 		color: DefaultStyle.formItemBackgroundColor
@@ -42,14 +42,14 @@ ColumnLayout {
 			anchors.left: parent.left
 			anchors.right: eyeButton.visible ? eyeButton.left : parent.right
 			anchors.verticalCenter: parent.verticalCenter
-			placeholderText: cellLayout.defaultText
-			echoMode: (cellLayout.hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
+			placeholderText: mainItem.defaultText
+			echoMode: (mainItem.hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
 			font.family: DefaultStyle.defaultFont
 			font.pointSize: DefaultStyle.formTextInputSize
 			color: DefaultStyle.formItemLabelColor
-			inputMethodHints: cellLayout.inputMethodHints
+			inputMethodHints: mainItem.inputMethodHints
 			selectByMouse: true
-			validator: cellLayout.validator
+			validator: mainItem.validator
 			// MouseArea {
 			// 	anchors.fill: parent
 			// 	// acceptedButtons: Qt.NoButton
@@ -60,7 +60,7 @@ ColumnLayout {
 		}
 		Button {
 			id: eyeButton
-			visible: cellLayout.hidden
+			visible: mainItem.hidden
 			checkable: true
 			background: Rectangle {
 				color: "transparent"

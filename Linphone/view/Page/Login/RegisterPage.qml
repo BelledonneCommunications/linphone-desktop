@@ -4,8 +4,7 @@ import QtQuick.Controls as Control
 import Linphone
 
 LoginLayout {
-
-	id: registerPage
+	id: mainItem
 	signal returnToLogin()
 	signal registerCalled()
 	readonly property string countryCode: phoneNumberInput.countryCode
@@ -37,7 +36,8 @@ LoginLayout {
 			text: "Log in"
 			onClicked: {
 				console.debug("[LoginItem] User: return")
-				returnToLogin()}
+				returnToLogin()
+			}
 		}
 	}
 
@@ -45,11 +45,7 @@ LoginLayout {
 		TabBar {
 			Layout.fillWidth: true
 			id: bar
-			Component.onCompleted: {
-				appendTab(qsTr("Register with phone number"))
-				appendTab(qsTr("Register with email"))
-
-			}
+			model: [qsTr("Register with phone number"), qsTr("Register with email")]
 		}
 		StackLayout {
 			currentIndex: bar.currentIndex
@@ -107,8 +103,8 @@ LoginLayout {
 						text: "Register"
 						onClicked:{
 							console.log("[RegisterPage] User: Call register")
-							registerPage.registerCalled()
-							}
+							mainItem.registerCalled()
+						}
 					}
 				}
 				Item {
@@ -176,7 +172,7 @@ LoginLayout {
 						text: "Register"
 						onClicked:{
 							console.log("[RegisterPage] User: Call register")
-							registerPage.registerCalled()
+							mainItem.registerCalled()
 							}
 					}
 				}

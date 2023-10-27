@@ -3,7 +3,7 @@ import QtQuick.Controls 2.2 as Control
 import Linphone
   
 Control.CheckBox {
-	id: checkbox
+	id: mainItem
 	
 	indicator: Rectangle {
 		implicitWidth: 18
@@ -20,7 +20,7 @@ Control.CheckBox {
 			text: "\u2714"
 			font.pointSize: 18
 			color: DefaultStyle.checkboxBorderColor
-			visible: checkbox.checked
+			visible: mainItem.checked
 		}
 	}
 }

@@ -3,7 +3,7 @@ import QtQuick.Controls 2.2 as Control
 import Linphone
   
 Control.TextField {
-	id: numberInput
+	id: mainItem
 	property int inputSize: 50
 	color: activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
 	rightPadding: inputSize / 4
@@ -20,20 +20,20 @@ Control.TextField {
 
 	background: Rectangle {
 		// id: background
-		border.color: numberInput.activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
-		radius: numberInput.inputSize / 8
+		border.color: mainItem.activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
+		radius: mainItem.inputSize / 8
 	}
 	// cursorDelegate: Rectangle {
-	// 	visible: numberInput.activeFocus
-	// 	// width: numberInput.cursorRectangle.width
-	// 	// height: numberInput.cursorRectangle.height - inputSize/5
+	// 	visible: mainItem.activeFocus
+	// 	// width: mainItem.cursorRectangle.width
+	// 	// height: mainItem.cursorRectangle.height - inputSize/5
 	// 	x: background.x
 	// 	y: background.height - inputSize/8
 	// 	transform: Rotation {angle: -90}
 	// 	// anchors.bottom: parent.bottom
 	// 	// anchors.left: parent.left
 	// 	// anchors.bottomMargin: inputSize/8
-	// 	// transform: [/*Translate {x: numberInput.cursorRectangle.height},*/ Rotation {angle: -90}]
-	// 	color: numberInput.activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
+	// 	// transform: [/*Translate {x: mainItem.cursorRectangle.height},*/ Rotation {angle: -90}]
+	// 	color: mainItem.activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
 	// }
 }

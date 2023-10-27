@@ -1,20 +1,20 @@
 import QtQuick
-import QtQuick.Controls
+import QtQuick.Controls as Control
 import QtQuick.Layouts 1.0
 import Linphone
   
 ColumnLayout {
-	id: cellLayout
+	id: mainItem
 	property string label: ""
 	property int backgroundWidth: 200
 	// Usage : each item of the model list must be {text: ..., img: ...}
 	property var modelList: []
-	readonly property string currentText: chosenItemText.text
+	readonly property string currentText: selectedItemText.text
 
 	Text {
 		visible: label.length > 0
 		verticalAlignment: Text.AlignVCenter
-		text: cellLayout.label
+		text: mainItem.label
 		color: DefaultStyle.formItemLabelColor
 		font {
 			pointSize: DefaultStyle.formItemLabelSize
@@ -22,53 +22,61 @@ ColumnLayout {
 		}
 	}
 
-	ComboBox {
+	Control.ComboBox {
 		id: combobox
-		model: cellLayout.modelList
-		width: cellLayout.backgroundWidth
-		background: Loader {
-			sourceComponent: backgroundRectangle
+		model: mainItem.modelList
+		width: mainItem.backgroundWidth
+		background: Rectangle {
+			implicitWidth: mainItem.backgroundWidth
+			implicitHeight: 30
+			radius: 15
+			color: DefaultStyle.formItemBackgroundColor
 		}
 		contentItem: Item {
 			anchors.left: parent.left
-			anchors.right: indic.right
-			anchors.leftMargin: 10
+			anchors.right: indicImage.right
 			Image {
-				id: chosenItemImg
+				id: selectedItemImg
+				visible: source != ""
 				sourceSize.width: 20
-				width: 20
+				width: visible ? 20 : 0
 				fillMode: Image.PreserveAspectFit
-				anchors.leftMargin: 20
 				anchors.verticalCenter: parent.verticalCenter
+				anchors.leftMargin: visible ? 10 : 0
 			}
 
 			Text {
-				id: chosenItemText
-				anchors.left: chosenItemImg.right
-				anchors.leftMargin: 10
-				anchors.rightMargin: 20
-				anchors.right: parent.right
+				id: selectedItemText
 				elide: Text.ElideRight
+				anchors.left: selectedItemImg.right
+				anchors.leftMargin: selectedItemImg.visible ? 15 : 10
+				anchors.right: parent.right
+				anchors.rightMargin: 20
 				anchors.verticalCenter: parent.verticalCenter
 			}
 
 			Component.onCompleted: {
-				if (cellLayout.modelList[combobox.currentIndex].img)
-					chosenItemImg.source = cellLayout.modelList[combobox.currentIndex].img
-				if (cellLayout.modelList[combobox.currentIndex].text)
-					chosenItemText.text = cellLayout.modelList[combobox.currentIndex].text
+				var index = combobox.currentIndex < 0 ? 0 : combobox.currentIndex
+				if (mainItem.modelList[index].img) {
+					selectedItemImg.source = mainItem.modelList[0].img
+				}
+				if (mainItem.modelList[index].text)
+					selectedItemText.text = mainItem.modelList[0].text
+				else if (mainItem.modelList[index])
+					selectedItemText.text = mainItem.modelList[0]
 			}
 		}
 
 
 		indicator: Image {
-			id: indic
-			x: combobox.width - width - combobox.rightPadding
-			y: combobox.topPadding + (combobox.availableHeight - height) / 2
+			id: indicImage
+			anchors.right: parent.right
+			anchors.rightMargin: 10
+			anchors.verticalCenter: parent.verticalCenter
 			source: AppIcons.downArrow
 		}
 
-		popup: Popup {
+		popup: Control.Popup {
 			id: listPopup
 			y: combobox.height - 1
 			width: combobox.width
@@ -82,34 +90,47 @@ ColumnLayout {
 				model: combobox.model
 				currentIndex: combobox.highlightedIndex >= 0 ? combobox.highlightedIndex : 0
 				highlightFollowsCurrentItem: true
-				highlight: highlight
+				highlight: Rectangle {
+					width: listView.width
+					color: DefaultStyle.comboBoxHighlightColor
+					radius: 15
+					y: listView.currentItem? listView.currentItem.y : 0
+				}
 
 				delegate: Item {
-					width:combobox.width;
-					height: combobox.height;
+					width:combobox.width
+					height: combobox.height
+					anchors.left: parent.left
+					anchors.right: parent.right
+
 					Image {
-						id: delegateImg;
+						id: delegateImg
+						visible: source != ""
+						width: visible ? 20 : 0
 						sourceSize.width: 20
-						width: 20
-						anchors.left: parent.left
-						anchors.leftMargin: 10
-						anchors.verticalCenter: parent.verticalCenter
-						fillMode: Image.PreserveAspectFit
 						source: modelData.img ? modelData.img : ""
+						fillMode: Image.PreserveAspectFit
+						anchors.left: parent.left
+						anchors.leftMargin: visible ? 10 : 0
+						anchors.verticalCenter: parent.verticalCenter
 					}
 
 					Text {
-						text: modelData.text ? modelData.text : modelData ? modelData : ""
-						anchors.leftMargin: 10
-						anchors.rightMargin: 10
+						text: modelData.text 
+								? modelData.text 
+								: modelData 
+									? modelData
+									: ""
 						elide: Text.ElideRight
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.left: delegateImg.right
+						anchors.leftMargin: delegateImg.visible ? 5 : 10
 						anchors.right: parent.right
+						anchors.rightMargin: 20
 					}
 
 					MouseArea {
-						anchors.fill: parent;
+						anchors.fill: parent
 						hoverEnabled: true
 						Rectangle {
 							anchors.fill: parent
@@ -120,43 +141,29 @@ ColumnLayout {
 						}
 						onPressed: {
 							combobox.state = ""
-							chosenItemText.text = modelData.text ? modelData.text : modelData ? modelData : ""
-							chosenItemImg.source = modelData.img ? modelData.img : ""
-							listView.currentIndex = index
+							selectedItemText.text = modelData.text  
+														? modelData.text
+														: modelData 
+															? modelData
+															: ""
+							selectedItemImg.source = modelData.img ? modelData.img : ""
+							combobox.currentIndex = index
 							listPopup.close()
 						}
 					}
 				}
 
-				ScrollIndicator.vertical: ScrollIndicator { }
+				Control.ScrollIndicator.vertical: Control.ScrollIndicator { }
 			}
 
 			onOpened: {
 				listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
 			}
 
-			Component {
-				id: highlight
-				Rectangle {
-					width: listView.width
-					height: listView.height
-					color: DefaultStyle.comboBoxHighlightColor
-					radius: 15
-					y: listView.currentItem? listView.currentItem.y : 0
-				}
-			}
-
-			background: Loader {
-				sourceComponent: backgroundRectangle
-			}
-		}
-		Component {
-			id: backgroundRectangle
-			Rectangle {
-				implicitWidth: cellLayout.backgroundWidth
+			background: Rectangle {
+				implicitWidth: mainItem.backgroundWidth
 				implicitHeight: 30
 				radius: 15
-				color: DefaultStyle.formItemBackgroundColor
 			}
 		}
 	}

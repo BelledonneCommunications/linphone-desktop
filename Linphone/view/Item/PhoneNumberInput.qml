@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.0
 import Linphone
   
 ColumnLayout {
-	id: cellLayout
+	id: mainItem
 
 	property string label: ""
 	property string defaultText : ""
@@ -16,7 +16,7 @@ ColumnLayout {
 	Text {
 		visible: label.length > 0
 		verticalAlignment: Text.AlignVCenter
-		text: cellLayout.label + (cellLayout.mandatory ? "*" : "")
+		text: mainItem.label + (mainItem.mandatory ? "*" : "")
 		color: DefaultStyle.formItemLabelColor
 		font {
 			pointSize: DefaultStyle.formItemLabelSize
@@ -25,7 +25,7 @@ ColumnLayout {
 	}
 
 	Rectangle {
-		implicitWidth: cellLayout.textInputWidth
+		implicitWidth: mainItem.textInputWidth
 		implicitHeight: 30
 		radius: 20
 		color: DefaultStyle.formItemBackgroundColor
@@ -36,8 +36,7 @@ ColumnLayout {
 				backgroundWidth: 100
 			}
 			Rectangle {
-
-				width: 1
+				Layout.preferredWidth: 1
 				Layout.fillHeight: true
 				Layout.topMargin: 5
 				Layout.bottomMargin: 5
@@ -46,7 +45,7 @@ ColumnLayout {
 			TextInput {
 				id: textField
 				Layout.fillWidth: true
-				defaultText: cellLayout.defaultText
+				defaultText: mainItem.defaultText
 				inputMethodHints: Qt.ImhDigitsOnly
 				fillWidth: true
 				validator: IntValidator{}

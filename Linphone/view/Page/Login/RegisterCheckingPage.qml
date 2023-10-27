@@ -4,7 +4,6 @@ import QtQuick.Controls as Control
 import Linphone
 
 LoginLayout {
-
 	id: mainItem
 	signal returnToRegister()
 	property string phoneNumber
@@ -12,12 +11,13 @@ LoginLayout {
 
 	titleContent: RowLayout {
 		Control.Button {
+			Layout.preferredHeight: 40
+    		Layout.preferredWidth: 40
+			icon.width: 40
+			icon.height: 40
+			icon.source: AppIcons.returnArrow
 			background: Rectangle {
 				color: "transparent"
-			}
-			contentItem: Image {
-				source: AppIcons.returnArrow
-				fillMode: Image.PreserveAspectFit
 			}
 			onClicked: {
 				console.debug("[RegisterCheckingPage] User: return to register")
@@ -58,30 +58,23 @@ LoginLayout {
 			Layout.margins: 10
 			ColumnLayout {
 				RowLayout {
-					// Layout.fillWidth: true
-					DigitInput {
-						id: first
-						onTextEdited: if (text.length > 0 ) second.forceActiveFocus()
-						Layout.margins: 10
-					}
-					DigitInput {
-						id: second
-						onTextEdited: if (text.length > 0 ) third.forceActiveFocus()
-						Layout.margins: 10
-					}
-					DigitInput {
-						id: third
-						onTextEdited: if (text.length > 0 ) fourth.forceActiveFocus()
-						Layout.margins: 10
-					}
-					DigitInput {
-						id: fourth
-						Layout.margins: 10
-						// onTextEdited: validate()
+					Repeater {
+						model: 4
+						DigitInput {
+							required property int index
+							onTextEdited: if (text.length > 0 ) {
+								console.log("next", nextItemInFocusChain(true))
+								if (index < 3)
+									nextItemInFocusChain(true).forceActiveFocus()
+								else {
+									// validate()
+								}
+							} 
+							Layout.margins: 10
+						}
 					}
 				}
 				RowLayout {
-					// Layout.topMargin: 10
 					Text {
 						Layout.rightMargin: 15
 						text: "Didn't receive the code ?"
