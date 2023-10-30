@@ -21,10 +21,11 @@
 #ifndef PHONE_NUMBER_H_
 #define PHONE_NUMBER_H_
 
+#include "tool/AbstractObject.hpp"
 #include <QObject>
 #include <linphone++/linphone.hh>
 
-class PhoneNumber : public QObject {
+class PhoneNumber : public QObject, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QString flag MEMBER mFlag CONSTANT)
@@ -37,6 +38,7 @@ class PhoneNumber : public QObject {
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	PhoneNumber(const std::shared_ptr<linphone::DialPlan> &dialPlan);
+	~PhoneNumber();
 
 	QString mFlag;
 	int mNationalNumberLength;
@@ -44,6 +46,8 @@ public:
 	QString mIsoCountryCode;
 	QString mInternationalCallPrefix;
 	QString mCountry;
+
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

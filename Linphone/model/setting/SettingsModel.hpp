@@ -26,7 +26,9 @@
 #include <QVariantMap>
 #include <linphone++/linphone.hh>
 
-class SettingsModel : public QObject {
+#include "tool/AbstractObject.hpp"
+
+class SettingsModel : public QObject, public AbstractObject {
 	Q_OBJECT
 public:
 	SettingsModel(QObject *parent = Q_NULLPTR);
@@ -40,5 +42,8 @@ public:
 	static const std::string UiSection;
 
 	std::shared_ptr<linphone::Config> mConfig;
+
+private:
+	DECLARE_ABSTRACT_OBJECT
 };
 #endif // SETTINGS_MODEL_H_

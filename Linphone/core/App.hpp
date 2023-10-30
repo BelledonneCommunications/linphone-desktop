@@ -23,8 +23,9 @@
 #include <QSharedPointer>
 
 #include "core/singleapplication/singleapplication.h"
-#include "core/thread/Thread.hpp"
 #include "model/core/CoreModel.hpp"
+
+class Thread;
 
 class App : public SingleApplication {
 public:

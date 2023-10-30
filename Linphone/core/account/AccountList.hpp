@@ -22,14 +22,17 @@
 #define ACCOUNT_LIST_H_
 
 #include "../proxy/ListProxy.hpp"
+#include "tool/AbstractObject.hpp"
 #include <QLocale>
 // =============================================================================
 
-class AccountList : public ListProxy {
+class AccountList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
 	AccountList(QObject *parent = Q_NULLPTR);
 	~AccountList();
+
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

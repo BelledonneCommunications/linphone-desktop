@@ -21,8 +21,11 @@
 #include "Account.hpp"
 #include "tool/Utils.hpp"
 
+DEFINE_ABSTRACT_OBJECT(Account)
+
 Account::Account(const std::shared_ptr<linphone::Account> &account) : QObject(nullptr) {
 	// Should be call from model Thread
+	mustBeInLinphoneThread(getClassName());
 	auto address = account->getContactAddress();
 	mContactAddress = address ? Utils::coreStringToAppString(account->getContactAddress()->asString()) : "";
 	auto params = account->getParams();
@@ -40,6 +43,7 @@ Account::Account(const std::shared_ptr<linphone::Account> &account) : QObject(nu
 }
 
 Account::~Account() {
+	mustBeInMainThread("~" + getClassName());
 	emit mAccountModel->removeListener();
 }
 

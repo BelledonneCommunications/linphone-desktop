@@ -22,12 +22,14 @@
 #include "PhoneNumber.hpp"
 #include "core/App.hpp"
 #include <QSharedPointer>
+#include <QString>
 #include <linphone++/linphone.hh>
-
 // =============================================================================
 
-PhoneNumberList::PhoneNumberList(QObject *parent) : ListProxy(parent) {
+DEFINE_ABSTRACT_OBJECT(PhoneNumberList)
 
+PhoneNumberList::PhoneNumberList(QObject *parent) : ListProxy(parent) {
+	mustBeInMainThread(getClassName());
 	App::postModelAsync([=]() {
 		// Model thread.
 		auto dialPlans = linphone::Factory::get()->getDialPlans();
@@ -39,6 +41,13 @@ PhoneNumberList::PhoneNumberList(QObject *parent) : ListProxy(parent) {
 			numbers.push_back(numberModel);
 		}
 		// Invoke for adding stuffs in caller thread
-		QMetaObject::invokeMethod(this, [this, numbers]() { add(numbers); });
+		QMetaObject::invokeMethod(this, [this, numbers]() {
+			mustBeInMainThread(this->log().arg(Q_FUNC_INFO));
+			add(numbers);
+		});
 	});
+}
+
+PhoneNumberList::~PhoneNumberList() {
+	mustBeInMainThread("~" + getClassName());
 }

@@ -19,15 +19,18 @@
  */
 
 #include "SettingsModel.hpp"
-
 // =============================================================================
+
+DEFINE_ABSTRACT_OBJECT(SettingsModel)
 
 const std::string SettingsModel::UiSection("ui");
 
 SettingsModel::SettingsModel(QObject *parent) : QObject(parent) {
+	mustBeInLinphoneThread(getClassName());
 }
 
 SettingsModel::~SettingsModel() {
+	mustBeInLinphoneThread("~" + getClassName());
 }
 
 bool SettingsModel::isReadOnly(const std::string &section, const std::string &name) const {
@@ -35,5 +38,6 @@ bool SettingsModel::isReadOnly(const std::string &section, const std::string &na
 }
 
 std::string SettingsModel::getEntryFullName(const std::string &section, const std::string &name) const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return isReadOnly(section, name) ? name + "/readonly" : name;
 }

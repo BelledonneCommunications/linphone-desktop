@@ -27,7 +27,7 @@
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
-class Account : public QObject {
+class Account : public QObject, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QString contactAddress READ getContactAddress CONSTANT)
@@ -66,6 +66,8 @@ private:
 	QString mPictureUri;
 	LinphoneEnums::RegistrationState mRegistrationState;
 	std::shared_ptr<AccountModel> mAccountModel;
+
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

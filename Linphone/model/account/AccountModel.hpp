@@ -22,11 +22,14 @@
 #define ACCOUNT_MODEL_H_
 
 #include "model/listener/Listener.hpp"
+#include "tool/AbstractObject.hpp"
 
 #include <QObject>
 #include <linphone++/linphone.hh>
 
-class AccountModel : public ::Listener<linphone::Account, linphone::AccountListener>, public linphone::AccountListener {
+class AccountModel : public ::Listener<linphone::Account, linphone::AccountListener>,
+                     public linphone::AccountListener,
+                     public AbstractObject {
 	Q_OBJECT
 public:
 	AccountModel(const std::shared_ptr<linphone::Account> &account, QObject *parent = nullptr);
@@ -44,6 +47,9 @@ signals:
 	                              const std::string &message);
 
 	void pictureUriChanged(std::string uri);
+
+private:
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

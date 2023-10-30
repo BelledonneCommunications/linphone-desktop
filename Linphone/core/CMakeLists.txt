@@ -11,7 +11,6 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/phone-number/PhoneNumberProxy.cpp
 	
 	core/setting/Settings.cpp
-	core/thread/Thread.cpp
 	
 	core/proxy/ListProxy.cpp
 	core/proxy/Proxy.cpp

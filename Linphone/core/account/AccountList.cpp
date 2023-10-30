@@ -26,11 +26,14 @@
 
 // =============================================================================
 
-AccountList::AccountList(QObject *parent) : ListProxy(parent) {
+DEFINE_ABSTRACT_OBJECT(AccountList)
 
+AccountList::AccountList(QObject *parent) : ListProxy(parent) {
+	mustBeInMainThread(getClassName());
 	App::postModelAsync([=]() {
 		QList<QSharedPointer<Account>> accounts;
 		// Model thread.
+		mustBeInLinphoneThread(getClassName());
 		auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
 		for (auto it : linphoneAccounts) {
 			auto model = QSharedPointer<Account>(new Account(it), &QObject::deleteLater);
@@ -38,9 +41,13 @@ AccountList::AccountList(QObject *parent) : ListProxy(parent) {
 			accounts.push_back(model);
 		}
 		// Invoke for adding stuffs in caller thread
-		QMetaObject::invokeMethod(this, [this, accounts]() { add(accounts); });
+		QMetaObject::invokeMethod(this, [this, accounts]() {
+			mustBeInMainThread(getClassName());
+			add(accounts);
+		});
 	});
 }
 
 AccountList::~AccountList() {
+	mustBeInMainThread("~" + getClassName());
 }

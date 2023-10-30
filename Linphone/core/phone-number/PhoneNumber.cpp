@@ -21,13 +21,19 @@
 #include "PhoneNumber.hpp"
 #include "tool/Utils.hpp"
 #include <QApplication>
+DEFINE_ABSTRACT_OBJECT(PhoneNumber)
 
 PhoneNumber::PhoneNumber(const std::shared_ptr<linphone::DialPlan> &dialPlan) : QObject(nullptr) {
 	// Should be call from model Thread
+	mustBeInLinphoneThread(getClassName());
 	mFlag = Utils::coreStringToAppString(dialPlan->getFlag());
 	mNationalNumberLength = dialPlan->getNationalNumberLength();
 	mCountryCallingCode = Utils::coreStringToAppString(dialPlan->getCountryCallingCode());
 	mIsoCountryCode = Utils::coreStringToAppString(dialPlan->getIsoCountryCode());
 	mInternationalCallPrefix = Utils::coreStringToAppString(dialPlan->getInternationalCallPrefix());
 	mCountry = Utils::coreStringToAppString(dialPlan->getCountry());
+}
+
+PhoneNumber::~PhoneNumber() {
+	mustBeInMainThread(getClassName());
 }

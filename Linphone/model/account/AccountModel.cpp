@@ -22,11 +22,15 @@
 
 #include <QDebug>
 
+DEFINE_ABSTRACT_OBJECT(AccountModel)
+
 AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QObject *parent)
     : ::Listener<linphone::Account, linphone::AccountListener>(account, parent) {
+	mustBeInLinphoneThread(getClassName());
 }
 
 AccountModel::~AccountModel() {
+	mustBeInLinphoneThread("~" + getClassName());
 }
 
 void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -36,6 +40,7 @@ void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Ac
 }
 
 void AccountModel::setPictureUri(std::string uri) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto account = std::dynamic_pointer_cast<linphone::Account>(mMonitor);
 	auto params = account->getParams()->clone();
 	params->setPictureUri(uri);

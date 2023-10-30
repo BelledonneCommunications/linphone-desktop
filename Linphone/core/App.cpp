@@ -34,6 +34,7 @@
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "tool/Constants.hpp"
+#include "tool/thread/Thread.hpp"
 
 #include "tool/providers/ImageProvider.hpp"
 

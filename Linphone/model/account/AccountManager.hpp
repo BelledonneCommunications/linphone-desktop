@@ -25,11 +25,13 @@
 #include <linphone++/linphone.hh>
 
 #include "AccountModel.hpp"
+#include "tool/AbstractObject.hpp"
 
-class AccountManager : public QObject {
+class AccountManager : public QObject, public AbstractObject {
 	Q_OBJECT
 public:
 	AccountManager(QObject *parent = nullptr);
+	~AccountManager();
 
 	bool login(QString username, QString password);
 
@@ -43,6 +45,7 @@ signals:
 
 private:
 	std::shared_ptr<AccountModel> mAccountModel;
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

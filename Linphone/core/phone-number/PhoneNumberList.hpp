@@ -22,13 +22,17 @@
 #define PHONE_NUMBER_LIST_H_
 
 #include "../proxy/ListProxy.hpp"
+#include "tool/AbstractObject.hpp"
 #include <QLocale>
 // =============================================================================
 
-class PhoneNumberList : public ListProxy {
+class PhoneNumberList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
 	PhoneNumberList(QObject *parent = Q_NULLPTR);
+	~PhoneNumberList();
+
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

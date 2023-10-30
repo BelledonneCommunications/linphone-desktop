@@ -27,13 +27,21 @@
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 
+DEFINE_ABSTRACT_OBJECT(AccountManager)
+
 AccountManager::AccountManager(QObject *parent) : QObject(parent) {
+	mustBeInLinphoneThread(getClassName());
+}
+
+AccountManager::~AccountManager() {
+	mustBeInLinphoneThread("~" + getClassName());
 }
 
 std::shared_ptr<linphone::Account> AccountManager::createAccount(const QString &assistantFile) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	QString assistantPath = "://data/assistant/" + assistantFile;
-	qInfo() << QStringLiteral("[AccountManager] Set config on assistant: `%1`.").arg(assistantPath);
+	qInfo() << log().arg(QStringLiteral("Set config on assistant: `%1`.")).arg(assistantPath);
 	QFile resource(assistantPath);
 	auto file = QTemporaryFile::createNativeFile(resource);
 	core->getConfig()->loadFromXmlFile(Utils::appStringToCoreString(file->fileName()));
@@ -41,6 +49,7 @@ std::shared_ptr<linphone::Account> AccountManager::createAccount(const QString &
 }
 
 bool AccountManager::login(QString username, QString password) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	auto factory = linphone::Factory::get();
 	auto account = createAccount("use-app-sip-account.rc");
@@ -51,7 +60,8 @@ bool AccountManager::login(QString username, QString password) {
 
 	identity->setUsername(Utils::appStringToCoreString(username));
 	if (params->setIdentityAddress(identity)) {
-		qWarning() << QStringLiteral("[AccountManager] Unable to set identity address: `%1`.")
+		qWarning() << log()
+		                  .arg(QStringLiteral("Unable to set identity address: `%1`."))
 		                  .arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 		return false;
 	}

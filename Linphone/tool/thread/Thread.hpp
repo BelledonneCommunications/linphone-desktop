@@ -18,11 +18,17 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef THREAD_H_
+#define THREAD_H_
+
 #include <QThread>
 
 class Thread : public QThread {
 public:
 	Thread(QObject *parent = nullptr);
+	static bool mustBeInLinphoneThread(const QString &context);
+	static bool mustBeInMainThread(const QString &context);
 
 	virtual void run();
 };
+#endif
