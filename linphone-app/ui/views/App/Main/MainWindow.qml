@@ -261,7 +261,7 @@ ApplicationWindow {
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newConference
 						visible: SettingsModel.conferenceEnabled
-						enabled: SettingsModel.videoConferenceEnabled 
+						enabled: SettingsModel.videoConferenceEnabled
 						tooltipText:qsTr('newConferenceButton')
 						onClicked: {
 							window.detachVirtualWindow()
@@ -344,6 +344,7 @@ ApplicationWindow {
 							}
 						}
 						ActionButton {
+							visible: SettingsModel.standardChatEnabled || SettingsModel.secureChatEnabled
 							isCustom: true
 							backgroundRadius: 4
 							colorSet: MainWindowStyle.buttons.chatMenu
@@ -375,6 +376,7 @@ ApplicationWindow {
 							}
 						}
 						ActionButton {
+							visible: SettingsModel.conferenceEnabled
 							isCustom: true
 							backgroundRadius: 4
 							colorSet: MainWindowStyle.buttons.meetingsMenu
