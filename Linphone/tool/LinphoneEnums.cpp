@@ -113,6 +113,42 @@ LinphoneEnums::ConferenceSchedulerState LinphoneEnums::fromLinphone(const linpho
 	return static_cast<LinphoneEnums::ConferenceSchedulerState>(state);
 }
 
+linphone::LogLevel LinphoneEnums::toLinphone(const QtMsgType &data) {
+	switch (data) {
+		case QtDebugMsg:
+			return linphone::LogLevel::Debug;
+		case QtWarningMsg:
+			return linphone::LogLevel::Warning;
+		case QtCriticalMsg:
+			return linphone::LogLevel::Error;
+		case QtFatalMsg:
+			return linphone::LogLevel::Fatal;
+		case QtInfoMsg:
+			return linphone::LogLevel::Message;
+		default:
+			return linphone::LogLevel::Trace;
+	}
+}
+
+QtMsgType LinphoneEnums::fromLinphone(const linphone::LogLevel &data) {
+	switch (data) {
+		case linphone::LogLevel::Debug:
+			return QtDebugMsg;
+		case linphone::LogLevel::Trace:
+			return QtInfoMsg;
+		case linphone::LogLevel::Message:
+			return QtInfoMsg;
+		case linphone::LogLevel::Warning:
+			return QtWarningMsg;
+		case linphone::LogLevel::Error:
+			return QtCriticalMsg;
+		case linphone::LogLevel::Fatal:
+			return QtFatalMsg;
+		default:
+			return QtInfoMsg;
+	}
+}
+
 linphone::ParticipantDevice::State LinphoneEnums::toLinphone(const LinphoneEnums::ParticipantDeviceState &state) {
 	return static_cast<linphone::ParticipantDevice::State>(state);
 }

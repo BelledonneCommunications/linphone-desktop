@@ -161,6 +161,9 @@ Q_ENUM_NS(ConferenceSchedulerState)
 linphone::ConferenceScheduler::State toLinphone(const LinphoneEnums::ConferenceSchedulerState &state);
 LinphoneEnums::ConferenceSchedulerState fromLinphone(const linphone::ConferenceScheduler::State &state);
 
+linphone::LogLevel toLinphone(const QtMsgType &data);
+QtMsgType fromLinphone(const linphone::LogLevel &data);
+
 enum class ParticipantDeviceState {
 	Joining = int(linphone::ParticipantDevice::State::Joining),
 	Present = int(linphone::ParticipantDevice::State::Present),

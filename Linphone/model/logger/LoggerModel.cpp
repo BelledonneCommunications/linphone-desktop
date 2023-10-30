@@ -122,7 +122,8 @@ void LoggerModel::onLinphoneLog(const std::shared_ptr<linphone::LoggingService> 
                                 linphone::LogLevel level,
                                 const std::string &message) {
 	bool isAppLog = domain == Constants::AppDomain;
-	if (!mVerboseEnabled || (!isAppLog && mQtOnlyEnabled)) return;
+	if (isAppLog || !mVerboseEnabled || mQtOnlyEnabled) return; // App logs are already managed.
+
 	emit linphoneLogReceived(domain, level, message);
 }
 

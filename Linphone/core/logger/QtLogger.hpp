@@ -29,7 +29,7 @@
 // =============================================================================
 //
 //      Qt          SDK
-//fatal |            |
+// fatal |            |
 //   -- *----------> |
 //  |                |
 //  |   | <--------- *
@@ -47,13 +47,13 @@ public:
 	static QtLogger *getInstance();
 	static void enableVerbose(bool verbose);
 	static void enableQtOnly(bool qtOnly);
-	
-	void printLog(QString * qMessage, const std::string &domain, linphone::LogLevel level, const std::string &message);
-	
-// Log Sources
+
+	void printLog(QString *qMessage, const std::string &domain, linphone::LogLevel level, const std::string &message);
+
+	// Log Sources
 	static void onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg);
 	void onLinphoneLog(const std::string &domain, linphone::LogLevel level, const std::string &message);
-
+	bool mVerboseEnabled = false;
 signals:
 	void qtLogReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
 	void requestVerboseEnabled(bool verbose);

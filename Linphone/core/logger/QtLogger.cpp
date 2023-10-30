@@ -19,6 +19,8 @@
  */
 
 #include "QtLogger.hpp"
+#include "model/core/CoreModel.hpp"
+#include "tool/LinphoneEnums.hpp"
 #include "tool/Utils.hpp"
 #include <QApplication>
 #include <QMessageBox>
@@ -66,15 +68,16 @@ QtLogger *QtLogger::getInstance() {
 }
 
 void QtLogger::onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
-	if (type == QtFatalMsg) {
-		QString out; // Qt force call abort() that kill the application. So it cannot be used to retrieve
-		             // in other thread. Print the error in the hope that it can be catch somewhere.
-		gLogger.printLog(&out, Constants::AppDomain, linphone::LogLevel::Fatal, Utils::appStringToCoreString(msg));
+	QString out;
+	if (gLogger.mVerboseEnabled) {
+		gLogger.printLog(&out, Constants::AppDomain, LinphoneEnums::toLinphone(type),
+		                 Utils::appStringToCoreString(msg));
 	}
 	emit gLogger.qtLogReceived(type, context.file, context.line, msg);
 }
 
 void QtLogger::enableVerbose(bool verbose) {
+	gLogger.mVerboseEnabled = verbose;
 	emit gLogger.requestVerboseEnabled(verbose);
 }
 
