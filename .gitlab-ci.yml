@@ -38,6 +38,13 @@ workflow:
     #Launch pipeline if there is a schedule event
     - if: $CI_PIPELINE_SOURCE == "schedule"
 
+
+.rules-merge-request-manual:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+      allow_failure: true
+      
 #################################################
 # Platforms to test
 #################################################

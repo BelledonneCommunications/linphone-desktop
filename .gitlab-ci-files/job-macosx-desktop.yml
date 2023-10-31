@@ -65,9 +65,9 @@ job-macosx-makefile:
   extends: .job-macosx-desktop
 
 job-macosx-ninja-novideo:
-  only:
-    variables:
-      - $NIGHTLY_MASTER
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
   variables:
     CMAKE_OPTIONS: -DENABLE_VIDEO=OFF -DENABLE_PQCRYPTO=OFF
     CMAKE_GENERATOR: Ninja
