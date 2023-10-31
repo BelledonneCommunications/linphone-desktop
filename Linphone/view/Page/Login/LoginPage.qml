@@ -7,6 +7,7 @@ LoginLayout {
 	id: mainItem
 	signal useSIPButtonClicked()
 	signal goToRegister()
+	signal connectionSucceed()
 
 	titleContent: RowLayout {
 		Image {
@@ -37,18 +38,15 @@ LoginLayout {
 			}
 		}
 	}
-
 	centerContent: ColumnLayout {
-		signal useSIPButtonClicked()
+		Layout.alignment: Qt.AlignBottom
+
 		RowLayout {
+			
 			ColumnLayout {
-				Layout.fillHeight: true
-				Layout.fillWidth: true
-				clip: true
-				spacing: 15
-
-				LoginForm{}
-
+				LoginForm {
+					onConnectionSucceed: mainItem.connectionSucceed()
+				}
 				Button {
 					Layout.topMargin: 40
 					inversedColors: true

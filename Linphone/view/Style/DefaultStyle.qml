@@ -10,11 +10,15 @@ QtObject {
 	property color buttonInversedBackground: "white"
 	property color buttonPressedInversedBackground: "#fff1e8"
 	property color buttonTextColor: "white"
+	property color radioButtonCheckedColor: "#4AA8FF"
+	property color radioButtonUncheckedColor: "#FE5E00"
+	property color radioButtonTitleColor: "#070707"
+	property int radioButtonTextSize: 8
+	property int radioButtonTitleSize: 9
 	property color buttonInversedTextColor: "#FE5E00"
 	property color checkboxBorderColor: "#FE5E00"
 	property double checkboxBorderWidth: 2
 	property int buttonTextSize: 10
-	property int tabButtonTextSize: 11
 	property color carouselLightGrayColor: "#DFECF2"
 	property color formItemLabelColor: "#4E6074"
 	property int formItemLabelSize: 8
@@ -23,6 +27,9 @@ QtObject {
 	property color formItemBackgroundColor: "#F9F9F9"
 	property color formItemBorderColor: "#EDEDED"
 	property color formItemFocusBorderColor: "#FE5E00"
+
+	property int tabButtonTextSize: 11
+	property color verticalTabBarColor: "#FE5E00"
 
 	property color comboBoxHighlightColor: "#C0D1D9"
 	property color comboBoxHoverColor: "#6C7A87"

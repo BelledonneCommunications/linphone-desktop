@@ -3,8 +3,12 @@ import QtQuick.Layouts 1.0
 import QtQuick.Controls as Control
 import Linphone
 
+
 ColumnLayout {
+	id: mainItem
 	spacing: 15
+	signal connectionSucceed()
+
 	TextInput {
 		id: username
 		label: "Username"
@@ -19,13 +23,66 @@ ColumnLayout {
 		textInputWidth: 250
 	}
 
+	Text {
+		id: errorText
+		text: "Connection has failed. Please verify your credentials"
+		color: DefaultStyle.errorMessageColor
+		opacity: 0
+		states: [
+			State{
+				name: "Visible"
+				PropertyChanges{target: errorText; opacity: 1.0}
+			},
+			State{
+				name:"Invisible"
+				PropertyChanges{target: errorText; opacity: 0.0}
+			}
+		]
+		transitions: [
+			Transition {
+				from: "Visible"
+				to: "Invisible"
+				NumberAnimation {
+					property: "opacity"
+					duration: 1000
+				}
+			}
+		]
+		Timer {
+			id: autoHideErrorMessage
+			interval: 2500
+			onTriggered: errorText.state = "Invisible"
+		}
+		Connections {
+			target: LoginPageCpp
+			onRegistrationStateChanged: {
+				if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Failed) {
+					errorText.state = "Visible"
+					autoHideErrorMessage.restart()
+				} else if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
+					mainItem.connectionSucceed()
+				}
+			}
+		}
+	}
+
 	RowLayout {
 		id: lastFormLineLayout
 		Button {
-			text: 'Log in'
+			text: "Log in"
 			Layout.rightMargin: 20
 			onClicked: {
-				LoginPageCpp.login(username.inputText, password.inputText);
+				username.errorMessage = ""
+				password.errorMessage = ""
+
+				if (username.inputText.length == 0 || password.inputText.length == 0) {
+					if (username.inputText.length == 0)
+						username.errorMessage = qsTr("You must enter a username")
+					if (password.inputText.length == 0)
+						password.errorMessage = qsTr("You must enter a password")
+					return
+				}
+				LoginPageCpp.login(username.inputText, password.inputText)
 			}
 		}
 		Button {

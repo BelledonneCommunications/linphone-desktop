@@ -25,19 +25,27 @@
 
 #include "model/account/AccountManager.hpp"
 
+DEFINE_ABSTRACT_OBJECT(LoginPage)
+
 LoginPage::LoginPage(QObject *parent) : QObject(parent) {
+	mustBeInMainThread(getClassName());
 }
 
-bool LoginPage::isLogged() const {
+LoginPage::~LoginPage() {
+	mustBeInMainThread("~" + getClassName());
+}
+
+linphone::RegistrationState LoginPage::getRegistrationState() const {
 	// View thread
-	return mIsLogged;
+	return mRegistrationState;
 }
 
-void LoginPage::setIsLogged(bool status) {
+void LoginPage::setRegistrationState(linphone::RegistrationState status) {
 	// Should be view thread only because of object updates.
-	if (mIsLogged != status) {
-		mIsLogged = status;
-		emit isLoggedChanged();
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (mRegistrationState != status) {
+		mRegistrationState = status;
+		emit registrationStateChanged();
 	}
 }
 
@@ -45,11 +53,25 @@ void LoginPage::login(const QString &username, const QString &password) {
 	App::postModelAsync([=]() {
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();
-		connect(accountManager, &AccountManager::logged, this, [accountManager, this](bool isLoggued) mutable {
-			// View thread
-			setIsLogged(isLoggued);
-			accountManager->deleteLater();
-		});
-		accountManager->login(username, password);
+		connect(accountManager, &AccountManager::registrationStateChanged, this,
+		        [accountManager, this](linphone::RegistrationState state) mutable {
+			        // View thread
+			        setRegistrationState(state);
+			        switch (state) {
+				        case linphone::RegistrationState::Ok:
+				        case linphone::RegistrationState::Cleared:
+				        case linphone::RegistrationState::Failed: {
+					        accountManager->deleteLater();
+					        break;
+				        }
+				        case linphone::RegistrationState::None:
+				        case linphone::RegistrationState::Progress:
+				        case linphone::RegistrationState::Refreshing:
+					        break;
+			        }
+		        });
+		if (!accountManager->login(username, password)) {
+			emit accountManager->registrationStateChanged(linphone::RegistrationState::Failed);
+		}
 	});
 }

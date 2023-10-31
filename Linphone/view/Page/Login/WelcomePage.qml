@@ -41,7 +41,7 @@ LoginLayout {
 				font.underline: true
 			}
 			onClicked: {
-				console.debug("[LoginItem] User: Click skip")
+				console.debug("[WelcomePage] User: Click skip")
 				mainItem.startButtonPressed()
 			}
 		}

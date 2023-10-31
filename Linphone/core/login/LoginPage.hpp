@@ -18,23 +18,34 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <QObject>
+#ifndef LOGINPAGE_H_
+#define LOGINPAGE_H_
 
-class LoginPage : public QObject {
+#include "tool/AbstractObject.hpp"
+#include <QObject>
+#include <linphone++/linphone.hh>
+
+class LoginPage : public QObject, public AbstractObject {
 	Q_OBJECT
 
 public:
 	LoginPage(QObject *parent = nullptr);
+	~LoginPage();
 
-	Q_PROPERTY(bool isLogged READ isLogged NOTIFY isLoggedChanged)
-	
-	Q_INVOKABLE void login(const QString& username, const QString& password);
+	Q_PROPERTY(linphone::RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
 
-	bool isLogged() const;
-	void setIsLogged(bool status);
+	Q_INVOKABLE void login(const QString &username, const QString &password);
+
+	linphone::RegistrationState getRegistrationState() const;
+	void setRegistrationState(linphone::RegistrationState status);
 
 signals:
-	void isLoggedChanged();
+	void registrationStateChanged();
+
 private:
-	bool mIsLogged = false;
+	linphone::RegistrationState mRegistrationState = linphone::RegistrationState::None;
+
+	DECLARE_ABSTRACT_OBJECT
 };
+
+#endif

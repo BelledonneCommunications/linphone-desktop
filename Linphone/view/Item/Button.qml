@@ -19,6 +19,12 @@ Control.Button {
 					: DefaultStyle.buttonBackground
 		radius: 24
 		border.color: inversedColors ? DefaultStyle.buttonBackground : DefaultStyle.buttonInversedBackground
+
+		MouseArea {
+			anchors.fill: parent
+			hoverEnabled: true
+			cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+		}
 	}
 
 	leftPadding: 13

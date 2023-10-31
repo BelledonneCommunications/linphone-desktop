@@ -13,7 +13,7 @@ Control.CheckBox {
 		radius: 3
 		border.color: DefaultStyle.checkboxBorderColor
 		border.width: DefaultStyle.checkboxBorderWidth
-		// color: checkbox.checked ? DefaultStyle.checkboxBorderColor : "transparent"
+		// color: mainItem.checked ? DefaultStyle.checkboxBorderColor : "transparent"
 
 		Text {
 			visible: mainItem.checked

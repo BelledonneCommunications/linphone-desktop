@@ -91,14 +91,13 @@ void AccountManager::onRegistrationStateChanged(const std::shared_ptr<linphone::
 			core->removeAccount(account);
 			emit mAccountModel->removeListener();
 			mAccountModel = nullptr;
-			emit logged(false);
 			break;
 		case linphone::RegistrationState::Ok:
 			emit mAccountModel->removeListener();
 			mAccountModel = nullptr;
-			emit logged(true);
 			break;
 		default: {
 		}
 	}
+	emit registrationStateChanged(state);
 }

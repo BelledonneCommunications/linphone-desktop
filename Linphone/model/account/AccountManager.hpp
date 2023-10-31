@@ -41,7 +41,7 @@ public:
 	                                linphone::RegistrationState state,
 	                                const std::string &message);
 signals:
-	void logged(bool isLoggued);
+	void registrationStateChanged(linphone::RegistrationState state);
 
 private:
 	std::shared_ptr<AccountModel> mAccountModel;

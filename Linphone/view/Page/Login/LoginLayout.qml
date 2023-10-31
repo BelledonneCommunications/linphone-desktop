@@ -32,7 +32,7 @@ Item {
 						fillMode: Image.PreserveAspectFit
 						source: AppIcons.info
 					}
-					onClicked: console.debug("[LoginLayout] Userr: open about popup")
+					onClicked: console.debug("[LoginLayout] User: open about popup")
 				}
 
 				Text {

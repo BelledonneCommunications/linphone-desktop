@@ -15,6 +15,8 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/caret-left.svg"
 	"data/image/verif_page_image.svg"
 	"data/image/check.svg"
+	"data/image/chiffrement.svg"
+	"data/image/interoperable.svg"
 )
 
 set(_LINPHONEAPP_RC_FILES ${_LINPHONEAPP_RC_FILES} PARENT_SCOPE)

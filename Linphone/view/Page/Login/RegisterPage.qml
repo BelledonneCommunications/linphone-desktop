@@ -38,7 +38,7 @@ LoginLayout {
 			inversedColors: true
 			text: "Log in"
 			onClicked: {
-				console.debug("[LoginItem] User: return")
+				console.debug("[RegisterPage] User: return")
 				returnToLogin()
 			}
 		}

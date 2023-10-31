@@ -15,4 +15,6 @@ QtObject {
 	property string profile: "image://internal/user-circle.svg"
 	property string verif_page_image: "image://internal/verif_page_image.svg"
 	property string check: "image://internal/check.svg"
+	property string chiffrement: "image://internal/chiffrement.svg"
+	property string interoperable: "image://internal/interoperable.svg"
 }

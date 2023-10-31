@@ -10,6 +10,7 @@ Window {
 	height: 641
 	visible: true
 	title: qsTr("Linphone")
+	property bool firstConnection: true
 	
 	StackView {
 		id: mainWindowStackView
@@ -29,6 +30,13 @@ Window {
 		LoginPage {
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
+			onConnectionSucceed: {
+				if (mainWindow.firstConnection) {
+					mainWindowStackView.replace(securityModePage)
+				} else {
+					mainWindowStackView.replace(callPage)
+				}
+			}
 		}
 	}
 	Component {
@@ -36,6 +44,14 @@ Window {
 		SIPLoginPage {
 			onReturnToLogin: mainWindowStackView.pop()
 			onGoToRegister: mainWindowStackView.replace(registerPage)
+			
+			onConnectionSucceed: {
+				if (mainWindow.firstConnection) {
+					mainWindowStackView.replace(securityModePage)
+				} else {
+					mainWindowStackView.replace(callPage)
+				}
+			}
 		}
 	}
 	Component {
@@ -51,6 +67,21 @@ Window {
 		id: checkingPage
 		RegisterCheckingPage {
 			onReturnToRegister: mainWindowStackView.pop()
+		}
+	}
+	Component {
+		id: securityModePage
+		SecurityModePage {
+			onModeSelected: (index) => {
+				var selectedMode = index == 0 ? "chiffrement" : "interoperable"
+				console.debug("[SelectMode]User: User selected mode " + selectedMode)
+				mainWindowStackView.replace(callPage)
+			}
+		}
+	}
+	Component {
+		id: callPage
+		CallPage {
 		}
 	}
 } 

@@ -8,6 +8,8 @@ LoginLayout {
 	id: mainItem
 	signal returnToLogin()
 	signal goToRegister()
+	signal connectionSucceed()
+	
 	titleContent: RowLayout {
 		Control.Button {
 			Layout.preferredHeight: 40
@@ -19,7 +21,7 @@ LoginLayout {
 				color: "transparent"
 			}
 			onClicked: {
-				console.debug("[LoginItem] User: return")
+				console.debug("[SIPLoginPage] User: return")
 				mainItem.returnToLogin()
 			}
 		}
@@ -103,7 +105,7 @@ LoginLayout {
 									inversedColors: true
 									text: "I prefer creating an account"
 									onClicked: {
-										console.debug("[LoginItem] User: click register")
+										console.debug("[SIPLoginPage] User: click register")
 										mainItem.goToRegister()
 									}
 								}
@@ -148,11 +150,50 @@ LoginLayout {
 							ComboBox {
 								label: "Transport"
 								backgroundWidth: 250
-								modelList:[
-									{text:"TCP"},
-									{text:"UDP"},
-									{text:"TLS"}
+								modelList:[ "TCP", "UDP", "TLS"]
+							}
+
+							Text {
+								id: errorText
+								text: "Connection has failed. Please verify your credentials"
+								color: DefaultStyle.errorMessageColor
+								opacity: 0
+								states: [
+									State{
+										name: "Visible"
+										PropertyChanges{target: errorText; opacity: 1.0}
+									},
+									State{
+										name:"Invisible"
+										PropertyChanges{target: errorText; opacity: 0.0}
+									}
 								]
+								transitions: [
+									Transition {
+										from: "Visible"
+										to: "Invisible"
+										NumberAnimation {
+											property: "opacity"
+											duration: 1000
+										}
+									}
+								]
+								Timer {
+									id: autoHideErrorMessage
+									interval: 2500
+									onTriggered: errorText.state = "Invisible"
+								}
+								Connections {
+									target: LoginPageCpp
+									onRegistrationStateChanged: {
+										if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Failed) {
+											errorText.state = "Visible"
+											autoHideErrorMessage.restart()
+										} else if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
+											mainItem.connectionSucceed()
+										}
+									}
+								}
 							}
 
 							Button {

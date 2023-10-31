@@ -2,6 +2,7 @@
 list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Main.qml
 	view/App/Layout/LoginLayout.qml
+	view/App/Layout/OverviewLayout.qml
 	
 	view/Item/Button.qml
 	view/Item/Carousel.qml
@@ -10,11 +11,13 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/DigitInput.qml
 	view/Item/PhoneNumberComboBox.qml
 	view/Item/PhoneNumberInput.qml
+	view/Item/RadioButton.qml
 	view/Item/RectangleTest.qml
 	view/Item/TabBar.qml
 	view/Item/Text.qml
 	view/Item/TextInput.qml
 	view/Item/ToolTip.qml
+	view/Item/VerticalTabBar.qml
 	
 	view/Item/Form/LoginForm.qml
 
@@ -22,9 +25,12 @@ list(APPEND _LINPHONEAPP_QML_FILES
 
 	view/Page/Login/LoginPage.qml
 	view/Page/Login/RegisterPage.qml
-	view/Page/Login/SIPLoginPage.qml
 	view/Page/Login/RegisterCheckingPage.qml
+	view/Page/Login/SIPLoginPage.qml
+	view/Page/Login/SecurityModePage.qml
 	view/Page/Login/WelcomePage.qml
+
+	view/Page/Overview/CallPage.qml
 	
 # Prototypes
 	view/Prototype/PhoneNumberPrototype.qml
