@@ -25,6 +25,8 @@ QtObject {
 	property color comboBoxHighlightColor: "#C0D1D9"
 	property color comboBoxHoverColor: "#6C7A87"
 
+	property color tooltipBackgroundColor: "#DFECF2"
+
 	property color digitInputFocusedColor: "#FE5E00"
 	property color digitInputColor: "#6C7A87"
 

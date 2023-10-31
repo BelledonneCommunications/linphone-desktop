@@ -11,20 +11,20 @@ LoginLayout {
 	titleContent: RowLayout {
 		Text {
 			id: welcome
-			text: "Welcome"
-			color: DefaultStyle.titleColor
-			font.pointSize: DefaultStyle.title1FontPointSize
-			font.bold: true
+			textItem.text: "Welcome"
+			textItem.color: DefaultStyle.titleColor
+			textItem.font.pointSize: DefaultStyle.title1FontPointSize
+			textItem.font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Text {
 			Layout.alignment: Qt.AlignBottom
 			Layout.leftMargin: 10
 			Layout.bottomMargin: 5
-			color: DefaultStyle.titleColor
-			text: "in Linphone"
-			font.pointSize: 18
-			font.bold: true
+			textItem.color: DefaultStyle.titleColor
+			textItem.text: "in Linphone"
+			textItem.font.pointSize: 18
+			textItem.font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -42,8 +42,8 @@ LoginLayout {
 				radius: 48
 			}
 			contentItem: Text {
-				text: "Skip"
-				font.underline: true
+				textItem.text: "Skip"
+				textItem.font.underline: true
 			}
 			onClicked: {
 				console.debug("[LoginItem] User: Click skip")
@@ -65,61 +65,28 @@ LoginLayout {
 			}
 			Carousel {
 				id: carousel
-				itemsList: [carousel0, carousel1, carousel2]
-				Component {
-					id: carousel0
+				itemsCount: slideRepeater.count
+				itemsList: Repeater {
+					id: slideRepeater
+					model: [
+						{title: "Linphone", text: "Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>."},
+						{title: "Sécurisé", text: "Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>."},
+						{title: "Open Source", text: "Une application open source et un <b>service gratuit</b> depuis <b>2001</b>"},
+						]
 					Item {
 						ColumnLayout {
 							anchors.verticalCenter: parent.verticalCenter
 							Text {
-								text: "Linphone"
-								font.bold: true
-								font.pixelSize: 20
+								textItem.text: modelData.title
+								textItem.font.bold: true
+								textItem.font.pixelSize: 20
 								scaleLettersFactor: 1.1
 							}
 							Text {
 								Layout.maximumWidth: 361
-								wrapMode: Text.WordWrap
-								font.pixelSize: 11
-								text: "Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>. "
-							}
-						}
-					}
-				}
-				Component {
-					id: carousel1
-					Item {
-						ColumnLayout {
-							anchors.verticalCenter: parent.verticalCenter
-							Text {
-								text: "Sécurisé"
-								font.bold: true
-								font.pixelSize: 20
-							}
-							Text {
-								Layout.maximumWidth: 361
-								wrapMode: Text.WordWrap
-								font.pixelSize: 11
-								text: "Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>."
-							}
-						}
-					}
-				}
-				Component {
-					id: carousel2
-					Item {
-						ColumnLayout {
-							anchors.verticalCenter: parent.verticalCenter
-							Text {
-								text: "Open Source"
-								font.bold: true
-								font.pixelSize: 20
-							}
-							Text {
-								Layout.maximumWidth: 361
-								wrapMode: Text.WordWrap
-								font.pixelSize: 11
-								text: "Une application open source et un <b>service gratuit</b> depuis <b>2001</b>"
+								textItem.wrapMode: Text.WordWrap
+								textItem.font.pixelSize: 11
+								textItem.text: modelData.text
 							}
 						}
 					}
@@ -132,7 +99,7 @@ LoginLayout {
 			Layout.bottomMargin: 20
 			Layout.leftMargin: 361 - width
 			Layout.alignment: Qt.AlignBottom
-			text: carousel.currentIndex < (carousel.itemsList.length - 1) ? "Next" : "Start"
+			text: carousel.currentIndex < (carousel.itemsCount - 1) ? "Next" : "Start"
 			onClicked: { 
 				if (carousel.currentIndex < 2) carousel.goToSlide(carousel.currentIndex + 1);
 				else mainItem.startButtonPressed();

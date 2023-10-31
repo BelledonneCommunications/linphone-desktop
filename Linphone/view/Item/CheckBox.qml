@@ -16,11 +16,11 @@ Control.CheckBox {
 		// color: checkbox.checked ? DefaultStyle.checkboxBorderColor : "transparent"
 
 		Text {
-			anchors.centerIn: parent
-			text: "\u2714"
-			font.pointSize: 18
-			color: DefaultStyle.checkboxBorderColor
 			visible: mainItem.checked
+			textItem.text: "\u2714"
+			textItem.font.pointSize: 18
+			textItem.color: DefaultStyle.checkboxBorderColor
+			anchors.centerIn: parent
 		}
 	}
 }

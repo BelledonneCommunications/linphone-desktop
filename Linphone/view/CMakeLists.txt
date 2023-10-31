@@ -14,8 +14,11 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/TabBar.qml
 	view/Item/Text.qml
 	view/Item/TextInput.qml
+	view/Item/ToolTip.qml
 	
 	view/Item/Form/LoginForm.qml
+
+	view/Item/Test/ItemsTest.qml
 
 	view/Page/Login/LoginPage.qml
 	view/Page/Login/RegisterPage.qml

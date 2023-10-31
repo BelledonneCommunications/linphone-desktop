@@ -7,7 +7,10 @@ import Linphone
 ColumnLayout {
 	id: mainItem
 
-	property list<Component> itemsList
+	required property list<Item> itemsList
+	// Items count is needed when using a repeater for itemsList
+	// which is part of the carouselStackLayout children list
+	required property int itemsCount
 	property int currentIndex: carouselStackLayout.currentIndex
 	property bool prevButtonVisible: true
 	property bool nextButtonVisible: true
@@ -18,8 +21,7 @@ ColumnLayout {
 
 	StackLayout {
 		id: carouselStackLayout
-
-		property var items: children
+		children: mainItem.itemsList
 		property int previousIndex: currentIndex
 
 		function goToSlideAtIndex(index) {
@@ -30,16 +32,23 @@ ColumnLayout {
 		Component.onCompleted: {
 			// The animation is not working until the slide
 			// has been displayed once
-			for (var i = 0; i < mainItem.itemsList.length; ++i) {
+			for (var i = 0; i < mainItem.itemsCount; ++i) {
 				// const newObject = Qt.createQmlObject(mainItem.itemsList[i], carouselStackLayout);
-				mainItem.itemsList[i].createObject(carouselStackLayout)
+				// mainItem.itemsList[i].createObject(carouselStackLayout)
+				// carouselStackLayout.append(itemsList[i])
 				var button = carouselButton.createObject(carouselButtonsLayout, {slideIndex: i, stackLayout: carouselStackLayout})
 				button.buttonClicked.connect(goToSlideAtIndex)
 				currentIndex = i
 			}
 			currentIndex = 0
 			previousIndex = currentIndex
-			items = children
+		}
+
+		onCurrentIndexChanged: {
+			var currentItem = children[currentIndex]
+			var crossFaderAnim = crossFader.createObject(parent, {fadeInTarget: currentItem, mirrored: (previousIndex > currentIndex)})
+			crossFaderAnim.restart()
+			mainItem.currentIndex = currentIndex
 		}
 
 		Component {
@@ -67,13 +76,6 @@ ColumnLayout {
 					easing.type: Easing.OutCubic
 				}
 			}
-		}
-
-		onCurrentIndexChanged: {
-			var currentItem = items[currentIndex]
-			var crossFaderAnim = crossFader.createObject(parent, {fadeInTarget: currentItem, mirrored: (previousIndex > currentIndex)})
-			crossFaderAnim.restart()
-			mainItem.currentIndex = currentIndex
 		}
 	}
 	RowLayout {

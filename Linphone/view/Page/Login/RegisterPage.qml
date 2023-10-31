@@ -17,9 +17,9 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			text: "Register"
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			textItem.text: "Register"
+			textItem.font.pointSize: DefaultStyle.title2FontPointSize
+			textItem.font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -27,8 +27,8 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15
-			text: "Already have an account ?"
-			font.pointSize: DefaultStyle.defaultTextSize
+			textItem.text: "Already have an account ?"
+			textItem.font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
@@ -89,14 +89,14 @@ LoginLayout {
 						CheckBox {
 						}
 						Text {
-							text: "I would like to suscribe to the newsletter"
+							textItem.text: "I would like to suscribe to the newsletter"
 						}
 					}
 					RowLayout {
 						CheckBox {
 						}
 						Text {
-							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
+							textItem.text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
 						}
 					}
 					Button {
@@ -158,14 +158,14 @@ LoginLayout {
 						CheckBox {
 						}
 						Text {
-							text: "I would like to suscribe to the newsletter"
+							textItem.text: "I would like to suscribe to the newsletter"
 						}
 					}
 					RowLayout {
 						CheckBox {
 						}
 						Text {
-							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
+							textItem.text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
 						}
 					}
 					Button {

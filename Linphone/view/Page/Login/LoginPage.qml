@@ -14,9 +14,9 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			text: "Login"
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			textItem.text: "Login"
+			textItem.font.pointSize: DefaultStyle.title2FontPointSize
+			textItem.font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -24,8 +24,8 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15
-			text: "No account yet ?"
-			font.pointSize: DefaultStyle.defaultTextSize
+			textItem.text: "No account yet ?"
+			textItem.font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight

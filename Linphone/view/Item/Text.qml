@@ -1,11 +1,21 @@
 import QtQuick 2.7
-import QtQuick.Controls 2.2 as Control
+import QtQuick.Layouts
 import Linphone
 
-Text {
+RowLayout {
+	id: mainItem
+	property alias textItem: innerItem
 	property double scaleLettersFactor: 1.
-	font.family: DefaultStyle.defaultFont
-	font.pointSize: DefaultStyle.defaultFontPointSize
-	color: DefaultStyle.defaultTextColor
-	transform: Scale { yScale: scaleLettersFactor}
+	Text {
+		id: innerItem
+		font.family: DefaultStyle.defaultFont
+		font.pointSize: DefaultStyle.defaultFontPointSize
+		color: DefaultStyle.defaultTextColor
+		wrapMode: Text.Wrap
+		elide: Text.ElideRight
+		transformOrigin: Item.TopLeft
+		transform: Scale { 
+			yScale: mainItem.scaleLettersFactor
+		}
+	}
 }

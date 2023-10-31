@@ -7,7 +7,7 @@ Control.Button {
 	property int capitalization
 	property bool inversedColors: false
 	property int textSize: DefaultStyle.buttonTextSize
-	
+
 	background: Rectangle {
 		color: inversedColors ? DefaultStyle.buttonInversedBackground : DefaultStyle.buttonBackground
 		radius: 24
@@ -15,19 +15,20 @@ Control.Button {
 	}
 	
 	contentItem: Text {
-		horizontalAlignment: Text.AlignHCenter
-		verticalAlignment: Text.AlignVCenter
-		leftPadding: 11
-		rightPadding: 11
-		topPadding: 6
-		bottomPadding: 6
+		textItem.horizontalAlignment: Text.AlignHCenter
+		textItem.verticalAlignment: Text.AlignVCenter
+		textItem.leftPadding: 11
+		textItem.rightPadding: 11
+		textItem.topPadding: 6
+		textItem.bottomPadding: 6
 
-		wrapMode: Text.WordWrap
-		text: mainItem.text
-		color: inversedColors ? DefaultStyle.buttonInversedTextColor : DefaultStyle.buttonTextColor
-		font {
+		textItem.wrapMode: Text.WordWrap
+		textItem.text: mainItem.text
+		textItem.color: inversedColors ? DefaultStyle.buttonInversedTextColor : DefaultStyle.buttonTextColor
+		textItem.font {
 			bold: true
 			pointSize: mainItem.textSize
+			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization
 		}
 	}

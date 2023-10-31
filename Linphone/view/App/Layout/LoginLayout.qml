@@ -37,9 +37,9 @@ Item {
 
 				Text {
 					Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-					text: "About"
-					font.pixelSize: 12
-					color: DefaultStyle.grayColor
+					textItem.text: "About"
+					textItem.font.pixelSize: 12
+					textItem.color: DefaultStyle.grayColor
 				}
 			}
 			RowLayout {

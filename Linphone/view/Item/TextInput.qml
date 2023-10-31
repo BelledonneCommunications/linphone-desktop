@@ -18,16 +18,22 @@ ColumnLayout {
 
 	Text {
 		visible: label.length > 0
-		verticalAlignment: Text.AlignVCenter
-		text: mainItem.label + (mainItem.mandatory ? "*" : "")
-		color: DefaultStyle.formItemLabelColor
-		font {
+		textItem.verticalAlignment: Text.AlignVCenter
+		textItem.text: mainItem.label + (mainItem.mandatory ? "*" : "")
+		textItem.color: DefaultStyle.formItemLabelColor
+		textItem.elide: Text.ElideRight
+		textItem.wrapMode: Text.Wrap
+		textItem.maximumLineCount: 1
+		textItem.font {
 			pointSize: DefaultStyle.formItemLabelSize
+			family: DefaultStyle.defaultFont
 			bold: true
 		}
+		Layout.preferredWidth: mainItem.textInputWidth
 	}
 
 	Rectangle {
+		id: input
 		Component.onCompleted: {
 			if (mainItem.fillWidth)
 				Layout.fillWidth = true
@@ -50,10 +56,6 @@ ColumnLayout {
 			inputMethodHints: mainItem.inputMethodHints
 			selectByMouse: true
 			validator: mainItem.validator
-			// MouseArea {
-			// 	anchors.fill: parent
-			// 	// acceptedButtons: Qt.NoButton
-			// }
 			background: Item {
 				opacity: 0.
 			}

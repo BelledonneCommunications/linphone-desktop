@@ -15,10 +15,10 @@ ColumnLayout {
 
 	Text {
 		visible: label.length > 0
-		verticalAlignment: Text.AlignVCenter
-		text: mainItem.label + (mainItem.mandatory ? "*" : "")
-		color: DefaultStyle.formItemLabelColor
-		font {
+		textItem.verticalAlignment: Text.AlignVCenter
+		textItem.text: mainItem.label + (mainItem.mandatory ? "*" : "")
+		textItem.color: DefaultStyle.formItemLabelColor
+		textItem.font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true
 		}

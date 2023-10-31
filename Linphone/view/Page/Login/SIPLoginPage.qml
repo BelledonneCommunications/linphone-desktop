@@ -28,9 +28,9 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			text: "Use a SIP Account"
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			textItem.text: "Use a SIP Account"
+			textItem.font.pointSize: DefaultStyle.title2FontPointSize
+			textItem.font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -38,8 +38,8 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15
-			text: "No account yet ?"
-			font.pointSize: DefaultStyle.defaultTextSize
+			textItem.text: "No account yet ?"
+			textItem.font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
@@ -72,10 +72,10 @@ LoginLayout {
 						Text {
 							Layout.preferredWidth: 361
 							Layout.fillWidth: true
-							wrapMode: Text.WordWrap
-							color: DefaultStyle.darkGrayColor
-							font.pointSize: DefaultStyle.defaultTextSize
-							text: "<p>Some features require a Linphone account, such as group messaging, video conferences...</p> 
+							textItem.wrapMode: Text.WordWrap
+							textItem.color: DefaultStyle.darkGrayColor
+							textItem.font.pointSize: DefaultStyle.defaultTextSize
+							textItem.text: "<p>Some features require a Linphone account, such as group messaging, video conferences...</p> 
 							<p>These features are hidden when you register with a third party SIP account.</p>
 							<p>To enable it in a commercial projet, please contact us. </p>"
 						}

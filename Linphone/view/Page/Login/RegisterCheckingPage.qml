@@ -29,12 +29,12 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			text: {
+			textItem.text: {
 				var completeString =  (mainItem.email.length > 0) ? "email" : "phone number"
 				text = "Register | Register with your " + completeString
 			}
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			textItem.font.pointSize: DefaultStyle.title2FontPointSize
+			textItem.font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -47,8 +47,8 @@ LoginLayout {
 		Layout.fillHeight: true
 		Text {
 			Layout.alignment: Qt.AlignTop
-			font.bold: true
-			text: {
+			textItem.font.bold: true
+			textItem.text: {
 				var completeString = (mainItem.email.length > 0) ? ("email" + mainItem.email) : ("phone number" + mainItem.phoneNumber)
 				text = "We have sent a verification code on your " + completeString + " <br>Please enter the verification code below:"
 			}
@@ -77,8 +77,8 @@ LoginLayout {
 				RowLayout {
 					Text {
 						Layout.rightMargin: 15
-						text: "Didn't receive the code ?"
-						font.pointSize: DefaultStyle.defaultTextSize
+						textItem.text: "Didn't receive the code ?"
+						textItem.font.pointSize: DefaultStyle.defaultTextSize
 					}
 					Button {
 						Layout.alignment: Qt.AlignRight

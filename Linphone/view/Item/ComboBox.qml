@@ -9,14 +9,14 @@ ColumnLayout {
 	property int backgroundWidth: 200
 	// Usage : each item of the model list must be {text: ..., img: ...}
 	property var modelList: []
-	readonly property string currentText: selectedItemText.text
+	readonly property string currentText: selectedItemText.textItem.text
 
 	Text {
 		visible: label.length > 0
-		verticalAlignment: Text.AlignVCenter
-		text: mainItem.label
-		color: DefaultStyle.formItemLabelColor
-		font {
+		textItem.verticalAlignment: Text.AlignVCenter
+		textItem.text: mainItem.label
+		textItem.color: DefaultStyle.formItemLabelColor
+		textItem.font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true
 		}
@@ -42,14 +42,15 @@ ColumnLayout {
 				width: visible ? 20 : 0
 				fillMode: Image.PreserveAspectFit
 				anchors.verticalCenter: parent.verticalCenter
+				anchors.left: parent.left
 				anchors.leftMargin: visible ? 10 : 0
 			}
 
 			Text {
 				id: selectedItemText
-				elide: Text.ElideRight
+				textItem.elide: Text.ElideRight
 				anchors.left: selectedItemImg.right
-				anchors.leftMargin: selectedItemImg.visible ? 15 : 10
+				anchors.leftMargin: selectedItemImg.visible ? 5 : 10
 				anchors.right: parent.right
 				anchors.rightMargin: 20
 				anchors.verticalCenter: parent.verticalCenter
@@ -61,9 +62,9 @@ ColumnLayout {
 					selectedItemImg.source = mainItem.modelList[0].img
 				}
 				if (mainItem.modelList[index].text)
-					selectedItemText.text = mainItem.modelList[0].text
+					selectedItemText.textItem.text = mainItem.modelList[0].text
 				else if (mainItem.modelList[index])
-					selectedItemText.text = mainItem.modelList[0]
+					selectedItemText.textItem.text = mainItem.modelList[0]
 			}
 		}
 
@@ -116,12 +117,12 @@ ColumnLayout {
 					}
 
 					Text {
-						text: modelData.text 
+						textItem.text: modelData.text 
 								? modelData.text 
 								: modelData 
 									? modelData
 									: ""
-						elide: Text.ElideRight
+						textItem.elide: Text.ElideRight
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.left: delegateImg.right
 						anchors.leftMargin: delegateImg.visible ? 5 : 10
@@ -141,7 +142,7 @@ ColumnLayout {
 						}
 						onPressed: {
 							combobox.state = ""
-							selectedItemText.text = modelData.text  
+							selectedItemText.textItem.text = modelData.text  
 														? modelData.text
 														: modelData 
 															? modelData

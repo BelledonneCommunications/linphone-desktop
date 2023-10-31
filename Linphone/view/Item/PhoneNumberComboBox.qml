@@ -12,10 +12,10 @@ ColumnLayout {
 
 	Text {
 		visible: label.length > 0
-		verticalAlignment: Text.AlignVCenter
-		text: mainItem.label
-		color: DefaultStyle.formItemLabelColor
-		font {
+		textItem.verticalAlignment: Text.AlignVCenter
+		textItem.text: mainItem.label
+		textItem.color: DefaultStyle.formItemLabelColor
+		textItem.font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true
 		}
@@ -42,19 +42,19 @@ ColumnLayout {
 			Text {
 				visible: text.length > 0
 				id: selectedItemFlag
-				text: parent.currentItem ? parent.currentItem.flag : ""
-				font.family: DefaultStyle.emojiFont
+				textItem.text: parent.currentItem ? parent.currentItem.flag : ""
+				textItem.font.family: DefaultStyle.emojiFont
 				anchors.rightMargin: 5
 				anchors.verticalCenter: parent.verticalCenter
 			}
 			Text {
-				leftPadding: 5
-				text: parent.currentItem ? "+" + parent.currentItem.countryCallingCode : ""
-				color: DefaultStyle.formItemLabelColor
+				textItem.leftPadding: 5
+				textItem.text: parent.currentItem ? "+" + parent.currentItem.countryCallingCode : ""
+				textItem.color: DefaultStyle.formItemLabelColor
 				anchors.right: parent.right
 				anchors.left: selectedItemFlag.right
 				anchors.verticalCenter: parent.verticalCenter 
-				elide: Text.ElideRight
+				textItem.elide: Text.ElideRight
 			}
 		}
 		
@@ -95,8 +95,8 @@ ColumnLayout {
 					Text {
 						id: delegateImg;
 						visible: text.length > 0
-						text: $modelData.flag
-						font.family: DefaultStyle.emojiFont
+						textItem.text: $modelData.flag
+						textItem.font.family: DefaultStyle.emojiFont
 						anchors.left: parent.left
 						anchors.verticalCenter: parent.verticalCenter 
 						anchors.leftMargin: 15
@@ -104,13 +104,13 @@ ColumnLayout {
 					}
 
 					Text {
-						text: "+" + $modelData.countryCallingCode
-						elide: Text.ElideRight
-						leftPadding: 5
+						textItem.text: "+" + $modelData.countryCallingCode
+						textItem.elide: Text.ElideRight
+						textItem.leftPadding: 5
 						anchors.left: delegateImg.right
 						anchors.right: parent.right
 						anchors.verticalCenter: parent.verticalCenter 
-						color: DefaultStyle.formItemLabelColor
+						textItem.color: DefaultStyle.formItemLabelColor
 					}
 
 					MouseArea {

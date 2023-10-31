@@ -38,10 +38,10 @@ ColumnLayout {
 						}
 					}
 					Text {
-						color: DefaultStyle.grayColor
-						text: "Forgotten password?"
-						font.underline: true
-						font.pointSize: DefaultStyle.defaultTextSize
+						textItem.color: DefaultStyle.grayColor
+						textItem.text: "Forgotten password?"
+						textItem.font.underline: true
+						textItem.font.pointSize: DefaultStyle.defaultTextSize
 					}
 				
 				}
