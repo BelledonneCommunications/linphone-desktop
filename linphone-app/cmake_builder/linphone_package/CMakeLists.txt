@@ -200,7 +200,7 @@ if (WIN32)
 #  endforeach ()
 elseif (APPLE)
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/Info.plist.in" "${CMAKE_CURRENT_BINARY_DIR}/../../Info.plist" @ONLY)
-	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/entitlements.xml.in" "${CMAKE_CURRENT_BINARY_DIR}/../../entitlements.xml" @ONLY)
+	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/entitlements.xml.in" "${CMAKE_BINARY_DIR}/entitlements.xml" @ONLY)
 	configure_file("${CMAKE_CURRENT_SOURCE_DIR}/macos/linphone.icns" "${CMAKE_CURRENT_BINARY_DIR}/../../${EXECUTABLE_NAME}.icns" COPYONLY)
 	set(APP_QT_CONF_PATH "[Paths]\nPlugins = PlugIns\nImports = Resources/qml\nQml2Imports = Resources/qml")
 
