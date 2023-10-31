@@ -12,7 +12,7 @@ Window {
 		RowLayout {
 			ColumnLayout {
 				Text {
-					textItem.text: "Combobox with image"
+					text: "Combobox with image"
 				}
 				ComboBox {
 					modelList: [
@@ -24,7 +24,7 @@ Window {
 			}
 			ColumnLayout {
 				Text {
-					textItem.text: "Combobox without image"
+					text: "Combobox without image"
 				}
 				ComboBox {
 					modelList: [
@@ -63,59 +63,59 @@ Window {
 				Component {
 					ColumnLayout {
 						Text {
-							textItem.text: "item 1"
+							text: "item 1"
 						}
 						Text {
-							textItem.text: "item 1"
+							text: "item 1"
 						}
 					}
 				},
 				Component {
 					RowLayout {
 						Text {
-							textItem.text: "item 2"
+							text: "item 2"
 						}
 						Text {
-							textItem.text: "item 2"
+							text: "item 2"
 						}
 					}
 				},
 				Component {
 					Text {
-						textItem.text: "item 3"
+						text: "item 3"
 					}
 				}, 
 				Component {
 					Text {
-						textItem.text: "item 4"
+						text: "item 4"
 					}
 				}
 			]
 		}
 
 		Text {
-			textItem.text: "default text"
+			text: "default text"
 		}
 		Text {
 			id: testText
 			scaleLettersFactor: 2
-			textItem.text: "scaled text"
+			text: "scaled text"
 		}
 		RowLayout {
 			TextInput {
 				label: "mandatory text input"
-				defaultText: "default text"
+				placeholderText: "default text"
 				mandatory: true
 			}
 			TextInput {
 				label: "password text input"
-				defaultText: "default text"
+				placeholderText: "default text"
 				hidden: true
 			}
 			TextInput {
 				id: next
 				label: "text input with long long looooooooooooooooooooooooooooooooooooooooooooooooooooooooong label"
-				defaultText: "long long long default text"
+				placeholderText: "long long long default text"
 			}
 			TextInput {
 				label: "number text input"
@@ -125,7 +125,7 @@ Window {
 
 		ColumnLayout {
 			Text {
-				textItem.text: "4 digit inputs"
+				text: "4 digit inputs"
 			}
 			RowLayout {
 				Repeater {

@@ -29,12 +29,13 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			textItem.text: {
+			wrapMode: Text.NoWrap
+			text: {
 				var completeString =  (mainItem.email.length > 0) ? "email" : "phone number"
 				text = "Register | Register with your " + completeString
 			}
-			textItem.font.pointSize: DefaultStyle.title2FontPointSize
-			textItem.font.bold: true
+			font.pointSize: DefaultStyle.title2FontPointSize
+			font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -43,13 +44,14 @@ LoginLayout {
 	}
 
 	centerContent: ColumnLayout {
-		Layout.fillWidth: true
-		Layout.fillHeight: true
+		spacing: 2
 		Text {
 			Layout.alignment: Qt.AlignTop
-			textItem.font.bold: true
-			textItem.text: {
-				var completeString = (mainItem.email.length > 0) ? ("email" + mainItem.email) : ("phone number" + mainItem.phoneNumber)
+			font.bold: true
+			font.pointSize: DefaultStyle.defaultFontPointSize
+			color: DefaultStyle.questionTextColor
+			text: {
+				var completeString = (mainItem.email.length > 0) ? ("email " + mainItem.email) : ("phone number " + mainItem.phoneNumber)
 				text = "We have sent a verification code on your " + completeString + " <br>Please enter the verification code below:"
 			}
 		}
@@ -57,28 +59,33 @@ LoginLayout {
 			Layout.fillWidth: true
 			Layout.margins: 10
 			ColumnLayout {
+				spacing: 70
 				RowLayout {
 					Repeater {
 						model: 4
 						DigitInput {
 							required property int index
 							onTextEdited: if (text.length > 0 ) {
-								console.log("next", nextItemInFocusChain(true))
 								if (index < 3)
 									nextItemInFocusChain(true).forceActiveFocus()
 								else {
 									// validate()
 								}
+							} else {
+								if (index > 0)
+									nextItemInFocusChain(false).forceActiveFocus()
 							} 
 							Layout.margins: 10
 						}
 					}
 				}
 				RowLayout {
+					Layout.alignment: Qt.AlignBottom
 					Text {
 						Layout.rightMargin: 15
-						textItem.text: "Didn't receive the code ?"
-						textItem.font.pointSize: DefaultStyle.defaultTextSize
+						text: "Didn't receive the code ?"
+						color: DefaultStyle.questionTextColor
+						font.pointSize: DefaultStyle.defaultTextSize
 					}
 					Button {
 						Layout.alignment: Qt.AlignRight
@@ -99,6 +106,9 @@ LoginLayout {
 				fillMode: Image.PreserveAspectFit
 				source: AppIcons.verif_page_image
 			}
+		}
+		Item {
+			Layout.fillHeight: true
 		}
 	}
 }

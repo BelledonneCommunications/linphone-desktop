@@ -4,7 +4,7 @@ import Linphone
   
 Control.TextField {
 	id: mainItem
-	property int inputSize: 50
+	property int inputSize: 60
 	color: activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
 	rightPadding: inputSize / 4
 	leftPadding: inputSize / 4
@@ -34,6 +34,6 @@ Control.TextField {
 	// 	// anchors.left: parent.left
 	// 	// anchors.bottomMargin: inputSize/8
 	// 	// transform: [/*Translate {x: mainItem.cursorRectangle.height},*/ Rotation {angle: -90}]
-	// 	color: mainItem.activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
+	// 	color:DefaultStyle.digitInputFocusedColor
 	// }
 }

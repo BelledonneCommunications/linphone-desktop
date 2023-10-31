@@ -7,26 +7,33 @@ Control.Button {
 	property int capitalization
 	property bool inversedColors: false
 	property int textSize: DefaultStyle.buttonTextSize
+	property bool boldText: true
 
 	background: Rectangle {
-		color: inversedColors ? DefaultStyle.buttonInversedBackground : DefaultStyle.buttonBackground
+		color: inversedColors 
+				? mainItem.pressed 
+					? DefaultStyle.buttonPressedInversedBackground
+					: DefaultStyle.buttonInversedBackground
+				: mainItem.pressed 
+					? DefaultStyle.buttonPressedBackground
+					: DefaultStyle.buttonBackground
 		radius: 24
 		border.color: inversedColors ? DefaultStyle.buttonBackground : DefaultStyle.buttonInversedBackground
 	}
+
+	leftPadding: 13
+	rightPadding: 13
+	topPadding: 10
+	bottomPadding: 10
 	
 	contentItem: Text {
-		textItem.horizontalAlignment: Text.AlignHCenter
-		textItem.verticalAlignment: Text.AlignVCenter
-		textItem.leftPadding: 11
-		textItem.rightPadding: 11
-		textItem.topPadding: 6
-		textItem.bottomPadding: 6
-
-		textItem.wrapMode: Text.WordWrap
-		textItem.text: mainItem.text
-		textItem.color: inversedColors ? DefaultStyle.buttonInversedTextColor : DefaultStyle.buttonTextColor
-		textItem.font {
-			bold: true
+		horizontalAlignment: Text.AlignHCenter
+		anchors.centerIn: parent
+		wrapMode: Text.WordWrap
+		text: mainItem.text
+		color: inversedColors ? DefaultStyle.buttonInversedTextColor : DefaultStyle.buttonTextColor
+		font {
+			bold: mainItem.boldText
 			pointSize: mainItem.textSize
 			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization

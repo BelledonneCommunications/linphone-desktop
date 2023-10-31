@@ -14,57 +14,67 @@ Item {
 	property alias centerContent : centerLayout.children
 
 	ColumnLayout {
-		anchors.fill: parent
-		Layout.fillHeight: true
+		anchors.rightMargin: 30
+		anchors.leftMargin: 80
+		anchors.top: parent.top
+		anchors.left: parent.left
+		anchors.right: parent.right
+		anchors.bottom: bottomMountains.top
+		spacing: 20
 		ColumnLayout {
-			Layout.rightMargin: 25
-			RowLayout {
-				Layout.fillWidth: true
-				Layout.preferredHeight: 50
-				Layout.topMargin: 20
+			Layout.fillWidth: true
+			Layout.preferredHeight: 50
+			Layout.topMargin: 18
+			Layout.alignment: Qt.AlignRight | Qt.AlignTop
+			Control.Button {
+				Layout.alignment: Qt.AlignRight
 				Layout.bottomMargin: 20
-				Layout.alignment: Qt.AlignRight | Qt.AlignTop
-				Control.Button {
-					background: Rectangle {
-						color: "transparent"
-					}
-					contentItem: Image {
+				background: Rectangle {
+					color: "transparent"
+				}
+				contentItem: RowLayout {
+					Image {
 						fillMode: Image.PreserveAspectFit
 						source: AppIcons.info
 					}
-					onClicked: console.debug("[LoginLayout]User: open about popup")
+					Text {
+						Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+						text: "About"
+						font.pixelSize: 12
+						color: DefaultStyle.aboutButtonTextColor
+					}
 				}
+				onClicked: console.debug("[LoginLayout]User: open about popup")
+			}
+				
+		}
 
-				Text {
-					Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-					textItem.text: "About"
-					textItem.font.pixelSize: 12
-					textItem.color: DefaultStyle.grayColor
-				}
-			}
-			RowLayout {
-				id: titleLayout
-				Layout.leftMargin: 40
-				Layout.bottomMargin: 20
-			}
-			ColumnLayout {
-				id: centerLayout
-				Layout.leftMargin: 40
-				Layout.fillHeight: true
-				Layout.topMargin: 20
-			}
+		RowLayout {
+			id: titleLayout
+			Layout.bottomMargin: 20
+		}
+		ColumnLayout {
+			id: centerLayout
+			Layout.fillHeight: true
 		}
 		
-		RowLayout {
-			Layout.alignment: Qt.AlignBottom
-			Image {
-				Layout.minimumHeight: 80
-				Layout.fillWidth: true
-				source: AppIcons.belledonne
-				fillMode: Image.Stretch
-			}
+	}
 
+	RowLayout {
+		id: bottomMountains
+		// RectangleTest{color: "blue"}
+		// Layout.alignment: Qt.AlignBottom
+		anchors.bottom: parent.bottom
+		anchors.left: parent.left
+		anchors.right: parent.right
+		Image {
+			Layout.minimumHeight: 50
+			Layout.preferredHeight: 80
+			Layout.fillWidth: true
+			source: AppIcons.belledonne
+			fillMode: Image.Stretch
 		}
+
 	}
 } 
  

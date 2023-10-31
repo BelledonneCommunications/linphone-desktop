@@ -9,14 +9,16 @@ ColumnLayout {
 	property int backgroundWidth: 200
 	// Usage : each item of the model list must be {text: ..., img: ...}
 	property var modelList: []
-	readonly property string currentText: selectedItemText.textItem.text
+	readonly property string currentText: selectedItemText.text
+	property bool enableBackgroundColors: true
+	readonly property bool hasActiveFocus: combobox.activeFocus
 
 	Text {
 		visible: label.length > 0
-		textItem.verticalAlignment: Text.AlignVCenter
-		textItem.text: mainItem.label
-		textItem.color: DefaultStyle.formItemLabelColor
-		textItem.font {
+		verticalAlignment: Text.AlignVCenter
+		text: mainItem.label
+		color: combobox.activeFocus ? DefaultStyle.formItemFocusBorderColor : DefaultStyle.formItemLabelColor
+		font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true
 		}
@@ -30,7 +32,8 @@ ColumnLayout {
 			implicitWidth: mainItem.backgroundWidth
 			implicitHeight: 30
 			radius: 15
-			color: DefaultStyle.formItemBackgroundColor
+			color: combobox.enabled ? DefaultStyle.formItemBackgroundColor : DefaultStyle.formItemDisableBackgroundColor
+			border.color: combobox.enabled ? DefaultStyle.formItemBorderColor : DefaultStyle.formItemDisableColor
 		}
 		contentItem: Item {
 			anchors.left: parent.left
@@ -48,7 +51,8 @@ ColumnLayout {
 
 			Text {
 				id: selectedItemText
-				textItem.elide: Text.ElideRight
+				color: combobox.enabled ? DefaultStyle.defaultTextColor : DefaultStyle.formItemDisableColor
+				elide: Text.ElideRight
 				anchors.left: selectedItemImg.right
 				anchors.leftMargin: selectedItemImg.visible ? 5 : 10
 				anchors.right: parent.right
@@ -62,9 +66,9 @@ ColumnLayout {
 					selectedItemImg.source = mainItem.modelList[0].img
 				}
 				if (mainItem.modelList[index].text)
-					selectedItemText.textItem.text = mainItem.modelList[0].text
+					selectedItemText.text = mainItem.modelList[0].text
 				else if (mainItem.modelList[index])
-					selectedItemText.textItem.text = mainItem.modelList[0]
+					selectedItemText.text = mainItem.modelList[0]
 			}
 		}
 
@@ -117,12 +121,12 @@ ColumnLayout {
 					}
 
 					Text {
-						textItem.text: modelData.text 
+						text: modelData.text 
 								? modelData.text 
 								: modelData 
 									? modelData
 									: ""
-						textItem.elide: Text.ElideRight
+						elide: Text.ElideRight
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.left: delegateImg.right
 						anchors.leftMargin: delegateImg.visible ? 5 : 10
@@ -142,7 +146,7 @@ ColumnLayout {
 						}
 						onPressed: {
 							combobox.state = ""
-							selectedItemText.textItem.text = modelData.text  
+							selectedItemText.text = modelData.text  
 														? modelData.text
 														: modelData 
 															? modelData

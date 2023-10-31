@@ -28,9 +28,9 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			textItem.text: "Use a SIP Account"
-			textItem.font.pointSize: DefaultStyle.title2FontPointSize
-			textItem.font.bold: true
+			text: "Use a SIP Account"
+			font.pointSize: DefaultStyle.title2FontPointSize
+			font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -38,8 +38,8 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15
-			textItem.text: "No account yet ?"
-			textItem.font.pointSize: DefaultStyle.defaultTextSize
+			text: "No account yet ?"
+			font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
@@ -51,129 +51,140 @@ LoginLayout {
 			}
 		}
 	}
+	
+	centerContent: ColumnLayout {
+		signal useSIPButtonClicked()
+		RowLayout {
+			
+			ColumnLayout {
+				Layout.preferredWidth: 330
+				Layout.maximumWidth: 340
+				Control.StackView {
+					id: rootStackView
+					initialItem: firstItem
+					Layout.preferredWidth: parent.width
+					Layout.preferredHeight: parent.height
 
-	centerContent: RowLayout {
-		Layout.alignment: Qt.AlignBottom
-		ColumnLayout {
-			Layout.fillHeight: true
-			Layout.fillWidth: true
-			clip: true
-
-			Control.StackView {
-				id: rootStackView
-				initialItem: firstItem
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-
-				Component {
-					id: firstItem
-					ColumnLayout {
-
-						Text {
-							Layout.preferredWidth: 361
-							Layout.fillWidth: true
-							textItem.wrapMode: Text.WordWrap
-							textItem.color: DefaultStyle.darkGrayColor
-							textItem.font.pointSize: DefaultStyle.defaultTextSize
-							textItem.text: "<p>Some features require a Linphone account, such as group messaging, video conferences...</p> 
-							<p>These features are hidden when you register with a third party SIP account.</p>
-							<p>To enable it in a commercial projet, please contact us. </p>"
-						}
-
-						Button {
-							text: 'linphone.org/contact'
-							textSize: 8
-							inversedColors: true
-							onClicked: {
-								Qt.openUrlExternally(ConstantsCpp.ContactUrl)
-							}
-						}
-						Item {
+					Component {
+						id: firstItem
+						ColumnLayout {
+							Layout.alignment: Qt.AlignTop
 							Layout.fillHeight: true
-						}
+							Layout.maximumWidth: rootStackView.width
+							clip: true
 
-						Button {
-							Layout.fillWidth: true
-							text: 'I prefere create an account'
-							inversedColors: true
-							onClicked: {
-								console.debug("[LoginItem] User: click register")
-								mainItem.goToRegister()
+							ColumnLayout {
+								Text {
+									Layout.preferredWidth: rootStackView.width
+									width: rootStackView.width
+
+									wrapMode: Text.WordWrap
+									color: DefaultStyle.darkGrayColor
+									font.pointSize: DefaultStyle.defaultTextSize
+									text: "<p>Some features require a Linphone account, such as group messaging, video conferences...</p> 
+									<p>These features are hidden when you register with a third party SIP account.</p>
+									<p>To enable it in a commercial projet, please contact us. </p>"
+								}
+								Button {
+									text: "linphone.org/contact"
+									textSize: 8
+									inversedColors: true
+									onClicked: {
+										Qt.openUrlExternally(ConstantsCpp.ContactUrl)
+									}
+								}
 							}
-						}
 
-						Button {
-							Layout.fillWidth: true
-							Layout.bottomMargin: 40
-							text: 'I understand'
-							onClicked: {
-								rootStackView.replace(secondItem)
+							ColumnLayout {
+								spacing: 10
+								Layout.bottomMargin: 20
+								Button {
+									Layout.fillWidth: true
+									inversedColors: true
+									text: "I prefer creating an account"
+									onClicked: {
+										console.debug("[LoginItem] User: click register")
+										mainItem.goToRegister()
+									}
+								}
+								Button {
+									Layout.fillWidth: true
+									text: "I understand"
+									onClicked: {
+										rootStackView.replace(secondItem)
+									}
+								}
 							}
 						}
 					}
-
-				}
-				Component {
-					id: secondItem
-					ColumnLayout {
-						TextInput {
-							id: username
-							label: "Username"
-							mandatory: true
-							textInputWidth: 250
-						}
-						TextInput {
-							id: password
-							label: "Password"
-							mandatory: true
-							hidden: true
-							textInputWidth: 250
-						}
-						TextInput {
-							id: domain
-							label: "Domain"
-							mandatory: true
-							textInputWidth: 250
-						}
-						TextInput {
-							id: displayName
-							label: "Display Name"
-							textInputWidth: 250
-						}
-						ComboBox {
-							label: "Transport"
-							backgroundWidth: 250
-							modelList:[
-								{text:"TCP"},
-								{text:"UDP"},
-								{text:"TLS"}
-							]
-						}
-
-						Button {
-							Layout.bottomMargin: 20
-
-							text: 'Log in'
-							onClicked: {
-								console.debug("[SIPLoginPage] User: Log in")
-								LoginPageCpp.login(username.inputText, password.inputText);
+					Component {
+						id: secondItem
+						ColumnLayout {
+							spacing: 10
+							TextInput {
+								id: username
+								label: "Username"
+								mandatory: true
+								textInputWidth: 250
 							}
-						}
-						Item {
-							Layout.fillHeight: true
+							TextInput {
+								id: password
+								label: "Password"
+								mandatory: true
+								hidden: true
+								textInputWidth: 250
+							}
+							TextInput {
+								id: domain
+								label: "Domain"
+								mandatory: true
+								textInputWidth: 250
+							}
+							TextInput {
+								id: displayName
+								label: "Display Name"
+								textInputWidth: 250
+							}
+							ComboBox {
+								label: "Transport"
+								backgroundWidth: 250
+								modelList:[
+									{text:"TCP"},
+									{text:"UDP"},
+									{text:"TLS"}
+								]
+							}
+
+							Button {
+								Layout.topMargin: 20
+								Layout.bottomMargin: 20
+
+								text: "Log in"
+								onClicked: {
+									console.debug("[SIPLoginPage] User: Log in")
+									LoginPageCpp.login(username.inputText, password.inputText);
+								}
+							}
+							Item {
+								Layout.fillHeight: true
+							}
 						}
 					}
 				}
 			}
+			Item {
+				Layout.fillWidth: true
+			}
+			Image {
+				Layout.alignment: Qt.AlignBottom
+				Layout.rightMargin: 40
+				Layout.preferredWidth: 300
+				fillMode: Image.PreserveAspectFit
+				source: AppIcons.loginImage
+			}
 		}
 		Item {
-			Layout.fillWidth: true
-		}
-		Image {
-			Layout.rightMargin: 40
-			Layout.preferredWidth: 300
-			fillMode: Image.PreserveAspectFit
-			source: AppIcons.loginImage
+			Layout.fillHeight: true
 		}
 	}
 }

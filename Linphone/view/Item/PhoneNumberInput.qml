@@ -7,7 +7,8 @@ ColumnLayout {
 	id: mainItem
 
 	property string label: ""
-	property string defaultText : ""
+	property string errorMessage: ""
+	property string placeholderText : ""
 	property bool mandatory: false
 	property int textInputWidth: 200
 	readonly property string phoneNumber: textField.inputText
@@ -15,10 +16,10 @@ ColumnLayout {
 
 	Text {
 		visible: label.length > 0
-		textItem.verticalAlignment: Text.AlignVCenter
-		textItem.text: mainItem.label + (mainItem.mandatory ? "*" : "")
-		textItem.color: DefaultStyle.formItemLabelColor
-		textItem.font {
+		verticalAlignment: Text.AlignVCenter
+		text: mainItem.label + (mainItem.mandatory ? "*" : "")
+		color: (combobox.hasActiveFocus || textField.hasActiveFocus) ? DefaultStyle.formItemFocusBorderColor : DefaultStyle.formItemLabelColor
+		font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true
 		}
@@ -29,6 +30,11 @@ ColumnLayout {
 		implicitHeight: 30
 		radius: 20
 		color: DefaultStyle.formItemBackgroundColor
+		border.color: mainItem.errorMessage.length > 0 
+						? DefaultStyle.errorMessageColor 
+						: (textField.hasActiveFocus || combobox.hasActiveFocus)
+							? DefaultStyle.formItemFocusBorderColor
+							: DefaultStyle.formItemBorderColor
 		RowLayout {
 			anchors.fill: parent
 			PhoneNumberComboBox {
@@ -45,11 +51,27 @@ ColumnLayout {
 			TextInput {
 				id: textField
 				Layout.fillWidth: true
-				defaultText: mainItem.defaultText
-				inputMethodHints: Qt.ImhDigitsOnly
+				placeholderText: mainItem.placeholderText
+				enableBackgroundColors: false
 				fillWidth: true
 				validator: IntValidator{}
 			}
 		}
-	}	
+	}
+	
+	Text {
+		visible: mainItem.errorMessage.length > 0
+		verticalAlignment: Text.AlignVCenter
+		text: mainItem.errorMessage
+		color: DefaultStyle.errorMessageColor
+		elide: Text.ElideRight
+		wrapMode: Text.Wrap
+		// maximumLineCount: 1
+		font {
+			pointSize: DefaultStyle.defaultTextSize
+			family: DefaultStyle.defaultFont
+			bold: true
+		}
+		Layout.preferredWidth: mainItem.textInputWidth
+	}
 }

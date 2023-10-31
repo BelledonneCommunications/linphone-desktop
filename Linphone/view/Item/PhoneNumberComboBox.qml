@@ -9,13 +9,14 @@ ColumnLayout {
 	property int backgroundWidth: 100
 	readonly property string currentText: combobox.model.getAt(combobox.currentIndex) ? combobox.model.getAt(combobox.currentIndex).countryCallingCode : ""
 	property string defaultCallingCode: ""
+	property bool enableBackgroundColors: false
 
 	Text {
-		visible: label.length > 0
-		textItem.verticalAlignment: Text.AlignVCenter
-		textItem.text: mainItem.label
-		textItem.color: DefaultStyle.formItemLabelColor
-		textItem.font {
+		visible: mainItem.label.length > 0
+		verticalAlignment: Text.AlignVCenter
+		text: mainItem.label
+		color: combobox.activeFocus ? DefaultStyle.formItemFocusBorderColor : DefaultStyle.formItemLabelColor
+		font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true
 		}
@@ -33,28 +34,35 @@ ColumnLayout {
 			implicitWidth: mainItem.backgroundWidth
 			implicitHeight: 30
 			radius: 15
-			color: DefaultStyle.formItemBackgroundColor
+			color: mainItem.enableBackgroundColor ? DefaultStyle.formItemBackgroundColor : "transparent"
+			border.color: mainItem.enableBackgroundColors 
+						? (mainItem.errorMessage.length > 0 
+							? DefaultStyle.errorMessageColor 
+							: textField.activeFocus
+								? DefaultStyle.formItemFocusBorderColor
+								: DefaultStyle.formItemBorderColor)
+						: "transparent"
 		}
 		contentItem: Item {
 			anchors.fill: parent
 			readonly property var currentItem: combobox.model.getAt(combobox.currentIndex)
 			anchors.leftMargin: 15
 			Text {
-				visible: text.length > 0
 				id: selectedItemFlag
-				textItem.text: parent.currentItem ? parent.currentItem.flag : ""
-				textItem.font.family: DefaultStyle.emojiFont
+				visible: text.length > 0
+				text: parent.currentItem ? parent.currentItem.flag : ""
+				font.family: DefaultStyle.emojiFont
 				anchors.rightMargin: 5
 				anchors.verticalCenter: parent.verticalCenter
 			}
 			Text {
-				textItem.leftPadding: 5
-				textItem.text: parent.currentItem ? "+" + parent.currentItem.countryCallingCode : ""
-				textItem.color: DefaultStyle.formItemLabelColor
+				leftPadding: 5
+				text: parent.currentItem ? "+" + parent.currentItem.countryCallingCode : ""
+				color: DefaultStyle.formItemLabelColor
 				anchors.right: parent.right
 				anchors.left: selectedItemFlag.right
 				anchors.verticalCenter: parent.verticalCenter 
-				textItem.elide: Text.ElideRight
+				elide: Text.ElideRight
 			}
 		}
 		
@@ -95,8 +103,8 @@ ColumnLayout {
 					Text {
 						id: delegateImg;
 						visible: text.length > 0
-						textItem.text: $modelData.flag
-						textItem.font.family: DefaultStyle.emojiFont
+						text: $modelData.flag
+						font.family: DefaultStyle.emojiFont
 						anchors.left: parent.left
 						anchors.verticalCenter: parent.verticalCenter 
 						anchors.leftMargin: 15
@@ -104,13 +112,13 @@ ColumnLayout {
 					}
 
 					Text {
-						textItem.text: "+" + $modelData.countryCallingCode
-						textItem.elide: Text.ElideRight
-						textItem.leftPadding: 5
+						text: "+" + $modelData.countryCallingCode
+						elide: Text.ElideRight
+						leftPadding: 5
 						anchors.left: delegateImg.right
 						anchors.right: parent.right
 						anchors.verticalCenter: parent.verticalCenter 
-						textItem.color: DefaultStyle.formItemLabelColor
+						color: DefaultStyle.formItemLabelColor
 					}
 
 					MouseArea {

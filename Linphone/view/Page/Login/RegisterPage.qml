@@ -6,7 +6,7 @@ import Linphone
 LoginLayout {
 	id: mainItem
 	signal returnToLogin()
-	signal registerCalled()
+	signal registerCalled(countryCode: string, phoneNumber: string, email: string)
 	readonly property string countryCode: phoneNumberInput.countryCode
 	readonly property string phoneNumber: phoneNumberInput.phoneNumber
 	readonly property string email: emailInput.inputText
@@ -17,9 +17,11 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			textItem.text: "Register"
-			textItem.font.pointSize: DefaultStyle.title2FontPointSize
-			textItem.font.bold: true
+			Layout.preferredWidth: width
+			text: "Register"
+			font.pointSize: DefaultStyle.title2FontPointSize
+			font.bold: true
+			wrapMode: Text.NoWrap
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -27,11 +29,12 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15
-			textItem.text: "Already have an account ?"
-			textItem.font.pointSize: DefaultStyle.defaultTextSize
+			color: DefaultStyle.questionTextColor
+			text: "Already have an account ?"
+			font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
-			Layout.alignment: Qt.AlignRight
+			// Layout.alignment: Qt.AlignRight
 			inversedColors: true
 			text: "Log in"
 			onClicked: {
@@ -53,6 +56,7 @@ LoginLayout {
 				ColumnLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					spacing: 15
 					RowLayout {
 						TextInput {
 							label: "Username"
@@ -61,6 +65,7 @@ LoginLayout {
 						}
 						ComboBox {
 							label: " "
+							enabled: false
 							modelList: [{text:"@sip.linphone.org"}]
 						}
 					}
@@ -68,42 +73,59 @@ LoginLayout {
 						id: phoneNumberInput
 						label: "Phone number"
 						mandatory: true
-						defaultText: "Phone number"
+						placeholderText: "Phone number"
 						textInputWidth: 250
 					}
 					RowLayout {
-						TextInput {
-							label: "Password"
-							mandatory: true
-							hidden: true
-							textInputWidth: 250
+						ColumnLayout {
+							TextInput {
+								label: "Password"
+								mandatory: true
+								hidden: true
+								textInputWidth: 250
+							}
+							Text {
+								text: "The password must contain 6 characters minimum"
+								font {
+									pointSize: DefaultStyle.defaultTextSize
+								}
+							}
 						}
-						TextInput {
-							label: "Confirm password"
-							mandatory: true
-							hidden: true
-							textInputWidth: 250
+						ColumnLayout {
+							TextInput {
+								label: "Confirm password"
+								mandatory: true
+								hidden: true
+								textInputWidth: 250
+							}
+							Text {
+								text: "The password must contain 6 characters minimum"
+								font {
+									pointSize: DefaultStyle.defaultTextSize
+								}
+							}
 						}
 					}
 					RowLayout {
 						CheckBox {
 						}
 						Text {
-							textItem.text: "I would like to suscribe to the newsletter"
+							text: "I would like to suscribe to the newsletter"
 						}
 					}
 					RowLayout {
 						CheckBox {
 						}
 						Text {
-							textItem.text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
+							Layout.preferredWidth: 450
+							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
 						}
 					}
 					Button {
 						text: "Register"
 						onClicked:{
-							console.log("[RegisterPage] User: Call register")
-							mainItem.registerCalled()
+							console.log("[RegisterPage] User: Call register with phone number", phoneNumberInput.phoneNumber)
+							mainItem.registerCalled(phoneNumberInput.countryCode, phoneNumberInput.phoneNumber, "")
 						}
 					}
 				}
@@ -121,6 +143,7 @@ LoginLayout {
 				ColumnLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					spacing: 15
 					RowLayout {
 						TextInput {
 							label: "Username"
@@ -131,6 +154,7 @@ LoginLayout {
 							// if we don't set a label this item is offset
 							// due to the invisibility of the upper label
 							label: " "
+							enabled: false
 							modelList: [{text:"@sip.linphone.org"}]
 						}
 					}
@@ -141,39 +165,62 @@ LoginLayout {
 						textInputWidth: 250
 					}
 					RowLayout {
-						TextInput {
-							label: "Password"
-							mandatory: true
-							hidden: true
-							textInputWidth: 250
+						ColumnLayout {
+							TextInput {
+								id: pwdInput
+								label: "Password"
+								mandatory: true
+								hidden: true
+								textInputWidth: 250
+							}
+							Text {
+								text: "The password must contain 6 characters minimum"
+								font {
+									pointSize: DefaultStyle.defaultTextSize
+								}
+							}
 						}
-						TextInput {
-							label: "Confirm password"
-							mandatory: true
-							hidden: true
-							textInputWidth: 250
+						ColumnLayout {
+							TextInput {
+								id: confirmPwdInput
+								label: "Confirm password"
+								mandatory: true
+								hidden: true
+								textInputWidth: 250
+							}
+							Text {
+								text: "The password must contain 6 characters minimum"
+								font {
+									pointSize: DefaultStyle.defaultTextSize
+								}
+							}
 						}
 					}
 					RowLayout {
 						CheckBox {
 						}
 						Text {
-							textItem.text: "I would like to suscribe to the newsletter"
+							text: "I would like to suscribe to the newsletter"
 						}
 					}
 					RowLayout {
 						CheckBox {
 						}
 						Text {
-							textItem.text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
+							Layout.preferredWidth: 450
+							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
 						}
 					}
 					Button {
 						text: "Register"
 						onClicked:{
-							console.log("[RegisterPage] User: Call register")
-							mainItem.registerCalled()
+							console.log("[RegisterPage] User: Call register with email", emailInput.inputText)
+							if (emailInput.inputText.length == 0) {
+								emailInput.errorMessage = "You must enter an email"
+								return
 							}
+							mainItem.registerCalled("", "", emailInput.inputText)
+						}
 					}
 				}
 				Item {

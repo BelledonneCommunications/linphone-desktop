@@ -13,10 +13,10 @@ Control.ToolTip {
 		radius: 15
 	}
 	contentItem: Text {
-		textItem.text: mainItem.text
-		textItem.color: DefaultStyle.defaultTextColor
-		textItem.width: tooltipBackground.width
-		textItem.wrapMode: Text.Wrap
-		textItem.elide: Text.ElideRight
+		text: mainItem.text
+		color: DefaultStyle.defaultTextColor
+		width: tooltipBackground.width
+		wrapMode: Text.Wrap
+		elide: Text.ElideRight
 	}
 }

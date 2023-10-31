@@ -4,67 +4,44 @@ import QtQuick.Controls as Control
 import Linphone
 
 ColumnLayout {
-	id: mainItem
-	Layout.alignment: Qt.AlignBottom
-	signal useSIPButtonClicked()
+	spacing: 15
+	TextInput {
+		id: username
+		label: "Username"
+		mandatory: true
+		textInputWidth: 250
+	}
+	TextInput {
+		id: password
+		label: "Password"
+		mandatory: true
+		hidden: true
+		textInputWidth: 250
+	}
+
 	RowLayout {
-		ColumnLayout {
-			Layout.fillHeight: true
-			Layout.fillWidth: true
-			clip: true
-
-			ColumnLayout {
-				TextInput {
-					id: username
-					label: "Username"
-					mandatory: true
-					textInputWidth: 250
-				}
-				TextInput {
-					id: password
-					label: "Password"
-					mandatory: true
-					hidden: true
-					textInputWidth: 250
-				}
-
-				RowLayout {
-					id: lastFormLineLayout
-					Button {
-						text: 'Log in'
-						Layout.rightMargin: 20
-						onClicked: {
-							LoginPageCpp.login(username.inputText, password.inputText);
-						}
-					}
-					Text {
-						textItem.color: DefaultStyle.grayColor
-						textItem.text: "Forgotten password?"
-						textItem.font.underline: true
-						textItem.font.pointSize: DefaultStyle.defaultTextSize
-					}
-				
-				}
-
-				Button {
-					Layout.topMargin: 40
-					inversedColors: true
-					text: "Use SIP Account"
-					onClicked: {mainItem.useSIPButtonClicked()}
-				}
+		id: lastFormLineLayout
+		Button {
+			text: 'Log in'
+			Layout.rightMargin: 20
+			onClicked: {
+				LoginPageCpp.login(username.inputText, password.inputText);
 			}
 		}
-		Item {
-			Layout.fillWidth: true
+		Button {
+			background: Item {
+				visible: false
+			}
+			contentItem: Text {
+				color: DefaultStyle.grayColor
+				text: "Forgotten password?"
+				font{
+					underline: true
+					pointSize: DefaultStyle.defaultTextSize
+				}
+			}
+			onClicked: console.debug("[LoginForm]User: forgotten password button clicked")
 		}
-		Image {
-			Layout.rightMargin: 40
-			Layout.preferredWidth: 300
-			fillMode: Image.PreserveAspectFit
-			source: AppIcons.loginImage
-		}
-	}
-	Item {
-		Layout.fillHeight: true
+	
 	}
 }

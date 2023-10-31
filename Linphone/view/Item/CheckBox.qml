@@ -17,9 +17,9 @@ Control.CheckBox {
 
 		Text {
 			visible: mainItem.checked
-			textItem.text: "\u2714"
-			textItem.font.pointSize: 18
-			textItem.color: DefaultStyle.checkboxBorderColor
+			text: "\u2714"
+			font.pointSize: 18
+			color: DefaultStyle.checkboxBorderColor
 			anchors.centerIn: parent
 		}
 	}

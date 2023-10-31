@@ -6,8 +6,8 @@ import Linphone
 
 Window {
 	id: mainWindow
-	width: 960
-	height: 600
+	width: 1025
+	height: 641
 	visible: true
 	title: qsTr("Linphone")
 	
@@ -42,7 +42,9 @@ Window {
 		id: registerPage
 		RegisterPage {
 			onReturnToLogin: mainWindowStackView.replace(loginPage)
-			onRegisterCalled: mainWindowStackView.push(checkingPage)
+			onRegisterCalled: (countryCode, phoneNumber, email) => {
+				mainWindowStackView.push(checkingPage, {"phoneNumber": phoneNumber, "email": email})
+			}
 		}
 	}
 	Component {

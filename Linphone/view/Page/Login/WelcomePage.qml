@@ -11,39 +11,34 @@ LoginLayout {
 	titleContent: RowLayout {
 		Text {
 			id: welcome
-			textItem.text: "Welcome"
-			textItem.color: DefaultStyle.titleColor
-			textItem.font.pointSize: DefaultStyle.title1FontPointSize
-			textItem.font.bold: true
+			text: "Welcome"
+			color: DefaultStyle.titleColor
+			font.pointSize: DefaultStyle.title1FontPointSize
+			font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Text {
 			Layout.alignment: Qt.AlignBottom
 			Layout.leftMargin: 10
 			Layout.bottomMargin: 5
-			textItem.color: DefaultStyle.titleColor
-			textItem.text: "in Linphone"
-			textItem.font.pointSize: 18
-			textItem.font.bold: true
+			color: DefaultStyle.titleColor
+			text: "in Linphone"
+			font.pointSize: DefaultStyle.title2FontPointSize
+			font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
 			Layout.fillWidth: true
 		}
-		Control.Button {
-			leftPadding: 13
-			rightPadding: 13
-			topPadding: 20
-			bottomPadding: 20
+		Button {
+			visible: carousel.currentIndex < (carousel.itemsCount - 1)
 			flat: true
-			checkable: false
-			background: Rectangle {
-				color: "transparent"
-				radius: 48
+			background: Item {
+				visible: false
 			}
 			contentItem: Text {
-				textItem.text: "Skip"
-				textItem.font.underline: true
+				text: "Skip"
+				font.underline: true
 			}
 			onClicked: {
 				console.debug("[LoginItem] User: Click skip")
@@ -71,22 +66,23 @@ LoginLayout {
 					model: [
 						{title: "Linphone", text: "Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>."},
 						{title: "Sécurisé", text: "Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>."},
-						{title: "Open Source", text: "Une application open source et un <b>service gratuit</b> depuis <b>2001</b>"},
+						{title: "Open Source", text: "Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>"},
 						]
 					Item {
 						ColumnLayout {
 							anchors.verticalCenter: parent.verticalCenter
+							spacing: 15
 							Text {
-								textItem.text: modelData.title
-								textItem.font.bold: true
-								textItem.font.pixelSize: 20
+								text: modelData.title
+								font.bold: true
+								font.pixelSize: 20
 								scaleLettersFactor: 1.1
 							}
 							Text {
 								Layout.maximumWidth: 361
-								textItem.wrapMode: Text.WordWrap
-								textItem.font.pixelSize: 11
-								textItem.text: modelData.text
+								wrapMode: Text.WordWrap
+								font.pixelSize: 11
+								text: modelData.text
 							}
 						}
 					}

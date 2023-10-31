@@ -1,4 +1,4 @@
-import QtQuick 2.7 as QT
+import QtQuick 2.7 as Quick
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as Control
 import Linphone
@@ -11,11 +11,11 @@ Control.TabBar {
 							: 0
 	spacing: 40
 	wheelEnabled: true
-	background: QT.Item {
+	background: Quick.Item {
 		id: tabBarBackground
 		anchors.fill: parent
 
-		QT.Rectangle {
+		Quick.Rectangle {
 			id: barBG
 			height: 4
 			color: DefaultStyle.lightGrayColor
@@ -23,7 +23,7 @@ Control.TabBar {
 			width: parent.width
 		}
 
-		// QT.Rectangle {
+		// Quick.Rectangle {
 		// 	height: 4
 		// 	color: DefaultStyle.orangeColor
 		// 	anchors.bottom: parent.bottom
@@ -34,17 +34,18 @@ Control.TabBar {
 		// 		: 0
 		// 	width: mainItem.currentItem ? mainItem.currentItem.width : 0
 		// 	// clip: true
-		// 	QT.Behavior on x { QT.NumberAnimation {duration: 100}}
-		// 	QT.Behavior on width {QT.NumberAnimation {duration: 100}}
+		// 	Quick.Behavior on x { Quick.NumberAnimation {duration: 100}}
+		// 	Quick.Behavior on width {Quick.NumberAnimation {duration: 100}}
 		// }
 	}
 
-	QT.Repeater {
+	Quick.Repeater {
 		model: mainItem.model
 		Control.TabButton {
 			required property string modelData
 			required property int index
-			width: Math.min(txtMeter.advanceWidth, Math.max(50, mainItem.width - (x - mainItem.x)))
+			// width: Math.min(txtMeter.advanceWidth, Math.max(50, mainItem.width - (x - mainItem.x)))
+			width: txtMeter.advanceWidth
 			hoverEnabled: true
 			ToolTip {
 				visible: tabText.truncated && hovered
@@ -52,10 +53,10 @@ Control.TabBar {
 				text: modelData
 			}
 
-			background: QT.Item {
+			background: Quick.Item {
 				anchors.fill: parent
 
-				QT.Rectangle {
+				Quick.Rectangle {
 					visible: mainItem.currentIndex === index
 					height: 4
 					color: DefaultStyle.orangeColor
@@ -65,21 +66,21 @@ Control.TabBar {
 				}
 			}
 
-			contentItem: QT.Text {
+			contentItem: Quick.Text {
 				id: tabText
 				anchors.fill: parent
 				font.bold: true
-				color: DefaultStyle.defaultTextColor
+				color: mainItem.currentIndex === index ? DefaultStyle.defaultTextColor : DefaultStyle.disableTextColor
 				font.family: DefaultStyle.defaultFont
 				font.pointSize: DefaultStyle.tabButtonTextSize
-				elide: QT.Text.ElideRight
+				elide: Quick.Text.ElideRight
 				maximumLineCount: 1
 				text: txtMeter.elidedText
 				// width: Math.min(txtMeter.advanceWidth, Math.max(50, mainItem.width - (x - mainItem.x)))
 				bottomPadding: 5
 			}
 
-			QT.TextMetrics {
+			Quick.TextMetrics {
 				id: txtMeter
 				font: tabText.font
 				text: modelData

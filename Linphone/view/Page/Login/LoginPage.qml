@@ -14,9 +14,9 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			textItem.text: "Login"
-			textItem.font.pointSize: DefaultStyle.title2FontPointSize
-			textItem.font.bold: true
+			text: "Login"
+			font.pointSize: DefaultStyle.title2FontPointSize
+			font.bold: true
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -24,8 +24,8 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15
-			textItem.text: "No account yet ?"
-			textItem.font.pointSize: DefaultStyle.defaultTextSize
+			text: "No account yet ?"
+			font.pointSize: DefaultStyle.defaultTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
@@ -38,8 +38,37 @@ LoginLayout {
 		}
 	}
 
-	centerContent: LoginForm {
-		onUseSIPButtonClicked: mainItem.useSIPButtonClicked()
+	centerContent: ColumnLayout {
+		signal useSIPButtonClicked()
+		RowLayout {
+			ColumnLayout {
+				Layout.fillHeight: true
+				Layout.fillWidth: true
+				clip: true
+				spacing: 15
+
+				LoginForm{}
+
+				Button {
+					Layout.topMargin: 40
+					inversedColors: true
+					text: "Use SIP Account"
+					onClicked: {mainItem.useSIPButtonClicked()}
+				}
+			}
+			Item {
+				Layout.fillWidth: true
+			}
+			Image {
+				Layout.rightMargin: 40
+				Layout.preferredWidth: 300
+				fillMode: Image.PreserveAspectFit
+				source: AppIcons.loginImage
+			}
+		}
+		Item {
+			Layout.fillHeight: true
+		}
 	}
 }
  
