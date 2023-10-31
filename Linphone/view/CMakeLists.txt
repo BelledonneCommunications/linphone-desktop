@@ -28,6 +28,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 
 	view/Item/Test/ItemsTest.qml
 
+	view/Page/Login/ChooseModePage.qml
 	view/Page/Login/LoginPage.qml
 	view/Page/Login/RegisterPage.qml
 	view/Page/Login/RegisterCheckingPage.qml
