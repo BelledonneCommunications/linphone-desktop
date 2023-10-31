@@ -68,6 +68,7 @@ SettingsModel::SettingsModel (QObject *parent) : QObject(parent) {
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &SettingsModel::groupChatEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &SettingsModel::videoConferenceEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &SettingsModel::secureChatEnabledChanged);
+	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, this, &SettingsModel::onDefaultAccountChanged);
 	
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::groupChatEnabledChanged);
 	connect(coreManager->getAccountSettingsModel(), &AccountSettingsModel::accountSettingsUpdated, this, &SettingsModel::videoConferenceEnabledChanged);
@@ -2014,4 +2015,8 @@ bool SettingsModel::isReadOnly(const std::string& section, const std::string& na
 
 std::string SettingsModel::getEntryFullName(const std::string& section, const std::string& name) const {
 	return isReadOnly(section, name)?name+"/readonly" : name;
+}
+
+void SettingsModel::onDefaultAccountChanged(){
+	mConfig->setInt("misc", "hide_chat_rooms_from_removed_proxies", CoreManager::getInstance()->getCore()->getDefaultAccount() != nullptr);
 }

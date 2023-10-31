@@ -671,11 +671,14 @@ QString Utils::computeUserAgent(const std::shared_ptr<linphone::Config>& config)
 }
 
 bool Utils::isMe(const QString& address){
-	return !address.isEmpty() ? CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(Utils::interpretUrl(address)) : false;
+	return !address.isEmpty() ? isMe(Utils::interpretUrl(address)) : false;
 }
 
 bool Utils::isMe(const std::shared_ptr<const linphone::Address>& address){
-	return address ? CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(address) : false;
+    if( !CoreManager::getInstance()->getCore()->getDefaultAccount()){// Default account is selected : Me is all local accounts.
+        return CoreManager::getInstance()->getAccountSettingsModel()->findAccount(address) != nullptr;
+    }else
+        return address ? CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(address) : false;
 }
 
 bool Utils::isAnimatedImage(const QString& path){

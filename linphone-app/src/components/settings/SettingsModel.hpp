@@ -703,6 +703,8 @@ public:
 	bool isReadOnly(const std::string& section, const std::string& name) const;
 	std::string getEntryFullName(const std::string& section, const std::string& name) const;	// Return the full name of the entry : 'name/readonly' or 'name'
 	
+	void onDefaultAccountChanged();
+	
 	static const std::string UiSection;
 	static const std::string ContactsSection;
 	

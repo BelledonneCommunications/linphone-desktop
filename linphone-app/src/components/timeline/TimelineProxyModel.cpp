@@ -142,7 +142,7 @@ bool TimelineProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &sou
 			//|| timeline->getChatRoomModel()->getFullPeerAddress().contains(search); not enough significant?
 	}
 	if(show)
-		show = timeline->getChatRoomModel()->isCurrentAccount();
+		show = !CoreManager::getInstance()->getCore()->getDefaultAccount() || timeline->getChatRoomModel()->isCurrentAccount();
 	return show;
 }
 
