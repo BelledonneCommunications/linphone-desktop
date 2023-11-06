@@ -144,6 +144,8 @@ public:
 	static constexpr char PathLimeDatabase[] = "/x3dh.c25519.sqlite3";
 	static constexpr char PathMessageHistoryList[] = "/message-history.db";
 	static constexpr char PathZrtpSecrets[] = "/zidcache";
+	static constexpr char PathISpellDicts[] = "/" EXECUTABLE_NAME "/ispell_dictionaries/";
+	static constexpr char PathISpellOwnDict[] = "/" EXECUTABLE_NAME "/ispell_own_dict";
 	
 	static constexpr char LanguagePath[] = ":/languages/";
 	

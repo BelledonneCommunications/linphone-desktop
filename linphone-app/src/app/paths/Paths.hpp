@@ -55,7 +55,9 @@ namespace Paths {
 	std::string getUserCertificatesDirPath ();
 	std::string getZrtpDataFilePath ();
 	std::string getZrtpSecretsFilePath ();
-	
+	QString getISpellDictsDirPath ();
+	std::string getISpellOwnDictsDirPath ();
+
 	void migrate ();
 }
 

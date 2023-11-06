@@ -23,6 +23,9 @@
 #include <QTimer>
 #include <QAbstractTextDocumentLayout>
 #include <QTextEdit>
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
+
 #ifdef WIN32
 #include <spellcheck.h>
 #endif
@@ -32,15 +35,25 @@ SpellChecker::SpellChecker(QObject *parent) : QSyntaxHighlighter(parent) {
 	errorFormater.setFontUnderline(true);
 	errorFormater.setUnderlineColor(Qt::red); // not supported before Qt6.2
 	
-	QFontMetrics fm = QFontMetrics(QApplication::font());
+	QFontMetrics fm = QFontMetrics(CoreManager::getInstance()->getSettingsModel()->getTextMessageFont());
+#ifdef __linux__
+	wave = QString("‾");
+	QRect boundingRect = fm.boundingRect(wave);
+	waveHeight = 10;
+	waveTopPadding = 5;
+#else
 	wave = QString(u8"\uFE4B");
 	QRect boundingRect = fm.boundingRect(wave);
+	waveHeight = 5;
+	waveTopPadding = 3;
+#endif
 	waveWidth = boundingRect.width();
 	
 	graceTimer = new QTimer(this);
 	graceTimer->setSingleShot(true);
 	connect(graceTimer, SIGNAL(timeout()), SLOT(highlightAfterGracePeriod()));
 	
+	mAvailable = false;
 	setLanguage();
 }
 
@@ -112,7 +125,7 @@ void SpellChecker::highlightDocument() {
 				QRectF boundingRect = fragment.glyphRuns(begin,length).first().boundingRect();
 				QPointF start = boundingRect.bottomLeft();
 				qreal width = boundingRect.width();
-				redLines.append(QString::number(start.x())+","+QString::number(start.y())+","+QString::number(width)+","+underLine(width));
+				redLines.append(QString::number(start.x())+","+QString::number(start.y())+","+QString::number(width)+","+underLine(width)+","+QString::number(waveHeight)+","+QString::number(waveTopPadding));
 			}
 			if (wordActive) {
 				hadActiveWord = wordActive;

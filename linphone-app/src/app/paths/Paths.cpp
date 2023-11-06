@@ -309,6 +309,14 @@ string Paths::getZrtpSecretsFilePath () {
 	return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathZrtpSecrets);
 }
 
+QString Paths::getISpellDictsDirPath () {
+	return getAppPackageDataDirPath() + Constants::PathISpellDicts;
+}
+
+string Paths::getISpellOwnDictsDirPath () {
+	return getWritableFilePath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)) + Constants::PathISpellOwnDict;
+}
+
 // -----------------------------------------------------------------------------
 
 static void migrateFile (const QString &oldPath, const QString &newPath) {

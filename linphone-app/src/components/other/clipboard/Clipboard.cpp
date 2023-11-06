@@ -56,7 +56,7 @@ QString Clipboard::getChatFormattedText () const {
 	QString text = getText();
 	if (text.isEmpty())
 		return text;
-#ifdef linux
+#ifdef __linux__
 	QString cr = "\n";
 #endif
 #ifdef WIN32

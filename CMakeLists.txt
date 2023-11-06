@@ -89,6 +89,9 @@ if( NOT QTKEYCHAIN_OUTPUT_DIR) # set this variable only if you don't build the m
 	set(QTKEYCHAIN_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
 endif()
 
+if(NOT ISPELL_OUTPUT_DIR) # set this variable only if you don't build the module
+	set(ISPELL_OUTPUT_DIR "${CMAKE_INSTALL_PREFIX}")# Cannot be different from the current CMAKE_INSTALL_PREFIX
+endif()
 
 
 # Avoid cmake warning if CMP0071 is not set.
@@ -218,6 +221,13 @@ if(NOT APPLE OR MONO_ARCH)
 						add_subdirectory("external/qtkeychain")
 					endfunction()
 					add_linphone_keychain()
+			endif()
+			if(NOT APPLE AND NOT WIN32)
+				function(add_linphone_ispell)
+					add_subdirectory("external/ispell")
+				endfunction()
+				add_linphone_ispell()
+				SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")
 			endif()
 	endif()
 	function(add_linphone_app)

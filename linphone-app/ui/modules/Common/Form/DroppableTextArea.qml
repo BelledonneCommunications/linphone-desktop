@@ -238,9 +238,9 @@ Item {
 							model: spellChecker.redLines
 							Rectangle {
 								clip: true
-								height: 5
+								height: parseFloat(modelData.split(',')[4])
 								x: textArea.leftPadding + parseFloat(modelData.split(',')[0])
-								y: textArea.topPadding + parseFloat(modelData.split(',')[1])-3
+								y: textArea.topPadding + parseFloat(modelData.split(',')[1])-parseFloat(modelData.split(',')[5])
 								width: parseFloat(modelData.split(',')[2])
 								color: 'transparent'
 								Text {

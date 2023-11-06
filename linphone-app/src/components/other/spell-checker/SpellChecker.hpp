@@ -36,6 +36,10 @@
 #include <QTimer>
 #include "app/App.hpp"
 
+#ifdef __linux__
+#include <thread>
+#endif
+
 #define SUGGESTIONS_LIMIT 10
 #define GRACE_PERIOD_SECS 1.0
 
@@ -89,7 +93,10 @@ private:
 	QHash<int,QString> ignoredOnce;
 	QString wave;
 	qreal waveWidth;
+	qreal waveHeight;
+	qreal waveTopPadding;
 	qint64 mLastHightlight;
+	bool mAvailable;
 
 	void setLanguage();
 	bool isWordActive(QStringList words, QString word, int index);
@@ -99,6 +106,24 @@ private:
 #ifdef WIN32
 	ISpellChecker* mNativeSpellChecker = nullptr;
 #endif
+	
+// ISpell linux
+#ifdef __linux__
+	static int gISpell_sc_read_fd;
+	static int gISpell_sc_write_fd;
+	static int gISpell_app_read_fd;
+	static int gISpell_app_write_fd;
+	static std::thread *gISpellCheckerThread;
+	static QHash<QString,QStringList> gISpellSuggestions;
+	static std::string gISpellCheckeCurrentLanguage;
+	static std::string gIspellDictionariesFolder;
+	void stopISpellChecker();
+	static std::shared_ptr<linphone::Config> gISpellSelfDictionary;
+	bool isLearnt(QString word);
+	bool wordValidWithFrVariants(QString word);
+	bool validSplittedOn(QString pattern, QString word);
+#endif
+	
 };
 
 

@@ -7,3 +7,6 @@ path = linphone-sdk
 [submodule "external/qtkeychain"]
 	path = external/qtkeychain
 	url = https://gitlab.linphone.org/BC/public/external/qtkeychain.git
+[submodule "external/ispell"]
+	path = external/ispell
+	url = https://gitlab.linphone.org/BC/public/external/ispell.git

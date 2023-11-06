@@ -59,6 +59,8 @@ constexpr char Constants::PathFriendsList[];
 constexpr char Constants::PathLimeDatabase[];
 constexpr char Constants::PathMessageHistoryList[];
 constexpr char Constants::PathZrtpSecrets[];
+constexpr char Constants::PathISpellDicts[];
+constexpr char Constants::PathISpellOwnDict[];
 
 // Max image size in bytes. (100Kb)
 constexpr qint64 Constants::MaxImageSize;
