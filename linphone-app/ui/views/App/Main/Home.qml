@@ -31,54 +31,49 @@ Rectangle {
     spacing: HomeStyle.spacing
 
     height: parent.height
+    
     width: {
-      var width = CardBlockStyle.width * count + (count - 1) * spacing
+		var itemCount = 0;
+		for(var i = 0 ; i < count ; ++i)
+			if(model[i].$visible)
+				++itemCount;
+      var width = CardBlockStyle.width * itemCount + (itemCount - 1) * spacing
       return parent.width < width ? parent.width : width
     }
 
-    model: ListModel {
-      // TODO: Uncomment me when smart tooltip will be available.
-      // ListElement {
-      //   $component: 'checkBox'
-      //   $componentText: qsTr('showTooltips')
-      //   $description: qsTr('howToDescription')
-      //   $icon: 'home_use_linphone'
-      //   $title: qsTr('howToTitle')
-      // }
-
-      ListElement {
-        $component: 'button'
-        $componentText: qsTr('inviteButton')
-        $description: qsTr('inviteDescription')
-        $view: 'InviteFriends'
-        $icon: 'home_invite_friends'
-        $title: qsTr('inviteTitle')
-      }
-
-      ListElement {
-        $component: 'button'
-        $componentText: qsTr('assistantButton')
-        $description: qsTr('accountAssistantDescription')
-        $icon: 'home_account_assistant'
-        $title: qsTr('accountAssistantTitle')
-        $view: 'Assistant'
-      }
-    }
+    model: [{
+        $component: 'button',
+        $componentText: qsTr('inviteButton'),
+        $description: qsTr('inviteDescription'),
+        $view: 'InviteFriends',
+        $icon: 'home_invite_friends',
+        $title: qsTr('inviteTitle'),
+        $visible: SettingsModel.getShowHomeInviteButton()
+      },{
+        $component: 'button',
+        $componentText: qsTr('assistantButton'),
+        $description: qsTr('accountAssistantDescription'),
+        $icon: 'home_account_assistant',
+        $title: qsTr('accountAssistantTitle'),
+        $view: 'Assistant',
+        $visible: true
+      }]
 
     delegate: CardBlock {
       anchors.verticalCenter: parent.verticalCenter
 
-      description: $description.replace('%1', Utils.capitalizeFirstLetter(Qt.application.name))
-      icon: $icon
-      title: $title.replace('%1', Qt.application.name.toUpperCase())
-
+      description: modelData.$description.replace('%1', Utils.capitalizeFirstLetter(Qt.application.name))
+      icon: modelData.$icon
+      title: modelData.$title.replace('%1', Qt.application.name.toUpperCase())
+      visible: modelData.$visible
+		
       Loader {
         Component {
           id: button
 
           TextButtonB {
-            text: $componentText
-            onClicked: window.setView($view)
+            text: modelData.$componentText
+            onClicked: window.setView(modelData.$view)
           }
         }
 
@@ -86,12 +81,12 @@ Rectangle {
           id: checkBox
 
           CheckBoxText {
-            text: $componentText
+            text: modelData.$componentText
           }
         }
 
         anchors.horizontalCenter: parent.horizontalCenter
-        sourceComponent: $component === 'button' ? button : checkBox
+        sourceComponent: modelData.$component === 'button' ? button : checkBox
       }
     }
   }

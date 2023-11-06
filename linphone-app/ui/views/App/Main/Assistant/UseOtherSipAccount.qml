@@ -143,6 +143,7 @@ import Common.Styles 1.0
 							
 							TextField {
 								id: sipDomain
+								text: SettingsModel.getDefaultOtherSipAccountDomain()
 							}
 						}
 					}

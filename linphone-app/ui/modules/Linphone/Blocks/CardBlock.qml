@@ -14,7 +14,7 @@ Column {
   // ---------------------------------------------------------------------------
 
   spacing: CardBlockStyle.spacing
-  width: CardBlockStyle.width
+  width: visible ? CardBlockStyle.width : 0
 
   Icon {
     id: icon

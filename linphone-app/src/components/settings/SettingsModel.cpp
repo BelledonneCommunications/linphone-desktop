@@ -1745,6 +1745,14 @@ bool SettingsModel::getShowHomePage() const {
     return !!mConfig->getInt(UiSection, "show_home_page", true);
 }
 
+bool SettingsModel::getShowHomeInviteButton() const {
+	return !!mConfig->getInt(UiSection, "show_home_invite_button", true);
+}
+
+QString SettingsModel::getDefaultOtherSipAccountDomain() const {
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "default_other_sip_account_domain", ""));
+}
+
 bool SettingsModel::isMipmapEnabled() const{
 	return !!mConfig->getInt(UiSection, "mipmap_enabled", 0);
 }

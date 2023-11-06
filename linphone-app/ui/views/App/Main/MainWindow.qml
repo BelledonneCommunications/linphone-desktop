@@ -192,6 +192,7 @@ ApplicationWindow {
 						id: smartSearchBar
 						
 						Layout.fillWidth: true
+						Layout.maximumWidth: parent.width - telKeypad.width - x
 						
 						maxMenuHeight: MainWindowStyle.searchBox.maxHeight
 						placeholderText: qsTr('mainSearchBarPlaceholder')

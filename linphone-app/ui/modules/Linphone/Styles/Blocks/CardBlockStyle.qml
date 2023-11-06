@@ -23,7 +23,7 @@ QtObject {
 	
 	property QtObject icon: QtObject {
 		property int bottomMargin: 20
-		property int size: 148
+		property int size: 140
 	}
 	
 	property QtObject title: QtObject {

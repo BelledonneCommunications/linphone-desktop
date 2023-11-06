@@ -220,6 +220,8 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool showLocalSipAccount READ getShowLocalSipAccount CONSTANT)
 	Q_PROPERTY(bool showStartChatButton READ getShowStartChatButton CONSTANT)
 	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
+	Q_PROPERTY(bool showHomeInviteButton READ getShowHomeInviteButton CONSTANT)
+	Q_PROPERTY(QString defaultOtherSipAccountDomain READ getDefaultOtherSipAccountDomain CONSTANT)
 	
 	Q_PROPERTY(bool mipmapEnabled READ isMipmapEnabled WRITE setMipmapEnabled NOTIFY mipmapEnabledChanged)
 	Q_PROPERTY(bool useMinimalTimelineFilter READ useMinimalTimelineFilter WRITE setUseMinimalTimelineFilter NOTIFY useMinimalTimelineFilterChanged)
@@ -628,6 +630,9 @@ public:
 	Q_INVOKABLE int getShowDefaultPage() const; // -1 : default
 	Q_INVOKABLE int getShowForcedAssistantPage() const; // -1 : no force
 	Q_INVOKABLE bool getShowHomePage() const;
+	Q_INVOKABLE bool getShowHomeInviteButton() const;
+	Q_INVOKABLE QString getDefaultOtherSipAccountDomain() const;
+	
 	
 	bool isMipmapEnabled() const;
 	void setMipmapEnabled(const bool& enabled);
