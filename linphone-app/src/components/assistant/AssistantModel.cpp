@@ -33,7 +33,7 @@
 #endif
 
 #ifdef ENABLE_QRCODE
-#include <linphone/FlexiAPIClient.hh>
+#include <linphone/flexi-api-client.h>
 #endif
 
 #include <QtDebug>
@@ -532,28 +532,28 @@ void AssistantModel::createTestAccount(){
 }
 void AssistantModel::generateQRCode(){
 #ifdef ENABLE_QRCODE
-	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	auto flexiAPIClient = make_shared<LinphonePrivate::FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient
 		->accountProvision()
-		->then([this](FlexiAPIClient::Response response){
+		->then([this](LinphonePrivate::FlexiAPIClient::Response response){
 			emit newQRCodeReceived(response.json()["provisioning_token"].asCString());
 		})
-		->error([this](FlexiAPIClient::Response response){
+		->error([this](LinphonePrivate::FlexiAPIClient::Response response){
 			emit newQRCodeNotReceived(Utils::coreStringToAppString(response.body), response.code);
 		});
 #endif
 }
 void AssistantModel::requestQRCode(){
 #ifdef ENABLE_QRCODE
-	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	auto flexiAPIClient = make_shared<LinphonePrivate::FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	
 	flexiAPIClient
 		->accountAuthTokenCreate()
-		->then([this](FlexiAPIClient::Response response) {
+		->then([this](LinphonePrivate::FlexiAPIClient::Response response) {
 			mToken = response.json()["token"].asCString();
 			emit newQRCodeReceived(mToken);
 			QTimer::singleShot(5000, this, &AssistantModel::checkLinkingAccount);
-		})->error([this](FlexiAPIClient::Response response){
+		})->error([this](LinphonePrivate::FlexiAPIClient::Response response){
 			qWarning() << response.code << " => " << response.body.c_str();
 			emit newQRCodeNotReceived(Utils::coreStringToAppString(response.body), response.code);
 		});
@@ -568,12 +568,12 @@ void AssistantModel::newQRCodeNotReceivedTest(){
 }
 void AssistantModel::checkLinkingAccount(){
 #ifdef ENABLE_QRCODE
-	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	auto flexiAPIClient = make_shared<LinphonePrivate::FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient
 		->accountApiKeyFromAuthTokenGenerate(mToken.toStdString())
-		->then([this](FlexiAPIClient::Response response)mutable{
+		->then([this](LinphonePrivate::FlexiAPIClient::Response response)mutable{
 			emit apiReceived(Utils::coreStringToAppString(response.json()["api_key"].asCString()));
-		})->error([this](FlexiAPIClient::Response){
+		})->error([this](LinphonePrivate::FlexiAPIClient::Response){
 			QTimer::singleShot(5000, this, &AssistantModel::checkLinkingAccount);
 	});
 #endif
@@ -581,12 +581,12 @@ void AssistantModel::checkLinkingAccount(){
 
 void AssistantModel::onApiReceived(QString apiKey){
 #ifdef ENABLE_QRCODE
-	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	auto flexiAPIClient = make_shared<LinphonePrivate::FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient->setApiKey(Utils::appStringToCoreString(apiKey).c_str())
 		->accountProvision()
-		->then([this](FlexiAPIClient::Response response){
+		->then([this](LinphonePrivate::FlexiAPIClient::Response response){
 			emit provisioningTokenReceived(response.json()["provisioning_token"].asCString());
-		})->error([this](FlexiAPIClient::Response response){
+		})->error([this](LinphonePrivate::FlexiAPIClient::Response response){
 			//it provisioningTokenReceived("token");
 			emit this->newQRCodeNotReceived("Cannot generate a provisioning key"+(response.body.empty() ? "" : " : " +Utils::coreStringToAppString(response.body)), response.code);
 	});
@@ -599,14 +599,14 @@ void AssistantModel::onQRCodeFound(const std::string & result){
 
 void AssistantModel::attachAccount(const QString& token){
 #ifdef ENABLE_QRCODE
-	auto flexiAPIClient = make_shared<FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
+	auto flexiAPIClient = make_shared<LinphonePrivate::FlexiAPIClient>(CoreManager::getInstance()->getCore()->cPtr());
 	flexiAPIClient->
 	accountAuthTokenAttach(Utils::appStringToCoreString(token))
-		->then([this](FlexiAPIClient::Response response){
+		->then([this](LinphonePrivate::FlexiAPIClient::Response response){
 			qWarning() << "Attached";
 			emit qRCodeAttached();
 		})
-		->error([this](FlexiAPIClient::Response response){
+		->error([this](LinphonePrivate::FlexiAPIClient::Response response){
 			emit qRCodeNotAttached("Cannot attach"+ (response.body.empty() ? "" : " : " +Utils::coreStringToAppString(response.body)), response.code);
 		});
 #endif
