@@ -35,6 +35,8 @@
 #include <QStringList>
 #include <QTimer>
 #include "app/App.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 
 #ifdef __linux__
 #include <thread>
@@ -57,7 +59,10 @@ public:
 	~SpellChecker();
 	
 	// Common
-	static QString currentLanguage() { return App::getInstance()->getLocale().name();}
+	static QString currentLanguage() {
+		QString overrideLocale = CoreManager::getInstance()->getSettingsModel()->getSpellCheckerOverrideLocale();
+		return overrideLocale.isEmpty() ? App::getInstance()->getLocale().name() : overrideLocale;
+	}
 	Q_INVOKABLE void setTextDocument(QQuickTextDocument *textDocument);
 	Q_INVOKABLE int wordPosition(int x, int y);
 	Q_INVOKABLE bool isWordAtPositionValid(int cursorPosition);

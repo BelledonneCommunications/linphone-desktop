@@ -23,8 +23,7 @@
 #include <QTimer>
 #include <QAbstractTextDocumentLayout>
 #include <QTextEdit>
-#include "components/core/CoreManager.hpp"
-#include "components/settings/SettingsModel.hpp"
+
 
 #ifdef WIN32
 #include <spellcheck.h>
@@ -54,7 +53,8 @@ SpellChecker::SpellChecker(QObject *parent) : QSyntaxHighlighter(parent) {
 	connect(graceTimer, SIGNAL(timeout()), SLOT(highlightAfterGracePeriod()));
 	
 	mAvailable = false;
-	setLanguage();
+	if (CoreManager::getInstance()->getSettingsModel()->getSpellCheckerEnabled())
+		setLanguage();
 }
 
 SpellChecker::~SpellChecker () {

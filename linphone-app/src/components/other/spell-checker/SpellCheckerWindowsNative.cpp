@@ -58,12 +58,13 @@ void SpellChecker::setLanguage() {
 		qWarning() << LOG_TAG << "Windows native spell checker unable to create spell checker";
 		return;
 	}
-	qWarning() << LOG_TAG << "Windows native spell checker created for locale" << locale;
+	qDebug() << LOG_TAG << "Windows native spell checker created for locale" << locale;
+	mAvailable = true;
 }
 
 
 bool SpellChecker::isValid(QString word) {
-	if (mNativeSpellChecker == nullptr)
+	if (!mAvailable)
 		return true;
 	wchar_t *text = reinterpret_cast<wchar_t *>(word.data());
 	IEnumSpellingError* enumSpellingError = nullptr;

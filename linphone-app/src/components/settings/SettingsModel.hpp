@@ -589,6 +589,9 @@ public:
 	int getEmojiFontSize() const;
 	void setEmojiFontSize(const int& size);
 	
+	QString getSpellCheckerOverrideLocale() const;
+	bool getSpellCheckerEnabled() const;
+	
 	QString getSavedScreenshotsFolder () const;
 	void setSavedScreenshotsFolder (const QString &folder);
 	

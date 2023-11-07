@@ -1566,6 +1566,14 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 	emit savedScreenshotsFolderChanged(cleanedFolder);
 }
 
+QString SettingsModel::getSpellCheckerOverrideLocale() const{
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "spell_checker_override_locale", ""));
+}
+
+bool SettingsModel::getSpellCheckerEnabled() const{
+	return mConfig->getBool(UiSection, "spell_checker_enabled", true);
+}
+
 // -----------------------------------------------------------------------------
 
 static inline string getLegacySavedCallsFolder (const shared_ptr<linphone::Config> &config) {

@@ -19,8 +19,8 @@
  */
 
 
-#import "SpellChecker.hpp"
-#import <libispell.h>
+#include "SpellChecker.hpp"
+#include <libispell.h>
 #include "app/paths/Paths.hpp"
 #include <unistd.h>
 #include <cstdio>
