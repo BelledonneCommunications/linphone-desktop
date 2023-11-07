@@ -1508,7 +1508,6 @@ Adresa URL není nakonfigurována.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
         <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
     </message>
     <message>
@@ -1995,6 +1994,42 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lastProvisioningFailed</source>
+        <translation type="unfinished">Poslední vzdálené zajištění selhalo</translation>
+    </message>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation type="unfinished">K dispozici je nová verze (%1)!</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>downloadUpdate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionCheckError</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noNewVersionAvailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionInstalled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -2391,7 +2426,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>newVersionAvailable</source>
         <translation>K dispozici je nová verze (%1)!</translation>
     </message>
-	<message>
+    <message>
         <source>newFileMessage</source>
         <translation>Obdržena nová příloha!</translation>
     </message>
@@ -3837,6 +3872,11 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
         <translation>Obnovení vyskakovacích oken</translation>
     </message>
+    <message>
+        <source>spellCheckerLabel</source>
+        <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -4022,6 +4062,29 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addContact</source>
         <translation>PŘIDAT KONTAKT</translation>
+    </message>
+</context>
+<context>
+    <name>SpellCheckerMenu</name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5207,6 +5270,10 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
             <numerusform>%1 vteřiny</numerusform>
             <numerusform>%1 vteřin</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>okButton</source>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 </TS>

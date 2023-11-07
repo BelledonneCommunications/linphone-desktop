@@ -1570,8 +1570,21 @@ QString SettingsModel::getSpellCheckerOverrideLocale() const{
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "spell_checker_override_locale", ""));
 }
 
+void SettingsModel::setSpellCheckerOverrideLocale (const QString &locale) {
+	CoreManager::getInstance()->getCore()->getConfig()->setString(
+				SettingsModel::UiSection, "spell_checker_override_locale", Utils::appStringToCoreString(locale)
+				);
+	
+	emit spellCheckerOverrideLocaleChanged();
+}
+
 bool SettingsModel::getSpellCheckerEnabled() const{
 	return mConfig->getBool(UiSection, "spell_checker_enabled", true);
+}
+
+void SettingsModel::setSpellCheckerEnabled(bool enable){
+	mConfig->setBool(UiSection, "spell_checker_enabled", enable);
+	emit spellCheckerEnabledChanged();
 }
 
 // -----------------------------------------------------------------------------

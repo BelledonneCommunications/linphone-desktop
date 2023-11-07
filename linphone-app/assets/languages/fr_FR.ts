@@ -1923,24 +1923,24 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
 <context>
     <name>MainWindow</name>
     <message>
-		  <source>newVersionCheckError</source>
-		  <translation>Une erreur est survenue. Merci de réessayer plus tard ou de contacter le support.</translation>
+        <source>newVersionCheckError</source>
+        <translation>Une erreur est survenue. Merci de réessayer plus tard ou de contacter le support.</translation>
     </message>
     <message>
-		  <source>newVersionAvailableInstructions</source>
-		  <translation>Pour mettre à jour télécharger l&apos;application et lancer l&apos;installeur.</translation>
+        <source>newVersionAvailableInstructions</source>
+        <translation>Pour mettre à jour télécharger l&apos;application et lancer l&apos;installeur.</translation>
     </message>
     <message>
-		  <source>downloadUpdate</source>
-		  <translation>Télécharger</translation>
+        <source>downloadUpdate</source>
+        <translation>Télécharger</translation>
     </message>
     <message>
-		  <source>noNewVersionAvailable</source>
-		  <translation>Votre application est à jour.</translation>
+        <source>noNewVersionAvailable</source>
+        <translation>Votre application est à jour.</translation>
     </message>
     <message>
-		  <source>newVersionInstalled</source>
-		  <translation>La nouvelle version de l&apos;application a été installée avec succès.</translation>
+        <source>newVersionInstalled</source>
+        <translation>La nouvelle version de l&apos;application a été installée avec succès.</translation>
     </message>
     <message>
         <source>mainSearchBarPlaceholder</source>
@@ -2002,6 +2002,22 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>openMeetings</source>
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lastProvisioningFailed</source>
+        <translation type="unfinished">Erreur de récupération de la configuration distante. Le lien de configuration a peut-être déjà été utilisé ou a expiré. Merci de contacter un administrateur si ce lien vous a été fourni.</translation>
+    </message>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation type="unfinished">Une nouvelle version (%1) est disponible !</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <translation type="unfinished">Un compte est déjà configuré. Cette action effacera le compte existant.</translation>
     </message>
 </context>
 <context>
@@ -3818,6 +3834,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
         <translation>Restaurer les popups de confirmation</translation>
     </message>
+    <message>
+        <source>spellCheckerLabel</source>
+        <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -4003,6 +4024,29 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addContact</source>
         <translation>AJOUTER CE CONTACT</translation>
+    </message>
+</context>
+<context>
+    <name>SpellCheckerMenu</name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
+        <translation>Voulez-vous dire ?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
+        <translation>Ajouter au Dictionnaire</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
+        <translation>Ignorer une fois</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
+        <translation>Ignorer tout</translation>
     </message>
 </context>
 <context>
@@ -5182,24 +5226,9 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
             <numerusform>%1 secondes</numerusform>
         </translation>
     </message>
-</context>
-<context>
-    <name>SpellCheckerMenu</name>
     <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Voulez-vous dire ?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Ajouter au Dictionnaire</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorer une fois</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorer tout</translation>
+        <source>okButton</source>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 </TS>

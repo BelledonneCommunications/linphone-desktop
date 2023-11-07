@@ -1497,7 +1497,6 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
         <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
     </message>
     <message>
@@ -1983,6 +1982,42 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <source>openMeetings</source>
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lastProvisioningFailed</source>
+        <translation type="unfinished">O último provisionamento remoto falhou</translation>
+    </message>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation type="unfinished">Está disponível uma nova versão (%1)!</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>downloadUpdate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionCheckError</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noNewVersionAvailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionInstalled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
     </message>
 </context>
 <context>
@@ -3799,6 +3834,11 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>spellCheckerLabel</source>
+        <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -3984,6 +4024,29 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>addContact</source>
         <translation>ADICIONAR CONTATO</translation>
+    </message>
+</context>
+<context>
+    <name>SpellCheckerMenu</name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5162,6 +5225,10 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
             <numerusform>%1 segundo</numerusform>
             <numerusform>%1 segundos</numerusform>
         </translation>
+    </message>
+    <message>
+        <source>okButton</source>
+        <translation type="unfinished">OK</translation>
     </message>
 </context>
 </TS>

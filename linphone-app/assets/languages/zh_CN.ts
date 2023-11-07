@@ -1486,7 +1486,6 @@
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
         <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
     </message>
     <message>
@@ -1972,6 +1971,42 @@
         <source>openMeetings</source>
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lastProvisioningFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation type="unfinished">新版本（ %1 ）可用！</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished">取消</translation>
+    </message>
+    <message>
+        <source>downloadUpdate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionCheckError</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noNewVersionAvailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionInstalled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
     </message>
 </context>
 <context>
@@ -3785,6 +3820,11 @@
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>spellCheckerLabel</source>
+        <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -3970,6 +4010,29 @@
     <message>
         <source>addContact</source>
         <translation>添加联系人</translation>
+    </message>
+</context>
+<context>
+    <name>SpellCheckerMenu</name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5141,6 +5204,10 @@
         <translation type="unfinished">
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>okButton</source>
+        <translation type="unfinished">好</translation>
     </message>
 </context>
 </TS>

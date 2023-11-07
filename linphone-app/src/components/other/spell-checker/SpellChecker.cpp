@@ -51,6 +51,7 @@ SpellChecker::SpellChecker(QObject *parent) : QSyntaxHighlighter(parent) {
 	graceTimer = new QTimer(this);
 	graceTimer->setSingleShot(true);
 	connect(graceTimer, SIGNAL(timeout()), SLOT(highlightAfterGracePeriod()));
+	connect(CoreManager::getInstance()->getSettingsModel(), &SettingsModel::spellCheckerOverrideLocaleChanged, this, &SpellChecker::setLanguage);
 	
 	mAvailable = false;
 	if (CoreManager::getInstance()->getSettingsModel()->getSpellCheckerEnabled())
@@ -59,7 +60,7 @@ SpellChecker::SpellChecker(QObject *parent) : QSyntaxHighlighter(parent) {
 
 SpellChecker::~SpellChecker () {
 	graceTimer->stop();
-#ifdef WIN32
+#ifdef _WIN32
 	if (mNativeSpellChecker != nullptr)
 		mNativeSpellChecker->Release();
 #endif
@@ -91,7 +92,7 @@ QString SpellChecker::underLine(qreal minLength) {
 }
 
 void SpellChecker::highlightDocument() {
-	
+	if(!CoreManager::getInstance()->getSettingsModel()->getSpellCheckerEnabled()) return;
 	if (!fromTimer && QDateTime::currentMSecsSinceEpoch() <= mLastHightlight + GRACE_PERIOD_SECS*1000) {
 		scheduleHighlight();
 		return;

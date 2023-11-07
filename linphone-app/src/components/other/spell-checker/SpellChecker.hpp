@@ -48,7 +48,7 @@
 #define LOG_TAG "[SpellChecker]"
 #define WORD_DELIMITERS_REGEXP "[^\r\n\t\u2028 ]+"
 
-#ifdef WIN32
+#ifdef _WIN32
 class ISpellChecker;
 #endif
 
@@ -57,7 +57,7 @@ class SpellChecker : public QSyntaxHighlighter {
 public:
 	SpellChecker(QObject* parent = nullptr);
 	~SpellChecker();
-	
+		
 	// Common
 	static QString currentLanguage() {
 		QString overrideLocale = CoreManager::getInstance()->getSettingsModel()->getSpellCheckerOverrideLocale();
@@ -108,7 +108,7 @@ private:
 	bool wasIgnoredOnce(QString word, int wordStartIndex, int wordEndIndex);
 	void scheduleHighlight();
 	QString underLine(qreal minLength);
-#ifdef WIN32
+#ifdef _WIN32
 	ISpellChecker* mNativeSpellChecker = nullptr;
 #endif
 	
