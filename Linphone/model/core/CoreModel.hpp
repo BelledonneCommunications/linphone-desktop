@@ -35,16 +35,15 @@
 class CoreModel : public QObject {
 	Q_OBJECT
 public:
-	CoreModel(const QString &configPath, QThread * parent);
+	CoreModel(const QString &configPath, QThread *parent);
 	~CoreModel();
-	static QSharedPointer<CoreModel> create(const QString &configPath, QThread * parent);
+	static QSharedPointer<CoreModel> create(const QString &configPath, QThread *parent);
 	static QSharedPointer<CoreModel> getInstance();
 
 	std::shared_ptr<linphone::Core> getCore();
 
 	void start();
 	void setConfigPath(QString path);
-	
 
 	bool mEnd = false;
 
@@ -53,14 +52,15 @@ public:
 
 signals:
 	void loggerInitialized();
+
 private:
 	QString mConfigPath;
 	QTimer *mIterateTimer = nullptr;
-	
+
 	void setPathBeforeCreation();
 	void setPathsAfterCreation();
 	void setPathAfterStart();
-	
+
 	static QSharedPointer<CoreModel> gCoreModel;
 };
 

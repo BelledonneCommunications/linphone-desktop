@@ -33,7 +33,9 @@
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/singleapplication/singleapplication.h"
+#include "model/object/VariantObject.hpp"
 #include "tool/Constants.hpp"
+#include "tool/Utils.hpp"
 #include "tool/thread/Thread.hpp"
 
 #include "tool/providers/ImageProvider.hpp"
@@ -99,8 +101,12 @@ void App::initCppInterfaces() {
 	qmlRegisterSingletonType<Constants>(
 	    "ConstantsCpp", 1, 0, "ConstantsCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Constants(engine); });
+	qmlRegisterSingletonType<Utils>("UtilsCpp", 1, 0, "UtilsCpp",
+	                                [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Utils(engine); });
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
+	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
+
 	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
 	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
 	qmlRegisterUncreatableType<Account>(Constants::MainQmlUri, 1, 0, "Account", QLatin1String("Uncreatable"));

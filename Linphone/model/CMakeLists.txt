@@ -10,7 +10,11 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/logger/LoggerModel.cpp
 	model/logger/LoggerListener.cpp
 	
+	model/object/VariantObject.cpp
+	
 	model/setting/SettingsModel.cpp
+	
+	model/tool/ToolModel.cpp
 )
 
 set(_LINPHONEAPP_SOURCES ${_LINPHONEAPP_SOURCES} PARENT_SCOPE)

@@ -65,6 +65,8 @@ bool AccountManager::login(QString username, QString password) {
 		                  .arg(Utils::coreStringToAppString(identity->asStringUriOnly()));
 		return false;
 	}
+
+	account->setParams(params);
 	core->addAuthInfo(factory->createAuthInfo(Utils::appStringToCoreString(username), // Username.
 	                                          "",                                     // User ID.
 	                                          Utils::appStringToCoreString(password), // Password.
@@ -73,6 +75,7 @@ bool AccountManager::login(QString username, QString password) {
 	                                          identity->getDomain()                   // Domain.
 	                                          ));
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account);
+	mAccountModel->setSelf(mAccountModel);
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
 	        &AccountManager::onRegistrationStateChanged);
 	core->addAccount(account);

@@ -42,12 +42,19 @@ public:
 	static auto postModelAsync(Func &&callable) {
 		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable);
 	}
-	template <typename Func>
-	static auto postModelSync(Func &&callable) {
-		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable,
-		                          QThread::currentThread() != CoreModel::getInstance()->thread()
-		                              ? Qt::BlockingQueuedConnection
-		                              : Qt::DirectConnection);
+	template <typename Func, typename... Args>
+	static auto postModelSync(Func &&callable, Args &&...args) {
+		if (QThread::currentThread() != CoreModel::getInstance()->thread()) {
+			bool end = false;
+			postModelAsync([&end, callable, args...]() mutable {
+				QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable, args..., Qt::DirectConnection);
+				end = true;
+			});
+			while (!end)
+				qApp->processEvents();
+		} else {
+			QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable, Qt::DirectConnection);
+		}
 	}
 
 	void clean();

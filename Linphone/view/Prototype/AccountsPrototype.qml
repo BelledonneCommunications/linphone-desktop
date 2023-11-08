@@ -2,6 +2,8 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.0
 import QtQuick.Controls as Control
 import Linphone
+import UtilsCpp 1.0
+
 // Snippet
 
 ListView{
@@ -34,7 +36,10 @@ ListView{
 				}
 			}
 			Text{
-				text: $modelData.identityAddress
+				// Store the VariantObject and use value on this object. Do not use value in one line because of looping signals.
+				property var displayName: UtilsCpp.getDisplayName($modelData.identityAddress)
+				text: displayName.value
+				onTextChanged: console.log('[ProtoAccounts] Async account displayName: ' +$modelData.identityAddress + " => " +text)
 			}
 			Text{
 				text: $modelData.registrationState == LinphoneEnums.RegistrationState.Ok 

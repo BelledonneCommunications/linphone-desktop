@@ -58,7 +58,7 @@ public:
 
 protected:
 	std::shared_ptr<LinphoneClass> mMonitor;
-	std::shared_ptr<ListenerClass> mSelf;
+	std::shared_ptr<ListenerClass> mSelf = nullptr;
 };
 
 #endif

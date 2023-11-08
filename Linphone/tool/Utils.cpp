@@ -20,6 +20,10 @@
 
 #include "Utils.hpp"
 
+#include "core/App.hpp"
+#include "model/object/VariantObject.hpp"
+#include "model/tool/ToolModel.hpp"
+
 // =============================================================================
 
 char *Utils::rstrstr(const char *a, const char *b) {
@@ -33,4 +37,13 @@ char *Utils::rstrstr(const char *a, const char *b) {
 	}
 
 	return nullptr;
+}
+
+VariantObject *Utils::getDisplayName(const QString &address) {
+	VariantObject *data = new VariantObject(address); // Scope : GUI
+	App::postModelAsync([coreObject = data->mCoreObject, address]() mutable {
+		QString displayName = ToolModel::getDisplayName(address);
+		emit coreObject->valueChanged(displayName);
+	});
+	return data;
 }

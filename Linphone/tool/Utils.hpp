@@ -40,11 +40,15 @@
 #endif // if defined(__GNUC__) && __GNUC__ >= 7
 #endif // ifndef UTILS_NO_BREAK
 
+class VariantObject;
+
 class Utils : public QObject {
 	Q_OBJECT
 public:
 	Utils(QObject *parent = nullptr) : QObject(parent) {
 	}
+
+	Q_INVOKABLE static VariantObject *getDisplayName(const QString &address);
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);
