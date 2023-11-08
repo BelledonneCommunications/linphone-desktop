@@ -161,9 +161,21 @@ job-ubuntu1804-makefile-gcc-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_LINUX
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/Packages/*.AppImage $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
-    - rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
-    - rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+# Going to folder in order to avoid having path in checksum
+    - |-
+      cd build/OUTPUT/Packages
+      for file in  $(find . -type f -name '*.AppImage' -printf '%f\n')
+      do
+        rsync -rlv --ignore-existing $file $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
+        sha512sum $file > $file.sha512
+        rsync -rlv --ignore-existing $file.sha512 $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM/$APP_FOLDER
+      done
+      cd ../../..
+    - |-
+      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+        rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$LINUX_PLATFORM
+      fi
 
 
 job-ubuntu1804-makefile-gcc-plugins-deploy:
