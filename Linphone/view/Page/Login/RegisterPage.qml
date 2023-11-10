@@ -9,7 +9,7 @@ LoginLayout {
 	signal registerCalled(countryCode: string, phoneNumber: string, email: string)
 	readonly property string countryCode: phoneNumberInput.countryCode
 	readonly property string phoneNumber: phoneNumberInput.phoneNumber
-	readonly property string email: emailInput.inputText
+	readonly property string email: emailInput.text
 
 	titleContent: RowLayout {
 		Image {
@@ -214,12 +214,12 @@ LoginLayout {
 					Button {
 						text: "Register"
 						onClicked:{
-							console.log("[RegisterPage] User: Call register with email", emailInput.inputText)
-							if (emailInput.inputText.length == 0) {
+							console.log("[RegisterPage] User: Call register with email", emailInput.text)
+							if (emailInput.text.length == 0) {
 								emailInput.errorMessage = "You must enter an email"
 								return
 							}
-							mainItem.registerCalled("", "", emailInput.inputText)
+							mainItem.registerCalled("", "", emailInput.text)
 						}
 					}
 				}

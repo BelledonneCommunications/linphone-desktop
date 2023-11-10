@@ -74,7 +74,6 @@ bool AccountManager::login(QString username, QString password) {
 	                                          "",                                     // Realm.
 	                                          identity->getDomain()                   // Domain.
 	                                          ));
-	account->setParams(params);
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account);
 	mAccountModel->setSelf(mAccountModel);
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,

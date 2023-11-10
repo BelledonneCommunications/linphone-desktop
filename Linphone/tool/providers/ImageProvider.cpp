@@ -61,7 +61,7 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 	QFile file(mPath);
 
 	if (!file.exists()) {
-		qDebug() << QStringLiteral("[ImageProvider] File doesn't exist: `%1`.").arg(mPath);
+		qDebug() << QStringLiteral("[ImageProvider] File doesn't exist: `%1`.").arg(path + id);
 		return;
 	}
 	QImage originalImage(mPath);

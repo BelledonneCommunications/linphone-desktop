@@ -30,6 +30,8 @@ QtObject {
 
 	property int tabButtonTextSize: 11
 	property color verticalTabBarColor: "#FE5E00"
+	property color verticalTabBarTextColor: "white"
+	property int verticalTabButtonTextSize: 6
 
 	property color comboBoxHighlightColor: "#C0D1D9"
 	property color comboBoxHoverColor: "#6C7A87"
@@ -57,4 +59,23 @@ QtObject {
 	property int title1FontPointSize: 50
 	property int title2FontPointSize: 20
 	property color titleColor: "#22334D"
+
+	property color mainPageRightPanelBackgroundColor: "#F9F9F9"
+	property color mainPageTitleColor: "#364860"
+	property int mainPageTitleSize: 15
+
+	property color searchBarFocusBorderColor: "#6C7A87"
+
+	property color numericPadBackgroundColor: "#F9F9F9"
+	property color numericPadShadowColor: Qt.rgba(0.0, 0.0, 0.0, 0.1)
+	property color numericPadButtonColor: "#FFFFFF"
+	property int numericPadButtonTextSize: 15
+	property int numericPadButtonSubtextSize: 6
+	property color numericPadPressedButtonColor: "#EEF7F8"
+	property color numericPadLaunchCallButtonColor: "#4FAE80"
+
+	property color groupCallButtonColor: "#EEF7F8"
+
+	property color splitViewHandleColor: "#F9F9F9"
+	property color splitViewHoveredHandleColor: "#EDEDED"
 }

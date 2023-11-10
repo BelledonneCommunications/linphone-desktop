@@ -75,14 +75,14 @@ ColumnLayout {
 				username.errorMessage = ""
 				password.errorMessage = ""
 
-				if (username.inputText.length == 0 || password.inputText.length == 0) {
-					if (username.inputText.length == 0)
+				if (username.text.length == 0 || password.text.length == 0) {
+					if (username.text.length == 0)
 						username.errorMessage = qsTr("You must enter a username")
-					if (password.inputText.length == 0)
+					if (password.text.length == 0)
 						password.errorMessage = qsTr("You must enter a password")
 					return
 				}
-				LoginPageCpp.login(username.inputText, password.inputText)
+				LoginPageCpp.login(username.text, password.text)
 			}
 		}
 		Button {

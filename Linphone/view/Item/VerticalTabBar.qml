@@ -1,59 +1,100 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as Control
+import QtQuick.Effects
+
 import Linphone
-  
+
 Control.TabBar {
 	id: mainItem
-	spacing: 40
-	property color tabBarColor: DefaultStyle.verticalTabBarColor
+	spacing: 15
+	topPadding: 20
+	// leftPadding: 15
+	// rightPadding: 15
 
-	function appendTab(label) {
-		var newTab = tab.createObject(mainItem, {title: label, index: mainItem.count})
-	}
+	property var model
 
 	contentItem: ListView {
+		model: mainItem.contentModel
+		currentIndex: mainItem.currentIndex
+
+		spacing: mainItem.spacing
 		orientation: ListView.Vertical
-		model: mainItem.model
+		// boundsBehavior: Flickable.StopAtBounds
+		flickableDirection: Flickable.AutoFlickIfNeeded
+		// snapMode: ListView.SnapToItem
+
+		// highlightMoveDuration: 0
+		// highlightRangeMode: ListView.ApplyRange
+		// preferredHighlightBegin: 40
+		// preferredHighlightEnd: width - 40
 	}
 
 	background: Item {
+		id: background
 		anchors.fill: parent
-
 		Rectangle {
-			id: barBG
-			height: 4
-			color: mainItem.tabBarColor
-			anchors.bottom: parent.bottom
-			width: parent.width
+			anchors.fill: parent
+			color: DefaultStyle.verticalTabBarColor
+			radius: 25
+		}
+		Rectangle {
+			color: DefaultStyle.verticalTabBarColor
+			anchors.left: parent.left
+			anchors.top: parent.top
+			width: parent.width/2
+			height: parent.height/2
+		}
+		Rectangle {
+			color: DefaultStyle.verticalTabBarColor
+			x: parent.x + parent.width/2
+			y: parent.y + parent.height/2
+			width: parent.width/2
+			height: parent.height/2
 		}
 	}
 
-	Component {
-		id: tab
+	Repeater {
+		model: mainItem.model
 		Control.TabButton {
-			property string title
-			property int index
-			width: txtMeter. advanceWidth
+			id: tabButton
+			anchors.left: parent.left
+			anchors.right: parent.right
 
-			background: Item {
-				visible: false
-			}
-
-			contentItem: Text {
-				id: tabText
+			contentItem: ColumnLayout {
 				anchors.fill: parent
-				font.bold: true
-				font.pointSize: DefaultStyle.tabButtonTextSize
-				text: txtMeter.text
-				bottomPadding: 5
-				width: txtMeter.advanceWidth
+				EffectImage {
+					id: buttonIcon
+					image.source: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
+					Layout.preferredWidth: 20
+					Layout.preferredHeight: 20
+					Layout.alignment: Qt.AlignHCenter
+					image.sourceSize.width: 20
+					image.fillMode: Image.PreserveAspectFit
+					effect.brightness: 1.0
+				}
+				Text {
+					id: buttonText
+					text: modelData.label
+					font.bold: mainItem.currentIndex === index
+					font.pointSize: DefaultStyle.verticalTabButtonTextSize
+					color: DefaultStyle.verticalTabBarTextColor
+					Layout.preferredWidth: txtMeter.width
+					Layout.preferredHeight: txtMeter.height
+					Layout.alignment: Qt.AlignHCenter
+					horizontalAlignment: Text.AlignHCenter
+					leftPadding: 3
+					rightPadding: 3
+				}
 			}
-
 			TextMetrics {
 				id: txtMeter
-				font: tabText.font
-				text: title
+				text: modelData.label
+				font: buttonText.font
+				Component.onCompleted: mainItem.width = Math.max(mainItem.width, advanceWidth)
+			}
+
+			background: Item {
 			}
 		}
 	}

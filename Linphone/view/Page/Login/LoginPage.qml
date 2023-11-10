@@ -39,7 +39,6 @@ LoginLayout {
 		}
 	}
 	centerContent: ColumnLayout {
-		Layout.alignment: Qt.AlignBottom
 
 		RowLayout {
 			

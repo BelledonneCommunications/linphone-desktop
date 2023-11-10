@@ -34,7 +34,7 @@ Window {
 				if (mainWindow.firstConnection) {
 					mainWindowStackView.replace(securityModePage)
 				} else {
-					mainWindowStackView.replace(callPage)
+					mainWindowStackView.replace(mainPage)
 				}
 			}
 		}
@@ -49,7 +49,7 @@ Window {
 				if (mainWindow.firstConnection) {
 					mainWindowStackView.replace(securityModePage)
 				} else {
-					mainWindowStackView.replace(callPage)
+					mainWindowStackView.replace(mainPage)
 				}
 			}
 		}
@@ -75,14 +75,21 @@ Window {
 			onModeSelected: (index) => {
 				var selectedMode = index == 0 ? "chiffrement" : "interoperable"
 				console.debug("[SelectMode]User: User selected mode " + selectedMode)
-				mainWindowStackView.replace(callPage)
+				mainWindowStackView.replace(mainPage)
 			}
 		}
 	}
 	Component {
-		id: callPage
-		CallPage {
+		id: mainPage
+		MainLayout {
 		}
 	}
+
+	Component {
+		id: ongoingCallPage
+		OngoingCallPage {
+		}
+	}
+
 } 
  

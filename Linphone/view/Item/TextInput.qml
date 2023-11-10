@@ -15,8 +15,18 @@ ColumnLayout {
 	property var validator: RegularExpressionValidator{}
 	property bool fillWidth: false
 	property bool enableBackgroundColors: true
-	property string inputText: textField.text
+	property string initialText
+	readonly property string text: textField.text
 	readonly property bool hasActiveFocus: textField.activeFocus
+
+	Component.onCompleted: setText(initialText)
+
+	function setText(text) {
+		textField.text = text
+	}
+	function resetText() {
+		setText(initialText)
+	}
 
 	Text {
 		visible: mainItem.label.length > 0

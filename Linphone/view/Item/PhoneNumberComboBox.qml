@@ -97,11 +97,11 @@ ColumnLayout {
 				}
 
 				delegate: Item {
-					width:combobox.width;
-					height: combobox.height;
+					width:combobox.width
+					height: combobox.height
 
 					Text {
-						id: delegateImg;
+						id: delegateImg
 						visible: text.length > 0
 						text: $modelData.flag
 						font.family: DefaultStyle.emojiFont

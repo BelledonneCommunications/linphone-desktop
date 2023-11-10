@@ -1,4 +1,4 @@
-import QtQuick
+import QtQuick 2.15
 import QtQuick.Controls
 import QtQuick.Layouts 1.0
 import Linphone
@@ -11,7 +11,8 @@ ColumnLayout {
 	property string placeholderText : ""
 	property bool mandatory: false
 	property int textInputWidth: 200
-	readonly property string phoneNumber: textField.inputText
+	property string initialPhoneNumber
+	readonly property string phoneNumber: textField.text
 	readonly property string countryCode: combobox.currentText
 
 	Text {
@@ -54,6 +55,7 @@ ColumnLayout {
 				placeholderText: mainItem.placeholderText
 				enableBackgroundColors: false
 				fillWidth: true
+				initialText: initialPhoneNumber
 				validator: IntValidator{}
 			}
 		}
@@ -66,7 +68,6 @@ ColumnLayout {
 		color: DefaultStyle.errorMessageColor
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
-		// maximumLineCount: 1
 		font {
 			pointSize: DefaultStyle.defaultTextSize
 			family: DefaultStyle.defaultFont

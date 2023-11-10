@@ -62,8 +62,6 @@ Item {
 
 	RowLayout {
 		id: bottomMountains
-		// RectangleTest{color: "blue"}
-		// Layout.alignment: Qt.AlignBottom
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right

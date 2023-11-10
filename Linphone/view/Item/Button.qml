@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2 as Control
+import QtQuick.Effects
 import Linphone
   
 Control.Button {
@@ -8,22 +9,36 @@ Control.Button {
 	property bool inversedColors: false
 	property int textSize: DefaultStyle.buttonTextSize
 	property bool boldText: true
+	property bool shadowEnabled: false
+	hoverEnabled: true
 
-	background: Rectangle {
-		color: inversedColors 
-				? mainItem.pressed 
-					? DefaultStyle.buttonPressedInversedBackground
-					: DefaultStyle.buttonInversedBackground
-				: mainItem.pressed 
-					? DefaultStyle.buttonPressedBackground
-					: DefaultStyle.buttonBackground
-		radius: 24
-		border.color: inversedColors ? DefaultStyle.buttonBackground : DefaultStyle.buttonInversedBackground
-
-		MouseArea {
+	background: Item {
+		Rectangle {
 			anchors.fill: parent
-			hoverEnabled: true
-			cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+			id: buttonBackground
+			color: inversedColors 
+					? mainItem.pressed 
+						? DefaultStyle.buttonPressedInversedBackground
+						: DefaultStyle.buttonInversedBackground
+					: mainItem.pressed 
+						? DefaultStyle.buttonPressedBackground
+						: DefaultStyle.buttonBackground
+			radius: 24
+			border.color: inversedColors ? DefaultStyle.buttonBackground : DefaultStyle.buttonInversedBackground
+
+			MouseArea {
+				anchors.fill: parent
+				hoverEnabled: true
+				cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+			}
+		}
+		MultiEffect {
+			enabled: mainItem.shadowEnabled
+			anchors.fill: buttonBackground
+			source: buttonBackground
+			shadowEnabled: mainItem.shadowEnabled
+			shadowColor: "black"//DefaultStyle.numericPadShadowColor
+			shadowHorizontalOffset: 1.0
 		}
 	}
 
@@ -45,6 +60,4 @@ Control.Button {
 			capitalization: mainItem.capitalization
 		}
 	}
-	
-	hoverEnabled: true
 }
