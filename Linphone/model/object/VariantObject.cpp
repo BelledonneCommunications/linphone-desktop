@@ -23,31 +23,40 @@
 #include <QDebug>
 #include <QTest>
 
+#include "core/App.hpp"
+
 DEFINE_ABSTRACT_OBJECT(VariantObject)
 
 VariantObject::VariantObject(QObject *parent) {
+	mThreadLocation = false;
 	mustBeInMainThread(getClassName());
+	mCoreObject = nullptr;
 }
 
 VariantObject::VariantObject(QVariant value, QObject *parent) : mValue(value) {
+	mThreadLocation = true;
 	mustBeInMainThread(getClassName());
-	connect(this, &VariantObject::updateValue, this, &VariantObject::setValue);
-	mCoreObject = new VariantObject();
+	connect(this, &VariantObject::valueUpdated, this, &VariantObject::setValue);
+	mCoreObject = new VariantObject(nullptr);
+	mCoreObject->moveToThread(CoreModel::getInstance()->thread());
 	connect(mCoreObject, &VariantObject::valueChanged, this, &VariantObject::setValue);
 	connect(mCoreObject, &VariantObject::valueChanged, mCoreObject, &QObject::deleteLater);
 }
 
 VariantObject::~VariantObject() {
-	mustBeInMainThread("~" + getClassName());
+	if (mThreadLocation) mustBeInMainThread("~" + getClassName());
+	else mustBeInLinphoneThread("~" + getClassName());
 }
 
 QVariant VariantObject::getValue() const {
-	mustBeInMainThread(QString(gClassName) + " : " + Q_FUNC_INFO);
+	if (mThreadLocation) mustBeInMainThread(QString(gClassName) + " : " + Q_FUNC_INFO);
+	else mustBeInLinphoneThread(QString(gClassName) + " : " + Q_FUNC_INFO);
 	return mValue;
 }
 
 void VariantObject::setValue(QVariant value) {
-	mustBeInMainThread(QString(gClassName) + " : " + Q_FUNC_INFO);
+	if (mThreadLocation) mustBeInMainThread(QString(gClassName) + " : " + Q_FUNC_INFO);
+	else mustBeInLinphoneThread(QString(gClassName) + " : " + Q_FUNC_INFO);
 	if (value != mValue) {
 		mValue = value;
 		emit valueChanged(mValue);

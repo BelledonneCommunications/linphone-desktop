@@ -8,7 +8,12 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Carousel.qml
 	view/Item/CheckBox.qml
 	view/Item/ComboBox.qml
+	view/Item/DesktopPopup.qml
 	view/Item/DigitInput.qml
+	
+	view/Item/Notification/Notification.qml
+	view/Item/Notification/NotificationReceivedCall.qml
+	
 	view/Item/PhoneNumberComboBox.qml
 	view/Item/PhoneNumberInput.qml
 	view/Item/RadioButton.qml
@@ -35,6 +40,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 # Prototypes
 	view/Prototype/PhoneNumberPrototype.qml
 	view/Prototype/AccountsPrototype.qml
+	view/Prototype/CallPrototype.qml
 )
 
 list(APPEND _LINPHONEAPP_QML_SINGLETONS

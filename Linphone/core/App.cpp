@@ -23,13 +23,18 @@
 #include "App.hpp"
 
 #include <QCoreApplication>
+#include <QFileSelector>
 #include <QGuiApplication>
+#include <QLibraryInfo>
 #include <QQmlContext>
+#include <QQmlFileSelector>
+#include <QTimer>
 
 #include "core/account/Account.hpp"
 #include "core/account/AccountProxy.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
+#include "core/notifier/Notifier.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/singleapplication/singleapplication.h"
@@ -50,6 +55,9 @@ App *App::getInstance() {
 	return dynamic_cast<App *>(QApplication::instance());
 }
 
+Notifier *App::getNotifier() const {
+	return mNotifier;
+}
 //-----------------------------------------------------------
 //		Initializations
 //-----------------------------------------------------------
@@ -76,10 +84,21 @@ void App::init() {
 
 	// QML
 	mEngine = new QQmlApplicationEngine(this);
+	// Provide `+custom` folders for custom components and `5.9` for old components.
+	QStringList selectors("custom");
+	const QVersionNumber &version = QLibraryInfo::version();
+	if (version.majorVersion() == 5 && version.minorVersion() == 9) selectors.push_back("5.9");
+	auto selector = new QQmlFileSelector(mEngine, mEngine);
+	selector->setExtraSelectors(selectors);
+	qInfo() << QStringLiteral("[App] Activated selectors:") << selector->selector()->allSelectors();
+
 	mEngine->addImportPath(":/");
 	mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
 	initCppInterfaces();
 	mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+
+	// Enable notifications.
+	mNotifier = new Notifier(mEngine);
 
 	const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
 	QObject::connect(
@@ -110,6 +129,7 @@ void App::initCppInterfaces() {
 	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
 	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
 	qmlRegisterUncreatableType<Account>(Constants::MainQmlUri, 1, 0, "Account", QLatin1String("Uncreatable"));
+	qmlRegisterUncreatableType<Call>(Constants::MainQmlUri, 1, 0, "Call", QLatin1String("Uncreatable"));
 
 	LinphoneEnums::registerMetaTypes();
 }

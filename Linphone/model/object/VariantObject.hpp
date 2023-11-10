@@ -42,14 +42,17 @@ public:
 	QVariant getValue() const;
 	void setValue(QVariant value);
 
+	// mCoreObject must be used to request update value : this object will be not be deleted by GUI so it is safe to use
+	// inside model thread. call emit updateValue() from coreObject to set value from model.
 	VariantObject *mCoreObject; // Ensure to use DeleteLater() after updating value
 
 signals:
 	void valueChanged(QVariant value);
-	void updateValue(QVariant value);
+	void valueUpdated(QVariant value);
 
 private:
 	QVariant mValue;
+	bool mThreadLocation = true; // true=Core, false=Model
 	DECLARE_ABSTRACT_OBJECT
 };
 

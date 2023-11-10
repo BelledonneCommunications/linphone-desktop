@@ -147,7 +147,7 @@ void LoggerModel::init() {
 	mListener = std::make_shared<LoggerListener>();
 	connect(mListener.get(), &LoggerListener::logReceived, this, &LoggerModel::onLinphoneLog);
 	{
-		std::shared_ptr<linphone::LoggingService> loggingService = linphone::LoggingService::get();
+		std::shared_ptr<linphone::LoggingService> loggingService = mLoginService = linphone::LoggingService::get();
 		loggingService->setDomain(Constants::AppDomain);
 		loggingService->setLogLevel(linphone::LogLevel::Debug);
 		loggingService->addListener(mListener);

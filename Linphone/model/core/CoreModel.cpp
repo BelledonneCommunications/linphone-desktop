@@ -28,14 +28,17 @@
 #include <QTimer>
 
 #include "core/App.hpp"
+#include "core/notifier/Notifier.hpp"
 #include "core/path/Paths.hpp"
 #include "tool/Utils.hpp"
 
 // =============================================================================
+DEFINE_ABSTRACT_OBJECT(CoreModel)
 
-QSharedPointer<CoreModel> CoreModel::gCoreModel;
+std::shared_ptr<CoreModel> CoreModel::gCoreModel;
 
-CoreModel::CoreModel(const QString &configPath, QThread *parent) : QObject() {
+CoreModel::CoreModel(const QString &configPath, QThread *parent)
+    : ::Listener<linphone::Core, linphone::CoreListener>(nullptr, parent) {
 	connect(parent, &QThread::finished, this, [this]() {
 		// Model thread
 		if (mCore && mCore->getGlobalState() == linphone::GlobalState::On) mCore->stop();
@@ -50,8 +53,9 @@ CoreModel::CoreModel(const QString &configPath, QThread *parent) : QObject() {
 CoreModel::~CoreModel() {
 }
 
-QSharedPointer<CoreModel> CoreModel::create(const QString &configPath, QThread *parent) {
-	auto model = QSharedPointer<CoreModel>::create(configPath, parent);
+std::shared_ptr<CoreModel> CoreModel::create(const QString &configPath, QThread *parent) {
+	auto model = std::make_shared<CoreModel>(configPath, parent);
+	model->setSelf(model);
 	gCoreModel = model;
 	return model;
 }
@@ -64,6 +68,7 @@ void CoreModel::start() {
 	mCore =
 	    linphone::Factory::get()->createCore(Utils::appStringToCoreString(Paths::getConfigFilePath(mConfigPath)),
 	                                         Utils::appStringToCoreString(Paths::getFactoryConfigFilePath()), nullptr);
+	setMonitor(mCore);
 	setPathsAfterCreation();
 	mCore->start();
 	setPathAfterStart();
@@ -71,7 +76,7 @@ void CoreModel::start() {
 }
 // -----------------------------------------------------------------------------
 
-QSharedPointer<CoreModel> CoreModel::getInstance() {
+std::shared_ptr<CoreModel> CoreModel::getInstance() {
 	return gCoreModel;
 }
 
@@ -130,4 +135,139 @@ void CoreModel::setPathAfterStart() {
 	if (mCore->getRootCa().empty() || !Paths::filePathExists(Utils::coreStringToAppString(mCore->getRootCa())))
 		mCore->setRootCa(Utils::appStringToCoreString(Paths::getRootCaFilePath()));
 	qInfo() << "[CoreModel] Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
+}
+
+//---------------------------------------------------------------------------------------------------------------------------
+
+void CoreModel::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                                  const std::shared_ptr<linphone::Account> &account,
+                                                  linphone::RegistrationState state,
+                                                  const std::string &message) {
+	emit accountRegistrationStateChanged(core, account, state, message);
+}
+void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
+                                          const std::shared_ptr<linphone::AuthInfo> &authInfo,
+                                          linphone::AuthMethod method) {
+	emit authenticationRequested(core, authInfo, method);
+}
+void CoreModel::onCallEncryptionChanged(const std::shared_ptr<linphone::Core> &core,
+                                        const std::shared_ptr<linphone::Call> &call,
+                                        bool on,
+                                        const std::string &authenticationToken) {
+	emit callEncryptionChanged(core, call, on, authenticationToken);
+}
+void CoreModel::onCallLogUpdated(const std::shared_ptr<linphone::Core> &core,
+                                 const std::shared_ptr<linphone::CallLog> &callLog) {
+	emit callLogUpdated(core, callLog);
+}
+void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                   const std::shared_ptr<linphone::Call> &call,
+                                   linphone::Call::State state,
+                                   const std::string &message) {
+	if (state == linphone::Call::State::IncomingReceived) {
+		App::getInstance()->getNotifier()->notifyReceivedCall(call);
+	}
+	emit callStateChanged(core, call, state, message);
+}
+void CoreModel::onCallStatsUpdated(const std::shared_ptr<linphone::Core> &core,
+                                   const std::shared_ptr<linphone::Call> &call,
+                                   const std::shared_ptr<const linphone::CallStats> &stats) {
+	emit callStatsUpdated(core, call, stats);
+}
+void CoreModel::onCallCreated(const std::shared_ptr<linphone::Core> &lc, const std::shared_ptr<linphone::Call> &call) {
+	emit callCreated(lc, call);
+}
+void CoreModel::onChatRoomRead(const std::shared_ptr<linphone::Core> &core,
+                               const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
+	emit chatRoomRead(core, chatRoom);
+}
+void CoreModel::onChatRoomStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                       const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+                                       linphone::ChatRoom::State state) {
+	emit chatRoomStateChanged(core, chatRoom, state);
+}
+void CoreModel::onConferenceInfoReceived(const std::shared_ptr<linphone::Core> &core,
+                                         const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
+	emit conferenceInfoReceived(core, conferenceInfo);
+}
+void CoreModel::onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
+                                    linphone::Config::ConfiguringState status,
+                                    const std::string &message) {
+	emit configuringStatus(core, status, message);
+}
+void CoreModel::onDtmfReceived(const std::shared_ptr<linphone::Core> &lc,
+                               const std::shared_ptr<linphone::Call> &call,
+                               int dtmf) {
+	emit dtmfReceived(lc, call, dtmf);
+}
+void CoreModel::onEcCalibrationResult(const std::shared_ptr<linphone::Core> &core,
+                                      linphone::EcCalibratorStatus status,
+                                      int delayMs) {
+	emit ecCalibrationResult(core, status, delayMs);
+}
+void CoreModel::onGlobalStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                     linphone::GlobalState gstate,
+                                     const std::string &message) {
+	emit globalStateChanged(core, gstate, message);
+}
+void CoreModel::onIsComposingReceived(const std::shared_ptr<linphone::Core> &core,
+                                      const std::shared_ptr<linphone::ChatRoom> &room) {
+	emit isComposingReceived(core, room);
+}
+void CoreModel::onLogCollectionUploadStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                                  linphone::Core::LogCollectionUploadState state,
+                                                  const std::string &info) {
+	emit logCollectionUploadStateChanged(core, state, info);
+}
+void CoreModel::onLogCollectionUploadProgressIndication(const std::shared_ptr<linphone::Core> &lc,
+                                                        size_t offset,
+                                                        size_t total) {
+	emit logCollectionUploadProgressIndication(lc, offset, total);
+}
+void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
+                                  const std::shared_ptr<linphone::ChatRoom> &room,
+                                  const std::shared_ptr<linphone::ChatMessage> &message) {
+	emit messageReceived(core, room, message);
+}
+void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
+                                   const std::shared_ptr<linphone::ChatRoom> &room,
+                                   const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
+	emit messagesReceived(core, room, messages);
+}
+void CoreModel::onNewMessageReaction(const std::shared_ptr<linphone::Core> &core,
+                                     const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+                                     const std::shared_ptr<linphone::ChatMessage> &message,
+                                     const std::shared_ptr<const linphone::ChatMessageReaction> &reaction) {
+	emit newMessageReaction(core, chatRoom, message, reaction);
+}
+void CoreModel::onNotifyPresenceReceivedForUriOrTel(
+    const std::shared_ptr<linphone::Core> &core,
+    const std::shared_ptr<linphone::Friend> &linphoneFriend,
+    const std::string &uriOrTel,
+    const std::shared_ptr<const linphone::PresenceModel> &presenceModel) {
+	emit notifyPresenceReceivedForUriOrTel(core, linphoneFriend, uriOrTel, presenceModel);
+}
+void CoreModel::onNotifyPresenceReceived(const std::shared_ptr<linphone::Core> &core,
+                                         const std::shared_ptr<linphone::Friend> &linphoneFriend) {
+	emit notifyPresenceReceived(core, linphoneFriend);
+}
+void CoreModel::onQrcodeFound(const std::shared_ptr<linphone::Core> &core, const std::string &result) {
+	emit qrcodeFound(core, result);
+}
+void CoreModel::onReactionRemoved(const std::shared_ptr<linphone::Core> &core,
+                                  const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+                                  const std::shared_ptr<linphone::ChatMessage> &message,
+                                  const std::shared_ptr<const linphone::Address> &address) {
+	emit reactionRemoved(core, chatRoom, message, address);
+}
+void CoreModel::onTransferStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                       const std::shared_ptr<linphone::Call> &call,
+                                       linphone::Call::State state) {
+	emit transferStateChanged(core, call, state);
+}
+void CoreModel::onVersionUpdateCheckResultReceived(const std::shared_ptr<linphone::Core> &core,
+                                                   linphone::VersionUpdateCheckResult result,
+                                                   const std::string &version,
+                                                   const std::string &url) {
+	emit versionUpdateCheckResultReceived(core, result, version, url);
 }

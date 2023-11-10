@@ -19,9 +19,9 @@
  */
 
 #include "ToolModel.hpp"
+#include "core/App.hpp"
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
-
 #include <QDebug>
 #include <QTest>
 
@@ -66,4 +66,59 @@ QString ToolModel::getDisplayName(QString address) {
 
 	QString displayName = getDisplayName(interpretUrl(address));
 	return displayName.isEmpty() ? address : displayName;
+}
+
+Call *ToolModel::startAudioCall(const QString &sipAddress,
+                                const QString &prepareTransfertAddress,
+                                const QHash<QString, QString> &headers) {
+	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
+	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
+
+	std::shared_ptr<linphone::Address> address = interpretUrl(sipAddress);
+	if (!address) {
+		qCritical() << "[" + QString(gClassName) + "] The calling address is not an interpretable SIP address: "
+		            << sipAddress;
+		return nullptr;
+	}
+
+	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
+	params->enableVideo(false);
+
+	QHashIterator<QString, QString> iterator(headers);
+	while (iterator.hasNext()) {
+		iterator.next();
+		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()),
+		                        Utils::appStringToCoreString(iterator.value()));
+	}
+	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
+	// CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
+	auto call = core->inviteAddressWithParams(address, params);
+	return call ? new Call(call) : nullptr;
+
+	/* TODO transfer
+
+	std::shared_ptr<linphone::Account> currentAccount = core->getDefaultAccount();
+	if (currentAccount) {
+	    if (!waitRegistrationForCall || currentAccount->getState() == linphone::RegistrationState::Ok) {
+	        qWarning() << "prepareTransfert not impolemented";
+	        // CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
+	    } else {
+	        qWarning() << "Waiting registration not implemented";
+
+	        // QObject *context = new QObject();
+	        // QObject::connect(
+	        //     CoreManager::getInstance()->getHandlers().get(), &CoreHandlers::registrationStateChanged, context,
+	        //     [address, core, params, currentAccount, prepareTransfertAddress, context](
+	        //         const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state) mutable {
+	        //	    if (context && account == currentAccount && state == linphone::RegistrationState::Ok) {
+	        //		    CallModel::prepareTransfert(core->inviteAddressWithParams(address, params),
+	        //		                                prepareTransfertAddress);
+	        //		    context->deleteLater();
+	        //		    context = nullptr;
+	        //	    }
+	        //    });
+	    }
+	} else qWarning() << "prepareTransfert not impolemented";
+	// CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
+	*/
 }

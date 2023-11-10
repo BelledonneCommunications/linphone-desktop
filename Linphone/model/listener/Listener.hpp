@@ -41,7 +41,7 @@ template <class LinphoneClass, class ListenerClass>
 class Listener : public ListenerPrivate {
 public:
 	Listener(std::shared_ptr<LinphoneClass> monitor, QObject *parent = nullptr) {
-		mMonitor = monitor;
+		setMonitor(monitor);
 	}
 	~Listener() {
 		qDebug() << "Destroying Listener";
@@ -50,10 +50,15 @@ public:
 	virtual void onRemoveListener() {
 		setSelf(nullptr);
 	}
+	void setMonitor(std::shared_ptr<LinphoneClass> monitor) {
+		if (mMonitor && mSelf) mMonitor->removeListener(mSelf);
+		mMonitor = monitor;
+		if (mMonitor && mSelf) mMonitor->addListener(mSelf);
+	}
 	void setSelf(const std::shared_ptr<ListenerClass> &self) {
 		if (mMonitor && mSelf) mMonitor->removeListener(mSelf);
 		mSelf = self;
-		if (self) mMonitor->addListener(self);
+		if (mMonitor && mSelf) mMonitor->addListener(self);
 	}
 
 protected:

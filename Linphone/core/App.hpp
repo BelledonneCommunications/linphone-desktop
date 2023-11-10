@@ -26,11 +26,13 @@
 #include "model/core/CoreModel.hpp"
 
 class Thread;
+class Notifier;
 
 class App : public SingleApplication {
 public:
 	App(int &argc, char *argv[]);
 	static App *getInstance();
+	Notifier *getNotifier() const;
 
 	// App::postModelAsync(<lambda>) => run lambda in model thread and continue.
 	// App::postModelSync(<lambda>) => run lambda in current thread and block connection.
@@ -41,6 +43,14 @@ public:
 	template <typename Func>
 	static auto postModelAsync(Func &&callable) {
 		QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable);
+	}
+	template <typename Func, typename... Args>
+	static auto postCoreAsync(Func &&callable, Args &&...args) {
+		QMetaObject::invokeMethod(App::getInstance(), callable, args...);
+	}
+	template <typename Func>
+	static auto postCoreAsync(Func &&callable) {
+		QMetaObject::invokeMethod(App::getInstance(), callable);
 	}
 	template <typename Func, typename... Args>
 	static auto postModelSync(Func &&callable, Args &&...args) {
@@ -70,4 +80,5 @@ private:
 
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
+	Notifier *mNotifier = nullptr;
 };

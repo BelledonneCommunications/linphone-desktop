@@ -27,6 +27,7 @@
 // =============================================================================
 
 void LinphoneEnums::registerMetaTypes() {
+	qRegisterMetaType<LinphoneEnums::CallState>();
 	qRegisterMetaType<LinphoneEnums::CallStatus>();
 	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
 	qRegisterMetaType<LinphoneEnums::ChatRoomState>();
@@ -81,11 +82,37 @@ LinphoneEnums::ChatRoomState LinphoneEnums::fromLinphone(const linphone::ChatRoo
 	return static_cast<LinphoneEnums::ChatRoomState>(data);
 }
 
+linphone::Call::State LinphoneEnums::toLinphone(const LinphoneEnums::CallState &data) {
+	return static_cast<linphone::Call::State>(data);
+}
+LinphoneEnums::CallState LinphoneEnums::fromLinphone(const linphone::Call::State &data) {
+	return static_cast<LinphoneEnums::CallState>(data);
+}
+
 linphone::Call::Status LinphoneEnums::toLinphone(const LinphoneEnums::CallStatus &data) {
 	return static_cast<linphone::Call::Status>(data);
 }
 LinphoneEnums::CallStatus LinphoneEnums::fromLinphone(const linphone::Call::Status &data) {
 	return static_cast<LinphoneEnums::CallStatus>(data);
+}
+
+QString LinphoneEnums::toString(const LinphoneEnums::CallStatus &data) {
+	switch (data) {
+		case LinphoneEnums::CallStatus::Declined:
+			return "Declined";
+		case LinphoneEnums::CallStatus::Missed:
+			return "Missed";
+		case LinphoneEnums::CallStatus::Success:
+			return "Success";
+		case LinphoneEnums::CallStatus::Aborted:
+			return "Aborted";
+		case LinphoneEnums::CallStatus::EarlyAborted:
+			return "EarlyAborted";
+		case LinphoneEnums::CallStatus::AcceptedElsewhere:
+			return "AcceptedElsewhere";
+		case LinphoneEnums::CallStatus::DeclinedElsewhere:
+			return "DeclinedElsewhere";
+	}
 }
 
 linphone::Conference::Layout LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceLayout &layout) {

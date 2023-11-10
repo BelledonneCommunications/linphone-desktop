@@ -3,8 +3,10 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/account/AccountList.cpp
 	core/account/AccountProxy.cpp
 	core/App.cpp
+	core/call/Call.cpp
 	core/logger/QtLogger.cpp
 	core/login/LoginPage.cpp
+	core/notifier/Notifier.cpp
 	core/path/Paths.cpp
 	core/phone-number/PhoneNumber.cpp
 	core/phone-number/PhoneNumberList.cpp

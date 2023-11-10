@@ -21,6 +21,7 @@
 #include "Utils.hpp"
 
 #include "core/App.hpp"
+#include "model/call/CallModel.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 
@@ -43,7 +44,25 @@ VariantObject *Utils::getDisplayName(const QString &address) {
 	VariantObject *data = new VariantObject(address); // Scope : GUI
 	App::postModelAsync([coreObject = data->mCoreObject, address]() mutable {
 		QString displayName = ToolModel::getDisplayName(address);
-		emit coreObject->valueChanged(displayName);
+		coreObject->setValue(displayName);
 	});
+	return data;
+}
+
+VariantObject *Utils::startAudioCall(const QString &sipAddress,
+                                     const QString &prepareTransfertAddress,
+                                     const QHash<QString, QString> &headers) {
+	VariantObject *data = new VariantObject(QVariant()); // Scope : GUI
+	qDebug() << "Calling " << sipAddress;
+	App::postModelAsync([coreObject = data->mCoreObject, sipAddress, prepareTransfertAddress, headers]() mutable {
+		auto call = ToolModel::startAudioCall(sipAddress, prepareTransfertAddress, headers);
+		if (call && coreObject) {
+			call->moveToThread(App::getInstance()->thread());
+			coreObject->setValue(QVariant::fromValue(call));
+			// App::postCoreAsync([data, call]() { data->setValue(QVariant::fromValue(call)); });
+			//  emit coreObject->valueChanged(call);
+		}
+	});
+
 	return data;
 }

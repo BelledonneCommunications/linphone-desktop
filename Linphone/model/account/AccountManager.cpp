@@ -93,6 +93,7 @@ void AccountManager::onRegistrationStateChanged(const std::shared_ptr<linphone::
 			mAccountModel = nullptr;
 			break;
 		case linphone::RegistrationState::Ok:
+			core->setDefaultAccount(account);
 			emit mAccountModel->removeListener();
 			mAccountModel = nullptr;
 			break;

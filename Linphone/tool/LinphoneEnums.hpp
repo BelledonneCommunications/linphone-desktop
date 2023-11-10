@@ -30,6 +30,7 @@
 
 namespace LinphoneEnums {
 Q_NAMESPACE
+Q_CLASSINFO("RegisterEnumClassesUnscoped", "false") // Avoid name clashes
 
 void registerMetaTypes();
 
@@ -115,6 +116,34 @@ Q_ENUM_NS(ChatRoomState)
 linphone::ChatRoom::State toLinphone(const LinphoneEnums::ChatRoomState &data);
 LinphoneEnums::ChatRoomState fromLinphone(const linphone::ChatRoom::State &data);
 
+enum class CallState {
+	Idle = int(linphone::Call::State::Idle),
+	IncomingReceived = int(linphone::Call::State::IncomingReceived),
+	PushIncomingReceived = int(linphone::Call::State::PushIncomingReceived),
+	OutgoingInit = int(linphone::Call::State::OutgoingInit),
+	OutgoingProgress = int(linphone::Call::State::OutgoingProgress),
+	OutgoingRinging = int(linphone::Call::State::OutgoingRinging),
+	OutgoingEarlyMedia = int(linphone::Call::State::OutgoingEarlyMedia),
+	Connected = int(linphone::Call::State::Connected),
+	StreamsRunning = int(linphone::Call::State::StreamsRunning),
+	Pausing = int(linphone::Call::State::Pausing),
+	Paused = int(linphone::Call::State::Paused),
+	Resuming = int(linphone::Call::State::Resuming),
+	Referred = int(linphone::Call::State::Referred),
+	Error = int(linphone::Call::State::Error),
+	End = int(linphone::Call::State::End),
+	PausedByRemote = int(linphone::Call::State::PausedByRemote),
+	UpdatedByRemote = int(linphone::Call::State::UpdatedByRemote),
+	IncomingEarlyMedia = int(linphone::Call::State::IncomingEarlyMedia),
+	Updating = int(linphone::Call::State::Updating),
+	Released = int(linphone::Call::State::Released),
+	EarlyUpdatedByRemote = int(linphone::Call::State::EarlyUpdatedByRemote),
+	EarlyUpdating = int(linphone::Call::State::EarlyUpdating)
+};
+Q_ENUM_NS(CallState)
+linphone::Call::State toLinphone(const LinphoneEnums::CallState &data);
+LinphoneEnums::CallState fromLinphone(const linphone::Call::State &data);
+
 enum class CallStatus {
 	Declined = int(linphone::Call::Status::Declined),
 	Missed = int(linphone::Call::Status::Missed),
@@ -126,8 +155,9 @@ enum class CallStatus {
 };
 Q_ENUM_NS(CallStatus)
 
-linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus &capability);
-LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status &capability);
+linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus &data);
+LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status &data);
+QString toString(const LinphoneEnums::CallStatus &data);
 
 enum class ConferenceLayout {
 	Grid = int(linphone::Conference::Layout::Grid),
@@ -227,7 +257,8 @@ LinphoneEnums::TransportType fromLinphone(const linphone::TransportType &type);
 QString toString(const LinphoneEnums::TransportType &type);
 void fromString(const QString &transportType, LinphoneEnums::TransportType *transport);
 } // namespace LinphoneEnums
-
+/*
+Q_DECLARE_METATYPE(LinphoneEnums::CallState)
 Q_DECLARE_METATYPE(LinphoneEnums::CallStatus)
 Q_DECLARE_METATYPE(LinphoneEnums::ChatMessageState)
 Q_DECLARE_METATYPE(LinphoneEnums::ChatRoomState)
@@ -242,5 +273,5 @@ Q_DECLARE_METATYPE(LinphoneEnums::RecorderState)
 Q_DECLARE_METATYPE(LinphoneEnums::RegistrationState)
 Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
 Q_DECLARE_METATYPE(LinphoneEnums::TransportType)
-
+*/
 #endif

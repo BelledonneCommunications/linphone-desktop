@@ -21,8 +21,10 @@
 #ifndef TOOL_MODEL_H_
 #define TOOL_MODEL_H_
 
+#include "core/call/Call.hpp"
 #include "tool/AbstractObject.hpp"
 
+#include <QHash>
 #include <QObject>
 #include <linphone++/linphone.hh>
 
@@ -36,6 +38,10 @@ public:
 
 	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
 	static QString getDisplayName(QString address);
+
+	static Call *startAudioCall(const QString &sipAddress,
+	                            const QString &prepareTransfertAddress = "",
+	                            const QHash<QString, QString> &headers = {});
 
 private:
 	DECLARE_ABSTRACT_OBJECT
