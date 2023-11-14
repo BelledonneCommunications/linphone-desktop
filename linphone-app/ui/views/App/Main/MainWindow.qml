@@ -192,7 +192,7 @@ ApplicationWindow {
 						id: smartSearchBar
 						
 						Layout.fillWidth: true
-						Layout.maximumWidth: parent.width - telKeypad.width - x
+						
 						
 						maxMenuHeight: MainWindowStyle.searchBox.maxHeight
 						placeholderText: qsTr('mainSearchBarPlaceholder')
@@ -226,8 +226,14 @@ ApplicationWindow {
 						}
 						onLaunchVideoCall: CallsListModel.launchVideoCall(sipAddress, '')
 					}
+					Item{
+						Layout.preferredWidth: telKeypad.width - 30
+												- (keypadButton.visible ? keypadButton.width : 0)
+												- (newChatGroupButton.visible ? newChatGroupButton.width : 0)
+												- 4 * MainWindowStyle.toolBar.spacing
+					}
 					ActionButton {
-						Layout.leftMargin: 30
+						id: keypadButton
 						isCustom: true
 						backgroundRadius: 90
 						colorSet: MainWindowStyle.buttons.telKeyad
@@ -235,6 +241,7 @@ ApplicationWindow {
 						toggled: telKeypad.visible
 					}					
 					ActionButton {
+						id: newChatGroupButton
 						isCustom: true
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newChatGroup
@@ -258,6 +265,7 @@ ApplicationWindow {
 					}
 					
 					ActionButton {
+						id:newConferenceButton
 						isCustom: true
 						backgroundRadius: 4
 						colorSet: MainWindowStyle.buttons.newConference
