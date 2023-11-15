@@ -177,7 +177,7 @@ vs2019-win64-upload:
 # Going to folder in order to avoid having path in checksum
     - |-
       cd build-desktop/OUTPUT/Packages/
-      for file in  $(find . -type f -name '*.exe' -printf '%f\n')
+      for file in  $(find . -type f -name '*.exe' -exec basename {} \;)
       do
         rsync -rlv --ignore-existing $file $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM/$APP_FOLDER
         sha512sum $file > $file.sha512

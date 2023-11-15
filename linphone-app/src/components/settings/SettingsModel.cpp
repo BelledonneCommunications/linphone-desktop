@@ -1774,6 +1774,10 @@ QString SettingsModel::getDefaultOtherSipAccountDomain() const {
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "default_other_sip_account_domain", ""));
 }
 
+bool SettingsModel::getMessageCounterRedirectEnabled() const {
+	return !!mConfig->getInt(UiSection, "message_counter_redirect_enabled", false);
+}
+
 bool SettingsModel::isMipmapEnabled() const{
 	return !!mConfig->getInt(UiSection, "mipmap_enabled", 0);
 }

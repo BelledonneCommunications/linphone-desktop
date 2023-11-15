@@ -150,7 +150,7 @@ job-macosx-makefile-deploy:
 # Going to folder in order to avoid having path in checksum
     - |-
       cd build/OUTPUT/linphone-app/macos/Packages/
-      for file in  $(find . -type f -name 'Linphone*.dmg' -printf '%f\n')
+      for file in  $(find . -type f -name '*.dmg' -exec basename {} \;)
       do
         rsync -rlv --ignore-existing $file $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
         sha512sum $file > $file.sha512

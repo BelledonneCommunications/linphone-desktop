@@ -225,6 +225,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
 	Q_PROPERTY(bool showHomeInviteButton READ getShowHomeInviteButton CONSTANT)
 	Q_PROPERTY(QString defaultOtherSipAccountDomain READ getDefaultOtherSipAccountDomain CONSTANT)
+	Q_PROPERTY(bool messageCounterRedirectEnabled READ getMessageCounterRedirectEnabled CONSTANT)
 	
 	Q_PROPERTY(bool mipmapEnabled READ isMipmapEnabled WRITE setMipmapEnabled NOTIFY mipmapEnabledChanged)
 	Q_PROPERTY(bool useMinimalTimelineFilter READ useMinimalTimelineFilter WRITE setUseMinimalTimelineFilter NOTIFY useMinimalTimelineFilterChanged)
@@ -640,6 +641,7 @@ public:
 	Q_INVOKABLE bool getShowHomePage() const;
 	Q_INVOKABLE bool getShowHomeInviteButton() const;
 	Q_INVOKABLE QString getDefaultOtherSipAccountDomain() const;
+	Q_INVOKABLE bool getMessageCounterRedirectEnabled() const;
 	
 	
 	bool isMipmapEnabled() const;

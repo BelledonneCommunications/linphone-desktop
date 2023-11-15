@@ -410,7 +410,7 @@ void AssistantModel::login () {
 		return;
 	}
 	
-	mAccountCreator->setAsDefault(false);
+	mAccountCreator->setAsDefault(true);
 	auto account = mAccountCreator->createAccountInCore();
 	if(account){
 		auto listener = std::make_shared<LoginListener>(this);

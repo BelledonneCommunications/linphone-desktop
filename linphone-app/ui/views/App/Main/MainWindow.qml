@@ -161,6 +161,7 @@ ApplicationWindow {
 							CoreManager.forceRefreshRegisters()
 							Logic.manageAccounts()
 						}
+						onMessageCounterClicked: window.setView('Calls')
 					}
 					
 					ColumnLayout {
