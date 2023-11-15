@@ -1579,7 +1579,7 @@ void SettingsModel::setSpellCheckerOverrideLocale (const QString &locale) {
 }
 
 bool SettingsModel::getSpellCheckerEnabled() const{
-	return mConfig->getBool(UiSection, "spell_checker_enabled", true);
+	return mConfig->getBool(UiSection, "spell_checker_enabled", false);
 }
 
 void SettingsModel::setSpellCheckerEnabled(bool enable){
