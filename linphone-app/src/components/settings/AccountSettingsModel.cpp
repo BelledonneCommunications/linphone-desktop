@@ -144,8 +144,8 @@ bool AccountSettingsModel::addOrUpdateAccount (std::shared_ptr<linphone::Account
 						  .arg(QString::fromStdString(account->getParams()->getIdentityAddress()->asString()));
 			return false;
 		}
-		
 		coreManager->addingAccount(account->getParams());
+		setDefaultAccount(account);
 	}
 	emit accountSettingsUpdated();
 	return true;
