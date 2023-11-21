@@ -22,6 +22,8 @@
 #define ACCOUNT_PROXY_H_
 
 #include "../proxy/SortFilterProxy.hpp"
+#include "core/account/AccountGui.hpp"
+#include "core/account/AccountList.hpp"
 
 // =============================================================================
 
@@ -29,6 +31,7 @@ class AccountProxy : public SortFilterProxy {
 	Q_OBJECT
 
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
+	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount WRITE setDefaultAccount NOTIFY defaultAccountChanged)
 
 public:
 	AccountProxy(QObject *parent = Q_NULLPTR);
@@ -37,14 +40,19 @@ public:
 	QString getFilterText() const;
 	void setFilterText(const QString &filter);
 
+	AccountGui *getDefaultAccount() const;
+	void setDefaultAccount(AccountGui *account);
+
 signals:
 	void filterTextChanged();
+	void defaultAccountChanged();
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
+	QSharedPointer<AccountList> mList;
 };
 
 #endif

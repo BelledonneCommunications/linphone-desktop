@@ -22,11 +22,16 @@
 
 #include <QDebug>
 
+#include "model/core/CoreModel.hpp"
+#include "tool/Utils.hpp"
+
 DEFINE_ABSTRACT_OBJECT(AccountModel)
 
 AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QObject *parent)
     : ::Listener<linphone::Account, linphone::AccountListener>(account, parent) {
 	mustBeInLinphoneThread(getClassName());
+	connect(CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged, this,
+	        &AccountModel::onDefaultAccountChanged);
 }
 
 AccountModel::~AccountModel() {
@@ -39,11 +44,22 @@ void AccountModel::onRegistrationStateChanged(const std::shared_ptr<linphone::Ac
 	emit registrationStateChanged(account, state, message);
 }
 
-void AccountModel::setPictureUri(std::string uri) {
+void AccountModel::setPictureUri(QString uri) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto account = std::dynamic_pointer_cast<linphone::Account>(mMonitor);
 	auto params = account->getParams()->clone();
-	params->setPictureUri(uri);
+	params->setPictureUri(Utils::appStringToCoreString(uri));
 	account->setParams(params);
 	emit pictureUriChanged(uri);
+}
+
+void AccountModel::onDefaultAccountChanged() {
+	emit defaultAccountChanged(CoreModel::getInstance()->getCore()->getDefaultAccount() == mMonitor);
+}
+
+void AccountModel::setDefault() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto core = CoreModel::getInstance()->getCore();
+	core->setDefaultAccount(mMonitor);
+	emit CoreModel::getInstance()->defaultAccountChanged();
 }

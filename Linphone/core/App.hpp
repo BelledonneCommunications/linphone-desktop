@@ -74,6 +74,7 @@ public:
 	void onLoggerInitialized();
 
 	QQmlApplicationEngine *mEngine = nullptr;
+	bool notify(QObject *receiver, QEvent *event);
 
 private:
 	void createCommandParser();

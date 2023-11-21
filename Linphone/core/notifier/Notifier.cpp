@@ -32,7 +32,7 @@
 #include "Notifier.hpp"
 
 #include "core/App.hpp"
-#include "core/call/Call.hpp"
+#include "core/call/CallGui.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/providers/ImageProvider.hpp"
 
@@ -274,20 +274,23 @@ void Notifier::deleteNotification(QVariant notification) {
 
 void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	auto model = new Call(call);
-	model->moveToThread(this->thread());
-	App::postCoreAsync([this, model]() {
+	auto model = CallCore::create(call);
+	auto gui = new CallGui(model);
+	gui->moveToThread(App::getInstance()->thread());
+	App::postCoreAsync([this, gui]() {
 		mustBeInMainThread(getClassName());
 		QVariantMap map;
-		map["call"].setValue(model);
+
+		map["call"].setValue(gui);
 		CREATE_NOTIFICATION(Notifier::ReceivedCall, map)
 
 		QObject::connect(
-		    model, &Call::statusChanged, notification, [this, notification](LinphoneEnums::CallStatus status) {
+		    gui->getCore(), &CallCore::statusChanged, notification,
+		    [this, notification](LinphoneEnums::CallStatus status) {
 			    qInfo() << log().arg("Delete notification on call status : %1").arg(LinphoneEnums::toString(status));
 			    deleteNotification(QVariant::fromValue(notification));
 		    });
-		QObject::connect(model, &Call::destroyed, notification,
+		QObject::connect(gui->getCore(), &CallCore::destroyed, notification,
 		                 [this, notification]() { deleteNotification(QVariant::fromValue(notification)); });
 	});
 }

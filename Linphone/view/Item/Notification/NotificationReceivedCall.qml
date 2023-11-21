@@ -10,7 +10,7 @@ Notification {
 	// ---------------------------------------------------------------------------
 	
 	readonly property var call: notificationData && notificationData.call
-	property var state: call.state
+	property var state: call.core.state
 	onStateChanged:{
 		 if(state != LinphoneEnums.CallState.IncomingReceived){
 			close()
@@ -35,7 +35,7 @@ Notification {
 				text: 'Accept'
 				Layout.rightMargin: 20
 				onClicked: {
-					notification.call.lAccept()
+					notification.call.core.lAccept(true)
 				}
 			}
 			Item{
@@ -46,7 +46,7 @@ Notification {
 				text: 'Reject'
 				Layout.rightMargin: 20
 				onClicked: {
-					notification.call.lDecline()
+					notification.call.core.lDecline()
 				}
 			}
 		}

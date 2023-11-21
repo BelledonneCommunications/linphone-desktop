@@ -30,8 +30,10 @@
 #include <QQmlFileSelector>
 #include <QTimer>
 
-#include "core/account/Account.hpp"
+#include "core/account/AccountCore.hpp"
 #include "core/account/AccountProxy.hpp"
+#include "core/call/CallCore.hpp"
+#include "core/call/CallGui.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
 #include "core/notifier/Notifier.hpp"
@@ -128,8 +130,10 @@ void App::initCppInterfaces() {
 
 	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
 	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
-	qmlRegisterUncreatableType<Account>(Constants::MainQmlUri, 1, 0, "Account", QLatin1String("Uncreatable"));
-	qmlRegisterUncreatableType<Call>(Constants::MainQmlUri, 1, 0, "Call", QLatin1String("Uncreatable"));
+	qmlRegisterType<AccountGui>(Constants::MainQmlUri, 1, 0, "AccountGui");
+	qmlRegisterUncreatableType<AccountCore>(Constants::MainQmlUri, 1, 0, "AccountCore", QLatin1String("Uncreatable"));
+	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
+	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));
 
 	LinphoneEnums::registerMetaTypes();
 }
@@ -166,4 +170,16 @@ void App::createCommandParser() {
 	    {{"V", "verbose"}, tr("commandLineOptionVerbose")},
 	    {"qt-logs-only", tr("commandLineOptionQtLogsOnly")},
 	});
+}
+
+bool App::notify(QObject *receiver, QEvent *event) {
+	bool done = true;
+	try {
+		done = QApplication::notify(receiver, event);
+	} catch (const std::exception &ex) {
+		qCritical() << "[App] Exception has been catch in notify";
+	} catch (...) {
+		qCritical() << "[App] Generic exeption has been catch in notify";
+	}
+	return done;
 }

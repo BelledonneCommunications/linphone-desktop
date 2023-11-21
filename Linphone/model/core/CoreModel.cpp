@@ -139,6 +139,10 @@ void CoreModel::setPathAfterStart() {
 
 //---------------------------------------------------------------------------------------------------------------------------
 
+void CoreModel::onAccountAdded() {
+	emit accountAdded();
+}
+
 void CoreModel::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
                                                   const std::shared_ptr<linphone::Account> &account,
                                                   linphone::RegistrationState state,

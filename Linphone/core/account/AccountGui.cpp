@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -18,34 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ACCOUNT_LIST_H_
-#define ACCOUNT_LIST_H_
+#include "AccountGui.hpp"
+#include "core/App.hpp"
 
-#include "../proxy/ListProxy.hpp"
-#include "tool/AbstractObject.hpp"
-#include "tool/thread/SafeConnection.hpp"
-#include <QLocale>
+DEFINE_ABSTRACT_OBJECT(AccountGui)
 
-class AccountGui;
-// =============================================================================
+AccountGui::AccountGui(QSharedPointer<AccountCore> core) {
+	mustBeInMainThread(getClassName());
+	qDebug() << "[AccountGui] new" << this;
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
+	mCore = core;
+}
 
-class AccountList : public ListProxy, public AbstractObject {
-	Q_OBJECT
-public:
-	static QSharedPointer<AccountList> create();
-	AccountList(QObject *parent = Q_NULLPTR);
-	~AccountList();
+AccountGui::~AccountGui() {
+	mustBeInMainThread("~" + getClassName());
+	qDebug() << "[AccountGui] delete" << this;
+}
 
-	void setSelf(QSharedPointer<AccountList> me);
-
-	AccountGui *getDefaultAccount() const;
-	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-signals:
-	void lUpdate();
-
-private:
-	QSharedPointer<SafeConnection> mModelConnection;
-	DECLARE_ABSTRACT_OBJECT
-};
-
-#endif
+AccountCore *AccountGui::getCore() const {
+	return mCore.get();
+}

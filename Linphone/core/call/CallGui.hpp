@@ -18,32 +18,23 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOOL_MODEL_H_
-#define TOOL_MODEL_H_
+#ifndef CALL_GUI_H_
+#define CALL_GUI_H_
 
-#include "core/call/CallCore.hpp"
-#include "tool/AbstractObject.hpp"
-
-#include <QHash>
+#include "CallCore.hpp"
 #include <QObject>
-#include <linphone++/linphone.hh>
+#include <QSharedPointer>
 
-class ToolModel : public QObject, public AbstractObject {
+class CallGui : public QObject, public AbstractObject {
 	Q_OBJECT
+
+	Q_PROPERTY(CallCore *core READ getCore CONSTANT)
+
 public:
-	ToolModel(QObject *parent = nullptr);
-	~ToolModel();
-
-	static std::shared_ptr<linphone::Address> interpretUrl(const QString &address);
-
-	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
-	static QString getDisplayName(QString address);
-
-	static QSharedPointer<CallCore> startAudioCall(const QString &sipAddress,
-	                                               const QString &prepareTransfertAddress = "",
-	                                               const QHash<QString, QString> &headers = {});
-
-private:
+	CallGui(QSharedPointer<CallCore> core);
+	~CallGui();
+	CallCore *getCore() const;
+	QSharedPointer<CallCore> mCore;
 	DECLARE_ABSTRACT_OBJECT
 };
 

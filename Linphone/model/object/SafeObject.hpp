@@ -18,32 +18,31 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef TOOL_MODEL_H_
-#define TOOL_MODEL_H_
+#ifndef SAFE_OBJECT_H_
+#define SAFE_OBJECT_H_
 
-#include "core/call/CallCore.hpp"
 #include "tool/AbstractObject.hpp"
 
-#include <QHash>
 #include <QObject>
-#include <linphone++/linphone.hh>
+#include <QVariant>
 
-class ToolModel : public QObject, public AbstractObject {
+class SafeObject : public QObject, public AbstractObject {
 	Q_OBJECT
 public:
-	ToolModel(QObject *parent = nullptr);
-	~ToolModel();
+	SafeObject(QObject *parent = nullptr);
+	SafeObject(QVariant defaultValue, QObject *parent = nullptr);
+	~SafeObject();
 
-	static std::shared_ptr<linphone::Address> interpretUrl(const QString &address);
-
-	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
-	static QString getDisplayName(QString address);
-
-	static QSharedPointer<CallCore> startAudioCall(const QString &sipAddress,
-	                                               const QString &prepareTransfertAddress = "",
-	                                               const QHash<QString, QString> &headers = {});
+	QVariant getValue() const;
+	void onSetValue(QVariant value);
+signals:
+	void requestValue();
+	void setValue(QVariant value);
+	void valueChanged(QVariant value);
 
 private:
+	QVariant mValue;
+
 	DECLARE_ABSTRACT_OBJECT
 };
 

@@ -25,6 +25,7 @@
 #include "tool/AbstractObject.hpp"
 
 #include <QObject>
+#include <QTimer>
 #include <linphone++/linphone.hh>
 
 class CallModel : public ::Listener<linphone::Call, linphone::CallListener>,
@@ -39,7 +40,14 @@ public:
 	void decline();
 	void terminate();
 
+	void setMicrophoneMuted(bool isMuted);
+
+signals:
+	void microphoneMutedChanged(bool isMuted);
+	void durationChanged(int);
+
 private:
+	QTimer mDurationTimer;
 	DECLARE_ABSTRACT_OBJECT
 
 	//--------------------------------------------------------------------------------

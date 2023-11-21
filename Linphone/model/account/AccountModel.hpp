@@ -38,15 +38,18 @@ public:
 	virtual void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                                        linphone::RegistrationState state,
 	                                        const std::string &message) override;
+	void onDefaultAccountChanged();
 
-	void setPictureUri(std::string uri);
+	void setPictureUri(QString uri);
+	void setDefault();
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                              linphone::RegistrationState state,
 	                              const std::string &message);
+	void defaultAccountChanged(bool isDefault);
 
-	void pictureUriChanged(std::string uri);
+	void pictureUriChanged(QString uri);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

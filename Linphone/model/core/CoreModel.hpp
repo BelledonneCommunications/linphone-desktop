@@ -56,6 +56,7 @@ public:
 
 signals:
 	void loggerInitialized();
+	void defaultAccountChanged();
 
 private:
 	QString mConfigPath;
@@ -71,6 +72,7 @@ private:
 	//--------------------------------------------------------------------------------
 	// LINPHONE
 	//--------------------------------------------------------------------------------
+	virtual void onAccountAdded(); // override (Not yet implemented by SDK)
 	virtual void onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                               const std::shared_ptr<linphone::Account> &account,
 	                                               linphone::RegistrationState state,
@@ -152,6 +154,7 @@ private:
 	                                                const std::string &url) override;
 
 signals:
+	void accountAdded();
 	void accountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                     const std::shared_ptr<linphone::Account> &account,
 	                                     linphone::RegistrationState state,

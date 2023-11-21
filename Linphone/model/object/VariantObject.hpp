@@ -24,35 +24,41 @@
 #include "tool/AbstractObject.hpp"
 
 #include <QObject>
+#include <QSharedPointer>
 #include <QVariant>
 
-// Store the VariantObject on a propery and use value.
-// Do not use direcly teh value like VariantObject.value : in this case if value change, VariantObject will be
-// reevaluated.
+#include "SafeObject.hpp"
+#include "tool/thread/SafeConnection.hpp"
 
 class VariantObject : public QObject, public AbstractObject {
 	Q_OBJECT
+	Q_PROPERTY(QVariant value READ getValue NOTIFY valueChanged)
 public:
-	Q_PROPERTY(QVariant value READ getValue WRITE setValue NOTIFY valueChanged)
-
 	VariantObject(QObject *parent = nullptr);
-	VariantObject(QVariant value, QObject *parent = nullptr);
+	VariantObject(QVariant defaultValue, QObject *parent = nullptr);
 	~VariantObject();
 
+	template <typename Func, typename... Args>
+	void makeRequest(Func &&callable, Args &&...args) {
+		mConnection->makeConnect(mCoreObject.get(), &SafeObject::requestValue, [this, callable, args...]() {
+			mConnection->invokeToModel([this, callable, args...]() { mModelObject->setValue(callable(args...)); });
+		});
+	}
+	template <typename SenderClass>
+	void makeUpdate(const typename QtPrivate::FunctionPointer<SenderClass>::Object *sender, SenderClass signal) {
+		mConnection->makeConnect(sender, signal,
+		                         [this]() { mConnection->invokeToCore([this]() { mCoreObject->requestValue(); }); });
+	}
+
 	QVariant getValue() const;
-	void setValue(QVariant value);
+	void requestValue();
 
-	// mCoreObject must be used to request update value : this object will be not be deleted by GUI so it is safe to use
-	// inside model thread. call emit updateValue() from coreObject to set value from model.
-	VariantObject *mCoreObject; // Ensure to use DeleteLater() after updating value
-
+	QSharedPointer<SafeObject> mCoreObject, mModelObject;
+	QSharedPointer<SafeConnection> mConnection;
 signals:
 	void valueChanged(QVariant value);
-	void valueUpdated(QVariant value);
 
 private:
-	QVariant mValue;
-	bool mThreadLocation = true; // true=Core, false=Model
 	DECLARE_ABSTRACT_OBJECT
 };
 

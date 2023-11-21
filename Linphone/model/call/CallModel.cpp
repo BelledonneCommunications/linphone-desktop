@@ -29,6 +29,10 @@ DEFINE_ABSTRACT_OBJECT(CallModel)
 CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *parent)
     : ::Listener<linphone::Call, linphone::CallListener>(call, parent) {
 	mustBeInLinphoneThread(getClassName());
+	mDurationTimer.setInterval(1000);
+	mDurationTimer.setSingleShot(false);
+	connect(&mDurationTimer, &QTimer::timeout, this, [this]() { this->durationChanged(mMonitor->getDuration()); });
+	mDurationTimer.start();
 }
 
 CallModel::~CallModel() {
@@ -65,6 +69,11 @@ void CallModel::terminate() {
 	mMonitor->terminate();
 }
 
+void CallModel::setMicrophoneMuted(bool isMuted) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->setMicrophoneMuted(isMuted);
+	emit microphoneMutedChanged(isMuted);
+}
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {
 	emit dtmfReceived(call, dtmf);
 }

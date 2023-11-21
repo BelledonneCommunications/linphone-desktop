@@ -12,25 +12,79 @@ Window{
 	onWidthChanged: console.log(width)
 	property var callVarObject
 	property var call: callVarObject ? callVarObject.value : null
-	property var callState: call && call.state
-	onCallStateChanged: console.log("State:" +callState)
+	property var callState: call && call.core.state
+	onCallStateChanged: {
+		console.log("State:" +callState)
+		if(callState == LinphoneEnums.CallState.Released)
+			callVarObject = undefined
+		}
 	visible: true
 	onCallChanged: console.log('New Call:' +call)
+	onClosing: {
+		accountStatus.defaultAccount = accountStatus
+		accountLayout.accounts = null
+		gc()
+	}
+	Component.onDestruction: gc()
 	ColumnLayout{
 		anchors.fill: parent
 		RowLayout {
+			id: accountLayout
 			Layout.fillWidth: true
-			LoginForm{
+			property AccountProxy accounts: AccountProxy{id: accountProxy}
+			property var haveAccountVar: UtilsCpp.haveAccount()
+			property var haveAccount: haveAccountVar ? haveAccountVar.value : false
+			onHaveAccountChanged: {
+				console.log("HaveAccount: " +haveAccount)
+				logStack.replace(haveAccount ? accountListComponent : loginComponent)
 			}
+			Control.StackView{
+				id: logStack
+				Layout.preferredHeight: 250
+				Layout.preferredWidth: 250
+				//initialItem: loginComponent
+			}
+			Component{
+					id: accountListComponent
+					ListView{
+						id: accountList
+						Layout.fillHeight: true
+						model: AccountProxy{}
+						delegate:Rectangle{
+							color: "#11111111"
+							height: 20
+							width: accountList.width
+							Text{
+								
+								text: modelData.core.identityAddress
+							}
+						}
+					}
+				}
+				Component{
+					id: loginComponent
+					LoginForm{}
+				}
 			Rectangle{
+				id: accountStatus
 				Layout.preferredWidth: 50
 				Layout.preferredHeight: 50
+				property var defaultAccount: accountProxy.defaultAccount
+				property var state: accountProxy.count > 0 && defaultAccount? defaultAccount.registrationState : LoginPageCpp.registrationState
+				onStateChanged: console.log("State:"+state)
 				
-				color: LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok
+				color: state === LinphoneEnums.RegistrationState.Ok
 								? 'green'
-								: LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Failed  || LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.None
+								: state === LinphoneEnums.RegistrationState.Failed  || state === LinphoneEnums.RegistrationState.None
 									? 'red'
 									: 'orange'
+				MouseArea{
+					anchors.fill: parent
+					onClicked:{
+						logStack.replace(loginComponent)
+						gc()
+					}
+				}
 			}
 			TextInput {
 				id: usernameToCall
@@ -41,6 +95,7 @@ Window{
 				text: 'Call'
 				onClicked: {
 						mainItem.callVarObject = UtilsCpp.startAudioCall(usernameToCall.inputText + "@sip.linphone.org")
+						proto.component1 = comp
 				}
 			}
 		}
@@ -48,10 +103,10 @@ Window{
 		Rectangle{
 			Layout.fillWidth: true
 			Layout.preferredHeight: 50
-			color: call 
-					? call.state === LinphoneEnums.CallState.StreamsRunning 
+			color: call
+					? call.core.state === LinphoneEnums.CallState.StreamsRunning 
 						? 'green'
-						: call.state === LinphoneEnums.CallState.Released
+						: call.core.state === LinphoneEnums.CallState.Released
 							? 'pink'
 							: 'orange'
 					: 'red'
@@ -68,12 +123,25 @@ Window{
 		}
 		Text{
 			id: errorMessageText
-			text: mainItem.call ? mainItem.call.lastErrorMessage : ''
+			text: mainItem.call ? mainItem.call.core.lastErrorMessage : ''
 			color: 'red'
+		}
+		ItemPrototype{
+			id: proto
+			Layout.fillHeight: true
+			Layout.fillWidth: true
 		}
 		Item{
 			Layout.fillHeight: true
 			Layout.fillWidth: true
+		}
+	}
+	Component{
+		id: comp
+		Rectangle{
+			width: 100
+			height: width
+			color: 'pink'
 		}
 	}
 }

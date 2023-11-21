@@ -19,7 +19,8 @@
  */
 
 #include "AccountList.hpp"
-#include "Account.hpp"
+#include "AccountCore.hpp"
+#include "AccountGui.hpp"
 #include "core/App.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
@@ -28,26 +29,80 @@
 
 DEFINE_ABSTRACT_OBJECT(AccountList)
 
+QSharedPointer<AccountList> AccountList::create() {
+	auto model = QSharedPointer<AccountList>(new AccountList(), &QObject::deleteLater);
+	model->moveToThread(App::getInstance()->thread());
+	model->setSelf(model);
+	return model;
+}
+
 AccountList::AccountList(QObject *parent) : ListProxy(parent) {
+	qDebug() << "[AccountList] new" << this;
 	mustBeInMainThread(getClassName());
-	App::postModelAsync([=]() {
-		QList<QSharedPointer<Account>> accounts;
-		// Model thread.
-		mustBeInLinphoneThread(getClassName());
-		auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
-		for (auto it : linphoneAccounts) {
-			auto model = QSharedPointer<Account>(new Account(it), &QObject::deleteLater);
-			model->moveToThread(this->thread());
-			accounts.push_back(model);
-		}
-		// Invoke for adding stuffs in caller thread
-		QMetaObject::invokeMethod(this, [this, accounts]() {
-			mustBeInMainThread(getClassName());
-			add(accounts);
-		});
-	});
+	connect(CoreModel::getInstance().get(), &CoreModel::accountAdded, this, &AccountList::lUpdate);
 }
 
 AccountList::~AccountList() {
+	qDebug() << "[AccountList] delete" << this;
 	mustBeInMainThread("~" + getClassName());
+	if (mModelConnection) mModelConnection->deleteLater();
+}
+
+void AccountList::setSelf(QSharedPointer<AccountList> me) {
+	mModelConnection = QSharedPointer<SafeConnection>(
+	    new SafeConnection(me.objectCast<QObject>(), std::dynamic_pointer_cast<QObject>(CoreModel::getInstance())),
+	    &QObject::deleteLater);
+	mModelConnection->makeConnect(this, &AccountList::lUpdate, [this]() {
+		mModelConnection->invokeToModel([this]() {
+			QList<QSharedPointer<AccountCore>> accounts;
+			// Model thread.
+			mustBeInLinphoneThread(getClassName());
+			auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
+			for (auto it : linphoneAccounts) {
+				auto model = AccountCore::create(it);
+				accounts.push_back(model);
+			}
+			mModelConnection->invokeToCore([this, accounts]() {
+				mustBeInMainThread(getClassName());
+				clearData();
+				add(accounts);
+			});
+		});
+	});
+
+	lUpdate();
+}
+
+AccountGui *AccountList::getDefaultAccount() const {
+	for (auto it : mList) {
+		auto account = it.objectCast<AccountCore>();
+		if (account->getIsDefaultAccount()) return new AccountGui(account);
+	}
+	return nullptr;
+}
+/*
+void AccountList::update() {
+    App::postModelAsync([=]() {
+        QList<QSharedPointer<AccountCore>> accounts;
+        // Model thread.
+        mustBeInLinphoneThread(getClassName());
+        auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
+        for (auto it : linphoneAccounts) {
+            auto model = AccountCore::create(it);
+            accounts.push_back(model);
+        }
+        // Invoke for adding stuffs in caller thread
+        QMetaObject::invokeMethod(this, [this, accounts]() {
+            mustBeInMainThread(getClassName());
+            clearData();
+            add(accounts);
+        });
+    });
+}
+*/
+QVariant AccountList::data(const QModelIndex &index, int role) const {
+	int row = index.row();
+	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
+	if (role == Qt::DisplayRole) return QVariant::fromValue(new AccountGui(mList[row].objectCast<AccountCore>()));
+	return QVariant();
 }

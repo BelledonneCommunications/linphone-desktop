@@ -11,6 +11,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/logger/LoggerModel.cpp
 	model/logger/LoggerListener.cpp
 	
+	model/object/SafeObject.cpp
 	model/object/VariantObject.cpp
 	
 	model/setting/SettingsModel.cpp

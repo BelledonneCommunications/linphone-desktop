@@ -84,12 +84,5 @@ Window {
 		MainLayout {
 		}
 	}
-
-	Component {
-		id: ongoingCallPage
-		OngoingCallPage {
-		}
-	}
-
 } 
  

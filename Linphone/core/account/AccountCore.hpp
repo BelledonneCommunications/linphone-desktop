@@ -18,54 +18,63 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ACCOUNT_H_
-#define ACCOUNT_H_
+#ifndef ACCOUNT_CORE_H_
+#define ACCOUNT_CORE_H_
 
 #include "model/account/AccountModel.hpp"
 #include "tool/LinphoneEnums.hpp"
+#include "tool/thread/SafeConnection.hpp"
 #include <QObject>
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
-class Account : public QObject, public AbstractObject {
+class AccountCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QString contactAddress READ getContactAddress CONSTANT)
 	Q_PROPERTY(QString identityAddress READ getIdentityAddress CONSTANT)
-	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE setPictureUri NOTIFY pictureUriChanged)
+	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE lSetPictureUri NOTIFY pictureUriChanged)
 	Q_PROPERTY(
 	    LinphoneEnums::RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
+	Q_PROPERTY(bool isDefaultAccount READ getIsDefaultAccount NOTIFY defaultAccountChanged)
 
 public:
+	static QSharedPointer<AccountCore> create(const std::shared_ptr<linphone::Account> &account);
 	// Should be call from model Thread. Will be automatically in App thread after initialization
-	Account(const std::shared_ptr<linphone::Account> &account);
-	~Account();
+	AccountCore(const std::shared_ptr<linphone::Account> &account);
+	~AccountCore();
+	void setSelf(QSharedPointer<AccountCore> me);
 
 	QString getContactAddress() const;
 	QString getIdentityAddress() const;
 	QString getPictureUri() const;
 	LinphoneEnums::RegistrationState getRegistrationState() const;
+	bool getIsDefaultAccount() const;
 
-	void setPictureUri(const QString &uri);
-
-	void onPictureUriChanged(std::string uri);
+	void onPictureUriChanged(QString uri);
 	void onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
 	                                linphone::RegistrationState state,
 	                                const std::string &message);
 
+	void onDefaultAccountChanged(bool isDefault);
+
 signals:
 	void pictureUriChanged();
 	void registrationStateChanged(const QString &message);
+	void defaultAccountChanged(bool isDefault);
 
 	// Account requests
-	void requestSetPictureUri(std::string pictureUri);
+	void lSetPictureUri(QString pictureUri);
+	void lSetDefaultAccount();
 
 private:
 	QString mContactAddress;
 	QString mIdentityAddress;
 	QString mPictureUri;
+	bool mIsDefaultAccount = false;
 	LinphoneEnums::RegistrationState mRegistrationState;
 	std::shared_ptr<AccountModel> mAccountModel;
+	QSharedPointer<SafeConnection> mAccountModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

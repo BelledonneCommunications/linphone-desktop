@@ -1,9 +1,11 @@
 list(APPEND _LINPHONEAPP_SOURCES
-	core/account/Account.cpp
+	core/account/AccountCore.cpp
+	core/account/AccountGui.cpp
 	core/account/AccountList.cpp
 	core/account/AccountProxy.cpp
 	core/App.cpp
-	core/call/Call.cpp
+	core/call/CallCore.cpp
+	core/call/CallGui.cpp
 	core/logger/QtLogger.cpp
 	core/login/LoginPage.cpp
 	core/notifier/Notifier.cpp

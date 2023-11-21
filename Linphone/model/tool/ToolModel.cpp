@@ -68,9 +68,9 @@ QString ToolModel::getDisplayName(QString address) {
 	return displayName.isEmpty() ? address : displayName;
 }
 
-Call *ToolModel::startAudioCall(const QString &sipAddress,
-                                const QString &prepareTransfertAddress,
-                                const QHash<QString, QString> &headers) {
+QSharedPointer<CallCore> ToolModel::startAudioCall(const QString &sipAddress,
+                                                   const QString &prepareTransfertAddress,
+                                                   const QHash<QString, QString> &headers) {
 	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
 	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 
@@ -93,7 +93,7 @@ Call *ToolModel::startAudioCall(const QString &sipAddress,
 	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	// CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	auto call = core->inviteAddressWithParams(address, params);
-	return call ? new Call(call) : nullptr;
+	return call ? CallCore::create(call) : nullptr;
 
 	/* TODO transfer
 

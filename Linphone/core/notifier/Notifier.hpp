@@ -23,10 +23,10 @@
 
 #include <memory>
 
-#include "core/call/Call.hpp"
 #include "tool/AbstractObject.hpp"
 #include <QHash>
 #include <QObject>
+#include <linphone++/linphone.hh>
 // =============================================================================
 
 class QMutex;

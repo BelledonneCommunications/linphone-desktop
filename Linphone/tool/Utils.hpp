@@ -52,6 +52,7 @@ public:
 	Q_INVOKABLE static VariantObject *startAudioCall(const QString &sipAddress,
 	                                                 const QString &prepareTransfertAddress = "",
 	                                                 const QHash<QString, QString> &headers = {});
+	Q_INVOKABLE static VariantObject *haveAccount();
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);

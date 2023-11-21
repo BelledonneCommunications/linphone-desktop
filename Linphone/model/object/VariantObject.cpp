@@ -26,39 +26,29 @@
 #include "core/App.hpp"
 
 DEFINE_ABSTRACT_OBJECT(VariantObject)
-
-VariantObject::VariantObject(QObject *parent) {
-	mThreadLocation = false;
-	mustBeInMainThread(getClassName());
-	mCoreObject = nullptr;
+VariantObject::VariantObject(QObject *parent) : VariantObject(QVariant()) {
 }
+VariantObject::VariantObject(QVariant defaultValue, QObject *parent) {
+	mCoreObject = QSharedPointer<SafeObject>::create(defaultValue);
+	mModelObject = QSharedPointer<SafeObject>::create();
+	mModelObject->moveToThread(CoreModel::getInstance()->thread());
 
-VariantObject::VariantObject(QVariant value, QObject *parent) : mValue(value) {
-	mThreadLocation = true;
-	mustBeInMainThread(getClassName());
-	connect(this, &VariantObject::valueUpdated, this, &VariantObject::setValue);
-	mCoreObject = new VariantObject(nullptr);
-	mCoreObject->moveToThread(CoreModel::getInstance()->thread());
-	connect(mCoreObject, &VariantObject::valueChanged, this, &VariantObject::setValue);
-	connect(mCoreObject, &VariantObject::valueChanged, mCoreObject, &QObject::deleteLater);
+	mConnection = QSharedPointer<SafeConnection>(
+	    new SafeConnection(mCoreObject.objectCast<QObject>(), mModelObject.objectCast<QObject>()),
+	    &QObject::deleteLater);
+
+	mConnection->makeConnect(mCoreObject.get(), &SafeObject::setValue, &SafeObject::onSetValue);
+	mConnection->makeConnect(mModelObject.get(), &SafeObject::setValue, &SafeObject::onSetValue);
+	connect(mCoreObject.get(), &SafeObject::valueChanged, this, &VariantObject::valueChanged);
 }
 
 VariantObject::~VariantObject() {
-	if (mThreadLocation) mustBeInMainThread("~" + getClassName());
-	else mustBeInLinphoneThread("~" + getClassName());
 }
 
 QVariant VariantObject::getValue() const {
-	if (mThreadLocation) mustBeInMainThread(QString(gClassName) + " : " + Q_FUNC_INFO);
-	else mustBeInLinphoneThread(QString(gClassName) + " : " + Q_FUNC_INFO);
-	return mValue;
+	return mCoreObject->getValue();
 }
 
-void VariantObject::setValue(QVariant value) {
-	if (mThreadLocation) mustBeInMainThread(QString(gClassName) + " : " + Q_FUNC_INFO);
-	else mustBeInLinphoneThread(QString(gClassName) + " : " + Q_FUNC_INFO);
-	if (value != mValue) {
-		mValue = value;
-		emit valueChanged(mValue);
-	}
+void VariantObject::requestValue() {
+	emit mCoreObject->requestValue();
 }

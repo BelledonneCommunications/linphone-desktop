@@ -21,7 +21,7 @@
 #include "Utils.hpp"
 
 #include "core/App.hpp"
-#include "model/call/CallModel.hpp"
+#include "core/call/CallGui.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 
@@ -42,10 +42,11 @@ char *Utils::rstrstr(const char *a, const char *b) {
 
 VariantObject *Utils::getDisplayName(const QString &address) {
 	VariantObject *data = new VariantObject(address); // Scope : GUI
-	App::postModelAsync([coreObject = data->mCoreObject, address]() mutable {
+	data->makeRequest([address]() {
 		QString displayName = ToolModel::getDisplayName(address);
-		coreObject->setValue(displayName);
+		return displayName;
 	});
+	data->requestValue();
 	return data;
 }
 
@@ -53,16 +54,27 @@ VariantObject *Utils::startAudioCall(const QString &sipAddress,
                                      const QString &prepareTransfertAddress,
                                      const QHash<QString, QString> &headers) {
 	VariantObject *data = new VariantObject(QVariant()); // Scope : GUI
-	qDebug() << "Calling " << sipAddress;
-	App::postModelAsync([coreObject = data->mCoreObject, sipAddress, prepareTransfertAddress, headers]() mutable {
+
+	data->makeRequest([sipAddress, prepareTransfertAddress, headers]() {
 		auto call = ToolModel::startAudioCall(sipAddress, prepareTransfertAddress, headers);
-		if (call && coreObject) {
-			call->moveToThread(App::getInstance()->thread());
-			coreObject->setValue(QVariant::fromValue(call));
-			// App::postCoreAsync([data, call]() { data->setValue(QVariant::fromValue(call)); });
-			//  emit coreObject->valueChanged(call);
-		}
+		if (call) {
+			return QVariant::fromValue(new CallGui(call));
+		} else return QVariant();
 	});
+	data->requestValue();
 
 	return data;
+}
+
+VariantObject *Utils::haveAccount() {
+	VariantObject *result = new VariantObject();
+
+	// Using connect ensure to have sender() and receiver() alive.
+	result->makeRequest([]() {
+		// Model
+		return CoreModel::getInstance()->getCore()->getAccountList().size() > 0;
+	});
+	result->makeUpdate(CoreModel::getInstance().get(), &CoreModel::accountAdded);
+	result->requestValue();
+	return result;
 }
