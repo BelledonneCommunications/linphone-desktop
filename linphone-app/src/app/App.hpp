@@ -127,6 +127,11 @@ public:
 
 // Check module availability when no dependencies are needed (else use SettingsModel)
   Q_INVOKABLE static bool isPdfAvailable();
+  Q_INVOKABLE static bool isLinux();
+#ifdef Q_OS_LINUX
+  Q_INVOKABLE void exportDesktopFile();
+  bool generateDesktopFile(const QString& confPath, bool remove);
+#endif
   
 public slots:
   void stateChanged(Qt::ApplicationState);

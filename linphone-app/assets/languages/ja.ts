@@ -2033,6 +2033,11 @@
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
         <translation>録音</translation>
     </message>
+    <message>
+        <source>exportDesktopFile</source>
+        <extracomment>&apos;Export %1.desktop file to applications&apos; : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowTopMenuBar</name>
@@ -2057,6 +2062,11 @@
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
         <translation>録音</translation>
+    </message>
+    <message>
+        <source>exportDesktopFile</source>
+        <extracomment>&apos;Export %1.desktop file to applications&apos; : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

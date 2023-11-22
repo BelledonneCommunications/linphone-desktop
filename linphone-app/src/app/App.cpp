@@ -73,6 +73,7 @@ using namespace std;
 namespace {
 #ifdef Q_OS_LINUX
 const QString AutoStartDirectory(QDir::homePath().append(QStringLiteral("/.config/autostart/")));
+const QString ApplicationsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/applications/")));
 #elif defined(Q_OS_MACOS)
 const QString OsascriptExecutable(QStringLiteral("osascript"));
 #else
@@ -464,6 +465,7 @@ void App::initContentApp () {
 	mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 	
 	mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
+	mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
 
 #ifdef APPLICATION_URL
 	mEngine->rootContext()->setContextProperty("applicationUrl", APPLICATION_URL);
@@ -997,23 +999,37 @@ void App::setAutoStart (bool enabled) {
 	}
 	
 	const QString confPath(AutoStartDirectory + EXECUTABLE_NAME ".desktop");
+	if(generateDesktopFile(confPath, !enabled)) {
+		mAutoStart = enabled;
+		emit autoStartChanged(enabled);
+	}
+}
+void App::exportDesktopFile(){
+	QDir dir(ApplicationsDirectory);
+	if (!dir.exists() && !dir.mkpath(ApplicationsDirectory)) {
+		qWarning() << QStringLiteral("Unable to build applications dir path: `%1`.").arg(ApplicationsDirectory);
+		return;
+	}
+	
+	const QString confPath(ApplicationsDirectory + EXECUTABLE_NAME ".desktop");
+	if(generateDesktopFile(confPath, true))
+		generateDesktopFile(confPath, false);
+}
+bool App::generateDesktopFile(const QString& confPath, bool remove){
 	qInfo() << QStringLiteral("Updating `%1`...").arg(confPath);
 	QFile file(confPath);
 	
-	if (!enabled) {
+	if (remove) {
 		if (file.exists() && !file.remove()) {
 			qWarning() << QLatin1String("Unable to remove autostart file: `" EXECUTABLE_NAME ".desktop`.");
-			return;
+			return false;
 		}
-		
-		mAutoStart = enabled;
-		emit autoStartChanged(enabled);
-		return;
+		return true;
 	}
 	
 	if (!file.open(QFile::WriteOnly)) {
 		qWarning() << "Unable to open autostart file: `" EXECUTABLE_NAME ".desktop`.";
-		return;
+		return false;
 	}
 	
 	const QString binPath(applicationFilePath());
@@ -1044,11 +1060,10 @@ void App::setAutoStart (bool enabled) {
     "Exec=" + exec + " --iconified\n"
     "Terminal=false\n"
     "Categories=Network;Telephony;\n"
-    "MimeType=x-scheme-handler/sip-" EXECUTABLE_NAME ";x-scheme-handler/sip;x-scheme-handler/sips-" EXECUTABLE_NAME ";x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;\n"
+    "MimeType=x-scheme-handler/sip-" EXECUTABLE_NAME ";x-scheme-handler/sip;x-scheme-handler/sips-" EXECUTABLE_NAME ";x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;x-scheme-handler/" EXECUTABLE_NAME "-config;\n"
+    "X-PulseAudio-Properties=media.role=phone\n"
   );
-	
-	mAutoStart = enabled;
-	emit autoStartChanged(enabled);
+  return true;
 }
 
 #elif defined(Q_OS_MACOS)
@@ -1203,6 +1218,14 @@ void App::checkForUpdates(bool force) {
 
 bool App::isPdfAvailable(){
 #ifdef PDF_ENABLED
+	return true;
+#else
+	return false;
+#endif
+}
+
+bool App::isLinux(){
+#ifdef Q_OS_LINUX
 	return true;
 #else
 	return false;
