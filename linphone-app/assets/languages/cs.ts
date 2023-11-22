@@ -1996,18 +1996,6 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <translation>Otevřít schůzky</translation>
     </message>
     <message>
-        <source>lastProvisioningFailed</source>
-        <translation type="unfinished">Poslední vzdálené zajištění selhalo</translation>
-    </message>
-    <message>
-        <source>newVersionAvailable</source>
-        <translation type="unfinished">K dispozici je nová verze (%1)!</translation>
-    </message>
-    <message>
-        <source>newVersionAvailableInstructions</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>cancel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5285,6 +5273,61 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>okButton</source>
         <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <translation>Chtěl jste říct?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <translation>Přidat do slovníku</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <translation>Ignorovat</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <translation>Ignorovat vždy</translation>
+    </message>
+    <message>
+        <source>newVersionCheckError</source>
+        <translation>Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation>Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
+    </message>
+    <message>
+        <source>downloadUpdate</source>
+        <translation>Stáhnout</translation>
+    </message>
+    <message>
+        <source>noNewVersionAvailable</source>
+        <translation>Vaše aplikace je aktuální.</translation>
+    </message>
+    <message>
+        <source>newVersionInstalled</source>
+        <translation>Nová verze aplikace byla úspěšně nainstalována.</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <translation>Chtěl jste říct?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <translation>Přidat do slovníku</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <translation>Ignorovat</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <translation>Ignorovat vždy</translation>
     </message>
 </context>
 <context>
