@@ -262,42 +262,42 @@
     <message>
         <source>noAccountExists</source>
         <extracomment>&quot;Account doesn&apos;t exist&quot; : Warning message when no account has been found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Účet již neexistuje</translation>
     </message>
     <message>
         <source>recoveringAccount</source>
         <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Obnova účtu</translation>
     </message>
     <message>
         <source>Cannot open validation url for the account creation request token</source>
         <extracomment>&quot;Cannot open validation URL for the account creation request token&quot; : Warning message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze otevřít adresu URL pro ověření tokenu žádosti o vytvoření účtu</translation>
     </message>
     <message>
         <source>waitingValidation</source>
         <extracomment>&apos;Waiting for validation at %1&apos; : User message for validation. %1 is an URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Čekání na ověření %1</translation>
     </message>
     <message>
         <source>wrongTokenRequest</source>
         <extracomment>&apos;The answer of account creation request token doesn&apos;t have token and validation_url fields&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odpověď tokenu požadavku na vytvoření účtu neobsahuje pole token a validation_url</translation>
     </message>
     <message>
         <source>tokenError</source>
         <extracomment>&apos;Cannot get request token for account creation (%1)&apos; : Status messsage. %1 is a code number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nelze získat token požadavku pro vytvoření účtu (%1)&apos;</translation>
     </message>
     <message>
         <source>requestingValidationUrl</source>
         <extracomment>&apos;Requesting validation URL&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vyžádání adresy URL pro ověřování</translation>
     </message>
     <message>
         <source>loginStep</source>
         <extracomment>&apos;Connecting&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Připojování</translation>
     </message>
 </context>
 <context>
@@ -496,27 +496,27 @@
     <message>
         <source>callListTitle</source>
         <extracomment>&apos;Call list&apos; : Call histories title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Historie volání</translation>
     </message>
     <message>
         <source>incomingFilter</source>
         <extracomment>&apos;Incoming&apos; : Filter label for incoming call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Příchozí</translation>
     </message>
     <message>
         <source>outgoingFilter</source>
         <extracomment>&apos;Outgoing&apos; : Filter label for outgoing call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Odchozí</translation>
     </message>
     <message>
         <source>missedFilter</source>
         <extracomment>&apos;Missed&apos; : Filter label for missed call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zmeškané</translation>
     </message>
     <message>
         <source>searchListPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in a list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hledat v seznamu</translation>
     </message>
 </context>
 <context>
@@ -991,7 +991,7 @@ Adresa URL není nakonfigurována.</translation>
     <message>
         <source>createMeeting</source>
         <extracomment>&apos;Create Meeting&apos; : Button label to create a meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vytvořit schůzku</translation>
     </message>
 </context>
 <context>
@@ -1097,7 +1097,7 @@ Adresa URL není nakonfigurována.</translation>
     <message>
         <source>displayName</source>
         <extracomment>&apos;Display Name&apos; : placeholder for setting display name on a contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zobrazené jméno</translation>
     </message>
 </context>
 <context>
@@ -1127,17 +1127,17 @@ Adresa URL není nakonfigurována.</translation>
     <message>
         <source>localContactsEntry</source>
         <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
-        <translation type="unfinished">Místní kontakty</translation>
+        <translation>Místní kontakty</translation>
     </message>
     <message>
         <source>contactsEntry</source>
         <extracomment>&apos;Contacts&apos; : Contacts section label in main waindow.</extracomment>
-        <translation type="unfinished">KONTAKTY</translation>
+        <translation>Kontakty</translation>
     </message>
     <message>
         <source>selectOnlineContacts</source>
         <extracomment>&apos;Online&apos; : Filter label to display only online contacts.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Online</translation>
     </message>
 </context>
 <context>
@@ -1508,12 +1508,13 @@ Adresa URL není nakonfigurována.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
+        <translation>Účet je již vytvořen. Tato akce vymaže stávající účet. : Upozorněte na to uživatele.</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation>Poslední vzdálené zajištění selhalo</translation>
+        <translation>Vzdálené poskytování nastavení selhalo. Odkaz může být použit nebo jeho platnost vypršela. Pokud vám byl poskytnut, obraťte se na správce.</translation>
     </message>
     <message>
         <source>generateLabel</source>
@@ -1977,22 +1978,22 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>openCalls</source>
         <extracomment>&apos;Open call history&apos; : Tooltip for a button that open the call history view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít historii volání</translation>
     </message>
     <message>
         <source>openChats</source>
         <extracomment>&apos;Open chats&apos; : Tooltip for a button that open the conversations view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít chaty</translation>
     </message>
     <message>
         <source>openContacts</source>
         <extracomment>&apos;Open contacts&apos; : Tooltip for a button that open the contacts view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít kontakty</translation>
     </message>
     <message>
         <source>openMeetings</source>
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Otevřít schůzky</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
@@ -2740,7 +2741,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished">Přihlášení se nezdařilo. Zkontrolujte prosím uživatelské jméno/heslo.</translation>
+        <translation>Přihlášení se nezdařilo. Zkontrolujte prosím své uživatelské jméno/heslo.</translation>
     </message>
 </context>
 <context>
@@ -4117,7 +4118,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>chatsTitle</source>
         <extracomment>&apos;Messages&apos; : Title for conversations</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zprávy</translation>
     </message>
 </context>
 <context>
@@ -5284,6 +5285,61 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>okButton</source>
         <translation type="unfinished">OK</translation>
+    </message>
+</context>
+<context>
+    <name></name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <translation>Chtěl jste říct?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <translation>Přidat do slovníku</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <translation>Ignorovat</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <translation>Ignorovat vždy</translation>
+    </message>
+    <message>
+        <source>newVersionCheckError</source>
+        <translation>Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation>Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
+    </message>
+    <message>
+        <source>downloadUpdate</source>
+        <translation>Stáhnout</translation>
+    </message>
+    <message>
+        <source>noNewVersionAvailable</source>
+        <translation>Vaše aplikace je aktuální.</translation>
+    </message>
+    <message>
+        <source>newVersionInstalled</source>
+        <translation>Nová verze aplikace byla úspěšně nainstalována.</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <translation>Chtěl jste říct?</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <translation>Přidat do slovníku</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <translation>Ignorovat</translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <translation>Ignorovat vždy</translation>
     </message>
 </context>
 </TS>
