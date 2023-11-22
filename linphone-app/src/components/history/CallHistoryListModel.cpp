@@ -60,8 +60,9 @@ CallHistoryListModel::~CallHistoryListModel(){
 
 void CallHistoryListModel::add(const std::list<std::shared_ptr<linphone::CallLog>>& callLogs){
 	QList<QSharedPointer<CallHistoryModel>> toAdd;
+	auto defaultAccount = CoreManager::getInstance()->getCore()->getDefaultAccount();
 	for(auto callLog : callLogs) {
-		if(!callLog->getLocalAddress()->weakEqual(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()))
+		if(defaultAccount && !callLog->getLocalAddress()->weakEqual(CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()))
 			continue;
 		QString confUri;
 		auto remoteAddress = callLog->getRemoteAddress()->clone();
