@@ -433,39 +433,34 @@ Window {
 						ColumnLayout {
 							Layout.fillWidth: true
 							Layout.fillHeight: true
+							Item {
+								Layout.fillWidth: true
+								Layout.fillHeight: true
+							}
 							SearchBar {
 								id: dialerTextInput
 								Layout.fillWidth: true
-								// Layout.maximumWidth: mainItem.width
+								Layout.leftMargin: 10 * DefaultStyle.dp
+								Layout.rightMargin: 10 * DefaultStyle.dp
+								magnifierVisible: false
 								color: DefaultStyle.grey_0
 								borderColor: DefaultStyle.grey_200
 								placeholderText: ""
 								numericPad: numPad
-								Component.onCompleted: numericPad.visible = true
 								numericPadButton.visible: false
 							}
 							Item {
-								Component.onCompleted: console.log("num pad", x, y, width, height)
 								Layout.fillWidth: true
 								Layout.preferredHeight: numPad.height
-								Layout.fillHeight: numPad.height
-								Layout.alignment: Qt.AlignBottom
-								visible: false
-								onVisibleChanged: {
-									console.log("visible cvhanged", visible)
-									if (visible) numPad.open()
-									else numPad.close()
-								}
+								Layout.topMargin: 10 * DefaultStyle.dp
 								NumericPad {
 									id: numPad
 									width: parent.width
 									visible: parent.visible
 									closeButtonVisible: false
-									onVisibleChanged: {
-									console.log("visible numpad", visible, parent.visible)
+									onLaunchCall: {
+										var callVarObject = UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
 									}
-									onOpened: console.log("open")
-									onClosed: console.log("close")
 								}
 							}
 						}
@@ -577,9 +572,8 @@ Window {
 						enabledIcon: AppIcons.verticalDots
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
-						onCheckedChanged: {
-							if (checked) moreOptionsMenu.open()
-							else moreOptionsMenu.close()
+						onPressed: {
+							moreOptionsMenu.visible = !moreOptionsMenu.visible
 						}
 					}
 					Popup {
@@ -588,14 +582,8 @@ Window {
 						y: moreOptionsButton.y - height
 						padding: 20 * DefaultStyle.dp
 
-						closePolicy: Control.Popup.CloseOnEscape
-						onClosed: moreOptionsButton.checked = false
-
-						Connections {
-							target: rightPanel
-							onVisibleChanged: if (!rightPanel.visible) moreOptionsMenu.close()
-						}
-
+						// closePolicy: Control.Popup.CloseOnEscape
+						onAboutToHide: moreOptionsButton.checked = false
 						contentItem: ColumnLayout {
 							id: optionsList
 							spacing: 10 * DefaultStyle.dp
@@ -604,7 +592,7 @@ Window {
 								id: dialerButton
 								// width: 150
 								Layout.fillWidth: true
-								height: 32 * DefaultStyle.dp
+								// height: 32 * DefaultStyle.dp
 								background: Item {
 									visible: false
 								}
@@ -627,7 +615,7 @@ Window {
 							Control.Button {
 								id: speakerButton
 								Layout.fillWidth: true
-								height: 32 * DefaultStyle.dp
+								// height: 32 * DefaultStyle.dp
 								checkable: true
 								background: Item {
 									visible: false

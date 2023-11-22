@@ -30,8 +30,15 @@ Control.Popup {
 			source: numPadBackground
 			shadowEnabled: true
 			shadowColor: DefaultStyle.grey_1000
-			shadowOpacity: 0.1
+			shadowOpacity: 0.8
+			shadowHorizontalOffset: 10 * DefaultStyle.dp
 			shadowBlur: 1
+		}
+		Rectangle {
+			width: parent.width
+			height: parent.height / 2
+			anchors.bottom: parent.bottom
+			color: DefaultStyle.grey_100
 		}
 		Button {
 			id: closeButton

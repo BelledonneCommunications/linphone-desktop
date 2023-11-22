@@ -10,6 +10,7 @@ Rectangle {
 	property int textInputWidth: 350 * DefaultStyle.dp
 	property color borderColor: "transparent"
 	property string text: textField.text
+	property bool magnifierVisible: true
 	property var validator: RegularExpressionValidator{}
 	property Control.Popup numericPad
 	property alias numericPadButton: dialerButton
@@ -36,6 +37,7 @@ Rectangle {
 	border.color: textField.activeFocus ? DefaultStyle.main2_500main : mainItem.borderColor
 	Image {
 		id: magnifier
+		visible: mainItem.magnifierVisible
 		anchors.left: parent.left
 		anchors.verticalCenter: parent.verticalCenter
 		anchors.leftMargin: 10 * DefaultStyle.dp
@@ -45,7 +47,8 @@ Rectangle {
 	}
 	Control.TextField {
 		id: textField
-		anchors.left: magnifier.right
+		anchors.left: magnifier.visible ? magnifier.right : parent.left
+		anchors.leftMargin: magnifier.visible ? 0 : 10 * DefaultStyle.dp
 		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
 		placeholderText: mainItem.placeholderText
@@ -63,9 +66,9 @@ Rectangle {
 			opacity: 0.
 		}
 		cursorDelegate: Rectangle {
-			visible: textField.activeFocus
-			color: DefaultStyle.main1_500_main
-			width: 2 * DefaultStyle.dp
+			visible: textField.cursorVisible
+			color: DefaultStyle.main2_500main
+			width: 1 * DefaultStyle.dp
 		}
 	}
 	Control.Button {
