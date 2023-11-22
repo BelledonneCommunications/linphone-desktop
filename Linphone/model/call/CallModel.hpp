@@ -41,10 +41,20 @@ public:
 	void terminate();
 
 	void setMicrophoneMuted(bool isMuted);
+	void setSpeakerMuted(bool isMuted);
+	void setCameraEnabled(bool enabled);
+	void setPaused(bool paused);
+	void transferTo(const std::shared_ptr<linphone::Address> &address);
+
+	std::shared_ptr<const linphone::Address> getRemoteAddress();
+	bool getAuthenticationTokenVerified();
 
 signals:
 	void microphoneMutedChanged(bool isMuted);
+	void speakerMutedChanged(bool isMuted);
+	void cameraEnabledChanged(bool enabled);
 	void durationChanged(int);
+	void pausedChanged(bool paused);
 
 private:
 	QTimer mDurationTimer;
@@ -67,6 +77,8 @@ private:
 	virtual void onStateChanged(const std::shared_ptr<linphone::Call> &call,
 	                            linphone::Call::State state,
 	                            const std::string &message) override;
+	virtual void onStatusChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::Status status);
+	virtual void onDirChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::Dir dir);
 	virtual void onStatsUpdated(const std::shared_ptr<linphone::Call> &call,
 	                            const std::shared_ptr<const linphone::CallStats> &stats) override;
 	virtual void onTransferStateChanged(const std::shared_ptr<linphone::Call> &call,
@@ -94,6 +106,8 @@ signals:
 	void infoMessageReceived(const std::shared_ptr<linphone::Call> &call,
 	                         const std::shared_ptr<const linphone::InfoMessage> &message);
 	void stateChanged(linphone::Call::State state, const std::string &message);
+	void statusChanged(linphone::Call::Status status);
+	void dirChanged(linphone::Call::Dir dir);
 	void statsUpdated(const std::shared_ptr<linphone::Call> &call,
 	                  const std::shared_ptr<const linphone::CallStats> &stats);
 	void transferStateChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);

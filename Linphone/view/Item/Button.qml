@@ -19,12 +19,12 @@ Control.Button {
 			color: inversedColors 
 					? mainItem.pressed 
 						? DefaultStyle.buttonPressedInversedBackground
-						: DefaultStyle.buttonInversedBackground
+						: DefaultStyle.grey_0
 					: mainItem.pressed 
 						? DefaultStyle.buttonPressedBackground
-						: DefaultStyle.buttonBackground
+						: DefaultStyle.main1_500_main
 			radius: 24
-			border.color: inversedColors ? DefaultStyle.buttonBackground : DefaultStyle.buttonInversedBackground
+			border.color: inversedColors ? DefaultStyle.main1_500_main : DefaultStyle.grey_0
 
 			MouseArea {
 				anchors.fill: parent
@@ -42,17 +42,12 @@ Control.Button {
 		}
 	}
 
-	leftPadding: 13
-	rightPadding: 13
-	topPadding: 10
-	bottomPadding: 10
-	
 	contentItem: Text {
 		horizontalAlignment: Text.AlignHCenter
 		anchors.centerIn: parent
 		wrapMode: Text.WordWrap
 		text: mainItem.text
-		color: inversedColors ? DefaultStyle.buttonInversedTextColor : DefaultStyle.buttonTextColor
+		color: inversedColors ? DefaultStyle.main1_500_main : DefaultStyle.grey_0
 		font {
 			bold: mainItem.boldText
 			pointSize: mainItem.textSize

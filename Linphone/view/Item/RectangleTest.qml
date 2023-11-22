@@ -1,9 +1,15 @@
 import QtQuick 2.7
 
 Rectangle {
+	function genRandomColor(){
+		return '#'+ Math.floor(Math.random()*255).toString(16)
+										+Math.floor(Math.random()*255).toString(16)
+										+Math.floor(Math.random()*255).toString(16)
+	}
+
 	anchors.fill: parent
-	color: "blue"
+	color: genRandomColor() //"blue"
 	opacity: 0.2
-	border.color: "green"
+	border.color: genRandomColor() //"red"
 	border.width: 2
 }

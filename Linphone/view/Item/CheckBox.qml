@@ -11,15 +11,15 @@ Control.CheckBox {
 		x: (parent.width - width) / 2
 		y: (parent.height - height) / 2
 		radius: 3
-		border.color: DefaultStyle.checkboxBorderColor
+		border.color: DefaultStyle.main1_500_main
 		border.width: DefaultStyle.checkboxBorderWidth
-		// color: mainItem.checked ? DefaultStyle.checkboxBorderColor : "transparent"
+		// color: mainItem.checked ? DefaultStyle.main1_500_main : "transparent"
 
 		Text {
 			visible: mainItem.checked
 			text: "\u2714"
 			font.pointSize: 18
-			color: DefaultStyle.checkboxBorderColor
+			color: DefaultStyle.main1_500_main
 			anchors.centerIn: parent
 		}
 	}

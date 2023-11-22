@@ -1,11 +1,21 @@
 
 list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Main.qml
+	view/App/CallsWindow.qml
 	view/App/Layout/LoginLayout.qml
 	view/App/Layout/MainLayout.qml
 	
 	view/Item/Account/Accounts.qml
 	
+	view/Item/Call/ContactsList.qml
+	view/Item/Call/OngoingCallRightPanel.qml
+	
+	view/Item/Notification/Notification.qml
+	view/Item/Notification/NotificationReceivedCall.qml
+
+	view/Item/Prototype/CanvasCircle.qml
+	
+	view/Item/BusyIndicator.qml
 	view/Item/Button.qml
 	view/Item/Carousel.qml
 	view/Item/CheckBox.qml
@@ -17,10 +27,6 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Item/DesktopPopup.qml
 	view/Item/DigitInput.qml
-	
-	view/Item/Notification/Notification.qml
-	view/Item/Notification/NotificationReceivedCall.qml
-	
 	view/Item/EffectImage.qml
 	view/Item/NumericPad.qml
 	view/Item/PhoneNumberComboBox.qml
@@ -48,7 +54,6 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Page/Main/AbstractMainPage.qml
 	view/Page/Main/CallPage.qml
-	# view/Page/Main/OngoingCallPage.qml
 	
 # Prototypes
 	view/Prototype/PhoneNumberPrototype.qml

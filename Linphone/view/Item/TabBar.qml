@@ -25,7 +25,7 @@ Control.TabBar {
 
 		// Quick.Rectangle {
 		// 	height: 4
-		// 	color: DefaultStyle.orangeColor
+		// 	color: DefaultStyle.main1_500_main
 		// 	anchors.bottom: parent.bottom
 		// 	// anchors.left: mainItem.currentItem.left
 		// 	// anchors.right: mainItem.currentItem.right
@@ -59,7 +59,7 @@ Control.TabBar {
 				Quick.Rectangle {
 					visible: mainItem.currentIndex === index
 					height: 4
-					color: DefaultStyle.orangeColor
+					color: DefaultStyle.main1_500_main
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
 					anchors.right: parent.right

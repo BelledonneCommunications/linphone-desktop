@@ -32,11 +32,18 @@ class SafeConnection;
 class CallCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
+	// Q_PROPERTY(QString peerDisplayName MEMBER mPeerDisplayName)
 	Q_PROPERTY(LinphoneEnums::CallStatus status READ getStatus NOTIFY statusChanged)
+	Q_PROPERTY(LinphoneEnums::CallDir dir READ getDir NOTIFY dirChanged)
 	Q_PROPERTY(LinphoneEnums::CallState state READ getState NOTIFY stateChanged)
 	Q_PROPERTY(QString lastErrorMessage READ getLastErrorMessage NOTIFY lastErrorMessageChanged)
-	Q_PROPERTY(int duration READ getDuration NOTIFY durationChanged);
+	Q_PROPERTY(int duration READ getDuration NOTIFY durationChanged)
 	Q_PROPERTY(bool microphoneMuted READ getMicrophoneMuted WRITE lSetMicrophoneMuted NOTIFY microphoneMutedChanged)
+	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE lSetCameraEnabled NOTIFY cameraEnabledChanged)
+	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
+	Q_PROPERTY(QString peerAddress MEMBER mPeerAddress CONSTANT)
+	Q_PROPERTY(bool peerSecured READ getPeerSecured WRITE setPeerSecured NOTIFY peerSecuredChanged)
+	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -48,9 +55,11 @@ public:
 	LinphoneEnums::CallStatus getStatus() const;
 	void setStatus(LinphoneEnums::CallStatus status);
 
+	LinphoneEnums::CallDir getDir() const;
+	void setDir(LinphoneEnums::CallDir dir);
+
 	LinphoneEnums::CallState getState() const;
 	void setState(LinphoneEnums::CallState state, const QString &message);
-	void onStateChanged(linphone::Call::State state, const std::string &message);
 
 	QString getLastErrorMessage() const;
 	void setLastErrorMessage(const QString &message);
@@ -61,18 +70,39 @@ public:
 	bool getMicrophoneMuted() const;
 	void setMicrophoneMuted(bool isMuted);
 
+	bool getCameraEnabled() const;
+	void setCameraEnabled(bool enabled);
+
+	bool getPaused() const;
+	void setPaused(bool paused);
+
+	bool getPeerSecured() const;
+	void setPeerSecured(bool secured);
+
+	LinphoneEnums::CallState getTransferState() const;
+	void setTransferState(LinphoneEnums::CallState state, const QString &message);
+
 signals:
 	void statusChanged(LinphoneEnums::CallStatus status);
 	void stateChanged(LinphoneEnums::CallState state);
+	void dirChanged(LinphoneEnums::CallDir dir);
 	void lastErrorMessageChanged();
+	void peerAddressChanged();
 	void durationChanged(int duration);
 	void microphoneMutedChanged();
+	void cameraEnabledChanged();
+	void pausedChanged();
+	void transferStateChanged();
+	void peerSecuredChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
 	void lDecline();              // Decline an incoming call
 	void lTerminate();            // Hangup a call
 	void lSetMicrophoneMuted(bool isMuted);
+	void lSetCameraEnabled(bool enabled);
+	void lSetPaused(bool paused);
+	void lTransferCall(const QString &dest);
 
 	/* TODO
 	    Q_INVOKABLE void acceptWithVideo();
@@ -99,9 +129,15 @@ private:
 	std::shared_ptr<CallModel> mCallModel;
 	LinphoneEnums::CallStatus mStatus;
 	LinphoneEnums::CallState mState;
+	LinphoneEnums::CallState mTransferState;
+	LinphoneEnums::CallDir mDir;
 	QString mLastErrorMessage;
+	QString mPeerAddress;
+	bool mPeerSecured;
 	int mDuration = 0;
 	bool mMicrophoneMuted;
+	bool mCameraEnabled;
+	bool mPaused = false;
 	QSharedPointer<SafeConnection> mAccountModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT

@@ -32,7 +32,7 @@ ColumnLayout {
 		visible: mainItem.label.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.label + (mainItem.mandatory ? "*" : "")
-		color: textField.activeFocus ? DefaultStyle.formItemFocusBorderColor : DefaultStyle.formItemLabelColor
+		color: textField.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.formItemLabelColor
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
 		maximumLineCount: 1
@@ -58,7 +58,7 @@ ColumnLayout {
 						? (mainItem.errorMessage.length > 0 
 							? DefaultStyle.errorMessageColor
 							: textField.activeFocus
-								? DefaultStyle.formItemFocusBorderColor
+								? DefaultStyle.main1_500_main
 								: DefaultStyle.formItemBorderColor)
 						: "transparent"
 		Control.TextField {
@@ -78,7 +78,7 @@ ColumnLayout {
 			}
 			cursorDelegate: Rectangle {
 				visible: textField.activeFocus
-				color: DefaultStyle.formItemFocusBorderColor
+				color: DefaultStyle.main1_500_main
 				width: 2
 			}
 		}
@@ -107,7 +107,7 @@ ColumnLayout {
 		wrapMode: Text.Wrap
 		// maximumLineCount: 1
 		font {
-			pointSize: DefaultStyle.defaultTextSize
+			pointSize: DefaultStyle.indicatorMessageTextSize
 			family: DefaultStyle.defaultFont
 			bold: true
 		}

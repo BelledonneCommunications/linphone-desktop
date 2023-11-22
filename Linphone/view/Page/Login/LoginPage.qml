@@ -26,7 +26,7 @@ LoginLayout {
 		Text {
 			Layout.rightMargin: 15
 			text: "No account yet ?"
-			font.pointSize: DefaultStyle.defaultTextSize
+			font.pointSize: DefaultStyle.indicatorMessageTextSize
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight

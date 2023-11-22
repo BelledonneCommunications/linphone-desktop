@@ -19,7 +19,7 @@ ColumnLayout {
 		visible: label.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.label + (mainItem.mandatory ? "*" : "")
-		color: (combobox.hasActiveFocus || textField.hasActiveFocus) ? DefaultStyle.formItemFocusBorderColor : DefaultStyle.formItemLabelColor
+		color: (combobox.hasActiveFocus || textField.hasActiveFocus) ? DefaultStyle.main1_500_main : DefaultStyle.formItemLabelColor
 		font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true
@@ -34,7 +34,7 @@ ColumnLayout {
 		border.color: mainItem.errorMessage.length > 0 
 						? DefaultStyle.errorMessageColor 
 						: (textField.hasActiveFocus || combobox.hasActiveFocus)
-							? DefaultStyle.formItemFocusBorderColor
+							? DefaultStyle.main1_500_main
 							: DefaultStyle.formItemBorderColor
 		RowLayout {
 			anchors.fill: parent
@@ -69,7 +69,7 @@ ColumnLayout {
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
 		font {
-			pointSize: DefaultStyle.defaultTextSize
+			pointSize: DefaultStyle.indicatorMessageTextSize
 			family: DefaultStyle.defaultFont
 			bold: true
 		}

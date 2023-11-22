@@ -74,6 +74,7 @@ void CoreModel::start() {
 	setPathAfterStart();
 	mCore->enableFriendListSubscription(true);
 	mCore->enableRecordAware(true);
+	mCore->getCallsNb();
 	mIterateTimer->start();
 }
 // -----------------------------------------------------------------------------

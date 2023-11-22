@@ -17,19 +17,20 @@ Item {
 
 	Image {
 		id: image
+		visible: !effect2.enabled
+		sourceSize.width: parent.width
+		sourceSize.height: parent.height
 		width: parent.width
 		height: parent.height
-		//sourceSize.width: parent.width
 		fillMode: Image.PreserveAspectFit
 		anchors.centerIn: parent
-		visible: !effect2.enabled
 	}
 	MultiEffect {
 		id: effect
+		visible: !effect2.enabled
 		anchors.fill: image
 		source: image
 		maskSource: image
-		visible: !effect2.enabled
 		brightness: effect2.enabled ? 1.0 : 0.0
 	}
 	MultiEffect {

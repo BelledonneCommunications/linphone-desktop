@@ -45,6 +45,7 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 	QString path = ":/data/image/";
 	QStringList filters;
 	filters << "*.svg";
+	filters << "*.png";
 	QDir imageDir(path);
 	if (!imageDir.exists()) {
 		qDebug() << QStringLiteral("[ImageProvider] Dir doesn't exist: `%1`.").arg(path);

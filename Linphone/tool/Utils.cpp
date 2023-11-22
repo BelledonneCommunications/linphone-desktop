@@ -27,6 +27,7 @@
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include <QImageReader>
+#include <QQuickWindow>
 
 // =============================================================================
 
@@ -81,12 +82,22 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 	data->makeRequest([sipAddress, prepareTransfertAddress, headers]() {
 		auto call = ToolModel::createCall(sipAddress, prepareTransfertAddress, headers);
 		if (call) {
-			return QVariant::fromValue(new CallGui(call));
+			auto callGui = QVariant::fromValue(new CallGui(call));
+			App::postCoreSync([callGui]() {
+				auto app = App::getInstance();
+				auto window = app->getCallsWindow(callGui);
+				window->show();
+			});
+			return callGui;
 		} else return QVariant();
 	});
 	data->requestValue();
 
 	return data;
+}
+
+void Utils::closeCallsWindow() {
+	App::getInstance()->closeCallsWindow();
 }
 
 VariantObject *Utils::haveAccount() {
@@ -133,4 +144,37 @@ QString Utils::createAvatar(const QUrl &fileUrl) {
 		}
 	}
 	return fileUri;
+}
+
+QString Utils::formatElapsedTime(int seconds) {
+	// s,	m,	h,		d,		W,		M,			Y
+	// 1,	60,	3600,	86400,	604800,	2592000,	31104000
+	auto y = floor(seconds / 31104000);
+	if (y > 0) return QString::number(y) + " years";
+	auto M = floor(seconds / 2592000);
+	if (M > 0) return QString::number(M) + " months";
+	auto w = floor(seconds / 604800);
+	if (w > 0) return QString::number(w) + " week";
+	auto d = floor(seconds / 86400);
+	if (d > 0) return QString::number(d) + " days";
+
+	auto h = floor(seconds / 3600);
+	auto m = floor((seconds - h * 3600) / 60);
+	auto s = seconds - h * 3600 - m * 60;
+
+	QString hours, min, sec;
+
+	if (h < 10 && h > 0) {
+		hours = "0" + QString::number(h);
+	}
+
+	if (m < 10) {
+		min = "0" + QString::number(m);
+	}
+
+	if (s < 10) {
+		sec = "0" + QString::number(s);
+	}
+
+	return (h == 0 ? "" : hours + ":") + min + ":" + sec;
 }

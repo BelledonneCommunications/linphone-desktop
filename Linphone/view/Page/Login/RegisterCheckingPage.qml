@@ -85,7 +85,7 @@ LoginLayout {
 						Layout.rightMargin: 15
 						text: "Didn't receive the code ?"
 						color: DefaultStyle.questionTextColor
-						font.pointSize: DefaultStyle.defaultTextSize
+						font.pointSize: DefaultStyle.indicatorMessageTextSize
 					}
 					Button {
 						Layout.alignment: Qt.AlignRight

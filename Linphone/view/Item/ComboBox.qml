@@ -17,7 +17,7 @@ ColumnLayout {
 		visible: label.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.label
-		color: combobox.activeFocus ? DefaultStyle.formItemFocusBorderColor : DefaultStyle.formItemLabelColor
+		color: combobox.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.formItemLabelColor
 		font {
 			pointSize: DefaultStyle.formItemLabelSize
 			bold: true

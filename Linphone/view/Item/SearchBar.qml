@@ -8,11 +8,12 @@ Rectangle {
 	id: mainItem
 	property string placeholderText: ""
 	property int textInputWidth: 350
-	property var validator: RegularExpressionValidator{}
+	property color borderColor: "transparent"
 	property string text: textField.text
+	property var validator: RegularExpressionValidator{}
+	property var numericPad
 	property alias numericPadButton: dialerButton
 	readonly property bool hasActiveFocus: textField.activeFocus
-	property var numericPad
 	signal numericPadButtonPressed(bool checked)
 
 	onVisibleChanged: if (!visible && numericPad) numericPad.close()
@@ -32,7 +33,7 @@ Rectangle {
 	implicitHeight: 30
 	radius: 20
 	color: DefaultStyle.formItemBackgroundColor
-	border.color: textField.activeFocus ? DefaultStyle.searchBarFocusBorderColor : "transparent"
+	border.color: textField.activeFocus ? DefaultStyle.searchBarFocusBorderColor : mainItem.borderColor
 	Image {
 		id: magnifier
 		anchors.left: parent.left
@@ -43,9 +44,10 @@ Rectangle {
 	Control.TextField {
 		id: textField
 		anchors.left: magnifier.right
-		anchors.right: dialerButton.visible ? dialerButton.left : parent.right
+		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
 		placeholderText: mainItem.placeholderText
+		width: mainItem.width - dialerButton.width
 		echoMode: (mainItem.hidden && !dialerButton.checked) ? TextInput.Password : TextInput.Normal
 		font.family: DefaultStyle.defaultFont
 		font.pointSize: DefaultStyle.defaultFontPointSize
@@ -57,13 +59,13 @@ Rectangle {
 		}
 		cursorDelegate: Rectangle {
 			visible: textField.activeFocus
-			color: DefaultStyle.formItemFocusBorderColor
+			color: DefaultStyle.main1_500_main
 			width: 2
 		}
 	}
 	Control.Button {
 		id: dialerButton
-		visible: numericPad != undefined
+		visible: numericPad != undefined && textField.text.length === 0
 		checkable: true
 		checked: false
 		background: Rectangle {
@@ -80,6 +82,26 @@ Rectangle {
 		onCheckedChanged: {
 			if (checked) mainItem.numericPad.open()
 			else mainItem.numericPad.close()
+		}
+	}
+	Control.Button {
+		id: clearTextButton
+		visible: textField.text.length > 0
+		checkable: true
+		checked: false
+		background: Rectangle {
+			color: "transparent"
+		}
+		contentItem: Image {
+			fillMode: Image.PreserveAspectFit
+			source: AppIcons.closeX
+		}
+		anchors.top: parent.top
+		anchors.bottom: parent.bottom
+		anchors.right: parent.right
+		anchors.rightMargin: 10
+		onCheckedChanged: {
+			textField.clear()
 		}
 	}
 }

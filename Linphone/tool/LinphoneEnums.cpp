@@ -115,6 +115,22 @@ QString LinphoneEnums::toString(const LinphoneEnums::CallStatus &data) {
 	}
 }
 
+LinphoneEnums::CallDir LinphoneEnums::fromLinphone(const linphone::Call::Dir &data) {
+	return static_cast<LinphoneEnums::CallDir>(data);
+}
+
+linphone::Call::Dir LinphoneEnums::toLinphone(const LinphoneEnums::CallDir &data) {
+	return static_cast<linphone::Call::Dir>(data);
+}
+QString LinphoneEnums::toString(const LinphoneEnums::CallDir &data) {
+	switch (data) {
+		case LinphoneEnums::CallDir::Incoming:
+			return "Incoming";
+		case LinphoneEnums::CallDir::Outgoing:
+			return "Outgoing";
+	}
+}
+
 linphone::Conference::Layout LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceLayout &layout) {
 	if (layout != LinphoneEnums::ConferenceLayout::AudioOnly) return static_cast<linphone::Conference::Layout>(layout);
 	else return linphone::Conference::Layout::Grid; // Audio Only mode

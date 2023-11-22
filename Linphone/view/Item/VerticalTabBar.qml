@@ -33,18 +33,18 @@ Control.TabBar {
 		anchors.fill: parent
 		Rectangle {
 			anchors.fill: parent
-			color: DefaultStyle.verticalTabBarColor
+			color: DefaultStyle.main1_500_main
 			radius: 25
 		}
 		Rectangle {
-			color: DefaultStyle.verticalTabBarColor
+			color: DefaultStyle.main1_500_main
 			anchors.left: parent.left
 			anchors.top: parent.top
 			width: parent.width/2
 			height: parent.height/2
 		}
 		Rectangle {
-			color: DefaultStyle.verticalTabBarColor
+			color: DefaultStyle.main1_500_main
 			x: parent.x + parent.width/2
 			y: parent.y + parent.height/2
 			width: parent.width/2
@@ -69,9 +69,8 @@ Control.TabBar {
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
 					Layout.alignment: Qt.AlignHCenter
-					image.sourceSize.width: buttonSize
 					image.fillMode: Image.PreserveAspectFit
-					effect.brightness: 1.0
+					colorizationColor: DefaultStyle.grey_0
 				}
 				Text {
 					id: buttonText

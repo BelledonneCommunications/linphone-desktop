@@ -7,7 +7,7 @@ import Linphone
 Window {
 	id: mainWindow
 	width: 1512 * DefaultStyle.dp
-	height: 930 * DefaultStyle.dp
+	height: 982 * DefaultStyle.dp
 	visible: true
 	title: qsTr("Linphone")
 	property bool firstConnection: true

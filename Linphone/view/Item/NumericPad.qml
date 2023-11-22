@@ -8,6 +8,7 @@ Control.Popup {
 	clip: true
 	id: mainItem
 	signal buttonPressed(string text)
+	signal launchCall()
 	signal wipe()
 	closePolicy: Control.Popup.CloseOnEscape
 	leftPadding: closeButton.width
@@ -61,7 +62,7 @@ Control.Popup {
 				implicitHeight: 40
 				background: Rectangle {
 					anchors.fill: parent
-					color: numPadButton.down ? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.numericPadButtonColor
+					color: numPadButton.down ? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
 					radius: 20
 				}
 				contentItem: Text {
@@ -91,7 +92,7 @@ Control.Popup {
 				implicitHeight: 40
 				background: Rectangle {
 					anchors.fill: parent
-					color: digitButton.down ? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.numericPadButtonColor
+					color: digitButton.down ? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
 					radius: 20
 				}
 				contentItem: Item {
@@ -131,7 +132,7 @@ Control.Popup {
 			bottomPadding: 15
 			background: Rectangle {
 				anchors.fill: parent
-				color: DefaultStyle.numericPadLaunchCallButtonColor
+				color: DefaultStyle.launchCallButtonColor
 				radius: 15
 			}
 			contentItem: EffectImage {
@@ -142,8 +143,9 @@ Control.Popup {
 				width: 20
 				height: 20
 				image.fillMode: Image.PreserveAspectFit
-				effect.brightness: 1.0
+				colorizationColor: DefaultStyle.grey_0
 			}
+			onClicked: mainItem.launchCall()
 		}
 		Button {
 			leftPadding: 5

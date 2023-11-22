@@ -23,6 +23,7 @@
 #include <QDebug>
 
 #include "model/core/CoreModel.hpp"
+#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CallModel)
 
@@ -41,7 +42,6 @@ CallModel::~CallModel() {
 
 void CallModel::accept(bool withVideo) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = core->createCallParams(mMonitor);
 	params->enableVideo(withVideo);
@@ -68,12 +68,53 @@ void CallModel::terminate() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->terminate();
 }
+void CallModel::setPaused(bool paused) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (paused) {
+		auto status = mMonitor->pause();
+		if (status != -1) emit pausedChanged(paused);
+	} else {
+		auto status = mMonitor->resume();
+		if (status != -1) emit pausedChanged(paused);
+	}
+}
+
+void CallModel::transferTo(const std::shared_ptr<linphone::Address> &address) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (mMonitor->transferTo(address) == -1)
+		qWarning() << log()
+		                  .arg(QStringLiteral("Unable to transfer: `%1`."))
+		                  .arg(Utils::coreStringToAppString(address->asString()));
+}
 
 void CallModel::setMicrophoneMuted(bool isMuted) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setMicrophoneMuted(isMuted);
 	emit microphoneMutedChanged(isMuted);
 }
+
+void CallModel::setSpeakerMuted(bool isMuted) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->setSpeakerMuted(isMuted);
+	emit speakerMutedChanged(isMuted);
+}
+
+void CallModel::setCameraEnabled(bool enabled) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->enableCamera(enabled);
+	emit cameraEnabledChanged(enabled);
+}
+
+std::shared_ptr<const linphone::Address> CallModel::getRemoteAddress() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return mMonitor->getRemoteAddress();
+}
+
+bool CallModel::getAuthenticationTokenVerified() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return mMonitor->getAuthenticationTokenVerified();
+}
+
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {
 	emit dtmfReceived(call, dtmf);
 }
@@ -106,6 +147,14 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
                                linphone::Call::State state,
                                const std::string &message) {
 	emit stateChanged(state, message);
+}
+
+void CallModel::onStatusChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::Status status) {
+	emit statusChanged(status);
+}
+
+void CallModel::onDirChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::Dir dir) {
+	emit dirChanged(dir);
 }
 
 void CallModel::onStatsUpdated(const std::shared_ptr<linphone::Call> &call,

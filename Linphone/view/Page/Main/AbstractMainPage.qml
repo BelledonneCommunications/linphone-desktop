@@ -15,9 +15,9 @@ Item {
 	property string newItemIconSource
 	property string emptyListText
 	property alias leftPanelContent: leftPanel.children
-	property Component rightPanelContent
+	property var rightPanelContent: rightPanelItem.children
 	property bool showDefaultItem: true
-	onShowDefaultItemChanged: stackView.replace(showDefaultItem ? defaultItem : rightPanel)
+	// onShowDefaultItemChanged: stackView.replace(showDefaultItem ? defaultItem : rightPanelItem)
 	signal noItemButtonPressed()
 
 	Control.SplitView {
@@ -37,64 +37,74 @@ Item {
 			id: rightPanel
 			clip: true
 			color: DefaultStyle.mainPageRightPanelBackgroundColor
-			Control.StackView {
-				id: stackView
-				initialItem: defaultItem
+			StackLayout {
+				currentIndex: mainItem.showDefaultItem ? 0 : 1
 				anchors.fill: parent
-				Layout.alignment: Qt.AlignCenter
-			}
-			Component {
-				id: defaultItem
 				ColumnLayout {
-					Item {
-						Layout.fillHeight: true
-					}
-					ColumnLayout {
+					id: defaultItem
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					RowLayout {
 						Layout.fillHeight: true
 						Layout.fillWidth: true
-						visible: mainItem.showDefaultItem
-						// anchors.centerIn: parent
 						Layout.alignment: Qt.AlignHCenter
 						spacing: 25
-						Image {
-							Layout.alignment: Qt.AlignHCenter
-							source: AppIcons.noItemImage
-							Layout.preferredWidth: 250
-							Layout.preferredHeight: 250
-							fillMode: Image.PreserveAspectFit
+						Item {
+							Layout.fillWidth: true
 						}
-						Text {
-							text: mainItem.emptyListText
-							Layout.alignment: Qt.AlignHCenter
-							font.bold: true
-						}
-						Button {
-							Layout.alignment: Qt.AlignHCenter
-							contentItem: RowLayout {
-								Layout.alignment: Qt.AlignVCenter
-								EffectImage {
-									effect.brightness: 1
-									image.source: mainItem.newItemIconSource
-									image.width: 20
-									image.fillMode: Image.PreserveAspectFit
-								}
-								Text {
-									text: mainItem.noItemButtonText
-									wrapMode: Text.WordWrap
-									color: DefaultStyle.buttonTextColor
-									font {
-										bold: true
-										pointSize: DefaultStyle.buttonTextSize
-										family: DefaultStyle.defaultFont
+						ColumnLayout {
+							Item {
+								Layout.fillHeight: true
+							}
+							Image {
+								Layout.alignment: Qt.AlignHCenter
+								source: AppIcons.noItemImage
+								Layout.preferredWidth: 250
+								Layout.preferredHeight: 250
+								fillMode: Image.PreserveAspectFit
+							}
+							Text {
+								text: mainItem.emptyListText
+								Layout.alignment: Qt.AlignHCenter
+								font.bold: true
+							}
+							Button {
+								Layout.alignment: Qt.AlignHCenter
+								contentItem: RowLayout {
+									Layout.alignment: Qt.AlignVCenter
+									EffectImage {
+										colorizationColor: DefaultStyle.grey_0
+										image.source: mainItem.newItemIconSource
+										image.width: 20
+										image.fillMode: Image.PreserveAspectFit
+									}
+									Text {
+										text: mainItem.noItemButtonText
+										wrapMode: Text.WordWrap
+										color: DefaultStyle.grey_0
+										font {
+											bold: true
+											pointSize: DefaultStyle.buttonTextSize
+											family: DefaultStyle.defaultFont
+										}
 									}
 								}
+								onPressed: mainItem.noItemButtonPressed()
 							}
-							onPressed: mainItem.noItemButtonPressed()
+							Item {
+								Layout.fillHeight: true
+							}
+						}
+						Item {
+							Layout.fillWidth: true
 						}
 					}
-					Item {
-						Layout.fillHeight: true
-					}
+					
+				}
+				Item {
+					id: rightPanelItem
+					Layout.fillWidth: true
+					Layout.fillHeight: true
 				}
 			}
 		}

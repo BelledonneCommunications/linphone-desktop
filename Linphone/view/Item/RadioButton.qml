@@ -20,7 +20,7 @@ Control.RadioButton {
 
 	background: Rectangle {
 		color: DefaultStyle.formItemBackgroundColor
-		border.color: mainItem.checked ? DefaultStyle.radioButtonCheckedColor : "transparent"
+		border.color: mainItem.checked ? DefaultStyle.info_500_main : "transparent"
 		radius: 20
 	}
 
@@ -34,7 +34,7 @@ Control.RadioButton {
 			implicitWidth: 16
 			implicitHeight: 16
 			radius: implicitWidth/2
-			border.color: mainItem.checked ? DefaultStyle.radioButtonCheckedColor : DefaultStyle.radioButtonUncheckedColor
+			border.color: mainItem.checked ? DefaultStyle.info_500_main : DefaultStyle.main1_500_main
 
 			Rectangle {
 				width: parent.width/2
@@ -42,14 +42,14 @@ Control.RadioButton {
 				x: parent.width/4
 				y: parent.width/4
 				radius: width/2
-				color: DefaultStyle.radioButtonCheckedColor
+				color: DefaultStyle.info_500_main
 				visible: mainItem.checked
 			}
 		}
 		Text {
 			text: mainItem.title
 			font.bold: true
-			color: DefaultStyle.radioButtonTitleColor
+			color: DefaultStyle.grey_900
 			font.pointSize: DefaultStyle.radioButtonTitleSize
 		}
 		Control.Button {
@@ -83,7 +83,7 @@ Control.RadioButton {
 				verticalAlignment: Text.AlignVCenter
 				Layout.preferredWidth: 220
 				Layout.preferredHeight: 100
-				font.pointSize: DefaultStyle.defaultTextSize
+				font.pointSize: DefaultStyle.descriptionTextSize
 				text: mainItem.contentText
 				Layout.fillHeight: true
 			}

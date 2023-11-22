@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
+import UtilsCpp 1.0
 
 AbstractMainPage {
 	id: mainItem
@@ -16,10 +17,12 @@ AbstractMainPage {
 		Layout.fillHeight: true
 		Control.StackView {
 			id: listStackView
+			clip: true
 			initialItem: listItem
 			anchors.fill: parent
-			anchors.leftMargin: 25
-			anchors.rightMargin: 25
+			property int sideMargin: 25
+			// anchors.leftMargin: 25
+			// anchors.rightMargin: 25
 		}
 		Component {
 			id: listItem
@@ -27,6 +30,8 @@ AbstractMainPage {
 			ColumnLayout {
 				RowLayout {
 					Layout.fillWidth: true
+					Layout.leftMargin: listStackView.sideMargin
+					Layout.rightMargin: listStackView.sideMargin
 					Text {
 						text: qsTr("Appels")
 						color: DefaultStyle.mainPageTitleColor
@@ -65,6 +70,8 @@ AbstractMainPage {
 					id: listLayout
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					Layout.leftMargin: listStackView.sideMargin
+					Layout.rightMargin: listStackView.sideMargin
 
 					background: Rectangle {
 						anchors.fill: parent
@@ -148,6 +155,11 @@ AbstractMainPage {
 
 								onCountChanged: mainItem.showDefaultItem = listView.count === 0
 
+								Connections {
+									target: mainItem
+									onShowDefaultItemChanged: mainItem.showDefaultItem = mainItem.showDefaultItem && listView.count === 0
+								}
+
 								Control.ScrollIndicator.vertical: Control.ScrollIndicator { }
 							}
 						}
@@ -158,7 +170,13 @@ AbstractMainPage {
 		Component {
 			id: newCallItem
 			ColumnLayout {
+				Control.StackView.onActivating: {
+					mainItem.showDefaultItem = false
+				}
+				Control.StackView.onDeactivating: mainItem.showDefaultItem = true
 				RowLayout {
+					Layout.leftMargin: listStackView.sideMargin
+					Layout.rightMargin: listStackView.sideMargin
 					Control.Button {
 						background: Item {
 						}
@@ -180,72 +198,24 @@ AbstractMainPage {
 						Layout.fillWidth: true
 					}
 				}
-				Control.Control {
-					id: listLayout
+				ContactsList {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					background: Rectangle {
-						anchors.fill: parent
-					}
-					ColumnLayout {
-						anchors.fill: parent
-						SearchBar {
-							id: searchBar
-							Layout.alignment: Qt.AlignTop
-							Layout.fillWidth: true
-							placeholderText: qsTr("Rechercher un appel")
-							numericPad: numPad
-						}
-						Button {
-							Layout.fillWidth: true
-							leftPadding: 0
-							topPadding: 0
-							rightPadding: 0
-							bottomPadding: 0
-							background: Rectangle {
-								color: DefaultStyle.groupCallButtonColor
-								anchors.fill: parent
-								radius: 50
-							}
-							contentItem: RowLayout {
-								Image {
-									source: AppIcons.groupCall
-									Layout.preferredWidth: 35
-									sourceSize.width: 35
-									fillMode: Image.PreserveAspectFit
-								}
-								Text {
-									text: "Appel de groupe"
-									font.bold: true
-								}
-								Item {
-									Layout.fillWidth: true
-								}
-								Image {
-									source: AppIcons.rightArrow
-								}
-							}
-						}
-						ColumnLayout {
-							ListView {
-								Layout.fillHeight: true
-								// call history
-							}
-						}
+					Layout.maximumWidth: parent.width
+					groupCallVisible: true
+					searchBarColor: DefaultStyle.contactListSearchBarColor
+					
+					onCallButtonPressed: (address) => {
+						var addressEnd = "@sip.linphone.org"
+						if (!address.endsWith(addressEnd)) address += addressEnd
+						var callVarObject = UtilsCpp.createCall(address)
+						// var windowComp = Qt.createComponent("CallsWindow.qml")
+						// var call = callVarObject.value
+						// var callWindow = windowComp.createObject(null, {callVarObject: callVarObject})
+						// callWindow.modality = Qt.ApplicationModal
+						// callWindow.show()
 					}
 				}
-			}
-		}
-
-		Item {
-			anchors.bottom: parent.bottom
-			anchors.left: parent.left
-			anchors.right: parent.right
-			height: numPad.height
-			NumericPad {
-				id: numPad
-				// anchors.centerIn: parent
-				width: parent.width
 			}
 		}
 	}

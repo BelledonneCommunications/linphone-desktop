@@ -31,7 +31,7 @@ LoginLayout {
 			Layout.rightMargin: 15
 			color: DefaultStyle.questionTextColor
 			text: "Already have an account ?"
-			font.pointSize: DefaultStyle.defaultTextSize
+			font.pointSize: DefaultStyle.indicatorMessageTextSize
 		}
 		Button {
 			// Layout.alignment: Qt.AlignRight
@@ -87,7 +87,7 @@ LoginLayout {
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.defaultTextSize
+									pointSize: DefaultStyle.indicatorMessageTextSize
 								}
 							}
 						}
@@ -101,7 +101,7 @@ LoginLayout {
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.defaultTextSize
+									pointSize: DefaultStyle.indicatorMessageTextSize
 								}
 							}
 						}
@@ -176,7 +176,7 @@ LoginLayout {
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.defaultTextSize
+									pointSize: DefaultStyle.indicatorMessageTextSize
 								}
 							}
 						}
@@ -191,7 +191,7 @@ LoginLayout {
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.defaultTextSize
+									pointSize: DefaultStyle.indicatorMessageTextSize
 								}
 							}
 						}

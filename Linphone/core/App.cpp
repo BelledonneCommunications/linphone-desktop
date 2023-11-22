@@ -26,8 +26,10 @@
 #include <QFileSelector>
 #include <QGuiApplication>
 #include <QLibraryInfo>
+#include <QQmlComponent>
 #include <QQmlContext>
 #include <QQmlFileSelector>
+#include <QQuickWindow>
 #include <QTimer>
 
 #include "core/account/AccountCore.hpp"
@@ -45,10 +47,13 @@
 #include "core/singleapplication/singleapplication.h"
 #include "model/object/VariantObject.hpp"
 #include "tool/Constants.hpp"
+#include "tool/EnumsToString.hpp"
 #include "tool/Utils.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
 #include "tool/thread/Thread.hpp"
+
+DEFINE_ABSTRACT_OBJECT(App)
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
@@ -83,7 +88,7 @@ void App::init() {
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 
 	if (!mLinphoneThread->isRunning()) {
-		qDebug() << "[App] Starting Thread";
+		qDebug() << log().arg("Starting Thread");
 		mLinphoneThread->start();
 	}
 	setQuitOnLastWindowClosed(true); // TODO: use settings to set it
@@ -96,7 +101,7 @@ void App::init() {
 	if (version.majorVersion() == 5 && version.minorVersion() == 9) selectors.push_back("5.9");
 	auto selector = new QQmlFileSelector(mEngine, mEngine);
 	selector->setExtraSelectors(selectors);
-	qInfo() << QStringLiteral("[App] Activated selectors:") << selector->selector()->allSelectors();
+	qInfo() << log().arg("Activated selectors:") << selector->selector()->allSelectors();
 
 	mEngine->addImportPath(":/");
 	mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
@@ -110,9 +115,9 @@ void App::init() {
 	const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
 	QObject::connect(
 	    mEngine, &QQmlApplicationEngine::objectCreated, this,
-	    [url](QObject *obj, const QUrl &objUrl) {
+	    [this, url](QObject *obj, const QUrl &objUrl) {
 		    if (!obj && url == objUrl) {
-			    qCritical() << "[App] Main.qml couldn't be load. The app will exit";
+			    qCritical() << log().arg("Main.qml couldn't be load. The app will exit");
 			    exit(-1);
 		    }
 	    },
@@ -129,6 +134,9 @@ void App::initCppInterfaces() {
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Constants(engine); });
 	qmlRegisterSingletonType<Utils>("UtilsCpp", 1, 0, "UtilsCpp",
 	                                [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new Utils(engine); });
+	qmlRegisterSingletonType<EnumsToString>(
+	    "EnumsToStringCpp", 1, 0, "EnumsToStringCpp",
+	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new EnumsToString(engine); });
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
@@ -189,9 +197,70 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	try {
 		done = QApplication::notify(receiver, event);
 	} catch (const std::exception &ex) {
-		qCritical() << "[App] Exception has been catch in notify";
+		qCritical() << log().arg("Exception has been catch in notify");
 	} catch (...) {
-		qCritical() << "[App] Generic exeption has been catch in notify";
+		qCritical() << log().arg("Generic exeption has been catch in notify");
 	}
 	return done;
+}
+
+QQuickWindow *App::getCallsWindow(QVariant callGui) {
+	mustBeInMainThread(getClassName());
+	if (!mCallsWindow) {
+		const QUrl callUrl("qrc:/Linphone/view/App/CallsWindow.qml");
+
+		qInfo() << log().arg("Creating subwindow: `%1`.").arg(callUrl.toString());
+
+		QQmlComponent component(mEngine, callUrl);
+		if (component.isError()) {
+			qWarning() << component.errors();
+			abort();
+		}
+		qInfo() << log().arg("Subwindow status: `%1`.").arg(component.status());
+
+		QObject *object = component.createWithInitialProperties({{"call", callGui}});
+		Q_ASSERT(object);
+		if (!object) {
+			qCritical() << log().arg("Calls window could not be created.");
+			return nullptr;
+		}
+
+		// QQmlEngine::setObjectOwnership(object, QQmlEngine::CppOwnership);
+		object->setParent(mEngine);
+
+		auto window = qobject_cast<QQuickWindow *>(object);
+		Q_ASSERT(window);
+		if (!window) {
+			qCritical() << log().arg("Calls window could not be created.");
+			return nullptr;
+		}
+		mCallsWindow = window;
+	}
+
+	postModelAsync([this]() {
+		auto core = CoreModel::getInstance()->getCore();
+		auto callsNb = core->getCallsNb();
+		postCoreAsync([this, callsNb] { mCallsWindow->setProperty("callsCount", callsNb); });
+	});
+	mCallsWindow->setProperty("call", callGui);
+	return mCallsWindow;
+}
+
+void App::closeCallsWindow() {
+	if (mCallsWindow) {
+		mCallsWindow->close();
+		mCallsWindow->deleteLater();
+		mCallsWindow = nullptr;
+	}
+}
+
+void App::smartShowWindow(QQuickWindow *window) {
+	if (!window) return;
+	window->setVisible(true);
+	// Force show, maybe redundant with setVisible
+	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
+		window->showMaximized();
+	else window->show();
+	window->raise(); // Raise ensure to get focus on Mac
+	window->requestActivate();
 }

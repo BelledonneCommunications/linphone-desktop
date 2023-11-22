@@ -159,6 +159,13 @@ linphone::Call::Status toLinphone(const LinphoneEnums::CallStatus &data);
 LinphoneEnums::CallStatus fromLinphone(const linphone::Call::Status &data);
 QString toString(const LinphoneEnums::CallStatus &data);
 
+enum class CallDir { Outgoing = int(linphone::Call::Dir::Outgoing), Incoming = int(linphone::Call::Dir::Incoming) };
+Q_ENUM_NS(CallDir)
+
+linphone::Call::Dir toLinphone(const LinphoneEnums::CallDir &data);
+LinphoneEnums::CallDir fromLinphone(const linphone::Call::Dir &data);
+QString toString(const LinphoneEnums::CallDir &data);
+
 enum class ConferenceLayout {
 	Grid = int(linphone::Conference::Layout::Grid),
 	ActiveSpeaker = int(linphone::Conference::Layout::ActiveSpeaker),

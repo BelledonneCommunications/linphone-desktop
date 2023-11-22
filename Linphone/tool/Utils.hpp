@@ -40,6 +40,7 @@
 #endif // if defined(__GNUC__) && __GNUC__ >= 7
 #endif // ifndef UTILS_NO_BREAK
 
+class QQuickWindow;
 class VariantObject;
 
 class Utils : public QObject {
@@ -53,8 +54,10 @@ public:
 	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
+	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path
+	Q_INVOKABLE static QString formatElapsedTime(int seconds);    // Return the elapsed time formated
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);

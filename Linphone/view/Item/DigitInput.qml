@@ -5,7 +5,7 @@ import Linphone
 Control.TextField {
 	id: mainItem
 	property int inputSize: 60
-	color: activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
+	color: activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.digitInputColor
 	rightPadding: inputSize / 4
 	leftPadding: inputSize / 4
 	validator: IntValidator{bottom: 0; top: 9}
@@ -20,7 +20,7 @@ Control.TextField {
 
 	background: Rectangle {
 		// id: background
-		border.color: mainItem.activeFocus ? DefaultStyle.digitInputFocusedColor : DefaultStyle.digitInputColor
+		border.color: mainItem.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.digitInputColor
 		radius: mainItem.inputSize / 8
 	}
 	// cursorDelegate: Rectangle {
@@ -34,6 +34,6 @@ Control.TextField {
 	// 	// anchors.left: parent.left
 	// 	// anchors.bottomMargin: inputSize/8
 	// 	// transform: [/*Translate {x: mainItem.cursorRectangle.height},*/ Rotation {angle: -90}]
-	// 	color:DefaultStyle.digitInputFocusedColor
+	// 	color:DefaultStyle.main1_500_main
 	// }
 }

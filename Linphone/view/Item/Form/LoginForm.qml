@@ -94,7 +94,7 @@ ColumnLayout {
 				text: "Forgotten password?"
 				font{
 					underline: true
-					pointSize: DefaultStyle.defaultTextSize
+					pointSize: DefaultStyle.indicatorMessageTextSize
 				}
 			}
 			onClicked: console.debug("[LoginForm]User: forgotten password button clicked")

@@ -24,11 +24,14 @@
 
 #include "core/singleapplication/singleapplication.h"
 #include "model/core/CoreModel.hpp"
+#include "tool/AbstractObject.hpp"
 
+class CallGui;
 class Thread;
 class Notifier;
+class QQuickWindow;
 
-class App : public SingleApplication {
+class App : public SingleApplication, public AbstractObject {
 public:
 	App(int &argc, char *argv[]);
 	static App *getInstance();
@@ -53,6 +56,20 @@ public:
 		QMetaObject::invokeMethod(App::getInstance(), callable);
 	}
 	template <typename Func, typename... Args>
+	static auto postCoreSync(Func &&callable, Args &&...args) {
+		if (QThread::currentThread() == CoreModel::getInstance()->thread()) {
+			bool end = false;
+			postCoreAsync([&end, callable, args...]() mutable {
+				QMetaObject::invokeMethod(App::getInstance(), callable, args..., Qt::DirectConnection);
+				end = true;
+			});
+			while (!end)
+				qApp->processEvents();
+		} else {
+			QMetaObject::invokeMethod(App::getInstance(), callable, Qt::DirectConnection);
+		}
+	}
+	template <typename Func, typename... Args>
 	static auto postModelSync(Func &&callable, Args &&...args) {
 		if (QThread::currentThread() != CoreModel::getInstance()->thread()) {
 			bool end = false;
@@ -73,8 +90,13 @@ public:
 
 	void onLoggerInitialized();
 
+	QQuickWindow *getCallsWindow(QVariant callGui);
+	void closeCallsWindow();
+
+	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);
+
 	QQmlApplicationEngine *mEngine = nullptr;
-	bool notify(QObject *receiver, QEvent *event);
+	bool notify(QObject *receiver, QEvent *event) override;
 
 	enum class StatusCode { gRestartCode = 1000, gDeleteDataCode = 1001 };
 
@@ -84,4 +106,9 @@ private:
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
 	Notifier *mNotifier = nullptr;
+	QQuickWindow *mCallsWindow = nullptr;
+	// TODO : changer ce count lorsqu'on aura liste d'appels
+	int callsCount = 0;
+
+	DECLARE_ABSTRACT_OBJECT
 };

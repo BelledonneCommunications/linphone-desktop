@@ -91,7 +91,7 @@ ColumnLayout {
 				signal buttonClicked(int index)
 
 				background: Rectangle {
-					color: stackLayout.currentIndex == slideIndex ? DefaultStyle.buttonBackground : DefaultStyle.carouselLightGrayColor
+					color: stackLayout.currentIndex == slideIndex ? DefaultStyle.main1_500_main : DefaultStyle.carouselLightGrayColor
 					radius: 15
 					width: stackLayout.currentIndex == slideIndex ? 11 : 8
 					height: 8
