@@ -42,7 +42,12 @@ MenuBar {
 			role: MenuItem.ApplicationSpecificRole
 			onTriggered: App.checkForUpdates(true)
 		}
-
+		MenuItem{
+			visible: App.isLinux()
+			//: 'Export %1.desktop file to applications' : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)
+			text: qsTr('exportDesktopFile').arg(executableName)
+			onTriggered: App.exportDesktopFile()
+		}
 		MenuItem {
 			text: qsTr('about')
 			role: MenuItem.AboutRole

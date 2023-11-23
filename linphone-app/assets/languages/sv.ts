@@ -1497,7 +1497,6 @@ Serverwebbadressen är inte konfigurerad.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
         <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
     </message>
     <message>
@@ -1984,6 +1983,42 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>lastProvisioningFailed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation type="unfinished">En ny version (%1) är tillgänglig!</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished">AVBRYT</translation>
+    </message>
+    <message>
+        <source>downloadUpdate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionCheckError</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noNewVersionAvailable</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>newVersionInstalled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>remoteProvisioningWarnAccountOverwrite</source>
+        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+    </message>
 </context>
 <context>
     <name>MainWindowMenuBar</name>
@@ -2009,6 +2044,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>exportDesktopFile</source>
+        <extracomment>&apos;Export %1.desktop file to applications&apos; : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>MainWindowTopMenuBar</name>
@@ -2032,6 +2072,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>recordings</source>
         <extracomment>&apos;Recordings&apos; : Label for the recordings menu.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>exportDesktopFile</source>
+        <extracomment>&apos;Export %1.desktop file to applications&apos; : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3799,6 +3844,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>spellCheckerLabel</source>
+        <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideo</name>
@@ -3984,6 +4034,29 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addContact</source>
         <translation>LÄGG TILL KONTAKT</translation>
+    </message>
+</context>
+<context>
+    <name>SpellCheckerMenu</name>
+    <message>
+        <source>spellCheckingMenuDidYouMean</source>
+        <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuAddToDictionary</source>
+        <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreOnce</source>
+        <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>spellCheckingMenuIgnoreAll</source>
+        <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5162,6 +5235,10 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
             <numerusform></numerusform>
             <numerusform></numerusform>
         </translation>
+    </message>
+    <message>
+        <source>okButton</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>

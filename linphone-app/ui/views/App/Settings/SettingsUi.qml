@@ -55,6 +55,41 @@ TabContainer {
 					}
 				}
 			}
+			FormLine {
+				FormGroup {
+					//: 'Spell Checker' : label for spell checker settings
+					label: qsTr('spellCheckerLabel')
+					RowLayout{
+						ComboBox {
+							Layout.fillWidth: true
+							textRole: 'key'
+							
+							Component.onCompleted: {
+								var locales = Logic.getAvailableLocales()
+								model = locales
+								
+								var locale = SettingsModel.spellCheckerOverrideLocale 
+								if (!locale.length) {
+									currentIndex = 0
+									return
+								}
+								
+								var value = Qt.locale(locale).name
+								currentIndex = Number(Utils.findIndex(locales, function (locale) {
+									return locale.value === value
+								}))
+							}
+							
+							onActivated: SettingsModel.spellCheckerOverrideLocale  = model[index].value
+						}
+						Switch {
+							checked: SettingsModel.spellCheckerEnabled
+							
+							onClicked: SettingsModel.spellCheckerEnabled = !checked
+						}
+					}
+				}
+			}
 			Form {
 				//: 'Fonts' : title of fonts section in settings
 				title: qsTr('fontsTitle')

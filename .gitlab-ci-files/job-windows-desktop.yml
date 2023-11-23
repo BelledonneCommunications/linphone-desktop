@@ -167,16 +167,28 @@ vs2019-win64-package:
 
 vs2019-win64-upload:
   stage: deploy
-  tags: [ "windows-powershell"]
+  tags: [ "deploy"]
   rules:
     - if: $NIGHTLY_MASTER
     - if: $DEPLOY_WINDOWS
   needs:
     - vs2019-win64-package
   script:
-    - scp -pr build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
-    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
-    - if ($MAKE_RELEASE_FILE_URL) { scp -pr build-desktop/OUTPUT/RELEASE ${MAIN_DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
+# Going to folder in order to avoid having path in checksum
+    - |-
+      cd build-desktop/OUTPUT/Packages/
+      for file in  $(find . -type f -name '*.exe' -exec basename {} \;)
+      do
+        rsync -rlv --ignore-existing $file $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM/$APP_FOLDER
+        sha512sum $file > $file.sha512
+        rsync -rlv --ignore-existing $file.sha512 $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM/$APP_FOLDER
+      done
+      cd ../../..
+    - |-
+      if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
+        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM
+        rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM
+      fi
 
 vs2019-win64-plugins-upload:
   stage: deploy

@@ -200,6 +200,9 @@ class SettingsModel : public QObject {
 	
 	// UI. -----------------------------------------------------------------------
 	
+	Q_PROPERTY(QString spellCheckerOverrideLocale READ getSpellCheckerOverrideLocale WRITE setSpellCheckerOverrideLocale NOTIFY spellCheckerOverrideLocaleChanged)
+	Q_PROPERTY(bool spellCheckerEnabled READ getSpellCheckerEnabled WRITE setSpellCheckerEnabled NOTIFY spellCheckerEnabledChanged)
+	
 	Q_PROPERTY(QFont textMessageFont READ getTextMessageFont WRITE setTextMessageFont NOTIFY textMessageFontChanged)
 	Q_PROPERTY(int textMessageFontSize READ getTextMessageFontSize WRITE setTextMessageFontSize NOTIFY textMessageFontSizeChanged)
 	Q_PROPERTY(QFont emojiFont READ getEmojiFont WRITE setEmojiFont NOTIFY emojiFontChanged)
@@ -222,6 +225,7 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool showStartVideoCallButton READ getShowStartVideoCallButton CONSTANT)
 	Q_PROPERTY(bool showHomeInviteButton READ getShowHomeInviteButton CONSTANT)
 	Q_PROPERTY(QString defaultOtherSipAccountDomain READ getDefaultOtherSipAccountDomain CONSTANT)
+	Q_PROPERTY(bool messageCounterRedirectEnabled READ getMessageCounterRedirectEnabled CONSTANT)
 	
 	Q_PROPERTY(bool mipmapEnabled READ isMipmapEnabled WRITE setMipmapEnabled NOTIFY mipmapEnabledChanged)
 	Q_PROPERTY(bool useMinimalTimelineFilter READ useMinimalTimelineFilter WRITE setUseMinimalTimelineFilter NOTIFY useMinimalTimelineFilterChanged)
@@ -589,6 +593,11 @@ public:
 	int getEmojiFontSize() const;
 	void setEmojiFontSize(const int& size);
 	
+	QString getSpellCheckerOverrideLocale() const;
+	void setSpellCheckerOverrideLocale (const QString &locale);
+	bool getSpellCheckerEnabled() const;
+	void setSpellCheckerEnabled(bool enable);
+	
 	QString getSavedScreenshotsFolder () const;
 	void setSavedScreenshotsFolder (const QString &folder);
 	
@@ -632,6 +641,7 @@ public:
 	Q_INVOKABLE bool getShowHomePage() const;
 	Q_INVOKABLE bool getShowHomeInviteButton() const;
 	Q_INVOKABLE QString getDefaultOtherSipAccountDomain() const;
+	Q_INVOKABLE bool getMessageCounterRedirectEnabled() const;
 	
 	
 	bool isMipmapEnabled() const;
@@ -857,6 +867,9 @@ signals:
 	void rlsUriChanged ();
 		
 	// UI. -----------------------------------------------------------------------
+	
+	void spellCheckerOverrideLocaleChanged();
+	void spellCheckerEnabledChanged();
 	
 	void textMessageFontChanged(const QFont& font);
 	void textMessageFontSizeChanged(const int& size);

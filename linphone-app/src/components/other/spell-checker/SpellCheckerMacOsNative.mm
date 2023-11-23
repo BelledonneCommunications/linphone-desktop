@@ -28,12 +28,15 @@ void SpellChecker::setLanguage() {
 	if ([spellChecker setLanguage:locale.toNSString()]) {
 		[spellChecker updatePanels];
 		qDebug() << LOG_TAG << "Macos native spell checker Language set to " << locale;
+		mAvailable = true;
 	} else {
 		qWarning() << LOG_TAG << "Macos native spell checker unable to set language to " << locale;
 	}
 }
 
 bool SpellChecker::isValid(QString word) {
+	if (!mAvailable)
+		return true;
 	NSSpellChecker *spellChecker = [NSSpellChecker sharedSpellChecker];
 	QString locale = SpellChecker::currentLanguage();
 	bool isValid = [spellChecker checkSpellingOfString:word.toNSString() startingAt:0 language:locale.toNSString() wrap:NO inSpellDocumentWithTag:0 wordCount:nullptr].length == 0;

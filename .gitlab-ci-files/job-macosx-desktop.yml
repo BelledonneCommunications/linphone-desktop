@@ -139,7 +139,7 @@ job-macosx-codesigning:
 
 job-macosx-makefile-deploy:
   stage: deploy
-  tags: [ "macos-xcode13" ]
+  tags: [ "deploy" ]
   needs:
     - job-macosx-codesigning
   only:
@@ -147,7 +147,16 @@ job-macosx-makefile-deploy:
        - $NIGHTLY_MASTER
        - $DEPLOY_MACOSX
   script:
-    - rsync -rlv --ignore-existing build/OUTPUT/linphone-app/macos/Packages/Linphone*.dmg $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+# Going to folder in order to avoid having path in checksum
+    - |-
+      cd build/OUTPUT/linphone-app/macos/Packages/
+      for file in  $(find . -type f -name '*.dmg' -exec basename {} \;)
+      do
+        rsync -rlv --ignore-existing $file $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+        sha512sum $file > $file.sha512
+        rsync -rlv --ignore-existing $file.sha512 $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM/$APP_FOLDER
+      done
+      cd ../../../../..
     - |-
       if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
         rsync -rlv build/OUTPUT/linphone-app/macos/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$MACOSX_PLATFORM

@@ -1566,6 +1566,27 @@ void SettingsModel::setSavedScreenshotsFolder (const QString &folder) {
 	emit savedScreenshotsFolderChanged(cleanedFolder);
 }
 
+QString SettingsModel::getSpellCheckerOverrideLocale() const{
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "spell_checker_override_locale", ""));
+}
+
+void SettingsModel::setSpellCheckerOverrideLocale (const QString &locale) {
+	CoreManager::getInstance()->getCore()->getConfig()->setString(
+				SettingsModel::UiSection, "spell_checker_override_locale", Utils::appStringToCoreString(locale)
+				);
+	
+	emit spellCheckerOverrideLocaleChanged();
+}
+
+bool SettingsModel::getSpellCheckerEnabled() const{
+	return mConfig->getBool(UiSection, "spell_checker_enabled", false);
+}
+
+void SettingsModel::setSpellCheckerEnabled(bool enable){
+	mConfig->setBool(UiSection, "spell_checker_enabled", enable);
+	emit spellCheckerEnabledChanged();
+}
+
 // -----------------------------------------------------------------------------
 
 static inline string getLegacySavedCallsFolder (const shared_ptr<linphone::Config> &config) {
@@ -1751,6 +1772,10 @@ bool SettingsModel::getShowHomeInviteButton() const {
 
 QString SettingsModel::getDefaultOtherSipAccountDomain() const {
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "default_other_sip_account_domain", ""));
+}
+
+bool SettingsModel::getMessageCounterRedirectEnabled() const {
+	return !!mConfig->getInt(UiSection, "message_counter_redirect_enabled", false);
 }
 
 bool SettingsModel::isMipmapEnabled() const{

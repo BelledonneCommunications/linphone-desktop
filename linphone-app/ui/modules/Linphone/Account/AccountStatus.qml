@@ -16,6 +16,7 @@ Item {
 	// ---------------------------------------------------------------------------
 	
 	signal clicked
+	signal messageCounterClicked
 	property alias cursorShape:mouseArea.cursorShape
 	property alias betterIcon : presenceLevel.betterIcon
 	property bool noAccountConfigured: AccountSettingsModel.accounts.length <= ((SettingsModel.showLocalSipAccount ? 1 : 0))
@@ -96,6 +97,11 @@ Item {
 					count: CoreManager.eventCount
 					iconSize: AccountStatusStyle.messageCounter.iconSize
 					pointSize: AccountStatusStyle.messageCounter.pointSize
+					MouseArea{
+						anchors.fill: parent
+						visible: SettingsModel.messageCounterRedirectEnabled
+						onClicked: accountStatus.messageCounterClicked()
+					}
 				}
 			}
 		}//RowLayout

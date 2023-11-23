@@ -35,6 +35,8 @@
 #include <QStringList>
 #include <QTimer>
 #include "app/App.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 
 #ifdef __linux__
 #include <thread>
@@ -46,7 +48,7 @@
 #define LOG_TAG "[SpellChecker]"
 #define WORD_DELIMITERS_REGEXP "[^\r\n\t\u2028 ]+"
 
-#ifdef WIN32
+#ifdef _WIN32
 class ISpellChecker;
 #endif
 
@@ -55,9 +57,12 @@ class SpellChecker : public QSyntaxHighlighter {
 public:
 	SpellChecker(QObject* parent = nullptr);
 	~SpellChecker();
-	
+		
 	// Common
-	static QString currentLanguage() { return App::getInstance()->getLocale().name();}
+	static QString currentLanguage() {
+		QString overrideLocale = CoreManager::getInstance()->getSettingsModel()->getSpellCheckerOverrideLocale();
+		return overrideLocale.isEmpty() ? App::getInstance()->getLocale().name() : overrideLocale;
+	}
 	Q_INVOKABLE void setTextDocument(QQuickTextDocument *textDocument);
 	Q_INVOKABLE int wordPosition(int x, int y);
 	Q_INVOKABLE bool isWordAtPositionValid(int cursorPosition);
@@ -103,7 +108,7 @@ private:
 	bool wasIgnoredOnce(QString word, int wordStartIndex, int wordEndIndex);
 	void scheduleHighlight();
 	QString underLine(qreal minLength);
-#ifdef WIN32
+#ifdef _WIN32
 	ISpellChecker* mNativeSpellChecker = nullptr;
 #endif
 	
