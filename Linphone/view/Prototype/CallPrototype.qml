@@ -26,6 +26,10 @@ Window{
 		gc()
 	}
 	Component.onDestruction: gc()
+	Connections{
+		target: call && call.core || null
+		onLastErrorMessageChanged: if(mainItem.call) errorMessageText.text=mainItem.call.core.lastErrorMessage
+	}
 	ColumnLayout{
 		anchors.fill: parent
 		RowLayout {
@@ -69,8 +73,11 @@ Window{
 				id: accountStatus
 				Layout.preferredWidth: 50
 				Layout.preferredHeight: 50
+				property int accountCount: accountProxy.count
+				onAccountCountChanged: console.log("AccountCount:"+accountCount)
 				property var defaultAccount: accountProxy.defaultAccount
-				property var state: accountProxy.count > 0 && defaultAccount? defaultAccount.registrationState : LoginPageCpp.registrationState
+				onDefaultAccountChanged: console.log("DefaultAccount:"+defaultAccount)
+				property var state: accountProxy.count > 0 && defaultAccount? defaultAccount.core.registrationState : LoginPageCpp.registrationState
 				onStateChanged: console.log("State:"+state)
 				
 				color: state === LinphoneEnums.RegistrationState.Ok
@@ -94,7 +101,9 @@ Window{
 			Button{
 				text: 'Call'
 				onClicked: {
-						mainItem.callVarObject = UtilsCpp.startAudioCall(usernameToCall.inputText + "@sip.linphone.org")
+						var address = usernameToCall.text + "@sip.linphone.org"
+						console.log("Calling "+address)
+						mainItem.callVarObject = UtilsCpp.createCall(address)
 						proto.component1 = comp
 				}
 			}
@@ -123,7 +132,6 @@ Window{
 		}
 		Text{
 			id: errorMessageText
-			text: mainItem.call ? mainItem.call.core.lastErrorMessage : ''
 			color: 'red'
 		}
 		ItemPrototype{

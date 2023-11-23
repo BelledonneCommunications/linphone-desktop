@@ -33,12 +33,16 @@ void Thread::run() {
 		if (result <= 0) toExit = true;
 	}
 }
+bool Thread::isInLinphoneThread() {
+	return QThread::currentThread() == CoreModel::getInstance()->thread();
+}
 
 bool Thread::mustBeInLinphoneThread(const QString &context) {
-	bool isLinphoneThread = QThread::currentThread() == CoreModel::getInstance()->thread();
+	bool isLinphoneThread = isInLinphoneThread();
 	if (!isLinphoneThread) qCritical() << "[Thread] Not processing in Linphone thread from " << context;
 	return isLinphoneThread;
 }
+
 bool Thread::mustBeInMainThread(const QString &context) {
 	bool isMainThread = QThread::currentThread() == App::getInstance()->thread();
 	if (!isMainThread) qCritical() << "[Thread] Not processing in Main thread from " << context;

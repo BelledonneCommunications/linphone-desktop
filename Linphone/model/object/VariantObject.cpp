@@ -37,8 +37,15 @@ VariantObject::VariantObject(QVariant defaultValue, QObject *parent) {
 	    new SafeConnection(mCoreObject.objectCast<QObject>(), mModelObject.objectCast<QObject>()),
 	    &QObject::deleteLater);
 
-	mConnection->makeConnect(mCoreObject.get(), &SafeObject::setValue, &SafeObject::onSetValue);
-	mConnection->makeConnect(mModelObject.get(), &SafeObject::setValue, &SafeObject::onSetValue);
+	mConnection->makeConnect(mCoreObject.get(), &SafeObject::setValue, [this](QVariant value) {
+		mConnection->invokeToModel([this, value]() { mModelObject->onSetValue(value); });
+	});
+	mConnection->makeConnect(mModelObject.get(), &SafeObject::setValue, [this](QVariant value) {
+		mConnection->invokeToCore([this, value]() { mCoreObject->onSetValue(value); });
+	});
+	mConnection->makeConnect(mModelObject.get(), &SafeObject::valueChanged, [this](QVariant value) {
+		mConnection->invokeToCore([this, value]() { mCoreObject->valueChanged(value); });
+	});
 	connect(mCoreObject.get(), &SafeObject::valueChanged, this, &VariantObject::valueChanged);
 }
 

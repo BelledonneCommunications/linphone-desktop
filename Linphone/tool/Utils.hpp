@@ -49,9 +49,9 @@ public:
 	}
 
 	Q_INVOKABLE static VariantObject *getDisplayName(const QString &address);
-	Q_INVOKABLE static VariantObject *startAudioCall(const QString &sipAddress,
-	                                                 const QString &prepareTransfertAddress = "",
-	                                                 const QHash<QString, QString> &headers = {});
+	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
+	                                             const QString &prepareTransfertAddress = "",
+	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static VariantObject *haveAccount();
 
 	static inline QString coreStringToAppString(const std::string &str) {

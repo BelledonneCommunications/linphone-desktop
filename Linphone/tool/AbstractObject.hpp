@@ -41,7 +41,9 @@ public:
 	inline QString log() const {
 		return QStringLiteral("[%1]: %2").arg(getClassName()).arg("%1");
 	}
-
+	inline static bool isInLinphoneThread() {
+		return Thread::isInLinphoneThread();
+	}
 	inline static bool mustBeInLinphoneThread(const QString &context) { // For convenience : Alias to Thread
 		return Thread::mustBeInLinphoneThread(context);
 	}

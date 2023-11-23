@@ -39,9 +39,9 @@ public:
 	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
 	static QString getDisplayName(QString address);
 
-	static QSharedPointer<CallCore> startAudioCall(const QString &sipAddress,
-	                                               const QString &prepareTransfertAddress = "",
-	                                               const QHash<QString, QString> &headers = {});
+	static QSharedPointer<CallCore> createCall(const QString &sipAddress,
+	                                           const QString &prepareTransfertAddress = "",
+	                                           const QHash<QString, QString> &headers = {});
 
 private:
 	DECLARE_ABSTRACT_OBJECT

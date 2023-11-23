@@ -54,18 +54,19 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	    &QObject::deleteLater);
 	mModelConnection->makeConnect(this, &AccountList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {
-			QList<QSharedPointer<AccountCore>> accounts;
+			QList<QSharedPointer<AccountCore>> *accounts = new QList<QSharedPointer<AccountCore>>();
 			// Model thread.
 			mustBeInLinphoneThread(getClassName());
 			auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
 			for (auto it : linphoneAccounts) {
 				auto model = AccountCore::create(it);
-				accounts.push_back(model);
+				accounts->push_back(model);
 			}
 			mModelConnection->invokeToCore([this, accounts]() {
 				mustBeInMainThread(getClassName());
-				clearData();
-				add(accounts);
+				resetData();
+				add(*accounts);
+				delete accounts;
 			});
 		});
 	});

@@ -26,6 +26,7 @@
 class Thread : public QThread {
 public:
 	Thread(QObject *parent = nullptr);
+	static bool isInLinphoneThread();
 	static bool mustBeInLinphoneThread(const QString &context);
 	static bool mustBeInMainThread(const QString &context);
 

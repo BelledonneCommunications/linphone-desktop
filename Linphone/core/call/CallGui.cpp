@@ -24,10 +24,10 @@
 DEFINE_ABSTRACT_OBJECT(CallGui)
 
 CallGui::CallGui(QSharedPointer<CallCore> core) {
-	mustBeInMainThread(getClassName());
 	qDebug() << "[CallGui] new" << this;
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
+	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 
 CallGui::~CallGui() {

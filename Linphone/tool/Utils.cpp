@@ -50,13 +50,13 @@ VariantObject *Utils::getDisplayName(const QString &address) {
 	return data;
 }
 
-VariantObject *Utils::startAudioCall(const QString &sipAddress,
-                                     const QString &prepareTransfertAddress,
-                                     const QHash<QString, QString> &headers) {
+VariantObject *Utils::createCall(const QString &sipAddress,
+                                 const QString &prepareTransfertAddress,
+                                 const QHash<QString, QString> &headers) {
 	VariantObject *data = new VariantObject(QVariant()); // Scope : GUI
 
 	data->makeRequest([sipAddress, prepareTransfertAddress, headers]() {
-		auto call = ToolModel::startAudioCall(sipAddress, prepareTransfertAddress, headers);
+		auto call = ToolModel::createCall(sipAddress, prepareTransfertAddress, headers);
 		if (call) {
 			return QVariant::fromValue(new CallGui(call));
 		} else return QVariant();

@@ -24,10 +24,10 @@
 DEFINE_ABSTRACT_OBJECT(AccountGui)
 
 AccountGui::AccountGui(QSharedPointer<AccountCore> core) {
-	mustBeInMainThread(getClassName());
 	qDebug() << "[AccountGui] new" << this;
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
+	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 
 AccountGui::~AccountGui() {
