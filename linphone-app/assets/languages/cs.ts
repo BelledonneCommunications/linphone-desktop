@@ -1508,7 +1508,6 @@ Adresa URL není nakonfigurována.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <extracomment>&apos;An account is already provisioned. This action will erase the existing account. : Warn user about it.</extracomment>
         <translation>Účet je již vytvořen. Tato akce vymaže stávající účet. : Upozorněte na to uživatele.</translation>
     </message>
     <message>
@@ -1997,23 +1996,39 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>downloadUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Stáhnout</translation>
     </message>
     <message>
         <source>newVersionCheckError</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
     </message>
     <message>
         <source>noNewVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Vaše aplikace je aktuální.</translation>
     </message>
     <message>
         <source>newVersionInstalled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Nová verze aplikace byla úspěšně nainstalována.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
         <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+    </message>
+    <message>
+        <source>lastProvisioningFailed</source>
+        <translation type="unfinished">Vzdálené poskytování nastavení selhalo. Odkaz může být použit nebo jeho platnost vypršela. Pokud vám byl poskytnut, obraťte se na správce.</translation>
+    </message>
+    <message>
+        <source>newVersionAvailable</source>
+        <translation type="unfinished">K dispozici je nová verze (%1)!</translation>
+    </message>
+    <message>
+        <source>newVersionAvailableInstructions</source>
+        <translation type="unfinished">Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
+    </message>
+    <message>
+        <source>cancel</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4064,22 +4079,22 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>spellCheckingMenuDidYouMean</source>
         <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Chtěl jste říct?</translation>
     </message>
     <message>
         <source>spellCheckingMenuAddToDictionary</source>
         <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Přidat do slovníku</translation>
     </message>
     <message>
         <source>spellCheckingMenuIgnoreOnce</source>
         <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ignorovat</translation>
     </message>
     <message>
         <source>spellCheckingMenuIgnoreAll</source>
         <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ignorovat vždy</translation>
     </message>
 </context>
 <context>
@@ -5269,226 +5284,6 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>okButton</source>
         <translation type="unfinished">OK</translation>
-    </message>
-</context>
-<context>
-    <name></name>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
-    </message>
-    <message>
-        <source>newVersionCheckError</source>
-        <translation>Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
-    </message>
-    <message>
-        <source>newVersionAvailableInstructions</source>
-        <translation>Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
-    </message>
-    <message>
-        <source>downloadUpdate</source>
-        <translation>Stáhnout</translation>
-    </message>
-    <message>
-        <source>noNewVersionAvailable</source>
-        <translation>Vaše aplikace je aktuální.</translation>
-    </message>
-    <message>
-        <source>newVersionInstalled</source>
-        <translation>Nová verze aplikace byla úspěšně nainstalována.</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
-    </message>
-</context>
-<context>
-    <name></name>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
-    </message>
-    <message>
-        <source>newVersionCheckError</source>
-        <translation>Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
-    </message>
-    <message>
-        <source>newVersionAvailableInstructions</source>
-        <translation>Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
-    </message>
-    <message>
-        <source>downloadUpdate</source>
-        <translation>Stáhnout</translation>
-    </message>
-    <message>
-        <source>noNewVersionAvailable</source>
-        <translation>Vaše aplikace je aktuální.</translation>
-    </message>
-    <message>
-        <source>newVersionInstalled</source>
-        <translation>Nová verze aplikace byla úspěšně nainstalována.</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
-    </message>
-</context>
-<context>
-    <name></name>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
-    </message>
-    <message>
-        <source>newVersionCheckError</source>
-        <translation>Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
-    </message>
-    <message>
-        <source>newVersionAvailableInstructions</source>
-        <translation>Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
-    </message>
-    <message>
-        <source>downloadUpdate</source>
-        <translation>Stáhnout</translation>
-    </message>
-    <message>
-        <source>noNewVersionAvailable</source>
-        <translation>Vaše aplikace je aktuální.</translation>
-    </message>
-    <message>
-        <source>newVersionInstalled</source>
-        <translation>Nová verze aplikace byla úspěšně nainstalována.</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
-    </message>
-</context>
-<context>
-    <name></name>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
-    </message>
-    <message>
-        <source>newVersionCheckError</source>
-        <translation>Při kontrole nové verze došlo k chybě. Zkuste to později nebo kontaktujte podporu, pokud problém přetrvává.</translation>
-    </message>
-    <message>
-        <source>newVersionAvailableInstructions</source>
-        <translation>Chcete-li upgradovat na novou verzi, stáhněte si balíček a nainstalujte jej místo stávající verze</translation>
-    </message>
-    <message>
-        <source>downloadUpdate</source>
-        <translation>Stáhnout</translation>
-    </message>
-    <message>
-        <source>noNewVersionAvailable</source>
-        <translation>Vaše aplikace je aktuální.</translation>
-    </message>
-    <message>
-        <source>newVersionInstalled</source>
-        <translation>Nová verze aplikace byla úspěšně nainstalována.</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuDidYouMean</source>
-        <translation>Chtěl jste říct?</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuAddToDictionary</source>
-        <translation>Přidat do slovníku</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreOnce</source>
-        <translation>Ignorovat</translation>
-    </message>
-    <message>
-        <source>spellCheckingMenuIgnoreAll</source>
-        <translation>Ignorovat vždy</translation>
     </message>
 </context>
 </TS>
