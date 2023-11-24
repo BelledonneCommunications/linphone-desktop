@@ -87,8 +87,32 @@ const QString AutoStartSettingsFilePath(
 // -----------------------------------------------------------------------------
 
 #ifdef Q_OS_LINUX
-static inline bool autoStartEnabled () {
-	return QDir(AutoStartDirectory).exists() && QFile(AutoStartDirectory + EXECUTABLE_NAME ".desktop").exists();
+bool App::autoStartEnabled () {
+	const QString confPath(AutoStartDirectory + EXECUTABLE_NAME ".desktop");
+	QFile file(confPath);
+	if(!QDir(AutoStartDirectory).exists() || !file.exists())
+		return false;
+	if (!file.open(QFile::ReadOnly)) {
+		qWarning() << "Unable to open autostart file in read only: `" << confPath << "`.";
+		return false;
+	}
+
+	// Check if installation is done via Flatpak, AppImage, or classic package
+	// in order to check if there is a correct exec path for autostart
+
+	QString exec = getApplicationPath();
+
+	QTextStream in(&file);
+	QString autoStartConf = in.readAll();
+
+	int index = -1;
+	// check if the Exec part of the autostart ini file not corresponding to our executable (old desktop entry with wrong version in filename)
+	if (autoStartConf.indexOf(QString("Exec=" + exec+ " ")) < 0) {// On autostart, there is the option --iconified so there is one space.
+		// replace file
+		setAutoStart(true);
+	}
+
+	return true;
 }
 #elif defined(Q_OS_MACOS)
 static inline QString getMacOsBundlePath () {
@@ -109,7 +133,7 @@ static inline QString getMacOsBundleName () {
 	return QFileInfo(getMacOsBundlePath()).baseName();
 }
 
-static inline bool autoStartEnabled () {
+bool App::autoStartEnabled () {
 	const QByteArray expectedWord(getMacOsBundleName().toUtf8());
 	if (expectedWord.isEmpty()) {
 		qInfo() << QStringLiteral("Application is not installed. Autostart unavailable.");
@@ -145,7 +169,7 @@ static inline bool autoStartEnabled () {
 	return false;
 }
 #else
-static inline bool autoStartEnabled () {
+bool App::autoStartEnabled () {
 	return QSettings(AutoStartSettingsFilePath, QSettings::NativeFormat).value(EXECUTABLE_NAME).isValid();
 }
 #endif // ifdef Q_OS_LINUX
@@ -285,7 +309,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	
 	if (mParser->isSet("version"))
 		mParser->showVersion();
-	
+	mAutoStart = false;
 	mAutoStart = autoStartEnabled();
 	
 	qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
@@ -1016,24 +1040,9 @@ void App::exportDesktopFile(){
 	if(generateDesktopFile(confPath, true, false))
 		generateDesktopFile(confPath, false, false);
 }
-bool App::generateDesktopFile(const QString& confPath, bool remove, bool openInBackground){
-	qInfo() << QStringLiteral("Updating `%1`...").arg(confPath);
-	QFile file(confPath);
-	
-	if (remove) {
-		if (file.exists() && !file.remove()) {
-			qWarning() << QLatin1String("Unable to remove autostart file: `" EXECUTABLE_NAME ".desktop`.");
-			return false;
-		}
-		return true;
-	}
-	
-	if (!file.open(QFile::WriteOnly)) {
-		qWarning() << "Unable to open autostart file: `" EXECUTABLE_NAME ".desktop`.";
-		return false;
-	}
-	
-	const QString binPath(applicationFilePath());
+
+QString App::getApplicationPath() const{
+	const QString binPath(QCoreApplication::applicationFilePath());
 	
 	// Check if installation is done via Flatpak, AppImage, or classic package
 	// in order to rewrite a correct exec path for autostart
@@ -1051,6 +1060,27 @@ bool App::generateDesktopFile(const QString& confPath, bool remove, bool openInB
 		exec = binPath;
 		qDebug() << "exec path autostart set classic package=" << exec;
 	}
+	return exec;
+}
+
+bool App::generateDesktopFile(const QString& confPath, bool remove, bool openInBackground){
+	qInfo() << QStringLiteral("Updating `%1`...").arg(confPath);
+	QFile file(confPath);
+	
+	if (remove) {
+		if (file.exists() && !file.remove()) {
+			qWarning() << QLatin1String("Unable to remove autostart file: `" EXECUTABLE_NAME ".desktop`.");
+			return false;
+		}
+		return true;
+	}
+	
+	if (!file.open(QFile::WriteOnly)) {
+		qWarning() << "Unable to open autostart file: `" EXECUTABLE_NAME ".desktop`.";
+		return false;
+	}
+	
+	QString exec = getApplicationPath();
 	
 	QDir dir;
 	QString iconPath;
@@ -1058,7 +1088,7 @@ bool App::generateDesktopFile(const QString& confPath, bool remove, bool openInB
 	if(!dir.mkpath(IconsDirectory))	// Scalable icons folder may be created
 		qWarning() << "Cannot create scalable icon path at " << IconsDirectory;
 	else{
-		iconPath = IconsDirectory +"/"+ EXECUTABLE_NAME +".svg";
+		iconPath = IconsDirectory + EXECUTABLE_NAME +".svg";
 		QFile icon(Constants::WindowIconPath);
 		if(!QFile(iconPath).exists()) {// Keep old icon but copy if it doesn't exist
 			haveIcon = icon.copy(iconPath);
@@ -1069,7 +1099,7 @@ bool App::generateDesktopFile(const QString& confPath, bool remove, bool openInB
 				icon.setPermissions(icon.permissions() | QFileDevice::WriteOwner);
 			}
 		}else {
-			qInfo() << "Icon already exist in " << IconsDirectory << " and is not replaced.";
+			qInfo() << "Icon already exists in " << IconsDirectory << ". It is not replaced.";
 			haveIcon = true;
 		}
 	}
