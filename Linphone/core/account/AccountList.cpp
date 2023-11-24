@@ -45,7 +45,6 @@ AccountList::AccountList(QObject *parent) : ListProxy(parent) {
 AccountList::~AccountList() {
 	qDebug() << "[AccountList] delete" << this;
 	mustBeInMainThread("~" + getClassName());
-	if (mModelConnection) mModelConnection->deleteLater();
 }
 
 void AccountList::setSelf(QSharedPointer<AccountList> me) {

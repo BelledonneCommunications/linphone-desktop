@@ -140,6 +140,13 @@ LinphoneEnums::ConferenceSchedulerState LinphoneEnums::fromLinphone(const linpho
 	return static_cast<LinphoneEnums::ConferenceSchedulerState>(state);
 }
 
+linphone::ConsolidatedPresence LinphoneEnums::toLinphone(const LinphoneEnums::ConsolidatedPresence &data) {
+	return static_cast<linphone::ConsolidatedPresence>(data);
+}
+LinphoneEnums::ConsolidatedPresence LinphoneEnums::fromLinphone(const linphone::ConsolidatedPresence &data) {
+	return static_cast<LinphoneEnums::ConsolidatedPresence>(data);
+}
+
 linphone::LogLevel LinphoneEnums::toLinphone(const QtMsgType &data) {
 	switch (data) {
 		case QtDebugMsg:

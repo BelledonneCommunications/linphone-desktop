@@ -34,11 +34,14 @@
 #include "core/account/AccountProxy.hpp"
 #include "core/call/CallCore.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/friend/FriendCore.hpp"
+#include "core/friend/FriendGui.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
+#include "core/search/MagicSearchProxy.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "model/object/VariantObject.hpp"
 #include "tool/Constants.hpp"
@@ -134,6 +137,9 @@ void App::initCppInterfaces() {
 	qmlRegisterUncreatableType<AccountCore>(Constants::MainQmlUri, 1, 0, "AccountCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));
+	qmlRegisterType<FriendGui>(Constants::MainQmlUri, 1, 0, "FriendGui");
+	qmlRegisterUncreatableType<FriendCore>(Constants::MainQmlUri, 1, 0, "FriendCore", QLatin1String("Uncreatable"));
+	qmlRegisterType<MagicSearchProxy>(Constants::MainQmlUri, 1, 0, "MagicSearchProxy");
 
 	LinphoneEnums::registerMetaTypes();
 }

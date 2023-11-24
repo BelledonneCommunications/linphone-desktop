@@ -79,7 +79,6 @@ bool AccountManager::login(QString username, QString password) {
 	connect(mAccountModel.get(), &AccountModel::registrationStateChanged, this,
 	        &AccountManager::onRegistrationStateChanged);
 	core->addAccount(account);
-	emit CoreModel::getInstance()->accountAdded();
 	return true;
 }
 

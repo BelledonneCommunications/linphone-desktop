@@ -6,6 +6,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	model/core/CoreModel.cpp
 	
+	model/friend/FriendModel.cpp
+	
 	model/listener/Listener.hpp
 	
 	model/logger/LoggerModel.cpp
@@ -13,6 +15,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	
 	model/object/SafeObject.cpp
 	model/object/VariantObject.cpp
+	
+	model/search/MagicSearchModel.cpp
 	
 	model/setting/SettingsModel.cpp
 	

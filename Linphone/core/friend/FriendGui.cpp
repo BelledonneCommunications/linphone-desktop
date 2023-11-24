@@ -18,15 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SafeConnection.hpp"
+#include "FriendGui.hpp"
+#include "core/App.hpp"
 
-SafeConnection::SafeConnection(SafeSharedPointer<QObject> core, SafeSharedPointer<QObject> model)
-    : mCore(core), mModel(model) {
+DEFINE_ABSTRACT_OBJECT(FriendGui)
+
+FriendGui::FriendGui(QObject *parent) : QObject(parent) {
+	mCore = FriendCore::create(nullptr);
 }
-SafeConnection::~SafeConnection() {
-	mLocker.lock();
-	if (mCore.mCountRef != 0 || mModel.mCountRef != 0)
-		qCritical() << "[SafeConnection] Destruction while still having references. CoreRef=" << mCore.mCountRef
-		            << "ModelRef=" << mModel.mCountRef;
-	mLocker.unlock();
+FriendGui::FriendGui(QSharedPointer<FriendCore> core) {
+	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
+	mCore = core;
+	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
+}
+
+FriendGui::~FriendGui() {
+	mustBeInMainThread("~" + getClassName());
+}
+
+FriendCore *FriendGui::getCore() const {
+	return mCore.get();
 }

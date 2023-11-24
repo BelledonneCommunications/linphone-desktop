@@ -45,7 +45,7 @@ public:
 	}
 	~Listener() {
 		qDebug() << "Destroying Listener";
-		if (mMonitor && mSelf) mMonitor->removeListener(mSelf);
+		setSelf(nullptr);
 	}
 	virtual void onRemoveListener() {
 		setSelf(nullptr);

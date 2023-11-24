@@ -139,10 +139,6 @@ void CoreModel::setPathAfterStart() {
 
 //---------------------------------------------------------------------------------------------------------------------------
 
-void CoreModel::onAccountAdded() {
-	emit accountAdded();
-}
-
 void CoreModel::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
                                                   const std::shared_ptr<linphone::Account> &account,
                                                   linphone::RegistrationState state,
@@ -237,6 +233,10 @@ void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::ChatRoom> &room,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
 	emit messagesReceived(core, room, messages);
+}
+void CoreModel::onNewAccountAdded(const std::shared_ptr<linphone::Core> &core,
+                                  const std::shared_ptr<linphone::Account> &account) {
+	emit accountAdded(core, account);
 }
 void CoreModel::onNewMessageReaction(const std::shared_ptr<linphone::Core> &core,
                                      const std::shared_ptr<linphone::ChatRoom> &chatRoom,

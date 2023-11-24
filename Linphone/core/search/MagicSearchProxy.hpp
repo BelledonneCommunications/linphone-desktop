@@ -18,15 +18,32 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SafeConnection.hpp"
+#ifndef MAGIC_SEARCH_PROXY_H_
+#define MAGIC_SEARCH_PROXY_H_
 
-SafeConnection::SafeConnection(SafeSharedPointer<QObject> core, SafeSharedPointer<QObject> model)
-    : mCore(core), mModel(model) {
-}
-SafeConnection::~SafeConnection() {
-	mLocker.lock();
-	if (mCore.mCountRef != 0 || mModel.mCountRef != 0)
-		qCritical() << "[SafeConnection] Destruction while still having references. CoreRef=" << mCore.mCountRef
-		            << "ModelRef=" << mModel.mCountRef;
-	mLocker.unlock();
-}
+#include "../proxy/SortFilterProxy.hpp"
+#include "core/search/MagicSearchList.hpp"
+
+// =============================================================================
+
+class MagicSearchProxy : public SortFilterProxy {
+	Q_OBJECT
+
+	Q_PROPERTY(QString searchText READ getSearchText WRITE setSearchText NOTIFY searchTextChanged)
+
+public:
+	MagicSearchProxy(QObject *parent = Q_NULLPTR);
+	~MagicSearchProxy();
+
+	QString getSearchText() const;
+	void setSearchText(const QString &search);
+
+signals:
+	void searchTextChanged();
+
+protected:
+	QString mSearchText;
+	QSharedPointer<MagicSearchList> mList;
+};
+
+#endif

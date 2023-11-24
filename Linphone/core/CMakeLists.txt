@@ -6,6 +6,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/App.cpp
 	core/call/CallCore.cpp
 	core/call/CallGui.cpp
+	core/friend/FriendCore.cpp
+	core/friend/FriendGui.cpp
 	core/logger/QtLogger.cpp
 	core/login/LoginPage.cpp
 	core/notifier/Notifier.cpp
@@ -13,6 +15,9 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/phone-number/PhoneNumber.cpp
 	core/phone-number/PhoneNumberList.cpp
 	core/phone-number/PhoneNumberProxy.cpp
+	
+	core/search/MagicSearchList.cpp
+	core/search/MagicSearchProxy.cpp
 	
 	core/setting/Settings.cpp
 	

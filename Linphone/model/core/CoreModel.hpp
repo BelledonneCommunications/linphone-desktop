@@ -57,6 +57,8 @@ public:
 signals:
 	void loggerInitialized();
 	void defaultAccountChanged();
+	void friendAdded();
+	void friendRemoved();
 
 private:
 	QString mConfigPath;
@@ -72,7 +74,6 @@ private:
 	//--------------------------------------------------------------------------------
 	// LINPHONE
 	//--------------------------------------------------------------------------------
-	virtual void onAccountAdded(); // override (Not yet implemented by SDK)
 	virtual void onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                               const std::shared_ptr<linphone::Account> &account,
 	                                               linphone::RegistrationState state,
@@ -129,6 +130,9 @@ private:
 	virtual void onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
 	                                const std::shared_ptr<linphone::ChatRoom> &room,
 	                                const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) override;
+	virtual void onNewAccountAdded(const std::shared_ptr<linphone::Core> &core,
+	                               const std::shared_ptr<linphone::Account> &account) override;
+
 	virtual void onNewMessageReaction(const std::shared_ptr<linphone::Core> &core,
 	                                  const std::shared_ptr<linphone::ChatRoom> &chatRoom,
 	                                  const std::shared_ptr<linphone::ChatMessage> &message,
@@ -154,7 +158,7 @@ private:
 	                                                const std::string &url) override;
 
 signals:
-	void accountAdded();
+	void accountAdded(const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account);
 	void accountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                     const std::shared_ptr<linphone::Account> &account,
 	                                     linphone::RegistrationState state,

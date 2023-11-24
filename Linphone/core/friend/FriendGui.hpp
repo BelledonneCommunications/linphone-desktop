@@ -18,15 +18,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "SafeConnection.hpp"
+#ifndef FRIEND_GUI_H_
+#define FRIEND_GUI_H_
 
-SafeConnection::SafeConnection(SafeSharedPointer<QObject> core, SafeSharedPointer<QObject> model)
-    : mCore(core), mModel(model) {
-}
-SafeConnection::~SafeConnection() {
-	mLocker.lock();
-	if (mCore.mCountRef != 0 || mModel.mCountRef != 0)
-		qCritical() << "[SafeConnection] Destruction while still having references. CoreRef=" << mCore.mCountRef
-		            << "ModelRef=" << mModel.mCountRef;
-	mLocker.unlock();
-}
+#include "FriendCore.hpp"
+#include <QObject>
+#include <QSharedPointer>
+
+class FriendGui : public QObject, public AbstractObject {
+	Q_OBJECT
+
+	Q_PROPERTY(FriendCore *core READ getCore CONSTANT)
+
+public:
+	FriendGui(QObject *parent = nullptr);
+	FriendGui(QSharedPointer<FriendCore> core);
+	~FriendGui();
+	FriendCore *getCore() const;
+	QSharedPointer<FriendCore> mCore;
+	DECLARE_ABSTRACT_OBJECT
+};
+
+#endif

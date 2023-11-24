@@ -46,6 +46,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Prototype/PhoneNumberPrototype.qml
 	view/Prototype/AccountsPrototype.qml
 	view/Prototype/CallPrototype.qml
+	view/Prototype/FriendPrototype.qml
 	view/Prototype/ItemPrototype.qml
 )
 
