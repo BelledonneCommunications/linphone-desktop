@@ -74,6 +74,7 @@ namespace {
 #ifdef Q_OS_LINUX
 const QString AutoStartDirectory(QDir::homePath().append(QStringLiteral("/.config/autostart/")));
 const QString ApplicationsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/applications/")));
+const QString IconsDirectory(QDir::homePath().append(QStringLiteral("/.local/share/icons/hicolor/scalable/apps/")));
 #elif defined(Q_OS_MACOS)
 const QString OsascriptExecutable(QStringLiteral("osascript"));
 #else
@@ -999,7 +1000,7 @@ void App::setAutoStart (bool enabled) {
 	}
 	
 	const QString confPath(AutoStartDirectory + EXECUTABLE_NAME ".desktop");
-	if(generateDesktopFile(confPath, !enabled)) {
+	if(generateDesktopFile(confPath, !enabled, true)) {
 		mAutoStart = enabled;
 		emit autoStartChanged(enabled);
 	}
@@ -1012,10 +1013,10 @@ void App::exportDesktopFile(){
 	}
 	
 	const QString confPath(ApplicationsDirectory + EXECUTABLE_NAME ".desktop");
-	if(generateDesktopFile(confPath, true))
-		generateDesktopFile(confPath, false);
+	if(generateDesktopFile(confPath, true, false))
+		generateDesktopFile(confPath, false, false);
 }
-bool App::generateDesktopFile(const QString& confPath, bool remove){
+bool App::generateDesktopFile(const QString& confPath, bool remove, bool openInBackground){
 	qInfo() << QStringLiteral("Updating `%1`...").arg(confPath);
 	QFile file(confPath);
 	
@@ -1051,18 +1052,41 @@ bool App::generateDesktopFile(const QString& confPath, bool remove){
 		qDebug() << "exec path autostart set classic package=" << exec;
 	}
 	
+	QDir dir;
+	QString iconPath;
+	bool haveIcon = false;
+	if(!dir.mkpath(IconsDirectory))	// Scalable icons folder may be created
+		qWarning() << "Cannot create scalable icon path at " << IconsDirectory;
+	else{
+		iconPath = IconsDirectory +"/"+ EXECUTABLE_NAME +".svg";
+		QFile icon(Constants::WindowIconPath);
+		if(!QFile(iconPath).exists()) {// Keep old icon but copy if it doesn't exist
+			haveIcon = icon.copy(iconPath);
+			if(!haveIcon)
+				qWarning() << "Couldn't copy icon svg into " << iconPath;
+			else {// Update permissions
+				QFile icon(iconPath);
+				icon.setPermissions(icon.permissions() | QFileDevice::WriteOwner);
+			}
+		}else {
+			qInfo() << "Icon already exist in " << IconsDirectory << " and is not replaced.";
+			haveIcon = true;
+		}
+	}
+	
 	QTextStream(&file) << QString(
 							  "[Desktop Entry]\n"
     "Name=" APPLICATION_NAME "\n"
     "GenericName=SIP Phone\n"
     "Comment=" APPLICATION_DESCRIPTION "\n"
-    "Type=Application\n"
-    "Exec=" + exec + " --iconified\n"
-    "Terminal=false\n"
+    "Type=Application\n")
+    << (openInBackground ? "Exec=" + exec + " --iconified %u\n" : "Exec=" + exec + " %u\n")
+    << (haveIcon ? "Icon=" +iconPath + "\n" : "Icon=" EXECUTABLE_NAME "\n")
+    << "Terminal=false\n"
     "Categories=Network;Telephony;\n"
     "MimeType=x-scheme-handler/sip-" EXECUTABLE_NAME ";x-scheme-handler/sip;x-scheme-handler/sips-" EXECUTABLE_NAME ";x-scheme-handler/sips;x-scheme-handler/tel;x-scheme-handler/callto;x-scheme-handler/" EXECUTABLE_NAME "-config;\n"
-    "X-PulseAudio-Properties=media.role=phone\n"
-  );
+    "X-PulseAudio-Properties=media.role=phone\n";
+  
   return true;
 }
 

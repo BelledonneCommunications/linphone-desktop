@@ -2046,8 +2046,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>exportDesktopFile</source>
-        <extracomment>&apos;Export %1.desktop file to applications&apos; : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)</extracomment>
-        <translation>Export %1.desktop file to applications</translation>
+        <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
+        <translation>Create desktop entry</translation>
     </message>
 </context>
 <context>
@@ -2076,8 +2076,8 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>exportDesktopFile</source>
-        <extracomment>&apos;Export %1.desktop file to applications&apos; : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)</extracomment>
-        <translation>Export %1.desktop file to applications</translation>
+        <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
+        <translation>Create desktop entry</translation>
     </message>
 </context>
 <context>

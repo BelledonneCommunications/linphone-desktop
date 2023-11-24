@@ -44,8 +44,8 @@ MenuBar {
 		}
 		MenuItem{
 			visible: App.isLinux()
-			//: 'Export %1.desktop file to applications' : Label menu to export the %1.desktop file to the ~/.local/share/applications/ folder on Linux (%1 is the exectuable name)
-			text: qsTr('exportDesktopFile').arg(executableName)
+			//: 'Create desktop entry' : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux
+			text: qsTr('exportDesktopFile')
 			onTriggered: App.exportDesktopFile()
 		}
 		MenuItem {

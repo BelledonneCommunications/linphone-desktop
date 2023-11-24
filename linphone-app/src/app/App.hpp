@@ -130,7 +130,7 @@ public:
   Q_INVOKABLE static bool isLinux();
 #ifdef Q_OS_LINUX
   Q_INVOKABLE void exportDesktopFile();
-  bool generateDesktopFile(const QString& confPath, bool remove);
+  bool generateDesktopFile(const QString& confPath, bool remove, bool openInBackground);
 #endif
   
 public slots:
