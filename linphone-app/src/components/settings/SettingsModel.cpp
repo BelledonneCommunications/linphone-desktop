@@ -657,12 +657,13 @@ void SettingsModel::setVideoDefinition (const QVariantMap &definition) {
 }
 
 bool SettingsModel::getVideoEnabled() const {
-	return CoreManager::getInstance()->getCore()->videoSupported() && !!mConfig->getInt(UiSection, "video_enabled", 1);
+	return CoreManager::getInstance()->getCore()->videoSupported() 
+	&& !mConfig->getInt("app", "disable_video_feature", !mConfig->getInt(UiSection, "video_enabled", 1));
 }
 
 void SettingsModel::setVideoEnabled(const bool& enable){
 	if( CoreManager::getInstance()->getCore()->videoSupported()){
-		mConfig->setInt(UiSection, "video_enabled", enable);
+		mConfig->setInt("app", "disable_video_feature", !enable);
 		emit videoEnabledChanged();
 	}
 }
@@ -894,8 +895,9 @@ void SettingsModel::setMuteMicrophoneEnabled (bool status) {
 
 // -----------------------------------------------------------------------------
 
+
 bool SettingsModel::getStandardChatEnabled () const {
-	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection,"standard_chat_enabled"), 1);
+	return getChatEnabled() && !!mConfig->getInt(UiSection, getEntryFullName(UiSection,"standard_chat_enabled"), 1);
 }
 
 void SettingsModel::setStandardChatEnabled (bool status) {
@@ -905,7 +907,7 @@ void SettingsModel::setStandardChatEnabled (bool status) {
 }
 
 bool SettingsModel::getSecureChatEnabled () const {
-	return !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "secure_chat_enabled"), 1)
+	return getChatEnabled() && !!mConfig->getInt(UiSection, getEntryFullName(UiSection, "secure_chat_enabled"), 1)
 		&& getLimeIsSupported()
 		&& CoreManager::getInstance()->getCore()->getDefaultAccount() && !CoreManager::getInstance()->getCore()->getDefaultAccount()->getParams()->getLimeServerUrl().empty()
 		//&& !CoreManager::getInstance()->getCore()->getLimeX3DhServerUrl().empty()
@@ -917,6 +919,10 @@ void SettingsModel::setSecureChatEnabled (bool status) {
 	if(!isReadOnly(UiSection, "secure_chat_enabled"))
 		mConfig->setInt(UiSection, "secure_chat_enabled", status);
 	emit secureChatEnabledChanged();
+}
+
+bool SettingsModel::getChatEnabled () const {
+	return !mConfig->getInt("app", getEntryFullName("app","disable_chat_feature"), 0);
 }
 
 bool SettingsModel::getGroupChatEnabled() const{

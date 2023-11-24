@@ -467,6 +467,7 @@ public:
 	bool getIncallScreenshotEnabled() const;
 	void setIncallScreenshotEnabled(const bool& status);
 	
+	bool getChatEnabled()const;
 	bool getGroupChatEnabled()const;
 	
 	bool getConferenceEnabled () const;
