@@ -9,11 +9,9 @@ Control.TabBar {
 	id: mainItem
 	spacing: 15
 	topPadding: 20
-	// leftPadding: 15
-	// rightPadding: 15
 
 	property var model
-
+	
 	contentItem: ListView {
 		model: mainItem.contentModel
 		currentIndex: mainItem.currentIndex
@@ -55,31 +53,35 @@ Control.TabBar {
 	}
 
 	Repeater {
+		id: actionsRepeater
 		model: mainItem.model
 		Control.TabButton {
 			id: tabButton
-			anchors.left: parent.left
-			anchors.right: parent.right
+			width: mainItem.width
 
 			contentItem: ColumnLayout {
-				anchors.fill: parent
+				height: tabButton.height
+				width: tabButton.width
 				EffectImage {
 					id: buttonIcon
+					property int buttonSize: 20
 					image.source: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
-					Layout.preferredWidth: 20
-					Layout.preferredHeight: 20
+					Layout.preferredWidth: buttonSize
+					Layout.preferredHeight: buttonSize
 					Layout.alignment: Qt.AlignHCenter
-					image.sourceSize.width: 20
+					image.sourceSize.width: buttonSize
 					image.fillMode: Image.PreserveAspectFit
 					effect.brightness: 1.0
 				}
 				Text {
 					id: buttonText
 					text: modelData.label
-					font.bold: mainItem.currentIndex === index
-					font.pointSize: DefaultStyle.verticalTabButtonTextSize
+					font {
+						bold: mainItem.currentIndex === index
+						pointSize: DefaultStyle.verticalTabButtonTextSize
+					}
 					color: DefaultStyle.verticalTabBarTextColor
-					Layout.preferredWidth: txtMeter.width
+					Layout.fillWidth: true
 					Layout.preferredHeight: txtMeter.height
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
@@ -91,7 +93,10 @@ Control.TabBar {
 				id: txtMeter
 				text: modelData.label
 				font: buttonText.font
-				Component.onCompleted: mainItem.width = Math.max(mainItem.width, advanceWidth)
+				Component.onCompleted: {
+					font.bold= true
+					mainItem.implicitWidth = Math.max(mainItem.implicitWidth, advanceWidth + buttonIcon.buttonSize)
+				}
 			}
 
 			background: Item {

@@ -21,7 +21,6 @@ Item {
 		VerticalTabBar {
 			id: tabbar
 			Layout.fillHeight: true
-			Layout.preferredWidth: width
 			model: [
 				{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
 				{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},

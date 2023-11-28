@@ -29,11 +29,9 @@ Item {
 			color: Control.SplitHandle.hovered ? DefaultStyle.splitViewHoveredHandleColor : DefaultStyle.splitViewHandleColor
 		}
 
-		Component.onCompleted: {
-			leftPanel.implicitWidth = 280
-		}
 		ColumnLayout {
 			id: leftPanel
+			Control.SplitView.preferredWidth: 280
 		}
 		Rectangle {
 			id: rightPanel
