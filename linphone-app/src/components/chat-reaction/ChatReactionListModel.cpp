@@ -86,7 +86,9 @@ void ChatReactionListModel::clear(){
 }
 
 void ChatReactionListModel::updateChatReaction(const std::shared_ptr<const linphone::ChatMessageReaction>& reaction) {
-	QString address = Utils::coreStringToAppString(reaction->getFromAddress()->asStringUriOnly());
+	auto fromAddress = reaction->getFromAddress()->clone();
+	fromAddress->clean();
+	QString address = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
 	auto itReaction = mReactions.find(address);
 	int oldReactionCount = mReactions.size();
 	auto oldBodies = getBodies();
@@ -137,7 +139,9 @@ void ChatReactionListModel::updateList(){
 }
 		
 bool ChatReactionListModel::exists(std::shared_ptr<linphone::ChatMessageReaction> reaction) const {
-	QString address = Utils::coreStringToAppString(reaction->getFromAddress()->asStringUriOnly());
+	auto fromAddress = reaction->getFromAddress()->clone();
+	fromAddress->clean();
+	QString address = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
 	auto itReaction = mReactions.find(address);
 	if(itReaction != mReactions.end())
 		return (*itReaction)->getBody() == Utils::coreStringToAppString(reaction->getBody());
@@ -181,7 +185,9 @@ void ChatReactionListModel::onNewMessageReaction(const std::shared_ptr<linphone:
 	updateChatReaction(reaction);
 }
 void ChatReactionListModel::onReactionRemoved(const std::shared_ptr<linphone::ChatMessage> & message, const std::shared_ptr<const linphone::Address> & address) {
-	mReactions.remove(Utils::coreStringToAppString(address->asStringUriOnly()));
+	auto fromAddress = address->clone();
+	fromAddress->clean();
+	mReactions.remove(Utils::coreStringToAppString(fromAddress->asStringUriOnly()));
 	mBodies.clear();
 	for(auto it : mReactions)
 		mBodies[it->getBody()].push_back(it);

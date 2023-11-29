@@ -28,7 +28,9 @@
 ChatReactionModel::ChatReactionModel(const std::shared_ptr<const linphone::ChatMessageReaction>& reaction) {
 	App::getInstance()->getEngine()->setObjectOwnership(this, QQmlEngine::CppOwnership);// Avoid QML to destroy it when passing by Q_INVOKABLE
 	mBody = Utils::coreStringToAppString(reaction->getBody());
-	mFromAddress = Utils::coreStringToAppString(reaction->getFromAddress()->asStringUriOnly());
+	auto fromAddress = reaction->getFromAddress()->clone();
+	fromAddress->clean();
+	mFromAddress = Utils::coreStringToAppString(fromAddress->asStringUriOnly());
 }
 
 QString ChatReactionModel::getBody() const {
