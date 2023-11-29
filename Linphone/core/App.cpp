@@ -86,6 +86,7 @@ void App::init() {
 		qDebug() << "[App] Starting Thread";
 		mLinphoneThread->start();
 	}
+	setQuitOnLastWindowClosed(true); // TODO: use settings to set it
 
 	// QML
 	mEngine = new QQmlApplicationEngine(this);
@@ -148,6 +149,10 @@ void App::initCppInterfaces() {
 
 void App::clean() {
 	// Wait 500ms to let time for log te be stored.
+	delete mNotifier;
+	mNotifier = nullptr;
+	delete mEngine;
+	mEngine = nullptr;
 	mLinphoneThread->wait(250);
 	qApp->processEvents(QEventLoop::AllEvents, 250);
 	mLinphoneThread->exit();

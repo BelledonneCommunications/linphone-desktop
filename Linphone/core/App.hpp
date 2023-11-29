@@ -76,6 +76,8 @@ public:
 	QQmlApplicationEngine *mEngine = nullptr;
 	bool notify(QObject *receiver, QEvent *event);
 
+	enum class StatusCode { gRestartCode = 1000, gDeleteDataCode = 1001 };
+
 private:
 	void createCommandParser();
 

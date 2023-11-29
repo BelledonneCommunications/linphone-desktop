@@ -118,9 +118,11 @@ Notifier::~Notifier() {
 	delete mMutex;
 
 	const int nComponents = Notifications.size();
-	for (int i = 0; i < nComponents; ++i)
-		mComponents[i]->deleteLater();
-	delete[] mComponents;
+	if (mComponents) {
+		for (int i = 0; i < nComponents; ++i)
+			if (mComponents[i]) mComponents[i]->deleteLater();
+		delete[] mComponents;
+	}
 }
 
 // -----------------------------------------------------------------------------

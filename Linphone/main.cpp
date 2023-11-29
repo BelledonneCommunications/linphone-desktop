@@ -46,9 +46,10 @@ int main(int argc, char *argv[]) {
 #endif
 
 	int result = 0;
-	while (result >= 0) {
+	do {
 		result = app.exec();
-	}
+	} while (result == (int)App::StatusCode::gRestartCode);
+	qWarning() << "[Main] Exiting app with the code : " << result;
 	app.clean();
 	return result;
 }
