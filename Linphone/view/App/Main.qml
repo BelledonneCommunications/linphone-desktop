@@ -11,11 +11,19 @@ Window {
 	visible: true
 	title: qsTr("Linphone")
 	property bool firstConnection: true
-	
+	AccountProxy{
+		id: accountProxy
+		onHaveAccountChanged: {
+			if(haveAccount)
+				mainWindowStackView.replace(mainPage)
+			else
+				mainWindowStackView.replace(loginPage)
+		}
+	}
 	StackView {
 		id: mainWindowStackView
 		anchors.fill: parent
-		initialItem: welcomePage
+		initialItem: accountProxy.haveAccount ? mainPage : welcomePage
 	}
 	Component {
 		id: welcomePage

@@ -32,6 +32,7 @@ class AccountProxy : public SortFilterProxy {
 
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
 	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount WRITE setDefaultAccount NOTIFY defaultAccountChanged)
+	Q_PROPERTY(bool haveAccount READ getHaveAccount NOTIFY haveAccountChanged)
 
 public:
 	AccountProxy(QObject *parent = Q_NULLPTR);
@@ -43,9 +44,12 @@ public:
 	AccountGui *getDefaultAccount() const;
 	void setDefaultAccount(AccountGui *account);
 
+	bool getHaveAccount() const;
+
 signals:
 	void filterTextChanged();
 	void defaultAccountChanged();
+	void haveAccountChanged();
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;

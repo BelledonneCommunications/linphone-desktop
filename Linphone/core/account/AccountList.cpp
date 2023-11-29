@@ -40,6 +40,7 @@ AccountList::AccountList(QObject *parent) : ListProxy(parent) {
 	qDebug() << "[AccountList] new" << this;
 	mustBeInMainThread(getClassName());
 	connect(CoreModel::getInstance().get(), &CoreModel::accountAdded, this, &AccountList::lUpdate);
+	connect(CoreModel::getInstance().get(), &CoreModel::accountRemoved, this, &AccountList::lUpdate);
 }
 
 AccountList::~AccountList() {
@@ -65,6 +66,7 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 				mustBeInMainThread(getClassName());
 				resetData();
 				add(*accounts);
+				setHaveAccount(accounts->size() > 0);
 				delete accounts;
 			});
 		});
@@ -73,33 +75,29 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 	lUpdate();
 }
 
-AccountGui *AccountList::getDefaultAccount() const {
+QSharedPointer<AccountCore> AccountList::getDefaultAccountCore() const {
 	for (auto it : mList) {
 		auto account = it.objectCast<AccountCore>();
-		if (account->getIsDefaultAccount()) return new AccountGui(account);
+		if (account->getIsDefaultAccount()) return account;
 	}
 	return nullptr;
 }
-/*
-void AccountList::update() {
-    App::postModelAsync([=]() {
-        QList<QSharedPointer<AccountCore>> accounts;
-        // Model thread.
-        mustBeInLinphoneThread(getClassName());
-        auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
-        for (auto it : linphoneAccounts) {
-            auto model = AccountCore::create(it);
-            accounts.push_back(model);
-        }
-        // Invoke for adding stuffs in caller thread
-        QMetaObject::invokeMethod(this, [this, accounts]() {
-            mustBeInMainThread(getClassName());
-            clearData();
-            add(accounts);
-        });
-    });
+
+AccountGui *AccountList::getDefaultAccount() const {
+	auto account = getDefaultAccountCore();
+	if (account) return new AccountGui(account);
+	else return nullptr;
 }
-*/
+bool AccountList::getHaveAccount() const {
+	return mHaveAccount;
+}
+void AccountList::setHaveAccount(bool haveAccount) {
+	if (mHaveAccount != haveAccount) {
+		mHaveAccount = haveAccount;
+		emit haveAccountChanged();
+	}
+}
+
 QVariant AccountList::data(const QModelIndex &index, int role) const {
 	int row = index.row();
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();

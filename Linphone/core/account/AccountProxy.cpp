@@ -26,6 +26,7 @@ AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
 	qDebug() << "[AccountProxy] new" << this;
 	mList = AccountList::create();
 	connect(mList.get(), &AccountList::countChanged, this, &AccountProxy::defaultAccountChanged);
+	connect(mList.get(), &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
 	setSourceModel(mList.get());
 	sort(0);
 }
@@ -51,6 +52,10 @@ AccountGui *AccountProxy::getDefaultAccount() const {
 }
 
 void AccountProxy::setDefaultAccount(AccountGui *account) {
+}
+
+bool AccountProxy::getHaveAccount() const {
+	return dynamic_cast<AccountList *>(sourceModel())->getHaveAccount();
 }
 
 bool AccountProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {

@@ -27,6 +27,7 @@
 #include <QLocale>
 
 class AccountGui;
+class AccountCore;
 // =============================================================================
 
 class AccountList : public ListProxy, public AbstractObject {
@@ -39,11 +40,18 @@ public:
 	void setSelf(QSharedPointer<AccountList> me);
 
 	AccountGui *getDefaultAccount() const;
+	QSharedPointer<AccountCore> getDefaultAccountCore() const;
+
+	bool getHaveAccount() const;
+	void setHaveAccount(bool haveAccount);
+
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 signals:
 	void lUpdate();
+	void haveAccountChanged();
 
 private:
+	bool mHaveAccount = false;
 	QSharedPointer<SafeConnection> mModelConnection;
 	DECLARE_ABSTRACT_OBJECT
 };

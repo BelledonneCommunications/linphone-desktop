@@ -159,6 +159,7 @@ private:
 
 signals:
 	void accountAdded(const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account);
+	void accountRemoved();
 	void accountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                     const std::shared_ptr<linphone::Account> &account,
 	                                     linphone::RegistrationState state,
