@@ -71,7 +71,8 @@ void AccountList::setSelf(QSharedPointer<AccountList> me) {
 			});
 		});
 	});
-
+	mModelConnection->makeConnect(CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged,
+	                              [this]() { mModelConnection->invokeToCore([this]() { defaultAccountChanged(); }); });
 	lUpdate();
 }
 

@@ -41,8 +41,9 @@ public:
 	QString getFilterText() const;
 	void setFilterText(const QString &filter);
 
-	AccountGui *getDefaultAccount() const;
-	void setDefaultAccount(AccountGui *account);
+	AccountGui *getDefaultAccount();             // Get a new object from List or give the stored one.
+	void setDefaultAccount(AccountGui *account); // TODO
+	void resetDefaultAccount();                  // Reset the default account to let UI build its new object if needed.
 
 	bool getHaveAccount() const;
 
@@ -56,6 +57,7 @@ protected:
 	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
+	AccountGui *mDefaultAccount = nullptr; // When null, a new UI object is build from List
 	QSharedPointer<AccountList> mList;
 };
 

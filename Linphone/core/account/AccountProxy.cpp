@@ -25,7 +25,8 @@
 AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
 	qDebug() << "[AccountProxy] new" << this;
 	mList = AccountList::create();
-	connect(mList.get(), &AccountList::countChanged, this, &AccountProxy::defaultAccountChanged);
+	connect(mList.get(), &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
+	connect(mList.get(), &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
 	connect(mList.get(), &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
 	setSourceModel(mList.get());
 	sort(0);
@@ -47,11 +48,18 @@ void AccountProxy::setFilterText(const QString &filter) {
 	}
 }
 
-AccountGui *AccountProxy::getDefaultAccount() const {
-	return dynamic_cast<AccountList *>(sourceModel())->getDefaultAccount();
+AccountGui *AccountProxy::getDefaultAccount() {
+	if (!mDefaultAccount) mDefaultAccount = dynamic_cast<AccountList *>(sourceModel())->getDefaultAccount();
+	return mDefaultAccount;
 }
 
 void AccountProxy::setDefaultAccount(AccountGui *account) {
+}
+
+// Reset the default account to let UI build its new object if needed.
+void AccountProxy::resetDefaultAccount() {
+	mDefaultAccount = nullptr;
+	this->defaultAccountChanged(); // Warn the UI
 }
 
 bool AccountProxy::getHaveAccount() const {

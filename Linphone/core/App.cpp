@@ -46,9 +46,9 @@
 #include "model/object/VariantObject.hpp"
 #include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
-#include "tool/thread/Thread.hpp"
-
+#include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
+#include "tool/thread/Thread.hpp"
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
@@ -102,6 +102,7 @@ void App::init() {
 	mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
 	initCppInterfaces();
 	mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+	mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
 
 	// Enable notifications.
 	mNotifier = new Notifier(mEngine);

@@ -53,6 +53,7 @@ public:
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static VariantObject *haveAccount();
+	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);

@@ -139,6 +139,14 @@ void CoreModel::setPathAfterStart() {
 
 //---------------------------------------------------------------------------------------------------------------------------
 
+void CoreModel::onAccountAdded(const std::shared_ptr<linphone::Core> &core,
+                               const std::shared_ptr<linphone::Account> &account) {
+	emit accountAdded(core, account);
+}
+void CoreModel::onAccountRemoved(const std::shared_ptr<linphone::Core> &core,
+                                 const std::shared_ptr<linphone::Account> &account) {
+	emit accountRemoved(core, account);
+}
 void CoreModel::onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
                                                   const std::shared_ptr<linphone::Account> &account,
                                                   linphone::RegistrationState state,
@@ -195,6 +203,10 @@ void CoreModel::onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
                                     const std::string &message) {
 	emit configuringStatus(core, status, message);
 }
+void CoreModel::onDefaultAccountChanged(const std::shared_ptr<linphone::Core> &core,
+                                        const std::shared_ptr<linphone::Account> &account) {
+	emit defaultAccountChanged(core, account);
+}
 void CoreModel::onDtmfReceived(const std::shared_ptr<linphone::Core> &lc,
                                const std::shared_ptr<linphone::Call> &call,
                                int dtmf) {
@@ -234,10 +246,7 @@ void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
 	emit messagesReceived(core, room, messages);
 }
-void CoreModel::onNewAccountAdded(const std::shared_ptr<linphone::Core> &core,
-                                  const std::shared_ptr<linphone::Account> &account) {
-	emit accountAdded(core, account);
-}
+
 void CoreModel::onNewMessageReaction(const std::shared_ptr<linphone::Core> &core,
                                      const std::shared_ptr<linphone::ChatRoom> &chatRoom,
                                      const std::shared_ptr<linphone::ChatMessage> &message,

@@ -19,8 +19,6 @@
  */
 
 #include "core/path/Paths.hpp"
-#include "core/utils/Constants.hpp"
-// #include "tool/Utils.hpp"
 
 #include "AvatarProvider.hpp"
 
@@ -30,9 +28,7 @@ const QString AvatarProvider::ProviderId = "avatar";
 
 AvatarProvider::AvatarProvider()
     : QQuickImageProvider(QQmlImageProviderBase::Image, QQmlImageProviderBase::ForceAsynchronousImageLoading) {
-	const auto &str = Paths::getAvatarsDirPath().toStdString();
-	if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) mAvatarsPath = QString::fromStdString(str);
-	else mAvatarsPath = QString::fromLocal8Bit(str.c_str(), int(str.size()));
+	mAvatarsPath = Paths::getAvatarsDirPath();
 }
 
 QImage AvatarProvider::requestImage(const QString &id, QSize *size, const QSize &) {

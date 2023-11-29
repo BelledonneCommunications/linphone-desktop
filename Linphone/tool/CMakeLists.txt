@@ -6,6 +6,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/thread/SafeSharedPointer.hpp
 	tool/thread/SafeConnection.cpp
 	tool/thread/Thread.cpp
+	tool/providers/AvatarProvider.cpp
 	tool/providers/ImageProvider.cpp
 )
 

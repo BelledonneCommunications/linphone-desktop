@@ -2,11 +2,14 @@
 * Qml template used for welcome and login/register pages
 **/
 
+import QtCore
 import QtQuick 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as Control
+import QtQuick.Dialogs 
 
 import Linphone
+import UtilsCpp
 
 Item {
 	id: mainItem
@@ -36,18 +39,35 @@ Item {
 					placeholderText: qsTr("Rechercher un contact, appeler ou envoyer un message...")
 				}
 				Control.Button {
+					id: avatarButton
+					AccountProxy{
+						id: accountProxy
+						property bool haveAvatar: defaultAccount && defaultAccount.core.pictureUri || false
+					}
+					
 					Layout.preferredWidth: 30
 					Layout.preferredHeight: 30
 					background: Item {
 						visible: false
 					}
 					contentItem: Image {
-						//avatar
-						source: AppIcons.welcomeLinphoneLogo
-						// width: 30
-						// height: 30
+						id: avatar
+						source: accountProxy.haveAvatar ? accountProxy.defaultAccount.core.pictureUri : AppIcons.welcomeLinphoneLogo
 						fillMode: Image.PreserveAspectFit
 					}
+					onClicked: {
+							fileDialog.open()
+					}
+					FileDialog {
+						 id: fileDialog
+						 currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+						 onAccepted: {
+							var avatarPath = UtilsCpp.createAvatar( selectedFile )
+							if(avatarPath){
+								accountProxy.defaultAccount.core.pictureUri = avatarPath
+							}
+						}
+					 }
 				}
 				Control.Button {
 					enabled: false

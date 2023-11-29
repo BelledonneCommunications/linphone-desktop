@@ -20,10 +20,12 @@
 
 #include "AccountModel.hpp"
 
-#include <QDebug>
-
+#include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
+#include "tool/providers/AvatarProvider.hpp"
+#include <QDebug>
+#include <QUrl>
 
 DEFINE_ABSTRACT_OBJECT(AccountModel)
 
@@ -48,6 +50,15 @@ void AccountModel::setPictureUri(QString uri) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto account = std::dynamic_pointer_cast<linphone::Account>(mMonitor);
 	auto params = account->getParams()->clone();
+	auto oldPictureUri = Utils::coreStringToAppString(params->getPictureUri());
+	if (!oldPictureUri.isEmpty()) {
+		QString appPrefix = QStringLiteral("image://%1/").arg(AvatarProvider::ProviderId);
+		if (oldPictureUri.startsWith(appPrefix)) {
+			oldPictureUri = Paths::getAvatarsDirPath() + oldPictureUri.mid(appPrefix.length());
+		}
+		QFile oldPicture(oldPictureUri);
+		if (!oldPicture.remove()) qWarning() << log().arg("Cannot delete old avatar file at " + oldPictureUri);
+	}
 	params->setPictureUri(Utils::appStringToCoreString(uri));
 	account->setParams(params);
 	emit pictureUriChanged(uri);
@@ -61,5 +72,4 @@ void AccountModel::setDefault() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	core->setDefaultAccount(mMonitor);
-	emit CoreModel::getInstance()->defaultAccountChanged();
 }

@@ -22,8 +22,11 @@
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/path/Paths.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
+#include "tool/providers/AvatarProvider.hpp"
+#include <QImageReader>
 
 // =============================================================================
 
@@ -77,4 +80,37 @@ VariantObject *Utils::haveAccount() {
 	result->makeUpdate(CoreModel::getInstance().get(), &CoreModel::accountAdded);
 	result->requestValue();
 	return result;
+}
+QString Utils::createAvatar(const QUrl &fileUrl) {
+	QString filePath = fileUrl.toLocalFile();
+	QString fileId;  // uuid.ext
+	QString fileUri; // image://avatar/filename.ext
+	QFile file;
+	if (!filePath.isEmpty()) {
+		if (filePath.startsWith("image:")) { // No need to copy
+			fileUri = filePath;
+		} else {
+			file.setFileName(filePath);
+			if (!file.exists()) {
+				qWarning() << "[Utils] Avatar not found at " << filePath;
+				return "";
+			}
+			if (QImageReader::imageFormat(filePath).size() == 0) {
+				qWarning() << "[Utils] Avatar extension not supported by QImageReader for " << filePath;
+				return "";
+			}
+			QFileInfo info(file);
+			QString uuid = QUuid::createUuid().toString();
+			fileId = QStringLiteral("%1.%2")
+			             .arg(uuid.mid(1, uuid.length() - 2)) // Remove `{}`.
+			             .arg(info.suffix());
+			fileUri = QStringLiteral("image://%1/%2").arg(AvatarProvider::ProviderId).arg(fileId);
+			QString dest = Paths::getAvatarsDirPath() + fileId;
+			if (!file.copy(dest)) {
+				qWarning() << "[Utils] Avatar couldn't be created to " << dest;
+				return "";
+			}
+		}
+	}
+	return fileUri;
 }

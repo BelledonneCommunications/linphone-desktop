@@ -56,7 +56,6 @@ public:
 
 signals:
 	void loggerInitialized();
-	void defaultAccountChanged();
 	void friendAdded();
 	void friendRemoved();
 
@@ -74,6 +73,10 @@ private:
 	//--------------------------------------------------------------------------------
 	// LINPHONE
 	//--------------------------------------------------------------------------------
+	virtual void onAccountAdded(const std::shared_ptr<linphone::Core> &core,
+	                            const std::shared_ptr<linphone::Account> &account) override;
+	virtual void onAccountRemoved(const std::shared_ptr<linphone::Core> &core,
+	                              const std::shared_ptr<linphone::Account> &account) override;
 	virtual void onAccountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                               const std::shared_ptr<linphone::Account> &account,
 	                                               linphone::RegistrationState state,
@@ -107,6 +110,8 @@ private:
 	virtual void onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
 	                                 linphone::Config::ConfiguringState status,
 	                                 const std::string &message) override;
+	virtual void onDefaultAccountChanged(const std::shared_ptr<linphone::Core> &core,
+	                                     const std::shared_ptr<linphone::Account> &account) override;
 	virtual void onDtmfReceived(const std::shared_ptr<linphone::Core> &lc,
 	                            const std::shared_ptr<linphone::Call> &call,
 	                            int dtmf) override;
@@ -130,8 +135,6 @@ private:
 	virtual void onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
 	                                const std::shared_ptr<linphone::ChatRoom> &room,
 	                                const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) override;
-	virtual void onNewAccountAdded(const std::shared_ptr<linphone::Core> &core,
-	                               const std::shared_ptr<linphone::Account> &account) override;
 
 	virtual void onNewMessageReaction(const std::shared_ptr<linphone::Core> &core,
 	                                  const std::shared_ptr<linphone::ChatRoom> &chatRoom,
@@ -159,7 +162,7 @@ private:
 
 signals:
 	void accountAdded(const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account);
-	void accountRemoved();
+	void accountRemoved(const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account);
 	void accountRegistrationStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                     const std::shared_ptr<linphone::Account> &account,
 	                                     linphone::RegistrationState state,
@@ -189,6 +192,8 @@ signals:
 	void configuringStatus(const std::shared_ptr<linphone::Core> &core,
 	                       linphone::Config::ConfiguringState status,
 	                       const std::string &message);
+	void defaultAccountChanged(const std::shared_ptr<linphone::Core> &core,
+	                           const std::shared_ptr<linphone::Account> &account);
 	void dtmfReceived(const std::shared_ptr<linphone::Core> &lc, const std::shared_ptr<linphone::Call> &call, int dtmf);
 	void
 	ecCalibrationResult(const std::shared_ptr<linphone::Core> &core, linphone::EcCalibratorStatus status, int delayMs);
