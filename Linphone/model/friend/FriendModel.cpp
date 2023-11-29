@@ -22,8 +22,6 @@
 
 #include <QDebug>
 
-#include "model/core/CoreModel.hpp"
-
 DEFINE_ABSTRACT_OBJECT(FriendModel)
 
 FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, QObject *parent)

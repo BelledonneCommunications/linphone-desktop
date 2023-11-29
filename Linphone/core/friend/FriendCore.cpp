@@ -191,6 +191,7 @@ void FriendCore::save() {                                          // Save Value
 			if (created) {
 				mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
 				mFriendModel->setSelf(mFriendModel);
+				core->getDefaultFriendList()->updateSubscriptions();
 			}
 			emit CoreModel::getInstance()->friendAdded();
 			mFriendModelConnection->invokeToCore([this, created]() {

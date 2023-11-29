@@ -147,6 +147,13 @@ LinphoneEnums::ConsolidatedPresence LinphoneEnums::fromLinphone(const linphone::
 	return static_cast<LinphoneEnums::ConsolidatedPresence>(data);
 }
 
+linphone::MagicSearch::Aggregation LinphoneEnums::toLinphone(const LinphoneEnums::MagicSearchAggregation &data) {
+	return static_cast<linphone::MagicSearch::Aggregation>(data);
+}
+LinphoneEnums::MagicSearchAggregation LinphoneEnums::fromLinphone(const linphone::MagicSearch::Aggregation &data) {
+	return static_cast<LinphoneEnums::MagicSearchAggregation>(data);
+}
+
 linphone::LogLevel LinphoneEnums::toLinphone(const QtMsgType &data) {
 	switch (data) {
 		case QtDebugMsg:

@@ -45,7 +45,23 @@ void MagicSearchModel::search(QString filter) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mLastSearch = filter;
 	mMonitor->getContactsListAsync(filter != "*" ? Utils::appStringToCoreString(filter) : "", "", mSourceFlags,
-	                               mAggregationFlag);
+	                               LinphoneEnums::toLinphone(mAggregationFlag));
+}
+
+void MagicSearchModel::setSourceFlags(int flags) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (mSourceFlags != flags) {
+		mSourceFlags = flags;
+		emit sourceFlagsChanged(mSourceFlags);
+	}
+}
+
+void MagicSearchModel::setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (mAggregationFlag != flag) {
+		mAggregationFlag = flag;
+		emit aggregationFlagChanged(mAggregationFlag);
+	}
 }
 
 void MagicSearchModel::onSearchResultsReceived(const std::shared_ptr<linphone::MagicSearch> &magicSearch) {

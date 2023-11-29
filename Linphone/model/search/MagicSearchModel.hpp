@@ -23,6 +23,7 @@
 
 #include "model/listener/Listener.hpp"
 #include "tool/AbstractObject.hpp"
+#include "tool/LinphoneEnums.hpp"
 
 #include <QObject>
 #include <QTimer>
@@ -37,10 +38,16 @@ public:
 	~MagicSearchModel();
 
 	void search(QString filter);
+	void setSourceFlags(int flags);
+	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
 
 	int mSourceFlags = (int)linphone::MagicSearch::Source::All;
-	linphone::MagicSearch::Aggregation mAggregationFlag = linphone::MagicSearch::Aggregation::None;
+	LinphoneEnums::MagicSearchAggregation mAggregationFlag = LinphoneEnums::MagicSearchAggregation::None;
 	QString mLastSearch;
+
+signals:
+	void sourceFlagsChanged(int sourceFlags);
+	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation aggregationFlag);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

@@ -72,6 +72,8 @@ void CoreModel::start() {
 	setPathsAfterCreation();
 	mCore->start();
 	setPathAfterStart();
+	mCore->enableFriendListSubscription(true);
+	mCore->enableRecordAware(true);
 	mIterateTimer->start();
 }
 // -----------------------------------------------------------------------------

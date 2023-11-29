@@ -23,6 +23,8 @@
 
 MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
 	mList = MagicSearchList::create();
+	connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
+	connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged);
 	setSourceModel(mList.get());
 	sort(0);
 }
@@ -37,4 +39,20 @@ QString MagicSearchProxy::getSearchText() const {
 void MagicSearchProxy::setSearchText(const QString &search) {
 	mSearchText = search;
 	qobject_cast<MagicSearchList *>(sourceModel())->setSearch(mSearchText);
+}
+
+int MagicSearchProxy::getSourceFlags() const {
+	return qobject_cast<MagicSearchList *>(sourceModel())->getSourceFlags();
+}
+
+void MagicSearchProxy::setSourceFlags(int flags) {
+	qobject_cast<MagicSearchList *>(sourceModel())->lSetSourceFlags(flags);
+}
+
+LinphoneEnums::MagicSearchAggregation MagicSearchProxy::getAggregationFlag() const {
+	return qobject_cast<MagicSearchList *>(sourceModel())->getAggregationFlag();
+}
+
+void MagicSearchProxy::setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag) {
+	qobject_cast<MagicSearchList *>(sourceModel())->lSetAggregationFlag(flag);
 }

@@ -202,6 +202,15 @@ Q_ENUM_NS(ConsolidatedPresence);
 linphone::ConsolidatedPresence toLinphone(const LinphoneEnums::ConsolidatedPresence &state);
 LinphoneEnums::ConsolidatedPresence fromLinphone(const linphone::ConsolidatedPresence &state);
 
+enum class MagicSearchAggregation {
+	Friend = int(linphone::MagicSearch::Aggregation::Friend),
+	None = int(linphone::MagicSearch::Aggregation::None)
+};
+Q_ENUM_NS(MagicSearchAggregation);
+
+linphone::MagicSearch::Aggregation toLinphone(const LinphoneEnums::MagicSearchAggregation &data);
+LinphoneEnums::MagicSearchAggregation fromLinphone(const linphone::MagicSearch::Aggregation &data);
+
 linphone::LogLevel toLinphone(const QtMsgType &data);
 QtMsgType fromLinphone(const linphone::LogLevel &data);
 

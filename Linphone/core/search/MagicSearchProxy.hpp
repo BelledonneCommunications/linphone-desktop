@@ -23,6 +23,7 @@
 
 #include "../proxy/SortFilterProxy.hpp"
 #include "core/search/MagicSearchList.hpp"
+#include "tool/LinphoneEnums.hpp"
 
 // =============================================================================
 
@@ -30,6 +31,9 @@ class MagicSearchProxy : public SortFilterProxy {
 	Q_OBJECT
 
 	Q_PROPERTY(QString searchText READ getSearchText WRITE setSearchText NOTIFY searchTextChanged)
+	Q_PROPERTY(int sourceFlags READ getSourceFlags WRITE setSourceFlags NOTIFY sourceFlagsChanged)
+	Q_PROPERTY(LinphoneEnums::MagicSearchAggregation aggregationFlag READ getAggregationFlag WRITE setAggregationFlag
+	               NOTIFY aggregationFlagChanged)
 
 public:
 	MagicSearchProxy(QObject *parent = Q_NULLPTR);
@@ -38,8 +42,16 @@ public:
 	QString getSearchText() const;
 	void setSearchText(const QString &search);
 
+	int getSourceFlags() const;
+	void setSourceFlags(int flags);
+
+	LinphoneEnums::MagicSearchAggregation getAggregationFlag() const;
+	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
+
 signals:
 	void searchTextChanged();
+	void sourceFlagsChanged(int sourceFlags);
+	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation aggregationFlag);
 
 protected:
 	QString mSearchText;

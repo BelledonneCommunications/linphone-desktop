@@ -42,12 +42,26 @@ public:
 	void setSearch(const QString &search);
 	void setResults(const QList<QSharedPointer<FriendCore>> &contacts);
 
+	int getSourceFlags() const;
+	void setSourceFlags(int flags);
+
+	LinphoneEnums::MagicSearchAggregation getAggregationFlag() const;
+	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
+
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
 	void lSearch(QString filter);
+	void lSetSourceFlags(int sourceFlags);
+	void lSetAggregationFlag(LinphoneEnums::MagicSearchAggregation aggregationFlag);
+
+	void sourceFlagsChanged(int sourceFlags);
+	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation flag);
 
 private:
+	int mSourceFlags;
+	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
+
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	QSharedPointer<SafeConnection> mModelConnection;
 	QSharedPointer<SafeConnection> mCoreModelConnection;
