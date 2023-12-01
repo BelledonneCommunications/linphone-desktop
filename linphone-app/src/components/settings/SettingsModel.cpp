@@ -1979,6 +1979,12 @@ QString SettingsModel::getLogsFolder (const shared_ptr<linphone::Config> &config
 					    : Paths::getLogsDirPath());
 }
 
+size_t SettingsModel::getMaxLogsCollectionSize (const shared_ptr<linphone::Config> &config) {
+	return config
+					    ? config->getInt(UiSection, "logs_max_size", Constants::MaxLogsCollectionSize)
+					    : Constants::MaxLogsCollectionSize;
+}
+
 bool SettingsModel::getLogsEnabled (const shared_ptr<linphone::Config> &config) {
 	return config ? config->getInt(UiSection, "logs_enabled", false) : true;
 }

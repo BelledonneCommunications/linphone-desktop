@@ -209,7 +209,7 @@ void Logger::init (const shared_ptr<linphone::Config> &config) {
 	
 	linphone::Core::setLogCollectionPrefix(EXECUTABLE_NAME);
 	linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(folder));
-	linphone::Core::setLogCollectionMaxFileSize(Constants::MaxLogsCollectionSize);
+	linphone::Core::setLogCollectionMaxFileSize(SettingsModel::getMaxLogsCollectionSize(config));
 	
 	mInstance->enableFullLogs(SettingsModel::getFullLogsEnabled(config));
 	mInstance->enable(SettingsModel::getLogsEnabled(config));
