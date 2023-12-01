@@ -51,6 +51,7 @@ QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address>
 	QString displayName;
 	if (address) {
 		displayName = Utils::coreStringToAppString(address->getDisplayName());
+		if (displayName.isEmpty()) displayName = Utils::coreStringToAppString(address->getUsername());
 		// TODO
 		//	std::shared_ptr<linphone::Address> cleanAddress = address->clone();
 		//	cleanAddress->clean();

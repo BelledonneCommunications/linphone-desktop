@@ -6,7 +6,7 @@ import QtCore
 import QtQuick 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as Control
-import QtQuick.Dialogs 
+import QtQuick.Effects
 
 import Linphone
 import UtilsCpp
@@ -17,7 +17,7 @@ Item {
 	RowLayout {
 		anchors.fill: parent
 		// spacing: 30
-		anchors.topMargin: 18
+		anchors.topMargin: 18 * DefaultStyle.dp
 		VerticalTabBar {
 			id: tabbar
 			Layout.fillHeight: true
@@ -32,7 +32,9 @@ Item {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			RowLayout {
-				Layout.leftMargin: 25
+				id: topRow
+				Layout.leftMargin: 25 * DefaultStyle.dp
+				Layout.rightMargin: 41 * DefaultStyle.dp
 				TextInput {
 					fillWidth: true
 					placeholderText: qsTr("Rechercher un contact, appeler ou envoyer un message...")
@@ -41,41 +43,43 @@ Item {
 					id: avatarButton
 					AccountProxy{
 						id: accountProxy
-						property bool haveAvatar: defaultAccount && defaultAccount.core.pictureUri || false
+						//property bool haveAvatar: defaultAccount && defaultAccount.core.pictureUri || false
 					}
 					
-					Layout.preferredWidth: 30
-					Layout.preferredHeight: 30
+					Layout.preferredWidth: 54 * DefaultStyle.dp
+					Layout.preferredHeight: width
 					background: Item {
 						visible: false
 					}
-					contentItem: Image {
+					contentItem: Avatar {
 						id: avatar
-						source: accountProxy.haveAvatar ? accountProxy.defaultAccount.core.pictureUri : AppIcons.welcomeLinphoneLogo
-						fillMode: Image.PreserveAspectFit
+						height: avatarButton.height
+						width: avatarButton.width
+						account: accountProxy.defaultAccount
 					}
 					onClicked: {
-							fileDialog.open()
+							accountList.open()
 					}
-					FileDialog {
-						 id: fileDialog
-						 currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
-						 onAccepted: {
-							var avatarPath = UtilsCpp.createAvatar( selectedFile )
-							if(avatarPath){
-								accountProxy.defaultAccount.core.pictureUri = avatarPath
-							}
-						}
-					 }
 				}
 				Control.Button {
+					id: settingsButton
 					enabled: false
-					Layout.preferredWidth: 30
-					Layout.preferredHeight: 30
+					Layout.preferredWidth: 30 * DefaultStyle.dp
+					Layout.preferredHeight: 30 * DefaultStyle.dp
 					background: Item {
 					}
 					contentItem: Image {
 						source: AppIcons.verticalDots
+					}
+					Popup{
+						id: accountList
+						x: -width + parent.width
+						y: settingsButton.height + (10 * DefaultStyle.dp)
+						contentWidth: accounts.width
+						contentHeight: accounts.height
+						Accounts{
+							id: accounts
+						}
 					}
 				}
 			}

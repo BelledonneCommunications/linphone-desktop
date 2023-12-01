@@ -34,6 +34,10 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 	mustBeInLinphoneThread(getClassName());
 	connect(CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged, this,
 	        &AccountModel::onDefaultAccountChanged);
+
+	// Hack because Account doesn't provide callbacks on updated data
+	connect(this, &AccountModel::defaultAccountChanged, this,
+	        [this]() { emit pictureUriChanged(Utils::coreStringToAppString(mMonitor->getParams()->getPictureUri())); });
 }
 
 AccountModel::~AccountModel() {
@@ -61,7 +65,10 @@ void AccountModel::setPictureUri(QString uri) {
 	}
 	params->setPictureUri(Utils::appStringToCoreString(uri));
 	account->setParams(params);
-	emit pictureUriChanged(uri);
+	// Hack because Account doesn't provide callbacks on updated data
+	// emit pictureUriChanged(uri);
+	emit CoreModel::getInstance()->defaultAccountChanged(CoreModel::getInstance()->getCore(),
+	                                                     CoreModel::getInstance()->getCore()->getDefaultAccount());
 }
 
 void AccountModel::onDefaultAccountChanged() {

@@ -53,6 +53,26 @@ VariantObject *Utils::getDisplayName(const QString &address) {
 	return data;
 }
 
+QString Utils::getInitials(const QString &username) {
+	if (username.isEmpty()) return "";
+
+	QRegularExpression regex("[\\s\\.]+");
+	QStringList words = username.split(regex); // Qt 5.14: Qt::SkipEmptyParts
+	QStringList initials;
+	auto str32 = words[0].toStdU32String();
+	std::u32string char32;
+	char32 += str32[0];
+	initials << QString::fromStdU32String(char32);
+	for (int i = 1; i < words.size() && initials.size() <= 1; ++i) {
+		if (words[i].size() > 0) {
+			str32 = words[i].toStdU32String();
+			char32[0] = str32[0];
+			initials << QString::fromStdU32String(char32);
+		}
+	}
+	return QLocale().toUpper(initials.join(""));
+}
+
 VariantObject *Utils::createCall(const QString &sipAddress,
                                  const QString &prepareTransfertAddress,
                                  const QHash<QString, QString> &headers) {

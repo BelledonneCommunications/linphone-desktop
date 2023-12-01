@@ -14,6 +14,7 @@ QtObject {
 	property string loginImage: "image://internal/login_image.svg"
 	property string belledonne: "image://internal/belledonne.svg"
 	property string profile: "image://internal/user-circle.svg"
+	property string manageProfile: "image://internal/user-circle-gear.svg"
 	property string verif_page_image: "image://internal/verif_page_image.svg"
 	property string check: "image://internal/check.svg"
 	property string dialer: "image://internal/dialer.svg"

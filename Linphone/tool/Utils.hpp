@@ -49,6 +49,7 @@ public:
 	}
 
 	Q_INVOKABLE static VariantObject *getDisplayName(const QString &address);
+	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
 	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});

@@ -39,8 +39,12 @@ public:
 	~FriendModel();
 
 	QDateTime getPresenceTimestamp() const;
-
 	std::shared_ptr<linphone::Friend> getFriend() const;
+
+	void setPictureUri(QString uri);
+
+signals:
+	void pictureUriChanged(QString uri);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

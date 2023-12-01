@@ -78,4 +78,16 @@ QtObject {
 
 	property color splitViewHandleColor: "#F9F9F9"
 	property color splitViewHoveredHandleColor: "#EDEDED"
+	
+	property color danger_500main: "#DD5F5F"
+	property color grey_0: "#FFFFFF"
+	property color success_500main: "#4FAE80"
+	property color warning_600: "#DBB820"
+	property color main2_200: "#DFECF2"
+	property color main2_300: "#C0D1D9"
+	property color main2_400: "#9AABB5"
+	property color main2_700: "#364860"
+	property color main2_500main: "#6C7A87"
+	
+	property double dp: 1.0//0.66
 }

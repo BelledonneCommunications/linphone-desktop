@@ -40,6 +40,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mFriendModel->setSelf(mFriendModel);
 		mConsolidatedPresence = LinphoneEnums::fromLinphone(contact->getConsolidatedPresence());
 		mPresenceTimestamp = mFriendModel->getPresenceTimestamp();
+		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
 		auto address = contact->getAddress();
 		mAddress = address ? Utils::coreStringToAppString(contact->getAddress()->asString()) : "NoAddress";
 		mIsSaved = true;
@@ -71,6 +72,14 @@ void FriendCore::setSelf(SafeSharedPointer<QObject> me) {
 				    setPresenceTimestamp(presenceTimestamp);
 			    });
 		    });
+		mFriendModelConnection->makeConnect(mFriendModel.get(), &FriendModel::pictureUriChanged, [this](QString uri) {
+			mFriendModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
+		});
+
+		// From GUI
+		mFriendModelConnection->makeConnect(this, &FriendCore::lSetPictureUri, [this](QString uri) {
+			mFriendModelConnection->invokeToModel([this, uri]() { mFriendModel->setPictureUri(uri); });
+		});
 
 	} else { // Create
 		mFriendModelConnection = QSharedPointer<SafeConnection>(
@@ -131,6 +140,15 @@ void FriendCore::setPresenceTimestamp(QDateTime presenceTimestamp) {
 		mPresenceTimestamp = presenceTimestamp;
 		emit presenceTimestampChanged(mPresenceTimestamp);
 	}
+}
+
+QString FriendCore::getPictureUri() const {
+	return mPictureUri;
+}
+
+void FriendCore::onPictureUriChanged(QString uri) {
+	mPictureUri = uri;
+	emit pictureUriChanged();
 }
 
 bool FriendCore::getIsSaved() const {

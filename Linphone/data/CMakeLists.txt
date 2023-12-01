@@ -4,6 +4,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/info.svg" 
 	"data/image/belledonne.svg"
 	"data/image/user-circle.svg"
+	"data/image/user-circle-gear.svg"
 	"data/image/logo.svg" 
 	"data/image/login_image.svg" 
 	"data/image/eye-slash.svg"
@@ -44,6 +45,9 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/outgoing_call.svg"
 	"data/image/outgoing_call_missed.svg"
 	"data/image/outgoing_call_rejected.svg"
+	
+	data/shaders/roundEffect.vert.qsb
+	data/shaders/roundEffect.frag.qsb
 	
 )
 
