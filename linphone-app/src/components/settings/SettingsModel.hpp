@@ -683,7 +683,7 @@ public:
 	QString getLogsEmail () const;
 	void setLogsEmail (const QString &email);
 	
-	bool getVfsEncrypted ();
+	static bool getVfsEncrypted ();
 	Q_INVOKABLE void setVfsEncrypted (bool encrypted, const bool deleteUserData);
 	
 	Q_INVOKABLE bool isLdapAvailable();

@@ -28,6 +28,7 @@
 
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
+#include "components/settings/SettingsModel.hpp"
 
 #include "Paths.hpp"
 
@@ -248,7 +249,10 @@ string Paths::getFriendsListFilePath () {
 }
 
 string Paths::getDownloadDirPath () {
-	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + QDir::separator());
+	if( SettingsModel:: getVfsEncrypted())
+		return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation)+ Constants::PathVfs);
+	else
+		return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + QDir::separator());
 }
 
 std::string Paths::getLimeDatabasePath (){

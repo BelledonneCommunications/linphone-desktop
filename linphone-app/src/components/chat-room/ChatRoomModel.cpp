@@ -836,7 +836,7 @@ void ChatRoomModel::updateNewMessageNotice(const int& count){
 int ChatRoomModel::loadTillMessage(ChatMessageModel * message){
 	if( message){
 		auto linphoneMessage = message->getChatMessage();
-		return loadTillMessage(message);
+		return loadTillMessage(linphoneMessage);
 	}else
 		return -1;
 }
@@ -1140,7 +1140,7 @@ void ChatRoomModel::handleCallCreated(const shared_ptr<linphone::Call> &call){
 }
 
 void ChatRoomModel::handlePresenceStatusReceived(std::shared_ptr<linphone::Friend> contact){
-	if(!mDeleteChatRoom && contact){
+	if(!mDeleteChatRoom && contact && mChatRoom){
 		bool canUpdatePresence = false;
 		auto contactAddresses = contact->getAddresses();
 		for( auto itContactAddress = contactAddresses.begin() ; !canUpdatePresence && itContactAddress != contactAddresses.end() ; ++itContactAddress){

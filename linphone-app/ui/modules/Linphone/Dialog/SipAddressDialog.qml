@@ -40,7 +40,6 @@ DialogPlus {
 			
 			Layout.fillWidth: true
 			Layout.topMargin: SipAddressDialogStyle.spacing
-			visible: !timeline.isFilterVisible
 			
 			showHeader:false
 			

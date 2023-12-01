@@ -97,7 +97,8 @@ QString ParticipantListModel::addressesToString()const{
 			txt << Utils::toDisplayString(Utils::coreStringToAppString(address->asStringUriOnly()), CoreManager::getInstance()->getSettingsModel()->getSipDisplayMode());
 		}
 	}
-	txt.removeFirst();// Remove me
+	if( txt.size() > 0)
+		txt.removeFirst();// Remove me
 	return txt.join(", ");
 }
 
@@ -111,7 +112,8 @@ QString ParticipantListModel::displayNamesToString()const{
 				txt << displayName;
 		}
 	}
-	txt.removeFirst();// Remove me
+	if(txt.size() > 0)
+		txt.removeFirst();// Remove me
 	return txt.join(", ");
 }
 
@@ -124,7 +126,8 @@ QString ParticipantListModel::usernamesToString()const{
 			username = participant->getAddress()->getUsername();
 		txt << Utils::coreStringToAppString(username);
 	}
-	txt.removeFirst();// Remove me
+	if(txt.size() > 0)
+		txt.removeFirst();// Remove me
 	return txt.join(", ");
 }
 

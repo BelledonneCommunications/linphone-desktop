@@ -58,6 +58,7 @@ constexpr char Constants::PathRootCa[];
 constexpr char Constants::PathFriendsList[];
 constexpr char Constants::PathLimeDatabase[];
 constexpr char Constants::PathMessageHistoryList[];
+constexpr char Constants::PathVfs[];
 constexpr char Constants::PathZrtpSecrets[];
 constexpr char Constants::PathISpellDicts[];
 constexpr char Constants::PathISpellOwnDict[];
