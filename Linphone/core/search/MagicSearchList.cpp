@@ -57,38 +57,37 @@ MagicSearchList::~MagicSearchList() {
 }
 
 void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
-	mModelConnection = QSharedPointer<SafeConnection>(
-	    new SafeConnection(me.objectCast<QObject>(), std::dynamic_pointer_cast<QObject>(mMagicSearch)),
-	    &QObject::deleteLater);
-	mModelConnection->makeConnect(this, &MagicSearchList::lSearch, [this](QString filter) {
+	mModelConnection = QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>>(
+	    new SafeConnection<MagicSearchList, MagicSearchModel>(me, mMagicSearch), &QObject::deleteLater);
+	mModelConnection->makeConnectToCore(&MagicSearchList::lSearch, [this](QString filter) {
 		mModelConnection->invokeToModel([this, filter]() { mMagicSearch->search(filter); });
 	});
-	mModelConnection->makeConnect(this, &MagicSearchList::lSetSourceFlags, [this](int flags) {
+	mModelConnection->makeConnectToCore(&MagicSearchList::lSetSourceFlags, [this](int flags) {
 		mModelConnection->invokeToModel([this, flags]() { mMagicSearch->setSourceFlags(flags); });
 	});
-	mModelConnection->makeConnect(mMagicSearch.get(), &MagicSearchModel::sourceFlagsChanged, [this](int flags) {
+	mModelConnection->makeConnectToModel(&MagicSearchModel::sourceFlagsChanged, [this](int flags) {
 		mModelConnection->invokeToCore([this, flags]() { setSourceFlags(flags); });
 	});
-	mModelConnection->makeConnect(mMagicSearch.get(), &MagicSearchModel::aggregationFlagChanged,
-	                              [this](LinphoneEnums::MagicSearchAggregation flag) {
-		                              mModelConnection->invokeToCore([this, flag]() { setAggregationFlag(flag); });
-	                              });
+	mModelConnection->makeConnectToModel(
+	    &MagicSearchModel::aggregationFlagChanged, [this](LinphoneEnums::MagicSearchAggregation flag) {
+		    mModelConnection->invokeToCore([this, flag]() { setAggregationFlag(flag); });
+	    });
 
-	mModelConnection->makeConnect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived,
-	                              [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
-		                              auto *contacts = new QList<QSharedPointer<FriendCore>>();
-		                              for (auto it : results) {
-			                              QSharedPointer<FriendCore> contact;
-			                              if (it->getFriend()) {
-				                              contact = FriendCore::create(it->getFriend());
-				                              contacts->append(contact);
-			                              }
-		                              }
-		                              mModelConnection->invokeToCore([this, contacts]() {
-			                              setResults(*contacts);
-			                              delete contacts;
-		                              });
-	                              });
+	mModelConnection->makeConnectToModel(&MagicSearchModel::searchResultsReceived,
+	                                     [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
+		                                     auto *contacts = new QList<QSharedPointer<FriendCore>>();
+		                                     for (auto it : results) {
+			                                     QSharedPointer<FriendCore> contact;
+			                                     if (it->getFriend()) {
+				                                     contact = FriendCore::create(it->getFriend());
+				                                     contacts->append(contact);
+			                                     }
+		                                     }
+		                                     mModelConnection->invokeToCore([this, contacts]() {
+			                                     setResults(*contacts);
+			                                     delete contacts;
+		                                     });
+	                                     });
 }
 
 void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contacts) {

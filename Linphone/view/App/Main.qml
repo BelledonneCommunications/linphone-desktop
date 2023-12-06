@@ -36,6 +36,8 @@ Window {
 	Component {
 		id: loginPage
 		LoginPage {
+			showBackButton: accountProxy.haveAccount
+			onGoBack: mainWindowStackView.replace(mainPage)
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			onConnectionSucceed: {
@@ -50,7 +52,7 @@ Window {
 	Component {
 		id: sipLoginPage
 		SIPLoginPage {
-			onReturnToLogin: mainWindowStackView.pop()
+			onGoBack: mainWindowStackView.pop()
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			
 			onConnectionSucceed: {
@@ -90,6 +92,7 @@ Window {
 	Component {
 		id: mainPage
 		MainLayout {
+			onAddAccountRequest: mainWindowStackView.replace(loginPage)
 		}
 	}
 } 

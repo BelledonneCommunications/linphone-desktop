@@ -33,17 +33,16 @@ VariantObject::VariantObject(QVariant defaultValue, QObject *parent) {
 	mModelObject = QSharedPointer<SafeObject>::create();
 	mModelObject->moveToThread(CoreModel::getInstance()->thread());
 
-	mConnection = QSharedPointer<SafeConnection>(
-	    new SafeConnection(mCoreObject.objectCast<QObject>(), mModelObject.objectCast<QObject>()),
-	    &QObject::deleteLater);
+	mConnection = QSharedPointer<SafeConnection<SafeObject, SafeObject>>(
+	    new SafeConnection<SafeObject, SafeObject>(mCoreObject, mModelObject), &QObject::deleteLater);
 
-	mConnection->makeConnect(mCoreObject.get(), &SafeObject::setValue, [this](QVariant value) {
+	mConnection->makeConnectToCore(&SafeObject::setValue, [this](QVariant value) {
 		mConnection->invokeToModel([this, value]() { mModelObject->onSetValue(value); });
 	});
-	mConnection->makeConnect(mModelObject.get(), &SafeObject::setValue, [this](QVariant value) {
+	mConnection->makeConnectToModel(&SafeObject::setValue, [this](QVariant value) {
 		mConnection->invokeToCore([this, value]() { mCoreObject->onSetValue(value); });
 	});
-	mConnection->makeConnect(mModelObject.get(), &SafeObject::valueChanged, [this](QVariant value) {
+	mConnection->makeConnectToModel(&SafeObject::valueChanged, [this](QVariant value) {
 		mConnection->invokeToCore([this, value]() { mCoreObject->valueChanged(value); });
 	});
 	connect(mCoreObject.get(), &SafeObject::valueChanged, this, &VariantObject::valueChanged);

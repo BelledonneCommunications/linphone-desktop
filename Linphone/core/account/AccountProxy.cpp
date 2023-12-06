@@ -23,7 +23,6 @@
 #include "AccountList.hpp"
 
 AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
-	qDebug() << "[AccountProxy] new" << this;
 	mList = AccountList::create();
 	connect(mList.get(), &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
 	connect(mList.get(), &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
@@ -33,7 +32,7 @@ AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
 }
 
 AccountProxy::~AccountProxy() {
-	qDebug() << "[AccountProxy] delete" << this;
+	setSourceModel(nullptr);
 }
 
 QString AccountProxy::getFilterText() const {
@@ -59,7 +58,7 @@ void AccountProxy::setDefaultAccount(AccountGui *account) {
 // Reset the default account to let UI build its new object if needed.
 void AccountProxy::resetDefaultAccount() {
 	mDefaultAccount = nullptr;
-	this->defaultAccountChanged(); // Warn the UI
+	emit this->defaultAccountChanged(); // Warn the UI
 }
 
 bool AccountProxy::getHaveAccount() const {

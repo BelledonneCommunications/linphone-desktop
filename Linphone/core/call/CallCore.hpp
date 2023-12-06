@@ -23,11 +23,10 @@
 
 #include "model/call/CallModel.hpp"
 #include "tool/LinphoneEnums.hpp"
+#include "tool/thread/SafeConnection.hpp"
 #include <QObject>
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
-
-class SafeConnection;
 
 class CallCore : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -138,7 +137,7 @@ private:
 	bool mMicrophoneMuted;
 	bool mCameraEnabled;
 	bool mPaused = false;
-	QSharedPointer<SafeConnection> mAccountModelConnection;
+	QSharedPointer<SafeConnection<CallCore, CallModel>> mAccountModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

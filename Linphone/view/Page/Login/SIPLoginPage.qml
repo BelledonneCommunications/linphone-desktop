@@ -6,7 +6,7 @@ import ConstantsCpp 1.0
 
 LoginLayout {
 	id: mainItem
-	signal returnToLogin()
+	signal goBack()
 	signal goToRegister()
 	signal connectionSucceed()
 	
@@ -22,7 +22,7 @@ LoginLayout {
 			}
 			onClicked: {
 				console.debug("[SIPLoginPage] User: return")
-				mainItem.returnToLogin()
+				mainItem.goBack()
 			}
 		}
 		Image {

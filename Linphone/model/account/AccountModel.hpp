@@ -42,6 +42,7 @@ public:
 
 	void setPictureUri(QString uri);
 	void setDefault();
+	void removeAccount();
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -50,6 +51,7 @@ signals:
 	void defaultAccountChanged(bool isDefault);
 
 	void pictureUriChanged(QString uri);
+	void unreadNotificationsChanged(int unreadMessagesCount, int unreadCallsCount);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

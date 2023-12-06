@@ -67,13 +67,12 @@ CallCore::~CallCore() {
 }
 
 void CallCore::setSelf(QSharedPointer<CallCore> me) {
-	mAccountModelConnection = QSharedPointer<SafeConnection>(
-	    new SafeConnection(me.objectCast<QObject>(), std::dynamic_pointer_cast<QObject>(mCallModel)),
-	    &QObject::deleteLater);
-	mAccountModelConnection->makeConnect(this, &CallCore::lSetMicrophoneMuted, [this](bool isMuted) {
+	mAccountModelConnection = QSharedPointer<SafeConnection<CallCore, CallModel>>(
+	    new SafeConnection<CallCore, CallModel>(me, mCallModel), &QObject::deleteLater);
+	mAccountModelConnection->makeConnectToCore(&CallCore::lSetMicrophoneMuted, [this](bool isMuted) {
 		mAccountModelConnection->invokeToModel([this, isMuted]() { mCallModel->setMicrophoneMuted(isMuted); });
 	});
-	mAccountModelConnection->makeConnect(mCallModel.get(), &CallModel::microphoneMutedChanged, [this](bool isMuted) {
+	mAccountModelConnection->makeConnectToModel(&CallModel::microphoneMutedChanged, [this](bool isMuted) {
 		mAccountModelConnection->invokeToCore([this, isMuted]() { setMicrophoneMuted(isMuted); });
 	});
 	// mAccountModelConnection->makeConnect(this, &CallCore::lSetSpeakerMuted, [this](bool isMuted) {
@@ -82,37 +81,37 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	// mAccountModelConnection->makeConnect(mCallModel.get(), &CallModel::speakerMutedChanged, [this](bool isMuted) {
 	// 	mAccountModelConnection->invokeToCore([this, isMuted]() { setSpeakerMuted(isMuted); });
 	// });
-	mAccountModelConnection->makeConnect(this, &CallCore::lSetCameraEnabled, [this](bool enabled) {
+	mAccountModelConnection->makeConnectToCore(&CallCore::lSetCameraEnabled, [this](bool enabled) {
 		mAccountModelConnection->invokeToModel([this, enabled]() { mCallModel->setCameraEnabled(enabled); });
 	});
-	mAccountModelConnection->makeConnect(mCallModel.get(), &CallModel::cameraEnabledChanged, [this](bool enabled) {
+	mAccountModelConnection->makeConnectToModel(&CallModel::cameraEnabledChanged, [this](bool enabled) {
 		mAccountModelConnection->invokeToCore([this, enabled]() { setCameraEnabled(enabled); });
 	});
-	mAccountModelConnection->makeConnect(mCallModel.get(), &CallModel::durationChanged, [this](int duration) {
+	mAccountModelConnection->makeConnectToModel(&CallModel::durationChanged, [this](int duration) {
 		mAccountModelConnection->invokeToCore([this, duration]() { setDuration(duration); });
 	});
-	connect(mCallModel.get(), &CallModel::stateChanged, this,
-	        [this](linphone::Call::State state, const std::string &message) {
-		        mAccountModelConnection->invokeToCore([this, state, message]() {
-			        setState(LinphoneEnums::fromLinphone(state), Utils::coreStringToAppString(message));
-		        });
-	        });
-	connect(mCallModel.get(), &CallModel::statusChanged, this, [this](linphone::Call::Status status) {
+	mAccountModelConnection->makeConnectToModel(
+	    &CallModel::stateChanged, [this](linphone::Call::State state, const std::string &message) {
+		    mAccountModelConnection->invokeToCore([this, state, message]() {
+			    setState(LinphoneEnums::fromLinphone(state), Utils::coreStringToAppString(message));
+		    });
+	    });
+	mAccountModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
 		mAccountModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
 	});
-	mAccountModelConnection->makeConnect(this, &CallCore::lSetPaused, [this](bool paused) {
+	mAccountModelConnection->makeConnectToCore(&CallCore::lSetPaused, [this](bool paused) {
 		mAccountModelConnection->invokeToModel([this, paused]() { mCallModel->setPaused(paused); });
 	});
-	mAccountModelConnection->makeConnect(mCallModel.get(), &CallModel::pausedChanged, [this](bool paused) {
+	mAccountModelConnection->makeConnectToModel(&CallModel::pausedChanged, [this](bool paused) {
 		mAccountModelConnection->invokeToCore([this, paused]() { setPaused(paused); });
 	});
 
-	mAccountModelConnection->makeConnect(this, &CallCore::lTransferCall, [this](const QString &address) {
+	mAccountModelConnection->makeConnectToCore(&CallCore::lTransferCall, [this](const QString &address) {
 		mAccountModelConnection->invokeToModel(
 		    [this, address]() { mCallModel->transferTo(ToolModel::interpretUrl(address)); });
 	});
-	mAccountModelConnection->makeConnect(
-	    mCallModel.get(), &CallModel::transferStateChanged,
+	mAccountModelConnection->makeConnectToModel(
+	    &CallModel::transferStateChanged,
 	    [this](const std::shared_ptr<linphone::Call> &call, linphone::Call::State state) {
 		    mAccountModelConnection->invokeToCore([this, state]() {
 			    QString message;
@@ -122,8 +121,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    setTransferState(LinphoneEnums::fromLinphone(state), message);
 		    });
 	    });
-	mAccountModelConnection->makeConnect(
-	    mCallModel.get(), &CallModel::encryptionChanged,
+	mAccountModelConnection->makeConnectToModel(
+	    &CallModel::encryptionChanged,
 	    [this](const std::shared_ptr<linphone::Call> &call, bool on, const std::string &authenticationToken) {
 		    auto encryption = LinphoneEnums::fromLinphone(call->getCurrentParams()->getMediaEncryption());
 		    auto tokenVerified = mCallModel->getAuthenticationTokenVerified();
@@ -133,13 +132,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			                   encryption == LinphoneEnums::MediaEncryption::Dtls);
 		    });
 	    });
-	mAccountModelConnection->makeConnect(this, &CallCore::lAccept, [this](bool withVideo) {
+	mAccountModelConnection->makeConnectToCore(&CallCore::lAccept, [this](bool withVideo) {
 		mAccountModelConnection->invokeToModel([this, withVideo]() { mCallModel->accept(withVideo); });
 	});
-	mAccountModelConnection->makeConnect(this, &CallCore::lDecline, [this]() {
-		mAccountModelConnection->invokeToModel([this]() { mCallModel->decline(); });
-	});
-	mAccountModelConnection->makeConnect(this, &CallCore::lTerminate, [this]() {
+	mAccountModelConnection->makeConnectToCore(
+	    &CallCore::lDecline, [this]() { mAccountModelConnection->invokeToModel([this]() { mCallModel->decline(); }); });
+	mAccountModelConnection->makeConnectToCore(&CallCore::lTerminate, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mCallModel->terminate(); });
 	});
 }

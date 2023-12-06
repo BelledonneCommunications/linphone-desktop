@@ -58,6 +58,7 @@ signals:
 	void loggerInitialized();
 	void friendAdded();
 	void friendRemoved();
+	void unreadNotificationsChanged();
 
 private:
 	QString mConfigPath;

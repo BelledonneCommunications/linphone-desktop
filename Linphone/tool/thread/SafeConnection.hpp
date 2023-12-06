@@ -22,6 +22,7 @@
 #define SAFE_CONNECTION_H_
 
 #include "SafeSharedPointer.hpp"
+#include "model/core/CoreModel.hpp"
 #include <QMutex>
 #include <QObject>
 
@@ -60,19 +61,40 @@
  *
  */
 
+template <class A, class B>
 class SafeConnection : public QObject {
 public:
-	SafeConnection(SafeSharedPointer<QObject> a, SafeSharedPointer<QObject> b);
-	~SafeConnection();
-	SafeSharedPointer<QObject> mCore, mModel;
+	// SafeConnection(SafeSharedPointer<QObject> a, SafeSharedPointer<QObject> b);
+	SafeConnection(QSharedPointer<A> a, std::shared_ptr<B> b)
+	    : mCore(a), mModel(b), mCoreObject(a.get()), mModelObject(b.get()) {
+	}
+	SafeConnection(QSharedPointer<A> a, QSharedPointer<B> b)
+	    : mCore(a), mModel(b), mCoreObject(a.get()), mModelObject(b.get()) {
+	}
+	~SafeConnection() {
+		mLocker.lock();
+		if (mCore.mCountRef != 0 || mModel.mCountRef != 0)
+			qCritical() << "[SafeConnection] Destruction while still having references. CoreRef=" << mCore.mCountRef
+			            << "ModelRef=" << mModel.mCountRef;
+		mCore.reset();
+		mModel.reset();
+		mLocker.unlock();
+	}
+	SafeSharedPointer<A> mCore;
+	SafeSharedPointer<B> mModel;
 	QMutex mLocker;
 
 	template <typename Func1, typename Func2>
-	static inline QMetaObject::Connection makeConnect(const typename QtPrivate::FunctionPointer<Func1>::Object *sender,
-	                                                  Func1 signal,
-	                                                  Func2 slot,
-	                                                  Qt::ConnectionType type = Qt::AutoConnection) {
-		return connect(sender, signal, sender, slot, type);
+	inline QMetaObject::Connection makeConnectToModel(Func1 signal, Func2 slot) {
+		return connect(mModelObject, signal, mCoreObject, slot, Qt::DirectConnection);
+	}
+	template <typename Sender, typename Func1, typename Func2>
+	inline QMetaObject::Connection makeConnectToModel(Sender sender, Func1 signal, Func2 slot) {
+		return connect(sender, signal, mCoreObject, slot, Qt::DirectConnection);
+	}
+	template <typename Func1, typename Func2>
+	inline QMetaObject::Connection makeConnectToCore(Func1 signal, Func2 slot) {
+		return connect(mCoreObject, signal, mModelObject, slot, Qt::DirectConnection);
 	}
 
 	template <typename Func, typename... Args>
@@ -112,6 +134,10 @@ public:
 		mModel.unlock();
 		mLocker.unlock();
 	}
+
+protected:
+	A *mCoreObject = nullptr;
+	B *mModelObject = nullptr; // Use only for makeConnects
 };
 
 #endif

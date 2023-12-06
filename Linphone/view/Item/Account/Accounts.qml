@@ -1,6 +1,8 @@
-import QtQuick 2.15
-import QtQuick.Layouts 1.3
-import QtQuick.Controls 2.2 as Control
+import QtCore
+import QtQuick
+import QtQuick.Layouts
+import QtQuick.Controls as Control
+import QtQuick.Dialogs
 
 import Linphone
 import UtilsCpp
@@ -13,6 +15,9 @@ Item {
 	readonly property int leftPadding: 32 * DefaultStyle.dp
 	readonly property int rightPadding: 32 * DefaultStyle.dp
 	readonly property int spacing: 16 * DefaultStyle.dp
+	
+	signal addAccountRequest()
+	
 	implicitHeight: list.contentHeight + topPadding + bottomPadding + 32 * DefaultStyle.dp + 1 + newAccountArea.height
 	ColumnLayout{
 		anchors.top: parent.top
@@ -28,8 +33,21 @@ Item {
 			spacing: mainItem.spacing
 			model: AccountProxy{}
 			delegate: Contact{
+				id: contactItem
 				width: list.width
 				account: modelData
+				onAvatarClicked: fileDialog.open()
+				onBackgroundClicked: modelData.core.lSetDefaultAccount()
+				FileDialog {
+					id: fileDialog
+					currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
+					onAccepted: {
+						var avatarPath = UtilsCpp.createAvatar( selectedFile )
+						if(avatarPath){
+							modelData.core.pictureUri = avatarPath
+						}
+					}
+				}
 			}
 		}
 		Rectangle{
@@ -40,10 +58,10 @@ Item {
 			height: 1
 			color: DefaultStyle.main2_300
 		}
-		MouseArea{ // TODO
+		MouseArea{
 			Layout.fillWidth: true
 			Layout.preferredHeight: 32 * DefaultStyle.dp
-			onClicked: console.log('New!')
+			onClicked: mainItem.addAccountRequest()
 			RowLayout{
 				id: newAccountArea
 				anchors.fill: parent

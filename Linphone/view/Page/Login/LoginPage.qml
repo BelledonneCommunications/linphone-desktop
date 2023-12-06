@@ -5,11 +5,28 @@ import Linphone
 
 LoginLayout {
 	id: mainItem
+	property bool showBackButton: false
+	signal goBack()
 	signal useSIPButtonClicked()
 	signal goToRegister()
 	signal connectionSucceed()
 
 	titleContent: RowLayout {
+		Control.Button {
+			Layout.preferredHeight: 40 * DefaultStyle.dp
+			Layout.preferredWidth: height
+			visible: mainItem.showBackButton
+			icon.width: width
+			icon.height: height
+			icon.source: AppIcons.returnArrow
+			background: Rectangle {
+				color: "transparent"
+			}
+			onClicked: {
+				console.debug("[LoginLayout] User: return")
+				mainItem.goBack()
+			}
+		}
 		Image {
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.profile
@@ -24,7 +41,7 @@ LoginLayout {
 			Layout.fillWidth: true
 		}
 		Text {
-			Layout.rightMargin: 15
+			Layout.rightMargin: 15 * DefaultStyle.dp
 			text: "No account yet ?"
 			font.pointSize: DefaultStyle.indicatorMessageTextSize
 		}
@@ -47,7 +64,7 @@ LoginLayout {
 					onConnectionSucceed: mainItem.connectionSucceed()
 				}
 				Button {
-					Layout.topMargin: 40
+					Layout.topMargin: 40 * DefaultStyle.dp
 					inversedColors: true
 					text: "Use SIP Account"
 					onClicked: {mainItem.useSIPButtonClicked()}
@@ -57,8 +74,8 @@ LoginLayout {
 				Layout.fillWidth: true
 			}
 			Image {
-				Layout.rightMargin: 40
-				Layout.preferredWidth: 300
+				Layout.rightMargin: 40 * DefaultStyle.dp
+				Layout.preferredWidth: 300 * DefaultStyle.dp
 				fillMode: Image.PreserveAspectFit
 				source: AppIcons.loginImage
 			}

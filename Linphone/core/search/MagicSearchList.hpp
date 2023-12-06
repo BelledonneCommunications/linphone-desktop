@@ -28,6 +28,7 @@
 #include <QLocale>
 
 class FriendCore;
+class CoreModel;
 // =============================================================================
 
 // Return FriendGui list to Ui
@@ -63,8 +64,8 @@ private:
 	LinphoneEnums::MagicSearchAggregation mAggregationFlag;
 
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
-	QSharedPointer<SafeConnection> mModelConnection;
-	QSharedPointer<SafeConnection> mCoreModelConnection;
+	QSharedPointer<SafeConnection<MagicSearchList, MagicSearchModel>> mModelConnection;
+	QSharedPointer<SafeConnection<MagicSearchList, CoreModel>> mCoreModelConnection;
 	DECLARE_ABSTRACT_OBJECT
 };
 

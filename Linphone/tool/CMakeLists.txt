@@ -5,7 +5,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 
 	tool/LinphoneEnums.cpp
 	tool/thread/SafeSharedPointer.hpp
-	tool/thread/SafeConnection.cpp
+	tool/thread/SafeConnection.hpp
 	tool/thread/Thread.cpp
 	tool/providers/AvatarProvider.cpp
 	tool/providers/ImageProvider.cpp

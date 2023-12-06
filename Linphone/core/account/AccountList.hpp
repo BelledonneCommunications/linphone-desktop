@@ -28,6 +28,7 @@
 
 class AccountGui;
 class AccountCore;
+class CoreModel;
 // =============================================================================
 
 class AccountList : public ListProxy, public AbstractObject {
@@ -41,6 +42,7 @@ public:
 
 	AccountGui *getDefaultAccount() const;
 	QSharedPointer<AccountCore> getDefaultAccountCore() const;
+	void setDefaultAccount(QSharedPointer<AccountCore> account);
 
 	bool getHaveAccount() const;
 	void setHaveAccount(bool haveAccount);
@@ -53,7 +55,8 @@ signals:
 
 private:
 	bool mHaveAccount = false;
-	QSharedPointer<SafeConnection> mModelConnection;
+	QSharedPointer<AccountCore> mDefaultAccount;
+	QSharedPointer<SafeConnection<AccountList, CoreModel>> mModelConnection;
 	DECLARE_ABSTRACT_OBJECT
 };
 

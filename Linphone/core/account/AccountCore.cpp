@@ -46,6 +46,8 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mPictureUri = Utils::coreStringToAppString(params->getPictureUri());
 	mRegistrationState = LinphoneEnums::fromLinphone(account->getState());
 	mIsDefaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount() == account;
+	// mUnreadNotifications = account->getUnreadChatMessageCount() + account->getMissedCallsCount();	// TODO
+	mUnreadNotifications = account->getMissedCallsCount();
 
 	// Add listener
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account); // OK
@@ -58,30 +60,34 @@ AccountCore::~AccountCore() {
 }
 
 void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
-	mAccountModelConnection = QSharedPointer<SafeConnection>(
-	    new SafeConnection(me.objectCast<QObject>(), std::dynamic_pointer_cast<QObject>(mAccountModel)));
-	mAccountModelConnection->makeConnect(mAccountModel.get(), &AccountModel::registrationStateChanged,
-	                                     [this](const std::shared_ptr<linphone::Account> &account,
-	                                            linphone::RegistrationState state, const std::string &message) {
-		                                     mAccountModelConnection->invokeToCore([this, account, state, message]() {
-			                                     this->onRegistrationStateChanged(account, state, message);
-		                                     });
-	                                     });
-	// From Model
-	mAccountModelConnection->makeConnect(
-	    mAccountModel.get(), &AccountModel::defaultAccountChanged, [this](bool isDefault) {
-		    mAccountModelConnection->invokeToCore([this, isDefault]() { this->onDefaultAccountChanged(isDefault); });
+	mAccountModelConnection = QSharedPointer<SafeConnection<AccountCore, AccountModel>>(
+	    new SafeConnection<AccountCore, AccountModel>(me, mAccountModel));
+	mAccountModelConnection->makeConnectToModel(
+	    &AccountModel::registrationStateChanged, [this](const std::shared_ptr<linphone::Account> &account,
+	                                                    linphone::RegistrationState state, const std::string &message) {
+		    mAccountModelConnection->invokeToCore(
+		        [this, account, state, message]() { this->onRegistrationStateChanged(account, state, message); });
 	    });
+	// From Model
+	mAccountModelConnection->makeConnectToModel(&AccountModel::defaultAccountChanged, [this](bool isDefault) {
+		mAccountModelConnection->invokeToCore([this, isDefault]() { this->onDefaultAccountChanged(isDefault); });
+	});
 
-	mAccountModelConnection->makeConnect(mAccountModel.get(), &AccountModel::pictureUriChanged, [this](QString uri) {
+	mAccountModelConnection->makeConnectToModel(&AccountModel::pictureUriChanged, [this](QString uri) {
 		mAccountModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
 	});
+	mAccountModelConnection->makeConnectToModel(
+	    &AccountModel::unreadNotificationsChanged, [this](int unreadMessagesCount, int unreadCallsCount) {
+		    mAccountModelConnection->invokeToCore([this, unreadMessagesCount, unreadCallsCount]() {
+			    this->setUnreadNotifications(unreadMessagesCount + unreadCallsCount);
+		    });
+	    });
 
 	// From GUI
-	mAccountModelConnection->makeConnect(this, &AccountCore::lSetPictureUri, [this](QString uri) {
+	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetPictureUri, [this](QString uri) {
 		mAccountModelConnection->invokeToModel([this, uri]() { mAccountModel->setPictureUri(uri); });
 	});
-	mAccountModelConnection->makeConnect(this, &AccountCore::lSetDefaultAccount, [this]() {
+	mAccountModelConnection->makeConnectToCore(&AccountCore::lSetDefaultAccount, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mAccountModel->setDefault(); });
 	});
 }
@@ -106,6 +112,16 @@ bool AccountCore::getIsDefaultAccount() const {
 	return mIsDefaultAccount;
 }
 
+int AccountCore::getUnreadNotifications() const {
+	return mUnreadNotifications;
+}
+void AccountCore::setUnreadNotifications(int unread) {
+	if (mUnreadNotifications != unread) {
+		mUnreadNotifications = unread;
+		emit unreadNotificationsChanged(unread);
+	}
+}
+
 void AccountCore::onRegistrationStateChanged(const std::shared_ptr<linphone::Account> &account,
                                              linphone::RegistrationState state,
                                              const std::string &message) {
@@ -123,4 +139,8 @@ void AccountCore::onDefaultAccountChanged(bool isDefault) {
 void AccountCore::onPictureUriChanged(QString uri) {
 	mPictureUri = uri;
 	emit pictureUriChanged();
+}
+
+void AccountCore::removeAccount() {
+	mAccountModelConnection->invokeToModel([this]() { mAccountModel->removeAccount(); });
 }

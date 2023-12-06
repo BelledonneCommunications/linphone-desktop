@@ -13,11 +13,11 @@ StackView{
 	id: mainItem
 	property FriendGui contact
 	property AccountGui account
-	onAccountChanged: if(account) replace(avatar, StackView.Immediate)
 	property string address: account ? account.core.identityAddress : ''
 	property var displayNameObj: UtilsCpp.getDisplayName(address)
 	property bool haveAvatar: (account && account.core.pictureUri )
 								|| (contact && contact.core.pictureUri)
+	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 	
 	initialItem: haveAvatar ? avatar : initials
 	Component{
@@ -25,12 +25,10 @@ StackView{
 		Rectangle {
 			id: initialItem
 			property string initials: UtilsCpp.getInitials(mainItem.displayNameObj.value)
-			onInitialsChanged: console.log("newInit:"+initials)
 			radius: width / 2
 			color: DefaultStyle.main2_200
 			height: mainItem.height
 			width: height
-			Component.onCompleted: console.log("init:"+initials)
 			Text {
 				anchors.fill: parent
 				anchors.centerIn: parent

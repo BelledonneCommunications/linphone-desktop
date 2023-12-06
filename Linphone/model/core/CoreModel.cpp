@@ -63,18 +63,23 @@ std::shared_ptr<CoreModel> CoreModel::create(const QString &configPath, QThread 
 void CoreModel::start() {
 	mIterateTimer = new QTimer(this);
 	mIterateTimer->setInterval(30);
-	connect(mIterateTimer, &QTimer::timeout, [this]() { mCore->iterate(); });
+	connect(mIterateTimer, &QTimer::timeout, [this]() {
+		static int iterateCount = 0;
+		if (iterateCount != 0) qCritical() << log().arg("Multi Iterate ! ");
+		++iterateCount;
+		mCore->iterate();
+		--iterateCount;
+	});
 	setPathBeforeCreation();
 	mCore =
 	    linphone::Factory::get()->createCore(Utils::appStringToCoreString(Paths::getConfigFilePath(mConfigPath)),
 	                                         Utils::appStringToCoreString(Paths::getFactoryConfigFilePath()), nullptr);
 	setMonitor(mCore);
 	setPathsAfterCreation();
-	mCore->start();
-	setPathAfterStart();
 	mCore->enableFriendListSubscription(true);
 	mCore->enableRecordAware(true);
-	mCore->getCallsNb();
+	mCore->start();
+	setPathAfterStart();
 	mIterateTimer->start();
 }
 // -----------------------------------------------------------------------------
@@ -92,7 +97,7 @@ void CoreModel::setConfigPath(QString path) {
 	if (mConfigPath != path) {
 		mConfigPath = path;
 		if (!mCore) {
-			qWarning() << "[CoreModel] Setting config path after core creation is not yet supported";
+			qWarning() << log().arg("Setting config path after core creation is not yet supported");
 		}
 	}
 }
@@ -118,9 +123,6 @@ void CoreModel::setPathBeforeCreation() {
 }
 
 void CoreModel::setPathsAfterCreation() {
-	QString friendsDb = Paths::getFriendsListFilePath();
-	qInfo() << QStringLiteral("[CoreModel] Set Database `Friends` path: `%1`").arg(friendsDb);
-	mCore->setFriendsDatabasePath(Utils::appStringToCoreString(friendsDb));
 }
 
 void CoreModel::setPathAfterStart() {
@@ -169,6 +171,7 @@ void CoreModel::onCallEncryptionChanged(const std::shared_ptr<linphone::Core> &c
 }
 void CoreModel::onCallLogUpdated(const std::shared_ptr<linphone::Core> &core,
                                  const std::shared_ptr<linphone::CallLog> &callLog) {
+	if (callLog && callLog->getStatus() == linphone::Call::Status::Missed) emit unreadNotificationsChanged();
 	emit callLogUpdated(core, callLog);
 }
 void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
@@ -242,11 +245,13 @@ void CoreModel::onLogCollectionUploadProgressIndication(const std::shared_ptr<li
 void CoreModel::onMessageReceived(const std::shared_ptr<linphone::Core> &core,
                                   const std::shared_ptr<linphone::ChatRoom> &room,
                                   const std::shared_ptr<linphone::ChatMessage> &message) {
+	emit unreadNotificationsChanged();
 	emit messageReceived(core, room, message);
 }
 void CoreModel::onMessagesReceived(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::ChatRoom> &room,
                                    const std::list<std::shared_ptr<linphone::ChatMessage>> &messages) {
+	emit unreadNotificationsChanged();
 	emit messagesReceived(core, room, messages);
 }
 

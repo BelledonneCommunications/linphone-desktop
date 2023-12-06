@@ -30,6 +30,8 @@
 #include "SafeObject.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
+class CoreModel;
+
 class VariantObject : public QObject, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(QVariant value READ getValue NOTIFY valueChanged)
@@ -40,21 +42,21 @@ public:
 
 	template <typename Func, typename... Args>
 	void makeRequest(Func &&callable, Args &&...args) {
-		mConnection->makeConnect(mCoreObject.get(), &SafeObject::requestValue, [this, callable, args...]() {
+		mConnection->makeConnectToCore(&SafeObject::requestValue, [this, callable, args...]() {
 			mConnection->invokeToModel([this, callable, args...]() { mModelObject->setValue(callable(args...)); });
 		});
 	}
-	template <typename SenderClass>
-	void makeUpdate(const typename QtPrivate::FunctionPointer<SenderClass>::Object *sender, SenderClass signal) {
-		mConnection->makeConnect(sender, signal,
-		                         [this]() { mConnection->invokeToCore([this]() { mCoreObject->requestValue(); }); });
+	template <typename Sender, typename SenderClass>
+	void makeUpdate(Sender sender, SenderClass signal) {
+		mConnection->makeConnectToModel(
+		    sender, signal, [this]() { mConnection->invokeToCore([this]() { mCoreObject->requestValue(); }); });
 	}
 
 	QVariant getValue() const;
 	void requestValue();
 
 	QSharedPointer<SafeObject> mCoreObject, mModelObject;
-	QSharedPointer<SafeConnection> mConnection;
+	QSharedPointer<SafeConnection<SafeObject, SafeObject>> mConnection;
 signals:
 	void valueChanged(QVariant value);
 

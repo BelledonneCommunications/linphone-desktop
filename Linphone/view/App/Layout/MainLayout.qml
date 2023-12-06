@@ -13,6 +13,8 @@ import UtilsCpp
 
 Item {
 	id: mainItem
+	
+	signal addAccountRequest()
 
 	RowLayout {
 		anchors.fill: parent
@@ -79,6 +81,7 @@ Item {
 						contentHeight: accounts.height
 						Accounts{
 							id: accounts
+							onAddAccountRequest: mainItem.addAccountRequest()
 						}
 					}
 				}

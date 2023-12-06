@@ -56,35 +56,36 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 FriendCore::~FriendCore() {
 }
 
-void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
-	setSelf(me.objectCast<QObject>());
+void FriendCore::setSelf(SafeSharedPointer<FriendCore> me) {
+	setSelf(me.mQDataWeak.lock());
 }
-
-void FriendCore::setSelf(SafeSharedPointer<QObject> me) {
-	if (mFriendModel) {
-		mFriendModelConnection = QSharedPointer<SafeConnection>(
-		    new SafeConnection(me, std::dynamic_pointer_cast<QObject>(mFriendModel)), &QObject::deleteLater);
-		mFriendModelConnection->makeConnect(
-		    mFriendModel.get(), &FriendModel::presenceReceived,
-		    [this](LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp) {
-			    mFriendModelConnection->invokeToCore([this, consolidatedPresence, presenceTimestamp]() {
-				    setConsolidatedPresence(consolidatedPresence);
-				    setPresenceTimestamp(presenceTimestamp);
+void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
+	if (me) {
+		if (mFriendModel) {
+			mCoreModelConnection = nullptr; // No more needed
+			mFriendModelConnection = QSharedPointer<SafeConnection<FriendCore, FriendModel>>(
+			    new SafeConnection<FriendCore, FriendModel>(me, mFriendModel), &QObject::deleteLater);
+			mFriendModelConnection->makeConnectToModel(
+			    &FriendModel::presenceReceived,
+			    [this](LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp) {
+				    mFriendModelConnection->invokeToCore([this, consolidatedPresence, presenceTimestamp]() {
+					    setConsolidatedPresence(consolidatedPresence);
+					    setPresenceTimestamp(presenceTimestamp);
+				    });
 			    });
-		    });
-		mFriendModelConnection->makeConnect(mFriendModel.get(), &FriendModel::pictureUriChanged, [this](QString uri) {
-			mFriendModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
-		});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::pictureUriChanged, [this](QString uri) {
+				mFriendModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
+			});
 
-		// From GUI
-		mFriendModelConnection->makeConnect(this, &FriendCore::lSetPictureUri, [this](QString uri) {
-			mFriendModelConnection->invokeToModel([this, uri]() { mFriendModel->setPictureUri(uri); });
-		});
+			// From GUI
+			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetPictureUri, [this](QString uri) {
+				mFriendModelConnection->invokeToModel([this, uri]() { mFriendModel->setPictureUri(uri); });
+			});
 
-	} else { // Create
-		mFriendModelConnection = QSharedPointer<SafeConnection>(
-		    new SafeConnection(me, std::dynamic_pointer_cast<QObject>(CoreModel::getInstance())),
-		    &QObject::deleteLater);
+		} else { // Create
+			mCoreModelConnection = QSharedPointer<SafeConnection<FriendCore, CoreModel>>(
+			    new SafeConnection<FriendCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+		}
 	}
 }
 
@@ -200,7 +201,7 @@ void FriendCore::save() {                                          // Save Value
 			mFriendModelConnection->invokeToCore([this]() { saved(); });
 		});
 	} else { // Creation
-		mFriendModelConnection->invokeToModel([this, thisCopy]() {
+		mCoreModelConnection->invokeToModel([this, thisCopy]() {
 			auto core = CoreModel::getInstance()->getCore();
 			auto contact = core->createFriend();
 			thisCopy->writeInto(contact);
@@ -212,8 +213,8 @@ void FriendCore::save() {                                          // Save Value
 				core->getDefaultFriendList()->updateSubscriptions();
 			}
 			emit CoreModel::getInstance()->friendAdded();
-			mFriendModelConnection->invokeToCore([this, created]() {
-				if (created) setSelf(mFriendModelConnection->mCore);
+			mCoreModelConnection->invokeToCore([this, created]() {
+				if (created) setSelf(mCoreModelConnection->mCore);
 				setIsSaved(created);
 			});
 		});

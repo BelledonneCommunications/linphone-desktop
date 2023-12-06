@@ -146,7 +146,6 @@ public:
 	static constexpr char PathDatabase[] = "/linphone.db";
 	static constexpr char PathFactoryConfig[] = "/" EXECUTABLE_NAME "/linphonerc-factory";
 	static constexpr char PathRootCa[] = "/" EXECUTABLE_NAME "/rootca.pem";
-	static constexpr char PathFriendsList[] = "/friends.db";
 	static constexpr char PathLimeDatabase[] = "/x3dh.c25519.sqlite3";
 	static constexpr char PathMessageHistoryList[] = "/message-history.db";
 	static constexpr char PathZrtpSecrets[] = "/zidcache";

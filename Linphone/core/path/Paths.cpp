@@ -162,10 +162,6 @@ static inline QString getAppRootCaFilePath() {
 	return "";
 }
 
-static inline QString getAppFriendsFilePath() {
-	return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathFriendsList;
-}
-
 static inline QString getAppMessageHistoryFilePath() {
 	return QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) + Constants::PathMessageHistoryList;
 }
@@ -241,10 +237,6 @@ QString Paths::getDatabaseFilePath() {
 
 QString Paths::getFactoryConfigFilePath() {
 	return getReadableFilePath(getAppFactoryConfigFilePath());
-}
-
-QString Paths::getFriendsListFilePath() {
-	return getWritableFilePath(getAppFriendsFilePath());
 }
 
 QString Paths::getDownloadDirPath() {

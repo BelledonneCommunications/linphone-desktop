@@ -23,17 +23,18 @@
 
 #include "model/friend/FriendModel.hpp"
 #include "tool/LinphoneEnums.hpp"
+#include "tool/thread/SafeConnection.hpp"
 #include "tool/thread/SafeSharedPointer.hpp"
 #include <QDateTime>
 #include <QObject>
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
-class SafeConnection;
-
 // This object is defferent from usual Core. It set internal data from directly from GUI.
 // Values are saved on request.
 // This allow revert feature.
+
+class CoreModel;
 
 class FriendCore : public QObject, public AbstractObject {
 	Q_OBJECT
@@ -53,7 +54,7 @@ public:
 	FriendCore(const FriendCore &friendCore);
 	~FriendCore();
 	void setSelf(QSharedPointer<FriendCore> me);
-	void setSelf(SafeSharedPointer<QObject> me);
+	void setSelf(SafeSharedPointer<FriendCore> me);
 	void reset(const FriendCore &contact);
 
 	QString getName() const;
@@ -106,7 +107,8 @@ protected:
 	QString mPictureUri;
 	bool mIsSaved;
 	std::shared_ptr<FriendModel> mFriendModel;
-	QSharedPointer<SafeConnection> mFriendModelConnection;
+	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
+	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

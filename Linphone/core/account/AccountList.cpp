@@ -37,57 +37,67 @@ QSharedPointer<AccountList> AccountList::create() {
 }
 
 AccountList::AccountList(QObject *parent) : ListProxy(parent) {
-	qDebug() << "[AccountList] new" << this;
 	mustBeInMainThread(getClassName());
 	connect(CoreModel::getInstance().get(), &CoreModel::accountAdded, this, &AccountList::lUpdate);
 	connect(CoreModel::getInstance().get(), &CoreModel::accountRemoved, this, &AccountList::lUpdate);
 }
 
 AccountList::~AccountList() {
-	qDebug() << "[AccountList] delete" << this;
 	mustBeInMainThread("~" + getClassName());
+	mModelConnection = nullptr;
 }
 
 void AccountList::setSelf(QSharedPointer<AccountList> me) {
-	mModelConnection = QSharedPointer<SafeConnection>(
-	    new SafeConnection(me.objectCast<QObject>(), std::dynamic_pointer_cast<QObject>(CoreModel::getInstance())),
-	    &QObject::deleteLater);
-	mModelConnection->makeConnect(this, &AccountList::lUpdate, [this]() {
+	mModelConnection = QSharedPointer<SafeConnection<AccountList, CoreModel>>(
+	    new SafeConnection<AccountList, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+
+	mModelConnection->makeConnectToCore(&AccountList::lUpdate, [this]() {
 		mModelConnection->invokeToModel([this]() {
+			// Avoid copy to lambdas
 			QList<QSharedPointer<AccountCore>> *accounts = new QList<QSharedPointer<AccountCore>>();
-			// Model thread.
 			mustBeInLinphoneThread(getClassName());
 			auto linphoneAccounts = CoreModel::getInstance()->getCore()->getAccountList();
+			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+			QSharedPointer<AccountCore> defaultAccountCore;
 			for (auto it : linphoneAccounts) {
 				auto model = AccountCore::create(it);
+				if (it == defaultAccount) defaultAccountCore = AccountCore::create(defaultAccount);
 				accounts->push_back(model);
 			}
-			mModelConnection->invokeToCore([this, accounts]() {
+			mModelConnection->invokeToCore([this, accounts, defaultAccountCore]() {
 				mustBeInMainThread(getClassName());
 				resetData();
 				add(*accounts);
 				setHaveAccount(accounts->size() > 0);
+				setDefaultAccount(defaultAccountCore);
 				delete accounts;
 			});
 		});
 	});
-	mModelConnection->makeConnect(CoreModel::getInstance().get(), &CoreModel::defaultAccountChanged,
-	                              [this]() { mModelConnection->invokeToCore([this]() { defaultAccountChanged(); }); });
+	mModelConnection->makeConnectToModel(
+	    &CoreModel::defaultAccountChanged,
+	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
+		    auto model = AccountCore::create(account);
+		    mModelConnection->invokeToCore([this, model]() { setDefaultAccount(model); });
+	    });
 	lUpdate();
 }
 
 QSharedPointer<AccountCore> AccountList::getDefaultAccountCore() const {
-	for (auto it : mList) {
-		auto account = it.objectCast<AccountCore>();
-		if (account->getIsDefaultAccount()) return account;
-	}
-	return nullptr;
+	return mDefaultAccount;
 }
 
 AccountGui *AccountList::getDefaultAccount() const {
 	auto account = getDefaultAccountCore();
 	if (account) return new AccountGui(account);
 	else return nullptr;
+}
+
+void AccountList::setDefaultAccount(QSharedPointer<AccountCore> account) {
+	if (mDefaultAccount != account) {
+		mDefaultAccount = account;
+		emit defaultAccountChanged();
+	}
 }
 bool AccountList::getHaveAccount() const {
 	return mHaveAccount;

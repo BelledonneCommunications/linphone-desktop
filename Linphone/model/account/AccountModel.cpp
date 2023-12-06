@@ -38,6 +38,11 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 	// Hack because Account doesn't provide callbacks on updated data
 	connect(this, &AccountModel::defaultAccountChanged, this,
 	        [this]() { emit pictureUriChanged(Utils::coreStringToAppString(mMonitor->getParams()->getPictureUri())); });
+
+	connect(CoreModel::getInstance().get(), &CoreModel::unreadNotificationsChanged, this, [this]() {
+		emit unreadNotificationsChanged(0 /*mMonitor->getUnreadChatMessageCount()*/,
+		                                mMonitor->getMissedCallsCount()); // TODO
+	});
 }
 
 AccountModel::~AccountModel() {
@@ -79,4 +84,8 @@ void AccountModel::setDefault() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	core->setDefaultAccount(mMonitor);
+}
+
+void AccountModel::removeAccount() {
+	CoreModel::getInstance()->getCore()->removeAccount(mMonitor);
 }

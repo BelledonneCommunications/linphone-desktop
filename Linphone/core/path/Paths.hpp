@@ -39,7 +39,6 @@ QString getConfigFilePath(const QString &configPath = QString(), bool writable =
 QString getDatabaseFilePath();
 QString getDownloadDirPath();
 QString getFactoryConfigFilePath();
-QString getFriendsListFilePath();
 QString getLimeDatabasePath();
 QString getLogsDirPath();
 QString getMessageHistoryFilePath();

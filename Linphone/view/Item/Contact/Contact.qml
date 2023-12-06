@@ -1,7 +1,6 @@
-import QtCore
 import QtQuick
 import QtQuick.Effects
-import QtQuick.Dialogs
+
 import QtQuick.Layouts
 
 
@@ -11,7 +10,14 @@ import UtilsCpp
 Rectangle{
 	id: mainItem
 	property AccountGui account
+	signal avatarClicked()
+	signal backgroundClicked()
+	
 	height: 45 * DefaultStyle.dp
+	MouseArea{
+		anchors.fill: parent
+		onClicked: mainItem.backgroundClicked()
+	}
 	RowLayout{
 		anchors.fill: parent
 		spacing: 0
@@ -22,17 +28,7 @@ Rectangle{
 			account: mainItem.account
 			MouseArea{
 				anchors.fill: parent
-				onClicked: fileDialog.open()
-			}
-			FileDialog {
-				id: fileDialog
-				currentFolder: StandardPaths.standardLocations(StandardPaths.PicturesLocation)[0]
-				onAccepted: {
-					var avatarPath = UtilsCpp.createAvatar( selectedFile )
-					if(avatarPath){
-						mainItem.account.core.pictureUri = avatarPath
-					}
-				}
+				onClicked: mainItem.avatarClicked()
 			}
 		}
 		ContactDescription{
@@ -95,7 +91,7 @@ Rectangle{
 				}
 			}
 		}
-		Item{ // TODO
+		Item{
 			Layout.preferredWidth: 100 * DefaultStyle.dp
 			Layout.fillHeight: true
 			Rectangle{
@@ -103,6 +99,7 @@ Rectangle{
 				anchors.left: parent.left
 				anchors.leftMargin: 10 * DefaultStyle.dp
 				anchors.verticalCenter: parent.verticalCenter
+				visible: unreadCount.text > 0
 				width: 22 * DefaultStyle.dp
 				height: 22 * DefaultStyle.dp
 				radius: width/2
@@ -112,10 +109,15 @@ Rectangle{
 				Text{
 					id: unreadCount
 					anchors.fill: parent
+					anchors.margins: 2 * DefaultStyle.dp
 					verticalAlignment: Text.AlignVCenter
 					horizontalAlignment: Text.AlignHCenter
 					color: DefaultStyle.grey_0
-					text: '2'
+					minimumPixelSize: 5
+					fontSizeMode: Text.Fit
+					font.pixelSize: 20 *  DefaultStyle.dp
+					property var unread: mainItem.account.core.unreadNotifications
+					text: unread > 100 ? '+' : unread
 				}
 			}
 		}
@@ -130,7 +132,7 @@ Rectangle{
 			colorizationColor: DefaultStyle.main2_500main
 			MouseArea{ // TODO
 				anchors.fill: parent
-				onClicked: console.log('Manage!')
+				onClicked: console.log('TODO: Manage!')
 			}
 		}
 	}
