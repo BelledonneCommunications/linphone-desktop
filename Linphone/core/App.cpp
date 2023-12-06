@@ -36,6 +36,7 @@
 #include "core/account/AccountProxy.hpp"
 #include "core/call/CallCore.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/camera/CameraGui.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
 #include "core/logger/QtLogger.hpp"
@@ -123,6 +124,7 @@ void App::init() {
 	    },
 	    Qt::QueuedConnection);
 	mEngine->load(url);
+	// mEngine->load(u"qrc:/Linphone/view/Prototype/CameraPrototype.qml"_qs);
 }
 
 void App::initCppInterfaces() {
@@ -150,7 +152,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<FriendGui>(Constants::MainQmlUri, 1, 0, "FriendGui");
 	qmlRegisterUncreatableType<FriendCore>(Constants::MainQmlUri, 1, 0, "FriendCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<MagicSearchProxy>(Constants::MainQmlUri, 1, 0, "MagicSearchProxy");
-
+	qmlRegisterType<CameraGui>(Constants::MainQmlUri, 1, 0, "CameraGui");
 	LinphoneEnums::registerMetaTypes();
 }
 

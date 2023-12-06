@@ -17,6 +17,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Item/BusyIndicator.qml
 	view/Item/Button.qml
+	
 	view/Item/Carousel.qml
 	view/Item/CheckBox.qml
 	view/Item/ComboBox.qml
@@ -24,6 +25,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Contact/Avatar.qml
 	view/Item/Contact/Contact.qml
 	view/Item/Contact/ContactDescription.qml
+	view/Item/Contact/Sticker.qml
 	
 	view/Item/DesktopPopup.qml
 	view/Item/DigitInput.qml
@@ -59,6 +61,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Prototype/PhoneNumberPrototype.qml
 	view/Prototype/AccountsPrototype.qml
 	view/Prototype/CallPrototype.qml
+	view/Prototype/CameraPrototype.qml
 	view/Prototype/FriendPrototype.qml
 	view/Prototype/ItemPrototype.qml
 )

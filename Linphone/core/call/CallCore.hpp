@@ -42,6 +42,8 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
 	Q_PROPERTY(QString peerAddress MEMBER mPeerAddress CONSTANT)
 	Q_PROPERTY(bool peerSecured READ getPeerSecured WRITE setPeerSecured NOTIFY peerSecuredChanged)
+	Q_PROPERTY(
+	    bool remoteVideoEnabled READ getRemoteVideoEnabled WRITE setRemoteVideoEnabled NOTIFY remoteVideoEnabledChanged)
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 
 public:
@@ -78,8 +80,13 @@ public:
 	bool getPeerSecured() const;
 	void setPeerSecured(bool secured);
 
+	bool getRemoteVideoEnabled() const;
+	void setRemoteVideoEnabled(bool enabled);
+
 	LinphoneEnums::CallState getTransferState() const;
 	void setTransferState(LinphoneEnums::CallState state, const QString &message);
+
+	std::shared_ptr<CallModel> getModel() const;
 
 signals:
 	void statusChanged(LinphoneEnums::CallStatus status);
@@ -93,6 +100,7 @@ signals:
 	void pausedChanged();
 	void transferStateChanged();
 	void peerSecuredChanged();
+	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -137,6 +145,7 @@ private:
 	bool mMicrophoneMuted;
 	bool mCameraEnabled;
 	bool mPaused = false;
+	bool mRemoteVideoEnabled = false;
 	QSharedPointer<SafeConnection<CallCore, CallModel>> mAccountModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT

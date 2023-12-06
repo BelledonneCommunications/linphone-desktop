@@ -6,17 +6,24 @@ import QtQuick.Effects
 import Linphone
 import UtilsCpp
 
-// Avatar using initial of the username in case
-// they don't have any profile picture
+// Fill contact, account or call
+// Initials will be displayed if there isn't any avatar.
+// TODO : get FriendGui from Call.
 
 StackView{
 	id: mainItem
-	property FriendGui contact
-	property AccountGui account
-	property string address: account ? account.core.identityAddress : ''
+	property AccountGui account: null
+	property FriendGui contact: null
+	property CallGui call: null
+	property string address: account
+								? account.core.identityAddress
+								: call
+									? call.core.peerAddress
+									: ''
 	property var displayNameObj: UtilsCpp.getDisplayName(address)
 	property bool haveAvatar: (account && account.core.pictureUri )
 								|| (contact && contact.core.pictureUri)
+								
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 	
 	initialItem: haveAvatar ? avatar : initials

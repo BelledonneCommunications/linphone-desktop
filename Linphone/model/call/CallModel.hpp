@@ -55,6 +55,7 @@ signals:
 	void cameraEnabledChanged(bool enabled);
 	void durationChanged(int);
 	void pausedChanged(bool paused);
+	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 
 private:
 	QTimer mDurationTimer;

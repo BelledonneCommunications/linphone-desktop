@@ -78,6 +78,18 @@ void CoreModel::start() {
 	setPathsAfterCreation();
 	mCore->enableFriendListSubscription(true);
 	mCore->enableRecordAware(true);
+	mCore->setVideoDisplayFilter("MSQOGL");
+	mCore->usePreviewWindow(true);
+	// Force capture/display.
+	// Useful if the app was built without video support.
+	// (The capture/display attributes are reset by the core in this case.)
+	auto config = mCore->getConfig();
+	if (mCore->videoSupported()) {
+		config->setInt("video", "capture", 1);
+		config->setInt("video", "display", 1);
+	}
+	mCore->enableVideoPreview(false);         // SDK doesn't write the state in configuration if not ready.
+	config->setInt("video", "show_local", 0); // So : write ourself to turn off camera before starting the core.
 	mCore->start();
 	setPathAfterStart();
 	mIterateTimer->start();

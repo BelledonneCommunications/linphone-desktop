@@ -6,6 +6,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/App.cpp
 	core/call/CallCore.cpp
 	core/call/CallGui.cpp
+	core/camera/CameraGui.cpp
+	core/camera/CameraDummy.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp
 	core/logger/QtLogger.cpp

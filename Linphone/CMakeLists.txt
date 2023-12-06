@@ -41,15 +41,16 @@ set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG -DQT_QML_DEBUG -DQT_
 set(CMAKE_INCLUDE_CURRENT_DIR ON)#useful for config.h
 include(application_info.cmake)
 
-if(APPLE)
-	if(MS2_PLUGINS_LOCATION)
-		set(MSPLUGINS_DIR ${MS2_PLUGINS_LOCATION})
-	else()
-		set(MSPLUGINS_DIR "Frameworks/mediastreamer2.framework/Versions/A/Libraries")
-	endif()
+
+
+if(MEDIASTREAMER2_PLUGINS_LOCATION)
+	set(MSPLUGINS_DIR ${MEDIASTREAMER2_PLUGINS_LOCATION})
+elseif(APPLE)
+	set(MSPLUGINS_DIR "Frameworks/mediastreamer2.framework/Versions/A/Libraries")
 else()
-	set(MSPLUGINS_DIR "plugins/mediastreamer")
+	set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
 endif()
+
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
 if(${Qt6_VERSION} VERSION_LESS "6.3.0")

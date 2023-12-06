@@ -75,6 +75,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mAccountModelConnection->makeConnectToModel(&CallModel::microphoneMutedChanged, [this](bool isMuted) {
 		mAccountModelConnection->invokeToCore([this, isMuted]() { setMicrophoneMuted(isMuted); });
 	});
+	mAccountModelConnection->makeConnectToModel(&CallModel::remoteVideoEnabledChanged, [this](bool enabled) {
+		mAccountModelConnection->invokeToCore([this, enabled]() { setRemoteVideoEnabled(enabled); });
+	});
 	// mAccountModelConnection->makeConnect(this, &CallCore::lSetSpeakerMuted, [this](bool isMuted) {
 	// 	mAccountModelConnection->invokeToModel([this, isMuted]() { mCallModel->setSpeakerMuted(isMuted); });
 	// });
@@ -243,6 +246,17 @@ void CallCore::setPeerSecured(bool secured) {
 	}
 }
 
+bool CallCore::getRemoteVideoEnabled() const {
+	return mRemoteVideoEnabled;
+}
+
+void CallCore::setRemoteVideoEnabled(bool enabled) {
+	if (mRemoteVideoEnabled != enabled) {
+		mRemoteVideoEnabled = enabled;
+		emit remoteVideoEnabledChanged(mRemoteVideoEnabled);
+	}
+}
+
 LinphoneEnums::CallState CallCore::getTransferState() const {
 	return mTransferState;
 }
@@ -253,4 +267,8 @@ void CallCore::setTransferState(LinphoneEnums::CallState state, const QString &m
 		if (state == LinphoneEnums::CallState::Error) setLastErrorMessage(message);
 		emit transferStateChanged();
 	}
+}
+
+std::shared_ptr<CallModel> CallCore::getModel() const {
+	return mCallModel;
 }

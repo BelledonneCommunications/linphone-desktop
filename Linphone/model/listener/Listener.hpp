@@ -60,6 +60,10 @@ public:
 		if (mMonitor && mSelf) mMonitor->addListener(self);
 	}
 
+	std::shared_ptr<LinphoneClass> getMonitor() const {
+		return mMonitor;
+	}
+
 protected:
 	std::shared_ptr<LinphoneClass> mMonitor;
 	std::shared_ptr<ListenerClass> mSelf = nullptr;

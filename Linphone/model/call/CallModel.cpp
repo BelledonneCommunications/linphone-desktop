@@ -146,6 +146,12 @@ void CallModel::onInfoMessageReceived(const std::shared_ptr<linphone::Call> &cal
 void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
                                linphone::Call::State state,
                                const std::string &message) {
+	if (state == linphone::Call::State::StreamsRunning) {
+		// After UpdatedByRemote, video direction could be changed.
+		auto params = call->getRemoteParams();
+		emit remoteVideoEnabledChanged(params && params->videoEnabled());
+		emit cameraEnabledChanged(call->cameraEnabled());
+	}
 	emit stateChanged(state, message);
 }
 

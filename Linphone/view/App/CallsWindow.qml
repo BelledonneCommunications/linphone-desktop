@@ -312,6 +312,11 @@ Window {
 								ColumnLayout {
 									anchors.centerIn: parent
 									spacing: 2
+									Sticker{
+										Layout.fillHeight: true
+										Layout.fillWidth: true
+										call: mainWindow.call
+									}
 									// Avatar {
 									// 	Layout.alignment: Qt.AlignCenter
 									// 	visible: mainWindow.isInContactList
@@ -505,7 +510,6 @@ Window {
 										|| mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
 										? bottomButtonsLayout.columns - 1 : 0
 					BottomButton {
-						enabled: false
 						enabledIcon: AppIcons.videoCamera
 						disabledIcon: AppIcons.videoCameraSlash
 						checked: !mainWindow.call.core.cameraEnabled
@@ -527,5 +531,15 @@ Window {
 			}
 		}
 	}
-	
+	Sticker{
+		height: 100
+		width: 100
+		anchors.right: parent.right
+		anchors.bottom: parent.bottom
+		visible: mainWindow.call.core.cameraEnabled
+		AccountProxy{
+			id: accounts
+		}
+		account: accounts.defaultAccount
+	}
 }
