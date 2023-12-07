@@ -40,7 +40,7 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool microphoneMuted READ getMicrophoneMuted WRITE lSetMicrophoneMuted NOTIFY microphoneMutedChanged)
 	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE lSetCameraEnabled NOTIFY cameraEnabledChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
-	Q_PROPERTY(QString peerAddress MEMBER mPeerAddress CONSTANT)
+	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
 	Q_PROPERTY(bool peerSecured READ getPeerSecured WRITE setPeerSecured NOTIFY peerSecuredChanged)
 	Q_PROPERTY(
 	    bool remoteVideoEnabled READ getRemoteVideoEnabled WRITE setRemoteVideoEnabled NOTIFY remoteVideoEnabledChanged)
@@ -52,6 +52,8 @@ public:
 	CallCore(const std::shared_ptr<linphone::Call> &call);
 	~CallCore();
 	void setSelf(QSharedPointer<CallCore> me);
+
+	QString getPeerAddress() const;
 
 	LinphoneEnums::CallStatus getStatus() const;
 	void setStatus(LinphoneEnums::CallStatus status);

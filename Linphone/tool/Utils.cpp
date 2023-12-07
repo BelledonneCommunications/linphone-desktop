@@ -97,7 +97,9 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 
 	return data;
 }
-
+void Utils::openCallsWindow(CallGui *call) {
+	if (call) App::getInstance()->getCallsWindow(QVariant::fromValue(call))->show();
+}
 void Utils::closeCallsWindow() {
 	App::getInstance()->closeCallsWindow();
 }

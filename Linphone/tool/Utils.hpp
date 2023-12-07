@@ -42,6 +42,7 @@
 
 class QQuickWindow;
 class VariantObject;
+class CallGui;
 
 class Utils : public QObject {
 	Q_OBJECT
@@ -51,9 +52,11 @@ public:
 
 	Q_INVOKABLE static VariantObject *getDisplayName(const QString &address);
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
+
 	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
+	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path

@@ -36,6 +36,8 @@
 #include "core/account/AccountProxy.hpp"
 #include "core/call/CallCore.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/call/CallList.hpp"
+#include "core/call/CallProxy.hpp"
 #include "core/camera/CameraGui.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
@@ -149,6 +151,8 @@ void App::initCppInterfaces() {
 	qmlRegisterUncreatableType<AccountCore>(Constants::MainQmlUri, 1, 0, "AccountCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));
+	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
+	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterType<FriendGui>(Constants::MainQmlUri, 1, 0, "FriendGui");
 	qmlRegisterUncreatableType<FriendCore>(Constants::MainQmlUri, 1, 0, "FriendCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<MagicSearchProxy>(Constants::MainQmlUri, 1, 0, "MagicSearchProxy");

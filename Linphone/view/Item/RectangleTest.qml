@@ -7,7 +7,6 @@ Rectangle {
 										+Math.floor(Math.random()*255).toString(16)
 	}
 
-	anchors.fill: parent
 	color: genRandomColor() //"blue"
 	opacity: 0.2
 	border.color: genRandomColor() //"red"

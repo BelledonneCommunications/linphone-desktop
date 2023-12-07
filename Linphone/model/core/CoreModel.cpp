@@ -201,7 +201,7 @@ void CoreModel::onCallStatsUpdated(const std::shared_ptr<linphone::Core> &core,
 	emit callStatsUpdated(core, call, stats);
 }
 void CoreModel::onCallCreated(const std::shared_ptr<linphone::Core> &lc, const std::shared_ptr<linphone::Call> &call) {
-	emit callCreated(lc, call);
+	emit callCreated(call);
 }
 void CoreModel::onChatRoomRead(const std::shared_ptr<linphone::Core> &core,
                                const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
@@ -235,6 +235,9 @@ void CoreModel::onEcCalibrationResult(const std::shared_ptr<linphone::Core> &cor
                                       int delayMs) {
 	emit ecCalibrationResult(core, status, delayMs);
 }
+void CoreModel::onFirstCallStarted(const std::shared_ptr<linphone::Core> &core) {
+	emit firstCallStarted();
+}
 void CoreModel::onGlobalStateChanged(const std::shared_ptr<linphone::Core> &core,
                                      linphone::GlobalState gstate,
                                      const std::string &message) {
@@ -244,6 +247,11 @@ void CoreModel::onIsComposingReceived(const std::shared_ptr<linphone::Core> &cor
                                       const std::shared_ptr<linphone::ChatRoom> &room) {
 	emit isComposingReceived(core, room);
 }
+
+void CoreModel::onLastCallEnded(const std::shared_ptr<linphone::Core> &core) {
+	emit lastCallEnded();
+}
+
 void CoreModel::onLogCollectionUploadStateChanged(const std::shared_ptr<linphone::Core> &core,
                                                   linphone::Core::LogCollectionUploadState state,
                                                   const std::string &info) {

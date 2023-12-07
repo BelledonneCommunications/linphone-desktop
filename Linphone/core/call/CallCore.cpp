@@ -145,6 +145,10 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 }
 
+QString CallCore::getPeerAddress() const {
+	return mPeerAddress;
+}
+
 LinphoneEnums::CallStatus CallCore::getStatus() const {
 	return mStatus;
 }

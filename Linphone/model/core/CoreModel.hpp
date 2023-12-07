@@ -119,11 +119,13 @@ private:
 	virtual void onEcCalibrationResult(const std::shared_ptr<linphone::Core> &core,
 	                                   linphone::EcCalibratorStatus status,
 	                                   int delayMs) override;
+	virtual void onFirstCallStarted(const std::shared_ptr<linphone::Core> &core) override;
 	virtual void onGlobalStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                  linphone::GlobalState gstate,
 	                                  const std::string &message) override;
 	virtual void onIsComposingReceived(const std::shared_ptr<linphone::Core> &core,
 	                                   const std::shared_ptr<linphone::ChatRoom> &room) override;
+	virtual void onLastCallEnded(const std::shared_ptr<linphone::Core> &core) override;
 	virtual void onLogCollectionUploadStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                               linphone::Core::LogCollectionUploadState state,
 	                                               const std::string &info) override;
@@ -183,7 +185,7 @@ signals:
 	void callStatsUpdated(const std::shared_ptr<linphone::Core> &core,
 	                      const std::shared_ptr<linphone::Call> &call,
 	                      const std::shared_ptr<const linphone::CallStats> &stats);
-	void callCreated(const std::shared_ptr<linphone::Core> &lc, const std::shared_ptr<linphone::Call> &call);
+	void callCreated(const std::shared_ptr<linphone::Call> &call);
 	void chatRoomRead(const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::ChatRoom> &chatRoom);
 	void chatRoomStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                          const std::shared_ptr<linphone::ChatRoom> &chatRoom,
@@ -198,11 +200,13 @@ signals:
 	void dtmfReceived(const std::shared_ptr<linphone::Core> &lc, const std::shared_ptr<linphone::Call> &call, int dtmf);
 	void
 	ecCalibrationResult(const std::shared_ptr<linphone::Core> &core, linphone::EcCalibratorStatus status, int delayMs);
+	void firstCallStarted();
 	void globalStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                        linphone::GlobalState gstate,
 	                        const std::string &message);
 	void isComposingReceived(const std::shared_ptr<linphone::Core> &core,
 	                         const std::shared_ptr<linphone::ChatRoom> &room);
+	void lastCallEnded();
 	void logCollectionUploadStateChanged(const std::shared_ptr<linphone::Core> &core,
 	                                     linphone::Core::LogCollectionUploadState state,
 	                                     const std::string &info);

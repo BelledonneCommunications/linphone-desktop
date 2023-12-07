@@ -51,6 +51,14 @@ Window {
 			autoCloseWindow.restart()
 		}
 	}
+	
+	CallProxy{
+		id: callList
+		onCurrentCallChanged: {
+			console.log("Current call changed:"+currentCall)
+			if(currentCall) mainWindow.call = currentCall
+		}
+	}
 
 	component BottomButton : Button {
 		required property string enabledIcon

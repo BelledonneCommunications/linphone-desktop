@@ -68,6 +68,7 @@ void CallModel::terminate() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->terminate();
 }
+
 void CallModel::setPaused(bool paused) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (paused) {

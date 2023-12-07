@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import Linphone
-
+import UtilsCpp
 // =============================================================================
 
 Notification {
@@ -36,10 +36,7 @@ Notification {
 				Layout.rightMargin: 20
 				onClicked: {
 					notification.call.core.lAccept(true)
-					var windowComp = Qt.createComponent("OngoingCallPage.qml")
-					var callWindow = windowComp.createObject(null, {callVarObject: callVarObject})
-					callWindow.modality = Qt.ApplicationModal
-					callWindow.show()
+					UtilsCpp.openCallsWindow(notification.call)
 				}
 			}
 			Item{
