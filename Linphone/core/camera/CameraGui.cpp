@@ -41,8 +41,11 @@ CameraGui::CameraGui(QQuickItem *parent) : QQuickFramebufferObject(parent) {
 
 	mRefreshTimer.start();
 }
+
+// TODO : Deactivate only if there are no previews to display (Could be open in settings and calls)
 CameraGui::~CameraGui() {
 	mustBeInMainThread("~" + getClassName());
+	App::postModelSync([this]() { CoreModel::getInstance()->getCore()->enableVideoPreview(false); });
 }
 
 QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
