@@ -99,11 +99,12 @@ Rectangle{
 				anchors.left: parent.left
 				anchors.leftMargin: 10 * DefaultStyle.dp
 				anchors.verticalCenter: parent.verticalCenter
-				visible: unreadCount.text > 0
+				property int unread: mainItem.account.core.unreadNotifications
+				visible: unread > 0
 				width: 22 * DefaultStyle.dp
 				height: 22 * DefaultStyle.dp
 				radius: width/2
-				color: DefaultStyle.danger_500main
+				color: DefaultStyle.danger_500
 				border.color: DefaultStyle.grey_0
 				border.width: 2 * DefaultStyle.dp
 				Text{
@@ -116,8 +117,7 @@ Rectangle{
 					minimumPixelSize: 5
 					fontSizeMode: Text.Fit
 					font.pixelSize: 20 *  DefaultStyle.dp
-					property var unread: mainItem.account.core.unreadNotifications
-					text: unread > 100 ? '+' : unread
+					text: parent.unread > 100 ? '+' : parent.unread
 				}
 			}
 		}
