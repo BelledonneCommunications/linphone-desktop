@@ -100,6 +100,14 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 void Utils::openCallsWindow(CallGui *call) {
 	if (call) App::getInstance()->getCallsWindow(QVariant::fromValue(call))->show();
 }
+
+QQuickWindow *Utils::getCallsWindow(CallGui *callGui) {
+	auto app = App::getInstance();
+	auto window = app->getCallsWindow(QVariant::fromValue(callGui));
+	window->show();
+	return window;
+}
+
 void Utils::closeCallsWindow() {
 	App::getInstance()->closeCallsWindow();
 }
@@ -168,17 +176,14 @@ QString Utils::formatElapsedTime(int seconds) {
 
 	QString hours, min, sec;
 
-	if (h < 10 && h > 0) {
-		hours = "0" + QString::number(h);
-	}
+	if (h < 10 && h > 0) hours = "0";
+	hours.append(QString::number(h));
 
-	if (m < 10) {
-		min = "0" + QString::number(m);
-	}
+	if (m < 10) min = "0";
+	min.append(QString::number(m));
 
-	if (s < 10) {
-		sec = "0" + QString::number(s);
-	}
+	if (s < 10) sec = "0";
+	sec.append(QString::number(s));
 
 	return (h == 0 ? "" : hours + ":") + min + ":" + sec;
 }

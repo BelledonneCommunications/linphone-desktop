@@ -40,6 +40,6 @@ Item {
 		source: effect
 		maskSource: effect
 		colorizationColor: effect2.enabled ? mainItem.colorizationColor : 'black'
-		colorization: effect2.enabled ? 1.0 : 0.0
+		colorization: effect2.enabled ? 1.0: 0.0
 	}
 }

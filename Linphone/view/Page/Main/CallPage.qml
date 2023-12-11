@@ -20,7 +20,7 @@ AbstractMainPage {
 			clip: true
 			initialItem: listItem
 			anchors.fill: parent
-			property int sideMargin: 25
+			property int sideMargin: 25 * DefaultStyle.dp
 			// anchors.leftMargin: 25
 			// anchors.rightMargin: 25
 		}
@@ -34,9 +34,9 @@ AbstractMainPage {
 					Layout.rightMargin: listStackView.sideMargin
 					Text {
 						text: qsTr("Appels")
-						color: DefaultStyle.mainPageTitleColor
-						font.pointSize: DefaultStyle.mainPageTitleSize
-						font.bold: true
+						color: DefaultStyle.main2_700
+						font.pixelSize: 29 * DefaultStyle.dp
+						font.weight: 800 * DefaultStyle.dp
 					}
 					Item {
 						Layout.fillWidth: true
@@ -56,8 +56,8 @@ AbstractMainPage {
 						}
 						contentItem: Image {
 							source: AppIcons.newCall
-							width: 30
-							sourceSize.width: 30
+							width: 30 * DefaultStyle.dp
+							sourceSize.width: 30 * DefaultStyle.dp
 							fillMode: Image.PreserveAspectFit
 						}
 						onClicked: {
@@ -87,10 +87,13 @@ AbstractMainPage {
 						ColumnLayout {
 							Text {
 								text: qsTr("Aucun appel")
-								font.bold: true
+								font {
+									pixelSize: 16 * DefaultStyle.dp
+									weight: 800 * DefaultStyle.dp
+								}
 								visible: listView.count === 0
 								Layout.alignment: Qt.AlignHCenter
-								Layout.topMargin: 30
+								Layout.topMargin: 30 * DefaultStyle.dp
 							}
 							ListView {
 								id: listView
@@ -103,7 +106,7 @@ AbstractMainPage {
 								delegate: Item {
 									required property int index
 									width:listView.width
-									height: 30
+									height: 30 * DefaultStyle.dp
 									// RectangleTest{}
 									RowLayout {
 										anchors.fill: parent
@@ -127,15 +130,15 @@ AbstractMainPage {
 											Layout.fillWidth: true
 										}
 										Control.Button {
-											implicitWidth: 30
-											implicitHeight: 30
+											implicitWidth: 30 * DefaultStyle.dp
+											implicitHeight: 30 * DefaultStyle.dp
 											background: Item {
 												visible: false
 											}
 											contentItem: Image {
 												source: AppIcons.phone
-												width: 20
-												sourceSize.width: 20
+												width: 20 * DefaultStyle.dp
+												sourceSize.width: 20 * DefaultStyle.dp
 												fillMode: Image.PreserveAspectFit
 											}
 										}
@@ -145,8 +148,8 @@ AbstractMainPage {
 										Rectangle {
 											anchors.fill: parent
 											opacity: 0.1
-											radius: 15
-											color: DefaultStyle.comboBoxHoverColor
+											radius: 15 * DefaultStyle.dp
+											color: DefaultStyle.main2_500main
 											visible: parent.containsMouse
 										}
 										onPressed: listView.currentIndex = parent.index
@@ -190,9 +193,9 @@ AbstractMainPage {
 					}
 					Text {
 						text: qsTr("Nouvel appel")
-						color: DefaultStyle.mainPageTitleColor
-						font.pointSize: DefaultStyle.mainPageTitleSize
-						font.bold: true
+						color: DefaultStyle.main2_700
+						font.pixelSize: 29 * DefaultStyle.dp
+						font.weight: 800 * DefaultStyle.dp
 					}
 					Item {
 						Layout.fillWidth: true
@@ -203,17 +206,12 @@ AbstractMainPage {
 					Layout.fillHeight: true
 					Layout.maximumWidth: parent.width
 					groupCallVisible: true
-					searchBarColor: DefaultStyle.contactListSearchBarColor
+					searchBarColor: DefaultStyle.grey_100
 					
 					onCallButtonPressed: (address) => {
 						var addressEnd = "@sip.linphone.org"
 						if (!address.endsWith(addressEnd)) address += addressEnd
 						var callVarObject = UtilsCpp.createCall(address)
-						// var windowComp = Qt.createComponent("CallsWindow.qml")
-						// var call = callVarObject.value
-						// var callWindow = windowComp.createObject(null, {callVarObject: callVarObject})
-						// callWindow.modality = Qt.ApplicationModal
-						// callWindow.show()
 					}
 				}
 			}

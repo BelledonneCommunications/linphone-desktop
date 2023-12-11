@@ -7,8 +7,8 @@ import Linphone
 
 Control.TabBar {
 	id: mainItem
-	spacing: 15
-	topPadding: 20
+	spacing: 15 * DefaultStyle.dp
+	topPadding: 20 * DefaultStyle.dp
 
 	property var model
 	
@@ -34,7 +34,7 @@ Control.TabBar {
 		Rectangle {
 			anchors.fill: parent
 			color: DefaultStyle.main1_500_main
-			radius: 25
+			radius: 25 * DefaultStyle.dp
 		}
 		Rectangle {
 			color: DefaultStyle.main1_500_main
@@ -64,7 +64,7 @@ Control.TabBar {
 				width: tabButton.width
 				EffectImage {
 					id: buttonIcon
-					property int buttonSize: 20
+					property int buttonSize: 24 * DefaultStyle.dp
 					image.source: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
@@ -76,16 +76,16 @@ Control.TabBar {
 					id: buttonText
 					text: modelData.label
 					font {
-						bold: mainItem.currentIndex === index
-						pointSize: DefaultStyle.verticalTabButtonTextSize
+						weight: mainItem.currentIndex === index ? 800 * DefaultStyle.dp : 400 * DefaultStyle.dp
+						pixelSize: 9 * DefaultStyle.dp
 					}
-					color: DefaultStyle.verticalTabBarTextColor
+					color: DefaultStyle.grey_0
 					Layout.fillWidth: true
 					Layout.preferredHeight: txtMeter.height
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
-					leftPadding: 3
-					rightPadding: 3
+					leftPadding: 3 * DefaultStyle.dp
+					rightPadding: 3 * DefaultStyle.dp
 				}
 			}
 			TextMetrics {
@@ -93,7 +93,7 @@ Control.TabBar {
 				text: modelData.label
 				font: buttonText.font
 				Component.onCompleted: {
-					font.bold= true
+					font.weight = 800 * DefaultStyle.dp
 					mainItem.implicitWidth = Math.max(mainItem.implicitWidth, advanceWidth + buttonIcon.buttonSize)
 				}
 			}

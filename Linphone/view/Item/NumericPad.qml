@@ -10,6 +10,7 @@ Control.Popup {
 	signal buttonPressed(string text)
 	signal launchCall()
 	signal wipe()
+	property bool closeButtonVisible: true
 	closePolicy: Control.Popup.CloseOnEscape
 	leftPadding: closeButton.width
 	rightPadding: closeButton.width
@@ -20,18 +21,21 @@ Control.Popup {
 		Rectangle {
 			id: numPadBackground
 			anchors.fill: parent
-			color: DefaultStyle.numericPadBackgroundColor
-			radius: 10
+			color: DefaultStyle.grey_100
+			radius: 20 * DefaultStyle.dp
 		}
 		MultiEffect {
 			id: effect
 			anchors.fill: parent
 			source: numPadBackground
 			shadowEnabled: true
-			shadowColor: DefaultStyle.numericPadShadowColor
+			shadowColor: DefaultStyle.grey_1000
+			shadowOpacity: 0.1
+			shadowBlur: 1
 		}
 		Button {
 			id: closeButton
+			visible: mainItem.closeButtonVisible
 			anchors.right: parent.right
 			anchors.top: parent.top
 			background: Item {
@@ -41,8 +45,8 @@ Control.Popup {
 			contentItem: Image {
 				anchors.centerIn: parent
 				source: AppIcons.closeX
-				width: 10
-				sourceSize.width: 10
+				width: 24 * DefaultStyle.dp
+				sourceSize.width: 24 * DefaultStyle.dp
 				fillMode: Image.PreserveAspectFit
 			}
 			onClicked: mainItem.close()
@@ -57,22 +61,25 @@ Control.Popup {
 			model: 9
 			Button {
 				id: numPadButton
+				Layout.alignment: Qt.AlignHCenter
 				required property int index
-				implicitWidth: 40
-				implicitHeight: 40
+				implicitWidth: 60 * DefaultStyle.dp
+				implicitHeight: 60 * DefaultStyle.dp
 				background: Rectangle {
 					anchors.fill: parent
 					color: numPadButton.down ? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
-					radius: 20
+					radius: 71 * DefaultStyle.dp
 				}
 				contentItem: Text {
 					id: innerText
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter
-					anchors.fill: parent
 					anchors.centerIn: parent
 					text: index + 1
-					font.pointSize: DefaultStyle.numericPadButtonTextSize
+					font {
+						pixelSize: 32 * DefaultStyle.dp
+						weight: 400 * DefaultStyle.dp
+					}
 				}
 				onClicked: {
 					mainItem.buttonPressed(innerText.text)
@@ -87,35 +94,38 @@ Control.Popup {
 			]
 			Button {
 				id: digitButton
+				Layout.alignment: Qt.AlignHCenter
 				shadowEnabled: true
-				implicitWidth: 40
-				implicitHeight: 40
+				implicitWidth: 60 * DefaultStyle.dp
+				implicitHeight: 60 * DefaultStyle.dp
+
 				background: Rectangle {
 					anchors.fill: parent
 					color: digitButton.down ? DefaultStyle.numericPadPressedButtonColor : DefaultStyle.grey_0
-					radius: 20
+					radius: 71 * DefaultStyle.dp
 				}
 				contentItem: Item {
 					anchors.fill: parent
-					anchors.centerIn: parent
 					Text {
 						id: pressText
+						height: contentHeight
 						anchors.left: parent.left
 						anchors.right: parent.right
 						horizontalAlignment: Text.AlignHCenter
-						width: parent.width
+						Component.onCompleted: {if (modelData.longPressText === undefined) anchors.centerIn= parent}
 						text: modelData.pressText
-						font.pointSize: DefaultStyle.numericPadButtonTextSize
+						font.pixelSize: 32 * DefaultStyle.dp
 					}
 					Text {
 						id: longPressText
+						height: contentHeight
 						anchors.left: parent.left
 						anchors.right: parent.right
-						anchors.top: pressText.bottom
+						y: digitButton.height/2
 						horizontalAlignment: Text.AlignHCenter
 						visible: modelData.longPressText ? modelData.longPressText.length > 0 : false
 						text: modelData.longPressText ? modelData.longPressText : ""
-						font.pointSize: DefaultStyle.numericPadButtonSubtextSize
+						font.pixelSize: 22 * DefaultStyle.dp
 					}
 				}
 				onClicked: mainItem.buttonPressed(pressText.text)
@@ -126,38 +136,40 @@ Control.Popup {
 			// Invisible item to move the last two buttons to the right
 		}
 		Button {
-			leftPadding: 20
-			rightPadding: 20
-			topPadding: 15
-			bottomPadding: 15
+			id: launchCallButton
+			implicitWidth: 75 * DefaultStyle.dp
+			implicitHeight: 55 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignHCenter
 			background: Rectangle {
 				anchors.fill: parent
-				color: DefaultStyle.launchCallButtonColor
-				radius: 15
+				color: DefaultStyle.success_500main
+				radius: 71 * DefaultStyle.dp
 			}
 			contentItem: EffectImage {
 				id: buttonIcon
 				image.source: AppIcons.phone
-				anchors.fill: parent
 				anchors.centerIn: parent
-				width: 20
-				height: 20
+				width: 24 * DefaultStyle.dp
+				height: 24 * DefaultStyle.dp
 				image.fillMode: Image.PreserveAspectFit
 				colorizationColor: DefaultStyle.grey_0
 			}
 			onClicked: mainItem.launchCall()
 		}
 		Button {
-			leftPadding: 5
-			rightPadding: 5
-			topPadding: 5
-			bottomPadding: 5
+			leftPadding: 5 * DefaultStyle.dp
+			rightPadding: 5 * DefaultStyle.dp
+			topPadding: 5 * DefaultStyle.dp
+			bottomPadding: 5 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignHCenter
 			background: Item {
 				visible: false
 			}
 			contentItem: Image {
 				source: AppIcons.backspaceFill
 				anchors.centerIn: parent
+				width: 24 * DefaultStyle.dp
+				height: 24 * DefaultStyle.dp
 			}
 			onClicked: mainItem.wipe()
 		}

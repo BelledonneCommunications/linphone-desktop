@@ -9,12 +9,12 @@ Control.ToolTip {
 	background: Rectangle {
 		id: tooltipBackground
 		opacity: 0.7
-		color: DefaultStyle.tooltipBackgroundColor
-		radius: 15
+		color: DefaultStyle.main2_200
+		radius: 15 * DefaultStyle.dp
 	}
 	contentItem: Text {
 		text: mainItem.text
-		color: DefaultStyle.defaultTextColor
+		color: DefaultStyle.main2_600
 		width: tooltipBackground.width
 		wrapMode: Text.Wrap
 		elide: Text.ElideRight

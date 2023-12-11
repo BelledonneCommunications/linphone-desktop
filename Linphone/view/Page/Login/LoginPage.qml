@@ -33,8 +33,10 @@ LoginLayout {
 		}
 		Text {
 			text: "Login"
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			font {
+				pixelSize: 36 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -43,11 +45,11 @@ LoginLayout {
 		Text {
 			Layout.rightMargin: 15 * DefaultStyle.dp
 			text: "No account yet ?"
-			font.pointSize: DefaultStyle.indicatorMessageTextSize
+			font.pixelSize: 14 * DefaultStyle.dp
+			font.weight: 400 * DefaultStyle.dp
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
-			inversedColors: true
 			text: "Register"
 			onClicked: {
 				console.debug("[LoginPage] User: go to register")

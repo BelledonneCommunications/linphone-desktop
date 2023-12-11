@@ -25,18 +25,18 @@ Item {
 		anchors.fill: parent
 
 		handle: Rectangle {
-			implicitWidth: 8
-			color: Control.SplitHandle.hovered ? DefaultStyle.splitViewHoveredHandleColor : DefaultStyle.splitViewHandleColor
+			implicitWidth: 8 * DefaultStyle.dp
+			color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
 		}
 
 		ColumnLayout {
 			id: leftPanel
-			Control.SplitView.preferredWidth: 280
+			Control.SplitView.preferredWidth: 280 * DefaultStyle.dp
 		}
 		Rectangle {
 			id: rightPanel
 			clip: true
-			color: DefaultStyle.mainPageRightPanelBackgroundColor
+			color: DefaultStyle.grey_100
 			StackLayout {
 				currentIndex: mainItem.showDefaultItem ? 0 : 1
 				anchors.fill: parent
@@ -48,25 +48,28 @@ Item {
 						Layout.fillHeight: true
 						Layout.fillWidth: true
 						Layout.alignment: Qt.AlignHCenter
-						spacing: 25
 						Item {
 							Layout.fillWidth: true
 						}
 						ColumnLayout {
+							spacing: 30 * DefaultStyle.dp
 							Item {
 								Layout.fillHeight: true
 							}
 							Image {
 								Layout.alignment: Qt.AlignHCenter
 								source: AppIcons.noItemImage
-								Layout.preferredWidth: 250
-								Layout.preferredHeight: 250
+								Layout.preferredWidth: 359 * DefaultStyle.dp
+								Layout.preferredHeight: 314 * DefaultStyle.dp
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
 								text: mainItem.emptyListText
 								Layout.alignment: Qt.AlignHCenter
-								font.bold: true
+								font {
+									pixelSize: 22 * DefaultStyle.dp
+									weight: 800 * DefaultStyle.dp
+								}
 							}
 							Button {
 								Layout.alignment: Qt.AlignHCenter
@@ -75,7 +78,8 @@ Item {
 									EffectImage {
 										colorizationColor: DefaultStyle.grey_0
 										image.source: mainItem.newItemIconSource
-										image.width: 20
+										image.width: 24 * DefaultStyle.dp
+										image.height: 24 * DefaultStyle.dp
 										image.fillMode: Image.PreserveAspectFit
 									}
 									Text {
@@ -83,8 +87,8 @@ Item {
 										wrapMode: Text.WordWrap
 										color: DefaultStyle.grey_0
 										font {
-											bold: true
-											pointSize: DefaultStyle.buttonTextSize
+											weight: 600 * DefaultStyle.dp
+											pixelSize: 18 * DefaultStyle.dp
 											family: DefaultStyle.defaultFont
 										}
 									}

@@ -7,23 +7,28 @@ Control.Button {
 	id: mainItem
 	property int capitalization
 	property bool inversedColors: false
-	property int textSize: DefaultStyle.buttonTextSize
-	property bool boldText: true
+	property int textSize: 18 * DefaultStyle.dp
+	property int textWeight: 600 * DefaultStyle.dp
 	property bool shadowEnabled: false
 	hoverEnabled: true
+
+	leftPadding: 20 * DefaultStyle.dp
+	rightPadding: 20 * DefaultStyle.dp
+	topPadding: 11 * DefaultStyle.dp
+	bottomPadding: 11 * DefaultStyle.dp
 
 	background: Item {
 		Rectangle {
 			anchors.fill: parent
 			id: buttonBackground
-			color: inversedColors 
+			color: inversedColors
 					? mainItem.pressed 
-						? DefaultStyle.buttonPressedInversedBackground
+						? DefaultStyle.grey_100
 						: DefaultStyle.grey_0
 					: mainItem.pressed 
-						? DefaultStyle.buttonPressedBackground
+						? DefaultStyle.main1_500_main_darker
 						: DefaultStyle.main1_500_main
-			radius: 24
+			radius: 48 * DefaultStyle.dp
 			border.color: inversedColors ? DefaultStyle.main1_500_main : DefaultStyle.grey_0
 
 			MouseArea {
@@ -37,8 +42,9 @@ Control.Button {
 			anchors.fill: buttonBackground
 			source: buttonBackground
 			shadowEnabled: mainItem.shadowEnabled
-			shadowColor: "black"//DefaultStyle.numericPadShadowColor
-			shadowHorizontalOffset: 1.0
+			shadowColor: DefaultStyle.grey_1000
+			shadowBlur: 1
+			shadowOpacity: 0.1
 		}
 	}
 
@@ -49,8 +55,8 @@ Control.Button {
 		text: mainItem.text
 		color: inversedColors ? DefaultStyle.main1_500_main : DefaultStyle.grey_0
 		font {
-			bold: mainItem.boldText
-			pointSize: mainItem.textSize
+			pixelSize: mainItem.textSize
+			weight: mainItem.textWeight
 			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization
 		}

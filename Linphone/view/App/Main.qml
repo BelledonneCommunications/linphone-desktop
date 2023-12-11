@@ -15,9 +15,9 @@ Window {
 		id: accountProxy
 		onHaveAccountChanged: {
 			if(haveAccount)
-				mainWindowStackView.replace(mainPage)
+				mainWindowStackView.replace(mainPage, StackView.Immediate)
 			else
-				mainWindowStackView.replace(loginPage)
+				mainWindowStackView.replace(loginPage, StackView.Immediate)
 		}
 	}
 	StackView {

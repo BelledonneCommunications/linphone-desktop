@@ -10,7 +10,7 @@ ColumnLayout {
 	property string errorMessage: ""
 	property string placeholderText : ""
 	property bool mandatory: false
-	property int textInputWidth: 200
+	property int textInputWidth: 200 * DefaultStyle.dp
 	property string initialPhoneNumber
 	readonly property string phoneNumber: textField.text
 	readonly property string countryCode: combobox.currentText
@@ -19,35 +19,35 @@ ColumnLayout {
 		visible: label.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.label + (mainItem.mandatory ? "*" : "")
-		color: (combobox.hasActiveFocus || textField.hasActiveFocus) ? DefaultStyle.main1_500_main : DefaultStyle.formItemLabelColor
+		color: (combobox.hasActiveFocus || textField.hasActiveFocus) ? DefaultStyle.main1_500_main : DefaultStyle.main2_600
 		font {
-			pointSize: DefaultStyle.formItemLabelSize
-			bold: true
+			pixelSize: 13 * DefaultStyle.dp
+			weight: 700 * DefaultStyle.dp
 		}
 	}
 
 	Rectangle {
 		implicitWidth: mainItem.textInputWidth
-		implicitHeight: 30
-		radius: 20
-		color: DefaultStyle.formItemBackgroundColor
+		implicitHeight: 49 * DefaultStyle.dp
+		radius: 63 * DefaultStyle.dp
+		color: DefaultStyle.grey_100
 		border.color: mainItem.errorMessage.length > 0 
-						? DefaultStyle.errorMessageColor 
+						? DefaultStyle.danger_500main 
 						: (textField.hasActiveFocus || combobox.hasActiveFocus)
 							? DefaultStyle.main1_500_main
-							: DefaultStyle.formItemBorderColor
+							: DefaultStyle.grey_200
 		RowLayout {
 			anchors.fill: parent
 			PhoneNumberComboBox {
 				id: combobox
-				backgroundWidth: 100
+				implicitWidth: 110 * DefaultStyle.dp
 			}
 			Rectangle {
-				Layout.preferredWidth: 1
+				Layout.preferredWidth: 1 * DefaultStyle.dp
 				Layout.fillHeight: true
-				Layout.topMargin: 5
-				Layout.bottomMargin: 5
-				color: DefaultStyle.defaultTextColor
+				Layout.topMargin: 10 * DefaultStyle.dp
+				Layout.bottomMargin: 10 * DefaultStyle.dp
+				color: DefaultStyle.main2_600
 			}
 			TextInput {
 				id: textField
@@ -65,11 +65,11 @@ ColumnLayout {
 		visible: mainItem.errorMessage.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.errorMessage
-		color: DefaultStyle.errorMessageColor
+		color: DefaultStyle.danger_500main
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
 		font {
-			pointSize: DefaultStyle.indicatorMessageTextSize
+			pixelSize: 13 * DefaultStyle.dp
 			family: DefaultStyle.defaultFont
 			bold: true
 		}

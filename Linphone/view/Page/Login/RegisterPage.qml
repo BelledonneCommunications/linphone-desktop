@@ -18,9 +18,11 @@ LoginLayout {
 		}
 		Text {
 			Layout.preferredWidth: width
-			text: "Register"
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			text: qsTr("Register")
+			font {
+				pixelSize: 36 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
 			wrapMode: Text.NoWrap
 			scaleLettersFactor: 1.1
 		}
@@ -28,10 +30,13 @@ LoginLayout {
 			Layout.fillWidth: true
 		}
 		Text {
-			Layout.rightMargin: 15
-			color: DefaultStyle.questionTextColor
-			text: "Already have an account ?"
-			font.pointSize: DefaultStyle.indicatorMessageTextSize
+			Layout.rightMargin: 15 * DefaultStyle.dp
+			color: DefaultStyle.main2_700
+			text: qsTr("Already have an account ?")
+			font {
+				pixelSize: 14 * DefaultStyle.dp
+				weight: 400 * DefaultStyle.dp
+			}
 		}
 		Button {
 			// Layout.alignment: Qt.AlignRight
@@ -45,6 +50,7 @@ LoginLayout {
 	}
 
 	centerContent: ColumnLayout {
+		Layout.topMargin: 40 * DefaultStyle.dp
 		TabBar {
 			Layout.fillWidth: true
 			id: bar
@@ -56,12 +62,12 @@ LoginLayout {
 				ColumnLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					spacing: 15
+					spacing: 15 * DefaultStyle.dp
 					RowLayout {
 						TextInput {
 							label: "Username"
 							mandatory: true
-							textInputWidth: 250
+							textInputWidth: 346 * DefaultStyle.dp
 						}
 						ComboBox {
 							label: " "
@@ -74,7 +80,7 @@ LoginLayout {
 						label: "Phone number"
 						mandatory: true
 						placeholderText: "Phone number"
-						textInputWidth: 250
+						textInputWidth: 346 * DefaultStyle.dp
 					}
 					RowLayout {
 						ColumnLayout {
@@ -82,12 +88,13 @@ LoginLayout {
 								label: "Password"
 								mandatory: true
 								hidden: true
-								textInputWidth: 250
+								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.indicatorMessageTextSize
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 300 * DefaultStyle.dp
 								}
 							}
 						}
@@ -96,12 +103,13 @@ LoginLayout {
 								label: "Confirm password"
 								mandatory: true
 								hidden: true
-								textInputWidth: 250
+								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.indicatorMessageTextSize
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 300 * DefaultStyle.dp
 								}
 							}
 						}
@@ -117,7 +125,7 @@ LoginLayout {
 						CheckBox {
 						}
 						Text {
-							Layout.preferredWidth: 450
+							Layout.preferredWidth: 450 * DefaultStyle.dp
 							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
 						}
 					}
@@ -133,8 +141,8 @@ LoginLayout {
 					Layout.fillWidth: true
 				}
 				Image {
-					Layout.rightMargin: 40
-					Layout.preferredWidth: 300
+					Layout.rightMargin: 40 * DefaultStyle.dp
+					Layout.preferredWidth: 300 * DefaultStyle.dp
 					fillMode: Image.PreserveAspectFit
 					source: AppIcons.loginImage
 				}
@@ -143,12 +151,12 @@ LoginLayout {
 				ColumnLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					spacing: 15
+					spacing: 15 * DefaultStyle.dp
 					RowLayout {
 						TextInput {
 							label: "Username"
 							mandatory: true
-							textInputWidth: 250
+							textInputWidth: 346 * DefaultStyle.dp
 						}
 						ComboBox {
 							// if we don't set a label this item is offset
@@ -156,13 +164,14 @@ LoginLayout {
 							label: " "
 							enabled: false
 							modelList: [{text:"@sip.linphone.org"}]
+							backgroundWidth: 154 * DefaultStyle.dp
 						}
 					}
 					TextInput {
 						id: emailInput
 						label: "Email"
 						mandatory: true
-						textInputWidth: 250
+						textInputWidth: 346 * DefaultStyle.dp
 					}
 					RowLayout {
 						ColumnLayout {
@@ -171,12 +180,13 @@ LoginLayout {
 								label: "Password"
 								mandatory: true
 								hidden: true
-								textInputWidth: 250
+								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.indicatorMessageTextSize
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 300 * DefaultStyle.dp
 								}
 							}
 						}
@@ -186,12 +196,13 @@ LoginLayout {
 								label: "Confirm password"
 								mandatory: true
 								hidden: true
-								textInputWidth: 250
+								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
 								text: "The password must contain 6 characters minimum"
 								font {
-									pointSize: DefaultStyle.indicatorMessageTextSize
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 300 * DefaultStyle.dp
 								}
 							}
 						}
@@ -207,7 +218,7 @@ LoginLayout {
 						CheckBox {
 						}
 						Text {
-							Layout.preferredWidth: 450
+							Layout.preferredWidth: 450 * DefaultStyle.dp
 							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
 						}
 					}
@@ -227,8 +238,8 @@ LoginLayout {
 					Layout.fillWidth: true
 				}
 				Image {
-					Layout.rightMargin: 40
-					Layout.preferredWidth: 300
+					Layout.rightMargin: 40 * DefaultStyle.dp
+					Layout.preferredWidth: 300 * DefaultStyle.dp
 					fillMode: Image.PreserveAspectFit
 					source: AppIcons.loginImage
 				}

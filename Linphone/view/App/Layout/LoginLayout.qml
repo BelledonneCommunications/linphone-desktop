@@ -12,23 +12,25 @@ Item {
 	id: mainItem
 	property alias titleContent : titleLayout.children
 	property alias centerContent : centerLayout.children
-
 	ColumnLayout {
-		anchors.rightMargin: 30
-		anchors.leftMargin: 80
+		anchors.rightMargin: 40 * DefaultStyle.dp
+		anchors.leftMargin: 119 * DefaultStyle.dp
 		anchors.top: parent.top
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: bottomMountains.top
-		spacing: 20
-		ColumnLayout {
+		spacing: 3 * DefaultStyle.dp
+		RowLayout {
 			Layout.fillWidth: true
-			Layout.preferredHeight: 50
-			Layout.topMargin: 18
-			Layout.alignment: Qt.AlignRight | Qt.AlignTop
+			Layout.preferredHeight: 102 * DefaultStyle.dp
+			// Layout.topMargin: 18
+			// Layout.alignment: Qt.AlignRight | Qt.AlignTop
+			Item {
+				Layout.fillWidth: true
+			}
 			Control.Button {
-				Layout.alignment: Qt.AlignRight
-				Layout.bottomMargin: 20
+				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+				// Layout.bottomMargin: 20
 				background: Rectangle {
 					color: "transparent"
 				}
@@ -36,12 +38,17 @@ Item {
 					Image {
 						fillMode: Image.PreserveAspectFit
 						source: AppIcons.info
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
 					}
 					Text {
 						Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-						text: "About"
-						font.pixelSize: 12
-						color: DefaultStyle.aboutButtonTextColor
+						text: qsTr("À propos")
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							weight: 400 * DefaultStyle.dp
+						}
+						color: DefaultStyle.main2_500main
 					}
 				}
 				onClicked: console.debug("[LoginLayout]User: open about popup")
@@ -51,13 +58,16 @@ Item {
 
 		RowLayout {
 			id: titleLayout
-			Layout.bottomMargin: 20
+			Layout.preferredHeight: 131 * DefaultStyle.dp
+			// Layout.bottomMargin: 20
 		}
 		ColumnLayout {
 			id: centerLayout
 			Layout.fillHeight: true
 		}
-		
+		Item {
+			Layout.fillHeight: true
+		}
 	}
 
 	RowLayout {
@@ -66,8 +76,8 @@ Item {
 		anchors.left: parent.left
 		anchors.right: parent.right
 		Image {
-			Layout.minimumHeight: 50
-			Layout.preferredHeight: 80
+			Layout.minimumHeight: 50 * DefaultStyle.dp
+			Layout.preferredHeight: 80 * DefaultStyle.dp
 			Layout.fillWidth: true
 			source: AppIcons.belledonne
 			fillMode: Image.Stretch

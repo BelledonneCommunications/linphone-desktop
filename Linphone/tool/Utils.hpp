@@ -40,6 +40,7 @@
 #endif // if defined(__GNUC__) && __GNUC__ >= 7
 #endif // ifndef UTILS_NO_BREAK
 
+class CallGui;
 class QQuickWindow;
 class VariantObject;
 class CallGui;
@@ -57,6 +58,7 @@ public:
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
+	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui);
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path

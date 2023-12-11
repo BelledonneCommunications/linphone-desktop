@@ -37,8 +37,8 @@ Item {
 				id: topRow
 				Layout.leftMargin: 25 * DefaultStyle.dp
 				Layout.rightMargin: 41 * DefaultStyle.dp
-				TextInput {
-					fillWidth: true
+				SearchBar {
+					Layout.fillWidth: true
 					placeholderText: qsTr("Rechercher un contact, appeler ou envoyer un message...")
 				}
 				Control.Button {
@@ -60,7 +60,7 @@ Item {
 						account: accountProxy.defaultAccount
 					}
 					onClicked: {
-							accountList.open()
+						accountList.open()
 					}
 				}
 				Control.Button {

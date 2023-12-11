@@ -4,11 +4,15 @@ import Linphone
   
 Control.TextField {
 	id: mainItem
-	property int inputSize: 60
-	color: activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.digitInputColor
-	rightPadding: inputSize / 4
-	leftPadding: inputSize / 4
+	property int inputSize: 100 * DefaultStyle.dp
+	color: activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+	rightPadding: width * 0.32
+	leftPadding: width  * 0.32
+	topPadding: height  * 0.2
+	bottomPadding: height  * 0.2
 	validator: IntValidator{bottom: 0; top: 9}
+	// horizontalAlignment: TextInput.AlignHCenter
+	// verticalAlignment: TextInput.AlignVCenter
 
 	// just reserve the space for the background
 	placeholderText: "0"
@@ -16,12 +20,16 @@ Control.TextField {
 
 	// horizontalAlignment: Control.TextField.AlignHCenter
 	font.family: DefaultStyle.defaultFont
-	font.pointSize: inputSize / 1.5
+	font.pixelSize: inputSize / 2
+	font.weight: 300 * DefaultStyle.dp
 
 	background: Rectangle {
-		// id: background
-		border.color: mainItem.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.digitInputColor
-		radius: mainItem.inputSize / 8
+		id: background
+		border.width: Math.max(DefaultStyle.dp, 1)
+		border.color: mainItem.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+		radius: mainItem.inputSize * 0.15
+		width: mainItem.inputSize * 0.9
+		height: mainItem.inputSize
 	}
 	// cursorDelegate: Rectangle {
 	// 	visible: mainItem.activeFocus

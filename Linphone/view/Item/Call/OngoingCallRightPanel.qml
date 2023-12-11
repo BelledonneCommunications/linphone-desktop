@@ -10,8 +10,8 @@ Control.Page {
 	background: Rectangle {
 		width: mainItem.width
 		height: mainItem.height
-		color: DefaultStyle.callRightPanelBackgroundColor
-		radius: 15
+		color: DefaultStyle.grey_100
+		radius: 15 * DefaultStyle.dp
 	}
 	
 	header: Control.Control {
@@ -22,7 +22,7 @@ Control.Page {
 			width: pageHeader.width
 			height: pageHeader.height
 			color: DefaultStyle.grey_0
-			radius: 15
+			radius: 15 * DefaultStyle.dp
 			Rectangle {
 				y: pageHeader.height/2
 				height: pageHeader.height/2
@@ -33,7 +33,7 @@ Control.Page {
 		contentItem: RowLayout {
 			width: pageHeader.width
 			height: pageHeader.height
-			anchors.leftMargin: 10
+			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.left: pageHeader.left
 			Item {
 				id: header
@@ -50,8 +50,8 @@ Control.Page {
 				contentItem: Image {
 					anchors.centerIn: closeButton
 					source: AppIcons.closeX
-					width: 10
-					sourceSize.width: 10
+					width: 10 * DefaultStyle.dp
+					sourceSize.width: 10 * DefaultStyle.dp
 					fillMode: Image.PreserveAspectFit
 				}
 				onClicked: mainItem.visible = false

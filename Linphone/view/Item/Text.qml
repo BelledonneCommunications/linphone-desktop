@@ -8,9 +8,12 @@ Quick.Text {
 	id: innerItem
 	// Layout.preferredWidth: mainItem.width
 	// width: mainItem.width
-	font.family: DefaultStyle.defaultFont
-	font.pointSize: DefaultStyle.defaultFontPointSize
-	color: DefaultStyle.defaultTextColor
+	font {
+		family: DefaultStyle.defaultFont
+		pixelSize: 10 * DefaultStyle.dp
+		weight: 400 * DefaultStyle.dp
+	}
+	color: DefaultStyle.main2_600
 	wrapMode: Quick.Text.Wrap
 	elide: Quick.Text.ElideRight
 	transformOrigin: Quick.Item.TopLeft

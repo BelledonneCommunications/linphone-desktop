@@ -11,7 +11,7 @@ ColumnLayout {
 	property string placeholderText: ""
 	property bool mandatory: false
 	property bool hidden: false
-	property int textInputWidth: 200
+	property int textInputWidth: 346 * DefaultStyle.dp
 	property var validator: RegularExpressionValidator{}
 	property bool fillWidth: false
 	property bool enableBackgroundColors: true
@@ -32,14 +32,14 @@ ColumnLayout {
 		visible: mainItem.label.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.label + (mainItem.mandatory ? "*" : "")
-		color: textField.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.formItemLabelColor
+		color: textField.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_600
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
 		maximumLineCount: 1
 		font {
-			pointSize: DefaultStyle.formItemLabelSize
+			pixelSize: 13 * DefaultStyle.dp
 			family: DefaultStyle.defaultFont
-			bold: true
+			weight: 700 * DefaultStyle.dp
 		}
 		Layout.preferredWidth: mainItem.textInputWidth
 	}
@@ -51,15 +51,15 @@ ColumnLayout {
 				Layout.fillWidth = true
 		}
 		implicitWidth: mainItem.textInputWidth
-		implicitHeight: 30
-		radius: 20
-		color: mainItem.enableBackgroundColors ? DefaultStyle.formItemBackgroundColor : "transparent"
+		implicitHeight: 49 * DefaultStyle.dp
+		radius: 79 * DefaultStyle.dp
+		color: mainItem.enableBackgroundColors ? DefaultStyle.grey_100 : "transparent"
 		border.color: mainItem.enableBackgroundColors
 						? (mainItem.errorMessage.length > 0 
-							? DefaultStyle.errorMessageColor
+							? DefaultStyle.danger_500main
 							: textField.activeFocus
 								? DefaultStyle.main1_500_main
-								: DefaultStyle.formItemBorderColor)
+								: DefaultStyle.grey_200)
 						: "transparent"
 		Control.TextField {
 			id: textField
@@ -69,8 +69,11 @@ ColumnLayout {
 			placeholderText: mainItem.placeholderText
 			echoMode: (mainItem.hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
 			font.family: DefaultStyle.defaultFont
-			font.pointSize: DefaultStyle.defaultFontPointSize
-			color: DefaultStyle.formItemLabelColor
+			font {
+				pixelSize: 14 * DefaultStyle.dp
+				weight: 400 * DefaultStyle.dp
+			}
+			color: DefaultStyle.main2_600
 			selectByMouse: true
 			validator: mainItem.validator
 			background: Item {
@@ -79,7 +82,7 @@ ColumnLayout {
 			cursorDelegate: Rectangle {
 				visible: textField.activeFocus
 				color: DefaultStyle.main1_500_main
-				width: 2
+				width: 2 * DefaultStyle.dp
 			}
 		}
 		Control.Button {
@@ -102,12 +105,12 @@ ColumnLayout {
 		visible: mainItem.errorMessage.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.errorMessage
-		color: DefaultStyle.errorMessageColor
+		color: DefaultStyle.danger_500main
 		elide: Text.ElideRight
 		wrapMode: Text.Wrap
 		// maximumLineCount: 1
 		font {
-			pointSize: DefaultStyle.indicatorMessageTextSize
+			pixelSize: 13 * DefaultStyle.dp
 			family: DefaultStyle.defaultFont
 			bold: true
 		}

@@ -44,7 +44,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mCallModel->setSelf(mCallModel);
 	mDuration = call->getDuration();
 	mMicrophoneMuted = call->getMicrophoneMuted();
-	// mSpeakerMuted = call->getSpeakerMuted();
+	mSpeakerMuted = call->getSpeakerMuted();
 	mCameraEnabled = call->cameraEnabled();
 	mDuration = call->getDuration();
 	mState = LinphoneEnums::fromLinphone(call->getState());
@@ -78,12 +78,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mAccountModelConnection->makeConnectToModel(&CallModel::remoteVideoEnabledChanged, [this](bool enabled) {
 		mAccountModelConnection->invokeToCore([this, enabled]() { setRemoteVideoEnabled(enabled); });
 	});
-	// mAccountModelConnection->makeConnect(this, &CallCore::lSetSpeakerMuted, [this](bool isMuted) {
-	// 	mAccountModelConnection->invokeToModel([this, isMuted]() { mCallModel->setSpeakerMuted(isMuted); });
-	// });
-	// mAccountModelConnection->makeConnect(mCallModel.get(), &CallModel::speakerMutedChanged, [this](bool isMuted) {
-	// 	mAccountModelConnection->invokeToCore([this, isMuted]() { setSpeakerMuted(isMuted); });
-	// });
+	mAccountModelConnection->makeConnectToCore(&CallCore::lSetSpeakerMuted, [this](bool isMuted) {
+		mAccountModelConnection->invokeToModel([this, isMuted]() { mCallModel->setSpeakerMuted(isMuted); });
+	});
+	mAccountModelConnection->makeConnectToModel(&CallModel::speakerMutedChanged, [this](bool isMuted) {
+		mAccountModelConnection->invokeToCore([this, isMuted]() { setSpeakerMuted(isMuted); });
+	});
 	mAccountModelConnection->makeConnectToCore(&CallCore::lSetCameraEnabled, [this](bool enabled) {
 		mAccountModelConnection->invokeToModel([this, enabled]() { mCallModel->setCameraEnabled(enabled); });
 	});
@@ -204,6 +204,17 @@ void CallCore::setDuration(int duration) {
 	if (mDuration != duration) {
 		mDuration = duration;
 		emit durationChanged(mDuration);
+	}
+}
+
+bool CallCore::getSpeakerMuted() const {
+	return mSpeakerMuted;
+}
+
+void CallCore::setSpeakerMuted(bool isMuted) {
+	if (mSpeakerMuted != isMuted) {
+		mSpeakerMuted = isMuted;
+		emit speakerMutedChanged();
 	}
 }
 

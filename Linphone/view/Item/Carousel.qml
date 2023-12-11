@@ -6,14 +6,11 @@ import Linphone
 
 ColumnLayout {
 	id: mainItem
-
 	required property list<Item> itemsList
 	// Items count is needed when using a repeater for itemsList
 	// which is part of the carouselStackLayout children list
 	required property int itemsCount
 	property int currentIndex: carouselStackLayout.currentIndex
-	property bool prevButtonVisible: true
-	property bool nextButtonVisible: true
 
 	function goToSlide(index) {
 		carouselStackLayout.goToSlideAtIndex(index)
@@ -80,8 +77,6 @@ ColumnLayout {
 	}
 	RowLayout {
 		id: carouselButtonsLayout
-		Layout.topMargin: 20
-		Layout.bottomMargin: 20
 
 		Component {
 			id: carouselButton
@@ -91,10 +86,10 @@ ColumnLayout {
 				signal buttonClicked(int index)
 
 				background: Rectangle {
-					color: stackLayout.currentIndex == slideIndex ? DefaultStyle.main1_500_main : DefaultStyle.carouselLightGrayColor
-					radius: 15
-					width: stackLayout.currentIndex == slideIndex ? 11 : 8
-					height: 8
+					color: stackLayout.currentIndex == slideIndex ? DefaultStyle.main1_500_main : DefaultStyle.main2_200
+					radius: 15 * DefaultStyle.dp
+					width: stackLayout.currentIndex == slideIndex ? 11 * DefaultStyle.dp : 8 * DefaultStyle.dp
+					height: 8 * DefaultStyle.dp
 					Behavior on width { NumberAnimation {duration: 100}}
 				}
 				onClicked: {

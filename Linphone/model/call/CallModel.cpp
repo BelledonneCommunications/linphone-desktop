@@ -68,7 +68,6 @@ void CallModel::terminate() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->terminate();
 }
-
 void CallModel::setPaused(bool paused) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (paused) {
@@ -83,9 +82,8 @@ void CallModel::setPaused(bool paused) {
 void CallModel::transferTo(const std::shared_ptr<linphone::Address> &address) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (mMonitor->transferTo(address) == -1)
-		qWarning() << log()
-		                  .arg(QStringLiteral("Unable to transfer: `%1`."))
-		                  .arg(Utils::coreStringToAppString(address->asString()));
+		qWarning()
+		    << log().arg(QStringLiteral("Unable to transfer: `%1`.")).arg(QString::fromStdString(address->asString()));
 }
 
 void CallModel::setMicrophoneMuted(bool isMuted) {

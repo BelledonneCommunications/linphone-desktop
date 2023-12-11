@@ -7,39 +7,41 @@ import Linphone
 Rectangle {
 	id: mainItem
 	property string placeholderText: ""
-	property int textInputWidth: 350
+	property int textInputWidth: 350 * DefaultStyle.dp
 	property color borderColor: "transparent"
 	property string text: textField.text
 	property var validator: RegularExpressionValidator{}
-	property var numericPad
+	property Control.Popup numericPad
 	property alias numericPadButton: dialerButton
 	readonly property bool hasActiveFocus: textField.activeFocus
-	signal numericPadButtonPressed(bool checked)
 
 	onVisibleChanged: if (!visible && numericPad) numericPad.close()
 
 	Connections {
 		enabled: numericPad != undefined
 		target: numericPad ? numericPad : null
-		onAboutToHide: { searchBar.numericPadButton.checked = false }
-		onAboutToShow: { searchBar.numericPadButton.checked = true }
+		onAboutToHide: { mainItem.numericPadButton.checked = false }
+		onAboutToShow: { mainItem.numericPadButton.checked = true }
 		onButtonPressed: (text) => {
 			textField.text += text
 		}
 		onWipe: textField.text = textField.text.slice(0, -1)
 	}
 
+
 	implicitWidth: mainItem.textInputWidth
-	implicitHeight: 30
-	radius: 20
-	color: DefaultStyle.formItemBackgroundColor
-	border.color: textField.activeFocus ? DefaultStyle.searchBarFocusBorderColor : mainItem.borderColor
+	implicitHeight: 50 * DefaultStyle.dp
+	radius: 28 * DefaultStyle.dp
+	color: DefaultStyle.grey_100
+	border.color: textField.activeFocus ? DefaultStyle.main2_500main : mainItem.borderColor
 	Image {
 		id: magnifier
 		anchors.left: parent.left
 		anchors.verticalCenter: parent.verticalCenter
-		anchors.leftMargin: 10 
+		anchors.leftMargin: 10 * DefaultStyle.dp
 		source: AppIcons.magnifier
+		width: 20 * DefaultStyle.dp
+		height: 20 * DefaultStyle.dp
 	}
 	Control.TextField {
 		id: textField
@@ -49,9 +51,12 @@ Rectangle {
 		placeholderText: mainItem.placeholderText
 		width: mainItem.width - dialerButton.width
 		echoMode: (mainItem.hidden && !dialerButton.checked) ? TextInput.Password : TextInput.Normal
-		font.family: DefaultStyle.defaultFont
-		font.pointSize: DefaultStyle.defaultFontPointSize
-		color: DefaultStyle.formItemLabelColor
+		font {
+			pixelSize: 14 * DefaultStyle.dp
+			weight: 400 * DefaultStyle.dp
+			family: DefaultStyle.defaultFont
+		}
+		color: DefaultStyle.main2_600
 		selectByMouse: true
 		validator: mainItem.validator
 		background: Item {
@@ -60,7 +65,7 @@ Rectangle {
 		cursorDelegate: Rectangle {
 			visible: textField.activeFocus
 			color: DefaultStyle.main1_500_main
-			width: 2
+			width: 2 * DefaultStyle.dp
 		}
 	}
 	Control.Button {
@@ -78,7 +83,7 @@ Rectangle {
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-		anchors.rightMargin: 10
+		anchors.rightMargin: 10 * DefaultStyle.dp
 		onCheckedChanged: {
 			if (checked) mainItem.numericPad.open()
 			else mainItem.numericPad.close()
@@ -87,8 +92,6 @@ Rectangle {
 	Control.Button {
 		id: clearTextButton
 		visible: textField.text.length > 0
-		checkable: true
-		checked: false
 		background: Rectangle {
 			color: "transparent"
 		}
@@ -99,8 +102,8 @@ Rectangle {
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-		anchors.rightMargin: 10
-		onCheckedChanged: {
+		anchors.rightMargin: 10 * DefaultStyle.dp
+		onClicked: {
 			textField.clear()
 		}
 	}

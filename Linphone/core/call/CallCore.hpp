@@ -37,6 +37,7 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(LinphoneEnums::CallState state READ getState NOTIFY stateChanged)
 	Q_PROPERTY(QString lastErrorMessage READ getLastErrorMessage NOTIFY lastErrorMessageChanged)
 	Q_PROPERTY(int duration READ getDuration NOTIFY durationChanged)
+	Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE lSetSpeakerMuted NOTIFY speakerMutedChanged)
 	Q_PROPERTY(bool microphoneMuted READ getMicrophoneMuted WRITE lSetMicrophoneMuted NOTIFY microphoneMutedChanged)
 	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE lSetCameraEnabled NOTIFY cameraEnabledChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
@@ -70,6 +71,9 @@ public:
 	int getDuration();
 	void setDuration(int duration);
 
+	bool getSpeakerMuted() const;
+	void setSpeakerMuted(bool isMuted);
+
 	bool getMicrophoneMuted() const;
 	void setMicrophoneMuted(bool isMuted);
 
@@ -97,6 +101,7 @@ signals:
 	void lastErrorMessageChanged();
 	void peerAddressChanged();
 	void durationChanged(int duration);
+	void speakerMutedChanged();
 	void microphoneMutedChanged();
 	void cameraEnabledChanged();
 	void pausedChanged();
@@ -108,6 +113,7 @@ signals:
 	void lAccept(bool withVideo); // Accept an incoming call
 	void lDecline();              // Decline an incoming call
 	void lTerminate();            // Hangup a call
+	void lSetSpeakerMuted(bool muted);
 	void lSetMicrophoneMuted(bool isMuted);
 	void lSetCameraEnabled(bool enabled);
 	void lSetPaused(bool paused);
@@ -144,6 +150,7 @@ private:
 	QString mPeerAddress;
 	bool mPeerSecured;
 	int mDuration = 0;
+	bool mSpeakerMuted;
 	bool mMicrophoneMuted;
 	bool mCameraEnabled;
 	bool mPaused = false;

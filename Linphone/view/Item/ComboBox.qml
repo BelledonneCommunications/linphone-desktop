@@ -6,7 +6,7 @@ import Linphone
 ColumnLayout {
 	id: mainItem
 	property string label: ""
-	property int backgroundWidth: 200
+	property int backgroundWidth: 200 * DefaultStyle.dp
 	// Usage : each item of the model list must be {text: ..., img: ...}
 	property var modelList: []
 	readonly property string currentText: selectedItemText.text
@@ -17,10 +17,10 @@ ColumnLayout {
 		visible: label.length > 0
 		verticalAlignment: Text.AlignVCenter
 		text: mainItem.label
-		color: combobox.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.formItemLabelColor
+		color: combobox.activeFocus ? DefaultStyle.main1_500_main : DefaultStyle.main2_600
 		font {
-			pointSize: DefaultStyle.formItemLabelSize
-			bold: true
+			pixelSize: 13 * DefaultStyle.dp
+			weight: 700 * DefaultStyle.dp
 		}
 	}
 
@@ -30,10 +30,10 @@ ColumnLayout {
 		width: mainItem.backgroundWidth
 		background: Rectangle {
 			implicitWidth: mainItem.backgroundWidth
-			implicitHeight: 30
-			radius: 15
-			color: combobox.enabled ? DefaultStyle.formItemBackgroundColor : DefaultStyle.formItemDisableBackgroundColor
-			border.color: combobox.enabled ? DefaultStyle.formItemBorderColor : DefaultStyle.formItemDisableColor
+			implicitHeight: 49 * DefaultStyle.dp
+			radius: 63 * DefaultStyle.dp
+			color: combobox.enabled ? DefaultStyle.grey_100 : DefaultStyle.grey_200
+			border.color: combobox.enabled ? DefaultStyle.grey_200 : DefaultStyle.grey_400
 		}
 		contentItem: Item {
 			anchors.left: parent.left
@@ -41,22 +41,22 @@ ColumnLayout {
 			Image {
 				id: selectedItemImg
 				visible: source != ""
-				sourceSize.width: 20
-				width: visible ? 20 : 0
+				sourceSize.width: 20 * DefaultStyle.dp
+				width: visible ? 20 * DefaultStyle.dp : 0
 				fillMode: Image.PreserveAspectFit
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.left: parent.left
-				anchors.leftMargin: visible ? 10 : 0
+				anchors.leftMargin: visible ? 10 * DefaultStyle.dp : 0
 			}
 
 			Text {
 				id: selectedItemText
-				color: combobox.enabled ? DefaultStyle.defaultTextColor : DefaultStyle.formItemDisableColor
+				color: combobox.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
 				elide: Text.ElideRight
 				anchors.left: selectedItemImg.right
-				anchors.leftMargin: selectedItemImg.visible ? 5 : 10
+				anchors.leftMargin: selectedItemImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
 				anchors.right: parent.right
-				anchors.rightMargin: 20
+				anchors.rightMargin: 20 * DefaultStyle.dp
 				anchors.verticalCenter: parent.verticalCenter
 			}
 
@@ -76,7 +76,7 @@ ColumnLayout {
 		indicator: Image {
 			id: indicImage
 			anchors.right: parent.right
-			anchors.rightMargin: 10
+			anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			source: AppIcons.downArrow
 		}
@@ -86,7 +86,7 @@ ColumnLayout {
 			y: combobox.height - 1
 			width: combobox.width
 			implicitHeight: contentItem.implicitHeight
-			padding: 1
+			padding: 1 * DefaultStyle.dp
 
 			contentItem: ListView {
 				id: listView
@@ -97,8 +97,8 @@ ColumnLayout {
 				highlightFollowsCurrentItem: true
 				highlight: Rectangle {
 					width: listView.width
-					color: DefaultStyle.comboBoxHighlightColor
-					radius: 15
+					color: DefaultStyle.main2_300
+					radius: 63 * DefaultStyle.dp
 					y: listView.currentItem? listView.currentItem.y : 0
 				}
 
@@ -111,12 +111,12 @@ ColumnLayout {
 					Image {
 						id: delegateImg
 						visible: source != ""
-						width: visible ? 20 : 0
-						sourceSize.width: 20
+						width: visible ? 20 * DefaultStyle.dp : 0
+						sourceSize.width: 20 * DefaultStyle.dp
 						source: modelData.img ? modelData.img : ""
 						fillMode: Image.PreserveAspectFit
 						anchors.left: parent.left
-						anchors.leftMargin: visible ? 10 : 0
+						anchors.leftMargin: visible ? 10 * DefaultStyle.dp : 0
 						anchors.verticalCenter: parent.verticalCenter
 					}
 
@@ -129,9 +129,9 @@ ColumnLayout {
 						elide: Text.ElideRight
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.left: delegateImg.right
-						anchors.leftMargin: delegateImg.visible ? 5 : 10
+						anchors.leftMargin: delegateImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
 						anchors.right: parent.right
-						anchors.rightMargin: 20
+						anchors.rightMargin: 20 * DefaultStyle.dp
 					}
 
 					MouseArea {
@@ -140,8 +140,8 @@ ColumnLayout {
 						Rectangle {
 							anchors.fill: parent
 							opacity: 0.1
-							radius: 15
-							color: DefaultStyle.comboBoxHoverColor
+							radius: 63 * DefaultStyle.dp
+							color: DefaultStyle.main2_500main
 							visible: parent.containsMouse
 						}
 						onPressed: {
@@ -167,8 +167,8 @@ ColumnLayout {
 
 			background: Rectangle {
 				implicitWidth: mainItem.backgroundWidth
-				implicitHeight: 30
-				radius: 15
+				implicitHeight: 30 * DefaultStyle.dp
+				radius: 63 * DefaultStyle.dp
 			}
 		}
 	}

@@ -9,7 +9,7 @@ Control.TabBar {
 	readonly property int originX: count > 0 
 							? itemAt(0).x 
 							: 0
-	spacing: 40
+	spacing: 40 * DefaultStyle.dp
 	wheelEnabled: true
 	background: Quick.Item {
 		id: tabBarBackground
@@ -17,8 +17,8 @@ Control.TabBar {
 
 		Quick.Rectangle {
 			id: barBG
-			height: 4
-			color: DefaultStyle.lightGrayColor
+			height: 4 * DefaultStyle.dp
+			color: DefaultStyle.grey_200
 			anchors.bottom: parent.bottom
 			width: parent.width
 		}
@@ -58,7 +58,7 @@ Control.TabBar {
 
 				Quick.Rectangle {
 					visible: mainItem.currentIndex === index
-					height: 4
+					height: 4 * DefaultStyle.dp
 					color: DefaultStyle.main1_500_main
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
@@ -70,14 +70,14 @@ Control.TabBar {
 				id: tabText
 				anchors.fill: parent
 				font.bold: true
-				color: mainItem.currentIndex === index ? DefaultStyle.defaultTextColor : DefaultStyle.disableTextColor
+				color: mainItem.currentIndex === index ? DefaultStyle.main2_600 : DefaultStyle.main2_400
 				font.family: DefaultStyle.defaultFont
-				font.pointSize: DefaultStyle.tabButtonTextSize
+				font.pixelSize: 22 * DefaultStyle.dp
 				elide: Quick.Text.ElideRight
 				maximumLineCount: 1
 				text: txtMeter.elidedText
 				// width: Math.min(txtMeter.advanceWidth, Math.max(50, mainItem.width - (x - mainItem.x)))
-				bottomPadding: 5
+				bottomPadding: 5 * DefaultStyle.dp
 			}
 
 			Quick.TextMetrics {

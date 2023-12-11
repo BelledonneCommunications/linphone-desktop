@@ -6,27 +6,27 @@ import Linphone
 
 ColumnLayout {
 	id: mainItem
-	spacing: 15
+	spacing: 15 * DefaultStyle.dp
 	signal connectionSucceed()
 
 	TextInput {
 		id: username
 		label: "Username"
 		mandatory: true
-		textInputWidth: 250
+		textInputWidth: 250 * DefaultStyle.dp
 	}
 	TextInput {
 		id: password
 		label: "Password"
 		mandatory: true
 		hidden: true
-		textInputWidth: 250
+		textInputWidth: 250 * DefaultStyle.dp
 	}
 
 	Text {
 		id: errorText
 		text: "Connection has failed. Please verify your credentials"
-		color: DefaultStyle.errorMessageColor
+		color: DefaultStyle.danger_500main
 		opacity: 0
 		states: [
 			State{
@@ -70,7 +70,7 @@ ColumnLayout {
 		id: lastFormLineLayout
 		Button {
 			text: "Log in"
-			Layout.rightMargin: 20
+			Layout.rightMargin: 20 * DefaultStyle.dp
 			onClicked: {
 				username.errorMessage = ""
 				password.errorMessage = ""
@@ -90,11 +90,12 @@ ColumnLayout {
 				visible: false
 			}
 			contentItem: Text {
-				color: DefaultStyle.grayColor
+				color: DefaultStyle.main2_500main
 				text: "Forgotten password?"
 				font{
 					underline: true
-					pointSize: DefaultStyle.indicatorMessageTextSize
+					pixelSize: 13 * DefaultStyle.dp
+					weight : 600 * DefaultStyle.dp
 				}
 			}
 			onClicked: console.debug("[LoginForm]User: forgotten password button clicked")

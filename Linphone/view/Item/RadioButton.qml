@@ -19,20 +19,20 @@ Control.RadioButton {
 	}
 
 	background: Rectangle {
-		color: DefaultStyle.formItemBackgroundColor
+		color: DefaultStyle.grey_100
 		border.color: mainItem.checked ? DefaultStyle.info_500_main : "transparent"
-		radius: 20
+		radius: 20 * DefaultStyle.dp
 	}
 
 	indicator: RowLayout {
 		anchors.left: parent.left
-		anchors.leftMargin: 13
+		anchors.leftMargin: 13 * DefaultStyle.dp
 		anchors.top: parent.top
-		anchors.topMargin: 8
-		spacing: 4
+		anchors.topMargin: 8 * DefaultStyle.dp
+		spacing: 4 * DefaultStyle.dp
 		Rectangle {
-			implicitWidth: 16
-			implicitHeight: 16
+			implicitWidth: 16 * DefaultStyle.dp
+			implicitHeight: 16 * DefaultStyle.dp
 			radius: implicitWidth/2
 			border.color: mainItem.checked ? DefaultStyle.info_500_main : DefaultStyle.main1_500_main
 
@@ -50,7 +50,7 @@ Control.RadioButton {
 			text: mainItem.title
 			font.bold: true
 			color: DefaultStyle.grey_900
-			font.pointSize: DefaultStyle.radioButtonTitleSize
+			font.pixelSize: 16 * DefaultStyle.dp
 		}
 		Control.Button {
 			padding: 0
@@ -60,8 +60,8 @@ Control.RadioButton {
 			contentItem: Image {
 				fillMode: Image.PreserveAspectFit
 				source: AppIcons.info
-				width: 2
-				height: 2
+				width: 2 * DefaultStyle.dp
+				height: 2 * DefaultStyle.dp
 			}
 		}
 	}
@@ -71,27 +71,27 @@ Control.RadioButton {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		anchors.leftMargin: 13
+		anchors.leftMargin: 13 * DefaultStyle.dp
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			Layout.bottomMargin: 10
-			Layout.rightMargin: 10
+			Layout.bottomMargin: 10 * DefaultStyle.dp
+			Layout.rightMargin: 10 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignVCenter
 			Text {
 				id: innerText
 				verticalAlignment: Text.AlignVCenter
-				Layout.preferredWidth: 220
-				Layout.preferredHeight: 100
-				font.pointSize: DefaultStyle.descriptionTextSize
+				Layout.preferredWidth: 220 * DefaultStyle.dp
+				Layout.preferredHeight: 100 * DefaultStyle.dp
+				font.pixelSize: 14 * DefaultStyle.dp
 				text: mainItem.contentText
 				Layout.fillHeight: true
 			}
 			Image {
 				id: image
 				Layout.fillHeight: true
-				Layout.preferredWidth: 100
-				Layout.preferredHeight: 100
+				Layout.preferredWidth: 100 * DefaultStyle.dp
+				Layout.preferredHeight: 100 * DefaultStyle.dp
 				fillMode: Image.PreserveAspectFit
 				source: mainItem.imgUrl
 			}

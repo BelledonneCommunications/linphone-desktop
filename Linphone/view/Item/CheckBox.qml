@@ -6,21 +6,19 @@ Control.CheckBox {
 	id: mainItem
 	
 	indicator: Rectangle {
-		implicitWidth: 18
-		implicitHeight: 18
+		implicitWidth: 20 * DefaultStyle.dp
+		implicitHeight: 20 * DefaultStyle.dp
 		x: (parent.width - width) / 2
 		y: (parent.height - height) / 2
-		radius: 3
+		radius: 3 * DefaultStyle.dp
 		border.color: DefaultStyle.main1_500_main
-		border.width: DefaultStyle.checkboxBorderWidth
+		border.width: 2 * DefaultStyle.dp
 		// color: mainItem.checked ? DefaultStyle.main1_500_main : "transparent"
-
-		Text {
+		EffectImage {
 			visible: mainItem.checked
-			text: "\u2714"
-			font.pointSize: 18
-			color: DefaultStyle.main1_500_main
-			anchors.centerIn: parent
+			image.source: AppIcons.check
+			colorizationColor: DefaultStyle.main1_500_main
+			anchors.fill: parent
 		}
 	}
 }

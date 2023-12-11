@@ -11,20 +11,24 @@ LoginLayout {
 	titleContent: RowLayout {
 		Text {
 			id: welcome
-			text: "Welcome"
-			color: DefaultStyle.titleColor
-			font.pointSize: DefaultStyle.title1FontPointSize
-			font.bold: true
+			text: qsTr("Bienvenue")
+			color: DefaultStyle.main2_800
+			font {
+				pixelSize: 96 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
 			scaleLettersFactor: 1.1
 		}
 		Text {
 			Layout.alignment: Qt.AlignBottom
-			Layout.leftMargin: 10
-			Layout.bottomMargin: 5
-			color: DefaultStyle.titleColor
-			text: "in Linphone"
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			Layout.leftMargin: 10 * DefaultStyle.dp
+			Layout.bottomMargin: 5 * DefaultStyle.dp
+			color: DefaultStyle.main2_800
+			text: qsTr("sur Linphone")
+			font {
+				pixelSize: 36 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -37,8 +41,12 @@ LoginLayout {
 				visible: false
 			}
 			contentItem: Text {
-				text: "Skip"
-				font.underline: true
+				text: qsTr("Passer")
+				font {
+					underline: true
+					pixelSize: 13 * DefaultStyle.dp
+					weight: 600 * DefaultStyle.dp
+				}
 			}
 			onClicked: {
 				console.debug("[WelcomePage] User: Click skip")
@@ -47,14 +55,18 @@ LoginLayout {
 		}
 	}
 	centerContent: ColumnLayout {
-		Layout.bottomMargin: 20
+		id: centerLayout
+		Layout.bottomMargin: 20 * DefaultStyle.dp
+		Layout.fillWidth: false
+		Layout.fillHeight: false
+		Layout.leftMargin: 250 * DefaultStyle.dp
+		Layout.topMargin: 165 * DefaultStyle.dp
 		RowLayout {
-			Layout.leftMargin: 100
 			Image {
-				Layout.rightMargin: 40
-				Layout.topMargin: 20
-				Layout.preferredWidth: 100
-				Layout.maximumWidth: 100
+				id: carouselImg
+				Layout.rightMargin: 40 * DefaultStyle.dp
+				Layout.preferredWidth: 153.22 * DefaultStyle.dp
+				Layout.preferredHeight: 156 * DefaultStyle.dp
 				fillMode: Image.PreserveAspectFit
 				source: carousel.currentIndex == 0 ? AppIcons.welcomeLinphoneLogo : carousel.currentIndex == 1 ? AppIcons.welcomeLock : AppIcons.welcomeOpenSource
 			}
@@ -64,26 +76,27 @@ LoginLayout {
 				itemsList: Repeater {
 					id: slideRepeater
 					model: [
-						{title: "Linphone", text: "Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>."},
-						{title: "Sécurisé", text: "Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>."},
-						{title: "Open Source", text: "Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>"},
-						]
-					Item {
-						ColumnLayout {
-							anchors.verticalCenter: parent.verticalCenter
-							spacing: 15
-							Text {
-								text: modelData.title
-								font.bold: true
-								font.pixelSize: 20
-								scaleLettersFactor: 1.1
+					{title: qsTr("Linphone"), text: qsTr("Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>.")},
+					{title: qsTr("Sécurisé"), text: qsTr("Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>.")},
+					{title: qsTr("Open Source"), text: qsTr("Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>")},
+					]
+					ColumnLayout {
+						spacing: 15 * DefaultStyle.dp
+						Text {
+							id: title
+							text: modelData.title
+							font {
+								pixelSize: 29 * DefaultStyle.dp
+								weight: 800 * DefaultStyle.dp
 							}
-							Text {
-								Layout.maximumWidth: 361
-								wrapMode: Text.WordWrap
-								font.pixelSize: 11
-								text: modelData.text
-							}
+						}
+						Text {
+							id: txt
+							Layout.maximumWidth: 361 * DefaultStyle.dp
+							wrapMode: Text.WordWrap
+							font.pixelSize: 14 * DefaultStyle.dp
+							font.weight: 400 * DefaultStyle.dp
+							text: modelData.text
 						}
 					}
 				}
@@ -91,18 +104,16 @@ LoginLayout {
 		}
 
 		Button {
-			Layout.topMargin: 20
-			Layout.bottomMargin: 20
-			Layout.leftMargin: 361 - width
-			Layout.alignment: Qt.AlignBottom
-			text: carousel.currentIndex < (carousel.itemsCount - 1) ? "Next" : "Start"
+			Layout.topMargin: 20 * DefaultStyle.dp
+			Layout.bottomMargin: 20 * DefaultStyle.dp
+			Layout.leftMargin: (centerLayout.width - width) * DefaultStyle.dp
+			Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+			y: centerLayout.implicitWidth - width
+			text: carousel.currentIndex < (carousel.itemsCount - 1) ? qsTr("Suivant") : qsTr("Commencer")
 			onClicked: { 
 				if (carousel.currentIndex < 2) carousel.goToSlide(carousel.currentIndex + 1);
 				else mainItem.startButtonPressed();
 			}
-		}
-		Item {
-			Layout.fillHeight: true
 		}
 	}
 } 

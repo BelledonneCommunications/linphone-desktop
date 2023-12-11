@@ -11,10 +11,10 @@ LoginLayout {
 
 	titleContent: RowLayout {
 		Control.Button {
-			Layout.preferredHeight: 40
-    		Layout.preferredWidth: 40
-			icon.width: 40
-			icon.height: 40
+			Layout.preferredHeight: 40 * DefaultStyle.dp
+    		Layout.preferredWidth: 40 * DefaultStyle.dp
+			icon.width: 40 * DefaultStyle.dp
+			icon.height: 40 * DefaultStyle.dp
 			icon.source: AppIcons.returnArrow
 			background: Rectangle {
 				color: "transparent"
@@ -31,11 +31,13 @@ LoginLayout {
 		Text {
 			wrapMode: Text.NoWrap
 			text: {
-				var completeString =  (mainItem.email.length > 0) ? "email" : "phone number"
-				text = "Register | Register with your " + completeString
+				var completeString =  (mainItem.email.length > 0) ? qsTr("email") : qsTr("numéro")
+				text = qsTr("Inscription | Confirmer votre ") + completeString
 			}
-			font.pointSize: DefaultStyle.title2FontPointSize
-			font.bold: true
+			font {
+				pixelSize: 36 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
 			scaleLettersFactor: 1.1
 		}
 		Item {
@@ -44,22 +46,26 @@ LoginLayout {
 	}
 
 	centerContent: ColumnLayout {
-		spacing: 2
+		spacing: 2 * DefaultStyle.dp
 		Text {
 			Layout.alignment: Qt.AlignTop
 			font.bold: true
-			font.pointSize: DefaultStyle.defaultFontPointSize
-			color: DefaultStyle.questionTextColor
+			font.pixelSize: DefaultStyle.defaultFontPointSize
+			color: DefaultStyle.main2_700
 			text: {
 				var completeString = (mainItem.email.length > 0) ? ("email " + mainItem.email) : ("phone number " + mainItem.phoneNumber)
 				text = "We have sent a verification code on your " + completeString + " <br>Please enter the verification code below:"
 			}
+			font {
+				pixelSize: 22 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
 		}
 		RowLayout {
 			Layout.fillWidth: true
-			Layout.margins: 10
+			Layout.margins: 10 * DefaultStyle.dp
 			ColumnLayout {
-				spacing: 70
+				spacing: 70 * DefaultStyle.dp
 				RowLayout {
 					Repeater {
 						model: 4
@@ -75,17 +81,18 @@ LoginLayout {
 								if (index > 0)
 									nextItemInFocusChain(false).forceActiveFocus()
 							} 
-							Layout.margins: 10
+							Layout.margins: 10 * DefaultStyle.dp
 						}
 					}
 				}
 				RowLayout {
 					Layout.alignment: Qt.AlignBottom
 					Text {
-						Layout.rightMargin: 15
+						Layout.rightMargin: 15 * DefaultStyle.dp
 						text: "Didn't receive the code ?"
-						color: DefaultStyle.questionTextColor
-						font.pointSize: DefaultStyle.indicatorMessageTextSize
+						color: DefaultStyle.main2_700
+						font.pixelSize: 14 * DefaultStyle.dp
+						font.weight: 400 * DefaultStyle.dp
 					}
 					Button {
 						Layout.alignment: Qt.AlignRight
@@ -101,8 +108,8 @@ LoginLayout {
 				Layout.fillWidth: true
 			}
 			Image {
-				Layout.rightMargin: 40
-				Layout.preferredWidth: 300
+				Layout.rightMargin: 40 * DefaultStyle.dp
+				Layout.preferredWidth: 300 * DefaultStyle.dp
 				fillMode: Image.PreserveAspectFit
 				source: AppIcons.verif_page_image
 			}
