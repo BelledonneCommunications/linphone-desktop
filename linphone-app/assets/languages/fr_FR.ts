@@ -185,7 +185,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -201,7 +201,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex&#x202f;: `%1`).</translation>
+        <translation>Caractères invalides détectés (regex : `%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -262,42 +262,42 @@
     <message>
         <source>noAccountExists</source>
         <extracomment>&quot;Account doesn&apos;t exist&quot; : Warning message when no account has been found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Le compte n&apos;existe pas.</translation>
     </message>
     <message>
         <source>recoveringAccount</source>
         <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Récupération du compte en cours</translation>
     </message>
     <message>
         <source>Cannot open validation url for the account creation request token</source>
         <extracomment>&quot;Cannot open validation URL for the account creation request token&quot; : Warning message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;ouvrir l&apos;URL de validation pour le token de la création de compte.</translation>
     </message>
     <message>
         <source>waitingValidation</source>
         <extracomment>&apos;Waiting for validation at %1&apos; : User message for validation. %1 is an URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>En attente de validation sur %1</translation>
     </message>
     <message>
         <source>wrongTokenRequest</source>
         <extracomment>&apos;The answer of account creation request token doesn&apos;t have token and validation_url fields&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>La réponse à la demande de création de compte de contient pas les champs token et validation_url.</translation>
     </message>
     <message>
         <source>tokenError</source>
         <extracomment>&apos;Cannot get request token for account creation (%1)&apos; : Status messsage. %1 is a code number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Impossible d&apos;obtenir le token pour la création de compte (%1)</translation>
     </message>
     <message>
         <source>requestingValidationUrl</source>
         <extracomment>&apos;Requesting validation URL&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Demande de l&apos;URL de validation en cours</translation>
     </message>
     <message>
         <source>loginStep</source>
         <extracomment>&apos;Connecting&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Connexion en cours</translation>
     </message>
 </context>
 <context>
@@ -496,27 +496,27 @@
     <message>
         <source>callListTitle</source>
         <extracomment>&apos;Call list&apos; : Call histories title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Liste d&apos;appels</translation>
     </message>
     <message>
         <source>incomingFilter</source>
         <extracomment>&apos;Incoming&apos; : Filter label for incoming call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Entrant</translation>
     </message>
     <message>
         <source>outgoingFilter</source>
         <extracomment>&apos;Outgoing&apos; : Filter label for outgoing call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sortant</translation>
     </message>
     <message>
         <source>missedFilter</source>
         <extracomment>&apos;Missed&apos; : Filter label for missed call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Manqué</translation>
     </message>
     <message>
         <source>searchListPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in a list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Recherche dans la liste</translation>
     </message>
 </context>
 <context>
@@ -619,7 +619,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>confirmForward</source>
         <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
-        <translation>Souhaitez-vous transférer ce message&#x202f;?</translation>
+        <translation>Souhaitez-vous transférer ce message ?</translation>
     </message>
 </context>
 <context>
@@ -984,7 +984,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>createMeeting</source>
         <extracomment>&apos;Create Meeting&apos; : Button label to create a meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Créer une conférence</translation>
     </message>
 </context>
 <context>
@@ -1120,17 +1120,17 @@ URL du serveur non configurée.</translation>
     <message>
         <source>localContactsEntry</source>
         <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
-        <translation type="unfinished">Contacts locaux</translation>
+        <translation>Contacts locaux</translation>
     </message>
     <message>
         <source>contactsEntry</source>
         <extracomment>&apos;Contacts&apos; : Contacts section label in main waindow.</extracomment>
-        <translation type="unfinished">CONTACTS</translation>
+        <translation>CONTACTS</translation>
     </message>
     <message>
         <source>selectOnlineContacts</source>
         <extracomment>&apos;Online&apos; : Filter label to display only online contacts.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>En ligne</translation>
     </message>
 </context>
 <context>
@@ -1401,7 +1401,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#x202f;!</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1986,38 +1986,38 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>openCalls</source>
         <extracomment>&apos;Open call history&apos; : Tooltip for a button that open the call history view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir l&apos;historique d&apos;appels</translation>
     </message>
     <message>
         <source>openChats</source>
         <extracomment>&apos;Open chats&apos; : Tooltip for a button that open the conversations view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir les conversations</translation>
     </message>
     <message>
         <source>openContacts</source>
         <extracomment>&apos;Open contacts&apos; : Tooltip for a button that open the contacts view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir les contacts</translation>
     </message>
     <message>
         <source>openMeetings</source>
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ouvrir les conférences</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
-        <translation type="unfinished">Erreur de récupération de la configuration distante. Le lien de configuration a peut-être déjà été utilisé ou a expiré. Merci de contacter un administrateur si ce lien vous a été fourni.</translation>
+        <translation>Erreur de récupération de la configuration distante. Le lien de configuration a peut-être déjà été utilisé ou a expiré. Merci de contacter un administrateur si ce lien vous a été fourni.</translation>
     </message>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished">Une nouvelle version (%1) est disponible !</translation>
+        <translation>Une nouvelle version (%1) est disponible !</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Annuler</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation type="unfinished">Un compte est déjà configuré. Cette action effacera le compte existant.</translation>
+        <translation>Un compte est déjà configuré. Cette action effacera le compte existant.</translation>
     </message>
 </context>
 <context>
@@ -2047,7 +2047,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>exportDesktopFile</source>
         <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Créer un raccourci</translation>
     </message>
 </context>
 <context>
@@ -2077,7 +2077,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>exportDesktopFile</source>
         <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Créer un raccourci</translation>
     </message>
 </context>
 <context>
@@ -2292,7 +2292,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation>Voulez-vous programmer cette réunion&#x202f;?</translation>
+        <translation>Voulez-vous programmer cette réunion ?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2390,7 +2390,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
-        <translation>Les messages éphémères ont été activés : %1</translation>
+        <translation>Les messages éphémères ont été activés : %1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageDisabledEvent</source>
@@ -2439,7 +2439,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation>Message vocal reçu&#x202f;!</translation>
+        <translation>Message vocal reçu !</translation>
     </message>
     <message>
         <source>voiceMessageReact</source>
@@ -2725,7 +2725,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished">La connexion a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
+        <translation>La connexion a échoué. Merci de vérifier le nom d&apos;utilisateur/mot de passe.</translation>
     </message>
 </context>
 <context>
@@ -2823,12 +2823,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application&#xa0;? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
+        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application ? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain d&apos;activer le chiffrement&#xa0;? Cette action est irréversible sans perdre TOUTES vos données.</translation>
+        <translation>Êtes-vous certain d&apos;activer le chiffrement ? Cette action est irréversible sans perdre TOUTES vos données.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -3102,7 +3102,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie&#x202f;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3847,7 +3847,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>spellCheckerLabel</source>
         <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Correcteur orthographique</translation>
     </message>
 </context>
 <context>
@@ -4069,7 +4069,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>timelineFilterChatGroups</source>
         <extracomment>&apos;Chat groups&apos; : Filter item. Selecting it will show all chat groups (with more than one participant).</extracomment>
-        <translation>Groupes standards</translation>
+        <translation>Groupes</translation>
     </message>
     <message>
         <source>timelineSearchPlaceholderText</source>
@@ -4079,7 +4079,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>chatsTitle</source>
         <extracomment>&apos;Messages&apos; : Title for conversations</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Messages</translation>
     </message>
 </context>
 <context>
@@ -4087,7 +4087,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation&#x202f;?</translation>
+        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation ?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
@@ -4209,15 +4209,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation>Échec lors de la suppression de la clef&#xa0;: %1</translation>
+        <translation>Échec lors de la suppression de la clef : %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation>Échec lors de la lecture de la clef&#xa0;: %1</translation>
+        <translation>Échec lors de la lecture de la clef : %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation>Échec lors de l&apos;écriture de la clef&#xa0;: %1</translation>
+        <translation>Échec lors de l&apos;écriture de la clef : %1</translation>
     </message>
 </context>
 <context>
@@ -5238,7 +5238,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>okButton</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>

@@ -2005,11 +2005,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>lastProvisioningFailed</source>
-        <translation type="unfinished">Remote provisioning failed. The link might be used or expired. If it was provided to you, please contact your administrator.</translation>
+        <translation>Remote provisioning failed. The link might be used or expired. If it was provided to you, please contact your administrator.</translation>
     </message>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished">A new version (%1) is available!</translation>
+        <translation>A new version (%1) is available!</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -2017,7 +2017,7 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation type="unfinished">An account is already provisioned. This action will erase the existing account.</translation>
+        <translation>An account is already provisioned. This action will erase the existing account.</translation>
     </message>
 </context>
 <context>
