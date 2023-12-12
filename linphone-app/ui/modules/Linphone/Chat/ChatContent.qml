@@ -210,7 +210,7 @@ Loader{// Use of Loader because of Repeater (items cannot be loaded dynamically)
 					onLastTextSelectedChanged: mainItem.lastTextSelectedChanged(lastTextSelected)
 					color: mainItem.useTextColor
 								? mainItem.textColor
-								: $modelData.isOutgoing
+								: chatMessageModel.isOutgoing
 									? ChatStyle.entry.message.outgoing.text.colorModel.color
 									: ChatStyle.entry.message.incoming.text.colorModel.color
 					onRightClicked: mainItem.rightClicked()
