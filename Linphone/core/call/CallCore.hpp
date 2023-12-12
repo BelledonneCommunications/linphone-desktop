@@ -113,6 +113,7 @@ signals:
 	void lAccept(bool withVideo); // Accept an incoming call
 	void lDecline();              // Decline an incoming call
 	void lTerminate();            // Hangup a call
+	void lTerminateAllCalls();    // Hangup all calls
 	void lSetSpeakerMuted(bool muted);
 	void lSetMicrophoneMuted(bool isMuted);
 	void lSetCameraEnabled(bool enabled);

@@ -45,6 +45,7 @@ public:
 	void setCameraEnabled(bool enabled);
 	void setPaused(bool paused);
 	void transferTo(const std::shared_ptr<linphone::Address> &address);
+	void terminateAllCalls();
 
 	std::shared_ptr<const linphone::Address> getRemoteAddress();
 	bool getAuthenticationTokenVerified();

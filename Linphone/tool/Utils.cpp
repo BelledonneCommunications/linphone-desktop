@@ -88,7 +88,7 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 			App::postCoreSync([callGui]() {
 				auto app = App::getInstance();
 				auto window = app->getCallsWindow(callGui);
-				window->show();
+				smartShowWindow(window);
 			});
 			return callGui;
 		} else return QVariant();
@@ -104,12 +104,18 @@ void Utils::openCallsWindow(CallGui *call) {
 QQuickWindow *Utils::getCallsWindow(CallGui *callGui) {
 	auto app = App::getInstance();
 	auto window = app->getCallsWindow(QVariant::fromValue(callGui));
-	window->show();
+	smartShowWindow(window);
 	return window;
 }
 
 void Utils::closeCallsWindow() {
 	App::getInstance()->closeCallsWindow();
+}
+
+QQuickWindow *Utils::getMainWindow() {
+	auto win = App::getInstance()->getMainWindow();
+	smartShowWindow(win);
+	return win;
 }
 
 VariantObject *Utils::haveAccount() {
@@ -124,6 +130,16 @@ VariantObject *Utils::haveAccount() {
 	result->requestValue();
 	return result;
 }
+
+void Utils::smartShowWindow(QQuickWindow *window) {
+	if (!window) return;
+	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
+		window->showNormal();
+	else window->show();
+	window->raise(); // Raise ensure to get focus on Mac
+	window->requestActivate();
+}
+
 QString Utils::createAvatar(const QUrl &fileUrl) {
 	QString filePath = fileUrl.toLocalFile();
 	QString fileId;  // uuid.ext

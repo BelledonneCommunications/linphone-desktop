@@ -143,6 +143,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mAccountModelConnection->makeConnectToCore(&CallCore::lTerminate, [this]() {
 		mAccountModelConnection->invokeToModel([this]() { mCallModel->terminate(); });
 	});
+	mAccountModelConnection->makeConnectToCore(&CallCore::lTerminateAllCalls, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { mCallModel->terminateAllCalls(); });
+	});
 }
 
 QString CallCore::getPeerAddress() const {

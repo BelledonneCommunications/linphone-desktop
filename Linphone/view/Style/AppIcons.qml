@@ -25,6 +25,7 @@ QtObject {
 	property string phoneSelected: "image://internal/phone-selected.svg"
 	property string newCall: "image://internal/phone-plus.svg"
 	property string endCall: "image://internal/phone-disconnect.svg"
+	property string callList: "image://internal/phone-list.svg"
 	property string transferCall: "image://internal/phone-transfer.svg"
 	property string adressBook: "image://internal/address-book.svg"
 	property string adressBookSelected: "image://internal/address-book-selected.svg"

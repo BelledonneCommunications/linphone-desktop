@@ -25,6 +25,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/phone-selected.svg"
 	"data/image/phone-plus.svg"
 	"data/image/phone-disconnect.svg"
+	"data/image/phone-list.svg"
 	"data/image/phone-transfer.svg"
 	"data/image/address-book.svg"
 	"data/image/address-book-selected.svg"

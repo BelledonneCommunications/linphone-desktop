@@ -10,7 +10,11 @@ AbstractMainPage {
 	emptyListText: qsTr("Historique d'appel vide")
 	newItemIconSource: AppIcons.newCall
 
-	onNoItemButtonPressed: listStackView.push(newCallItem)
+	onNoItemButtonPressed: goToNewCall()
+	
+	function goToNewCall() {
+		listStackView.push(newCallItem)
+	}
 
 	leftPanelContent: Item {
 		Layout.fillWidth: true
@@ -212,6 +216,7 @@ AbstractMainPage {
 						var addressEnd = "@sip.linphone.org"
 						if (!address.endsWith(addressEnd)) address += addressEnd
 						var callVarObject = UtilsCpp.createCall(address)
+						// var window = UtilsCpp.getCallsWindow()
 					}
 				}
 			}

@@ -96,6 +96,8 @@ void App::init() {
 	}
 	setQuitOnLastWindowClosed(true); // TODO: use settings to set it
 
+	qInfo() << log().arg("Display server : %1").arg(platformName());
+
 	// QML
 	mEngine = new QQmlApplicationEngine(this);
 	// Provide `+custom` folders for custom components and `5.9` for old components.
@@ -119,9 +121,13 @@ void App::init() {
 	QObject::connect(
 	    mEngine, &QQmlApplicationEngine::objectCreated, this,
 	    [this, url](QObject *obj, const QUrl &objUrl) {
-		    if (!obj && url == objUrl) {
-			    qCritical() << log().arg("Main.qml couldn't be load. The app will exit");
-			    exit(-1);
+		    if (url == objUrl) {
+			    if (!obj) {
+				    qCritical() << log().arg("Main.qml couldn't be load. The app will exit");
+				    exit(-1);
+			    }
+			    mMainWindow = qobject_cast<QQuickWindow *>(obj);
+			    Q_ASSERT(mMainWindow);
 		    }
 	    },
 	    Qt::QueuedConnection);
@@ -149,7 +155,6 @@ void App::initCppInterfaces() {
 	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
 	qmlRegisterType<AccountGui>(Constants::MainQmlUri, 1, 0, "AccountGui");
 	qmlRegisterUncreatableType<AccountCore>(Constants::MainQmlUri, 1, 0, "AccountCore", QLatin1String("Uncreatable"));
-	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
@@ -240,14 +245,9 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 			qCritical() << log().arg("Calls window could not be created.");
 			return nullptr;
 		}
+		// window->setParent(mMainWindow);
 		mCallsWindow = window;
 	}
-
-	postModelAsync([this]() {
-		auto core = CoreModel::getInstance()->getCore();
-		auto callsNb = core->getCallsNb();
-		postCoreAsync([this, callsNb] { mCallsWindow->setProperty("callsCount", callsNb); });
-	});
 	mCallsWindow->setProperty("call", callGui);
 	return mCallsWindow;
 }
@@ -260,13 +260,6 @@ void App::closeCallsWindow() {
 	}
 }
 
-void App::smartShowWindow(QQuickWindow *window) {
-	if (!window) return;
-	window->setVisible(true);
-	// Force show, maybe redundant with setVisible
-	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
-		window->showMaximized();
-	else window->show();
-	window->raise(); // Raise ensure to get focus on Mac
-	window->requestActivate();
+QQuickWindow *App::getMainWindow() {
+	return mMainWindow;
 }

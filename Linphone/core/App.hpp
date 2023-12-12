@@ -93,7 +93,7 @@ public:
 	QQuickWindow *getCallsWindow(QVariant callGui);
 	void closeCallsWindow();
 
-	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);
+	QQuickWindow *getMainWindow();
 
 	QQmlApplicationEngine *mEngine = nullptr;
 	bool notify(QObject *receiver, QEvent *event) override;
@@ -106,6 +106,7 @@ private:
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
 	Notifier *mNotifier = nullptr;
+	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
 	// TODO : changer ce count lorsqu'on aura liste d'appels
 	int callsCount = 0;

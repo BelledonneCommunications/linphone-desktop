@@ -58,9 +58,11 @@ public:
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
+	Q_INVOKABLE static QQuickWindow *getMainWindow();
 	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui);
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
+	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path
 	Q_INVOKABLE static QString formatElapsedTime(int seconds);    // Return the elapsed time formated
 

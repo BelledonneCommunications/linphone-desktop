@@ -31,7 +31,6 @@ Control.Popup {
 			shadowEnabled: true
 			shadowColor: DefaultStyle.grey_1000
 			shadowOpacity: 0.8
-			shadowHorizontalOffset: 10 * DefaultStyle.dp
 			shadowBlur: 1
 		}
 		Rectangle {

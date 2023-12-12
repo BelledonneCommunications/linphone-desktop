@@ -34,6 +34,10 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 	mDurationTimer.setSingleShot(false);
 	connect(&mDurationTimer, &QTimer::timeout, this, [this]() { this->durationChanged(mMonitor->getDuration()); });
 	mDurationTimer.start();
+	connect(this, &CallModel::stateChanged, this, [this] {
+		auto state = mMonitor->getState();
+		if (state == linphone::Call::State::Paused) setPaused(true);
+	});
 }
 
 CallModel::~CallModel() {
@@ -84,6 +88,10 @@ void CallModel::transferTo(const std::shared_ptr<linphone::Address> &address) {
 	if (mMonitor->transferTo(address) == -1)
 		qWarning()
 		    << log().arg(QStringLiteral("Unable to transfer: `%1`.")).arg(QString::fromStdString(address->asString()));
+}
+
+void CallModel::terminateAllCalls() {
+	auto status = mMonitor->getCore()->terminateAllCalls();
 }
 
 void CallModel::setMicrophoneMuted(bool isMuted) {

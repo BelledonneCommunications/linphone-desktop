@@ -11,6 +11,16 @@ Window {
 	visible: true
 	title: qsTr("Linphone")
 	property bool firstConnection: true
+
+	function goToNewCall() {
+		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		mainWindowStackView.currentItem.goToNewCall()
+	}
+	function transferCallSucceed() {
+		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		mainWindowStackView.currentItem.transferCallSucceed()
+	}
+
 	AccountProxy{
 		id: accountProxy
 		onHaveAccountChanged: {
