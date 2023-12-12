@@ -11,11 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mac emoji font.
 - Better SVG preview in thumbnails.
 - Unstable forward message menu.
+- Display all call logs on default account.
+- Avoid sending composing when openning chat.
+- Crashes.
+- Update SDK to 5.3
 
 ### Added
 - Dedicated call history view.
 - Chat reactions
 - Update UI layouts.
+- Spellchecker
+- LDAP search with multi-criteria.
+- Export Desktop entry from menu for Linux.
 
 ## Removed
 - Call events from chats.
