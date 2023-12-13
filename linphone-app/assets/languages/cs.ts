@@ -2062,7 +2062,7 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation>An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+        <translation>Účet je již vytvořen. Tato akce vymaže stávající účet.</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
