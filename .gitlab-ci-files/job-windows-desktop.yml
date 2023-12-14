@@ -186,8 +186,8 @@ vs2019-win64-upload:
       cd ../../..
     - |-
       if [[ $MAKE_RELEASE_FILE_URL != "" ]]; then
-        rsync -rlv build/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM
-        rsync -rlv build/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM
+        rsync -rlv build-desktop/OUTPUT/RELEASE $DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM
+        rsync -rlv build-desktop/OUTPUT/RELEASE $MAIN_DEPLOY_SERVER:$UPLOAD_ROOT_PATH/$WINDOWS_PLATFORM
       fi
 
 vs2019-win64-plugins-upload:
