@@ -64,7 +64,10 @@ public:
 	Q_INVOKABLE static VariantObject *haveAccount();
 	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path
-	Q_INVOKABLE static QString formatElapsedTime(int seconds);    // Return the elapsed time formated
+	Q_INVOKABLE static QString formatElapsedTime(int seconds,
+	                                             bool dotsSeparator = true); // Return the elapsed time formated
+	Q_INVOKABLE static QString formatDate(const QDateTime &date, bool includeTime = true); // Return the date formated
+	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);               // Return the date formated
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);

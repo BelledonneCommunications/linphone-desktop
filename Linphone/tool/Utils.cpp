@@ -89,6 +89,7 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 				auto app = App::getInstance();
 				auto window = app->getCallsWindow(callGui);
 				smartShowWindow(window);
+				// callGui.value<CallGui *>()->getCore()->lSetCameraEnabled(true);
 			});
 			return callGui;
 		} else return QVariant();
@@ -174,7 +175,7 @@ QString Utils::createAvatar(const QUrl &fileUrl) {
 	return fileUri;
 }
 
-QString Utils::formatElapsedTime(int seconds) {
+QString Utils::formatElapsedTime(int seconds, bool dotsSeparator) {
 	// s,	m,	h,		d,		W,		M,			Y
 	// 1,	60,	3600,	86400,	604800,	2592000,	31104000
 	auto y = floor(seconds / 31104000);
@@ -192,14 +193,50 @@ QString Utils::formatElapsedTime(int seconds) {
 
 	QString hours, min, sec;
 
-	if (h < 10 && h > 0) hours = "0";
+	if (dotsSeparator && h < 10 && h > 0) hours = "0";
 	hours.append(QString::number(h));
 
-	if (m < 10) min = "0";
+	if (dotsSeparator && m < 10) min = "0";
 	min.append(QString::number(m));
 
-	if (s < 10) sec = "0";
+	if (dotsSeparator && s < 10) sec = "0";
 	sec.append(QString::number(s));
 
-	return (h == 0 ? "" : hours + ":") + min + ":" + sec;
+	if (dotsSeparator) return (h == 0 ? "" : hours + ":") + min + ":" + sec;
+	else return (h == 0 ? "" : hours + "h ") + (m == 0 ? "" : min + "min ") + sec + "s";
+}
+
+QString Utils::formatDate(const QDateTime &date, bool includeTime) {
+	QString format = date.date().year() == QDateTime::currentDateTime().date().year() ? "dd MMMM" : "dd MMMM yyyy";
+	auto dateDay = tr(date.date().toString(format).toLocal8Bit().data());
+	if (!includeTime) return dateDay;
+
+	auto time = date.time().toString("hh:mm");
+	return dateDay + " | " + time;
+}
+
+QString Utils::formatDateElapsedTime(const QDateTime &date) {
+	// auto y = floor(seconds / 31104000);
+	// if (y > 0) return QString::number(y) + " years";
+	// auto M = floor(seconds / 2592000);
+	// if (M > 0) return QString::number(M) + " months";
+	// auto w = floor(seconds / 604800);
+	// if (w > 0) return QString::number(w) + " week";
+	auto dateSec = date.secsTo(QDateTime::currentDateTime());
+
+	auto d = floor(dateSec / 86400);
+	if (d > 7) {
+		return formatDate(date, false);
+	} else if (d > 0) {
+		return tr(date.date().toString("dddd").toLocal8Bit().data());
+	}
+
+	auto h = floor(dateSec / 3600);
+	if (h > 0) return QString::number(h) + " h";
+
+	auto m = floor((dateSec - h * 3600) / 60);
+	if (m > 0) return QString::number(m) + " m";
+
+	auto s = dateSec - h * 3600 - m * 60;
+	return QString::number(s) + " s";
 }

@@ -46,6 +46,7 @@ QtObject {
 	property string incomingCallRejected: "image://internal/incoming_call_rejected.svg"
 	property string outgoingCall: "image://internal/outgoing_call.svg"
 	property string outgoingCallMissed: "image://internal/outgoing_call_missed.svg"
+	property string outgoingCallRejected: "image://internal/outgoing_call_rejected.svg"
 	property string microphone: "image://internal/microphone.svg"
 	property string microphoneSlash: "image://internal/microphone-slash.svg"
 	property string videoCamera: "image://internal/video-camera.svg"
@@ -57,4 +58,7 @@ QtObject {
 	property string pause: "image://internal/pause.svg"
 	property string play: "image://internal/play.svg"
 	property string smiley: "image://internal/smiley.svg"
+	property string trashCan: "image://internal/trash-simple.svg"
+	property string copy: "image://internal/copy.svg"
+	property string empty: "image://internal/empty.svg"
 }

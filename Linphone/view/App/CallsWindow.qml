@@ -121,9 +121,9 @@ Window {
 
 
 	component BottomButton : Button {
+		id: bottomButton
 		required property string enabledIcon
 		property string disabledIcon
-		id: bottomButton
 		enabled: call != undefined
 		padding: 18 * DefaultStyle.dp
 		checkable: true
@@ -367,7 +367,8 @@ Window {
 									Avatar {
 										Layout.alignment: Qt.AlignCenter
 										// TODO : remove username when friend list ready
-										address: mainWindow.peerNameText
+										call: mainWindow.call
+										// address: mainWindow.peerNameText
 										Layout.preferredWidth: 120 * DefaultStyle.dp
 										Layout.preferredHeight: 120 * DefaultStyle.dp
 									}
@@ -414,6 +415,7 @@ Window {
 						}
 						Text {
 							anchors.left: parent.left
+							anchors.right: parent.right
 							anchors.bottom: parent.bottom
 							anchors.leftMargin: 10 * DefaultStyle.dp
 							anchors.bottomMargin: 10 * DefaultStyle.dp
@@ -528,15 +530,13 @@ Window {
 								id: callList
 								model: callsModel
 								height: contentHeight
-								onHeightChanged: console.log("height changzed lustviexw", height, contentHeight)
 								spacing: 15 * DefaultStyle.dp
 
 								onCountChanged: forceLayout()
 
 								delegate: Item {
-									anchors.left: parent.left
-									anchors.right: parent.right
 									id: callDelegate
+									width: callList.width
 									height: 45 * DefaultStyle.dp
 
 									RowLayout {
@@ -567,118 +567,62 @@ Window {
 											|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
 												? qsTr("Appel en pause") : qsTr("Appel en cours")
 										}
-										Button {
+										PopupButton {
 											id: listCallOptionsButton
-											checked: listCallOptionsMenu.visible
 											Layout.preferredWidth: 24 * DefaultStyle.dp
 											Layout.preferredHeight: 24 * DefaultStyle.dp
 											Layout.alignment: Qt.AlignRight
-											leftPadding: 0
-											rightPadding: 0
-											topPadding: 0
-											bottomPadding: 0
-											background: Rectangle {
-												anchors.fill: listCallOptionsButton
-												opacity: listCallOptionsButton.checked ? 1 : 0
-												color: DefaultStyle.main2_300
-												radius: 40 * DefaultStyle.dp
-											}
-											contentItem: Image {
-												source: AppIcons.verticalDots
-												sourceSize.width: 24 * DefaultStyle.dp
-												sourceSize.height: 24 * DefaultStyle.dp
-												width: 24 * DefaultStyle.dp
-												height: 24 * DefaultStyle.dp
-											}
-											onPressed: {
-												console.log("listCallOptionsMenu visible", listCallOptionsMenu.visible, "opened", listCallOptionsMenu.opened)
-												if (listCallOptionsMenu.visible){
-													console.log("close popup")
-													listCallOptionsMenu.close()
-												} 
-												else {
-													console.log("open popup")
-													listCallOptionsMenu.open()
-												}
-											}
-											Control.Popup {
-												id: listCallOptionsMenu
-												x: - width
-												y: listCallOptionsButton.height
-												onVisibleChanged: console.log("popup visible", visible)
-												closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnEscape
 
-												padding: 20 * DefaultStyle.dp
-
-												background: Item {
-													anchors.fill: parent
-													Rectangle {
-														id: callOptionsMenuPopup
-														anchors.fill: parent
-														color: DefaultStyle.grey_0
-														radius: 16 * DefaultStyle.dp
-													}
-													MultiEffect {
-														source: callOptionsMenuPopup
-														anchors.fill: callOptionsMenuPopup
-														shadowEnabled: true
-														shadowBlur: 1
-														shadowColor: DefaultStyle.grey_900
-														shadowOpacity: 0.4
-													}
-												}
-
-												contentItem: ColumnLayout {
-													spacing: 0
-													Control.Button {
-														background: Item {}
-														contentItem: RowLayout {
-															Image {
-																source: modelData.core.state === LinphoneEnums.CallState.Paused 
-																|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-																? AppIcons.phone : AppIcons.pause
-																sourceSize.width: 32 * DefaultStyle.dp
-																sourceSize.height: 32 * DefaultStyle.dp
-																Layout.preferredWidth: 32 * DefaultStyle.dp
-																Layout.preferredHeight: 32 * DefaultStyle.dp
-																fillMode: Image.PreserveAspectFit
-															}
-															Text {
-																text: modelData.core.state === LinphoneEnums.CallState.Paused 
-																|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-																? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
-																color: DefaultStyle.main2_500main
-																Layout.preferredWidth: metrics.width
-															}
-															TextMetrics {
-																id: metrics
-																text: qsTr("Reprendre l'appel")
-															}
-															Item {
-																Layout.fillWidth: true
-															}
+											popup.contentItem: ColumnLayout {
+												spacing: 0
+												Control.Button {
+													background: Item {}
+													contentItem: RowLayout {
+														Image {
+															source: modelData.core.state === LinphoneEnums.CallState.Paused 
+															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+															? AppIcons.phone : AppIcons.pause
+															sourceSize.width: 32 * DefaultStyle.dp
+															sourceSize.height: 32 * DefaultStyle.dp
+															Layout.preferredWidth: 32 * DefaultStyle.dp
+															Layout.preferredHeight: 32 * DefaultStyle.dp
+															fillMode: Image.PreserveAspectFit
 														}
-														onClicked: modelData.core.lSetPaused(!modelData.core.paused)
-													}
-													Control.Button {
-														background: Item {}
-														contentItem: RowLayout {
-															EffectImage {
-																image.source: AppIcons.endCall
-																colorizationColor: DefaultStyle.danger_500main
-																width: 32 * DefaultStyle.dp
-																height: 32 * DefaultStyle.dp
-															}
-															Text {
-																color: DefaultStyle.danger_500main
-																text: qsTr("Terminer l'appel")
-															}
-															Item {
-																Layout.fillWidth: true
-															}
+														Text {
+															text: modelData.core.state === LinphoneEnums.CallState.Paused 
+															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+															? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
+															color: DefaultStyle.main2_500main
+															Layout.preferredWidth: metrics.width
 														}
-														onClicked: mainWindow.endCall(modelData)
+														TextMetrics {
+															id: metrics
+															text: qsTr("Reprendre l'appel")
+														}
+														Item {
+															Layout.fillWidth: true
+														}
 													}
+													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
+												}
+												Control.Button {
+													background: Item {}
+													contentItem: RowLayout {
+														EffectImage {
+															image.source: AppIcons.endCall
+															colorizationColor: DefaultStyle.danger_500main
+															width: 32 * DefaultStyle.dp
+															height: 32 * DefaultStyle.dp
+														}
+														Text {
+															color: DefaultStyle.danger_500main
+															text: qsTr("Terminer l'appel")
+														}
+														Item {
+															Layout.fillWidth: true
+														}
+													}
+													onClicked: mainWindow.endCall(modelData)
 												}
 											}
 										}

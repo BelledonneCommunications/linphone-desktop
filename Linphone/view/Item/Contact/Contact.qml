@@ -104,7 +104,7 @@ Rectangle{
 				width: 22 * DefaultStyle.dp
 				height: 22 * DefaultStyle.dp
 				radius: width/2
-				color: DefaultStyle.danger_500
+				color: DefaultStyle.danger_500main
 				border.color: DefaultStyle.grey_0
 				border.width: 2 * DefaultStyle.dp
 				Text{

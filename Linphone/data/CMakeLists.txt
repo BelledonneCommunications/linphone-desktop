@@ -58,6 +58,9 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/randomAvatar.png"
 	"data/image/pause.svg"
 	"data/image/smiley.svg"
+	"data/image/trash-simple.svg"
+	"data/image/copy.svg"
+	"data/image/empty.svg"
 	
 	data/shaders/roundEffect.vert.qsb
 	data/shaders/roundEffect.frag.qsb

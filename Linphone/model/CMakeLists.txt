@@ -4,6 +4,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	
 	model/call/CallModel.cpp
 
+	model/call-history/CallHistoryModel.cpp
+
 	model/core/CoreModel.cpp
 	
 	model/friend/FriendModel.cpp

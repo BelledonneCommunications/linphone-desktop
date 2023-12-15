@@ -23,11 +23,11 @@
 #include "AccountList.hpp"
 
 AccountProxy::AccountProxy(QObject *parent) : SortFilterProxy(parent) {
-	mList = AccountList::create();
-	connect(mList.get(), &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
-	connect(mList.get(), &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
-	connect(mList.get(), &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
-	setSourceModel(mList.get());
+	mAccountList = AccountList::create();
+	connect(mAccountList.get(), &AccountList::countChanged, this, &AccountProxy::resetDefaultAccount);
+	connect(mAccountList.get(), &AccountList::defaultAccountChanged, this, &AccountProxy::resetDefaultAccount);
+	connect(mAccountList.get(), &AccountList::haveAccountChanged, this, &AccountProxy::haveAccountChanged);
+	setSourceModel(mAccountList.get());
 	sort(0);
 }
 

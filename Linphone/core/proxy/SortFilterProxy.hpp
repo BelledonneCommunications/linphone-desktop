@@ -36,6 +36,11 @@ public:
 	virtual int getCount() const;
 	virtual int getFilterType() const;
 	Q_INVOKABLE QVariant getAt(const int &index) const;
+	template <class A, class B>
+	QSharedPointer<B> getItemAt(const int &atIndex) const {
+		auto modelIndex = index(atIndex, 0);
+		return qobject_cast<A *>(sourceModel())->template getAt<B>(mapToSource(modelIndex).row());
+	}
 	Q_INVOKABLE void setSortOrder(const Qt::SortOrder &order);
 
 	virtual void setFilterType(int filterType);

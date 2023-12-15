@@ -18,47 +18,43 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef ACCOUNT_PROXY_H_
-#define ACCOUNT_PROXY_H_
+#ifndef CALL_HISTORY_PROXY_H_
+#define CALL_HISTORY_PROXY_H_
 
 #include "../proxy/SortFilterProxy.hpp"
-#include "core/account/AccountGui.hpp"
-#include "core/account/AccountList.hpp"
+#include "CallHistoryGui.hpp"
+#include "CallHistoryList.hpp"
+#include "tool/AbstractObject.hpp"
 
 // =============================================================================
 
-class AccountProxy : public SortFilterProxy {
+class CallHistoryProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
-	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount WRITE setDefaultAccount NOTIFY defaultAccountChanged)
-	Q_PROPERTY(bool haveAccount READ getHaveAccount NOTIFY haveAccountChanged)
 
 public:
-	AccountProxy(QObject *parent = Q_NULLPTR);
-	~AccountProxy();
+	CallHistoryProxy(QObject *parent = Q_NULLPTR);
+	~CallHistoryProxy();
 
 	QString getFilterText() const;
 	void setFilterText(const QString &filter);
 
-	AccountGui *getDefaultAccount();             // Get a new object from List or give the stored one.
-	void setDefaultAccount(AccountGui *account); // TODO
-	void resetDefaultAccount();                  // Reset the default account to let UI build its new object if needed.
-
-	bool getHaveAccount() const;
+	Q_INVOKABLE void removeAllEntries();
+	Q_INVOKABLE void removeEntriesWithFilter();
+	Q_INVOKABLE void updateView();
 
 signals:
 	void filterTextChanged();
-	void defaultAccountChanged();
-	void haveAccountChanged();
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
-	AccountGui *mDefaultAccount = nullptr; // When null, a new UI object is build from List
-	QSharedPointer<AccountList> mAccountList;
+	QSharedPointer<CallHistoryList> mHistoryList;
+
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

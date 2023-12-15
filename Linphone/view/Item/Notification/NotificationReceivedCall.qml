@@ -12,6 +12,7 @@ Notification {
 	readonly property var call: notificationData && notificationData.call
 	property var state: call.core.state
 	onStateChanged:{
+		console.log("state notif", state)
 		 if(state != LinphoneEnums.CallState.IncomingReceived){
 			close()
 		}

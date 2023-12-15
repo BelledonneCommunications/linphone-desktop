@@ -15,9 +15,8 @@ Item {
 	property string newItemIconSource
 	property string emptyListText
 	property alias leftPanelContent: leftPanel.children
-	property var rightPanelContent: rightPanelItem.children
+	property alias rightPanelContent: rightPanelItem.children
 	property bool showDefaultItem: true
-	// onShowDefaultItemChanged: stackView.replace(showDefaultItem ? defaultItem : rightPanelItem)
 	signal noItemButtonPressed()
 
 	Control.SplitView {
@@ -31,7 +30,7 @@ Item {
 
 		ColumnLayout {
 			id: leftPanel
-			Control.SplitView.preferredWidth: 280 * DefaultStyle.dp
+			Control.SplitView.preferredWidth: 350 * DefaultStyle.dp
 		}
 		Rectangle {
 			id: rightPanel
@@ -44,6 +43,7 @@ Item {
 					id: defaultItem
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					
 					RowLayout {
 						Layout.fillHeight: true
 						Layout.fillWidth: true
@@ -105,7 +105,7 @@ Item {
 					}
 					
 				}
-				Item {
+				ColumnLayout {
 					id: rightPanelItem
 					Layout.fillWidth: true
 					Layout.fillHeight: true
@@ -114,4 +114,3 @@ Item {
 		}
 	}
 }
-				

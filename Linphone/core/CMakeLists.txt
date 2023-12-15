@@ -8,6 +8,10 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/call/CallGui.cpp
 	core/call/CallList.cpp
 	core/call/CallProxy.cpp
+	core/call-history/CallHistoryCore.cpp
+	core/call-history/CallHistoryGui.cpp
+	core/call-history/CallHistoryList.cpp
+	core/call-history/CallHistoryProxy.cpp
 	core/camera/CameraGui.cpp
 	core/camera/CameraDummy.cpp
 	core/friend/FriendCore.cpp
