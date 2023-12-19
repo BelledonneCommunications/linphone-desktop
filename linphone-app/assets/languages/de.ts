@@ -262,42 +262,42 @@
     <message>
         <source>noAccountExists</source>
         <extracomment>&quot;Account doesn&apos;t exist&quot; : Warning message when no account has been found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Das Konto existiert nicht</translation>
     </message>
     <message>
         <source>recoveringAccount</source>
         <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Konto wiederherstellen</translation>
     </message>
     <message>
         <source>Cannot open validation url for the account creation request token</source>
         <extracomment>&quot;Cannot open validation URL for the account creation request token&quot; : Warning message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Validierungs-URL für das Token der Kontoerstellungsanforderung kann nicht geöffnet werden</translation>
     </message>
     <message>
         <source>waitingValidation</source>
         <extracomment>&apos;Waiting for validation at %1&apos; : User message for validation. %1 is an URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Warten auf Validierung von %1</translation>
     </message>
     <message>
         <source>wrongTokenRequest</source>
         <extracomment>&apos;The answer of account creation request token doesn&apos;t have token and validation_url fields&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Antwort auf die Anfrage zur Kontoerstellung enthält nicht die Felder token und validation_url.</translation>
     </message>
     <message>
         <source>tokenError</source>
         <extracomment>&apos;Cannot get request token for account creation (%1)&apos; : Status messsage. %1 is a code number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Request-Token für Kontoerstellung (%1) kann nicht abgerufen werden&apos;</translation>
     </message>
     <message>
         <source>requestingValidationUrl</source>
         <extracomment>&apos;Requesting validation URL&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abfrage der URL für die Validierung</translation>
     </message>
     <message>
         <source>loginStep</source>
         <extracomment>&apos;Connecting&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verbindung wird hergestellt</translation>
     </message>
 </context>
 <context>
@@ -496,27 +496,27 @@
     <message>
         <source>callListTitle</source>
         <extracomment>&apos;Call list&apos; : Call histories title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Anruferliste</translation>
     </message>
     <message>
         <source>incomingFilter</source>
         <extracomment>&apos;Incoming&apos; : Filter label for incoming call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eingehender Anruf</translation>
     </message>
     <message>
         <source>outgoingFilter</source>
         <extracomment>&apos;Outgoing&apos; : Filter label for outgoing call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ausgehender Anruf</translation>
     </message>
     <message>
         <source>missedFilter</source>
         <extracomment>&apos;Missed&apos; : Filter label for missed call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verpasster Anruf</translation>
     </message>
     <message>
         <source>searchListPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in a list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>In der Liste suchen</translation>
     </message>
 </context>
 <context>
@@ -825,9 +825,9 @@ Server URL ist nicht konfiguriert.</translation>
     <message numerus="yes">
         <source>reactionsCount</source>
         <extracomment>&quot;%1&lt;br&gt;reactions&quot; : count of all chat reactions with a jump line between count and text.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1&lt;br&gt;Reaktion</numerusform>
+            <numerusform>%1&lt;br&gt;Reaktionen</numerusform>
         </translation>
     </message>
 </context>
@@ -984,7 +984,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>createMeeting</source>
         <extracomment>&apos;Create Meeting&apos; : Button label to create a meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Videokonferenz erstellen</translation>
     </message>
 </context>
 <context>
@@ -1090,7 +1090,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>displayName</source>
         <extracomment>&apos;Display Name&apos; : placeholder for setting display name on a contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige Name</translation>
     </message>
 </context>
 <context>
@@ -1120,17 +1120,17 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>localContactsEntry</source>
         <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Lokale Kontakte</translation>
     </message>
     <message>
         <source>contactsEntry</source>
         <extracomment>&apos;Contacts&apos; : Contacts section label in main waindow.</extracomment>
-        <translation type="unfinished">KONTAKTE</translation>
+        <translation>Kontakte</translation>
     </message>
     <message>
         <source>selectOnlineContacts</source>
         <extracomment>&apos;Online&apos; : Filter label to display only online contacts.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Online</translation>
     </message>
 </context>
 <context>
@@ -1497,12 +1497,12 @@ Server URL ist nicht konfiguriert.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+        <translation>Ein Konto ist bereits eingerichtet. Mit dieser Aktion wird das bestehende Konto gelöscht.</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation>Letzte Fernkonfiguration fehlgeschlagen</translation>
+        <translation>Fernkonfiguration fehlgeschlagen. Der Link wurde bereits verwendet oder ist abgelaufen. Wenn er Ihnen zur Verfügung gestellt wurde, wenden Sie sich bitte an Ihren Administrator.</translation>
     </message>
     <message>
         <source>generateLabel</source>
@@ -1636,7 +1636,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallPauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf den Play-Knopf, um wieder teilzunehmen.</translation>
     </message>
     <message>
         <source>incallStartRecordTooltip</source>
@@ -1651,7 +1651,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmfoto erstellen</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
@@ -1666,12 +1666,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallWaitParticipantMessage</source>
         <extracomment>&apos;Waiting for another participant...&apos; : Waiting message for more participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Warten auf weitere Teilnehmer...</translation>
     </message>
     <message>
         <source>aloneInConference</source>
         <extracomment>&apos;&apos;You are alone in this conference&apos; : Text in message banner when the user is the only participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sie sind der einzige Teilnehmer in dieser Videokonferenz</translation>
     </message>
     <message>
         <source>incallWaitConnectedMessage</source>
@@ -1681,7 +1681,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallRemotePauseWarning</source>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Der Anruf wurde von der Gegenstelle unterbrochen.</translation>
     </message>
 </context>
 <context>
@@ -1689,12 +1689,12 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You are currently out of the conference.&apos; : Pause message in video conference.</extracomment>
-        <translation type="unfinished">Sie haben den Anruf unterbrochen.</translation>
+        <translation>Die Videokonferenz wurde pausiert.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
         <extracomment>&apos;Click on play button to join it back.&apos; : Explain what to do when being in pause in conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf den Play-Knopf, um wieder teilzunehmen.</translation>
     </message>
     <message>
         <source>incallStartRecordTooltip</source>
@@ -1709,7 +1709,7 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallSnapshotTooltip</source>
         <extracomment>&apos;Take Snapshot&apos; : Tooltip for takking snapshot.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmfoto aufnehmen</translation>
     </message>
     <message>
         <source>incallWaitMessage</source>
@@ -1752,22 +1752,22 @@ Server URL ist nicht konfiguriert.</translation>
     <message>
         <source>incallMenuGridLayout</source>
         <extracomment>&apos;Mosaic mode&apos; : Grid layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kachelansicht</translation>
     </message>
     <message>
         <source>incallMenuActiveSpeakerLayout</source>
         <extracomment>&apos;Active speaker mode&apos; : Active speaker layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver Sprecher</translation>
     </message>
     <message>
         <source>incallMenuAudioLayout</source>
         <extracomment>&apos;Audio only mode&apos; : Audio only layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Video deaktivieren</translation>
     </message>
     <message>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sie sind der einzige Teilnehmer</translation>
     </message>
 </context>
 <context>
@@ -1936,7 +1936,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newConferenceButton</source>
-        <translation>Telefonkonferenz starten</translation>
+        <translation>Videokonferenz starten</translation>
     </message>
     <message>
         <source>newChatRoom</source>
@@ -1951,73 +1951,73 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newChatRoomUriMissing</source>
         <extracomment>&apos;Conference URI is not set. You have to change it in your account settings in order to create new group chats.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Gruppenchat -URI ist nicht festgelegt. Sie müssen sie in Ihren Kontoeinstellungen ändern, um neue Gruppenchats erstellen zu können.</translation>
     </message>
     <message>
         <source>newConferenceUriMissing</source>
         <extracomment>&apos;Video conference URI is not set. You have to change it in your account settings in order to create new meetings.&apos; : Tooltip to warn the user to change a setting to activate an action.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Videokonferenz -URI ist nicht festgelegt. Sie müssen sie in Ihren Kontoeinstellungen ändern, um neue Videokonferenzen erstellen zu können.</translation>
     </message>
     <message>
         <source>confirmFetchUri</source>
         <extracomment>&apos;Do you want to download and apply configuration from this URL?&apos; : text to confirm to fetch a specified URL</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Möchten Sie die Konfiguration von dieser URL herunterladen und anwenden?</translation>
     </message>
     <message>
         <source>openCalls</source>
         <extracomment>&apos;Open call history&apos; : Tooltip for a button that open the call history view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Anrufliste anzeigen</translation>
     </message>
     <message>
         <source>openChats</source>
         <extracomment>&apos;Open chats&apos; : Tooltip for a button that open the conversations view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chatfenster anzeigen</translation>
     </message>
     <message>
         <source>openContacts</source>
         <extracomment>&apos;Open contacts&apos; : Tooltip for a button that open the contacts view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kontakte anzeigen</translation>
     </message>
     <message>
         <source>openMeetings</source>
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Videokonferenzen anzeigen</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
-        <translation type="unfinished">Letzte Fernkonfiguration fehlgeschlagen</translation>
+        <translation>Fernkonfiguration fehlgeschlagen. Der Link wurde bereits verwendet oder ist abgelaufen. Wenn er Ihnen zur Verfügung gestellt wurde, wenden Sie sich bitte an Ihren Administrator.</translation>
     </message>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished">Eine neue Version (%1) ist verfügbar!</translation>
+        <translation>Eine neue Version (%1) ist verfügbar!</translation>
     </message>
     <message>
         <source>newVersionAvailableInstructions</source>
-        <translation type="unfinished"></translation>
+        <translation>Um auf die neue Version zu aktualisieren, laden Sie das Paket herunter und installieren Sie es über die bestehende Version</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <source>downloadUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation>Download</translation>
     </message>
     <message>
         <source>newVersionCheckError</source>
-        <translation type="unfinished"></translation>
+        <translation>Bei der Suche nach einer neuen Version ist ein Fehler aufgetreten. Versuchen Sie es später erneut oder wenden Sie sich an den Support, wenn das Problem weiterhin besteht.</translation>
     </message>
     <message>
         <source>noNewVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Ihre Version ist aktuell.</translation>
     </message>
     <message>
         <source>newVersionInstalled</source>
-        <translation type="unfinished"></translation>
+        <translation>Die neue Version wurde erfolgreich installiert.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+        <translation>Ein Konto ist bereits eingerichtet. Mit dieser Aktion wird das bestehende Konto gelöscht.</translation>
     </message>
 </context>
 <context>
@@ -2047,7 +2047,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>exportDesktopFile</source>
         <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Desktopsymbol erstellen</translation>
     </message>
 </context>
 <context>
@@ -2077,7 +2077,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>exportDesktopFile</source>
         <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Desktopsymbol erstellen</translation>
     </message>
 </context>
 <context>
@@ -2211,7 +2211,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message numerus="yes">
         <source>missingParticipants</source>
         <extracomment>&apos;You need at least %1 participant.&apos; : Tooltip to warn a user that there are not enough participants for the meeting creation.</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>Sie benötigen mindestens %1 Teilnehmer.</numerusform>
             <numerusform>Sie benötigen mindestens %1 Teilnehmer.</numerusform>
         </translation>
@@ -2219,7 +2219,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>missingConferenceURI</source>
         <extracomment>&apos;You need to set the meeting URI in your account settings to create a meeting based chat room.&apos; : Tooltip to warn the user that a setting is missing in its configuration.</extracomment>
-        <translation type="unfinished">Sie müssen eine Konferenz-URI in den Kontoeinstellungen festlegen um einen konferenzbasierten Chatraum zu erstellen.</translation>
+        <translation>Sie müssen eine Konferenz-URI in den Kontoeinstellungen festlegen, um einen konferenzbasierten Chatraum zu erstellen.</translation>
     </message>
     <message>
         <source>newConferenceTitle</source>
@@ -2239,13 +2239,13 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>subjectTooltip</source>
         <extracomment>&apos;Current subject of the Meeting. It cannot be empty&apos;</extracomment>
-        <translation type="unfinished">Aktuelles Thema des Chatraums. Darf nicht leer sein.</translation>
+        <translation>Thema des Chatraums. Darf nicht leer sein.</translation>
         <extra-Tooltip>Explanation about the subject of the meeting</extra-Tooltip>
     </message>
     <message>
         <source>askEncryption</source>
         <extracomment>&apos;Would you like to encrypt your meeting ?&apos; : Ask about setting the meeting as secured.</extracomment>
-        <translation type="unfinished">Möchten Sie den Chat verschlüsseln?</translation>
+        <translation>Möchten Sie die Videokonferenz verschlüsseln?</translation>
     </message>
     <message>
         <source>participantSelectionPlaceholder</source>
@@ -2255,7 +2255,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantSelectionTooltip</source>
         <extracomment>&apos;Search in your contacts or add a custom one to the conference.&apos;</extracomment>
-        <translation type="unfinished">In Kontakten suchen oder einen eigenen zum Chatraum hinzufügen.</translation>
+        <translation>In Kontakten suchen oder neue Teilnehmer zum Chatraum hinzufügen.</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -2266,7 +2266,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>removeParticipantSelection</source>
         <extracomment>&apos;Remove this participant from the selection&apos; : Explanation about removing participant from a selection</extracomment>
-        <translation type="unfinished">Teilnehmer aus Auswahl entfernen</translation>
+        <translation>Teilnehmer aus Auswahl entfernen</translation>
         <extra-Tooltip>This is a tooltip</extra-Tooltip>
     </message>
     <message>
@@ -2444,22 +2444,22 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>voiceMessageReact</source>
         <extracomment>&apos;Voice message&apos; : Voice message type that has been reacted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sprachnachricht</translation>
     </message>
     <message>
         <source>conferenceInvitationReact</source>
         <extracomment>&apos;Conference invitation&apos; : Conference invitation message type that has been reacted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Einladung zur Videokonferenz</translation>
     </message>
     <message>
         <source>reactionMessage</source>
         <extracomment>&apos;&apos;Has reacted by %1 to: %2&apos; : Reaction message. %1=Reaction(emoji), %2=type of message(Voice Message/Conference invitation/ Message text)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reagiert mit %1 zu: %2</translation>
     </message>
     <message>
         <source>newReactionsMessages</source>
         <extracomment>&apos;New reactions received!&apos; : Notification that warn the user of new reactions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Neue Reaktionen erhalten!</translation>
     </message>
 </context>
 <context>
@@ -2505,7 +2505,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conversationDevicesTitle</source>
         <extracomment>&apos;Conversation&apos;s devices&apos; : Title of window that show all devices</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verfügbare Geräte</translation>
     </message>
 </context>
 <context>
@@ -2513,7 +2513,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>addParticipantPlaceholder</source>
         <extracomment>&apos;Add Participants&apos; : Placeholder in a search bar for adding participant to the chat room</extracomment>
-        <translation type="unfinished">Teilnehmer hinzufügen</translation>
+        <translation>Teilnehmer hinzufügen</translation>
     </message>
     <message>
         <source>addParticipantTooltip</source>
@@ -2524,7 +2524,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>participantList</source>
         <extracomment>&apos;Participant list&apos;</extracomment>
-        <translation type="unfinished">Teilnehmerliste</translation>
+        <translation>Teilnehmerliste</translation>
     </message>
     <message>
         <source>adminStatus</source>
@@ -2556,7 +2556,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>PdfWidget</name>
     <message>
         <source>PDF Viewer</source>
-        <translation type="unfinished"></translation>
+        <translation>PDF Anzeige</translation>
     </message>
     <message>
         <source>View</source>
@@ -2676,7 +2676,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>presenceAway</source>
         <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
-        <translation type="unfinished">Abwesend</translation>
+        <translation>Abwesend</translation>
     </message>
 </context>
 <context>
@@ -2725,7 +2725,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished">Login fehlgeschlagen. Bitte überprüfen Sie Ihren Benutzernamen und das Passwort.</translation>
+        <translation>Login fehlgeschlagen. Bitte überprüfen Sie Ihren Benutzernamen und das Passwort.</translation>
     </message>
 </context>
 <context>
@@ -2813,7 +2813,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsTitle</source>
         <extracomment>&apos;VFS&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>VFS</translation>
     </message>
     <message>
         <source>vfsEncryption</source>
@@ -3044,27 +3044,27 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>chatNotificationsEnabledLabel</source>
         <extracomment>&apos;Enable notifications&apos;: settings label for enabling notifications.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen aktivieren</translation>
     </message>
     <message>
         <source>AutoDownload</source>
         <extracomment>&apos;Auto download&apos; : Label for a slider about auto download mode</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Automatischer Download</translation>
     </message>
     <message>
         <source>autoDownloadNever</source>
         <extracomment>&apos;Never&apos; : auto download mode description for deactivated feature.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Niemals</translation>
     </message>
     <message>
         <source>autoDownloadAlways</source>
         <extracomment>&apos;Always&apos; : auto download mode description for activated feature without any constraints.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Immer</translation>
     </message>
     <message>
         <source>callScreenshotEnabledLabel</source>
         <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirmfotos aktivieren</translation>
     </message>
 </context>
 <context>
@@ -3415,17 +3415,17 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>defaultDeviceNameLabel</source>
         <extracomment>&apos;Device Name&apos; : Label for setting the device name.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gerätename</translation>
     </message>
     <message>
         <source>webviewRegistrationUrlLabel</source>
         <extracomment>&apos;Registration URL&apos; : Label for registration URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Registrierungs URL</translation>
     </message>
     <message>
         <source>webviewLoginUrlLabel</source>
         <extracomment>&apos;Login URL&apos; : Label for login URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Anmelde URL</translation>
     </message>
 </context>
 <context>
@@ -3531,61 +3531,61 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoConferenceURI</source>
         <extracomment>&quot;Video Conference URI&quot; : Label of a text edit for filling Video conference URI.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Videokonferenz URI</translation>
     </message>
     <message>
         <source>limeServerUrl</source>
         <extracomment>&apos;E2E encryption keys server URL&apos; : Label of a text edit for filling the Lime server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Server URL für E2E Verschlüsselung</translation>
     </message>
     <message>
         <source>invalidLimeServerUrl</source>
         <extracomment>&quot;invalid E2E encryption keys server URL&quot; : Error text about E2E encryption keys server URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ungültige Server URL für E2E Verschlüsselung</translation>
     </message>
     <message>
         <source>publishDurationLabel</source>
-        <translation type="unfinished"></translation>
+        <translation>Veröffentlicht seit (Sek)</translation>
     </message>
     <message>
         <source>dialPrefix</source>
         <extracomment>&apos;Prefix for your country&apos; : Label for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Landesvorwahl</translation>
     </message>
     <message>
         <source>dialPrefixTooptip</source>
         <extracomment>&quot;The prefix to use when using numbers without the &apos;+&apos;&quot; : tooltip for a text option to set the country code on the phone numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vorwahl, wenn Telefonnummern ohne &apos;+&apos; verwendet werden</translation>
     </message>
     <message>
         <source>dialEscapePlus</source>
         <extracomment>&quot;Replace &apos;+&apos; by &apos;00&apos;&quot; : Label to an option for escaping the &apos;+&apos; character when dialing.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ersetzen von &apos;+&apos; durch &apos;00&apos;</translation>
     </message>
     <message>
         <source>dialEscapePlusTooltip</source>
         <extracomment>&apos;Replace + in addresses by 00&apos; : tooltip for an option that allow escaping the &apos;+&apos; character in phone number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>In Adressen &apos;+&apos; durch &apos;00&apos; ersetzen</translation>
     </message>
     <message>
         <source>dialPrefixCallChat</source>
         <extracomment>&apos;Apply prefix for outgoing calls and chats&apos; : Label to set an option for applying the specified prefix to outgoings calls and chats.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Vorwahl einfügen für ausgehende Anrufe und Unterhaltungen</translation>
     </message>
     <message>
         <source>dialPrefixCallChatTooltip</source>
         <extracomment>&apos;If a number is entered, apply the prefix to number&apos; : tooltip for an option to applying the country prefix to numbers.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Wenn eine Nummer eingegeben wurde, Vorwahl einfügen</translation>
     </message>
     <message>
         <source>advancedTitle</source>
         <extracomment>&apos;Advanced&apos; : Option title for advanced option in account parameters.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <source>enableBundleMode</source>
         <extracomment>&apos;Bundle mode&apos; : Option title to enable the RTP bundle mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bundle Modus</translation>
     </message>
 </context>
 <context>
@@ -3797,57 +3797,57 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>minimalTimelineFilterLabel</source>
         <extracomment>&apos;Minimal Timeline filter&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Minimaler Zeitleistenfilter</translation>
     </message>
     <message>
         <source>minimalTimelineFilterTooltip</source>
         <extracomment>&apos;Show a minimal version of what to display in timeline.&apos; :</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Minimum, das in der Zeitleiste angezeigt werden soll.</translation>
     </message>
     <message>
         <source>versionCheckTypeRelease</source>
         <extracomment>&apos;Release&apos; : Keyword for an option to check the release version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Stabile Version</translation>
     </message>
     <message>
         <source>versionCheckTypeCustom</source>
         <extracomment>&apos;Custom&apos; : Keyword for an option to check the custom version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerdefiniert</translation>
     </message>
     <message>
         <source>versionCheckTypeNightly</source>
         <extracomment>&apos;Nightly&apos; : Keyword for an option to check the nightly version</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Entwicklerversion</translation>
     </message>
     <message>
         <source>fontsEmojiChange</source>
         <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Emojis</translation>
     </message>
     <message>
         <source>displayUsernamesLabel</source>
         <extracomment>&apos;Display only usernames&apos; : Option text to display only usernames from SIP addresses.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nur Benutzernamen anzeigen</translation>
     </message>
     <message>
         <source>displayUsernamesTooltip</source>
         <extracomment>&apos;Display only usernames from SIP addresses&apos; : tooltip for addresses display mode where username is only shown.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nur Benutzernamen von SIP-Adressen anzeigen</translation>
     </message>
     <message>
         <source>magicSearchMaxResultsLabel</source>
         <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Max Anzahl Suchergebnisse</translation>
     </message>
     <message>
         <source>restoreAskingPopups</source>
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ursprüngliche Abfragen wiederherstellen</translation>
     </message>
     <message>
         <source>spellCheckerLabel</source>
         <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rechtschreibprüfung</translation>
     </message>
 </context>
 <context>
@@ -3903,47 +3903,47 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoDisplayTitle</source>
         <extracomment>&apos;Video display&apos; : Title for display parameters</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Anzeige Einstellungen</translation>
     </message>
     <message>
         <source>videoHybrid</source>
         <extracomment>&apos;Hybrid&apos; : Hybrid mode for camera.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hybrid</translation>
     </message>
     <message>
         <source>videoOccupyAllSpace</source>
         <extracomment>&apos;Occupy all space&apos; : Camera mode for a centered cropping view.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Gesamten Platz verwenden</translation>
     </message>
     <message>
         <source>videoBlackBars</source>
         <extracomment>&apos;Black bars&apos; : Camera mode for a fit view with black bars to keep ratio.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mit schwarzen Balken</translation>
     </message>
     <message>
         <source>videoLayout</source>
         <extracomment>&apos;Default video layout&apos; : Label to choose the default layout in video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Standard Videoansicht</translation>
     </message>
     <message>
         <source>videoActiveSpeakerLayout</source>
         <extracomment>&apos;Active speaker&apos; : Active speaker layout for video conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver Sprecher</translation>
     </message>
     <message>
         <source>videoMosaicLayout</source>
         <extracomment>&apos;Mosaic&apos; : Mosaic layout invideo conference.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kachelansicht</translation>
     </message>
     <message>
         <source>videoGridModeLabel</source>
         <extracomment>&apos;Mosaic&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kachelansicht</translation>
     </message>
     <message>
         <source>videoActiveSpeakerModeLabel</source>
         <extracomment>&apos;Active speaker&apos; : Label to choose a camera mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aktiver Sprecher</translation>
     </message>
     <message>
         <source>videoCallsModeLabel</source>
@@ -3953,7 +3953,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>videoModeLabel</source>
         <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kamera Modus</translation>
     </message>
 </context>
 <context>
@@ -4041,22 +4041,22 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>spellCheckingMenuDidYouMean</source>
         <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Meinten Sie?</translation>
     </message>
     <message>
         <source>spellCheckingMenuAddToDictionary</source>
         <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Zum Wörterbuch hinzufügen</translation>
     </message>
     <message>
         <source>spellCheckingMenuIgnoreOnce</source>
         <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Einmal ignorieren</translation>
     </message>
     <message>
         <source>spellCheckingMenuIgnoreAll</source>
         <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Alles ignorieren</translation>
     </message>
 </context>
 <context>
@@ -4079,7 +4079,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>chatsTitle</source>
         <extracomment>&apos;Messages&apos; : Title for conversations</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nachrichten</translation>
     </message>
 </context>
 <context>
@@ -4087,12 +4087,12 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Sind Sie sicher, dass Sie diese Zeitleiste löschen und verlassen möchten?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
         <extracomment>&apos;After confirmation, it will erase all history, leave the chat room if it is a group chat and delete it in database.&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nach der Bestätigung wird der gesamte Verlauf gelöscht, der Chat-Raum verlassen, wenn es sich um einen Gruppen-Chat handelt, und in der Datenbank gelöscht.</translation>
     </message>
 </context>
 <context>
@@ -4192,32 +4192,32 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>warningFeatures</source>
         <extracomment>&apos;Some features require a %1 account, such as group messaging or ephemeral messaging.&apos; : Warning text about features. %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Für einige Funktionen ist ein %1-Konto erforderlich, z. B. für Gruppennachrichten oder Einmal-Nachrichten.</translation>
     </message>
     <message>
         <source>warningThirdParty</source>
         <extracomment>&apos;These features are hidden when you register with a third party SIP account.&apos; : Warning text for using third party account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Diese Funktionen werden ausgeblendet, wenn Sie sich mit einem SIP-Konto eines Drittanbieters anmelden.</translation>
     </message>
     <message>
         <source>warningContact</source>
         <extracomment>&apos;To enable it in a commercial project, please contact us.&apos; : Warning text for contacting about enabling features.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Um diese Funktionen in einem kommerziellen Projekt zu verwenden, kontaktieren Sie uns bitte.</translation>
     </message>
 </context>
 <context>
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Löschen des Schlüssels fehlgeschlagen: %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Einlesen des Schlüssels fehlgeschlagen: %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern des Schlüssels fehlgeschlagen: %1</translation>
     </message>
 </context>
 <context>
@@ -4230,7 +4230,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Button label for starting the conference.</extracomment>
-        <translation type="unfinished">START</translation>
+        <translation>Start</translation>
     </message>
     <message>
         <source>endCallStatus</source>
@@ -5238,7 +5238,7 @@ Klicken Sie hier: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>okButton</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>
