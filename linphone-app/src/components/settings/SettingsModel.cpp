@@ -248,6 +248,17 @@ void SettingsModel::setAssistantSupportsPhoneNumbers (bool status) {
 	}
 }
 
+int SettingsModel::getAssistantDefaultTransport() const {
+	return mConfig->getInt(UiSection, getEntryFullName(UiSection, "assistant_default_transport") , 2);
+}
+
+void SettingsModel::setAssistantDefaultTransport(int transport) {
+	if(!isReadOnly(UiSection, "assistant_default_transport")) {
+		mConfig->setInt(UiSection, "assistant_default_transport", transport);
+		emit assistantSupportsPhoneNumbersChanged(transport);
+	}
+}
+
 bool SettingsModel::useWebview() const{
 #ifdef ENABLE_APP_WEBVIEW
 	return true;

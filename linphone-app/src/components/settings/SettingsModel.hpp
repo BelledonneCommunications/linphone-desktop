@@ -55,6 +55,8 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(bool autoApplyProvisioningConfigUriHandlerEnabled READ getAutoApplyProvisioningConfigUriHandlerEnabled WRITE setAutoApplyProvisioningConfigUriHandlerEnabled NOTIFY autoApplyProvisioningConfigUriHandlerEnabledChanged)
 	
 	Q_PROPERTY(bool assistantSupportsPhoneNumbers READ getAssistantSupportsPhoneNumbers WRITE setAssistantSupportsPhoneNumbers NOTIFY assistantSupportsPhoneNumbersChanged)
+	Q_PROPERTY(int assistantDefaultTransport READ getAssistantDefaultTransport WRITE setAssistantDefaultTransport NOTIFY assistantDefaultTransportChanged)
+	
 // Webviews config
 	Q_PROPERTY(QString assistantRegistrationUrl READ getAssistantRegistrationUrl WRITE setAssistantRegistrationUrl NOTIFY assistantRegistrationUrlChanged)
 	Q_PROPERTY(QString assistantLoginUrl READ getAssistantLoginUrl WRITE setAssistantLoginUrl NOTIFY assistantLoginUrlChanged)
@@ -306,6 +308,9 @@ public:
 	
 	bool getAssistantSupportsPhoneNumbers () const;
 	void setAssistantSupportsPhoneNumbers (bool status);
+	
+	int getAssistantDefaultTransport() const;
+	void setAssistantDefaultTransport(int transport);// 0:UDP, 1:TCP, 2:TLS
 	
 	Q_INVOKABLE bool useWebview() const;
 
@@ -740,6 +745,7 @@ signals:
 	void autoApplyProvisioningConfigUriHandlerEnabledChanged();
 	
 	void assistantSupportsPhoneNumbersChanged (bool status);
+	void assistantDefaultTransportChanged (int transport);
 
 	void assistantRegistrationUrlChanged (QString url);
 	void assistantLoginUrlChanged (QString url);
