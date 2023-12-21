@@ -32,7 +32,7 @@ LoginLayout {
 			source: AppIcons.profile
 		}
 		Text {
-			text: "Login"
+			text: qsTr("Connexion")
 			font {
 				pixelSize: 36 * DefaultStyle.dp
 				weight: 800 * DefaultStyle.dp
@@ -44,13 +44,13 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15 * DefaultStyle.dp
-			text: "No account yet ?"
+			text: qsTr("Pas encore de compte ?")
 			font.pixelSize: 14 * DefaultStyle.dp
 			font.weight: 400 * DefaultStyle.dp
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
-			text: "Register"
+			text: qsTr("S'inscrire")
 			onClicked: {
 				console.debug("[LoginPage] User: go to register")
 				mainItem.goToRegister()
@@ -68,7 +68,7 @@ LoginLayout {
 				Button {
 					Layout.topMargin: 40 * DefaultStyle.dp
 					inversedColors: true
-					text: "Use SIP Account"
+					text: qsTr("Compte SIP tiers")
 					onClicked: {mainItem.useSIPButtonClicked()}
 				}
 			}
@@ -76,14 +76,15 @@ LoginLayout {
 				Layout.fillWidth: true
 			}
 			Image {
+				Layout.alignment: Qt.AlignVCenter
 				Layout.rightMargin: 40 * DefaultStyle.dp
-				Layout.preferredWidth: 300 * DefaultStyle.dp
+				Layout.preferredWidth: 395 * DefaultStyle.dp
 				fillMode: Image.PreserveAspectFit
 				source: AppIcons.loginImage
 			}
-		}
-		Item {
-			Layout.fillHeight: true
+			Item {
+				Layout.fillHeight: true
+			}
 		}
 	}
 }

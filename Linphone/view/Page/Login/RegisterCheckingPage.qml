@@ -50,7 +50,10 @@ LoginLayout {
 		Text {
 			Layout.alignment: Qt.AlignTop
 			font.bold: true
-			font.pixelSize: DefaultStyle.defaultFontPointSize
+			font {
+				pixelSize: 22 * DefaultStyle.dp
+				weight: 800 * DefaultStyle.dp
+			}
 			color: DefaultStyle.main2_700
 			text: {
 				var completeString = (mainItem.email.length > 0) ? ("email " + mainItem.email) : ("phone number " + mainItem.phoneNumber)
@@ -71,16 +74,22 @@ LoginLayout {
 						model: 4
 						DigitInput {
 							required property int index
-							onTextEdited: if (text.length > 0 ) {
-								if (index < 3)
-									nextItemInFocusChain(true).forceActiveFocus()
-								else {
-									// validate()
-								}
-							} else {
-								if (index > 0)
-									nextItemInFocusChain(false).forceActiveFocus()
-							} 
+							Layout.preferredWidth: width
+							Layout.preferredHeight: height
+							Component.onCompleted: console.log("completed", width, Layout.preferredWidth)
+							onTextEdited: {
+								console.log("textfield text", text, index)
+								if (text.length > 0 ) {
+									if (index < 3)
+										nextItemInFocusChain(true).forceActiveFocus()
+									else {
+										// validate()
+									}
+								} else {
+									if (index > 0)
+										nextItemInFocusChain(false).forceActiveFocus()
+								} 
+							}
 							Layout.margins: 10 * DefaultStyle.dp
 						}
 					}

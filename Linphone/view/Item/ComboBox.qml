@@ -1,13 +1,14 @@
 import QtQuick
 import QtQuick.Controls as Control
 import QtQuick.Layouts 1.0
+import QtQuick.Effects
 import Linphone
   
 ColumnLayout {
 	id: mainItem
 	property string label: ""
-	property int backgroundWidth: 200 * DefaultStyle.dp
 	// Usage : each item of the model list must be {text: ..., img: ...}
+	// If string list, only text part of the delegate will be filled
 	property var modelList: []
 	readonly property string currentText: selectedItemText.text
 	property bool enableBackgroundColors: true
@@ -27,9 +28,9 @@ ColumnLayout {
 	Control.ComboBox {
 		id: combobox
 		model: mainItem.modelList
-		width: mainItem.backgroundWidth
+		Layout.preferredWidth: mainItem.width
 		background: Rectangle {
-			implicitWidth: mainItem.backgroundWidth
+			implicitWidth: mainItem.width
 			implicitHeight: 49 * DefaultStyle.dp
 			radius: 63 * DefaultStyle.dp
 			color: combobox.enabled ? DefaultStyle.grey_100 : DefaultStyle.grey_200
@@ -53,6 +54,10 @@ ColumnLayout {
 				id: selectedItemText
 				color: combobox.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
 				elide: Text.ElideRight
+				font {
+					pixelSize: 14 * DefaultStyle.dp
+					weight: 400 * DefaultStyle.dp
+				}
 				anchors.left: selectedItemImg.right
 				anchors.leftMargin: selectedItemImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
 				anchors.right: parent.right
@@ -98,7 +103,7 @@ ColumnLayout {
 				highlight: Rectangle {
 					width: listView.width
 					color: DefaultStyle.main2_300
-					radius: 63 * DefaultStyle.dp
+					radius: 15 * DefaultStyle.dp
 					y: listView.currentItem? listView.currentItem.y : 0
 				}
 
@@ -127,6 +132,10 @@ ColumnLayout {
 									? modelData
 									: ""
 						elide: Text.ElideRight
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							weight: 400 * DefaultStyle.dp
+						}
 						anchors.verticalCenter: parent.verticalCenter
 						anchors.left: delegateImg.right
 						anchors.leftMargin: delegateImg.visible ? 5 * DefaultStyle.dp : 10 * DefaultStyle.dp
@@ -140,7 +149,7 @@ ColumnLayout {
 						Rectangle {
 							anchors.fill: parent
 							opacity: 0.1
-							radius: 63 * DefaultStyle.dp
+							radius: 15 * DefaultStyle.dp
 							color: DefaultStyle.main2_500main
 							visible: parent.containsMouse
 						}
@@ -165,11 +174,23 @@ ColumnLayout {
 				listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
 			}
 
-			background: Rectangle {
-				implicitWidth: mainItem.backgroundWidth
+			background: Item {
+				implicitWidth: mainItem.width
 				implicitHeight: 30 * DefaultStyle.dp
-				radius: 63 * DefaultStyle.dp
-			}
+				Rectangle {
+					id: cboxBg
+					anchors.fill: parent
+					radius: 15 * DefaultStyle.dp
+				}
+				MultiEffect {
+					anchors.fill: cboxBg
+					source: cboxBg
+					shadowEnabled: true
+					shadowColor: DefaultStyle.grey_1000
+					shadowBlur: 1
+					shadowOpacity: 0.1
+				}
+			} 
 		}
 	}
 }

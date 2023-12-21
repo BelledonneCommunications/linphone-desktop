@@ -13,52 +13,41 @@ ColumnLayout {
 		id: username
 		label: "Username"
 		mandatory: true
-		textInputWidth: 250 * DefaultStyle.dp
+		enableErrorText: true
+
+		Binding on background.border.color {
+			when: errorText.opacity != 0
+			value: DefaultStyle.danger_500main
+		}
+		Binding on textField.color {
+			when: errorText.opacity != 0
+			value: DefaultStyle.danger_500main
+		}
 	}
 	TextInput {
 		id: password
 		label: "Password"
 		mandatory: true
 		hidden: true
-		textInputWidth: 250 * DefaultStyle.dp
+		enableErrorText: true
+
+		Binding on background.border.color {
+			when: errorText.opacity != 0
+			value: DefaultStyle.danger_500main
+		}
+		Binding on textField.color {
+			when: errorText.opacity != 0
+			value: DefaultStyle.danger_500main
+		}
 	}
 
-	Text {
+	ErrorText {
 		id: errorText
-		text: "Connection has failed. Please verify your credentials"
-		color: DefaultStyle.danger_500main
-		opacity: 0
-		states: [
-			State{
-				name: "Visible"
-				PropertyChanges{target: errorText; opacity: 1.0}
-			},
-			State{
-				name:"Invisible"
-				PropertyChanges{target: errorText; opacity: 0.0}
-			}
-		]
-		transitions: [
-			Transition {
-				from: "Visible"
-				to: "Invisible"
-				NumberAnimation {
-					property: "opacity"
-					duration: 1000
-				}
-			}
-		]
-		Timer {
-			id: autoHideErrorMessage
-			interval: 2500
-			onTriggered: errorText.state = "Invisible"
-		}
 		Connections {
 			target: LoginPageCpp
 			onRegistrationStateChanged: {
 				if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Failed) {
-					errorText.state = "Visible"
-					autoHideErrorMessage.restart()
+					errorText.text = qsTr("Le couple identifiant mot de passe ne correspont pas")
 				} else if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
 					mainItem.connectionSucceed()
 				}
@@ -69,7 +58,7 @@ ColumnLayout {
 	RowLayout {
 		id: lastFormLineLayout
 		Button {
-			text: "Log in"
+			text: qsTr("Connexion")
 			Layout.rightMargin: 20 * DefaultStyle.dp
 			onClicked: {
 				username.errorMessage = ""

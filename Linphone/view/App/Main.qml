@@ -23,17 +23,17 @@ Window {
 
 	AccountProxy{
 		id: accountProxy
-		onHaveAccountChanged: {
-			if(haveAccount)
-				mainWindowStackView.replace(mainPage, StackView.Immediate)
-			else
-				mainWindowStackView.replace(loginPage, StackView.Immediate)
-		}
+		// onHaveAccountChanged: {
+		// 	if(haveAccount)
+		// 		mainWindowStackView.replace(mainPage, StackView.Immediate)
+		// 	else
+		// 		mainWindowStackView.replace(loginPage, StackView.Immediate)
+		// }
 	}
 	StackView {
 		id: mainWindowStackView
 		anchors.fill: parent
-		initialItem: accountProxy.haveAccount ? mainPage : welcomePage
+		initialItem: welcomePage
 	}
 	Component {
 		id: welcomePage

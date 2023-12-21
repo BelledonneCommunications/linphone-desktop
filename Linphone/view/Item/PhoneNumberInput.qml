@@ -27,8 +27,8 @@ ColumnLayout {
 	}
 
 	Rectangle {
-		implicitWidth: mainItem.textInputWidth
-		implicitHeight: 49 * DefaultStyle.dp
+		Layout.preferredWidth: mainItem.textInputWidth
+		Layout.preferredHeight: 49 * DefaultStyle.dp
 		radius: 63 * DefaultStyle.dp
 		color: DefaultStyle.grey_100
 		border.color: mainItem.errorMessage.length > 0 

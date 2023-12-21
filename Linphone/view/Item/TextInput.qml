@@ -16,6 +16,12 @@ ColumnLayout {
 	property bool fillWidth: false
 	property bool enableBackgroundColors: true
 	property string initialText
+
+	property bool enableErrorText: false
+
+	property alias textField: textField
+	property alias background: input
+
 	readonly property string text: textField.text
 	readonly property bool hasActiveFocus: textField.activeFocus
 
@@ -50,21 +56,24 @@ ColumnLayout {
 			if (mainItem.fillWidth)
 				Layout.fillWidth = true
 		}
-		implicitWidth: mainItem.textInputWidth
-		implicitHeight: 49 * DefaultStyle.dp
+		Layout.preferredWidth: mainItem.textInputWidth
+		Layout.preferredHeight: 49 * DefaultStyle.dp
 		radius: 79 * DefaultStyle.dp
 		color: mainItem.enableBackgroundColors ? DefaultStyle.grey_100 : "transparent"
 		border.color: mainItem.enableBackgroundColors
-						? (mainItem.errorMessage.length > 0 
-							? DefaultStyle.danger_500main
-							: textField.activeFocus
-								? DefaultStyle.main1_500_main
-								: DefaultStyle.grey_200)
-						: "transparent"
+			? errorText.opacity === 0
+				? textField.activeFocus
+					? DefaultStyle.main1_500_main
+					: DefaultStyle.grey_200
+				: DefaultStyle.danger_500main
+			: "transparent"
+
 		Control.TextField {
 			id: textField
 			anchors.left: parent.left
+			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.right: eyeButton.visible ? eyeButton.left : parent.right
+			anchors.rightMargin: eyeButton.visible ? 0 : 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			placeholderText: mainItem.placeholderText
 			echoMode: (mainItem.hidden && !eyeButton.checked) ? TextInput.Password : TextInput.Normal
@@ -73,7 +82,7 @@ ColumnLayout {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 400 * DefaultStyle.dp
 			}
-			color: DefaultStyle.main2_600
+			color: errorText.opacity === 0 ? DefaultStyle.main2_600 : DefaultStyle.danger_500main
 			selectByMouse: true
 			validator: mainItem.validator
 			background: Item {
@@ -95,25 +104,19 @@ ColumnLayout {
 			contentItem: Image {
 				fillMode: Image.PreserveAspectFit
 				source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
+				width: 20 * DefaultStyle.dp
+				height: 20 * DefaultStyle.dp
 			}
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
+			anchors.rightMargin: 5 * DefaultStyle.dp
 		}
 	}
-	Text {
-		visible: mainItem.errorMessage.length > 0
-		verticalAlignment: Text.AlignVCenter
+	ErrorText {
+		id: errorText
+		visible: mainItem.enableErrorText
 		text: mainItem.errorMessage
-		color: DefaultStyle.danger_500main
-		elide: Text.ElideRight
-		wrapMode: Text.Wrap
-		// maximumLineCount: 1
-		font {
-			pixelSize: 13 * DefaultStyle.dp
-			family: DefaultStyle.defaultFont
-			bold: true
-		}
 		Layout.preferredWidth: mainItem.textInputWidth
 	}
 }

@@ -190,18 +190,22 @@ ColumnLayout {
 				listView.positionViewAtIndex(listView.currentIndex, ListView.Center)
 			}
 
-			background: Rectangle {
+			background: Item {
 				anchors.fill: parent
-				radius: 15 * DefaultStyle.dp
-				color: DefaultStyle.grey_100
-			}
-
-			MultiEffect {
-				anchors.fill: listPopup
-				source: listPopup
-				shadowEnabled: true
-				shadowColor: DefaultStyle.grey_1000
-				shadowBlur: 1
+				Rectangle {
+					id: popupBg
+					anchors.fill: parent
+					radius: 15 * DefaultStyle.dp
+					color: DefaultStyle.grey_100
+				}
+				MultiEffect {
+					anchors.fill: popupBg
+					source: popupBg
+					shadowEnabled: true
+					shadowColor: DefaultStyle.grey_1000
+					shadowBlur: 1
+					shadowOpacity: 0.1
+				}
 			}
 		}
 	}

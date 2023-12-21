@@ -49,7 +49,7 @@ LoginLayout {
 		}
 		Text {
 			Layout.rightMargin: 15 * DefaultStyle.dp
-			text: qsTr("No account yet ?")
+			text: qsTr("Pas encore de compte ?")
 			font {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 400 * DefaultStyle.dp
@@ -57,8 +57,7 @@ LoginLayout {
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
-			inversedColors: true
-			text: qsTr("Register")
+			text: qsTr("S'inscrire")
 			onClicked: {
 				console.debug("[SIPLoginPage] User: go to register page")
 				mainItem.goToRegister()
@@ -115,7 +114,7 @@ LoginLayout {
 				Button {
 					Layout.fillWidth: true
 					inversedColors: true
-					text: "I prefer creating an account"
+					text: qsTr("I prefer creating an account")
 					onClicked: {
 						console.debug("[SIPLoginPage] User: click register")
 						mainItem.goToRegister()
@@ -123,7 +122,7 @@ LoginLayout {
 				}
 				Button {
 					Layout.fillWidth: true
-					text: "I understand"
+					text: qsTr("I understand")
 					onClicked: {
 						rootStackView.replace(secondItem)
 					}
@@ -139,70 +138,41 @@ LoginLayout {
 				spacing: 10 * DefaultStyle.dp
 				TextInput {
 					id: username
-					label: "Username"
+					label: qsTr("Username")
 					mandatory: true
-					textInputWidth: 250 * DefaultStyle.dp
+					textInputWidth: 360 * DefaultStyle.dp
 				}
 				TextInput {
 					id: password
-					label: "Password"
+					label: qsTr("Password")
 					mandatory: true
 					hidden: true
-					textInputWidth: 250 * DefaultStyle.dp
+					textInputWidth: 360 * DefaultStyle.dp
 				}
 				TextInput {
 					id: domain
-					label: "Domain"
+					label: qsTr("Domain")
 					mandatory: true
-					textInputWidth: 250 * DefaultStyle.dp
+					textInputWidth: 360 * DefaultStyle.dp
 				}
 				TextInput {
 					id: displayName
-					label: "Display Name"
-					textInputWidth: 250 * DefaultStyle.dp
+					label: qsTr("Display Name")
+					textInputWidth: 360 * DefaultStyle.dp
 				}
 				ComboBox {
-					label: "Transport"
-					backgroundWidth: 250 * DefaultStyle.dp
-					modelList:[ "TCP", "UDP", "TLS"]
+					label: qsTr("Transport")
+					modelList:[ "TCP", "UDP", "TLS", "DTLS"]
+					Layout.preferredWidth: 360 * DefaultStyle.dp
 				}
 
-				Text {
+				ErrorText {
 					id: errorText
-					text: "Connection has failed. Please verify your credentials"
-					color: DefaultStyle.danger_500main
-					opacity: 0
-					states: [
-						State{
-							name: "Visible"
-							PropertyChanges{target: errorText; opacity: 1.0}
-						},
-						State{
-							name:"Invisible"
-							PropertyChanges{target: errorText; opacity: 0.0}
-						}
-					]
-					transitions: [
-						Transition {
-							from: "Visible"
-							to: "Invisible"
-							NumberAnimation {
-								property: "opacity"
-								duration: 1000
-							}
-						}
-					]
-					Timer {
-						id: autoHideErrorMessage
-						interval: 2500
-						onTriggered: errorText.state = "Invisible"
-					}
 					Connections {
 						target: LoginPageCpp
 						onRegistrationStateChanged: {
 							if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Failed) {
-								errorText.state = "Visible"
-								autoHideErrorMessage.restart()
+								errorText.text = qsTr("Connection has failed. Please verify your credentials")
 							} else if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
 								mainItem.connectionSucceed()
 							}
@@ -214,7 +184,7 @@ LoginLayout {
 					Layout.topMargin: 20 * DefaultStyle.dp
 					Layout.bottomMargin: 20 * DefaultStyle.dp
 
-					text: "Log in"
+					text: qsTr("Log in")
 					onClicked: {
 						console.debug("[SIPLoginPage] User: Log in")
 						LoginPageCpp.login(username.inputText, password.inputText);

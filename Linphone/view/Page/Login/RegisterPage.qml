@@ -18,7 +18,7 @@ LoginLayout {
 		}
 		Text {
 			Layout.preferredWidth: width
-			text: qsTr("Register")
+			text: qsTr("Inscription")
 			font {
 				pixelSize: 36 * DefaultStyle.dp
 				weight: 800 * DefaultStyle.dp
@@ -32,7 +32,7 @@ LoginLayout {
 		Text {
 			Layout.rightMargin: 15 * DefaultStyle.dp
 			color: DefaultStyle.main2_700
-			text: qsTr("Already have an account ?")
+			text: qsTr("Déjà un compte ?")
 			font {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 400 * DefaultStyle.dp
@@ -40,8 +40,7 @@ LoginLayout {
 		}
 		Button {
 			// Layout.alignment: Qt.AlignRight
-			inversedColors: true
-			text: "Log in"
+			text: qsTr("Connexion")
 			onClicked: {
 				console.debug("[RegisterPage] User: return")
 				returnToLogin()
@@ -62,10 +61,11 @@ LoginLayout {
 				ColumnLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					Layout.topMargin: 20 * DefaultStyle.dp
 					spacing: 15 * DefaultStyle.dp
 					RowLayout {
 						TextInput {
-							label: "Username"
+							label: qsTr("Username")
 							mandatory: true
 							textInputWidth: 346 * DefaultStyle.dp
 						}
@@ -73,11 +73,12 @@ LoginLayout {
 							label: " "
 							enabled: false
 							modelList: [{text:"@sip.linphone.org"}]
+							Layout.preferredWidth: 210 * DefaultStyle.dp
 						}
 					}
 					PhoneNumberInput {
 						id: phoneNumberInput
-						label: "Phone number"
+						label: qsTr("Phone number")
 						mandatory: true
 						placeholderText: "Phone number"
 						textInputWidth: 346 * DefaultStyle.dp
@@ -85,13 +86,13 @@ LoginLayout {
 					RowLayout {
 						ColumnLayout {
 							TextInput {
-								label: "Password"
+								label: qsTr("Password")
 								mandatory: true
 								hidden: true
 								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
-								text: "The password must contain 6 characters minimum"
+								text: qsTr("The password must contain 6 characters minimum")
 								font {
 									pixelSize: 12 * DefaultStyle.dp
 									weight: 300 * DefaultStyle.dp
@@ -100,13 +101,13 @@ LoginLayout {
 						}
 						ColumnLayout {
 							TextInput {
-								label: "Confirm password"
+								label: qsTr("Confirm password")
 								mandatory: true
 								hidden: true
 								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
-								text: "The password must contain 6 characters minimum"
+								text: qsTr("The password must contain 6 characters minimum")
 								font {
 									pixelSize: 12 * DefaultStyle.dp
 									weight: 300 * DefaultStyle.dp
@@ -118,7 +119,7 @@ LoginLayout {
 						CheckBox {
 						}
 						Text {
-							text: "I would like to suscribe to the newsletter"
+							text: qsTr("I would like to suscribe to the newsletter")
 						}
 					}
 					RowLayout {
@@ -126,11 +127,11 @@ LoginLayout {
 						}
 						Text {
 							Layout.preferredWidth: 450 * DefaultStyle.dp
-							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
+							text: qsTr("I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy.")
 						}
 					}
 					Button {
-						text: "Register"
+						text: qsTr("Register")
 						onClicked:{
 							console.log("[RegisterPage] User: Call register with phone number", phoneNumberInput.phoneNumber)
 							mainItem.registerCalled(phoneNumberInput.countryCode, phoneNumberInput.phoneNumber, "")
@@ -142,7 +143,7 @@ LoginLayout {
 				}
 				Image {
 					Layout.rightMargin: 40 * DefaultStyle.dp
-					Layout.preferredWidth: 300 * DefaultStyle.dp
+					Layout.preferredWidth: 395 * DefaultStyle.dp
 					fillMode: Image.PreserveAspectFit
 					source: AppIcons.loginImage
 				}
@@ -154,7 +155,7 @@ LoginLayout {
 					spacing: 15 * DefaultStyle.dp
 					RowLayout {
 						TextInput {
-							label: "Username"
+							label: qsTr("Username")
 							mandatory: true
 							textInputWidth: 346 * DefaultStyle.dp
 						}
@@ -164,12 +165,12 @@ LoginLayout {
 							label: " "
 							enabled: false
 							modelList: [{text:"@sip.linphone.org"}]
-							backgroundWidth: 154 * DefaultStyle.dp
+							Layout.preferredWidth: 210 * DefaultStyle.dp
 						}
 					}
 					TextInput {
 						id: emailInput
-						label: "Email"
+						label: qsTr("Email")
 						mandatory: true
 						textInputWidth: 346 * DefaultStyle.dp
 					}
@@ -177,13 +178,13 @@ LoginLayout {
 						ColumnLayout {
 							TextInput {
 								id: pwdInput
-								label: "Password"
+								label: qsTr("Password")
 								mandatory: true
 								hidden: true
 								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
-								text: "The password must contain 6 characters minimum"
+								text: qsTr("The password must contain 6 characters minimum")
 								font {
 									pixelSize: 12 * DefaultStyle.dp
 									weight: 300 * DefaultStyle.dp
@@ -193,13 +194,13 @@ LoginLayout {
 						ColumnLayout {
 							TextInput {
 								id: confirmPwdInput
-								label: "Confirm password"
+								label: qsTr("Confirm password")
 								mandatory: true
 								hidden: true
 								textInputWidth: 346 * DefaultStyle.dp
 							}
 							Text {
-								text: "The password must contain 6 characters minimum"
+								text: qsTr("The password must contain 6 characters minimum")
 								font {
 									pixelSize: 12 * DefaultStyle.dp
 									weight: 300 * DefaultStyle.dp
@@ -211,7 +212,7 @@ LoginLayout {
 						CheckBox {
 						}
 						Text {
-							text: "I would like to suscribe to the newsletter"
+							text: qsTr("I would like to suscribe to the newsletter")
 						}
 					}
 					RowLayout {
@@ -219,15 +220,15 @@ LoginLayout {
 						}
 						Text {
 							Layout.preferredWidth: 450 * DefaultStyle.dp
-							text: "I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy."
+							text: qsTr("I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy.")
 						}
 					}
 					Button {
-						text: "Register"
+						text: qsTr("Register")
 						onClicked:{
 							console.log("[RegisterPage] User: Call register with email", emailInput.text)
 							if (emailInput.text.length == 0) {
-								emailInput.errorMessage = "You must enter an email"
+								emailInput.errorMessage = qsTr("You must enter an email")
 								return
 							}
 							mainItem.registerCalled("", "", emailInput.text)
@@ -239,7 +240,7 @@ LoginLayout {
 				}
 				Image {
 					Layout.rightMargin: 40 * DefaultStyle.dp
-					Layout.preferredWidth: 300 * DefaultStyle.dp
+					Layout.preferredWidth: 395 * DefaultStyle.dp
 					fillMode: Image.PreserveAspectFit
 					source: AppIcons.loginImage
 				}
