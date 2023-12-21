@@ -18,6 +18,7 @@ max_conference_size=vga
 
 [ui]
 use_qrcode=0
+assistant_supports_phone_numbers/readonly=0
 
 [account_creator]
 backend=1
