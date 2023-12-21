@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 5.2.0 - undefined
+## 5.2.0 - 2023-12-22
 
 ### Fixed
 - Download path and emojis size settings
@@ -14,7 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Display all call logs on default account.
 - Avoid sending composing when openning chat.
 - Crashes.
-- Update SDK to 5.3
+- Double chat rooms.
+- Update SDK to 5.3.1
 
 ### Added
 - Dedicated call history view.
