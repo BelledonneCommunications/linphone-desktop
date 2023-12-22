@@ -15,14 +15,16 @@ Window {
 
 	property CallGui call
 
+	Connections {
+		target: call.core
+		onRemoteVideoEnabledChanged: console.log("remote video enabled", call.core.remoteVideoEnabled)
+	}
+
 	onCallChanged: {
 		waitingTime.seconds = 0
 		waitingTimer.restart()
 		console.log("call changed", call, waitingTime.seconds)
 	}
-
-	property var peerName: UtilsCpp.getDisplayName(call.core.peerAddress)
-	property string peerNameText: peerName ? peerName.value : ""
 
 	property var callState: call.core.state
 	onCallStateChanged: {
@@ -296,7 +298,6 @@ Window {
 			}
 			RowLayout {
 				Control.Control {
-					id: centerItem
 					Layout.fillWidth: true
 					Layout.preferredWidth: 1059 * DefaultStyle.dp
 					Layout.fillHeight: true
@@ -309,23 +310,26 @@ Window {
 						radius: 15 * DefaultStyle.dp
 					}
 					contentItem: Item {
+						id: centerItem
 						anchors.fill: parent
 						StackLayout {
 							id: centerLayout
+							currentIndex: 0
 							anchors.fill: parent
 							Connections {
 								target: mainWindow
 								onCallStateChanged: {
 									if (mainWindow.call.core.state === LinphoneEnums.CallState.Error) {
-										centerLayout.currentIndex = 2
+										centerLayout.currentIndex = 1
 									}
 								}
 							}
-							Item {
-								id: audioCallItem
-								Layout.alignment: Qt.AlignHCenter
-								Layout.preferredWidth: parent.width
-								Layout.preferredHeight: parent.height
+							Sticker {
+								visible: false
+								call: mainWindow.call
+								Layout.fillWidth: true
+								Layout.fillHeight: true
+
 								Timer {
 									id: waitingTimer
 									interval: 1000
@@ -361,44 +365,6 @@ Window {
 										}
 									}
 								}
-								ColumnLayout {
-									anchors.centerIn: parent
-									spacing: 2 * DefaultStyle.dp
-									Avatar {
-										Layout.alignment: Qt.AlignCenter
-										// TODO : remove username when friend list ready
-										call: mainWindow.call
-										// address: mainWindow.peerNameText
-										Layout.preferredWidth: 120 * DefaultStyle.dp
-										Layout.preferredHeight: 120 * DefaultStyle.dp
-									}
-									Text {
-										Layout.alignment: Qt.AlignCenter
-										Layout.topMargin: 15 * DefaultStyle.dp
-										visible: mainWindow.peerNameText.length > 0
-										text: mainWindow.peerNameText
-										color: DefaultStyle.grey_0
-										font {
-											pixelSize: 22 * DefaultStyle.dp
-											weight: 300 * DefaultStyle.dp
-											capitalization: Font.Capitalize
-										}
-									}
-									Text {
-										Layout.alignment: Qt.AlignCenter
-										text: mainWindow.call.core.peerAddress
-										color: DefaultStyle.grey_0
-										font {
-											pixelSize: 14 * DefaultStyle.dp
-											weight: 300 * DefaultStyle.dp
-										}
-									}
-								}
-							}
-							Image {
-								id: videoCallItem
-								Layout.preferredWidth: parent.width
-								Layout.preferredHeight: parent.height
 							}
 							ColumnLayout {
 								id: userNotFoundLayout
@@ -413,17 +379,36 @@ Window {
 								}
 							}
 						}
-						Text {
-							anchors.left: parent.left
-							anchors.right: parent.right
-							anchors.bottom: parent.bottom
-							anchors.leftMargin: 10 * DefaultStyle.dp
+						Sticker {
+							id: preview
+							height: 180 * DefaultStyle.dp
+							width: 300 * DefaultStyle.dp
+							anchors.right: centerItem.right
+							anchors.bottom: centerItem.bottom
+							anchors.rightMargin: 10 * DefaultStyle.dp
 							anchors.bottomMargin: 10 * DefaultStyle.dp
-							text: mainWindow.peerNameText
-							color: DefaultStyle.grey_0
-							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 500 * DefaultStyle.dp
+							AccountProxy{
+								id: accounts
+							}
+							account: accounts.defaultAccount
+							enablePersonalCamera: mainWindow.call.core.cameraEnabled
+
+							MovableMouseArea{
+								anchors.fill: parent
+								// visible: mainItem.participantCount <= 2
+								function resetPosition(){
+									preview.anchors.right = centerItem.right
+									preview.anchors.bottom = centerItem.bottom
+								}
+								onVisibleChanged: if(!visible){
+									resetPosition()
+								}
+								drag.target: preview
+								onDraggingChanged: if(dragging){
+									preview.anchors.right = undefined
+									preview.anchors.bottom = undefined
+								}
+								onRequestResetPosition: resetPosition()
 							}
 						}
 					}
@@ -552,7 +537,8 @@ Window {
 										}
 										Text {
 											id: delegateName
-											text: UtilsCpp.getDisplayName(modelData.core.peerAddress).value
+											property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
+											text: remoteAddress ? remoteAddress.value : ""
 											Connections {
 												target: modelData.core
 											}
@@ -862,16 +848,5 @@ Window {
 				}
 			}
 		}
-	}
-	Sticker{
-		height: 100 * DefaultStyle.dp
-		width: 100 * DefaultStyle.dp
-		anchors.right: parent.right
-		anchors.bottom: parent.bottom
-		visible: mainWindow.call.core.cameraEnabled
-		AccountProxy{
-			id: accounts
-		}
-		account: accounts.defaultAccount
 	}
 }

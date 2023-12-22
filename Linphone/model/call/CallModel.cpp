@@ -49,6 +49,7 @@ void CallModel::accept(bool withVideo) {
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = core->createCallParams(mMonitor);
 	params->enableVideo(withVideo);
+	mMonitor->enableCamera(withVideo);
 	// Answer with local call address.
 	auto localAddress = mMonitor->getCallLog()->getLocalAddress();
 	for (auto account : core->getAccountList()) {
@@ -109,6 +110,9 @@ void CallModel::setSpeakerMuted(bool isMuted) {
 void CallModel::setCameraEnabled(bool enabled) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->enableCamera(enabled);
+	auto core = CoreModel::getInstance()->getCore();
+	auto params = core->createCallParams(mMonitor);
+	params->enableVideo(enabled);
 	emit cameraEnabledChanged(enabled);
 }
 

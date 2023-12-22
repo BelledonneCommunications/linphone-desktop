@@ -30,6 +30,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/DigitInput.qml
 	view/Item/EffectImage.qml
 	view/Item/ErrorText.qml
+	view/Item/MovableMouseArea.qml
 	view/Item/NumericPad.qml
 	view/Item/PhoneNumberComboBox.qml
 	view/Item/PhoneNumberInput.qml
