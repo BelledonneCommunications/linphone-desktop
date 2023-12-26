@@ -18,7 +18,7 @@
     <message>
         <source>noAccount</source>
         <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conta não configurada</translation>
     </message>
 </context>
 <context>
@@ -262,42 +262,42 @@
     <message>
         <source>noAccountExists</source>
         <extracomment>&quot;Account doesn&apos;t exist&quot; : Warning message when no account has been found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conta não existe</translation>
     </message>
     <message>
         <source>recoveringAccount</source>
         <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Recuperação de conta</translation>
     </message>
     <message>
         <source>Cannot open validation url for the account creation request token</source>
         <extracomment>&quot;Cannot open validation URL for the account creation request token&quot; : Warning message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Não se pode abrir URL de validação do token de requisição de criação de conta</translation>
     </message>
     <message>
         <source>waitingValidation</source>
         <extracomment>&apos;Waiting for validation at %1&apos; : User message for validation. %1 is an URL.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Esperando pela validação de %1</translation>
     </message>
     <message>
         <source>wrongTokenRequest</source>
         <extracomment>&apos;The answer of account creation request token doesn&apos;t have token and validation_url fields&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O resposta do token de requisição de criação de conta não contém os campos token e url de validação.</translation>
     </message>
     <message>
         <source>tokenError</source>
         <extracomment>&apos;Cannot get request token for account creation (%1)&apos; : Status messsage. %1 is a code number.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Não pode obter o token de requisição para criação de conta (%1)</translation>
     </message>
     <message>
         <source>requestingValidationUrl</source>
         <extracomment>&apos;Requesting validation URL&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Requisitando URL de validação</translation>
     </message>
     <message>
         <source>loginStep</source>
         <extracomment>&apos;Connecting&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conectando</translation>
     </message>
 </context>
 <context>
@@ -496,27 +496,27 @@
     <message>
         <source>callListTitle</source>
         <extracomment>&apos;Call list&apos; : Call histories title</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Histórico de chamadas</translation>
     </message>
     <message>
         <source>incomingFilter</source>
         <extracomment>&apos;Incoming&apos; : Filter label for incoming call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Recebendo chamada</translation>
     </message>
     <message>
         <source>outgoingFilter</source>
         <extracomment>&apos;Outgoing&apos; : Filter label for outgoing call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamando</translation>
     </message>
     <message>
         <source>missedFilter</source>
         <extracomment>&apos;Missed&apos; : Filter label for missed call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada perdida</translation>
     </message>
     <message>
         <source>searchListPlaceholderText</source>
         <extracomment>&apos;Search in the list&apos; : ths is a placeholder when searching something in a list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Procurar na lista</translation>
     </message>
 </context>
 <context>
@@ -619,7 +619,7 @@ URL do servidor não configurado.</translation>
     <message>
         <source>confirmForward</source>
         <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Quer encaminhar esta mensagem?</translation>
     </message>
 </context>
 <context>
@@ -825,9 +825,9 @@ URL do servidor não configurado.</translation>
     <message numerus="yes">
         <source>reactionsCount</source>
         <extracomment>&quot;%1&lt;br&gt;reactions&quot; : count of all chat reactions with a jump line between count and text.</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1&lt;br&gt;reação</numerusform>
+            <numerusform>%1&lt;br&gt;reações</numerusform>
         </translation>
     </message>
 </context>
@@ -984,7 +984,7 @@ URL do servidor não configurado.</translation>
     <message>
         <source>createMeeting</source>
         <extracomment>&apos;Create Meeting&apos; : Button label to create a meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criar reunião</translation>
     </message>
 </context>
 <context>
@@ -1085,12 +1085,12 @@ URL do servidor não configurado.</translation>
     <message>
         <source>usernames</source>
         <extracomment>&apos;USERNAME(S)&apos; : label for sip accounts when only username is displayed n contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>USUÁRIO(S)</translation>
     </message>
     <message>
         <source>displayName</source>
         <extracomment>&apos;Display Name&apos; : placeholder for setting display name on a contact</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nome de exibição</translation>
     </message>
 </context>
 <context>
@@ -1120,17 +1120,17 @@ URL do servidor não configurado.</translation>
     <message>
         <source>localContactsEntry</source>
         <extracomment>&apos;Local contacts&apos; : Contacts section label in main window when we have to specify that they are local to the application.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Contatos locais</translation>
     </message>
     <message>
         <source>contactsEntry</source>
         <extracomment>&apos;Contacts&apos; : Contacts section label in main waindow.</extracomment>
-        <translation type="unfinished">CONTATOS</translation>
+        <translation>Contatos</translation>
     </message>
     <message>
         <source>selectOnlineContacts</source>
         <extracomment>&apos;Online&apos; : Filter label to display only online contacts.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conectado</translation>
     </message>
 </context>
 <context>
@@ -1215,22 +1215,22 @@ URL do servidor não configurado.</translation>
     <message>
         <source>groupCallConfirmTitle</source>
         <extracomment>&apos;Group call&apos; : Title for a group call confirmation.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada em grupo</translation>
     </message>
     <message>
         <source>groupCallConfirmDescription</source>
         <extracomment>&apos;Do you want to start a group call?&lt;br/&gt;Everyone in this group will receive a call to join the meeting.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Quer iniciar uma chamada em grupo?&lt;br/&gt;Todos neste grupo receberão uma chamada para entrarem na reunião.</translation>
     </message>
     <message>
         <source>cancelButton</source>
         <extracomment>&apos;Cancel&apos; : Cancel button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>startButton</source>
         <extracomment>&apos;Start&apos; : Start button</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Iniciar</translation>
     </message>
 </context>
 <context>
@@ -1368,12 +1368,12 @@ URL do servidor não configurado.</translation>
     <message>
         <source>emojisLastUsed</source>
         <extracomment>&apos;Last used&apos; : Emoji title for last used section.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Último usado</translation>
     </message>
     <message>
         <source>emojisAll</source>
         <extracomment>&apos;All&apos; Emoji title for all items.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Todos</translation>
     </message>
 </context>
 <context>
@@ -1497,12 +1497,12 @@ URL do servidor não configurado.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+        <translation>Já há uma conta fornecida. Esta ação apagará a conta existente.</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
         <extracomment>&apos;Last remote provisioning failed&apos; : Test to warn the user that the last fetch of remote provisioning has failed.</extracomment>
-        <translation>O último provisionamento remoto falhou</translation>
+        <translation>Provisão remota falhou. O link pode ter sido usado ou expirou. Se ele foi fornecido a você, entre em contato com seu administrador.</translation>
     </message>
     <message>
         <source>generateLabel</source>
@@ -1631,7 +1631,7 @@ URL do servidor não configurado.</translation>
     <message>
         <source>incallPauseWarning</source>
         <extracomment>&apos;You have paused the call.&apos; : Pause message in call.</extracomment>
-        <translation>Está atualmente fora da reunião.</translation>
+        <translation>Você pausou a chamada.</translation>
     </message>
     <message>
         <source>incallPauseHint</source>
@@ -1681,7 +1681,7 @@ URL do servidor não configurado.</translation>
     <message>
         <source>incallRemotePauseWarning</source>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Chamada foi pausada pelo outro participante.</translation>
     </message>
     <message>
         <source>incallStopScreenSharing</source>
@@ -1898,7 +1898,7 @@ URL do servidor não configurado.</translation>
     <message>
         <source>dontAskAgain</source>
         <extracomment>&quot;Don&apos;t ask again&quot; : Checkbox text to avoid showing the popup information on encryptions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Não pergunte novamente</translation>
     </message>
 </context>
 <context>
@@ -2016,58 +2016,58 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>openCalls</source>
         <extracomment>&apos;Open call history&apos; : Tooltip for a button that open the call history view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abrir histórico de chamadas</translation>
     </message>
     <message>
         <source>openChats</source>
         <extracomment>&apos;Open chats&apos; : Tooltip for a button that open the conversations view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abrir conversar</translation>
     </message>
     <message>
         <source>openContacts</source>
         <extracomment>&apos;Open contacts&apos; : Tooltip for a button that open the contacts view</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abrir contatos</translation>
     </message>
     <message>
         <source>openMeetings</source>
         <extracomment>&apos;Open meetings&apos; : Tooltip for a button that open the meetings list</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Abrir reuniões</translation>
     </message>
     <message>
         <source>lastProvisioningFailed</source>
-        <translation type="unfinished">O último provisionamento remoto falhou</translation>
+        <translation>Provisão remota falhou. O link pode ter sido usado ou expirou. Se ele foi fornecido a você, entre em contato com seu administrador.</translation>
     </message>
     <message>
         <source>newVersionAvailable</source>
-        <translation type="unfinished">Está disponível uma nova versão (%1)!</translation>
+        <translation>Uma nova versão (%1) está disponível!</translation>
     </message>
     <message>
         <source>newVersionAvailableInstructions</source>
-        <translation type="unfinished"></translation>
+        <translation>Para atualizar para uma nova versão, baixe o pacote e instale-o sobre a instalação atual</translation>
     </message>
     <message>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>downloadUpdate</source>
-        <translation type="unfinished"></translation>
+        <translation>Baixar</translation>
     </message>
     <message>
         <source>newVersionCheckError</source>
-        <translation type="unfinished"></translation>
+        <translation>Ocorreu um erro ao pesquisar uma nova versão. Tente novamente mais tarde ou chame o suporte se o problema persistir.</translation>
     </message>
     <message>
         <source>noNewVersionAvailable</source>
-        <translation type="unfinished"></translation>
+        <translation>Linphone está atualizado.</translation>
     </message>
     <message>
         <source>newVersionInstalled</source>
-        <translation type="unfinished"></translation>
+        <translation>Nova versão instalada com sucesso.</translation>
     </message>
     <message>
         <source>remoteProvisioningWarnAccountOverwrite</source>
-        <translation type="unfinished">An account is already provisioned. This action will erase the existing account. : Warn user about it.</translation>
+        <translation>Já há uma conta fornecida. Esta ação apagará a conta existente.</translation>
     </message>
 </context>
 <context>
@@ -2097,7 +2097,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>exportDesktopFile</source>
         <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criar atalho na área de trabalho</translation>
     </message>
 </context>
 <context>
@@ -2127,7 +2127,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>exportDesktopFile</source>
         <extracomment>&apos;Create desktop entry&apos; : Label menu to export the application.desktop file to the ~/.local/share/applications/ folder on Linux</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Criar atalho na área de trabalho</translation>
     </message>
 </context>
 <context>
@@ -2430,7 +2430,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>conferencePArticipantUnsetAdminEvent</source>
         <extracomment>&apos;%1 is no longer an admin&apos; : Little message to show on the event when somebody lost its admin status. %1 is somebody</extracomment>
-        <translation>%1 não é mais um administrador</translation>
+        <translation>%1 não é um administrador</translation>
     </message>
     <message>
         <source>conferenceSecurityEvent</source>
@@ -2489,27 +2489,27 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mensagem de voz recebida!</translation>
     </message>
     <message>
         <source>voiceMessageReact</source>
         <extracomment>&apos;Voice message&apos; : Voice message type that has been reacted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mensagem de voz</translation>
     </message>
     <message>
         <source>conferenceInvitationReact</source>
         <extracomment>&apos;Conference invitation&apos; : Conference invitation message type that has been reacted.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Convite para conferência</translation>
     </message>
     <message>
         <source>reactionMessage</source>
         <extracomment>&apos;&apos;Has reacted by %1 to: %2&apos; : Reaction message. %1=Reaction(emoji), %2=type of message(Voice Message/Conference invitation/ Message text)</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Há reação de %1 para %2</translation>
     </message>
     <message>
         <source>newReactionsMessages</source>
         <extracomment>&apos;New reactions received!&apos; : Notification that warn the user of new reactions.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Novas reações recebidas!</translation>
     </message>
 </context>
 <context>
@@ -2726,7 +2726,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>presenceAway</source>
         <extracomment>&apos;Away&apos; : presence label when user is away.</extracomment>
-        <translation type="unfinished">Ausente</translation>
+        <translation>Ausente</translation>
     </message>
 </context>
 <context>
@@ -2753,7 +2753,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>presenceAway</source>
-        <translation type="unfinished">Ausente</translation>
+        <translation>Ausente</translation>
     </message>
 </context>
 <context>
@@ -2775,7 +2775,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation type="unfinished">Falha no login. Verifique seu nome de usuário/senha.</translation>
+        <translation>Falha no login. Favor verifique seu usuário/senha.</translation>
     </message>
 </context>
 <context>
@@ -3630,12 +3630,12 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>advancedTitle</source>
         <extracomment>&apos;Advanced&apos; : Option title for advanced option in account parameters.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Avançado</translation>
     </message>
     <message>
         <source>enableBundleMode</source>
         <extracomment>&apos;Bundle mode&apos; : Option title to enable the RTP bundle mode.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Modo &quot;portátil&quot;</translation>
     </message>
 </context>
 <context>
@@ -3872,32 +3872,32 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>fontsEmojiChange</source>
         <extracomment>&apos;Emojis&apos; : Label for changing emojis fonts</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Emojis</translation>
     </message>
     <message>
         <source>displayUsernamesLabel</source>
         <extracomment>&apos;Display only usernames&apos; : Option text to display only usernames from SIP addresses.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mostra somente usuários</translation>
     </message>
     <message>
         <source>displayUsernamesTooltip</source>
         <extracomment>&apos;Display only usernames from SIP addresses&apos; : tooltip for addresses display mode where username is only shown.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mostra somente usuários com endereços SIP</translation>
     </message>
     <message>
         <source>magicSearchMaxResultsLabel</source>
         <extracomment>&apos;Max results on search&apos; : Label for setting the max results returned by the Magic Search bar.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Máximo de resultados na pesquisa</translation>
     </message>
     <message>
         <source>restoreAskingPopups</source>
         <extracomment>&apos;Restore asking popups&apos; : Text button for restoring asking popups.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reativar janelas de solicitação</translation>
     </message>
     <message>
         <source>spellCheckerLabel</source>
         <extracomment>&apos;Spell Checker&apos; : label for spell checker settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verificador Ortográfico</translation>
     </message>
 </context>
 <context>
@@ -4096,22 +4096,22 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>spellCheckingMenuDidYouMean</source>
         <extracomment>&apos;Did you mean ?&apos; : Suggest new words</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>O que você quis dizer?</translation>
     </message>
     <message>
         <source>spellCheckingMenuAddToDictionary</source>
         <extracomment>&apos;Add to dictionary&apos; : Add word to dictionary</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar ao Dicionário</translation>
     </message>
     <message>
         <source>spellCheckingMenuIgnoreOnce</source>
         <extracomment>&apos;Ignore Once&apos; : Ignore spell checking only for this occurences</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ignorar uma vez</translation>
     </message>
     <message>
         <source>spellCheckingMenuIgnoreAll</source>
         <extracomment>&apos;Ignore All&apos; : Ignore spell checking for all occurences</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ignorar Tudo</translation>
     </message>
 </context>
 <context>
@@ -4134,7 +4134,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     <message>
         <source>chatsTitle</source>
         <extracomment>&apos;Messages&apos; : Title for conversations</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mensagens</translation>
     </message>
 </context>
 <context>
@@ -5293,7 +5293,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>okButton</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
 </context>
 </TS>
