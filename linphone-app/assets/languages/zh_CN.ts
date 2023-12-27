@@ -10,7 +10,7 @@
     <message>
         <source>aboutTranslation</source>
         <extracomment>&apos;Help us translate %1&apos; : %1 is the application name</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>完善翻译</translation>
     </message>
 </context>
 <context>
@@ -18,7 +18,7 @@
     <message>
         <source>noAccount</source>
         <extracomment>&apos;No account configured&apos; : Status text when there is no configured account.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>暂未配置账户</translation>
     </message>
 </context>
 <context>
@@ -63,7 +63,7 @@
     </message>
     <message>
         <source>applicationDescription</source>
-        <translation>一个免费（且自由）的 SIP 网络电话.</translation>
+        <translation>一个可自由配置的免费SIP 网络电话.</translation>
     </message>
     <message>
         <source>commandLineOptionIconified</source>
@@ -123,11 +123,11 @@
     </message>
     <message>
         <source>checkForUpdates</source>
-        <translation type="unfinished"></translation>
+        <translation>检测软件更新</translation>
     </message>
     <message>
         <source>commandLineOptionQtLogsOnly</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">仅打印本软件日志</translation>
     </message>
 </context>
 <context>
@@ -166,14 +166,14 @@
     <message>
         <source>homeCgu</source>
         <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">我接受%1&apos;s %2使用条款以及 %4隐私政策%5</translation>
     </message>
 </context>
 <context>
     <name>AssistantModel</name>
     <message>
         <source>loginWithUsernameFailed</source>
-        <translation>登录失败，请检查你的用户名/密码</translation>
+        <translation>登录失败，请检查你的用户名/密码。</translation>
     </message>
     <message>
         <source>usernameStatusTooShort</source>
@@ -209,15 +209,15 @@
     </message>
     <message>
         <source>requestFailed</source>
-        <translation>无法发送请求</translation>
+        <translation>请求失败。</translation>
     </message>
     <message>
         <source>emailStatusMalformed</source>
-        <translation>邮箱地址错误</translation>
+        <translation>邮箱地址错误。</translation>
     </message>
     <message>
         <source>emailStatusMalformedInvalidCharacters</source>
-        <translation>邮箱地址错误或检测到无效字符</translation>
+        <translation>邮箱地址错误或检测到无效字符。</translation>
     </message>
     <message>
         <source>cannotSendSms</source>
@@ -253,7 +253,7 @@
     </message>
     <message>
         <source>loginWithPhoneNumberFailed</source>
-        <translation>登录失败，请检查你的手机号码</translation>
+        <translation>登录失败，请检查你的手机号码。</translation>
     </message>
     <message>
         <source>unableToAddAccount</source>
@@ -262,12 +262,12 @@
     <message>
         <source>noAccountExists</source>
         <extracomment>&quot;Account doesn&apos;t exist&quot; : Warning message when no account has been found</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>账户不存在。</translation>
     </message>
     <message>
         <source>recoveringAccount</source>
         <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>覆盖账户</translation>
     </message>
     <message>
         <source>Cannot open validation url for the account creation request token</source>
@@ -297,7 +297,7 @@
     <message>
         <source>loginStep</source>
         <extracomment>&apos;Connecting&apos; : Status message</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>连接中</translation>
     </message>
 </context>
 <context>
@@ -320,7 +320,7 @@
     </message>
     <message>
         <source>authenticationRequestDescription</source>
-        <translation>无法验证，请检查你的密码</translation>
+        <translation>无法验证，请检查你的密码。</translation>
     </message>
     <message>
         <source>userIdLabel</source>
