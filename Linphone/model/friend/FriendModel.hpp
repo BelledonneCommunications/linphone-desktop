@@ -39,12 +39,17 @@ public:
 	~FriendModel();
 
 	QDateTime getPresenceTimestamp() const;
+	QString getAddress() const;
+	QString getName() const;
+	bool getStarred() const;
 	std::shared_ptr<linphone::Friend> getFriend() const;
 
 	void setPictureUri(QString uri);
+	void setStarred(bool starred);
 
 signals:
 	void pictureUriChanged(QString uri);
+	void starredChanged(bool starred);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

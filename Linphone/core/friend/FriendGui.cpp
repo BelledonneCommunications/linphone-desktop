@@ -36,6 +36,9 @@ FriendGui::~FriendGui() {
 	mustBeInMainThread("~" + getClassName());
 }
 
+void FriendGui::createContact(const QString &address) {
+}
+
 FriendCore *FriendGui::getCore() const {
 	return mCore.get();
 }

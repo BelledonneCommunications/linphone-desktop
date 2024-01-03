@@ -49,6 +49,23 @@ QDateTime FriendModel::getPresenceTimestamp() const {
 	} else return QDateTime();
 }
 
+QString FriendModel::getAddress() const {
+	return Utils::coreStringToAppString(mMonitor->getAddress()->asStringUriOnly());
+}
+
+QString FriendModel::getName() const {
+	return Utils::coreStringToAppString(mMonitor->getName());
+}
+
+bool FriendModel::getStarred() const {
+	return mMonitor->getStarred();
+}
+
+void FriendModel::setStarred(bool starred) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->setStarred(starred);
+	emit starredChanged(starred);
+}
 void FriendModel::onPresenceReceived(const std::shared_ptr<linphone::Friend> &contact) {
 	emit presenceReceived(LinphoneEnums::fromLinphone(contact->getConsolidatedPresence()), getPresenceTimestamp());
 }

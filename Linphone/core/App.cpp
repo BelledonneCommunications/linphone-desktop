@@ -42,6 +42,7 @@
 #include "core/camera/CameraGui.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
+#include "core/friend/FriendInitialProxy.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
 #include "core/notifier/Notifier.hpp"
@@ -163,6 +164,7 @@ void App::initCppInterfaces() {
 	qmlRegisterType<FriendGui>(Constants::MainQmlUri, 1, 0, "FriendGui");
 	qmlRegisterUncreatableType<FriendCore>(Constants::MainQmlUri, 1, 0, "FriendCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<MagicSearchProxy>(Constants::MainQmlUri, 1, 0, "MagicSearchProxy");
+	qmlRegisterType<FriendInitialProxy>(Constants::MainQmlUri, 1, 0, "FriendInitialProxy");
 	qmlRegisterType<CameraGui>(Constants::MainQmlUri, 1, 0, "CameraGui");
 	LinphoneEnums::registerMetaTypes();
 }

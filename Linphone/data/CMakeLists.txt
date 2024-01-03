@@ -15,6 +15,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/caret-down.svg"
 	"data/image/caret-left.svg"
 	"data/image/caret-right.svg"
+	"data/image/caret-up.svg"
 	"data/image/verif_page_image.svg"
 	"data/image/check.svg"
 	"data/image/dialer.svg"
@@ -61,6 +62,8 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/trash-simple.svg"
 	"data/image/copy.svg"
 	"data/image/empty.svg"
+	"data/image/heart.svg"
+	"data/image/heart-fill.svg"
 	
 	data/shaders/roundEffect.vert.qsb
 	data/shaders/roundEffect.frag.qsb

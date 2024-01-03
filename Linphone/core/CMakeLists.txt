@@ -16,6 +16,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/camera/CameraDummy.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp
+	core/friend/FriendInitialProxy.cpp
 	core/logger/QtLogger.cpp
 	core/login/LoginPage.cpp
 	core/notifier/Notifier.cpp

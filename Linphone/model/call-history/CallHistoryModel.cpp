@@ -33,8 +33,8 @@ CallHistoryModel::CallHistoryModel(const std::shared_ptr<linphone::CallLog> &cal
 }
 
 CallHistoryModel::~CallHistoryModel() {
-	qDebug() << "[CallHistoryModel] delete" << this;
-	mustBeInLinphoneThread("~" + getClassName());
+	// qDebug() << "[CallHistoryModel] delete" << this;
+	// mustBeInLinphoneThread("~" + getClassName());
 }
 
 void CallHistoryModel::removeCallHistory() {

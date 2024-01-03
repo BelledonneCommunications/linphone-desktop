@@ -170,6 +170,13 @@ LinphoneEnums::MagicSearchAggregation LinphoneEnums::fromLinphone(const linphone
 	return static_cast<LinphoneEnums::MagicSearchAggregation>(data);
 }
 
+linphone::MagicSearch::Source LinphoneEnums::toLinphone(const LinphoneEnums::MagicSearchSource &data) {
+	return static_cast<linphone::MagicSearch::Source>(data);
+}
+LinphoneEnums::MagicSearchSource LinphoneEnums::fromLinphone(const linphone::MagicSearch::Source &data) {
+	return static_cast<LinphoneEnums::MagicSearchSource>(data);
+}
+
 linphone::LogLevel LinphoneEnums::toLinphone(const QtMsgType &data) {
 	switch (data) {
 		case QtDebugMsg:

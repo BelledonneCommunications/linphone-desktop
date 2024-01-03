@@ -218,6 +218,24 @@ Q_ENUM_NS(MagicSearchAggregation);
 linphone::MagicSearch::Aggregation toLinphone(const LinphoneEnums::MagicSearchAggregation &data);
 LinphoneEnums::MagicSearchAggregation fromLinphone(const linphone::MagicSearch::Aggregation &data);
 
+enum class MagicSearchSource {
+	None = int(linphone::MagicSearch::Source::None),
+	Friends = int(linphone::MagicSearch::Source::Friends),
+	CallLogs = int(linphone::MagicSearch::Source::CallLogs),
+	LdapServers = int(linphone::MagicSearch::Source::LdapServers),
+	ChatRooms = int(linphone::MagicSearch::Source::ChatRooms),
+	Request = int(linphone::MagicSearch::Source::Request),
+	FavoriteFriends = int(linphone::MagicSearch::Source::FavoriteFriends),
+	ConferencesInfo = int(linphone::MagicSearch::Source::ConferencesInfo),
+	All = int(linphone::MagicSearch::Source::All)
+};
+Q_ENUM_NS(MagicSearchSource);
+// Q_DECLARE_FLAGS(MagicSearchSources, MagicSearchSource)
+// Q_DECLARE_OPERATORS_FOR_FLAGS(MagicSearchSources)
+
+linphone::MagicSearch::Source toLinphone(const LinphoneEnums::MagicSearchSource &data);
+LinphoneEnums::MagicSearchSource fromLinphone(const linphone::MagicSearch::Source &data);
+
 linphone::LogLevel toLinphone(const QtMsgType &data);
 QtMsgType fromLinphone(const linphone::LogLevel &data);
 

@@ -10,6 +10,7 @@ QtObject {
 	property string downArrow: "image://internal/caret-down.svg"
 	property string returnArrow: "image://internal/caret-left.svg"
 	property string rightArrow: "image://internal/caret-right.svg"
+	property string upArrow: "image://internal/caret-up.svg"
 	property string info: "image://internal/info.svg"
 	property string loginImage: "image://internal/login_image.svg"
 	property string belledonne: "image://internal/belledonne.svg"
@@ -61,4 +62,6 @@ QtObject {
 	property string trashCan: "image://internal/trash-simple.svg"
 	property string copy: "image://internal/copy.svg"
 	property string empty: "image://internal/empty.svg"
+	property string heart: "image://internal/heart.svg"
+	property string heartFill: "image://internal/heart-fill.svg"
 }

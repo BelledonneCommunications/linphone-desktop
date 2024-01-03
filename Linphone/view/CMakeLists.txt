@@ -7,7 +7,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	
 	view/Item/Account/Accounts.qml
 	
-	view/Item/Call/ContactsList.qml
+	view/Item/Call/CallContactsLists.qml
 	view/Item/Call/OngoingCallRightPanel.qml
 	
 	view/Item/Notification/Notification.qml
@@ -25,6 +25,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Carousel.qml
 	view/Item/CheckBox.qml
 	view/Item/ComboBox.qml
+	view/Item/ContactsList.qml
 	view/Item/DesktopPopup.qml
 	view/Item/DigitInput.qml
 	view/Item/EffectImage.qml

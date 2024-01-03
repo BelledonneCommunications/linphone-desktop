@@ -454,7 +454,7 @@ Window {
 					}
 					Component {
 						id: contactsListPanel
-						ContactsList {
+						CallContactsLists {
 							sideMargin: 10 * DefaultStyle.dp
 							topMargin: 15 * DefaultStyle.dp
 							groupCallVisible: false

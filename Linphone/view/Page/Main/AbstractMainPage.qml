@@ -27,10 +27,10 @@ Item {
 			implicitWidth: 8 * DefaultStyle.dp
 			color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
 		}
-
 		ColumnLayout {
 			id: leftPanel
 			Control.SplitView.preferredWidth: 350 * DefaultStyle.dp
+			Control.SplitView.minimumWidth: 350 * DefaultStyle.dp
 		}
 		Rectangle {
 			id: rightPanel

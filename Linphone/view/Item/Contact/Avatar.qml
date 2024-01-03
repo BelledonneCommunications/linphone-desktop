@@ -19,7 +19,9 @@ StackView{
 								? account.core.identityAddress
 								: call
 									? call.core.peerAddress
-									: ''
+									: contact
+										? contact.core.address
+										: ''
 	property var displayNameObj: UtilsCpp.getDisplayName(address)
 	property bool haveAvatar: (account && account.core.pictureUri )
 								|| (contact && contact.core.pictureUri)

@@ -20,6 +20,8 @@
 
 #include "FriendCore.hpp"
 #include "core/App.hpp"
+#include "model/object/VariantObject.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
@@ -42,7 +44,11 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mPresenceTimestamp = mFriendModel->getPresenceTimestamp();
 		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
 		auto address = contact->getAddress();
-		mAddress = address ? Utils::coreStringToAppString(contact->getAddress()->asString()) : "NoAddress";
+		mAddress = address ? Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly()) : "NoAddress";
+		auto name = contact->getName();
+		mName =
+		    name.empty() ? Utils::getDisplayName(mAddress)->getValue().toString() : Utils::coreStringToAppString(name);
+		mStarred = contact->getStarred();
 		mIsSaved = true;
 	} else mIsSaved = false;
 }
@@ -76,10 +82,19 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			mFriendModelConnection->makeConnectToModel(&FriendModel::pictureUriChanged, [this](QString uri) {
 				mFriendModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
 			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::starredChanged, [this](bool starred) {
+				mFriendModelConnection->invokeToCore([this, starred]() { this->onStarredChanged(starred); });
+			});
+			mFriendModelConnection->makeConnectToModel(
+			    &FriendModel::objectNameChanged,
+			    [this](const QString &objectName) { qDebug() << "object name changed" << objectName; });
 
 			// From GUI
 			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetPictureUri, [this](QString uri) {
 				mFriendModelConnection->invokeToModel([this, uri]() { mFriendModel->setPictureUri(uri); });
+			});
+			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetStarred, [this](bool starred) {
+				mFriendModelConnection->invokeToModel([this, starred]() { mFriendModel->setStarred(starred); });
 			});
 
 		} else { // Create
@@ -105,6 +120,16 @@ void FriendCore::setName(QString data) {
 		emit addressChanged(mName);
 		setIsSaved(false);
 	}
+}
+
+bool FriendCore::getStarred() const {
+	return mStarred;
+}
+
+void FriendCore::onStarredChanged(bool starred) {
+	mStarred = starred;
+	save();
+	emit starredChanged();
 }
 
 QString FriendCore::getAddress() const {
@@ -190,35 +215,66 @@ void FriendCore::remove() {
 	}
 }
 
-void FriendCore::save() {                                          // Save Values to model
-	FriendCore *thisCopy = new FriendCore(*this);                  // Pointer to avoid multiple copies in lambdas
-	if (mFriendModel) {                                            // Update
+void FriendCore::save() {                         // Save Values to model
+	FriendCore *thisCopy = new FriendCore(*this); // Pointer to avoid multiple copies in lambdas
+	auto linphoneAddr = ToolModel::interpretUrl(mAddress);
+
+	if (mFriendModel) {
 		mFriendModelConnection->invokeToModel([this, thisCopy]() { // Copy values to avoid concurrency
-			auto core = CoreModel::getInstance()->getCore();
 			auto contact = mFriendModel->getFriend();
 			thisCopy->writeInto(contact);
 			thisCopy->deleteLater();
 			mFriendModelConnection->invokeToCore([this]() { saved(); });
 		});
-	} else { // Creation
-		mCoreModelConnection->invokeToModel([this, thisCopy]() {
+	} else {
+		mCoreModelConnection->invokeToModel([this, thisCopy, linphoneAddr]() {
 			auto core = CoreModel::getInstance()->getCore();
-			auto contact = core->createFriend();
-			thisCopy->writeInto(contact);
-			thisCopy->deleteLater();
-			bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
-			if (created) {
-				mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-				mFriendModel->setSelf(mFriendModel);
-				core->getDefaultFriendList()->updateSubscriptions();
+			auto contact = core->findFriend(linphoneAddr);
+			auto friendExists = contact != nullptr;
+			if (contact != nullptr) {
+				thisCopy->writeInto(contact);
+				thisCopy->deleteLater();
+				if (mFriendModelConnection) mFriendModelConnection->invokeToCore([this] { saved(); });
+				else mCoreModelConnection->invokeToCore([this] { saved(); });
+			} else {
+				auto contact = core->createFriend();
+				thisCopy->writeInto(contact);
+				thisCopy->deleteLater();
+				bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
+				if (created) {
+					mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+					mFriendModel->setSelf(mFriendModel);
+					core->getDefaultFriendList()->updateSubscriptions();
+				}
+				emit CoreModel::getInstance()->friendAdded();
+				mCoreModelConnection->invokeToCore([this, created]() {
+					if (created) setSelf(mCoreModelConnection->mCore);
+					setIsSaved(created);
+				});
 			}
-			emit CoreModel::getInstance()->friendAdded();
-			mCoreModelConnection->invokeToCore([this, created]() {
-				if (created) setSelf(mCoreModelConnection->mCore);
-				setIsSaved(created);
-			});
 		});
 	}
+
+	// if (mFriendModel) {                                            // Update
+	// } else { // Creation
+	// 	mCoreModelConnection->invokeToModel([this, thisCopy]() {
+	// 		auto core = CoreModel::getInstance()->getCore();
+	// 		auto contact = core->createFriend();
+	// 		thisCopy->writeInto(contact);
+	// 		thisCopy->deleteLater();
+	// 		bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
+	// 		if (created) {
+	// 			mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+	// 			mFriendModel->setSelf(mFriendModel);
+	// 			core->getDefaultFriendList()->updateSubscriptions();
+	// 		}
+	// 		emit CoreModel::getInstance()->friendAdded();
+	// 		mCoreModelConnection->invokeToCore([this, created]() {
+	// 			if (created) setSelf(mCoreModelConnection->mCore);
+	// 			setIsSaved(created);
+	// 		});
+	// 	});
+	// }
 }
 
 void FriendCore::undo() { // Retrieve values from model

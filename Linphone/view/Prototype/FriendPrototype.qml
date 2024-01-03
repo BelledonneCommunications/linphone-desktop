@@ -32,7 +32,7 @@ Window{
 					contact.core.save()
 				}
 			}
-			Text{
+			Text {
 				text: 'IsSaved:'+contact.core.isSaved
 			}
 		}
@@ -40,6 +40,7 @@ Window{
 			id: friends
 			Layout.fillHeight: true
 			Layout.fillWidth: true
+			onCountChanged: console.log("count changed", count)
 			
 			model: MagicSearchProxy{
 				id: search

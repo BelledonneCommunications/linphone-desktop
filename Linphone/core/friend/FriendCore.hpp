@@ -46,6 +46,7 @@ class FriendCore : public QObject, public AbstractObject {
 	               consolidatedPresenceChanged)
 	Q_PROPERTY(bool isSaved READ getIsSaved NOTIFY isSavedChanged)
 	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE lSetPictureUri NOTIFY pictureUriChanged)
+	Q_PROPERTY(bool starred READ getStarred WRITE lSetStarred NOTIFY starredChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -59,6 +60,9 @@ public:
 
 	QString getName() const;
 	void setName(QString data);
+
+	bool getStarred() const;
+	void onStarredChanged(bool starred);
 
 	QString getAddress() const;
 	void setAddress(QString address);
@@ -84,6 +88,7 @@ public:
 signals:
 	void contactUpdated();
 	void nameChanged(QString name);
+	void starredChanged();
 	void addressChanged(QString address);
 	void consolidatedPresenceChanged(LinphoneEnums::ConsolidatedPresence level);
 	void presenceTimestampChanged(QDateTime presenceTimestamp);
@@ -95,6 +100,7 @@ signals:
 	void removed(FriendCore *contact);
 
 	void lSetPictureUri(QString pictureUri);
+	void lSetStarred(bool starred);
 
 protected:
 	void writeInto(std::shared_ptr<linphone::Friend> contact) const;
@@ -103,6 +109,7 @@ protected:
 	LinphoneEnums::ConsolidatedPresence mConsolidatedPresence = LinphoneEnums::ConsolidatedPresence::Offline;
 	QDateTime mPresenceTimestamp;
 	QString mName;
+	bool mStarred;
 	QString mAddress;
 	QString mPictureUri;
 	bool mIsSaved;

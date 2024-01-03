@@ -70,7 +70,7 @@ AbstractMainPage {
 									colorizationColor: DefaultStyle.danger_500main
 								}
 								Text {
-									text: qsTr("Supprimmer l’historique")
+									text: qsTr("Supprimer l’historique")
 									color: DefaultStyle.danger_500main
 									font {
 										pixelSize: 14 * DefaultStyle.dp
@@ -80,7 +80,7 @@ AbstractMainPage {
 							}
 							onClicked: {
 								historyListView.model.removeAllEntries()
-								removeHistory.closePopup()
+								removeHistory.close()
 							}
 						}
 					}
@@ -101,194 +101,197 @@ AbstractMainPage {
 						}
 					}
 				}
-				RowLayout {
-					Control.Control {
-						id: listLayout
+				ColumnLayout {
+					SearchBar {
+						id: searchBar
 						Layout.fillWidth: true
-						Layout.fillHeight: true
 						Layout.leftMargin: listStackView.sideMargin
 						Layout.rightMargin: listStackView.sideMargin
+						placeholderText: qsTr("Rechercher un appel")
+					}
+					RowLayout {
+						Layout.topMargin: 30 * DefaultStyle.dp	
+						Control.Control {
+							id: listLayout
+							Layout.fillWidth: true
+							Layout.fillHeight: true
+							Layout.leftMargin: listStackView.sideMargin
+							Layout.rightMargin: listStackView.sideMargin
 
-						background: Rectangle {
-							anchors.fill: parent
-						}
-						ColumnLayout {
-							anchors.fill: parent
-							SearchBar {
-								id: searchBar
-								Layout.alignment: Qt.AlignTop
-								Layout.fillWidth: true
-								placeholderText: qsTr("Rechercher un appel")
+							background: Rectangle {
+								anchors.fill: parent
 							}
 							ColumnLayout {
-								Text {
-									text: qsTr("Aucun appel")
-									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
+								anchors.fill: parent
+								ColumnLayout {
+									Text {
+										text: qsTr("Aucun appel")
+										font {
+											pixelSize: 16 * DefaultStyle.dp
+											weight: 800 * DefaultStyle.dp
+										}
+										visible: historyListView.count === 0
+										Layout.alignment: Qt.AlignHCenter
 									}
-									visible: historyListView.count === 0
-									Layout.alignment: Qt.AlignHCenter
-									Layout.topMargin: 30 * DefaultStyle.dp
-								}
-								ListView {
-									id: historyListView
-									clip: true
-									Layout.fillWidth: true
-									Layout.fillHeight: true
-									Layout.topMargin: 30 * DefaultStyle.dp
-									model: CallHistoryProxy{
-										filterText: searchBar.text
-									}
-									currentIndex: -1
-									onCurrentIndexChanged: {
-										mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
-									}
-									spacing: 10 * DefaultStyle.dp
-									highlightMoveDuration: 10
-									highlightMoveVelocity: -1
-									// highlightFollowsCurrentItem: true
-									highlight: Rectangle {
-										x: historyListView.x
-										width: historyListView.width
-										height: historyListView.height
-										color: DefaultStyle.main2_100
-										y: historyListView.currentItem? historyListView.currentItem.y : 0
-									}
+									ListView {
+										id: historyListView
+										clip: true
+										Layout.fillWidth: true
+										Layout.fillHeight: true
+										model: CallHistoryProxy{
+											filterText: searchBar.text
+										}
+										currentIndex: -1
+										
+										spacing: 10 * DefaultStyle.dp
+										highlightMoveDuration: 10
+										highlightMoveVelocity: -1
+										// highlightFollowsCurrentItem: true
+										highlight: Rectangle {
+											x: historyListView.x
+											width: historyListView.width
+											height: historyListView.height
+											color: DefaultStyle.main2_100
+											y: historyListView.currentItem? historyListView.currentItem.y : 0
+										}
 
-									delegate: Item {
-										width:historyListView.width
-										height: 56 * DefaultStyle.dp
-										anchors.topMargin: 5 * DefaultStyle.dp
-										anchors.bottomMargin: 5 * DefaultStyle.dp
-										RowLayout {
-											z: 1
-											anchors.fill: parent
-											Item {
-												Layout.preferredWidth: historyAvatar.width
-												Layout.preferredHeight: historyAvatar.height
-												Layout.leftMargin: 5 * DefaultStyle.dp
-												MultiEffect {
-													source: historyAvatar
-													anchors.fill: historyAvatar
-													shadowEnabled: true
-													shadowBlur: 1
-													shadowColor: DefaultStyle.grey_900
-													shadowOpacity: 0.1
-												}
-												Avatar {
-													id: historyAvatar
-													address: modelData.core.remoteAddress
-													width: 45 * DefaultStyle.dp
-													height: 45 * DefaultStyle.dp
-												}
-											}
-											ColumnLayout {
-												Layout.alignment: Qt.AlignVCenter
-												Text {
-													property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : undefined
-													text: remoteAddress ? remoteAddress.value : ""
-													font {
-														pixelSize: 14 * DefaultStyle.dp
-														weight: 400 * DefaultStyle.dp
+										delegate: Item {
+											width:historyListView.width
+											height: 56 * DefaultStyle.dp
+											anchors.topMargin: 5 * DefaultStyle.dp
+											anchors.bottomMargin: 5 * DefaultStyle.dp
+											RowLayout {
+												z: 1
+												anchors.fill: parent
+												Item {
+													Layout.preferredWidth: historyAvatar.width
+													Layout.preferredHeight: historyAvatar.height
+													Layout.leftMargin: 5 * DefaultStyle.dp
+													MultiEffect {
+														source: historyAvatar
+														anchors.fill: historyAvatar
+														shadowEnabled: true
+														shadowBlur: 1
+														shadowColor: DefaultStyle.grey_900
+														shadowOpacity: 0.1
+													}
+													Avatar {
+														id: historyAvatar
+														address: modelData.core.remoteAddress
+														width: 45 * DefaultStyle.dp
+														height: 45 * DefaultStyle.dp
 													}
 												}
-												RowLayout {
-													Image {
-														source: modelData.core.status === LinphoneEnums.CallStatus.Declined
-														|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-														|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-														|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-															? modelData.core.isOutgoing 
-																? AppIcons.outgoingCallRejected 
-																: AppIcons.incomingCallRejected
-															: modelData.core.status === LinphoneEnums.CallStatus.Missed
-																? modelData.core.isOutgoing
-																	? AppIcons.outgoingCallMissed 
-																	: AppIcons.incomingCallMissed
-																: modelData.core.isOutgoing
-																	? AppIcons.outgoingCall 
-																	: AppIcons.incomingCall
-														Layout.preferredWidth: 5 * DefaultStyle.dp
-														Layout.preferredHeight: 5 * DefaultStyle.dp
-														sourceSize.width: 5 * DefaultStyle.dp
-														sourceSize.height: 5 * DefaultStyle.dp
-													}
+												ColumnLayout {
+													Layout.alignment: Qt.AlignVCenter
 													Text {
-														// text: modelData.core.date
-														text: UtilsCpp.formatDateElapsedTime(modelData.core.date)
+														property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : undefined
+														text: remoteAddress ? remoteAddress.value : ""
 														font {
-															pixelSize: 12 * DefaultStyle.dp
-															weight: 300 * DefaultStyle.dp
+															pixelSize: 14 * DefaultStyle.dp
+															weight: 400 * DefaultStyle.dp
+														}
+													}
+													RowLayout {
+														Image {
+															source: modelData.core.status === LinphoneEnums.CallStatus.Declined
+															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+																? modelData.core.isOutgoing 
+																	? AppIcons.outgoingCallRejected 
+																	: AppIcons.incomingCallRejected
+																: modelData.core.status === LinphoneEnums.CallStatus.Missed
+																	? modelData.core.isOutgoing
+																		? AppIcons.outgoingCallMissed 
+																		: AppIcons.incomingCallMissed
+																	: modelData.core.isOutgoing
+																		? AppIcons.outgoingCall 
+																		: AppIcons.incomingCall
+															Layout.preferredWidth: 5 * DefaultStyle.dp
+															Layout.preferredHeight: 5 * DefaultStyle.dp
+															sourceSize.width: 5 * DefaultStyle.dp
+															sourceSize.height: 5 * DefaultStyle.dp
+														}
+														Text {
+															// text: modelData.core.date
+															text: UtilsCpp.formatDateElapsedTime(modelData.core.date)
+															font {
+																pixelSize: 12 * DefaultStyle.dp
+																weight: 300 * DefaultStyle.dp
+															}
 														}
 													}
 												}
-											}
-											Item {
-												Layout.fillWidth: true
-											}
-											Control.Button {
-												implicitWidth: 24 * DefaultStyle.dp
-												implicitHeight: 24 * DefaultStyle.dp
-												Layout.rightMargin: 5 * DefaultStyle.dp
-												padding: 0
-												background: Item {
-													visible: false
+												Item {
+													Layout.fillWidth: true
 												}
-												contentItem: Image {
-													source: AppIcons.phone
-													width: 24 * DefaultStyle.dp
-													sourceSize.width: 24 * DefaultStyle.dp
-													fillMode: Image.PreserveAspectFit
-												}
-												onClicked: {
-													var addr = modelData.core.remoteAddress
-													var addressEnd = "@sip.linphone.org"
-													if (!addr.endsWith(addressEnd)) addr += addressEnd
-													var callVarObject = UtilsCpp.createCall(addr)
+												Control.Button {
+													implicitWidth: 24 * DefaultStyle.dp
+													implicitHeight: 24 * DefaultStyle.dp
+													Layout.rightMargin: 5 * DefaultStyle.dp
+													padding: 0
+													background: Item {
+														visible: false
+													}
+													contentItem: Image {
+														source: AppIcons.phone
+														width: 24 * DefaultStyle.dp
+														sourceSize.width: 24 * DefaultStyle.dp
+														fillMode: Image.PreserveAspectFit
+													}
+													onClicked: {
+														var addr = modelData.core.remoteAddress
+														var addressEnd = "@sip.linphone.org"
+														if (!addr.endsWith(addressEnd)) addr += addressEnd
+														var callVarObject = UtilsCpp.createCall(addr)
+													}
 												}
 											}
-										}
-										MouseArea {
-											hoverEnabled: true
-											anchors.fill: parent
-											Rectangle {
+											MouseArea {
+												hoverEnabled: true
 												anchors.fill: parent
-												opacity: 0.1
-												color: DefaultStyle.main2_500main
-												visible: parent.containsMouse
-											}
-											onPressed: {
-												historyListView.currentIndex = model.index
+												Rectangle {
+													anchors.fill: parent
+													opacity: 0.1
+													color: DefaultStyle.main2_500main
+													visible: parent.containsMouse
+												}
+												onPressed: {
+													historyListView.currentIndex = model.index
+												}
 											}
 										}
-									}
-
-									onCountChanged: {
-										mainItem.showDefaultItem = historyListView.count === 0 && historyListView.visible
-									}
-
-									onVisibleChanged: {
-										mainItem.showDefaultItem = historyListView.count === 0 && historyListView.visible
-										if (!visible) currentIndex = -1
-									}
-
-									Connections {
-										target: mainItem
-										onShowDefaultItemChanged: mainItem.showDefaultItem = mainItem.showDefaultItem && historyListView.count === 0 && historyListView.visible
-										onListViewUpdated: {
-											historyListView.model.updateView()
+										onCurrentIndexChanged: {
+											mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
 										}
+										onCountChanged: {
+											mainItem.showDefaultItem = historyListView.count === 0 && historyListView.visible
+										}
+
+										onVisibleChanged: {
+											mainItem.showDefaultItem = historyListView.count === 0 && historyListView.visible
+											if (!visible) currentIndex = -1
+										}
+
+										Connections {
+											target: mainItem
+											onShowDefaultItemChanged: mainItem.showDefaultItem = mainItem.showDefaultItem && historyListView.count === 0 && historyListView.visible
+											onListViewUpdated: {
+												historyListView.model.updateView()
+											}
+										}
+										Control.ScrollBar.vertical: scrollbar
 									}
-									Control.ScrollBar.vertical: scrollbar
 								}
 							}
 						}
-					}
-					Control.ScrollBar {
-						id: scrollbar
-						active: true
-						Layout.fillHeight: true
+						Control.ScrollBar {
+							id: scrollbar
+							active: true
+							policy: Control.ScrollBar.AlwaysOn
+							Layout.fillHeight: true
+						}
 					}
 				}
 			}
@@ -324,18 +327,24 @@ AbstractMainPage {
 						Layout.fillWidth: true
 					}
 				}
-				ContactsList {
+				RowLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Layout.maximumWidth: parent.width
-					groupCallVisible: true
-					searchBarColor: DefaultStyle.grey_100
-					
-					onCallButtonPressed: (address) => {
-						var addressEnd = "@sip.linphone.org"
-						if (!address.endsWith(addressEnd)) address += addressEnd
-						var callVarObject = UtilsCpp.createCall(address)
-						// var window = UtilsCpp.getCallsWindow()
+					// Layout.maximumWidth: parent.width
+					CallContactsLists {
+						Layout.fillWidth: true
+						Layout.fillHeight: true
+						// Layout.leftMargin: listStackView.sideMargin
+						// Layout.rightMargin: listStackView.sideMargin
+						groupCallVisible: true
+						searchBarColor: DefaultStyle.grey_100
+						
+						onCallButtonPressed: (address) => {
+							var addressEnd = "@sip.linphone.org"
+							if (!address.endsWith(addressEnd)) address += addressEnd
+							var callVarObject = UtilsCpp.createCall(address)
+							// var window = UtilsCpp.getCallsWindow()
+						}
 					}
 				}
 			}
@@ -366,7 +375,7 @@ AbstractMainPage {
 					anchors.centerIn: parent
 					width: 100 * DefaultStyle.dp
 					height: 100 * DefaultStyle.dp
-					address: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
+					address: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
 				}
 				PopupButton {
 					id: detailOptions
@@ -381,7 +390,14 @@ AbstractMainPage {
 								text: qsTr("Ajouter aux contacts")
 								iconSource: AppIcons.plusCircle
 							}
-							onClicked: console.debug("[CallPage.qml] TODO : add to contact")
+							onClicked: {
+								// console.debug("[CallPage.qml] TODO : add to contact")
+								var friendGui = Qt.createQmlObject('import Linphone
+																	FriendGui{}', detailAvatar)
+								friendGui.core.name = contactName.text
+								friendGui.core.address = contactAddress.text
+								friendGui.core.save()
+							}
 						}
 						Button {
 							background: Item {}
@@ -413,8 +429,8 @@ AbstractMainPage {
 							}
 							onClicked: {
 								detailListView.model.removeEntriesWithFilter()
-								detailListView.currentIndex = -1 // reset index for ui
-								detailOptions.closePopup()
+								// detailListView.currentIndex = -1 // reset index for ui
+								detailOptions.close()
 							}
 						}
 					}
@@ -424,6 +440,7 @@ AbstractMainPage {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.fillWidth: true
 				Text {
+					id: contactName
 					property var remoteAddress: mainItem.selectedRowHistoryGui ? UtilsCpp.getDisplayName(mainItem.selectedRowHistoryGui.core.remoteAddress) : undefined
 					Layout.alignment: Qt.AlignHCenter
 					text: remoteAddress ? remoteAddress.value : ""
@@ -434,6 +451,7 @@ AbstractMainPage {
 					}
 				}
 				Text {
+					id: contactAddress
 					text: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
 					horizontalAlignment: Text.AlignHCenter
 					font {
@@ -554,7 +572,6 @@ AbstractMainPage {
 										sourceSize.height: 6.67 * DefaultStyle.dp
 									}
 									Text {
-										Component.onCompleted: console.log("status", modelData.core.status)
 										text: modelData.core.status === LinphoneEnums.CallStatus.Missed
 											? qsTr("Appel manqué")
 											: modelData.core.isOutgoing

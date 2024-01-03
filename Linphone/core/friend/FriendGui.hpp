@@ -35,6 +35,7 @@ public:
 	FriendGui(QSharedPointer<FriendCore> core);
 	~FriendGui();
 	FriendCore *getCore() const;
+	Q_INVOKABLE void createContact(const QString &address);
 	QSharedPointer<FriendCore> mCore;
 	DECLARE_ABSTRACT_OBJECT
 };

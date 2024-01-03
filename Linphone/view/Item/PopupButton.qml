@@ -13,7 +13,7 @@ Button {
 	rightPadding: 0
 	topPadding: 0
 	bottomPadding: 0
-	function closePopup() {
+	function close() {
 		popup.close()
 	}
 	background: Rectangle {

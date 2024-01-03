@@ -133,6 +133,8 @@ void MagicSearchList::setAggregationFlag(LinphoneEnums::MagicSearchAggregation f
 QVariant MagicSearchList::data(const QModelIndex &index, int role) const {
 	int row = index.row();
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
-	if (role == Qt::DisplayRole) return QVariant::fromValue(new FriendGui(mList[row].objectCast<FriendCore>()));
+	if (role == Qt::DisplayRole) {
+		return QVariant::fromValue(new FriendGui(mList[row].objectCast<FriendCore>()));
+	}
 	return QVariant();
 }

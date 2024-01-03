@@ -55,7 +55,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 }
 
 CallHistoryCore::~CallHistoryCore() {
-	qDebug() << "[CallHistoryCore] delete" << this;
+	// qDebug() << "[CallHistoryCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
 }
 

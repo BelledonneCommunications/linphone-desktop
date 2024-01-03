@@ -59,6 +59,7 @@ QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address>
 		//	auto sipAddressEntry = getSipAddressEntry(qtAddress, cleanAddress);
 		//	displayName = sipAddressEntry->displayNames.get();
 	}
+	displayName.replace('.', ' ');
 	return displayName;
 }
 
