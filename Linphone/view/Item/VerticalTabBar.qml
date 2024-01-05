@@ -60,16 +60,18 @@ Control.TabBar {
 			width: mainItem.width
 
 			contentItem: ColumnLayout {
-				height: tabButton.height
-				width: tabButton.width
+				// height: tabButton.height
+				// width: tabButton.width
 				EffectImage {
 					id: buttonIcon
 					property int buttonSize: 24 * DefaultStyle.dp
-					image.source: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
+					source: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
+					width: buttonSize
+					height: buttonSize
 					Layout.alignment: Qt.AlignHCenter
-					image.fillMode: Image.PreserveAspectFit
+					fillMode: Image.PreserveAspectFit
 					colorizationColor: DefaultStyle.grey_0
 				}
 				Text {

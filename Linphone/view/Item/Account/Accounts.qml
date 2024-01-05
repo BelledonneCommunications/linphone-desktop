@@ -68,11 +68,11 @@ Item {
 				spacing: 5 * DefaultStyle.dp
 				EffectImage {
 					id: newAccount
-					image.source: AppIcons.plusCircle
+					source: AppIcons.plusCircle
 					Layout.fillHeight: true
 					Layout.preferredWidth: height
 					Layout.alignment: Qt.AlignHCenter
-					image.fillMode: Image.PreserveAspectFit
+					fillMode: Image.PreserveAspectFit
 					colorizationColor: DefaultStyle.main2_500main
 				}
 				Text{

@@ -21,8 +21,8 @@ Control.Popup{
 			width: mainItem.width
 			height: mainItem.height
 			radius: mainItem.radius
+			color: DefaultStyle.grey_0
 			border.color: DefaultStyle.grey_0
-			// border.width: 1
 		}
 		MultiEffect {
 			anchors.fill: backgroundItem

@@ -77,10 +77,10 @@ Item {
 									Layout.alignment: Qt.AlignVCenter
 									EffectImage {
 										colorizationColor: DefaultStyle.grey_0
-										image.source: mainItem.newItemIconSource
-										image.width: 24 * DefaultStyle.dp
-										image.height: 24 * DefaultStyle.dp
-										image.fillMode: Image.PreserveAspectFit
+										source: mainItem.newItemIconSource
+										width: 24 * DefaultStyle.dp
+										height: 24 * DefaultStyle.dp
+										fillMode: Image.PreserveAspectFit
 									}
 									Text {
 										text: mainItem.noItemButtonText

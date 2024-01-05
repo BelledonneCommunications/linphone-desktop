@@ -36,6 +36,7 @@ QtObject {
 	property string usersThreeSelected: "image://internal/users-three-selected.svg"
 	property string noItemImage: "image://internal/noItemImage.svg"
 	property string verticalDots: "image://internal/dots-three-vertical.svg"
+	property string more: "image://internal/more.svg"
 	property string plusCircle: "image://internal/plus-circle.svg"
 	property string micro: "image://internal/microphone-stage.svg"
 	property string groupCall: "image://internal/group-call.svg"
@@ -64,4 +65,5 @@ QtObject {
 	property string empty: "image://internal/empty.svg"
 	property string heart: "image://internal/heart.svg"
 	property string heartFill: "image://internal/heart-fill.svg"
+	property string recordFill: "image://internal/record-fill.svg"
 }

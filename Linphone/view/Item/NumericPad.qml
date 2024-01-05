@@ -153,11 +153,11 @@ Control.Popup {
 			}
 			contentItem: EffectImage {
 				id: buttonIcon
-				image.source: AppIcons.phone
+				source: AppIcons.phone
 				anchors.centerIn: parent
 				width: 24 * DefaultStyle.dp
 				height: 24 * DefaultStyle.dp
-				image.fillMode: Image.PreserveAspectFit
+				fillMode: Image.PreserveAspectFit
 				colorizationColor: DefaultStyle.grey_0
 			}
 			onClicked: mainItem.launchCall()

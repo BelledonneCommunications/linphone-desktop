@@ -46,7 +46,7 @@ Item {
 		contentItem: RowLayout {
 			spacing: 15 * DefaultStyle.dp
 			EffectImage {
-				image.source: AppIcons.smiley
+				source: AppIcons.smiley
 				colorizationColor: DefaultStyle.success_500main
 				Layout.preferredWidth: 32 * DefaultStyle.dp
 				Layout.preferredHeight: 32 * DefaultStyle.dp
@@ -136,7 +136,7 @@ Item {
 					background: Item {
 					}
 					contentItem: Image {
-						source: AppIcons.verticalDots
+						source: AppIcons.more
 					}
 					Popup{
 						id: accountList

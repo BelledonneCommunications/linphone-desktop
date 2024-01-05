@@ -58,7 +58,6 @@ bool FriendInitialProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sour
 		QRegularExpression search(mFilterText, QRegularExpression::CaseInsensitiveOption |
 		                                           QRegularExpression::UseUnicodePropertiesOption);
 		auto friendData = sourceModel()->data(sourceModel()->index(sourceRow, 0, sourceParent)).value<FriendGui *>();
-		auto name = friendData->getCore()->getName();
 		show = friendData->getCore()->getName().indexOf(search) == 0;
 	}
 

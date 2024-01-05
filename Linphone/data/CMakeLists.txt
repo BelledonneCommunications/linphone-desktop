@@ -36,6 +36,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/users-three-selected.svg"
 	"data/image/noItemImage.svg"
 	"data/image/dots-three-vertical.svg"
+	"data/image/more.svg"
 	"data/image/plus-circle.svg"
 	"data/image/microphone-stage.svg"
 	"data/image/group-call.svg"
@@ -64,6 +65,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/empty.svg"
 	"data/image/heart.svg"
 	"data/image/heart-fill.svg"
+	"data/image/record-fill.svg"
 	
 	data/shaders/roundEffect.vert.qsb
 	data/shaders/roundEffect.frag.qsb

@@ -50,7 +50,10 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		    name.empty() ? Utils::getDisplayName(mAddress)->getValue().toString() : Utils::coreStringToAppString(name);
 		mStarred = contact->getStarred();
 		mIsSaved = true;
-	} else mIsSaved = false;
+	} else {
+		mIsSaved = false;
+		mStarred = false;
+	}
 }
 
 FriendCore::FriendCore(const FriendCore &friendCore) {
@@ -60,6 +63,8 @@ FriendCore::FriendCore(const FriendCore &friendCore) {
 }
 
 FriendCore::~FriendCore() {
+	mustBeInMainThread("~" + getClassName());
+	emit mFriendModel->removeListener();
 }
 
 void FriendCore::setSelf(SafeSharedPointer<FriendCore> me) {
@@ -217,7 +222,6 @@ void FriendCore::remove() {
 
 void FriendCore::save() {                         // Save Values to model
 	FriendCore *thisCopy = new FriendCore(*this); // Pointer to avoid multiple copies in lambdas
-	auto linphoneAddr = ToolModel::interpretUrl(mAddress);
 
 	if (mFriendModel) {
 		mFriendModelConnection->invokeToModel([this, thisCopy]() { // Copy values to avoid concurrency
@@ -227,7 +231,8 @@ void FriendCore::save() {                         // Save Values to model
 			mFriendModelConnection->invokeToCore([this]() { saved(); });
 		});
 	} else {
-		mCoreModelConnection->invokeToModel([this, thisCopy, linphoneAddr]() {
+		mCoreModelConnection->invokeToModel([this, thisCopy]() {
+			auto linphoneAddr = ToolModel::interpretUrl(mAddress);
 			auto core = CoreModel::getInstance()->getCore();
 			auto contact = core->findFriend(linphoneAddr);
 			auto friendExists = contact != nullptr;

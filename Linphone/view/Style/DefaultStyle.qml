@@ -31,7 +31,7 @@ QtObject {
 
 
 	
-	property double dp: 0.8 //1
+	property double dp: 1
 	
 	property string emojiFont: "Noto Color Emoji"
 	property string defaultFont: "Noto Sans"

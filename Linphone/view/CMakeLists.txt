@@ -27,6 +27,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/ComboBox.qml
 	view/Item/ContactsList.qml
 	view/Item/DesktopPopup.qml
+	view/Item/Dialog.qml
 	view/Item/DigitInput.qml
 	view/Item/EffectImage.qml
 	view/Item/ErrorText.qml

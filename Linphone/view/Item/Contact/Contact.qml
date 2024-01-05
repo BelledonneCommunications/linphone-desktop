@@ -123,12 +123,12 @@ Rectangle{
 		}
 		EffectImage {
 			id: manageAccount
-			image.source: AppIcons.manageProfile
+			source: AppIcons.manageProfile
 			Layout.preferredWidth: 24 * DefaultStyle.dp
 			Layout.preferredHeight: 24 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignHCenter
-			image.sourceSize.width: 24 * DefaultStyle.dp
-			image.fillMode: Image.PreserveAspectFit
+			width: 24 * DefaultStyle.dp
+			fillMode: Image.PreserveAspectFit
 			colorizationColor: DefaultStyle.main2_500main
 			MouseArea{ // TODO
 				anchors.fill: parent

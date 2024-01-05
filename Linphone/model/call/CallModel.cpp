@@ -22,6 +22,7 @@
 
 #include <QDebug>
 
+#include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 
@@ -49,6 +50,11 @@ void CallModel::accept(bool withVideo) {
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = core->createCallParams(mMonitor);
 	params->enableVideo(withVideo);
+	params->setRecordFile(
+	    Paths::getCapturesDirPath()
+	        .append(Utils::generateSavedFilename(QString::fromStdString(mMonitor->getToAddress()->getUsername()), ""))
+	        .append(".mkv")
+	        .toStdString());
 	mMonitor->enableCamera(withVideo);
 	// Answer with local call address.
 	auto localAddress = mMonitor->getCallLog()->getLocalAddress();
@@ -114,6 +120,30 @@ void CallModel::setCameraEnabled(bool enabled) {
 	auto params = core->createCallParams(mMonitor);
 	params->enableVideo(enabled);
 	emit cameraEnabledChanged(enabled);
+}
+
+void CallModel::startRecording() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->startRecording();
+	emit recordingChanged(mMonitor->getParams()->isRecording());
+}
+
+void CallModel::stopRecording() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->stopRecording();
+	emit recordingChanged(mMonitor->getParams()->isRecording());
+	// TODO : display notification
+}
+
+void CallModel::setRecordFile(const std::string &path) {
+	auto core = CoreModel::getInstance()->getCore();
+	auto params = core->createCallParams(mMonitor);
+	params->setRecordFile(path);
+	mMonitor->update(params);
+}
+
+std::string CallModel::getRecordFile() const {
+	return mMonitor->getParams()->getRecordFile();
 }
 
 std::shared_ptr<const linphone::Address> CallModel::getRemoteAddress() {

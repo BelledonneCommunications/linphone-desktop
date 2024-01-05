@@ -68,13 +68,14 @@ public:
 	                                             bool dotsSeparator = true); // Return the elapsed time formated
 	Q_INVOKABLE static QString formatDate(const QDateTime &date, bool includeTime = true); // Return the date formated
 	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);               // Return the date formated
+	static QString generateSavedFilename(const QString &from, const QString &to);
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);
 		else
 			return QString::fromLocal8Bit(str.c_str(),
-			                              int(str.size())); // When using Locale. Be careful about conversion bijection
-			                                                // with UTF-8, you may loss characters
+			                              int(str.size())); // When using Locale. Be careful about conversion
+			                                                // bijection with UTF-8, you may loss characters
 	}
 
 	static inline std::string appStringToCoreString(const QString &str) {

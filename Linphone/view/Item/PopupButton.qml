@@ -23,7 +23,7 @@ Button {
 		radius: 40 * DefaultStyle.dp
 	}
 	contentItem: Image {
-		source: AppIcons.verticalDots
+		source: AppIcons.more
 		sourceSize.width: 24 * DefaultStyle.dp
 		sourceSize.height: 24 * DefaultStyle.dp
 		width: 24 * DefaultStyle.dp
@@ -37,7 +37,7 @@ Button {
 		id: popup
 		x: - width
 		y: mainItem.height
-		closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnEscape
+		closePolicy: Popup.CloseOnPressOutsideParent |Popup.CloseOnPressOutside
 
 		padding: 20 * DefaultStyle.dp
 

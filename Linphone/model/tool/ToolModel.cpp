@@ -20,6 +20,7 @@
 
 #include "ToolModel.hpp"
 #include "core/App.hpp"
+#include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 #include <QDebug>
@@ -51,7 +52,10 @@ QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address>
 	QString displayName;
 	if (address) {
 		displayName = Utils::coreStringToAppString(address->getDisplayName());
-		if (displayName.isEmpty()) displayName = Utils::coreStringToAppString(address->getUsername());
+		if (displayName.isEmpty()) {
+			displayName = Utils::coreStringToAppString(address->getUsername());
+			displayName.replace('.', ' ');
+		}
 		// TODO
 		//	std::shared_ptr<linphone::Address> cleanAddress = address->clone();
 		//	cleanAddress->clean();
@@ -59,7 +63,6 @@ QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address>
 		//	auto sipAddressEntry = getSipAddressEntry(qtAddress, cleanAddress);
 		//	displayName = sipAddressEntry->displayNames.get();
 	}
-	displayName.replace('.', ' ');
 	return displayName;
 }
 
@@ -85,6 +88,14 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(false);
+	if (Utils::coreStringToAppString(params->getRecordFile()).isEmpty()) {
+
+		params->setRecordFile(
+		    Paths::getCapturesDirPath()
+		        .append(Utils::generateSavedFilename(QString::fromStdString(address->getUsername()), ""))
+		        .append(".mkv")
+		        .toStdString());
+	}
 
 	QHashIterator<QString, QString> iterator(headers);
 	while (iterator.hasNext()) {
@@ -92,8 +103,8 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 		params->addCustomHeader(Utils::appStringToCoreString(iterator.key()),
 		                        Utils::appStringToCoreString(iterator.value()));
 	}
+
 	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
-	// CallModel::setRecordFile(params, Utils::coreStringToAppString(address->getUsername()));
 	auto call = core->inviteAddressWithParams(address, params);
 	return call ? CallCore::create(call) : nullptr;
 

@@ -35,7 +35,6 @@ class FriendInitialProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 
 	Q_PROPERTY(QString filterText READ getFilterText WRITE setFilterText NOTIFY filterTextChanged)
-	// Q_PROPERTY(QAbstractItemModel *sourceModel READ sourceModel WRITE setSourceModel NOTIFY sourceModelChanged)
 
 public:
 	FriendInitialProxy(QObject *parent = Q_NULLPTR);
@@ -52,7 +51,6 @@ signals:
 
 protected:
 	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	// virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	QString mFilterText;
 	QSharedPointer<MagicSearchProxy> mSource;

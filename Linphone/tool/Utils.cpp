@@ -240,3 +240,15 @@ QString Utils::formatDateElapsedTime(const QDateTime &date) {
 	auto s = dateSec - h * 3600 - m * 60;
 	return QString::number(s) + " s";
 }
+
+QString Utils::generateSavedFilename(const QString &from, const QString &to) {
+	auto escape = [](const QString &str) {
+		constexpr char ReservedCharacters[] = "[<|>|:|\"|/|\\\\|\\?|\\*|\\+|\\||_|-]+";
+		static QRegularExpression regexp(ReservedCharacters);
+		return QString(str).replace(regexp, "");
+	};
+	return QStringLiteral("%1_%2_%3")
+	    .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
+	    .arg(escape(from))
+	    .arg(escape(to));
+}

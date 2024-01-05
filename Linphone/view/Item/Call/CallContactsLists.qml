@@ -231,31 +231,10 @@ Item {
 								weight: 800 * DefaultStyle.dp
 							}
 						}
-						Repeater {
-							model: ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "\\d"]
-							RowLayout {
-								visible: contactList.count > 0
-								spacing: 8 * DefaultStyle.dp
-								Layout.fillWidth: true
-								Text {
-									Layout.preferredWidth: 20 * DefaultStyle.dp
-									Layout.alignment: Qt.AlignTop
-									Layout.topMargin: 15 * DefaultStyle.dp // Align center with the first row
-									text: modelData == "\\d" ? " " : modelData
-									color: DefaultStyle.main2_400
-									font {
-										pixelSize: 20 * DefaultStyle.dp
-										weight: 500 * DefaultStyle.dp
-									}
-								}
-								ContactsList{
-									Layout.fillWidth: true
-									id: contactList
-									initialProxyModel: modelData
-									searchBarText: searchBar.text
-									// contactMenuVisible: false
-								}
-							}
+						ContactsList{
+							Layout.fillWidth: true
+							id: contactList
+							searchBarText: searchBar.text
 						}
 					}
 					ColumnLayout {
@@ -269,16 +248,11 @@ Item {
 						ContactsList{
 							contactMenuVisible: false
 							Layout.fillHeight: true
-
-							model: FriendInitialProxy {
-								filterText: ""
-								property int sourceFlags: LinphoneEnums.MagicSearchSource.FavoriteFriends//mainItem.magicSearchSourceFlags
-								sourceModel: MagicSearchProxy {
-									id: search
-									searchText: searchBar.text.length === 0 ? "*" : searchBar.text
-									aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
-									sourceFlags: LinphoneEnums.MagicSearchSource.FavoriteFriends
-								}
+							initialHeadersVisible: false
+							model: MagicSearchProxy {
+								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
+								sourceFlags: LinphoneEnums.MagicSearchSource.FavoriteFriends
+								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
 							}
 						}
 					}
@@ -299,7 +273,7 @@ Item {
 			id: numPad
 			width: parent.width
 			onLaunchCall: {
-				var callVarObject = UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
+				UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
 				// TODO : auto completion instead of sip linphone
 			}
 		}

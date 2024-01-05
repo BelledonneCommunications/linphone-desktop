@@ -45,6 +45,9 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool peerSecured READ getPeerSecured WRITE setPeerSecured NOTIFY peerSecuredChanged)
 	Q_PROPERTY(
 	    bool remoteVideoEnabled READ getRemoteVideoEnabled WRITE setRemoteVideoEnabled NOTIFY remoteVideoEnabledChanged)
+	Q_PROPERTY(bool recording READ getRecording WRITE setRecording NOTIFY recordingChanged)
+	Q_PROPERTY(bool remoteRecording READ getRemoteRecording WRITE setRemoteRecording NOTIFY remoteRecordingChanged)
+	Q_PROPERTY(bool recordable READ getRecordable WRITE setRecordable NOTIFY recordableChanged)
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 
 public:
@@ -89,6 +92,15 @@ public:
 	bool getRemoteVideoEnabled() const;
 	void setRemoteVideoEnabled(bool enabled);
 
+	bool getRecording() const;
+	void setRecording(bool recording);
+
+	bool getRemoteRecording() const;
+	void setRemoteRecording(bool recording);
+
+	bool getRecordable() const;
+	void setRecordable(bool recordable);
+
 	LinphoneEnums::CallState getTransferState() const;
 	void setTransferState(LinphoneEnums::CallState state, const QString &message);
 
@@ -108,6 +120,9 @@ signals:
 	void transferStateChanged();
 	void peerSecuredChanged();
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
+	void recordingChanged();
+	void remoteRecordingChanged();
+	void recordableChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -119,6 +134,8 @@ signals:
 	void lSetCameraEnabled(bool enabled);
 	void lSetPaused(bool paused);
 	void lTransferCall(const QString &dest);
+	void lStartRecording();
+	void lStopRecording();
 
 	/* TODO
 	    Q_INVOKABLE void acceptWithVideo();
@@ -133,13 +150,10 @@ signals:
 	    Q_INVOKABLE void rejectVideoRequest();
 
 	    Q_INVOKABLE void takeSnapshot();
-	    Q_INVOKABLE void startRecording();
-	    Q_INVOKABLE void stopRecording();
 
 	    Q_INVOKABLE void sendDtmf(const QString &dtmf);
 	    Q_INVOKABLE void verifyAuthenticationToken(bool verify);
 	    Q_INVOKABLE void updateStreams();
-	    Q_INVOKABLE void toggleSpeakerMute();
 	*/
 private:
 	std::shared_ptr<CallModel> mCallModel;
@@ -156,6 +170,9 @@ private:
 	bool mCameraEnabled;
 	bool mPaused = false;
 	bool mRemoteVideoEnabled = false;
+	bool mRecording = false;
+	bool mRemoteRecording = false;
+	bool mRecordable = false;
 	QSharedPointer<SafeConnection<CallCore, CallModel>> mAccountModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT

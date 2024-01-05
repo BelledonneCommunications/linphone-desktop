@@ -23,6 +23,18 @@ AbstractMainPage {
 		listStackView.push(newCallItem)
 	}
 
+
+	Dialog {
+		id: deleteHistoryPopup
+		width: 278 * DefaultStyle.dp
+		text: qsTr("L'historique d'appel sera supprimé. Souhaitez-vous continuer ?")
+	}
+	Dialog {
+		id: deleteForUserPopup
+		width: 278 * DefaultStyle.dp
+		text: qsTr("L'historique d'appel de l'utilisateur sera supprimé. Souhaitez-vous continuer ?")
+	}
+
 	leftPanelContent: Item {
 		id: leftPanel
 		Layout.fillWidth: true
@@ -61,12 +73,12 @@ AbstractMainPage {
 							background: Item{}
 							contentItem: RowLayout {
 								EffectImage {
-									image.source: AppIcons.trashCan
+									source: AppIcons.trashCan
 									width: 24 * DefaultStyle.dp
 									height: 24 * DefaultStyle.dp
 									Layout.preferredWidth: 24 * DefaultStyle.dp
 									Layout.preferredHeight: 24 * DefaultStyle.dp
-									image.fillMode: Image.PreserveAspectFit
+									fillMode: Image.PreserveAspectFit
 									colorizationColor: DefaultStyle.danger_500main
 								}
 								Text {
@@ -78,9 +90,13 @@ AbstractMainPage {
 									}
 								}
 							}
+							Connections {
+								target: deleteHistoryPopup
+								onAccepted: historyListView.model.removeAllEntries()
+							}
 							onClicked: {
-								historyListView.model.removeAllEntries()
 								removeHistory.close()
+								deleteHistoryPopup.open()
 							}
 						}
 					}
@@ -182,50 +198,58 @@ AbstractMainPage {
 														height: 45 * DefaultStyle.dp
 													}
 												}
-												ColumnLayout {
-													Layout.alignment: Qt.AlignVCenter
-													Text {
-														property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : undefined
-														text: remoteAddress ? remoteAddress.value : ""
-														font {
-															pixelSize: 14 * DefaultStyle.dp
-															weight: 400 * DefaultStyle.dp
-														}
-													}
-													RowLayout {
-														Image {
-															source: modelData.core.status === LinphoneEnums.CallStatus.Declined
-															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-																? modelData.core.isOutgoing 
-																	? AppIcons.outgoingCallRejected 
-																	: AppIcons.incomingCallRejected
-																: modelData.core.status === LinphoneEnums.CallStatus.Missed
-																	? modelData.core.isOutgoing
-																		? AppIcons.outgoingCallMissed 
-																		: AppIcons.incomingCallMissed
-																	: modelData.core.isOutgoing
-																		? AppIcons.outgoingCall 
-																		: AppIcons.incomingCall
-															Layout.preferredWidth: 5 * DefaultStyle.dp
-															Layout.preferredHeight: 5 * DefaultStyle.dp
-															sourceSize.width: 5 * DefaultStyle.dp
-															sourceSize.height: 5 * DefaultStyle.dp
-														}
+												Item {
+													Layout.fillWidth: true
+													Layout.fillHeight: true
+													ColumnLayout {
+														spacing: 5 * DefaultStyle.dp
+														anchors.verticalCenter: parent.verticalCenter
 														Text {
-															// text: modelData.core.date
-															text: UtilsCpp.formatDateElapsedTime(modelData.core.date)
+															id: friendAddress
+															property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : undefined
+															text: remoteAddress ? remoteAddress.value : ""
 															font {
-																pixelSize: 12 * DefaultStyle.dp
-																weight: 300 * DefaultStyle.dp
+																pixelSize: 14 * DefaultStyle.dp
+																weight: 400 * DefaultStyle.dp
+															}
+														}
+														RowLayout {
+															spacing: 3 * DefaultStyle.dp
+															Image {
+																source: modelData.core.status === LinphoneEnums.CallStatus.Declined
+																|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+																|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+																|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+																	? modelData.core.isOutgoing 
+																		? AppIcons.outgoingCallRejected 
+																		: AppIcons.incomingCallRejected
+																	: modelData.core.status === LinphoneEnums.CallStatus.Missed
+																		? modelData.core.isOutgoing
+																			? AppIcons.outgoingCallMissed 
+																			: AppIcons.incomingCallMissed
+																		: modelData.core.isOutgoing
+																			? AppIcons.outgoingCall 
+																			: AppIcons.incomingCall
+																Layout.preferredWidth: 5 * DefaultStyle.dp
+																Layout.preferredHeight: 5 * DefaultStyle.dp
+																sourceSize.width: 5 * DefaultStyle.dp
+																sourceSize.height: 5 * DefaultStyle.dp
+															RectangleTest{anchors.fill: parent}
+															}
+															Text {
+																// text: modelData.core.date
+																text: UtilsCpp.formatDateElapsedTime(modelData.core.date)
+																font {
+																	pixelSize: 12 * DefaultStyle.dp
+																	weight: 300 * DefaultStyle.dp
+																}
 															}
 														}
 													}
 												}
-												Item {
-													Layout.fillWidth: true
-												}
+												// Item {
+												// 	Layout.fillWidth: true
+												// }
 												Control.Button {
 													implicitWidth: 24 * DefaultStyle.dp
 													implicitHeight: 24 * DefaultStyle.dp
@@ -244,7 +268,7 @@ AbstractMainPage {
 														var addr = modelData.core.remoteAddress
 														var addressEnd = "@sip.linphone.org"
 														if (!addr.endsWith(addressEnd)) addr += addressEnd
-														var callVarObject = UtilsCpp.createCall(addr)
+														UtilsCpp.createCall(addr)
 													}
 												}
 											}
@@ -342,7 +366,7 @@ AbstractMainPage {
 						onCallButtonPressed: (address) => {
 							var addressEnd = "@sip.linphone.org"
 							if (!address.endsWith(addressEnd)) address += addressEnd
-							var callVarObject = UtilsCpp.createCall(address)
+							UtilsCpp.createCall(address)
 							// var window = UtilsCpp.getCallsWindow()
 						}
 					}
@@ -427,10 +451,13 @@ AbstractMainPage {
 								iconSource: AppIcons.trashCan
 								colorizationColor: DefaultStyle.danger_500main
 							}
+							Connections {
+								target: deleteForUserPopup
+								onAccepted: detailListView.model.removeEntriesWithFilter()
+							}
 							onClicked: {
-								detailListView.model.removeEntriesWithFilter()
-								// detailListView.currentIndex = -1 // reset index for ui
 								detailOptions.close()
+								deleteForUserPopup.open()
 							}
 						}
 					}
@@ -659,12 +686,12 @@ AbstractMainPage {
 		property string iconSource
 		property color colorizationColor: DefaultStyle.main2_500main
 		EffectImage {
-			image.source: iconLabel.iconSource
+			source: iconLabel.iconSource
 			width: 24 * DefaultStyle.dp
 			height: 24 * DefaultStyle.dp
 			Layout.preferredWidth: 24 * DefaultStyle.dp
 			Layout.preferredHeight: 24 * DefaultStyle.dp
-			image.fillMode: Image.PreserveAspectFit
+			fillMode: Image.PreserveAspectFit
 			colorizationColor: iconLabel.colorizationColor
 		}
 		Text {

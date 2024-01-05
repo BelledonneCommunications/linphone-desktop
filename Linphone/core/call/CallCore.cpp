@@ -58,6 +58,9 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	               encryption == LinphoneEnums::MediaEncryption::Dtls;
 	mPaused = mState == LinphoneEnums::CallState::Pausing || mState == LinphoneEnums::CallState::Paused ||
 	          mState == LinphoneEnums::CallState::PausedByRemote;
+	mRecording = call->getParams() && call->getParams()->isRecording();
+	mRemoteRecording = call->getRemoteParams() && call->getRemoteParams()->isRecording();
+	mRecordable = mState == LinphoneEnums::CallState::StreamsRunning;
 }
 
 CallCore::~CallCore() {
@@ -87,6 +90,19 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mAccountModelConnection->makeConnectToCore(&CallCore::lSetCameraEnabled, [this](bool enabled) {
 		mAccountModelConnection->invokeToModel([this, enabled]() { mCallModel->setCameraEnabled(enabled); });
 	});
+	mAccountModelConnection->makeConnectToCore(&CallCore::lStartRecording, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { mCallModel->startRecording(); });
+	});
+	mAccountModelConnection->makeConnectToCore(&CallCore::lStopRecording, [this]() {
+		mAccountModelConnection->invokeToModel([this]() { mCallModel->stopRecording(); });
+	});
+	mAccountModelConnection->makeConnectToModel(&CallModel::recordingChanged, [this](bool recording) {
+		mAccountModelConnection->invokeToCore([this, recording]() { setRecording(recording); });
+	});
+	mAccountModelConnection->makeConnectToModel(
+	    &CallModel::remoteRecording, [this](const std::shared_ptr<linphone::Call> &call, bool recording) {
+		    mAccountModelConnection->invokeToCore([this, recording]() { setRemoteRecording(recording); });
+	    });
 	mAccountModelConnection->makeConnectToModel(&CallModel::cameraEnabledChanged, [this](bool enabled) {
 		mAccountModelConnection->invokeToCore([this, enabled]() { setCameraEnabled(enabled); });
 	});
@@ -102,6 +118,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mAccountModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
 		mAccountModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
 	});
+	mAccountModelConnection->makeConnectToModel(&CallModel::stateChanged,
+	                                            [this](linphone::Call::State state, const std::string &message) {
+		                                            mAccountModelConnection->invokeToCore([this, state]() {
+			                                            setRecordable(state == linphone::Call::State::StreamsRunning);
+		                                            });
+	                                            });
 	mAccountModelConnection->makeConnectToCore(&CallCore::lSetPaused, [this](bool paused) {
 		mAccountModelConnection->invokeToModel([this, paused]() { mCallModel->setPaused(paused); });
 	});
@@ -272,6 +294,36 @@ void CallCore::setRemoteVideoEnabled(bool enabled) {
 	if (mRemoteVideoEnabled != enabled) {
 		mRemoteVideoEnabled = enabled;
 		emit remoteVideoEnabledChanged(mRemoteVideoEnabled);
+	}
+}
+
+bool CallCore::getRecording() const {
+	return mRecording;
+}
+void CallCore::setRecording(bool recording) {
+	if (mRecording != recording) {
+		mRecording = recording;
+		emit recordingChanged();
+	}
+}
+
+bool CallCore::getRemoteRecording() const {
+	return mRemoteRecording;
+}
+void CallCore::setRemoteRecording(bool recording) {
+	if (mRemoteRecording != recording) {
+		mRemoteRecording = recording;
+		emit remoteRecordingChanged();
+	}
+}
+
+bool CallCore::getRecordable() const {
+	return mRecordable;
+}
+void CallCore::setRecordable(bool recordable) {
+	if (mRecordable != recordable) {
+		mRecordable = recordable;
+		emit recordableChanged();
 	}
 }
 

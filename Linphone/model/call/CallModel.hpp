@@ -33,7 +33,7 @@ class CallModel : public ::Listener<linphone::Call, linphone::CallListener>,
                   public AbstractObject {
 	Q_OBJECT
 public:
-	CallModel(const std::shared_ptr<linphone::Call> &account, QObject *parent = nullptr);
+	CallModel(const std::shared_ptr<linphone::Call> &call, QObject *parent = nullptr);
 	~CallModel();
 
 	void accept(bool withVideo);
@@ -43,10 +43,15 @@ public:
 	void setMicrophoneMuted(bool isMuted);
 	void setSpeakerMuted(bool isMuted);
 	void setCameraEnabled(bool enabled);
+	void startRecording();
+	void stopRecording();
+	void setRecordFile(const std::string &path);
+
 	void setPaused(bool paused);
 	void transferTo(const std::shared_ptr<linphone::Address> &address);
 	void terminateAllCalls();
 
+	std::string getRecordFile() const;
 	std::shared_ptr<const linphone::Address> getRemoteAddress();
 	bool getAuthenticationTokenVerified();
 
@@ -57,6 +62,7 @@ signals:
 	void durationChanged(int);
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
+	void recordingChanged(bool recording);
 
 private:
 	QTimer mDurationTimer;

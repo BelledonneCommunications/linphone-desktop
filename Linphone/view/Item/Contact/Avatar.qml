@@ -33,7 +33,7 @@ StackView{
 		id: initials
 		Rectangle {
 			id: initialItem
-			property string initials: UtilsCpp.getInitials(mainItem.displayNameObj.value)
+			property string initials: displayNameObj ? UtilsCpp.getInitials(mainItem.displayNameObj.value) : ""
 			radius: width / 2
 			color: DefaultStyle.main2_200
 			height: mainItem.height
