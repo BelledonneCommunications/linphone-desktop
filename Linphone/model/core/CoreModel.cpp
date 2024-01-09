@@ -92,6 +92,10 @@ void CoreModel::start() {
 	config->setInt("video", "show_local", 0); // So : write ourself to turn off camera before starting the core.
 	mCore->start();
 	setPathAfterStart();
+	auto videoPolicy = mCore->getVideoActivationPolicy();
+	videoPolicy->setAutomaticallyAccept(true);
+	videoPolicy->setAutomaticallyInitiate(false);
+	mCore->setVideoActivationPolicy(videoPolicy);
 	mIterateTimer->start();
 }
 // -----------------------------------------------------------------------------
