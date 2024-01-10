@@ -11,21 +11,23 @@ Item {
 	id: mainItem
 	width: 517 * DefaultStyle.dp
 	readonly property int topPadding: 23 * DefaultStyle.dp
-	readonly property int bottomPadding: 18 * DefaultStyle.dp
+	readonly property int bottomPadding: 23 * DefaultStyle.dp
 	readonly property int leftPadding: 32 * DefaultStyle.dp
 	readonly property int rightPadding: 32 * DefaultStyle.dp
 	readonly property int spacing: 16 * DefaultStyle.dp
 	
 	signal addAccountRequest()
-	
 	implicitHeight: list.contentHeight + topPadding + bottomPadding + 32 * DefaultStyle.dp + 1 + newAccountArea.height
 	ColumnLayout{
+		id: childLayout
 		anchors.top: parent.top
 		anchors.topMargin: mainItem.topPadding
 		anchors.left: parent.left
 		anchors.leftMargin: mainItem.leftPadding
 		anchors.right: parent.right
 		anchors.rightMargin: mainItem.rightPadding
+		anchors.bottom: parent.bottom
+		anchors.bottomMargin: mainItem.bottomPadding
 		ListView{
 			id: list
 			Layout.preferredHeight: contentHeight
@@ -69,8 +71,10 @@ Item {
 				EffectImage {
 					id: newAccount
 					source: AppIcons.plusCircle
-					Layout.fillHeight: true
-					Layout.preferredWidth: height
+					width: 32 * DefaultStyle.dp
+					height: 32 * DefaultStyle.dp
+					Layout.preferredWidth: 32 * DefaultStyle.dp
+					Layout.preferredHeight: 32 * DefaultStyle.dp
 					Layout.alignment: Qt.AlignHCenter
 					fillMode: Image.PreserveAspectFit
 					colorizationColor: DefaultStyle.main2_500main

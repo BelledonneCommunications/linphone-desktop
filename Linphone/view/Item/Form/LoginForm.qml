@@ -1,5 +1,5 @@
 import QtQuick 2.15
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts
 import QtQuick.Controls as Control
 import Linphone
 
@@ -24,32 +24,38 @@ ColumnLayout {
 			value: DefaultStyle.danger_500main
 		}
 	}
-	TextInput {
-		id: password
-		label: "Password"
-		mandatory: true
-		hidden: true
-		enableErrorText: true
 
-		Binding on background.border.color {
-			when: errorText.opacity != 0
-			value: DefaultStyle.danger_500main
-		}
-		Binding on textField.color {
-			when: errorText.opacity != 0
-			value: DefaultStyle.danger_500main
-		}
-	}
+	Item {
+		Layout.preferredHeight: password.implicitHeight
+		TextInput {
+			id: password
+			label: "Password"
+			mandatory: true
+			hidden: true
+			enableErrorText: true
 
-	ErrorText {
-		id: errorText
-		Connections {
-			target: LoginPageCpp
-			onRegistrationStateChanged: {
-				if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Failed) {
-					errorText.text = qsTr("Le couple identifiant mot de passe ne correspont pas")
-				} else if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
-					mainItem.connectionSucceed()
+			Binding on background.border.color {
+				when: errorText.opacity != 0
+				value: DefaultStyle.danger_500main
+			}
+			Binding on textField.color {
+				when: errorText.opacity != 0
+				value: DefaultStyle.danger_500main
+			}
+		}
+
+		ErrorText {
+			anchors.bottom: password.bottom
+			id: errorText
+			Connections {
+				target: LoginPageCpp
+				onErrorMessageChanged: {
+					errorText.text = LoginPageCpp.errorMessage
+				}
+				onRegistrationStateChanged: {
+					if (LoginPageCpp.registrationState === LinphoneEnums.RegistrationState.Ok) {
+						mainItem.connectionSucceed()
+					}
 				}
 			}
 		}
@@ -58,11 +64,43 @@ ColumnLayout {
 	RowLayout {
 		id: lastFormLineLayout
 		Button {
-			text: qsTr("Connexion")
+			contentItem: StackLayout {
+				id: connectionButton
+				currentIndex: 0
+				Text {
+					text: qsTr("Connexion")
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+
+					font {
+						pixelSize: 18 * DefaultStyle.dp
+						weight: 600 * DefaultStyle.dp
+					}
+					color: DefaultStyle.grey_0
+				}
+				BusyIndicator {
+					width: parent.height
+					height: parent.height
+					Layout.alignment: Qt.AlignCenter
+					indicatorColor: DefaultStyle.grey_0
+				}
+				Connections {
+					target: LoginPageCpp
+					onRegistrationStateChanged: {
+						if (LoginPageCpp.registrationState != LinphoneEnums.RegistrationState.Progress) {
+							connectionButton.currentIndex = 0
+						}
+					}
+					onErrorMessageChanged: {
+						connectionButton.currentIndex = 0
+					}
+				}
+			}
 			Layout.rightMargin: 20 * DefaultStyle.dp
 			onClicked: {
 				username.errorMessage = ""
 				password.errorMessage = ""
+				errorText.text = ""
 
 				if (username.text.length == 0 || password.text.length == 0) {
 					if (username.text.length == 0)
@@ -72,6 +110,7 @@ ColumnLayout {
 					return
 				}
 				LoginPageCpp.login(username.text, password.text)
+				connectionButton.currentIndex = 1
 			}
 		}
 		Button {

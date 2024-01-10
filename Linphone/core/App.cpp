@@ -81,6 +81,7 @@ void App::init() {
 	// Core. Manage the logger so it must be instantiate at first.
 	auto coreModel = CoreModel::create("", mLinphoneThread);
 	connect(mLinphoneThread, &QThread::started, coreModel.get(), &CoreModel::start);
+	mFirstLaunch = mSettings.value("firstLaunch", 1).toInt();
 	// Console Commands
 	createCommandParser();
 	mParser->parse(this->arguments());
@@ -262,6 +263,17 @@ void App::closeCallsWindow() {
 		mCallsWindow->deleteLater();
 		mCallsWindow = nullptr;
 	}
+}
+
+void App::setFirstLaunch(bool first) {
+	if (mFirstLaunch != first) {
+		mFirstLaunch = first;
+		mSettings.setValue("firstLaunch", first);
+	}
+}
+
+bool App::getFirstLaunch() const {
+	return mFirstLaunch;
 }
 
 QQuickWindow *App::getMainWindow() {

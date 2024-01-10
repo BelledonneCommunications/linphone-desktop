@@ -33,17 +33,23 @@ public:
 	~LoginPage();
 
 	Q_PROPERTY(linphone::RegistrationState registrationState READ getRegistrationState NOTIFY registrationStateChanged)
+	Q_PROPERTY(QString errorMessage READ getErrorMessage NOTIFY errorMessageChanged)
 
 	Q_INVOKABLE void login(const QString &username, const QString &password);
 
 	linphone::RegistrationState getRegistrationState() const;
 	void setRegistrationState(linphone::RegistrationState status);
 
+	QString getErrorMessage() const;
+	void setErrorMessage(const QString &error);
+
 signals:
 	void registrationStateChanged();
+	void errorMessageChanged();
 
 private:
 	linphone::RegistrationState mRegistrationState = linphone::RegistrationState::None;
+	QString mErrorMessage;
 
 	DECLARE_ABSTRACT_OBJECT
 };

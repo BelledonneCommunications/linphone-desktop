@@ -49,28 +49,48 @@ void LoginPage::setRegistrationState(linphone::RegistrationState status) {
 	}
 }
 
+QString LoginPage::getErrorMessage() const {
+	return mErrorMessage;
+}
+
+void LoginPage::setErrorMessage(const QString &error) {
+	// force signal emission to display the error even if it doesn't change
+	mErrorMessage = error;
+	emit errorMessageChanged();
+}
+
 void LoginPage::login(const QString &username, const QString &password) {
 	App::postModelAsync([=]() {
+		QString *error = new QString(tr("Le couple identifiant mot de passe ne correspont pas"));
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();
 		connect(accountManager, &AccountManager::registrationStateChanged, this,
-		        [accountManager, this](linphone::RegistrationState state) mutable {
+		        [accountManager, this, error](linphone::RegistrationState state) mutable {
 			        // View thread
 			        setRegistrationState(state);
 			        switch (state) {
-				        case linphone::RegistrationState::Ok:
-				        case linphone::RegistrationState::Cleared:
 				        case linphone::RegistrationState::Failed: {
+					        emit accountManager->errorMessageChanged(*error);
 					        accountManager->deleteLater();
 					        break;
 				        }
+				        case linphone::RegistrationState::Ok: {
+					        emit accountManager->errorMessageChanged("");
+					        break;
+				        }
+				        case linphone::RegistrationState::Cleared:
 				        case linphone::RegistrationState::None:
 				        case linphone::RegistrationState::Progress:
 				        case linphone::RegistrationState::Refreshing:
 					        break;
 			        }
 		        });
-		if (!accountManager->login(username, password)) {
+		connect(accountManager, &AccountManager::errorMessageChanged, this,
+		        [this](QString errorMessage) { setErrorMessage(errorMessage); });
+
+		connect(accountManager, &AccountManager::destroyed, [error]() { delete error; });
+
+		if (!accountManager->login(username, password, error)) {
 			emit accountManager->registrationStateChanged(linphone::RegistrationState::Failed);
 		}
 	});

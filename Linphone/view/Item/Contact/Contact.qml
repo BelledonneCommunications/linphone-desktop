@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Effects
 
 import QtQuick.Layouts
+import QtQuick.Controls as Control
 
 
 import Linphone
@@ -31,68 +32,76 @@ Rectangle{
 				onClicked: mainItem.avatarClicked()
 			}
 		}
-		ContactDescription{
-			id: description
-			Layout.fillWidth: true
+		Item {
+			Layout.preferredWidth: 200 * DefaultStyle.dp
 			Layout.fillHeight: true
 			Layout.leftMargin: 10 * DefaultStyle.dp
-			account: mainItem.account
-		}
-		Item{
-			id: registrationStatusItem
-			Layout.preferredWidth: 97 * DefaultStyle.dp
-			Layout.fillHeight: true
-			Rectangle{
-				id: registrationStatus
-				anchors.left: parent.left
-				anchors.verticalCenter: parent.verticalCenter
-				width: Math.min(text.implicitWidth + (2 * 8 * DefaultStyle.dp), registrationStatusItem.width)
-				height: 24 * DefaultStyle.dp
-				color: DefaultStyle.main2_200
-				radius: 90 * DefaultStyle.dp
-				Text{
-					id: text
-					anchors.fill: parent
-					anchors.leftMargin: 8 * DefaultStyle.dp
-					anchors.rightMargin: 8 * DefaultStyle.dp
-					verticalAlignment: Text.AlignVCenter	
-					horizontalAlignment: Text.AlignHCenter
-					visible: mainItem.account
-					readonly property int mode : !mainItem.account || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Ok
-													? 0
-													: mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Cleared || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.None
-														? 1
-														: mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Progress || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Refreshing
-															? 2
-															: 3
-					// Test texts
-					//Timer{
-					//	running: true
-					//	interval: 1000
-					//	repeat: true
-					//	onTriggered: text.mode = (++text.mode) % 4
-					//}
-					font.weight: 300 * DefaultStyle.dp
-					font.pixelSize: 12 * DefaultStyle.dp
-					color: mode == 0 
-							? DefaultStyle.success_500main
-							: mode == 1
-								? DefaultStyle.warning_600
-								: mode == 2
-									? DefaultStyle.main2_500main
-									: DefaultStyle.danger_500main
-					text: mode == 0
-							? 'Connecté'
-							: mode == 1
-								? 'Désactivé'
-								: mode == 2
-									? 'Connexion...'
-									: 'Erreur'
-				}
+			Layout.rightMargin: 10 * DefaultStyle.dp
+			ContactDescription{
+				id: description
+				anchors.fill: parent
+				account: mainItem.account
 			}
 		}
+		Control.Control {
+			id: registrationStatusItem
+			Layout.minimumWidth: 49 * DefaultStyle.dp
+			Layout.preferredHeight: 24 * DefaultStyle.dp
+			topPadding: 4 * DefaultStyle.dp
+			bottomPadding: 4 * DefaultStyle.dp
+			leftPadding: 8 * DefaultStyle.dp
+			rightPadding: 8 * DefaultStyle.dp
+			Layout.preferredWidth: text.implicitWidth + (2 * 8 * DefaultStyle.dp)
+			background: Rectangle{
+				id: registrationStatus
+				anchors.fill: parent
+				color: DefaultStyle.main2_200
+				radius: 90 * DefaultStyle.dp
+			}
+			contentItem: Text {
+				id: text
+				anchors.fill: parent
+				verticalAlignment: Text.AlignVCenter	
+				horizontalAlignment: Text.AlignHCenter
+				visible: mainItem.account
+				property int mode : !mainItem.account || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Ok
+												? 0
+												: mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Cleared || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.None
+													? 1
+													: mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Progress || mainItem.account.core.registrationState == LinphoneEnums.RegistrationState.Refreshing
+														? 2
+														: 3
+				// Test texts
+				// Timer{
+				// 	running: true
+				// 	interval: 1000
+				// 	repeat: true
+				// 	onTriggered: text.mode = (++text.mode) % 4
+				// }
+				font.weight: 300 * DefaultStyle.dp
+				font.pixelSize: 12 * DefaultStyle.dp
+				color: mode == 0 
+						? DefaultStyle.success_500main
+						: mode == 1
+							? DefaultStyle.warning_600
+							: mode == 2
+								? DefaultStyle.main2_500main
+								: DefaultStyle.danger_500main
+				text: mode == 0
+						? qsTr("Connecté")
+						: mode == 1
+							? qsTr("Désactivé")
+							: mode == 2
+								? qsTr("Connexion...")
+								: qsTr("Erreur")
+			}
+		}
+		Item {
+			Layout.fillWidth: true
+		}
 		Item{
-			Layout.preferredWidth: 100 * DefaultStyle.dp
+			Layout.preferredWidth: 22 * DefaultStyle.dp
+			Layout.preferredHeight: 22 * DefaultStyle.dp
 			Layout.fillHeight: true
 			Rectangle{
 				id: unreadNotifications

@@ -54,7 +54,7 @@ LoginLayout {
 			}
 		}
 	}
-	centerContent: ColumnLayout {
+	centerContent: Item {
 		id: centerLayout
 		Layout.bottomMargin: 20 * DefaultStyle.dp
 		Layout.fillWidth: false
@@ -62,6 +62,7 @@ LoginLayout {
 		Layout.leftMargin: 250 * DefaultStyle.dp
 		Layout.topMargin: 165 * DefaultStyle.dp
 		RowLayout {
+			id: carouselLayout
 			Image {
 				id: carouselImg
 				Layout.rightMargin: 40 * DefaultStyle.dp
@@ -104,10 +105,11 @@ LoginLayout {
 		}
 
 		Button {
-			Layout.topMargin: 20 * DefaultStyle.dp
-			Layout.bottomMargin: 20 * DefaultStyle.dp
-			Layout.leftMargin: (centerLayout.width - width) * DefaultStyle.dp
-			Layout.alignment: Qt.AlignBottom | Qt.AlignRight
+			anchors.top: carouselLayout.bottom
+			anchors.right: carouselLayout.right
+			anchors.topMargin: 20 * DefaultStyle.dp
+			anchors.bottomMargin: 20 * DefaultStyle.dp
+			anchors.leftMargin: (centerLayout.width - width) * DefaultStyle.dp
 			y: centerLayout.implicitWidth - width
 			text: carousel.currentIndex < (carousel.itemsCount - 1) ? qsTr("Suivant") : qsTr("Commencer")
 			onClicked: { 

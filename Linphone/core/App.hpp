@@ -20,6 +20,7 @@
 
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
+#include <QSettings>
 #include <QSharedPointer>
 
 #include "core/singleapplication/singleapplication.h"
@@ -93,6 +94,9 @@ public:
 	QQuickWindow *getCallsWindow(QVariant callGui);
 	void closeCallsWindow();
 
+	bool getFirstLaunch() const;
+	void setFirstLaunch(bool first);
+
 	QQuickWindow *getMainWindow();
 
 	QQmlApplicationEngine *mEngine = nullptr;
@@ -108,6 +112,8 @@ private:
 	Notifier *mNotifier = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
+	QSettings mSettings;
+	bool mFirstLaunch = true;
 	// TODO : changer ce count lorsqu'on aura liste d'appels
 	int callsCount = 0;
 

@@ -37,10 +37,16 @@ VariantObject::VariantObject(QVariant defaultValue, QObject *parent) {
 	    new SafeConnection<SafeObject, SafeObject>(mCoreObject, mModelObject), &QObject::deleteLater);
 
 	mConnection->makeConnectToCore(&SafeObject::setValue, [this](QVariant value) {
-		mConnection->invokeToModel([this, value]() { mModelObject->onSetValue(value); });
+		mConnection->invokeToModel([this, value]() {
+			// TODO : fix this properly
+			if (mModelObject) mModelObject->onSetValue(value);
+		});
 	});
 	mConnection->makeConnectToModel(&SafeObject::setValue, [this](QVariant value) {
-		mConnection->invokeToCore([this, value]() { mCoreObject->onSetValue(value); });
+		mConnection->invokeToCore([this, value]() {
+			// TODO : fix this properly
+			if (mCoreObject) mCoreObject->onSetValue(value);
+		});
 	});
 	mConnection->makeConnectToModel(&SafeObject::valueChanged, [this](QVariant value) {
 		mConnection->invokeToCore([this, value]() { mCoreObject->valueChanged(value); });

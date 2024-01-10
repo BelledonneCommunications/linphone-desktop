@@ -18,6 +18,7 @@ ColumnLayout {
 	property string initialText
 
 	property bool enableErrorText: false
+	property bool errorTextVisible: errorText.opacity > 0
 
 	property alias textField: textField
 	property alias background: input
@@ -61,11 +62,11 @@ ColumnLayout {
 		radius: 79 * DefaultStyle.dp
 		color: mainItem.enableBackgroundColors ? DefaultStyle.grey_100 : "transparent"
 		border.color: mainItem.enableBackgroundColors
-			? errorText.opacity === 0
-				? textField.activeFocus
+			? mainItem.errorTextVisible
+				? DefaultStyle.danger_500main
+				: textField.activeFocus
 					? DefaultStyle.main1_500_main
 					: DefaultStyle.grey_200
-				: DefaultStyle.danger_500main
 			: "transparent"
 
 		Control.TextField {
@@ -82,7 +83,7 @@ ColumnLayout {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 400 * DefaultStyle.dp
 			}
-			color: errorText.opacity === 0 ? DefaultStyle.main2_600 : DefaultStyle.danger_500main
+			color: mainItem.errorTextVisible ? DefaultStyle.danger_500main : DefaultStyle.main2_600
 			selectByMouse: true
 			validator: mainItem.validator
 			background: Item {
@@ -117,6 +118,6 @@ ColumnLayout {
 		id: errorText
 		visible: mainItem.enableErrorText
 		text: mainItem.errorMessage
-		Layout.preferredWidth: mainItem.textInputWidth
+		Layout.preferredWidth: implicitWidth
 	}
 }

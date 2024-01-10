@@ -27,8 +27,32 @@ StackView{
 								|| (contact && contact.core.pictureUri)
 								
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
+
+	property bool secured: false
 	
 	initialItem: haveAvatar ? avatar : initials
+
+	Rectangle {
+		visible: mainItem.secured
+		anchors.fill: mainItem.currentItem
+		radius: mainItem.width / 2
+		z: 1
+		color: "transparent"
+		border {
+			width: 3 * DefaultStyle.dp
+			color: DefaultStyle.info_500_main
+		}
+		Image {
+			source: AppIcons.trusted
+			x: mainItem.width / 7
+			width: mainItem.width / 4.5
+			height: width
+			sourceSize.width: width
+			sourceSize.height: height
+			fillMode: Image.PreserveAspectFit
+			anchors.bottom: parent.bottom
+		}
+	}
 	Component{
 		id: initials
 		Rectangle {

@@ -8,6 +8,12 @@ Text {
 	id: mainItem
 	color: DefaultStyle.danger_500main
 	opacity: 0
+	function displayText() {
+		mainItem.state = "Visible"
+	}
+	function hideText() {
+		mainItem.state = "Invisible"
+	}
 	font {
 		pixelSize: 13 * DefaultStyle.dp
 		weight: 600 * DefaultStyle.dp
@@ -30,10 +36,6 @@ Text {
 				property: "opacity"
 				duration: 1000
 			}
-			// NumberAnimation {
-			// 	property: "visible"
-			// 	duration: 1100
-			// }
 		}
 	]
 	Timer {
@@ -48,7 +50,7 @@ Text {
 		target: mainItem
 		onTextChanged: {
 			if (mainItem.text.length > 0) {
-				errorText.state = "Visible"
+				mainItem.state = "Visible"
 			}
 		}
 	}

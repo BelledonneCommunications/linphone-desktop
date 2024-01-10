@@ -55,9 +55,9 @@ Item {
 			}
 			Repeater {
 				id: adresses
-				model: [{label: "SIP", address: startCallPopup.contact ? startCallPopup.contact.core.address : ""},
-				{label: "Work", address: "06000000000"},
-				{label: "Personal", address: "060000000"}
+				model: [{label: "SIP", address: startCallPopup.contact ? startCallPopup.contact.core.address : ""}
+				// {label: "Work", address: "06000000000"},
+				// {label: "Personal", address: "060000000"}
 				] //account.adresses
 				Button {
 					id: channel
@@ -235,6 +235,10 @@ Item {
 							Layout.fillWidth: true
 							id: contactList
 							searchBarText: searchBar.text
+							onContactSelected: (contact) => {
+								startCallPopup.contact = contact
+								startCallPopup.open()
+							}
 						}
 					}
 					ColumnLayout {
@@ -253,6 +257,10 @@ Item {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
 								sourceFlags: LinphoneEnums.MagicSearchSource.FavoriteFriends
 								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+							}
+							onContactSelected: (contact) => {
+								startCallPopup.contact = contact
+								startCallPopup.open()
 							}
 						}
 					}

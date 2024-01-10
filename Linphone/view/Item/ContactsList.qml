@@ -16,6 +16,8 @@ ListView {
 	property bool contactMenuVisible: true
 	property bool initialHeadersVisible: true
 
+	signal contactSelected(var contact)
+
 	model: MagicSearchProxy {
 		searchText: searchBarText.length === 0 ? "*" : searchBarText
 	}
@@ -40,6 +42,7 @@ ListView {
 		}
 		Item {
 			width: mainItem.width
+			Layout.preferredWidth: mainItem.width
 			height: 56 * DefaultStyle.dp
 			RowLayout {
 				anchors.fill: parent
@@ -129,9 +132,7 @@ ListView {
 					visible: contactArea.containsMouse || friendPopup.hovered
 				}
 				onClicked: {
-					startCallPopup.contact = modelData
-					startCallPopup.open()
-					// mainItem.callButtonPressed(modelData.core.address)
+					mainItem.contactSelected(modelData)
 				}
 			}
 		}

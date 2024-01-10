@@ -33,7 +33,7 @@ public:
 	AccountManager(QObject *parent = nullptr);
 	~AccountManager();
 
-	bool login(QString username, QString password);
+	bool login(QString username, QString password, QString *errorMessage = nullptr);
 
 	std::shared_ptr<linphone::Account> createAccount(const QString &assistantFile);
 
@@ -42,6 +42,7 @@ public:
 	                                const std::string &message);
 signals:
 	void registrationStateChanged(linphone::RegistrationState state);
+	void errorMessageChanged(const QString &errorMessage);
 
 private:
 	std::shared_ptr<AccountModel> mAccountModel;

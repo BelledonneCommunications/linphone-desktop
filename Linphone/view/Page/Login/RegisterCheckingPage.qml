@@ -76,7 +76,6 @@ LoginLayout {
 							required property int index
 							Layout.preferredWidth: width
 							Layout.preferredHeight: height
-							Component.onCompleted: console.log("completed", width, Layout.preferredWidth)
 							onTextEdited: {
 								console.log("textfield text", text, index)
 								if (text.length > 0 ) {

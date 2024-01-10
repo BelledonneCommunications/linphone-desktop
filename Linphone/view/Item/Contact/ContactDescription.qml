@@ -12,9 +12,9 @@ ColumnLayout{
 	property string topText: displayName ? displayName.value : ''
 	property string bottomText: account ? account.core.identityAddress : ''
 	spacing: 0
-	Text{
+	width: topTextItem.implicitWidth
+	Text {
 		id: topTextItem
-		Layout.fillWidth: true
 		Layout.fillHeight: true
 		verticalAlignment: (bottomTextItem.visible?Text.AlignBottom:Text.AlignVCenter)
 		visible: text != ''
@@ -22,10 +22,13 @@ ColumnLayout{
 		font.pixelSize: 14 * DefaultStyle.dp
 		color: DefaultStyle.main2_700
 		text: mainItem.topText
+		width: mainItem.width
+		Layout.preferredWidth: mainItem.width
+		wrapMode: Text.WrapAnywhere
+		maximumLineCount: 1
 	}
-	Text{
+	Text {
 		id: bottomTextItem
-		Layout.fillWidth: true
 		Layout.fillHeight: true
 		verticalAlignment: (topTextItem.visible?Text.AlignTop:Text.AlignVCenter)
 		visible: text != ''
@@ -33,5 +36,8 @@ ColumnLayout{
 		font.pixelSize: 12 * DefaultStyle.dp
 		color: DefaultStyle.main2_400
 		text: mainItem.bottomText
+		Layout.preferredWidth: mainItem.width
+		maximumLineCount: 1
+		wrapMode: Text.WrapAnywhere
 	}
 }

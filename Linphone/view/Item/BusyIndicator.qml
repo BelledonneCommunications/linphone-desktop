@@ -12,6 +12,7 @@ Item {
 	Control.BusyIndicator {
 		id: busyIndicator
 		running: mainItem.visible
+		anchors.centerIn: mainItem
 	}
 	MultiEffect {
 		source: busyIndicator

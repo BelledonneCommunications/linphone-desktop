@@ -315,7 +315,6 @@ Q_DECLARE_METATYPE(LinphoneEnums::FriendCapability)
 Q_DECLARE_METATYPE(LinphoneEnums::MediaEncryption)
 Q_DECLARE_METATYPE(LinphoneEnums::ParticipantDeviceState)
 Q_DECLARE_METATYPE(LinphoneEnums::RecorderState)
-Q_DECLARE_METATYPE(LinphoneEnums::RegistrationState)
 Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
 Q_DECLARE_METATYPE(LinphoneEnums::TransportType)
 */

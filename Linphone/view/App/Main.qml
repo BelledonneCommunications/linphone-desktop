@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls
 import Linphone
-//import UI 1.0
+import UtilsCpp 1.0
 
 Window {
 	id: mainWindow
@@ -10,6 +10,7 @@ Window {
 	height: 982 * DefaultStyle.dp
 	visible: true
 	title: qsTr("Linphone")
+	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
 
 	function goToNewCall() {
@@ -21,25 +22,23 @@ Window {
 		mainWindowStackView.currentItem.transferCallSucceed()
 	}
 
-	AccountProxy{
+	AccountProxy {
+		// TODO : change this so it does not display the main page for one second
+		// when we fail trying to connect the first account (account is added and
+		// removed shortly after)
 		id: accountProxy
-		onHaveAccountChanged: {
-			if(haveAccount)
-				mainWindowStackView.replace(mainPage, StackView.Immediate)
-			else
-				mainWindowStackView.replace(loginPage, StackView.Immediate)
-		}
 	}
 	StackView {
 		id: mainWindowStackView
 		anchors.fill: parent
-		initialItem: accountProxy.haveAccount ? mainPage : welcomePage
+		initialItem: accountProxy.haveAccount ? mainPage : UtilsCpp.getFirstLaunch() ? welcomePage : loginPage
 	}
 	Component {
 		id: welcomePage
 		WelcomePage {
 			onStartButtonPressed: {
 				mainWindowStackView.replace(loginPage)// Replacing the first item will destroy the old.
+				UtilsCpp.setFirstLaunch(false)
 			}
 		}
 	}
@@ -51,11 +50,7 @@ Window {
 			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			onConnectionSucceed: {
-				if (mainWindow.firstConnection) {
-					mainWindowStackView.replace(securityModePage)
-				} else {
-					mainWindowStackView.replace(mainPage)
-				}
+				mainWindowStackView.replace(mainPage)
 			}
 		}
 	}
@@ -66,11 +61,7 @@ Window {
 			onGoToRegister: mainWindowStackView.replace(registerPage)
 			
 			onConnectionSucceed: {
-				if (mainWindow.firstConnection) {
-					mainWindowStackView.replace(securityModePage)
-				} else {
-					mainWindowStackView.replace(mainPage)
-				}
+				mainWindowStackView.replace(mainPage)
 			}
 		}
 	}
@@ -92,7 +83,9 @@ Window {
 	Component {
 		id: securityModePage
 		SecurityModePage {
+			id: securePage
 			onModeSelected: (index) => {
+				// TODO : connect to cpp part when ready
 				var selectedMode = index == 0 ? "chiffrement" : "interoperable"
 				console.debug("[SelectMode]User: User selected mode " + selectedMode)
 				mainWindowStackView.replace(mainPage)
@@ -103,7 +96,7 @@ Window {
 		id: mainPage
 		MainLayout {
 			onAddAccountRequest: mainWindowStackView.replace(loginPage)
+			// StackView.onActivated: connectionSecured(0) // TODO : connect to cpp part when ready
 		}
 	}
-} 
- 
+}

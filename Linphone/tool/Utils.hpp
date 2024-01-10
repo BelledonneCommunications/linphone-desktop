@@ -57,6 +57,8 @@ public:
 	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
+	Q_INVOKABLE static void setFirstLaunch(bool first);
+	Q_INVOKABLE static bool getFirstLaunch();
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
 	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui);
