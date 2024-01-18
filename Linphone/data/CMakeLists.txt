@@ -52,6 +52,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/outgoing_call_rejected.svg"
 	"data/image/microphone.svg"
 	"data/image/microphone-slash.svg"
+	"data/image/camera.svg"
 	"data/image/video-camera.svg"
 	"data/image/video-camera-slash.svg"
 	"data/image/speaker-high.svg"
@@ -66,6 +67,10 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/heart.svg"
 	"data/image/heart-fill.svg"
 	"data/image/record-fill.svg"
+	"data/image/pencil-simple.svg"
+	"data/image/share-network.svg"
+	"data/image/bell-simple.svg"
+	"data/image/bell-simple-slash.svg"
 	"data/image/media_encryption_zrtp_pq.svg"
 	
 	data/shaders/roundEffect.vert.qsb

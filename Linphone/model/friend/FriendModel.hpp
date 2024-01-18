@@ -34,22 +34,60 @@ class FriendModel : public ::Listener<linphone::Friend, linphone::FriendListener
                     public linphone::FriendListener,
                     public AbstractObject {
 	Q_OBJECT
+	friend class FriendCore;
+
 public:
-	FriendModel(const std::shared_ptr<linphone::Friend> &contact, QObject *parent = nullptr);
+	FriendModel(const std::shared_ptr<linphone::Friend> &contact,
+	            const QString &name = QString(),
+	            QObject *parent = nullptr);
 	~FriendModel();
 
 	QDateTime getPresenceTimestamp() const;
-	QString getAddress() const;
+	std::list<std::shared_ptr<linphone::FriendPhoneNumber>> getPhoneNumbers() const;
+	std::list<std::shared_ptr<linphone::Address>> getAddresses() const;
 	QString getName() const;
+	QString getGivenName() const;
+	QString getFamilyName() const;
+	QString getOrganization() const;
+	QString getJob() const;
 	bool getStarred() const;
 	std::shared_ptr<linphone::Friend> getFriend() const;
+	QString getPictureUri() const;
 
-	void setPictureUri(QString uri);
+protected:
+	void setAddress(const std::shared_ptr<linphone::Address> &address);
+	void appendPhoneNumber(const std::shared_ptr<linphone::FriendPhoneNumber> &number);
+	void appendPhoneNumbers(const std::list<std::shared_ptr<linphone::FriendPhoneNumber>> &numbers);
+	void resetPhoneNumbers(const std::list<std::shared_ptr<linphone::FriendPhoneNumber>> &numbers);
+	void removePhoneNumber(const QString &number);
+	void clearPhoneNumbers();
+
+	void appendAddress(const std::shared_ptr<linphone::Address> &addr);
+	void appendAddresses(const std::list<std::shared_ptr<linphone::Address>> &addresses);
+	void resetAddresses(const std::list<std::shared_ptr<linphone::Address>> &addresses);
+	void removeAddress(const std::shared_ptr<linphone::Address> &addr);
+	void clearAddresses();
+
+	void setName(const QString &name);
+	void setGivenName(const QString &name);
+	void setFamilyName(const QString &name);
+	void setOrganization(const QString &orga);
+	void setJob(const QString &job);
+
+	void setPictureUri(const QString &uri);
 	void setStarred(bool starred);
 
 signals:
-	void pictureUriChanged(QString uri);
+	void pictureUriChanged(const QString &uri);
 	void starredChanged(bool starred);
+	void addressesChanged();
+	void defaultAddressChanged();
+	void phoneNumbersChanged();
+	// void nameChanged(const QString &name);
+	void givenNameChanged(const QString &name);
+	void familyNameChanged(const QString &name);
+	void organizationChanged(const QString &orga);
+	void jobChanged(const QString &job);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

@@ -48,10 +48,13 @@ public:
 	LinphoneEnums::MagicSearchAggregation getAggregationFlag() const;
 	void setAggregationFlag(LinphoneEnums::MagicSearchAggregation flag);
 
+	// Q_INVOKABLE forceUpdate();
+
 signals:
 	void searchTextChanged();
 	void sourceFlagsChanged(int sourceFlags);
 	void aggregationFlagChanged(LinphoneEnums::MagicSearchAggregation aggregationFlag);
+	void forceUpdate();
 
 protected:
 	QString mSearchText;

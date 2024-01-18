@@ -38,8 +38,8 @@ ListView{
 			Text{
 				// Store the VariantObject and use value on this object. Do not use value in one line because of looping signals.
 				property var displayName: UtilsCpp.getDisplayName($modelData.identityAddress)
-				text: displayName.value
-				onTextChanged: console.log('[ProtoAccounts] Async account displayName: ' +$modelData.identityAddress + " => " +text)
+				text: displayName ? displayName.value : ""
+				onTextChanged: console.log("[ProtoAccounts] Async account displayName: " +$modelData.identityAddress + " => " +text)
 			}
 			Text{
 				text: $modelData.registrationState == LinphoneEnums.RegistrationState.Ok 

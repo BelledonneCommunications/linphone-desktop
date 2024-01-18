@@ -61,7 +61,10 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			// Avoid copy to lambdas
 			QList<QSharedPointer<CallHistoryCore>> *callLogs = new QList<QSharedPointer<CallHistoryCore>>();
 			mustBeInLinphoneThread(getClassName());
-			auto linphoneCallLogs = CoreModel::getInstance()->getCore()->getCallLogs();
+			std::list<std::shared_ptr<linphone::CallLog>> linphoneCallLogs;
+			if (auto account = CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+				linphoneCallLogs = account->getCallLogs();
+			}
 			for (auto it : linphoneCallLogs) {
 				auto model = createCallHistoryCore(it);
 				callLogs->push_back(model);
@@ -74,7 +77,8 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			});
 		});
 	});
-
+	mModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged,
+	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
 	mModelConnection->makeConnectToModel(&CoreModel::callLogUpdated,
 	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
 	lUpdate();

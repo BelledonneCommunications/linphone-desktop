@@ -18,8 +18,8 @@ Window{
 			}
 			TextInput{
 				placeholderText: 'Name'
-				initialText: contact.core.name
-				onTextChanged: contact.core.name = text 
+				initialText: contact.core.givenName
+				onTextChanged: contact.core.givenName = text 
 			}
 			TextInput{
 				placeholderText: 'Address'

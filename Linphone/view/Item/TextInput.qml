@@ -15,6 +15,8 @@ ColumnLayout {
 	property var validator: RegularExpressionValidator{}
 	property bool fillWidth: false
 	property bool enableBackgroundColors: true
+	property color backgroundColor: DefaultStyle.grey_100
+	property color backgroundBorderColor: DefaultStyle.grey_200
 	property string initialText
 
 	property bool enableErrorText: false
@@ -26,7 +28,11 @@ ColumnLayout {
 	readonly property string text: textField.text
 	readonly property bool hasActiveFocus: textField.activeFocus
 
-	Component.onCompleted: setText(initialText)
+	signal editingFinished()
+
+	Component.onCompleted: {
+		setText(initialText)
+	}
 
 	function setText(text) {
 		textField.text = text
@@ -60,14 +66,12 @@ ColumnLayout {
 		Layout.preferredWidth: mainItem.textInputWidth
 		Layout.preferredHeight: 49 * DefaultStyle.dp
 		radius: 79 * DefaultStyle.dp
-		color: mainItem.enableBackgroundColors ? DefaultStyle.grey_100 : "transparent"
-		border.color: mainItem.enableBackgroundColors
-			? mainItem.errorTextVisible
-				? DefaultStyle.danger_500main
-				: textField.activeFocus
-					? DefaultStyle.main1_500_main
-					: DefaultStyle.grey_200
-			: "transparent"
+		color: mainItem.backgroundColor
+		border.color: mainItem.errorTextVisible
+			? DefaultStyle.danger_500main
+			: textField.activeFocus
+				? DefaultStyle.main1_500_main
+				: mainItem.backgroundBorderColor
 
 		Control.TextField {
 			id: textField
@@ -93,6 +97,15 @@ ColumnLayout {
 				visible: textField.activeFocus
 				color: DefaultStyle.main1_500_main
 				width: 2 * DefaultStyle.dp
+			}
+			onEditingFinished: {
+				mainItem.editingFinished()
+			}
+
+			Keys.onPressed: (event)=> {
+				if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+					textField.focus = false
+				}
 			}
 		}
 		Control.Button {

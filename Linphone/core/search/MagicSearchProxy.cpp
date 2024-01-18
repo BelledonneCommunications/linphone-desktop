@@ -26,6 +26,9 @@ MagicSearchProxy::MagicSearchProxy(QObject *parent) : SortFilterProxy(parent) {
 	connect(mList.get(), &MagicSearchList::sourceFlagsChanged, this, &MagicSearchProxy::sourceFlagsChanged);
 	connect(mList.get(), &MagicSearchList::aggregationFlagChanged, this, &MagicSearchProxy::aggregationFlagChanged);
 	setSourceModel(mList.get());
+	connect(CoreModel::getInstance().get(), &CoreModel::friendRemoved, this,
+	        [this] { emit mList->lSearch(mSearchText); });
+	connect(this, &MagicSearchProxy::forceUpdate, [this] { emit mList->lSearch(mSearchText); });
 	sort(0);
 }
 

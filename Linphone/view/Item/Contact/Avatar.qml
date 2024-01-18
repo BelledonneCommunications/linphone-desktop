@@ -10,7 +10,7 @@ import UtilsCpp
 // Initials will be displayed if there isn't any avatar.
 // TODO : get FriendGui from Call.
 
-StackView{
+StackView {
 	id: mainItem
 	property AccountGui account: null
 	property FriendGui contact: null
@@ -20,9 +20,10 @@ StackView{
 								: call
 									? call.core.peerAddress
 									: contact
-										? contact.core.address
+										? contact.core.defaultAddress
 										: ''
 	property var displayNameObj: UtilsCpp.getDisplayName(address)
+	property string displayNameVal: displayNameObj ? displayNameObj.value : ""
 	property bool haveAvatar: (account && account.core.pictureUri )
 								|| (contact && contact.core.pictureUri)
 								
@@ -57,7 +58,7 @@ StackView{
 		id: initials
 		Rectangle {
 			id: initialItem
-			property string initials: displayNameObj ? UtilsCpp.getInitials(mainItem.displayNameObj.value) : ""
+			property string initials: UtilsCpp.getInitials(mainItem.displayNameVal)
 			radius: width / 2
 			color: DefaultStyle.main2_200
 			height: mainItem.height
@@ -73,6 +74,13 @@ StackView{
 					weight: 800 * DefaultStyle.dp
 					capitalization: Font.AllUppercase
 				}
+			}
+			Image {
+				visible: initialItem.initials.length === 0
+				width: mainItem.width/3
+				height: width
+				source: AppIcons.profile
+				anchors.centerIn: parent
 			}
 		}
 	}
@@ -92,7 +100,9 @@ StackView{
 				sourceSize.height: avatarItem.height
 				fillMode: Image.PreserveAspectCrop
 				anchors.centerIn: parent
-				source: mainItem.account ? mainItem.account.core.pictureUri : mainItem.contact.core.pictureUri
+				source: mainItem.account && mainItem.account.core.pictureUri 
+				|| mainItem.contact && mainItem.contact.core.pictureUri
+				|| ""
 				mipmap: true
 			}
 			ShaderEffect {

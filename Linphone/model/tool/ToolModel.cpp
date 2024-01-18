@@ -48,6 +48,14 @@ std::shared_ptr<linphone::Address> ToolModel::interpretUrl(const QString &addres
 	return interpretedAddress;
 }
 
+std::shared_ptr<linphone::FriendPhoneNumber> ToolModel::makeLinphoneNumber(const QString &label,
+                                                                           const QString &number) {
+	auto linphoneNumber = std::make_shared<linphone::FriendPhoneNumber>(nullptr);
+	linphoneNumber->setLabel(Utils::appStringToCoreString(label));
+	linphoneNumber->setLabel(Utils::appStringToCoreString(number));
+	return linphoneNumber;
+}
+
 QString ToolModel::getDisplayName(const std::shared_ptr<const linphone::Address> &address) {
 	QString displayName;
 	if (address) {

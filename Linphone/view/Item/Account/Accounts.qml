@@ -57,7 +57,7 @@ Item {
 			Layout.fillWidth: true
 			Layout.topMargin: mainItem.spacing
 			Layout.bottomMargin: mainItem.spacing
-			height: 1
+			height: 1 * DefaultStyle.dp
 			color: DefaultStyle.main2_300
 		}
 		MouseArea{

@@ -208,7 +208,6 @@ Window {
 					spacing: 10 * DefaultStyle.dp
 					EffectImage {
 						id: callStatusIcon
-						fillMode: Image.PreserveAspectFit
 						width: 15 * DefaultStyle.dp
 						height: 15 * DefaultStyle.dp
 						source:(mainWindow.call.core.state === LinphoneEnums.CallState.End

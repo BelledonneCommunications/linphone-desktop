@@ -26,6 +26,7 @@
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
+#include <QClipboard>
 #include <QImageReader>
 #include <QQuickWindow>
 #include <QRandomGenerator>
@@ -49,12 +50,26 @@ VariantObject *Utils::getDisplayName(const QString &address) {
 	QStringList splitted = address.split(":");
 	if (splitted.size() > 0 && splitted[0] == "sip") splitted.removeFirst();
 	VariantObject *data = new VariantObject(splitted.first().split("@").first()); // Scope : GUI
+	if (!data) return nullptr;
 	data->makeRequest([address]() {
 		QString displayName = ToolModel::getDisplayName(address);
 		return displayName;
 	});
 	data->requestValue();
 	return data;
+}
+
+QString Utils::getGivenNameFromFullName(const QString &fullName) {
+	if (fullName.isEmpty()) return QString();
+	auto nameSplitted = fullName.split(" ");
+	return nameSplitted[0];
+}
+
+QString Utils::getFamilyNameFromFullName(const QString &fullName) {
+	if (fullName.isEmpty()) return QString();
+	auto nameSplitted = fullName.split(" ");
+	nameSplitted.removeFirst();
+	return nameSplitted.join(" ");
 }
 
 QString Utils::getInitials(const QString &username) {
@@ -81,7 +96,7 @@ VariantObject *Utils::createCall(const QString &sipAddress,
                                  const QString &prepareTransfertAddress,
                                  const QHash<QString, QString> &headers) {
 	VariantObject *data = new VariantObject(QVariant()); // Scope : GUI
-
+	if (!data) return nullptr;
 	data->makeRequest([sipAddress, prepareTransfertAddress, headers]() {
 		auto call = ToolModel::createCall(sipAddress, prepareTransfertAddress, headers);
 		if (call) {
@@ -90,10 +105,14 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 				auto app = App::getInstance();
 				auto window = app->getCallsWindow(callGui);
 				smartShowWindow(window);
+				qDebug() << "Utils : call created" << callGui;
 				// callGui.value<CallGui *>()->getCore()->lSetCameraEnabled(true);
 			});
 			return callGui;
-		} else return QVariant();
+		} else {
+			qDebug() << "Utils : failed to create call";
+			return QVariant();
+		}
 	});
 	data->requestValue();
 
@@ -131,7 +150,7 @@ QQuickWindow *Utils::getMainWindow() {
 
 VariantObject *Utils::haveAccount() {
 	VariantObject *result = new VariantObject();
-
+	if (!result) return nullptr;
 	// Using connect ensure to have sender() and receiver() alive.
 	result->makeRequest([]() {
 		// Model
@@ -287,4 +306,8 @@ QStringList Utils::generateSecurityLettersArray(int arraySize, int correctIndex,
 
 int Utils::getRandomIndex(int size) {
 	return QRandomGenerator::global()->bounded(size);
+}
+
+void Utils::copyToClipboard(const QString &text) {
+	QApplication::clipboard()->setText(text);
 }

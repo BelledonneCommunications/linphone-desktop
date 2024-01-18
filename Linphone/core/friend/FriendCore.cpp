@@ -20,12 +20,22 @@
 
 #include "FriendCore.hpp"
 #include "core/App.hpp"
-#include "model/object/VariantObject.hpp"
+#include "core/proxy/ListProxy.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
 DEFINE_ABSTRACT_OBJECT(FriendCore)
+
+const QString addressLabel = FriendCore::tr("Adresse SIP");
+const QString phoneLabel = FriendCore::tr("Téléphone");
+
+QVariant createFriendAddressVariant(const QString &label, const QString &address) {
+	QVariantMap map;
+	map.insert("label", label);
+	map.insert("address", address);
+	return map;
+}
 
 QSharedPointer<FriendCore> FriendCore::create(const std::shared_ptr<linphone::Friend> &contact) {
 	auto sharedPointer = QSharedPointer<FriendCore>(new FriendCore(contact), &QObject::deleteLater);
@@ -43,28 +53,51 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact) : QObje
 		mConsolidatedPresence = LinphoneEnums::fromLinphone(contact->getConsolidatedPresence());
 		mPresenceTimestamp = mFriendModel->getPresenceTimestamp();
 		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
-		auto address = contact->getAddress();
-		mAddress = address ? Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly()) : "NoAddress";
-		auto name = contact->getName();
-		mName =
-		    name.empty() ? Utils::getDisplayName(mAddress)->getValue().toString() : Utils::coreStringToAppString(name);
+		auto vcard = contact->getVcard();
+		mOrganization = Utils::coreStringToAppString(vcard->getOrganization());
+		mJob = Utils::coreStringToAppString(vcard->getJobTitle());
+		mGivenName = Utils::coreStringToAppString(vcard->getGivenName());
+		mFamilyName = Utils::coreStringToAppString(vcard->getFamilyName());
+		auto addresses = contact->getAddresses();
+		for (auto &address : addresses) {
+			mAddressList.append(
+			    createFriendAddressVariant(addressLabel, Utils::coreStringToAppString(address->asStringUriOnly())));
+		}
+		mDefaultAddress =
+		    contact->getAddress() ? Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly()) : QString();
+		auto phoneNumbers = contact->getPhoneNumbersWithLabel();
+		for (auto &phoneNumber : phoneNumbers) {
+			mPhoneNumberList.append(
+			    createFriendAddressVariant(Utils::coreStringToAppString(phoneNumber->getLabel()),
+			                               Utils::coreStringToAppString(phoneNumber->getPhoneNumber())));
+		}
+
 		mStarred = contact->getStarred();
 		mIsSaved = true;
 	} else {
 		mIsSaved = false;
 		mStarred = false;
 	}
+	connect(this, &FriendCore::addressChanged, &FriendCore::allAddressesChanged);
+	connect(this, &FriendCore::phoneNumberChanged, &FriendCore::allAddressesChanged);
 }
 
 FriendCore::FriendCore(const FriendCore &friendCore) {
 	// Only copy friend values without models for lambda using and avoid concurrencies.
-	mAddress = friendCore.mAddress;
+	mAddressList = friendCore.mAddressList;
+	mPhoneNumberList = friendCore.mPhoneNumberList;
+	mDefaultAddress = friendCore.mDefaultAddress;
+	mGivenName = friendCore.mGivenName;
+	mFamilyName = friendCore.mFamilyName;
+	mOrganization = friendCore.mOrganization;
+	mJob = friendCore.mJob;
+	mPictureUri = friendCore.mPictureUri;
 	mIsSaved = friendCore.mIsSaved;
 }
 
 FriendCore::~FriendCore() {
 	mustBeInMainThread("~" + getClassName());
-	emit mFriendModel->removeListener();
+	if (mFriendModel) emit mFriendModel->removeListener();
 }
 
 void FriendCore::setSelf(SafeSharedPointer<FriendCore> me) {
@@ -84,20 +117,47 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 					    setPresenceTimestamp(presenceTimestamp);
 				    });
 			    });
-			mFriendModelConnection->makeConnectToModel(&FriendModel::pictureUriChanged, [this](QString uri) {
+			mFriendModelConnection->makeConnectToModel(&FriendModel::pictureUriChanged, [this](const QString &uri) {
 				mFriendModelConnection->invokeToCore([this, uri]() { this->onPictureUriChanged(uri); });
 			});
 			mFriendModelConnection->makeConnectToModel(&FriendModel::starredChanged, [this](bool starred) {
 				mFriendModelConnection->invokeToCore([this, starred]() { this->onStarredChanged(starred); });
+			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::givenNameChanged, [this](const QString &name) {
+				mFriendModelConnection->invokeToCore([this, name]() { setGivenName(name); });
+			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::familyNameChanged, [this](const QString &name) {
+				mFriendModelConnection->invokeToCore([this, name]() { setFamilyName(name); });
+			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::organizationChanged, [this](const QString &orga) {
+				mFriendModelConnection->invokeToCore([this, orga]() { setOrganization(orga); });
+			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::jobChanged, [this](const QString &job) {
+				mFriendModelConnection->invokeToCore([this, job]() { setJob(job); });
+			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::addressesChanged, [this]() {
+				auto numbers = mFriendModel->getAddresses();
+				QList<QVariant> addr;
+				for (auto &num : numbers) {
+					addr.append(
+					    createFriendAddressVariant(addressLabel, Utils::coreStringToAppString(num->asStringUriOnly())));
+				}
+				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
+			});
+			mFriendModelConnection->makeConnectToModel(&FriendModel::phoneNumbersChanged, [this]() {
+				auto numbers = mFriendModel->getPhoneNumbers();
+				QList<QVariant> addr;
+				for (auto &num : numbers) {
+					addr.append(
+					    createFriendAddressVariant(phoneLabel, Utils::coreStringToAppString(num->getPhoneNumber())));
+				}
+				mFriendModelConnection->invokeToCore([this, addr]() { resetPhoneNumbers(addr); });
 			});
 			mFriendModelConnection->makeConnectToModel(
 			    &FriendModel::objectNameChanged,
 			    [this](const QString &objectName) { qDebug() << "object name changed" << objectName; });
 
 			// From GUI
-			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetPictureUri, [this](QString uri) {
-				mFriendModelConnection->invokeToModel([this, uri]() { mFriendModel->setPictureUri(uri); });
-			});
 			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetStarred, [this](bool starred) {
 				mFriendModelConnection->invokeToModel([this, starred]() { mFriendModel->setStarred(starred); });
 			});
@@ -110,19 +170,67 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 }
 
 void FriendCore::reset(const FriendCore &contact) {
-	setAddress(contact.getAddress());
-	setName(contact.getName());
+	resetAddresses(contact.getAddresses());
+	resetPhoneNumbers(contact.getPhoneNumbers());
+	setDefaultAddress(contact.getDefaultAddress());
+	setGivenName(contact.getGivenName());
+	setFamilyName(contact.getFamilyName());
+	setOrganization(contact.getOrganization());
+	setJob(contact.getJob());
+	setPictureUri(contact.getPictureUri());
 	setIsSaved(mFriendModel != nullptr);
 }
 
-QString FriendCore::getName() const {
-	return mName;
+QString FriendCore::getDisplayName() const {
+	return mGivenName + " " + mFamilyName;
 }
 
-void FriendCore::setName(QString data) {
-	if (mName != data) {
-		mName = data;
-		emit addressChanged(mName);
+QString FriendCore::getGivenName() const {
+	return mGivenName;
+}
+
+void FriendCore::setGivenName(const QString &name) {
+	if (mGivenName != name) {
+		mGivenName = name;
+		emit givenNameChanged(name);
+		emit displayNameChanged();
+		setIsSaved(false);
+	}
+}
+
+QString FriendCore::getOrganization() const {
+	return mOrganization;
+}
+
+void FriendCore::setOrganization(const QString &orga) {
+	if (mOrganization != orga) {
+		mOrganization = orga;
+		emit organizationChanged();
+		setIsSaved(false);
+	}
+}
+
+QString FriendCore::getJob() const {
+	return mJob;
+}
+
+void FriendCore::setJob(const QString &job) {
+	if (mJob != job) {
+		mJob = job;
+		emit jobChanged();
+		setIsSaved(false);
+	}
+}
+
+QString FriendCore::getFamilyName() const {
+	return mFamilyName;
+}
+
+void FriendCore::setFamilyName(const QString &name) {
+	if (mFamilyName != name) {
+		mFamilyName = name;
+		emit familyNameChanged(name);
+		emit displayNameChanged();
 		setIsSaved(false);
 	}
 }
@@ -137,15 +245,88 @@ void FriendCore::onStarredChanged(bool starred) {
 	emit starredChanged();
 }
 
-QString FriendCore::getAddress() const {
-	return mAddress;
+QList<QVariant> FriendCore::getPhoneNumbers() const {
+	return mPhoneNumberList;
 }
 
-void FriendCore::setAddress(QString address) {
-	if (mAddress != address) {
-		mAddress = address;
-		emit addressChanged(mAddress);
+QVariant FriendCore::getPhoneNumberAt(int index) const {
+	if (index < 0 || index >= mPhoneNumberList.count()) return QVariant();
+	return mPhoneNumberList[index];
+}
+
+void FriendCore::setPhoneNumberAt(int index, const QString &label, const QString &phoneNumber) {
+	if (index < 0 || index >= mPhoneNumberList.count()) return;
+	auto map = mPhoneNumberList[index].toMap();
+	auto oldLabel = map["label"].toString();
+	if (/*oldLabel != label || */ map["address"] != phoneNumber) {
+		mPhoneNumberList.replace(index, createFriendAddressVariant(label.isEmpty() ? oldLabel : label, phoneNumber));
+		emit phoneNumberChanged();
 		setIsSaved(false);
+	}
+}
+
+void FriendCore::removePhoneNumber(int index) {
+	if (index != -1) mPhoneNumberList.remove(index);
+	emit phoneNumberChanged();
+}
+
+void FriendCore::appendPhoneNumber(const QString &label, const QString &number) {
+	mPhoneNumberList.append(createFriendAddressVariant(label, number));
+	emit phoneNumberChanged();
+}
+
+void FriendCore::resetPhoneNumbers(QList<QVariant> newList) {
+	mPhoneNumberList = newList;
+	emit phoneNumberChanged();
+}
+
+QList<QVariant> FriendCore::getAddresses() const {
+	return mAddressList;
+}
+
+QVariant FriendCore::getAddressAt(int index) const {
+	if (index < 0 || index >= mAddressList.count()) return QVariant();
+	return mAddressList[index];
+}
+
+void FriendCore::setAddressAt(int index, const QString &label, const QString &address) {
+	if (index < 0 || index >= mAddressList.count()) return;
+	auto map = mAddressList[index].toMap();
+	auto oldLabel = map["label"].toString();
+	if (/*oldLabel != label || */ map["address"] != address) {
+		mAddressList.replace(index, createFriendAddressVariant(label.isEmpty() ? oldLabel : label, address));
+		emit addressChanged();
+		setIsSaved(false);
+	}
+}
+
+void FriendCore::removeAddress(int index) {
+	if (index != -1) mAddressList.remove(index);
+	emit addressChanged();
+}
+
+void FriendCore::appendAddress(const QString &addr) {
+	mAddressList.append(createFriendAddressVariant(addressLabel, addr));
+	emit addressChanged();
+}
+
+void FriendCore::resetAddresses(QList<QVariant> newList) {
+	mAddressList = newList;
+	emit addressChanged();
+}
+
+QList<QVariant> FriendCore::getAllAddresses() const {
+	return mAddressList + mPhoneNumberList;
+}
+
+QString FriendCore::getDefaultAddress() const {
+	return mDefaultAddress;
+}
+
+void FriendCore::setDefaultAddress(const QString &address) {
+	if (mDefaultAddress != address) {
+		mDefaultAddress = address;
+		emit defaultAddressChanged();
 	}
 }
 
@@ -177,6 +358,13 @@ QString FriendCore::getPictureUri() const {
 	return mPictureUri;
 }
 
+void FriendCore::setPictureUri(const QString &uri) {
+	if (mPictureUri != uri) {
+		mPictureUri = uri;
+		emit pictureUriChanged();
+	}
+}
+
 void FriendCore::onPictureUriChanged(QString uri) {
 	mPictureUri = uri;
 	emit pictureUriChanged();
@@ -192,21 +380,63 @@ void FriendCore::setIsSaved(bool data) {
 	}
 }
 
-void FriendCore::writeInto(std::shared_ptr<linphone::Friend> contact) const {
+void FriendCore::writeIntoModel(std::shared_ptr<FriendModel> model) const {
 	mustBeInLinphoneThread(QString("[") + gClassName + "] " + Q_FUNC_INFO);
+	model->getFriend()->edit();
+	// needed to create the vcard if not created yet
+	model->setName(mGivenName + (mFamilyName.isEmpty() || mGivenName.isEmpty() ? "" : " ") + mFamilyName);
 	auto core = CoreModel::getInstance()->getCore();
-	auto newAddress = core->createAddress(Utils::appStringToCoreString(mAddress));
-	contact->edit();
-	if (newAddress) contact->setAddress(newAddress);
-	else qDebug() << "Bad address : " << mAddress;
-	contact->done();
+
+	std::list<std::shared_ptr<linphone::Address>> addresses;
+	for (auto &addr : mAddressList) {
+		auto friendAddress = addr.toMap();
+		auto num =
+		    linphone::Factory::get()->createAddress(Utils::appStringToCoreString(friendAddress["address"].toString()));
+		addresses.push_back(num);
+	}
+	model->resetAddresses(addresses);
+
+	model->setAddress(ToolModel::interpretUrl(mDefaultAddress));
+
+	std::list<std::shared_ptr<linphone::FriendPhoneNumber>> phones;
+	for (auto &number : mPhoneNumberList) {
+		auto friendAddress = number.toMap();
+		auto num = linphone::Factory::get()->createFriendPhoneNumber(
+		    Utils::appStringToCoreString(friendAddress["address"].toString()),
+		    Utils::appStringToCoreString(friendAddress["label"].toString()));
+		phones.push_back(num);
+	}
+	model->resetPhoneNumbers(phones);
+
+	model->setGivenName(mGivenName);
+	model->setFamilyName(mFamilyName);
+	model->setOrganization(mOrganization);
+	model->setJob(mJob);
+	model->setPictureUri(mPictureUri);
+	model->getFriend()->done();
 }
 
-void FriendCore::writeFrom(const std::shared_ptr<linphone::Friend> &contact) {
+void FriendCore::writeFromModel(const std::shared_ptr<FriendModel> &model) {
 	mustBeInLinphoneThread(QString("[") + gClassName + "] " + Q_FUNC_INFO);
-	auto address = contact->getAddress();
-	mAddress = (address ? Utils::coreStringToAppString(address->asString()) : "");
-	mName = Utils::coreStringToAppString(contact->getName());
+
+	QList<QVariant> addresses;
+	for (auto &addr : model->getAddresses()) {
+		addresses.append(
+		    createFriendAddressVariant(addressLabel, Utils::coreStringToAppString(addr->asStringUriOnly())));
+	}
+	mAddressList = addresses;
+
+	QList<QVariant> phones;
+	for (auto &number : model->getPhoneNumbers()) {
+		phones.append(createFriendAddressVariant(Utils::coreStringToAppString(number->getLabel()),
+		                                         Utils::coreStringToAppString(number->getPhoneNumber())));
+	}
+	mPhoneNumberList = phones;
+	mGivenName = model->getGivenName();
+	mFamilyName = model->getFamilyName();
+	mOrganization = model->getOrganization();
+	mJob = model->getJob();
+	mPictureUri = model->getPictureUri();
 }
 
 void FriendCore::remove() {
@@ -225,33 +455,40 @@ void FriendCore::save() {                         // Save Values to model
 
 	if (mFriendModel) {
 		mFriendModelConnection->invokeToModel([this, thisCopy]() { // Copy values to avoid concurrency
-			auto contact = mFriendModel->getFriend();
-			thisCopy->writeInto(contact);
+			thisCopy->writeIntoModel(mFriendModel);
 			thisCopy->deleteLater();
 			mFriendModelConnection->invokeToCore([this]() { saved(); });
+			setIsSaved(true);
 		});
 	} else {
 		mCoreModelConnection->invokeToModel([this, thisCopy]() {
-			auto linphoneAddr = ToolModel::interpretUrl(mAddress);
+			std::shared_ptr<linphone::Friend> contact;
 			auto core = CoreModel::getInstance()->getCore();
-			auto contact = core->findFriend(linphoneAddr);
-			auto friendExists = contact != nullptr;
+			for (auto &addr : mAddressList) {
+				auto friendAddress = addr.toMap();
+				auto linphoneAddr = ToolModel::interpretUrl(friendAddress["address"].toString());
+				contact = core->findFriend(linphoneAddr);
+				if (contact) break;
+			}
 			if (contact != nullptr) {
-				thisCopy->writeInto(contact);
+				auto friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+				friendModel->setSelf(friendModel);
+				thisCopy->writeIntoModel(friendModel);
 				thisCopy->deleteLater();
 				if (mFriendModelConnection) mFriendModelConnection->invokeToCore([this] { saved(); });
 				else mCoreModelConnection->invokeToCore([this] { saved(); });
 			} else {
 				auto contact = core->createFriend();
-				thisCopy->writeInto(contact);
+				std::shared_ptr<FriendModel> friendModel;
+				friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+				friendModel->setSelf(friendModel);
+				thisCopy->writeIntoModel(friendModel);
 				thisCopy->deleteLater();
 				bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
 				if (created) {
-					mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-					mFriendModel->setSelf(mFriendModel);
 					core->getDefaultFriendList()->updateSubscriptions();
+					emit CoreModel::getInstance()->friendAdded();
 				}
-				emit CoreModel::getInstance()->friendAdded();
 				mCoreModelConnection->invokeToCore([this, created]() {
 					if (created) setSelf(mCoreModelConnection->mCore);
 					setIsSaved(created);
@@ -259,35 +496,15 @@ void FriendCore::save() {                         // Save Values to model
 			}
 		});
 	}
-
-	// if (mFriendModel) {                                            // Update
-	// } else { // Creation
-	// 	mCoreModelConnection->invokeToModel([this, thisCopy]() {
-	// 		auto core = CoreModel::getInstance()->getCore();
-	// 		auto contact = core->createFriend();
-	// 		thisCopy->writeInto(contact);
-	// 		thisCopy->deleteLater();
-	// 		bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
-	// 		if (created) {
-	// 			mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-	// 			mFriendModel->setSelf(mFriendModel);
-	// 			core->getDefaultFriendList()->updateSubscriptions();
-	// 		}
-	// 		emit CoreModel::getInstance()->friendAdded();
-	// 		mCoreModelConnection->invokeToCore([this, created]() {
-	// 			if (created) setSelf(mCoreModelConnection->mCore);
-	// 			setIsSaved(created);
-	// 		});
-	// 	});
-	// }
 }
 
 void FriendCore::undo() { // Retrieve values from model
 	if (mFriendModel) {
 		mFriendModelConnection->invokeToModel([this]() {
 			FriendCore *contact = new FriendCore(*this);
-			contact->writeFrom(mFriendModel->getFriend());
-			mFriendModelConnection->invokeToCore([this, contact]() {
+			contact->writeFromModel(mFriendModel);
+			contact->moveToThread(App::getInstance()->thread());
+			mFriendModelConnection->invokeToCore([this, contact]() mutable {
 				this->reset(*contact);
 				contact->deleteLater();
 			});

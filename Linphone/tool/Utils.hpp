@@ -52,6 +52,8 @@ public:
 	}
 
 	Q_INVOKABLE static VariantObject *getDisplayName(const QString &address);
+	Q_INVOKABLE static QString getGivenNameFromFullName(const QString &fullName);
+	Q_INVOKABLE static QString getFamilyNameFromFullName(const QString &fullName);
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
 
 	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
@@ -72,6 +74,7 @@ public:
 	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
 	Q_INVOKABLE static int getRandomIndex(int size);
+	Q_INVOKABLE static void copyToClipboard(const QString &text);	
 	static QString generateSavedFilename(const QString &from, const QString &to);
 
 	static inline QString coreStringToAppString(const std::string &str) {

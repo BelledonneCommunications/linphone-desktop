@@ -17,7 +17,7 @@ AbstractMainPage {
 
 	onNoItemButtonPressed: goToNewCall()
 
-	showDefaultItem: listStackView.currentItem.listView ? listStackView.currentItem.listView.count === 0 : true
+	showDefaultItem: listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0 && listStackView.currentItem.listView.model.sourceModel.count === 0 || false
 
 	function goToNewCall() {
 		listStackView.push(newCallItem)
@@ -51,6 +51,7 @@ AbstractMainPage {
 			id: historyListItem
 
 			ColumnLayout {
+				property alias listView: historyListView
 				RowLayout {
 					Layout.fillWidth: true
 					Layout.leftMargin: listStackView.sideMargin
@@ -91,7 +92,9 @@ AbstractMainPage {
 							}
 							Connections {
 								target: deleteHistoryPopup
-								onAccepted: historyListView.model.removeAllEntries()
+								onAccepted: {
+									historyListView.model.removeAllEntries()
+								}
 							}
 							onClicked: {
 								removeHistory.close()
@@ -156,6 +159,7 @@ AbstractMainPage {
 										model: CallHistoryProxy{
 											filterText: searchBar.text
 										}
+										
 										currentIndex: -1
 										
 										spacing: 10 * DefaultStyle.dp
@@ -205,7 +209,7 @@ AbstractMainPage {
 														anchors.verticalCenter: parent.verticalCenter
 														Text {
 															id: friendAddress
-															property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : undefined
+															property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : null
 															text: remoteAddress ? remoteAddress.value : ""
 															font {
 																pixelSize: 14 * DefaultStyle.dp
@@ -288,18 +292,13 @@ AbstractMainPage {
 										onCurrentIndexChanged: {
 											mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
 										}
-										onCountChanged: {
-											mainItem.showDefaultItem = historyListView.count === 0 && historyListView.visible
-										}
-
 										onVisibleChanged: {
-											mainItem.showDefaultItem = historyListView.count === 0 && historyListView.visible
 											if (!visible) currentIndex = -1
+											console.log("visible", visible)
 										}
 
 										Connections {
 											target: mainItem
-											onShowDefaultItemChanged: mainItem.showDefaultItem = mainItem.showDefaultItem && historyListView.count === 0 && historyListView.visible
 											onListViewUpdated: {
 												historyListView.model.updateView()
 											}
@@ -312,7 +311,7 @@ AbstractMainPage {
 						Control.ScrollBar {
 							id: scrollbar
 							active: true
-							policy: Control.ScrollBar.AlwaysOn
+							policy: Control.ScrollBar.AsNeeded
 							Layout.fillHeight: true
 						}
 					}
@@ -322,10 +321,6 @@ AbstractMainPage {
 		Component {
 			id: newCallItem
 			ColumnLayout {
-				Control.StackView.onActivating: {
-					mainItem.showDefaultItem = false
-				}
-				Control.StackView.onDeactivating: mainItem.showDefaultItem = true
 				RowLayout {
 					Layout.leftMargin: listStackView.sideMargin
 					Layout.rightMargin: listStackView.sideMargin
@@ -350,214 +345,141 @@ AbstractMainPage {
 						Layout.fillWidth: true
 					}
 				}
-				RowLayout {
+				CallContactsLists {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					// Layout.maximumWidth: parent.width
-					CallContactsLists {
-						Layout.fillWidth: true
-						Layout.fillHeight: true
-						// Layout.leftMargin: listStackView.sideMargin
-						// Layout.rightMargin: listStackView.sideMargin
-						groupCallVisible: true
-						searchBarColor: DefaultStyle.grey_100
-						
-						onCallButtonPressed: (address) => {
-							var addressEnd = "@sip.linphone.org"
-							if (!address.endsWith(addressEnd)) address += addressEnd
-							UtilsCpp.createCall(address)
-							// var window = UtilsCpp.getCallsWindow()
-						}
+					// Layout.leftMargin: listStackView.sideMargin
+					// Layout.rightMargin: listStackView.sideMargin
+					groupCallVisible: true
+					searchBarColor: DefaultStyle.grey_100
+					
+					onCallButtonPressed: (address) => {
+						var addressEnd = "@sip.linphone.org"
+						if (!address.endsWith(addressEnd)) address += addressEnd
+						UtilsCpp.createCall(address)
+						// var window = UtilsCpp.getCallsWindow()
 					}
 				}
 			}
 		}
 	}
 
-	rightPanelContent: RowLayout {
+	rightPanelContent: Control.StackView {
+		id: rightPanelStackView
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		visible: mainItem.selectedRowHistoryGui != undefined
-		Layout.topMargin: 45 * DefaultStyle.dp
-		
-		Item {
-			Layout.fillWidth: true
-			Layout.fillHeight: true
+		initialItem: emptySelection
+		Connections {
+			target: mainItem
+			onSelectedRowHistoryGuiChanged: {
+				if (mainItem.selectedRowHistoryGui) rightPanelStackView.replace(contactDetailComp, Control.StackView.Immediate)
+				else rightPanelStackView.replace(emptySelection, Control.StackView.Immediate)
+			}
 		}
-		ColumnLayout {
-			spacing: 30 * DefaultStyle.dp
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-
-			Item {
-				Layout.preferredHeight: detailAvatar.height
-				Layout.fillWidth: true
-				Layout.alignment: Qt.AlignHCenter
-				Avatar {
-					id: detailAvatar
-					anchors.centerIn: parent
-					width: 100 * DefaultStyle.dp
-					height: 100 * DefaultStyle.dp
-					address: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
-				}
-				PopupButton {
-					id: detailOptions
-					anchors.left: detailAvatar.right
-					anchors.leftMargin: 30 * DefaultStyle.dp
-					anchors.verticalCenter: parent.verticalCenter
-					popup.x: width
-					popup.contentItem: ColumnLayout {
-						Button {
-							background: Item {}
-							contentItem: IconLabel {
-								text: qsTr("Ajouter aux contacts")
-								iconSource: AppIcons.plusCircle
-							}
-							onClicked: {
-								// console.debug("[CallPage.qml] TODO : add to contact")
-								var friendGui = Qt.createQmlObject('import Linphone
-																	FriendGui{}', detailAvatar)
-								friendGui.core.name = contactName.text
-								friendGui.core.address = contactAddress.text
-								friendGui.core.save()
-							}
+		onCurrentItemChanged: {
+		}
+	}
+	Component{
+		id: emptySelection
+		Item{}
+	}
+	Component {
+		id: contactDetailComp
+		ContactLayout {
+			id: contactDetail
+			visible: mainItem.selectedRowHistoryGui != undefined
+			property var remoteName: mainItem.selectedRowHistoryGui ? UtilsCpp.getDisplayName(mainItem.selectedRowHistoryGui.core.remoteAddress) : null
+			contactAddress: mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress || ""
+			contactName: remoteName ? remoteName.value : ""
+			anchors.top: rightPanelStackView.top
+			anchors.bottom: rightPanelStackView.bottom
+			anchors.topMargin: 45 * DefaultStyle.dp
+			anchors.bottomMargin: 45 * DefaultStyle.dp
+			buttonContent: PopupButton {
+				id: detailOptions
+				anchors.right: parent.right
+				anchors.rightMargin: 30 * DefaultStyle.dp
+				anchors.verticalCenter: parent.verticalCenter
+				popup.x: width
+				popup.contentItem: ColumnLayout {
+					Button {
+						background: Item {}
+						contentItem: IconLabel {
+							text: qsTr("Ajouter aux contacts")
+							iconSource: AppIcons.plusCircle
 						}
-						Button {
-							background: Item {}
-							contentItem: IconLabel {
-								text: qsTr("Copier l'adresse SIP")
-								iconSource: AppIcons.copy
-							}
-							onClicked: console.debug("[CallPage.qml] TODO : copy SIP address")
+						onClicked: {
+							// console.debug("[CallPage.qml] TODO : add to contact")
+							var friendGui = Qt.createQmlObject('import Linphone
+																FriendGui{
+																}', contactDetail)
+							detailOptions.close()
+							friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(contactDetail.contactName)
+							friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(contactDetail.contactName)
+							friendGui.core.appendAddress(contactDetail.contactAddress)
+							friendGui.core.defaultAddress = contactDetail.contactAddress
+							rightPanelStackView.push(editContact, {"contact": friendGui, "title": qsTr("Ajouter contact"), "saveButtonText": qsTr("Créer")})
 						}
-						Button {
-							background: Item {}
-							contentItem: IconLabel {
-								text: qsTr("Bloquer")
-								iconSource: AppIcons.empty
-							}
-							onClicked: console.debug("[CallPage.qml] TODO : block user")
+					}
+					Button {
+						background: Item {}
+						contentItem: IconLabel {
+							text: qsTr("Copier l'adresse SIP")
+							iconSource: AppIcons.copy
 						}
-						Rectangle {
-							Layout.fillWidth: true
-							Layout.preferredHeight: 2 * DefaultStyle.dp
-							color: DefaultStyle.main2_400
+						onClicked: UtilsCpp.copyToClipboard(mainItem.selectedRowHistoryGui && mainItem.selectedRowHistoryGui.core.remoteAddress)
+					}
+					Button {
+						background: Item {}
+						enabled: false
+						contentItem: IconLabel {
+							text: qsTr("Bloquer")
+							iconSource: AppIcons.empty
 						}
-						Button {
-							background: Item {}
-							contentItem: IconLabel {
-								text: qsTr("Supprimer l'historique")
-								iconSource: AppIcons.trashCan
-								colorizationColor: DefaultStyle.danger_500main
-							}
-							Connections {
-								target: deleteForUserPopup
-								onAccepted: detailListView.model.removeEntriesWithFilter()
-							}
-							onClicked: {
-								detailOptions.close()
-								deleteForUserPopup.open()
-							}
+						onClicked: console.debug("[CallPage.qml] TODO : block user")
+					}
+					Rectangle {
+						Layout.fillWidth: true
+						Layout.preferredHeight: 2 * DefaultStyle.dp
+						color: DefaultStyle.main2_400
+					}
+					Button {
+						background: Item {}
+						contentItem: IconLabel {
+							text: qsTr("Supprimer l'historique")
+							iconSource: AppIcons.trashCan
+							colorizationColor: DefaultStyle.danger_500main
+						}
+						Connections {
+							target: deleteForUserPopup
+							onAccepted: detailListView.model.removeEntriesWithFilter()
+						}
+						onClicked: {
+							detailOptions.close()
+							deleteForUserPopup.open()
 						}
 					}
 				}
 			}
-			ColumnLayout {
-				Layout.alignment: Qt.AlignHCenter
-				Layout.fillWidth: true
-				Text {
-					id: contactName
-					property var remoteAddress: mainItem.selectedRowHistoryGui ? UtilsCpp.getDisplayName(mainItem.selectedRowHistoryGui.core.remoteAddress) : undefined
-					Layout.alignment: Qt.AlignHCenter
-					text: remoteAddress ? remoteAddress.value : ""
-					horizontalAlignment: Text.AlignHCenter
-					font {
-						pixelSize: 14 * DefaultStyle.dp
-						weight: 400 * DefaultStyle.dp
-					}
-				}
-				Text {
-					id: contactAddress
-					text: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
-					horizontalAlignment: Text.AlignHCenter
-					font {
-						pixelSize: 12 * DefaultStyle.dp
-						weight: 300 * DefaultStyle.dp
-					}
-				}
-				Text {
-					// connection status
-				}
-			}
-			RowLayout {
-				spacing: 40 * DefaultStyle.dp
-				Layout.alignment: Qt.AlignHCenter
-				Layout.fillWidth: true
-				// Layout.fillHeight: true
-				Item {Layout.fillWidth: true}
-				LabelButton {
-					Layout.preferredWidth: 24 * DefaultStyle.dp//image.width
-					Layout.preferredHeight: image.height
-					image.source: AppIcons.phone
-					label: qsTr("Appel")
-					button.onClicked: {
-						var addr = mainItem.selectedRowHistoryGui.core.remoteAddress
-						var addressEnd = "@sip.linphone.org"
-						if (!addr.endsWith(addressEnd)) addr += addressEnd
-						UtilsCpp.createCall(addr)
-				}
-				}
-				LabelButton {
-					Layout.preferredWidth: image.width
-					Layout.preferredHeight: image.height
-					image.source: AppIcons.chatTeardropText
-					label: qsTr("Message")
-					button.onClicked: console.debug("[CallPage.qml] TODO : open conversation")
-				}
-				LabelButton {
-					Layout.preferredWidth: image.width
-					Layout.preferredHeight: image.height
-					image.source: AppIcons.videoCamera
-					label: qsTr("Appel Video")
-					button.onClicked: {
-						var addr = mainItem.selectedRowHistoryGui.core.remoteAddress
-						var addressEnd = "@sip.linphone.org"
-						if(!addr.endsWith(addressEnd)) addr += addressEnd
-						UtilsCpp.createCall(addr)
-						console.log("[CallPage.qml] TODO : enable video")
-					}
-				}
-				Item {Layout.fillWidth: true}
-
-			}
-			
-			Control.Control {
+			detailContent: Control.Control {
 				id: detailControl
-				Layout.preferredWidth: detailListView.width + leftPadding + rightPadding
-				implicitHeight: 430 * DefaultStyle.dp + topPadding + bottomPadding
-
-				Layout.alignment: Qt.AlignHCenter
-				Layout.topMargin: 30 * DefaultStyle.dp
-
-				topPadding: 16 * DefaultStyle.dp
-				bottomPadding: 21 * DefaultStyle.dp
-				leftPadding: 17 * DefaultStyle.dp
-				rightPadding: 17 * DefaultStyle.dp
+				// Layout.fillWidth: true
+				Layout.fillHeight: true
+				Layout.preferredWidth: 360 * DefaultStyle.dp
 
 				background: Rectangle {
 					id: detailListBackground
-					width: parent.width
-					height: detailListView.height
 					color: DefaultStyle.grey_0
 					radius: 15 * DefaultStyle.dp
+					anchors.fill: detailListView
 				}
-				ListView {
+
+				contentItem: ListView {
 					id: detailListView
-					width: 360 * DefaultStyle.dp
-					height: Math.min(detailControl.implicitHeight, contentHeight)
-					anchors.centerIn: detailListBackground
-					anchors.bottomMargin: 21 * DefaultStyle.dp
-					spacing: 10 * DefaultStyle.dp
+					width: parent.width
+					height: Math.min(detailControl.height, contentHeight)
+					
+					spacing: 20 * DefaultStyle.dp
 					clip: true
 
 					onCountChanged: {
@@ -570,10 +492,11 @@ AbstractMainPage {
 					delegate: Item {
 						width:detailListView.width
 						height: 56 * DefaultStyle.dp
-						// anchors.topMargin: 5 * DefaultStyle.dp
-						// anchors.bottomMargin: 5 * DefaultStyle.dp
 						RowLayout {
 							anchors.fill: parent
+							anchors.leftMargin: 20 * DefaultStyle.dp
+							anchors.rightMargin: 20 * DefaultStyle.dp
+							anchors.verticalCenter: parent.verticalCenter
 							ColumnLayout {
 								Layout.alignment: Qt.AlignVCenter
 								RowLayout {
@@ -619,6 +542,7 @@ AbstractMainPage {
 								}
 							}
 							Item {
+								Layout.fillHeight: true
 								Layout.fillWidth: true
 							}
 							Text {
@@ -633,9 +557,11 @@ AbstractMainPage {
 				}
 			}
 		}
-		Item {
-			Layout.fillWidth: true
-			Layout.fillHeight: true
+	}
+	Component {
+		id: editContact
+		ContactEdition {
+			onCloseEdition: rightPanelStackView.pop(Control.StackView.Immediate)
 		}
 	}
 

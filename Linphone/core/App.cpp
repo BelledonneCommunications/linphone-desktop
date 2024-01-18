@@ -50,6 +50,7 @@
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/search/MagicSearchProxy.hpp"
 #include "core/singleapplication/singleapplication.h"
+#include "core/variant/VariantList.hpp"
 #include "model/object/VariantObject.hpp"
 #include "tool/Constants.hpp"
 #include "tool/EnumsToString.hpp"
@@ -161,6 +162,7 @@ void App::initCppInterfaces() {
 	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
 	qmlRegisterType<CallHistoryProxy>(Constants::MainQmlUri, 1, 0, "CallHistoryProxy");
+	qmlRegisterType<VariantList>(Constants::MainQmlUri, 1, 0, "VariantList");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterType<FriendGui>(Constants::MainQmlUri, 1, 0, "FriendGui");
 	qmlRegisterUncreatableType<FriendCore>(Constants::MainQmlUri, 1, 0, "FriendCore", QLatin1String("Uncreatable"));

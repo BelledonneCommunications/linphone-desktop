@@ -122,7 +122,6 @@ signals:
 	void stateChanged(LinphoneEnums::CallState state);
 	void dirChanged(LinphoneEnums::CallDir dir);
 	void lastErrorMessageChanged();
-	void peerAddressChanged();
 	void durationChanged(int duration);
 	void speakerMutedChanged();
 	void microphoneMutedChanged();

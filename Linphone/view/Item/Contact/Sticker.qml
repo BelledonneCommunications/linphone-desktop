@@ -20,7 +20,8 @@ Item {
 	onEnablePersonalCameraChanged: console.log ("enable camera", enablePersonalCamera)
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
-	property var peerAddress: call ? UtilsCpp.getDisplayName(call.core.peerAddress) : null
+	property var peerAddressObj: call ? UtilsCpp.getDisplayName(call.core.peerAddress) : null
+	property string peerAddress: peerAddressObj ? peerAddressObj.value : ""
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
 
 	Rectangle {
@@ -42,7 +43,7 @@ Item {
 				Layout.alignment: Qt.AlignHCenter
 				Layout.topMargin: 15 * DefaultStyle.dp
 				visible: mainItem.call && mainItem.call != undefined
-				text: mainItem.peerAddress ? mainItem.peerAddress.value : ""
+				text: mainItem.peerAddress
 				color: DefaultStyle.grey_0
 				font {
 					pixelSize: 22 * DefaultStyle.dp
@@ -99,8 +100,8 @@ Item {
 			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.bottomMargin: 10 * DefaultStyle.dp
 			width: txtMeter.width
-			text: mainItem.call && mainItem.peerAddress
-				? mainItem.peerAddress.value
+			text: mainItem.peerAddress.length != 0
+				? mainItem.peerAddress
 				: mainItem.account && mainItem.identityAddress
 					? mainItem.identityAddress.value
 					: ""

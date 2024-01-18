@@ -22,7 +22,6 @@
 
 #include "core/App.hpp"
 #include "model/call/CallModel.hpp"
-#include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 
 // =============================================================================

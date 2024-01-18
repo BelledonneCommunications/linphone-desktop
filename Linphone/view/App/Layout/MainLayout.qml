@@ -160,7 +160,7 @@ Item {
 				CallPage {
 					id: callPage
 				}
-				//ContactPage{}
+				ContactPage{}
 				//ConversationPage{}
 				//MeetingPage{}
 			}

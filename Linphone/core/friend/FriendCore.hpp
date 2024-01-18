@@ -21,31 +21,43 @@
 #ifndef FRIEND_CORE_H_
 #define FRIEND_CORE_H_
 
+// #include "FriendAddressList.hpp"
+#include "core/variant/VariantList.hpp"
 #include "model/friend/FriendModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/thread/SafeConnection.hpp"
 #include "tool/thread/SafeSharedPointer.hpp"
+#include <linphone++/linphone.hh>
+
 #include <QDateTime>
+#include <QMap>
 #include <QObject>
 #include <QSharedPointer>
-#include <linphone++/linphone.hh>
 
 // This object is defferent from usual Core. It set internal data from directly from GUI.
 // Values are saved on request.
 // This allow revert feature.
 
 class CoreModel;
+class FriendCore;
 
 class FriendCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
-	Q_PROPERTY(QString name READ getName WRITE setName NOTIFY nameChanged)
-	Q_PROPERTY(QString address READ getAddress WRITE setAddress NOTIFY addressChanged)
+	Q_PROPERTY(QList<QVariant> allAdresses READ getAllAddresses NOTIFY allAddressesChanged)
+	Q_PROPERTY(QList<QVariant> phoneNumbers READ getPhoneNumbers NOTIFY phoneNumberChanged)
+	Q_PROPERTY(QList<QVariant> addresses READ getAddresses NOTIFY addressChanged)
+	Q_PROPERTY(QString givenName READ getGivenName WRITE setGivenName NOTIFY givenNameChanged)
+	Q_PROPERTY(QString familyName READ getFamilyName WRITE setFamilyName NOTIFY familyNameChanged)
+	Q_PROPERTY(QString displayName READ getDisplayName NOTIFY displayNameChanged)
+	Q_PROPERTY(QString organization READ getOrganization WRITE setOrganization NOTIFY organizationChanged)
+	Q_PROPERTY(QString job READ getJob WRITE setJob NOTIFY jobChanged)
+	Q_PROPERTY(QString defaultAddress READ getDefaultAddress WRITE setDefaultAddress NOTIFY defaultAddressChanged)
 	Q_PROPERTY(QDateTime presenceTimestamp READ getPresenceTimestamp NOTIFY presenceTimestampChanged)
 	Q_PROPERTY(LinphoneEnums::ConsolidatedPresence consolidatedPresence READ getConsolidatedPresence NOTIFY
 	               consolidatedPresenceChanged)
 	Q_PROPERTY(bool isSaved READ getIsSaved NOTIFY isSavedChanged)
-	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE lSetPictureUri NOTIFY pictureUriChanged)
+	Q_PROPERTY(QString pictureUri READ getPictureUri WRITE setPictureUri NOTIFY pictureUriChanged)
 	Q_PROPERTY(bool starred READ getStarred WRITE lSetStarred NOTIFY starredChanged)
 
 public:
@@ -58,14 +70,41 @@ public:
 	void setSelf(SafeSharedPointer<FriendCore> me);
 	void reset(const FriendCore &contact);
 
-	QString getName() const;
-	void setName(QString data);
+	QString getDisplayName() const;
+
+	QString getFamilyName() const;
+	void setFamilyName(const QString &name);
+
+	QString getGivenName() const;
+	void setGivenName(const QString &name);
+
+	QString getOrganization() const;
+	void setOrganization(const QString &name);
+
+	QString getJob() const;
+	void setJob(const QString &name);
 
 	bool getStarred() const;
 	void onStarredChanged(bool starred);
 
-	QString getAddress() const;
-	void setAddress(QString address);
+	QList<QVariant> getPhoneNumbers() const;
+	QVariant getPhoneNumberAt(int index) const;
+	Q_INVOKABLE void appendPhoneNumber(const QString &label, const QString &number);
+	Q_INVOKABLE void removePhoneNumber(int index);
+	Q_INVOKABLE void setPhoneNumberAt(int index, const QString &label, const QString &phoneNumber);
+	void resetPhoneNumbers(QList<QVariant> newList);
+
+	QList<QVariant> getAddresses() const;
+	QVariant getAddressAt(int index) const;
+	Q_INVOKABLE void appendAddress(const QString &addr);
+	Q_INVOKABLE void removeAddress(int index);
+	Q_INVOKABLE void setAddressAt(int index, const QString &label, const QString &address);
+	void resetAddresses(QList<QVariant> newList);
+
+	void setDefaultAddress(const QString &address);
+	QString getDefaultAddress() const;
+
+	QList<QVariant> getAllAddresses() const;
 
 	LinphoneEnums::ConsolidatedPresence getConsolidatedPresence() const;
 	void setConsolidatedPresence(LinphoneEnums::ConsolidatedPresence presence);
@@ -77,6 +116,7 @@ public:
 	void setIsSaved(bool isSaved);
 
 	QString getPictureUri() const;
+	void setPictureUri(const QString &uri);
 	void onPictureUriChanged(QString uri);
 
 	void onPresenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
@@ -87,30 +127,39 @@ public:
 
 signals:
 	void contactUpdated();
-	void nameChanged(QString name);
+	void displayNameChanged();
+	void givenNameChanged(const QString &name);
+	void familyNameChanged(const QString &name);
 	void starredChanged();
-	void addressChanged(QString address);
+	void phoneNumberChanged();
+	void addressChanged();
+	void organizationChanged();
+	void jobChanged();
 	void consolidatedPresenceChanged(LinphoneEnums::ConsolidatedPresence level);
 	void presenceTimestampChanged(QDateTime presenceTimestamp);
-	void sipAddressAdded(const QString &sipAddress);
-	void sipAddressRemoved(const QString &sipAddress);
 	void pictureUriChanged();
 	void saved();
 	void isSavedChanged(bool isSaved);
 	void removed(FriendCore *contact);
+	void defaultAddressChanged();
+	void allAddressesChanged();
 
-	void lSetPictureUri(QString pictureUri);
 	void lSetStarred(bool starred);
 
 protected:
-	void writeInto(std::shared_ptr<linphone::Friend> contact) const;
-	void writeFrom(const std::shared_ptr<linphone::Friend> &contact);
+	void writeIntoModel(std::shared_ptr<FriendModel> model) const;
+	void writeFromModel(const std::shared_ptr<FriendModel> &model);
 
 	LinphoneEnums::ConsolidatedPresence mConsolidatedPresence = LinphoneEnums::ConsolidatedPresence::Offline;
 	QDateTime mPresenceTimestamp;
-	QString mName;
+	QString mGivenName;
+	QString mFamilyName;
+	QString mOrganization;
+	QString mJob;
 	bool mStarred;
-	QString mAddress;
+	QList<QVariant> mPhoneNumberList;
+	QList<QVariant> mAddressList;
+	QString mDefaultAddress;
 	QString mPictureUri;
 	bool mIsSaved;
 	std::shared_ptr<FriendModel> mFriendModel;
@@ -119,5 +168,6 @@ protected:
 
 	DECLARE_ABSTRACT_OBJECT
 };
+
 Q_DECLARE_METATYPE(FriendCore *)
 #endif

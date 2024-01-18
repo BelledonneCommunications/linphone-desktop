@@ -53,7 +53,7 @@ public:
 	}
 
 	virtual T getAt(const int &index) const {
-		if (index < 0 || index >= mList.count()) return nullptr;
+		if (index < 0 || index >= mList.count()) return T();
 		else return mList[index];
 	}
 

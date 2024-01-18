@@ -20,7 +20,7 @@ Item {
 		id: startCallPopup
 		property FriendGui contact
 		onContactChanged: {
-			
+			console.log("contact changed", contact)
 		}
 		underlineColor: DefaultStyle.main1_500_main
 		anchors.centerIn: parent
@@ -53,56 +53,83 @@ Item {
 					onClicked: startCallPopup.close()
 				}
 			}
-			Repeater {
-				id: adresses
-				model: [{label: "SIP", address: startCallPopup.contact ? startCallPopup.contact.core.address : ""}
-				// {label: "Work", address: "06000000000"},
-				// {label: "Personal", address: "060000000"}
-				] //account.adresses
-				Button {
-					id: channel
-					// required property int index
-					leftPadding: 0
-					rightPadding: 0
-					// topPadding: 0
-					bottomPadding: 0
-					Layout.fillWidth: true
-					
-					background: Item{}
-					contentItem: ColumnLayout {
-						RowLayout {
-							ColumnLayout {
-								Text {
-									Layout.leftMargin: 5 * DefaultStyle.dp
-									Layout.rightMargin: 5 * DefaultStyle.dp
-									text: modelData.label
-									font {
-										pixelSize: 14 * DefaultStyle.dp
-										weight: 700 * DefaultStyle.dp
-									}
-								}
-								Text {
-									Layout.leftMargin: 5 * DefaultStyle.dp
-									Layout.rightMargin: 5 * DefaultStyle.dp
-									text: modelData.address
-									font {
-										pixelSize: 13 * DefaultStyle.dp
-										weight: 400 * DefaultStyle.dp
-									}
+			component AddressButton: Button {
+				property int index
+				property string label
+				property string address
+				id: channel
+				// required property int index
+				leftPadding: 0
+				rightPadding: 0
+				// topPadding: 0
+				bottomPadding: 0
+				Layout.fillWidth: true
+				
+				background: Item{}
+				contentItem: ColumnLayout {
+					RowLayout {
+						ColumnLayout {
+							Text {
+								Layout.leftMargin: 5 * DefaultStyle.dp
+								Layout.rightMargin: 5 * DefaultStyle.dp
+								text: label
+								// TODO : change this with domain
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 700 * DefaultStyle.dp
 								}
 							}
-							Item {
-								Layout.fillWidth: true
+							Text {
+								Layout.leftMargin: 5 * DefaultStyle.dp
+								Layout.rightMargin: 5 * DefaultStyle.dp
+								text: address
+								font {
+									pixelSize: 13 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
 							}
 						}
-						Rectangle {
-							visible: index < adresses.count - 1
+						Item {
 							Layout.fillWidth: true
-							Layout.preferredHeight: 1 * DefaultStyle.dp
-							color: DefaultStyle.main2_200
 						}
 					}
-					onClicked: mainItem.callButtonPressed(modelData.address)
+					Rectangle {
+						visible: index < selectedContactAddresses.count - 1
+						Layout.fillWidth: true
+						Layout.preferredHeight: 1 * DefaultStyle.dp
+						color: DefaultStyle.main2_200
+					}
+				}
+				onClicked: mainItem.callButtonPressed(address)
+			}
+			Repeater {
+				id: selectedContactAddresses
+				model: VariantList {
+					model: startCallPopup.contact && startCallPopup.contact.core.addresses || []
+				}
+				// model: startCallPopup.contact ? startCallPopup.contact.core.addresses : ""
+				// {label: "Work", address: "06000000000"},
+				// {label: "Personal", address: "060000000"}
+				 //account.adresses
+				delegate: AddressButton {
+					// property int index
+					// property string label
+					// property string address
+				}
+			}
+			Repeater {
+				id: selectedContactPhoneNumbers
+				model: VariantList {
+					model: startCallPopup.contact && startCallPopup.contact.core.phoneNumbers || []
+				}
+				// model: startCallPopup.contact ? startCallPopup.contact.core.addresses : ""
+				// {label: "Work", address: "06000000000"},
+				// {label: "Personal", address: "060000000"}
+				 //account.adresses
+				delegate: AddressButton {
+					// property int index
+					// property string label
+					// property string address
 				}
 			}
 		}
@@ -113,7 +140,7 @@ Item {
 		id: contactsScrollbar
 		active: true
 		interactive: true
-		policy: Control.ScrollBar.AlwaysOn
+		policy: Control.ScrollBar.AsNeeded
 		// Layout.fillWidth: true
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
@@ -233,9 +260,11 @@ Item {
 						}
 						ContactsList{
 							Layout.fillWidth: true
+							contactMenuVisible: false
 							id: contactList
 							searchBarText: searchBar.text
 							onContactSelected: (contact) => {
+								console.log("contact selected", contact)
 								startCallPopup.contact = contact
 								startCallPopup.open()
 							}
@@ -251,6 +280,7 @@ Item {
 						}
 						ContactsList{
 							contactMenuVisible: false
+							Layout.fillWidth: true
 							Layout.fillHeight: true
 							initialHeadersVisible: false
 							model: MagicSearchProxy {

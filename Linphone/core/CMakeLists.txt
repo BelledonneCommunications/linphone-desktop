@@ -33,6 +33,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/proxy/ListProxy.cpp
 	core/proxy/Proxy.cpp
 	core/proxy/SortFilterProxy.cpp
+	
+	core/variant/VariantList.cpp
 )
 
 ## Single Application

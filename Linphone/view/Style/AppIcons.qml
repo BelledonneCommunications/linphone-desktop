@@ -51,6 +51,7 @@ QtObject {
 	property string outgoingCallRejected: "image://internal/outgoing_call_rejected.svg"
 	property string microphone: "image://internal/microphone.svg"
 	property string microphoneSlash: "image://internal/microphone-slash.svg"
+	property string camera: "image://internal/camera.svg"
 	property string videoCamera: "image://internal/video-camera.svg"
 	property string videoCameraSlash: "image://internal/video-camera-slash.svg"
 	property string speaker: "image://internal/speaker-high.svg"
@@ -67,4 +68,9 @@ QtObject {
 	property string heartFill: "image://internal/heart-fill.svg"
 	property string recordFill: "image://internal/record-fill.svg"
 	property string mediaEncryptionZrtpPq: "image://internal/media_encryption_zrtp_pq.svg"
+	property string pencil: "image://internal/pencil-simple.svg"
+	property string shareNetwork: "image://internal/share-network.svg"
+	property string bell: "image://internal/bell-simple.svg"
+	property string bellSlash: "image://internal/bell-simple-slash.svg"
+	
 }

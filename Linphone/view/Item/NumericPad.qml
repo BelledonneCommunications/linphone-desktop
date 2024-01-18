@@ -24,15 +24,16 @@ Control.Popup {
 			color: DefaultStyle.grey_100
 			radius: 20 * DefaultStyle.dp
 		}
-		MultiEffect {
-			id: effect
-			anchors.fill: parent
-			source: numPadBackground
-			shadowEnabled: true
-			shadowColor: DefaultStyle.grey_1000
-			shadowOpacity: 0.8
-			shadowBlur: 1
-		}
+		// MultiEffect {
+		// 	id: effect
+		// 	anchors.fill: parent
+		// 	source: numPadBackground
+		// 	shadowEnabled: true
+		// 	shadowColor: DefaultStyle.grey_1000
+		// 	shadowOpacity: 0.1
+		// 	shadowVerticalOffset: -200 * DefaultStyle.dp
+		// 	shadowBlur: 1
+		// }
 		Rectangle {
 			width: parent.width
 			height: parent.height / 2

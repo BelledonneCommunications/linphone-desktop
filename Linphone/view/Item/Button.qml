@@ -20,6 +20,13 @@ Control.Button {
 	topPadding: 11 * DefaultStyle.dp
 	bottomPadding: 11 * DefaultStyle.dp
 
+	MouseArea {
+		anchors.fill: parent
+		hoverEnabled: true
+		cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+		acceptedButtons: Qt.NoButton
+	}
+
 	background: Item {
 		Rectangle {
 			anchors.fill: parent
