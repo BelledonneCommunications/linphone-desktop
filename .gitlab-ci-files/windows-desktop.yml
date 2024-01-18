@@ -117,15 +117,17 @@
     - Set-Variable -Name "CLCACHE_DISABLE" -Value 1
 
 ######################################################
-# JOBS
+# On each push
 ######################################################
 
 vs2019-msvc-win64-windows:
-  extends: .windows-vs2019-msvc
+  rules:
+    - if: ($CI_PIPELINE_SOURCE == "merge_request_event") && $DOCKER_UPDATE == null && $SKIP_WINDOWS == null
   variables:
     CMAKE_C_COMPILER : cl.exe
     CMAKE_CXX_COMPILER : cl.exe
     CMAKE_RC_COMPILER : rc.exe
+  extends: .windows-vs2019-msvc
 
 ######################################################
 # NIGHTLY
@@ -134,11 +136,12 @@ vs2019-msvc-win64-windows:
 ##      ON SCHEDULE     ##
 
 vs2019-win64-scheduled-windows:
-  extends: .windows-vs2019-scheduled
   rules:
+    - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
-    - if: $NIGHTLY_RELEASE
+    - if: $DEPLOY_PLUGINS
     - if: $DEPLOY_RUN_WINDOWS
+  extends: vs2019-msvc-win64-windows
 
 #################################################
 #               PACKAGE
@@ -147,13 +150,14 @@ vs2019-win64-scheduled-windows:
 #Remove . when packaging process is ready to use
 vs2019-win64-package:
   stage: package
-  extends: .windows-vs2019-msvc
   dependencies: []
   rules:
+    - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
     - if: $NIGHTLY_RELEASE
     - if: $PACKAGE_WINDOWS
     - if: $DEPLOY_WINDOWS
+  extends: .windows-vs2019-msvc
   variables:
     CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DLINPHONE_WINDOWS_SIGN_TOOL=$WINDOWS_SIGN_TOOL -DLINPHONE_WINDOWS_SIGN_TIMESTAMP_URL=$WINDOWS_SIGN_TIMESTAMP_URL -DLINPHONE_WINDOWS_SIGN_HASH=$WINDOWS_SIGN_HASH -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=ON
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER

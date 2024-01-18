@@ -62,7 +62,7 @@ if(APPLE)
 
 	#configure_file("${CMAKE_SOURCE_DIR}/Linphone/../assets/qt.conf.in" "${CMAKE_BINARY_DIR}/cmake/install/macos/qt.conf" @ONLY)
 	#install(FILES "${CMAKE_BINARY_DIR}/cmake/install/macos/qt.conf" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/..")
-	install(FILES "${CMAKE_BINARY_DIR}/cmake/install/macos/Info.plist" DESTINATION "${APPLICATION_NAME}.app/Contents")
+	#install(FILES "${CMAKE_BINARY_DIR}/cmake/install/macos/Info.plist" DESTINATION "${APPLICATION_NAME}.app/Contents")
 	install(FILES "${CMAKE_BINARY_DIR}/cmake/install/macos/${EXECUTABLE_NAME}.icns" DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/..")
 	file(GLOB SHARED_LIBRARIES "${LINPHONE_OUTPUT_DIR}/${CMAKE_INSTALL_LIBDIR}/lib*.dylib")
 	if( ENABLE_OPENH264 )# Remove openH264 lib from the installation. this codec will be download by user
@@ -96,7 +96,10 @@ if(APPLE)
 	if (NOT DEPLOYQT_PROGRAM)
 		message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
 	endif()
-	install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip )")
+	if(NOT ENABLE_APP_PACKAGING)
+		install(CODE "MESSAGE(\"MacDeploy install: execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite) \")")
+		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite)")
+	endif()
 endif()
 
 # ==============================================================================

@@ -95,6 +95,7 @@ macosx-makefile-package:
   dependencies: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
+    - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
     - if: $NIGHTLY_MASTER
     - if: $PACKAGE_MACOSX
     - if: $DEPLOY_MACOSX

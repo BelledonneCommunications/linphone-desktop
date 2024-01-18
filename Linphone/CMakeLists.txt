@@ -19,7 +19,6 @@ endforeach()
 set(TARGET_NAME Linphone)
 set(APP_TARGETS ${LinphoneCxx_TARGET})
 
-
 set(QT_DEFAULT_MAJOR_VERSION 6)
 set(QT_PACKAGES Core Quick Qml Widgets Svg Multimedia Test)# Search Core at first for initialize Qt scripts for next find_packages.
 if (UNIX AND NOT APPLE)
@@ -104,6 +103,7 @@ set_target_properties(${TARGET_NAME} PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
+    MACOSX_BUNDLE_INFO_PLIST ${CMAKE_BINARY_DIR}/cmake/install/macos/Info.plist
     WIN32_EXECUTABLE TRUE
     OUTPUT_NAME "${EXECUTABLE_NAME}"
 # Added for Qt to set the correct path on run configurations.
