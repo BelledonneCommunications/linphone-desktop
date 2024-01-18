@@ -64,7 +64,7 @@ class Cli : public QObject {
     );
 
     void execute (QHash<QString, QString> &args) const;
-    void executeUri (const std::shared_ptr<linphone::Address> &address) const;
+    void executeUri (QString address, QHash<QString, QString> args) const;
     void executeUrl (const QString &url) const;
 
     const char *getFunctionDescription () const {
@@ -73,11 +73,12 @@ class Cli : public QObject {
 
     QString getFunctionSyntax () const ;
 
+    QHash<QString, Argument> mArgsScheme;
+    
   private:
     QString mFunctionName;
     const char *mFunctionDescription;
     Function mFunction = nullptr;
-    QHash<QString, Argument> mArgsScheme;
     bool mGenericArguments=false;// Used to avoid check on arguments
   };
 
