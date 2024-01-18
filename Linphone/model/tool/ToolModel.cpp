@@ -75,7 +75,8 @@ QString ToolModel::getDisplayName(QString address) {
 
 QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
                                                const QString &prepareTransfertAddress,
-                                               const QHash<QString, QString> &headers) {
+                                               const QHash<QString, QString> &headers,
+                                               linphone::MediaEncryption mediaEncryption) {
 	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
 	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 
@@ -88,6 +89,7 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
 	params->enableVideo(false);
+	params->setMediaEncryption(mediaEncryption);
 	if (Utils::coreStringToAppString(params->getRecordFile()).isEmpty()) {
 
 		params->setRecordFile(

@@ -18,6 +18,15 @@ Window {
 	Connections {
 		target: call.core
 		onRemoteVideoEnabledChanged: console.log("remote video enabled", call.core.remoteVideoEnabled)
+		onSecurityUpdated: {
+			if (call.core.isSecured) {
+				zrtpValidation.close()
+			}
+			else if(call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
+				zrtpValidation.open()
+				// mainWindow.attachVirtualWindow(Utils.buildLinphoneDialogUri('ZrtpTokenAuthenticationDialog'), {call:callModel})
+			}
+		}
 	}
 
 	onCallChanged: {
@@ -29,7 +38,12 @@ Window {
 	property var callState: call.core.state
 	onCallStateChanged: {
 		console.log("State:", callState)
-		if (callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.End) {
+		if (callState === LinphoneEnums.CallState.Connected) {
+			if(!call.core.isSecured && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
+				zrtpValidation.open()
+			}
+		}
+		else if (callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.End) {
 			endCall(call)
 		}
 	}
@@ -121,6 +135,10 @@ Window {
 			anchors.centerIn: parent
 			colorizationColor: disabledIcon && bottomButton.checked ? DefaultStyle.main2_0 : DefaultStyle.grey_0
 		}
+	}
+	ZrtpTokenAuthenticationDialog {
+		id: zrtpValidation
+		call: mainWindow.call
 	}
 	Popup {
 		id: waitingPopup
@@ -259,8 +277,7 @@ Window {
 					bottomPadding: 8 * DefaultStyle.dp
 					leftPadding: 10 * DefaultStyle.dp
 					rightPadding: 10 * DefaultStyle.dp
-					visible: mainWindow.call.core.peerSecured
-					onVisibleChanged: console.log("peer secured", mainWindow.call.core.peerSecured)
+					visible: mainWindow.call.core.isSecured
 					background: Rectangle {
 						anchors.fill: parent
 						border.color: DefaultStyle.info_500_main
@@ -483,8 +500,6 @@ Window {
 							Control.StackView.onActivated: rightPanelTitle.text = qsTr("Liste d'appel")
 							// width: callList.width
 							// height: callList.height
-							onHeightChanged: console.log("control height changed", height)
-
 							// padding: 15 * DefaultStyle.dp
 							topPadding: 15 * DefaultStyle.dp
 							bottomPadding: 15 * DefaultStyle.dp

@@ -28,6 +28,7 @@
 #include "tool/providers/AvatarProvider.hpp"
 #include <QImageReader>
 #include <QQuickWindow>
+#include <QRandomGenerator>
 
 // =============================================================================
 
@@ -260,4 +261,30 @@ QString Utils::generateSavedFilename(const QString &from, const QString &to) {
 	    .arg(QDateTime::currentDateTime().toString("yyyy-MM-dd_hh-mm-ss"))
 	    .arg(escape(from))
 	    .arg(escape(to));
+}
+
+QStringList Utils::generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode) {
+	QStringList vec;
+	const QString possibleCharacters(tr("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"));
+	const int n = 2;
+	for (int i = 0; i < arraySize; ++i) {
+		QString randomString;
+		if (i == correctIndex) randomString = correctCode;
+		else {
+			do {
+				randomString.clear();
+				for (int j = 0; j < n; ++j) {
+					int index = rand() % possibleCharacters.length();
+					QChar nextChar = possibleCharacters.at(index);
+					randomString.append(nextChar);
+				}
+			} while (vec.contains(randomString) || randomString == correctCode);
+		}
+		vec.append(randomString);
+	}
+	return vec;
+}
+
+int Utils::getRandomIndex(int size) {
+	return QRandomGenerator::global()->bounded(size);
 }

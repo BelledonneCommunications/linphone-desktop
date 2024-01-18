@@ -53,7 +53,9 @@ public:
 
 	std::string getRecordFile() const;
 	std::shared_ptr<const linphone::Address> getRemoteAddress();
-	bool getAuthenticationTokenVerified();
+	bool getAuthenticationTokenVerified() const;
+	void setAuthenticationTokenVerified(bool verified);
+	std::string getAuthenticationToken() const;
 
 signals:
 	void microphoneMutedChanged(bool isMuted);
@@ -63,6 +65,7 @@ signals:
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 	void recordingChanged(bool recording);
+	void authenticationTokenVerifiedChanged(bool verified);
 
 private:
 	QTimer mDurationTimer;

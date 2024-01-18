@@ -41,7 +41,8 @@ public:
 
 	static QSharedPointer<CallCore> createCall(const QString &sipAddress,
 	                                           const QString &prepareTransfertAddress = "",
-	                                           const QHash<QString, QString> &headers = {});
+	                                           const QHash<QString, QString> &headers = {},
+	                                           linphone::MediaEncryption = linphone::MediaEncryption::None);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

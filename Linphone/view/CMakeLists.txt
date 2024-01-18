@@ -45,6 +45,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/TextInput.qml
 	view/Item/ToolTip.qml
 	view/Item/VerticalTabBar.qml
+	view/Item/ZrtpTokenAuthenticationDialog.qml
 	
 	view/Item/Form/LoginForm.qml
 	

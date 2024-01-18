@@ -42,7 +42,10 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE lSetCameraEnabled NOTIFY cameraEnabledChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
 	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
-	Q_PROPERTY(bool peerSecured READ getPeerSecured WRITE setPeerSecured NOTIFY peerSecuredChanged)
+	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated)
+	Q_PROPERTY(LinphoneEnums::MediaEncryption encryption READ getEncryption NOTIFY securityUpdated)
+	Q_PROPERTY(QString localSas READ getLocalSas WRITE setLocalSas MEMBER mLocalSas NOTIFY localSasChanged)
+	Q_PROPERTY(QString remoteSas WRITE setRemoteSas MEMBER mRemoteSas NOTIFY remoteSasChanged)
 	Q_PROPERTY(
 	    bool remoteVideoEnabled READ getRemoteVideoEnabled WRITE setRemoteVideoEnabled NOTIFY remoteVideoEnabledChanged)
 	Q_PROPERTY(bool recording READ getRecording WRITE setRecording NOTIFY recordingChanged)
@@ -86,8 +89,16 @@ public:
 	bool getPaused() const;
 	void setPaused(bool paused);
 
-	bool getPeerSecured() const;
-	void setPeerSecured(bool secured);
+	bool isSecured() const;
+	void setIsSecured(bool secured);
+
+	QString getLocalSas();
+	void setLocalSas(const QString &sas);
+	QString getRemoteSas();
+	void setRemoteSas(const QString &sas);
+
+	LinphoneEnums::MediaEncryption getEncryption() const;
+	void setEncryption(LinphoneEnums::MediaEncryption encryption);
 
 	bool getRemoteVideoEnabled() const;
 	void setRemoteVideoEnabled(bool enabled);
@@ -118,7 +129,9 @@ signals:
 	void cameraEnabledChanged();
 	void pausedChanged();
 	void transferStateChanged();
-	void peerSecuredChanged();
+	void securityUpdated();
+	void localSasChanged();
+	void remoteSasChanged();
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 	void recordingChanged();
 	void remoteRecordingChanged();
@@ -136,6 +149,7 @@ signals:
 	void lTransferCall(const QString &dest);
 	void lStartRecording();
 	void lStopRecording();
+	void lVerifyAuthenticationToken(bool verified);
 
 	/* TODO
 	    Q_INVOKABLE void acceptWithVideo();
@@ -161,9 +175,10 @@ private:
 	LinphoneEnums::CallState mState;
 	LinphoneEnums::CallState mTransferState;
 	LinphoneEnums::CallDir mDir;
+	LinphoneEnums::MediaEncryption mEncryption;
 	QString mLastErrorMessage;
 	QString mPeerAddress;
-	bool mPeerSecured;
+	bool mIsSecured;
 	int mDuration = 0;
 	bool mSpeakerMuted;
 	bool mMicrophoneMuted;
@@ -173,7 +188,9 @@ private:
 	bool mRecording = false;
 	bool mRemoteRecording = false;
 	bool mRecordable = false;
-	QSharedPointer<SafeConnection<CallCore, CallModel>> mAccountModelConnection;
+	QString mLocalSas;
+	QString mRemoteSas;
+	QSharedPointer<SafeConnection<CallCore, CallModel>> mCallModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

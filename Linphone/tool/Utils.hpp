@@ -69,7 +69,9 @@ public:
 	Q_INVOKABLE static QString formatElapsedTime(int seconds,
 	                                             bool dotsSeparator = true); // Return the elapsed time formated
 	Q_INVOKABLE static QString formatDate(const QDateTime &date, bool includeTime = true); // Return the date formated
-	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);               // Return the date formated
+	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);
+	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
+	Q_INVOKABLE static int getRandomIndex(int size);
 	static QString generateSavedFilename(const QString &from, const QString &to);
 
 	static inline QString coreStringToAppString(const std::string &str) {

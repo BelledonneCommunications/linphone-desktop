@@ -66,6 +66,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/heart.svg"
 	"data/image/heart-fill.svg"
 	"data/image/record-fill.svg"
+	"data/image/media_encryption_zrtp_pq.svg"
 	
 	data/shaders/roundEffect.vert.qsb
 	data/shaders/roundEffect.frag.qsb

@@ -12,9 +12,11 @@ Popup {
 	rightPadding: 10 * DefaultStyle.dp
 	leftPadding: 10 * DefaultStyle.dp
 	topPadding: 10 * DefaultStyle.dp
-	bottomPadding: 10 * DefaultStyle.dp + buttonsLayout.height
+	bottomPadding: 10 * DefaultStyle.dp
 	property int radius: 16 * DefaultStyle.dp
 	property color underlineColor: DefaultStyle.main1_500_main
+  	property alias buttons: buttonsLayout.data
+  	property alias content: contentLayout.data
 	property string text
 	signal accepted()
 	signal rejected()
@@ -24,14 +26,17 @@ Popup {
 		Rectangle {
 			visible: mainItem.underlineColor != undefined
 			width: mainItem.width
-			height: mainItem.height + 2 * DefaultStyle.dp
+			x: backgroundItem.x
+			y: backgroundItem.y
+			height: backgroundItem.height + 2 * DefaultStyle.dp
 			color: mainItem.underlineColor
 			radius: mainItem.radius
 		}
-		Rectangle{
+		Rectangle {
 			id: backgroundItem
+			anchors.fill: parent
 			width: mainItem.width
-			height: mainItem.height
+			height: mainItem.implicitHeight
 			radius: mainItem.radius
 			color: DefaultStyle.grey_0
 			border.color: DefaultStyle.grey_0
@@ -44,13 +49,39 @@ Popup {
 			shadowBlur: 1.0
 			shadowOpacity: 0.1
 		}
+	}
+
+	contentItem: ColumnLayout {
+		spacing: 20 * DefaultStyle.dp
+		ColumnLayout {
+			id: contentLayout
+			Layout.fillWidth: true
+			Layout.fillHeight: true
+			Layout.alignment: Qt.AlignHCenter
+		}
+		Text {
+			id: defaultText
+			visible: text.length != 0
+			width: parent.width
+			Layout.preferredWidth: 278 * DefaultStyle.dp
+			text: mainItem.text
+			font {
+				pixelSize: 14 * DefaultStyle.dp
+				weight: 400 * DefaultStyle.dp
+			}
+			wrapMode: Text.Wrap
+			horizontalAlignment: Text.AlignHCenter
+		}
+
 		RowLayout {
 			id: buttonsLayout
-			anchors.bottom: parent.bottom
-			anchors.horizontalCenter: parent.horizontalCenter
-			Layout.alignment: Qt.AlignHCenter
-			Layout.bottomMargin: 10 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+			spacing: 10 * DefaultStyle.dp
+
+			// Default buttons only visible if no other children
+			// have been set
 			Button {
+				visible: mainItem.buttons.length === 2
 				text: qsTr("Oui")
 				onClicked: {
 					mainItem.accepted()
@@ -58,6 +89,7 @@ Popup {
 				}
 			}
 			Button {
+				visible: mainItem.buttons.length === 2
 				text: qsTr("Non")
 				onClicked: {
 					mainItem.rejected()
@@ -65,17 +97,5 @@ Popup {
 				}
 			}
 		}
-	}
-
-	contentItem: Text {
-		width: parent.width
-		Layout.preferredWidth: 278 * DefaultStyle.dp
-		text: mainItem.text
-		font {
-			pixelSize: 14 * DefaultStyle.dp
-			weight: 400 * DefaultStyle.dp
-		}
-		wrapMode: Text.Wrap
-		horizontalAlignment: Text.AlignHCenter
 	}
 }

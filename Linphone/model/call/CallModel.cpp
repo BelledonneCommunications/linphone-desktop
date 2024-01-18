@@ -136,6 +136,7 @@ void CallModel::stopRecording() {
 }
 
 void CallModel::setRecordFile(const std::string &path) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = core->createCallParams(mMonitor);
 	params->setRecordFile(path);
@@ -143,6 +144,7 @@ void CallModel::setRecordFile(const std::string &path) {
 }
 
 std::string CallModel::getRecordFile() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mMonitor->getParams()->getRecordFile();
 }
 
@@ -151,9 +153,21 @@ std::shared_ptr<const linphone::Address> CallModel::getRemoteAddress() {
 	return mMonitor->getRemoteAddress();
 }
 
-bool CallModel::getAuthenticationTokenVerified() {
+bool CallModel::getAuthenticationTokenVerified() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mMonitor->getAuthenticationTokenVerified();
+}
+
+void CallModel::setAuthenticationTokenVerified(bool verified) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mMonitor->setAuthenticationTokenVerified(verified);
+	emit authenticationTokenVerifiedChanged(verified);
+}
+
+std::string CallModel::getAuthenticationToken() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto token = mMonitor->getAuthenticationToken();
+	return token;
 }
 
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {

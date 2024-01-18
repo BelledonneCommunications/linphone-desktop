@@ -23,7 +23,6 @@ AbstractMainPage {
 		listStackView.push(newCallItem)
 	}
 
-
 	Dialog {
 		id: deleteHistoryPopup
 		width: 278 * DefaultStyle.dp

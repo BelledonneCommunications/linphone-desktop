@@ -6,9 +6,12 @@ import Linphone
 Control.Button {
 	id: mainItem
 	property int capitalization
+	property color color: DefaultStyle.main1_500_main
+	property color pressedColor: DefaultStyle.main1_500_main_darker
 	property bool inversedColors: false
 	property int textSize: 18 * DefaultStyle.dp
 	property int textWeight: 600 * DefaultStyle.dp
+	property bool underline: false
 	property bool shadowEnabled: false
 	hoverEnabled: true
 
@@ -26,10 +29,10 @@ Control.Button {
 						? DefaultStyle.grey_100
 						: DefaultStyle.grey_0
 					: mainItem.pressed 
-						? DefaultStyle.main1_500_main_darker
-						: DefaultStyle.main1_500_main
+						? mainItem.pressedColor
+						: mainItem.color
 			radius: 48 * DefaultStyle.dp
-			border.color: inversedColors ? DefaultStyle.main1_500_main : DefaultStyle.grey_0
+			border.color: inversedColors ? mainItem.color : DefaultStyle.grey_0
 
 			MouseArea {
 				anchors.fill: parent
@@ -49,16 +52,18 @@ Control.Button {
 	}
 
 	contentItem: Text {
+		id: contentText
 		horizontalAlignment: Text.AlignHCenter
 		anchors.centerIn: parent
 		wrapMode: Text.WordWrap
 		text: mainItem.text
-		color: inversedColors ? DefaultStyle.main1_500_main : DefaultStyle.grey_0
+		color: inversedColors ? mainItem.color : DefaultStyle.grey_0
 		font {
 			pixelSize: mainItem.textSize
 			weight: mainItem.textWeight
 			family: DefaultStyle.defaultFont
 			capitalization: mainItem.capitalization
+			underline: mainItem.underline
 		}
 	}
 }

@@ -66,4 +66,5 @@ QtObject {
 	property string heart: "image://internal/heart.svg"
 	property string heartFill: "image://internal/heart-fill.svg"
 	property string recordFill: "image://internal/record-fill.svg"
+	property string mediaEncryptionZrtpPq: "image://internal/media_encryption_zrtp_pq.svg"
 }
