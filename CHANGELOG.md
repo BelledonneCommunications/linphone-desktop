@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - URI handlers when no domain are provided like tel:number.
+- Empty page on first date in date picker.
+- Ephemeral deactivation while restarting it.
 - Update SDK to 5.3.10.
 
 ### Added

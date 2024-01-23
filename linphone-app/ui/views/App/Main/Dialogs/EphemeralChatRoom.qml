@@ -107,6 +107,7 @@ DialogPlus {
 								return 5;
 							else
 								return 5;
+			onCurrentIndexChanged: dialog.timer = model[currentIndex].value
 			model:[
 				//: 'Disabled'
 				{text:qsTr('disabled'), value:0},
@@ -121,7 +122,6 @@ DialogPlus {
 				{ text:qsTr('nWeek', '', 1).arg(1), value:604800}
 			]
 			
-			onActivated: dialog.timer = model[index].value
 			visible: chatRoomModel.canBeEphemeral
 		}
 	}
