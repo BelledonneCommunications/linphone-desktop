@@ -76,7 +76,6 @@ void CoreModel::start() {
 	                                         Utils::appStringToCoreString(Paths::getFactoryConfigFilePath()), nullptr);
 	setMonitor(mCore);
 	setPathsAfterCreation();
-	mCore->enableFriendListSubscription(true);
 	mCore->enableRecordAware(true);
 	mCore->setVideoDisplayFilter("MSQOGL");
 	mCore->usePreviewWindow(true);
@@ -92,6 +91,7 @@ void CoreModel::start() {
 	config->setInt("video", "show_local", 0); // So : write ourself to turn off camera before starting the core.
 	mCore->start();
 	setPathAfterStart();
+	mCore->enableFriendListSubscription(true);
 	auto videoPolicy = mCore->getVideoActivationPolicy();
 	videoPolicy->setAutomaticallyAccept(true);
 	videoPolicy->setAutomaticallyInitiate(false);

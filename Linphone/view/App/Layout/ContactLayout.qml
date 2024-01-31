@@ -77,18 +77,34 @@ ColumnLayout {
 		// Layout.fillWidth: true
 		Text {
 			Layout.alignment: Qt.AlignHCenter
-			text: mainItem.contactName
 			horizontalAlignment: Text.AlignHCenter
+			text: mainItem.contactName
 			font {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 400 * DefaultStyle.dp
+				capitalization: Font.Capitalize
 			}
 		}
 		Text {
 			id: contactAddress
-			visible: mainItem.addressVisible
-			text: mainItem.contactAddress
+			property var mode : contact ? contact.core.consolidatedPresence : -1
+			Layout.alignment: Qt.AlignHCenter
 			horizontalAlignment: Text.AlignHCenter
+			visible: mainItem.addressVisible
+			text: mode === LinphoneEnums.ConsolidatedPresence.Online
+				? qsTr("En ligne")
+				: mode === LinphoneEnums.ConsolidatedPresence.Busy
+					? qsTr("Occupé")
+					: mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
+						? qsTr("Ne pas déranger")
+						: qsTr("Hors ligne")
+			color: mode === LinphoneEnums.ConsolidatedPresence.Online
+				? DefaultStyle.success_500main
+				: mode === LinphoneEnums.ConsolidatedPresence.Busy
+					? DefaultStyle.warning_600
+					: mode === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
+						? DefaultStyle.danger_500main
+						: DefaultStyle.main2_500main
 			font {
 				pixelSize: 12 * DefaultStyle.dp
 				weight: 300 * DefaultStyle.dp

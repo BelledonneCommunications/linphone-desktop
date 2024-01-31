@@ -88,6 +88,7 @@ signals:
 	void familyNameChanged(const QString &name);
 	void organizationChanged(const QString &orga);
 	void jobChanged(const QString &job);
+	void presenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
 
 private:
 	DECLARE_ABSTRACT_OBJECT
@@ -96,9 +97,6 @@ private:
 	// LINPHONE
 	//--------------------------------------------------------------------------------
 	virtual void onPresenceReceived(const std::shared_ptr<linphone::Friend> &contact) override;
-
-signals:
-	void presenceReceived(LinphoneEnums::ConsolidatedPresence consolidatedPresence, QDateTime presenceTimestamp);
 };
 
 #endif

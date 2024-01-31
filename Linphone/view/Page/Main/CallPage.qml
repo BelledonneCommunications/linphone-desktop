@@ -194,58 +194,53 @@ AbstractMainPage {
 														height: 45 * DefaultStyle.dp
 													}
 												}
-												Item {
-													Layout.fillWidth: true
+												ColumnLayout {
 													Layout.fillHeight: true
-													ColumnLayout {
-														spacing: 5 * DefaultStyle.dp
-														anchors.verticalCenter: parent.verticalCenter
-														Text {
-															id: friendAddress
-															property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : null
-															text: remoteAddress ? remoteAddress.value : ""
-															font {
-																pixelSize: 14 * DefaultStyle.dp
-																weight: 400 * DefaultStyle.dp
-															}
+													Layout.fillWidth: true
+													spacing: 5 * DefaultStyle.dp
+													Text {
+														id: friendAddress
+														Layout.fillWidth: true
+														maximumLineCount: 1
+														property var remoteAddress: modelData ? UtilsCpp.getDisplayName(modelData.core.remoteAddress) : null
+														text: remoteAddress ? remoteAddress.value : ""
+														font {
+															pixelSize: 14 * DefaultStyle.dp
+															weight: 400 * DefaultStyle.dp
 														}
-														RowLayout {
-															spacing: 3 * DefaultStyle.dp
-															Image {
-																source: modelData.core.status === LinphoneEnums.CallStatus.Declined
-																|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
-																|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
-																|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-																	? modelData.core.isOutgoing 
-																		? AppIcons.outgoingCallRejected 
-																		: AppIcons.incomingCallRejected
-																	: modelData.core.status === LinphoneEnums.CallStatus.Missed
-																		? modelData.core.isOutgoing
-																			? AppIcons.outgoingCallMissed 
-																			: AppIcons.incomingCallMissed
-																		: modelData.core.isOutgoing
-																			? AppIcons.outgoingCall 
-																			: AppIcons.incomingCall
-																Layout.preferredWidth: 5 * DefaultStyle.dp
-																Layout.preferredHeight: 5 * DefaultStyle.dp
-																sourceSize.width: 5 * DefaultStyle.dp
-																sourceSize.height: 5 * DefaultStyle.dp
-															RectangleTest{anchors.fill: parent}
-															}
-															Text {
-																// text: modelData.core.date
-																text: UtilsCpp.formatDateElapsedTime(modelData.core.date)
-																font {
-																	pixelSize: 12 * DefaultStyle.dp
-																	weight: 300 * DefaultStyle.dp
-																}
+													}
+													RowLayout {
+														spacing: 3 * DefaultStyle.dp
+														Image {
+															source: modelData.core.status === LinphoneEnums.CallStatus.Declined
+															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+																? modelData.core.isOutgoing 
+																	? AppIcons.outgoingCallRejected 
+																	: AppIcons.incomingCallRejected
+																: modelData.core.status === LinphoneEnums.CallStatus.Missed
+																	? modelData.core.isOutgoing
+																		? AppIcons.outgoingCallMissed 
+																		: AppIcons.incomingCallMissed
+																	: modelData.core.isOutgoing
+																		? AppIcons.outgoingCall 
+																		: AppIcons.incomingCall
+															Layout.preferredWidth: 5 * DefaultStyle.dp
+															Layout.preferredHeight: 5 * DefaultStyle.dp
+															sourceSize.width: 5 * DefaultStyle.dp
+															sourceSize.height: 5 * DefaultStyle.dp
+														}
+														Text {
+															// text: modelData.core.date
+															text: UtilsCpp.formatDateElapsedTime(modelData.core.date)
+															font {
+																pixelSize: 12 * DefaultStyle.dp
+																weight: 300 * DefaultStyle.dp
 															}
 														}
 													}
 												}
-												// Item {
-												// 	Layout.fillWidth: true
-												// }
 												Button {
 													Layout.rightMargin: 5 * DefaultStyle.dp
 													padding: 0

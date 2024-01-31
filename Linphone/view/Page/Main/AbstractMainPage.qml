@@ -190,10 +190,14 @@ Item {
 							}
 							Button {
 								Layout.alignment: Qt.AlignHCenter
+								topPadding: 11 * DefaultStyle.dp
+								bottomPadding: 11 * DefaultStyle.dp
+								leftPadding: 20 * DefaultStyle.dp
+								rightPadding: 20 * DefaultStyle.dp
 								contentItem: RowLayout {
 									Layout.alignment: Qt.AlignVCenter
 									EffectImage {
-										colorizationColor: "red"// DefaultStyle.grey_0
+										colorizationColor: DefaultStyle.grey_0
 										source: mainItem.newItemIconSource
 										width: 24 * DefaultStyle.dp
 										height: 24 * DefaultStyle.dp

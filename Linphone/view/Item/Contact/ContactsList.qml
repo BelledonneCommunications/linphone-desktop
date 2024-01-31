@@ -84,81 +84,75 @@ ListView {
 				text: itemDelegate.displayName
 				font.pixelSize: 14 * DefaultStyle.dp
 				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
-			}
-			Item {
+				maximumLineCount: 1
 				Layout.fillWidth: true
 			}
-		}
+			RowLayout {
+				id: buttonsLayout
+				z: 1
+				height: parent.height
+				children: mainItem.delegateButtons || []
+			}
 
-		RowLayout {
-			z: 1
-			height: parent.height
-			anchors.right: parent.right
-			anchors.rightMargin: 5 * DefaultStyle.dp
-			anchors.verticalCenter: parent.verticalCenter
-			children: mainItem.delegateButtons || []
-		}
-
-		PopupButton {
-			id: friendPopup
-			z: 1
-			hoverEnabled: mainItem.hoverEnabled
-			visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!delegateButtons || delegateButtons.children.length === 0)
-			popup.x: 0
-			popup.padding: 10 * DefaultStyle.dp
-			anchors.right: parent.right
-			anchors.rightMargin: 5 * DefaultStyle.dp
-			anchors.verticalCenter: parent.verticalCenter
-			popup.contentItem: ColumnLayout {
-				Button {
-					background: Item{}
-					contentItem: RowLayout {
-						Image {
-							source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
-							fillMode: Image.PreserveAspectFit
-							width: 24 * DefaultStyle.dp
-							height: 24 * DefaultStyle.dp
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-						}
-						Text {
-							text: modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
-							color: DefaultStyle.main2_500main
-							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
+			PopupButton {
+				id: friendPopup
+				z: 1
+				hoverEnabled: mainItem.hoverEnabled
+				visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!delegateButtons || delegateButtons.children.length === 0)
+				popup.x: 0
+				popup.padding: 10 * DefaultStyle.dp
+				Layout.rightMargin: 5 * DefaultStyle.dp
+				popup.contentItem: ColumnLayout {
+					Button {
+						background: Item{}
+						contentItem: RowLayout {
+							Image {
+								source: modelData.core.starred ? AppIcons.heartFill : AppIcons.heart
+								fillMode: Image.PreserveAspectFit
+								width: 24 * DefaultStyle.dp
+								height: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+							}
+							Text {
+								text: modelData.core.starred ? qsTr("Enlever des favoris") : qsTr("Mettre en favori")
+								color: DefaultStyle.main2_500main
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
 							}
 						}
-					}
-					onClicked: {
-						modelData.core.lSetStarred(!modelData.core.starred)
-						friendPopup.close()
-					}
-				}
-				Button {
-					background: Item{}
-					contentItem: RowLayout {
-						EffectImage {
-							source: AppIcons.trashCan
-							width: 24 * DefaultStyle.dp
-							height: 24 * DefaultStyle.dp
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							fillMode: Image.PreserveAspectFit
-							colorizationColor: DefaultStyle.danger_500main
+						onClicked: {
+							modelData.core.lSetStarred(!modelData.core.starred)
+							friendPopup.close()
 						}
-						Text {
-							text: qsTr("Supprimer")
-							color: DefaultStyle.danger_500main
-							font {
-								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
+					}
+					Button {
+						background: Item{}
+						contentItem: RowLayout {
+							EffectImage {
+								source: AppIcons.trashCan
+								width: 24 * DefaultStyle.dp
+								height: 24 * DefaultStyle.dp
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+								fillMode: Image.PreserveAspectFit
+								colorizationColor: DefaultStyle.danger_500main
+							}
+							Text {
+								text: qsTr("Supprimer")
+								color: DefaultStyle.danger_500main
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									weight: 400 * DefaultStyle.dp
+								}
 							}
 						}
-					}
-					onClicked: {
-						mainItem.contactDeletionRequested(modelData)
-						friendPopup.close()
+						onClicked: {
+							mainItem.contactDeletionRequested(modelData)
+							friendPopup.close()
+						}
 					}
 				}
 			}
@@ -167,7 +161,7 @@ ListView {
 		MouseArea {
 			id: contactArea
 			hoverEnabled: mainItem.hoverEnabled
-			anchors.fill: initial.visible ? contactDelegate : parent
+			anchors.fill: contactDelegate
 			height: mainItem.height
 			Rectangle {
 				anchors.fill: contactArea

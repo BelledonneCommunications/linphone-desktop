@@ -9,7 +9,7 @@ AbstractMainPage {
 	id: mainItem
 	noItemButtonText: qsTr("Ajouter un contact")
 	emptyListText: qsTr("Aucun contact pour le moment")
-	newItemIconSource: AppIcons.newCall
+	newItemIconSource: AppIcons.plusCircle
 
 	// disable left panel contact list interaction while a contact is being edited
 	property bool leftPanelEnabled: true
@@ -154,8 +154,8 @@ AbstractMainPage {
 								Button {
 									background: Item{}
 									icon.source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
-									width: 24 * DefaultStyle.dp
-									height: 24 * DefaultStyle.dp
+									Layout.preferredWidth: 24 * DefaultStyle.dp
+									Layout.preferredHeight: 24 * DefaultStyle.dp
 									onClicked: favoriteList.visible = !favoriteList.visible
 								}
 							}
@@ -190,6 +190,7 @@ AbstractMainPage {
 						ColumnLayout {
 							visible: contactList.count > 0
 							RowLayout {
+								Layout.fillWidth: true
 								Text {
 									text: qsTr("All contacts")
 									font {
@@ -201,11 +202,11 @@ AbstractMainPage {
 									Layout.fillWidth: true
 								}
 								Button {
-										background: Item{}
-										icon.source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
-										width: 24 * DefaultStyle.dp
-										height: 24 * DefaultStyle.dp
-										onClicked: contactList.visible = !contactList.visible
+									background: Item{}
+									icon.source: contactList.visible ? AppIcons.upArrow : AppIcons.downArrow
+									Layout.preferredWidth: 24 * DefaultStyle.dp
+									Layout.preferredHeight: 24 * DefaultStyle.dp
+									onClicked: contactList.visible = !contactList.visible
 								}
 							}
 							ContactsList{

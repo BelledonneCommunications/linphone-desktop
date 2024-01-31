@@ -26,7 +26,7 @@ StackView {
 	property string displayNameVal: displayNameObj ? displayNameObj.value : ""
 	property bool haveAvatar: (account && account.core.pictureUri )
 								|| (contact && contact.core.pictureUri)
-								
+			
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 
 	property bool secured: false
@@ -52,6 +52,38 @@ StackView {
 			sourceSize.height: height
 			fillMode: Image.PreserveAspectFit
 			anchors.bottom: parent.bottom
+		}
+	}
+	Rectangle {
+		visible: (account || contact) && (account 
+			? account.core.registrationState != LinphoneEnums.RegistrationState.Progress && account.core.registrationState != LinphoneEnums.RegistrationState.Refreshing
+			: contact.core.consolidatedPresence != LinphoneEnums.ConsolidatedPresence.Offline)
+		width: mainItem.width/4.5
+		height: width
+		radius: width / 2
+		x: 2 * mainItem.width / 3
+		y: 6 * mainItem.height / 7
+		z: 1
+		color: account
+			? account.core.registrationState == LinphoneEnums.RegistrationState.Ok
+				? DefaultStyle.success_500main
+				: account.core.registrationState == LinphoneEnums.RegistrationState.Cleared || account.core.registrationState == LinphoneEnums.RegistrationState.None
+					? DefaultStyle.warning_600
+					: account.core.registrationState == LinphoneEnums.RegistrationState.Progress || account.core.registrationState == LinphoneEnums.RegistrationState.Refreshing
+						? DefaultStyle.main2_500main
+						: DefaultStyle.danger_500main
+			: contact
+				? contact.core.consolidatedPresence === LinphoneEnums.ConsolidatedPresence.Online
+					? DefaultStyle.success_500main
+					: contact.core.consolidatedPresence === LinphoneEnums.ConsolidatedPresence.Busy
+						? DefaultStyle.warning_600
+						: contact.core.consolidatedPresence === LinphoneEnums.ConsolidatedPresence.DoNotDisturb
+							? DefaultStyle.danger_500main
+							: DefaultStyle.main2_500main
+			: "transparent"
+		border {
+			width: 2 * DefaultStyle.dp
+			color: DefaultStyle.grey_0
 		}
 	}
 	Component{
