@@ -5,13 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## 5.2.1 - undefined
+## 5.2.1 - 2024-02-01
 
 ### Fixed
 - URI handlers when no domain are provided like tel:number.
 - Empty page on first date in date picker.
 - Ephemeral deactivation while restarting it.
-- Update SDK to 5.3.10.
+- Fix rates on capture audio (SDK).
+- Update SDK to 5.3.14.
 
 ### Added
 - Remove trailing newlines in smart search bar.
