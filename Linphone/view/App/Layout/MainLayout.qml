@@ -127,17 +127,6 @@ Item {
 					onClicked: {
 						accountList.open()
 					}
-				}
-				Control.Button {
-					id: settingsButton
-					enabled: false
-					Layout.preferredWidth: 30 * DefaultStyle.dp
-					Layout.preferredHeight: 30 * DefaultStyle.dp
-					background: Item {
-					}
-					contentItem: Image {
-						source: AppIcons.more
-					}
 					Popup{
 						id: accountList
 						x: -width + parent.width
@@ -147,6 +136,53 @@ Item {
 						Accounts{
 							id: accounts
 							onAddAccountRequest: mainItem.addAccountRequest()
+						}
+					}
+				}
+				PopupButton {
+					id: settingsButton
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					popup.x: width - popup.width
+					popup.width: 271 * DefaultStyle.dp
+					popup.contentItem: ColumnLayout {
+						spacing: 20 * DefaultStyle.dp
+						IconLabelButton {
+							Layout.preferredHeight: 32 * DefaultStyle.dp
+							iconSize: 32 * DefaultStyle.dp
+							text: qsTr("Mon compte")
+							iconSource: AppIcons.manageProfile
+							onClicked: console.log("TODO : manage profile")
+						}
+						IconLabelButton {
+							Layout.preferredHeight: 32 * DefaultStyle.dp
+							iconSize: 32 * DefaultStyle.dp
+							text: qsTr("Paramètres")
+							iconSource: AppIcons.settings
+						}
+						IconLabelButton {
+							Layout.preferredHeight: 32 * DefaultStyle.dp
+							iconSize: 32 * DefaultStyle.dp
+							text: qsTr("Enregistrements")
+							iconSource: AppIcons.micro
+						}
+						IconLabelButton {
+							Layout.preferredHeight: 32 * DefaultStyle.dp
+							iconSize: 32 * DefaultStyle.dp
+							text: qsTr("Aide")
+							iconSource: AppIcons.question
+						}
+						Rectangle {
+							Layout.fillWidth: true
+							Layout.preferredHeight: 1 * DefaultStyle.dp
+							color: DefaultStyle.main2_400
+						}
+						IconLabelButton {
+							Layout.preferredHeight: 32 * DefaultStyle.dp
+							iconSize: 32 * DefaultStyle.dp
+							text: qsTr("Ajouter un compte")
+							iconSource: AppIcons.plusCircle
+							onClicked: mainItem.addAccountRequest()
 						}
 					}
 				}

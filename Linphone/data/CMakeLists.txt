@@ -72,6 +72,8 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/bell-simple.svg"
 	"data/image/bell-simple-slash.svg"
 	"data/image/media_encryption_zrtp_pq.svg"
+	"data/image/question.svg"
+	"data/image/settings.svg"
 	
 	data/shaders/roundEffect.vert.qsb
 	data/shaders/roundEffect.frag.qsb

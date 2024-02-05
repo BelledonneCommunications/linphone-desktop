@@ -72,5 +72,7 @@ QtObject {
 	property string shareNetwork: "image://internal/share-network.svg"
 	property string bell: "image://internal/bell-simple.svg"
 	property string bellSlash: "image://internal/bell-simple-slash.svg"
+	property string question: "image://internal/question.svg"
+	property string settings: "image://internal/settings.svg"
 	
 }
