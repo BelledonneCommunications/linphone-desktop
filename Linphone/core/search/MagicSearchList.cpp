@@ -73,21 +73,32 @@ void MagicSearchList::setSelf(QSharedPointer<MagicSearchList> me) {
 		    mModelConnection->invokeToCore([this, flag]() { setAggregationFlag(flag); });
 	    });
 
-	mModelConnection->makeConnectToModel(&MagicSearchModel::searchResultsReceived,
-	                                     [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
-		                                     auto *contacts = new QList<QSharedPointer<FriendCore>>();
-		                                     for (auto it : results) {
-			                                     QSharedPointer<FriendCore> contact;
-			                                     if (it->getFriend()) {
-				                                     contact = FriendCore::create(it->getFriend());
-				                                     contacts->append(contact);
-			                                     }
-		                                     }
-		                                     mModelConnection->invokeToCore([this, contacts]() {
-			                                     setResults(*contacts);
-			                                     delete contacts;
-		                                     });
-	                                     });
+	mModelConnection->makeConnectToModel(
+	    &MagicSearchModel::searchResultsReceived,
+	    [this](const std::list<std::shared_ptr<linphone::SearchResult>> &results) {
+		    auto *contacts = new QList<QSharedPointer<FriendCore>>();
+		    for (auto it : results) {
+			    QSharedPointer<FriendCore> contact;
+			    if (it->getFriend()) {
+				    contact = FriendCore::create(it->getFriend());
+				    contacts->append(contact);
+			    } else if (auto address = it->getAddress()) {
+				    contact = FriendCore::create(nullptr);
+				    contact->setGivenName(Utils::coreStringToAppString(address->asStringUriOnly()));
+				    contact->appendAddress(Utils::coreStringToAppString(address->asStringUriOnly()));
+				    contacts->append(contact);
+			    } else if (!it->getPhoneNumber().empty()) {
+				    contact = FriendCore::create(it->getFriend());
+				    contact->setGivenName(Utils::coreStringToAppString(it->getPhoneNumber()));
+				    contact->appendPhoneNumber(tr("Phone"), Utils::coreStringToAppString(it->getPhoneNumber()));
+				    contacts->append(contact);
+			    }
+		    }
+		    mModelConnection->invokeToCore([this, contacts]() {
+			    setResults(*contacts);
+			    delete contacts;
+		    });
+	    });
 }
 
 void MagicSearchList::setResults(const QList<QSharedPointer<FriendCore>> &contacts) {

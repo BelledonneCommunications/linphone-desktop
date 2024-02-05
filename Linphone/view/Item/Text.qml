@@ -3,11 +3,9 @@ import QtQuick.Layouts
 import Linphone
 
 Quick.Text {
+	id: mainItem
 	property double scaleLettersFactor: 1.
 	width: txtMeter.advanceWidth
-	id: innerItem
-	// Layout.preferredWidth: mainItem.width
-	// width: mainItem.width
 	font {
 		family: DefaultStyle.defaultFont
 		pixelSize: 10 * DefaultStyle.dp
@@ -18,12 +16,12 @@ Quick.Text {
 	elide: Quick.Text.ElideRight
 	transformOrigin: Quick.Item.TopLeft
 	transform: Quick.Scale { 
-		yScale: scaleLettersFactor//mainItem.scaleLettersFactor
+		yScale: scaleLettersFactor
 	}
 
 	Quick.TextMetrics {
 		id: txtMeter
-		text: innerItem.text
-		font: innerItem.font
+		text: mainItem.text
+		font: mainItem.font
 	}
 }

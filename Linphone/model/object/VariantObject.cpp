@@ -38,13 +38,11 @@ VariantObject::VariantObject(QVariant defaultValue, QObject *parent) {
 
 	mConnection->makeConnectToCore(&SafeObject::setValue, [this](QVariant value) {
 		mConnection->invokeToModel([this, value]() {
-			// TODO : fix this properly
 			if (mModelObject) mModelObject->onSetValue(value);
 		});
 	});
 	mConnection->makeConnectToModel(&SafeObject::setValue, [this](QVariant value) {
 		mConnection->invokeToCore([this, value]() {
-			// TODO : fix this properly
 			if (mCoreObject) mCoreObject->onSetValue(value);
 		});
 	});

@@ -32,6 +32,13 @@ AbstractMainPage {
 		listStackView.replace(newCallItem)
 	}
 
+	Dialog {
+		id: dialog
+		property var contact
+		text: (contact ? contact.core.displayName : "Contact") + " is about to be deleted. Do you want to continue ?"
+		onAccepted: contact.core.remove()
+	}
+
 	leftPanelContent: ColumnLayout {
 		id: leftPanel
 		Layout.fillWidth: true
@@ -164,6 +171,10 @@ AbstractMainPage {
 									}
 									mainItem.selectedContact = selectedContact
 								}
+								onContactDeletionRequested: (contact) => {
+									dialog.contact = contact
+									dialog.open()
+								}
 							}
 						}
 						ColumnLayout {
@@ -204,6 +215,10 @@ AbstractMainPage {
 										favoriteList.currentIndex = -1
 									}
 									mainItem.selectedContact = selectedContact
+								}
+								onContactDeletionRequested: (contact) => {
+									dialog.contact = contact
+									dialog.open()
 								}
 							}
 						}
@@ -274,7 +289,7 @@ AbstractMainPage {
 								height: contentHeight
 								clip: true
 								model: VariantList {
-									model:  mainItem.selectedContact ? mainItem.selectedContact.core.allAdresses : []
+									model:  mainItem.selectedContact ? mainItem.selectedContact.core.allAddresses : []
 								}
 								// model: contactDetail.selectedContact && contactDetail.selectedContact.core.addresses
 								delegate: Item {
@@ -317,6 +332,7 @@ AbstractMainPage {
 												background: Item{}
 												Layout.preferredWidth: 24 * DefaultStyle.dp
 												Layout.preferredHeight: 24 * DefaultStyle.dp
+												property var callObj
 												contentItem: Image {
 													anchors.fill: parent
 													source: AppIcons.phone
@@ -324,7 +340,7 @@ AbstractMainPage {
 													height: 24 * DefaultStyle.dp
 												}
 												onClicked: {
-													UtilsCpp.createCall(modelData.address)
+													callObj = UtilsCpp.createCall(modelData.address)
 												}
 											}
 										}
@@ -550,7 +566,11 @@ AbstractMainPage {
 								iconSource: AppIcons.trashCan
 								color: DefaultStyle.danger_500main
 								text: qsTr("Delete this contact")
-								onClicked: mainItem.selectedContact.core.remove()
+								onClicked: {
+									// mainItem.selectedContact.core.remove()
+									dialog.contact = mainItem.selectedContact
+									dialog.open()
+								}
 							}
 						}
 					}

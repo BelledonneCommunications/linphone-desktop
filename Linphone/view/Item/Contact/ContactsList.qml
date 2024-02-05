@@ -15,6 +15,8 @@ ListView {
 	property bool hoverEnabled: true
 	property bool contactMenuVisible: true
 	property bool initialHeadersVisible: true
+	property bool displayNameCapitalization: true
+	
 
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
 
@@ -25,6 +27,7 @@ ListView {
 
 	signal contactSelected(var contact)
 	signal contactStarredChanged()
+	signal contactDeletionRequested(FriendGui contact)
 
 	onContactStarredChanged: model.forceUpdate()
 
@@ -45,6 +48,7 @@ ListView {
 		}
 		Text {
 			id: initial
+			visible: mainItem.model.sourceFlags != LinphoneEnums.MagicSearchSource.All
 			anchors.verticalCenter: parent.verticalCenter
 			verticalAlignment: Text.AlignVCenter
 			Layout.preferredWidth: 20 * DefaultStyle.dp
@@ -72,7 +76,7 @@ ListView {
 			Text {
 				text: itemDelegate.displayName
 				font.pixelSize: 14 * DefaultStyle.dp
-				font.capitalization: Font.Capitalize
+				font.capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
 			}
 			Item {
 				Layout.fillWidth: true
@@ -137,7 +141,7 @@ ListView {
 						}
 					}
 					onClicked: {
-						modelData.core.remove()
+						mainItem.contactDeletionRequested(modelData)
 						friendPopup.close()
 					}
 				}

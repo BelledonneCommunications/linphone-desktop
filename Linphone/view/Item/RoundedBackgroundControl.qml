@@ -10,7 +10,9 @@ Control.Control {
 	leftPadding: 10 * DefaultStyle.dp
 	rightPadding: 10 * DefaultStyle.dp
 	background: Rectangle {
-		anchors.fill: parent
+		// anchors.fill: parent
+		width: parent.width
+		height: parent.height
 		radius: 15 * DefaultStyle.dp
 		color: mainItem.backgroundColor ? mainItem.backgroundColor : DefaultStyle.grey_0
 	}

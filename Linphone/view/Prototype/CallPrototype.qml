@@ -136,10 +136,10 @@ Window{
 				Button{
 					text: 'Call'
 					onClicked: {
-							var address = usernameToCall.text + "@sip.linphone.org"
-							console.log("Calling "+address)
-							mainItem.callVarObject = UtilsCpp.createCall(address)
-							proto.component1 = comp
+						var address = usernameToCall.text + "@sip.linphone.org"
+						console.log("Calling "+address)
+						mainItem.callVarObject = UtilsCpp.createCall(address)
+						proto.component1 = comp
 					}
 				}
 			}

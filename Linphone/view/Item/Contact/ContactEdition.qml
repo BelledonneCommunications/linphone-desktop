@@ -147,7 +147,7 @@ ColumnLayout {
 						TextInput {
 							label: modelData.label
 							onEditingFinished: {
-								if (text.length != 0) mainItem.contact.core.setAddressAt(index, text)
+								if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Address SIP"), text)
 							}
 							initialText: modelData.address
 							backgroundColor: DefaultStyle.grey_0

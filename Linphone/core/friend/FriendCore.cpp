@@ -301,12 +301,16 @@ void FriendCore::setAddressAt(int index, const QString &label, const QString &ad
 }
 
 void FriendCore::removeAddress(int index) {
-	if (index != -1) mAddressList.remove(index);
+	if (index < 0 && index >= mAddressList.size()) return;
+	auto map = mAddressList[index].toMap();
+	if (map["address"].toString() == mDefaultAddress) mDefaultAddress.clear();
+	mAddressList.remove(index);
 	emit addressChanged();
 }
 
 void FriendCore::appendAddress(const QString &addr) {
 	mAddressList.append(createFriendAddressVariant(addressLabel, addr));
+	if (mDefaultAddress.isEmpty()) mDefaultAddress = addr;
 	emit addressChanged();
 }
 
@@ -324,6 +328,9 @@ QString FriendCore::getDefaultAddress() const {
 }
 
 void FriendCore::setDefaultAddress(const QString &address) {
+	auto it = std::find_if(mAddressList.begin(), mAddressList.end(),
+	                       [address](const QVariant &a) { return a.toMap()["address"].toString() == address; });
+	if (it == mAddressList.end()) appendAddress(address);
 	if (mDefaultAddress != address) {
 		mDefaultAddress = address;
 		emit defaultAddressChanged();

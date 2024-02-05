@@ -1,8 +1,8 @@
-import QtQuick 2.7
+import QtQuick
 import QtQuick.Controls 2.2 as Control
 import QtQuick.Effects
 import Linphone
-  
+
 Button {
 	id: mainItem
 	property alias popup: popup
@@ -38,6 +38,15 @@ Button {
 		x: - width
 		y: mainItem.height
 		closePolicy: Popup.CloseOnPressOutsideParent |Popup.CloseOnPressOutside
+
+		onAboutToShow: {
+			var coord = mapToGlobal(mainItem.x, mainItem.y)
+			if (coord.y + popup.height >= mainApplicationWindow.height) {
+				y = -popup.height
+			} else {
+				y = mainItem.height
+			}
+		}
 
 		padding: 20 * DefaultStyle.dp
 

@@ -23,7 +23,7 @@ Control.Button {
 	MouseArea {
 		anchors.fill: parent
 		hoverEnabled: true
-		cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 		acceptedButtons: Qt.NoButton
 	}
 
@@ -44,7 +44,7 @@ Control.Button {
 			MouseArea {
 				anchors.fill: parent
 				hoverEnabled: true
-				cursorShape: hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
+				cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 			}
 		}
 		MultiEffect {

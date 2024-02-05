@@ -156,23 +156,13 @@ AbstractMainPage {
 										clip: true
 										Layout.fillWidth: true
 										Layout.fillHeight: true
-										model: CallHistoryProxy{
+										model: CallHistoryProxy {
 											filterText: searchBar.text
 										}
 										
 										currentIndex: -1
 										
 										spacing: 10 * DefaultStyle.dp
-										highlightMoveDuration: 10
-										highlightMoveVelocity: -1
-										// highlightFollowsCurrentItem: true
-										highlight: Rectangle {
-											x: historyListView.x
-											width: historyListView.width
-											height: historyListView.height
-											color: DefaultStyle.main2_100
-											y: historyListView.currentItem? historyListView.currentItem.y : 0
-										}
 
 										delegate: Item {
 											width:historyListView.width
@@ -258,6 +248,7 @@ AbstractMainPage {
 													implicitHeight: 24 * DefaultStyle.dp
 													Layout.rightMargin: 5 * DefaultStyle.dp
 													padding: 0
+													property var callObj
 													background: Item {
 														visible: false
 													}
@@ -271,7 +262,7 @@ AbstractMainPage {
 														var addr = modelData.core.remoteAddress
 														var addressEnd = "@sip.linphone.org"
 														if (!addr.endsWith(addressEnd)) addr += addressEnd
-														UtilsCpp.createCall(addr)
+														callObj = UtilsCpp.createCall(addr)
 													}
 												}
 											}
@@ -284,17 +275,22 @@ AbstractMainPage {
 													color: DefaultStyle.main2_500main
 													visible: parent.containsMouse
 												}
+												Rectangle {
+													anchors.fill: parent
+													visible: historyListView.currentIndex === model.index
+													color: DefaultStyle.main2_100
+												}
 												onPressed: {
 													historyListView.currentIndex = model.index
 												}
 											}
 										}
 										onCurrentIndexChanged: {
+											positionViewAtIndex(currentIndex, ListView.Visible)
 											mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
 										}
 										onVisibleChanged: {
 											if (!visible) currentIndex = -1
-											console.log("visible", visible)
 										}
 
 										Connections {
@@ -352,11 +348,12 @@ AbstractMainPage {
 					// Layout.rightMargin: listStackView.sideMargin
 					groupCallVisible: true
 					searchBarColor: DefaultStyle.grey_100
+					property var callObj
 					
 					onCallButtonPressed: (address) => {
 						var addressEnd = "@sip.linphone.org"
 						if (!address.endsWith(addressEnd)) address += addressEnd
-						UtilsCpp.createCall(address)
+						callObj = UtilsCpp.createCall(address)
 						// var window = UtilsCpp.getCallsWindow()
 					}
 				}
@@ -416,7 +413,6 @@ AbstractMainPage {
 							detailOptions.close()
 							friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(contactDetail.contactName)
 							friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(contactDetail.contactName)
-							friendGui.core.appendAddress(contactDetail.contactAddress)
 							friendGui.core.defaultAddress = contactDetail.contactAddress
 							rightPanelStackView.push(editContact, {"contact": friendGui, "title": qsTr("Ajouter contact"), "saveButtonText": qsTr("Créer")})
 						}
@@ -452,7 +448,10 @@ AbstractMainPage {
 						}
 						Connections {
 							target: deleteForUserPopup
-							onAccepted: detailListView.model.removeEntriesWithFilter()
+							onAccepted: {
+								detailListView.model.removeEntriesWithFilter()
+								mainItem.listViewUpdated()
+							}
 						}
 						onClicked: {
 							detailOptions.close()
@@ -461,34 +460,32 @@ AbstractMainPage {
 					}
 				}
 			}
-			detailContent: Control.Control {
+			detailContent: RoundedBackgroundControl {
 				id: detailControl
-				// Layout.fillWidth: true
-				Layout.fillHeight: true
 				Layout.preferredWidth: 360 * DefaultStyle.dp
+				implicitHeight: 430 * DefaultStyle.dp + topPadding + bottomPadding
 
 				background: Rectangle {
 					id: detailListBackground
+					width: parent.width
+					height: detailListView.height
 					color: DefaultStyle.grey_0
 					radius: 15 * DefaultStyle.dp
-					anchors.fill: detailListView
 				}
 
-				contentItem: ListView {
+				ListView {
 					id: detailListView
 					width: parent.width
-					height: Math.min(detailControl.height, contentHeight)
+					height: Math.min(detailControl.implicitHeight, contentHeight)
+
 					
 					spacing: 20 * DefaultStyle.dp
 					clip: true
 
-					onCountChanged: {
-						mainItem.listViewUpdated()
-					}
-
 					model: CallHistoryProxy {
 						filterText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
 					}
+
 					delegate: Item {
 						width:detailListView.width
 						height: 56 * DefaultStyle.dp
@@ -555,6 +552,9 @@ AbstractMainPage {
 						}
 					}
 				}
+			}
+			Item{
+				Layout.fillHeight: true
 			}
 		}
 	}

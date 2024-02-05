@@ -61,7 +61,7 @@ void LoginPage::setErrorMessage(const QString &error) {
 
 void LoginPage::login(const QString &username, const QString &password) {
 	App::postModelAsync([=]() {
-		QString *error = new QString(tr("Le couple identifiant mot de passe ne correspont pas"));
+		QString *error = new QString(tr("Le couple identifiant mot de passe ne correspond pas"));
 		// Create on Model thread.
 		AccountManager *accountManager = new AccountManager();
 		connect(accountManager, &AccountManager::registrationStateChanged, this,

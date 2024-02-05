@@ -119,11 +119,12 @@ ColumnLayout {
 			// height: image.height
 			image.source: AppIcons.phone
 			label: qsTr("Appel")
+			property var callObj
 			button.onClicked: {
 				var addr = mainItem.contact.core.defaultAddress
 				var addressEnd = "@sip.linphone.org"
 				if (!addr.endsWith(addressEnd)) addr += addressEnd
-				UtilsCpp.createCall(addr)
+				callObj = UtilsCpp.createCall(addr)
 			}
 		}
 		LabelButton {
@@ -141,11 +142,12 @@ ColumnLayout {
 			// Layout.preferredHeight: image.height
 			image.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
+			property var callObj
 			button.onClicked: {
 				var addr = mainItem.contact.core.defaultAddress
 				var addressEnd = "@sip.linphone.org"
 				if(!addr.endsWith(addressEnd)) addr += addressEnd
-				UtilsCpp.createCall(addr)
+				callObj = UtilsCpp.createCall(addr)
 				console.log("[CallPage.qml] TODO : enable video")
 			}
 		}

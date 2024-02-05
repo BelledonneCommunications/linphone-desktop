@@ -32,7 +32,7 @@ Window {
 	onCallChanged: {
 		waitingTime.seconds = 0
 		waitingTimer.restart()
-		console.log("call changed", call, waitingTime.seconds)
+		console.log("call changed", call)
 	}
 
 	property var callState: call.core.state
@@ -195,8 +195,9 @@ Window {
 		color: DefaultStyle.grey_900
 		ColumnLayout {
 			anchors.fill: parent
-			spacing: 5 * DefaultStyle.dp
-			anchors.bottomMargin: 5 * DefaultStyle.dp
+			spacing: 10 * DefaultStyle.dp
+			anchors.bottomMargin: 10 * DefaultStyle.dp
+			anchors.topMargin: 10 * DefaultStyle.dp
 			Item {
 				Layout.margins: 10 * DefaultStyle.dp
 				Layout.fillWidth: true
@@ -276,11 +277,15 @@ Window {
 					bottomPadding: 8 * DefaultStyle.dp
 					leftPadding: 10 * DefaultStyle.dp
 					rightPadding: 10 * DefaultStyle.dp
-					visible: mainWindow.call.core.isSecured
+					width: 269 * DefaultStyle.dp
+					visible: mainWindow.call.core.peerSecured
+					onVisibleChanged: console.log("peer secured", mainWindow.call.core.peerSecured)
 					background: Rectangle {
 						anchors.fill: parent
+						color: DefaultStyle.main2_0
 						border.color: DefaultStyle.info_500_main
-						radius: 15 * DefaultStyle.dp
+						border.width: 1 * DefaultStyle.dp
+						radius: 50 * DefaultStyle.dp
 					}
 					contentItem: RowLayout {
 						Image {
@@ -296,7 +301,6 @@ Window {
 							color: DefaultStyle.info_500_main
 							font {
 								pixelSize: 14 * DefaultStyle.dp
-								weight: 400 * DefaultStyle.dp
 							}
 						}
 					}
@@ -481,13 +485,14 @@ Window {
 								Layout.fillWidth: true
 								Layout.preferredHeight: numPad.height
 								Layout.topMargin: 10 * DefaultStyle.dp
+								property var callObj
 								NumericPad {
 									id: numPad
 									width: parent.width
 									visible: parent.visible
 									closeButtonVisible: false
 									onLaunchCall: {
-										UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
+										callObj = UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
 									}
 								}
 							}

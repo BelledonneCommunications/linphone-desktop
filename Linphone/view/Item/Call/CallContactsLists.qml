@@ -24,16 +24,17 @@ Item {
 		}
 		underlineColor: DefaultStyle.main1_500_main
 		anchors.centerIn: parent
-		width: parent.width
+		width: parent.width - 30 * DefaultStyle.dp
 		modal: true
 		leftPadding: 15 * DefaultStyle.dp
 		rightPadding: 15 * DefaultStyle.dp
 		topPadding: 20 * DefaultStyle.dp
 		bottomPadding: 25 * DefaultStyle.dp
 		contentItem: ColumnLayout {
+			spacing: 10 * DefaultStyle.dp
 			RowLayout {
 				Text {
-					text: qsTr("Select channel")
+					text: qsTr("Which channel do you choose?")
 					font {
 						pixelSize: 16 * DefaultStyle.dp
 						weight: 800 * DefaultStyle.dp
@@ -53,83 +54,51 @@ Item {
 					onClicked: startCallPopup.close()
 				}
 			}
-			component AddressButton: Button {
-				property int index
-				property string label
-				property string address
-				id: channel
-				// required property int index
-				leftPadding: 0
-				rightPadding: 0
-				// topPadding: 0
-				bottomPadding: 0
+			ListView {
+				id: popuplist
+				model: VariantList {
+					model: startCallPopup.contact && startCallPopup.contact.core.allAddresses || []
+				}
 				Layout.fillWidth: true
-				
-				background: Item{}
-				contentItem: ColumnLayout {
-					RowLayout {
+				Layout.preferredHeight: contentHeight
+				delegate: Item {
+					width: parent.width
+					height: 56 * DefaultStyle.dp
+					ColumnLayout {
+						width: parent.width
+						anchors.verticalCenter: parent.verticalCenter
+						spacing: 10 * DefaultStyle.dp
 						ColumnLayout {
 							Text {
 								Layout.leftMargin: 5 * DefaultStyle.dp
-								Layout.rightMargin: 5 * DefaultStyle.dp
-								text: label
-								// TODO : change this with domain
+								text: modelData.label
 								font {
-									pixelSize: 14 * DefaultStyle.dp
+									pixelSize: 13 * DefaultStyle.dp
 									weight: 700 * DefaultStyle.dp
 								}
 							}
 							Text {
 								Layout.leftMargin: 5 * DefaultStyle.dp
-								Layout.rightMargin: 5 * DefaultStyle.dp
-								text: address
+								text: modelData.address
 								font {
-									pixelSize: 13 * DefaultStyle.dp
+									pixelSize: 14 * DefaultStyle.dp
 									weight: 400 * DefaultStyle.dp
 								}
 							}
 						}
-						Item {
+						Rectangle {
+							visible: index != popuplist.model.count - 1
 							Layout.fillWidth: true
+							Layout.preferredHeight: 1 * DefaultStyle.dp
+							color: DefaultStyle.main2_200
 						}
 					}
-					Rectangle {
-						visible: index < selectedContactAddresses.count - 1
-						Layout.fillWidth: true
-						Layout.preferredHeight: 1 * DefaultStyle.dp
-						color: DefaultStyle.main2_200
+					MouseArea {
+						anchors.fill: parent
+						hoverEnabled: true
+						cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+						onClicked: mainItem.callButtonPressed(modelData.address)
 					}
-				}
-				onClicked: mainItem.callButtonPressed(address)
-			}
-			Repeater {
-				id: selectedContactAddresses
-				model: VariantList {
-					model: startCallPopup.contact && startCallPopup.contact.core.addresses || []
-				}
-				// model: startCallPopup.contact ? startCallPopup.contact.core.addresses : ""
-				// {label: "Work", address: "06000000000"},
-				// {label: "Personal", address: "060000000"}
-				 //account.adresses
-				delegate: AddressButton {
-					// property int index
-					// property string label
-					// property string address
-				}
-			}
-			Repeater {
-				id: selectedContactPhoneNumbers
-				model: VariantList {
-					model: startCallPopup.contact && startCallPopup.contact.core.phoneNumbers || []
-				}
-				// model: startCallPopup.contact ? startCallPopup.contact.core.addresses : ""
-				// {label: "Work", address: "06000000000"},
-				// {label: "Personal", address: "060000000"}
-				 //account.adresses
-				delegate: AddressButton {
-					// property int index
-					// property string label
-					// property string address
 				}
 			}
 		}
@@ -259,14 +228,18 @@ Item {
 							}
 						}
 						ContactsList{
+							id: contactList
 							Layout.fillWidth: true
 							contactMenuVisible: false
-							id: contactList
 							searchBarText: searchBar.text
 							onContactSelected: (contact) => {
-								console.log("contact selected", contact)
-								startCallPopup.contact = contact
-								startCallPopup.open()
+								if (contact.core.allAddresses.length > 1) {
+									startCallPopup.contact = contact
+									startCallPopup.open()
+
+								} else {
+									mainItem.callButtonPressed(contact.core.defaultAddress)
+								}
 							}
 						}
 					}
@@ -283,14 +256,25 @@ Item {
 							Layout.fillWidth: true
 							Layout.fillHeight: true
 							initialHeadersVisible: false
+							displayNameCapitalization: false
 							model: MagicSearchProxy {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
-								sourceFlags: LinphoneEnums.MagicSearchSource.FavoriteFriends
+								sourceFlags: LinphoneEnums.MagicSearchSource.All
 								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
 							}
 							onContactSelected: (contact) => {
-								startCallPopup.contact = contact
-								startCallPopup.open()
+								if (contact.core.allAddresses.length > 1) {
+									startCallPopup.contact = contact
+									startCallPopup.open()
+
+								} else {
+									var addressToCall = contact.core.defaultAddress.length === 0 
+										? contact.core.phoneNumbers.length === 0
+											? ""
+											: contact.core.phoneNumbers[0].address
+										: contact.core.defaultAddress
+									if (addressToCall.length != 0) mainItem.callButtonPressed(addressToCall)
+								}
 							}
 						}
 					}
@@ -310,8 +294,9 @@ Item {
 		NumericPad {
 			id: numPad
 			width: parent.width
+			property var callObj
 			onLaunchCall: {
-				UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
+				callObj = UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
 				// TODO : auto completion instead of sip linphone
 			}
 		}

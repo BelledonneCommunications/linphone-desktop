@@ -44,7 +44,7 @@ class FriendCore;
 class FriendCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
-	Q_PROPERTY(QList<QVariant> allAdresses READ getAllAddresses NOTIFY allAddressesChanged)
+	Q_PROPERTY(QList<QVariant> allAddresses READ getAllAddresses NOTIFY allAddressesChanged)
 	Q_PROPERTY(QList<QVariant> phoneNumbers READ getPhoneNumbers NOTIFY phoneNumberChanged)
 	Q_PROPERTY(QList<QVariant> addresses READ getAddresses NOTIFY addressChanged)
 	Q_PROPERTY(QString givenName READ getGivenName WRITE setGivenName NOTIFY givenNameChanged)
@@ -92,14 +92,12 @@ public:
 	Q_INVOKABLE void appendPhoneNumber(const QString &label, const QString &number);
 	Q_INVOKABLE void removePhoneNumber(int index);
 	Q_INVOKABLE void setPhoneNumberAt(int index, const QString &label, const QString &phoneNumber);
-	void resetPhoneNumbers(QList<QVariant> newList);
 
 	QList<QVariant> getAddresses() const;
 	QVariant getAddressAt(int index) const;
 	Q_INVOKABLE void appendAddress(const QString &addr);
 	Q_INVOKABLE void removeAddress(int index);
 	Q_INVOKABLE void setAddressAt(int index, const QString &label, const QString &address);
-	void resetAddresses(QList<QVariant> newList);
 
 	void setDefaultAddress(const QString &address);
 	QString getDefaultAddress() const;
@@ -124,6 +122,10 @@ public:
 	Q_INVOKABLE void remove();
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
+
+protected:
+	void resetPhoneNumbers(QList<QVariant> newList);
+	void resetAddresses(QList<QVariant> newList);
 
 signals:
 	void contactUpdated();
