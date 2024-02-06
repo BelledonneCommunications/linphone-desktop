@@ -74,6 +74,7 @@ list(APPEND _LINPHONEAPP_RC_FILES data/assistant/use-app-sip-account.rc
 	"data/image/media_encryption_zrtp_pq.svg"
 	"data/image/question.svg"
 	"data/image/settings.svg"
+	"data/image/user-plus.svg"
 	
 	data/shaders/roundEffect.vert.qsb
 	data/shaders/roundEffect.frag.qsb

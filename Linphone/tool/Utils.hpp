@@ -74,8 +74,9 @@ public:
 	Q_INVOKABLE static QString formatDateElapsedTime(const QDateTime &date);
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
 	Q_INVOKABLE static int getRandomIndex(int size);
-	Q_INVOKABLE static void copyToClipboard(const QString &text);	
+	Q_INVOKABLE static void copyToClipboard(const QString &text);
 	static QString generateSavedFilename(const QString &from, const QString &to);
+	Q_INVOKABLE static QString generateLinphoneSipAddress(const QString &uri);
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);

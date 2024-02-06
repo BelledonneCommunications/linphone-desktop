@@ -257,6 +257,8 @@ Item {
 							Layout.fillHeight: true
 							initialHeadersVisible: false
 							displayNameCapitalization: false
+							// Align the suggestions list to the friends ones (which contains intial column)
+							delegateLeftMargin: 20 * DefaultStyle.dp
 							model: MagicSearchProxy {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
 								sourceFlags: LinphoneEnums.MagicSearchSource.All

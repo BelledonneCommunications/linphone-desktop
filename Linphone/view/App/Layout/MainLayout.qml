@@ -103,8 +103,140 @@ Item {
 				Layout.leftMargin: 25 * DefaultStyle.dp
 				Layout.rightMargin: 41 * DefaultStyle.dp
 				SearchBar {
+					id: magicSearchBar
 					Layout.fillWidth: true
 					placeholderText: qsTr("Rechercher un contact, appeler ou envoyer un message...")
+					onTextChanged: {
+						if (text.length != 0) listPopup.open()
+						else listPopup.close()
+					}
+					Popup {
+						id: listPopup
+						width: magicSearchList.width + listPopup.rightPadding + listPopup.leftPadding
+						height: Math.min(magicSearchList.contentHeight, 300 * DefaultStyle.dp + topPadding + bottomPadding)
+						y: magicSearchBar.height
+						closePolicy: Popup.NoAutoClose
+						topPadding: 10 * DefaultStyle.dp
+						bottomPadding: 10 * DefaultStyle.dp
+						rightPadding: 10 * DefaultStyle.dp
+						leftPadding: 10 * DefaultStyle.dp
+						background: Item {
+							anchors.fill: parent
+							Rectangle {
+								id: popupBg
+								radius: 15 * DefaultStyle.dp
+								anchors.fill: parent
+								// width: magicSearchList.width + listPopup.rightPadding + listPopup.leftPadding
+							}
+							MultiEffect {
+								source: popupBg
+								anchors.fill: popupBg
+								shadowEnabled: true
+								shadowBlur: 1
+								shadowColor: DefaultStyle.grey_1000
+								shadowOpacity: 0.1
+							}
+						}
+						Control.ScrollBar {
+							id: scrollbar
+							height: parent.height
+							anchors.right: parent.right
+						}
+						ContactsList {
+							id: magicSearchList
+							visible: magicSearchBar.text.length != 0
+							height: Math.min(contentHeight, listPopup.height)
+							width: magicSearchBar.width
+							initialHeadersVisible: false
+							contactMenuVisible: false
+							model: MagicSearchProxy {
+								searchText: magicSearchBar.text.length === 0 ? "*" : magicSearchBar.text
+								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+							}
+							Control.ScrollBar.vertical: scrollbar
+							header: ColumnLayout {
+								width: magicSearchList.width
+								RowLayout {
+									Layout.fillWidth: true
+									spacing: 10 * DefaultStyle.dp
+									Avatar {
+										Layout.preferredWidth: 45 * DefaultStyle.dp
+										Layout.preferredHeight: 45 * DefaultStyle.dp
+										address: sipAddr.text
+									}
+									ColumnLayout {
+										Text {
+											text: magicSearchBar.text
+											font {
+												pixelSize: 14 * DefaultStyle.dp
+												weight: 700 * DefaultStyle.dp
+											}
+										}
+										Text {
+											id: sipAddr
+											text: UtilsCpp.generateLinphoneSipAddress(magicSearchBar.text)
+										}
+									}
+									Item {
+										Layout.fillWidth: true
+									}
+									Button {
+										background: Item{}
+										Layout.preferredWidth: 24 * DefaultStyle.dp
+										Layout.preferredHeight: 24 * DefaultStyle.dp
+										contentItem: Image {
+											width: 24 * DefaultStyle.dp
+											height: 24 * DefaultStyle.dp
+											source: AppIcons.phone
+										}
+										onClicked: {
+											var callObj = UtilsCpp.createCall(sipAddr)
+										}
+									}
+								}
+								Button {
+									Layout.fillWidth: true
+									color: DefaultStyle.main2_200
+									pressedColor: DefaultStyle.main2_400
+									background: Rectangle {
+										anchors.fill: parent
+										color: DefaultStyle.main2_200
+									}
+									contentItem: RowLayout {
+										spacing: 10 * DefaultStyle.dp
+										Image {
+											source: AppIcons.userPlus
+										}
+										Text {
+											text: qsTr("Ajouter ce contact")
+											font {
+												pixelSize: 14 * DefaultStyle.dp
+												weight: 700 * DefaultStyle.dp
+												capitalization: Font.AllUppercase
+											}
+										}
+										Item {Layout.fillWidth: true}
+									}
+									onClicked: {
+										var currentItem = mainStackLayout.children[mainStackLayout.currentIndex]
+										listPopup.close()
+										currentItem.createContact(magicSearchBar.text, sipAddr.text)
+									}
+								}
+							}
+							delegateButtons: Button {
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
+								background: Item{}
+								contentItem: Image {
+									anchors.fill: parent
+									width: 24 * DefaultStyle.dp
+									height: 24 * DefaultStyle.dp
+									source: AppIcons.phone
+								}
+							}
+						}
+					}
 				}
 				Control.Button {
 					id: avatarButton
@@ -190,7 +322,7 @@ Item {
 			StackLayout {
 				// width: parent.width
 				// height: parent.height
-
+				id: mainStackLayout
 				currentIndex: tabbar.currentIndex
 
 				CallPage {

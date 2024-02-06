@@ -9,6 +9,7 @@ ListView {
 	Layout.preferredHeight: contentHeight
 	height: contentHeight
 	visible: count > 0
+	clip: true
 
 	property string searchBarText
 
@@ -17,6 +18,10 @@ ListView {
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
 	
+	property int delegateLeftMargin: 0
+	currentIndex: -1
+
+	property var delegateButtons
 
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
 
@@ -48,10 +53,11 @@ ListView {
 		}
 		Text {
 			id: initial
-			visible: mainItem.model.sourceFlags != LinphoneEnums.MagicSearchSource.All
+			anchors.left: parent.left
+			visible: mainItem.initialHeadersVisible && mainItem.model.sourceFlags != LinphoneEnums.MagicSearchSource.All
 			anchors.verticalCenter: parent.verticalCenter
 			verticalAlignment: Text.AlignVCenter
-			Layout.preferredWidth: 20 * DefaultStyle.dp
+			width: 20 * DefaultStyle.dp
 			opacity: (!previousItem || !previousDisplayName.startsWith(displayName[0])) ? 1 : 0
 			text: displayName[0]
 			color: DefaultStyle.main2_400
@@ -63,10 +69,11 @@ ListView {
 		}
 		RowLayout {
 			id: contactDelegate
-			anchors.left: initial.right
-			anchors.leftMargin: 10 * DefaultStyle.dp
+			anchors.left: initial.visible ? initial.right : parent.left
+			anchors.leftMargin: 10 * DefaultStyle.dp + mainItem.delegateLeftMargin
 			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
+			spacing: 10 * DefaultStyle.dp
 			z: 1
 			Avatar {
 				Layout.preferredWidth: 45 * DefaultStyle.dp
@@ -83,11 +90,20 @@ ListView {
 			}
 		}
 
+		RowLayout {
+			z: 1
+			height: parent.height
+			anchors.right: parent.right
+			anchors.rightMargin: 5 * DefaultStyle.dp
+			anchors.verticalCenter: parent.verticalCenter
+			children: mainItem.delegateButtons || []
+		}
+
 		PopupButton {
 			id: friendPopup
 			z: 1
 			hoverEnabled: mainItem.hoverEnabled
-			visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened)
+			visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!delegateButtons || delegateButtons.children.length === 0)
 			popup.x: 0
 			popup.padding: 10 * DefaultStyle.dp
 			anchors.right: parent.right
@@ -151,7 +167,7 @@ ListView {
 		MouseArea {
 			id: contactArea
 			hoverEnabled: mainItem.hoverEnabled
-			anchors.fill: contactDelegate
+			anchors.fill: initial.visible ? contactDelegate : parent
 			height: mainItem.height
 			Rectangle {
 				anchors.fill: contactArea

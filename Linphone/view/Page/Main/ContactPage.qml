@@ -14,16 +14,29 @@ AbstractMainPage {
 	// disable left panel contact list interaction while a contact is being edited
 	property bool leftPanelEnabled: true
 	property FriendGui selectedContact
+	onSelectedContactChanged: {
+		if (selectedContact) {
+			if (!rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName != "contactDetail") rightPanelStackView.push(contactDetail)
+		} else {
+			if (rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName === "contactDetail") rightPanelStackView.clear()
+		}
+	}
 	signal forceListsUpdate()
 
-	onNoItemButtonPressed: createNewContact()
+	onNoItemButtonPressed: createContact("", "")
 
-	function createNewContact() {
-		console.debug("[ContactPage]User: create new contact")
-		var friendGui = Qt.createQmlObject('import Linphone
-													FriendGui{
-													}', contactDetail)
-		rightPanelStackView.replace(editContact, {"contact": friendGui, "title": qsTr("Nouveau contact"), "saveButtonText": qsTr("Créer")})
+	// rightPanelStackView.initialItem: contactDetail
+	Binding {
+		mainItem.showDefaultItem: false
+		when: rightPanelStackView.currentItem && rightPanelStackView.currentItem.objectName == "contactEdition"
+		restoreMode: Binding.RestoreBinding
+	}
+	Connections {
+		target: mainItem
+		onContactEditionClosed: {
+			mainItem.forceListsUpdate()
+			// mainItem.rightPanelStackView.replace(contactDetail, Control.StackView.Immediate)
+		}
 	}
 
 	showDefaultItem: contactList.model.sourceModel.count === 0
@@ -71,7 +84,7 @@ AbstractMainPage {
 					fillMode: Image.PreserveAspectFit
 				}
 				onClicked: {
-					mainItem.createNewContact()
+					mainItem.createContact("", "")
 				}
 			}
 		}
@@ -80,6 +93,12 @@ AbstractMainPage {
 			Layout.topMargin: 30 * DefaultStyle.dp
 			Layout.leftMargin: leftPanel.sideMargin
 			enabled: mainItem.leftPanelEnabled
+			Button {
+				onClicked: {
+					favoriteList.currentIndex = -1
+					contactList.currentIndex = -1
+				}
+			}
 			SearchBar {
 				id: searchBar
 				Layout.rightMargin: leftPanel.sideMargin
@@ -227,20 +246,11 @@ AbstractMainPage {
 			}
 		}
 	}
-	rightPanelContent: Control.StackView {
-		id: rightPanelStackView
-		Layout.fillWidth: true
-		Layout.fillHeight: true
-		initialItem: contactDetail
-		Binding {
-			mainItem.showDefaultItem: false
-			when: rightPanelStackView.currentItem.objectName == "contactEdition"
-			restoreMode: Binding.RestoreBinding
-		}
-	}
+
 	Component {
 		id: contactDetail
 		RowLayout {
+			property string objectName: "contactDetail"
 			visible: mainItem.selectedContact != undefined
 			Layout.fillWidth: true
 			Layout.fillHeight: true
@@ -263,7 +273,7 @@ AbstractMainPage {
 						anchors.fill: parent
 						source: AppIcons.pencil
 					}
-					onClicked: rightPanelStackView.replace(editContact, Control.StackView.Immediate)
+					onClicked: mainItem.editContact(mainItem.selectedContact)
 				}
 				detailContent: ColumnLayout {
 					Layout.fillWidth: false
@@ -475,24 +485,24 @@ AbstractMainPage {
 							IconLabelButton {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 50 * DefaultStyle.dp
 								iconSize: 24 * DefaultStyle.dp
 								iconSource: AppIcons.pencil
 								text: qsTr("Edit")
-								onClicked: rightPanelStackView.replace(editContact, Control.StackView.Immediate)
+								onClicked: mainItem.editContact(mainItem.selectedContact)
 							}
 							Rectangle {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 1 * DefaultStyle.dp
 								color: DefaultStyle.main2_200
 							}
 							IconLabelButton {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 50 * DefaultStyle.dp
 								iconSize: 24 * DefaultStyle.dp
 								iconSource: mainItem.selectedContact && mainItem.selectedContact.core.starred ? AppIcons.heartFill : AppIcons.heart
@@ -502,14 +512,14 @@ AbstractMainPage {
 							Rectangle {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 1 * DefaultStyle.dp
 								color: DefaultStyle.main2_200
 							}
 							IconLabelButton {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 50 * DefaultStyle.dp
 								iconSize: 24 * DefaultStyle.dp
 								iconSource: AppIcons.shareNetwork
@@ -519,14 +529,14 @@ AbstractMainPage {
 							Rectangle {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 1 * DefaultStyle.dp
 								color: DefaultStyle.main2_200
 							}
 							IconLabelButton {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 50 * DefaultStyle.dp
 								iconSize: 24 * DefaultStyle.dp
 								iconSource: AppIcons.bellSlash
@@ -536,14 +546,14 @@ AbstractMainPage {
 							Rectangle {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 1 * DefaultStyle.dp
 								color: DefaultStyle.main2_200
 							}
 							IconLabelButton {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 50 * DefaultStyle.dp
 								iconSize: 24 * DefaultStyle.dp
 								iconSource: AppIcons.empty
@@ -553,14 +563,14 @@ AbstractMainPage {
 							Rectangle {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 1 * DefaultStyle.dp
 								color: DefaultStyle.main2_200
 							}
 							IconLabelButton {
 								Layout.fillWidth: true
 								Layout.leftMargin: 15 * DefaultStyle.dp
-							Layout.rightMargin: 15 * DefaultStyle.dp
+								Layout.rightMargin: 15 * DefaultStyle.dp
 								Layout.preferredHeight: 50 * DefaultStyle.dp
 								iconSize: 24 * DefaultStyle.dp
 								iconSource: AppIcons.trashCan
@@ -576,18 +586,6 @@ AbstractMainPage {
 					}
 				}
 				// TODO : find device by friend
-			}
-		}
-	}
-	Component {
-		id: editContact
-		ContactEdition {
-			id: contactEdition
-			property string objectName: "contactEdition"
-			contact: mainItem.selectedContact
-			onCloseEdition: {
-				mainItem.forceListsUpdate()
-				rightPanelStackView.replace(contactDetail, Control.StackView.Immediate)
 			}
 		}
 	}

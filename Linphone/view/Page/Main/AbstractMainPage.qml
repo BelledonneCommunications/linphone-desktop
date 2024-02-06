@@ -7,7 +7,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls as Control
 
 import Linphone
-
+import UtilsCpp
 
 Item {
 	id: mainItem
@@ -15,9 +15,25 @@ Item {
 	property string newItemIconSource
 	property string emptyListText
 	property alias leftPanelContent: leftPanel.children
-	property alias rightPanelContent: rightPanelItem.children
+	property alias rightPanelStackView: rightPanelStackView
+	property alias contactEditionComp: contactEditionComp
 	property bool showDefaultItem: true
 	signal noItemButtonPressed()
+	signal contactEditionClosed()
+
+	function createContact(name, address) {
+		var friendGui = Qt.createQmlObject('import Linphone
+											FriendGui{
+											}', mainItem)
+		friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(name)
+		friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(name)
+		friendGui.core.defaultAddress = address
+		rightPanelStackView.push(contactEditionComp, {"contact": friendGui, "title": qsTr("Nouveau contact"), "saveButtonText": qsTr("Créer")})
+	}
+
+	function editContact(friendGui) {
+		rightPanelStackView.push(contactEditionComp, {"contact": friendGui, "title": qsTr("Modifier contact"), "saveButtonText": qsTr("Enregistrer")})
+	}
 
 	// Control.SplitView {
 	// 	id: splitView
@@ -206,10 +222,20 @@ Item {
 					}
 					
 				}
-				ColumnLayout {
-					id: rightPanelItem
+				Control.StackView {
+					id: rightPanelStackView
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+				}
+				Component {
+					id: contactEditionComp
+					ContactEdition {
+						property string objectName: "contactEdition"
+						onCloseEdition: {
+							rightPanelStackView.pop(Control.StackView.Immediate)
+							mainItem.contactEditionClosed()
+						}
+					}
 				}
 			}
 		}

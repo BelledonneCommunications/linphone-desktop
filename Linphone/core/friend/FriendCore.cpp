@@ -309,6 +309,7 @@ void FriendCore::removeAddress(int index) {
 }
 
 void FriendCore::appendAddress(const QString &addr) {
+	if (addr.isEmpty()) return;
 	mAddressList.append(createFriendAddressVariant(addressLabel, addr));
 	if (mDefaultAddress.isEmpty()) mDefaultAddress = addr;
 	emit addressChanged();

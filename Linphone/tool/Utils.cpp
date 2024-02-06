@@ -270,6 +270,17 @@ QString Utils::formatDateElapsedTime(const QDateTime &date) {
 	return QString::number(s) + " s";
 }
 
+QString Utils::generateLinphoneSipAddress(const QString &uri) {
+	QString ret = uri;
+	if (!ret.startsWith("sip:")) {
+		ret.prepend("sip:");
+	}
+	if (!ret.endsWith("@sip.linhpone.org")) {
+		ret.append("@sip.linhpone.org");
+	}
+	return ret;
+}
+
 QString Utils::generateSavedFilename(const QString &from, const QString &to) {
 	auto escape = [](const QString &str) {
 		constexpr char ReservedCharacters[] = "[<|>|:|\"|/|\\\\|\\?|\\*|\\+|\\||_|-]+";

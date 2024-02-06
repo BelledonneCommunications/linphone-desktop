@@ -15,6 +15,12 @@ AbstractMainPage {
 
 	signal listViewUpdated()
 
+	onSelectedRowHistoryGuiChanged: {
+		if (selectedRowHistoryGui) rightPanelStackView.replace(contactDetailComp, Control.StackView.Immediate)
+		else rightPanelStackView.replace(emptySelection, Control.StackView.Immediate)
+	}
+	rightPanelStackView.initialItem: emptySelection
+
 	onNoItemButtonPressed: goToNewCall()
 
 	showDefaultItem: listStackView.currentItem.listView && listStackView.currentItem.listView.count === 0 && listStackView.currentItem.listView.model.sourceModel.count === 0 || false
@@ -161,7 +167,7 @@ AbstractMainPage {
 										}
 										
 										currentIndex: -1
-										
+										flickDeceleration: 10000
 										spacing: 10 * DefaultStyle.dp
 
 										delegate: Item {
@@ -259,9 +265,7 @@ AbstractMainPage {
 														fillMode: Image.PreserveAspectFit
 													}
 													onClicked: {
-														var addr = modelData.core.remoteAddress
-														var addressEnd = "@sip.linphone.org"
-														if (!addr.endsWith(addressEnd)) addr += addressEnd
+														var addr = UtilsCpp.generateLinphoneSipAddress(modelData.core.remoteAddress)
 														callObj = UtilsCpp.createCall(addr)
 													}
 												}
@@ -351,9 +355,7 @@ AbstractMainPage {
 					property var callObj
 					
 					onCallButtonPressed: (address) => {
-						var addressEnd = "@sip.linphone.org"
-						if (!address.endsWith(addressEnd)) address += addressEnd
-						callObj = UtilsCpp.createCall(address)
+						callObj = UtilsCpp.createCall(UtilsCpp.generateLinphoneSipAddress(address))
 						// var window = UtilsCpp.getCallsWindow()
 					}
 				}
@@ -361,21 +363,6 @@ AbstractMainPage {
 		}
 	}
 
-	rightPanelContent: Control.StackView {
-		id: rightPanelStackView
-		Layout.fillWidth: true
-		Layout.fillHeight: true
-		initialItem: emptySelection
-		Connections {
-			target: mainItem
-			onSelectedRowHistoryGuiChanged: {
-				if (mainItem.selectedRowHistoryGui) rightPanelStackView.replace(contactDetailComp, Control.StackView.Immediate)
-				else rightPanelStackView.replace(emptySelection, Control.StackView.Immediate)
-			}
-		}
-		onCurrentItemChanged: {
-		}
-	}
 	Component{
 		id: emptySelection
 		Item{}
@@ -406,15 +393,8 @@ AbstractMainPage {
 							iconSource: AppIcons.plusCircle
 						}
 						onClicked: {
-							// console.debug("[CallPage.qml] TODO : add to contact")
-							var friendGui = Qt.createQmlObject('import Linphone
-																FriendGui{
-																}', contactDetail)
 							detailOptions.close()
-							friendGui.core.givenName = UtilsCpp.getGivenNameFromFullName(contactDetail.contactName)
-							friendGui.core.familyName = UtilsCpp.getFamilyNameFromFullName(contactDetail.contactName)
-							friendGui.core.defaultAddress = contactDetail.contactAddress
-							rightPanelStackView.push(editContact, {"contact": friendGui, "title": qsTr("Ajouter contact"), "saveButtonText": qsTr("Créer")})
+							mainItem.createContact(contactDetail.contactName, contactDetail.contactAddress)
 						}
 					}
 					Button {
@@ -556,12 +536,6 @@ AbstractMainPage {
 			Item{
 				Layout.fillHeight: true
 			}
-		}
-	}
-	Component {
-		id: editContact
-		ContactEdition {
-			onCloseEdition: rightPanelStackView.pop(Control.StackView.Immediate)
 		}
 	}
 

@@ -121,9 +121,7 @@ ColumnLayout {
 			label: qsTr("Appel")
 			property var callObj
 			button.onClicked: {
-				var addr = mainItem.contact.core.defaultAddress
-				var addressEnd = "@sip.linphone.org"
-				if (!addr.endsWith(addressEnd)) addr += addressEnd
+ 	  			var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contact.core.defaultAddress)
 				callObj = UtilsCpp.createCall(addr)
 			}
 		}
@@ -144,11 +142,9 @@ ColumnLayout {
 			label: qsTr("Appel Video")
 			property var callObj
 			button.onClicked: {
-				var addr = mainItem.contact.core.defaultAddress
-				var addressEnd = "@sip.linphone.org"
-				if(!addr.endsWith(addressEnd)) addr += addressEnd
-				callObj = UtilsCpp.createCall(addr)
-				console.log("[CallPage.qml] TODO : enable video")
+				var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contact.core.defaultAddress)
+	  			callObj = UtilsCpp.createCall(addr)
+  				console.log("[CallPage.qml] TODO : enable video")
 			}
 		}
 		// Item {Layout.fillWidth: true}
