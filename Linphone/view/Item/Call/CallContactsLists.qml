@@ -47,6 +47,9 @@ Item {
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp
 					background: Item{}
+					icon.source:AppIcons.closeX
+					width: 24 * DefaultStyle.dp
+					height: 24 * DefaultStyle.dp
 					contentItem: Image {
 						anchors.fill: parent
 						source: AppIcons.closeX
@@ -158,10 +161,6 @@ Item {
 					Button {
 						visible: mainItem.groupCallVisible
 						Layout.fillWidth: true
-						leftPadding: 0
-						topPadding: 0
-						rightPadding: 0
-						bottomPadding: 0
 						background: Rectangle {
 							color: DefaultStyle.groupCallButtonColor
 							anchors.fill: parent
@@ -190,35 +189,33 @@ Item {
 						}
 					}
 
-					RowLayout {
-						visible: searchBar.text.length > 0
-						Layout.maximumWidth: parent.width
-						Layout.fillWidth: true
-						Text {
-							text: searchBar.text
-							maximumLineCount: 1
-							elide: Text.ElideRight
-						}
-						Item {
-							Layout.fillWidth: true
-						}
-						Control.Button {
-							implicitWidth: 30 * DefaultStyle.dp
-							implicitHeight: 30 * DefaultStyle.dp
-							background: Item {
-								visible: false
-							}
-							contentItem: Image {
-								source: AppIcons.phone
-								width: 20 * DefaultStyle.dp
-								sourceSize.width: 20 * DefaultStyle.dp
-								fillMode: Image.PreserveAspectFit
-							}
-							onClicked: {
-								mainItem.callButtonPressed(searchBar.text)
-							}
-						}
-					}
+					// RowLayout {
+					// 	//DEBUG
+					// 	visible: searchBar.text.length > 0
+					// 	Layout.maximumWidth: parent.width
+					// 	Layout.fillWidth: true
+					// 	Text {
+					// 		text: searchBar.text
+					// 		maximumLineCount: 1
+					// 		elide: Text.ElideRight
+					// 	}
+					// 	Item {
+					// 		Layout.fillWidth: true
+					// 	}
+					// 	Button {
+					// 		implicitWidth: 30 * DefaultStyle.dp
+					// 		implicitHeight: 30 * DefaultStyle.dp
+					// 		background: Item {
+					// 			visible: false
+					// 		}
+					// 		icon.source: AppIcons.phone
+					// 		width: 20 * DefaultStyle.dp
+					// 		height: 20 * DefaultStyle.dp
+					// 		onClicked: {
+					// 			mainItem.callButtonPressed(searchBar.text)
+					// 		}
+					// 	}
+					// }
 					ColumnLayout {
 						Text {
 							text: qsTr("All contacts")

@@ -10,11 +10,9 @@ LoginLayout {
 	property string email
 
 	titleContent: RowLayout {
-		Control.Button {
-			Layout.preferredHeight: 40 * DefaultStyle.dp
-    		Layout.preferredWidth: 40 * DefaultStyle.dp
-			icon.width: 40 * DefaultStyle.dp
-			icon.height: 40 * DefaultStyle.dp
+		Button {
+			Layout.preferredHeight: 24 * DefaultStyle.dp
+    		Layout.preferredWidth: 24 * DefaultStyle.dp
 			icon.source: AppIcons.returnArrow
 			background: Rectangle {
 				color: "transparent"
@@ -104,6 +102,10 @@ LoginLayout {
 					}
 					Button {
 						Layout.alignment: Qt.AlignRight
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						topPadding: 11 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
 						inversedColors: true
 						text: "Resend a code"
 						onClicked: {

@@ -59,6 +59,7 @@ AbstractMainPage {
 			ColumnLayout {
 				property alias listView: historyListView
 				RowLayout {
+					spacing: 16 * DefaultStyle.dp
 					Layout.fillWidth: true
 					Layout.leftMargin: listStackView.sideMargin
 					Layout.rightMargin: listStackView.sideMargin
@@ -73,6 +74,8 @@ AbstractMainPage {
 					}
 					PopupButton {
 						id: removeHistory
+						width: 24 * DefaultStyle.dp
+						height: 24 * DefaultStyle.dp
 						popup.x: 0
 						popup.padding: 10 * DefaultStyle.dp
 						popup.contentItem: Button {
@@ -108,17 +111,11 @@ AbstractMainPage {
 							}
 						}
 					}
-					Control.Button {
-
-						background: Item {
-							visible: false
-						}
-						contentItem: Image {
-							source: AppIcons.newCall
-							width: 30 * DefaultStyle.dp
-							sourceSize.width: 30 * DefaultStyle.dp
-							fillMode: Image.PreserveAspectFit
-						}
+					Button {
+						background: Item {}
+						icon.source: AppIcons.newCall
+						Layout.preferredWidth: 28 * DefaultStyle.dp
+						Layout.preferredHeight: 28 * DefaultStyle.dp
 						onClicked: {
 							console.debug("[CallPage]User: create new call")
 							listStackView.push(newCallItem)
@@ -249,21 +246,16 @@ AbstractMainPage {
 												// Item {
 												// 	Layout.fillWidth: true
 												// }
-												Control.Button {
-													implicitWidth: 24 * DefaultStyle.dp
-													implicitHeight: 24 * DefaultStyle.dp
+												Button {
 													Layout.rightMargin: 5 * DefaultStyle.dp
 													padding: 0
 													property var callObj
 													background: Item {
 														visible: false
 													}
-													contentItem: Image {
-														source: AppIcons.phone
-														width: 24 * DefaultStyle.dp
-														sourceSize.width: 24 * DefaultStyle.dp
-														fillMode: Image.PreserveAspectFit
-													}
+													icon.source: AppIcons.phone
+													Layout.preferredWidth: 24 * DefaultStyle.dp
+													Layout.preferredHeight: 24 * DefaultStyle.dp
 													onClicked: {
 														var addr = UtilsCpp.generateLinphoneSipAddress(modelData.core.remoteAddress)
 														callObj = UtilsCpp.createCall(addr)
@@ -293,6 +285,7 @@ AbstractMainPage {
 											positionViewAtIndex(currentIndex, ListView.Visible)
 											mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
 										}
+										onCountChanged: mainItem.selectedRowHistoryGui = model.getAt(currentIndex)
 										onVisibleChanged: {
 											if (!visible) currentIndex = -1
 										}
@@ -324,12 +317,12 @@ AbstractMainPage {
 				RowLayout {
 					Layout.leftMargin: listStackView.sideMargin
 					Layout.rightMargin: listStackView.sideMargin
-					Control.Button {
+					Button {
 						background: Item {
 						}
-						contentItem: Image {
-							source: AppIcons.returnArrow
-						}
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						icon.source: AppIcons.returnArrow
 						onClicked: {
 							console.debug("[CallPage]User: return to call history")
 							listStackView.pop()
@@ -535,46 +528,6 @@ AbstractMainPage {
 			}
 			Item{
 				Layout.fillHeight: true
-			}
-		}
-	}
-
-	component LabelButton: ColumnLayout {
-		id: labelButton
-		property alias image: buttonImg
-		property alias button: button
-		property string label
-		spacing: 8 * DefaultStyle.dp
-		Button {
-			id: button
-			Layout.alignment: Qt.AlignHCenter
-			Layout.preferredWidth: 56 * DefaultStyle.dp
-			Layout.preferredHeight: 56 * DefaultStyle.dp
-			topPadding: 16 * DefaultStyle.dp
-			bottomPadding: 16 * DefaultStyle.dp
-			leftPadding: 16 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
-			background: Rectangle {
-				anchors.fill: parent
-				radius: 40 * DefaultStyle.dp
-				color: DefaultStyle.main2_200
-			}
-			contentItem: Image {
-				id: buttonImg
-				source: labelButton.source
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
-				fillMode: Image.PreserveAspectFit
-				sourceSize.width: 24 * DefaultStyle.dp
-				sourceSize.height: 24 * DefaultStyle.dp
-			}
-		}
-		Text {
-			Layout.alignment: Qt.AlignHCenter
-			text: labelButton.label
-			font {
-				pixelSize: 14 * DefaultStyle.dp
-				weight: 400 * DefaultStyle.dp
 			}
 		}
 	}

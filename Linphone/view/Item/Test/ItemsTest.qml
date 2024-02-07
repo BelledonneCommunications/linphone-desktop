@@ -15,7 +15,7 @@ Window {
 					text: "Combobox with image"
 				}
 				ComboBox {
-					modelList: [
+					model: [
 						{text: "item 1", img: AppIcons.info},
 						{text: "item 2", img: AppIcons.info},
 						{text: "item 3", img: AppIcons.info}
@@ -27,7 +27,7 @@ Window {
 					text: "Combobox without image"
 				}
 				ComboBox {
-					modelList: [
+					model: [
 						{text: "item 1"},
 						{text: "item 2"},
 						{text: "item 3"}

@@ -193,7 +193,7 @@ Item {
 								contentItem: RowLayout {
 									Layout.alignment: Qt.AlignVCenter
 									EffectImage {
-										colorizationColor: DefaultStyle.grey_0
+										colorizationColor: "red"// DefaultStyle.grey_0
 										source: mainItem.newItemIconSource
 										width: 24 * DefaultStyle.dp
 										height: 24 * DefaultStyle.dp

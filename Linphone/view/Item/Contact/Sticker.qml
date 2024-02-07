@@ -70,7 +70,10 @@ Item {
 				interval: 1
 				onTriggered: {cameraLoader.active=false; cameraLoader.active=true;}
 			}
-			active: mainItem.visible && call ? call.core.remoteVideoEnabled : mainItem.enablePersonalCamera
+			active: mainItem.visible && call 
+				? call.core.remoteVideoEnabled && (mainItem.call.core.state != LinphoneEnums.CallState.End
+								&& mainItem.call.core.state != LinphoneEnums.CallState.Released)
+				: mainItem.enablePersonalCamera
 			onActiveChanged: console.log("camera active", active)
 			sourceComponent: cameraComponent
 		}
@@ -99,7 +102,7 @@ Item {
 			anchors.bottom: parent.bottom
 			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.bottomMargin: 10 * DefaultStyle.dp
-			width: txtMeter.width
+			width: implicitWidth
 			text: mainItem.peerAddress.length != 0
 				? mainItem.peerAddress
 				: mainItem.account && mainItem.identityAddress
@@ -110,10 +113,6 @@ Item {
 				pixelSize: 14 * DefaultStyle.dp
 				weight: 500 * DefaultStyle.dp
 			}
-		}
-		TextMetrics {
-			id: txtMeter
-			text: bottomAddress.text
 		}
 	}
 	MultiEffect {

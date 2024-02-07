@@ -57,6 +57,7 @@ public:
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
 
 	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
+												 bool withVideo = false,
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static void setFirstLaunch(bool first);

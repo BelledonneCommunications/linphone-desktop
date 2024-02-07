@@ -108,23 +108,20 @@ ColumnLayout {
 				}
 			}
 		}
-		Control.Button {
+		Button {
 			id: eyeButton
 			visible: mainItem.hidden
 			checkable: true
 			background: Rectangle {
 				color: "transparent"
 			}
-			contentItem: Image {
-				fillMode: Image.PreserveAspectFit
-				source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
-				width: 20 * DefaultStyle.dp
-				height: 20 * DefaultStyle.dp
-			}
+			icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
+			width: 20 * DefaultStyle.dp
+			height: 20 * DefaultStyle.dp
 			anchors.top: parent.top
 			anchors.bottom: parent.bottom
 			anchors.right: parent.right
-			anchors.rightMargin: 5 * DefaultStyle.dp
+			anchors.rightMargin: 15 * DefaultStyle.dp
 		}
 	}
 	ErrorText {

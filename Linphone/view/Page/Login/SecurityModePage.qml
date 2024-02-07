@@ -42,14 +42,15 @@ LoginLayout {
 			spacing: 70 * DefaultStyle.dp
 			Repeater {
 				model: [
-					{checked: true, title: qsTr("Chiffrement de bout en bout"), text: qsTr("Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges."), imgUrl: AppIcons.chiffrement},
-					{checked: false, title: qsTr("Interoperable"), text: qsTr("Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP."), imgUrl: AppIcons.interoperable}
+					{checked: true, title: qsTr("Chiffrement de bout en bout"), text: qsTr("Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges."), imgUrl: AppIcons.chiffrement, color: DefaultStyle.info_500_main},
+					{checked: false, title: qsTr("Interoperable"), text: qsTr("Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP."), imgUrl: AppIcons.interoperable, color: DefaultStyle.main1_500_main}
 				]
 				RadioButton {
 					title: modelData.title
 					contentText: modelData.text
 					imgUrl: modelData.imgUrl
 					checked: modelData.checked
+					color: modelData. color
 					onCheckedChanged: {
 						if (checked) continueButton.selectedIndex = index
 					}
@@ -60,6 +61,8 @@ LoginLayout {
 			id: continueButton
 			property int selectedIndex: 0
 			Layout.alignment: Qt.AlignHCenter
+			topPadding: 11 * DefaultStyle.dp
+			bottomPadding: 11 * DefaultStyle.dp
 			leftPadding: 100 * DefaultStyle.dp
 			rightPadding: 100 * DefaultStyle.dp
 			text: qsTr("Continuer")

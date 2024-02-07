@@ -83,6 +83,10 @@ Popup {
 			Button {
 				visible: mainItem.buttons.length === 2
 				text: qsTr("Oui")
+				leftPadding: 20 * DefaultStyle.dp
+				rightPadding: 20 * DefaultStyle.dp
+				topPadding: 11 * DefaultStyle.dp
+				bottomPadding: 11 * DefaultStyle.dp
 				onClicked: {
 					mainItem.accepted()
 					mainItem.close()
@@ -91,6 +95,10 @@ Popup {
 			Button {
 				visible: mainItem.buttons.length === 2
 				text: qsTr("Non")
+				leftPadding: 20 * DefaultStyle.dp
+				rightPadding: 20 * DefaultStyle.dp
+				topPadding: 11 * DefaultStyle.dp
+				bottomPadding: 11 * DefaultStyle.dp
 				onClicked: {
 					mainItem.rejected()
 					mainItem.close()

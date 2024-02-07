@@ -40,6 +40,10 @@ LoginLayout {
 		}
 		Button {
 			// Layout.alignment: Qt.AlignRight
+			leftPadding: 20 * DefaultStyle.dp
+			rightPadding: 20 * DefaultStyle.dp
+			topPadding: 11 * DefaultStyle.dp
+			bottomPadding: 11 * DefaultStyle.dp
 			text: qsTr("Connexion")
 			onClicked: {
 				console.debug("[RegisterPage] User: return")
@@ -72,7 +76,7 @@ LoginLayout {
 						ComboBox {
 							label: " "
 							enabled: false
-							modelList: [{text:"@sip.linphone.org"}]
+							model: [{text:"@sip.linphone.org"}]
 							Layout.preferredWidth: 210 * DefaultStyle.dp
 						}
 					}
@@ -131,6 +135,10 @@ LoginLayout {
 						}
 					}
 					Button {
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						topPadding: 11 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
 						text: qsTr("Register")
 						onClicked:{
 							console.log("[RegisterPage] User: Call register with phone number", phoneNumberInput.phoneNumber)
@@ -164,7 +172,7 @@ LoginLayout {
 							// due to the invisibility of the upper label
 							label: " "
 							enabled: false
-							modelList: [{text:"@sip.linphone.org"}]
+							model: [{text:"@sip.linphone.org"}]
 							Layout.preferredWidth: 210 * DefaultStyle.dp
 						}
 					}
@@ -224,6 +232,10 @@ LoginLayout {
 						}
 					}
 					Button {
+						leftPadding: 20 * DefaultStyle.dp
+						rightPadding: 20 * DefaultStyle.dp
+						topPadding: 11 * DefaultStyle.dp
+						bottomPadding: 11 * DefaultStyle.dp
 						text: qsTr("Register")
 						onClicked:{
 							console.log("[RegisterPage] User: Call register with email", emailInput.text)

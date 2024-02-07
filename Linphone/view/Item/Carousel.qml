@@ -20,25 +20,11 @@ ColumnLayout {
 		id: carouselStackLayout
 		children: mainItem.itemsList
 		property int previousIndex: currentIndex
+		currentIndex: 0
 
 		function goToSlideAtIndex(index) {
-			carouselStackLayout.previousIndex = carouselStackLayout.currentIndex;
-			carouselStackLayout.currentIndex = index;
-		}
-
-		Component.onCompleted: {
-			// The animation is not working until the slide
-			// has been displayed once
-			for (var i = 0; i < mainItem.itemsCount; ++i) {
-				// const newObject = Qt.createQmlObject(mainItem.itemsList[i], carouselStackLayout);
-				// mainItem.itemsList[i].createObject(carouselStackLayout)
-				// carouselStackLayout.append(itemsList[i])
-				var button = carouselButton.createObject(carouselButtonsLayout, {slideIndex: i, stackLayout: carouselStackLayout})
-				button.buttonClicked.connect(goToSlideAtIndex)
-				currentIndex = i
-			}
-			currentIndex = 0
-			previousIndex = currentIndex
+			carouselStackLayout.previousIndex = carouselStackLayout.currentIndex
+			carouselStackLayout.currentIndex = index
 		}
 
 		onCurrentIndexChanged: {
@@ -75,25 +61,37 @@ ColumnLayout {
 			}
 		}
 	}
-	RowLayout {
-		id: carouselButtonsLayout
 
-		Component {
-			id: carouselButton
-			Control.Button {
-				property int slideIndex
-				property var stackLayout
-				signal buttonClicked(int index)
-
-				background: Rectangle {
-					color: stackLayout.currentIndex == slideIndex ? DefaultStyle.main1_500_main : DefaultStyle.main2_200
-					radius: 15 * DefaultStyle.dp
-					width: stackLayout.currentIndex == slideIndex ? 11 * DefaultStyle.dp : 8 * DefaultStyle.dp
+	Item {
+		Rectangle {
+			id: currentIndicator
+			width: 13 * DefaultStyle.dp
+			height: 8 * DefaultStyle.dp
+			radius: 30 * DefaultStyle.dp
+			color: DefaultStyle.main1_500_main
+			z: 1
+			x: carouselButton.itemAt(mainItem.currentIndex).x
+			Behavior on x { NumberAnimation {duration: 100}}
+		}
+		RowLayout {
+			id: carouselButtonsLayout
+			spacing: 10 * DefaultStyle.dp
+			Repeater {
+				id: carouselButton
+				model: mainItem.itemsCount
+				delegate: Button {
+					width: 8 * DefaultStyle.dp
 					height: 8 * DefaultStyle.dp
-					Behavior on width { NumberAnimation {duration: 100}}
-				}
-				onClicked: {
-					buttonClicked(slideIndex)
+					padding: 0
+					background: Rectangle {
+						color: DefaultStyle.main2_200
+						radius: 30 * DefaultStyle.dp
+						width: 8 * DefaultStyle.dp
+						height: 8 * DefaultStyle.dp
+					}
+					onClicked: {
+						mainItem.goToSlide(modelData)
+					}
 				}
 			}
 		}

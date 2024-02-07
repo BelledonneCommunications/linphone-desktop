@@ -71,7 +71,7 @@ Rectangle {
 			width: 1 * DefaultStyle.dp
 		}
 	}
-	Control.Button {
+	Button {
 		id: dialerButton
 		visible: numericPad != undefined && textField.text.length === 0
 		checkable: true
@@ -79,33 +79,30 @@ Rectangle {
 		background: Rectangle {
 			color: "transparent"
 		}
-		contentItem: Image {
-			fillMode: Image.PreserveAspectFit
-			source: dialerButton.checked ? AppIcons.dialerSelected : AppIcons.dialer
-		}
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
+		icon.source: dialerButton.checked ? AppIcons.dialerSelected : AppIcons.dialer
+		width: 24 * DefaultStyle.dp
+		height: 24 * DefaultStyle.dp
+		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
-		anchors.rightMargin: 10 * DefaultStyle.dp
+		anchors.rightMargin: 15 * DefaultStyle.dp
 		onCheckedChanged: {
 			if (checked) mainItem.numericPad.open()
 			else mainItem.numericPad.close()
 		}
 	}
-	Control.Button {
+	Button {
 		id: clearTextButton
 		visible: textField.text.length > 0
 		background: Rectangle {
 			color: "transparent"
 		}
-		contentItem: Image {
-			fillMode: Image.PreserveAspectFit
-			source: AppIcons.closeX
-		}
+		width: 24 * DefaultStyle.dp
+		height: 24 * DefaultStyle.dp
+		icon.source: AppIcons.closeX
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right
-		anchors.rightMargin: 10 * DefaultStyle.dp
+		anchors.rightMargin: 15 * DefaultStyle.dp
 		onClicked: {
 			textField.clear()
 		}

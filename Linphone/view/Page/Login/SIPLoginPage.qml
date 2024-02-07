@@ -14,12 +14,9 @@ LoginLayout {
 		Button {
 			Layout.preferredHeight: 24 * DefaultStyle.dp
     		Layout.preferredWidth: 24 * DefaultStyle.dp
-			contentItem: Image {
-				anchors.fill: parent
-				source: AppIcons.returnArrow
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
-			}
+			icon.source: AppIcons.returnArrow
+			width: 24 * DefaultStyle.dp
+			height: 24 * DefaultStyle.dp
 			background: Item {
 				anchors.fill: parent
 			}
@@ -162,7 +159,7 @@ LoginLayout {
 				}
 				ComboBox {
 					label: qsTr("Transport")
-					modelList:[ "TCP", "UDP", "TLS", "DTLS"]
+					model:[ "TCP", "UDP", "TLS", "DTLS"]
 					Layout.preferredWidth: 360 * DefaultStyle.dp
 				}
 

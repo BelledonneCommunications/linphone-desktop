@@ -20,7 +20,7 @@ ColumnLayout {
 
 	component LabelButton: ColumnLayout {
 		id: labelButton
-		property alias image: buttonImg
+		// property alias image: buttonImg
 		property alias button: button
 		property string label
 		spacing: 8 * DefaultStyle.dp
@@ -37,15 +37,6 @@ ColumnLayout {
 				anchors.fill: parent
 				radius: 40 * DefaultStyle.dp
 				color: DefaultStyle.main2_200
-			}
-			contentItem: Image {
-				id: buttonImg
-				source: labelButton.source
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
-				fillMode: Image.PreserveAspectFit
-				sourceSize.width: 24 * DefaultStyle.dp
-				sourceSize.height: 24 * DefaultStyle.dp
 			}
 		}
 		Text {
@@ -108,16 +99,16 @@ ColumnLayout {
 		}
 	}
 	Item {
-		// spacing: 10 * DefaultStyle.dp
 		Layout.alignment: Qt.AlignHCenter
 		Layout.preferredWidth: mainItem.implicitWidth
 		Layout.preferredHeight: childrenRect.height
-		// Layout.fillHeight: true
 		LabelButton {
 			anchors.left: parent.left
-			// width: 24 * DefaultStyle.dp//image.width
-			// height: image.height
-			image.source: AppIcons.phone
+			width: 56 * DefaultStyle.dp
+			height: 56 * DefaultStyle.dp
+			button.icon.width: 24 * DefaultStyle.dp
+			button.icon.height: 24 * DefaultStyle.dp
+			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
 			property var callObj
 			button.onClicked: {
@@ -127,18 +118,22 @@ ColumnLayout {
 		}
 		LabelButton {
 			anchors.horizontalCenter: parent.horizontalCenter
-			// Layout.preferredWidth: image.width
-			// Layout.preferredHeight: image.height
-			image.source: AppIcons.chatTeardropText
+			width: 56 * DefaultStyle.dp
+			height: 56 * DefaultStyle.dp
+			button.icon.width: 24 * DefaultStyle.dp
+			button.icon.height: 24 * DefaultStyle.dp
+			button.icon.source: AppIcons.chatTeardropText
 			label: qsTr("Message")
 			button.onClicked: console.debug("[CallPage.qml] TODO : open conversation")
 		}
 		LabelButton {
 			id: videoCall
 			anchors.right: parent.right
-			// Layout.preferredWidth: image.width
-			// Layout.preferredHeight: image.height
-			image.source: AppIcons.videoCamera
+			width: 56 * DefaultStyle.dp
+			height: 56 * DefaultStyle.dp
+			button.icon.width: 24 * DefaultStyle.dp
+			button.icon.height: 24 * DefaultStyle.dp
+			button.icon.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
 			property var callObj
 			button.onClicked: {
@@ -147,8 +142,6 @@ ColumnLayout {
   				console.log("[CallPage.qml] TODO : enable video")
 			}
 		}
-		// Item {Layout.fillWidth: true}
-
 	}
 	ColumnLayout {
 		id: detailControl

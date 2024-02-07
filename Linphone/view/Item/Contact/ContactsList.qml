@@ -148,7 +148,7 @@ ListView {
 							colorizationColor: DefaultStyle.danger_500main
 						}
 						Text {
-							text: qsTr("Supprimmer")
+							text: qsTr("Supprimer")
 							color: DefaultStyle.danger_500main
 							font {
 								pixelSize: 14 * DefaultStyle.dp

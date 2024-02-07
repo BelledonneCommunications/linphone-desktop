@@ -43,19 +43,17 @@ Control.Popup {
 		Button {
 			id: closeButton
 			visible: mainItem.closeButtonVisible
-			anchors.right: parent.right
 			anchors.top: parent.top
+			anchors.right: parent.right
+			anchors.topMargin: 10 * DefaultStyle.dp
+			anchors.rightMargin: 10 * DefaultStyle.dp
 			background: Item {
 				anchors.fill: parent
 				visible: false
 			}
-			contentItem: Image {
-				anchors.centerIn: parent
-				source: AppIcons.closeX
-				width: 24 * DefaultStyle.dp
-				sourceSize.width: 24 * DefaultStyle.dp
-				fillMode: Image.PreserveAspectFit
-			}
+			icon.source: AppIcons.closeX
+			width: 24 * DefaultStyle.dp
+			height: 24 * DefaultStyle.dp
 			onClicked: mainItem.close()
 		}
 	}
@@ -152,15 +150,10 @@ Control.Popup {
 				color: DefaultStyle.success_500main
 				radius: 71 * DefaultStyle.dp
 			}
-			contentItem: EffectImage {
-				id: buttonIcon
-				source: AppIcons.phone
-				anchors.centerIn: parent
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
-				fillMode: Image.PreserveAspectFit
-				colorizationColor: DefaultStyle.grey_0
-			}
+			icon.source: AppIcons.phone
+			icon.width: 32 * DefaultStyle.dp
+			icon.height: 32 * DefaultStyle.dp
+			contentImageColor: DefaultStyle.grey_0
 			onClicked: mainItem.launchCall()
 		}
 		Button {
@@ -172,12 +165,9 @@ Control.Popup {
 			background: Item {
 				visible: false
 			}
-			contentItem: Image {
-				source: AppIcons.backspaceFill
-				anchors.centerIn: parent
-				width: 24 * DefaultStyle.dp
-				height: 24 * DefaultStyle.dp
-			}
+			icon.source: AppIcons.backspaceFill
+			icon.width: 38 * DefaultStyle.dp
+			icon.height: 38 * DefaultStyle.dp
 			onClicked: mainItem.wipe()
 		}
 	}

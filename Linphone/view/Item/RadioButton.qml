@@ -5,10 +5,10 @@ import Linphone
   
 Control.RadioButton {
 	id: mainItem
-	property bool inversedColors: false
 	property string title
 	property string contentText
 	property string imgUrl
+	property color color
 	hoverEnabled: true
 
 	MouseArea {
@@ -20,7 +20,7 @@ Control.RadioButton {
 
 	background: Rectangle {
 		color: DefaultStyle.grey_100
-		border.color: mainItem.checked ? DefaultStyle.info_500_main : "transparent"
+		border.color: mainItem.checked ? mainItem.color : "transparent"
 		radius: 20 * DefaultStyle.dp
 	}
 
@@ -34,7 +34,7 @@ Control.RadioButton {
 			implicitWidth: 16 * DefaultStyle.dp
 			implicitHeight: 16 * DefaultStyle.dp
 			radius: implicitWidth/2
-			border.color: mainItem.checked ? DefaultStyle.info_500_main : DefaultStyle.main1_500_main
+			border.color: mainItem.color
 
 			Rectangle {
 				width: parent.width/2
@@ -42,7 +42,7 @@ Control.RadioButton {
 				x: parent.width/4
 				y: parent.width/4
 				radius: width/2
-				color: DefaultStyle.info_500_main
+				color: mainItem.color
 				visible: mainItem.checked
 			}
 		}
@@ -52,17 +52,16 @@ Control.RadioButton {
 			color: DefaultStyle.grey_900
 			font.pixelSize: 16 * DefaultStyle.dp
 		}
-		Control.Button {
+		Button {
 			padding: 0
 			background: Item {
 				visible: false
 			}
-			contentItem: Image {
-				fillMode: Image.PreserveAspectFit
-				source: AppIcons.info
-				width: 2 * DefaultStyle.dp
-				height: 2 * DefaultStyle.dp
-			}
+			icon.source: AppIcons.info
+			Layout.preferredWidth: 2 * DefaultStyle.dp
+			Layout.preferredHeight: 2 * DefaultStyle.dp
+			width: 2 * DefaultStyle.dp
+			height: 2 * DefaultStyle.dp
 		}
 	}
 	

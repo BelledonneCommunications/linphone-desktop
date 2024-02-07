@@ -82,6 +82,7 @@ QString ToolModel::getDisplayName(QString address) {
 }
 
 QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
+                                               bool withVideo,
                                                const QString &prepareTransfertAddress,
                                                const QHash<QString, QString> &headers,
                                                linphone::MediaEncryption mediaEncryption) {
@@ -96,7 +97,7 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 	}
 
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	params->enableVideo(false);
+	params->enableVideo(withVideo);
 	params->setMediaEncryption(mediaEncryption);
 	if (Utils::coreStringToAppString(params->getRecordFile()).isEmpty()) {
 
@@ -116,6 +117,7 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 
 	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	auto call = core->inviteAddressWithParams(address, params);
+	call->enableCamera(withVideo);
 	return call ? CallCore::create(call) : nullptr;
 
 	/* TODO transfer

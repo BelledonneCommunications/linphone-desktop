@@ -35,10 +35,7 @@ ColumnLayout {
 			anchors.rightMargin: 10 * DefaultStyle.dp
 			width: 24 * DefaultStyle.dp
 			height: 24 * DefaultStyle.dp
-			contentItem: Image {
-				anchors.fill: parent
-				source: AppIcons.closeX
-			}
+			icon.source: AppIcons.closeX
 			onClicked: {
 				// contact.core.pictureUri = mainItem.oldPictureUri
 				mainItem.contact.core.undo()
@@ -156,10 +153,9 @@ ColumnLayout {
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 							background: Item{}
-							contentItem: Image {
-								anchors.fill: parent
-								source: AppIcons.closeX
-							}
+							icon.source: AppIcons.closeX
+							width: 24 * DefaultStyle.dp
+							height: 24 * DefaultStyle.dp
 							onClicked: mainItem.contact.core.removeAddress(index)
 						}
 					}
@@ -196,10 +192,9 @@ ColumnLayout {
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 							background: Item{}
-							contentItem: Image {
-								anchors.fill: parent
-								source: AppIcons.closeX
-							}
+							icon.source: AppIcons.closeX
+							width: 24 * DefaultStyle.dp
+							height: 24 * DefaultStyle.dp
 							onClicked: mainItem.contact.core.removePhoneNumber(index)
 						}
 					}
@@ -242,6 +237,10 @@ ColumnLayout {
 		Layout.alignment: Qt.AlignHCenter
 		enabled: mainItem.contact && mainItem.contact.core.givenName.length > 0
 		text: mainItem.saveButtonText
+		leftPadding: 20 * DefaultStyle.dp
+		rightPadding: 20 * DefaultStyle.dp
+		topPadding: 11 * DefaultStyle.dp
+		bottomPadding: 11 * DefaultStyle.dp
 		onClicked: {
 			mainItem.contact.core.save()
 			mainItem.closeEdition()

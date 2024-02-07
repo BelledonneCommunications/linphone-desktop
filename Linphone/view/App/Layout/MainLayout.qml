@@ -238,34 +238,25 @@ Item {
 						}
 					}
 				}
-				Control.Button {
+				PopupButton {
 					id: avatarButton
 					AccountProxy{
 						id: accountProxy
 						//property bool haveAvatar: defaultAccount && defaultAccount.core.pictureUri || false
 					}
-					
+					background.visible: false
 					Layout.preferredWidth: 54 * DefaultStyle.dp
 					Layout.preferredHeight: width
-					background: Item {
-						visible: false
-					}
 					contentItem: Avatar {
 						id: avatar
 						height: avatarButton.height
 						width: avatarButton.width
 						account: accountProxy.defaultAccount
 					}
-					onClicked: {
-						accountList.open()
-					}
-					Popup{
-						id: accountList
-						x: -width + parent.width
-						y: settingsButton.height + (10 * DefaultStyle.dp)
-						contentWidth: accounts.width
-						contentHeight: accounts.height
-						Accounts{
+					popup.x: width - popup.width
+					popup.padding: 0
+					popup.contentItem: ColumnLayout {
+						Accounts {
 							id: accounts
 							onAddAccountRequest: mainItem.addAccountRequest()
 						}

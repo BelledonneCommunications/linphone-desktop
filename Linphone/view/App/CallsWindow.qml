@@ -14,6 +14,7 @@ Window {
 	// modality: Qt.WindowModal
 
 	property CallGui call
+	property bool callTerminatedByUser: false
 
 	Connections {
 		target: call.core
@@ -32,7 +33,7 @@ Window {
 	onCallChanged: {
 		waitingTime.seconds = 0
 		waitingTimer.restart()
-		console.log("call changed", call)
+		console.log("call changed", call, waitingTime.seconds)
 	}
 
 	property var callState: call.core.state
@@ -128,13 +129,10 @@ Window {
 					: DefaultStyle.grey_600
 			radius: 71 * DefaultStyle.dp
 		}
-		contentItem: EffectImage {
-			source: disabledIcon && bottomButton.checked ? disabledIcon : enabledIcon
-			imageWidth: 32 * DefaultStyle.dp
-			imageHeight: 32 * DefaultStyle.dp
-			anchors.centerIn: parent
-			colorizationColor: disabledIcon && bottomButton.checked ? DefaultStyle.main2_0 : DefaultStyle.grey_0
-		}
+		icon.source: disabledIcon && bottomButton.checked ? disabledIcon : enabledIcon
+		height: 32 * DefaultStyle.dp
+		width: 32 * DefaultStyle.dp
+		contentImageColor: DefaultStyle.grey_0
 	}
 	ZrtpTokenAuthenticationDialog {
 		id: zrtpValidation
@@ -214,7 +212,8 @@ Window {
 						source:(mainWindow.call.core.state === LinphoneEnums.CallState.End
 							|| mainWindow.call.core.state === LinphoneEnums.CallState.Released)
 							? AppIcons.endCall
-							: mainWindow.call.core.paused
+							: (mainWindow.call.core.state === LinphoneEnums.CallState.Paused
+							|| mainWindow.call.core.state === LinphoneEnums.CallState.PausedByRemote)
 								? AppIcons.pause
 								: mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
 									? AppIcons.outgoingCall
@@ -227,7 +226,8 @@ Window {
 						id: callStatusText
 						text: (mainWindow.call.core.state === LinphoneEnums.CallState.End  || mainWindow.call.core.state === LinphoneEnums.CallState.Released)
 							? qsTr("End of the call")
-							: (mainWindow.call.core.paused)
+							: (mainWindow.call.core.state === LinphoneEnums.CallState.Paused
+							|| mainWindow.call.core.state === LinphoneEnums.CallState.PausedByRemote)
 								? qsTr("Appel mis en pause")
 								: EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
 						color: DefaultStyle.grey_0
@@ -277,15 +277,11 @@ Window {
 					bottomPadding: 8 * DefaultStyle.dp
 					leftPadding: 10 * DefaultStyle.dp
 					rightPadding: 10 * DefaultStyle.dp
-					width: 269 * DefaultStyle.dp
-					visible: mainWindow.call.core.peerSecured
-					onVisibleChanged: console.log("peer secured", mainWindow.call.core.peerSecured)
+					visible: mainWindow.call.core.isSecured
 					background: Rectangle {
 						anchors.fill: parent
-						color: DefaultStyle.main2_0
 						border.color: DefaultStyle.info_500_main
-						border.width: 1 * DefaultStyle.dp
-						radius: 50 * DefaultStyle.dp
+						radius: 15 * DefaultStyle.dp
 					}
 					contentItem: RowLayout {
 						Image {
@@ -301,6 +297,7 @@ Window {
 							color: DefaultStyle.info_500_main
 							font {
 								pixelSize: 14 * DefaultStyle.dp
+								weight: 400 * DefaultStyle.dp
 							}
 						}
 					}
@@ -322,6 +319,28 @@ Window {
 					contentItem: Item {
 						id: centerItem
 						anchors.fill: parent
+						Text {
+							id: callTerminatedText
+							Connections {
+								target: mainWindow
+								onCallStateChanged: {
+									if (mainWindow.call.core.state === LinphoneEnums.CallState.End) {
+										callTerminatedText.visible = true
+									}
+								}
+							}
+							visible: false
+							anchors.horizontalCenter: parent.horizontalCenter
+							anchors.top: parent.top
+							anchors.topMargin: 25 * DefaultStyle.dp
+							text: mainWindow.callTerminatedByUser ? qsTr("Vous avez terminé l'appel") : qsTr("Votre correspondant a terminé l'appel")
+							color: DefaultStyle.grey_0
+							z: 1
+							font {
+								pixelSize: 22 * DefaultStyle.dp
+								weight: 300 * DefaultStyle.dp
+							}
+						}
 						StackLayout {
 							id: centerLayout
 							currentIndex: 0
@@ -335,10 +354,10 @@ Window {
 								}
 							}
 							Sticker {
-								visible: false
 								call: mainWindow.call
 								Layout.fillWidth: true
 								Layout.fillHeight: true
+								// visible: mainWindow.call.core.state != LinphoneEnums.CallState.End
 
 								Timer {
 									id: waitingTimer
@@ -391,6 +410,8 @@ Window {
 						}
 						Sticker {
 							id: preview
+							visible: mainWindow.call.core.state != LinphoneEnums.CallState.End
+								&& mainWindow.call.core.state != LinphoneEnums.CallState.Released
 							height: 180 * DefaultStyle.dp
 							width: 300 * DefaultStyle.dp
 							anchors.right: centerItem.right
@@ -492,7 +513,7 @@ Window {
 									visible: parent.visible
 									closeButtonVisible: false
 									onLaunchCall: {
-										callObj = UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
+										callObj = UtilsCpp.createCall(dialerTextInput.text)
 									}
 								}
 							}
@@ -558,8 +579,8 @@ Window {
 										}
 										Text {
 											id: callStateText
-											text: modelData.core.state === LinphoneEnums.CallState.Paused 
-											|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+											text: mainWindow.call.core.state === LinphoneEnums.CallState.Paused
+												|| mainWindow.call.core.state === LinphoneEnums.CallState.PausedByRemote
 												? qsTr("Appel en pause") : qsTr("Appel en cours")
 										}
 										PopupButton {
@@ -570,12 +591,14 @@ Window {
 
 											popup.contentItem: ColumnLayout {
 												spacing: 0
-												Control.Button {
+												Button {
+													leftPadding: 0
+													topPadding: 5 * DefaultStyle.dp
+													bottomPadding: 5 * DefaultStyle.dp
 													background: Item {}
 													contentItem: RowLayout {
 														Image {
-															source: modelData.core.state === LinphoneEnums.CallState.Paused 
-															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+															source: modelData.core.paused
 															? AppIcons.phone : AppIcons.pause
 															sourceSize.width: 32 * DefaultStyle.dp
 															sourceSize.height: 32 * DefaultStyle.dp
@@ -584,8 +607,7 @@ Window {
 															fillMode: Image.PreserveAspectFit
 														}
 														Text {
-															text: modelData.core.state === LinphoneEnums.CallState.Paused 
-															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+															text: modelData.core.paused
 															? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
 															color: DefaultStyle.main2_500main
 															Layout.preferredWidth: metrics.width
@@ -600,7 +622,10 @@ Window {
 													}
 													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
 												}
-												Control.Button {
+												Button {
+													leftPadding: 0
+													topPadding: 5 * DefaultStyle.dp
+													bottomPadding: 5 * DefaultStyle.dp
 													background: Item {}
 													contentItem: RowLayout {
 														EffectImage {
@@ -617,7 +642,10 @@ Window {
 															Layout.fillWidth: true
 														}
 													}
-													onClicked: mainWindow.endCall(modelData)
+													onClicked: {
+														mainWindow.endCall(modelData)
+														mainWindow.callTerminatedByUser = true
+													}
 												}
 											}
 										}
@@ -647,9 +675,14 @@ Window {
 					if (mainWindow.call.core.state === LinphoneEnums.CallState.Connected || mainWindow.call.core.state === LinphoneEnums.CallState.StreamsRunning) {
 						bottomButtonsLayout.layoutDirection = Qt.RightToLeft
 						connectedCallButtons.visible = true
-					} else if (mainWindow.callState === LinphoneEnums.CallState.OutgoingInit || mainWindow.callState === LinphoneEnums.CallState.End) {
+						videoCameraButton.enabled = true
+						moreOptionsButton.visible = true
+					} 
+					else if (mainWindow.callState === LinphoneEnums.CallState.OutgoingInit) {
 						connectedCallButtons.visible = false
 						bottomButtonsLayout.layoutDirection = Qt.LeftToRight
+						videoCameraButton.enabled = false
+						moreOptionsButton.visible = false
 					}
 				}
 
@@ -680,7 +713,10 @@ Window {
 						color: DefaultStyle.danger_500main
 						radius: 71 * DefaultStyle.dp
 					}
-					onClicked: mainWindow.endCall(mainWindow.call)
+					onClicked: {
+						mainWindow.endCall(mainWindow.call)
+						mainWindow.callTerminatedByUser = true
+					}
 				}
 				RowLayout {
 					id: connectedCallButtons
@@ -688,6 +724,7 @@ Window {
 					Layout.row: 0
 					Layout.column: 1
 					BottomButton {
+						id: pauseButton
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						background: Rectangle {
@@ -709,18 +746,6 @@ Window {
 						}
 					}
 					BottomButton {
-						id: newCallButton
-						checkable: false
-						enabledIcon: AppIcons.newCall
-						Layout.preferredWidth: 55 * DefaultStyle.dp
-						Layout.preferredHeight: 55 * DefaultStyle.dp
-						onClicked: {
-							var mainWin = UtilsCpp.getMainWindow()
-							UtilsCpp.smartShowWindow(mainWin)
-							mainWin.goToNewCall()
-						}
-					}
-					BottomButton {
 						id: transferCallButton
 						enabledIcon: AppIcons.transferCall
 						Layout.preferredWidth: 55 * DefaultStyle.dp
@@ -738,6 +763,18 @@ Window {
 							onVisibleChanged: if(!rightPanel.visible) transferCallButton.checked = false
 						}
 					}
+					BottomButton {
+						id: newCallButton
+						checkable: false
+						enabledIcon: AppIcons.newCall
+						Layout.preferredWidth: 55 * DefaultStyle.dp
+						Layout.preferredHeight: 55 * DefaultStyle.dp
+						onClicked: {
+							var mainWin = UtilsCpp.getMainWindow()
+							UtilsCpp.smartShowWindow(mainWin)
+							mainWin.goToNewCall()
+						}
+					}
 				}
 				RowLayout {
 					Layout.row: 0
@@ -748,6 +785,7 @@ Window {
 										|| mainWindow.call.core.state == LinphoneEnums.CallState.IncomingReceived
 										? bottomButtonsLayout.columns - 1 : 0
 					BottomButton {
+						id: videoCameraButton
 						enabledIcon: AppIcons.videoCamera
 						disabledIcon: AppIcons.videoCameraSlash
 						checked: !mainWindow.call.core.cameraEnabled
@@ -787,7 +825,7 @@ Window {
 							id: optionsList
 							spacing: 10 * DefaultStyle.dp
 							
-							Control.Button {
+							Button {
 								id: callListButton
 								Layout.fillWidth: true
 								background: Item {
@@ -810,7 +848,7 @@ Window {
 									moreOptionsMenu.close()
 								}
 							}
-							Control.Button {
+							Button {
 								id: dialerButton
 								Layout.fillWidth: true
 								background: Item {
@@ -833,32 +871,7 @@ Window {
 									moreOptionsMenu.close()
 								}
 							}
-							Control.Button {
-								id: speakerButton
-								Layout.fillWidth: true
-								checkable: true
-								background: Item {
-									visible: false
-								}
-								contentItem: RowLayout {
-									EffectImage {
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										fillMode: Image.PreserveAspectFit
-										source: mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
-										colorizationColor: mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : undefined
-									}
-									Text {
-										text: mainWindow.call.core.speakerMuted ? qsTr("Activer le son") : qsTr("Désactiver le son")
-										color: mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_600
-									}
-
-								}
-								onClicked: {
-									mainWindow.call.core.lSetSpeakerMuted(!mainWindow.call.core.speakerMuted)
-								}
-							}
-							Control.Button {
+							Button {
 								id: recordButton
 								Layout.fillWidth: true
 								enabled: mainWindow.call.core.recordable
@@ -882,6 +895,31 @@ Window {
 								}
 								onClicked: {
 									mainWindow.call.core.recording ? mainWindow.call.core.lStopRecording() : mainWindow.call.core.lStartRecording()
+								}
+							}
+							Button {
+								id: speakerButton
+								Layout.fillWidth: true
+								checkable: true
+								background: Item {
+									visible: false
+								}
+								contentItem: RowLayout {
+									EffectImage {
+										Layout.preferredWidth: 24 * DefaultStyle.dp
+										Layout.preferredHeight: 24 * DefaultStyle.dp
+										fillMode: Image.PreserveAspectFit
+										source: mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
+										colorizationColor: mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : undefined
+									}
+									Text {
+										text: mainWindow.call.core.speakerMuted ? qsTr("Activer le son") : qsTr("Désactiver le son")
+										color: mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_600
+									}
+
+								}
+								onClicked: {
+									mainWindow.call.core.lSetSpeakerMuted(!mainWindow.call.core.speakerMuted)
 								}
 							}
 						}

@@ -79,7 +79,8 @@ LoginLayout {
 					model: [
 					{title: qsTr("Linphone"), text: qsTr("Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>.")},
 					{title: qsTr("Sécurisé"), text: qsTr("Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>.")},
-					{title: qsTr("Open Source"), text: qsTr("Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>")},
+					{title: qsTr("Open Source"), text: qsTr("Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>")}
+					// {title: qsTr("Sécurisé"), text: qsTr("Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>.")}
 					]
 					ColumnLayout {
 						spacing: 15 * DefaultStyle.dp
@@ -111,9 +112,13 @@ LoginLayout {
 			anchors.bottomMargin: 20 * DefaultStyle.dp
 			anchors.leftMargin: (centerLayout.width - width) * DefaultStyle.dp
 			y: centerLayout.implicitWidth - width
+			leftPadding: 20 * DefaultStyle.dp
+			rightPadding: 20 * DefaultStyle.dp
+			topPadding: 11 * DefaultStyle.dp
+			bottomPadding: 11 * DefaultStyle.dp
 			text: carousel.currentIndex < (carousel.itemsCount - 1) ? qsTr("Suivant") : qsTr("Commencer")
 			onClicked: { 
-				if (carousel.currentIndex < 2) carousel.goToSlide(carousel.currentIndex + 1);
+				if (carousel.currentIndex < carousel.itemsCount - 1) carousel.goToSlide(carousel.currentIndex + 1);
 				else mainItem.startButtonPressed();
 			}
 		}

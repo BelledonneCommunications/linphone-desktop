@@ -47,13 +47,11 @@ Control.Page {
 				background: Item {
 					visible: false
 				}
-				contentItem: Image {
-					anchors.centerIn: closeButton
-					source: AppIcons.closeX
-					width: 10 * DefaultStyle.dp
-					sourceSize.width: 10 * DefaultStyle.dp
-					fillMode: Image.PreserveAspectFit
-				}
+				icon.source: AppIcons.closeX
+				Layout.preferredWidth: 10 * DefaultStyle.dp
+				Layout.preferredHeight: 10 * DefaultStyle.dp
+				width: 10 * DefaultStyle.dp
+				height: 10 * DefaultStyle.dp
 				onClicked: mainItem.visible = false
 			}
 		}

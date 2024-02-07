@@ -9,7 +9,7 @@ ColumnLayout {
 	property string label: ""
 	// Usage : each item of the model list must be {text: ..., img: ...}
 	// If string list, only text part of the delegate will be filled
-	property var modelList: []
+	property var model: []
 	readonly property string currentText: selectedItemText.text
 	property bool enableBackgroundColors: true
 	readonly property bool hasActiveFocus: combobox.activeFocus
@@ -27,7 +27,7 @@ ColumnLayout {
 
 	Control.ComboBox {
 		id: combobox
-		model: mainItem.modelList
+		model: mainItem.model
 		Layout.preferredWidth: mainItem.width
 		background: Rectangle {
 			implicitWidth: mainItem.width
@@ -67,13 +67,13 @@ ColumnLayout {
 
 			Component.onCompleted: {
 				var index = combobox.currentIndex < 0 ? 0 : combobox.currentIndex
-				if (mainItem.modelList[index].img) {
-					selectedItemImg.source = mainItem.modelList[0].img
+				if (mainItem.model[index].img) {
+					selectedItemImg.source = mainItem.model[0].img
 				}
-				if (mainItem.modelList[index].text)
-					selectedItemText.text = mainItem.modelList[0].text
-				else if (mainItem.modelList[index])
-					selectedItemText.text = mainItem.modelList[0]
+				if (mainItem.model[index].text)
+					selectedItemText.text = mainItem.model[0].text
+				else if (mainItem.model[index])
+					selectedItemText.text = mainItem.model[0]
 			}
 		}
 

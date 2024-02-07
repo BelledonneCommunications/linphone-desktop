@@ -50,13 +50,19 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mPeerAddress = Utils::coreStringToAppString(mCallModel->getRemoteAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
+	auto token = Utils::coreStringToAppString(mCallModel->getAuthenticationToken());
+	auto localToken = mDir == LinphoneEnums::CallDir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
+	auto remoteToken = mDir == LinphoneEnums::CallDir::Outgoing ? token.left(2).toUpper() : token.right(2).toUpper();
 	mEncryption = LinphoneEnums::fromLinphone(call->getParams()->getMediaEncryption());
 	auto tokenVerified = mCallModel->getAuthenticationTokenVerified();
+	mLocalSas = localToken;
+	mRemoteSas = remoteToken;
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Srtp ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Dtls;
 	mPaused = mState == LinphoneEnums::CallState::Pausing || mState == LinphoneEnums::CallState::Paused ||
 	          mState == LinphoneEnums::CallState::PausedByRemote;
+	mRemoteVideoEnabled = call->getRemoteParams() && call->getRemoteParams()->videoEnabled();
 	mRecording = call->getParams() && call->getParams()->isRecording();
 	mRemoteRecording = call->getRemoteParams() && call->getRemoteParams()->isRecording();
 	mRecordable = mState == LinphoneEnums::CallState::StreamsRunning;
@@ -159,12 +165,14 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		    auto tokenVerified = mCallModel->getAuthenticationTokenVerified();
 		    auto token = Utils::coreStringToAppString(mCallModel->getAuthenticationToken());
 		    mCallModelConnection->invokeToCore([this, call, encryption, tokenVerified, token]() {
-			    auto localToken =
-			        mDir == LinphoneEnums::CallDir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
-			    auto remoteToken =
-			        mDir == LinphoneEnums::CallDir::Outgoing ? token.left(2).toUpper() : token.right(2).toUpper();
-			    setLocalSas(localToken);
-			    setRemoteSas(remoteToken);
+			    if (token.size() == 4) {
+				    auto localToken =
+				        mDir == LinphoneEnums::CallDir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
+				    auto remoteToken =
+				        mDir == LinphoneEnums::CallDir::Outgoing ? token.left(2).toUpper() : token.right(2).toUpper();
+				    setLocalSas(localToken);
+				    setRemoteSas(remoteToken);
+			    }
 			    setEncryption(encryption);
 			    setIsSecured((encryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
 			                 encryption == LinphoneEnums::MediaEncryption::Srtp ||

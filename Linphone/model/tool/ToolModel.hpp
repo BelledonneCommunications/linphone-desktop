@@ -41,6 +41,7 @@ public:
 	static QString getDisplayName(QString address);
 
 	static QSharedPointer<CallCore> createCall(const QString &sipAddress,
+	                                           bool withVideo = false,
 	                                           const QString &prepareTransfertAddress = "",
 	                                           const QHash<QString, QString> &headers = {},
 	                                           linphone::MediaEncryption = linphone::MediaEncryption::None);

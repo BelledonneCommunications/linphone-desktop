@@ -28,7 +28,7 @@ Item {
 			Item {
 				Layout.fillWidth: true
 			}
-			Control.Button {
+			Button {
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 				// Layout.bottomMargin: 20
 				background: Rectangle {
@@ -53,7 +53,6 @@ Item {
 				}
 				onClicked: console.debug("[LoginLayout]User: open about popup")
 			}
-				
 		}
 
 		RowLayout {

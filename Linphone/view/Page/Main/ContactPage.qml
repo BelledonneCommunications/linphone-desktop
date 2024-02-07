@@ -72,17 +72,14 @@ AbstractMainPage {
 			Item {
 				Layout.fillWidth: true
 			}
-			Control.Button {
-
+			Button {
 				background: Item {
-					visible: false
 				}
-				contentItem: Image {
-					source: AppIcons.plusCircle
-					width: 30 * DefaultStyle.dp
-					sourceSize.width: 30 * DefaultStyle.dp
-					fillMode: Image.PreserveAspectFit
-				}
+				icon.source: AppIcons.plusCircle
+				Layout.preferredWidth: 30 * DefaultStyle.dp
+				Layout.preferredHeight: 30 * DefaultStyle.dp
+				width: 30 * DefaultStyle.dp
+				height: 30 * DefaultStyle.dp
 				onClicked: {
 					mainItem.createContact("", "")
 				}
@@ -93,12 +90,6 @@ AbstractMainPage {
 			Layout.topMargin: 30 * DefaultStyle.dp
 			Layout.leftMargin: leftPanel.sideMargin
 			enabled: mainItem.leftPanelEnabled
-			Button {
-				onClicked: {
-					favoriteList.currentIndex = -1
-					contactList.currentIndex = -1
-				}
-			}
 			SearchBar {
 				id: searchBar
 				Layout.rightMargin: leftPanel.sideMargin
@@ -162,9 +153,9 @@ AbstractMainPage {
 								}
 								Button {
 									background: Item{}
-									contentItem: Image {
-										source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
-									}
+									icon.source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
+									width: 24 * DefaultStyle.dp
+									height: 24 * DefaultStyle.dp
 									onClicked: favoriteList.visible = !favoriteList.visible
 								}
 							}
@@ -211,9 +202,9 @@ AbstractMainPage {
 								}
 								Button {
 										background: Item{}
-										contentItem: Image {
-											source: contactList.visible ? AppIcons.upArrow : AppIcons.downArrow
-										}
+										icon.source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
+										width: 24 * DefaultStyle.dp
+										height: 24 * DefaultStyle.dp
 										onClicked: contactList.visible = !contactList.visible
 								}
 							}
@@ -269,11 +260,8 @@ AbstractMainPage {
 					width: 24 * DefaultStyle.dp
 					height: 24 * DefaultStyle.dp
 					background: Item{}
-					contentItem: Image {
-						anchors.fill: parent
-						source: AppIcons.pencil
-					}
 					onClicked: mainItem.editContact(mainItem.selectedContact)
+					icon.source: AppIcons.pencil
 				}
 				detailContent: ColumnLayout {
 					Layout.fillWidth: false
@@ -319,7 +307,6 @@ AbstractMainPage {
 												Layout.fillWidth: true
 												Text {
 													Layout.fillWidth: true
-													// TODO change with domain
 													text: modelData.label
 													font {
 														pixelSize: 13 * DefaultStyle.dp
@@ -343,12 +330,9 @@ AbstractMainPage {
 												Layout.preferredWidth: 24 * DefaultStyle.dp
 												Layout.preferredHeight: 24 * DefaultStyle.dp
 												property var callObj
-												contentItem: Image {
-													anchors.fill: parent
-													source: AppIcons.phone
-													width: 24 * DefaultStyle.dp
-													height: 24 * DefaultStyle.dp
-												}
+												icon.source: AppIcons.phone
+												width: 24 * DefaultStyle.dp
+												height: 24 * DefaultStyle.dp
 												onClicked: {
 													callObj = UtilsCpp.createCall(modelData.address)
 												}

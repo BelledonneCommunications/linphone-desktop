@@ -12,12 +12,11 @@ LoginLayout {
 	signal connectionSucceed()
 
 	titleContent: RowLayout {
-		Control.Button {
-			Layout.preferredHeight: 40 * DefaultStyle.dp
-			Layout.preferredWidth: height
+		spacing: 15 * DefaultStyle.dp
+		Button {
 			visible: mainItem.showBackButton
-			icon.width: width
-			icon.height: height
+			Layout.preferredHeight: 27 * DefaultStyle.dp
+			Layout.preferredWidth: 27 * DefaultStyle.dp
 			icon.source: AppIcons.returnArrow
 			background: Rectangle {
 				color: "transparent"
@@ -30,6 +29,8 @@ LoginLayout {
 		Image {
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.profile
+			Layout.preferredHeight: 34 * DefaultStyle.dp
+			Layout.preferredWidth: 34 * DefaultStyle.dp
 		}
 		Text {
 			text: qsTr("Connexion")
@@ -37,7 +38,6 @@ LoginLayout {
 				pixelSize: 36 * DefaultStyle.dp
 				weight: 800 * DefaultStyle.dp
 			}
-			scaleLettersFactor: 1.1
 		}
 		Item {
 			Layout.fillWidth: true
@@ -50,6 +50,10 @@ LoginLayout {
 		}
 		Button {
 			Layout.alignment: Qt.AlignRight
+			leftPadding: 20 * DefaultStyle.dp
+			rightPadding: 20 * DefaultStyle.dp
+			topPadding: 11 * DefaultStyle.dp
+			bottomPadding: 11 * DefaultStyle.dp
 			text: qsTr("S'inscrire")
 			onClicked: {
 				console.debug("[LoginPage] User: go to register")
@@ -58,7 +62,7 @@ LoginLayout {
 		}
 	}
 	centerContent: ColumnLayout {
-
+		Layout.leftMargin: 45 * DefaultStyle.dp
 		RowLayout {
 			
 			ColumnLayout {
@@ -68,6 +72,10 @@ LoginLayout {
 				Button {
 					Layout.topMargin: 40 * DefaultStyle.dp
 					inversedColors: true
+					leftPadding: 20 * DefaultStyle.dp
+					rightPadding: 20 * DefaultStyle.dp
+					topPadding: 11 * DefaultStyle.dp
+					bottomPadding: 11 * DefaultStyle.dp
 					text: qsTr("Compte SIP tiers")
 					onClicked: {mainItem.useSIPButtonClicked()}
 				}

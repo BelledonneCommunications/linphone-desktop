@@ -64,6 +64,10 @@ ColumnLayout {
 	RowLayout {
 		id: lastFormLineLayout
 		Button {
+			leftPadding: 20 * DefaultStyle.dp
+			rightPadding: 20 * DefaultStyle.dp
+			topPadding: 11 * DefaultStyle.dp
+			bottomPadding: 11 * DefaultStyle.dp
 			contentItem: StackLayout {
 				id: connectionButton
 				currentIndex: 0

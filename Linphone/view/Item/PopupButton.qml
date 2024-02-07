@@ -22,13 +22,9 @@ Button {
 		color: DefaultStyle.main2_300
 		radius: 40 * DefaultStyle.dp
 	}
-	contentItem: Image {
-		source: AppIcons.more
-		sourceSize.width: 24 * DefaultStyle.dp
-		sourceSize.height: 24 * DefaultStyle.dp
-		width: 24 * DefaultStyle.dp
-		height: 24 * DefaultStyle.dp
-	}
+	icon.source: AppIcons.more
+	width: 24 * DefaultStyle.dp
+	height: 24 * DefaultStyle.dp
 	onPressed: {
 		if (popup.visible) popup.close()
 		else popup.open()

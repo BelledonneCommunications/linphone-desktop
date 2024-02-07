@@ -93,12 +93,13 @@ QString Utils::getInitials(const QString &username) {
 }
 
 VariantObject *Utils::createCall(const QString &sipAddress,
+                                 bool withVideo,
                                  const QString &prepareTransfertAddress,
                                  const QHash<QString, QString> &headers) {
 	VariantObject *data = new VariantObject(QVariant()); // Scope : GUI
 	if (!data) return nullptr;
-	data->makeRequest([sipAddress, prepareTransfertAddress, headers]() {
-		auto call = ToolModel::createCall(sipAddress, prepareTransfertAddress, headers);
+	data->makeRequest([sipAddress, withVideo, prepareTransfertAddress, headers]() {
+		auto call = ToolModel::createCall(sipAddress, withVideo, prepareTransfertAddress, headers);
 		if (call) {
 			auto callGui = QVariant::fromValue(new CallGui(call));
 			App::postCoreSync([callGui]() {
