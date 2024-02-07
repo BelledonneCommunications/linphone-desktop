@@ -47,7 +47,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mCameraEnabled = call->cameraEnabled();
 	mDuration = call->getDuration();
 	mState = LinphoneEnums::fromLinphone(call->getState());
-	mPeerAddress = Utils::coreStringToAppString(mCallModel->getRemoteAddress()->asString());
+	mPeerAddress = Utils::coreStringToAppString(mCallModel->getRemoteAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
 	mEncryption = LinphoneEnums::fromLinphone(call->getParams()->getMediaEncryption());

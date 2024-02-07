@@ -39,10 +39,10 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mustBeInLinphoneThread(getClassName());
 	// Init data
 	auto address = account->getContactAddress();
-	mContactAddress = address ? Utils::coreStringToAppString(account->getContactAddress()->asString()) : "";
+	mContactAddress = address ? Utils::coreStringToAppString(account->getContactAddress()->asStringUriOnly()) : "";
 	auto params = account->getParams();
 	auto identityAddress = params->getIdentityAddress();
-	mIdentityAddress = identityAddress ? Utils::coreStringToAppString(identityAddress->asString()) : "";
+	mIdentityAddress = identityAddress ? Utils::coreStringToAppString(identityAddress->asStringUriOnly()) : "";
 	mPictureUri = Utils::coreStringToAppString(params->getPictureUri());
 	mRegistrationState = LinphoneEnums::fromLinphone(account->getState());
 	mIsDefaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount() == account;

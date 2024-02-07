@@ -10,7 +10,8 @@ DesktopPopup {
 	property var notificationData: ({
 										timelineModel : null
 									})
-	property int overrodeHeight
+	property int overriddenHeight
+	property int overriddenWidth
 	default property alias _content: content.data
 	
 	signal deleteNotification (var notification)
@@ -29,8 +30,8 @@ DesktopPopup {
 	
 	Rectangle {
 		color: "#FFFFFF"
-		height: overrodeHeight || 120
-		width: 300
+		height: overriddenHeight || 120
+		width: overriddenWidth || 300
 		
 		border {
 			color: "#A1A1A1"
