@@ -208,9 +208,11 @@ bool ParticipantProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &
 	}
 }
 
-bool ParticipantProxyModel::lessThan (const QModelIndex &left, const QModelIndex &right) const {
-	const ParticipantModel* a = sourceModel()->data(left).value<ParticipantModel*>();
-	const ParticipantModel* b = sourceModel()->data(right).value<ParticipantModel*>();
-	
-	return a->getCreationTime() > b->getCreationTime() || b->isMe();
+bool ParticipantProxyModel::lessThan(const QModelIndex &left, const QModelIndex &right) const {
+	const ParticipantModel *a = sourceModel()->data(left).value<ParticipantModel *>();
+	const ParticipantModel *b = sourceModel()->data(right).value<ParticipantModel *>();
+	bool bIsRecent = a->getCreationTime() < b->getCreationTime();
+	bool aIsMe = a->isMe();
+	bool bIsMe = b->isMe();
+	return bIsMe || (bIsRecent && !aIsMe);
 }
