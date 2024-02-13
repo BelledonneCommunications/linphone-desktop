@@ -70,7 +70,7 @@ ColumnLayout {
 			radius: 30 * DefaultStyle.dp
 			color: DefaultStyle.main1_500_main
 			z: 1
-			x: carouselButton.itemAt(mainItem.currentIndex).x
+			x: mainItem.currentIndex >= 0 && carouselButton.itemAt(mainItem.currentIndex) ? carouselButton.itemAt(mainItem.currentIndex).x : 0
 			Behavior on x { NumberAnimation {duration: 100}}
 		}
 		RowLayout {

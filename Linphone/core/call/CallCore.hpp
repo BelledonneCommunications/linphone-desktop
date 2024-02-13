@@ -51,6 +51,11 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool recording READ getRecording WRITE setRecording NOTIFY recordingChanged)
 	Q_PROPERTY(bool remoteRecording READ getRemoteRecording WRITE setRemoteRecording NOTIFY remoteRecordingChanged)
 	Q_PROPERTY(bool recordable READ getRecordable WRITE setRecordable NOTIFY recordableChanged)
+	Q_PROPERTY(
+	    float speakerVolumeGain READ getSpeakerVolumeGain WRITE setSpeakerVolumeGain NOTIFY speakerVolumeGainChanged)
+	Q_PROPERTY(float microphoneVolumeGain READ getMicrophoneVolumeGain WRITE setMicrophoneVolumeGain NOTIFY
+	               microphoneVolumeGainChanged)
+	Q_PROPERTY(float microVolume READ getMicrophoneVolume WRITE setMicrophoneVolume NOTIFY microphoneVolumeChanged)
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 
 public:
@@ -112,6 +117,18 @@ public:
 	bool getRecordable() const;
 	void setRecordable(bool recordable);
 
+	float getSpeakerVolumeGain() const;
+	void setSpeakerVolumeGain(float gain);
+
+	float getMicrophoneVolumeGain() const;
+	void setMicrophoneVolumeGain(float gain);
+
+	float getMicrophoneVolume() const;
+	void setMicrophoneVolume(float vol);
+
+	QString getInputDeviceName() const;
+	void setInputDeviceName(const QString &id);
+
 	LinphoneEnums::CallState getTransferState() const;
 	void setTransferState(LinphoneEnums::CallState state, const QString &message);
 
@@ -135,6 +152,9 @@ signals:
 	void recordingChanged();
 	void remoteRecordingChanged();
 	void recordableChanged();
+	void speakerVolumeGainChanged();
+	void microphoneVolumeChanged();
+	void microphoneVolumeGainChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -149,6 +169,10 @@ signals:
 	void lStartRecording();
 	void lStopRecording();
 	void lVerifyAuthenticationToken(bool verified);
+	void lSetSpeakerVolumeGain(float gain);
+	void lSetMicrophoneVolumeGain(float gain);
+	void lSetInputAudioDevice(const QString &id);
+	void lSetOutputAudioDevice(const QString &id);
 
 	/* TODO
 	    Q_INVOKABLE void acceptWithVideo();
@@ -189,6 +213,9 @@ private:
 	bool mRecordable = false;
 	QString mLocalSas;
 	QString mRemoteSas;
+	float mSpeakerVolumeGain;
+	float mMicrophoneVolume;
+	float mMicrophoneVolumeGain;
 	QSharedPointer<SafeConnection<CallCore, CallModel>> mCallModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT

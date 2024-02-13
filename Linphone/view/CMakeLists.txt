@@ -44,6 +44,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/RectangleTest.qml
 	view/Item/RoundedBackgroundControl.qml
 	view/Item/SearchBar.qml
+	view/Item/Slider.qml
 	view/Item/TabBar.qml
 	view/Item/Text.qml
 	view/Item/TextInput.qml

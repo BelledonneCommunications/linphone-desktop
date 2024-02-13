@@ -3,17 +3,17 @@ import QtQuick.Controls as Control
 import Linphone
 
 Control.Control {
-	width: 360 * DefaultStyle.dp
-	property color backgroundColor
-	topPadding: 10 * DefaultStyle.dp
-	bottomPadding: 10 * DefaultStyle.dp
-	leftPadding: 10 * DefaultStyle.dp
-	rightPadding: 10 * DefaultStyle.dp
+	id: mainItem
+	// width: 360 * DefaultStyle.dp
+	property color backgroundColor: DefaultStyle.grey_0
+	padding: 10 * DefaultStyle.dp
 	background: Rectangle {
-		// anchors.fill: parent
-		width: parent.width
-		height: parent.height
+		anchors.fill: parent
 		radius: 15 * DefaultStyle.dp
-		color: mainItem.backgroundColor ? mainItem.backgroundColor : DefaultStyle.grey_0
+		color: mainItem.backgroundColor
+		anchors.leftMargin: 10 * DefaultStyle.dp
+		anchors.rightMargin: 10 * DefaultStyle.dp
+		anchors.topMargin: 10 * DefaultStyle.dp
+		anchors.bottomMargin: 10 * DefaultStyle.dp
 	}
 }

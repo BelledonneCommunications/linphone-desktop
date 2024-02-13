@@ -20,9 +20,9 @@
 
 #include <QCommandLineParser>
 #include <QQmlApplicationEngine>
-#include <QSettings>
 #include <QSharedPointer>
 
+#include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "model/core/CoreModel.hpp"
 #include "tool/AbstractObject.hpp"
@@ -35,6 +35,7 @@ class QQuickWindow;
 class App : public SingleApplication, public AbstractObject {
 public:
 	App(int &argc, char *argv[]);
+	~App();
 	static App *getInstance();
 	Notifier *getNotifier() const;
 
@@ -94,9 +95,6 @@ public:
 	QQuickWindow *getCallsWindow(QVariant callGui);
 	void closeCallsWindow();
 
-	bool getFirstLaunch() const;
-	void setFirstLaunch(bool first);
-
 	QQuickWindow *getMainWindow();
 
 	QQmlApplicationEngine *mEngine = nullptr;
@@ -112,10 +110,7 @@ private:
 	Notifier *mNotifier = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
-	QSettings mSettings;
-	bool mFirstLaunch = true;
-	// TODO : changer ce count lorsqu'on aura liste d'appels
-	int callsCount = 0;
+	QSharedPointer<Settings> mSettings;
 
 	DECLARE_ABSTRACT_OBJECT
 };

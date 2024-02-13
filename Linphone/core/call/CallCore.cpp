@@ -26,6 +26,13 @@
 
 DEFINE_ABSTRACT_OBJECT(CallCore)
 
+QVariant createDeviceVariant(const QString &id, const QString &name) {
+	QVariantMap map;
+	map.insert("id", id);
+	map.insert("name", name);
+	return map;
+}
+
 QSharedPointer<CallCore> CallCore::create(const std::shared_ptr<linphone::Call> &call) {
 	auto sharedPointer = QSharedPointer<CallCore>(new CallCore(call), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
@@ -45,16 +52,15 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mMicrophoneMuted = call->getMicrophoneMuted();
 	mSpeakerMuted = call->getSpeakerMuted();
 	mCameraEnabled = call->cameraEnabled();
-	mDuration = call->getDuration();
 	mState = LinphoneEnums::fromLinphone(call->getState());
-	mPeerAddress = Utils::coreStringToAppString(mCallModel->getRemoteAddress()->asStringUriOnly());
+	mPeerAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
 	auto token = Utils::coreStringToAppString(mCallModel->getAuthenticationToken());
 	auto localToken = mDir == LinphoneEnums::CallDir::Incoming ? token.left(2).toUpper() : token.right(2).toUpper();
 	auto remoteToken = mDir == LinphoneEnums::CallDir::Outgoing ? token.left(2).toUpper() : token.right(2).toUpper();
 	mEncryption = LinphoneEnums::fromLinphone(call->getParams()->getMediaEncryption());
-	auto tokenVerified = mCallModel->getAuthenticationTokenVerified();
+	auto tokenVerified = call->getAuthenticationTokenVerified();
 	mLocalSas = localToken;
 	mRemoteSas = remoteToken;
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
@@ -65,6 +71,19 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mRemoteVideoEnabled = call->getRemoteParams() && call->getRemoteParams()->videoEnabled();
 	mRecording = call->getParams() && call->getParams()->isRecording();
 	mRemoteRecording = call->getRemoteParams() && call->getRemoteParams()->isRecording();
+	mSpeakerVolumeGain = mCallModel->getSpeakerVolumeGain();
+	// TODO : change this with settings value when settings done
+	if (mSpeakerVolumeGain < 0) {
+		call->setSpeakerVolumeGain(0.5);
+		mSpeakerVolumeGain = 0.5;
+	}
+	mMicrophoneVolumeGain = call->getMicrophoneVolumeGain();
+	// TODO : change this with settings value when settings done
+	if (mMicrophoneVolumeGain < 0) {
+		call->setMicrophoneVolumeGain(0.5);
+		mMicrophoneVolumeGain = 0.5;
+	}
+	mMicrophoneVolume = call->getRecordVolume();
 	mRecordable = mState == LinphoneEnums::CallState::StreamsRunning;
 }
 
@@ -120,6 +139,9 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToModel(&CallModel::durationChanged, [this](int duration) {
 		mCallModelConnection->invokeToCore([this, duration]() { setDuration(duration); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeChanged, [this](float volume) {
+		mCallModelConnection->invokeToCore([this, volume]() { setMicrophoneVolume(volume); });
 	});
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::stateChanged, [this](linphone::Call::State state, const std::string &message) {
@@ -179,6 +201,35 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			                 encryption == LinphoneEnums::MediaEncryption::Dtls);
 		    });
 	    });
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetSpeakerVolumeGain, [this](float gain) {
+		mCallModelConnection->invokeToModel([this, gain]() { mCallModel->setSpeakerVolumeGain(gain); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::speakerVolumeGainChanged, [this](float gain) {
+		mCallModelConnection->invokeToCore([this, gain]() { setSpeakerVolumeGain(gain); });
+	});
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetMicrophoneVolumeGain, [this](float gain) {
+		mCallModelConnection->invokeToModel([this, gain]() { mCallModel->setMicrophoneVolumeGain(gain); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeGainChanged, [this](float gain) {
+		mCallModelConnection->invokeToCore([this, gain]() { setMicrophoneVolumeGain(gain); });
+	});
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetInputAudioDevice, [this](const QString &id) {
+		mCallModelConnection->invokeToModel([this, id]() {
+			if (auto device = ToolModel::findAudioDevice(id)) {
+				mCallModel->setInputAudioDevice(device);
+			}
+		});
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::inputAudioDeviceChanged, [this](const std::string &id) {
+		mCallModelConnection->invokeToCore([this, id]() {});
+	});
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetOutputAudioDevice, [this](const QString &id) {
+		mCallModelConnection->invokeToModel([this, id]() {
+			if (auto device = ToolModel::findAudioDevice(id)) {
+				mCallModel->setOutputAudioDevice(device);
+			}
+		});
+	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lAccept, [this](bool withVideo) {
 		mCallModelConnection->invokeToModel([this, withVideo]() { mCallModel->accept(withVideo); });
 	});
@@ -380,6 +431,36 @@ void CallCore::setRecordable(bool recordable) {
 	if (mRecordable != recordable) {
 		mRecordable = recordable;
 		emit recordableChanged();
+	}
+}
+
+float CallCore::getSpeakerVolumeGain() const {
+	return mSpeakerVolumeGain;
+}
+void CallCore::setSpeakerVolumeGain(float gain) {
+	if (mSpeakerVolumeGain != gain) {
+		mSpeakerVolumeGain = gain;
+		emit speakerVolumeGainChanged();
+	}
+}
+
+float CallCore::getMicrophoneVolume() const {
+	return mMicrophoneVolume;
+}
+void CallCore::setMicrophoneVolume(float vol) {
+	if (mMicrophoneVolume != vol) {
+		mMicrophoneVolume = vol;
+		emit microphoneVolumeChanged();
+	}
+}
+
+float CallCore::getMicrophoneVolumeGain() const {
+	return mMicrophoneVolumeGain;
+}
+void CallCore::setMicrophoneVolumeGain(float gain) {
+	if (mMicrophoneVolumeGain != gain) {
+		mMicrophoneVolumeGain = gain;
+		emit microphoneVolumeGainChanged();
 	}
 }
 

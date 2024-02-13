@@ -10,6 +10,7 @@ ColumnLayout {
 	// Usage : each item of the model list must be {text: ..., img: ...}
 	// If string list, only text part of the delegate will be filled
 	property var model: []
+	property alias combobox: combobox
 	readonly property string currentText: selectedItemText.text
 	property bool enableBackgroundColors: true
 	readonly property bool hasActiveFocus: combobox.activeFocus
@@ -54,6 +55,7 @@ ColumnLayout {
 				id: selectedItemText
 				color: combobox.enabled ? DefaultStyle.main2_600 : DefaultStyle.grey_400
 				elide: Text.ElideRight
+				maximumLineCount: 1
 				font {
 					pixelSize: 14 * DefaultStyle.dp
 					weight: 400 * DefaultStyle.dp
@@ -67,13 +69,13 @@ ColumnLayout {
 
 			Component.onCompleted: {
 				var index = combobox.currentIndex < 0 ? 0 : combobox.currentIndex
-				if (mainItem.model[index].img) {
-					selectedItemImg.source = mainItem.model[0].img
+				if (mainItem.model[index] && mainItem.model[index].img) {
+					selectedItemImg.source = mainItem.model[index].img
 				}
-				if (mainItem.model[index].text)
-					selectedItemText.text = mainItem.model[0].text
+				if (mainItem.model[index] && mainItem.model[index].text)
+					selectedItemText.text = mainItem.model[index].text
 				else if (mainItem.model[index])
-					selectedItemText.text = mainItem.model[0]
+					selectedItemText.text = mainItem.model[index]
 			}
 		}
 
@@ -132,6 +134,7 @@ ColumnLayout {
 									? modelData
 									: ""
 						elide: Text.ElideRight
+						maximumLineCount: 1
 						font {
 							pixelSize: 14 * DefaultStyle.dp
 							weight: 400 * DefaultStyle.dp

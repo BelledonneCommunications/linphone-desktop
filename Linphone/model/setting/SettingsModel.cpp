@@ -19,6 +19,8 @@
  */
 
 #include "SettingsModel.hpp"
+#include "model/core/CoreModel.hpp"
+
 // =============================================================================
 
 DEFINE_ABSTRACT_OBJECT(SettingsModel)
@@ -40,4 +42,21 @@ bool SettingsModel::isReadOnly(const std::string &section, const std::string &na
 std::string SettingsModel::getEntryFullName(const std::string &section, const std::string &name) const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return isReadOnly(section, name) ? name + "/readonly" : name;
+}
+
+std::list<std::string> SettingsModel::getVideoDevices() const {
+	auto core = CoreModel::getInstance()->getCore();
+	return core->getVideoDevicesList();
+}
+
+std::string SettingsModel::getVideoDevice() {
+	return CoreModel::getInstance()->getCore()->getVideoDevice();
+}
+
+void SettingsModel::setVideoDevice(const std::string &id) {
+	auto core = CoreModel::getInstance()->getCore();
+	if (core->getVideoDevice() != id) {
+		CoreModel::getInstance()->getCore()->setVideoDevice(id);
+		emit videoDeviceChanged();
+	}
 }

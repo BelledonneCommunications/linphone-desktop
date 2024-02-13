@@ -49,6 +49,7 @@
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/search/MagicSearchProxy.hpp"
+#include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "core/variant/VariantList.hpp"
 #include "model/object/VariantObject.hpp"
@@ -67,6 +68,9 @@ App::App(int &argc, char *argv[])
 	init();
 }
 
+App::~App() {
+}
+
 App *App::getInstance() {
 	return dynamic_cast<App *>(QApplication::instance());
 }
@@ -81,8 +85,53 @@ Notifier *App::getNotifier() const {
 void App::init() {
 	// Core. Manage the logger so it must be instantiate at first.
 	auto coreModel = CoreModel::create("", mLinphoneThread);
-	connect(mLinphoneThread, &QThread::started, coreModel.get(), &CoreModel::start);
-	mFirstLaunch = mSettings.value("firstLaunch", 1).toInt();
+	connect(
+	    mLinphoneThread, &QThread::started, coreModel.get(),
+	    [this, coreModel]() mutable {
+		    coreModel->start();
+		    auto settings = Settings::create();
+		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings]() mutable {
+			    mSettings = settings;
+			    settings.reset();
+
+			    // QML
+			    mEngine = new QQmlApplicationEngine(this);
+			    // Provide `+custom` folders for custom components and `5.9` for old components.
+			    QStringList selectors("custom");
+			    const QVersionNumber &version = QLibraryInfo::version();
+			    if (version.majorVersion() == 5 && version.minorVersion() == 9) selectors.push_back("5.9");
+			    auto selector = new QQmlFileSelector(mEngine, mEngine);
+			    selector->setExtraSelectors(selectors);
+			    qInfo() << log().arg("Activated selectors:") << selector->selector()->allSelectors();
+
+			    mEngine->addImportPath(":/");
+			    mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
+			    initCppInterfaces();
+			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+			    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
+
+			    // Enable notifications.
+			    mNotifier = new Notifier(mEngine);
+
+			    const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
+			    QObject::connect(
+			        mEngine, &QQmlApplicationEngine::objectCreated, this,
+			        [this, url](QObject *obj, const QUrl &objUrl) {
+				        if (url == objUrl) {
+					        if (!obj) {
+						        qCritical() << log().arg("Main.qml couldn't be load. The app will exit");
+						        exit(-1);
+					        }
+					        mMainWindow = qobject_cast<QQuickWindow *>(obj);
+					        Q_ASSERT(mMainWindow);
+				        }
+			        },
+			        Qt::QueuedConnection);
+			    mEngine->load(url);
+		    });
+		    coreModel.reset();
+	    },
+	    Qt::SingleShotConnection);
 	// Console Commands
 	createCommandParser();
 	mParser->parse(this->arguments());
@@ -102,40 +151,6 @@ void App::init() {
 
 	qInfo() << log().arg("Display server : %1").arg(platformName());
 
-	// QML
-	mEngine = new QQmlApplicationEngine(this);
-	// Provide `+custom` folders for custom components and `5.9` for old components.
-	QStringList selectors("custom");
-	const QVersionNumber &version = QLibraryInfo::version();
-	if (version.majorVersion() == 5 && version.minorVersion() == 9) selectors.push_back("5.9");
-	auto selector = new QQmlFileSelector(mEngine, mEngine);
-	selector->setExtraSelectors(selectors);
-	qInfo() << log().arg("Activated selectors:") << selector->selector()->allSelectors();
-
-	mEngine->addImportPath(":/");
-	mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
-	initCppInterfaces();
-	mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
-	mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
-
-	// Enable notifications.
-	mNotifier = new Notifier(mEngine);
-
-	const QUrl url(u"qrc:/Linphone/view/App/Main.qml"_qs);
-	QObject::connect(
-	    mEngine, &QQmlApplicationEngine::objectCreated, this,
-	    [this, url](QObject *obj, const QUrl &objUrl) {
-		    if (url == objUrl) {
-			    if (!obj) {
-				    qCritical() << log().arg("Main.qml couldn't be load. The app will exit");
-				    exit(-1);
-			    }
-			    mMainWindow = qobject_cast<QQuickWindow *>(obj);
-			    Q_ASSERT(mMainWindow);
-		    }
-	    },
-	    Qt::QueuedConnection);
-	mEngine->load(url);
 	// mEngine->load(u"qrc:/Linphone/view/Prototype/CameraPrototype.qml"_qs);
 }
 
@@ -151,6 +166,10 @@ void App::initCppInterfaces() {
 	qmlRegisterSingletonType<EnumsToString>(
 	    "EnumsToStringCpp", 1, 0, "EnumsToStringCpp",
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new EnumsToString(engine); });
+
+	qmlRegisterSingletonType<Settings>(
+	    "SettingsCpp", 1, 0, "SettingsCpp",
+	    [this](QQmlEngine *engine, QJSEngine *) -> QObject * { return mSettings.get(); });
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
@@ -180,6 +199,8 @@ void App::clean() {
 	mNotifier = nullptr;
 	delete mEngine;
 	mEngine = nullptr;
+	mSettings.reset();
+	mSettings = nullptr;
 	mLinphoneThread->wait(250);
 	qApp->processEvents(QEventLoop::AllEvents, 250);
 	mLinphoneThread->exit();
@@ -265,17 +286,6 @@ void App::closeCallsWindow() {
 		mCallsWindow->deleteLater();
 		mCallsWindow = nullptr;
 	}
-}
-
-void App::setFirstLaunch(bool first) {
-	if (mFirstLaunch != first) {
-		mFirstLaunch = first;
-		mSettings.setValue("firstLaunch", first);
-	}
-}
-
-bool App::getFirstLaunch() const {
-	return mFirstLaunch;
 }
 
 QQuickWindow *App::getMainWindow() {

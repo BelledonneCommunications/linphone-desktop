@@ -120,14 +120,6 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 	return data;
 }
 
-void Utils::setFirstLaunch(bool first) {
-	App::getInstance()->setFirstLaunch(first);
-}
-
-bool Utils::getFirstLaunch() {
-	return App::getInstance()->getFirstLaunch();
-}
-
 void Utils::openCallsWindow(CallGui *call) {
 	if (call) App::getInstance()->getCallsWindow(QVariant::fromValue(call))->show();
 }

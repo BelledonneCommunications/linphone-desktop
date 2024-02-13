@@ -5,6 +5,7 @@ import QtQuick.Controls as Control
 import Linphone
 import EnumsToStringCpp 1.0
 import UtilsCpp 1.0
+import SettingsCpp 1.0
 
 Window {
 	id: mainWindow
@@ -277,7 +278,8 @@ Window {
 					bottomPadding: 8 * DefaultStyle.dp
 					leftPadding: 10 * DefaultStyle.dp
 					rightPadding: 10 * DefaultStyle.dp
-					visible: mainWindow.call.core.isSecured
+					width: 269 * DefaultStyle.dp
+					visible: mainWindow.call && mainWindow.call.core.isSecured
 					background: Rectangle {
 						anchors.fill: parent
 						border.color: DefaultStyle.info_500_main
@@ -482,198 +484,341 @@ Window {
 							weight: 800 * DefaultStyle.dp
 						}
 					}
-					contentItem: Control.StackView {
+					Control.StackView {
 						id: rightPanelStack
-					}
-					Component {
-						id: contactsListPanel
-						CallContactsLists {
-							sideMargin: 10 * DefaultStyle.dp
-							topMargin: 15 * DefaultStyle.dp
-							groupCallVisible: false
-							searchBarColor: DefaultStyle.grey_0
-							searchBarBorderColor: DefaultStyle.grey_200
-							onCallButtonPressed: (address) => {
-								mainWindow.call.core.lTransferCall(address)
+						width: parent.width
+						height: parent.height
+						initialItem: callsListPanel
+						Component {
+							id: contactsListPanel
+							CallContactsLists {
+								sideMargin: 10 * DefaultStyle.dp
+								topMargin: 15 * DefaultStyle.dp
+								groupCallVisible: false
+								searchBarColor: DefaultStyle.grey_0
+								searchBarBorderColor: DefaultStyle.grey_200
+								onCallButtonPressed: (address) => {
+									mainWindow.call.core.lTransferCall(address)
+								}
+								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Transfert d'appel")
 							}
-							Control.StackView.onActivated: rightPanelTitle.text = qsTr("Transfert d'appel")
 						}
-					}
-					Component {
-						id: dialerPanel
-						ColumnLayout {
-							Control.StackView.onActivated: rightPanelTitle.text = qsTr("Dialer")
-							Item {
-								Layout.fillWidth: true
-								Layout.fillHeight: true
-							}
-							SearchBar {
-								id: dialerTextInput
-								Layout.fillWidth: true
-								Layout.leftMargin: 10 * DefaultStyle.dp
-								Layout.rightMargin: 10 * DefaultStyle.dp
-								magnifierVisible: false
-								color: DefaultStyle.grey_0
-								borderColor: DefaultStyle.grey_200
-								placeholderText: ""
-								numericPad: numPad
-								numericPadButton.visible: false
-							}
-							Item {
-								Layout.fillWidth: true
-								Layout.preferredHeight: numPad.height
-								Layout.topMargin: 10 * DefaultStyle.dp
-								property var callObj
-								NumericPad {
-									id: numPad
-									width: parent.width
-									visible: parent.visible
-									closeButtonVisible: false
-									onLaunchCall: {
-										callObj = UtilsCpp.createCall(dialerTextInput.text)
+						Component {
+							id: dialerPanel
+							ColumnLayout {
+								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Dialer")
+								Item {
+									Layout.fillWidth: true
+									Layout.fillHeight: true
+								}
+								SearchBar {
+									id: dialerTextInput
+									Layout.fillWidth: true
+									Layout.leftMargin: 10 * DefaultStyle.dp
+									Layout.rightMargin: 10 * DefaultStyle.dp
+									magnifierVisible: false
+									color: DefaultStyle.grey_0
+									borderColor: DefaultStyle.grey_200
+									placeholderText: ""
+									numericPad: numPad
+									numericPadButton.visible: false
+								}
+								Item {
+									Layout.fillWidth: true
+									Layout.preferredHeight: numPad.height
+									Layout.topMargin: 10 * DefaultStyle.dp
+									property var callObj
+									NumericPad {
+										id: numPad
+										width: parent.width
+										visible: parent.visible
+										closeButtonVisible: false
+										onLaunchCall: {
+											callObj = UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
+										}
 									}
 								}
 							}
 						}
-					}
-					Component {
-						id: callsListPanel
-						Control.Control {
-							Control.StackView.onActivated: rightPanelTitle.text = qsTr("Liste d'appel")
-							// width: callList.width
-							// height: callList.height
-							// padding: 15 * DefaultStyle.dp
-							topPadding: 15 * DefaultStyle.dp
-							bottomPadding: 15 * DefaultStyle.dp
-							leftPadding: 15 * DefaultStyle.dp
-							rightPadding: 15 * DefaultStyle.dp
-							
-							background: Rectangle {
-								anchors.fill: parent
-								anchors.leftMargin: 10 * DefaultStyle.dp
-								anchors.rightMargin: 10 * DefaultStyle.dp
-								anchors.topMargin: 10 * DefaultStyle.dp
-								anchors.bottomMargin: 10 * DefaultStyle.dp
-								color: DefaultStyle.main2_0
-								radius: 15 * DefaultStyle.dp
-							}
+						Component {
+							id: callsListPanel
+							ColumnLayout {
+								RoundedBackgroundControl {
+									Control.StackView.onActivated: rightPanelTitle.text = qsTr("Liste d'appel")
+									Layout.fillWidth: true
+									// height: Math.min(callList.height + topPadding + bottomPadding, rightPanelStack.height)
+									onHeightChanged: console.log("calls list height changed", height)
+									height: Math.min(callList.height + topPadding + bottomPadding, rightPanelStack.height)
 
-							contentItem: ListView {
-								id: callList
-								model: callsModel
-								height: contentHeight
-								spacing: 15 * DefaultStyle.dp
+									topPadding: 15 * DefaultStyle.dp
+									bottomPadding: 15 * DefaultStyle.dp
+									leftPadding: 15 * DefaultStyle.dp
+									rightPadding: 15 * DefaultStyle.dp
+									backgroundColor: DefaultStyle.main2_0
+									
+									contentItem: ListView {
+										id: callList
+										model: callsModel
+										height: Math.min(contentHeight, rightPanelStack.height)
+										spacing: 15 * DefaultStyle.dp
 
-								onCountChanged: forceLayout()
+										onCountChanged: forceLayout()
 
-								delegate: Item {
-									id: callDelegate
-									width: callList.width
-									height: 45 * DefaultStyle.dp
+										delegate: Item {
+											id: callDelegate
+											width: callList.width
+											height: 45 * DefaultStyle.dp
 
-									RowLayout {
-										id: delegateContent
-										anchors.fill: parent
-										anchors.leftMargin: 10 * DefaultStyle.dp
-										anchors.rightMargin: 10 * DefaultStyle.dp
-										Avatar {
-											id: delegateAvatar
-											address: modelData.core.peerAddress
-											Layout.preferredWidth: 45 * DefaultStyle.dp
-											Layout.preferredHeight: 45 * DefaultStyle.dp
+											RowLayout {
+												id: delegateContent
+												anchors.fill: parent
+												anchors.leftMargin: 10 * DefaultStyle.dp
+												anchors.rightMargin: 10 * DefaultStyle.dp
+												Avatar {
+													id: delegateAvatar
+													address: modelData.core.peerAddress
+													Layout.preferredWidth: 45 * DefaultStyle.dp
+													Layout.preferredHeight: 45 * DefaultStyle.dp
+												}
+												Text {
+													id: delegateName
+													property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
+													text: remoteAddress ? remoteAddress.value : ""
+													Connections {
+														target: modelData.core
+													}
+												}
+												Item {
+													Layout.fillHeight: true
+													Layout.fillWidth: true
+												}
+												Text {
+													id: callStateText
+													text: modelData.core.state === LinphoneEnums.CallState.Paused 
+													|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+														? qsTr("Appel en pause") : qsTr("Appel en cours")
+												}
+												PopupButton {
+													id: listCallOptionsButton
+													Layout.preferredWidth: 24 * DefaultStyle.dp
+													Layout.preferredHeight: 24 * DefaultStyle.dp
+													Layout.alignment: Qt.AlignRight
+
+													popup.contentItem: ColumnLayout {
+														spacing: 0
+														Control.Button {
+															background: Item {}
+															contentItem: RowLayout {
+																Image {
+																	source: modelData.core.state === LinphoneEnums.CallState.Paused 
+																	|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+																	? AppIcons.phone : AppIcons.pause
+																	sourceSize.width: 32 * DefaultStyle.dp
+																	sourceSize.height: 32 * DefaultStyle.dp
+																	Layout.preferredWidth: 32 * DefaultStyle.dp
+																	Layout.preferredHeight: 32 * DefaultStyle.dp
+																	fillMode: Image.PreserveAspectFit
+																}
+																Text {
+																	text: modelData.core.state === LinphoneEnums.CallState.Paused 
+																	|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+																	? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
+																	color: DefaultStyle.main2_500main
+																	Layout.preferredWidth: metrics.width
+																}
+																TextMetrics {
+																	id: metrics
+																	text: qsTr("Reprendre l'appel")
+																}
+																Item {
+																	Layout.fillWidth: true
+																}
+															}
+															onClicked: modelData.core.lSetPaused(!modelData.core.paused)
+														}
+														Control.Button {
+															background: Item {}
+															contentItem: RowLayout {
+																EffectImage {
+																	source: AppIcons.endCall
+																	colorizationColor: DefaultStyle.danger_500main
+																	width: 32 * DefaultStyle.dp
+																	height: 32 * DefaultStyle.dp
+																}
+																Text {
+																	color: DefaultStyle.danger_500main
+																	text: qsTr("Terminer l'appel")
+																}
+																Item {
+																	Layout.fillWidth: true
+																}
+															}
+															onClicked: mainWindow.endCall(modelData)
+														}
+													}
+												}
+											}
+												
+											// MouseArea{
+											// 	anchors.fill: delegateLayout
+											// 	onClicked: {
+											// 		callsModel.currentCall = modelData
+											// 	}
+											// }
 										}
-										Text {
-											id: delegateName
-											property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
-											text: remoteAddress ? remoteAddress.value : ""
-											Connections {
-												target: modelData.core
+									}
+								}
+								Item {
+									Layout.fillHeight: true
+								}
+							}
+						}
+						Component {
+							id: settingsPanel
+							ColumnLayout {
+								RoundedBackgroundControl {
+									Layout.alignment: Qt.AlignHCenter
+									Control.StackView.onActivated: {
+										rightPanelTitle.text = qsTr("Paramètres")
+									}
+									backgroundColor: DefaultStyle.main2_0
+									height: contentItem.implicitHeight + topPadding + bottomPadding
+									Layout.fillWidth: true
+									topPadding: 25 * DefaultStyle.dp
+									bottomPadding: 25 * DefaultStyle.dp
+									leftPadding: 25 * DefaultStyle.dp
+									rightPadding: 25 * DefaultStyle.dp
+									contentItem: ColumnLayout {
+										spacing: 10 * DefaultStyle.dp
+
+										RowLayout {
+											Layout.fillWidth: true
+											EffectImage {
+												source: AppIcons.speaker
+												colorizationColor: DefaultStyle.main1_500_main
+												Layout.preferredWidth: 24 * DefaultStyle.dp
+												Layout.preferredHeight: 24 * DefaultStyle.dp
+												imageWidth: 24 * DefaultStyle.dp
+												imageHeight: 24 * DefaultStyle.dp
+											}
+											Text {
+												text: qsTr("Haut-parleurs")
+												Layout.fillWidth: true
 											}
 										}
-										Item {
-											Layout.fillHeight: true
+										ComboBox {
 											Layout.fillWidth: true
+											Layout.preferredWidth: parent.width
+											model: SettingsCpp.outputAudioDevicesList
+											onCurrentTextChanged: {
+												mainWindow.call.core.lSetOutputAudioDevice(currentText)
+											}
 										}
-										Text {
-											id: callStateText
-											text: mainWindow.call.core.state === LinphoneEnums.CallState.Paused
-												|| mainWindow.call.core.state === LinphoneEnums.CallState.PausedByRemote
-												? qsTr("Appel en pause") : qsTr("Appel en cours")
+										Slider {
+											id: speakerVolume
+											Layout.fillWidth: true
+											from: 0.0
+											to: 1.0
+											value: mainWindow.call && mainWindow.call.core.speakerVolumeGain
+											onMoved: {
+												mainWindow.call.core.lSetSpeakerVolumeGain(value)
+											}
 										}
-										PopupButton {
-											id: listCallOptionsButton
-											Layout.preferredWidth: 24 * DefaultStyle.dp
-											Layout.preferredHeight: 24 * DefaultStyle.dp
-											Layout.alignment: Qt.AlignRight
+										RowLayout {
+											Layout.fillWidth: true
+											EffectImage {
+												source: AppIcons.microphone
+												colorizationColor: DefaultStyle.main1_500_main
+												Layout.preferredWidth: 24 * DefaultStyle.dp
+												Layout.preferredHeight: 24 * DefaultStyle.dp
+												imageWidth: 24 * DefaultStyle.dp
+												imageHeight: 24 * DefaultStyle.dp
+											}
+											Text {
+												text: qsTr("Microphone")
+												Layout.fillWidth: true
+											}
+										}
+										ComboBox {
+											Layout.fillWidth: true
+											Layout.preferredWidth: parent.width
+											model: SettingsCpp.inputAudioDevicesList
+											onCurrentTextChanged: {
+												mainWindow.call.core.lSetInputAudioDevice(currentText)
+											}
+										}
+										Slider {
+											id: microVolume
+											Layout.fillWidth: true
+											from: 0.0
+											to: 1.0
+											value: mainWindow.call && mainWindow.call.core.microphoneVolumeGain
+											onMoved: {
+												mainWindow.call.core.lSetMicrophoneVolumeGain(value)
+											}
+										}
+										Timer {
+											interval: 50
+											repeat: true
+											running: mainWindow.call || false
+											onTriggered: audioTestSlider.value = (mainWindow.call && mainWindow.call.core.microVolume)
+										}
+										Slider {
+											id: audioTestSlider
+											Layout.fillWidth: true
+											enabled: false
+											Layout.preferredHeight: 10 * DefaultStyle.dp
 
-											popup.contentItem: ColumnLayout {
-												spacing: 0
-												Button {
-													leftPadding: 0
-													topPadding: 5 * DefaultStyle.dp
-													bottomPadding: 5 * DefaultStyle.dp
-													background: Item {}
-													contentItem: RowLayout {
-														Image {
-															source: modelData.core.paused
-															? AppIcons.phone : AppIcons.pause
-															sourceSize.width: 32 * DefaultStyle.dp
-															sourceSize.height: 32 * DefaultStyle.dp
-															Layout.preferredWidth: 32 * DefaultStyle.dp
-															Layout.preferredHeight: 32 * DefaultStyle.dp
-															fillMode: Image.PreserveAspectFit
-														}
-														Text {
-															text: modelData.core.paused
-															? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
-															color: DefaultStyle.main2_500main
-															Layout.preferredWidth: metrics.width
-														}
-														TextMetrics {
-															id: metrics
-															text: qsTr("Reprendre l'appel")
-														}
-														Item {
-															Layout.fillWidth: true
-														}
+											background: Rectangle {
+												x: audioTestSlider.leftPadding
+												y: audioTestSlider.topPadding + audioTestSlider.availableHeight / 2 - height / 2
+												implicitWidth: 200 * DefaultStyle.dp
+												implicitHeight: 10 * DefaultStyle.dp
+												width: audioTestSlider.availableWidth
+												height: implicitHeight
+												radius: 2 * DefaultStyle.dp
+												color: "#D9D9D9"
+
+												Rectangle {
+													width: audioTestSlider.visualPosition * parent.width
+													height: parent.height
+													gradient: Gradient {
+														orientation: Gradient.Horizontal
+														GradientStop { position: 0.0; color: "#6FF88D" }
+														GradientStop { position: 1.0; color: "#00D916" }
 													}
-													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
+													radius: 2 * DefaultStyle.dp
 												}
-												Button {
-													leftPadding: 0
-													topPadding: 5 * DefaultStyle.dp
-													bottomPadding: 5 * DefaultStyle.dp
-													background: Item {}
-													contentItem: RowLayout {
-														EffectImage {
-															source: AppIcons.endCall
-															colorizationColor: DefaultStyle.danger_500main
-															width: 32 * DefaultStyle.dp
-															height: 32 * DefaultStyle.dp
-														}
-														Text {
-															color: DefaultStyle.danger_500main
-															text: qsTr("Terminer l'appel")
-														}
-														Item {
-															Layout.fillWidth: true
-														}
-													}
-													onClicked: {
-														mainWindow.endCall(modelData)
-														mainWindow.callTerminatedByUser = true
-													}
-												}
+											}
+											handle: Item {visible: false}
+										}
+										RowLayout {
+											Layout.fillWidth: true
+											EffectImage {
+												source: AppIcons.videoCamera
+												colorizationColor: DefaultStyle.main1_500_main
+												Layout.preferredWidth: 24 * DefaultStyle.dp
+												Layout.preferredHeight: 24 * DefaultStyle.dp
+												imageWidth: 24 * DefaultStyle.dp
+												imageHeight: 24 * DefaultStyle.dp
+											}
+											Text {
+												text: qsTr("Caméra")
+												Layout.fillWidth: true
+											}
+										}
+										ComboBox {
+											Layout.fillWidth: true
+											Layout.preferredWidth: parent.width
+											model: SettingsCpp.videoDevicesList
+											onCurrentTextChanged: {
+												SettingsCpp.lSetVideoDevice(currentText)
 											}
 										}
 									}
-										
-									// MouseArea{
-									// 	anchors.fill: delegateLayout
-									// 	onClicked: {
-									// 		callsModel.currentCall = modelData
-									// 	}
-									// }
+								}
+								Item {
+									Layout.fillHeight: true
 								}
 							}
 						}
@@ -845,9 +990,7 @@ Window {
 							Button {
 								id: callListButton
 								Layout.fillWidth: true
-								background: Item {
-									visible: false
-								}
+								background: Item {}
 								contentItem: RowLayout {
 									Image {
 										Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -868,9 +1011,7 @@ Window {
 							Button {
 								id: dialerButton
 								Layout.fillWidth: true
-								background: Item {
-									visible: false
-								}
+								background: Item {}
 								contentItem: RowLayout {
 									Image {
 										Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -893,9 +1034,7 @@ Window {
 								Layout.fillWidth: true
 								enabled: mainWindow.call.core.recordable
 								checkable: true
-								background: Item {
-									visible: false
-								}
+								background: Item {}
 								contentItem: RowLayout {
 									EffectImage {
 										Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -914,29 +1053,47 @@ Window {
 									mainWindow.call.core.recording ? mainWindow.call.core.lStopRecording() : mainWindow.call.core.lStartRecording()
 								}
 							}
-							Button {
+							Control.Button {
 								id: speakerButton
 								Layout.fillWidth: true
 								checkable: true
-								background: Item {
-									visible: false
-								}
+								background: Item {}
 								contentItem: RowLayout {
 									EffectImage {
 										Layout.preferredWidth: 24 * DefaultStyle.dp
 										Layout.preferredHeight: 24 * DefaultStyle.dp
 										fillMode: Image.PreserveAspectFit
-										source: mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
-										colorizationColor: mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : undefined
+										source: AppIcons.recordFill
+										colorizationColor: mainWindow.call.core.recording ? DefaultStyle.danger_500main : undefined
 									}
 									Text {
-										text: mainWindow.call.core.speakerMuted ? qsTr("Activer le son") : qsTr("Désactiver le son")
-										color: mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500main : DefaultStyle.main2_600
+										color: mainWindow.call.core.recording ? DefaultStyle.danger_500main : DefaultStyle.main2_600
+										text: mainWindow.call.core.recording ? qsTr("Terminer l'enregistrement") : qsTr("Enregistrer l'appel")
 									}
 
 								}
 								onClicked: {
-									mainWindow.call.core.lSetSpeakerMuted(!mainWindow.call.core.speakerMuted)
+									mainWindow.call.core.recording ? mainWindow.call.core.lStopRecording() : mainWindow.call.core.lStartRecording()
+								}
+							}
+							Control.Button {
+								id: settingsButton
+								Layout.fillWidth: true
+								background: Item{}
+								contentItem: RowLayout {
+									Image {
+										Layout.preferredWidth: 24 * DefaultStyle.dp
+										Layout.preferredHeight: 24 * DefaultStyle.dp
+										source: AppIcons.settings
+									}
+									Text {
+										text: qsTr("Paramètres")
+									}
+								}
+								onClicked: {
+									rightPanel.visible = true
+									rightPanel.replace(settingsPanel)
+									moreOptionsButton.close()
 								}
 							}
 						}

@@ -36,6 +36,7 @@ public:
 
 	static std::shared_ptr<linphone::Address> interpretUrl(const QString &address);
 	static std::shared_ptr<linphone::FriendPhoneNumber> makeLinphoneNumber(const QString &label, const QString &number);
+	static std::shared_ptr<linphone::AudioDevice> findAudioDevice(const QString &id);
 
 	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
 	static QString getDisplayName(QString address);

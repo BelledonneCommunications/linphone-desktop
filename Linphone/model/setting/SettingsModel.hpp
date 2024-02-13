@@ -30,6 +30,7 @@
 
 class SettingsModel : public QObject, public AbstractObject {
 	Q_OBJECT
+
 public:
 	SettingsModel(QObject *parent = Q_NULLPTR);
 	virtual ~SettingsModel();
@@ -39,9 +40,16 @@ public:
 	getEntryFullName(const std::string &section,
 	                 const std::string &name) const; // Return the full name of the entry : 'name/readonly' or 'name'
 
+	std::list<std::string> getVideoDevices() const;
+	void setVideoDevice(const std::string &id);
+	std::string getVideoDevice();
+
 	static const std::string UiSection;
 
 	std::shared_ptr<linphone::Config> mConfig;
+
+signals:
+	void videoDeviceChanged();
 
 private:
 	DECLARE_ABSTRACT_OBJECT

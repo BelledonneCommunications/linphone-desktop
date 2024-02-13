@@ -29,7 +29,6 @@ MouseArea{
 	preventStealing: true
 	propagateComposedEvents: true
 	hoverEnabled: true
-	onMScaleChanged: updateScale()
 	
 	function updateScale(){// Avoid scaling if leading outside movableArea.
 		drag.target.height = Math.max(0, Math.min(movableArea.height, heightOrigin * mScale))
@@ -42,6 +41,7 @@ MouseArea{
 		drag.target.x = Math.max(parentTLBounds.x + margin, Math.min(parentBRBounds.x - drag.target.width - margin, drag.target.x + x - margin))
 		drag.target.y = Math.max(parentTLBounds.y + margin, Math.min(parentBRBounds.y - drag.target.height - margin, drag.target.y + y - margin))
 	}
+	onMScaleChanged: updateScale()
 	onPositionChanged: (mouse) => {
 		if(dragging){
 			updatePosition(mouse.x - xClicked, mouse.y - yClicked)

@@ -35,6 +35,13 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 	mDurationTimer.setSingleShot(false);
 	connect(&mDurationTimer, &QTimer::timeout, this, [this]() { this->durationChanged(mMonitor->getDuration()); });
 	mDurationTimer.start();
+
+	mMicroVolumeTimer.setInterval(50);
+	mMicroVolumeTimer.setSingleShot(false);
+	connect(&mMicroVolumeTimer, &QTimer::timeout, this,
+	        [this]() { this->microphoneVolumeChanged(Utils::computeVu(mMonitor->getRecordVolume())); });
+	mMicroVolumeTimer.start();
+
 	connect(this, &CallModel::stateChanged, this, [this] {
 		auto state = mMonitor->getState();
 		if (state == linphone::Call::State::Paused) setPaused(true);
@@ -142,6 +149,54 @@ void CallModel::setRecordFile(const std::string &path) {
 	auto params = core->createCallParams(mMonitor);
 	params->setRecordFile(path);
 	mMonitor->update(params);
+}
+
+void CallModel::setSpeakerVolumeGain(float gain) {
+	mMonitor->setSpeakerVolumeGain(gain);
+	emit speakerVolumeGainChanged(gain);
+}
+
+float CallModel::getSpeakerVolumeGain() const {
+	auto gain = mMonitor->getSpeakerVolumeGain();
+	if (gain < 0) gain = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
+	return gain;
+}
+
+void CallModel::setMicrophoneVolumeGain(float gain) {
+	mMonitor->setMicrophoneVolumeGain(gain);
+	emit microphoneVolumeGainChanged(gain);
+}
+
+float CallModel::getMicrophoneVolumeGain() const {
+	auto gain = mMonitor->getMicrophoneVolumeGain();
+	return gain;
+}
+
+float CallModel::getMicrophoneVolume() const {
+	auto volume = mMonitor->getRecordVolume();
+	return volume;
+}
+
+void CallModel::setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &device) {
+	mMonitor->setInputAudioDevice(device);
+	std::string deviceName;
+	if (device) deviceName = device->getDeviceName();
+	emit inputAudioDeviceChanged(deviceName);
+}
+
+std::shared_ptr<const linphone::AudioDevice> CallModel::getInputAudioDevice() const {
+	return mMonitor->getInputAudioDevice();
+}
+
+void CallModel::setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &device) {
+	mMonitor->setOutputAudioDevice(device);
+	std::string deviceName;
+	if (device) deviceName = device->getDeviceName();
+	emit outputAudioDeviceChanged(deviceName);
+}
+
+std::shared_ptr<const linphone::AudioDevice> CallModel::getOutputAudioDevice() const {
+	return mMonitor->getOutputAudioDevice();
 }
 
 std::string CallModel::getRecordFile() const {

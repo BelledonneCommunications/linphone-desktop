@@ -116,7 +116,7 @@ ColumnLayout {
 					width: listView.width
 					height: listView.height
 					color: DefaultStyle.main2_300
-					radius: 15 * DefaultStyle.dp
+					// radius: 15 * DefaultStyle.dp
 					y: listView.currentItem? listView.currentItem.y : 0
 				}
 

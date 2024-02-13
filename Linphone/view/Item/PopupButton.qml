@@ -36,6 +36,7 @@ Button {
 		closePolicy: Popup.CloseOnPressOutsideParent |Popup.CloseOnPressOutside
 
 		onAboutToShow: {
+			if (mainApplicationWindow == undefined) return;
 			var coord = mapToGlobal(mainItem.x, mainItem.y)
 			if (coord.y + popup.height >= mainApplicationWindow.height) {
 				y = -popup.height

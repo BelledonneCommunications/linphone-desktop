@@ -20,7 +20,7 @@ Loader {
 		Image {
 			id: image
 			visible: !effect2.enabled
-			source: mainItem.source
+			source: mainItem.source ? mainItem.source : ""
 			fillMode: mainItem.fillMode
 			sourceSize.width: width
 			sourceSize.height: height

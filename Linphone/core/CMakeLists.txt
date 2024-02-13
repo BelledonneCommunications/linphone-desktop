@@ -28,7 +28,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/search/MagicSearchList.cpp
 	core/search/MagicSearchProxy.cpp
 	
-	core/setting/Settings.cpp
+	core/setting/SettingsCore.cpp
 	
 	core/proxy/ListProxy.cpp
 	core/proxy/Proxy.cpp

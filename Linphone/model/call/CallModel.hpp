@@ -46,11 +46,20 @@ public:
 	void startRecording();
 	void stopRecording();
 	void setRecordFile(const std::string &path);
+	void setSpeakerVolumeGain(float gain);
+	void setMicrophoneVolumeGain(float gain);
+	void setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);
+	std::shared_ptr<const linphone::AudioDevice> getInputAudioDevice() const;
+	void setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);
+	std::shared_ptr<const linphone::AudioDevice> getOutputAudioDevice() const;
 
 	void setPaused(bool paused);
 	void transferTo(const std::shared_ptr<linphone::Address> &address);
 	void terminateAllCalls();
 
+	float getMicrophoneVolumeGain() const;
+	float getMicrophoneVolume() const;
+	float getSpeakerVolumeGain() const;
 	std::string getRecordFile() const;
 	std::shared_ptr<const linphone::Address> getRemoteAddress();
 	bool getAuthenticationTokenVerified() const;
@@ -62,13 +71,19 @@ signals:
 	void speakerMutedChanged(bool isMuted);
 	void cameraEnabledChanged(bool enabled);
 	void durationChanged(int);
+	void microphoneVolumeChanged(float);
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
 	void recordingChanged(bool recording);
 	void authenticationTokenVerifiedChanged(bool verified);
+	void speakerVolumeGainChanged(float volume);
+	void microphoneVolumeGainChanged(float volume);
+	void inputAudioDeviceChanged(const std::string &id);
+	void outputAudioDeviceChanged(const std::string &id);
 
 private:
 	QTimer mDurationTimer;
+	QTimer mMicroVolumeTimer;
 	DECLARE_ABSTRACT_OBJECT
 
 	//--------------------------------------------------------------------------------

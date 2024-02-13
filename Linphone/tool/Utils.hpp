@@ -60,8 +60,6 @@ public:
 												 bool withVideo = false,
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
-	Q_INVOKABLE static void setFirstLaunch(bool first);
-	Q_INVOKABLE static bool getFirstLaunch();
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
 	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui);
@@ -97,6 +95,16 @@ public:
 	template <typename T, typename... Args>
 	static std::shared_ptr<T> makeQObject_ptr(Args &&...args) {
 		return std::shared_ptr<T>(new T(args...), [](T *obj) { obj->deleteLater(); });
+	}
+
+	static inline float computeVu(float volume) {
+		constexpr float VuMin = -20.f;
+		constexpr float VuMax = 4.f;
+
+		if (volume < VuMin) return 0.f;
+		if (volume > VuMax) return 1.f;
+
+		return (volume - VuMin) / (VuMax - VuMin);
 	}
 };
 

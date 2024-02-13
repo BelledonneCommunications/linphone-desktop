@@ -3,6 +3,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls
 import Linphone
 import UtilsCpp 1.0
+import SettingsCpp 1.0
 
 Window {
 	id: mainWindow
@@ -35,14 +36,14 @@ Window {
 	StackView {
 		id: mainWindowStackView
 		anchors.fill: parent
-		initialItem: accountProxy.haveAccount ? mainPage : UtilsCpp.getFirstLaunch() ? welcomePage : loginPage
+		initialItem: accountProxy.haveAccount ? mainPage : SettingsCpp.getFirstLaunch() ? welcomePage : loginPage
 	}
 	Component {
 		id: welcomePage
 		WelcomePage {
 			onStartButtonPressed: {
 				mainWindowStackView.replace(loginPage)// Replacing the first item will destroy the old.
-				UtilsCpp.setFirstLaunch(false)
+				SettingsCpp.setFirstLaunch(false)
 			}
 		}
 	}
