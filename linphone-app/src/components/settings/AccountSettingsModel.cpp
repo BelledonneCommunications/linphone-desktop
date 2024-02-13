@@ -398,9 +398,10 @@ bool AccountSettingsModel::addOrUpdateAccount(
 		accountParams->setExpires(data["registrationDuration"].toInt());
 	if(data.contains("publishDuration"))
 		accountParams->setPublishExpires(data["publishDuration"].toInt());
-	if(data.contains("route") && data["route"].toString() != "") {
+	if(data.contains("route")){
 		std::list<std::shared_ptr<linphone::Address>> routes;
-		routes.push_back(Utils::interpretUrl(data["route"].toString()));
+		if(data["route"].toString() != "")
+			routes.push_back(Utils::interpretUrl(data["route"].toString()));
 		accountParams->setRoutesAddresses(routes);
 	}
 	QString txt = data["conferenceUri"].toString();// Var is used for debug
