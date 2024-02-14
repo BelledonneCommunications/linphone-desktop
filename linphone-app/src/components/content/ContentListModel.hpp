@@ -42,7 +42,7 @@ public:
 	int count();
 	
 	QSharedPointer<ContentModel> add(std::shared_ptr<linphone::Content> content);
-	void addFile(const QString& path);
+	void addFile(QString path);
 	Q_INVOKABLE void remove(ContentModel * model);
 	
 	void clear();
