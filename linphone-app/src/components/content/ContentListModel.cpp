@@ -54,8 +54,15 @@ QSharedPointer<ContentModel> ContentListModel::add(std::shared_ptr<linphone::Con
 	return contentModel;
 }
 
-void ContentListModel::addFile(const QString& path){
+void ContentListModel::addFile(QString path){
 	QFile file(path);
+#ifdef _WIN32
+// A bug from FileDialog suppose that the file is local and overwrite the uri by removing "\\".
+	if (!file.exists()) {
+		path.prepend("\\\\");
+		file.setFileName(path);
+	}
+#endif
 	if (!file.exists())
 		return;
 	
