@@ -130,8 +130,8 @@ Window {
 			radius: 71 * DefaultStyle.dp
 		}
 		icon.source: disabledIcon && bottomButton.checked ? disabledIcon : enabledIcon
-		height: 32 * DefaultStyle.dp
-		width: 32 * DefaultStyle.dp
+		icon.width: 32 * DefaultStyle.dp
+		icon.height: 32 * DefaultStyle.dp
 		contentImageColor: DefaultStyle.grey_0
 	}
 	ZrtpTokenAuthenticationDialog {
@@ -424,23 +424,40 @@ Window {
 							account: accounts.defaultAccount
 							enablePersonalCamera: mainWindow.call.core.cameraEnabled
 
-							MovableMouseArea{
+							MovableMouseArea {
+								id: previewMouseArea
 								anchors.fill: parent
 								// visible: mainItem.participantCount <= 2
+								movableArea: centerItem
+								margin: 10 * DefaultStyle.dp
 								function resetPosition(){
 									preview.anchors.right = centerItem.right
 									preview.anchors.bottom = centerItem.bottom
+									preview.anchors.rightMargin = previewMouseArea.margin
+									preview.anchors.bottomMargin = previewMouseArea.margin
 								}
 								onVisibleChanged: if(!visible){
 									resetPosition()
 								}
 								drag.target: preview
-								onDraggingChanged: if(dragging){
+								onDraggingChanged: if(dragging) {
 									preview.anchors.right = undefined
 									preview.anchors.bottom = undefined
 								}
 								onRequestResetPosition: resetPosition()
 							}
+						}
+						property int previousWidth
+						Component.onCompleted: {
+							previousWidth = width
+						}
+						onWidthChanged: {
+							if (width < previousWidth) {
+								previewMouseArea.updatePosition(0, 0)
+							} else {
+								previewMouseArea.updatePosition(width - previousWidth, 0)
+							}
+							previousWidth = width
 						}
 					}
 				}
@@ -845,7 +862,7 @@ Window {
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(callsListPanel)
-									moreOptionsMenu.close()
+									moreOptionsButton.close()
 								}
 							}
 							Button {
@@ -868,7 +885,7 @@ Window {
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(dialerPanel)
-									moreOptionsMenu.close()
+									moreOptionsButton.close()
 								}
 							}
 							Button {

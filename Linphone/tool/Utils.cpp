@@ -276,8 +276,8 @@ QString Utils::generateLinphoneSipAddress(const QString &uri) {
 	if (!ret.startsWith("sip:")) {
 		ret.prepend("sip:");
 	}
-	if (!ret.endsWith("@sip.linhpone.org")) {
-		ret.append("@sip.linhpone.org");
+	if (!ret.endsWith("@sip.linphone.org")) {
+		ret.append("@sip.linphone.org");
 	}
 	return ret;
 }

@@ -27,7 +27,6 @@ Control.Page {
 				y: pageHeader.height/2
 				height: pageHeader.height/2
 				width: pageHeader.width
-
 			}
 		}
 		contentItem: RowLayout {
@@ -48,10 +47,10 @@ Control.Page {
 					visible: false
 				}
 				icon.source: AppIcons.closeX
-				Layout.preferredWidth: 10 * DefaultStyle.dp
-				Layout.preferredHeight: 10 * DefaultStyle.dp
-				width: 10 * DefaultStyle.dp
-				height: 10 * DefaultStyle.dp
+				Layout.preferredWidth: 24 * DefaultStyle.dp
+				Layout.preferredHeight: 24 * DefaultStyle.dp
+				icon.width: 24 * DefaultStyle.dp
+				icon.height: 24 * DefaultStyle.dp
 				onClicked: mainItem.visible = false
 			}
 		}

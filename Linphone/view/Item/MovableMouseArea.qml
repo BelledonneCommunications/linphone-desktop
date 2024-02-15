@@ -12,8 +12,8 @@ MouseArea{
 			xClicked = mouseX
 			yClicked = mouseY
 		}
-		
 	}
+	property int margin: 0
 // Position buffer
 	property int xClicked : 0
 	property int yClicked : 0
@@ -29,6 +29,7 @@ MouseArea{
 	preventStealing: true
 	propagateComposedEvents: true
 	hoverEnabled: true
+	onMScaleChanged: updateScale()
 	
 	function updateScale(){// Avoid scaling if leading outside movableArea.
 		drag.target.height = Math.max(0, Math.min(movableArea.height, heightOrigin * mScale))
@@ -38,17 +39,16 @@ MouseArea{
 	function updatePosition(x, y){// Avoid moving outside movableArea.
 		var parentTLBounds = drag.target.parent.mapFromItem(movableArea, 0, 0);
 		var parentBRBounds = drag.target.parent.mapFromItem(movableArea, movableArea.width, movableArea.height);
-		drag.target.x = Math.max(parentTLBounds.x, Math.min(parentBRBounds.x - drag.target.width, drag.target.x + x))
-		drag.target.y = Math.max(parentTLBounds.y, Math.min(parentBRBounds.y - drag.target.height, drag.target.y + y))
+		drag.target.x = Math.max(parentTLBounds.x + margin, Math.min(parentBRBounds.x - drag.target.width - margin, drag.target.x + x - margin))
+		drag.target.y = Math.max(parentTLBounds.y + margin, Math.min(parentBRBounds.y - drag.target.height - margin, drag.target.y + y - margin))
 	}
-	onMScaleChanged: updateScale()
-	onPositionChanged: {
+	onPositionChanged: (mouse) => {
 		if(dragging){
 			updatePosition(mouse.x - xClicked, mouse.y - yClicked)
 		}
 		mouse.accepted = false
 	}
-	onWheel: {
+	onWheel: (wheel) => {
 		if(!scaled){
 			scaled = true
 			heightOrigin = drag.target.height
@@ -67,7 +67,7 @@ MouseArea{
 		mScale = Math.max(0.5 , mScale * ( 1 + acceleration*(wheel.angleDelta.y >0 ? 1 : -1) ));
 		startTime = new Date().getTime();
 	}
-	onClicked: {
+	onClicked: (mouse) => {
 		if(mouse.button == Qt.RightButton){
 			if(scaled) {
 				scaled = false
