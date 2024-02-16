@@ -320,4 +320,8 @@ TabContainer {
 			}
 		}
 	}
+	Connections{
+		target: SettingsModel
+		onIsInCall: if(!SettingsModel.isInCall) SettingsModel.startCaptureGraph()
+	}
 }

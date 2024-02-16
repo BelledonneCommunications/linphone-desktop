@@ -335,7 +335,8 @@ public:
 	// Audio. --------------------------------------------------------------------
 
 	Q_INVOKABLE void startCaptureGraph();
-	Q_INVOKABLE void stopCaptureGraph();
+	Q_INVOKABLE void stopCaptureGraph();;
+	Q_INVOKABLE void stopCaptureGraphs();
 	Q_INVOKABLE void resetCaptureGraph();
 	void createCaptureGraph();
 	void deleteCaptureGraph();

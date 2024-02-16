@@ -343,10 +343,11 @@ void SettingsModel::createCaptureGraph() {
 	mSimpleCaptureGraph->start();
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
 }
-void SettingsModel::startCaptureGraph(){
-	if(!mSimpleCaptureGraph)
-		createCaptureGraph();
-	++mCaptureGraphListenerCount;
+void SettingsModel::startCaptureGraph() {
+	if(!getIsInCall()) {
+		if (!mSimpleCaptureGraph) createCaptureGraph();
+		++mCaptureGraphListenerCount;
+	}
 }
 void SettingsModel::stopCaptureGraph(){
 	if(mCaptureGraphListenerCount > 0 ){
@@ -354,7 +355,13 @@ void SettingsModel::stopCaptureGraph(){
 			deleteCaptureGraph();
 	}
 }
-void SettingsModel::deleteCaptureGraph(){
+void SettingsModel::stopCaptureGraphs() {
+	if (mCaptureGraphListenerCount > 0) {
+		mCaptureGraphListenerCount = 0;
+		deleteCaptureGraph();
+	}
+}
+void SettingsModel::deleteCaptureGraph() {
 	if (mSimpleCaptureGraph) {
 		if (mSimpleCaptureGraph->isRunning()) {
 			mSimpleCaptureGraph->stop();
@@ -374,9 +381,10 @@ void SettingsModel::accessAudioSettings() {
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 
-	//if (!getIsInCall()) {
+	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo calibrations in call.
+	if (!getIsInCall()) {
 		startCaptureGraph();
-	//}
+	}
 }
 
 void SettingsModel::closeAudioSettings() {
@@ -2054,11 +2062,15 @@ void SettingsModel::setDeveloperSettingsEnabled (bool status) {
 }
 
 void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &) {
-	emit isInCallChanged(getIsInCall());
+	bool isInCall = getIsInCall();
+	if(isInCall) stopCaptureGraphs(); // Ensure to stop all graphs
+	emit isInCallChanged(isInCall);
 }
 
 void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &, linphone::Call::State) {
-	emit isInCallChanged(getIsInCall());
+	bool isInCall = getIsInCall();
+	if(isInCall) stopCaptureGraphs(); // Ensure to stop all graphs
+	emit isInCallChanged(isInCall);
 }
 void SettingsModel::handleEcCalibrationResult(linphone::EcCalibratorStatus status, int delayMs){
 	emit echoCancellationStatus((int)status, delayMs);

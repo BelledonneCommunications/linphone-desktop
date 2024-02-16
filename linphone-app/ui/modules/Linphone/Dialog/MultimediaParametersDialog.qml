@@ -37,7 +37,8 @@ DialogPlus {
 	Component.onCompleted: {
 							SettingsModel.stopCaptureGraph()
 							SettingsModel.reloadDevices()
-							SettingsModel.startCaptureGraph()
+							if(!call)
+								SettingsModel.startCaptureGraph()
 							if( fixedSize){
 							   height = fitHeight
 							   width = fitWidth
