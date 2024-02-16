@@ -21,7 +21,7 @@
 #include <QQmlApplicationEngine>
 
 #include "app/App.hpp"
-
+#include "components/core/CoreManager.hpp"
 #include "ContactModel.hpp"
 #include "VcardModel.hpp"
 
@@ -43,7 +43,7 @@ ContactModel::ContactModel (VcardModel *vcardModel, QObject * parent) : QObject(
   Q_CHECK_PTR(vcardModel->mVcard);
   Q_ASSERT(!vcardModel->mIsReadOnly);
 
-  mLinphoneFriend = linphone::Friend::newFromVcard(vcardModel->mVcard);
+  mLinphoneFriend = CoreManager::getInstance()->getCore()->createFriendFromVcard(vcardModel->mVcard);
   mLinphoneFriend->setData("contact-model", *this);
   if(mLinphoneFriend)
 	qInfo() << QStringLiteral("Create contact from vcard:") << this << vcardModel;

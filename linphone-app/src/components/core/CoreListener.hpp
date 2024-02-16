@@ -44,7 +44,7 @@ public:
 	virtual void onCallCreated(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call) override;
 	virtual void onChatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom) override;
 	virtual void onChatRoomStateChanged(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom,linphone::ChatRoom::State state) override;
-	virtual void onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::Config::ConfiguringState status,const std::string & message) override;
+	virtual void onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::ConfiguringState status,const std::string & message) override;
 	virtual void onDtmfReceived(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call,int dtmf) override;
 	virtual void onGlobalStateChanged (const std::shared_ptr<linphone::Core> &core,linphone::GlobalState gstate,const std::string &message) override;
 	virtual void onIsComposingReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room) override;
@@ -72,7 +72,7 @@ signals:
 	void callCreated(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call);
 	void chatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom);
 	void chatRoomStateChanged(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom,linphone::ChatRoom::State state);
-	void configuringStatus(const std::shared_ptr<linphone::Core> & core,linphone::Config::ConfiguringState status,const std::string & message);
+	void configuringStatus(const std::shared_ptr<linphone::Core> & core,linphone::ConfiguringState status,const std::string & message);
 	void dtmfReceived(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call,int dtmf);
 	void globalStateChanged (const std::shared_ptr<linphone::Core> &core,linphone::GlobalState gstate,const std::string &message);
 	void isComposingReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room);
