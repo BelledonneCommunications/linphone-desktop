@@ -93,6 +93,7 @@ void CallsListModel::askForAttendedTransfer (CallModel *callModel) {
 // -----------------------------------------------------------------------------
 
 void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& prepareTransfertAddress, const QHash<QString, QString> &headers) const {
+	CoreManager::getInstance()->getSettingsModel()->stopCaptureGraphs();
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
@@ -133,6 +134,7 @@ void CallsListModel::launchAudioCall (const QString &sipAddress, const QString& 
 }
 
 void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneEnums::MediaEncryption encryption, const QHash<QString, QString> &headers, const QString& prepareTransfertAddress) const {
+	CoreManager::getInstance()->getSettingsModel()->stopCaptureGraphs();
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = true;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	
@@ -172,6 +174,7 @@ void CallsListModel::launchSecureAudioCall (const QString &sipAddress, LinphoneE
 }
 
 void CallsListModel::launchVideoCall (const QString &sipAddress, const QString& prepareTransfertAddress, const bool& autoSelectAfterCreation, QVariantMap options) const {
+	CoreManager::getInstance()->getSettingsModel()->stopCaptureGraphs();
 	CoreManager::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = autoSelectAfterCreation;
 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
 	if (!CoreManager::getInstance()->getSettingsModel()->getVideoEnabled()) {
