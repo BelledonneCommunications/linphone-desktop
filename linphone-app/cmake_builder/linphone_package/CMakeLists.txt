@@ -432,7 +432,7 @@ if(${ENABLE_APP_PACKAGING})
 				message(FATAL_ERROR "Could not find the macdeployqt program. Make sure it is in the PATH.")
 			endif()
 		endif()
-		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cleanCpack.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cleanCpack.cmake" @ONLY)
+		configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cleanCPack.cmake.in" "${CMAKE_CURRENT_BINARY_DIR}/cleanCPack.cmake" @ONLY)
 		set(CPACK_PRE_BUILD_SCRIPTS  "${CMAKE_CURRENT_BINARY_DIR}/cleanCPack.cmake")
 
 

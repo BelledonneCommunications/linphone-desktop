@@ -27,14 +27,15 @@ Item {
 	property bool cameraEnabled: true
 	property bool isConference: callModel && callModel.isConference
 	property bool isConferenceReady: isConference && callModel.conferenceModel && callModel.conferenceModel.isReady
-	
+	property ConferenceModel conferenceModel: callModel && callModel.conferenceModel
+	property bool isScreenSharingEnabled: conferenceModel && conferenceModel.isScreenSharingEnabled
+	property bool isLocalScreenSharingEnabled: conferenceModel && conferenceModel.isLocalScreenSharingEnabled
 	property int participantCount: isConference ? allDevices.count + 1 : 2	// +me. allDevices==0 if !conference
 	
 	property ParticipantDeviceProxyModel participantDevices : ParticipantDeviceProxyModel {
 			id: allDevices
 			callModel: mainItem.callModel
-			showMe: false		
-			
+			showMe: false
 			onConferenceCreated: cameraView.resetCamera()
 		}
 	
@@ -59,7 +60,7 @@ Item {
 									|| !mainItem.isConferenceReady
 								: (callModel && (callModel.pausedByUser || callModel.status === CallModel.CallStatusPaused || !callModel.videoEnabled) )
 									|| currentDevice && !currentDevice.videoEnabled
-		isPreview: !preview.visible && mainItem.participantCount == 1
+		isPreview: !preview.visible && mainItem.participantCount == 1 && !isScreenSharingEnabled
 		onIsPreviewChanged: {cameraView.resetCamera() }
 		isCameraFromDevice: isPreview
 		isPaused: isPreview && callModel.pausedByUser
@@ -86,7 +87,7 @@ Item {
 		height: visible ? miniViews.cellHeight : 0
 		width: 16 * height / 9
 		
-		visible: mainItem.isConferenceReady && allDevices.count >= 1
+		visible: mainItem.isConferenceReady && (allDevices.count >= 1 ||  mainItem.isLocalScreenSharingEnabled)
 				|| (!mainItem.isConference && mainItem.callModel && mainItem.callModel.cameraEnabled)// use videoEnabled if we want to show the preview sticker
 		
 		Loader{
@@ -152,7 +153,7 @@ Item {
 			id: miniViews
 			property int cellHeight: 150
 			anchors.fill: parent
-			model : mainItem.isConference && mainItem.participantDevices.count > 1 ? mainItem.participantDevices : []
+			model : /*mainItem.isConference && mainItem.participantDevices.count > 1 ? */mainItem.participantDevices //: []
 			spacing: 0
 			verticalLayoutDirection: ListView.BottomToTop
 			fitCacheToContent: false
@@ -162,7 +163,7 @@ Item {
 			delegate:Item{
 					height: visible ? miniViews.cellHeight + 15 : 0
 					width: visible ? miniViews.width : 0
-					visible: cameraView.currentDevice != modelData
+					visible: cameraView.currentDevice != modelData || mainItem.isScreenSharingEnabled
 					clip:false
 					Sticker{
 						id: miniView
@@ -172,8 +173,9 @@ Item {
 						anchors.rightMargin: 3
 						anchors.bottomMargin: 18
 						cameraQmlName: 'S_'+index
+						isThumbnail: true
 						deactivateCamera: (!mainItem.isConferenceReady || !mainItem.isConference)
-											&& (index <0 || !mainItem.cameraEnabled || (!modelData.videoEnabled) || (callModel && callModel.pausedByUser) )
+											&& (index <0 || !mainItem.cameraEnabled || (!modelData.thumbnailVideoEnabled) || (callModel && callModel.pausedByUser) )
 						currentDevice: modelData.isPreview ? null : modelData
 						callModel: modelData.isPreview ? null : mainItem.callModel
 						isCameraFromDevice:  mainItem.isConference

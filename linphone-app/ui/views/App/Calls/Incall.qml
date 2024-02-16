@@ -9,6 +9,7 @@ import Linphone 1.0
 
 import LinphoneEnums 1.0
 import UtilsCpp 1.0
+import DesktopTools 1.0
 
 import App.Styles 1.0
 
@@ -28,6 +29,8 @@ Rectangle {
 	property bool previewIsReady : false
 	property bool isFullScreen: false	// Use this variable to test if we are in fullscreen. Do not test _fullscreen : we need to clean memory before having the window (see .js file)
 	property bool layoutChanging: false
+	property bool isLocalScreenSharingEnabled: conferenceModel && conferenceModel.isLocalScreenSharingEnabled
+	property bool isScreenSharingEnabled: conferenceModel && conferenceModel.isScreenSharingEnabled
 	
 	property var _fullscreen: null
 	on_FullscreenChanged: if( !_fullscreen) isFullScreen = false
@@ -251,12 +254,41 @@ Rectangle {
 			}
 		}
 		// Mode buttons
+		TextButtonB{
+			id: screenSharingButton
+			visible: mainItem.isScreenSharingEnabled
+			Layout.preferredWidth: fitWidth
+			Icon{
+				id: screenSharingIcon
+				anchors.left: parent.left
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.leftMargin: 10
+				icon: IncallStyle.buttons.screenSharing.icon
+				iconSize: IncallStyle.buttons.screenSharing.iconSize
+				overwriteColor: screenSharingButton.textColor
+			}
+			button.leftPadding: screenSharingIcon.width
+			addHeight: 15
+			addWidth: 75
+			radius: height/4
+			text: mainItem.isLocalScreenSharingEnabled ? "Arrêter la présentation" : "Présentation en cours"
+			onClicked: if(mainItem.isLocalScreenSharingEnabled) conferenceModel.toggleScreenSharing()
+		}
 		ActionButton{
+			visible: !screenSharingButton.visible && callModel && mainItem.conferenceModel && callModel.videoEnabled
 			isCustom: true
 			backgroundRadius: width/2
 			colorSet: IncallStyle.buttons.screenSharing
-			visible: false	//TODO
+			toggled: rightMenu.visible && rightMenu.isScreenSharingMenu
+			
+			onClicked: {
+				if(toggled)
+					rightMenu.visible = false
+				else
+					rightMenu.showScreenSharingMenu()
+			}
 		}
+		
 		ActionButton {
 			id: recordingSwitch
 			isCustom: true
@@ -637,10 +669,20 @@ Rectangle {
 			onClicked: rightMenu.visible = !rightMenu.visible
 		}
 	}
+	Connections{
+		target: DesktopTools
+		onWindowIdSelectionStarted: window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+			descriptionText: "Click on the window that you want to share."
+			, showButtonOnly: 42
+			, buttonTexts : ['']
+			})
+		onWindowIdSelectionEnded: window.detachVirtualWindow()
+	}
 	
 	// ---------------------------------------------------------------------------
 	// TelKeypad.
 	// ---------------------------------------------------------------------------
+	
 	CallStatistics {
 		id: callStatistics
 		

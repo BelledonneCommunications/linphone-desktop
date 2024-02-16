@@ -3,6 +3,7 @@ import QtGraphicalEffects 1.12
 
 import Common 1.0
 import Linphone 1.0
+import DesktopTools 1.0
 
 import App.Styles 1.0
 
@@ -10,6 +11,8 @@ import App.Styles 1.0
 
 DialogPlus {
 	id: dialog
+	
+	
 	
 	buttons: [
 		TextButtonB {
@@ -26,8 +29,9 @@ DialogPlus {
 	width: SettingsVideoPreviewStyle.width
 	
 	// ---------------------------------------------------------------------------
-	Item{
+	MouseArea{
 		anchors.fill: parent
+		onClicked: DesktopTools.getWindowIdFromMouse()
 		CameraView{
 			id: previewLoader
 			anchors.centerIn: parent

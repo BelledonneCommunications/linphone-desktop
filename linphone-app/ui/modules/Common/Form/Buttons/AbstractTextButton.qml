@@ -26,10 +26,12 @@ Item {
   property color borderColorPressed
 
   property alias text: button.text
+  property alias textColor: button.textColor
   property bool enabled: true
   property bool showBorder : false
   property alias toggled : button.checked
-  
+  property alias button: button
+  property alias radius: button.radius
   property alias capitalization : button.capitalization
   
   //Additional size around text
@@ -81,16 +83,18 @@ Item {
   Button {
     id: button
     property int capitalization
+    property color textColor: _getTextColor()
+    property int radius: AbstractTextButtonStyle.background.radius
 
     background: Rectangle {
       color: _getBackgroundColor()
-      radius: AbstractTextButtonStyle.background.radius
+      radius: button.radius
       border.color: _getBorderColor()
       border.width: (showBorder ? 1 : 0)
     }
 
     contentItem: Text {
-      color: _getTextColor()
+      color: button.textColor
       font {
         bold: true
         pointSize: AbstractTextButtonStyle.text.pointSize

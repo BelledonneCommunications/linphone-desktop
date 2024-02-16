@@ -140,6 +140,7 @@ void Camera::updateWindowIdLocation(){
 	if(mIsPreview)
 		setWindowIdLocation( WindowIdLocation::CorePreview);
 	else{
+		
 		if(mCallModel){
 			auto call = mCallModel->getCall();
 			if(call){
@@ -180,6 +181,7 @@ void Camera::removeLinphonePlayer(){
 
 QQuickFramebufferObject::Renderer *Camera::createRenderer () const {
 	QQuickFramebufferObject::Renderer * renderer = NULL;
+	resetWindowId();
 	if(mWindowIdLocation == CorePreview){
 		qInfo() << "[Camera] (" << mQmlName << ") Setting Camera to Preview";
 		renderer=(QQuickFramebufferObject::Renderer *)CoreManager::getInstance()->getCore()->createNativePreviewWindowId();
@@ -334,8 +336,10 @@ void Camera::isNotReady(){
 
 void Camera::activatePreview(){
 	mPreviewCounterMutex.lock();
-	if (++mPreviewCounter == 1)
+	if (++mPreviewCounter == 1) {
 		CoreManager::getInstance()->getCore()->enableVideoPreview(true);
+		CoreManager::getInstance()->getSettingsModel()->setCaptureWindowId();
+	}
 	mPreviewCounterMutex.unlock();
 }
 

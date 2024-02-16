@@ -45,6 +45,8 @@ QtObject {
 		property string audioOnlyIcon: 'conference_audio_only_custom'
 		property string mediaIcon: 'micro_on_custom'
 		property string participantsIcon: 'participants_custom'
+		property string screenSharingIcon: 'screen_sharing_custom'
+		
 		property int width: 40
 		property int height: 40
 	}

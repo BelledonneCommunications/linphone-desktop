@@ -38,6 +38,7 @@ void LinphoneEnums::registerMetaTypes(){
 	qRegisterMetaType<LinphoneEnums::RecorderState>();
 	qRegisterMetaType<LinphoneEnums::TunnelMode>();
 	qRegisterMetaType<LinphoneEnums::TransportType>();
+	qRegisterMetaType<LinphoneEnums::VideoSourceScreenSharingType>();
 	
 	qRegisterMetaType<std::shared_ptr<linphone::Call>>();
 	qRegisterMetaType<linphone::Call::State>();
@@ -171,3 +172,11 @@ void LinphoneEnums::fromString(const QString& transportType, LinphoneEnums::Tran
 	else
 		*transport = TransportTypeDtls;
 }
+
+linphone::VideoSourceScreenSharingType LinphoneEnums::toLinphone(const LinphoneEnums::VideoSourceScreenSharingType& type){
+	return static_cast<linphone::VideoSourceScreenSharingType>(type);
+}
+LinphoneEnums::VideoSourceScreenSharingType LinphoneEnums::fromLinphone(const linphone::VideoSourceScreenSharingType& type){
+	return static_cast<LinphoneEnums::VideoSourceScreenSharingType>(type);
+}
+

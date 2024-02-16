@@ -50,11 +50,13 @@ public:
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(time_t timeOfJoining READ getTimeOfJoining CONSTANT)
 	Q_PROPERTY(bool videoEnabled READ isVideoEnabled NOTIFY videoEnabledChanged)
+	Q_PROPERTY(bool thumbnailVideoEnabled READ isThumbnailVideoEnabled NOTIFY thumbnailVideoEnabledChanged)
 	Q_PROPERTY(bool isMe READ isMe CONSTANT)
 	Q_PROPERTY(bool isLocal READ isLocal WRITE setIsLocal NOTIFY isLocalChanged)// Can change on call update. Not really used but it just in case as Object can be initialized with empty call/device.
 	Q_PROPERTY(bool isPaused READ getPaused WRITE setPaused NOTIFY isPausedChanged)
 	Q_PROPERTY(bool isSpeaking READ getIsSpeaking WRITE setIsSpeaking NOTIFY isSpeakingChanged)
 	Q_PROPERTY(bool isMuted READ getIsMuted NOTIFY isMutedChanged)
+	Q_PROPERTY(bool isScreenSharingEnabled READ getIsScreenSharingEnabled NOTIFY isScreenSharingEnabledChanged)
 	Q_PROPERTY(LinphoneEnums::ParticipantDeviceState state READ getState WRITE setState NOTIFY stateChanged)
   
 	QString getName() const;
@@ -63,11 +65,13 @@ public:
 	int getSecurityLevel() const;
 	time_t getTimeOfJoining() const;
 	bool isVideoEnabled() const;
+	bool isThumbnailVideoEnabled() const;
 	bool isMe() const;
 	bool isLocal()const;
 	bool getPaused() const;
 	bool getIsSpeaking() const;
 	bool getIsMuted() const;
+	bool getIsScreenSharingEnabled() const;
 	LinphoneEnums::ParticipantDeviceState getState() const;
 	
 	std::shared_ptr<linphone::ParticipantDevice>  getDevice();
@@ -77,6 +81,7 @@ public:
 	void setIsLocal(bool local);
 	void setState(LinphoneEnums::ParticipantDeviceState state);
 	
+	virtual void onScreenSharingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isScreenSharing);
 	virtual void onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking);
 	virtual void onIsMuted(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isMuted);
 	virtual void onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, linphone::ParticipantDevice::State state);
@@ -93,9 +98,11 @@ public slots:
 signals:
 	void securityLevelChanged();
 	void videoEnabledChanged();
+	void thumbnailVideoEnabledChanged();
 	void isPausedChanged();
 	void isSpeakingChanged();
 	void isMutedChanged();
+	void isScreenSharingEnabledChanged();
 	void isLocalChanged();
 	void stateChanged();
 
@@ -103,7 +110,8 @@ private:
 
 	bool mIsMe = false;
 	bool mIsLocal = false;
-	bool mIsVideoEnabled;
+	bool mIsVideoEnabled = false;
+	bool mIsThumbnailVideoEnabled = false;
 	bool mIsPaused = false;
 	bool mIsSpeaking = false;
 	linphone::ParticipantDevice::State mState;

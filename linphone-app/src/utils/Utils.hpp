@@ -195,6 +195,8 @@ public:
 	static QString computeUserAgent(const std::shared_ptr<linphone::Config>& config);
 	
 	static bool isMe(const std::shared_ptr<const linphone::Address>& address);
+	static bool isLocal(const std::shared_ptr<linphone::Conference>& conference, const std::shared_ptr<const linphone::ParticipantDevice>& device);
+
 	
 	static void deleteAllUserData();
 	static void deleteAllUserDataOffline();// When we are out of all events and core is not running (aka in main())

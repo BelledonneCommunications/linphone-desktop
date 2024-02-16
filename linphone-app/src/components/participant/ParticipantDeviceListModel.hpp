@@ -42,6 +42,7 @@ public:
 	void initConferenceModel();
 	void updateDevices(std::shared_ptr<linphone::Participant> participant);
 	void updateDevices(const std::list<std::shared_ptr<linphone::ParticipantDevice>>& devices, const bool& isMe);
+	void setActiveSpeaker(QSharedPointer<ParticipantDeviceModel> activeSpeaker);
 	
 	bool add(std::shared_ptr<linphone::ParticipantDevice> deviceToAdd);
 	bool remove(std::shared_ptr<const linphone::ParticipantDevice> deviceToAdd);
@@ -65,6 +66,7 @@ public slots:
 	void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool isSpeaking);
 	void onParticipantDeviceSpeaking();
+	void onParticipantDeviceScreenSharingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 
 signals:
 	void activeSpeakerChanged();

@@ -214,6 +214,17 @@ linphone::TransportType toLinphone(const LinphoneEnums::TransportType& type);
 LinphoneEnums::TransportType fromLinphone(const linphone::TransportType& type);
 QString toString(const LinphoneEnums::TransportType& type);
 void fromString(const QString& transportType, LinphoneEnums::TransportType *transport);
+
+enum VideoSourceScreenSharingType{
+		VideoSourceScreenSharingTypeArea = int(linphone::VideoSourceScreenSharingType::Area),
+		VideoSourceScreenSharingTypeDisplay = int(linphone::VideoSourceScreenSharingType::Display),
+		VideoSourceScreenSharingTypeWindow = int(linphone::VideoSourceScreenSharingType::Window)
+};
+Q_ENUM_NS(VideoSourceScreenSharingType)
+
+linphone::VideoSourceScreenSharingType toLinphone(const LinphoneEnums::VideoSourceScreenSharingType& type);
+LinphoneEnums::VideoSourceScreenSharingType fromLinphone(const linphone::VideoSourceScreenSharingType& type);
+
 }
 
 
@@ -230,6 +241,7 @@ Q_DECLARE_METATYPE(LinphoneEnums::ParticipantDeviceState)
 Q_DECLARE_METATYPE(LinphoneEnums::RecorderState)
 Q_DECLARE_METATYPE(LinphoneEnums::TunnelMode)
 Q_DECLARE_METATYPE(LinphoneEnums::TransportType)
+Q_DECLARE_METATYPE(LinphoneEnums::VideoSourceScreenSharingType)
 
 Q_DECLARE_METATYPE(std::shared_ptr<linphone::Call>)
 Q_DECLARE_METATYPE(linphone::Call::State)

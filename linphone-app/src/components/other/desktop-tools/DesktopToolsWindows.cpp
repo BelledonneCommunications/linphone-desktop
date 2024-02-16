@@ -18,32 +18,64 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-
-
 #include "DesktopToolsWindows.hpp"
 
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
+#include "components/videoSource/VideoSourceDescriptorModel.hpp"
+
+#include <QDebug>
 #include <Windows.h>
 // =============================================================================
 
-DesktopTools::DesktopTools (QObject *parent) : QObject(parent) {}
-
-DesktopTools::~DesktopTools () {
-  setScreenSaverStatus(true);
+DesktopTools::DesktopTools(QObject *parent) : QObject(parent) {
 }
 
-bool DesktopTools::getScreenSaverStatus () const {
-  return mScreenSaverStatus;
+DesktopTools::~DesktopTools() {
+	setScreenSaverStatus(true);
 }
 
-void DesktopTools::setScreenSaverStatus (bool status) {
-  if (status == mScreenSaverStatus)
-    return;
+bool DesktopTools::getScreenSaverStatus() const {
+	return mScreenSaverStatus;
+}
 
-  if (status)
-    SetThreadExecutionState(ES_CONTINUOUS);
-  else
-    SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED);
+void DesktopTools::setScreenSaverStatus(bool status) {
+	if (status == mScreenSaverStatus) return;
 
-  mScreenSaverStatus = status;
-  emit screenSaverStatusChanged(status);
+	if (status) SetThreadExecutionState(ES_CONTINUOUS);
+	else SetThreadExecutionState(ES_CONTINUOUS | ES_DISPLAY_REQUIRED);
+
+	mScreenSaverStatus = status;
+	emit screenSaverStatusChanged(status);
+}
+
+HHOOK hMouseHook;
+DesktopTools *gTools = nullptr;
+LRESULT CALLBACK mouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
+	MOUSEHOOKSTRUCT *pMouseStruct = (MOUSEHOOKSTRUCT *)lParam;
+	if (pMouseStruct != NULL) {
+		if (wParam == WM_LBUTTONDOWN) {
+			printf("clicked");
+			auto id = WindowFromPoint(pMouseStruct->pt);
+			UnhookWindowsHookEx(hMouseHook);
+			QMetaObject::invokeMethod(CoreManager::getInstance(), [id]() {
+				gTools->mVideoSourceDescriptorModel->setScreenSharingWindow(reinterpret_cast<void *>(id));
+			});
+			emit gTools->windowIdSelectionEnded();
+		}
+		qDebug() << "Mouse position X = " << pMouseStruct->pt.x << " Mouse Position Y = " << pMouseStruct->pt.y;
+	}
+	return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
+}
+
+void DesktopTools::getWindowIdFromMouse(VideoSourceDescriptorModel *model) {
+	gTools = this;
+	gTools->mVideoSourceDescriptorModel = model;
+	emit windowIdSelectionStarted();
+	HINSTANCE hInstance = GetModuleHandle(NULL);
+	hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, mouseProc, hInstance, NULL);
+}
+
+uintptr_t DesktopTools::getDisplayIndex(void* screenSharing) {
+	return *(uintptr_t*)(&screenSharing);
 }

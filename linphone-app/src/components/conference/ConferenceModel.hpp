@@ -32,6 +32,7 @@
 
 class ConferenceListener;
 class ParticipantListModel;
+class VideoSourceDescriptorModel;
 
 class ConferenceModel : public QObject{
 	Q_OBJECT
@@ -43,12 +44,18 @@ public:
 	Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
 	Q_PROPERTY(int participantDeviceCount READ getParticipantDeviceCount NOTIFY participantDeviceCountChanged)
+	Q_PROPERTY(bool isLocalScreenSharingEnabled READ isLocalScreenSharingEnabled NOTIFY localScreenSharingChanged)
+	Q_PROPERTY(bool isScreenSharingEnabled READ isScreenSharingEnabled NOTIFY isScreenSharingEnabledChanged)
 
 
 	static QSharedPointer<ConferenceModel> create(std::shared_ptr<linphone::Conference> chatRoom, QObject *parent = Q_NULLPTR);
 	ConferenceModel(std::shared_ptr<linphone::Conference> content, QObject *parent = Q_NULLPTR);
 	virtual ~ConferenceModel();
 	bool updateLocalParticipant();	// true if changed
+	void updateLayout();
+	Q_INVOKABLE void toggleScreenSharing();
+	bool isLocalScreenSharingEnabled() const;
+	bool isScreenSharingEnabled() const;
 	
 	std::shared_ptr<linphone::Conference> getConference()const;
 	
@@ -71,9 +78,12 @@ public:
 	virtual void onParticipantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onParticipantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device);
 	virtual void onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool isSpeaking);
+	virtual void onParticipantDeviceScreenSharingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool enabled);
 	virtual void onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> & conference, const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDevice::State state);
 	virtual void onConferenceStateChanged(linphone::Conference::State newState);
 	virtual void onSubjectChanged(const std::string& subject);
+	
+	void onIsScreenSharingEnabledChanged();
 //---------------------------------------------------------------------------
 	
 signals:
@@ -87,11 +97,14 @@ signals:
 	void participantDeviceMediaCapabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceMediaAvailabilityChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice);
 	void participantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool isSpeaking);
+	void participantDeviceScreenSharingChanged( const std::shared_ptr<const linphone::ParticipantDevice> & device, bool enabled);
 	void participantDeviceStateChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, linphone::ParticipantDevice::State state);
 	void conferenceStateChanged(linphone::Conference::State newState);
 	void subjectChanged();
 	void isReadyChanged();
 	void participantDeviceCountChanged();
+	void localScreenSharingChanged(bool enabled);
+	void isScreenSharingEnabledChanged();
 
 private:
 	void connectTo(ConferenceListener * listener);

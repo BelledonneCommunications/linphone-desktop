@@ -34,6 +34,7 @@ class ConferenceInfoModel;
 class ConferenceModel;
 class ContactModel;
 class ChatRoomModel;
+class VideoSourceDescriptorModel;
 
 class CallModel : public QObject {
 	Q_OBJECT
@@ -97,7 +98,9 @@ class CallModel : public QObject {
 	
 	Q_PROPERTY(LinphoneEnums::ConferenceLayout conferenceVideoLayout READ getConferenceVideoLayout WRITE changeConferenceVideoLayout NOTIFY conferenceVideoLayoutChanged)
 	
-	
+	Q_PROPERTY(LinphoneEnums::VideoSourceScreenSharingType screenSharingType READ getVideoSourceType NOTIFY videoDescriptorChanged)
+	Q_PROPERTY(bool screenSharingIndex READ getScreenSharingIndex NOTIFY videoDescriptorChanged)
+	Q_PROPERTY(VideoSourceDescriptorModel *videoSourceDescriptorModel READ getVideoSourceDescriptorModel WRITE setVideoSourceDescriptorModel NOTIFY videoDescriptorChanged)
 	
 public:
 	enum CallStatus {
@@ -194,6 +197,13 @@ public:
 	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);	// Make a call request
 	void updateConferenceVideoLayout();		// Called from call state changed ater the new layout has been set.
 	
+	void setVideoSource(std::shared_ptr<linphone::VideoSourceDescriptor> videoDesc);
+	LinphoneEnums::VideoSourceScreenSharingType getVideoSourceType() const;
+	int getScreenSharingIndex() const;
+	Q_INVOKABLE VideoSourceDescriptorModel *getVideoSourceDescriptorModel() const;
+	Q_INVOKABLE void setVideoSourceDescriptorModel(VideoSourceDescriptorModel *model = nullptr);
+	
+	
 	static constexpr int DtmfSoundDelay = 200;
 	
 	std::shared_ptr<linphone::Call> mCall;
@@ -210,6 +220,7 @@ public slots:
 	void onChatRoomInitialized(int state);
 	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> & participant);
 	void onSecurityUpdated();
+    void onLocalScreenSharingChanged(bool enabled);
 	
 signals:
 	void meAdminChanged();
@@ -241,8 +252,7 @@ signals:
 	void transferAddressChanged (const QString &transferAddress);
 	
 	void conferenceVideoLayoutChanged();
-	
-	
+	void videoDescriptorChanged();
 public:
 	void handleCallEncryptionChanged (const std::shared_ptr<linphone::Call> &call);
 	void handleCallStateChanged (const std::shared_ptr<linphone::Call> &call, linphone::Call::State state);

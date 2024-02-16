@@ -680,6 +680,12 @@ bool Utils::isMe(const std::shared_ptr<const linphone::Address>& address){
     }else
         return address ? CoreManager::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(address) : false;
 }
+bool Utils::isLocal(const std::shared_ptr<linphone::Conference>& conference, const std::shared_ptr<const linphone::ParticipantDevice>& device) {
+	auto deviceAddress = device->getAddress();
+	auto callAddress = conference->getMe()->getAddress();
+	auto gruuAddress = CoreManager::getInstance()->getAccountSettingsModel()->findAccount(callAddress)->getContactAddress();
+	return deviceAddress->equal(gruuAddress);
+}
 
 bool Utils::isAnimatedImage(const QString& path){
 	if(path.isEmpty()) return false;

@@ -100,6 +100,7 @@ void ParticipantDeviceProxyModel::setCallModel(CallModel * callModel){
 	sort(0);
 	emit countChanged();
 	emit meChanged();
+	emit activeSpeakerChanged();
 }
 
 void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant){
@@ -112,6 +113,7 @@ void ParticipantDeviceProxyModel::setParticipant(ParticipantModel * participant)
 	sort(0);
 	emit countChanged();
 	emit meChanged();
+	emit activeSpeakerChanged();
 }
 
 void ParticipantDeviceProxyModel::setShowMe(const bool& show){

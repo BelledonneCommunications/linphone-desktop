@@ -11,6 +11,7 @@ import Linphone.Styles 1.0
 import LinphoneEnums 1.0
 
 import UtilsCpp 1.0
+import DesktopTools 1.0
 
 import App.Styles 1.0
 
@@ -23,6 +24,8 @@ Rectangle{
 	property ParticipantModel me: conferenceModel ? conferenceModel.localParticipant : null
 	property bool isMeAdmin: me && me.adminStatus
 	property bool isParticipantsMenu: false
+	property bool isScreenSharingMenu: false
+	property bool screenSharingAvailable: conferenceModel && (!conferenceModel.isScreenSharingEnabled || conferenceModel.isLocalScreenSharingEnabled)
 	signal close()
 	signal layoutChanging(int layoutMode)
 	
@@ -40,11 +43,16 @@ Rectangle{
 		//: 'Invite participants' : Menu title to invite participants in admin mode.
 		mainItem.isMeAdmin ? qsTr('incallMenuInvite')
 		//: 'Participants list' : Menu title to show participants in non-admin mode.
-			: qsTr('incallMenuParticipants')
+			: qsTr('incallMenuParticipants'),
+			"Partage d'écran"
 	]
 	
 	function showParticipantsMenu(){
 		contentsStack.push(participantsMenu, {title:Qt.binding(function() { return mainItem.menuTitles[2]})})
+		visible = true
+	}
+	function showScreenSharingMenu(){
+		contentsStack.push(screenSharingMenu, {title:Qt.binding(function() { return mainItem.menuTitles[3]})})
 		visible = true
 	}
 	onVisibleChanged: if(!visible && contentsStack.nViews > 1) {
@@ -59,6 +67,7 @@ Rectangle{
 		}
 	}
 	ButtonGroup{id: modeGroup}
+	ButtonGroup{id: screenSharingGroup}
 	ColumnLayout{
 		anchors.fill: parent
 // HEADER
@@ -134,7 +143,12 @@ Rectangle{
 						{ titleIndex: 2
 						, icon: IncallMenuStyle.settingsIcons.participantsIcon
 						, nextPage:participantsMenu
-						, visible: mainItem.callModel && mainItem.callModel.isConference}
+						, visible: mainItem.callModel && mainItem.callModel.isConference},
+						
+						{ titleIndex: 3
+						, icon: IncallMenuStyle.settingsIcons.screenSharingIcon
+						, nextPage: screenSharingMenu
+						, visible: mainItem.screenSharingAvailable && SettingsModel.videoAvailable}
 					]
 					delegate:
 						Borders{
@@ -226,11 +240,12 @@ Rectangle{
 				Layout.fillWidth: true
 				Repeater{
 				//: 'Mosaic mode' : Grid layout for video conference.
-					model: [{text: qsTr('incallMenuGridLayout'), icon: IncallMenuStyle.modeIcons.gridIcon, value:LinphoneEnums.ConferenceLayoutGrid}
+					model: [{text: qsTr('incallMenuGridLayout'), icon: IncallMenuStyle.modeIcons.gridIcon, value:LinphoneEnums.ConferenceLayoutGrid, enabled: (!mainItem.conferenceModel 
+					|| (mainItem.conferenceModel.participantDeviceCount <= SettingsModel.conferenceMaxThumbnails+1 && !mainItem.conferenceModel.isScreenSharingEnabled))}
 				//: 'Active speaker mode' : Active speaker layout for video conference.
-						, {text: qsTr('incallMenuActiveSpeakerLayout'), icon: IncallMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker}
+						, {text: qsTr('incallMenuActiveSpeakerLayout'), icon: IncallMenuStyle.modeIcons.activeSpeakerIcon, value:LinphoneEnums.ConferenceLayoutActiveSpeaker, enabled: true}
 				//: 'Audio only mode' : Audio only layout for video conference.
-						, {text: qsTr('incallMenuAudioLayout'), icon: IncallMenuStyle.modeIcons.audioOnlyIcon, value:LinphoneEnums.ConferenceLayoutAudioOnly}
+						, {text: qsTr('incallMenuAudioLayout'), icon: IncallMenuStyle.modeIcons.audioOnlyIcon, value:LinphoneEnums.ConferenceLayoutAudioOnly, enabled: true}
 					]				
 					delegate:
 						Borders{
@@ -238,7 +253,8 @@ Rectangle{
 						bottomWidth: IncallMenuStyle.list.border.width
 						Layout.preferredHeight: Math.max(layoutIcon.height, radio.contentItem.implicitHeight) + 20
 						Layout.fillWidth: true
-						enabled: mainItem.callModel && !mainItem.callModel.updating
+						enabled: mainItem.callModel && !mainItem.callModel.updating && modelData.enabled
+						opacity: enabled ? 1.0 : 0.5
 						MouseArea{
 							anchors.fill: parent
 							onClicked: radio.clicked()
@@ -308,6 +324,131 @@ Rectangle{
 				}
 				Component.onCompleted: mainItem.isParticipantsMenu = true
 				Component.onDestruction: mainItem.isParticipantsMenu = false
+			}
+		}
+//-----------------------------------------------------------------------------------------------------------------------------
+		Component{
+			id: screenSharingMenu
+			ColumnLayout{
+				id: screenSharingItem
+				property VideoSourceDescriptorModel desc: mainItem.callModel.videoSourceDescriptorModel
+				property string title
+				Layout.fillHeight: true
+				Layout.fillWidth: true
+				RadioButton{
+					id: displayRadioButton
+					Layout.fillWidth: true
+					Layout.leftMargin: 15
+					text: "Partager l'intégralité de l'écran"
+					font.pointSize: IncallMenuStyle.list.pointSize
+					ButtonGroup.group: screenSharingGroup
+					//checked: screenList.selectedIndex >= 0
+					checked: screenSharingItem.desc && screenSharingItem.desc.isScreenSharing && screenSharingItem.desc.screenSharingType == LinphoneEnums.VideoSourceScreenSharingTypeDisplay
+					onClicked: {
+						screenSharingItem.desc.screenSharingIndex = 0
+						if( mainItem.conferenceModel.isLocalScreenSharingEnabled)
+							mainItem.callModel.setVideoSourceDescriptorModel(screenSharingItem.desc)
+					}
+				}
+				
+				ListView{
+					id: screenList
+					property int selectedIndex: displayRadioButton.checked ? screenSharingItem.desc.screenSharingIndex : -1
+					Layout.fillWidth: true
+					Layout.leftMargin: 15
+					Layout.preferredWidth: parent.width
+					Layout.preferredHeight: 100
+					orientation: ListView.Horizontal
+					model: ScreenProxyModel{}
+					spacing: 10
+					delegate:Rectangle{
+						width: 114 + 10
+						height: 100
+						border.color: 'red'
+						border.width: index == screenList.selectedIndex ? 1 : 0
+						radius: 10
+						ColumnLayout{
+							anchors.fill: parent
+							anchors.margins: 5
+							RoundedImage{
+								Layout.preferredWidth: 114
+								Layout.preferredHeight: 64
+								backgroundColor: 'white'
+								source: 'image://screen/'+index
+								radius: 10
+							}
+							Text{
+								Layout.fillWidth: true
+								text: modelData.name
+								font.pointSize: IncallMenuStyle.list.pointSize
+								color: IncallMenuStyle.list.colorModel.color
+								horizontalAlignment: Text.AlignHCenter
+								verticalAlignment: Text.AlignVCenter
+							}
+						}
+						MouseArea{
+							anchors.fill: parent
+							onClicked: {
+								screenSharingItem.desc.screenSharingIndex = index
+								if( mainItem.conferenceModel.isLocalScreenSharingEnabled)
+									 mainItem.callModel.setVideoSourceDescriptorModel(screenSharingItem.desc)
+							}
+						}
+					}
+				}
+				Rectangle{
+					Layout.fillWidth: true
+					Layout.preferredHeight: IncallMenuStyle.list.border.width
+					color: IncallMenuStyle.list.border.colorModel.color
+				}
+				RadioButton{
+					id: windowSharingRadioButton
+					Layout.fillWidth: true
+					Layout.leftMargin: 15
+					text: "Partager une fenêtre"
+					font.pointSize: IncallMenuStyle.list.pointSize
+					ButtonGroup.group: screenSharingGroup
+					checked: screenSharingItem.desc && screenSharingItem.desc.isScreenSharing && screenSharingItem.desc.screenSharingType == LinphoneEnums.VideoSourceScreenSharingTypeWindow//screenList.selectedIndex < 0
+					onClicked: DesktopTools.getWindowIdFromMouse(screenSharingItem.desc)
+					Connections{
+						target: DesktopTools
+						onWindowIdSelectionEnded: if( mainItem.conferenceModel.isLocalScreenSharingEnabled)
+									 mainItem.callModel.setVideoSourceDescriptorModel(screenSharingItem.desc)
+					}
+				}
+				Rectangle{
+					Layout.fillWidth: true
+					Layout.preferredHeight: IncallMenuStyle.list.border.width
+					color: IncallMenuStyle.list.border.colorModel.color
+				}
+				Item{// Spacer
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+				}
+				Item{// Item encapsulation because of a bug on width update when changing text
+					Layout.fillWidth: true
+					Layout.preferredHeight: screenSharingButton.fitHeight
+					Layout.margins: 20
+					TextButtonB{
+						id: screenSharingButton
+						anchors.fill: parent
+						visible: mainItem.screenSharingAvailable
+						enabled: displayRadioButton.checked || windowSharingRadioButton.checked
+						text: mainItem.conferenceModel && mainItem.conferenceModel.isLocalScreenSharingEnabled
+						//: 'Stop' : Text button to stop the screen sharing.
+								? qsTr('incallMenuScreenSharingStop')
+						//: 'Share' : Text button to start the screen sharing.
+								: qsTr('incallMenuScreenSharingStart')
+						capitalization: Font.AllUppercase
+						onClicked: mainItem.conferenceModel.toggleScreenSharing()
+						Connections{
+							target: mainItem.conferenceModel
+							onLocalScreenSharingChanged: (enabled) => {if(enabled) mainItem.callModel.setVideoSourceDescriptorModel(screenSharingItem.desc) }
+						}
+					}
+				}
+				Component.onCompleted: mainItem.isScreenSharingMenu = true
+				Component.onDestruction: mainItem.isScreenSharingMenu = false
 			}
 		}
 	}

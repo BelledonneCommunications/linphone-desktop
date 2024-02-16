@@ -16,7 +16,10 @@ Control.RadioButton{
 	font.weight: checked ? RadioButtonStyle.selectedWeight : RadioButtonStyle.weight
 	font.pointSize: RadioButtonStyle.pointSize
 	spacing: 10
-	FontMetrics{id: fontMetrics}
+	FontMetrics{
+		id: fontMetrics
+		font: radio.font
+	}
 	
 	MouseArea{
 		anchors.fill:parent
@@ -29,7 +32,8 @@ Control.RadioButton{
 		height: fontMetrics.height - 5 
 		width: height
 		x: parent.leftPadding
-		y: parent.height / 2 - height / 2
+		//y: parent.height / 2 - (textItem.lineCount > 1 ? height / 2 : 0)
+		y: height / 2
 		radius: width/2
 		border.color: RadioButtonStyle.colorModel.color
 		property bool checked: parent.checked
@@ -44,14 +48,15 @@ Control.RadioButton{
 		}
 	}
 	contentItem: Text{
+		id: textItem
 		text: parent.text
 		font: parent.font
 		width: parent.width - (parent.indicator.width + parent.spacing)
-		height: implicitHeight
-		y:0
+		//height: implicitHeight
+		//y:0
 		// Override unwanted auto changes
-		onYChanged: y = 0
-		onHeightChanged: height=implicitHeight
+		//onYChanged: y = 0
+		//onHeightChanged: height=implicitHeight
 		//---------------------------------------
 		color: RadioButtonStyle.colorModel.color
 		verticalAlignment: Text.AlignVCenter

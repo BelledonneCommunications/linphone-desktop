@@ -28,6 +28,8 @@
 
 #include "app/App.hpp"
 #include "components/participant/ParticipantListModel.hpp"
+#include "components/core/CoreManager.hpp"
+#include "components/settings/SettingsModel.hpp"
 #include "utils/Utils.hpp"
 
 
@@ -42,6 +44,7 @@ void ConferenceModel::connectTo(ConferenceListener * listener){
 	connect(listener, &ConferenceListener::participantDeviceMediaCapabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaCapabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceMediaAvailabilityChanged, this, &ConferenceModel::onParticipantDeviceMediaAvailabilityChanged);
 	connect(listener, &ConferenceListener::participantDeviceIsSpeakingChanged, this, &ConferenceModel::onParticipantDeviceIsSpeakingChanged);
+	connect(listener, &ConferenceListener::participantDeviceScreenSharingChanged, this, &ConferenceModel::onParticipantDeviceScreenSharingChanged);
 	connect(listener, &ConferenceListener::conferenceStateChanged, this, &ConferenceModel::onConferenceStateChanged);
 	connect(listener, &ConferenceListener::subjectChanged, this, &ConferenceModel::onSubjectChanged);
 }
@@ -61,7 +64,9 @@ ConferenceModel::ConferenceModel (std::shared_ptr<linphone::Conference> conferen
 	mConference->addListener(mConferenceListener);
 	connect(this, &ConferenceModel::participantDeviceAdded, this, &ConferenceModel::participantDeviceCountChanged);
 	connect(this, &ConferenceModel::participantDeviceRemoved, this, &ConferenceModel::participantDeviceCountChanged);
+	connect(this, &ConferenceModel::isScreenSharingEnabledChanged, this, &ConferenceModel::onIsScreenSharingEnabledChanged);
 	connect(mParticipantListModel.get(), &ParticipantListModel::participantsChanged, this, &ConferenceModel::participantDeviceCountChanged);
+	connect(this, &ConferenceModel::participantDeviceCountChanged, this, &ConferenceModel::updateLayout);
 	onConferenceStateChanged(mConference->getState());// Is it already Created like for local conference?
 }
 
@@ -85,6 +90,42 @@ bool ConferenceModel::updateLocalParticipant(){
 		}
 	}
 	return changed;
+}
+
+void ConferenceModel::updateLayout(){
+	if(getParticipantDeviceCount() > CoreManager::getInstance()->getSettingsModel()->getConferenceMaxThumbnails()+1) {
+		auto call = mConference->getCall();
+		std::shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(call);
+		if( params->getConferenceVideoLayout() == linphone::Conference::Layout::Grid && params->videoEnabled()) {
+			params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
+			call->update(params);
+		}
+	}
+}
+
+void ConferenceModel::toggleScreenSharing() {
+	auto device = mConference->getScreenSharingParticipantDevice();
+	
+	if(!device || Utils::isLocal(mConference, device)) {
+		bool enable = !device;
+		auto params = CoreManager::getInstance()->getCore()->createCallParams(mConference->getCall());
+		params->enableScreenSharing(enable);
+		if(enable) {
+			params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
+			params->enableVideo(true);
+		}
+		if(params->isValid())
+			mConference->getCall()->update(params);
+	}
+}
+
+bool ConferenceModel::isLocalScreenSharingEnabled() const{
+	auto device = mConference->getScreenSharingParticipantDevice();
+	return device && Utils::isLocal(mConference, device);
+}
+
+bool ConferenceModel::isScreenSharingEnabled() const{
+	return mConference && mConference->getScreenSharingParticipant();
 }
 
 std::shared_ptr<linphone::Conference> ConferenceModel::getConference()const{
@@ -157,11 +198,14 @@ void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<cons
 
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
+	updateLayout();
 	updateLocalParticipant();
 	emit participantDeviceAdded(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice){
 	qDebug() << "Me devices : " << mConference->getMe()->getDevices().size();
+	if( participantDevice->screenSharingEnabled())
+		emit isScreenSharingEnabledChanged();
 	emit participantDeviceRemoved(participantDevice);
 }
 
@@ -182,10 +226,21 @@ void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(const std::sha
 void ConferenceModel::onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & participantDevice, bool isSpeaking){
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
 }
+void ConferenceModel::onParticipantDeviceScreenSharingChanged(const std::shared_ptr<const linphone::ParticipantDevice> & device, bool enabled){
+	emit participantDeviceScreenSharingChanged(device, enabled);
+	if(Utils::isLocal(mConference, device)){
+		emit localScreenSharingChanged(enabled);
+	}
+	emit isScreenSharingEnabledChanged();
+}
+
+
 void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newState){
 	if(newState == linphone::Conference::State::Created){
 		setIsReady(true);
 		emit participantDeviceCountChanged();
+		if(mConference->getScreenSharingParticipant())
+			emit isScreenSharingEnabledChanged();
 	}
 	updateLocalParticipant();
 	emit conferenceStateChanged(newState);
@@ -193,6 +248,13 @@ void ConferenceModel::onConferenceStateChanged(linphone::Conference::State newSt
 void ConferenceModel::onSubjectChanged(const std::string& string){
 	emit subjectChanged();
 }
-	
-	
+
+void ConferenceModel::onIsScreenSharingEnabledChanged(){
+	auto call = mConference->getCall();
+	std::shared_ptr<linphone::CallParams> params = CoreManager::getInstance()->getCore()->createCallParams(call);
+	if(params->getConferenceVideoLayout() == linphone::Conference::Layout::Grid && params->videoEnabled()) {
+		params->setConferenceVideoLayout(linphone::Conference::Layout::ActiveSpeaker);
+	}
+	call->update(params);
+}
 //-----------------------------------------------------------------------------------------------------------------------	

@@ -259,6 +259,7 @@ set(SOURCES
 	src/app/providers/ExternalImageProvider.cpp
 	src/app/providers/QRCodeProvider.cpp
 	src/app/providers/ThumbnailProvider.cpp
+	src/app/providers/ScreenProvider.cpp
 	src/app/proxyModel/ProxyListModel.cpp
 	src/app/proxyModel/SortFilterProxyModel.cpp
 	#src/app/proxyModel/ProxyMapModel.cpp
@@ -359,6 +360,8 @@ set(SOURCES
 	src/components/recorder/RecorderModel.cpp
 	src/components/recorder/RecordingListModel.cpp
 	src/components/recorder/RecordingProxyModel.cpp
+	src/components/screen/ScreenListModel.cpp
+	src/components/screen/ScreenProxyModel.cpp
 	src/components/search/SearchListener.cpp
 	src/components/search/SearchResultModel.cpp
 	src/components/search/SearchSipAddressesModel.cpp
@@ -380,6 +383,7 @@ set(SOURCES
 	src/components/tunnel/TunnelConfigListModel.cpp    
 	src/components/tunnel/TunnelConfigProxyModel.cpp
 	src/components/url-handlers/UrlHandlers.cpp
+	src/components/videoSource/VideoSourceDescriptorModel.cpp
 	src/utils/Constants.cpp
 	src/utils/LinphoneEnums.cpp
 	src/utils/MediastreamerUtils.cpp
@@ -404,6 +408,7 @@ set(HEADERS
 	src/app/providers/ExternalImageProvider.hpp
 	src/app/providers/QRCodeProvider.hpp
 	src/app/providers/ThumbnailProvider.hpp
+	src/app/providers/ScreenProvider.hpp
 	src/app/proxyModel/ProxyAbstractListModel.hpp
 	src/app/proxyModel/ProxyAbstractMapModel.hpp
 	src/app/proxyModel/ProxyAbstractObject.hpp
@@ -510,6 +515,8 @@ set(HEADERS
 	src/components/recorder/RecorderModel.hpp
 	src/components/recorder/RecordingListModel.hpp
 	src/components/recorder/RecordingProxyModel.hpp
+	src/components/screen/ScreenListModel.hpp
+	src/components/screen/ScreenProxyModel.hpp
 	src/components/search/SearchListener.hpp
 	src/components/search/SearchResultModel.hpp
 	src/components/search/SearchSipAddressesModel.hpp
@@ -531,6 +538,7 @@ set(HEADERS
 	src/components/tunnel/TunnelConfigListModel.hpp
 	src/components/tunnel/TunnelConfigProxyModel.hpp
 	src/components/url-handlers/UrlHandlers.hpp
+	src/components/videoSource/VideoSourceDescriptorModel.hpp
 	src/utils/Constants.hpp
 	src/utils/LinphoneEnums.hpp
 	src/utils/MediastreamerUtils.hpp
@@ -820,7 +828,7 @@ foreach(T ${APP_TARGETS})
 endforeach()
 
 if (APPLE)
-	target_link_libraries(${TARGET_NAME} "-framework Cocoa" "-framework IOKit" "-framework AVFoundation")
+	target_link_libraries(${TARGET_NAME} "-framework Cocoa" "-framework IOKit" "-framework AVFoundation" "-framework ScreenCaptureKit")
 endif()
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
@@ -828,6 +836,13 @@ target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 if(WIN32 AND ENABLE_LDAP)
 	find_package(OpenLDAP REQUIRED)
 	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${OPENLDAP_LIBRARIES})
+endif()
+
+if(NOT WIN32)
+	find_package(X11)
+endif()
+if(X11_FOUND)
+	target_link_libraries(${TARGET_NAME} X11::X11)
 endif()
 
 add_dependencies(${APP_LIBRARY} update_translations ${APP_PLUGIN})

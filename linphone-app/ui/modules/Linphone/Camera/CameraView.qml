@@ -21,6 +21,7 @@ Item{
 	property alias isPreview: camera.isPreview
 	property alias isFullscreen: camera.isFullscreen
 	property alias isCameraFromDevice: camera.isCameraFromDevice
+	property alias isThumbnail: camera.isThumbnail
 	property alias qmlName: camera.qmlName
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true

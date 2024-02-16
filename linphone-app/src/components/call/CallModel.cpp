@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2010-2020 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
@@ -40,6 +40,7 @@
 #include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
+#include "components/videoSource/VideoSourceDescriptorModel.hpp"
 #include "utils/MediastreamerUtils.hpp"
 #include "utils/Utils.hpp"
 
@@ -64,6 +65,7 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 	connect(this, &CallModel::encryptionChanged, this, &CallModel::securityUpdated);
 	connect(this, &CallModel::isPQZrtpChanged, this, &CallModel::securityUpdated);
 	connect(this, &CallModel::securityUpdated, this, &CallModel::onSecurityUpdated);
+	
 	
 	mCall = call;
 	if(mCall)
@@ -120,12 +122,14 @@ CallModel::CallModel (shared_ptr<linphone::Call> call){
 		if(mCall->getConference()) {
 			mConferenceModel = ConferenceModel::create(mCall->getConference());
 			connect(mConferenceModel.get(), &ConferenceModel::participantAdminStatusChanged, this, &CallModel::onParticipantAdminStatusChanged);
+			connect(mConferenceModel.get(), &ConferenceModel::localScreenSharingChanged, this, &CallModel::onLocalScreenSharingChanged);
 		}
 		auto conferenceInfo = CoreManager::getInstance()->getCore()->findConferenceInformationFromUri(getConferenceAddress());
 		if(	conferenceInfo ){
 			mConferenceInfoModel = ConferenceInfoModel::create(conferenceInfo);
 		}
 		mMagicSearch->getContactsListAsync(mRemoteAddress->getUsername(),mRemoteAddress->getDomain(), (int)linphone::MagicSearch::Source::LdapServers | (int)linphone::MagicSearch::Source::Friends, linphone::MagicSearch::Aggregation::Friend);
+
 	}
 }
 
@@ -248,6 +252,7 @@ QSharedPointer<ConferenceModel> CallModel::getConferenceSharedModel(){
 	if(mCall->getState() != linphone::Call::State::End && mCall->getConference() && !mConferenceModel){
 		mConferenceModel = ConferenceModel::create(mCall->getConference());
 		connect(mConferenceModel.get(), &ConferenceModel::participantAdminStatusChanged, this, &CallModel::onParticipantAdminStatusChanged);
+		connect(mConferenceModel.get(), &ConferenceModel::localScreenSharingChanged, this, &CallModel::onLocalScreenSharingChanged);
 		emit conferenceModelChanged();
 	}
 	return mConferenceModel;
@@ -570,7 +575,6 @@ void CallModel::handleCallStateChanged (const shared_ptr<linphone::Call> &call, 
 		case linphone::Call::State::PushIncomingReceived:
 			break;
 	}
-	
 	emit statusChanged(getStatus());
 }
 
@@ -1031,6 +1035,12 @@ void CallModel::onSecurityUpdated(){
 		model->updateSecurityLevel();
 }
 
+void CallModel::onLocalScreenSharingChanged(bool enabled) {
+	qDebug() << "onLocalScreenSharingChanged" << enabled;
+	if(!enabled)
+		setVideoSource(nullptr);
+}
+
 void CallModel::setRemoteDisplayName(const std::string& name){
 	mRemoteAddress->setDisplayName(name);
 	if(mCall) {
@@ -1081,6 +1091,9 @@ void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layo
 	shared_ptr<linphone::CallParams> params = coreManager->getCore()->createCallParams(mCall);
 	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
 	params->enableVideo(layout != LinphoneEnums::ConferenceLayoutAudioOnly);
+	if (!params->videoEnabled() && params->screenSharingEnabled()) {
+		params->enableScreenSharing(false); // Deactivate screensharing if going to audio only.
+	}
 	mCall->update(params);
 }
 
@@ -1105,6 +1118,45 @@ void CallModel::updateConferenceVideoLayout(){
 	}
 }
 
+void CallModel::setVideoSource(std::shared_ptr<linphone::VideoSourceDescriptor> videoDesc){
+	//auto videoSource = mCall->getVideoSource();
+	//if(!videoDesc) {
+	//	auto oldDesc = linphone::Factory::get()->createVideoSourceDescriptor();
+	//	oldDesc->setCameraId(CoreManager::getInstance()->getCore()->getVideoDevice());
+	//	mCall->setVideoSource(oldDesc);
+	//	mCall->setVideoSource(videoDesc);
+	//}else
+	mCall->setVideoSource(videoDesc);
+	
+	emit videoDescriptorChanged();
+}
+
+LinphoneEnums::VideoSourceScreenSharingType CallModel::getVideoSourceType() const{
+	auto videoSource = mCall->getVideoSource();
+	return LinphoneEnums::fromLinphone(videoSource ? videoSource->getScreenSharingType() : linphone::VideoSourceScreenSharingType::Display);
+}
+int CallModel::getScreenSharingIndex() const{
+	auto videoSource = mCall->getVideoSource();
+	if(videoSource && videoSource->getScreenSharingType() == linphone::VideoSourceScreenSharingType::Display) {
+		void * t = videoSource->getScreenSharing();
+		return *(int*)(&t);
+	}else
+		return -1;
+}
+
+VideoSourceDescriptorModel *CallModel::getVideoSourceDescriptorModel() const {
+	auto videoSource = mCall->getVideoSource();
+	return new VideoSourceDescriptorModel(videoSource ? videoSource->clone() : nullptr);
+}
+
+void CallModel::setVideoSourceDescriptorModel(VideoSourceDescriptorModel *model) {
+	if(model)
+		setVideoSource(model->mDesc);
+	else {
+		setVideoSource(nullptr);
+	}
+}
+	
 // -----------------------------------------------------------------------------
 
 CallModel::CallEncryption CallModel::getEncryption () const {

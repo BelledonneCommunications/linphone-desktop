@@ -42,7 +42,6 @@ ContactModel::ContactModel (VcardModel *vcardModel, QObject * parent) : QObject(
   Q_CHECK_PTR(vcardModel);
   Q_CHECK_PTR(vcardModel->mVcard);
   Q_ASSERT(!vcardModel->mIsReadOnly);
-
   mLinphoneFriend = CoreManager::getInstance()->getCore()->createFriendFromVcard(vcardModel->mVcard);
   mLinphoneFriend->setData("contact-model", *this);
   if(mLinphoneFriend)

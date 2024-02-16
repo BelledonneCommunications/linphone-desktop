@@ -38,6 +38,8 @@ Window {
 		console.info('[QML] Call becomes not ready : exit fullscreen')
 		window.exit()
 	}
+	property bool isLocalScreenSharingEnabled: conferenceModel && conferenceModel.isLocalScreenSharingEnabled
+	property bool isScreenSharingEnabled: conferenceModel && conferenceModel.isScreenSharingEnabled
 	// ---------------------------------------------------------------------------
 
 	function exit (cb) {
@@ -223,11 +225,39 @@ Window {
 				font.pointSize: IncallStyle.title.pointSize
 			}
 			// Mode buttons
+			TextButtonB{
+				id: screenSharingButton
+				visible: window.isScreenSharingEnabled
+				Layout.preferredWidth: fitWidth
+				Icon{
+					id: screenSharingIcon
+					anchors.left: parent.left
+					anchors.verticalCenter: parent.verticalCenter
+					anchors.leftMargin: 10
+					icon: IncallStyle.buttons.screenSharing.icon
+					iconSize: IncallStyle.buttons.screenSharing.iconSize
+					overwriteColor: screenSharingButton.textColor
+				}
+				button.leftPadding: screenSharingIcon.width
+				addHeight: 15
+				addWidth: 75
+				radius: height/4
+				text: window.isLocalScreenSharingEnabled ? "Arrêter la présentation" : "Présentation en cours"
+				onClicked: if(window.isLocalScreenSharingEnabled) conferenceModel.toggleScreenSharing()
+			}
 			ActionButton{
+				visible: !screenSharingButton.visible && callModel && window.conferenceModel && callModel.videoEnabled
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: IncallStyle.buttons.screenSharing
-				visible: false	//TODO
+				toggled: rightMenu.visible && rightMenu.isScreenSharingMenu
+
+				onClicked: {
+					if(toggled)
+						rightMenu.visible = false
+					else
+						rightMenu.showScreenSharingMenu()
+				}
 			}
 			ActionButton {
 				id: recordingSwitch

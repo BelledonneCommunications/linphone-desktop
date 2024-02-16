@@ -25,30 +25,44 @@
 #include "components/other/desktop-tools/screen-saver/ScreenSaverXdg.hpp"
 
 // =============================================================================
+class VideoSourceDescriptorModel;
 
 class DesktopTools : public QObject {
-  Q_OBJECT;
+	Q_OBJECT
 
-  Q_PROPERTY(bool screenSaverStatus READ getScreenSaverStatus WRITE setScreenSaverStatus NOTIFY screenSaverStatusChanged);
+	Q_PROPERTY(
+	    bool screenSaverStatus READ getScreenSaverStatus WRITE setScreenSaverStatus NOTIFY screenSaverStatusChanged)
 
 public:
-  DesktopTools (QObject *parent = Q_NULLPTR) : QObject(parent) {}
-  ~DesktopTools ();
+	DesktopTools(QObject *parent = Q_NULLPTR) : QObject(parent) {
+	}
+	~DesktopTools();
 
-  bool getScreenSaverStatus () const;
-  void setScreenSaverStatus (bool status);
+	bool getScreenSaverStatus() const;
+	void setScreenSaverStatus(bool status);
 
-  static void init(){}
-  static void applicationStateChanged(Qt::ApplicationState){};
+	static void init() {
+	}
+	static void applicationStateChanged(Qt::ApplicationState){};
+
+	Q_INVOKABLE void getWindowIdFromMouse(VideoSourceDescriptorModel *model);
+    static void *getDisplay(uintptr_t screenIndex){return reinterpret_cast<void*>(screenIndex);}
+    static uintptr_t getDisplayIndex(void* screenSharing);
 
 signals:
-  void screenSaverStatusChanged (bool status);
+	void screenSaverStatusChanged(bool status);
+	void windowIdSelectionStarted();
+	void windowIdSelectionEnded();
 
 private:
-  bool mScreenSaverStatus = true;
+	bool mScreenSaverStatus = true;
 
-  ScreenSaverDBus screenSaverDBus;
-  ScreenSaverXdg screenSaverXdg;
+	ScreenSaverDBus screenSaverDBus;
+	ScreenSaverXdg screenSaverXdg;
+
+	// X11 headers cannot be used in hpp. moc don't' compile.
+	void *mDisplay = nullptr; // Display
+	unsigned int mWindow = 0; // Window
 };
 
 #endif // DESKTOP_TOOLS_LINUX_H_

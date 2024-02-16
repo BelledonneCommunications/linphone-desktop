@@ -23,28 +23,34 @@
 
 #include <QObject>
 // =============================================================================
+class VideoSourceDescriptorModel;
 
 class DesktopTools : public QObject {
-  Q_OBJECT;
+	Q_OBJECT;
 
-  Q_PROPERTY(bool screenSaverStatus READ getScreenSaverStatus WRITE setScreenSaverStatus NOTIFY screenSaverStatusChanged);
+	Q_PROPERTY(
+	    bool screenSaverStatus READ getScreenSaverStatus WRITE setScreenSaverStatus NOTIFY screenSaverStatusChanged);
 
 public:
-  DesktopTools (QObject *parent = Q_NULLPTR);
-  ~DesktopTools ();
+	DesktopTools(QObject *parent = Q_NULLPTR);
+	~DesktopTools();
 
-  bool getScreenSaverStatus () const;
-  void setScreenSaverStatus (bool status);
+	bool getScreenSaverStatus() const;
+	void setScreenSaverStatus(bool status);
 
-  static void init();	// Do first initialization
-  static void applicationStateChanged(Qt::ApplicationState currentState);
-
+	static void init(); // Do first initialization
+	static void applicationStateChanged(Qt::ApplicationState currentState);
+	static void *getDisplay(int screenIndex);
+	static int getDisplayIndex(void *screenSharing);
+	Q_INVOKABLE void getWindowIdFromMouse(VideoSourceDescriptorModel *model);
 
 signals:
-  void screenSaverStatusChanged (bool status);
+	void screenSaverStatusChanged(bool status);
+	void windowIdSelectionStarted();
+	void windowIdSelectionEnded();
 
 private:
-  bool mScreenSaverStatus = true;
+	bool mScreenSaverStatus = true;
 };
 
 #endif // DESKTOP_TOOLS_MAC_OS_H_

@@ -37,6 +37,7 @@ Item{
 	property alias deactivateCamera: camera.deactivateCamera
 	readonly property alias isVideoEnabled: camera.isVideoEnabled
 	property alias cameraQmlName: camera.cameraQmlName
+	property alias isThumbnail: camera.isThumbnail
 	
 	property alias image: avatar.image
 	property alias avatarBackgroundColor: avatar.avatarBackgroundColor

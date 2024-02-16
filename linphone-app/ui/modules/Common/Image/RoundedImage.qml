@@ -12,12 +12,13 @@ Item {
 	property color backgroundColor: '#00000000'
 	property color foregroundColor: '#00000000'
 	readonly property alias status: image.status
+	property int radius: width/2
 	
 	Rectangle {
 		id: backgroundArea
 		anchors.fill: parent
 		color: item.backgroundColor
-		radius: width/2
+		radius: item.radius
 	}
 	Image {
 		id: image
@@ -36,6 +37,6 @@ Item {
 		anchors.fill: parent
 		visible: color != 'transparent'
 		color: item.foregroundColor
-		radius: width/2
+		radius: item.radius
 	}
 }

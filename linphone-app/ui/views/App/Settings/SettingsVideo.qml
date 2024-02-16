@@ -5,6 +5,8 @@ import Common 1.0
 import Linphone 1.0
 import LinphoneEnums 1.0
 import Utils 1.0
+import Units 1.0
+import DesktopTools 1.0
 
 import App.Styles 1.0
 
@@ -288,6 +290,7 @@ TabContainer {
 				}
 			}
 			FormLine {
+				width: parent.width
 				FormGroup {
 					//: 'Default video layout' : Label to choose the default layout in video conference.
 					label: qsTr('videoLayout')
@@ -301,6 +304,17 @@ TabContainer {
 						textRole: 'text'
 						currentIndex: SettingsModel.videoConferenceLayout == LinphoneEnums.ConferenceLayoutGrid ? 0 : 1
 						onActivated: SettingsModel.videoConferenceLayout = model[index].value
+					}
+				}
+				FormGroup {
+					label: 'Maximum thumbnails'
+					
+					NumericField {
+						maxValue: 60
+						minValue: 0
+						text: SettingsModel.conferenceMaxThumbnails
+						
+						onEditingFinished: SettingsModel.conferenceMaxThumbnails = text
 					}
 				}
 			}

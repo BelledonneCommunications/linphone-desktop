@@ -22,29 +22,43 @@
 #define DESKTOP_TOOLS_WINDOWS_H_
 
 #include <QObject>
+#include <windows.h>
 
+class VideoSourceDescriptorModel;
 // =============================================================================
 
 class DesktopTools : public QObject {
-  Q_OBJECT;
+	Q_OBJECT
 
-  Q_PROPERTY(bool screenSaverStatus READ getScreenSaverStatus WRITE setScreenSaverStatus NOTIFY screenSaverStatusChanged);
+	Q_PROPERTY(
+	    bool screenSaverStatus READ getScreenSaverStatus WRITE setScreenSaverStatus NOTIFY screenSaverStatusChanged)
 
 public:
-  DesktopTools (QObject *parent = Q_NULLPTR);
-  ~DesktopTools ();
+	DesktopTools(QObject *parent = Q_NULLPTR);
+	~DesktopTools();
 
-  bool getScreenSaverStatus () const;
-  void setScreenSaverStatus (bool status);
+	bool getScreenSaverStatus() const;
+	void setScreenSaverStatus(bool status);
 
-  static void init(){}
-  static void applicationStateChanged(Qt::ApplicationState){};
+	static void init() {
+	}
+	static void applicationStateChanged(Qt::ApplicationState){};
+
+	Q_INVOKABLE void getWindowIdFromMouse(VideoSourceDescriptorModel *model);
+	static void *getDisplay(uintptr_t screenIndex) {
+		return reinterpret_cast<void *>(screenIndex);
+	}
+	static uintptr_t getDisplayIndex(void *screenSharing);
+	HWND mWindowId = 0; // Window
+	VideoSourceDescriptorModel *mVideoSourceDescriptorModel = nullptr;
 
 signals:
-  void screenSaverStatusChanged (bool status);
+	void screenSaverStatusChanged(bool status);
+	void windowIdSelectionStarted();
+	void windowIdSelectionEnded();
 
 private:
-  bool mScreenSaverStatus = true;
+	bool mScreenSaverStatus = true;
 };
 
 #endif // DESKTOP_TOOLS_WINDOWS_H_

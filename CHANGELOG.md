@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - '[ui] logs_max_size' : option to set the max size of one log file.
+- Screen Sharing
 
 ## 5.2.1 - 2024-02-01
 

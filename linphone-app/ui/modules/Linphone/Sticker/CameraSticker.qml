@@ -23,6 +23,7 @@ DecorationSticker{
 	property alias isCameraFromDevice: camera.isCameraFromDevice
 	property alias isReady: camera.isReady
 	property alias isVideoEnabled: camera.isVideoEnabled
+	property alias isThumbnail: camera.isThumbnail
 	property alias cameraQmlName: camera.qmlName
 	property bool showCloseButton: false
 	property bool showActiveSpeakerOverlay: true

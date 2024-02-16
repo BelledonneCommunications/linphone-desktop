@@ -25,13 +25,15 @@ Item {
 	property bool hideCamera: false
 	property bool isPaused: false
 	property bool deactivateCamera: true
+	property bool isThumbnail: false
+	property bool isDeviceVideoEnabled: container.currentDevice && (isThumbnail ? container.currentDevice.thumbnailVideoEnabled : container.currentDevice.videoEnabled)
 	property bool isVideoEnabled: !deactivateCamera && (!callModel || callModel.videoEnabled)
 									&& (!container.currentDevice || ( callModel && container.currentDevice &&
-																		( (! (container.currentDevice.isMe && container.currentDevice.isLocal) && container.currentDevice.videoEnabled)
+																		( (! (container.currentDevice.isMe && container.currentDevice.isLocal) && isDeviceVideoEnabled)
 																			|| (container.currentDevice.isMe && container.currentDevice.isLocal && callModel.cameraEnabled))))
 
 	property bool a : callModel && callModel.videoEnabled
-	property bool b: container.currentDevice && container.currentDevice.videoEnabled
+	property bool b: isDeviceVideoEnabled
 	property bool c: container.currentDevice && container.currentDevice.isMe && container.currentDevice.isLocal
 	property bool d : callModel && callModel.cameraEnabled
 	property bool isReady: cameraLoader.item && cameraLoader.item.isReady

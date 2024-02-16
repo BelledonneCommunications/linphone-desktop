@@ -29,6 +29,7 @@
 void ParticipantDeviceModel::connectTo(ParticipantDeviceListener * listener){
 	connect(listener, &ParticipantDeviceListener::isSpeakingChanged, this, &ParticipantDeviceModel::onIsSpeakingChanged);
 	connect(listener, &ParticipantDeviceListener::isMuted, this, &ParticipantDeviceModel::onIsMuted);
+	connect(listener, &ParticipantDeviceListener::isScreenSharingChanged, this, &ParticipantDeviceModel::onScreenSharingChanged);
 	connect(listener, &ParticipantDeviceListener::stateChanged, this, &ParticipantDeviceModel::onStateChanged);
 	connect(listener, &ParticipantDeviceListener::streamCapabilityChanged, this, &ParticipantDeviceModel::onStreamCapabilityChanged);
 	connect(listener, &ParticipantDeviceListener::streamAvailabilityChanged, this, &ParticipantDeviceModel::onStreamAvailabilityChanged);
@@ -108,6 +109,10 @@ bool ParticipantDeviceModel::getIsMuted() const{
 	return mParticipantDevice ? mParticipantDevice->getIsMuted() : false;
 }
 
+bool ParticipantDeviceModel::getIsScreenSharingEnabled() const {
+	return mParticipantDevice ? mParticipantDevice->screenSharingEnabled() : false;
+}
+
 LinphoneEnums::ParticipantDeviceState ParticipantDeviceModel::getState() const{
 	return LinphoneEnums::fromLinphone(mState);
 }
@@ -118,6 +123,10 @@ std::shared_ptr<linphone::ParticipantDevice> ParticipantDeviceModel::getDevice()
 
 bool ParticipantDeviceModel::isVideoEnabled() const{
 	return mIsVideoEnabled;
+}
+
+bool ParticipantDeviceModel::isThumbnailVideoEnabled() const{
+	return mIsThumbnailVideoEnabled;
 }
 
 void ParticipantDeviceModel::setPaused(bool paused){
@@ -149,16 +158,51 @@ void ParticipantDeviceModel::setState(LinphoneEnums::ParticipantDeviceState stat
 	}
 }
 
-void ParticipantDeviceModel::updateVideoEnabled(){
-	bool enabled = (mParticipantDevice && mParticipantDevice->isInConference() && mParticipantDevice->getStreamAvailability(linphone::StreamType::Video) && 
-		(	mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendRecv
-			|| mParticipantDevice->getStreamCapability(linphone::StreamType::Video) == linphone::MediaDirection::SendOnly
-		)
-	 || (isMe() && isLocal())) && !mIsPaused;
-	 if( mIsVideoEnabled != enabled && mCall && mCall->getCall()->getState() ==  linphone::Call::State::StreamsRunning) {
-		qDebug() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str() : "") << ", me=" << isMe() << ", isLocal=" << isLocal() << ", CallState=" << (mCall ? (int)mCall->getCall()->getState() : -1);
-		mIsVideoEnabled = enabled;
-		emit videoEnabledChanged();
+void ParticipantDeviceModel::updateVideoEnabled() {
+	if (mCall && mCall->getCall()->getState() == linphone::Call::State::StreamsRunning) {
+		bool enabled = (mParticipantDevice && mParticipantDevice->isInConference()
+							&& mParticipantDevice->getStreamAvailability(linphone::StreamType::Video)
+						|| (isMe() && isLocal()))
+					   && !mIsPaused;
+		if (mIsVideoEnabled != enabled) {
+			qDebug() << "VideoEnabled: " << enabled << ", old=" << mIsVideoEnabled
+					 << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str()
+											: "")
+					 << ", me=" << isMe() << ", isLocal=" << isLocal() << ", inConf="
+					 << (mParticipantDevice ? mParticipantDevice->isInConference() : false)
+					 << ", CallState=" << (mCall ? (int) mCall->getCall()->getState() : -1)
+					 << ", StreamAvailability:"
+					 << (mParticipantDevice
+							 ? mParticipantDevice->getStreamAvailability(linphone::StreamType::Video)
+							 : false)
+					 << ", StreamDir="
+					 << (mParticipantDevice ? (int) mParticipantDevice->getStreamCapability(
+							 linphone::StreamType::Video)
+											: -1);
+			mIsVideoEnabled = enabled;
+			emit videoEnabledChanged();
+		}
+		enabled = (mParticipantDevice && mParticipantDevice->isInConference()
+					   && mParticipantDevice->getThumbnailStreamAvailability()
+				   || (isMe() && isLocal()))
+				  && !mIsPaused;
+		if (mIsThumbnailVideoEnabled != enabled) {
+			qDebug() << "ThumbnailVideoEnabled: " << enabled << ", old=" << mIsThumbnailVideoEnabled
+					 << (mParticipantDevice ? mParticipantDevice->getAddress()->asString().c_str()
+											: "")
+					 << ", me=" << isMe() << ", isLocal=" << isLocal() << ", inConf="
+					 << (mParticipantDevice ? mParticipantDevice->isInConference() : false)
+					 << ", CallState=" << (mCall ? (int) mCall->getCall()->getState() : -1)
+					 << ", StreamAvailability:"
+					 << (mParticipantDevice ? mParticipantDevice->getThumbnailStreamAvailability()
+											: false)
+					 << ", StreamDir="
+					 << (mParticipantDevice
+							 ? (int) mParticipantDevice->getThumbnailStreamCapability()
+							 : -1);
+			mIsThumbnailVideoEnabled = enabled;
+			emit thumbnailVideoEnabledChanged();
+		}
 	}
 }
 
@@ -189,6 +233,9 @@ void ParticipantDeviceModel::onCallStatusChanged(){
 }
 
 //--------------------------------------------------------------------
+void ParticipantDeviceModel::onScreenSharingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isScreenSharing) {
+	emit isScreenSharingEnabledChanged();
+}
 void ParticipantDeviceModel::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> & participantDevice, bool isSpeaking) {
 	setIsSpeaking(isSpeaking);
 }

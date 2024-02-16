@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Belledonne Communications SARL.
+ * Copyright (c) 2010-2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -17,24 +17,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-#include "CallListener.hpp"
 
+#ifndef SCREEN_PROVIDER_H_
+#define SCREEN_PROVIDER_H_
 
-#include <QQmlApplicationEngine>
-
-#include <algorithm>
-#include <QDebug>
-#include "CallModel.hpp"
+#include <QQuickImageProvider>
 
 // =============================================================================
 
+class ScreenProvider : public QQuickImageProvider {
+public:
+  ScreenProvider ();
 
+  QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
 
-// =============================================================================
-CallListener::CallListener(QObject* parent) : QObject(parent){
-}
+  static const QString ProviderId;
+};
 
-void CallListener::onRemoteRecording(const std::shared_ptr<linphone::Call> & call, bool recording){
-	qDebug() << "onRemoteRecording: " << recording;
-	emit remoteRecording(call, recording);
-}
+#endif

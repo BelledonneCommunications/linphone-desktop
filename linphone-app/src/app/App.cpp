@@ -48,6 +48,7 @@
 #include "providers/ExternalImageProvider.hpp"
 #include "providers/QRCodeProvider.hpp"
 #include "providers/ThumbnailProvider.hpp"
+#include "providers/ScreenProvider.hpp"
 #include "translator/DefaultTranslator.hpp"
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
@@ -57,6 +58,7 @@
 #include "components/other/date/DateModel.hpp"
 #include "components/other/spell-checker/SpellChecker.hpp"
 
+#include "components/screen/ScreenProxyModel.hpp"
 #include "components/settings/EmojisSettingsModel.hpp"
 #include "components/timeline/TimelineModel.hpp"
 #include "components/timeline/TimelineListModel.hpp"
@@ -65,6 +67,8 @@
 #include "components/participant/ParticipantModel.hpp"
 #include "components/participant/ParticipantListModel.hpp"
 #include "components/participant/ParticipantProxyModel.hpp"
+
+#include "components/videoSource/VideoSourceDescriptorModel.hpp"
 
 // =============================================================================
 
@@ -268,6 +272,7 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 		_putenv(("TZ="+QTimeZone::systemTimeZoneId().toStdString()).c_str());
 		_tzset();
 #else
+		QString t = QTimeZone::systemTimeZoneId();
 		setenv("TZ", QTimeZone::systemTimeZoneId().toStdString().c_str(), 1);
 		tzset();
 #endif
@@ -489,6 +494,7 @@ void App::initContentApp () {
 	mEngine->addImageProvider(ExternalImageProvider::ProviderId, new ExternalImageProvider());
 	mEngine->addImageProvider(QRCodeProvider::ProviderId, new QRCodeProvider());
 	mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
+	mEngine->addImageProvider(ScreenProvider::ProviderId, new ScreenProvider());
 	
 	mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 	mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
@@ -778,6 +784,7 @@ void App::registerTypes () {
 	registerType<SearchSipAddressesProxyModel>("SearchSipAddressesProxyModel");
 	registerType<TemporaryFile>("TemporaryFile");
 	registerType<TimeZoneProxyModel>("TimeZoneProxyModel");
+	registerType<VideoSourceDescriptorModel>("VideoSourceDescriptorModel");
 	
 	registerType<CallHistoryProxyModel>("CallHistoryProxyModel");
 	registerType<ColorProxyModel>("ColorProxyModel");
@@ -788,6 +795,7 @@ void App::registerTypes () {
 	registerType<ParticipantDeviceProxyModel>("ParticipantDeviceProxyModel");
 	registerType<SoundPlayer>("SoundPlayer");
 	registerType<TelephoneNumbersModel>("TelephoneNumbersModel");
+	registerType<ScreenProxyModel>("ScreenProxyModel");
 	registerType<SpellChecker>("SpellChecker");
 	
 	registerSingletonType<AudioCodecsModel>("AudioCodecsModel");
