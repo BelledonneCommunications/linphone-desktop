@@ -4,18 +4,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 5.2.0 - undefined
+## 5.3.0 - undefined
+
+### Fixed
+- Day offset in start date when scheduling a conference.
+- Audio latency and bad echo behavior when going to media settings while being in call.
+- Network remote file in chat attachment on Windows.
+- Empty route can now be set in account settings.
+- Some crashs.
+
+### Added
+- '[ui] logs_max_size' : option to set the max size of one log file.
+
+## 5.2.1 - 2024-02-01
+
+### Fixed
+- URI handlers when no domain are provided like tel:number.
+- Empty page on first date in date picker.
+- Ephemeral deactivation while restarting it.
+- Fix rates on capture audio (SDK).
+- Update SDK to 5.3.14.
+
+### Added
+- Remove trailing newlines in smart search bar.
+
+## 5.2.0 - 2023-12-22
 
 ### Fixed
 - Download path and emojis size settings
 - Mac emoji font.
 - Better SVG preview in thumbnails.
 - Unstable forward message menu.
+- Display all call logs on default account.
+- Avoid sending composing when openning chat.
+- Crashes.
+- Double chat rooms.
+- Update SDK to 5.3.1
 
 ### Added
 - Dedicated call history view.
 - Chat reactions
 - Update UI layouts.
+- Spellchecker
+- LDAP search with multi-criteria.
+- Export Desktop entry from menu for Linux.
 
 ## Removed
 - Call events from chats.
