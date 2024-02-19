@@ -37,7 +37,7 @@ Item{
 		Text { // month year
 			Layout.fillWidth: true
 			Layout.alignment: Qt.AlignCenter
-			horizontalAlignment: Qt.AlignCenter
+			horizontalAlignment: Text.AlignHCenter
 			text: new Date(monthList.currentYear, monthList.currentMonth-1, 15).toLocaleString(App.locale, 'MMMM yyyy')// 15 because of timezones that can change the date for localeString
 			color: DatePickerStyle.title.colorModel.color
 			font.pointSize: DatePickerStyle.title.pointSize
@@ -119,8 +119,8 @@ Item{
 						property bool selected : text.text != '-' 
 											&& text.text && dayIndex >= 0
 											&& cellDate.isEqual(monthList.selectedDate)	// Do not use == as it will compare JS Date.
-						width: grid.cellMinSize
-						height: width
+						Layout.preferredWidth: grid.cellMinSize
+						Layout.preferredHeight: width
 						
 						Rectangle { // index is 0 to 48
 							anchors.centerIn: parent
