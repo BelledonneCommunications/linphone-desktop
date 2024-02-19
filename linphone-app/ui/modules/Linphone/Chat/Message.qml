@@ -135,15 +135,6 @@ Item {
 		}
 		
 	}
-	ChatDeliveries{
-		id: deliveryLayout
-		anchors.top:rectangle.bottom
-		anchors.left:parent.left
-		anchors.right:parent.right
-		anchors.rightMargin: 50
-		
-		chatMessageModel: $chatEntry
-	}
 	Loader{
 		id: reactionLoader
 		anchors.top: rectangle.bottom
@@ -164,6 +155,15 @@ Item {
 			model: chatReactionProxyModel
 			onReactionsClicked: container.reactionsClicked($chatEntry)
 		}
+	}
+	ChatDeliveries{
+		id: deliveryLayout
+		anchors.top: reactionLoader.active ? reactionLoader.bottom : rectangle.bottom
+		anchors.left:parent.left
+		anchors.right:parent.right
+		anchors.rightMargin: 50
+		
+		chatMessageModel: $chatEntry
 	}
 	
 	ActionButton {
