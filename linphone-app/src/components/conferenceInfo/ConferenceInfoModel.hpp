@@ -98,7 +98,8 @@ public:
 	void setIsEnded(const bool& end);
 	void setInviteMode(const int& modes);
 	
-	Q_INVOKABLE void setDateTime(const QDate& date, const QTime& time, TimeZoneModel * model);
+	void setDateTime(const QDate& date, const QTime& time, TimeZoneModel * model);
+	Q_INVOKABLE void setDateTimeStr(const QString& date, const QString& time, TimeZoneModel * model);
 	Q_INVOKABLE void setParticipants(ParticipantListModel * participants);
 	void setConferenceInfo(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	

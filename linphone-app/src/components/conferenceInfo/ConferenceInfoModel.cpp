@@ -271,6 +271,14 @@ void ConferenceInfoModel::setDateTime(const QDate& date, const QTime& time, Time
 	setDateTime(QDateTime(date, time, model->getTimeZone()));
 }
 
+void ConferenceInfoModel::setDateTimeStr(const QString& date, const QString& time, TimeZoneModel * model){
+	setIsScheduled(true);
+	QDateTime t = QDateTime::fromString(date + " " +time, "yyyy/MM/dd hh:mm:ss");
+	t.setTimeZone(model->getTimeZone());
+	setDateTime(t);
+}
+
+
 void ConferenceInfoModel::setDuration(const int& duration){
 	mConferenceInfo->setDuration(duration);
 	setIsEnded(getIsEnded());

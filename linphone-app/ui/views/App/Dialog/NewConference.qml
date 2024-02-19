@@ -130,7 +130,7 @@ DialogPlus {
 				}
 				conferenceManager.creationState = 1
 				if( scheduledSwitch.checked){
-					conferenceInfoModel.setDateTime(UtilsCpp.toDate(dateField.getDateString(), 'yyyy/MM/dd'), timeField.getTime()+':00', timeZoneField.model.getAt(timeZoneField.currentIndex) )
+					conferenceInfoModel.setDateTimeStr(dateField.getDateString(), timeField.getTime()+':00', timeZoneField.model.getAt(timeZoneField.currentIndex) )
 					conferenceInfoModel.duration = durationField.model[durationField.currentIndex].value
 				}else{
 					conferenceInfoModel.isScheduled = false
