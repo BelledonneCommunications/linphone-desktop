@@ -113,7 +113,7 @@ SearchBox {
 			searchBox.addContact(sipAddress)
 		})
 		
-		genSipAddress: searchBox.filter
+		genSipAddress: searchBox.filter.replace(/\n+$/, "")
 		
 		model: SearchSipAddressesProxyModel {
 			id:searchModel

@@ -356,12 +356,8 @@ void Cli::Command::execute (QHash<QString, QString> &args) const {
 	}
 }
 
-void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) const {
-	QHash<QString, QString> args;
-	QString qAddress = Utils::coreStringToAppString(address->asString());
-	if(address->getDomain() == "" && qAddress.back() == '@')
-		qAddress.remove(qAddress.size()-1, 1);
-	QUrl url(qAddress);
+void Cli::Command::executeUri (QString address, QHash<QString, QString> args) const {
+	QUrl url(address);
 	QString query = url.query();
 
 	QStringList parameters = query.split('&');
@@ -375,12 +371,7 @@ void Cli::Command::executeUri (const shared_ptr<linphone::Address> &address) con
 		}
 	}
 
-	// TODO: check if there is too much headers.
-	for (const auto &argName : mArgsScheme.keys()) {
-		const string header = address->getHeader(Utils::appStringToCoreString(argName));
-		args[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
-	}
-	args["sip-address"] = qAddress;
+	args["sip-address"] = address;
 	execute(args);
 }
 
@@ -533,10 +524,15 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 			App::getInstance()->useFetchConfig(fetchUrl);
 		}else{
 			shared_ptr<linphone::Address> address;
+			QString qAddress;
+			std::string t;
+			address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand));// Test if command is an address
 			if(Utils::isUsername(transformedCommand)){
 				address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand+"@to.remove"));
-				if(address)
-					address->setDomain("");
+				address->setDomain("");
+				qAddress = Utils::coreStringToAppString(address->asString());
+				if(address && qAddress.isEmpty())
+					qAddress = transformedCommand;
 			}else
 				address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand));// Test if command is an address
 			if (format)
@@ -568,9 +564,15 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 				qWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
 				return;
 			}
-			if(address)
-				mCommands[functionName].executeUri(address);
-			else
+			if(address){
+				// TODO: check if there is too much headers.
+				QHash<QString, QString> headers;
+				for (const auto &argName : mCommands[functionName].mArgsScheme.keys()) {
+					const string header = address->getHeader(Utils::appStringToCoreString(argName));
+					headers[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
+				}
+				mCommands[functionName].executeUri(qAddress, headers);
+			}else
 				mCommands[functionName].executeUrl(command);
 		}
 	}
