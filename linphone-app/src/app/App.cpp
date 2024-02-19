@@ -312,7 +312,8 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	mAutoStart = false;
 	mAutoStart = autoStartEnabled();
 	
-	qInfo() << QStringLiteral("Starting " APPLICATION_NAME " (bin: " EXECUTABLE_NAME ")");
+	qInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME "). Version:%1 Os:%2 Qt:%3") 
+		.arg(applicationVersion()).arg(Utils::getOsProduct()).arg(qVersion());
 	qInfo() << QStringLiteral("Use locale: %1 with language: %2").arg(mLocale.name()).arg(QLocale::languageToString(mLocale.language()));
 	qInfo() << QStringLiteral("System timezone: code=%1 / country=%2 / Offset=%3 / ID=%4").arg(QTimeZone::systemTimeZone().country()).arg(Utils::getCountryName(QTimeZone::systemTimeZone().country()))
 			   .arg(QTimeZone::systemTimeZone().standardTimeOffset(QDateTime::currentDateTime()))
