@@ -322,6 +322,6 @@ TabContainer {
 	}
 	Connections{
 		target: SettingsModel
-		onIsInCall: if(!SettingsModel.isInCall) SettingsModel.startCaptureGraph()
+		onIsInCallChanged: if(!SettingsModel.isInCall) SettingsModel.startCaptureGraph()
 	}
 }
