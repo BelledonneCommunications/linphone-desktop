@@ -44,7 +44,8 @@ Rectangle{
 		mainItem.isMeAdmin ? qsTr('incallMenuInvite')
 		//: 'Participants list' : Menu title to show participants in non-admin mode.
 			: qsTr('incallMenuParticipants'),
-			"Partage d'écran"
+		//: 'Screen Sharing' : Menu title to show the screen sharing settings.
+			qsTr('incallMenuScreenSharing')
 	]
 	
 	function showParticipantsMenu(){
@@ -339,10 +340,10 @@ Rectangle{
 					id: displayRadioButton
 					Layout.fillWidth: true
 					Layout.leftMargin: 15
-					text: "Partager l'intégralité de l'écran"
+					//: 'Entire screen' : Setting label to set the mode of screen sharing for displaying a selected screen.
+					text: qsTr('incallMenuScreenSharingScreen')
 					font.pointSize: IncallMenuStyle.list.pointSize
 					ButtonGroup.group: screenSharingGroup
-					//checked: screenList.selectedIndex >= 0
 					checked: screenSharingItem.desc && screenSharingItem.desc.isScreenSharing && screenSharingItem.desc.screenSharingType == LinphoneEnums.VideoSourceScreenSharingTypeDisplay
 					onClicked: {
 						screenSharingItem.desc.screenSharingIndex = 0
@@ -379,7 +380,10 @@ Rectangle{
 							}
 							Text{
 								Layout.fillWidth: true
-								text: modelData.name
+								text: modelData.name != ''
+										? modelData.name
+										//: 'Screen %1' : Screen enumeration for selection where %1 is the index of the screen.
+										: qsTr('incallMenuScreenSharingScreenIndex').arg(index+1)
 								font.pointSize: IncallMenuStyle.list.pointSize
 								color: IncallMenuStyle.list.colorModel.color
 								horizontalAlignment: Text.AlignHCenter
@@ -405,7 +409,8 @@ Rectangle{
 					id: windowSharingRadioButton
 					Layout.fillWidth: true
 					Layout.leftMargin: 15
-					text: "Partager une fenêtre"
+					//: 'Window' : Setting label to set the mode of the screen sharing for displaying a selected window.
+					text: qsTr('incalMenuScreenSharingWindow')
 					font.pointSize: IncallMenuStyle.list.pointSize
 					ButtonGroup.group: screenSharingGroup
 					checked: screenSharingItem.desc && screenSharingItem.desc.isScreenSharing && screenSharingItem.desc.screenSharingType == LinphoneEnums.VideoSourceScreenSharingTypeWindow//screenList.selectedIndex < 0

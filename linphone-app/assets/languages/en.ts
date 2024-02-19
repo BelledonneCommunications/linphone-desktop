@@ -1683,6 +1683,16 @@ Server URL not configured.</translation>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
         <translation>Call has been paused by remote.</translation>
     </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation>Stop sharing</translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation>Presentation in progress</translation>
+    </message>
 </context>
 <context>
     <name>IncallFullscreen</name>
@@ -1720,6 +1730,16 @@ Server URL not configured.</translation>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
         <translation>This call is being recorded.</translation>
+    </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation>Stop sharing</translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation>Presentation in progreess</translation>
     </message>
 </context>
 <context>
@@ -1768,6 +1788,36 @@ Server URL not configured.</translation>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
         <translation>You are currently alone in this meeting</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharing</source>
+        <extracomment>&apos;Screen Sharing&apos; : Menu title to show the screen sharing settings.</extracomment>
+        <translation>Screen Sharing</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreen</source>
+        <extracomment>&apos;Entire screen&apos; : Setting label to set the mode of screen sharing for displaying a selected screen.</extracomment>
+        <translation>Entire screen</translation>
+    </message>
+    <message>
+        <source>incalMenuScreenSharingWindow</source>
+        <extracomment>&apos;Window&apos; : Setting label to set the mode of the screen sharing for displaying a selected window.</extracomment>
+        <translation>Window</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStop</source>
+        <extracomment>&apos;Stop&apos; : Text button to stop the screen sharing.</extracomment>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStart</source>
+        <extracomment>&apos;Share&apos; : Text button to start the screen sharing.</extracomment>
+        <translation>Share</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreenIndex</source>
+        <extracomment>&apos;Screen %1&apos; : Screen enumeration for selection where %1 is the index of the screen.</extracomment>
+        <translation>Screen %1</translation>
     </message>
 </context>
 <context>
@@ -3979,6 +4029,11 @@ Click here: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>videoModeLabel</source>
         <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
         <translation>Camera modes</translation>
+    </message>
+    <message>
+        <source>videoMaxThumbnails</source>
+        <extracomment>&apos;Maximum thumbnails&apos; : Label to set the maximum of thumbnails that are shown in conference.</extracomment>
+        <translation>Maximum thumbnails</translation>
     </message>
 </context>
 <context>

@@ -185,7 +185,7 @@
     </message>
     <message>
         <source>usernameStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;:&#xa0;`%1`).</translation>
     </message>
     <message>
         <source>usernameStatusInvalid</source>
@@ -201,7 +201,7 @@
     </message>
     <message>
         <source>passwordStatusInvalidCharacters</source>
-        <translation>Caractères invalides détectés (regex : `%1`).</translation>
+        <translation>Caractères invalides détectés (regex&#x202f;:&#xa0;`%1`).</translation>
     </message>
     <message>
         <source>passwordStatusMissingCharacters</source>
@@ -619,7 +619,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>confirmForward</source>
         <extracomment>&apos;Do you want to forward this message?&apos; : text to confirm to forward a message</extracomment>
-        <translation>Souhaitez-vous transférer ce message ?</translation>
+        <translation>Souhaitez-vous transférer ce message&#xa0;?</translation>
     </message>
 </context>
 <context>
@@ -1401,7 +1401,7 @@ URL du serveur non configurée.</translation>
     <message>
         <source>ephemeralNotInConference!</source>
         <extracomment>&apos;Ephemeral message is only supported in conference based chat room!&apos;</extracomment>
-        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence !</translation>
+        <translation>Les messages éphémères ne sont disponibles que pour une conversation définie en mode conférence&#xa0;!</translation>
         <extra-Context>Warning about not being in conference based chat room.</extra-Context>
     </message>
     <message>
@@ -1683,6 +1683,16 @@ URL du serveur non configurée.</translation>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
         <translation>L&apos;appel a été mis en pause par le correspondant.</translation>
     </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation>Arrêter la présentation</translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation>Présentation en cours</translation>
+    </message>
 </context>
 <context>
     <name>IncallFullscreen</name>
@@ -1720,6 +1730,16 @@ URL du serveur non configurée.</translation>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
         <translation>Cet appel est en train d&apos;être enregistré.</translation>
+    </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation>Arrêter la présentation</translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation>Présentation en cours</translation>
     </message>
 </context>
 <context>
@@ -1768,6 +1788,36 @@ URL du serveur non configurée.</translation>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
         <translation>Vous êtes actuellement seul dans cette réunion</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharing</source>
+        <extracomment>&apos;Screen Sharing&apos; : Menu title to show the screen sharing settings.</extracomment>
+        <translation>Partage d&apos;écran</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreen</source>
+        <extracomment>&apos;Entire screen&apos; : Setting label to set the mode of screen sharing for displaying a selected screen.</extracomment>
+        <translation>Partager l&apos;intégralité de l&apos;écran</translation>
+    </message>
+    <message>
+        <source>incalMenuScreenSharingWindow</source>
+        <extracomment>&apos;Window&apos; : Setting label to set the mode of the screen sharing for displaying a selected window.</extracomment>
+        <translation>Partager une fenêtre</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStop</source>
+        <extracomment>&apos;Stop&apos; : Text button to stop the screen sharing.</extracomment>
+        <translation>Arrêter</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStart</source>
+        <extracomment>&apos;Share&apos; : Text button to start the screen sharing.</extracomment>
+        <translation>Partager</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreenIndex</source>
+        <extracomment>&apos;Screen %1&apos; : Screen enumeration for selection where %1 is the index of the screen.</extracomment>
+        <translation>Écran %1</translation>
     </message>
 </context>
 <context>
@@ -2009,7 +2059,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>newVersionAvailable</source>
-        <translation>Une nouvelle version (%1) est disponible !</translation>
+        <translation>Une nouvelle version (%1) est disponible&#xa0;!</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -2292,7 +2342,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newConferenceScheduleTitle</source>
         <extracomment>&apos;Would you like to schedule your meeting?&apos; : Ask about setting the meeting as scheduled.</extracomment>
-        <translation>Voulez-vous programmer cette réunion ?</translation>
+        <translation>Voulez-vous programmer cette réunion&#xa0;?</translation>
     </message>
     <message>
         <source>newConferenceDate</source>
@@ -2390,7 +2440,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>conferenceEphemeralMessageEnabledEvent</source>
         <extracomment>&apos;Ephemeral messages have been enabled: %1&apos; : Little message to show on the event when ephemeral has been activated. %1 is a date time</extracomment>
-        <translation>Les messages éphémères ont été activés : %1</translation>
+        <translation>Les messages éphémères ont été activés&#xa0;:&#xa0;%1</translation>
     </message>
     <message>
         <source>conferenceEphemeralMessageDisabledEvent</source>
@@ -2439,7 +2489,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>newVoiceMessage</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notofication for voice messages.</extracomment>
-        <translation>Message vocal reçu !</translation>
+        <translation>Message vocal reçu&#xa0;!</translation>
     </message>
     <message>
         <source>voiceMessageReact</source>
@@ -2823,12 +2873,12 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>vfsDeactivation</source>
         <extracomment>&apos;Are you sure to deactivate the encryption? The application will exit and all your data will be lost. You must delete them before using the application.&apos; : Explanation to deactivate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application ? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
+        <translation>Êtes-vous certain de désactiver le chiffrement de l&apos;application&#xa0;? Elle redémarrera et toutes vos données seront perdues. Vous devez les supprimer avant d&apos;utiliser l&apos;application.</translation>
     </message>
     <message>
         <source>vfsActivation</source>
         <extracomment>&apos;Are you sure to activate the encryption? You cannot revert without deleting ALL your data&apos; : Explanation to activate the VFS encryption.</extracomment>
-        <translation>Êtes-vous certain d&apos;activer le chiffrement ? Cette action est irréversible sans perdre TOUTES vos données.</translation>
+        <translation>Êtes-vous certain d&apos;activer le chiffrement&#xa0;? Cette action est irréversible sans perdre TOUTES vos données.</translation>
     </message>
     <message>
         <source>cancel</source>
@@ -3102,7 +3152,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     </message>
     <message>
         <source>serverTooltip</source>
-        <translation>Serveur LDAP. ie : ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
+        <translation>Serveur LDAP. ie&#xa0;: ldap:// pour un serveur local ou ldap://ldap.example.org/</translation>
     </message>
     <message>
         <source>bindDNLabel</source>
@@ -3955,6 +4005,11 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
         <translation>Modes de caméra</translation>
     </message>
+    <message>
+        <source>videoMaxThumbnails</source>
+        <extracomment>&apos;Maximum thumbnails&apos; : Label to set the maximum of thumbnails that are shown in conference.</extracomment>
+        <translation>Vignettes max</translation>
+    </message>
 </context>
 <context>
     <name>SettingsVideoPreview</name>
@@ -4087,7 +4142,7 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <message>
         <source>deleteTimeline</source>
         <extracomment>&apos;Are you sure you want to delete and leave this timeline?&apos;</extracomment>
-        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation ?</translation>
+        <translation>Êtes-vous certain de vouloir tout effacer et de quitter cette conversation&#xa0;?</translation>
     </message>
     <message>
         <source>deleteTimelineTooltip</source>
@@ -4209,15 +4264,15 @@ Cliquez ici : &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
     <name>VfsUtils</name>
     <message>
         <source>Delete key failed: %1</source>
-        <translation>Échec lors de la suppression de la clef : %1</translation>
+        <translation>Échec lors de la suppression de la clef&#xa0;: %1</translation>
     </message>
     <message>
         <source>Read key failed: %1</source>
-        <translation>Échec lors de la lecture de la clef : %1</translation>
+        <translation>Échec lors de la lecture de la clef&#xa0;: %1</translation>
     </message>
     <message>
         <source>Write key failed: %1</source>
-        <translation>Échec lors de l&apos;écriture de la clef : %1</translation>
+        <translation>Échec lors de l&apos;écriture de la clef&#xa0;: %1</translation>
     </message>
 </context>
 <context>

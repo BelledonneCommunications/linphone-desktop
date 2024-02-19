@@ -271,7 +271,11 @@ Rectangle {
 			addHeight: 15
 			addWidth: 75
 			radius: height/4
-			text: mainItem.isLocalScreenSharingEnabled ? "Arrêter la présentation" : "Présentation en cours"
+			text: mainItem.isLocalScreenSharingEnabled
+				//: 'Stop sharing' : Button label to stop the screen sharing.
+				? qsTr('incallStopScreenSharing')
+				//: 'Presentation in progress': Button label to indicate that a screen sharing is running.
+				: qsTr('incallRunningScreenSharing')
 			onClicked: if(mainItem.isLocalScreenSharingEnabled) conferenceModel.toggleScreenSharing()
 		}
 		ActionButton{

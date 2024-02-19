@@ -1672,6 +1672,16 @@
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
         <translation>通話はリモートで一時停止されています。</translation>
     </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>IncallFullscreen</name>
@@ -1709,6 +1719,16 @@
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
         <translation>この通話は録音されています。</translation>
+    </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1757,6 +1777,36 @@
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
         <translation>このグループ通話は現在、あなた1人です</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharing</source>
+        <extracomment>&apos;Screen Sharing&apos; : Menu title to show the screen sharing settings.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreen</source>
+        <extracomment>&apos;Entire screen&apos; : Setting label to set the mode of screen sharing for displaying a selected screen.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incalMenuScreenSharingWindow</source>
+        <extracomment>&apos;Window&apos; : Setting label to set the mode of the screen sharing for displaying a selected window.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStop</source>
+        <extracomment>&apos;Stop&apos; : Text button to stop the screen sharing.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStart</source>
+        <extracomment>&apos;Share&apos; : Text button to start the screen sharing.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreenIndex</source>
+        <extracomment>&apos;Screen %1&apos; : Screen enumeration for selection where %1 is the index of the screen.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3940,6 +3990,11 @@
         <source>videoModeLabel</source>
         <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
         <translation>カメラモード</translation>
+    </message>
+    <message>
+        <source>videoMaxThumbnails</source>
+        <extracomment>&apos;Maximum thumbnails&apos; : Label to set the maximum of thumbnails that are shown in conference.</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

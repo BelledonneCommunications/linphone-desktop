@@ -307,7 +307,8 @@ TabContainer {
 					}
 				}
 				FormGroup {
-					label: 'Maximum thumbnails'
+					//: 'Maximum thumbnails' : Label to set the maximum of thumbnails that are shown in conference.
+					label: qsTr('videoMaxThumbnails')
 					
 					NumericField {
 						maxValue: 60
