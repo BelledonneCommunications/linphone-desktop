@@ -344,15 +344,20 @@ void SettingsModel::createCaptureGraph() {
 	emit captureGraphRunningChanged(getCaptureGraphRunning());
 }
 void SettingsModel::startCaptureGraph() {
-	if(!getIsInCall()) {
-		if (!mSimpleCaptureGraph) createCaptureGraph();
+	if (!getIsInCall()) {
+		if (!mSimpleCaptureGraph) {
+			qDebug() << "Starting capture graph [" << mCaptureGraphListenerCount << "]";
+			createCaptureGraph();
+		}
 		++mCaptureGraphListenerCount;
 	}
 }
-void SettingsModel::stopCaptureGraph(){
-	if(mCaptureGraphListenerCount > 0 ){
-		if(--mCaptureGraphListenerCount == 0)
+void SettingsModel::stopCaptureGraph() {
+	if (mCaptureGraphListenerCount > 0) {
+		if (--mCaptureGraphListenerCount == 0) {
+			qDebug() << "Stopping capture graph [" << mCaptureGraphListenerCount << "]";
 			deleteCaptureGraph();
+		}
 	}
 }
 void SettingsModel::stopCaptureGraphs() {
@@ -383,6 +388,7 @@ void SettingsModel::accessAudioSettings() {
 
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo calibrations in call.
 	if (!getIsInCall()) {
+		qDebug() << "Starting capture graph from accessing audio panel";
 		startCaptureGraph();
 	}
 }
@@ -2063,15 +2069,18 @@ void SettingsModel::setDeveloperSettingsEnabled (bool status) {
 
 void SettingsModel::handleCallCreated(const shared_ptr<linphone::Call> &) {
 	bool isInCall = getIsInCall();
-	if(isInCall) stopCaptureGraphs(); // Ensure to stop all graphs
+	if (isInCall) stopCaptureGraphs(); // Ensure to stop all graphs
+	else if (mCurrentSettingsTab == 1) startCaptureGraph();
 	emit isInCallChanged(isInCall);
 }
 
 void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &, linphone::Call::State) {
 	bool isInCall = getIsInCall();
-	if(isInCall) stopCaptureGraphs(); // Ensure to stop all graphs
+	if (isInCall) stopCaptureGraphs(); // Ensure to stop all graphs
+	else if (mCurrentSettingsTab == 1) startCaptureGraph();
 	emit isInCallChanged(isInCall);
 }
+
 void SettingsModel::handleEcCalibrationResult(linphone::EcCalibratorStatus status, int delayMs){
 	emit echoCancellationStatus((int)status, delayMs);
 }
