@@ -54,7 +54,7 @@ DialogPlus {
 					selectByMouse: true
 					font.pointSize: AboutStyle.versionsBlock.appVersion.pointSize
 					text: 'Desktop ' + Qt.application.version + ' - Qt' + App.qtVersion +'\nCore ' + CoreManager.version
-					
+					readOnly:true
 					height: parent.height
 					width: parent.width   
 					
