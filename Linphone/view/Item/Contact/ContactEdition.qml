@@ -103,29 +103,37 @@ ColumnLayout {
 		Layout.bottomMargin: 50 * DefaultStyle.dp
 		ColumnLayout {
 			spacing: 20 * DefaultStyle.dp
-			TextInput {
+			FormItemLayout {
 				label: qsTr("Prénom")
-				initialText: contact.core.givenName
-				onEditingFinished: contact.core.givenName = text
-				backgroundColor: DefaultStyle.grey_0
+				contentItem: TextField {
+					initialText: contact.core.givenName
+					onEditingFinished: contact.core.givenName = text
+					backgroundColor: DefaultStyle.grey_0
+				}
 			}
-			TextInput {
+			FormItemLayout {
 				label: qsTr("Nom")
-				initialText: contact.core.familyName
-				onEditingFinished: contact.core.familyName = text
-				backgroundColor: DefaultStyle.grey_0
+				contentItem: TextField {
+					initialText: contact.core.familyName
+					onEditingFinished: contact.core.familyName = text
+					backgroundColor: DefaultStyle.grey_0
+				}
 			}
-			TextInput {
+			FormItemLayout {
 				label: qsTr("Entreprise")
-				initialText: contact.core.organization
-				onEditingFinished: contact.core.organization = text
-				backgroundColor: DefaultStyle.grey_0
+				contentItem: TextField {
+					initialText: contact.core.organization
+					onEditingFinished: contact.core.organization = text
+					backgroundColor: DefaultStyle.grey_0
+				}
 			}
-			TextInput {
+			FormItemLayout {
 				label: qsTr("Fonction")
-				initialText: contact.core.job
-				onEditingFinished: contact.core.job = text
-				backgroundColor: DefaultStyle.grey_0
+				contentItem: TextField {
+					initialText: contact.core.job
+					onEditingFinished: contact.core.job = text
+					backgroundColor: DefaultStyle.grey_0
+				}
 			}
 			Item{Layout.fillHeight: true}
 		}
@@ -141,13 +149,15 @@ ColumnLayout {
 						model: mainItem.contact && mainItem.contact.core.addresses || []
 					}
 					delegate: RowLayout {
-						TextInput {
+						FormItemLayout {
 							label: modelData.label
-							onEditingFinished: {
-								if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Address SIP"), text)
+							contentItem: TextField {
+								onEditingFinished: {
+									if (text.length != 0) mainItem.contact.core.setAddressAt(index, qsTr("Address SIP"), text)
+								}
+								initialText: modelData.address
+								backgroundColor: DefaultStyle.grey_0
 							}
-							initialText: modelData.address
-							backgroundColor: DefaultStyle.grey_0
 						}
 						Button {
 							Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -161,12 +171,14 @@ ColumnLayout {
 					}
 				}
 				RowLayout {
-					TextInput {
+					FormItemLayout {
 						label: qsTr("Adresse SIP")
-						backgroundColor: DefaultStyle.grey_0
-						onEditingFinished: {
-							if (text.length != 0) mainItem.contact.core.appendAddress(text)
-							setText("")
+						contentItem: TextField {
+							backgroundColor: DefaultStyle.grey_0
+							onEditingFinished: {
+								if (text.length != 0) mainItem.contact.core.appendAddress(text)
+								text = ""
+							}
 						}
 					}
 					Item {
@@ -180,13 +192,15 @@ ColumnLayout {
 						model: mainItem.contact && mainItem.contact.core.phoneNumbers || []
 					}
 					delegate: RowLayout {
-						TextInput {
+						FormItemLayout {
 							label: modelData.label
-							initialText: modelData.address
-							onEditingFinished: {
-								if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("Téléphone"), text)
+							contentItem: TextField {
+								initialText: modelData.address
+								onEditingFinished: {
+									if (text.length != 0) mainItem.contact.core.setPhoneNumberAt(index, qsTr("Téléphone"), text)
+								}
+								backgroundColor: DefaultStyle.grey_0
 							}
-							backgroundColor: DefaultStyle.grey_0
 						}
 						Button {
 							Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -200,12 +214,14 @@ ColumnLayout {
 					}
 				}
 				RowLayout {
-					TextInput {
+					FormItemLayout {
 						label: qsTr("Phone")
-						backgroundColor: DefaultStyle.grey_0
-						onEditingFinished: {
-							if (text.length != 0) mainItem.contact.core.appendPhoneNumber(label, text)
-							setText("")
+						contentItem: TextField {
+							backgroundColor: DefaultStyle.grey_0
+							onEditingFinished: {
+								if (text.length != 0) mainItem.contact.core.appendPhoneNumber(label, text)
+								setText("")
+							}
 						}
 					}
 					Item {

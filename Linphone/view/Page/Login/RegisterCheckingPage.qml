@@ -13,7 +13,7 @@ LoginLayout {
 		Button {
 			Layout.preferredHeight: 24 * DefaultStyle.dp
     		Layout.preferredWidth: 24 * DefaultStyle.dp
-			icon.source: AppIcons.returnArrow
+			icon.source: AppIcons.leftArrow
 			background: Rectangle {
 				color: "transparent"
 			}

@@ -17,6 +17,7 @@ Item {
 	property alias leftPanelContent: leftPanel.children
 	property alias rightPanelStackView: rightPanelStackView
 	property alias contactEditionComp: contactEditionComp
+	property alias rightPanel: rightPanel
 	property bool showDefaultItem: true
 	signal noItemButtonPressed()
 	signal contactEditionClosed()
@@ -231,6 +232,7 @@ Item {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 				}
+				// We need this component here as it is used in multiple subPages (Call and Contact pages) 
 				Component {
 					id: contactEditionComp
 					ContactEdition {

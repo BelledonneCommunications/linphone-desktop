@@ -22,7 +22,6 @@
 #include "CallHistoryGui.hpp"
 #include "core/App.hpp"
 #include "model/object/VariantObject.hpp"
-#include "tool/Utils.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
 
@@ -81,7 +80,7 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
 	mModelConnection->makeConnectToModel(&CoreModel::callLogUpdated,
 	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
-	lUpdate();
+	emit lUpdate();
 }
 
 void CallHistoryList::removeAllEntries() {

@@ -21,7 +21,6 @@
 #include "FriendInitialProxy.hpp"
 #include "FriendCore.hpp"
 #include "FriendGui.hpp"
-#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(FriendInitialProxy)
 

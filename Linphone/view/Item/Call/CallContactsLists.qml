@@ -235,12 +235,26 @@ Item {
 							onContactSelected: (contact) => {
 								if (contact.core.allAddresses.length > 1) {
 									startCallPopup.contact = contact
-									startCallPopup.open()
+							onSelectedContactChanged: {
+								if (selectedContact) {
+									if (selectedContact.core.allAddresses.length > 1) {
+										startCallPopup.selectedContact = selectedContact
+										startCallPopup.open()
 
-								} else {
-									mainItem.callButtonPressed(contact.core.defaultAddress)
+									} else {
+										mainItem.callButtonPressed(selectedContact.core.defaultAddress)
+									}
 								}
 							}
+							// onContactSelected: (contact) => {
+							// 	if (contact.core.allAddresses.length > 1) {
+							// 		startCallPopup.contact = contact
+							// 		startCallPopup.open()
+
+							// 	} else {
+							// 		mainItem.callButtonPressed(contact.core.defaultAddress)
+							// 	}
+							// }
 						}
 					}
 					ColumnLayout {
@@ -264,20 +278,36 @@ Item {
 								sourceFlags: LinphoneEnums.MagicSearchSource.All
 								aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
 							}
-							onContactSelected: (contact) => {
-								if (contact.core.allAddresses.length > 1) {
-									startCallPopup.contact = contact
-									startCallPopup.open()
+							onSelectedContactChanged: {
+								if (selectedContact) {
+									if (selectedContact.core.allAddresses.length > 1) {
+										startCallPopup.selectedContact = selectedContact
+										startCallPopup.open()
 
-								} else {
-									var addressToCall = contact.core.defaultAddress.length === 0 
-										? contact.core.phoneNumbers.length === 0
-											? ""
-											: contact.core.phoneNumbers[0].address
-										: contact.core.defaultAddress
-									if (addressToCall.length != 0) mainItem.callButtonPressed(addressToCall)
+									} else {
+										var addressToCall = selectedContact.core.defaultAddress.length === 0 
+											? selectedContact.core.phoneNumbers.length === 0
+												? ""
+												: selectedContact.core.phoneNumbers[0].address
+											: selectedContact.core.defaultAddress
+										if (addressToCall.length != 0) mainItem.callButtonPressed(addressToCall)
+									}
 								}
 							}
+							// onContactSelected: (contact) => {
+							// 	if (contact.core.allAddresses.length > 1) {
+							// 		startCallPopup.contact = contact
+							// 		startCallPopup.open()
+
+							// 	} else {
+							// 		var addressToCall = contact.core.defaultAddress.length === 0 
+							// 			? contact.core.phoneNumbers.length === 0
+							// 				? ""
+							// 				: contact.core.phoneNumbers[0].address
+							// 			: contact.core.defaultAddress
+							// 		if (addressToCall.length != 0) mainItem.callButtonPressed(addressToCall)
+							// 	}
+							// }
 						}
 					}
 					Item {

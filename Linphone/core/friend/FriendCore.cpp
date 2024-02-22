@@ -459,6 +459,7 @@ void FriendCore::remove() {
 }
 
 void FriendCore::save() { // Save Values to model
+	mustBeInMainThread(getClassName() + "::save()");
 	if (mAddressList.size() > 0) {
 		auto it = std::find_if(mAddressList.begin(), mAddressList.end(), [this](const QVariant &a) {
 			return a.toMap()["address"].toString() == mDefaultAddress;
@@ -472,9 +473,9 @@ void FriendCore::save() { // Save Values to model
 		emit defaultAddressChanged();
 	}
 	FriendCore *thisCopy = new FriendCore(*this); // Pointer to avoid multiple copies in lambdas
-
 	if (mFriendModel) {
 		mFriendModelConnection->invokeToModel([this, thisCopy]() { // Copy values to avoid concurrency
+			mustBeInLinphoneThread(getClassName() + "::save()");
 			thisCopy->writeIntoModel(mFriendModel);
 			thisCopy->deleteLater();
 			mFriendModelConnection->invokeToCore([this]() { saved(); });
@@ -491,18 +492,17 @@ void FriendCore::save() { // Save Values to model
 				if (contact) break;
 			}
 			if (contact != nullptr) {
-				auto friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-				friendModel->setSelf(friendModel);
-				thisCopy->writeIntoModel(friendModel);
+				mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+				mFriendModel->setSelf(mFriendModel);
+				thisCopy->writeIntoModel(mFriendModel);
 				thisCopy->deleteLater();
 				if (mFriendModelConnection) mFriendModelConnection->invokeToCore([this] { saved(); });
 				else mCoreModelConnection->invokeToCore([this] { saved(); });
 			} else {
 				auto contact = core->createFriend();
-				std::shared_ptr<FriendModel> friendModel;
-				friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-				friendModel->setSelf(friendModel);
-				thisCopy->writeIntoModel(friendModel);
+				mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+				mFriendModel->setSelf(mFriendModel);
+				thisCopy->writeIntoModel(mFriendModel);
 				thisCopy->deleteLater();
 				bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
 				if (created) {

@@ -17,7 +17,6 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/fps-counter/FPSCounter.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp
-	core/friend/FriendInitialProxy.cpp
 	core/logger/QtLogger.cpp
 	core/login/LoginPage.cpp
 	core/notifier/Notifier.cpp
@@ -36,6 +35,24 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/proxy/SortFilterProxy.cpp
 	
 	core/variant/VariantList.cpp
+
+	core/conference/ConferenceCore.cpp
+	core/conference/ConferenceInfoCore.cpp
+	core/conference/ConferenceInfoGui.cpp
+	core/conference/ConferenceInfoList.cpp
+	core/conference/ConferenceInfoProxy.cpp
+
+	core/timezone/TimeZoneList.cpp
+	core/timezone/TimeZoneProxy.cpp
+	core/timezone/TimeZone.cpp
+
+	core/participant/ParticipantCore.cpp
+	core/participant/ParticipantGui.cpp
+	core/participant/ParticipantDeviceCore.cpp
+	# core/participant/ParticipantDeviceList.cpp
+	# core/participant/ParticipantDeviceProxy.cpp
+	core/participant/ParticipantList.cpp
+	core/participant/ParticipantProxy.cpp
 )
 
 ## Single Application

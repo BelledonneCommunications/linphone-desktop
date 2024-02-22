@@ -23,7 +23,6 @@
 #include <QDebug>
 
 #include "model/core/CoreModel.hpp"
-#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CallHistoryModel)
 
@@ -37,5 +36,6 @@ CallHistoryModel::~CallHistoryModel() {
 }
 
 void CallHistoryModel::removeCallHistory() {
+	mustBeInLinphoneThread(getClassName() + "::removeCallHistory");
 	CoreModel::getInstance()->getCore()->removeCallLog(callLog);
 }

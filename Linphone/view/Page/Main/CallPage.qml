@@ -317,7 +317,7 @@ AbstractMainPage {
 						}
 						Layout.preferredWidth: 24 * DefaultStyle.dp
 						Layout.preferredHeight: 24 * DefaultStyle.dp
-						icon.source: AppIcons.returnArrow
+						icon.source: AppIcons.leftArrow
 						onClicked: {
 							console.debug("[CallPage]User: return to call history")
 							listStackView.pop()

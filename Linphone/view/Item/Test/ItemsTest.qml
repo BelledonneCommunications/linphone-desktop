@@ -102,22 +102,22 @@ Window {
 			text: "scaled text"
 		}
 		RowLayout {
-			TextInput {
+			TextField {
 				label: "mandatory text input"
 				placeholderText: "default text"
-				mandatory: true
+				// mandatory: true
 			}
-			TextInput {
+			TextField {
 				label: "password text input"
 				placeholderText: "default text"
 				hidden: true
 			}
-			TextInput {
+			TextField {
 				id: next
 				label: "text input with long long looooooooooooooooooooooooooooooooooooooooooooooooooooooooong label"
 				placeholderText: "long long long default text"
 			}
-			TextInput {
+			TextField {
 				label: "number text input"
 				validator: IntValidator{}
 			}

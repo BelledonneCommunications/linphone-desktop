@@ -256,6 +256,15 @@ Q_ENUM_NS(ParticipantDeviceState)
 linphone::ParticipantDevice::State toLinphone(const LinphoneEnums::ParticipantDeviceState &state);
 LinphoneEnums::ParticipantDeviceState fromLinphone(const linphone::ParticipantDevice::State &state);
 
+enum class ParticipantRole {
+	Speaker = int(linphone::Participant::Role::Speaker),
+	Listener = int(linphone::Participant::Role::Listener),
+	Unknown = int(linphone::Participant::Role::Unknown)
+};
+Q_ENUM_NS(ParticipantRole)
+linphone::Participant::Role toLinphone(const LinphoneEnums::ParticipantRole &role);
+LinphoneEnums::ParticipantRole fromLinphone(const linphone::Participant::Role &role);
+
 enum class RegistrationState {
 	None = int(linphone::RegistrationState::None),
 	Progress = int(linphone::RegistrationState::Progress),

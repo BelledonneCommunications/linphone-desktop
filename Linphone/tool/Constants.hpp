@@ -37,7 +37,7 @@ public:
 
 	//----------------------------------------------------------------------------------
 
-	static constexpr char DefaultLocale[] = "en";
+	static constexpr char DefaultLocale[] = "en_EN";
 	static constexpr char DefaultFont[] = "Noto Sans";
 	static constexpr int DefaultFontPointSize = 10;
 

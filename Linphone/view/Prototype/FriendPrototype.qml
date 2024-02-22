@@ -16,12 +16,12 @@ Window{
 			FriendGui{
 				id: contact
 			}
-			TextInput{
+			TextField{
 				placeholderText: 'Name'
 				initialText: contact.core.givenName
 				onTextChanged: contact.core.givenName = text 
 			}
-			TextInput{
+			TextField{
 				placeholderText: 'Address'
 				initialText: contact.core.address
 				onTextChanged: contact.core.address = text
@@ -63,7 +63,7 @@ Window{
 					Text{
 						text: modelData.core.address
 					}
-					TextInput{
+					TextField{
 						initialText: modelData.core.address
 						onTextChanged: if(modelData.core.address != text){
 								modelData.core.address = text

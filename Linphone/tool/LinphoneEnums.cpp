@@ -221,6 +221,14 @@ LinphoneEnums::ParticipantDeviceState LinphoneEnums::fromLinphone(const linphone
 	return static_cast<LinphoneEnums::ParticipantDeviceState>(state);
 }
 
+linphone::Participant::Role LinphoneEnums::toLinphone(const LinphoneEnums::ParticipantRole &role) {
+	return static_cast<linphone::Participant::Role>(role);
+}
+
+LinphoneEnums::ParticipantRole LinphoneEnums::fromLinphone(const linphone::Participant::Role &role) {
+	return static_cast<LinphoneEnums::ParticipantRole>(role);
+}
+
 linphone::Tunnel::Mode LinphoneEnums::toLinphone(const LinphoneEnums::TunnelMode &data) {
 	return static_cast<linphone::Tunnel::Mode>(data);
 }

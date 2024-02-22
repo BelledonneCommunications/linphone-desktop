@@ -2,9 +2,16 @@
 list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Main.qml
 	view/App/CallsWindow.qml
-	view/App/Layout/ContactLayout.qml
 	view/App/Layout/LoginLayout.qml
 	view/App/Layout/MainLayout.qml
+	
+	view/Layout/Conference/IncallGrid.qml
+	view/Layout/Contact/ContactLayout.qml
+	view/Layout/Meeting/AddParticipantsLayout.qml
+
+	view/Layout/FormItemLayout.qml
+	view/Layout/Mosaic.qml
+	view/Layout/Section.qml
 	
 	view/Item/Account/Accounts.qml
 	
@@ -22,9 +29,14 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Contact/ContactEdition.qml
 	view/Item/Contact/ContactsList.qml
 	view/Item/Contact/Sticker.qml
+
+	view/Item/Meeting/MeetingList.qml
+	view/Item/Meeting/NewMeeting.qml
 	
 	view/Item/BusyIndicator.qml
 	view/Item/Button.qml
+	view/Item/Calendar.qml
+	view/Item/CalendarComboBox.qml
 	view/Item/Carousel.qml
 	view/Item/CheckBox.qml
 	view/Item/ComboBox.qml
@@ -45,9 +57,12 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/RoundedBackgroundControl.qml
 	view/Item/SearchBar.qml
 	view/Item/Slider.qml
+	view/Item/Switch.qml
 	view/Item/TabBar.qml
 	view/Item/Text.qml
-	view/Item/TextInput.qml
+	view/Item/TextArea.qml
+	view/Item/TextField.qml
+	view/Item/TimeComboBox.qml
 	view/Item/ToolTip.qml
 	view/Item/VerticalTabBar.qml
 	view/Item/ZrtpTokenAuthenticationDialog.qml
@@ -66,6 +81,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/AbstractMainPage.qml
 	view/Page/Main/CallPage.qml
 	view/Page/Main/ContactPage.qml
+	view/Page/Main/MeetingPage.qml
 	
 	view/Tool/utils.js
 # Prototypes

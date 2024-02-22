@@ -14,7 +14,7 @@ LoginLayout {
 		Button {
 			Layout.preferredHeight: 24 * DefaultStyle.dp
     		Layout.preferredWidth: 24 * DefaultStyle.dp
-			icon.source: AppIcons.returnArrow
+			icon.source: AppIcons.leftArrow
 			width: 24 * DefaultStyle.dp
 			height: 24 * DefaultStyle.dp
 			background: Item {
@@ -133,34 +133,45 @@ LoginLayout {
 			id: secondItem
 			ColumnLayout {
 				spacing: 10 * DefaultStyle.dp
-				TextInput {
-					id: username
+				FormItemLayout {
 					label: qsTr("Username")
 					mandatory: true
-					textInputWidth: 360 * DefaultStyle.dp
+					contentItem: TextField {
+						id: username
+						Layout.preferredWidth: 360 * DefaultStyle.dp
+					}
 				}
-				TextInput {
-					id: password
+				FormItemLayout {
 					label: qsTr("Password")
 					mandatory: true
-					hidden: true
-					textInputWidth: 360 * DefaultStyle.dp
+					contentItem: TextField {
+						id: password
+						hidden: true
+						Layout.preferredWidth: 360 * DefaultStyle.dp
+					}
 				}
-				TextInput {
-					id: domain
+				FormItemLayout {
 					label: qsTr("Domain")
 					mandatory: true
-					textInputWidth: 360 * DefaultStyle.dp
+					contentItem: TextField {
+						id: domain
+						Layout.preferredWidth: 360 * DefaultStyle.dp
+					}
 				}
-				TextInput {
-					id: displayName
+				FormItemLayout {
 					label: qsTr("Display Name")
-					textInputWidth: 360 * DefaultStyle.dp
+					contentItem: TextField {
+						id: displayName
+						Layout.preferredWidth: 360 * DefaultStyle.dp
+					}
 				}
-				ComboBox {
+				FormItemLayout {
 					label: qsTr("Transport")
-					model:[ "TCP", "UDP", "TLS", "DTLS"]
-					Layout.preferredWidth: 360 * DefaultStyle.dp
+					contentItem: ComboBox {
+						height: 49 * DefaultStyle.dp
+						width: 360 * DefaultStyle.dp
+						model:[ "TCP", "UDP", "TLS", "DTLS"]
+					}
 				}
 
 				ErrorText {

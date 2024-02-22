@@ -21,7 +21,6 @@
 #include "CallHistoryProxy.hpp"
 #include "CallHistoryGui.hpp"
 #include "CallHistoryList.hpp"
-#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CallHistoryProxy)
 

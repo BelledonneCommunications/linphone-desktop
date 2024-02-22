@@ -17,7 +17,7 @@ LoginLayout {
 			visible: mainItem.showBackButton
 			Layout.preferredHeight: 27 * DefaultStyle.dp
 			Layout.preferredWidth: 27 * DefaultStyle.dp
-			icon.source: AppIcons.returnArrow
+			icon.source: AppIcons.leftArrow
 			background: Rectangle {
 				color: "transparent"
 			}

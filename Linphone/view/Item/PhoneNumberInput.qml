@@ -49,12 +49,11 @@ ColumnLayout {
 				Layout.bottomMargin: 10 * DefaultStyle.dp
 				color: DefaultStyle.main2_600
 			}
-			TextInput {
+			TextField {
 				id: textField
 				Layout.fillWidth: true
 				placeholderText: mainItem.placeholderText
-				enableBackgroundColors: false
-				fillWidth: true
+				background: Item{}
 				initialText: initialPhoneNumber
 				validator: IntValidator{}
 			}

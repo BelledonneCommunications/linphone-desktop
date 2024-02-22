@@ -42,6 +42,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	// Should be call from model Thread
 	mustBeInLinphoneThread(getClassName());
+	mCallHistoryModel = std::make_shared<CallHistoryModel>(callLog);
 
 	auto addr = callLog->getRemoteAddress()->clone();
 	addr->clean();
@@ -49,7 +50,6 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	// mRemoteAddress->clean();
 	mStatus = LinphoneEnums::fromLinphone(callLog->getStatus());
 	mDate = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
-	mCallHistoryModel = std::make_shared<CallHistoryModel>(callLog);
 	mIsOutgoing = callLog->getDir() == linphone::Call::Dir::Outgoing;
 	mDuration = QString::number(callLog->getDuration());
 }

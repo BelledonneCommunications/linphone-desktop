@@ -62,6 +62,8 @@ public:
 	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
+	Q_INVOKABLE static void
+	showInformationPopup(const QString &title, const QString &description, bool isSuccess = true);
 	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui);
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
@@ -74,8 +76,26 @@ public:
 	Q_INVOKABLE static QStringList generateSecurityLettersArray(int arraySize, int correctIndex, QString correctCode);
 	Q_INVOKABLE static int getRandomIndex(int size);
 	Q_INVOKABLE static void copyToClipboard(const QString &text);
-	static QString generateSavedFilename(const QString &from, const QString &to);
+	Q_INVOKABLE static QString toDateString(QDateTime date, const QString &format = "");
+	Q_INVOKABLE static QString toDateString(QDate date, const QString &format = "");
+	Q_INVOKABLE static QString toDateDayString(const QDateTime &date);
+	Q_INVOKABLE static QString toDateHourString(const QDateTime &date);
+	Q_INVOKABLE static QString toDateDayNameString(const QDateTime &date);
+	Q_INVOKABLE static QString toDateMonthString(const QDateTime &date);
+	Q_INVOKABLE static bool isCurrentDay(QDateTime date);
+	Q_INVOKABLE static bool isCurrentDay(QDate date);
+	Q_INVOKABLE static bool isCurrentMonth(QDate date);
+	Q_INVOKABLE static bool isBeforeToday(QDate date);
+	Q_INVOKABLE static bool datesAreEqual(const QDate &a, const QDate &b);
+	Q_INVOKABLE static QDateTime createDateTime(const QDate &date, int hour, int min);
+	Q_INVOKABLE static int getYear(const QDate &date);
+	Q_INVOKABLE static int secsTo(const QString &start, const QString &end);
+	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);
 	Q_INVOKABLE static QString generateLinphoneSipAddress(const QString &uri);
+	Q_INVOKABLE static QString findAvatarByAddress(const QString &address);
+	static QString generateSavedFilename(const QString &from, const QString &to);
+	Q_INVOKABLE static bool isMe(const QString &address);
+	static QString getCountryName(const QLocale::Country &p_country);
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();

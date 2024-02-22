@@ -345,8 +345,9 @@ Item {
 						id: callPage
 					}
 					ContactPage{}
+					Item{}
 					//ConversationPage{}
-					//MeetingPage{}
+					MeetingPage{}
 				}
 			}
 		}

@@ -9,43 +9,51 @@ ColumnLayout {
 	spacing: 15 * DefaultStyle.dp
 	signal connectionSucceed()
 
-	TextInput {
+	FormItemLayout {
 		id: username
 		label: "Username"
 		mandatory: true
 		enableErrorText: true
-
-		Binding on background.border.color {
-			when: errorText.opacity != 0
-			value: DefaultStyle.danger_500main
-		}
-		Binding on textField.color {
-			when: errorText.opacity != 0
-			value: DefaultStyle.danger_500main
-		}
-	}
-
-	Item {
-		Layout.preferredHeight: password.implicitHeight
-		TextInput {
-			id: password
-			label: "Password"
-			mandatory: true
-			hidden: true
-			enableErrorText: true
-
-			Binding on background.border.color {
+		contentItem: TextField {
+			id: usernameEdit
+			Layout.preferredWidth: 360 * DefaultStyle.dp
+			Layout.preferredHeight: 49 * DefaultStyle.dp
+			Binding on backgroundBorderColor {
 				when: errorText.opacity != 0
 				value: DefaultStyle.danger_500main
 			}
-			Binding on textField.color {
+			Binding on color {
 				when: errorText.opacity != 0
 				value: DefaultStyle.danger_500main
+			}
+		}
+	}
+	Item {
+		Layout.preferredHeight: password.implicitHeight
+		FormItemLayout {
+			id: password
+			label: "Password"
+			mandatory: true
+			enableErrorText: true
+			contentItem: TextField {
+				id: passwordEdit
+				Layout.preferredWidth: 360 * DefaultStyle.dp
+				Layout.preferredHeight: 49 * DefaultStyle.dp
+				hidden: true
+				Binding on backgroundBorderColor {
+					when: errorText.opacity != 0
+					value: DefaultStyle.danger_500main
+				}
+				Binding on color {
+					when: errorText.opacity != 0
+					value: DefaultStyle.danger_500main
+				}
 			}
 		}
 
 		ErrorText {
-			anchors.bottom: password.bottom
+			anchors.top: password.bottom
+			anchors.topMargin: 15 * DefaultStyle.dp
 			id: errorText
 			Connections {
 				target: LoginPageCpp
@@ -106,14 +114,14 @@ ColumnLayout {
 				password.errorMessage = ""
 				errorText.text = ""
 
-				if (username.text.length == 0 || password.text.length == 0) {
-					if (username.text.length == 0)
+				if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0) {
+					if (usernameEdit.text.length == 0)
 						username.errorMessage = qsTr("You must enter a username")
-					if (password.text.length == 0)
+					if (passwordEdit.text.length == 0)
 						password.errorMessage = qsTr("You must enter a password")
 					return
 				}
-				LoginPageCpp.login(username.text, password.text)
+				LoginPageCpp.login(usernameEdit.text, passwordEdit.text)
 				connectionButton.currentIndex = 1
 			}
 		}

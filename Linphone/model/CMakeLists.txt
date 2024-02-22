@@ -5,6 +5,13 @@ list(APPEND _LINPHONEAPP_SOURCES
 	model/call/CallModel.cpp
 
 	model/call-history/CallHistoryModel.cpp
+	
+	model/conference/ConferenceInfoModel.cpp
+	model/conference/ConferenceModel.cpp
+	model/conference/ConferenceSchedulerModel.cpp
+
+	model/participant/ParticipantDeviceModel.cpp
+	model/participant/ParticipantModel.cpp
 
 	model/core/CoreModel.cpp
 	

@@ -18,6 +18,19 @@ ListView {
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
 	property bool showOnlyFavourites: false
+
+	property ConferenceInfoGui confInfoGui
+
+	property bool multiSelectionEnabled: false
+	property list<string> selectedContacts
+	property int selectedContactCount: selectedContacts.length
+	Component.onCompleted: {
+		if (confInfoGui) {
+			for(var i = 0; i < confInfoGui.core.participants.length; ++i) {
+				selectedContacts.push(confInfoGui.core.getParticipantAddressAt(i));
+			}
+		}
+	}
 	property int delegateLeftMargin: 0
 	currentIndex: -1
 
@@ -30,10 +43,11 @@ ListView {
 		selectedContact = model.getAt(currentIndex) || null
 	}
 
-	signal contactSelected(var contact)
+	// signal contactSelected(var contact)
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
-	
+	signal contactAddedToSelection()
+
 	model: MagicSearchProxy {
 			searchText: searchBarText.length === 0 ? "*" : searchBarText
 	}
@@ -89,13 +103,29 @@ ListView {
 				maximumLineCount: 1
 				Layout.fillWidth: true
 			}
-			RowLayout {
-				id: buttonsLayout
-				z: 1
-				height: parent.height
-				children: mainItem.delegateButtons || []
+			EffectImage {
+				id: isSelectedCheck
+				// visible: mainItem.multiSelectionEnabled && (mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1)
+				visible: mainItem.multiSelectionEnabled && (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)
+				Layout.preferredWidth: 24 * DefaultStyle.dp
+				Layout.preferredHeight: 24 * DefaultStyle.dp
+				imageSource: AppIcons.check
+				colorizationColor: DefaultStyle.main1_500_main
+				Connections {
+					target: mainItem
+					// onParticipantsChanged: isSelectedCheck.visible = mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress) != -1
+					onSelectedContactCountChanged: isSelectedCheck.visible = (mainItem.selectedContacts.indexOf(modelData.core.defaultAddress) != -1)
+				}
 			}
+		}
 
+		RowLayout {
+			z: 1
+			height: parent.height
+			anchors.right: parent.right
+			anchors.rightMargin: 5 * DefaultStyle.dp
+			anchors.verticalCenter: parent.verticalCenter
+			children: mainItem.delegateButtons || []
 			PopupButton {
 				id: friendPopup
 				z: 1
@@ -159,6 +189,7 @@ ListView {
 				}
 			}
 		}
+
 		
 		MouseArea {
 			id: contactArea
@@ -169,11 +200,29 @@ ListView {
 				anchors.fill: contactArea
 				opacity: 0.7
 				color: DefaultStyle.main2_100
-				visible: contactArea.containsMouse || friendPopup.hovered || mainItem.currentIndex === index
+				visible: contactArea.containsMouse || friendPopup.hovered || (!mainItem.multiSelectionEnabled && mainItem.currentIndex === index)
 			}
 			onClicked: {
 				mainItem.currentIndex = index
-				mainItem.contactSelected(modelData)
+				// mainItem.contactSelected(modelData)
+				// if (mainItem.multiSelectionEnabled && mainItem.confInfoGui) {
+				// 	var indexInSelection = mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress)
+				// 	if (indexInSelection == -1) {
+				// 		mainItem.confInfoGui.core.addParticipant(modelData.core.defaultAddress)
+				// 	} else {
+				// 		mainItem.confInfoGui.core.removeParticipant(indexInSelection)
+				// 	}
+				// }
+				if (mainItem.multiSelectionEnabled) {
+					var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
+					if (indexInSelection == -1) {
+						mainItem.selectedContacts.push(modelData.core.defaultAddress)
+						mainItem.contactAddedToSelection()
+					}
+					else {
+						mainItem.selectedContacts.splice(indexInSelection, 1)
+					}
+				}
 			}
 		}
 	}

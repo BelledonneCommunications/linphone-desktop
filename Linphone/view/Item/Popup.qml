@@ -8,6 +8,7 @@ Control.Popup{
 	padding: 0
 	property color underlineColor
 	property int radius: 16 * DefaultStyle.dp
+	property bool hovered: mouseArea.containsMouse
 	background: Item{
 		Rectangle {
 			visible: mainItem.underlineColor != undefined
@@ -31,6 +32,11 @@ Control.Popup{
 			shadowColor: DefaultStyle.grey_900
 			shadowBlur: 1.0
 			shadowOpacity: 0.1
+		}
+		MouseArea {
+			id: mouseArea
+			anchors.fill: parent
+			hoverEnabled: true
 		}
 	}
 }

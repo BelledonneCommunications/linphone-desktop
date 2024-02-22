@@ -24,6 +24,7 @@
 DEFINE_ABSTRACT_OBJECT(FriendGui)
 
 FriendGui::FriendGui(QObject *parent) : QObject(parent) {
+	mustBeInMainThread(getClassName());
 	mCore = FriendCore::create(nullptr);
 }
 FriendGui::FriendGui(QSharedPointer<FriendCore> core) {

@@ -220,8 +220,13 @@ void CoreModel::onConferenceInfoReceived(const std::shared_ptr<linphone::Core> &
                                          const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
 	emit conferenceInfoReceived(core, conferenceInfo);
 }
+void CoreModel::onConferenceStateChanged(const std::shared_ptr<linphone::Core> &core,
+                                         const std::shared_ptr<linphone::Conference> &conference,
+                                         linphone::Conference::State state) {
+	emit conferenceStateChanged(core, conference, state);
+}
 void CoreModel::onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
-                                    linphone::ConfiguringState status,
+                                    linphone::Config::ConfiguringState status,
                                     const std::string &message) {
 	emit configuringStatus(core, status, message);
 }

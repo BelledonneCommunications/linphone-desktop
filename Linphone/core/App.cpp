@@ -41,17 +41,23 @@
 #include "core/call/CallProxy.hpp"
 #include "core/camera/CameraGui.hpp"
 #include "core/fps-counter/FPSCounter.hpp"
+#include "core/conference/ConferenceInfoGui.hpp"
+#include "core/conference/ConferenceInfoProxy.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
-#include "core/friend/FriendInitialProxy.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/login/LoginPage.hpp"
 #include "core/notifier/Notifier.hpp"
+#include "core/participant/ParticipantDeviceCore.hpp"
+#include "core/participant/ParticipantGui.hpp"
+#include "core/participant/ParticipantProxy.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/search/MagicSearchProxy.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
+#include "core/timezone/TimeZone.hpp"
+#include "core/timezone/TimeZoneProxy.hpp"
 #include "core/variant/VariantList.hpp"
 #include "model/object/VariantObject.hpp"
 #include "tool/Constants.hpp"
@@ -184,7 +190,14 @@ void App::initCppInterfaces() {
 
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterType<VariantObject>(Constants::MainQmlUri, 1, 0, "VariantObject");
+	qmlRegisterType<VariantList>(Constants::MainQmlUri, 1, 0, "VariantList");
 
+	qmlRegisterType<ParticipantProxy>(Constants::MainQmlUri, 1, 0, "ParticipantProxy");
+	qmlRegisterType<ParticipantGui>(Constants::MainQmlUri, 1, 0, "ParticipantGui");
+	qmlRegisterType<ConferenceInfoProxy>(Constants::MainQmlUri, 1, 0, "ConferenceInfoProxy");
+	qmlRegisterType<ConferenceInfoGui>(Constants::MainQmlUri, 1, 0, "ConferenceInfoGui");
+
+	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
 	qmlRegisterUncreatableType<PhoneNumber>(Constants::MainQmlUri, 1, 0, "PhoneNumber", QLatin1String("Uncreatable"));
 	qmlRegisterType<AccountProxy>(Constants::MainQmlUri, 1, 0, "AccountProxy");
 	qmlRegisterType<AccountGui>(Constants::MainQmlUri, 1, 0, "AccountGui");
@@ -192,15 +205,14 @@ void App::initCppInterfaces() {
 	qmlRegisterUncreatableType<CallCore>(Constants::MainQmlUri, 1, 0, "CallCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
 	qmlRegisterType<CallHistoryProxy>(Constants::MainQmlUri, 1, 0, "CallHistoryProxy");
-	qmlRegisterType<VariantList>(Constants::MainQmlUri, 1, 0, "VariantList");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
 	qmlRegisterType<FriendGui>(Constants::MainQmlUri, 1, 0, "FriendGui");
 	qmlRegisterUncreatableType<FriendCore>(Constants::MainQmlUri, 1, 0, "FriendCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<MagicSearchProxy>(Constants::MainQmlUri, 1, 0, "MagicSearchProxy");
-	qmlRegisterType<FriendInitialProxy>(Constants::MainQmlUri, 1, 0, "FriendInitialProxy");
 	qmlRegisterType<CameraGui>(Constants::MainQmlUri, 1, 0, "CameraGui");
 	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
 
+	qmlRegisterType<TimeZoneProxy>(Constants::MainQmlUri, 1, 0, "TimeZoneProxy");
 	LinphoneEnums::registerMetaTypes();
 }
 
@@ -208,12 +220,13 @@ void App::initCppInterfaces() {
 
 void App::clean() {
 	// Wait 500ms to let time for log te be stored.
-	delete mNotifier;
-	mNotifier = nullptr;
+	// mNotifier destroyed in mEngine deletion as it is its parent
 	delete mEngine;
 	mEngine = nullptr;
-	mSettings.reset();
-	mSettings = nullptr;
+	if (mSettings) {
+		mSettings.reset();
+		mSettings = nullptr;
+	}
 	mLinphoneThread->wait(250);
 	qApp->processEvents(QEventLoop::AllEvents, 250);
 	mLinphoneThread->exit();

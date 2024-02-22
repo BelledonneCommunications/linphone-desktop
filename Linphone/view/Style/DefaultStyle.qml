@@ -29,7 +29,6 @@ QtObject {
 	property color success_500main: "#4FAE80"
 	property color info_500_main: "#4AA8FF"
 
-
 	
 	property double dp: 1
 	
@@ -39,7 +38,5 @@ QtObject {
 	property color numericPadPressedButtonColor: "#EEF7F8"
 
 	property color groupCallButtonColor: "#EEF7F8"
-	property color launchCallButtonColor: "#4FAE80"
-	property color callCheckedButtonColor: "#9AABB5"
 
 }

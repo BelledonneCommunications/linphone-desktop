@@ -128,10 +128,10 @@ Window{
 						}
 					}
 				}
-				TextInput {
+				TextField {
 					id: usernameToCall
 					label: "Username to call"
-					textInputWidth: 250
+					Layout.preferredWidth: 250 * DefaultStyle.dp
 				}
 				Button{
 					text: 'Call'

@@ -68,16 +68,19 @@ LoginLayout {
 					Layout.topMargin: 20 * DefaultStyle.dp
 					spacing: 15 * DefaultStyle.dp
 					RowLayout {
-						TextInput {
+						FormItemLayout {
 							label: qsTr("Username")
 							mandatory: true
-							textInputWidth: 346 * DefaultStyle.dp
+							contentItem: TextField {
+								Layout.preferredWidth: 346 * DefaultStyle.dp
+							}
 						}
 						ComboBox {
-							label: " "
+							Layout.alignment: Qt.AlignBottom
 							enabled: false
 							model: [{text:"@sip.linphone.org"}]
 							Layout.preferredWidth: 210 * DefaultStyle.dp
+							Layout.preferredHeight: 49 * DefaultStyle.dp
 						}
 					}
 					PhoneNumberInput {
@@ -85,15 +88,17 @@ LoginLayout {
 						label: qsTr("Phone number")
 						mandatory: true
 						placeholderText: "Phone number"
-						textInputWidth: 346 * DefaultStyle.dp
+						Layout.preferredWidth: 346 * DefaultStyle.dp
 					}
 					RowLayout {
 						ColumnLayout {
-							TextInput {
+							FormItemLayout {
 								label: qsTr("Password")
 								mandatory: true
-								hidden: true
-								textInputWidth: 346 * DefaultStyle.dp
+								contentItem: TextField {
+									hidden: true
+									Layout.preferredWidth: 346 * DefaultStyle.dp
+								}
 							}
 							Text {
 								text: qsTr("The password must contain 6 characters minimum")
@@ -104,11 +109,13 @@ LoginLayout {
 							}
 						}
 						ColumnLayout {
-							TextInput {
+							FormItemLayout {
 								label: qsTr("Confirm password")
 								mandatory: true
-								hidden: true
-								textInputWidth: 346 * DefaultStyle.dp
+								contentItem: TextField {
+									hidden: true
+									Layout.preferredWidth: 346 * DefaultStyle.dp
+								}
 							}
 							Text {
 								text: qsTr("The password must contain 6 characters minimum")
@@ -162,34 +169,40 @@ LoginLayout {
 					Layout.fillHeight: true
 					spacing: 15 * DefaultStyle.dp
 					RowLayout {
-						TextInput {
+						FormItemLayout {
 							label: qsTr("Username")
 							mandatory: true
-							textInputWidth: 346 * DefaultStyle.dp
+							contentItem: TextField {
+								Layout.preferredWidth: 346 * DefaultStyle.dp
+							}
 						}
 						ComboBox {
 							// if we don't set a label this item is offset
 							// due to the invisibility of the upper label
-							label: " "
 							enabled: false
 							model: [{text:"@sip.linphone.org"}]
 							Layout.preferredWidth: 210 * DefaultStyle.dp
+							Layout.alignment: Qt.AlignBottom
 						}
 					}
-					TextInput {
-						id: emailInput
+					FormItemLayout {
 						label: qsTr("Email")
 						mandatory: true
-						textInputWidth: 346 * DefaultStyle.dp
+						contentItem: TextField {
+							id: emailInput
+							Layout.preferredWidth: 346 * DefaultStyle.dp
+						}
 					}
 					RowLayout {
 						ColumnLayout {
-							TextInput {
-								id: pwdInput
+							FormItemLayout {
 								label: qsTr("Password")
 								mandatory: true
-								hidden: true
-								textInputWidth: 346 * DefaultStyle.dp
+								contentItem: TextField {
+									id: pwdInput
+									hidden: true
+									Layout.preferredWidth: 346 * DefaultStyle.dp
+								}
 							}
 							Text {
 								text: qsTr("The password must contain 6 characters minimum")
@@ -200,12 +213,14 @@ LoginLayout {
 							}
 						}
 						ColumnLayout {
-							TextInput {
-								id: confirmPwdInput
+							FormItemLayout {
 								label: qsTr("Confirm password")
 								mandatory: true
-								hidden: true
-								textInputWidth: 346 * DefaultStyle.dp
+								contentItem: TextField {
+									id: confirmPwdInput
+									hidden: true
+									Layout.preferredWidth: 346 * DefaultStyle.dp
+								}
 							}
 							Text {
 								text: qsTr("The password must contain 6 characters minimum")

@@ -15,6 +15,7 @@ Control.Button {
 	property bool underline: false
 	property bool shadowEnabled: false
 	property var contentImageColor
+	property alias contentText: contentText
 	hoverEnabled: true
 	icon.width: width
 	icon.height: height
@@ -69,6 +70,7 @@ Control.Button {
 				? 1
 				: 2
 
+		width: mainItem.width
 		Text {
 			id: contentText
 			horizontalAlignment: Text.AlignHCenter
@@ -76,10 +78,10 @@ Control.Button {
 			Layout.alignment: Qt.AlignCenter
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			width: implicitWidth
 			height: implicitHeight
-			wrapMode: Text.WordWrap
+			wrapMode: Text.WrapAnywhere
 			text: mainItem.text
+			maximumLineCount: 1
 			color: inversedColors ? mainItem.color : DefaultStyle.grey_0
 			font {
 				pixelSize: mainItem.textSize

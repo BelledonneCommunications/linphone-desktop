@@ -26,7 +26,9 @@ StackView {
 	property string displayNameVal: displayNameObj ? displayNameObj.value : ""
 	property bool haveAvatar: (account && account.core.pictureUri )
 								|| (contact && contact.core.pictureUri)
-			
+								|| computedAvatarUri.length != 0
+	property string computedAvatarUri: UtilsCpp.findAvatarByAddress(address)
+								
 	onHaveAvatarChanged: replace(haveAvatar ? avatar : initials, StackView.Immediate)
 
 	property bool secured: false
@@ -134,7 +136,7 @@ StackView {
 				anchors.centerIn: parent
 				source: mainItem.account && mainItem.account.core.pictureUri 
 				|| mainItem.contact && mainItem.contact.core.pictureUri
-				|| ""
+				|| computedAvatarUri
 				mipmap: true
 			}
 			ShaderEffect {
