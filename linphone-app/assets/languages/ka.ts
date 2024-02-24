@@ -4988,5 +4988,15 @@
         <source>commandLineOptionQtLogsOnly</source>
         <translation>მხოლოდ აპლიკაციიდან ჟურნალების დაბეჭვდა</translation>
     </message>
+    <message>
+        <source>recoveringAccount</source>
+        <extracomment>&apos;Recovering account&apos; : User message for recovering step.</extracomment>
+        <translation>ანგარიშის აღდგენა</translation>
+    </message>
+    <message>
+        <source>Cannot open validation url for the account creation request token</source>
+        <extracomment>&quot;Cannot open validation URL for the account creation request token&quot; : Warning message.</extracomment>
+        <translation>დადასტურების URL-ის გახსნა ანგარიშის შექმნის მოთხოვნის ტოკენისთვის ვერ ხერხდება</translation>
+    </message>
 </context>
 </TS>
