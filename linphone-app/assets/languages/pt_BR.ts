@@ -95,7 +95,7 @@
     </message>
     <message>
         <source>quit</source>
-        <translation>Desistir</translation>
+        <translation>Sair</translation>
     </message>
     <message>
         <source>settings</source>
@@ -166,7 +166,7 @@
     <message>
         <source>homeCgu</source>
         <extracomment>&apos;I accept %1&apos;s %2terms of use%3 and %4privacy policy%5&apos; : where %1 is the vendor name and other %n are internal keywords that encapsulate links.</extracomment>
-        <translation>Aceito %1&apos;s %2terms de utilização%3 e %4política de privacidade%5</translation>
+        <translation>Eu aceito os %2termos de uso%3 e %4política de privacidade%5 de %1</translation>
     </message>
 </context>
 <context>
@@ -2082,7 +2082,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>quit</source>
-        <translation>Desistir</translation>
+        <translation>Sair</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
@@ -2112,7 +2112,7 @@ Clique aqui: &lt;a href=&quot;%1&quot;&gt;%1 &lt;/a&gt;
     </message>
     <message>
         <source>quit</source>
-        <translation>Desistir</translation>
+        <translation>Sair</translation>
     </message>
     <message>
         <source>checkForUpdates</source>
