@@ -20,11 +20,16 @@
 #
 ############################################################################
 
-set(LINPHONEAPP_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build: comma-separated list of values in [arm64, x86_64]")
 option(ENABLE_FAT_BINARY "Enable fat binary generation using lipo." ON)
 
-set(_MACOS_ARCHS ${LINPHONEAPP_MACOS_ARCHS})
 #linphone_sdk_convert_comma_separated_list_to_cmake_list("${LINPHONESDK_MACOS_ARCHS}" _MACOS_ARCHS)
+macro(linphone_app_convert_comma_separated_list_to_cmake_list INPUT OUTPUT)
+	string(REPLACE " " "" ${OUTPUT} "${INPUT}")
+	string(REPLACE "," ";" ${OUTPUT} "${${OUTPUT}}")
+endmacro()
+linphone_app_convert_comma_separated_list_to_cmake_list("${LINPHONEAPP_MACOS_ARCHS}" _MACOS_ARCHS)
+
+
 
 set(LINPHONEAPP_NAME "linphone-app")
 set(LINPHONEAPP_PLATFORM "macos")
@@ -49,7 +54,7 @@ foreach(_MACOS_ARCH IN LISTS _MACOS_ARCHS)
 	set(_MACOS_ARCH_INSTALL_DIR "${_MACOS_INSTALL_DIR}-${_MACOS_ARCH}")		# build/OUTPUT/linphone-app/macos-x86_64
 
 	add_custom_target(${_TARGET_NAME} ALL
-		COMMAND ${CMAKE_COMMAND} -B ${_MACOS_ARCH_BINARY_DIR} -DMONO_ARCH=${_MACOS_ARCH} ${USER_ARGS} ${OPTION_LIST} ${_MACOS_CMAKE_ARGS} -DLINPHONEAPP_INSTALL_PREFIX=${_MACOS_ARCH_INSTALL_DIR} -DCMAKE_TOOLCHAIN_FILE=${PROJECT_SOURCE_DIR}/cmake/toolchains/toolchain-mac-x86_64.cmake -DLINPHONEAPP_BUILD_TYPE="Normal"
+		COMMAND ${CMAKE_COMMAND} -B ${_MACOS_ARCH_BINARY_DIR} -DMONO_ARCH=${_MACOS_ARCH} ${USER_ARGS} ${OPTION_LIST} ${_MACOS_CMAKE_ARGS} -DLINPHONEAPP_INSTALL_PREFIX=${_MACOS_ARCH_INSTALL_DIR} -DCMAKE_TOOLCHAIN_FILE=${PROJECT_SOURCE_DIR}/cmake/toolchains/toolchain-mac-${_MACOS_ARCH}.cmake -DLINPHONEAPP_BUILD_TYPE="Normal"
 		COMMAND ${CMAKE_COMMAND} --build ${_MACOS_ARCH_BINARY_DIR} --target install ${_CMAKE_BUILD_ARGS}
 		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
 		COMMENT "Building Linphone APP for MacOS ${_MACOS_ARCH}"

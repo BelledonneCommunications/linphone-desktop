@@ -57,6 +57,7 @@ endif()
 set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 
 if( APPLE )
+	set(LINPHONEAPP_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build: comma-separated list of values in [arm64, x86_64]")
 	set(LINPHONESDK_BUILD_TYPE "Default")#Using Mac will remove all SDK targets.
 	set(ENABLE_FAT_BINARY "ON") # Disable XCFrameworks as it is not supported.
 
@@ -68,13 +69,8 @@ if( APPLE )
 	if( NOT CMAKE_OSX_DEPLOYMENT_TARGET)
 		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")#Qt: 'path' is unavailable: introduced in macOS 10.15
 	endif()
-	if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "arm64")# TODO: add universal build
-		set(LINPHONESDK_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build for: comma-separated list of values in [x86_64]")
-	else()
-		set(LINPHONESDK_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build for: comma-separated list of values in [x86_64]")
-	endif()
+	set(LINPHONESDK_MACOS_ARCHS ${LINPHONEAPP_MACOS_ARCHS})
 	set(CMAKE_OSX_ARCHITECTURES ${LINPHONESDK_MACOS_ARCHS} CACHE STRING "")
-	set(CMAKE_SYSTEM_PROCESSOR "x86_64")
 elseif(WIN32)
     set(LINPHONESDK_BUILD_TYPE "Default")
 else()
