@@ -16,7 +16,6 @@
 #  along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ################################################################################
-message(FATAL_ERROR A)
 set(CMAKE_SYSTEM_PROCESSOR "arm64")
 set(CMAKE_OSX_ARCHITECTURES "arm64")
 set(CLANG_TARGET "arm64-apple-macos")

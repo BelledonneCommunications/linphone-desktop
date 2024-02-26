@@ -163,9 +163,9 @@ Before you install packages with Brew, you may have to change directories permis
         
 6. Download [Qt](https://www.qt.io/download), install a Qt5 version and set Qt5_DIR and PATH variables.
 
-7. Qt5 is not available for arm64. If you are building on a arm64 system, you have to select the x86_64 processor on the generation stage of cmake :
+7. The default architecture is x86_64 because Qt 5.15.2 is not available for arm64. LINPHONEAPP_MACOS_ARCHS can be used to change it.
 
-	-DCMAKE_APPLE_SILICON_PROCESSOR=x86_64
+	-DLINPHONEAPP_MACOS_ARCHS=arm64
 	
 
 8. Build as usual (General Steps).
