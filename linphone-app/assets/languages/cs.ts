@@ -1694,6 +1694,16 @@ Adresa URL není nakonfigurována.</translation>
         <extracomment>&apos;Call has been paused by remote.&apos; : Remote pause message in call.</extracomment>
         <translation>Hovor byl vzdáleně pozastaven.</translation>
     </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation>Zastavit sdílení</translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation>Probíhá sdílení</translation>
+    </message>
 </context>
 <context>
     <name>IncallFullscreen</name>
@@ -1731,6 +1741,16 @@ Adresa URL není nakonfigurována.</translation>
         <source>callWarningRecord</source>
         <extracomment>&apos;This call is being recorded.&apos; : Warn the user that the remote is currently recording the call.</extracomment>
         <translation>Tento hovor se nahrává.</translation>
+    </message>
+    <message>
+        <source>incallStopScreenSharing</source>
+        <extracomment>&apos;Stop sharing&apos; : Button label to stop the screen sharing.</extracomment>
+        <translation>Zastavit sdílení</translation>
+    </message>
+    <message>
+        <source>incallRunningScreenSharing</source>
+        <extracomment>&apos;Presentation in progress&apos;: Button label to indicate that a screen sharing is running.</extracomment>
+        <translation>Probíhá sdílení</translation>
     </message>
 </context>
 <context>
@@ -1779,6 +1799,36 @@ Adresa URL není nakonfigurována.</translation>
         <source>incallMenuParticipantsAlone</source>
         <extracomment>&apos;Your are currently alone in this meeting&apos; : Message to warn the user when there is no other participant.</extracomment>
         <translation>Na této schůzce jste momentálně sami</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharing</source>
+        <extracomment>&apos;Screen Sharing&apos; : Menu title to show the screen sharing settings.</extracomment>
+        <translation>Sdílení obrazovky</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreen</source>
+        <extracomment>&apos;Entire screen&apos; : Setting label to set the mode of screen sharing for displaying a selected screen.</extracomment>
+        <translation>Celá obrazovka</translation>
+    </message>
+    <message>
+        <source>incalMenuScreenSharingWindow</source>
+        <extracomment>&apos;Window&apos; : Setting label to set the mode of the screen sharing for displaying a selected window.</extracomment>
+        <translation>Okno</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStop</source>
+        <extracomment>&apos;Stop&apos; : Text button to stop the screen sharing.</extracomment>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingStart</source>
+        <extracomment>&apos;Share&apos; : Text button to start the screen sharing.</extracomment>
+        <translation>Sdílet</translation>
+    </message>
+    <message>
+        <source>incallMenuScreenSharingScreenIndex</source>
+        <extracomment>&apos;Screen %1&apos; : Screen enumeration for selection where %1 is the index of the screen.</extracomment>
+        <translation>Obrazovka %1</translation>
     </message>
 </context>
 <context>
@@ -3992,6 +4042,11 @@ Klikněte zde: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <source>videoModeLabel</source>
         <extracomment>&apos;Camera modes&apos; : Label to choose a camera modes.</extracomment>
         <translation>Režimy webkamery</translation>
+    </message>
+    <message>
+        <source>videoMaxThumbnails</source>
+        <extracomment>&apos;Maximum thumbnails&apos; : Label to set the maximum of thumbnails that are shown in conference.</extracomment>
+        <translation>Max. počet náhledů</translation>
     </message>
 </context>
 <context>
