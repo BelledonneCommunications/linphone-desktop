@@ -1,0 +1,110 @@
+###############################################################################
+# Dockerfile used to make gitlab.linphone.org:4567/bc/public/linphone-desktop/bc-dev-ubuntu-20-04-lts:20231024_add_multimedia
+###############################################################################
+
+FROM ubuntu:20.04
+
+# Qt on Ubuntu 20.04 is too old. Use a downloader.
+ARG QT_VERSION=5.15.2
+ARG QT6_VERSION=6.5.3
+#Do not use it. It seems that it cannot be used from python command.
+#ARG QT_MODULES=qtnetworkauth qtquick3d qtmultimedia
+
+MAINTAINER Julien Wadel <julien.wadel@belledonne-communications.com>
+
+# Use a Swiss mirror
+RUN sed -i -E 's/(archive|security)\.ubuntu\.com/ch.archive.ubuntu.com/' /etc/apt/sources.list
+
+# add fallbacks for timeout connections.
+
+#France
+RUN echo "deb http://fr.archive.ubuntu.com/ubuntu/ bionic main restricted" >> /etc/apt/sources.list
+RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main restricted" >> /etc/apt/sources.list
+RUN echo "deb http://ch.archive.ubuntu.com/ubuntu/ bionic-updates main restricted" >> /etc/apt/sources.list
+#Belgium
+RUN echo "deb http://be.archive.ubuntu.com/ubuntu/ bionic main restricted" >> /etc/apt/sources.list
+RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main restricted" >> /etc/apt/sources.list
+RUN echo "deb http://be.archive.ubuntu.com/ubuntu/ bionic-updates main restricted" >> /etc/apt/sources.list
+#International
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ bionic main restricted" >> /etc/apt/sources.list
+RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main restricted" >> /etc/apt/sources.list
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted" >> /etc/apt/sources.list
+
+# Configure locale
+RUN apt-get update && \
+    apt-get install -y locales && \
+    apt-get clean && \
+    echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
+    locale-gen
+ENV LANG='en_US.UTF-8' LANGUAGE='en_US:en' LC_ALL='en_US.UTF-8'
+ENV TZ=Europe/Paris
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ARG DEBIAN_FRONTEND=noninteractive
+
+ENV SHELL=/bin/bash
+#ENV PS1='\[\e[33m\]\u@bc-dev-ubuntu-20-04>\[\e[0m\] '
+
+# Install common general tools
+RUN apt-get update && \
+    apt-get install -y nano sudo vim && \
+    apt-get clean
+
+# Install development tools
+RUN apt-get update && \
+    apt-get install -y alien at autoconf bison ccache clang doxygen elfutils g++ gdb git graphviz intltool libtool lsb-release make ninja-build openssh-client patch perl python3-pip python3-pystache python-six python3-jsonschema python3-jinja2 meson yasm && \
+    apt-get clean
+
+# Install linphone & flexisip dependencies development packages
+RUN apt-get update && \
+    apt-get install -y libasound2-dev libavcodec-dev libavutil-dev libbsd-dev libegl1-mesa-dev libglew-dev libgsm1-dev libjansson-dev libmariadb-dev-compat libmbedtls-dev libopus-dev libpq-dev libprotobuf-dev libpulse-dev libqt5svg5-dev libsnmp-dev libspeex-dev libspeexdsp-dev libsqlite3-dev libsrtp2-dev libssl-dev libswscale-dev libturbojpeg0-dev libv4l-dev libvpx-dev libxerces-c-dev libxml2-dev libxv-dev protobuf-compiler qttools5-dev qttools5-dev-tools xsdcxx && \
+    apt-get clean
+
+# Install signing tools
+RUN sudo apt-get install -y gnupg2
+
+# Install configuration tools
+RUN sudo apt-get install -y wget
+
+# Configure user bc
+RUN useradd -ms /bin/bash bc && \
+    echo 'bc:cotcot' | chpasswd && \
+    echo 'bc ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Install newest cmake. Documented at https://gist.github.com/bmegli/4049b7394f9cfa016c24ed67e5041930
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.25.3/cmake-3.25.3.tar.gz && \
+	tar -zvxf cmake-3.25.3.tar.gz && \
+	cd cmake-3.25.3 && ./bootstrap && make -j8 && \
+	sudo apt-get install checkinstall && sudo checkinstall --pkgname=cmake --pkgversion="3.25-custom" --default && hash -r && \
+	cd .. && sudo rm -rf cmake-3.25.3 && rm -rf cmake-3.25.3.tar.gz
+
+# Install nasm from source as we need a newer version than the one being packaged
+RUN curl --fail --silent --show-error --location https://www.nasm.us/pub/nasm/releasebuilds/2.16.01/nasm-2.16.01.tar.gz | \
+    tar --extract --gzip --file - && cd nasm-2.16.01 && \
+    ./configure --prefix=/usr/local && make && make install && \
+    cd .. && rm -rf nasm-2.16.01
+
+###########				QT
+
+RUN sudo apt-get update && sudo apt-get install -y libxkbcommon* flite1-dev libspeechd-dev speech-dispatcher libfontconfig1-dev libfreetype6-dev libx11-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libx11-xcb* libxcb* qdbus-qt5 libqt5dbus5 libdbus-1-dev libdbus-glib-1-dev libatspi2.0-0 libatspi2.0-dev
+RUN sudo apt-get update && sudo apt-get install -y libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev
+
+USER bc
+WORKDIR /home/bc
+
+RUN sudo pip3 install --upgrade setuptools
+RUN sudo pip3 install ez_setup
+
+## Install Qt download tool
+# installation is split because there is a way where some modules are not downloaded in the first attempt.
+RUN sudo pip3 install py7zr aqtinstall
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt
+RUN sudo python3 -m aqt install-qt linux desktop $QT_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt
+RUN sudo python3 -m aqt install-qt linux desktop $QT6_VERSION -O /opt/Qt --noarchives -m qtnetworkauth qtquick3d qtmultimedia
+
+RUN sudo chown -R bc:bc /opt/Qt/
+
+RUN qtchooser -install $QT_VERSION /opt/Qt/$QT_VERSION/gcc_64/bin/qmake
+RUN qtchooser -install $QT6_VERSION /opt/Qt/$QT6_VERSION/gcc_64/bin/qmake
+
+CMD bash
