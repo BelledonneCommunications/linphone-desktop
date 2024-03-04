@@ -4,14 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## 5.3.0 - undefined
+
+## 5.2.2 - 2024-03-04
 
 ### Fixed
-- Day offset in start date when scheduling a conference.
 - Audio latency and bad echo behavior when going to media settings while being in call.
-- Network remote file in chat attachment on Windows.
+- About panel in readonly
+- Wrong day offset in start date when scheduling a conference.
 - Empty route can now be set in account settings.
+- Network remote file can be used in chat attachment on Windows.
 - Some crashs.
+- Update SDK to 5.3.26.
 
 ### Added
 - '[ui] logs_max_size' : option to set the max size of one log file.
