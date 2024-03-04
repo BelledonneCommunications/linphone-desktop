@@ -185,11 +185,11 @@ void CoreHandlers::onChatRoomStateChanged(
 
 void CoreHandlers::onConfiguringStatus(
 		const std::shared_ptr<linphone::Core> & core,
-		linphone::Config::ConfiguringState status,
+		linphone::ConfiguringState status,
 		const std::string & message){
 	Q_UNUSED(core)
 	emit setLastRemoteProvisioningState(status);
-	if(status == linphone::Config::ConfiguringState::Failed){
+	if(status == linphone::ConfiguringState::Failed){
 		qWarning() << "Remote provisioning has failed and was removed : "<< QString::fromStdString(message);
 		core->setProvisioningUri("");
 	}

@@ -42,7 +42,7 @@ void LinphoneEnums::registerMetaTypes(){
 	qRegisterMetaType<std::shared_ptr<linphone::Call>>();
 	qRegisterMetaType<linphone::Call::State>();
 	qRegisterMetaType<std::shared_ptr<linphone::Core>>();
-	qRegisterMetaType<linphone::Config::ConfiguringState>();
+	qRegisterMetaType<linphone::ConfiguringState>();
 	qRegisterMetaType<std::string>();
 	qRegisterMetaType<linphone::GlobalState>();
 	qRegisterMetaType<std::shared_ptr<linphone::ChatRoom>>();

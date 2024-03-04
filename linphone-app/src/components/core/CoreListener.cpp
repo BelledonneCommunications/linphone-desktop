@@ -57,7 +57,7 @@ void CoreListener::onChatRoomRead(const std::shared_ptr<linphone::Core> & core, 
 void CoreListener::onChatRoomStateChanged(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom,linphone::ChatRoom::State state){
 	emit chatRoomStateChanged(core, chatRoom,state);
 }
-void CoreListener::onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::Config::ConfiguringState status,const std::string & message){
+void CoreListener::onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::ConfiguringState status,const std::string & message){
 	emit configuringStatus(core,status,message);
 }
 void CoreListener::onDtmfReceived(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call,int dtmf){

@@ -177,7 +177,7 @@ public slots:
 	void initCoreManager();
 	void startIterate();
 	void stopIterate();
-	void setLastRemoteProvisioningState(const linphone::Config::ConfiguringState& state);
+	void setLastRemoteProvisioningState(const linphone::ConfiguringState& state);
 	void createLinphoneCore (const QString &configPath);// In order to delay creation
 	void handleChatRoomCreated(const QSharedPointer<ChatRoomModel> &chatRoomModel);
 	
@@ -219,7 +219,7 @@ private:
 	QSharedPointer<CoreHandlers> mHandlers;
 	
 	bool mStarted = false;
-	linphone::Config::ConfiguringState mLastRemoteProvisioningState;
+	linphone::ConfiguringState mLastRemoteProvisioningState;
 	
 	CallsListModel *mCallsListModel = nullptr;
 	ContactsListModel *mContactsListModel = nullptr;

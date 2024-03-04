@@ -58,7 +58,7 @@ signals:
 	void presenceStatusReceived(std::shared_ptr<linphone::Friend> contact);
 	void registrationStateChanged (const std::shared_ptr<linphone::Account> &account, linphone::RegistrationState state);
 	void ecCalibrationResult(linphone::EcCalibratorStatus status, int delayMs);
-	void setLastRemoteProvisioningState(const linphone::Config::ConfiguringState &state);
+	void setLastRemoteProvisioningState(const linphone::ConfiguringState &state);
 	void conferenceInfoReceived(const std::shared_ptr<const linphone::ConferenceInfo> & conferenceInfo);
 	void foundQRCode(const std::string & result);
 	
@@ -77,7 +77,7 @@ public slots:
 	void onCallCreated(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call);
 	void onChatRoomRead(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom);
 	void onChatRoomStateChanged(const std::shared_ptr<linphone::Core> & core, const std::shared_ptr<linphone::ChatRoom> & chatRoom,linphone::ChatRoom::State state);
-	void onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::Config::ConfiguringState status,const std::string & message);
+	void onConfiguringStatus(const std::shared_ptr<linphone::Core> & core,linphone::ConfiguringState status,const std::string & message);
 	void onDtmfReceived(const std::shared_ptr<linphone::Core> & lc,const std::shared_ptr<linphone::Call> & call,int dtmf);
 	void onGlobalStateChanged (const std::shared_ptr<linphone::Core> &core,linphone::GlobalState gstate,const std::string &message);
 	void onIsComposingReceived (const std::shared_ptr<linphone::Core> &core,const std::shared_ptr<linphone::ChatRoom> &room);
