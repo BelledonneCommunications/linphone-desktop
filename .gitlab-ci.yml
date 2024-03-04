@@ -27,6 +27,7 @@ variables:
   DEBIAN_10_IMAGE_VERSION: 20210217_python3
   UBUNTU_ROLLING_IMAGE_VERSION: 20211012_add_qtwebview
   UBUNTU_1804_IMAGE_VERSION: 20230706_add_deps_for_av1
+  UBUNTU_2004_IMAGE_VERSION: 20231024_add_multimedia
 
 
 workflow:
@@ -52,11 +53,15 @@ workflow:
 .job-prepare:
   variables:
     ALL_JOB_VARIABLE: ""
+.prepare:
+  variables:
+    ALL_JOB_VARIABLE: ""
 
 include:
+  - '.gitlab-ci-files/rules.yml'
   - '.gitlab-ci-files/job-linux-prepare.yml'
   - '.gitlab-ci-files/job-linux-desktop.yml'
-  - '.gitlab-ci-files/job-linux-desktop-ubuntu-1804.yml'
+  - '.gitlab-ci-files/job-linux-desktop-ubuntu-2004.yml'
   - '.gitlab-ci-files/job-windows-desktop.yml'
   - '.gitlab-ci-files/job-macosx-desktop.yml'
 
