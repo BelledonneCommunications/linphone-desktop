@@ -43,6 +43,7 @@ public:
 	static void *getDisplay(int screenIndex);
 	static int getDisplayIndex(void *screenSharing);
 	Q_INVOKABLE void getWindowIdFromMouse(VideoSourceDescriptorModel *model);
+	static QRect getWindowGeometry(void* screenSharing);
 
 signals:
 	void screenSaverStatusChanged(bool status);

@@ -495,6 +495,7 @@ void App::initContentApp () {
 	mEngine->addImageProvider(QRCodeProvider::ProviderId, new QRCodeProvider());
 	mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 	mEngine->addImageProvider(ScreenProvider::ProviderId, new ScreenProvider());
+	mEngine->addImageProvider(WindowProvider::ProviderId, new WindowProvider());
 	
 	mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 	mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);

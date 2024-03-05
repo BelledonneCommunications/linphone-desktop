@@ -13,6 +13,7 @@ Item {
 	property color foregroundColor: '#00000000'
 	readonly property alias status: image.status
 	property int radius: width/2
+	property alias cache: image.cache
 	
 	Rectangle {
 		id: backgroundArea

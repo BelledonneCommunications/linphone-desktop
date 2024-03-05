@@ -34,4 +34,13 @@ public:
   static const QString ProviderId;
 };
 
+class WindowProvider : public QQuickImageProvider {
+public:
+  WindowProvider ();
+
+  QImage requestImage (const QString &id, QSize *size, const QSize &requestedSize) override;
+
+  static const QString ProviderId;
+};
+
 #endif

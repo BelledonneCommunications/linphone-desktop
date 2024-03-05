@@ -675,12 +675,18 @@ Rectangle {
 	}
 	Connections{
 		target: DesktopTools
-		onWindowIdSelectionStarted: window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
-			descriptionText: "Click on the window that you want to share."
-			, showButtonOnly: 42
-			, buttonTexts : ['']
-			})
-		onWindowIdSelectionEnded: window.detachVirtualWindow()
+		onWindowIdSelectionStarted: {
+			mainItem.enabled = false
+			window.attachVirtualWindow(Utils.buildCommonDialogUri('ConfirmDialog'), {
+				descriptionText: "Click on the window that you want to share."
+				, showButtonOnly: 42
+				, buttonTexts : ['']
+				})
+			}
+		onWindowIdSelectionEnded: {
+			window.detachVirtualWindow()
+			mainItem.enabled = true
+		}
 	}
 	
 	// ---------------------------------------------------------------------------

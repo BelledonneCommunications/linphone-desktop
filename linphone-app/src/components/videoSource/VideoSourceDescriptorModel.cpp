@@ -52,6 +52,14 @@ void * VideoSourceDescriptorModel::getScreenSharing() const{
 		return mDesc->getScreenSharing();
 }
 
+quint64 VideoSourceDescriptorModel::getWindowId() const{
+	if(!mDesc) return 0;
+	else{
+		void * temp = mDesc->getScreenSharing();
+		return *(quint64*)&temp;
+	}
+}
+
 bool VideoSourceDescriptorModel::isScreenSharing() const{
 	return mDesc && mDesc->getType() == linphone::VideoSourceType::ScreenSharing;
 }

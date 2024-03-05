@@ -2,6 +2,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
 #include <QDebug>
+#include <QRect>
 #include <QThread>
 #include "components/videoSource/VideoSourceDescriptorModel.hpp"
 
@@ -68,4 +69,26 @@ void DesktopTools::getWindowIdFromMouse(VideoSourceDescriptorModel *model) {
               emit tools->windowIdSelectionEnded();
               return nil;
   }];
+}
+
+QRect DesktopTools::getWindowGeometry(void* screenSharing) {
+  QRect result;
+  CGWindowID windowId = *(CGWindowID*)&screenSharing;
+  CFArrayRef descriptions = CGWindowListCopyWindowInfo(kCGWindowListOptionIncludingWindow, windowId);
+  if(CFArrayGetCount(descriptions) > 0) {
+          CFDictionaryRef description = (CFDictionaryRef)CFArrayGetValueAtIndex ((CFArrayRef)descriptions, 0);
+          if(CFDictionaryContainsKey(description, kCGWindowBounds)) {
+                  CFDictionaryRef bounds = (CFDictionaryRef)CFDictionaryGetValue (description, kCGWindowBounds);
+                  if(bounds) {
+                          CGRect windowRect;
+                          CGRectMakeWithDictionaryRepresentation(bounds, &windowRect);
+                          result = QRect(windowRect.origin.x, windowRect.origin.y, windowRect.size.width, windowRect.size.height);
+                  }else
+                          qWarning() << "Bounds found be cannot be parsed for Window ID : " << windowId;
+          }else
+                  qWarning() << "No bounds specified in Apple description for Window ID : " << windowId;
+  }else
+          qWarning() << "No description found for Window ID : " << windowId;
+  CFRelease(descriptions);
+  return result;
 }

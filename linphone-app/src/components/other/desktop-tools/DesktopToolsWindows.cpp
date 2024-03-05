@@ -26,6 +26,7 @@
 
 #include <QDebug>
 #include <Windows.h>
+#include <dwmapi.h>
 // =============================================================================
 
 DesktopTools::DesktopTools(QObject *parent) : QObject(parent) {
@@ -78,4 +79,15 @@ void DesktopTools::getWindowIdFromMouse(VideoSourceDescriptorModel *model) {
 
 uintptr_t DesktopTools::getDisplayIndex(void* screenSharing) {
 	return *(uintptr_t*)(&screenSharing);
+}
+
+QRect DesktopTools::getWindowGeometry(void* screenSharing) {
+	QRect result;
+	HWND windowId = *(HWND*)&screenSharing;
+	RECT area;
+	if (S_OK == DwmGetWindowAttribute(windowId, DWMWA_EXTENDED_FRAME_BOUNDS, &area, sizeof(RECT))) {
+		result = QRect(area.left + 1, area.top, area.right - area.left, area.bottom - area.top);// +1 for border
+	}else
+		qWarning() << "Cannot get attributes from HWND: " << windowId;
+	return result;
 }

@@ -833,9 +833,12 @@ endif()
 target_link_libraries(${TARGET_NAME} ${APP_PLUGIN})
 
 
-if(WIN32 AND ENABLE_LDAP)
-	find_package(OpenLDAP REQUIRED)
-	target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${OPENLDAP_LIBRARIES})
+if(WIN32)
+	if(ENABLE_LDAP)
+		find_package(OpenLDAP REQUIRED)
+		target_link_libraries(${TARGET_NAME} wsock32 ws2_32 ${OPENLDAP_LIBRARIES})
+	endif()
+	target_link_libraries(${TARGET_NAME} Dwmapi)
 endif()
 
 if(NOT WIN32)

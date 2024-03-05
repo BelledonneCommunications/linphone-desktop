@@ -49,6 +49,7 @@ public:
 		return reinterpret_cast<void *>(screenIndex);
 	}
 	static uintptr_t getDisplayIndex(void *screenSharing);
+	static QRect getWindowGeometry(void* screenSharing);
 	HWND mWindowId = 0; // Window
 	VideoSourceDescriptorModel *mVideoSourceDescriptorModel = nullptr;
 

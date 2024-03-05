@@ -36,12 +36,14 @@ class VideoSourceDescriptorModel : public QObject{
 	Q_PROPERTY(bool isScreenSharing READ isScreenSharing NOTIFY videoDescriptorChanged)
 	Q_PROPERTY(LinphoneEnums::VideoSourceScreenSharingType screenSharingType READ getVideoSourceType NOTIFY videoDescriptorChanged)
 	Q_PROPERTY(int screenSharingIndex READ getScreenSharingIndex WRITE setScreenSharingDisplay NOTIFY videoDescriptorChanged)
+	Q_PROPERTY(quint64 windowId READ getWindowId NOTIFY videoDescriptorChanged)
 public:
 	VideoSourceDescriptorModel();
 	VideoSourceDescriptorModel(std::shared_ptr<linphone::VideoSourceDescriptor> desc);
 	void setScreenSharingDisplay(int index);
 	void setScreenSharingWindow(void *window);	// Get data from DesktopTools.
 	void *getScreenSharing() const;
+	quint64 getWindowId() const;
 	
 	bool isScreenSharing() const;
 	LinphoneEnums::VideoSourceScreenSharingType getVideoSourceType() const;

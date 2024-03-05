@@ -120,3 +120,17 @@ void DesktopTools::getWindowIdFromMouse(VideoSourceDescriptorModel *model) {
 uintptr_t DesktopTools::getDisplayIndex(void* screenSharing){
 	return *(uintptr_t*)(&screenSharing);
 }
+
+QRect DesktopTools::getWindowGeometry(void* screenSharing) {
+	const char *displayStr = getenv("DISPLAY");
+	if (displayStr == NULL) displayStr = ":0";
+	Display *display = XOpenDisplay(displayStr);
+	if (display == NULL) {
+		qCritical() << "Can't open X display!";
+		return QRect();
+	}
+	Window windowId = (Window)screenSharing;
+	XWindowAttributes attributes;
+	XGetWindowAttributes(display, windowId, &attributes);
+	return QRect(attributes.x, attributes.y, attributes.width, attributes.height);
+}
