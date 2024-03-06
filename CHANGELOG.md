@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## 5.2.2 - 2024-03-04
+## 5.2.2 - 2024-03-07
 
 ### Fixed
 - Audio latency and bad echo behavior when going to media settings while being in call.
@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wrong day offset in start date when scheduling a conference.
 - Empty route can now be set in account settings.
 - Network remote file can be used in chat attachment on Windows.
-- Some crashs.
+- Crash on forwarding a message to a new secure chat room.
 - Update SDK to 5.3.26.
 
 ### Added
