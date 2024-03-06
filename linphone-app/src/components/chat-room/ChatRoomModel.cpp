@@ -718,7 +718,7 @@ void ChatRoomModel::compose () {
 
 void ChatRoomModel::resetMessageCount () {
 	if(mChatRoom && !mDeleteChatRoom && markAsReadEnabled()){
-		if( mChatRoom->getState() != linphone::ChatRoom::State::Deleted){
+		if( mChatRoom->getState() != linphone::ChatRoom::State::Deleted && mChatRoom->getState() != linphone::ChatRoom::State::CreationPending){
 			if (mChatRoom->getUnreadMessagesCount() > 0){
 				mChatRoom->markAsRead();// Marking as read is only for messages. Not for calls.
 			}

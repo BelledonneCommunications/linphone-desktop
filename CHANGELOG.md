@@ -6,16 +6,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.3.0 - undefined
 
+### Added
+- Screen Sharing
+
+## 5.2.2 - 2024-03-07
+
 ### Fixed
 - Day offset in start date when scheduling a conference.
 - Audio latency and bad echo behavior when going to media settings while being in call.
 - Network remote file in chat attachment on Windows.
 - Empty route can now be set in account settings.
-- Some crashs.
+- Network remote file can be used in chat attachment on Windows.
+- Crash on forwarding a message to a new secure chat room.
+- Update SDK to 5.3.26.
 
 ### Added
 - '[ui] logs_max_size' : option to set the max size of one log file.
-- Screen Sharing
 
 ## 5.2.1 - 2024-02-01
 
