@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Network remote file can be used in chat attachment on Windows.
 - Crash on forwarding a message to a new secure chat room.
 - URI handlers and remote provisioning.
+- Avoid to remove file on cancelling upload and fix cancelling file transfers.
 - Update SDK to 5.3.26.
 
 ### Added
