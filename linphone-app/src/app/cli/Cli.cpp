@@ -524,9 +524,7 @@ void Cli::executeCommand (const QString &command, CommandFormat *format) {
 			App::getInstance()->useFetchConfig(fetchUrl);
 		}else{
 			shared_ptr<linphone::Address> address;
-			QString qAddress;
-			std::string t;
-			address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand));// Test if command is an address
+			QString qAddress = transformedCommand;
 			if(Utils::isUsername(transformedCommand)){
 				address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(transformedCommand+"@to.remove"));
 				address->setDomain("");

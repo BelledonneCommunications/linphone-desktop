@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Screen Sharing
 
-## 5.2.2 - 2024-03-07
+## 5.2.2 - 2024-03-08
 
 ### Fixed
 - Day offset in start date when scheduling a conference.
@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Empty route can now be set in account settings.
 - Network remote file can be used in chat attachment on Windows.
 - Crash on forwarding a message to a new secure chat room.
+- URI handlers and remote provisioning.
 - Update SDK to 5.3.26.
 
 ### Added

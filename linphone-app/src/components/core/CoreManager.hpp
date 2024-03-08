@@ -118,7 +118,6 @@ public:
 	}
 	
 	SettingsModel *getSettingsModel () const {
-		Q_CHECK_PTR(mSettingsModel);
 		return mSettingsModel;
 	}
 	EmojisSettingsModel *getEmojisSettingsModel () const {
