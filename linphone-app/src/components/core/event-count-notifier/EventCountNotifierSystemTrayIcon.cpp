@@ -28,7 +28,9 @@
 #include "app/App.hpp"
 #include "utils/Utils.hpp"
 #include "utils/Constants.hpp"
+#include "components/core/CoreManager.hpp"
 #include "components/other/colors/ColorListModel.hpp"
+#include "components/settings/SettingsModel.hpp"
 
 #include "EventCountNotifierSystemTrayIcon.hpp"
 
@@ -102,7 +104,9 @@ void EventCountNotifier::notifyEventCount (int n) {
 
   // Change counter.
   mBlinkTimer->stop();
-  mBlinkTimer->start();
+  auto coreManager = CoreManager::getInstance();
+  if(!coreManager->isInitialized() || coreManager->getSettingsModel()->isSystrayNotificationBlinkEnabled())
+	mBlinkTimer->start();
   mDisplayCounter = true;
   update();
 }

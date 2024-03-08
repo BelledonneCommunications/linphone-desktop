@@ -45,7 +45,8 @@ public:
 	
 	int getUnreadMessageCount () const;
 	int getMissedCallCount () const;
-	int getEventCount () const;
+	int getEventCount () const;// global
+	int getCurrentEventCount () const;// Current account
 signals:
 	void eventCountChanged ();
 

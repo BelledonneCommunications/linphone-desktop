@@ -1046,6 +1046,18 @@ int SettingsModel::getNotificationOrigin() const {
 	);
 }
 
+bool SettingsModel::isSystrayNotificationBlinkEnabled() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_blink", 1);
+}
+
+bool SettingsModel::isSystrayNotificationGlobal() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_global", 1);
+}
+
+bool SettingsModel::isSystrayNotificationFiltered() const {
+	return !!mConfig->getInt(UiSection, "systray_notification_filtered", 0);
+}
+
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getFileTransferUrl () const {
