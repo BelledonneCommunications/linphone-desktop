@@ -226,10 +226,18 @@ QString App::getFetchConfig (QCommandLineParser *parser) {
 
 void App::useFetchConfig(const QString& filePath){
 	if( !filePath.isEmpty()){
-		if(CoreManager::getInstance()->getSettingsModel()->getAutoApplyProvisioningConfigUriHandlerEnabled())
-			setFetchConfig(filePath);
-		else
-			emit requestFetchConfig(filePath);
+		if(CoreManager::getInstance()->isInitialized()) {
+			if(CoreManager::getInstance()->getSettingsModel()->getAutoApplyProvisioningConfigUriHandlerEnabled())
+				setFetchConfig(filePath);
+			else
+				emit requestFetchConfig(filePath);
+		}else{
+			QObject * context = new QObject();
+			connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized, context, [context, filePath, this](){
+				useFetchConfig(filePath);
+				context->deleteLater();
+			});
+		}
 	}
 }
 
@@ -549,14 +557,20 @@ void App::initContentApp () {
 		}	
 	}
 	);
-	
-	// Execute command argument if needed.
-	const QString commandArgument = getCommandArgument();
-	if (!commandArgument.isEmpty()) {
-		Cli::CommandFormat format;
-		Cli::executeCommand(commandArgument, &format);
-		if (format == Cli::UriFormat || format == Cli::UrlFormat )
-			mustBeIconified = true;
+
+	// Execute command argument if needed
+	// Commands are executed only once. clearPsitionalArguments doesn't work as its name suggest : getPositionalArguments still retrieve user arguments.
+	// So execute the command only once.
+	static bool firstRun = false;
+	if(!firstRun){
+		firstRun = true;
+		const QString commandArgument = getCommandArgument();
+		if (!commandArgument.isEmpty()) {
+			Cli::CommandFormat format;
+			Cli::executeCommand(commandArgument, &format);
+			if (format == Cli::UriFormat || format == Cli::UrlFormat )
+				mustBeIconified = true;
+		}
 	}
 }
 
