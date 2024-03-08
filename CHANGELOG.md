@@ -16,14 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on forwarding a message to a new secure chat room.
 - URI handlers and remote provisioning.
 - Avoid to remove file on cancelling upload and fix cancelling file transfers.
-- Update SDK to 5.3.26.
+- Update SDK to 5.3.30.
 
 ### Added
 - '[ui] logs_max_size' : option to set the max size of one log file.
 - '[ui] notification_origin' : option to specify where to display notifications (only supported: 0=bottom-right and 1=top-right).
 - '[ui] systray_notification_blink' : option to activate/deactivate the blinking systray on unread notifications.
 - '[ui] systray_notification_global' : option to display notification number from all accounts or only selected.
-- '[ui] systray_notification_filtered' : option to filtering the number (not count if chat room is muted).
+- '[ui] systray_notification_filtered' : option to filter the notification number (not count if chat room is muted).
 
 ## 5.2.1 - 2024-02-01
 
