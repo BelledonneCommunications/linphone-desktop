@@ -54,6 +54,12 @@ public:
 		RecordingCompleted
 	};
 	
+	enum NotificationOrigin{
+		BottomRight = 0,
+		Top = 1,
+		Left = 2
+	};
+	
 	void notifyReceivedMessages (const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);
 	void notifyReceivedReactions(const QList<QPair<std::shared_ptr<linphone::ChatMessage>, std::shared_ptr<const linphone::ChatMessageReaction>>> &reactions);
 	void notifyReceivedFileMessage (const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content);
@@ -61,6 +67,8 @@ public:
 	void notifyNewVersionAvailable (const QString &version, const QString &url);
 	void notifySnapshotWasTaken (const QString &filePath);
 	void notifyRecordingCompleted (const QString &filePath);
+	
+	static int getNotificationOrigin();
 	
 public slots:
 	void deleteNotificationOnTimeout(QVariant notification);

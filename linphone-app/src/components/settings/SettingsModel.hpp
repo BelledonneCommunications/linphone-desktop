@@ -489,6 +489,8 @@ public:
 	QString getChatNotificationSoundPath () const;
 	void setChatNotificationSoundPath (const QString &path);
 	
+	int getNotificationOrigin() const;
+	
 	QString getFileTransferUrl () const;
 	void setFileTransferUrl (const QString &url);
 	

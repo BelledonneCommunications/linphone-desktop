@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - '[ui] logs_max_size' : option to set the max size of one log file.
+- '[ui] notification_origin' : option to specify where to display notifications (only supported: 0=bottom-right and 1=top-right).
 
 ## 5.2.1 - 2024-02-01
 

@@ -34,6 +34,7 @@
 
 #include "components/assistant/AssistantModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/notifier/Notifier.hpp"
 #include "components/tunnel/TunnelModel.hpp"
 #include "include/LinphoneApp/PluginNetworkHelper.hpp"
 #include "utils/Utils.hpp"
@@ -1024,8 +1025,6 @@ void SettingsModel::setChatNotificationSoundEnabled (bool status) {
 	emit chatNotificationSoundEnabledChanged(status);
 }
 
-// -----------------------------------------------------------------------------
-
 QString SettingsModel::getChatNotificationSoundPath () const {
 	static const string defaultFile = linphone::Factory::get()->getSoundResourcesDir() + "/incoming_chat.wav";
 	return Utils::coreStringToAppString(mConfig->getString(UiSection, "chat_sound_notification_file", defaultFile));
@@ -1035,6 +1034,16 @@ void SettingsModel::setChatNotificationSoundPath (const QString &path) {
 	QString cleanedPath = QDir::cleanPath(path);
 	mConfig->setString(UiSection, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));
 	emit chatNotificationSoundPathChanged(cleanedPath);
+}
+
+int SettingsModel::getNotificationOrigin() const {
+	return mConfig->getInt(UiSection, "notification_origin",
+#ifdef __APPLE__
+		Notifier::NotificationOrigin::Top
+#else
+		Notifier::NotificationOrigin::BottomRight
+#endif
+	);
 }
 
 // -----------------------------------------------------------------------------
