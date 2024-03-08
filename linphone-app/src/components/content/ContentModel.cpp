@@ -207,11 +207,7 @@ void ContentModel::downloadFile(){
 }
 void ContentModel::cancelDownloadFile(){
 	if(mChatMessageModel && mChatMessageModel->getChatMessage()) {
-		if(mChatMessageModel->isOutgoing() ){
-			mChatMessageModel->deleteEvent();// Uploading is cancelling : Delete event to have clean history.
-			emit mChatMessageModel->remove(mChatMessageModel);
-		}else
-			mChatMessageModel->getChatMessage()->cancelFileTransfer();
+		mChatMessageModel->getChatMessage()->cancelFileTransfer();
 	}
 }
 
