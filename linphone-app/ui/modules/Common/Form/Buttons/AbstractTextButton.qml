@@ -29,6 +29,7 @@ Item {
   property alias textColor: button.textColor
   property bool enabled: true
   property bool showBorder : false
+  property bool interactive: true
   property alias toggled : button.checked
   property alias button: button
   property alias radius: button.radius
@@ -106,12 +107,13 @@ Item {
       verticalAlignment: Text.AlignVCenter
     }
 
-    hoverEnabled: true
+    hoverEnabled: wrappedButton.interactive
 
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        onPressed:  mouse.accepted = false
+        onPressed:  mouse.accepted = !interactive
+        interactive: wrappedButton.interactive
     }
 
     height: parent.height

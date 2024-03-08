@@ -227,7 +227,8 @@ Window {
 			// Mode buttons
 			TextButtonB{
 				id: screenSharingButton
-				visible: window.isScreenSharingEnabled
+				visible: window.isScreenSharingEnabled && (SettingsModel.isScreenSharingEnabled || !window.isLocalScreenSharingEnabled)
+				interactive: window.isLocalScreenSharingEnabled
 				Layout.preferredWidth: fitWidth
 				Icon{
 					id: screenSharingIcon
@@ -250,7 +251,7 @@ Window {
 				onClicked: if(window.isLocalScreenSharingEnabled) conferenceModel.toggleScreenSharing()
 			}
 			ActionButton{
-				visible: !screenSharingButton.visible && callModel && window.conferenceModel && callModel.videoEnabled
+				visible: SettingsModel.isScreenSharingEnabled && !screenSharingButton.visible && callModel && window.conferenceModel && callModel.videoEnabled
 				isCustom: true
 				backgroundRadius: width/2
 				colorSet: IncallStyle.buttons.screenSharing

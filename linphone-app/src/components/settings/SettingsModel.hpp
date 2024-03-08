@@ -104,9 +104,6 @@ class SettingsModel : public QObject {
 	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
 
 	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged)
-	Q_PROPERTY(
-	    int captureScreenIndex READ getCaptureScreenIndex WRITE saveCaptureScreenIndex NOTIFY captureScreenIndexChanged)
-
 	Q_PROPERTY(QString videoPreset READ getVideoPreset WRITE setVideoPreset NOTIFY videoPresetChanged)
 	Q_PROPERTY(int videoFramerate READ getVideoFramerate WRITE setVideoFramerate NOTIFY videoFramerateChanged)
 
@@ -168,6 +165,7 @@ class SettingsModel : public QObject {
 	               waitRegistrationForCallChanged) // Allow call only if the current proxy has been registered
 	Q_PROPERTY(bool incallScreenshotEnabled READ getIncallScreenshotEnabled WRITE setIncallScreenshotEnabled NOTIFY
 	               incallScreenshotEnabledChanged)
+	Q_PROPERTY(bool isScreenSharingEnabled READ getIsScreenSharingEnabled CONSTANT)
 
 	Q_PROPERTY(
 	    bool conferenceEnabled READ getConferenceEnabled WRITE setConferenceEnabled NOTIFY conferenceEnabledChanged)
@@ -424,10 +422,7 @@ public:
 	QString getVideoDevice() const;
 	void setVideoDevice(const QString &device);
 
-	Q_INVOKABLE void saveCaptureWindowId(void *windowId);
-	Q_INVOKABLE void saveCaptureScreenIndex(int index);
-	Q_INVOKABLE int getCaptureScreenIndex();
-	void setCaptureWindowId();
+	bool getIsScreenSharingEnabled() const;
 
 	QString getVideoPreset() const;
 	void setVideoPreset(const QString &preset);
@@ -826,7 +821,6 @@ signals:
 	void videoAvailableChanged();
 	void videoDevicesChanged(const QStringList &devices);
 	void videoDeviceChanged(const QString &device);
-	void captureScreenIndexChanged(int index);
 
 	void videoPresetChanged(const QString &preset);
 	void videoFramerateChanged(int framerate);

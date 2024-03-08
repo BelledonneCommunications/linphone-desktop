@@ -4,8 +4,9 @@ import Common 1.0
 import Common.Styles 1.0
 
 Quick.MouseArea {
-    cursorShape: containsMouse
+	property bool interactive: true
+    cursorShape: containsMouse && interactive
                 ? Qt.PointingHandCursor
                 : Qt.ArrowCursor
-    hoverEnabled: true
+    hoverEnabled: interactive
 }

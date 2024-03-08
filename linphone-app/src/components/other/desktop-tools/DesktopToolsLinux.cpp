@@ -19,12 +19,12 @@
  */
 
 #include "DesktopToolsLinux.hpp"
-
 #include "components/core/CoreManager.hpp"
-#include "components/settings/SettingsModel.hpp"
 #include "components/videoSource/VideoSourceDescriptorModel.hpp"
+#include "config.h"
 
 #include <QDebug>
+#include <QRect>
 #include <QThread>
 #include <X11/Xlib.h>
 #include <fcntl.h>
@@ -53,6 +53,8 @@ void DesktopTools::setScreenSaverStatus(bool status) {
 		emit screenSaverStatusChanged(mScreenSaverStatus);
 	}
 }
+
+#ifdef ENABLE_SCREENSHARING
 class T : public QThread {
 public:
 	Display *mDisplay;
@@ -87,7 +89,7 @@ public:
 				              &event.xbutton.y_root, &event.xbutton.x, &event.xbutton.y, &event.xbutton.state);
 				auto id = event.xbutton.subwindow;
 				QMetaObject::invokeMethod(CoreManager::getInstance(), [id, this]() mutable {
-					mVideoSourceDescriptorModel->setScreenSharingWindow(reinterpret_cast<void*>(id));
+					mVideoSourceDescriptorModel->setScreenSharingWindow(reinterpret_cast<void *>(id));
 				});
 				endLoop = true;
 			}
@@ -98,7 +100,10 @@ public:
 		deleteLater();
 	}
 };
+#endif
 void DesktopTools::getWindowIdFromMouse(VideoSourceDescriptorModel *model) {
+	Q_UNUSED(model)
+#ifdef ENABLE_SCREENSHARING
 	const char *displayStr = getenv("DISPLAY");
 	if (displayStr == NULL) displayStr = ":0";
 	Display *display = XOpenDisplay(displayStr); // QX11Info::display();
@@ -115,13 +120,21 @@ void DesktopTools::getWindowIdFromMouse(VideoSourceDescriptorModel *model) {
 	t->mWindow = RootWindow(display, screen); // QX11Info::appRootWindow(m_x11_screen);
 	t->mParent = this;
 	t->start();
+#endif
 }
 
-uintptr_t DesktopTools::getDisplayIndex(void* screenSharing){
-	return *(uintptr_t*)(&screenSharing);
+uintptr_t DesktopTools::getDisplayIndex(void *screenSharing) {
+	Q_UNUSED(screenSharing)
+#ifdef ENABLE_SCREENSHARING
+	return *(uintptr_t *)(&screenSharing);
+#else
+	return 0;
+#endif
 }
 
-QRect DesktopTools::getWindowGeometry(void* screenSharing) {
+QRect DesktopTools::getWindowGeometry(void *screenSharing) {
+	Q_UNUSED(screenSharing)
+#ifdef ENABLE_SCREENSHARING
 	const char *displayStr = getenv("DISPLAY");
 	if (displayStr == NULL) displayStr = ":0";
 	Display *display = XOpenDisplay(displayStr);
@@ -133,4 +146,7 @@ QRect DesktopTools::getWindowGeometry(void* screenSharing) {
 	XWindowAttributes attributes;
 	XGetWindowAttributes(display, windowId, &attributes);
 	return QRect(attributes.x, attributes.y, attributes.width, attributes.height);
+#else
+	return QRect();
+#endif
 }

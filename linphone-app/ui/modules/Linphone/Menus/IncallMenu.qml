@@ -25,7 +25,7 @@ Rectangle{
 	property bool isMeAdmin: me && me.adminStatus
 	property bool isParticipantsMenu: false
 	property bool isScreenSharingMenu: false
-	property bool screenSharingAvailable: conferenceModel && (!conferenceModel.isScreenSharingEnabled || conferenceModel.isLocalScreenSharingEnabled)
+	property bool screenSharingAvailable: SettingsModel.isScreenSharingEnabled && conferenceModel && (!conferenceModel.isScreenSharingEnabled || conferenceModel.isLocalScreenSharingEnabled)
 	signal close()
 	signal layoutChanging(int layoutMode)
 	

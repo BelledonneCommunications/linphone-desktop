@@ -594,31 +594,12 @@ void SettingsModel::setVideoDevice(const QString &device) {
 	emit videoDeviceChanged(device);
 }
 
-void SettingsModel::saveCaptureWindowId(void *windowId) {
-	mCaptureWindowId = windowId;
-	//CoreManager::getInstance()->getCore()->setVideoCaptureWindowId(mCaptureWindowId);
-	emit captureScreenIndexChanged(-1);
-	qDebug() << -1;
-}
-
-void SettingsModel::saveCaptureScreenIndex(int index) {
-	mCaptureWindowId = reinterpret_cast<void*>(-index);
-	//CoreManager::getInstance()->getCore()->setVideoCaptureWindowId(mCaptureWindowId);
-	emit captureScreenIndexChanged(index);
-	qDebug() << index;
-}
-
-int SettingsModel::getCaptureScreenIndex() {
-/*
-	int64_t id = (int64_t)CoreManager::getInstance()->getCore()->getVideoCaptureWindowId();
-	if(id <= 0){
-		return -id;
-	}else*/
-		return -1;
-}
-
-void SettingsModel::setCaptureWindowId() {
-	//CoreManager::getInstance()->getCore()->setVideoCaptureWindowId(mCaptureWindowId);
+bool SettingsModel::getIsScreenSharingEnabled() const {
+#ifdef ENABLE_SCREENSHARING
+	return true;
+#else
+	return false;
+#endif
 }
 // -----------------------------------------------------------------------------
 

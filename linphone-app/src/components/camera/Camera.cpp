@@ -338,7 +338,6 @@ void Camera::activatePreview(){
 	mPreviewCounterMutex.lock();
 	if (++mPreviewCounter == 1) {
 		CoreManager::getInstance()->getCore()->enableVideoPreview(true);
-		CoreManager::getInstance()->getSettingsModel()->setCaptureWindowId();
 	}
 	mPreviewCounterMutex.unlock();
 }

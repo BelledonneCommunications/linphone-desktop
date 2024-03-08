@@ -50,6 +50,7 @@ void DesktopTools::setScreenSaverStatus(bool status) {
 	emit screenSaverStatusChanged(status);
 }
 
+#ifdef ENABLE_SCREENSHARING
 HHOOK hMouseHook;
 DesktopTools *gTools = nullptr;
 LRESULT CALLBACK mouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
@@ -68,26 +69,37 @@ LRESULT CALLBACK mouseProc(int nCode, WPARAM wParam, LPARAM lParam) {
 	}
 	return CallNextHookEx(hMouseHook, nCode, wParam, lParam);
 }
+#endif
 
 void DesktopTools::getWindowIdFromMouse(VideoSourceDescriptorModel *model) {
+	Q_UNUSED(model)
+#ifdef ENABLE_SCREENSHARING
 	gTools = this;
 	gTools->mVideoSourceDescriptorModel = model;
 	emit windowIdSelectionStarted();
 	HINSTANCE hInstance = GetModuleHandle(NULL);
 	hMouseHook = SetWindowsHookEx(WH_MOUSE_LL, mouseProc, hInstance, NULL);
+#endif
 }
 
-uintptr_t DesktopTools::getDisplayIndex(void* screenSharing) {
-	return *(uintptr_t*)(&screenSharing);
+uintptr_t DesktopTools::getDisplayIndex(void *screenSharing) {
+	Q_UNUSED(screenSharing)
+#ifdef ENABLE_SCREENSHARING
+	return *(uintptr_t *)(&screenSharing);
+#else
+	return NULL;
+#endif
 }
 
-QRect DesktopTools::getWindowGeometry(void* screenSharing) {
+QRect DesktopTools::getWindowGeometry(void *screenSharing) {
+	Q_UNUSED(screenSharing)
 	QRect result;
-	HWND windowId = *(HWND*)&screenSharing;
+#ifdef ENABLE_SCREENSHARING
+	HWND windowId = *(HWND *)&screenSharing;
 	RECT area;
 	if (S_OK == DwmGetWindowAttribute(windowId, DWMWA_EXTENDED_FRAME_BOUNDS, &area, sizeof(RECT))) {
-		result = QRect(area.left + 1, area.top, area.right - area.left, area.bottom - area.top);// +1 for border
-	}else
-		qWarning() << "Cannot get attributes from HWND: " << windowId;
+		result = QRect(area.left + 1, area.top, area.right - area.left, area.bottom - area.top); // +1 for border
+	} else qWarning() << "Cannot get attributes from HWND: " << windowId;
+#endif
 	return result;
 }
