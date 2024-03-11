@@ -5,7 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## 5.2.2 - 2024-03-08
+## 5.2.2 - 2024-03-11
 
 ### Fixed
 - Audio latency and bad echo behavior when going to media settings while being in call.
@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Crash on forwarding a message to a new secure chat room.
 - URI handlers and remote provisioning.
 - Avoid to remove file on cancelling upload and fix cancelling file transfers.
-- Update SDK to 5.3.30.
+- Update SDK to 5.3.33.
 
 ### Added
 - '[ui] logs_max_size' : option to set the max size of one log file.
