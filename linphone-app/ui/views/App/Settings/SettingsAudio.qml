@@ -254,7 +254,7 @@ TabContainer {
 						}
 						Text{
 							id:echoCalibrationStatus
-							text: ''
+							text: SettingsModel.echoCancellationCalibration > 0 ?  qsTr("calibratingEchoCancellationDone").replace('%1', SettingsModel.echoCancellationCalibration) : ''
 							Layout.fillWidth:true
 							height:parent.height
 							verticalAlignment: Text.AlignVCenter
@@ -262,7 +262,7 @@ TabContainer {
 						}
 						TextButtonB {
 							id: echoCalibration
-							enabled: SettingsModel.echoCancellationEnabled
+							enabled: SettingsModel.echoCancellationEnabled && !SettingsModel.isInCall
 							
 							text: qsTr('echoCancellationCalibrationLabel')
 							

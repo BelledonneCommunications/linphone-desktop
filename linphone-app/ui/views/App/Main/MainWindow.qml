@@ -72,8 +72,41 @@ ApplicationWindow {
 	}
 	
 	Shortcut {
+		context: Qt.ApplicationShortcut
 		sequence: StandardKey.Close
 		onActivated: window.hide()
+	}
+	Shortcut {
+		context: Qt.ApplicationShortcut
+		sequence: ['Ctrl+Shift+W', 'Ctrl+Shift+V']
+		onActivated: CallsListModel.acceptLastIncomingCall(true)
+	}
+	Shortcut {
+		context: Qt.ApplicationShortcut
+		sequence: 'Ctrl+Shift+A'
+		onActivated: CallsListModel.acceptLastIncomingCall(false)
+	}
+	Shortcut {
+		sequence: 'Ctrl+Shift+D'
+		context: Qt.ApplicationShortcut
+		onActivated: CallsListModel.terminateLastCall(true)
+	}
+	Shortcut {
+		sequence: 'Ctrl+Shift+E'
+		context: Qt.ApplicationShortcut
+		onActivated: {// startEchoCancellerCalibration is unsupported while being in call.
+			SettingsModel.echoCancellationEnabled = !SettingsModel.echoCancellationEnabled;
+		}
+	}
+	Shortcut {
+		sequence: 'Ctrl+Shift+L'
+		context: Qt.ApplicationShortcut
+		onActivated: CallsListModel.toggleMuteSpeaker()
+	}
+	Shortcut {
+		sequence: 'Ctrl+Shift+M'
+		context: Qt.ApplicationShortcut
+		onActivated: CallsListModel.toggleMuteMicrophone()
 	}
 	// ---------------------------------------------------------------------------
 	

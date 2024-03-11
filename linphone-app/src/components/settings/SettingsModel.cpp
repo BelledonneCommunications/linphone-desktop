@@ -558,6 +558,10 @@ void SettingsModel::startEchoCancellerCalibration(){
 	CoreManager::getInstance()->getCore()->startEchoCancellerCalibration();
 
 }
+
+int SettingsModel::getEchoCancellationCalibration()const {
+	return CoreManager::getInstance()->getCore()->getEchoCancellationCalibration();
+}
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getShowAudioCodecs () const {
@@ -2104,6 +2108,7 @@ void SettingsModel::handleCallStateChanged(const shared_ptr<linphone::Call> &, l
 
 void SettingsModel::handleEcCalibrationResult(linphone::EcCalibratorStatus status, int delayMs){
 	emit echoCancellationStatus((int)status, delayMs);
+	emit echoCancellationCalibrationChanged();
 }
 bool SettingsModel::getIsInCall() const {
 	return CoreManager::getInstance()->getCore()->getCallsNb() != 0;

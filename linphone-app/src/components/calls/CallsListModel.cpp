@@ -501,6 +501,55 @@ void CallsListModel::terminateCall (const QString& sipAddress) const{
 	}
 }
 
+QSharedPointer<CallModel> CallsListModel::getLastCall(bool incoming) const{
+	QSharedPointer<CallModel> lastCall = nullptr;
+	time_t lastTime = 0;
+	auto item = mList.rbegin();
+	while(item != mList.rend() && !lastCall) {
+		auto call = item->objectCast<CallModel>();
+		if(!incoming || call->getStatus() == CallModel::CallStatusIncoming) {
+			lastCall = call;
+		}
+	}
+	return lastCall;
+}
+
+QSharedPointer<CallModel> CallsListModel::getCallModel(const std::shared_ptr<linphone::Call> &call) const{
+	QSharedPointer<CallModel> callModel;
+	if(call) {
+		auto itCall = std::find_if(mList.begin(), mList.end(), [call](const QSharedPointer<QObject> &item){
+			auto c = item.objectCast<CallModel>();
+			return c && c->getCall() == call;
+		});
+		if( itCall != mList.end())
+			callModel = itCall->objectCast<CallModel>();
+	}
+	return callModel;
+}
+
+void CallsListModel::acceptLastIncomingCall(bool video) {
+	auto call = getLastCall(true);
+	if(call) {
+		if(video) call->acceptWithVideo();
+		else call->accept();
+	}
+}
+
+void CallsListModel::terminateLastCall() {
+	auto call = getLastCall(false);	// Allow to terminate last outgoing call
+	if(call) call->terminate();
+}
+
+void CallsListModel::toggleMuteSpeaker() {
+	auto currentCall = getCallModel(CoreManager::getInstance()->getCore()->getCurrentCall());
+	if(currentCall) currentCall->setSpeakerMuted(!currentCall->getSpeakerMuted());
+}
+
+void CallsListModel::toggleMuteMicrophone() {
+	auto currentCall = getCallModel(CoreManager::getInstance()->getCore()->getCurrentCall());
+	if(currentCall) currentCall->setMicroMuted(!currentCall->getMicroMuted());
+}
+
 std::list<std::shared_ptr<linphone::CallLog>> CallsListModel::getCallHistory(const QString& peerAddress, const QString& localAddress){
 	std::shared_ptr<linphone::Address> cleanedPeerAddress = Utils::interpretUrl(Utils::cleanSipAddress(peerAddress));
 	std::shared_ptr<linphone::Address> cleanedLocalAddress = Utils::interpretUrl(Utils::cleanSipAddress(localAddress));
