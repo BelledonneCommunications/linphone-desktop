@@ -152,10 +152,10 @@ ubuntu2004-makefile-gcc-deploy:
   tags: [ "deploy" ]
   needs:
     - ubuntu2004-makefile-gcc-package
-  only:
-     variables:
-       - $NIGHTLY_MASTER
-       - $DEPLOY_LINUX
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
+    - if: $DEPLOY_LINUX
   script:
 # Going to folder in order to avoid having path in checksum
     - |-
