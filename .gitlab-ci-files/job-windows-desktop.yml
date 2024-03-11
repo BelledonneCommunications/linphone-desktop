@@ -153,6 +153,7 @@ vs2019-win64-package:
   extends: .windows-vs2019-msvc
   dependencies: []
   rules:
+    - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
     - if: $NIGHTLY_RELEASE
     - if: $PACKAGE_WINDOWS
@@ -169,6 +170,7 @@ vs2019-win64-upload:
   stage: deploy
   tags: [ "deploy"]
   rules:
+    - !reference [.rules-merge-request-manual, rules]
     - if: $NIGHTLY_MASTER
     - if: $DEPLOY_WINDOWS
   needs:

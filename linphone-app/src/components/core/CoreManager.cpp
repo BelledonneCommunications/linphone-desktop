@@ -114,6 +114,7 @@ void CoreManager::initCoreManager(){
 	
 	qInfo() << QStringLiteral("CoreManager initialized");
 	emit coreManagerInitialized();
+	emit eventCountChanged();
 }
 
 bool CoreManager::isInitialized() const{
