@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick 2.9
 import QtQuick.Controls 2.2
 import QtQuick.Layouts 1.3
 import Qt.labs.platform 1.0
@@ -78,7 +78,7 @@ ApplicationWindow {
 	}
 	Shortcut {
 		context: Qt.ApplicationShortcut
-		sequence: ['Ctrl+Shift+W', 'Ctrl+Shift+V']
+		sequences: ['Ctrl+Shift+W', 'Ctrl+Shift+V']
 		onActivated: CallsListModel.acceptLastIncomingCall(true)
 	}
 	Shortcut {
