@@ -90,9 +90,6 @@ LoginLayout {
 				fillMode: Image.PreserveAspectFit
 				source: AppIcons.loginImage
 			}
-			Item {
-				Layout.fillHeight: true
-			}
 		}
 	}
 }

@@ -40,6 +40,7 @@
 #include "core/call/CallList.hpp"
 #include "core/call/CallProxy.hpp"
 #include "core/camera/CameraGui.hpp"
+#include "core/fps-counter/FPSCounter.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
 #include "core/friend/FriendInitialProxy.hpp"
@@ -64,6 +65,11 @@ DEFINE_ABSTRACT_OBJECT(App)
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+	// Ignore vertical sync. This way, we avoid blinking on resizes(and other refresh like layouts etc.).
+	auto ignoreVSync = QSurfaceFormat::defaultFormat();
+	ignoreVSync.setSwapInterval(0);
+	QSurfaceFormat::setDefaultFormat(ignoreVSync);
+	//-------------------
 	mLinphoneThread = new Thread(this);
 	init();
 	qInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME
@@ -193,6 +199,8 @@ void App::initCppInterfaces() {
 	qmlRegisterType<MagicSearchProxy>(Constants::MainQmlUri, 1, 0, "MagicSearchProxy");
 	qmlRegisterType<FriendInitialProxy>(Constants::MainQmlUri, 1, 0, "FriendInitialProxy");
 	qmlRegisterType<CameraGui>(Constants::MainQmlUri, 1, 0, "CameraGui");
+	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
+
 	LinphoneEnums::registerMetaTypes();
 }
 

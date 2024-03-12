@@ -23,6 +23,7 @@ Item {
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.preferredHeight: 102 * DefaultStyle.dp
+			Layout.maximumHeight: 102 * DefaultStyle.dp
 			// Layout.topMargin: 18
 			// Layout.alignment: Qt.AlignRight | Qt.AlignTop
 			Item {
@@ -62,10 +63,10 @@ Item {
 		}
 		ColumnLayout {
 			id: centerLayout
-			Layout.fillHeight: true
 		}
 		Item {
 			Layout.fillHeight: true
+			Layout.fillWidth: true
 		}
 	}
 
