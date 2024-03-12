@@ -36,6 +36,7 @@
 #include "SettingsModel.hpp"
 #include "components/assistant/AssistantModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/notifier/Notifier.hpp"
 #include "components/tunnel/TunnelModel.hpp"
 #include "include/LinphoneApp/PluginNetworkHelper.hpp"
 #include "utils/Constants.hpp"
@@ -553,7 +554,7 @@ void SettingsModel::startEchoCancellerCalibration() {
 	CoreManager::getInstance()->getCore()->startEchoCancellerCalibration();
 }
 
-int SettingsModel::getEchoCancellationCalibration()const {
+int SettingsModel::getEchoCancellationCalibration() const {
 	return CoreManager::getInstance()->getCore()->getEchoCancellationCalibration();
 }
 // -----------------------------------------------------------------------------
@@ -1043,7 +1044,6 @@ void SettingsModel::setChatNotificationSoundEnabled(bool status) {
 	mConfig->setInt(UiSection, "chat_sound_notification_enabled", status);
 	emit chatNotificationSoundEnabledChanged(status);
 }
-
 // -----------------------------------------------------------------------------
 
 QString SettingsModel::getChatNotificationSoundPath() const {
@@ -1055,6 +1055,16 @@ void SettingsModel::setChatNotificationSoundPath(const QString &path) {
 	QString cleanedPath = QDir::cleanPath(path);
 	mConfig->setString(UiSection, "chat_sound_notification_file", Utils::appStringToCoreString(cleanedPath));
 	emit chatNotificationSoundPathChanged(cleanedPath);
+}
+
+int SettingsModel::getNotificationOrigin() const {
+	return mConfig->getInt(UiSection, "notification_origin",
+#ifdef __APPLE__
+	                       Notifier::NotificationOrigin::Top
+#else
+	                       Notifier::NotificationOrigin::BottomRight
+#endif
+	);
 }
 
 // -----------------------------------------------------------------------------

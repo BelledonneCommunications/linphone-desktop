@@ -120,6 +120,10 @@ Notifier::~Notifier () {
 	delete[] mComponents;
 }
 
+int Notifier::getNotificationOrigin() {
+	return CoreManager::getInstance()->getSettingsModel()->getNotificationOrigin();
+}
+
 // -----------------------------------------------------------------------------
 
 QObject *Notifier::createNotification (Notifier::NotificationType type, QVariantMap data) {
@@ -167,15 +171,24 @@ QObject *Notifier::createNotification (Notifier::NotificationType type, QVariant
 			
 			int * screenHeightOffset = &mScreenHeightOffset[screen->name()];	// Access optimization
 			QRect availableGeometry = screen->availableGeometry();
-			int heightOffset = availableGeometry.y() + (availableGeometry.height() - subWindow->height());//*screen->devicePixelRatio(); when using manual scaler
+			int heightOffset = availableGeometry.y() + (((getNotificationOrigin() & Top) != Top )
+															? (availableGeometry.height() - subWindow->height())//*screen->devicePixelRatio(); when using manual scaler
+															: 0);
 			if(showAsTool)
 				subWindow->setProperty("showAsTool",true);
 			subWindow->setX(availableGeometry.x()+ (availableGeometry.width()-subWindow->property("width").toInt()));//*screen->devicePixelRatio()); when using manual scaler
-			subWindow->setY(heightOffset-(*screenHeightOffset % heightOffset));
+			int newScreenHeightOffset = (subWindow->height() + *screenHeightOffset) + NotificationSpacing;
+			if(((getNotificationOrigin() & Top) == Top )){
+				subWindow->setY(heightOffset+(*screenHeightOffset));
+				if (newScreenHeightOffset + heightOffset > availableGeometry.height())
+					newScreenHeightOffset = 0;
+			}else{
+				subWindow->setY(heightOffset-(*screenHeightOffset % heightOffset));
+				if (newScreenHeightOffset - heightOffset + availableGeometry.y() >= 0)
+					newScreenHeightOffset = 0;
+			}
+			*screenHeightOffset = newScreenHeightOffset;
 			
-			*screenHeightOffset = (subWindow->height() + *screenHeightOffset) + NotificationSpacing;
-			if (*screenHeightOffset - heightOffset + availableGeometry.y() >= 0)
-				*screenHeightOffset = 0;
 			
 			//			if(primaryScreen != screen){	//Useful when doing manual scaling jobs. Need to implement scaler in GUI objects
 			//				//subwindow->setProperty("xScale", (double)screen->availableVirtualGeometry().width()/availableGeometry.width() );
