@@ -68,6 +68,13 @@ public:
 	
 	Q_INVOKABLE void terminateAllCalls () const;
 	Q_INVOKABLE void terminateCall (const QString& sipAddress) const;
+// Call commands
+	QSharedPointer<CallModel> getLastCall(bool incoming) const;
+	QSharedPointer<CallModel> getCallModel(const std::shared_ptr<linphone::Call> &call) const;
+	Q_INVOKABLE void acceptLastIncomingCall(bool video);
+	Q_INVOKABLE void terminateLastCall();
+	Q_INVOKABLE void toggleMuteSpeaker();
+	Q_INVOKABLE void toggleMuteMicrophone();
 	
 	static std::list<std::shared_ptr<linphone::CallLog>> getCallHistory(const QString& peerAddress, const QString& localAddress);
 	

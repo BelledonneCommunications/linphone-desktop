@@ -7,7 +7,7 @@ import Linphone.Styles 1.0
 
 DesktopPopup {
   id: notification
-
+  property bool selected: false
   property alias icon: iconSign.icon
   property var notificationData: ({
 		timelineModel : null
@@ -35,8 +35,8 @@ DesktopPopup {
     width: NotificationStyle.width
 
     border {
-      color: NotificationStyle.border.colorModel.color
-      width: NotificationStyle.border.width
+      color: notification.selected ? NotificationStyle.selectedBorder.colorModel.color : NotificationStyle.border.colorModel.color
+      width: notification.selected ? NotificationStyle.selectedBorder.width : NotificationStyle.border.width
     }
 
     Item {

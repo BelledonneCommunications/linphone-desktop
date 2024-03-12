@@ -2076,7 +2076,7 @@
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">检测软件更新</translation>
     </message>
     <message>
         <source>recordings</source>
@@ -2106,7 +2106,7 @@
     <message>
         <source>checkForUpdates</source>
         <extracomment>&apos;Check for updates&apos; : Item menu for checking updates</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">检测软件更新</translation>
     </message>
     <message>
         <source>recordings</source>

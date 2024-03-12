@@ -16,4 +16,8 @@ QtObject {
 		property var colorModel: ColorsList.add(sectionName+'_border', 'n')
 		property int width: 1
 	}
+	property QtObject selectedBorder: QtObject {
+		property var colorModel: ColorsList.add(sectionName+'_selected_border', 'i')
+		property int width: 1
+	}
 }

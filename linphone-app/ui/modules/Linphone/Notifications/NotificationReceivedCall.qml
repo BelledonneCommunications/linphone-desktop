@@ -17,7 +17,15 @@ Notification {
 	readonly property var call: notificationData && notificationData.call
 	
 	// ---------------------------------------------------------------------------
-	
+
+	selected: focusArea.containsMouse
+	onSelectedChanged: { if(selected) Window.window.requestActivate()}
+	MouseArea{
+		id: focusArea
+		anchors.fill: parent
+		acceptedButtons: Qt.NoButton
+		hoveredCursor: Qt.ArrowCursor
+	}
 	Loader {
 		active: Boolean(notification.call)
 		anchors {
