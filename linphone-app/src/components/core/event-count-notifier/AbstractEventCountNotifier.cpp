@@ -22,33 +22,69 @@
 
 #include "components/call/CallModel.hpp"
 #include "components/core/CoreManager.hpp"
+#include "components/settings/AccountSettingsModel.hpp"
 #include "components/settings/SettingsModel.hpp"
+#include "components/timeline/TimelineListModel.hpp"
 
 #include "AbstractEventCountNotifier.hpp"
+#include "components/timeline/TimelineModel.hpp"
 
 // =============================================================================
 
 using namespace std;
 
-AbstractEventCountNotifier::AbstractEventCountNotifier (QObject *parent) : QObject(parent) {
-  CoreManager *coreManager = CoreManager::getInstance();
-  connect(coreManager, &CoreManager::eventCountChanged, this, &AbstractEventCountNotifier::eventCountChanged);
-  connect(this, &AbstractEventCountNotifier::eventCountChanged, this, &AbstractEventCountNotifier::internalNotifyEventCount);
+AbstractEventCountNotifier::AbstractEventCountNotifier(QObject *parent)
+	: QObject(parent)
+{
+	CoreManager *coreManager = CoreManager::getInstance();
+	connect(coreManager,
+			&CoreManager::eventCountChanged,
+			this,
+			&AbstractEventCountNotifier::eventCountChanged);
+	connect(coreManager->getAccountSettingsModel(),
+			&AccountSettingsModel::defaultAccountChanged,
+			this,
+			&AbstractEventCountNotifier::internalNotifyEventCount);
+	connect(this,
+			&AbstractEventCountNotifier::eventCountChanged,
+			this,
+			&AbstractEventCountNotifier::internalNotifyEventCount);
 }
 
 // -----------------------------------------------------------------------------
 
-int AbstractEventCountNotifier::getEventCount () const {
+int AbstractEventCountNotifier::getEventCount() const
+{
 	auto coreManager = CoreManager::getInstance();
 	int count = coreManager->getCore()->getMissedCallsCount();
-	if(	coreManager->getSettingsModel()->getStandardChatEnabled() || coreManager->getSettingsModel()->getSecureChatEnabled())
-		count += coreManager->getCore()->getUnreadChatMessageCount();
+	if (coreManager->getSettingsModel()->getStandardChatEnabled()
+		|| coreManager->getSettingsModel()->getSecureChatEnabled())
+		count += coreManager->getCore()->getUnreadChatMessageCountFromActiveLocals();
 	return count;
 }
 
-void AbstractEventCountNotifier::internalNotifyEventCount () {
-  int n = getEventCount();
-  qInfo() << QStringLiteral("Notify event count: %1.").arg(n);
-  n = n > 99 ? 99 : n;
-  notifyEventCount(n);
+int AbstractEventCountNotifier::getCurrentEventCount() const
+{
+	auto coreManager = CoreManager::getInstance();
+	int count = coreManager->getCore()->getMissedCallsCount();
+	auto timelines = coreManager->getTimelineListModel()->getSharedList<TimelineModel>();
+	bool filtered = CoreManager::getInstance()->getSettingsModel()->isSystrayNotificationFiltered();
+	bool global = CoreManager::getInstance()->getSettingsModel()->isSystrayNotificationGlobal();
+	if( global && !filtered) return getEventCount();
+	for (const auto &timeline : timelines) {
+		auto chatRoom = timeline->getChatRoomModel();
+		if (!coreManager->getCore()->getDefaultAccount()
+			|| ((global || chatRoom->isCurrentAccount()) && (!filtered || chatRoom->isNotificationsEnabled())))
+			count += chatRoom->getUnreadMessagesCount();
+	}
+	return count;
+}
+
+void AbstractEventCountNotifier::internalNotifyEventCount()
+{
+	int n = getCurrentEventCount();
+
+	qInfo() << QStringLiteral("Notify event count: %1.").arg(n);
+	n = n > 99 ? 99 : n;
+	notifyEventCount(n);
 }

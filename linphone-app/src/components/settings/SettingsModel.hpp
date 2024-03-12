@@ -533,6 +533,10 @@ public:
 
 	int getNotificationOrigin() const;
 
+	bool isSystrayNotificationBlinkEnabled() const;
+	bool isSystrayNotificationGlobal() const;
+	bool isSystrayNotificationFiltered() const;
+
 	QString getFileTransferUrl() const;
 	void setFileTransferUrl(const QString &url);
 

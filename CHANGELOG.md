@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Screen Sharing
 
-## 5.2.2 - 2024-03-08
+## 5.2.2 - 2024-03-11
 
 ### Fixed
 - Day offset in start date when scheduling a conference.
