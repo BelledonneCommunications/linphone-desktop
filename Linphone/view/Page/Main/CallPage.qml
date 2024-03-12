@@ -82,7 +82,7 @@ AbstractMainPage {
 							background: Item{}
 							contentItem: RowLayout {
 								EffectImage {
-									source: AppIcons.trashCan
+									imageSource: AppIcons.trashCan
 									width: 24 * DefaultStyle.dp
 									height: 24 * DefaultStyle.dp
 									Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -533,7 +533,7 @@ AbstractMainPage {
 		property string iconSource
 		property color colorizationColor: DefaultStyle.main2_500main
 		EffectImage {
-			source: iconLabel.iconSource
+			imageSource: iconLabel.iconSource
 			width: 24 * DefaultStyle.dp
 			height: 24 * DefaultStyle.dp
 			Layout.preferredWidth: 24 * DefaultStyle.dp

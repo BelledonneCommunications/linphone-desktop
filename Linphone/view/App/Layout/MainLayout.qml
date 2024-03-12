@@ -46,7 +46,7 @@ Item {
 		contentItem: RowLayout {
 			spacing: 15 * DefaultStyle.dp
 			EffectImage {
-				source: AppIcons.smiley
+				imageSource: AppIcons.smiley
 				colorizationColor: DefaultStyle.success_500main
 				Layout.preferredWidth: 32 * DefaultStyle.dp
 				Layout.preferredHeight: 32 * DefaultStyle.dp

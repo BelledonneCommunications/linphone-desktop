@@ -73,7 +73,7 @@ Notification {
 					Layout.preferredHeight: 40 * DefaultStyle.dp
 					contentItem: EffectImage {
 						colorizationColor: DefaultStyle.grey_0
-						source: AppIcons.phone
+						imageSource: AppIcons.phone
 						imageWidth: 24 * DefaultStyle.dp
 						imageHeight: 24 * DefaultStyle.dp
 					}
@@ -88,7 +88,7 @@ Notification {
 					Layout.preferredHeight: 40 * DefaultStyle.dp
 					contentItem: EffectImage {
 						colorizationColor: DefaultStyle.grey_0
-						source: AppIcons.videoCamera
+						imageSource: AppIcons.videoCamera
 						imageWidth: 24 * DefaultStyle.dp
 						imageHeight: 24 * DefaultStyle.dp
 					}
@@ -109,7 +109,7 @@ Notification {
 				Layout.preferredHeight: 40 * DefaultStyle.dp
 				contentItem: EffectImage {
 					colorizationColor: DefaultStyle.grey_0
-					source: AppIcons.endCall
+					imageSource: AppIcons.endCall
 					imageWidth: 24 * DefaultStyle.dp
 					imageHeight: 24 * DefaultStyle.dp
 				}

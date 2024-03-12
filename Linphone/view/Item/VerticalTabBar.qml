@@ -65,7 +65,7 @@ Control.TabBar {
 				EffectImage {
 					id: buttonIcon
 					property int buttonSize: 24 * DefaultStyle.dp
-					source: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
+					imageSource: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
 					width: buttonSize

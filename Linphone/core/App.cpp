@@ -66,6 +66,11 @@ App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
 	mLinphoneThread = new Thread(this);
 	init();
+	qInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME
+	                          "). Version:%1 Os:%2 Qt:%3")
+	               .arg(applicationVersion())
+	               .arg(Utils::getOsProduct())
+	               .arg(qVersion());
 }
 
 App::~App() {

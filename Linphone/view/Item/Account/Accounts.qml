@@ -70,7 +70,7 @@ Item {
 				spacing: 5 * DefaultStyle.dp
 				EffectImage {
 					id: newAccount
-					source: AppIcons.plusCircle
+					imageSource: AppIcons.plusCircle
 					width: 32 * DefaultStyle.dp
 					height: 32 * DefaultStyle.dp
 					Layout.preferredWidth: 32 * DefaultStyle.dp

@@ -48,6 +48,7 @@ public:
 	static void enableVerbose(bool verbose);
 	static void enableQtOnly(bool qtOnly);
 
+	static QString formatLog(QString contextFile, int contextLine, QString msg);
 	void printLog(QString *qMessage, const std::string &domain, linphone::LogLevel level, const std::string &message);
 
 	// Log Sources
@@ -55,7 +56,7 @@ public:
 	void onLinphoneLog(const std::string &domain, linphone::LogLevel level, const std::string &message);
 	bool mVerboseEnabled = false;
 signals:
-	void qtLogReceived(QtMsgType type, QString contextFile, int contextLine, QString msg);
+	void qtLogReceived(QtMsgType type, QString msg);
 	void requestVerboseEnabled(bool verbose);
 	void requestQtOnlyEnabled(bool qtOnly);
 };

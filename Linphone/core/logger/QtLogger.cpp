@@ -67,13 +67,32 @@ QtLogger *QtLogger::getInstance() {
 	return &gLogger;
 }
 
+QString QtLogger::formatLog(QString contextFile, int contextLine, QString msg) {
+	QString message;
+
+#ifdef QT_MESSAGELOGCONTEXT
+	{
+		QStringList cleanFiles = contextFile.split(Constants::SrcPattern);
+		QString fileToDisplay = cleanFiles.back();
+
+		message = QStringLiteral("%1:%2: ").arg(fileToDisplay).arg(contextLine);
+	}
+#else
+	Q_UNUSED(contextFile)
+	Q_UNUSED(contextLine)
+#endif
+	message += msg;
+	return message;
+}
+
 void QtLogger::onQtLog(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
 	QString out;
+	QString message = QtLogger::formatLog(context.file, context.line, msg);
 	if (gLogger.mVerboseEnabled) {
 		gLogger.printLog(&out, Constants::AppDomain, LinphoneEnums::toLinphone(type),
-		                 Utils::appStringToCoreString(msg));
+		                 Utils::appStringToCoreString(message));
 	}
-	emit gLogger.qtLogReceived(type, context.file, context.line, msg);
+	emit gLogger.qtLogReceived(type, message);
 }
 
 void QtLogger::enableVerbose(bool verbose) {

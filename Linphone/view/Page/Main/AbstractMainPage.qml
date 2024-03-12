@@ -198,7 +198,7 @@ Item {
 									Layout.alignment: Qt.AlignVCenter
 									EffectImage {
 										colorizationColor: DefaultStyle.grey_0
-										source: mainItem.newItemIconSource
+										imageSource: mainItem.newItemIconSource
 										width: 24 * DefaultStyle.dp
 										height: 24 * DefaultStyle.dp
 										fillMode: Image.PreserveAspectFit

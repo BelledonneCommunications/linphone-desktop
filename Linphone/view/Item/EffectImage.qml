@@ -10,7 +10,7 @@ import Linphone
 Loader {
 	id: mainItem
 	active: visible
-	property var source
+	property var imageSource
 	property var fillMode: Image.PreserveAspectFit
 	property var colorizationColor
 	property int imageWidth: width
@@ -20,7 +20,7 @@ Loader {
 		Image {
 			id: image
 			visible: !effect2.enabled
-			source: mainItem.source ? mainItem.source : ""
+			source: mainItem.imageSource ? mainItem.imageSource : ""
 			fillMode: mainItem.fillMode
 			sourceSize.width: width
 			sourceSize.height: height

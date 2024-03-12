@@ -22,7 +22,7 @@ MouseArea {
 			Layout.preferredHeight: mainItem.iconSize
 			width: mainItem.iconSize
 			height: mainItem.iconSize
-			source: mainItem.iconSource
+			imageSource: mainItem.iconSource
 			colorizationColor: mainItem.color
 		}
 		Text {

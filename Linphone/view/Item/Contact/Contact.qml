@@ -132,7 +132,7 @@ Rectangle{
 		}
 		EffectImage {
 			id: manageAccount
-			source: AppIcons.manageProfile
+			imageSource: AppIcons.manageProfile
 			Layout.preferredWidth: 24 * DefaultStyle.dp
 			Layout.preferredHeight: 24 * DefaultStyle.dp
 			Layout.alignment: Qt.AlignHCenter

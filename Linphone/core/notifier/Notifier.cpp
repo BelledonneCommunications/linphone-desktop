@@ -34,6 +34,7 @@
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
 #include "tool/LinphoneEnums.hpp"
+#include "tool/providers/AvatarProvider.hpp"
 #include "tool/providers/ImageProvider.hpp"
 
 DEFINE_ABSTRACT_OBJECT(Notifier)
@@ -159,6 +160,7 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 			// auto engine = App::getInstance()->mEngine;
 			auto engine = new QQmlApplicationEngine();
 			engine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+			engine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
 			engine->addImportPath(":/");
 			// if(showAsTool) window->setProperty("showAsTool",true);
 			engine->setInitialProperties(data);

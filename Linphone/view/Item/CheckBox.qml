@@ -16,7 +16,7 @@ Control.CheckBox {
 		// color: mainItem.checked ? DefaultStyle.main1_500_main : "transparent"
 		EffectImage {
 			visible: mainItem.checked
-			source: AppIcons.check
+			imageSource: AppIcons.check
 			colorizationColor: DefaultStyle.main1_500_main
 			anchors.fill: parent
 		}

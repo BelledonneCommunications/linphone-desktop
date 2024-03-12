@@ -315,3 +315,28 @@ int Utils::getRandomIndex(int size) {
 void Utils::copyToClipboard(const QString &text) {
 	QApplication::clipboard()->setText(text);
 }
+
+QString Utils::getApplicationProduct() {
+	// Note: Keep '-' as a separator between application name and application type
+	return QString(APPLICATION_NAME "-Desktop").remove(' ') + "/" + QCoreApplication::applicationVersion();
+}
+
+QString Utils::getOsProduct() {
+	QString version =
+	    QSysInfo::productVersion().remove(' '); // A version can be "Server 2016" (for Windows Server 2016)
+	QString product = QSysInfo::productType().replace(' ', '-'); // Just in case
+	return product + "/" + version;
+}
+
+QString Utils::computeUserAgent() {
+	// Placeholder
+	return "Linphone 6.0";
+	/*
+	    const std::shared_ptr<linphone::Config> &config
+	    return QStringLiteral("%1 (%2) %3 Qt/%4 LinphoneSDK")
+	        .arg(Utils::getApplicationProduct())
+	        .arg(SettingsModel::getDeviceName(config).replace('\\', "\\\\").replace('(', "\\(").replace(')', "\\)"))
+	        .arg(Utils::getOsProduct())
+	        .arg(qVersion());
+	        */
+}

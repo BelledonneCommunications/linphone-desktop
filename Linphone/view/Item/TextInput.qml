@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls as Control
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts
 import Linphone
   
 ColumnLayout {
@@ -118,8 +118,7 @@ ColumnLayout {
 			icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
 			width: 20 * DefaultStyle.dp
 			height: 20 * DefaultStyle.dp
-			anchors.top: parent.top
-			anchors.bottom: parent.bottom
+			anchors.verticalCenter: parent.verticalCenter
 			anchors.right: parent.right
 			anchors.rightMargin: 15 * DefaultStyle.dp
 		}

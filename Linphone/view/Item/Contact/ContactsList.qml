@@ -132,7 +132,7 @@ ListView {
 						background: Item{}
 						contentItem: RowLayout {
 							EffectImage {
-								source: AppIcons.trashCan
+								imageSource: AppIcons.trashCan
 								width: 24 * DefaultStyle.dp
 								height: 24 * DefaultStyle.dp
 								Layout.preferredWidth: 24 * DefaultStyle.dp

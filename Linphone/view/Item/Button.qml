@@ -94,7 +94,7 @@ Control.Button {
 			Layout.alignment: Qt.AlignCenter
 			Layout.fillWidth: true
 			Layout.fillHeight: true
-			source: mainItem.icon.source
+			imageSource: mainItem.icon.source
 			imageWidth: mainItem.icon.width
 			imageHeight: mainItem.icon.height
 			colorizationColor: mainItem.contentImageColor

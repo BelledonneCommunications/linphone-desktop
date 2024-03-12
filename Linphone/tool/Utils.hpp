@@ -57,7 +57,7 @@ public:
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
 
 	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
-												 bool withVideo = false,
+	                                             bool withVideo = false,
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
@@ -76,6 +76,10 @@ public:
 	Q_INVOKABLE static void copyToClipboard(const QString &text);
 	static QString generateSavedFilename(const QString &from, const QString &to);
 	Q_INVOKABLE static QString generateLinphoneSipAddress(const QString &uri);
+
+	static QString getApplicationProduct();
+	static QString getOsProduct();
+	static QString computeUserAgent();
 
 	static inline QString coreStringToAppString(const std::string &str) {
 		if (Constants::LinphoneLocaleEncoding == QString("UTF-8")) return QString::fromStdString(str);

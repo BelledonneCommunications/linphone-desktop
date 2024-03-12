@@ -210,7 +210,7 @@ Window {
 						id: callStatusIcon
 						width: 15 * DefaultStyle.dp
 						height: 15 * DefaultStyle.dp
-						source:(mainWindow.call.core.state === LinphoneEnums.CallState.End
+						imageSource:(mainWindow.call.core.state === LinphoneEnums.CallState.End
 							|| mainWindow.call.core.state === LinphoneEnums.CallState.Released)
 							? AppIcons.endCall
 							: (mainWindow.call.core.state === LinphoneEnums.CallState.Paused
@@ -264,7 +264,7 @@ Window {
 							text: mainWindow.call.core.recording ? qsTr("Vous enregistrez l'appel") : qsTr("Votre correspondant enregistre l'appel")
 						}
 						EffectImage {
-							source: AppIcons.recordFill
+							imageSource: AppIcons.recordFill
 							colorizationColor: DefaultStyle.danger_500main
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
@@ -640,7 +640,7 @@ Window {
 															background: Item {}
 															contentItem: RowLayout {
 																EffectImage {
-																	source: AppIcons.endCall
+																	imageSource: AppIcons.endCall
 																	colorizationColor: DefaultStyle.danger_500main
 																	width: 32 * DefaultStyle.dp
 																	height: 32 * DefaultStyle.dp
@@ -694,7 +694,7 @@ Window {
 										RowLayout {
 											Layout.fillWidth: true
 											EffectImage {
-												source: AppIcons.speaker
+												imageSource: AppIcons.speaker
 												colorizationColor: DefaultStyle.main1_500_main
 												Layout.preferredWidth: 24 * DefaultStyle.dp
 												Layout.preferredHeight: 24 * DefaultStyle.dp
@@ -727,7 +727,7 @@ Window {
 										RowLayout {
 											Layout.fillWidth: true
 											EffectImage {
-												source: AppIcons.microphone
+												imageSource: AppIcons.microphone
 												colorizationColor: DefaultStyle.main1_500_main
 												Layout.preferredWidth: 24 * DefaultStyle.dp
 												Layout.preferredHeight: 24 * DefaultStyle.dp
@@ -795,7 +795,7 @@ Window {
 										RowLayout {
 											Layout.fillWidth: true
 											EffectImage {
-												source: AppIcons.videoCamera
+												imageSource: AppIcons.videoCamera
 												colorizationColor: DefaultStyle.main1_500_main
 												Layout.preferredWidth: 24 * DefaultStyle.dp
 												Layout.preferredHeight: 24 * DefaultStyle.dp
@@ -974,7 +974,7 @@ Window {
 						}
 						contentItem: Item {
 							EffectImage {
-								source: AppIcons.more
+								imageSource: AppIcons.more
 								width: 24 * DefaultStyle.dp
 								height: 24 * DefaultStyle.dp
 								anchors.centerIn: parent
@@ -1040,7 +1040,7 @@ Window {
 										Layout.preferredWidth: 24 * DefaultStyle.dp
 										Layout.preferredHeight: 24 * DefaultStyle.dp
 										fillMode: Image.PreserveAspectFit
-										source: AppIcons.recordFill
+										imageSource: AppIcons.recordFill
 										colorizationColor: mainWindow.call.core.recording ? DefaultStyle.danger_500main : undefined
 									}
 									Text {
@@ -1063,7 +1063,7 @@ Window {
 										Layout.preferredWidth: 24 * DefaultStyle.dp
 										Layout.preferredHeight: 24 * DefaultStyle.dp
 										fillMode: Image.PreserveAspectFit
-										source: AppIcons.recordFill
+										imageSource: AppIcons.recordFill
 										colorizationColor: mainWindow.call.core.recording ? DefaultStyle.danger_500main : undefined
 									}
 									Text {

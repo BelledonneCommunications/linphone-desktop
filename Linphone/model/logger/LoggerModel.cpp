@@ -79,22 +79,10 @@ void LoggerModel::enableQtOnly(const bool &enable) {
 
 // -----------------------------------------------------------------------------
 // Called from Qt
-void LoggerModel::onQtLog(QtMsgType type, QString contextFile, int contextLine, QString msg) {
+void LoggerModel::onQtLog(QtMsgType type, QString msg) {
 	auto service = linphone::LoggingService::get();
-	QString contextStr = "";
-#ifdef QT_MESSAGELOGCONTEXT
-	{
-		QStringList cleanFiles = contextFile.split(Constants::SrcPattern);
-		QString fileToDisplay = cleanFiles.back();
 
-		contextStr = QStringLiteral("%1:%2: ").arg(fileToDisplay).arg(contextLine);
-	}
-#else
-	Q_UNUSED(contextFile)
-	Q_UNUSED(contextLine)
-#endif
-
-	auto serviceMsg = Utils::appStringToCoreString(contextStr + msg);
+	auto serviceMsg = Utils::appStringToCoreString(msg);
 	if (service) {
 		switch (type) {
 			case QtDebugMsg:
