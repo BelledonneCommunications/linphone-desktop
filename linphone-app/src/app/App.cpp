@@ -269,7 +269,11 @@ bool App::setFetchConfig (QString filePath) {
 
 
 App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
-	
+	// Ignore vertical sync. This way, we avoid blinking on resizes(and other refresh steps like layouts etc.).
+	auto ignoreVSync = QSurfaceFormat::defaultFormat();
+	ignoreVSync.setSwapInterval(0);
+	QSurfaceFormat::setDefaultFormat(ignoreVSync);
+	//-------------------
 	connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
 	
 	setWindowIcon(QIcon(Constants::WindowIconPath));

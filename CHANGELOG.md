@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 5.3.0 - undefined
 
+### Fixed
+- Blinking on resize or Ui updates on screen that have low frame rates.
+
 ### Added
 - Screen Sharing
 
