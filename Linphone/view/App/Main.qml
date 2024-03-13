@@ -14,9 +14,6 @@ Window {
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
 
-	// access window properties from all its children
-	// (used in popupbutton to see if the popup exceed window height)
-	property Window mainApplicationWindow: mainWindow
 
 	function goToNewCall() {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)

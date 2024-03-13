@@ -34,13 +34,15 @@ Button {
 		x: - width
 		y: mainItem.height
 		closePolicy: Popup.CloseOnPressOutsideParent |Popup.CloseOnPressOutside
+		parent: mainItem	// Explicit define for coordinates references.
 
 		onAboutToShow: {
-			if (mainApplicationWindow == undefined) return;
-			var coord = mapToGlobal(mainItem.x, mainItem.y)
-			if (coord.y + popup.height >= mainApplicationWindow.height) {
-				y = -popup.height
-			} else {
+			// Do not use popup.height as it is not consistent.
+			var position = mainItem.mapToItem(mainItem.Window.contentItem, mainItem.x, mainItem.y + mainItem.height + popup.implicitContentHeight + popup.padding)
+			if (position.y >= mainItem.Window.height) {
+				position = mainItem.Window.contentItem.mapToItem(mainItem, 0,0)
+				y = position.y
+			}else {
 				y = mainItem.height
 			}
 		}
