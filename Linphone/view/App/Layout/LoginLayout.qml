@@ -8,10 +8,11 @@ import QtQuick.Controls 2.2 as Control
 
 import Linphone
 
-Item {
+Rectangle {
 	id: mainItem
 	property alias titleContent : titleLayout.children
 	property alias centerContent : centerLayout.children
+	color: DefaultStyle.grey_0
 	ColumnLayout {
 		anchors.rightMargin: 40 * DefaultStyle.dp
 		anchors.leftMargin: 119 * DefaultStyle.dp

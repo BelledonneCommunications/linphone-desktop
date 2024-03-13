@@ -14,7 +14,7 @@ Window {
 	// TODO : handle this bool when security mode is implemented
 	property bool firstConnection: true
 
-
+	color: "transparent"
 	function goToNewCall() {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
 		mainWindowStackView.currentItem.goToNewCall()

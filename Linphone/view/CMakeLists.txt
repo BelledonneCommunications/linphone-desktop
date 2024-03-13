@@ -67,6 +67,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/CallPage.qml
 	view/Page/Main/ContactPage.qml
 	
+	view/Tool/utils.js
 # Prototypes
 	view/Prototype/PhoneNumberPrototype.qml
 	view/Prototype/AccountsPrototype.qml

@@ -11,6 +11,7 @@ Control.TabBar {
 	topPadding: 20 * DefaultStyle.dp
 
 	property var model
+	readonly property alias cornerRadius: bottomLeftCorner.radius
 	
 	contentItem: ListView {
 		model: mainItem.contentModel
@@ -32,6 +33,7 @@ Control.TabBar {
 		id: background
 		anchors.fill: parent
 		Rectangle {
+			id: bottomLeftCorner
 			anchors.fill: parent
 			color: DefaultStyle.main1_500_main
 			radius: 25 * DefaultStyle.dp
