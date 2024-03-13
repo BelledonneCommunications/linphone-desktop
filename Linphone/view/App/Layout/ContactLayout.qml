@@ -9,7 +9,7 @@ ColumnLayout {
 	id: mainItem
 	spacing: 30 * DefaultStyle.dp
 
-	property var contact
+	property FriendGui contact
 	property string contactAddress: contact && contact.core.defaultAddress || ""
 	property string contactName: contact && contact.core.displayName || ""
 
@@ -61,7 +61,7 @@ ColumnLayout {
 			width: 100 * DefaultStyle.dp
 			height: 100 * DefaultStyle.dp
 			contact: mainItem.contact || null
-			address: !contact && mainItem.contactAddress || mainItem.contactName
+			address: mainItem.contactAddress || mainItem.contactName
 		}
 		Item {
 			id: rightButton

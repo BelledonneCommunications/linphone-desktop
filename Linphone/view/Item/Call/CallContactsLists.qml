@@ -229,6 +229,9 @@ Item {
 							Layout.fillWidth: true
 							contactMenuVisible: false
 							searchBarText: searchBar.text
+							model: MagicSearchProxy {
+										searchText: searchBarText.length === 0 ? "*" : searchBarText
+							}
 							onContactSelected: (contact) => {
 								if (contact.core.allAddresses.length > 1) {
 									startCallPopup.contact = contact

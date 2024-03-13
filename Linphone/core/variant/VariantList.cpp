@@ -26,7 +26,7 @@ VariantList::VariantList(QObject *parent) {
 }
 
 VariantList::VariantList(QList<QVariant> list, QObject *parent) {
-	set(list);
+	setModel(list);
 }
 
 VariantList::~VariantList() {
@@ -36,11 +36,11 @@ int VariantList::rowCount(const QModelIndex &parent) const {
 	return mList.count();
 }
 
-void VariantList::set(QList<QVariant> list) {
+void VariantList::setModel(QList<QVariant> list) {
 	beginResetModel();
 	mList = list;
 	endResetModel();
-	emit listModelChanged();
+	emit modelChanged();
 }
 
 void VariantList::replace(int index, QVariant newValue) {

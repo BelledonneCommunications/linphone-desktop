@@ -458,7 +458,19 @@ void FriendCore::remove() {
 	}
 }
 
-void FriendCore::save() {                         // Save Values to model
+void FriendCore::save() { // Save Values to model
+	if (mAddressList.size() > 0) {
+		auto it = std::find_if(mAddressList.begin(), mAddressList.end(), [this](const QVariant &a) {
+			return a.toMap()["address"].toString() == mDefaultAddress;
+		});
+		if (it == mAddressList.end()) {
+			mDefaultAddress = mAddressList[0].toMap()["address"].toString();
+			emit defaultAddressChanged();
+		}
+	} else {
+		mDefaultAddress = "";
+		emit defaultAddressChanged();
+	}
 	FriendCore *thisCopy = new FriendCore(*this); // Pointer to avoid multiple copies in lambdas
 
 	if (mFriendModel) {

@@ -8,7 +8,7 @@ ListView {
 	id: mainItem
 	Layout.preferredHeight: contentHeight
 	height: contentHeight
-	visible: count > 0
+	visible: contentHeight > 0
 	clip: true
 
 	property string searchBarText
@@ -17,7 +17,7 @@ ListView {
 	property bool contactMenuVisible: true
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
-	
+	property bool showOnlyFavourites: false
 	property int delegateLeftMargin: 0
 	currentIndex: -1
 
@@ -33,20 +33,22 @@ ListView {
 	signal contactSelected(var contact)
 	signal contactStarredChanged()
 	signal contactDeletionRequested(FriendGui contact)
-
-	onContactStarredChanged: model.forceUpdate()
-
+	
 	model: MagicSearchProxy {
-		searchText: searchBarText.length === 0 ? "*" : searchBarText
+			searchText: searchBarText.length === 0 ? "*" : searchBarText
 	}
+
 
 	delegate: Item {
 		id: itemDelegate
-		height: 56 * DefaultStyle.dp
+		height: display ? 56 * DefaultStyle.dp : 0
 		width: mainItem.width
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
 		property var previousDisplayName: previousItem ? previousItem.core.displayName : ""
 		property var displayName: modelData.core.displayName
+		property bool display: !mainItem.showOnlyFavourites || modelData.core.starred
+		
+		visible: display
 		Connections {
 			target: modelData.core
 			onStarredChanged: mainItem.contactStarredChanged()

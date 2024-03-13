@@ -44,6 +44,11 @@ AbstractMainPage {
 	function goToNewCall() {
 		listStackView.replace(newCallItem)
 	}
+	
+	property MagicSearchProxy allFriends: MagicSearchProxy {
+		searchText: searchBar.text.length === 0 ? "*" : searchBar.text
+		aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
+	}
 
 	Dialog {
 		id: dialog
@@ -139,7 +144,7 @@ AbstractMainPage {
 							Layout.alignment: Qt.AlignHCenter
 						}
 						ColumnLayout {
-							visible: favoriteList.count > 0
+							visible: favoriteList.contentHeight > 0
 							RowLayout {
 								Text {
 									text: qsTr("Favoris")
@@ -163,18 +168,8 @@ AbstractMainPage {
 								id: favoriteList
 								hoverEnabled: mainItem.leftPanelEnabled
 								Layout.fillWidth: true
-								onContactStarredChanged: contactList.model.forceUpdate()
-								Connections {
-									target: mainItem
-									onForceListsUpdate: {
-										contactList.model.forceUpdate()
-									}
-								}
-								model: MagicSearchProxy {
-									searchText: searchBar.text.length === 0 ? "*" : searchBar.text
-									sourceFlags: LinphoneEnums.MagicSearchSource.FavoriteFriends
-									aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend
-								}
+								showOnlyFavourites: true
+								model: allFriends
 								onSelectedContactChanged: {
 									if (selectedContact) {
 										contactList.currentIndex = -1
@@ -214,13 +209,7 @@ AbstractMainPage {
 								hoverEnabled: mainItem.leftPanelEnabled
 								Layout.fillWidth: true
 								searchBarText: searchBar.text
-								onContactStarredChanged: favoriteList.model.forceUpdate()
-								Connections {
-									target: mainItem
-									onForceListsUpdate: {
-										contactList.model.forceUpdate()
-									}
-								}
+								model: allFriends
 								onSelectedContactChanged: {
 									if (selectedContact) {
 										favoriteList.currentIndex = -1
@@ -290,7 +279,6 @@ AbstractMainPage {
 								model: VariantList {
 									model:  mainItem.selectedContact ? mainItem.selectedContact.core.allAddresses : []
 								}
-								// model: contactDetail.selectedContact && contactDetail.selectedContact.core.addresses
 								delegate: Item {
 									width: addrList.width
 									height: 70 * DefaultStyle.dp
