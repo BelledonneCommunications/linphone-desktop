@@ -49,11 +49,14 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 	QDir imageDir(path);
 	if (!imageDir.exists()) {
 		qDebug() << QStringLiteral("[ImageProvider] Dir doesn't exist: `%1`.").arg(path);
+		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 		return;
 	}
 	QFileInfoList files = QDir(path).entryInfoList(filters, QDir::Files, QDir::Name);
+	QFileInfo fileInfo;
 	for (QFileInfo file : files) {
 		if (file.fileName() == id) {
+			fileInfo = file;
 			mPath = file.absoluteFilePath();
 			break;
 		}
@@ -63,13 +66,44 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 
 	if (!file.exists()) {
 		qDebug() << QStringLiteral("[ImageProvider] File doesn't exist: `%1`.").arg(path + id);
+		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 		return;
 	}
-	QImage originalImage(mPath);
 
-	if (!originalImage.isNull()) {
-		emit imageGrabbed(originalImage);
+	if (Q_UNLIKELY(!file.open(QIODevice::ReadOnly))) {
+		qWarning() << QStringLiteral("[ImageProvider] Unable to open file: `%1`.").arg(path);
+		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
+		return;
 	}
+
+	QImage image;
+
+	if (fileInfo.suffix() == "svg") {
+		QSvgRenderer renderer(mPath);
+		if (Q_UNLIKELY(!renderer.isValid())) {
+			qWarning() << QStringLiteral("Invalid svg file: `%1`.").arg(path);
+			image = QImage(mPath); // Fallback to QImage
+		} else {
+			renderer.setAspectRatioMode(Qt::KeepAspectRatio);
+			QSize askedSize = !requestedSize.isEmpty()
+			                      ? requestedSize
+			                      : renderer.defaultSize() * QGuiApplication::primaryScreen()->devicePixelRatio();
+			// 3. Create image.
+			image = QImage(askedSize, QImage::Format_ARGB32_Premultiplied);
+			if (Q_UNLIKELY(image.isNull())) {
+				qWarning() << QStringLiteral("Unable to create image from path: `%1`.").arg(path);
+				image = QImage(mPath); // Fallback to QImage
+			} else {
+				image.fill(Qt::transparent); // Fill with transparent to set alpha channel
+				// 4. Paint!
+				QPainter painter(&image);
+				renderer.render(&painter);
+			}
+		}
+	} else image = QImage(mPath);
+
+	if (!image.isNull()) emit imageGrabbed(image);
+	else emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 }
 
 void ImageAsyncImageResponse::imageGrabbed(QImage image) {

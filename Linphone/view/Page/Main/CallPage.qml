@@ -534,8 +534,6 @@ AbstractMainPage {
 		property color colorizationColor: DefaultStyle.main2_500main
 		EffectImage {
 			imageSource: iconLabel.iconSource
-			width: 24 * DefaultStyle.dp
-			height: 24 * DefaultStyle.dp
 			Layout.preferredWidth: 24 * DefaultStyle.dp
 			Layout.preferredHeight: 24 * DefaultStyle.dp
 			fillMode: Image.PreserveAspectFit

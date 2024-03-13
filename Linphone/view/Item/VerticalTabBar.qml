@@ -68,8 +68,6 @@ Control.TabBar {
 					imageSource: mainItem.currentIndex === index ? modelData.selectedIcon : modelData.icon
 					Layout.preferredWidth: buttonSize
 					Layout.preferredHeight: buttonSize
-					width: buttonSize
-					height: buttonSize
 					Layout.alignment: Qt.AlignHCenter
 					fillMode: Image.PreserveAspectFit
 					colorizationColor: DefaultStyle.grey_0
