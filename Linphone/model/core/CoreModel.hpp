@@ -109,7 +109,7 @@ private:
 	onConferenceInfoReceived(const std::shared_ptr<linphone::Core> &core,
 	                         const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) override;
 	virtual void onConfiguringStatus(const std::shared_ptr<linphone::Core> &core,
-	                                 linphone::Config::ConfiguringState status,
+	                                 linphone::ConfiguringState status,
 	                                 const std::string &message) override;
 	virtual void onDefaultAccountChanged(const std::shared_ptr<linphone::Core> &core,
 	                                     const std::shared_ptr<linphone::Account> &account) override;
@@ -193,7 +193,7 @@ signals:
 	void conferenceInfoReceived(const std::shared_ptr<linphone::Core> &core,
 	                            const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo);
 	void configuringStatus(const std::shared_ptr<linphone::Core> &core,
-	                       linphone::Config::ConfiguringState status,
+	                       linphone::ConfiguringState status,
 	                       const std::string &message);
 	void defaultAccountChanged(const std::shared_ptr<linphone::Core> &core,
 	                           const std::shared_ptr<linphone::Account> &account);
