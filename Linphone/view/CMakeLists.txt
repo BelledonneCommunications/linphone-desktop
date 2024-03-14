@@ -31,7 +31,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Contact/Sticker.qml
 
 	view/Item/Meeting/MeetingList.qml
-	view/Item/Meeting/NewMeeting.qml
+	view/Item/Meeting/MeetingSetUp.qml
 	
 	view/Item/BusyIndicator.qml
 	view/Item/Button.qml

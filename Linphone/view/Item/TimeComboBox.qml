@@ -4,9 +4,11 @@ import UtilsCpp 1.0
   
 ComboBox {
 	id: mainItem
-	property string selectedTimeString: Qt.formatDateTime(new Date(), "hh:mm")
+	property var selectedDateTime
+	readonly property string selectedTimeString: Qt.formatDateTime(selectedDateTime, "hh:mm")
 	property int selectedHour: input.hour*1
 	property int selectedMin: input.min*1
+	property alias contentText: input
 	popup.width: 73 * DefaultStyle.dp
 	listView.model: 48
 	listView.implicitHeight: 204 * DefaultStyle.dp
@@ -33,7 +35,7 @@ ComboBox {
 				mainItem.popup.open()
 			} else {
 				listView.currentIndex = -1
-				mainItem.selectedTimeString = Qt.formatDateTime(UtilsCpp.createDateTime(new Date(), hour, min), "hh:mm")
+				mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
 			}
 		}
 		font {
@@ -48,7 +50,7 @@ ComboBox {
 		}
 		onEditingFinished: {
 			console.log("set time", hour, min)
-			mainItem.selectedTimeString = Qt.formatDateTime(UtilsCpp.createDateTime(new Date(), hour, min), "hh:mm")
+			mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
 		}
 	}
 	listView.delegate: Text {
@@ -71,7 +73,7 @@ ComboBox {
 			onClicked: {
 				// mainItem.text = parent.text
 				mainItem.listView.currentIndex = index
-				mainItem.selectedTimeString = hourDelegate.text
+				mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
 				mainItem.popup.close()
 			}
 			Rectangle {

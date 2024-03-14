@@ -58,7 +58,7 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 		}
 		mConferenceSchedulerModel = model;
 		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::stateChanged, this,
-		        &ConferenceInfoModel::stateChanged);
+		        &ConferenceInfoModel::schedulerStateChanged);
 		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this,
 		        &ConferenceInfoModel::invitationsSent);
 		mConferenceSchedulerModel->setSelf(mConferenceSchedulerModel);

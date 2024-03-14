@@ -64,7 +64,8 @@ signals:
 	void descriptionChanged(const QString &description);
 	void participantsChanged();
 	void conferenceInfoDeleted();
-	void stateChanged(linphone::ConferenceScheduler::State state);
+	void schedulerStateChanged(linphone::ConferenceScheduler::State state);
+	void infoStateChanged(linphone::ConferenceInfo::State state);
 	void invitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations);
 
 private:

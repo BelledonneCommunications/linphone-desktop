@@ -20,7 +20,7 @@ ListView {
 	Layout.fillHeight: true
 	highlightMoveDuration: 100
 
-	property var selectedDate: new Date()
+	property var selectedDate
 	
 	model: Control.CalendarModel {
 		id: calendarModel
@@ -84,7 +84,7 @@ ListView {
 			month: model.month
 			// locale: Qt.locale("en_US")
 			delegate: Item {
-				property bool isSelectedDay: UtilsCpp.datesAreEqual(mainItem.selectedDate, model.date)
+				property bool isSelectedDay: mainItem.selectedDate ? UtilsCpp.datesAreEqual(mainItem.selectedDate, model.date) : false
 				Rectangle {
 					anchors.centerIn: parent
 					width: 30 * DefaultStyle.dp

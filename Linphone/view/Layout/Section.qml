@@ -8,13 +8,16 @@ Layout with line separator used in several views
 
 ColumnLayout {
 	spacing: 15 * DefaultStyle.dp
-	property alias content: contentItem.data
-	implicitHeight: contentItem.implicitHeight + 1 * DefaultStyle.dp + spacing
-	Item {
-		id: contentItem
-		Layout.fillWidth: true
-		Layout.preferredHeight: childrenRect.height
-		Layout.preferredWidth: childrenRect.width
+	property alias content: contentLayout.data
+	property alias contentLayout: contentLayout
+	implicitHeight: contentLayout.implicitHeight + 1 * DefaultStyle.dp + spacing
+	ColumnLayout {
+		id: contentLayout
+		spacing: 8 * DefaultStyle.dp
+		// width: parent.width
+		// Layout.fillWidth: true
+		// Layout.preferredHeight: childrenRect.height
+		// Layout.preferredWidth: parent.width
 		// Layout.leftMargin: 8 * DefaultStyle.dp
 	}
 	Rectangle {

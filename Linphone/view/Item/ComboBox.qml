@@ -31,7 +31,6 @@ Control.ComboBox {
 			: item.img
 				? item.img
 				: ""
-		console.log("const", constantImageSource, item.img)
 	}
 
 	background: Rectangle {
@@ -41,6 +40,9 @@ Control.ComboBox {
 		border.color: mainItem.enabled ? DefaultStyle.grey_200 : DefaultStyle.grey_400
 	}
 	contentItem: Item {
+		anchors.fill: parent
+		anchors.leftMargin: 10 * DefaultStyle.dp
+		anchors.rightMargin: indicImage.width + 10 * DefaultStyle.dp
 		Image {
 			id: selectedItemImg
 			source: mainItem.constantImageSource ? mainItem.constantImageSource : ""
@@ -92,6 +94,8 @@ Control.ComboBox {
 		anchors.rightMargin: 10 * DefaultStyle.dp
 		anchors.verticalCenter: parent.verticalCenter
 		source: AppIcons.downArrow
+		width: 14 * DefaultStyle.dp
+		fillMode: Image.PreserveAspectFit
 	}
 
 	popup: Control.Popup {

@@ -33,11 +33,16 @@ AbstractMainPage {
 	}
 	onMeetingListCountChanged: showDefaultItem = leftPanelStackView.currentItem.objectName == "listLayout" && meetingListCount === 0
 
-	function createConference(name, address) {
-		var confInfoGui = Qt.createQmlObject('import Linphone
+	function setUpConference(confInfoGui = null) {
+		var isCreation = !confInfoGui
+		if (isCreation) {
+			confInfoGui = Qt.createQmlObject('import Linphone
 											ConferenceInfoGui{
 											}', mainItem)
-		leftPanelStackView.push(createConference, {"conferenceInfoGui": confInfoGui})
+			leftPanelStackView.push(createConf, {"conferenceInfoGui": confInfoGui, "isCreation": isCreation})
+		} else {
+			rightPanelStackView.push(editConf, {"conferenceInfoGui": confInfoGui, "isCreation": isCreation})
+		}
 	}
 
 	leftPanelContent: ColumnLayout {
@@ -53,14 +58,28 @@ AbstractMainPage {
 			Item {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
+
+				Control.ScrollBar {
+					id: meetingsScrollbar
+					visible: leftPanelStackView.currentItem.objectName == "listLayout"
+					active: true
+					interactive: true
+					policy: Control.ScrollBar.AsNeeded
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					anchors.right: parent.right
+				}
+
 				Control.StackView {
 					id: leftPanelStackView
 					initialItem: listLayout
 					anchors.fill: parent
+					anchors.rightMargin: leftPanel.sideMargin
 				}
 				Component {
 					id: listLayout
 					ColumnLayout {
+						property string objectName: "listLayout"
 						spacing: 19 * DefaultStyle.dp
 						RowLayout {
 							Layout.fillWidth: true
@@ -84,7 +103,7 @@ AbstractMainPage {
 								width: 30 * DefaultStyle.dp
 								height: 30 * DefaultStyle.dp
 								onClicked: {
-									mainItem.createConference()
+									mainItem.setUpConference()
 								}
 							}
 						}
@@ -121,35 +140,7 @@ AbstractMainPage {
 							onCountChanged: {
 								mainItem.meetingListCount = count
 							}
-							Control.ScrollBar.vertical: Control.ScrollBar {
-								id: meetingsScrollbar
-								active: true
-								interactive: true
-								policy: Control.ScrollBar.AsNeeded
-								anchors.top: parent.top
-								anchors.bottom: parent.bottom
-								anchors.right: parent.right
-							}
-						}
-					}
-				}
-				Component {
-					id: createConference
-					NewMeeting {
-						onReturnRequested: leftPanelStackView.pop()
-						onAddParticipantsRequested: {
-							onClicked: leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui})
-						}
-					}
-				}
-				Component {
-					id: addParticipants
-					AddParticipantsLayout {
-						title: qsTr("Ajouter des participants")
-						validateButtonText: qsTr("Ajouter")
-						titleColor: DefaultStyle.main1_500_main
-						onReturnRequested: {
-							leftPanelStackView.pop()
+							Control.ScrollBar.vertical: meetingsScrollbar
 						}
 					}
 				}
@@ -157,6 +148,54 @@ AbstractMainPage {
 		}
 	}
 	
+	Component {
+		id: createConf
+		MeetingSetUp {
+			Layout.rightMargin: leftPanel.sideMargin
+			onCreationSucceed: {
+				leftPanelStackView.pop()
+				UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
+			}
+			onAddParticipantsRequested: {
+				leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView})
+			}
+		}
+	}
+	Component {
+		id: editConf
+		RowLayout {
+			property bool isCreation
+			property ConferenceInfoGui conferenceInfoGui
+			MeetingSetUp {
+				Layout.alignment: Qt.AlignTop
+				Layout.preferredWidth: 393 * DefaultStyle.dp
+				Layout.fillWidth: false
+				Layout.fillHeight: true
+				Layout.leftMargin: 39 * DefaultStyle.dp
+				Layout.topMargin: 39 * DefaultStyle.dp
+				isCreation: parent.isCreation
+				conferenceInfoGui: parent.conferenceInfoGui
+				onReturnRequested: {
+					mainItem.rightPanelStackView.pop()
+				}
+				onAddParticipantsRequested: {
+					mainItem.rightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": mainItem.rightPanelStackView})
+				}
+			}
+		}
+	}
+	Component {
+		id: addParticipants
+		AddParticipantsLayout {
+			title: qsTr("Ajouter des participants")
+			validateButtonText: qsTr("Ajouter")
+			titleColor: DefaultStyle.main1_500_main
+			property Control.StackView container
+			onReturnRequested: {
+				container.pop()
+			}
+		}
+	}
 	Component {
 		id: meetingDetail
 		RowLayout {
@@ -192,7 +231,7 @@ AbstractMainPage {
 							icon.source: AppIcons.pencil
 							contentImageColor: DefaultStyle.main1_500_main
 							background: Item{}
-							onClicked: mainItem.rightPanelStackView.replace()
+							onClicked: mainItem.setUpConference(mainItem.selectedConference) //mainItem.rightPanelStackView.push(meetingEdition)
 						}
 						PopupButton {
 							id: deletePopup
@@ -402,42 +441,149 @@ AbstractMainPage {
 			}
 		}
 	}
-	Component {
-		id: meetingEdition
-		Section {
-			content: RowLayout {
-				spacing: 8 * DefaultStyle.dp
-				Button {
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-					icon.source: AppIcons.leftArrow
-					contentImageColor: DefaultStyle.main1_500_main
-					background: Item{}
-					onClicked: mainItem.rightPanelStackView.pop()
-				}
-				Image {
-					source: AppIcons.usersThree
-					Layout.preferredWidth: 24 * DefaultStyle.dp
-					Layout.preferredHeight: 24 * DefaultStyle.dp
-				}
-				Text {
-					text: mainItem.selectedConference.core.subject
-					font {
-						pixelSize: 20 * DefaultStyle.dp
-						weight: 800 * DefaultStyle.dp
-					}
-				}
-				Item {
-					Layout.fillWidth: true
-				}
-				Button {
-					text: qsTr("Save")
-					onClicked: {
-						console.log("TODO : save meeting infos")
-						mainItem.rightPanelStackView.pop(meetingDetail, Control.StackView.Immediate)
-					}
-				}
-			}
-		}
-	}
+	// Component {
+	// 	id: meetingEdition
+	// 	RowLayout {
+	// 		ColumnLayout {
+	// 			Layout.alignment: Qt.AlignTop
+	// 			Layout.preferredWidth: 393 * DefaultStyle.dp
+	// 			Layout.fillWidth: false
+	// 			Layout.fillHeight: true
+	// 			Layout.leftMargin: 39 * DefaultStyle.dp
+	// 			Layout.topMargin: 39 * DefaultStyle.dp
+	// 			spacing: 25 * DefaultStyle.dp
+	// 			Section {
+	// 				content: RowLayout {
+	// 					spacing: 8 * DefaultStyle.dp
+	// 					Button {
+	// 						Layout.preferredWidth: 24 * DefaultStyle.dp
+	// 						Layout.preferredHeight: 24 * DefaultStyle.dp
+	// 						icon.source: AppIcons.leftArrow
+	// 						contentImageColor: DefaultStyle.main1_500_main
+	// 						background: Item{}
+	// 						onClicked: mainItem.rightPanelStackView.pop()
+	// 					}
+	// 					EffectImage {
+	// 						imageSource: AppIcons.usersThree
+	// 						Layout.preferredWidth: 24 * DefaultStyle.dp
+	// 						Layout.preferredHeight: 24 * DefaultStyle.dp
+	// 						colorizationColor: DefaultStyle.main2_600
+	// 					}
+	// 					TextInput {
+	// 						Component.onCompleted: text = mainItem.selectedConference.core.subject
+	// 						color: DefaultStyle.main2_600
+	// 						font {
+	// 							pixelSize: 20 * DefaultStyle.dp
+	// 							weight: 800 * DefaultStyle.dp
+	// 						}
+	// 						onEditingFinished: mainItem.selectedConference.core.subject = text
+	// 					}
+	// 					Item {
+	// 						Layout.fillWidth: true
+	// 					}
+	// 					Button {
+	// 						text: qsTr("Save")
+	// 						topPadding: 6 * DefaultStyle.dp
+	// 						bottomPadding: 6 * DefaultStyle.dp
+	// 						leftPadding: 12 * DefaultStyle.dp
+	// 						rightPadding: 12 * DefaultStyle.dp
+	// 						onClicked: {
+	// 							console.log("TODO : save meeting infos")
+	// 							mainItem.selectedConference.core.save()
+	// 							mainItem.rightPanelStackView.pop(meetingDetail, Control.StackView.Immediate)
+	// 						}
+	// 					}
+	// 				}
+	// 			}
+	// 			Section {
+	// 				content: [
+	// 					RowLayout {
+	// 						EffectImage {
+	// 							imageSource: AppIcons.clock
+	// 							Layout.preferredWidth: 24 * DefaultStyle.dp
+	// 							Layout.preferredHeight: 24 * DefaultStyle.dp
+	// 							colorizationColor: DefaultStyle.main2_600
+	// 						}
+	// 						Text {
+	// 							text: "All the day"
+	// 							font {
+	// 								pixelSize: 14 * DefaultStyle.dp
+	// 								weighgt: 700 * DefaultStyle.dp
+	// 							}
+	// 						}
+	// 						Item{Layout.fillWidth: true}
+	// 						Switch {
+	// 							id: isAllDaySwitch
+	// 							Component.onCompleted: if (mainItem.selectedConference.core.isAllDayConf()) toggle
+	// 							onPositionChanged: if (position === 1) {
+	// 								mainItem.selectedConference.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, 0, 0)
+	// 								mainItem.selectedConference.core.endDateTime = UtilsCpp.createDateTime(endDate.selectedDate, 23, 59)
+	// 							}
+	// 						}
+	// 					},
+	// 					RowLayout {
+	// 						CalendarComboBox {
+	// 							id: startDate
+	// 							background: Item{}
+	// 							contentText.font.weight: 400 * DefaultStyle.dp
+	// 							Component.onCompleted: calendar.selectedDate = mainItem.selectedConference.core.dateTime
+	// 							onSelectedDateChanged: mainItem.selectedConference.core.dateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
+	// 						}
+	// 						Item{Layout.fillWidth: true}
+	// 						TimeComboBox {
+	// 							id: startHour
+	// 							visible: isAllDaySwitch.position === 0
+	// 							background: Item{}
+	// 							contentText.font.weight: 400 * DefaultStyle.dp
+	// 							onSelectedHourChanged: mainItem.selectedConference.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
+	// 							onSelectedMinChanged: mainItem.selectedConference.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
+
+	// 						}
+	// 					},
+	// 					RowLayout {
+	// 						CalendarComboBox {
+	// 							id: endDate
+	// 							background: Item{}
+	// 							contentText.font.weight: 400 * DefaultStyle.dp
+	// 							Component.onCompleted: calendar.selectedDate = mainItem.selectedConference.core.endDateTime
+	// 							onSelectedDateChanged: mainItem.selectedConference.core.endDateTime = UtilsCpp.createDateTime(selectedDate, endHour.selectedHour, endHour.selectedMin)
+	// 						}
+	// 						Item{Layout.fillWidth: true}
+	// 						TimeComboBox {
+	// 							id: endHour
+	// 							visible: isAllDaySwitch.position === 0
+	// 							background: Item{}
+	// 							contentText.font.weight: 400 * DefaultStyle.dp
+	// 							onSelectedHourChanged: mainItem.selectedConference.core.endDateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
+	// 							onSelectedMinChanged: mainItem.selectedConference.core.endDateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
+	// 						}
+	// 					},
+	// 					ComboBox {
+	// 						id: timeZoneCbox
+	// 						Layout.fillWidth: true
+	// 						Layout.preferredHeight: 30 * DefaultStyle.dp
+	// 						hoverEnabled: true
+	// 						listView.implicitHeight: 152 * DefaultStyle.dp
+	// 						constantImageSource: AppIcons.globe
+	// 						weight: 700 * DefaultStyle.dp
+	// 						leftMargin: 0
+	// 						currentIndex: mainItem.conferenceInfoGui ? model.getIndex(mainItem.conferenceInfoGui.core.timeZoneModel) : -1
+	// 						background: Rectangle {
+	// 							visible: parent.hovered || parent.down
+	// 							anchors.fill: parent
+	// 							color: DefaultStyle.grey_100
+	// 						}
+	// 						model: TimeZoneProxy{
+	// 						}
+	// 						onCurrentIndexChanged: {
+	// 							var modelIndex = timeZoneCbox.model.index(currentIndex, 0)
+	// 							mainItem.conferenceInfoGui.core.timeZoneModel = timeZoneCbox.model.data(modelIndex, Qt.DisplayRole + 1)
+	// 						}
+	// 					},
+	// 				]
+	// 			}
+	// 			// Item{Layout.fillHeight: true}
+	// 		}
+	// 	}
+	// }
 }

@@ -85,6 +85,8 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		}
 		mConferenceInfoState = LinphoneEnums::fromLinphone(conferenceInfo->getState());
 	} else {
+		mDateTime = QDateTime::currentDateTime();
+		mEndDateTime = QDateTime::currentDateTime().addSecs(3600);
 		App::postModelSync([this]() {
 			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (defaultAccount) {
@@ -166,21 +168,16 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 					setIsEnded(computeIsEnded());
 				});
 			});
-			mConfInfoModelConnection->makeConnectToModel(
-			    &ConferenceInfoModel::stateChanged, [this](linphone::ConferenceScheduler::State state) {
-				    qDebug() << "conf state changed" << LinphoneEnums::fromLinphone(state);
-				    mConfInfoModelConnection->invokeToCore([this] {});
-			    });
-
 			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lDeleteConferenceInfo,
 			                                            [this]() { mConferenceInfoModel->deleteConferenceInfo(); });
 			mConfInfoModelConnection->makeConnectToModel(&ConferenceInfoModel::conferenceInfoDeleted,
 			                                             &ConferenceInfoCore::removed);
 
-			mConfInfoModelConnection->makeConnectToModel(&ConferenceInfoModel::stateChanged,
-			                                             [this](linphone::ConferenceScheduler::State state) {
-				                                             qDebug() << "conf state changed:" << (int)state;
-			                                             });
+			mConfInfoModelConnection->makeConnectToModel(
+			    &ConferenceInfoModel::schedulerStateChanged, [this](linphone::ConferenceScheduler::State state) {
+				    mConfInfoModelConnection->invokeToCore(
+				        [this, state = LinphoneEnums::fromLinphone(state)] { setConferenceSchedulerState(state); });
+			    });
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::invitationsSent,
 			    [this](const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {
@@ -410,9 +407,9 @@ LinphoneEnums::ConferenceInfoState ConferenceInfoCore::getConferenceInfoState() 
 	return mConferenceInfoState;
 }
 
-// LinphoneEnums::ConferenceSchedulerState ConferenceInfoCore::getConferenceSchedulerState() const {
-// return LinphoneEnums::fromLinphone(mLastConferenceSchedulerState);
-// }
+LinphoneEnums::ConferenceSchedulerState ConferenceInfoCore::getConferenceSchedulerState() const {
+	return mConferenceSchedulerState;
+}
 
 //------------------------------------------------------------------------------------------------
 // Datetime is in Custom (Locale/UTC/System). Convert into UTC for conference info
@@ -444,6 +441,13 @@ void ConferenceInfoCore::setConferenceInfoState(LinphoneEnums::ConferenceInfoSta
 	if (state != mConferenceInfoState) {
 		mConferenceInfoState = state;
 		emit conferenceInfoStateChanged();
+	}
+}
+
+void ConferenceInfoCore::setConferenceSchedulerState(LinphoneEnums::ConferenceSchedulerState state) {
+	if (state != mConferenceSchedulerState) {
+		mConferenceSchedulerState = state;
+		emit conferenceSchedulerStateChanged();
 	}
 }
 
@@ -579,4 +583,9 @@ void ConferenceInfoCore::cancelConference() {
 void ConferenceInfoCore::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {
 	qDebug() << "ConferenceInfoCore::onInvitationsSent";
 	emit invitationsSent();
+}
+
+bool ConferenceInfoCore::isAllDayConf() const {
+	return mDateTime.time().hour() == 0 && mDateTime.time().minute() == 0 && mEndDateTime.time().hour() == 23 &&
+	       mEndDateTime.time().minute() == 59;
 }

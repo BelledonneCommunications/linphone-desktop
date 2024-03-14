@@ -57,6 +57,8 @@ public:
 	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
 	Q_PROPERTY(QVariantList participants READ getParticipants NOTIFY participantsChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
+	Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState schedulerState READ getConferenceSchedulerState NOTIFY
+	               conferenceSchedulerStateChanged)
 	// Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState conferenceSchedulerState READ getConferenceSchedulerState
 	// NOTIFY
 	//    conferenceSchedulerStateChanged)
@@ -92,6 +94,7 @@ public:
 	TimeZoneModel *getTimeZoneModel() const;
 	// QString getIcalendarString() const;
 	LinphoneEnums::ConferenceInfoState getConferenceInfoState() const;
+	LinphoneEnums::ConferenceSchedulerState getConferenceSchedulerState() const;
 	// LinphoneEnums::ConferenceSchedulerState getConferenceSchedulerState() const;
 
 	void setDateTime(const QDateTime &date);
@@ -105,6 +108,7 @@ public:
 	void setDescription(const QString &description);
 	void setInviteMode(const int &mode);
 	void setConferenceInfoState(LinphoneEnums::ConferenceInfoState state);
+	void setConferenceSchedulerState(LinphoneEnums::ConferenceSchedulerState state);
 
 	Q_INVOKABLE void addParticipant(const QString &address);
 	Q_INVOKABLE void removeParticipant(const QString &address);
@@ -130,6 +134,8 @@ public:
 	// virtual void onConferenceSchedulerStateChanged(linphone::ConferenceScheduler::State state);
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations);
 
+	Q_INVOKABLE bool isAllDayConf() const;
+
 signals:
 	void dateTimeChanged();
 	void endDateTimeChanged();
@@ -144,6 +150,7 @@ signals:
 	void isEndedChanged();
 	void inviteModeChanged();
 	void conferenceInfoStateChanged();
+	void conferenceSchedulerStateChanged();
 	void timeZoneModelChanged();
 	// void conferenceSchedulerStateChanged();
 
@@ -170,6 +177,7 @@ private:
 	QString mUri;
 	QVariantList mParticipants;
 	QSharedPointer<TimeZoneModel> mTimeZoneModel;
+	LinphoneEnums::ConferenceSchedulerState mConferenceSchedulerState;
 	LinphoneEnums::ConferenceInfoState mConferenceInfoState =
 	    LinphoneEnums::ConferenceInfoState::ConferenceInfoStateNew;
 	bool mIsScheduled = true;

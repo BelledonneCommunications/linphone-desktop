@@ -231,6 +231,7 @@ Item {
 					id: rightPanelStackView
 					Layout.fillWidth: true
 					Layout.fillHeight: true
+					Layout.leftMargin: 39 * DefaultStyle.dp
 				}
 				// We need this component here as it is used in multiple subPages (Call and Contact pages) 
 				Component {

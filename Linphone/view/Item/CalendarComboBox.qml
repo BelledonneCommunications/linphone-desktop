@@ -5,9 +5,11 @@ import Linphone
 
 ComboBox {
 	id: mainItem
-	property var selectedDate: calendar.selectedDate
+	readonly property var selectedDate: calendar.selectedDate
 	property alias calendar: calendar
+	property alias contentText: contentText
 	contentItem: Text {
+		id: contentText
 		text: Qt.formatDate(calendar.selectedDate, "ddd d, MMMM")
 		anchors.fill: parent
 		anchors.leftMargin: 15 * DefaultStyle.dp
