@@ -105,6 +105,7 @@ std::shared_ptr<CoreModel> CoreModel::getInstance() {
 }
 
 std::shared_ptr<linphone::Core> CoreModel::getCore() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mCore;
 }
 

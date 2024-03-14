@@ -334,7 +334,7 @@ ColumnLayout {
 				model: mainItem.conferenceInfoGui.core.participants
 				delegate: Item {
 					height: 56 * DefaultStyle.dp
-					width: parent.width
+					width: participantList.width
 					RowLayout {
 						anchors.fill: parent
 						Avatar {

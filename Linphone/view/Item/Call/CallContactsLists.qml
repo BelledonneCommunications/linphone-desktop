@@ -232,9 +232,6 @@ Item {
 							model: MagicSearchProxy {
 										searchText: searchBarText.length === 0 ? "*" : searchBarText
 							}
-							onContactSelected: (contact) => {
-								if (contact.core.allAddresses.length > 1) {
-									startCallPopup.contact = contact
 							onSelectedContactChanged: {
 								if (selectedContact) {
 									if (selectedContact.core.allAddresses.length > 1) {

@@ -34,7 +34,7 @@ ListView {
 	property int delegateLeftMargin: 0
 	currentIndex: -1
 
-	property var delegateButtons
+	property var delegateButtons: []
 
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
 
@@ -120,20 +120,25 @@ ListView {
 		}
 
 		RowLayout {
+			id: actionsRow
 			z: 1
-			height: parent.height
-			anchors.right: parent.right
+			anchors.fill: parent
 			anchors.rightMargin: 5 * DefaultStyle.dp
-			anchors.verticalCenter: parent.verticalCenter
-			children: mainItem.delegateButtons || []
+			RowLayout{
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				children: mainItem.delegateButtons
+			}
 			PopupButton {
 				id: friendPopup
 				z: 1
-				hoverEnabled: mainItem.hoverEnabled
-				visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!delegateButtons || delegateButtons.children.length === 0)
+				Layout.rightMargin: 5 * DefaultStyle.dp
+				Layout.alignment: Qt.AlignVCenter
 				popup.x: 0
 				popup.padding: 10 * DefaultStyle.dp
-				Layout.rightMargin: 5 * DefaultStyle.dp
+				hoverEnabled: mainItem.hoverEnabled
+				visible: mainItem.contactMenuVisible && (contactArea.containsMouse || hovered || popup.opened) && (!mainItem.delegateButtons || mainItem.delegateButtons.length === 0)
+				
 				popup.contentItem: ColumnLayout {
 					Button {
 						background: Item{}

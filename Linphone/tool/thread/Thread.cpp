@@ -39,13 +39,17 @@ bool Thread::isInLinphoneThread() {
 
 bool Thread::mustBeInLinphoneThread(const QString &context) {
 	bool isLinphoneThread = isInLinphoneThread();
-	if (!isLinphoneThread) qCritical() << "[Thread] Not processing in Linphone thread from " << context;
+	if (!isLinphoneThread) { // Bracket to easier debugging.
+		qCritical() << "[Thread] Not processing in Linphone thread from " << context;
+	}
 	return isLinphoneThread;
 }
 
 bool Thread::mustBeInMainThread(const QString &context) {
 	if (!qApp) return true;
 	bool isMainThread = QThread::currentThread() == qApp->thread();
-	if (!isMainThread) qCritical() << "[Thread] Not processing in Main thread from " << context;
+	if (!isMainThread) {
+		qCritical() << "[Thread] Not processing in Main thread from " << context;
+	}
 	return isMainThread;
 }

@@ -281,12 +281,17 @@ QString Utils::generateLinphoneSipAddress(const QString &uri) {
 }
 
 QString Utils::findAvatarByAddress(const QString &address) {
-	auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
-	if (!defaultFriendList) return QString();
-	auto linphoneAddr = ToolModel::interpretUrl(address);
-	auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
-	if (linFriend) return Utils::coreStringToAppString(linFriend->getPhoto());
-	return QString();
+	QString avatar;
+
+	App::postModelSync([address, avatar]() mutable {
+		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
+		if (!defaultFriendList) return;
+		auto linphoneAddr = ToolModel::interpretUrl(address);
+		auto linFriend = CoreModel::getInstance()->getCore()->findFriend(linphoneAddr);
+		if (linFriend) avatar = Utils::coreStringToAppString(linFriend->getPhoto());
+	});
+
+	return avatar;
 }
 
 QString Utils::generateSavedFilename(const QString &from, const QString &to) {

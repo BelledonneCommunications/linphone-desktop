@@ -129,7 +129,7 @@ Control.ComboBox {
 					visible: source != ""
 					width: visible ? 20 * DefaultStyle.dp : 0
 					sourceSize.width: 20 * DefaultStyle.dp
-					source: modelData.img ? modelData.img : ""
+					source: modelData && modelData.img ? modelData.img : ""
 					fillMode: Image.PreserveAspectFit
 					anchors.left: parent.left
 					anchors.leftMargin: visible ? 10 * DefaultStyle.dp : 0
@@ -137,11 +137,11 @@ Control.ComboBox {
 				}
 
 				Text {
-					text: modelData.text 
-							? modelData.text 
-							: modelData 
-								? modelData
-								: ""
+					text: modelData
+							? modelData.text
+								? modelData.text
+								: modelData
+							: ""
 					elide: Text.ElideRight
 					maximumLineCount: 1
 					wrapMode: Text.WrapAnywhere
