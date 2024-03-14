@@ -48,7 +48,7 @@ int TimeZoneModel::getStandardTimeOffset() const {
 }
 
 QString TimeZoneModel::getCountryName() const {
-	return QLocale::countryToString(mTimeZone.country());
+	return QLocale::territoryToString(mTimeZone.territory());
 }
 
 QString TimeZoneModel::getDisplayName() const {

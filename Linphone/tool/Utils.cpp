@@ -355,7 +355,7 @@ QString Utils::computeUserAgent() {
 	        .arg(qVersion());
 	        */
 }
-QString Utils::getCountryName(const QLocale::Country &p_country) {
+QString Utils::getCountryName(const QLocale::Territory &p_country) {
 	QString countryName;
 	switch (p_country) {
 		case QLocale::Afghanistan:
@@ -1087,10 +1087,10 @@ QString Utils::getCountryName(const QLocale::Country &p_country) {
 			if ((countryName = QCoreApplication::translate("country", "Zimbabwe")) == "Zimbabwe") countryName = "";
 			break;
 		default: {
-			countryName = QLocale::countryToString(p_country);
+			countryName = QLocale::territoryToString(p_country);
 		}
 	}
-	if (countryName == "") countryName = QLocale::countryToString(p_country);
+	if (countryName == "") countryName = QLocale::territoryToString(p_country);
 	return countryName;
 }
 QString Utils::toDateString(QDateTime date, const QString &format) {

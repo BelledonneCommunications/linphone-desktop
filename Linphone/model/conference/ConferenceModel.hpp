@@ -72,7 +72,7 @@ private:
 	    const std::shared_ptr<linphone::Conference> &conference,
 	    const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) override;
 	virtual void onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,
-	                                const std::shared_ptr<const linphone::Participant> &participant) override;
+	                                const std::shared_ptr<linphone::Participant> &participant) override;
 	virtual void onParticipantRemoved(const std::shared_ptr<linphone::Conference> &conference,
 	                                  const std::shared_ptr<const linphone::Participant> &participant) override;
 	virtual void
@@ -80,7 +80,7 @@ private:
 	                                const std::shared_ptr<const linphone::Participant> &participant) override;
 	virtual void
 	onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> &conference,
-	                         const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) override;
+	                         const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) override;
 	virtual void
 	onParticipantDeviceRemoved(const std::shared_ptr<linphone::Conference> &conference,
 	                           const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) override;

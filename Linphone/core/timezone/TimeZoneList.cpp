@@ -97,7 +97,7 @@ int TimeZoneList::get(const QTimeZone &timeZone) const {
 		auto today = QDateTime::currentDateTime();
 		it = find_if(mList.cbegin(), mList.cend(), [&timeZone, today](QSharedPointer<QObject> item) {
 			auto tz = item.objectCast<TimeZoneModel>()->getTimeZone();
-			return (timeZone.country() == QLocale::AnyCountry || tz.country() == timeZone.country()) &&
+			return (timeZone.territory() == QLocale::AnyCountry || tz.territory() == timeZone.territory()) &&
 			       tz.standardTimeOffset(today) == timeZone.standardTimeOffset(today);
 		});
 	}

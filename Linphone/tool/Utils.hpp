@@ -95,7 +95,7 @@ public:
 	Q_INVOKABLE static QString findAvatarByAddress(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);
 	Q_INVOKABLE static bool isMe(const QString &address);
-	static QString getCountryName(const QLocale::Country &p_country);
+	static QString getCountryName(const QLocale::Territory &p_country);
 
 	static QString getApplicationProduct();
 	static QString getOsProduct();
