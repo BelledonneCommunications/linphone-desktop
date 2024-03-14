@@ -49,21 +49,10 @@ AbstractMainPage {
 		ColumnLayout {
 			Layout.topMargin: 30 * DefaultStyle.dp
 			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
 			enabled: mainItem.leftPanelEnabled
 			Item {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-
-				Control.ScrollBar {
-					id: meetingsScrollbar
-					active: true
-					interactive: true
-					policy: Control.ScrollBar.AsNeeded
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.right: parent.right
-				}
 				Control.StackView {
 					id: leftPanelStackView
 					initialItem: listLayout
@@ -106,47 +95,40 @@ AbstractMainPage {
 							Layout.fillWidth: true
 							placeholderText: qsTr("Rechercher une réunion")
 						}
-						Control.ScrollView {
+
+						Text {
+							Layout.fillHeight: true
+							Layout.alignment: Qt.AlignHCenter
+							text: mainItem.emptyListText
+							font {
+								pixelSize: 16 * DefaultStyle.dp
+								weight: 800 * DefaultStyle.dp
+							}
+							visible: mainItem.showDefaultItem
+						}
+						
+						MeetingList {
+							id: conferenceList
+							visible: count != 0
+							hoverEnabled: mainItem.leftPanelEnabled
 							Layout.fillWidth: true
 							Layout.fillHeight: true
-							rightPadding: leftPanel.sideMargin
-							contentWidth: width - leftPanel.sideMargin
-							contentHeight: content.height
-							clip: true
-							Control.ScrollBar.vertical: meetingsScrollbar
-							ColumnLayout {
-								id: content
-								width: parent.width
-								anchors.topMargin: 5 * DefaultStyle.dp
-								anchors.fill: parent
-								spacing: 15 * DefaultStyle.dp
-								Text {
-									Layout.fillHeight: true
-									Layout.alignment: Qt.AlignHCenter
-									text: mainItem.emptyListText
-									font {
-										pixelSize: 16 * DefaultStyle.dp
-										weight: 800 * DefaultStyle.dp
-									}
-									visible: mainItem.showDefaultItem
-								}
-								
-								MeetingList {
-									id: conferenceList
-									visible: count != 0
-									hoverEnabled: mainItem.leftPanelEnabled
-									Layout.preferredWidth: parent.width
-									Layout.fillWidth: true
-									Layout.fillHeight: true
-									Layout.topMargin: 20 * DefaultStyle.dp
-									searchBarText: searchBar.text
-									onSelectedConferenceChanged: {
-										mainItem.selectedConference = selectedConference
-									}
-									onCountChanged: {
-										mainItem.meetingListCount = count
-									}
-								}
+							Layout.topMargin: 20 * DefaultStyle.dp
+							searchBarText: searchBar.text
+							onSelectedConferenceChanged: {
+								mainItem.selectedConference = selectedConference
+							}
+							onCountChanged: {
+								mainItem.meetingListCount = count
+							}
+							Control.ScrollBar.vertical: Control.ScrollBar {
+								id: meetingsScrollbar
+								active: true
+								interactive: true
+								policy: Control.ScrollBar.AsNeeded
+								anchors.top: parent.top
+								anchors.bottom: parent.bottom
+								anchors.right: parent.right
 							}
 						}
 					}

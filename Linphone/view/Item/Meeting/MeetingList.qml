@@ -8,7 +8,6 @@ import UtilsCpp 1.0
 
 ListView {
 	id: mainItem
-	height: contentHeight
 	visible: count > 0
 	clip: true
 
@@ -80,6 +79,7 @@ ListView {
 				radius: 50 * DefaultStyle.dp
 				property var isCurrentDay: UtilsCpp.isCurrentDay(dateTime)
 				color: isCurrentDay ? DefaultStyle.main1_500_main : "transparent"
+				Component.onCompleted: if(isCurrentDay) mainItem.currentIndex = index
 				Text {
 					anchors.centerIn: parent
 					text: UtilsCpp.toDateDayString(dateTime)
@@ -95,7 +95,7 @@ ListView {
 			id: conferenceInfoDelegate
 			anchors.left: dateDay.visible ? dateDay.right : parent.left
 			anchors.leftMargin: 10 * DefaultStyle.dp + mainItem.delegateLeftMargin
-			anchors.rightMargin: 10 * DefaultStyle.dp + mainItem.delegateLeftMargin
+			anchors.rightMargin: 25 * DefaultStyle.dp + mainItem.delegateLeftMargin
 			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
 			radius: 10 * DefaultStyle.dp
