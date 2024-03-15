@@ -128,7 +128,7 @@ ColumnLayout {
 			label: qsTr("Appel")
 			property var callObj
 			button.onClicked: {
- 	  			var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contact.core.defaultAddress)
+ 	  			var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contactAddress)
 				callObj = UtilsCpp.createCall(addr)
 			}
 		}
@@ -153,7 +153,7 @@ ColumnLayout {
 			label: qsTr("Appel Video")
 			property var callObj
 			button.onClicked: {
-				var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contact.core.defaultAddress)
+				var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contactAddress)
 	  			callObj = UtilsCpp.createCall(addr)
   				console.log("[CallPage.qml] TODO : enable video")
 			}

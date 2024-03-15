@@ -21,6 +21,8 @@
 #ifndef CALL_CORE_H_
 #define CALL_CORE_H_
 
+#include "core/conference/ConferenceCore.hpp"
+#include "core/conference/ConferenceGui.hpp"
 #include "model/call/CallModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -43,6 +45,7 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
 	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
 	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated)
+	Q_PROPERTY(bool isConference READ isConference NOTIFY conferenceChanged)
 	Q_PROPERTY(LinphoneEnums::MediaEncryption encryption READ getEncryption NOTIFY securityUpdated)
 	Q_PROPERTY(QString localSas READ getLocalSas WRITE setLocalSas MEMBER mLocalSas NOTIFY localSasChanged)
 	Q_PROPERTY(QString remoteSas WRITE setRemoteSas MEMBER mRemoteSas NOTIFY remoteSasChanged)
@@ -57,6 +60,7 @@ class CallCore : public QObject, public AbstractObject {
 	               microphoneVolumeGainChanged)
 	Q_PROPERTY(float microVolume READ getMicrophoneVolume WRITE setMicrophoneVolume NOTIFY microphoneVolumeChanged)
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
+	Q_PROPERTY(ConferenceGui *conference READ getConferenceGui NOTIFY conferenceChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -96,6 +100,10 @@ public:
 
 	bool isSecured() const;
 	void setIsSecured(bool secured);
+
+	bool isConference() const;
+	ConferenceGui *getConferenceGui() const;
+	void setConference(const QSharedPointer<ConferenceCore> &conference);
 
 	QString getLocalSas();
 	void setLocalSas(const QString &sas);
@@ -155,6 +163,7 @@ signals:
 	void speakerVolumeGainChanged();
 	void microphoneVolumeChanged();
 	void microphoneVolumeGainChanged();
+	void conferenceChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -194,6 +203,7 @@ signals:
 	*/
 private:
 	std::shared_ptr<CallModel> mCallModel;
+	QSharedPointer<ConferenceCore> mConference;
 	LinphoneEnums::CallStatus mStatus;
 	LinphoneEnums::CallState mState;
 	LinphoneEnums::CallState mTransferState;
@@ -202,6 +212,7 @@ private:
 	QString mLastErrorMessage;
 	QString mPeerAddress;
 	bool mIsSecured;
+	bool mIsConference = false;
 	int mDuration = 0;
 	bool mSpeakerMuted;
 	bool mMicrophoneMuted;

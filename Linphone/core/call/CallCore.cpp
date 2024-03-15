@@ -20,6 +20,8 @@
 
 #include "CallCore.hpp"
 #include "core/App.hpp"
+#include "core/conference/ConferenceCore.hpp"
+#include "core/conference/ConferenceGui.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -66,6 +68,11 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mIsSecured = (mEncryption == LinphoneEnums::MediaEncryption::Zrtp && tokenVerified) ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Srtp ||
 	             mEncryption == LinphoneEnums::MediaEncryption::Dtls;
+	auto conference = call->getConference();
+	mIsConference = conference != nullptr;
+	if (mIsConference) {
+		mConference = ConferenceCore::create(conference);
+	}
 	mPaused = mState == LinphoneEnums::CallState::Pausing || mState == LinphoneEnums::CallState::Paused ||
 	          mState == LinphoneEnums::CallState::PausedByRemote;
 	mRemoteVideoEnabled = call->getRemoteParams() && call->getRemoteParams()->videoEnabled();
@@ -230,6 +237,11 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			}
 		});
 	});
+	mCallModelConnection->makeConnectToModel(&CallModel::conferenceChanged, [this]() {
+		auto conference = mCallModel->getMonitor()->getConference();
+		QSharedPointer<ConferenceCore> core = conference ? ConferenceCore::create(conference) : nullptr;
+		mCallModelConnection->invokeToCore([this, core]() { setConference(core); });
+	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lAccept, [this](bool withVideo) {
 		mCallModelConnection->invokeToModel([this, withVideo]() { mCallModel->accept(withVideo); });
 	});
@@ -357,6 +369,22 @@ void CallCore::setIsSecured(bool secured) {
 	if (mIsSecured != secured) {
 		mIsSecured = secured;
 		emit securityUpdated();
+	}
+}
+
+bool CallCore::isConference() const {
+	return mIsConference;
+}
+
+ConferenceGui *CallCore::getConferenceGui() const {
+	return mConference ? new ConferenceGui(mConference) : nullptr;
+}
+
+void CallCore::setConference(const QSharedPointer<ConferenceCore> &conference) {
+	if (mConference != conference) {
+		mConference = conference;
+		mIsConference = (mConference != nullptr);
+		emit conferenceChanged();
 	}
 }
 

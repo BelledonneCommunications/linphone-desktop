@@ -216,7 +216,7 @@ AbstractMainPage {
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 						}
 						Text {
-							text: mainItem.selectedConference.core.subject
+							text: mainItem.selectedConference && mainItem.selectedConference.core.subject
 							font {
 								pixelSize: 20 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
@@ -287,7 +287,7 @@ AbstractMainPage {
 							}
 							Button {
 								Layout.fillWidth: true
-								text: mainItem.selectedConference.core.uri
+								text: mainItem.selectedConference && mainItem.selectedConference.core.uri
 								textSize: 14 * DefaultStyle.dp
 								textWeight: 400 * DefaultStyle.dp
 								underline: true
@@ -314,10 +314,12 @@ AbstractMainPage {
 								source: AppIcons.clock
 							}
 							Text {
-								text: UtilsCpp.toDateString(mainItem.selectedConference.core.dateTimeUtc) 
-								+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTimeUtc) 
-								+ " - " 
-								+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
+								text: mainItem.selectedConference
+										? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTimeUtc) 
+										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTimeUtc) 
+										+ " - " 
+										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
+										: ''
 								font {
 									pixelSize: 14 * DefaultStyle.dp
 									capitalization: Font.Capitalize
@@ -332,7 +334,7 @@ AbstractMainPage {
 								source: AppIcons.globe
 							}
 							Text {
-								text: qsTr("Time zone: ") + mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName
+								text: qsTr("Time zone: ") + (mainItem.selectedConference && (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName))
 								font {
 									pixelSize: 14 * DefaultStyle.dp
 									capitalization: Font.Capitalize
@@ -342,7 +344,7 @@ AbstractMainPage {
 					}
 				}
 				Section {
-					visible: mainItem.selectedConference.core.description.length != 0
+					visible: mainItem.selectedConference && mainItem.selectedConference.core.description.length != 0
 					content: RowLayout {
 						spacing: 8 * DefaultStyle.dp
 						EffectImage {
@@ -352,7 +354,7 @@ AbstractMainPage {
 							colorizationColor: DefaultStyle.main2_600
 						}
 						Text {
-							text: mainItem.selectedConference.core.description
+							text: mainItem.selectedConference && mainItem.selectedConference.core.description
 							Layout.fillWidth: true
 							font {
 								pixelSize: 14 * DefaultStyle.dp
@@ -373,10 +375,10 @@ AbstractMainPage {
 						Avatar {
 							Layout.preferredWidth: 45 * DefaultStyle.dp
 							Layout.preferredHeight: 45 * DefaultStyle.dp
-							address: mainItem.selectedConference.core.organizerAddress
+							address: mainItem.selectedConference && mainItem.selectedConference.core.organizerAddress
 						}
 						Text {
-							text: mainItem.selectedConference.core.organizerName
+							text: mainItem.selectedConference && mainItem.selectedConference.core.organizerName
 							font {
 								pixelSize: 14 * DefaultStyle.dp
 								capitalization: Font.Capitalize
@@ -400,7 +402,7 @@ AbstractMainPage {
 							id: participantList
 							Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
 							Layout.fillWidth: true
-							model: mainItem.selectedConference.core.participants
+							model: mainItem.selectedConference && mainItem.selectedConference.core.participants || []
 							clip: true
 							delegate: RowLayout {
 								height: 56 * DefaultStyle.dp
@@ -420,7 +422,7 @@ AbstractMainPage {
 								}
 								Text {
 									text: qsTr("Organizer")
-									visible: mainItem.selectedConference.core.organizerAddress === modelData.address
+									visible: mainItem.selectedConference && mainItem.selectedConference.core.organizerAddress === modelData.address
 									color: DefaultStyle.main2_400
 									font {
 										pixelSize: 12 * DefaultStyle.dp
@@ -432,11 +434,16 @@ AbstractMainPage {
 					}
 				}
 				Button {
+					property var callObj
 					Layout.fillWidth: true
 					text: qsTr("Rejoindre la réunion")
 					topPadding: 11 * DefaultStyle.dp
 					bottomPadding: 11 * DefaultStyle.dp
-					onClicked: console.log("TODO: join conf", mainItem.selectedConference.core.subject)
+					onClicked: {
+						console.log("TODO: join conf", mainItem.selectedConference.core.subject)
+						console.log(mainItem.selectedConference.core.uri)
+						callObj = UtilsCpp.createCall(mainItem.selectedConference.core.uri)
+					}
 				}
 			}
 		}

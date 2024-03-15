@@ -30,6 +30,7 @@ DEFINE_ABSTRACT_OBJECT(CallModel)
 
 CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *parent)
     : ::Listener<linphone::Call, linphone::CallListener>(call, parent) {
+	qDebug() << "[CallModel] new" << this;
 	mustBeInLinphoneThread(getClassName());
 	mDurationTimer.setInterval(1000);
 	mDurationTimer.setSingleShot(false);
@@ -227,6 +228,13 @@ std::string CallModel::getAuthenticationToken() const {
 	return token;
 }
 
+void CallModel::setConference(const std::shared_ptr<linphone::Conference> &conference) {
+	if (mConference != conference) {
+		mConference = conference;
+		emit conferenceChanged();
+	}
+}
+
 void CallModel::onDtmfReceived(const std::shared_ptr<linphone::Call> &call, int dtmf) {
 	emit dtmfReceived(call, dtmf);
 }
@@ -263,6 +271,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		auto params = call->getRemoteParams();
 		emit remoteVideoEnabledChanged(params && params->videoEnabled());
 		emit cameraEnabledChanged(call->cameraEnabled());
+		setConference(call->getConference());
 	}
 	emit stateChanged(state, message);
 }

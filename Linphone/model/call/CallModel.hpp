@@ -52,6 +52,7 @@ public:
 	std::shared_ptr<const linphone::AudioDevice> getInputAudioDevice() const;
 	void setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);
 	std::shared_ptr<const linphone::AudioDevice> getOutputAudioDevice() const;
+	void setConference(const std::shared_ptr<linphone::Conference> &conference);
 
 	void setPaused(bool paused);
 	void transferTo(const std::shared_ptr<linphone::Address> &address);
@@ -80,10 +81,13 @@ signals:
 	void microphoneVolumeGainChanged(float volume);
 	void inputAudioDeviceChanged(const std::string &id);
 	void outputAudioDeviceChanged(const std::string &id);
+	void conferenceChanged();
 
 private:
 	QTimer mDurationTimer;
 	QTimer mMicroVolumeTimer;
+	std::shared_ptr<linphone::Conference> mConference;
+
 	DECLARE_ABSTRACT_OBJECT
 
 	//--------------------------------------------------------------------------------

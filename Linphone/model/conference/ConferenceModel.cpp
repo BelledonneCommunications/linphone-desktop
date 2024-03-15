@@ -30,6 +30,7 @@ DEFINE_ABSTRACT_OBJECT(ConferenceModel)
 ConferenceModel::ConferenceModel(const std::shared_ptr<linphone::Conference> &conference, QObject *parent)
     : ::Listener<linphone::Conference, linphone::ConferenceListener>(conference, parent) {
 	mustBeInLinphoneThread(getClassName());
+	qDebug() << "[ConferenceModel] new" << this;
 }
 
 ConferenceModel::~ConferenceModel() {

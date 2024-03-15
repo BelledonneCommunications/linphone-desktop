@@ -37,6 +37,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/variant/VariantList.cpp
 
 	core/conference/ConferenceCore.cpp
+	core/conference/ConferenceGui.cpp
 	core/conference/ConferenceInfoCore.cpp
 	core/conference/ConferenceInfoGui.cpp
 	core/conference/ConferenceInfoList.cpp

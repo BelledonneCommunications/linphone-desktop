@@ -15,6 +15,7 @@ Window {
 	// modality: Qt.WindowModal
 
 	property CallGui call
+	property ConferenceGui conference: call && call.core.conference || null
 	property bool callTerminatedByUser: false
 
 	Connections {
@@ -46,7 +47,7 @@ Window {
 			}
 		}
 		else if (callState === LinphoneEnums.CallState.Error || callState === LinphoneEnums.CallState.End) {
-			endCall(call)
+			callEnded(call)
 		}
 	}
 	property var transferState: call.core.transferState
@@ -78,10 +79,12 @@ Window {
 	
 	function endCall(callToFinish) {
 		if (callToFinish) callToFinish.core.lTerminate()
+	}
+	function callEnded(){
 		if (!callsModel.haveCall) {
 			bottomButtonsLayout.setButtonsEnabled(false)
 			autoCloseWindow.restart()
-		} else if (callToFinish.core === mainWindow.call.core) {
+		} else {
 			mainWindow.call = callsModel.currentCall
 		}
 	}
@@ -230,7 +233,9 @@ Window {
 							: (mainWindow.call.core.state === LinphoneEnums.CallState.Paused
 							|| mainWindow.call.core.state === LinphoneEnums.CallState.PausedByRemote)
 								? qsTr("Appel mis en pause")
-								: EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
+								: mainWindow.conference
+									? mainWindow.conference.core.subject
+									: EnumsToStringCpp.dirToString(mainWindow.call.core.dir) + qsTr(" call")
 						color: DefaultStyle.grey_0
 						font {
 							pixelSize: 22 * DefaultStyle.dp

@@ -40,9 +40,10 @@
 #include "core/call/CallList.hpp"
 #include "core/call/CallProxy.hpp"
 #include "core/camera/CameraGui.hpp"
-#include "core/fps-counter/FPSCounter.hpp"
+#include "core/conference/ConferenceGui.hpp"
 #include "core/conference/ConferenceInfoGui.hpp"
 #include "core/conference/ConferenceInfoProxy.hpp"
+#include "core/fps-counter/FPSCounter.hpp"
 #include "core/friend/FriendCore.hpp"
 #include "core/friend/FriendGui.hpp"
 #include "core/logger/QtLogger.hpp"
@@ -206,6 +207,9 @@ void App::initCppInterfaces() {
 	qmlRegisterType<CallProxy>(Constants::MainQmlUri, 1, 0, "CallProxy");
 	qmlRegisterType<CallHistoryProxy>(Constants::MainQmlUri, 1, 0, "CallHistoryProxy");
 	qmlRegisterType<CallGui>(Constants::MainQmlUri, 1, 0, "CallGui");
+	qmlRegisterUncreatableType<ConferenceCore>(Constants::MainQmlUri, 1, 0, "ConferenceCore",
+	                                           QLatin1String("Uncreatable"));
+	qmlRegisterType<ConferenceGui>(Constants::MainQmlUri, 1, 0, "ConferenceGui");
 	qmlRegisterType<FriendGui>(Constants::MainQmlUri, 1, 0, "FriendGui");
 	qmlRegisterUncreatableType<FriendCore>(Constants::MainQmlUri, 1, 0, "FriendCore", QLatin1String("Uncreatable"));
 	qmlRegisterType<MagicSearchProxy>(Constants::MainQmlUri, 1, 0, "MagicSearchProxy");
