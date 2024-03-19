@@ -25,9 +25,14 @@ ListView {
 	onCountChanged: selectedConference = model.getAt(currentIndex) || null
 	onCurrentIndexChanged: selectedConference = model.getAt(currentIndex) || null
 
+	function forceUpdate() {
+		confInfoProxy.lUpdate()
+	}
+
 	signal conferenceSelected(var contact)
 
 	model: ConferenceInfoProxy {
+		id: confInfoProxy
 		searchText: searchBarText.length === 0 ? "" : searchBarText
 	}
 

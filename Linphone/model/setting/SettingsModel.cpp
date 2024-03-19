@@ -57,6 +57,6 @@ void SettingsModel::setVideoDevice(const std::string &id) {
 	auto core = CoreModel::getInstance()->getCore();
 	if (core->getVideoDevice() != id) {
 		CoreModel::getInstance()->getCore()->setVideoDevice(id);
-		emit videoDeviceChanged();
+		emit videoDeviceChanged(id);
 	}
 }

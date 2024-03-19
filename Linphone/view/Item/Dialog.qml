@@ -53,6 +53,7 @@ Popup {
 
 	contentItem: ColumnLayout {
 		spacing: 20 * DefaultStyle.dp
+
 		ColumnLayout {
 			id: contentLayout
 			Layout.fillWidth: true
@@ -64,6 +65,7 @@ Popup {
 			visible: text.length != 0
 			width: parent.width
 			Layout.preferredWidth: 278 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignCenter
 			text: mainItem.text
 			font {
 				pixelSize: 14 * DefaultStyle.dp

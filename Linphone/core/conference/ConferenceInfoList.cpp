@@ -88,6 +88,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	// 		    qWarning() << "No ConferenceInfo have beend found for " << conferenceInfo->getUri()->asString().c_str();
 	//     });
 
+	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, &ConferenceInfoList::lUpdate);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::conferenceInfoReceived, &ConferenceInfoList::lUpdate);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::conferenceStateChanged, [this] {
 		qDebug() << "list: conf state changed";

@@ -49,7 +49,7 @@ public:
 	std::shared_ptr<linphone::Config> mConfig;
 
 signals:
-	void videoDeviceChanged();
+	void videoDeviceChanged(const std::string &id);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

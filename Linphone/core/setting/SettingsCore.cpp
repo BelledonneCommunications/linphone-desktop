@@ -71,6 +71,10 @@ void Settings::setSelf(QSharedPointer<Settings> me) {
 		mSettingsModelConnection->invokeToModel(
 		    [this, id]() { mSettingsModel->setVideoDevice(Utils::appStringToCoreString(id)); });
 	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::videoDeviceChanged, [this](const std::string &id) {
+		mSettingsModelConnection->invokeToModel(
+		    [this, id = Utils::coreStringToAppString(id)]() { setCurrentVideoDevice(id); });
+	});
 }
 
 QString Settings::getConfigPath(const QCommandLineParser &parser) {
@@ -95,6 +99,23 @@ QStringList Settings::getOutputAudioDevicesList() const {
 
 QStringList Settings::getVideoDevicesList() const {
 	return mVideoDevices;
+}
+
+void Settings::setCurrentVideoDevice(const QString &id) {
+	if (mCurrentVideoDeviceId != id) {
+		mCurrentVideoDeviceId = id;
+		emit videoDeviceChanged();
+	}
+}
+
+int Settings::getCurrentVideoDeviceIndex() {
+	auto found = std::find_if(mVideoDevices.begin(), mVideoDevices.end(),
+	                          [this](const QString &device) { return mCurrentVideoDeviceId == device; });
+	if (found != mVideoDevices.end()) {
+		auto index = std::distance(mVideoDevices.begin(), found);
+		return index;
+	}
+	return -1;
 }
 
 bool Settings::getFirstLaunch() const {

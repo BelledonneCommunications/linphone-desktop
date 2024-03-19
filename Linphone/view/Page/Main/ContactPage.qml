@@ -62,6 +62,7 @@ AbstractMainPage {
 		Layout.fillWidth: true
 		Layout.fillHeight: true
 		property int sideMargin: 25 * DefaultStyle.dp
+		spacing: 30 * DefaultStyle.dp
 
 		RowLayout {
 			Layout.fillWidth: true
@@ -92,7 +93,6 @@ AbstractMainPage {
 		}
 
 		ColumnLayout {
-			Layout.topMargin: 30 * DefaultStyle.dp
 			Layout.leftMargin: leftPanel.sideMargin
 			enabled: mainItem.leftPanelEnabled
 			SearchBar {

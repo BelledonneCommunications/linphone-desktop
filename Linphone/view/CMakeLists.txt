@@ -16,7 +16,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Account/Accounts.qml
 	
 	view/Item/Call/CallContactsLists.qml
+	view/Item/Call/InCallSettingsPanel.qml
 	view/Item/Call/OngoingCallRightPanel.qml
+	view/Item/Call/WaitingRoom.qml
 	
 	view/Item/Notification/Notification.qml
 	view/Item/Notification/NotificationReceivedCall.qml
@@ -38,6 +40,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Calendar.qml
 	view/Item/CalendarComboBox.qml
 	view/Item/Carousel.qml
+	view/Item/CheckableButton.qml
 	view/Item/CheckBox.qml
 	view/Item/ComboBox.qml
 	view/Item/DesktopPopup.qml

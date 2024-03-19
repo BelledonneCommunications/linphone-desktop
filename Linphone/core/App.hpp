@@ -93,6 +93,7 @@ public:
 	void onLoggerInitialized();
 
 	QQuickWindow *getCallsWindow(QVariant callGui);
+	void setCallsWindowProperty(const char *id, QVariant property);
 	void closeCallsWindow();
 
 	QQuickWindow *getMainWindow();

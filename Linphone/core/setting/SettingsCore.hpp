@@ -34,6 +34,7 @@ class Settings : public QObject, public AbstractObject {
 	Q_PROPERTY(QStringList inputAudioDevicesList READ getInputAudioDevicesList NOTIFY inputAudioDeviceChanged)
 	Q_PROPERTY(QStringList outputAudioDevicesList READ getOutputAudioDevicesList NOTIFY outputAudioDeviceChanged)
 	Q_PROPERTY(QStringList videoDevicesList READ getVideoDevicesList NOTIFY videoDeviceChanged)
+	Q_PROPERTY(int currentVideoDeviceIndex READ getCurrentVideoDeviceIndex NOTIFY videoDeviceChanged)
 public:
 	static QSharedPointer<Settings> create();
 	Settings(QObject *parent = Q_NULLPTR);
@@ -48,6 +49,9 @@ public:
 	QStringList getOutputAudioDevicesList() const;
 
 	QStringList getVideoDevicesList() const;
+
+	void setCurrentVideoDevice(const QString &id);
+	int getCurrentVideoDeviceIndex();
 
 	Q_INVOKABLE void setFirstLaunch(bool first);
 	Q_INVOKABLE bool getFirstLaunch() const;
@@ -64,6 +68,7 @@ signals:
 private:
 	std::shared_ptr<SettingsModel> mSettingsModel;
 	QStringList mInputAudioDevices;
+	QString mCurrentVideoDeviceId;
 	QStringList mOutputAudioDevices;
 	QStringList mVideoDevices;
 	QSettings mAppSettings;

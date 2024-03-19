@@ -91,8 +91,8 @@ ColumnLayout {
 					color: DefaultStyle.grey_0
 				}
 				BusyIndicator {
-					width: parent.height
-					height: parent.height
+					implicitWidth: parent.height
+					implicitHeight: parent.height
 					Layout.alignment: Qt.AlignCenter
 					indicatorColor: DefaultStyle.grey_0
 				}

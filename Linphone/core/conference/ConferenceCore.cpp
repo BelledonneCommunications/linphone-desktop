@@ -39,7 +39,7 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 }
 ConferenceCore::~ConferenceCore() {
 	mustBeInMainThread("~" + getClassName());
-	emit mConferenceModel->removeListener();
+	if (mConferenceModel) emit mConferenceModel->removeListener();
 }
 
 void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {

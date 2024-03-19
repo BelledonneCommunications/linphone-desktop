@@ -22,7 +22,8 @@ Dialog {
 	onCallChanged: if(!call) close()
 
 	Connections {
-		target: call.core
+		enabled: call != undefined && call != null
+		target: call && call.core
 		onStatusChanged: if (status === CallModel.CallStatusEnded) close()
 	}
 
@@ -98,7 +99,8 @@ Dialog {
 			property var correctIndex
 			property var modelList
 			Connections {
-				target: mainItem.call.core
+				enabled: mainItem.call
+				target: mainItem.call ? mainItem.call.core : null
 				// this connection is needed to get the remoteSas when available
 				// due to the asynchronous connection between core and ui
 				onRemoteSasChanged: {

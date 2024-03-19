@@ -44,6 +44,7 @@ protected:
 
 signals:
 	void searchTextChanged();
+	void lUpdate();
 
 private:
 	QString mSearchText;

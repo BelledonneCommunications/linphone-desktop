@@ -12,13 +12,15 @@ ColumnLayout {
 	property ConferenceInfoGui conferenceInfoGui
 	signal addParticipantsRequested()
 	signal returnRequested()
-	signal creationSucceed()
+	signal saveSucceed(bool isCreation)
 
 	Connections {
 		target: mainItem.conferenceInfoGui.core
 		onSchedulerStateChanged: {
-			if (isCreation && mainItem.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) mainItem.creationSucceed()
 			console.log("scheduler state changed", mainItem.conferenceInfoGui.core.schedulerState)
+			if (mainItem.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
+				mainItem.saveSucceed(isCreation)
+			}
 		}
 	}
 
@@ -181,6 +183,7 @@ ColumnLayout {
 				CalendarComboBox {
 					id: startDate
 					background.visible: mainItem.isCreation
+					indicator.visible: mainItem.isCreation
 					contentText.font.weight: (isCreation ? 700 : 400) * DefaultStyle.dp
 					Layout.preferredWidth: 200 * DefaultStyle.dp
 					Layout.preferredHeight: 30 * DefaultStyle.dp
@@ -197,6 +200,7 @@ ColumnLayout {
 				TimeComboBox {
 					id: startHour
 					visible: allDaySwitch.position === 0
+					indicator.visible: mainItem.isCreation
 					// Layout.fillWidth: true
 					Layout.preferredWidth: 94 * DefaultStyle.dp
 					Layout.preferredHeight: 30 * DefaultStyle.dp
@@ -218,6 +222,7 @@ ColumnLayout {
 				CalendarComboBox {
 					id: endDate
 					background.visible: mainItem.isCreation
+					indicator.visible: mainItem.isCreation
 					// Layout.fillWidth: true
 					Layout.preferredWidth: 200 * DefaultStyle.dp
 					Layout.preferredHeight: 30 * DefaultStyle.dp
@@ -228,6 +233,7 @@ ColumnLayout {
 				TimeComboBox {
 					id: endHour
 					visible: allDaySwitch.position === 0
+					indicator.visible: mainItem.isCreation
 					Layout.preferredWidth: 94 * DefaultStyle.dp
 					Layout.preferredHeight: 30 * DefaultStyle.dp
 					background.visible: mainItem.isCreation

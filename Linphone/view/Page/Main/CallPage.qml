@@ -44,6 +44,7 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
+
 		Control.StackView {
 			id: listStackView
 			clip: true
@@ -57,6 +58,7 @@ AbstractMainPage {
 			id: historyListItem
 
 			ColumnLayout {
+				spacing: 30 * DefaultStyle.dp
 				property alias listView: historyListView
 				RowLayout {
 					spacing: 16 * DefaultStyle.dp
@@ -211,25 +213,37 @@ AbstractMainPage {
 													}
 													RowLayout {
 														spacing: 3 * DefaultStyle.dp
-														Image {
-															source: modelData.core.status === LinphoneEnums.CallStatus.Declined
+														EffectImage {
+															id: statusIcon
+															imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
 															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
 															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
 															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-																? modelData.core.isOutgoing 
-																	? AppIcons.outgoingCallRejected 
-																	: AppIcons.incomingCallRejected
-																: modelData.core.status === LinphoneEnums.CallStatus.Missed
-																	? modelData.core.isOutgoing
-																		? AppIcons.outgoingCallMissed 
-																		: AppIcons.incomingCallMissed
-																	: modelData.core.isOutgoing
-																		? AppIcons.outgoingCall 
-																		: AppIcons.incomingCall
-															Layout.preferredWidth: 5 * DefaultStyle.dp
-															Layout.preferredHeight: 5 * DefaultStyle.dp
-															sourceSize.width: 5 * DefaultStyle.dp
-															sourceSize.height: 5 * DefaultStyle.dp
+																? AppIcons.arrowElbow 
+																: modelData.core.isOutgoing
+																	? AppIcons.arrowUpRight
+																	: AppIcons.arrowDownLeft
+															colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
+															|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+															|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+															|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+															|| modelData.core.status === LinphoneEnums.CallStatus.Missed
+																? DefaultStyle.danger_500main
+																: modelData.core.isOutgoing
+																	? DefaultStyle.info_500_main
+																	: DefaultStyle.success_500main
+															Layout.preferredWidth: 12 * DefaultStyle.dp
+															Layout.preferredHeight: 12 * DefaultStyle.dp
+															transform: Rotation {
+																angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
+																	|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+																	|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+																	|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+																origin {
+																	x: statusIcon.width/2
+																	y: statusIcon.height/2
+																}
+															}
 														}
 														Text {
 															// text: modelData.core.date
@@ -309,6 +323,7 @@ AbstractMainPage {
 		Component {
 			id: newCallItem
 			ColumnLayout {
+				spacing: 30 * DefaultStyle.dp
 				RowLayout {
 					Layout.leftMargin: listStackView.sideMargin
 					Layout.rightMargin: listStackView.sideMargin
@@ -465,25 +480,37 @@ AbstractMainPage {
 							ColumnLayout {
 								Layout.alignment: Qt.AlignVCenter
 								RowLayout {
-									Image {
-										source: modelData.core.status === LinphoneEnums.CallStatus.Declined
+									EffectImage {
+										id: statusIcon
+										imageSource: modelData.core.status === LinphoneEnums.CallStatus.Declined
 										|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
 										|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
 										|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
-											? modelData.core.isOutgoing 
-												? AppIcons.outgoingCallRejected 
-												: AppIcons.incomingCallRejected
-											: modelData.core.status === LinphoneEnums.CallStatus.Missed
-												? modelData.core.isOutgoing
-													? AppIcons.outgoingCallMissed 
-													: AppIcons.incomingCallMissed
-												: modelData.core.isOutgoing
-													? AppIcons.outgoingCall 
-													: AppIcons.incomingCall
-										Layout.preferredWidth: 6.67 * DefaultStyle.dp
-										Layout.preferredHeight: 6.67 * DefaultStyle.dp
-										sourceSize.width: 6.67 * DefaultStyle.dp
-										sourceSize.height: 6.67 * DefaultStyle.dp
+											? AppIcons.arrowElbow 
+											: modelData.core.isOutgoing
+												? AppIcons.arrowUpRight
+												: AppIcons.arrowDownLeft
+										colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined
+										|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+										|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+										|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted
+										|| modelData.core.status === LinphoneEnums.CallStatus.Missed
+											? DefaultStyle.danger_500main
+											: modelData.core.isOutgoing
+												? DefaultStyle.info_500_main
+												: DefaultStyle.success_500main
+										Layout.preferredWidth: 16 * DefaultStyle.dp
+										Layout.preferredHeight: 16 * DefaultStyle.dp
+										transform: Rotation {
+											angle: modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined
+												|| modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere
+												|| modelData.core.status === LinphoneEnums.CallStatus.Aborted
+												|| modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+											origin {
+												x: statusIcon.width/2
+												y: statusIcon.height/2
+											}
+										}
 									}
 									Text {
 										text: modelData.core.status === LinphoneEnums.CallStatus.Missed

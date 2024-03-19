@@ -127,6 +127,7 @@ Item {
 					id: topRow
 					Layout.leftMargin: 25 * DefaultStyle.dp
 					Layout.rightMargin: 41 * DefaultStyle.dp
+					spacing: 25 * DefaultStyle.dp
 					SearchBar {
 						id: magicSearchBar
 						Layout.fillWidth: true
@@ -263,74 +264,77 @@ Item {
 							}
 						}
 					}
-					PopupButton {
-						id: avatarButton
-						AccountProxy{
-							id: accountProxy
-							//property bool haveAvatar: defaultAccount && defaultAccount.core.pictureUri || false
-						}
-						background.visible: false
-						Layout.preferredWidth: 54 * DefaultStyle.dp
-						Layout.preferredHeight: width
-						contentItem: Avatar {
-							id: avatar
-							height: avatarButton.height
-							width: avatarButton.width
-							account: accountProxy.defaultAccount
-						}
-						popup.x: width - popup.width
-						popup.padding: 0
-						popup.contentItem: ColumnLayout {
-							Accounts {
-								id: accounts
-								onAddAccountRequest: mainItem.addAccountRequest()
+					RowLayout {
+						spacing: 10 * DefaultStyle.dp
+						PopupButton {
+							id: avatarButton
+							AccountProxy{
+								id: accountProxy
+								//property bool haveAvatar: defaultAccount && defaultAccount.core.pictureUri || false
+							}
+							background.visible: false
+							Layout.preferredWidth: 54 * DefaultStyle.dp
+							Layout.preferredHeight: width
+							contentItem: Avatar {
+								id: avatar
+								height: avatarButton.height
+								width: avatarButton.width
+								account: accountProxy.defaultAccount
+							}
+							popup.x: width - popup.width
+							popup.padding: 0
+							popup.contentItem: ColumnLayout {
+								Accounts {
+									id: accounts
+									onAddAccountRequest: mainItem.addAccountRequest()
+								}
 							}
 						}
-					}
-					PopupButton {
-						id: settingsButton
-						Layout.preferredWidth: 24 * DefaultStyle.dp
-						Layout.preferredHeight: 24 * DefaultStyle.dp
-						popup.x: width - popup.width
-						popup.width: 271 * DefaultStyle.dp
-						popup.contentItem: ColumnLayout {
-							spacing: 20 * DefaultStyle.dp
-							IconLabelButton {
-								Layout.preferredHeight: 32 * DefaultStyle.dp
-								iconSize: 32 * DefaultStyle.dp
-								text: qsTr("Mon compte")
-								iconSource: AppIcons.manageProfile
-								onClicked: console.log("TODO : manage profile")
-							}
-							IconLabelButton {
-								Layout.preferredHeight: 32 * DefaultStyle.dp
-								iconSize: 32 * DefaultStyle.dp
-								text: qsTr("Paramètres")
-								iconSource: AppIcons.settings
-							}
-							IconLabelButton {
-								Layout.preferredHeight: 32 * DefaultStyle.dp
-								iconSize: 32 * DefaultStyle.dp
-								text: qsTr("Enregistrements")
-								iconSource: AppIcons.micro
-							}
-							IconLabelButton {
-								Layout.preferredHeight: 32 * DefaultStyle.dp
-								iconSize: 32 * DefaultStyle.dp
-								text: qsTr("Aide")
-								iconSource: AppIcons.question
-							}
-							Rectangle {
-								Layout.fillWidth: true
-								Layout.preferredHeight: 1 * DefaultStyle.dp
-								color: DefaultStyle.main2_400
-							}
-							IconLabelButton {
-								Layout.preferredHeight: 32 * DefaultStyle.dp
-								iconSize: 32 * DefaultStyle.dp
-								text: qsTr("Ajouter un compte")
-								iconSource: AppIcons.plusCircle
-								onClicked: mainItem.addAccountRequest()
+						PopupButton {
+							id: settingsButton
+							Layout.preferredWidth: 24 * DefaultStyle.dp
+							Layout.preferredHeight: 24 * DefaultStyle.dp
+							popup.x: width - popup.width
+							popup.width: 271 * DefaultStyle.dp
+							popup.contentItem: ColumnLayout {
+								spacing: 20 * DefaultStyle.dp
+								IconLabelButton {
+									Layout.preferredHeight: 32 * DefaultStyle.dp
+									iconSize: 32 * DefaultStyle.dp
+									text: qsTr("Mon compte")
+									iconSource: AppIcons.manageProfile
+									onClicked: console.log("TODO : manage profile")
+								}
+								IconLabelButton {
+									Layout.preferredHeight: 32 * DefaultStyle.dp
+									iconSize: 32 * DefaultStyle.dp
+									text: qsTr("Paramètres")
+									iconSource: AppIcons.settings
+								}
+								IconLabelButton {
+									Layout.preferredHeight: 32 * DefaultStyle.dp
+									iconSize: 32 * DefaultStyle.dp
+									text: qsTr("Enregistrements")
+									iconSource: AppIcons.micro
+								}
+								IconLabelButton {
+									Layout.preferredHeight: 32 * DefaultStyle.dp
+									iconSize: 32 * DefaultStyle.dp
+									text: qsTr("Aide")
+									iconSource: AppIcons.question
+								}
+								Rectangle {
+									Layout.fillWidth: true
+									Layout.preferredHeight: 1 * DefaultStyle.dp
+									color: DefaultStyle.main2_400
+								}
+								IconLabelButton {
+									Layout.preferredHeight: 32 * DefaultStyle.dp
+									iconSize: 32 * DefaultStyle.dp
+									text: qsTr("Ajouter un compte")
+									iconSource: AppIcons.plusCircle
+									onClicked: mainItem.addAccountRequest()
+								}
 							}
 						}
 					}

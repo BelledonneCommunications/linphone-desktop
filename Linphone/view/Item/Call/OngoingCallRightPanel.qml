@@ -17,6 +17,9 @@ Control.Page {
 	header: Control.Control {
 		id: pageHeader
 		width: mainItem.width
+		height: 56 * DefaultStyle.dp
+		leftPadding: 10 * DefaultStyle.dp
+		rightPadding: 10 * DefaultStyle.dp
 		background: Rectangle {
 			id: headerBackground
 			width: pageHeader.width
@@ -30,19 +33,13 @@ Control.Page {
 			}
 		}
 		contentItem: RowLayout {
-			width: pageHeader.width
-			height: pageHeader.height
-			anchors.leftMargin: 10 * DefaultStyle.dp
-			anchors.left: pageHeader.left
 			Item {
 				id: header
-			}
-			Item {
 				Layout.fillWidth: true
+				Layout.fillHeight: true
 			}
 			Button {
 				id: closeButton
-				Layout.alignment: Qt.AlignRight
 				background: Item {
 					visible: false
 				}

@@ -96,6 +96,7 @@ public:
 	LinphoneEnums::ConferenceInfoState getConferenceInfoState() const;
 	LinphoneEnums::ConferenceSchedulerState getConferenceSchedulerState() const;
 	// LinphoneEnums::ConferenceSchedulerState getConferenceSchedulerState() const;
+	QString toStartEndDateString();
 
 	void setDateTime(const QDateTime &date);
 	void setEndDateTime(const QDateTime &date);
@@ -118,12 +119,12 @@ public:
 	void resetParticipants(QVariantList participants);
 	Q_INVOKABLE void resetParticipants(const QStringList &adresses);
 	Q_INVOKABLE int getParticipantIndex(const QString &address);
+	Q_INVOKABLE QString getStartEndDateString();
 
 	void writeFromModel(const std::shared_ptr<ConferenceInfoModel> &model);
 	void writeIntoModel(std::shared_ptr<ConferenceInfoModel> model);
 
 	Q_INVOKABLE void save();
-	Q_INVOKABLE void cancelConference();
 	Q_INVOKABLE void undo();
 
 	// Tools
@@ -158,7 +159,7 @@ signals:
 	void removed();
 
 	// void lCreateConference(const int &securityLevel);
-	// void lCancelConference();
+	void lCancelConferenceInfo();
 	void lDeleteConferenceInfo(); // Remove completly this conference info from DB
 
 private:

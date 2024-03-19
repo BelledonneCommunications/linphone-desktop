@@ -44,7 +44,7 @@ Control.Button {
 						? mainItem.pressedColor
 						: mainItem.color
 			radius: 48 * DefaultStyle.dp
-			border.color: inversedColors ? mainItem.color : DefaultStyle.grey_0
+			border.color: inversedColors ? mainItem.color : "transparent"
 
 			MouseArea {
 				anchors.fill: parent

@@ -101,6 +101,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		});
 	}
 
+	connect(this, &ConferenceInfoCore::dateTimeChanged, [this] { setDuration(mDateTime.secsTo(mEndDateTime) / 60.0); });
 	connect(this, &ConferenceInfoCore::endDateTimeChanged,
 	        [this] { setDuration(mDateTime.secsTo(mEndDateTime) / 60.0); });
 	connect(this, &ConferenceInfoCore::durationChanged, [this] { setEndDateTime(mDateTime.addSecs(mDuration * 60)); });
@@ -168,15 +169,27 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 					setIsEnded(computeIsEnded());
 				});
 			});
-			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lDeleteConferenceInfo,
-			                                            [this]() { mConferenceInfoModel->deleteConferenceInfo(); });
+			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lCancelConferenceInfo, [this]() {
+				mConfInfoModelConnection->invokeToModel([this] {
+					if (Utils::isMe(mOrganizerAddress)) {
+						mConferenceInfoModel->cancelConference();
+					}
+				});
+			});
+			mConfInfoModelConnection->makeConnectToCore(&ConferenceInfoCore::lDeleteConferenceInfo, [this]() {
+				mConfInfoModelConnection->invokeToModel([this] { mConferenceInfoModel->deleteConferenceInfo(); });
+			});
 			mConfInfoModelConnection->makeConnectToModel(&ConferenceInfoModel::conferenceInfoDeleted,
 			                                             &ConferenceInfoCore::removed);
 
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::schedulerStateChanged, [this](linphone::ConferenceScheduler::State state) {
-				    mConfInfoModelConnection->invokeToCore(
-				        [this, state = LinphoneEnums::fromLinphone(state)] { setConferenceSchedulerState(state); });
+				    auto confInfoState = mConferenceInfoModel->getState();
+				    mConfInfoModelConnection->invokeToCore([this, state = LinphoneEnums::fromLinphone(state),
+				                                            infoState = LinphoneEnums::fromLinphone(confInfoState)] {
+					    setConferenceSchedulerState(state);
+					    setConferenceInfoState(infoState);
+				    });
 			    });
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::invitationsSent,
@@ -190,7 +203,14 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 	}
 }
 
-//------------------------------------------------------------------------------------------------
+QString ConferenceInfoCore::getStartEndDateString() {
+	if (Utils::datesAreEqual(mDateTime.date(), mEndDateTime.date())) {
+		return QLocale().toString(mDateTime, "ddd d MMM - hh") + "h - " + QLocale().toString(mEndDateTime, "hh") + "h";
+	} else {
+		return QLocale().toString(mDateTime, "ddd d MMM - hh") + "h - " +
+		       QLocale().toString(mEndDateTime, "ddd d MMM - hh") + "h";
+	}
+}
 
 // Note conferenceInfo->getDateTime uses UTC
 QDateTime ConferenceInfoCore::getDateTimeUtc() const {
@@ -492,6 +512,7 @@ void ConferenceInfoCore::save() {
 			mustBeInLinphoneThread(getClassName() + "::save()");
 			thisCopy->writeIntoModel(mConferenceInfoModel);
 			thisCopy->deleteLater();
+			mConferenceInfoModel->updateConferenceInfo();
 		});
 	} else {
 		mCoreModelConnection->invokeToModel([this, thisCopy]() {
@@ -543,11 +564,6 @@ void ConferenceInfoCore::undo() {
 			});
 		});
 	}
-}
-
-void ConferenceInfoCore::cancelConference() {
-	if (!mConferenceInfoModel) return;
-	mConferenceInfoModel->cancelConference();
 }
 
 //-------------------------------------------------------------------------------------------------

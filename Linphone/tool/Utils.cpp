@@ -22,6 +22,8 @@
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
+#include "core/conference/ConferenceInfoCore.hpp"
+#include "core/conference/ConferenceInfoGui.hpp"
 #include "core/path/Paths.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
@@ -120,8 +122,24 @@ VariantObject *Utils::createCall(const QString &sipAddress,
 	return data;
 }
 
+void Utils::setupConference(ConferenceInfoGui *confGui) {
+	if (!confGui) return;
+	auto window = App::getInstance()->getCallsWindow(QVariant());
+	window->setProperty("conferenceInfo", QVariant::fromValue(confGui));
+	window->show();
+}
+
 void Utils::openCallsWindow(CallGui *call) {
 	if (call) App::getInstance()->getCallsWindow(QVariant::fromValue(call))->show();
+}
+
+void Utils::setCallsWindowCall(CallGui *call) {
+	if (call) App::getInstance()->setCallsWindowProperty("call", QVariant::fromValue(call));
+}
+
+void Utils::setCallsWindowProperty(const QString &id, const QVariant &property) {
+	const char *idChar = id.toLocal8Bit().data();
+	App::getInstance()->setCallsWindowProperty(idChar, property);
 }
 
 QQuickWindow *Utils::getCallsWindow(CallGui *callGui) {
@@ -141,9 +159,12 @@ QQuickWindow *Utils::getMainWindow() {
 	return win;
 }
 
-void Utils::showInformationPopup(const QString &title, const QString &description, bool isSuccess) {
-	auto win = App::getInstance()->getMainWindow();
-	QMetaObject::invokeMethod(win, "showInformationPopup", Q_ARG(QVariant, title), Q_ARG(QVariant, description),
+void Utils::showInformationPopup(const QString &title,
+                                 const QString &description,
+                                 bool isSuccess,
+                                 QQuickWindow *window) {
+	if (!window) window = App::getInstance()->getMainWindow();
+	QMetaObject::invokeMethod(window, "showInformationPopup", Q_ARG(QVariant, title), Q_ARG(QVariant, description),
 	                          Q_ARG(QVariant, isSuccess));
 }
 
@@ -1173,16 +1194,20 @@ int Utils::getYear(const QDate &date) {
 }
 
 bool Utils::isMe(const QString &address) {
-	auto linAddr = ToolModel::interpretUrl(address);
-	if (!CoreModel::getInstance()->getCore()->getDefaultAccount()) {
-		for (auto &account : CoreModel::getInstance()->getCore()->getAccountList()) {
-			if (account->getContactAddress()->weakEqual(linAddr)) return true;
+	bool isMe = false;
+	App::postModelSync([&isMe, address]() {
+		auto linAddr = ToolModel::interpretUrl(address);
+		if (!CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+			// for (auto &account : CoreModel::getInstance()->getCore()->getAccountList()) {
+			// 	if (account->getContactAddress()->weakEqual(linAddr)) return true;
+			// }
+			isMe = false;
+		} else {
+			auto accountAddr = CoreModel::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
+			isMe = linAddr && accountAddr ? accountAddr->weakEqual(linAddr) : false;
 		}
-		return false;
-	} else {
-		auto accountAddr = CoreModel::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
-		return linAddr && accountAddr ? accountAddr->weakEqual(linAddr) : false;
-	}
+	});
+	return isMe;
 }
 // QDateTime dateTime(QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss"));
 

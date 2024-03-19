@@ -44,6 +44,7 @@ class CallGui;
 class QQuickWindow;
 class VariantObject;
 class CallGui;
+class ConferenceInfoGui;
 
 class Utils : public QObject {
 	Q_OBJECT
@@ -61,9 +62,14 @@ public:
 	                                             const QString &prepareTransfertAddress = "",
 	                                             const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
+	Q_INVOKABLE static void setupConference(ConferenceInfoGui *confGui);
+	Q_INVOKABLE static void setCallsWindowCall(CallGui *call);
+	Q_INVOKABLE static void setCallsWindowProperty(const QString &id, const QVariant &property);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
-	Q_INVOKABLE static void
-	showInformationPopup(const QString &title, const QString &description, bool isSuccess = true);
+	Q_INVOKABLE static void showInformationPopup(const QString &title,
+	                                             const QString &description,
+	                                             bool isSuccess = true,
+	                                             QQuickWindow *window = nullptr);
 	Q_INVOKABLE static QQuickWindow *getCallsWindow(CallGui *callGui);
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();

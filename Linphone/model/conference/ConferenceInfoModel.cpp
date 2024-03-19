@@ -81,6 +81,10 @@ QString ConferenceInfoModel::getSubject() const {
 	return Utils::coreStringToAppString(mConferenceInfo->getSubject());
 }
 
+linphone::ConferenceInfo::State ConferenceInfoModel::getState() const {
+	return mConferenceInfo->getState();
+}
+
 QString ConferenceInfoModel::getOrganizerName() const {
 	auto organizer = mConferenceInfo->getOrganizer();
 	auto name = Utils::coreStringToAppString(organizer->getDisplayName());
@@ -142,4 +146,9 @@ void ConferenceInfoModel::deleteConferenceInfo() {
 void ConferenceInfoModel::cancelConference() {
 	if (!mConferenceSchedulerModel) return;
 	mConferenceSchedulerModel->cancelConference(mConferenceInfo);
+	emit conferenceInfoCanceled();
+}
+
+void ConferenceInfoModel::updateConferenceInfo() {
+	mConferenceSchedulerModel->setInfo(mConferenceInfo);
 }

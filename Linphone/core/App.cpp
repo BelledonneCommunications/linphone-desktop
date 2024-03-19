@@ -287,7 +287,10 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 		}
 		qInfo() << log().arg("Subwindow status: `%1`.").arg(component.status());
 
-		QObject *object = component.createWithInitialProperties({{"call", callGui}});
+		QObject *object = nullptr;
+		// if (!callGui.isNull() && callGui.isValid()) object = component.createWithInitialProperties({{"call",
+		// callGui}});
+		object = component.create();
 		Q_ASSERT(object);
 		if (!object) {
 			qCritical() << log().arg("Calls window could not be created.");
@@ -306,8 +309,12 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 		// window->setParent(mMainWindow);
 		mCallsWindow = window;
 	}
-	mCallsWindow->setProperty("call", callGui);
+	if (!callGui.isNull() && callGui.isValid()) mCallsWindow->setProperty("call", callGui);
 	return mCallsWindow;
+}
+
+void App::setCallsWindowProperty(const char *id, QVariant property) {
+	if (mCallsWindow) mCallsWindow->setProperty(id, property);
 }
 
 void App::closeCallsWindow() {

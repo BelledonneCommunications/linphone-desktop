@@ -16,6 +16,7 @@ AbstractMainPage {
 	property bool leftPanelEnabled: true
 	property ConferenceInfoGui selectedConference
 	property int meetingListCount
+	signal newConfCreated()
 
 	onSelectedConferenceChanged: {
 		if (selectedConference) {
@@ -45,6 +46,52 @@ AbstractMainPage {
 		}
 	}
 
+	Dialog {
+		id: cancelAndDeleteConfDialog
+		property bool cancel: false
+		signal cancelRequested()
+		// width: 278 * DefaultStyle.dp
+		text: cancel ? qsTr("Souhaitez-vous annuler et supprimer cette réunion ?") : qsTr("Souhaitez-vous supprimer cette réunion ?")
+		buttons: [
+			Button {
+				visible: cancelAndDeleteConfDialog.cancel
+				text: qsTr("Annuler et supprimer")
+				leftPadding: 20 * DefaultStyle.dp
+				rightPadding: 20 * DefaultStyle.dp
+				topPadding: 11 * DefaultStyle.dp
+				bottomPadding: 11 * DefaultStyle.dp
+				onClicked: {
+					cancelAndDeleteConfDialog.accepted()
+					cancelAndDeleteConfDialog.close()
+					cancelAndDeleteConfDialog.cancelRequested()
+				}
+			},
+			Button {
+				text: cancelAndDeleteConfDialog.cancel ? qsTr("Supprimer seulement") : qsTr("Supprimer")
+				leftPadding: 20 * DefaultStyle.dp
+				rightPadding: 20 * DefaultStyle.dp
+				topPadding: 11 * DefaultStyle.dp
+				bottomPadding: 11 * DefaultStyle.dp
+				onClicked: {
+					cancelAndDeleteConfDialog.accepted()
+					cancelAndDeleteConfDialog.close()
+				}
+			},
+			Button {
+				text: qsTr("Retour")
+				inversedColors: true
+				leftPadding: 20 * DefaultStyle.dp
+				rightPadding: 20 * DefaultStyle.dp
+				topPadding: 11 * DefaultStyle.dp
+				bottomPadding: 11 * DefaultStyle.dp
+				onClicked: {
+					cancelAndDeleteConfDialog.rejected()
+					cancelAndDeleteConfDialog.close()
+				}
+			}
+		]
+	}
+
 	leftPanelContent: ColumnLayout {
 		id: leftPanel
 		Layout.fillWidth: true
@@ -52,66 +99,59 @@ AbstractMainPage {
 		property int sideMargin: 25 * DefaultStyle.dp
 
 		ColumnLayout {
-			Layout.topMargin: 30 * DefaultStyle.dp
+			// Layout.topMargin: 30 * DefaultStyle.dp
 			Layout.leftMargin: leftPanel.sideMargin
+			spacing: 30 * DefaultStyle.dp
+
 			enabled: mainItem.leftPanelEnabled
+
+			RowLayout {
+				visible: leftPanelStackView.currentItem.objectName == "listLayout"
+				Layout.fillWidth: true
+				Layout.rightMargin: leftPanel.sideMargin
+
+				Text {
+					text: qsTr("Réunions")
+					color: DefaultStyle.main2_700
+					font.pixelSize: 29 * DefaultStyle.dp
+					font.weight: 800 * DefaultStyle.dp
+				}
+				Item {
+					Layout.fillWidth: true
+				}
+				Button {
+					background: Item {
+					}
+					icon.source: AppIcons.plusCircle
+					Layout.preferredWidth: 30 * DefaultStyle.dp
+					Layout.preferredHeight: 30 * DefaultStyle.dp
+					width: 30 * DefaultStyle.dp
+					height: 30 * DefaultStyle.dp
+					onClicked: {
+						mainItem.setUpConference()
+					}
+				}
+			}
+
 			Item {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-
-				Control.ScrollBar {
-					id: meetingsScrollbar
-					visible: leftPanelStackView.currentItem.objectName == "listLayout"
-					active: true
-					interactive: true
-					policy: Control.ScrollBar.AsNeeded
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.right: parent.right
-				}
 
 				Control.StackView {
 					id: leftPanelStackView
 					initialItem: listLayout
 					anchors.fill: parent
-					anchors.rightMargin: leftPanel.sideMargin
 				}
 				Component {
 					id: listLayout
 					ColumnLayout {
 						property string objectName: "listLayout"
 						spacing: 19 * DefaultStyle.dp
-						RowLayout {
-							Layout.fillWidth: true
-							Layout.leftMargin: leftPanel.sideMargin
-							Layout.rightMargin: leftPanel.sideMargin
-							Text {
-								text: qsTr("Réunions")
-								color: DefaultStyle.main2_700
-								font.pixelSize: 29 * DefaultStyle.dp
-								font.weight: 800 * DefaultStyle.dp
-							}
-							Item {
-								Layout.fillWidth: true
-							}
-							Button {
-								background: Item {
-								}
-								icon.source: AppIcons.plusCircle
-								Layout.preferredWidth: 30 * DefaultStyle.dp
-								Layout.preferredHeight: 30 * DefaultStyle.dp
-								width: 30 * DefaultStyle.dp
-								height: 30 * DefaultStyle.dp
-								onClicked: {
-									mainItem.setUpConference()
-								}
-							}
-						}
 
 						SearchBar {
 							id: searchBar
-							Layout.rightMargin: leftPanel.sideMargin
 							Layout.fillWidth: true
+							Layout.rightMargin: leftPanel.sideMargin
 							placeholderText: qsTr("Rechercher une réunion")
 						}
 
@@ -126,21 +166,40 @@ AbstractMainPage {
 							visible: mainItem.showDefaultItem
 						}
 						
-						MeetingList {
-							id: conferenceList
-							visible: count != 0
-							hoverEnabled: mainItem.leftPanelEnabled
-							Layout.fillWidth: true
-							Layout.fillHeight: true
-							Layout.topMargin: 20 * DefaultStyle.dp
-							searchBarText: searchBar.text
-							onSelectedConferenceChanged: {
-								mainItem.selectedConference = selectedConference
+						RowLayout {
+							MeetingList {
+								id: conferenceList
+								visible: count != 0
+								hoverEnabled: mainItem.leftPanelEnabled
+								Layout.fillWidth: true
+								Layout.fillHeight: true
+								Layout.topMargin: 20 * DefaultStyle.dp
+								searchBarText: searchBar.text
+								onSelectedConferenceChanged: {
+									mainItem.selectedConference = selectedConference
+								}
+								onCountChanged: {
+									mainItem.meetingListCount = count
+								}
+								Connections {
+									target: mainItem
+									onNewConfCreated: {
+										conferenceList.forceUpdate()
+									}
+								}
+								Control.ScrollBar.vertical: meetingsScrollbar
 							}
-							onCountChanged: {
-								mainItem.meetingListCount = count
+							Control.ScrollBar {
+								id: meetingsScrollbar
+								visible: leftPanelStackView.currentItem.objectName == "listLayout"
+								active: true
+								interactive: true
+								policy: Control.ScrollBar.AsNeeded
+								Layout.fillHeight: true
+								// anchors.top: parent.top
+								// anchors.bottom: parent.bottom
+								// anchors.right: parent.right
 							}
-							Control.ScrollBar.vertical: meetingsScrollbar
 						}
 					}
 				}
@@ -152,9 +211,13 @@ AbstractMainPage {
 		id: createConf
 		MeetingSetUp {
 			Layout.rightMargin: leftPanel.sideMargin
-			onCreationSucceed: {
+			onSaveSucceed: {
+				mainItem.newConfCreated()
 				leftPanelStackView.pop()
 				UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
+			}
+			onReturnRequested: {
+				leftPanelStackView.pop()
 			}
 			onAddParticipantsRequested: {
 				leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView})
@@ -178,6 +241,10 @@ AbstractMainPage {
 				onReturnRequested: {
 					mainItem.rightPanelStackView.pop()
 				}
+				onSaveSucceed: {
+					mainItem.rightPanelStackView.pop()
+					UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
+				}
 				onAddParticipantsRequested: {
 					mainItem.rightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": mainItem.rightPanelStackView})
 				}
@@ -200,8 +267,8 @@ AbstractMainPage {
 		id: meetingDetail
 		RowLayout {
 			ColumnLayout {
-				Layout.alignment: Qt.AlignTop
 				Layout.preferredWidth: 393 * DefaultStyle.dp
+				Layout.alignment: Qt.AlignTop
 				Layout.fillWidth: false
 				Layout.fillHeight: true
 				Layout.leftMargin: 39 * DefaultStyle.dp
@@ -216,7 +283,7 @@ AbstractMainPage {
 							Layout.preferredHeight: 24 * DefaultStyle.dp
 						}
 						Text {
-							text: mainItem.selectedConference && mainItem.selectedConference.core.subject
+							text: mainItem.selectedConference ? mainItem.selectedConference.core.subject : ""
 							font {
 								pixelSize: 20 * DefaultStyle.dp
 								weight: 800 * DefaultStyle.dp
@@ -261,12 +328,19 @@ AbstractMainPage {
 										}
 									}
 									onClicked: {
-										if (UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress))
-											mainItem.selectedConference.core.lDeleteConferenceInfo()
-										else
-											UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vous pouvez supprimer une conférence seulement si vous en êtes l'organisateur"), false)
+										cancelAndDeleteConfDialog.cancel = UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
+										cancelAndDeleteConfDialog.open()
 										// mainItem.contactDeletionRequested(mainItem.selectedConference)
 										deletePopup.close()
+									}
+									Connections {
+										target: cancelAndDeleteConfDialog
+										onCancelRequested: {
+											mainItem.selectedConference.core.lCancelConferenceInfo()
+										}
+										onAccepted: {
+											mainItem.selectedConference.core.lDeleteConferenceInfo()
+										}
 									}
 								}
 							}
@@ -287,7 +361,7 @@ AbstractMainPage {
 							}
 							Button {
 								Layout.fillWidth: true
-								text: mainItem.selectedConference && mainItem.selectedConference.core.uri
+								text: mainItem.selectedConference ? mainItem.selectedConference.core.uri : ""
 								textSize: 14 * DefaultStyle.dp
 								textWeight: 400 * DefaultStyle.dp
 								underline: true
@@ -334,7 +408,7 @@ AbstractMainPage {
 								source: AppIcons.globe
 							}
 							Text {
-								text: qsTr("Time zone: ") + (mainItem.selectedConference && (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName))
+								text: qsTr("Time zone: ") + (mainItem.selectedConference ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
 								font {
 									pixelSize: 14 * DefaultStyle.dp
 									capitalization: Font.Capitalize
@@ -354,7 +428,7 @@ AbstractMainPage {
 							colorizationColor: DefaultStyle.main2_600
 						}
 						Text {
-							text: mainItem.selectedConference && mainItem.selectedConference.core.description
+							text: mainItem.selectedConference ? mainItem.selectedConference.core.description : ""
 							Layout.fillWidth: true
 							font {
 								pixelSize: 14 * DefaultStyle.dp
@@ -375,10 +449,10 @@ AbstractMainPage {
 						Avatar {
 							Layout.preferredWidth: 45 * DefaultStyle.dp
 							Layout.preferredHeight: 45 * DefaultStyle.dp
-							address: mainItem.selectedConference && mainItem.selectedConference.core.organizerAddress
+							address: mainItem.selectedConference ? mainItem.selectedConference.core.organizerAddress : ""
 						}
 						Text {
-							text: mainItem.selectedConference && mainItem.selectedConference.core.organizerName
+							text: mainItem.selectedConference ? mainItem.selectedConference.core.organizerName : ""
 							font {
 								pixelSize: 14 * DefaultStyle.dp
 								capitalization: Font.Capitalize
@@ -402,7 +476,7 @@ AbstractMainPage {
 							id: participantList
 							Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
 							Layout.fillWidth: true
-							model: mainItem.selectedConference && mainItem.selectedConference.core.participants || []
+							model: mainItem.selectedConference ? mainItem.selectedConference.core.participants : []
 							clip: true
 							delegate: RowLayout {
 								height: 56 * DefaultStyle.dp
@@ -434,7 +508,6 @@ AbstractMainPage {
 					}
 				}
 				Button {
-					property var callObj
 					Layout.fillWidth: true
 					text: qsTr("Rejoindre la réunion")
 					topPadding: 11 * DefaultStyle.dp
@@ -442,7 +515,7 @@ AbstractMainPage {
 					onClicked: {
 						console.log("TODO: join conf", mainItem.selectedConference.core.subject)
 						console.log(mainItem.selectedConference.core.uri)
-						callObj = UtilsCpp.createCall(mainItem.selectedConference.core.uri)
+						UtilsCpp.setupConference(mainItem.selectedConference)
 					}
 				}
 			}

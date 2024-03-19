@@ -25,13 +25,13 @@
 DEFINE_ABSTRACT_OBJECT(ConferenceInfoGui)
 
 ConferenceInfoGui::ConferenceInfoGui() {
-	qDebug() << "[ConferenceInfoGui] new" << this;
+	// qDebug() << "[ConferenceInfoGui] new" << this;
 	mCore = ConferenceInfoCore::create(nullptr);
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 ConferenceInfoGui::ConferenceInfoGui(QSharedPointer<ConferenceInfoCore> core) {
-	qDebug() << "[ConferenceInfoGui] new" << this;
+	// qDebug() << "[ConferenceInfoGui] new" << this;
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
@@ -39,7 +39,7 @@ ConferenceInfoGui::ConferenceInfoGui(QSharedPointer<ConferenceInfoCore> core) {
 
 ConferenceInfoGui::~ConferenceInfoGui() {
 	mustBeInMainThread("~" + getClassName());
-	qDebug() << "[ConferenceInfoGui] delete" << this;
+	// qDebug() << "[ConferenceInfoGui] delete" << this;
 }
 
 ConferenceInfoCore *ConferenceInfoGui::getCore() const {

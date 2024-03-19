@@ -29,6 +29,7 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : SortFilterProxy(pare
 	mList = ConferenceInfoList::create();
 	setSourceModel(mList.get());
 	connect(this, &ConferenceInfoProxy::searchTextChanged, [this] { invalidate(); });
+	connect(this, &ConferenceInfoProxy::lUpdate, mList.get(), &ConferenceInfoList::lUpdate);
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {

@@ -42,6 +42,7 @@ public:
 	int getDuration() const;
 	QDateTime getEndTime() const;
 	QString getSubject() const;
+	linphone::ConferenceInfo::State getState() const;
 	QString getOrganizerName() const;
 	QString getOrganizerAddress() const;
 	QString getDescription() const;
@@ -55,6 +56,7 @@ public:
 	void setParticipantInfos(const std::list<std::shared_ptr<linphone::ParticipantInfo>> &participantInfos);
 	void deleteConferenceInfo();
 	void cancelConference();
+	void updateConferenceInfo();
 
 signals:
 	void dateTimeChanged(const QDateTime &date);
@@ -64,6 +66,7 @@ signals:
 	void descriptionChanged(const QString &description);
 	void participantsChanged();
 	void conferenceInfoDeleted();
+	void conferenceInfoCanceled();
 	void schedulerStateChanged(linphone::ConferenceScheduler::State state);
 	void infoStateChanged(linphone::ConferenceInfo::State state);
 	void invitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations);
