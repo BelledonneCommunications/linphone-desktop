@@ -40,6 +40,7 @@ CallHistoryProxyModel::CallHistoryProxyModel (QObject *parent) : QSortFilterProx
 	sort(0);
 	connect(CoreManager::getInstance()->getAccountSettingsModel(), &AccountSettingsModel::defaultAccountChanged, model, &CallHistoryListModel::reload);
 	connect(model, &CallHistoryListModel::lastCallDateChanged, this, &CallHistoryProxyModel::invalidate);
+	connect(model, &CallHistoryListModel::lastCallStatusChanged, this, &CallHistoryProxyModel::invalidateFilter);
 	App *app = App::getInstance();
 	connect(app->getMainWindow(), &QWindow::activeChanged, this, [this]() {
 		handleIsActiveChanged(App::getInstance()->getMainWindow());
@@ -51,7 +52,7 @@ CallHistoryProxyModel::CallHistoryProxyModel (QObject *parent) : QSortFilterProx
 void CallHistoryProxyModel::setFilterFlags(int filterFlags){
 	if( mFilterFlags != filterFlags){
 		mFilterFlags = filterFlags;
-		invalidate();
+		invalidateFilter();
 		emit filterFlagsChanged();
 	}
 }
@@ -59,7 +60,7 @@ void CallHistoryProxyModel::setFilterFlags(int filterFlags){
 void CallHistoryProxyModel::setFilterText(const QString& text){
 	if( mFilterText != text){
 		mFilterText = text;
-		invalidate();
+		invalidateFilter();
 		emit filterTextChanged();
 	}
 }
@@ -75,7 +76,8 @@ bool CallHistoryProxyModel::filterAcceptsRow (int sourceRow, const QModelIndex &
 	auto timeline = sourceModel()->data(index).value<CallHistoryModel*>();
 	
 	if( mFilterFlags > 0) {
-		show = ( ((mFilterFlags & CallTimelineFilter::Incoming) == CallTimelineFilter::Incoming) && !timeline->mLastCallIsOutgoing)
+		show = ( ((mFilterFlags & CallTimelineFilter::Incoming) == CallTimelineFilter::Incoming)
+					&& (!timeline->mLastCallIsOutgoing && timeline->mLastCallStatus != LinphoneEnums::CallStatusMissed))
 				|| ( ((mFilterFlags & CallTimelineFilter::Outgoing) == CallTimelineFilter::Outgoing) && timeline->mLastCallIsOutgoing)
 				|| ( ((mFilterFlags & CallTimelineFilter::Missed) == CallTimelineFilter::Missed) && timeline->mLastCallStatus == LinphoneEnums::CallStatusMissed)
 				;

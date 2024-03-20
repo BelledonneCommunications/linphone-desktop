@@ -149,13 +149,12 @@ bool HistoryProxyModel::lessThan (const QModelIndex &left, const QModelIndex &ri
 
 void HistoryProxyModel::reload () {
 	mMaxDisplayedEntries = EntriesChunkSize;
-	//auto model = CoreManager::getInstance()->getHistoryModel();
-	//model->reload();
 	static_cast<HistoryModelFilter *>(sourceModel())->setSourceModel(new HistoryModel(mCallHistoryModel));
 	invalidate();
 }
 void HistoryProxyModel::resetMessageCount(){
-	static_cast<HistoryModel*>(static_cast<HistoryModelFilter *>(sourceModel())->sourceModel())->resetMessageCount();
+	auto model = static_cast<HistoryModel*>(static_cast<HistoryModelFilter *>(sourceModel())->sourceModel());
+	if(model) model->resetMessageCount();
 /*
 	auto model = CoreManager::getInstance()->getHistoryModel();
 	if( model){
@@ -176,9 +175,7 @@ static inline QWindow *getParentWindow (QObject *object) {
 }
 
 void HistoryProxyModel::handleIsActiveChanged (QWindow *window) {
-	auto model = CoreManager::getInstance()->getHistoryModel();
-	if (model && window->isActive() && getParentWindow(this) == window) {
-		model->focused();
-		model->resetMessageCount();
+	if (window->isActive() && getParentWindow(this) == window) {
+		resetMessageCount();
 	}
 }

@@ -44,6 +44,7 @@ QString reorder(const QString& address){
 void CallHistoryListModel::reload() {
 	beginResetModel();
 	mList.clear();
+	mCalls.clear();
 	endResetModel();
 	auto account = CoreManager::getInstance()->getCore()->getDefaultAccount();
 	auto callLogs = account ? account->getCallLogs() : CoreManager::getInstance()->getCore()->getCallLogs();
@@ -76,12 +77,13 @@ void CallHistoryListModel::add(const std::list<std::shared_ptr<linphone::CallLog
 			connect(call.get(), &CallHistoryModel::selectedChanged, this, &CallHistoryListModel::onSelectedChanged);
 			connect(call.get(), &CallHistoryModel::hasBeenRemoved, this, &CallHistoryListModel::onHasBeenRemoved);
 			connect(call.get(), &CallHistoryModel::lastCallDateChanged, this, &CallHistoryListModel::lastCallDateChanged);
+			connect(call.get(), &CallHistoryModel::lastCallStatusChanged, this, &CallHistoryListModel::lastCallStatusChanged);
 			toAdd << call;
 		}else{
 			mCalls[keyName]->update(callLog);
 		}
 	}
-	
+	qDebug() << "Adding call : " << callLogs.size() << " => " << toAdd.size();
 	ProxyListModel::add(toAdd);
 }
 
