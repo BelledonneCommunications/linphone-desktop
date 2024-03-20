@@ -277,21 +277,39 @@ App::App (int &argc, char *argv[]) : SingleApplication(argc, argv, true, Mode::U
 	connect(this, SIGNAL(applicationStateChanged(Qt::ApplicationState)), this, SLOT(stateChanged(Qt::ApplicationState)));
 	
 	setWindowIcon(QIcon(Constants::WindowIconPath));
-	
-	char * tz = getenv("TZ");
-	if(!tz){// If not set, set the environement variable for uses of mktime from the SDK.
+
 #ifdef Q_OS_WIN
-		_putenv(("TZ="+QTimeZone::systemTimeZoneId().toStdString()).c_str());
-		_tzset();
+	char tz[255] = {0};
+	size_t envSize = 0;
+	getenv_s(&envSize, tz, 255, "TZ");
+	if (envSize == 0 || tz[0] == '\0') { // If not set, set the environment variable for uses of mktime from the SDK.
+		long adjustTimezone;
+		_tzset(); // init timezone variable
+		auto error = _get_timezone(&adjustTimezone);
+		if (adjustTimezone != -QTimeZone::systemTimeZone().offsetFromUtc(QDateTime::currentDateTime())) {
+			QString timeZone = QTimeZone::systemTimeZoneId();
+			_putenv(("TZ=" + timeZone.toStdString()).c_str());
+			_tzset();
+			qInfo() << "Set TimeZone to " << timeZone;
+		}
+	} else qInfo() << "Use environment TimeZone:" << tz;
 #else
-		QString t = QTimeZone::systemTimeZoneId();
-		setenv("TZ", QTimeZone::systemTimeZoneId().toStdString().c_str(), 1);
-		tzset();
+	char *tz = getenv("TZ");
+	if (!tz) {   // If not set, set the environment variable for uses of mktime from the SDK.
+		tzset(); // init timezone variable
+		if (timezone != -QTimeZone::systemTimeZone().offsetFromUtc(QDateTime::currentDateTime())) {
+			QString timeZone = QTimeZone::systemTimeZoneId();
+			setenv("TZ", timeZone.toStdString().c_str(), 1);
+			tzset();
+			qInfo() << "Set TimeZone to " << timeZone;
+		}
+	} else qInfo() << "Use environment TimeZone:" << tz;
 #endif
-	}
-	bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);// Use UTF-8 for internals. Linphone uses UTF-8 so there will be no loss on data with less precise encodings. Qt will do the rest.
-	
-	
+
+	// Use UTF-8 for internals. Linphone uses UTF-8 so there will be no loss on
+	// data with less precise encodings. Qt will do the rest.
+	bctbx_set_default_encoding(Constants::LinphoneLocaleEncoding);
+
 	createParser();
 	mParser->parse(this->arguments());
 // Get configuration for translators
