@@ -129,15 +129,6 @@ CoreManager *CoreManager::getInstance (){
 	return mInstance;
 }
 
-
-HistoryModel* CoreManager::getHistoryModel(){
-	if(!mHistoryModel){
-		mHistoryModel = new HistoryModel(this);
-		emit historyModelCreated(mHistoryModel);
-	}
-	return mHistoryModel;
-}
-
 RecorderManager* CoreManager::getRecorderManager(){
 	if(!mRecorderManager){
 		mRecorderManager = new RecorderManager(this);

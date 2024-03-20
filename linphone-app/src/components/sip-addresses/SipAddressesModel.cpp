@@ -84,8 +84,9 @@ QString SipAddressesModel::DisplayNames::get(){
 
 void SipAddressesModel::DisplayNames::updateFromCall(const std::shared_ptr<const linphone::Address>& address){
 	auto displayName = address->getDisplayName();
-	if(!displayName.empty())
+	if(!displayName.empty()){
 		mFromCallLogs = Utils::coreStringToAppString(displayName);
+	}
 }
 
 void SipAddressesModel::DisplayNames::updateFromChatMessage(const std::shared_ptr<const linphone::Address>& address){
@@ -100,7 +101,6 @@ SipAddressesModel::SipAddressesModel (QObject *parent) : QAbstractListModel(pare
 	mCoreHandlers = coreManager->getHandlers();
 	
 	QObject::connect(coreManager, &CoreManager::chatRoomModelCreated, this, &SipAddressesModel::handleChatRoomModelCreated);
-	QObject::connect(coreManager, &CoreManager::historyModelCreated, this, &SipAddressesModel::handleHistoryModelCreated);
 //Use blocking in order to apply updates before any use
 	ContactsListModel *contacts = CoreManager::getInstance()->getContactsListModel();
 	QObject::connect(contacts, &ContactsListModel::contactAdded, this, &SipAddressesModel::handleContactAdded, Qt::DirectConnection);
@@ -327,9 +327,6 @@ void SipAddressesModel::handleChatRoomModelCreated (const QSharedPointer<ChatRoo
 	QObject::connect(ptr, &ChatRoomModel::messageSent, this, &SipAddressesModel::handleMessageSent);
 }
 
-void SipAddressesModel::handleHistoryModelCreated (HistoryModel *historyModel) {
-}
-
 void SipAddressesModel::handleContactAdded (QSharedPointer<ContactModel> contact) {
 	for (const auto &sipAddress : contact->getVcardModel()->getLinphoneSipAddresses()) {
 		addOrUpdateSipAddress(Utils::coreStringToAppString(sipAddress->asStringUriOnly()), sipAddress, contact);
@@ -520,13 +517,14 @@ void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry,
 void SipAddressesModel::addOrUpdateSipAddress (SipAddressEntry &sipAddressEntry, const shared_ptr<linphone::Call> &call) {
 	const shared_ptr<linphone::CallLog> callLog = call->getCallLog();
 	auto lPeerAddress = callLog->getRemoteAddress();
+	
 	QString localAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(callLog->getLocalAddress()->asStringUriOnly())));
 	QString peerAddress(Utils::cleanSipAddress(Utils::coreStringToAppString(lPeerAddress->asStringUriOnly())));
 	ConferenceEntry &conferenceEntry = sipAddressEntry.localAddressToConferenceEntry[
 			localAddress
 			];
 	
-	qInfo() << QStringLiteral("Update (`%1`, `%2`) from chat call.").arg(sipAddressEntry.sipAddress, localAddress);
+	qInfo() << QStringLiteral("Update (`%1`, `%2`, `%3`) from chat call.").arg(sipAddressEntry.sipAddress, localAddress, Utils::coreStringToAppString(lPeerAddress->asString()));
 	
 	conferenceEntry.timestamp = callLog->getStatus() == linphone::Call::Status::Success
 			? QDateTime::fromMSecsSinceEpoch((callLog->getStartDate() + callLog->getDuration()) * 1000)

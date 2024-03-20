@@ -74,7 +74,6 @@ public:
 		return mHandlers;
 	}
 	
-	HistoryModel* getHistoryModel();
 	RecorderManager* getRecorderManager();
 	
 	// ---------------------------------------------------------------------------
@@ -184,7 +183,6 @@ signals:
 	void coreManagerInitialized ();
 	
 	void chatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel);
-	void historyModelCreated (HistoryModel *historyModel);
 	void recorderManagerCreated(RecorderManager *recorderModel);
 	
 	void logsUploaded (const QString &url);

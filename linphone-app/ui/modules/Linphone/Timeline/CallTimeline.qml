@@ -122,15 +122,17 @@ ColumnLayout{
 							| (outgoingFilter.checked ? CallHistoryProxyModel.Outgoing : 0)
 							| (missedFilter.checked ? CallHistoryProxyModel.Missed : 0)
 		}
+		onCountChanged: if(count == 0) mainItem.entrySelected(null)
 		delegate: Loader{
-				width: view.contentWidth
-				asynchronous: index > 20
-				active: true
-				sourceComponent: CallTimelineItem{
-				callHistoryModel: $modelData
+			property CallHistoryModel historyModel: $modelData// use loader property to avoid desync variables into Component.
+			width: view.contentWidth
+			asynchronous: index > 20
+			active: historyModel
+			sourceComponent: CallTimelineItem{
+				callHistoryModel: historyModel
 				modelIndex: index
 				Connections{
-					target: $modelData
+					target: historyModel
 					onSelectedChanged:{
 						if(selected) {
 							view.currentIndex = index;

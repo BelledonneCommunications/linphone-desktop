@@ -116,7 +116,6 @@ private:
   // ---------------------------------------------------------------------------
 
   void handleChatRoomModelCreated (const QSharedPointer<ChatRoomModel> &chatRoomModel);
-  void handleHistoryModelCreated (HistoryModel *historyModel) ;
 
   void handleContactAdded (QSharedPointer<ContactModel> contact);
   void handleContactRemoved (QSharedPointer<ContactModel> contact);

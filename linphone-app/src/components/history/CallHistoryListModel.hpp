@@ -48,6 +48,7 @@ signals:
 	void countChanged();
 	void selectedChanged(CallHistoryModel * model);
 	void lastCallDateChanged();
+	void lastCallStatusChanged();
 private:
 	QHash<QString, QSharedPointer<CallHistoryModel>> mCalls;
 };
