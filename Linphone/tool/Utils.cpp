@@ -1195,18 +1195,7 @@ int Utils::getYear(const QDate &date) {
 
 bool Utils::isMe(const QString &address) {
 	bool isMe = false;
-	App::postModelSync([&isMe, address]() {
-		auto linAddr = ToolModel::interpretUrl(address);
-		if (!CoreModel::getInstance()->getCore()->getDefaultAccount()) {
-			// for (auto &account : CoreModel::getInstance()->getCore()->getAccountList()) {
-			// 	if (account->getContactAddress()->weakEqual(linAddr)) return true;
-			// }
-			isMe = false;
-		} else {
-			auto accountAddr = CoreModel::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
-			isMe = linAddr && accountAddr ? accountAddr->weakEqual(linAddr) : false;
-		}
-	});
+	App::postModelSync([&isMe, address]() { isMe = ToolModel::isMe(address); });
 	return isMe;
 }
 // QDateTime dateTime(QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss"));

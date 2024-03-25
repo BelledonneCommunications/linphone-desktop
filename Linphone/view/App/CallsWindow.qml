@@ -28,11 +28,12 @@ Window {
 		if (call && !conferenceInfo) middleItemStackView.replace(inCallItem)
 	}
 	Component.onCompleted: if (call && !conferenceInfo) middleItemStackView.replace(inCallItem)
+	property var callObj
 
 	function joinConference(withVideo) {
 		if (!conferenceInfo || conferenceInfo.core.uri.length === 0) UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence n'a pas pu démarrer en raison d'une erreur d'uri."))
 		else {
-			var callObj = UtilsCpp.createCall(conferenceInfo.core.uri, withVideo)
+			callObj = UtilsCpp.createCall(conferenceInfo.core.uri, withVideo)
 		}
 	}
 
@@ -358,6 +359,7 @@ Window {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Layout.margins: 20 * DefaultStyle.dp
+					
 				}
 				OngoingCallRightPanel {
 					id: rightPanel
@@ -606,6 +608,10 @@ Window {
 					onJoinConfRequested: mainWindow.joinConference(cameraEnabled)
 				}
 			}
+			
+			
+			
+			
 			Component {
 				id: inCallItem
 				Control.Control {
@@ -614,163 +620,18 @@ Window {
 					// implicitHeight: parent.height
 					Layout.fillHeight: true
 					Layout.leftMargin: 10 * DefaultStyle.dp
+
 					Layout.rightMargin: 10 * DefaultStyle.dp
 					Layout.alignment: Qt.AlignCenter
+					/*
 					background: Rectangle {
 						anchors.fill: parent
 						color: DefaultStyle.grey_600
 						radius: 15 * DefaultStyle.dp
-					}
-					contentItem: Item {
-						id: centerItem
-						anchors.fill: parent
-						Text {
-							id: callTerminatedText
-							Connections {
-								target: mainWindow
-								onCallStateChanged: {
-									if (mainWindow.callState === LinphoneEnums.CallState.End) {
-										callTerminatedText.visible = true
-									}
-								}
-							}
-							visible: false
-							anchors.horizontalCenter: parent.horizontalCenter
-							anchors.top: parent.top
-							anchors.topMargin: 25 * DefaultStyle.dp
-							text: mainWindow.callTerminatedByUser ? qsTr("Vous avez terminé l'appel") : qsTr("Votre correspondant a terminé l'appel")
-							color: DefaultStyle.grey_0
-							z: 1
-							font {
-								pixelSize: 22 * DefaultStyle.dp
-								weight: 300 * DefaultStyle.dp
-							}
-						}
-						StackLayout {
-							id: centerLayout
-							currentIndex: 0
-							anchors.fill: parent
-							Connections {
-								target: mainWindow
-								onCallStateChanged: {
-									if (mainWindow.callState === LinphoneEnums.CallState.Error) {
-										centerLayout.currentIndex = 1
-									}
-								}
-							}
-							Sticker {
-								call: mainWindow.call
-								Layout.fillWidth: true
-								Layout.fillHeight: true
-								// visible: mainWindow.callState != LinphoneEnums.CallState.End
-								Connections {
-									target: mainWindow
-									onCallChanged: {
-										waitingTime.seconds = 0
-										waitingTimer.restart()
-										console.log("call changed", call, waitingTime.seconds)
-									}
-								}
-								Timer {
-									id: waitingTimer
-									interval: 1000
-									repeat: true
-									onTriggered: waitingTime.seconds += 1
-								}
-								ColumnLayout {
-									anchors.horizontalCenter: parent.horizontalCenter
-									anchors.top: parent.top
-									anchors.topMargin: 30 * DefaultStyle.dp
-									visible: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
-											|| mainWindow.callState == LinphoneEnums.CallState.OutgoingProgress
-											|| mainWindow.callState == LinphoneEnums.CallState.OutgoingRinging
-											|| mainWindow.callState == LinphoneEnums.CallState.OutgoingEarlyMedia
-											|| mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
-									BusyIndicator {
-										indicatorColor: DefaultStyle.main2_100
-										Layout.alignment: Qt.AlignHCenter
-									}
-									Text {
-										id: waitingTime
-										property int seconds
-										text: UtilsCpp.formatElapsedTime(seconds)
-										color: DefaultStyle.grey_0
-										Layout.alignment: Qt.AlignHCenter
-										horizontalAlignment: Text.AlignHCenter
-										font {
-											pixelSize: 30 * DefaultStyle.dp
-											weight: 300 * DefaultStyle.dp
-										}
-										Component.onCompleted: {
-											waitingTimer.restart()
-										}
-									}
-								}
-							}
-							ColumnLayout {
-								id: errorLayout
-								Layout.preferredWidth: parent.width
-								Layout.preferredHeight: parent.height
-								Layout.alignment: Qt.AlignCenter
-								Text {
-									text: qsTr(mainWindow.call.core.lastErrorMessage)
-									Layout.alignment: Qt.AlignCenter
-									color: DefaultStyle.grey_0
-									font.pixelSize: 40 * DefaultStyle.dp
-								}
-							}
-						}
-						Sticker {
-							id: preview
-							visible: mainWindow.callState != LinphoneEnums.CallState.End
-								&& mainWindow.callState != LinphoneEnums.CallState.Released
-							height: 180 * DefaultStyle.dp
-							width: 300 * DefaultStyle.dp
-							anchors.right: centerItem.right
-							anchors.bottom: centerItem.bottom
-							anchors.rightMargin: 10 * DefaultStyle.dp
-							anchors.bottomMargin: 10 * DefaultStyle.dp
-							AccountProxy{
-								id: accounts
-							}
-							account: accounts.defaultAccount
-							enablePersonalCamera: mainWindow.call.core.cameraEnabled
-
-							MovableMouseArea {
-								id: previewMouseArea
-								anchors.fill: parent
-								// visible: mainWindow.participantCount <= 2
-								movableArea: centerItem
-								margin: 10 * DefaultStyle.dp
-								function resetPosition(){
-									preview.anchors.right = centerItem.right
-									preview.anchors.bottom = centerItem.bottom
-									preview.anchors.rightMargin = previewMouseArea.margin
-									preview.anchors.bottomMargin = previewMouseArea.margin
-								}
-								onVisibleChanged: if(!visible){
-									resetPosition()
-								}
-								drag.target: preview
-								onDraggingChanged: if(dragging) {
-									preview.anchors.right = undefined
-									preview.anchors.bottom = undefined
-								}
-								onRequestResetPosition: resetPosition()
-							}
-						}
-						property int previousWidth
-						Component.onCompleted: {
-							previousWidth = width
-						}
-						onWidthChanged: {
-							if (width < previousWidth) {
-								previewMouseArea.updatePosition(0, 0)
-							} else {
-								previewMouseArea.updatePosition(width - previousWidth, 0)
-							}
-							previousWidth = width
-						}
+					}*/
+					contentItem: CallLayout{
+						call: mainWindow.call
+						callTerminatedByUser: mainWindow.callTerminatedByUser
 					}
 				}
 			}

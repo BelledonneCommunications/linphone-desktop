@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -26,96 +26,71 @@
 
 // =============================================================================
 
+DEFINE_ABSTRACT_OBJECT(ParticipantDeviceProxy)
+
 ParticipantDeviceProxy::ParticipantDeviceProxy(QObject *parent) : SortFilterProxy(parent) {
-	mDeleteSourceModel = true;
-	mList = ParticipantDeviceList::create();
-	setSourceModel(mList.get());
+	mParticipants = ParticipantDeviceList::create();
+	connect(mParticipants.get(), &ParticipantDeviceList::countChanged, this, &ParticipantDeviceProxy::meChanged);
+
+	setSourceModel(mParticipants.get());
+	sort(0); //, Qt::DescendingOrder);
 }
 
 ParticipantDeviceProxy::~ParticipantDeviceProxy() {
+	setSourceModel(nullptr);
 }
 
-bool ParticipantDeviceProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	const QModelIndex index = mList->index(sourceRow, 0, sourceParent);
-	const ParticipantDeviceCore *device = index.data().value<ParticipantDeviceCore *>();
-	return device && (isShowMe() /*|| !(device->isMe() && device->isLocal())*/);
+CallGui *ParticipantDeviceProxy::getCurrentCall() const {
+	return mCurrentCall;
 }
 
-bool ParticipantDeviceProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	const ParticipantDeviceCore *deviceA = sourceModel()->data(left).value<ParticipantDeviceCore *>();
-	const ParticipantDeviceCore *deviceB = sourceModel()->data(right).value<ParticipantDeviceCore *>();
-	// 'me' at end (for grid).
-	return /*deviceB->isLocal() || !deviceA->isLocal() && deviceB->isMe() ||*/ left.row() < right.row();
-}
-//---------------------------------------------------------------------------------
-
-ParticipantDeviceCore *ParticipantDeviceProxy::getAt(int row) {
-	if (row >= 0) {
-		QModelIndex sourceIndex = mapToSource(this->index(row, 0));
-		return sourceModel()->data(sourceIndex).value<ParticipantDeviceCore *>();
-	} else return nullptr;
-}
-
-ParticipantDeviceCore *ParticipantDeviceProxy::getActiveSpeakerModel() {
-	return mList->getActiveSpeakerModel();
-}
-
-CallModel *ParticipantDeviceProxy::getCallModel() const {
-	return mCallModel;
-}
-
-ParticipantDeviceCore *ParticipantDeviceProxy::getMe() const {
-	return mList->getMe().get();
-}
-
-bool ParticipantDeviceProxy::isShowMe() const {
-	return mShowMe;
-}
-
-void ParticipantDeviceProxy::connectTo(ParticipantDeviceList *model) {
-	connect(model, &ParticipantDeviceList::countChanged, this, &ParticipantDeviceProxy::onCountChanged);
-	connect(model, &ParticipantDeviceList::participantSpeaking, this, &ParticipantDeviceProxy::onParticipantSpeaking);
-	connect(model, &ParticipantDeviceList::conferenceCreated, this, &ParticipantDeviceProxy::conferenceCreated);
-	connect(model, &ParticipantDeviceList::meChanged, this, &ParticipantDeviceProxy::meChanged);
-	connect(model, &ParticipantDeviceList::activeSpeakerChanged, this, &ParticipantDeviceProxy::activeSpeakerChanged);
-}
-void ParticipantDeviceProxy::setCallModel(CallModel *callModel) {
-	setFilterType(1);
-	mCallModel = callModel;
-	deleteSourceModel();
-	auto newSourceModel = new ParticipantDeviceList(mCallModel);
-	connectTo(newSourceModel);
-	setSourceModel(newSourceModel);
-	mDeleteSourceModel = true;
-	sort(0);
-	emit countChanged();
-	emit meChanged();
-}
-
-// void ParticipantDeviceProxy::setParticipant(ParticipantCore *participantCore) {
-// 	setFilterType(0);
-// 	deleteSourceModel();
-// 	auto newSourceModel = participant->getParticipantDevices().get();
-// 	connectTo(newSourceModel);
-// 	setSourceModel(newSourceModel);
-// 	mDeleteSourceModel = false;
-// 	sort(0);
-// 	emit countChanged();
-// 	emit meChanged();
-// }
-
-void ParticipantDeviceProxy::setShowMe(const bool &show) {
-	if (mShowMe != show) {
-		mShowMe = show;
-		emit showMeChanged();
-		invalidate();
+void ParticipantDeviceProxy::setCurrentCall(CallGui *call) {
+	qDebug() << "[ParticipantDeviceProxy] set current call " << this << " => " << call;
+	if (mCurrentCall != call) {
+		CallCore *callCore = nullptr;
+		if (mCurrentCall) {
+			callCore = mCurrentCall->getCore();
+			if (callCore) callCore->disconnect(mParticipants.get());
+			callCore = nullptr;
+		}
+		mCurrentCall = call;
+		if (mCurrentCall) callCore = mCurrentCall->getCore();
+		if (callCore) {
+			connect(callCore, &CallCore::conferenceChanged, mParticipants.get(), [this]() {
+				auto conference = mCurrentCall->getCore()->getConferenceCore();
+				qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+				mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
+				// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
+			});
+			auto conference = callCore->getConferenceCore();
+			qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+			mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
+			// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
+		}
+		emit currentCallChanged();
 	}
 }
 
-void ParticipantDeviceProxy::onCountChanged() {
-	qDebug() << "Count changed : " << getCount();
+ParticipantDeviceGui *ParticipantDeviceProxy::getMe() const {
+	auto core = mParticipants->getMe();
+	if (!core) return nullptr;
+	else {
+		return new ParticipantDeviceGui(core);
+	}
 }
 
-void ParticipantDeviceProxy::onParticipantSpeaking(ParticipantDeviceCore *speakingDevice) {
-	emit participantSpeaking(speakingDevice);
+void ParticipantDeviceProxy::setMe(ParticipantDeviceGui *me) {
+}
+
+bool ParticipantDeviceProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	return true;
+}
+
+bool ParticipantDeviceProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
+	auto deviceA = sourceModel()->data(left).value<ParticipantDeviceGui *>()->getCore();
+	auto deviceB = sourceModel()->data(right).value<ParticipantDeviceGui *>()->getCore();
+	// auto deviceB = getItemAt<ParticipantDeviceList, ParticipantDeviceGui>(right.row())->getCore();
+	//  return deviceB->isLocal() || !deviceA->isLocal() && deviceB->isMe() || left.row() < right.row();
+
+	return deviceB->isMe() || (!deviceB->isMe() && left.row() < right.row());
 }

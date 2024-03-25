@@ -50,6 +50,7 @@
 #include "core/login/LoginPage.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/participant/ParticipantDeviceCore.hpp"
+#include "core/participant/ParticipantDeviceProxy.hpp"
 #include "core/participant/ParticipantGui.hpp"
 #include "core/participant/ParticipantProxy.hpp"
 #include "core/phone-number/PhoneNumber.hpp"
@@ -217,6 +218,10 @@ void App::initCppInterfaces() {
 	qmlRegisterType<FPSCounter>(Constants::MainQmlUri, 1, 0, "FPSCounter");
 
 	qmlRegisterType<TimeZoneProxy>(Constants::MainQmlUri, 1, 0, "TimeZoneProxy");
+
+	qmlRegisterType<ParticipantDeviceGui>(Constants::MainQmlUri, 1, 0, "ParticipantDeviceGui");
+	qmlRegisterType<ParticipantDeviceProxy>(Constants::MainQmlUri, 1, 0, "ParticipantDeviceProxy");
+
 	LinphoneEnums::registerMetaTypes();
 }
 

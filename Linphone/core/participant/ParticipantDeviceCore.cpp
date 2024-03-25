@@ -20,6 +20,7 @@
 
 #include "ParticipantDeviceCore.hpp"
 #include "core/App.hpp"
+#include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include <QQmlApplicationEngine>
 
@@ -31,7 +32,7 @@ ParticipantDeviceCore::create(std::shared_ptr<linphone::ParticipantDevice> devic
 	    QSharedPointer<ParticipantDeviceCore>(new ParticipantDeviceCore(device, isMe, parent), &QObject::deleteLater);
 	sharedPointer->setSelf(sharedPointer);
 	sharedPointer->moveToThread(App::getInstance()->thread());
-	return nullptr;
+	return sharedPointer;
 }
 
 ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::ParticipantDevice> &device,
@@ -48,6 +49,8 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 	mParticipantDeviceModel = Utils::makeQObject_ptr<ParticipantDeviceModel>(device);
 	mParticipantDeviceModel->setSelf(mParticipantDeviceModel);
 	mState = LinphoneEnums::fromLinphone(device->getState());
+	qDebug() << "Address = " << Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
+	mIsLocal = ToolModel::findAccount(device->getAddress()) != nullptr; // TODO set local
 	// mCall = callModel;
 	// if (mCall) connect(mCall, &CallModel::statusChanged, this, &ParticipantDeviceCore::onCallStatusChanged);
 	mIsVideoEnabled = mParticipantDeviceModel->isVideoEnabled();
@@ -180,6 +183,10 @@ bool ParticipantDeviceCore::isMe() const {
 
 bool ParticipantDeviceCore::isLocal() const {
 	return mIsLocal;
+}
+
+std::shared_ptr<ParticipantDeviceModel> ParticipantDeviceCore::getModel() const {
+	return mParticipantDeviceModel;
 }
 
 // void ParticipantDeviceCore::updateIsLocal() {

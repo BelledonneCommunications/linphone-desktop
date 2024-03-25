@@ -18,21 +18,25 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "CallGui.hpp"
-#include "core/App.hpp"
+#ifndef PARTICIPANT_DEVICE_GUI_H_
+#define PARTICIPANT_DEVICE_GUI_H_
 
-DEFINE_ABSTRACT_OBJECT(CallGui)
+#include "ParticipantDeviceCore.hpp"
+#include <QObject>
+#include <QSharedPointer>
 
-CallGui::CallGui(QSharedPointer<CallCore> core) {
-	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
-	mCore = core;
-	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
-}
+class ParticipantDeviceGui : public QObject, public AbstractObject {
+	Q_OBJECT
 
-CallGui::~CallGui() {
-	mustBeInMainThread("~" + getClassName());
-}
+	Q_PROPERTY(ParticipantDeviceCore *core READ getCore CONSTANT)
 
-CallCore *CallGui::getCore() const {
-	return mCore.get();
-}
+public:
+	ParticipantDeviceGui(QSharedPointer<ParticipantDeviceCore> core);
+	ParticipantDeviceGui(QObject *parent = nullptr);
+	~ParticipantDeviceGui();
+	ParticipantDeviceCore *getCore() const;
+	QSharedPointer<ParticipantDeviceCore> mCore;
+	DECLARE_ABSTRACT_OBJECT
+};
+
+#endif

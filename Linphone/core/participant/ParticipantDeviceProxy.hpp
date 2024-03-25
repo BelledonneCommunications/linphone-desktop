@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2021 Belledonne Communications SARL.
+ * Copyright (c) 2024 Belledonne Communications SARL.
  *
  * This file is part of linphone-desktop
  * (see https://www.linphone.org).
@@ -21,64 +21,43 @@
 #ifndef PARTICIPANT_DEVICE_PROXY_MODEL_H_
 #define PARTICIPANT_DEVICE_PROXY_MODEL_H_
 
-#include <linphone++/linphone.hh>
-// =============================================================================
 #include "../proxy/SortFilterProxy.hpp"
-#include <QDateTime>
-#include <QObject>
-#include <QSharedPointer>
-#include <QString>
+#include "core/call/CallGui.hpp"
+#include "core/participant/ParticipantDeviceGui.hpp"
+#include "tool/AbstractObject.hpp"
 
 class ParticipantDeviceList;
-class ParticipantDeviceCore;
-class ParticipantCore;
-class CallModel;
+class ParticipantDeviceGui;
 
-class ParticipantDeviceProxy : public SortFilterProxy {
+class ParticipantDeviceProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
+	Q_PROPERTY(CallGui *currentCall READ getCurrentCall WRITE setCurrentCall NOTIFY currentCallChanged)
+	Q_PROPERTY(ParticipantDeviceGui *me READ getMe WRITE setMe NOTIFY meChanged)
 
 public:
-	Q_PROPERTY(CallModel *callModel READ getCallModel WRITE setCallModel NOTIFY callModelChanged)
-	Q_PROPERTY(bool showMe READ isShowMe WRITE setShowMe NOTIFY showMeChanged)
-	Q_PROPERTY(ParticipantDeviceCore *me READ getMe NOTIFY meChanged)
-	Q_PROPERTY(ParticipantDeviceCore *activeSpeaker READ getActiveSpeakerModel NOTIFY activeSpeakerChanged)
-
-	ParticipantDeviceProxy(QObject *parent = nullptr);
+	ParticipantDeviceProxy(QObject *parent = Q_NULLPTR);
 	~ParticipantDeviceProxy();
 
-	Q_INVOKABLE ParticipantDeviceCore *getAt(int row);
-	ParticipantDeviceCore *getActiveSpeakerModel();
-	ParticipantDeviceCore *getMe() const;
+	CallGui *getCurrentCall() const;
+	void setCurrentCall(CallGui *callGui);
 
-	CallModel *getCallModel() const;
-	bool isShowMe() const;
-
-	void setCallModel(CallModel *callModel);
-	// void setParticipant(ParticipantCore *participantCore);
-	void setShowMe(const bool &show);
-
-	void connectTo(ParticipantDeviceList *model);
-
-public slots:
-	void onCountChanged();
-	void onParticipantSpeaking(ParticipantDeviceCore *speakingDevice);
-
-signals:
-	void activeSpeakerChanged();
-	void callModelChanged();
-	void showMeChanged();
-	void meChanged();
-	void participantSpeaking(ParticipantDeviceCore *speakingDevice);
-	void conferenceCreated();
+	ParticipantDeviceGui *getMe() const;
+	void setMe(ParticipantDeviceGui *me);
 
 protected:
-	virtual bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	virtual bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
+	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
-	CallModel *mCallModel;
-	bool mShowMe = true;
+signals:
+	void lUpdate();
+	void currentCallChanged();
+	void meChanged();
 
-	QSharedPointer<ParticipantDeviceList> mList;
+private:
+	QString mSearchText;
+	CallGui *mCurrentCall = nullptr;
+	QSharedPointer<ParticipantDeviceList> mParticipants;
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

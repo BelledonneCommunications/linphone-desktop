@@ -74,6 +74,7 @@ public:
 	LinphoneEnums::ParticipantDeviceState getState() const;
 
 	std::shared_ptr<linphone::ParticipantDevice> getDevice();
+	std::shared_ptr<ParticipantDeviceModel> getModel() const;
 
 	void setPaused(bool paused);
 	void setIsSpeaking(bool speaking);

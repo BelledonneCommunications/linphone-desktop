@@ -28,41 +28,83 @@
 #include <QQuickFramebufferObject>
 #include <QTimer>
 
+#include "core/participant/ParticipantDeviceGui.hpp"
 // =============================================================================
 
 class CallGui;
 
 class CameraGui : public QQuickFramebufferObject, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(bool isReady READ getIsReady NOTIFY isReadyChanged)
-	Q_PROPERTY(CallGui *call READ getCallGui WRITE setCallGui NOTIFY callGuiChanged);
+	Q_PROPERTY(CallGui *call READ getCallGui WRITE setCallGui NOTIFY callGuiChanged)
+	Q_PROPERTY(ParticipantDeviceGui *participantDevice READ getParticipantDeviceGui WRITE setParticipantDeviceGui NOTIFY
+	               participantDeviceGuiChanged)
+	Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged)
+	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged)
+	// Q_PROPERTY(SoundPlayer * linphonePlayer READ getLinphonePlayer WRITE setLinphonePlayer NOTIFY
+	// linphonePlayerChanged)
+	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged)
+
+	typedef enum { None = -1, CorePreview = 0, Call, Device, Player, Core } WindowIdLocation;
 
 public:
 	CameraGui(QQuickItem *parent = Q_NULLPTR);
 	virtual ~CameraGui();
 	QQuickFramebufferObject::Renderer *createRenderer() const override;
+	QQuickFramebufferObject::Renderer *createRenderer(bool resetWindowid) const;
+
+	Q_INVOKABLE void resetWindowId() const; // const to be used from createRenderer()
+	void checkVideoDefinition();
+
+	static QMutex mPreviewCounterMutex;
+	static int mPreviewCounter;
 
 	bool getIsReady() const;
 	void setIsReady(bool isReady);
 	void isReady();
 	void isNotReady();
+	bool getIsPreview() const;
+	void setIsPreview(bool status);
 
 	CallGui *getCallGui() const;
 	void setCallGui(CallGui *callGui);
-
-	typedef enum { None = -1, CorePreview = 0, Call, Device, Player, Core } WindowIdLocation;
+	ParticipantDeviceGui *getParticipantDeviceGui() const;
+	void setParticipantDeviceGui(ParticipantDeviceGui *participantDeviceGui);
+	QString getQmlName() const;
+	void setQmlName(const QString &name);
 	WindowIdLocation getSourceLocation() const;
+	void setWindowIdLocation(const WindowIdLocation &location);
+
+	void activatePreview();
+	void deactivatePreview();
+	void updateWindowIdLocation();
+	void removeParticipantDeviceModel();
+	void removeCallModel();
+	void removeLinphonePlayer();
 
 signals:
 	void requestNewRenderer();
 	void isReadyChanged(bool isReady);
 	void callGuiChanged(CallGui *callGui);
+	void isPreviewChanged(bool isPreview);
+	void isReadyChanged();
+	void participantDeviceGuiChanged(ParticipantDeviceGui *participantDeviceGui);
+	void videoDefinitionChanged();
+	// void linphonePlayerChanged(SoundPlayer * linphonePlayer);
+	void qmlNameChanged();
 
 private:
+	bool mIsPreview = false;
 	bool mIsReady = false;
 	QTimer mRefreshTimer;
 	int mMaxFps = 30;
+	QVariantMap mLastVideoDefinition;
+	QTimer mLastVideoDefinitionChecker;
 	CallGui *mCallGui = nullptr;
+	ParticipantDeviceGui *mParticipantDeviceGui = nullptr;
+	QString mQmlName;
+
+	WindowIdLocation mWindowIdLocation = None;
+	mutable bool mIsWindowIdSet = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

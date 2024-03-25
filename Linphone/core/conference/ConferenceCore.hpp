@@ -21,6 +21,8 @@
 #ifndef CONFERENCE_CORE_H_
 #define CONFERENCE_CORE_H_
 
+#include "core/participant/ParticipantDeviceCore.hpp"
+#include "core/participant/ParticipantDeviceGui.hpp"
 #include "model/conference/ConferenceModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -38,6 +40,7 @@ public:
 	// Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
 	Q_PROPERTY(int participantDeviceCount READ getParticipantDeviceCount NOTIFY participantDeviceCountChanged)
+	Q_PROPERTY(ParticipantDeviceGui *activeSpeaker READ getActiveSpeakerGui NOTIFY activeSpeakerChanged)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ConferenceCore> create(const std::shared_ptr<linphone::Conference> &conference);
@@ -55,8 +58,13 @@ public:
 	// std::list<std::shared_ptr<linphone::Participant>>
 	// getParticipantList() const; // SDK exclude me. We want to get ALL participants.
 	int getParticipantDeviceCount() const;
+	ParticipantDeviceCore *getActiveSpeaker() const;
+	ParticipantDeviceGui *getActiveSpeakerGui() const;
+	void setActiveSpeaker(const QSharedPointer<ParticipantDeviceCore> &device);
 
 	void setIsReady(bool state);
+
+	std::shared_ptr<ConferenceModel> getModel() const;
 
 	//---------------------------------------------------------------------------
 
@@ -64,10 +72,12 @@ signals:
 	void subjectChanged();
 	void isReadyChanged();
 	void participantDeviceCountChanged();
+	void activeSpeakerChanged();
 
 private:
 	QSharedPointer<SafeConnection<ConferenceCore, ConferenceModel>> mConferenceModelConnection;
 	std::shared_ptr<ConferenceModel> mConferenceModel;
+	QSharedPointer<ParticipantDeviceCore> mActiveSpeaker;
 
 	bool mIsReady = false;
 	QString mSubject;

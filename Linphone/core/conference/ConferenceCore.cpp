@@ -20,6 +20,7 @@
 
 #include "ConferenceCore.hpp"
 #include "core/App.hpp"
+#include "model/conference/ConferenceModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
 
@@ -35,6 +36,7 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	// Should be call from model Thread
 	mustBeInLinphoneThread(getClassName());
+	mConferenceModel = ConferenceModel::create(conference);
 	mSubject = Utils::coreStringToAppString(conference->getSubject());
 }
 ConferenceCore::~ConferenceCore() {
@@ -45,6 +47,12 @@ ConferenceCore::~ConferenceCore() {
 void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 	mConferenceModelConnection = QSharedPointer<SafeConnection<ConferenceCore, ConferenceModel>>(
 	    new SafeConnection<ConferenceCore, ConferenceModel>(me, mConferenceModel), &QObject::deleteLater);
+	mConferenceModelConnection->makeConnectToModel(
+	    &ConferenceModel::activeSpeakerParticipantDevice,
+	    [this](const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
+		    auto device = ParticipantDeviceCore::create(participantDevice);
+		    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
+	    });
 	// mCallModelConnection->makeConnectToCore(&CallCore::lSetMicrophoneMuted, [this](bool isMuted) {
 	//	mCallModelConnection->invokeToModel([this, isMuted]() { mCallModel->setMicrophoneMuted(isMuted); });
 	// });
@@ -77,5 +85,25 @@ void ConferenceCore::setIsReady(bool state) {
 	if (mIsReady != state) {
 		mIsReady = state;
 		isReadyChanged();
+	}
+}
+
+std::shared_ptr<ConferenceModel> ConferenceCore::getModel() const {
+	return mConferenceModel;
+}
+
+ParticipantDeviceCore *ConferenceCore::getActiveSpeaker() const {
+	return mActiveSpeaker.get();
+}
+
+ParticipantDeviceGui *ConferenceCore::getActiveSpeakerGui() const {
+	return new ParticipantDeviceGui(mActiveSpeaker);
+}
+
+void ConferenceCore::setActiveSpeaker(const QSharedPointer<ParticipantDeviceCore> &device) {
+	if (mActiveSpeaker != device) {
+		mActiveSpeaker = device;
+		qDebug() << "Changing active speaker to " << device->getAddress();
+		emit activeSpeakerChanged();
 	}
 }

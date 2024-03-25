@@ -97,6 +97,14 @@ public:
 		return connect(mCoreObject, signal, mModelObject, slot, Qt::DirectConnection);
 	}
 
+	inline void disconnect() {
+		if (!tryLock()) // To avoid disconnections while being in call.
+			return;     //  Return to avoid to disconnect other connections than the pair.
+		QObject::disconnect(mModelObject, nullptr, mCoreObject, nullptr);
+		QObject::disconnect(mCoreObject, nullptr, mModelObject, nullptr);
+		unlock();
+	}
+
 	template <typename Func, typename... Args>
 	void invokeToModel(Func &&callable, Args &&...args) {
 		if (!tryLock()) return;

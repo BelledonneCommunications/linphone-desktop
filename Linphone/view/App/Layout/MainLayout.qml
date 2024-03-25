@@ -210,13 +210,14 @@ Item {
 											background: Item{}
 											Layout.preferredWidth: 24 * DefaultStyle.dp
 											Layout.preferredHeight: 24 * DefaultStyle.dp
+											property var callObj
 											contentItem: Image {
 												width: 24 * DefaultStyle.dp
 												height: 24 * DefaultStyle.dp
 												source: AppIcons.phone
 											}
 											onClicked: {
-												var callObj = UtilsCpp.createCall(sipAddr)
+												callObj = UtilsCpp.createCall(sipAddr.text)
 											}
 										}
 									}

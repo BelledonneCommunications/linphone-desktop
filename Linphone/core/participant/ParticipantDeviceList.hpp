@@ -22,70 +22,39 @@
 #define PARTICIPANT_DEVICE_LIST_H_
 
 #include "../proxy/ListProxy.hpp"
-#include "core/call/CallCore.hpp"
-#include "core/participant/ParticipantDeviceCore.hpp"
-#include <QDateTime>
-#include <QObject>
-#include <QString>
+#include "ParticipantDeviceCore.hpp"
+#include "model/conference/ConferenceModel.hpp"
+#include "tool/AbstractObject.hpp"
+#include "tool/thread/SafeConnection.hpp"
 
 class ParticipantDeviceList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 
 public:
-	static QSharedPointer<ParticipantDeviceList> create(const std::shared_ptr<linphone::Participant> &participant);
 	static QSharedPointer<ParticipantDeviceList> create();
+	static QSharedPointer<ParticipantDeviceList> create(const std::shared_ptr<ConferenceModel> &conferenceModel);
 
-	ParticipantDeviceList(const std::shared_ptr<linphone::Participant> &participant, QObject *parent = nullptr);
-	// ParticipantDeviceList(CallCore *callCore, QObject *parent = nullptr);
-	ParticipantDeviceList(QObject *parent = Q_NULLPTR);
+	ParticipantDeviceList();
 	~ParticipantDeviceList();
+
+	QList<QSharedPointer<ParticipantDeviceCore>>
+	buildDevices(const std::shared_ptr<ConferenceModel> &conferenceModel) const;
+
+	QSharedPointer<ParticipantDeviceCore> getMe() const;
+
+	void setDevices(QList<QSharedPointer<ParticipantDeviceCore>> devices);
+	void setConferenceModel(const std::shared_ptr<ConferenceModel> &conferenceModel);
 
 	void setSelf(QSharedPointer<ParticipantDeviceList> me);
 
-	void initConferenceModel();
-	void updateDevices(std::shared_ptr<linphone::Participant> participant);
-	void updateDevices(const std::list<QSharedPointer<ParticipantDeviceCore>> &devices, const bool &isMe);
-
-	bool add(const QSharedPointer<ParticipantDeviceCore> &deviceToAdd);
-	bool remove(std::shared_ptr<const linphone::ParticipantDevice> deviceToAdd);
-	QSharedPointer<ParticipantDeviceCore> get(std::shared_ptr<const linphone::ParticipantDevice> deviceToGet,
-	                                          int *index = nullptr);
-	QSharedPointer<ParticipantDeviceCore> getMe(int *index = nullptr) const;
-	ParticipantDeviceCore *getActiveSpeakerModel() const;
-
-	bool isMe(std::shared_ptr<linphone::ParticipantDevice> device) const;
-	bool isMeAlone() const;
-
-public slots:
-	void onActiveSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
-	void onConferenceModelChanged();
-	void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
-	void onParticipantAdded(const std::shared_ptr<const linphone::Participant> &participant);
-	void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> &participant);
-	void onParticipantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
-	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
-	void onConferenceStateChanged(linphone::Conference::State newState);
-	void onParticipantDeviceMediaCapabilityChanged(
-	    const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
-	void onParticipantDeviceMediaAvailabilityChanged(
-	    const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
-	void onParticipantDeviceIsSpeakingChanged(const std::shared_ptr<const linphone::ParticipantDevice> &device,
-	                                          bool isSpeaking);
-	void onParticipantDeviceSpeaking();
+	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
 signals:
-	void activeSpeakerChanged();
-	void securityLevelChanged(std::shared_ptr<const linphone::Address> device);
-	void participantSpeaking(ParticipantDeviceCore *speakingDevice);
-	void conferenceCreated();
-	void meChanged();
+	void lSetConferenceModel(const std::shared_ptr<ConferenceModel> &conferenceModel);
 
 private:
-	CallCore *mCallCore = nullptr;
-	QSharedPointer<ParticipantDeviceCore> mActiveSpeaker;
-	// QList<ParticipantDeviceCore*> mActiveSpeakers;// First item is last speaker
-	bool mInitialized = false;
-	QSharedPointer<SafeConnection<ParticipantDeviceList, CallModel>> mModelConnection;
+	std::shared_ptr<ConferenceModel> mConferenceModel;
+	QSharedPointer<SafeConnection<ParticipantDeviceList, ConferenceModel>> mConferenceModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

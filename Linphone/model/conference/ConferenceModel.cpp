@@ -24,13 +24,20 @@
 
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ConferenceModel)
+
+std::shared_ptr<ConferenceModel> ConferenceModel::create(const std::shared_ptr<linphone::Conference> &conference) {
+	auto model = Utils::makeQObject_ptr<ConferenceModel>(conference);
+	model->setSelf(model);
+	return model;
+}
 
 ConferenceModel::ConferenceModel(const std::shared_ptr<linphone::Conference> &conference, QObject *parent)
     : ::Listener<linphone::Conference, linphone::ConferenceListener>(conference, parent) {
 	mustBeInLinphoneThread(getClassName());
-	qDebug() << "[ConferenceModel] new" << this;
+	qDebug() << "[ConferenceModel] new" << this << conference.get();
 }
 
 ConferenceModel::~ConferenceModel() {
@@ -136,7 +143,8 @@ void ConferenceModel::onActiveSpeakerParticipantDevice(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
 	qDebug() << "onActiveSpeakerParticipantDevice: " << participantDevice->getAddress()->asString().c_str();
-	emit activeSpeakerParticipantDevice(participantDevice);
+
+	emit activeSpeakerParticipantDevice(conference->getActiveSpeakerParticipantDevice());
 }
 
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,

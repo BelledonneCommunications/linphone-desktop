@@ -380,10 +380,15 @@ ConferenceGui *CallCore::getConferenceGui() const {
 	return mConference ? new ConferenceGui(mConference) : nullptr;
 }
 
+QSharedPointer<ConferenceCore> CallCore::getConferenceCore() const {
+	return mConference;
+}
+
 void CallCore::setConference(const QSharedPointer<ConferenceCore> &conference) {
 	if (mConference != conference) {
 		mConference = conference;
 		mIsConference = (mConference != nullptr);
+		qDebug() << "[CallCore] Set conference : " << mConference;
 		emit conferenceChanged();
 	}
 }

@@ -18,27 +18,24 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ConferenceInfoGui.hpp"
-#include "ConferenceInfoCore.hpp"
+#include "ParticipantDeviceGui.hpp"
 #include "core/App.hpp"
 
-DEFINE_ABSTRACT_OBJECT(ConferenceInfoGui)
+DEFINE_ABSTRACT_OBJECT(ParticipantDeviceGui)
 
-ConferenceInfoGui::ConferenceInfoGui() {
-	mCore = ConferenceInfoCore::create(nullptr);
-	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
-	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
+ParticipantDeviceGui::ParticipantDeviceGui(QObject *parent) : QObject(parent) {
+	mCore = ParticipantDeviceCore::create(nullptr);
 }
-ConferenceInfoGui::ConferenceInfoGui(QSharedPointer<ConferenceInfoCore> core) {
+ParticipantDeviceGui::ParticipantDeviceGui(QSharedPointer<ParticipantDeviceCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 
-ConferenceInfoGui::~ConferenceInfoGui() {
+ParticipantDeviceGui::~ParticipantDeviceGui() {
 	mustBeInMainThread("~" + getClassName());
 }
 
-ConferenceInfoCore *ConferenceInfoGui::getCore() const {
+ParticipantDeviceCore *ParticipantDeviceGui::getCore() const {
 	return mCore.get();
 }

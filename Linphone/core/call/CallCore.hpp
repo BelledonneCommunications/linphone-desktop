@@ -103,6 +103,7 @@ public:
 
 	bool isConference() const;
 	ConferenceGui *getConferenceGui() const;
+	QSharedPointer<ConferenceCore> getConferenceCore() const;
 	void setConference(const QSharedPointer<ConferenceCore> &conference);
 
 	QString getLocalSas();

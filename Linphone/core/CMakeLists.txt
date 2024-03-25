@@ -50,8 +50,9 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/participant/ParticipantCore.cpp
 	core/participant/ParticipantGui.cpp
 	core/participant/ParticipantDeviceCore.cpp
-	# core/participant/ParticipantDeviceList.cpp
-	# core/participant/ParticipantDeviceProxy.cpp
+	core/participant/ParticipantDeviceGui.cpp
+	core/participant/ParticipantDeviceList.cpp
+	core/participant/ParticipantDeviceProxy.cpp
 	core/participant/ParticipantList.cpp
 	core/participant/ParticipantProxy.cpp
 )

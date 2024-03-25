@@ -28,7 +28,7 @@ RowLayout {
 					id: accounts
 				}
 				account: accounts.defaultAccount
-				enablePersonalCamera: mainItem.cameraEnabled
+				previewEnabled: mainItem.cameraEnabled
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter

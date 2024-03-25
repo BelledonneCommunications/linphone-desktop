@@ -5,6 +5,10 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/App/Layout/LoginLayout.qml
 	view/App/Layout/MainLayout.qml
 	
+	view/Layout/Call/ActiveSpeakerLayout.qml
+	view/Layout/Call/CallLayout.qml
+	#view/Layout/Call/GridLayout.qml
+	
 	view/Layout/Conference/IncallGrid.qml
 	view/Layout/Contact/ContactLayout.qml
 	view/Layout/Meeting/AddParticipantsLayout.qml
@@ -85,6 +89,8 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/CallPage.qml
 	view/Page/Main/ContactPage.qml
 	view/Page/Main/MeetingPage.qml
+	
+	
 	
 	view/Tool/utils.js
 # Prototypes

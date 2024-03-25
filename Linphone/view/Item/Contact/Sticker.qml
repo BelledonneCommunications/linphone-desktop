@@ -16,13 +16,19 @@ Item {
 	width: 200
 	property CallGui call: null
 	property AccountGui account: null
-	property bool enablePersonalCamera: false
-	onEnablePersonalCameraChanged: console.log ("enable camera", enablePersonalCamera)
+	property ParticipantDeviceGui participantDevice: null
+	property bool previewEnabled: false
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
-	property var peerAddressObj: call ? UtilsCpp.getDisplayName(call.core.peerAddress) : null
-	property string peerAddress: peerAddressObj ? peerAddressObj.value : ""
+	property var peerAddressObj: participantDevice && participantDevice.core
+									? UtilsCpp.getDisplayName(participantDevice.core.address)
+									: call && call.core
+										? UtilsCpp.getDisplayName(call.core.peerAddress)
+										: null
+	property string peerAddress:peerAddressObj ? peerAddressObj.value : ""
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
+	property bool cameraEnabled: previewEnabled
+	property string qmlName
 
 	Rectangle {
 		id: background
@@ -70,10 +76,7 @@ Item {
 				interval: 1
 				onTriggered: {cameraLoader.active=false; cameraLoader.active=true;}
 			}
-			active: mainItem.visible && call 
-				? call.core.remoteVideoEnabled && (mainItem.call.core.state != LinphoneEnums.CallState.End
-								&& mainItem.call.core.state != LinphoneEnums.CallState.Released)
-				: mainItem.enablePersonalCamera
+			active: mainItem.visible && mainItem.cameraEnabled
 			onActiveChanged: console.log("camera active", active)
 			sourceComponent: cameraComponent
 		}
@@ -88,7 +91,9 @@ Item {
 					anchors.fill: parent
 					visible: isReady
 					call: mainItem.call
-					
+					participantDevice: mainItem.participantDevice
+					isPreview: mainItem.previewEnabled
+					qmlName: mainItem.qmlName
 					onRequestNewRenderer: {
 						console.log("Request new renderer")
 						resetTimer.restart()
@@ -103,7 +108,7 @@ Item {
 			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.bottomMargin: 10 * DefaultStyle.dp
 			width: implicitWidth
-			text: mainItem.peerAddress.length != 0
+			text: mainItem.peerAddress != ''
 				? mainItem.peerAddress
 				: mainItem.account && mainItem.identityAddress
 					? mainItem.identityAddress.value

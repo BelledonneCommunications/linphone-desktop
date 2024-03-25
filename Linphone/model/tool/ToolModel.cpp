@@ -159,3 +159,43 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 	// CallModel::prepareTransfert(core->inviteAddressWithParams(address, params), prepareTransfertAddress);
 	*/
 }
+
+std::shared_ptr<linphone::Account> ToolModel::findAccount(const std::shared_ptr<const linphone::Address> &address) {
+	std::shared_ptr<linphone::Account> account;
+	for (auto item : CoreModel::getInstance()->getCore()->getAccountList()) {
+		if (item->getContactAddress()->weakEqual(address)) {
+			account = item;
+			break;
+		}
+	}
+	return account;
+}
+
+bool ToolModel::isMe(const QString &address) {
+	bool isMe = false;
+	auto linAddr = ToolModel::interpretUrl(address);
+	if (!CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+		// for (auto &account : CoreModel::getInstance()->getCore()->getAccountList()) {
+		// 	if (account->getContactAddress()->weakEqual(linAddr)) return true;
+		// }
+		isMe = false;
+	} else {
+		auto accountAddr = CoreModel::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
+		isMe = linAddr && accountAddr ? accountAddr->weakEqual(linAddr) : false;
+	}
+	return isMe;
+}
+
+bool ToolModel::isMe(const std::shared_ptr<const linphone::Address> &address) {
+	auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
+	if (!currentAccount) { // Default account is selected : Me is all local accounts.
+		return findAccount(address) != nullptr;
+	} else return address ? currentAccount->getContactAddress()->weakEqual(address) : false;
+}
+bool ToolModel::isLocal(const std::shared_ptr<linphone::Conference> &conference,
+                        const std::shared_ptr<const linphone::ParticipantDevice> &device) {
+	auto deviceAddress = device->getAddress();
+	auto callAddress = conference->getMe()->getAddress();
+	auto gruuAddress = findAccount(callAddress)->getContactAddress();
+	return deviceAddress->equal(gruuAddress);
+}

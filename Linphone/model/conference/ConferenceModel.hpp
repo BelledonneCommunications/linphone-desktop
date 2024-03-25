@@ -35,6 +35,7 @@ class ConferenceModel : public ::Listener<linphone::Conference, linphone::Confer
 public:
 	ConferenceModel(const std::shared_ptr<linphone::Conference> &conference, QObject *parent = nullptr);
 	~ConferenceModel();
+	static std::shared_ptr<ConferenceModel> create(const std::shared_ptr<linphone::Conference> &conference);
 
 	void terminate();
 
@@ -105,11 +106,11 @@ private:
 	                                  const std::shared_ptr<const linphone::AudioDevice> &audioDevice) override;
 
 signals:
-	void activeSpeakerParticipantDevice(const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
-	void participantAdded(const std::shared_ptr<const linphone::Participant> &participant);
+	void activeSpeakerParticipantDevice(const std::shared_ptr<linphone::ParticipantDevice> &participantDevice);
+	void participantAdded(const std::shared_ptr<linphone::Participant> &participant);
 	void participantRemoved(const std::shared_ptr<const linphone::Participant> &participant);
 	void participantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> &participant);
-	void participantDeviceAdded(const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
+	void participantDeviceAdded(const std::shared_ptr<linphone::ParticipantDevice> &participantDevice);
 	void participantDeviceRemoved(const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice);
 	void participantDeviceStateChanged(const std::shared_ptr<linphone::Conference> &conference,
 	                                   const std::shared_ptr<const linphone::ParticipantDevice> &device,

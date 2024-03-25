@@ -25,13 +25,11 @@
 DEFINE_ABSTRACT_OBJECT(ConferenceGui)
 
 ConferenceGui::ConferenceGui() {
-	qDebug() << "[ConferenceGui] new" << this;
 	mCore = ConferenceCore::create(nullptr);
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
 }
 ConferenceGui::ConferenceGui(QSharedPointer<ConferenceCore> core) {
-	qDebug() << "[ConferenceGui] new" << this;
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
