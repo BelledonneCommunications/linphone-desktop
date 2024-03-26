@@ -34,7 +34,7 @@ void Thread::run() {
 	}
 }
 bool Thread::isInLinphoneThread() {
-	return QThread::currentThread() == CoreModel::getInstance()->thread();
+	return CoreModel::getInstance() && QThread::currentThread() == CoreModel::getInstance()->thread();
 }
 
 bool Thread::mustBeInLinphoneThread(const QString &context) {

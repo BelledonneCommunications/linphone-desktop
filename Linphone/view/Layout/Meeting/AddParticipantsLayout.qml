@@ -111,4 +111,7 @@ ColumnLayout {
 		searchBarText: searchbar.text
 		onContactAddedToSelection: participantList.positionViewAtEnd()
 	}
+	Item {
+		Layout.fillHeight: true
+	}
 }

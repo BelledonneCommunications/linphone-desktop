@@ -5,7 +5,7 @@ import Linphone
 import UtilsCpp 1.0
 import SettingsCpp 1.0
 
-Window {
+ApplicationWindow {
 	id: mainWindow
 	width: 1512 * DefaultStyle.dp
 	height: 982 * DefaultStyle.dp
@@ -15,6 +15,15 @@ Window {
 	property bool firstConnection: true
 
 	color: "transparent"
+
+	// TODO : use this to make the border transparent
+	// flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowTitleHint
+	// menuBar: Rectangle {
+	// 	width: parent.width
+	// 	height: 40 * DefaultStyle.dp
+	// 	color: DefaultStyle.grey_100
+	// }
+
 	function goToNewCall() {
 		mainWindowStackView.replace(mainPage, StackView.Immediate)
 		mainWindowStackView.currentItem.goToNewCall()

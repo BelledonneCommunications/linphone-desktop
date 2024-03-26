@@ -9,11 +9,7 @@ Button {
 	property string iconUrl
 	property string checkedIconUrl
 	property color color: DefaultStyle.grey_500
-	property color checkedColor: DefaultStyle.main2_400
-	leftPadding: 0
-	rightPadding: 0
-	topPadding: 0
-	bottomPadding: 0
+	property color checkedColor: color
 	checkable: true
 	background: Rectangle {
 		anchors.fill: parent

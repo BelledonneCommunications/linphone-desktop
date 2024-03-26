@@ -16,9 +16,10 @@ Window {
 
 	property CallGui call
 	property ConferenceInfoGui conferenceInfo
-	onConferenceInfoChanged: console.log("CONFERENCE INFO", conferenceInfo)
 
 	property ConferenceGui conference: call && call.core.conference || null
+	onConferenceChanged: console.log ("CONFERENCE CHANGED", conference)
+
 	property bool callTerminatedByUser: false
 	
 	onCallChanged: {
@@ -56,7 +57,10 @@ Window {
 	onCallStateChanged: {
 		console.log("State:", callState)
 		if (callState === LinphoneEnums.CallState.Connected) {
-			if (conferenceInfo) middleItemStackView.replace(inCallItem)
+			if (conferenceInfo) {
+				middleItemStackView.replace(inCallItem)
+				bottomButtonsLayout.visible = true
+			}
 			if(!call.core.isSecured && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
 				zrtpValidation.open()
 			}
@@ -642,19 +646,17 @@ Window {
 				Layout.alignment: Qt.AlignHCenter
 				layoutDirection: Qt.LeftToRight
 				columnSpacing: 20 * DefaultStyle.dp
-				visible: mainWindow.conferenceUri ? mainWindow.conferenceJoined : mainWindow.call
+				visible: mainWindow.call && !mainWindow.conferenceInfo
 
 				function refreshLayout() {
 					if (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning) {
 						bottomButtonsLayout.layoutDirection = Qt.RightToLeft
-						connectedCallButtons.visible = true
-						videoCameraButton.enabled = true
-						moreOptionsButton.visible = true
-					} 
+						connectedCallButtons.visible = bottomButtonsLayout.visible
+						moreOptionsButton.visible = bottomButtonsLayout.visible
+					}
 					else if (mainWindow.callState === LinphoneEnums.CallState.OutgoingInit) {
 						connectedCallButtons.visible = false
 						bottomButtonsLayout.layoutDirection = Qt.LeftToRight
-						videoCameraButton.enabled = false
 						moreOptionsButton.visible = false
 					}
 				}
@@ -669,9 +671,12 @@ Window {
 						children[i].enabled = false
 					}
 				}
-				BottomButton {
+				Button {
 					Layout.row: 0
-					enabledIcon: AppIcons.endCall
+					icon.source: AppIcons.endCall
+					icon.width: 32 * DefaultStyle.dp
+					icon.height: 32 * DefaultStyle.dp
+					contentImageColor: DefaultStyle.grey_0
 					checkable: false
 					Layout.column: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingProgress
@@ -696,7 +701,7 @@ Window {
 					visible: false
 					Layout.row: 0
 					Layout.column: 1
-					BottomButton {
+					CheckableButton {
 						id: pauseButton
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
@@ -712,17 +717,20 @@ Window {
 								: DefaultStyle.grey_600
 						}
 						enabled: mainWindow.callState != LinphoneEnums.CallState.PausedByRemote
-						enabledIcon: enabled && checked ? AppIcons.play : AppIcons.pause
+						icon.source: enabled && checked ? AppIcons.play : AppIcons.pause
 						checked: mainWindow.call && mainWindow.call.core.paused
-						onClicked: {
-							mainWindow.call.core.lSetPaused(!callsModel.currentCall.core.paused)
+						onCheckedChanged: {
+							mainWindow.call.core.lSetPaused(!mainWindow.call.core.paused)
 						}
 					}
-					BottomButton {
+					CheckableButton {
 						id: transferCallButton
-						enabledIcon: AppIcons.transferCall
+						icon.source: AppIcons.transferCall
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						contentImageColor: enabled ? DefaultStyle.grey_0 : DefaultStyle.grey_500
+						onEnabledChanged: console.log("===================enable change", enabled)
+						onContentImageColorChanged: console.log("===================================== content image color", contentImageColor)
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
@@ -736,10 +744,10 @@ Window {
 							onVisibleChanged: if(!rightPanel.visible) transferCallButton.checked = false
 						}
 					}
-					BottomButton {
+					CheckableButton {
 						id: newCallButton
 						checkable: false
-						enabledIcon: AppIcons.newCall
+						icon.source: AppIcons.newCall
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						onClicked: {
@@ -757,40 +765,41 @@ Window {
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingEarlyMedia
 										|| mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
 										? bottomButtonsLayout.columns - 1 : 0
-					BottomButton {
+					CheckableButton {
 						id: videoCameraButton
-						enabledIcon: AppIcons.videoCamera
-						disabledIcon: AppIcons.videoCameraSlash
+						enabled: mainWindow.conferenceInfo || (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
+						iconUrl: AppIcons.videoCamera
+						checkedIconUrl: AppIcons.videoCameraSlash
 						checked: mainWindow.call && !mainWindow.call.core.cameraEnabled
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
-						onClicked: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
+						onCheckedChanged: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
 					}
-					BottomButton {
-						enabledIcon: AppIcons.microphone
-						disabledIcon: AppIcons.microphoneSlash
+					CheckableButton {
+						iconUrl: AppIcons.microphone
+						checkedIconUrl: AppIcons.microphoneSlash
 						checked: mainWindow.call && mainWindow.call.core.microphoneMuted
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
-						onClicked: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
+						onCheckedChanged: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
 					}
 					PopupButton {
 						id: moreOptionsButton
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						onEnabledChanged: console.log("========== enabled changed", enabled)
+						contentImageColor: enabled && !checked ? DefaultStyle.grey_0 : DefaultStyle.grey_500
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
+						icon.source: AppIcons.more
 						background: Rectangle {
 							anchors.fill: moreOptionsButton
-							color: moreOptionsButton.checked ? DefaultStyle.grey_0 : DefaultStyle.grey_500
+							color: moreOptionsButton.enabled 
+								? moreOptionsButton.checked 
+									? DefaultStyle.grey_0 
+									: DefaultStyle.grey_500
+								: DefaultStyle.grey_600
 							radius: 40 * DefaultStyle.dp
-						}
-						contentItem: Item {
-							EffectImage {
-								imageSource: AppIcons.more
-								width: 24 * DefaultStyle.dp
-								height: 24 * DefaultStyle.dp
-								anchors.centerIn: parent
-								colorizationColor: moreOptionsButton.checked ? DefaultStyle.grey_500 : DefaultStyle.grey_0
-							}
 						}
 						popup.x: width/2
 						popup.y: y - popup.height + height/4
@@ -864,30 +873,7 @@ Window {
 									mainWindow.call && mainWindow.call.core.recording ? mainWindow.call.core.lStopRecording() : mainWindow.call.core.lStartRecording()
 								}
 							}
-							Control.Button {
-								id: speakerButton
-								Layout.fillWidth: true
-								checkable: true
-								background: Item {}
-								contentItem: RowLayout {
-									EffectImage {
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										fillMode: Image.PreserveAspectFit
-										imageSource: AppIcons.recordFill
-										colorizationColor: mainWindow.call && mainWindow.call.core.recording ? DefaultStyle.danger_500main : undefined
-									}
-									Text {
-										color: mainWindow.call && mainWindow.call.core.recording ? DefaultStyle.danger_500main : DefaultStyle.main2_600
-										text: mainWindow.call && mainWindow.call.core.recording ? qsTr("Terminer l'enregistrement") : qsTr("Enregistrer l'appel")
-									}
-
-								}
-								onClicked: {
-									mainWindow.call.core.recording ? mainWindow.call.core.lStopRecording() : mainWindow.call.core.lStartRecording()
-								}
-							}
-							Control.Button {
+							Button {
 								id: settingsButton
 								Layout.fillWidth: true
 								background: Item{}

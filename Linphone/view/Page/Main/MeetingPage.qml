@@ -368,8 +368,9 @@ AbstractMainPage {
 								inversedColors: true
 								color: DefaultStyle.main2_600
 								background: Item{}
+								property var callObj
 								onClicked: {
-									console.log("TODO: join conf", text)
+									callObj = UtilsCpp.createCall(mainItem.selectedConference.core.uri)
 								}
 							}
 							Button {
@@ -377,7 +378,10 @@ AbstractMainPage {
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 								background: Item{}
 								icon.source: AppIcons.shareNetwork
-								onClicked: UtilsCpp.copyToClipboard(confUri.text)
+								onClicked: {
+									UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
+									UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Le lien de la réunion a été copié dans le presse-papiers"))
+								}
 							}
 						}
 						RowLayout {
@@ -513,7 +517,6 @@ AbstractMainPage {
 					topPadding: 11 * DefaultStyle.dp
 					bottomPadding: 11 * DefaultStyle.dp
 					onClicked: {
-						console.log("TODO: join conf", mainItem.selectedConference.core.subject)
 						console.log(mainItem.selectedConference.core.uri)
 						UtilsCpp.setupConference(mainItem.selectedConference)
 					}

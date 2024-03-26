@@ -8,6 +8,7 @@ Control.Button {
 	id: mainItem
 	property int capitalization
 	property color color: DefaultStyle.main1_500_main
+	property color borderColor: "transparent"
 	property color pressedColor: DefaultStyle.main1_500_main_darker
 	property bool inversedColors: false
 	property int textSize: 18 * DefaultStyle.dp
@@ -15,7 +16,6 @@ Control.Button {
 	property bool underline: false
 	property bool shadowEnabled: false
 	property var contentImageColor
-	property alias contentText: contentText
 	hoverEnabled: true
 	icon.width: width
 	icon.height: height
@@ -44,7 +44,7 @@ Control.Button {
 						? mainItem.pressedColor
 						: mainItem.color
 			radius: 48 * DefaultStyle.dp
-			border.color: inversedColors ? mainItem.color : "transparent"
+			border.color: inversedColors ? mainItem.color : mainItem.borderColor
 
 			MouseArea {
 				anchors.fill: parent
@@ -64,15 +64,48 @@ Control.Button {
 	}
 
 	contentItem: StackLayout {
-		currentIndex: mainItem.text.length != 0
+		currentIndex: mainItem.text.length != 0 && mainItem.icon.source != undefined
 			? 0
-			: mainItem.icon.source != undefined
+			: mainItem.text.length != 0
 				? 1
-				: 2
+				: mainItem.icon.source != undefined
+					? 2
+					: 3
 
 		width: mainItem.width
+		RowLayout {
+			spacing: 5 * DefaultStyle.dp
+			EffectImage {
+				visible: mainItem.icon.source != undefined
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				imageSource: mainItem.icon.source
+				imageWidth: mainItem.icon.width
+				imageHeight: mainItem.icon.height
+				colorizationColor: mainItem.contentImageColor
+			}
+			Text {
+				visible: mainItem.text != undefined
+				horizontalAlignment: Text.AlignHCenter
+				verticalAlignment: Text.AlignVCenter
+				width: mainItem.text != undefined ? implicitWidth : 0
+				height: implicitHeight
+				wrapMode: Text.WrapAnywhere
+				Layout.fillWidth: true
+				Layout.fillHeight: true
+				text: mainItem.text
+				maximumLineCount: 1
+				color: inversedColors ? mainItem.color : DefaultStyle.grey_0
+				font {
+					pixelSize: mainItem.textSize
+					weight: mainItem.textWeight
+					family: DefaultStyle.defaultFont
+					capitalization: mainItem.capitalization
+					underline: mainItem.underline
+				}
+			}
+		}
 		Text {
-			id: contentText
 			horizontalAlignment: Text.AlignHCenter
 			verticalAlignment: Text.AlignVCenter
 			Layout.alignment: Qt.AlignCenter
@@ -92,7 +125,6 @@ Control.Button {
 			}
 		}
 		EffectImage {
-			id: image
 			Layout.alignment: Qt.AlignCenter
 			Layout.fillWidth: true
 			Layout.fillHeight: true
@@ -102,8 +134,8 @@ Control.Button {
 			colorizationColor: mainItem.contentImageColor
 		}
 		Item {
-			Layout.fillWidth: true
-			Layout.fillHeight: true
+			Layout.fillWidth : true
+			Layout.fillHeight : true
 		}
 	}
 }

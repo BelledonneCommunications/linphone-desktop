@@ -64,6 +64,26 @@ Item {
 		}
 	}
 }
+
+		// ColumnLayout {
+		// 	id: waitingForParticipant
+		// 	Text {
+		// 		text: qsTr("Waiting for other participants...")
+		// 		color: DefaultStyle.frey_0
+		// 		font {
+		// 			pixelSize: 30 * DefaultStyle.dp
+		// 			weight: 300 * DefaultStyle.dp
+		// 		}
+		// 	}
+		// 	Button {
+		// 		inversedColors: true
+		// 		text: qsTr("Share invitation")
+		// 		icon.source: AppIcons.shareNetwork
+		// 		color: DefaultStyle.main2_400
+		// 		Layout.preferredWidth: 206 * DefaultStyle.dp
+		// 		Layout.preferredHeight: 47 * DefaultStyle.dp
+		// 	}
+		// }
 	/*
 	Sticker {
 		id: preview

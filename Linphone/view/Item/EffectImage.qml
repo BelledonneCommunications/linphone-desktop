@@ -19,7 +19,7 @@ Loader {
 	sourceComponent: Item {
 		Image {
 			id: image
-			visible: !effect2.enabled
+			visible: !effect2.effectEnabled
 			source: mainItem.imageSource ? mainItem.imageSource : ""
 			fillMode: mainItem.fillMode
 			sourceSize.width: width
@@ -34,18 +34,18 @@ Loader {
 			anchors.fill: image
 			source: image
 			maskSource: image
-			brightness: effect2.enabled ? 1.0 : 0.0
+			brightness: effect2.effectEnabled ? 1.0 : 0.0
 		}
 
 		MultiEffect {
 			id: effect2
 			visible: mainItem.useColor
-			enabled: mainItem.useColor
+			property bool effectEnabled: mainItem.useColor
 			anchors.fill: effect
 			source: effect
 			maskSource: effect
-			colorizationColor: effect2.enabled && mainItem.colorizationColor ? mainItem.colorizationColor : 'black'
-			colorization: effect2.enabled ? 1.0: 0.0
+			colorizationColor: effectEnabled && mainItem.colorizationColor ? mainItem.colorizationColor : 'black'
+			colorization: effectEnabled ? 1.0: 0.0
 		}
 	}
 }

@@ -10,11 +10,15 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
+	rightMargin: 5 * DefaultStyle.dp
 
 	property string searchBarText
 
 	property bool hoverEnabled: true
+	// dots popup menu
 	property bool contactMenuVisible: true
+	// call, video call etc menu
+	property bool actionMenuVisible: true
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
 	property bool showOnlyFavourites: false
@@ -34,8 +38,6 @@ ListView {
 	property int delegateLeftMargin: 0
 	currentIndex: -1
 
-	property var delegateButtons: []
-
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
 
 	onCurrentIndexChanged: selectedContact = model.getAt(currentIndex) || null
@@ -49,7 +51,7 @@ ListView {
 	signal contactAddedToSelection()
 
 	model: MagicSearchProxy {
-			searchText: searchBarText.length === 0 ? "*" : searchBarText
+		searchText: searchBarText.length === 0 ? "*" : searchBarText
 	}
 
 
@@ -88,6 +90,7 @@ ListView {
 			anchors.left: initial.visible ? initial.right : parent.left
 			anchors.leftMargin: 10 * DefaultStyle.dp + mainItem.delegateLeftMargin
 			anchors.right: parent.right
+			anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 10 * DefaultStyle.dp
 			z: 1
@@ -122,12 +125,39 @@ ListView {
 		RowLayout {
 			id: actionsRow
 			z: 1
-			anchors.fill: parent
-			anchors.rightMargin: 5 * DefaultStyle.dp
+			visible: mainItem.actionMenuVisible || friendPopup.visible
+			// anchors.fill: parent
+			anchors.right: parent.right
+			anchors.rightMargin: 10 * DefaultStyle.dp
+			anchors.verticalCenter: parent.verticalCenter
 			RowLayout{
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				children: mainItem.delegateButtons
+				property var callObj
+				visible: mainItem.actionMenuVisible
+				spacing: 10 * DefaultStyle.dp
+				Button {
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					background: Item{}
+					contentItem: Image {
+						anchors.fill: parent
+						width: 24 * DefaultStyle.dp
+						height: 24 * DefaultStyle.dp
+						source: AppIcons.phone
+					}
+					onClicked: callObj = UtilsCpp.createCall(modelData.core.defaultAddress)
+				}
+				Button {
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					background: Item{}
+					contentItem: Image {
+						anchors.fill: parent
+						width: 24 * DefaultStyle.dp
+						height: 24 * DefaultStyle.dp
+						source: AppIcons.videoCamera
+					}
+					onClicked: callObj = UtilsCpp.createCall(modelData.core.defaultAddress, true)
+				}
 			}
 			PopupButton {
 				id: friendPopup
