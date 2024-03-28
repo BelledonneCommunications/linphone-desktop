@@ -46,6 +46,7 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 	mAddress = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
 	mIsMuted = device->getIsMuted();
 	mIsMe = isMe;
+	mIsSpeaking = device->getIsSpeaking();
 	mParticipantDeviceModel = Utils::makeQObject_ptr<ParticipantDeviceModel>(device);
 	mParticipantDeviceModel->setSelf(mParticipantDeviceModel);
 	mState = LinphoneEnums::fromLinphone(device->getState());

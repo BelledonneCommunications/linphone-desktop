@@ -18,6 +18,7 @@ Item {
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null
 	property bool previewEnabled: false
+	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
 	property var peerAddressObj: participantDevice && participantDevice.core
@@ -32,10 +33,13 @@ Item {
 
 	Rectangle {
 		id: background
-		color: mainItem.color
+		color: noCameraLayout.visible ? mainItem.color : 'transparent'
 		radius: mainItem.radius
 		anchors.fill: parent
+		border.color: DefaultStyle.main2_200
+		border.width: mainItem.displayBorder ? 3 * DefaultStyle.dp : 0
 		ColumnLayout {
+			id: noCameraLayout
 			anchors.centerIn: parent
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
 			Avatar{
@@ -85,11 +89,11 @@ Item {
 			Item {
 				height: cameraLoader.height
 				width: cameraLoader.width
-				property bool isReady: cameraItem.visible
+				property alias isReady: cameraItem.isReady
 				CameraGui{
 					id: cameraItem
 					anchors.fill: parent
-					visible: isReady
+					visible: false
 					call: mainItem.call
 					participantDevice: mainItem.participantDevice
 					isPreview: mainItem.previewEnabled
@@ -98,6 +102,20 @@ Item {
 						console.log("Request new renderer")
 						resetTimer.restart()
 					}
+					layer.enabled: true
+				}
+				
+				ShaderEffect {
+					id: roundEffect
+					property variant src: cameraItem
+					property real edge: 0.9
+					property real edgeSoftness: 0.9
+					property real radius: mainItem.radius
+					property real shadowSoftness: 0.5
+					property real shadowOffset: 0.01
+					anchors.fill: parent
+					visible: cameraItem.isReady
+					fragmentShader: 'qrc:/data/shaders/roundEffect.frag.qsb'
 				}
 			}
 		}

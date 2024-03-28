@@ -124,7 +124,6 @@ StackView {
 			id: avatarItem
 			height: mainItem.height
 			width: height
-		
 			Image {
 				id: image
 				visible: false
@@ -135,16 +134,20 @@ StackView {
 				fillMode: Image.PreserveAspectCrop
 				anchors.centerIn: parent
 				source: mainItem.account && mainItem.account.core.pictureUri 
-				|| mainItem.contact && mainItem.contact.core.pictureUri
-				|| computedAvatarUri
+					|| mainItem.contact && mainItem.contact.core.pictureUri
+					|| computedAvatarUri
 				mipmap: true
+				layer.enabled: true
 			}
 			ShaderEffect {
 				id: roundEffect
 				property variant src: image
-				property double edge: 0.9
+				property real edge: 0.9
+				property real edgeSoftness: 0.9
+				property real radius: width / 2.0
+				property real shadowSoftness: 0.5
+				property real shadowOffset: 0.01
 				anchors.fill: parent
-				vertexShader: 'qrc:/data/shaders/roundEffect.vert.qsb'
 				fragmentShader: 'qrc:/data/shaders/roundEffect.frag.qsb'
 			}
 		}
