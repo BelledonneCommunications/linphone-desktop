@@ -41,7 +41,7 @@ class ParticipantCore : public QObject, public AbstractObject {
 	// Q_PROPERTY(FriendCore *friendCore READ getFriendCore CONSTANT)
 	Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
 	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged)
-	Q_PROPERTY(bool adminStatus READ getAdminStatus WRITE setAdminStatus NOTIFY adminStatusChanged)
+	Q_PROPERTY(bool isAdmin READ isAdmin WRITE setIsAdmin NOTIFY isAdminChanged)
 	Q_PROPERTY(bool isMe READ isMe CONSTANT)
 	Q_PROPERTY(QDateTime creationTime READ getCreationTime CONSTANT)
 	Q_PROPERTY(bool focus READ isFocus CONSTANT)
@@ -62,7 +62,7 @@ public:
 	QString getDisplayName() const;
 	QString getSipAddress() const;
 	QDateTime getCreationTime() const;
-	bool getAdminStatus() const;
+	bool isAdmin() const;
 	bool isFocus() const;
 	int getSecurityLevel() const;
 	int getDeviceCount() const;
@@ -72,7 +72,7 @@ public:
 	void setSipAddress(const QString &address);
 	void setDisplayName(const QString &name);
 	void setCreationTime(const QDateTime &date);
-	void setAdminStatus(const bool &status);
+	void setIsAdmin(const bool &status);
 	void setIsFocus(const bool &focus);
 	void setSecurityLevel(int level);
 
@@ -88,10 +88,7 @@ signals:
 	void securityLevelChanged();
 	void deviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
 	void sipAddressChanged();
-	void updateAdminStatus(
-	    const std::shared_ptr<linphone::Participant> participant,
-	    const bool &isAdmin); // Split in two signals in order to sequancialize execution between SDK and GUI
-	void adminStatusChanged();
+	void isAdminChanged();
 	void isFocusChanged();
 	void deviceCountChanged();
 	void invitingChanged();
@@ -99,6 +96,7 @@ signals:
 	void displayNameChanged();
 
 	void lStartInvitation(const int &secs);
+	void lSetIsAdmin(bool status);
 
 	void invitationTimeout(ParticipantCore *model);
 

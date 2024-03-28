@@ -22,6 +22,7 @@
 #include "core/App.hpp"
 #include "core/participant/ParticipantDeviceCore.hpp"
 #include "core/participant/ParticipantDeviceGui.hpp"
+#include "tool/Utils.hpp"
 
 #include <QQmlApplicationEngine>
 #include <algorithm>
@@ -77,6 +78,18 @@ void ParticipantDeviceList::setDevices(QList<QSharedPointer<ParticipantDeviceCor
 	qDebug() << "[ParticipantDeviceList] : add " << devices.size() << " devices";
 }
 
+QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::findDeviceByUniqueAddress(const QString &address) {
+	qDebug() << "address to find" << address;
+	auto found = std::find_if(mList.begin(), mList.end(), [address](const QSharedPointer<QObject> &obj) {
+		auto device = qobject_cast<QSharedPointer<ParticipantDeviceCore>>(obj);
+		qDebug() << "address" << device->getUniqueAddress();
+		return device && device->getUniqueAddress() == address;
+	});
+	if (found != mList.end()) {
+		return qobject_cast<QSharedPointer<ParticipantDeviceCore>>(*found);
+	} else return nullptr;
+}
+
 void ParticipantDeviceList::setConferenceModel(const std::shared_ptr<ConferenceModel> &conferenceModel) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	mConferenceModel = conferenceModel;
@@ -114,6 +127,16 @@ void ParticipantDeviceList::setSelf(QSharedPointer<ParticipantDeviceList> me) {
 			    mConferenceModelConnection->invokeToCore([this, deviceCore]() {
 				    qDebug() << "[ParticipantDeviceList] : add a device";
 				    this->add(deviceCore);
+			    });
+		    });
+		mConferenceModelConnection->makeConnectToModel(
+		    &ConferenceModel::participantDeviceRemoved,
+		    [this](const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
+			    QString uniqueAddress = Utils::coreStringToAppString(participantDevice->getAddress()->asString());
+			    auto deviceCore = findDeviceByUniqueAddress(uniqueAddress);
+			    mConferenceModelConnection->invokeToCore([this, deviceCore]() {
+				    qDebug() << "[ParticipantDeviceList] : remove a device";
+				    this->remove(deviceCore);
 			    });
 		    });
 		mConferenceModelConnection->makeConnectToModel(

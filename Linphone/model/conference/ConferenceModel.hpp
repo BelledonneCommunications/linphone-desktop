@@ -43,6 +43,7 @@ public:
 	void startRecording();
 	void stopRecording();
 	void setRecordFile(const std::string &path);
+	void setParticipantAdminStatus(const std::shared_ptr<linphone::Participant> participant, bool status);
 	void setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);
 	std::shared_ptr<const linphone::AudioDevice> getInputAudioDevice() const;
 	void setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &id);

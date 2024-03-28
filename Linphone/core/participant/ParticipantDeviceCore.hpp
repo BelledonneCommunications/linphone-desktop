@@ -37,6 +37,7 @@ class ParticipantDeviceCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString displayName READ getDisplayName CONSTANT)
 	Q_PROPERTY(QString name READ getName CONSTANT)
 	Q_PROPERTY(QString address READ getAddress CONSTANT)
+	Q_PROPERTY(QString uniqueAddress READ getUniqueAddress CONSTANT)
 	Q_PROPERTY(int securityLevel READ getSecurityLevel NOTIFY securityLevelChanged)
 	Q_PROPERTY(time_t timeOfJoining READ getTimeOfJoining CONSTANT)
 	Q_PROPERTY(bool videoEnabled READ isVideoEnabled NOTIFY videoEnabledChanged)
@@ -63,6 +64,7 @@ public:
 	QString getName() const;
 	QString getDisplayName() const;
 	QString getAddress() const;
+	QString getUniqueAddress() const;
 	int getSecurityLevel() const;
 	time_t getTimeOfJoining() const;
 	bool isVideoEnabled() const;
@@ -112,6 +114,7 @@ signals:
 private:
 	QString mName;
 	QString mDisplayName;
+	QString mUniqueAddress;
 	QString mAddress;
 	bool mIsMe = false;
 	bool mIsLocal = false;

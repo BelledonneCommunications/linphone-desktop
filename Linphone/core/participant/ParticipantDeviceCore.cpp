@@ -20,6 +20,7 @@
 
 #include "ParticipantDeviceCore.hpp"
 #include "core/App.hpp"
+#include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include <QQmlApplicationEngine>
@@ -42,16 +43,22 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mustBeInLinphoneThread(getClassName());
 	mName = Utils::coreStringToAppString(device->getName());
-	mDisplayName = Utils::coreStringToAppString(device->getAddress()->getDisplayName());
-	mAddress = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
+	auto deviceAddress = device->getAddress();
+	mUniqueAddress = Utils::coreStringToAppString(deviceAddress->asString());
+	mAddress = Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
+	mDisplayName = Utils::coreStringToAppString(deviceAddress->getDisplayName());
+	if (mDisplayName.isEmpty()) {
+		auto name = Utils::getDisplayName(mAddress);
+		if (name) mDisplayName = name->getValue().toString();
+	}
 	mIsMuted = device->getIsMuted();
 	mIsMe = isMe;
 	mIsSpeaking = device->getIsSpeaking();
 	mParticipantDeviceModel = Utils::makeQObject_ptr<ParticipantDeviceModel>(device);
 	mParticipantDeviceModel->setSelf(mParticipantDeviceModel);
 	mState = LinphoneEnums::fromLinphone(device->getState());
-	qDebug() << "Address = " << Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
-	mIsLocal = ToolModel::findAccount(device->getAddress()) != nullptr; // TODO set local
+	qDebug() << "Address = " << Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
+	mIsLocal = ToolModel::findAccount(deviceAddress) != nullptr; // TODO set local
 	// mCall = callModel;
 	// if (mCall) connect(mCall, &CallModel::statusChanged, this, &ParticipantDeviceCore::onCallStatusChanged);
 	mIsVideoEnabled = mParticipantDeviceModel->isVideoEnabled();
@@ -114,6 +121,10 @@ time_t ParticipantDeviceCore::getTimeOfJoining() const {
 
 QString ParticipantDeviceCore::getAddress() const {
 	return mAddress;
+}
+
+QString ParticipantDeviceCore::getUniqueAddress() const {
+	return mUniqueAddress;
 }
 
 bool ParticipantDeviceCore::getPaused() const {

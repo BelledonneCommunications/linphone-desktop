@@ -87,7 +87,7 @@ int ParticipantCore::getDeviceCount() const {
 }
 
 bool ParticipantCore::isMe() const {
-	return true; // Utils::isMe(getSipAddress());
+	return Utils::isMe(mSipAddress);
 }
 
 QString ParticipantCore::getSipAddress() const {
@@ -121,7 +121,7 @@ void ParticipantCore::setCreationTime(const QDateTime &date) {
 	}
 }
 
-bool ParticipantCore::getAdminStatus() const {
+bool ParticipantCore::isAdmin() const {
 	return mAdminStatus;
 }
 
@@ -129,10 +129,10 @@ bool ParticipantCore::isFocus() const {
 	return mIsFocus;
 }
 
-void ParticipantCore::setAdminStatus(const bool &status) {
+void ParticipantCore::setIsAdmin(const bool &status) {
 	if (status != mAdminStatus) {
 		mAdminStatus = status;
-		emit adminStatusChanged();
+		emit isAdminChanged();
 	}
 }
 

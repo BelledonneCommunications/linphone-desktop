@@ -27,6 +27,9 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Notification/Notification.qml
 	view/Item/Notification/NotificationReceivedCall.qml
 
+	view/Item/Participant/ParticipantDeviceList.qml
+	view/Item/Participant/ParticipantList.qml
+
 	view/Item/Prototype/CanvasCircle.qml
 	
 	view/Item/Contact/Avatar.qml

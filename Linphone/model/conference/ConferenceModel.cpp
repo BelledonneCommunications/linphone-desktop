@@ -117,6 +117,10 @@ void ConferenceModel::setRecordFile(const std::string &path) {
 // 	return volume;
 // }
 
+void ConferenceModel::setParticipantAdminStatus(const std::shared_ptr<linphone::Participant> participant, bool status) {
+	mMonitor->setParticipantAdminStatus(participant, status);
+}
+
 void ConferenceModel::setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &device) {
 	mMonitor->setInputAudioDevice(device);
 	std::string deviceName;
@@ -149,12 +153,12 @@ void ConferenceModel::onActiveSpeakerParticipantDevice(
 
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,
                                          const std::shared_ptr<linphone::Participant> &participant) {
-	qDebug() << "onParticipantAdded: " << participant->getAddress()->asString().c_str();
+	// qDebug() << "onParticipantAdded: " << participant->getAddress()->asString().c_str();
 	emit participantAdded(participant);
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::Participant> &participant) {
-	qDebug() << "onParticipantRemoved";
+	// qDebug() << "onParticipantRemoved";
 	emit participantRemoved(participant);
 }
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> &conference,

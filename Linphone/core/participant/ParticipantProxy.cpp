@@ -19,6 +19,7 @@
  */
 
 #include "ParticipantProxy.hpp"
+#include "ParticipantList.hpp"
 
 // #include "core/conference/ConferenceCore.hpp"
 #include "model/core/CoreModel.hpp"
@@ -31,17 +32,48 @@
 
 // =============================================================================
 
-// -----------------------------------------------------------------------------
+DEFINE_ABSTRACT_OBJECT(ParticipantProxy)
 
 ParticipantProxy::ParticipantProxy(QObject *parent) : SortFilterProxy(parent) {
-	mList = ParticipantList::create();
-	setSourceModel(mList.get());
+	mParticipants = ParticipantList::create();
 	connect(this, &ParticipantProxy::chatRoomModelChanged, this, &ParticipantProxy::countChanged);
 	connect(this, &ParticipantProxy::conferenceModelChanged, this, &ParticipantProxy::countChanged);
+	setSourceModel(mParticipants.get());
 }
 
 ParticipantProxy::~ParticipantProxy() {
 	setSourceModel(nullptr);
+}
+
+CallGui *ParticipantProxy::getCurrentCall() const {
+	return mCurrentCall;
+}
+
+void ParticipantProxy::setCurrentCall(CallGui *call) {
+	qDebug() << "[ParticipantProxy] set current call " << this << " => " << call;
+	if (mCurrentCall != call) {
+		CallCore *callCore = nullptr;
+		if (mCurrentCall) {
+			callCore = mCurrentCall->getCore();
+			if (callCore) callCore->disconnect(mParticipants.get());
+			callCore = nullptr;
+		}
+		mCurrentCall = call;
+		if (mCurrentCall) callCore = mCurrentCall->getCore();
+		if (callCore) {
+			connect(callCore, &CallCore::conferenceChanged, mParticipants.get(), [this]() {
+				auto conference = mCurrentCall->getCore()->getConferenceCore();
+				qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+				mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
+				// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
+			});
+			auto conference = callCore->getConferenceCore();
+			qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+			mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
+			// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
+		}
+		emit currentCallChanged();
+	}
 }
 
 // ChatRoomModel *ParticipantProxy::getChatRoomModel() const {
@@ -51,21 +83,6 @@ ParticipantProxy::~ParticipantProxy() {
 // ConferenceModel *ParticipantProxy::getConferenceModel() const {
 // return mConferenceModel;
 // }
-
-QStringList ParticipantProxy::getSipAddresses() const {
-	QStringList participants;
-	for (int i = 0; i < mList->rowCount(); ++i)
-		participants << mList->getAt<ParticipantCore>(i)->getSipAddress();
-	return participants;
-}
-
-QVariantList ParticipantProxy::getParticipants() const {
-	QVariantList participants;
-	ParticipantList *list = qobject_cast<ParticipantList *>(sourceModel());
-	for (int i = 0; i < list->rowCount(); ++i)
-		participants << QVariant::fromValue(list->getAt<ParticipantCore>(i).get());
-	return participants;
-}
 
 bool ParticipantProxy::getShowMe() const {
 	return mShowMe;
@@ -173,8 +190,12 @@ void ParticipantProxy::setShowMe(const bool &show) {
 
 void ParticipantProxy::removeParticipant(ParticipantCore *participant) {
 	if (participant) {
-		mList->remove(participant);
+		mParticipants->remove(participant);
 	}
+}
+
+void ParticipantProxy::setParticipantAdminStatus(ParticipantCore *participant, bool status) {
+	emit mParticipants->lSetParticipantAdminStatus(participant, status);
 }
 
 // -----------------------------------------------------------------------------

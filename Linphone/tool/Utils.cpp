@@ -1201,15 +1201,5 @@ bool Utils::isMe(const QString &address) {
 // QDateTime dateTime(QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss"));
 
 // bool Utils::isMe(const QString &address) {
-// 	return !address.isEmpty() ? isMe(Utils::interpretUrl(address)) : false;
-// }
-
-// bool Utils::isMe(const std::shared_ptr<const linphone::Address> &address) {
-// 	if (!CoreModel::getInstance()
-// 	         ->getCore()
-// 	         ->getDefaultAccount()) { // Default account is selected : Me is all local accounts.
-// 		return CoreModel::getInstance()->getAccountSettingsModel()->findAccount(address) != nullptr;
-// 	} else
-// 		return address ? CoreModel::getInstance()->getAccountSettingsModel()->getUsedSipAddress()->weakEqual(address)
-// 		               : false;
+// 	return !address.isEmpty() ? isMe(ToolModel::interpretUrl(address)) : false;
 // }

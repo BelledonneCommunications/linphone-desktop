@@ -13,6 +13,7 @@ Control.Button {
 	property bool inversedColors: false
 	property int textSize: 18 * DefaultStyle.dp
 	property int textWeight: 600 * DefaultStyle.dp
+	property color textColor: DefaultStyle.grey_0
 	property bool underline: false
 	property bool shadowEnabled: false
 	property var contentImageColor
@@ -63,6 +64,37 @@ Control.Button {
 		}
 	}
 
+	component ButtonText: Text {
+		visible: mainItem.text != undefined
+		horizontalAlignment: Text.AlignHCenter
+		verticalAlignment: Text.AlignVCenter
+		width: mainItem.text != undefined ? implicitWidth : 0
+		height: implicitHeight
+		wrapMode: Text.WrapAnywhere
+		Layout.fillWidth: true
+		Layout.fillHeight: true
+		text: mainItem.text
+		maximumLineCount: 1
+		color: inversedColors ? mainItem.color : mainItem.textColor
+		font {
+			pixelSize: mainItem.textSize
+			weight: mainItem.textWeight
+			family: DefaultStyle.defaultFont
+			capitalization: mainItem.capitalization
+			underline: mainItem.underline
+		}
+	}
+
+	component ButtonImage: EffectImage {
+		visible: mainItem.icon.source != undefined
+		Layout.fillWidth: true
+		Layout.fillHeight: true
+		imageSource: mainItem.icon.source
+		imageWidth: mainItem.icon.width
+		imageHeight: mainItem.icon.height
+		colorizationColor: mainItem.contentImageColor
+	}
+
 	contentItem: StackLayout {
 		currentIndex: mainItem.text.length != 0 && mainItem.icon.source != undefined
 			? 0
@@ -74,65 +106,12 @@ Control.Button {
 
 		width: mainItem.width
 		RowLayout {
-			spacing: 5 * DefaultStyle.dp
-			EffectImage {
-				visible: mainItem.icon.source != undefined
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				imageSource: mainItem.icon.source
-				imageWidth: mainItem.icon.width
-				imageHeight: mainItem.icon.height
-				colorizationColor: mainItem.contentImageColor
-			}
-			Text {
-				visible: mainItem.text != undefined
-				horizontalAlignment: Text.AlignHCenter
-				verticalAlignment: Text.AlignVCenter
-				width: mainItem.text != undefined ? implicitWidth : 0
-				height: implicitHeight
-				wrapMode: Text.WrapAnywhere
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				text: mainItem.text
-				maximumLineCount: 1
-				color: inversedColors ? mainItem.color : DefaultStyle.grey_0
-				font {
-					pixelSize: mainItem.textSize
-					weight: mainItem.textWeight
-					family: DefaultStyle.defaultFont
-					capitalization: mainItem.capitalization
-					underline: mainItem.underline
-				}
-			}
+			spacing: 10 * DefaultStyle.dp
+			ButtonImage{}
+			ButtonText{}
 		}
-		Text {
-			horizontalAlignment: Text.AlignHCenter
-			verticalAlignment: Text.AlignVCenter
-			Layout.alignment: Qt.AlignCenter
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			height: implicitHeight
-			wrapMode: Text.WrapAnywhere
-			text: mainItem.text
-			maximumLineCount: 1
-			color: inversedColors ? mainItem.color : DefaultStyle.grey_0
-			font {
-				pixelSize: mainItem.textSize
-				weight: mainItem.textWeight
-				family: DefaultStyle.defaultFont
-				capitalization: mainItem.capitalization
-				underline: mainItem.underline
-			}
-		}
-		EffectImage {
-			Layout.alignment: Qt.AlignCenter
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			imageSource: mainItem.icon.source
-			imageWidth: mainItem.icon.width
-			imageHeight: mainItem.icon.height
-			colorizationColor: mainItem.contentImageColor
-		}
+		ButtonText {}
+		ButtonImage{}
 		Item {
 			Layout.fillWidth : true
 			Layout.fillHeight : true

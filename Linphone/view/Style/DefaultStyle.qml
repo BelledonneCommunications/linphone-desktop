@@ -2,6 +2,7 @@ pragma Singleton
 import QtQuick 2.15
 
 QtObject {
+	property color main1_100: "#FFEACB"
 	property color main1_500_main: "#FE5E00"
 	property color main1_500_main_darker: "#C94C02"
 

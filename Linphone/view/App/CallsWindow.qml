@@ -131,7 +131,6 @@ Window {
 		}
 	}
 
-
 	component BottomButton : Button {
 		id: bottomButton
 		required property string enabledIcon
@@ -379,7 +378,7 @@ Window {
 						id: rightPanelTitle
 						anchors.verticalCenter: parent.verticalCenter
 						width: rightPanel.width
-						color: DefaultStyle.main2_700
+						color: mainWindow.conference ? DefaultStyle.main1_500_main : DefaultStyle.main2_700
 						// text: qsTr("Transfert d'appel")
 						font {
 							pixelSize: 16 * DefaultStyle.dp
@@ -579,6 +578,28 @@ Window {
 							InCallSettingsPanel {
 								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Paramètres")
 								call: mainWindow.call
+							}
+						}
+						Component {
+							id: participantListPanel
+							StackLayout {
+								id: participantsStack
+								currentIndex: 0
+								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Participants (%1)").arg(count)
+								onCurrentIndexChanged: {
+									if (index === 0) rightPanelTitle.text = qsTr("Participants (%1)").arg(count)
+									else rightPanelTitle.text = qsTr("Ajouter des participants")
+								}
+								ParticipantList {
+									call: mainWindow.call
+									onCountChanged: if (Control.StackView.status === Control.StackView.Active) {
+										rightPanelTitle.text = qsTr("Participants (%1)").arg(count)
+									}
+									onAddParticipantRequested: participantsStack.currentIndex = 1
+								}
+								AddParticipantLayout {
+									conferenceInfoGui: mainWindow.conferenceInfo
+								}
 							}
 						}
 					}
@@ -782,6 +803,21 @@ Window {
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						onCheckedChanged: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
+					}
+					CheckableButton {
+						iconUrl: AppIcons.usersTwo
+						checked: mainWindow.call && mainWindow.call.core.microphoneMuted
+						checkedColor: DefaultStyle.main2_400
+						Layout.preferredWidth: 55 * DefaultStyle.dp
+						Layout.preferredHeight: 55 * DefaultStyle.dp
+						onCheckedChanged: {
+							if (checked) {
+								rightPanel.visible = true
+								rightPanel.replace(participantListPanel)
+							} else {
+								rightPanel.visible = false
+							}
+						}
 					}
 					PopupButton {
 						id: moreOptionsButton

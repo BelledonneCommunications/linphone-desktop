@@ -22,6 +22,9 @@
 #define PARTICIPANT_PROXY_H_
 
 #include "../proxy/SortFilterProxy.hpp"
+#include "core/call/CallGui.hpp"
+#include "tool/AbstractObject.hpp"
+
 #include <memory>
 
 class ParticipantCore;
@@ -33,23 +36,24 @@ class ConferenceInfoModel;
 
 class QWindow;
 
-class ParticipantProxy : public SortFilterProxy {
+class ParticipantProxy : public SortFilterProxy, public AbstractObject {
 
 	Q_OBJECT
-
+	Q_PROPERTY(CallGui *currentCall READ getCurrentCall WRITE setCurrentCall NOTIFY currentCallChanged)
 	Q_PROPERTY(bool showMe READ getShowMe WRITE setShowMe NOTIFY showMeChanged)
 
 public:
 	ParticipantProxy(QObject *parent = Q_NULLPTR);
 	~ParticipantProxy();
 
+	CallGui *getCurrentCall() const;
+	void setCurrentCall(CallGui *callGui);
+
 	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 	// ChatRoomModel *getChatRoomModel() const;
 	// ConferenceModel *getConferenceModel() const;
-	Q_INVOKABLE QStringList getSipAddresses() const;
-	Q_INVOKABLE QVariantList getParticipants() const;
 	bool getShowMe() const;
 
 	// void setChatRoomModel(ChatRoomModel *chatRoomModel);
@@ -58,6 +62,7 @@ public:
 
 	// Q_INVOKABLE void addAddress(const QString &address);
 	Q_INVOKABLE void removeParticipant(ParticipantCore *participant);
+	Q_INVOKABLE void setParticipantAdminStatus(ParticipantCore *participant, bool status);
 	Q_INVOKABLE void setAddresses(ConferenceInfoModel *conferenceInfoModel);
 
 signals:
@@ -68,12 +73,14 @@ signals:
 	void showMeChanged();
 	void addressAdded(QString sipAddress);
 	void addressRemoved(QString sipAddress);
+	void currentCallChanged();
 
 private:
 	// ChatRoomModel *mChatRoomModel = nullptr;
-	// ConferenceModel *mConferenceModel = nullptr;
 	bool mShowMe = true;
-	QSharedPointer<ParticipantList> mList;
+	CallGui *mCurrentCall = nullptr;
+	QSharedPointer<ParticipantList> mParticipants;
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif // PARTICIPANT_PROXY_H_
