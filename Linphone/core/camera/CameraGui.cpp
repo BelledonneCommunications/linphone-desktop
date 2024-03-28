@@ -33,8 +33,8 @@
 
 DEFINE_ABSTRACT_OBJECT(CameraGui)
 
-QMutex CameraGui::mPreviewCounterMutex;
-int CameraGui::mPreviewCounter = 0;
+QMutex CameraGui::gPreviewCounterMutex;
+int CameraGui::gPreviewCounter = 0;
 
 // =============================================================================
 CameraGui::CameraGui(QQuickItem *parent) : QQuickFramebufferObject(parent) {
@@ -51,13 +51,15 @@ CameraGui::CameraGui(QQuickItem *parent) : QQuickFramebufferObject(parent) {
 CameraGui::~CameraGui() {
 	mustBeInMainThread("~" + getClassName());
 	mRefreshTimer.stop();
-	App::postModelSync([this]() { CoreModel::getInstance()->getCore()->enableVideoPreview(false); });
+	mIsDeleting = true;
+	deactivatePreview();
+	setWindowIdLocation(None);
 }
 
 QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
 	auto renderer = createRenderer(false);
 	if (!renderer) {
-		qInfo() << "[Camera] (" << mQmlName << ") Setting Camera to Dummy, " << getSourceLocation();
+		qInfo() << log().arg("(%1) Setting Camera to Dummy, %2").arg(mQmlName).arg(getSourceLocation());
 		QTimer::singleShot(1, this, &CameraGui::isNotReady);
 		renderer = new CameraDummy(); // Used to fill a renderer to avoid pushing a NULL.
 		QTimer::singleShot(1000, this, &CameraGui::requestNewRenderer);
@@ -69,14 +71,13 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 	QQuickFramebufferObject::Renderer *renderer = NULL;
 	// A renderer is mandatory, we cannot wait async.
 	switch (getSourceLocation()) {
-		case CorePreview:
-			App::postModelSync([this, &renderer, resetWindowId]() {
-				qInfo() << "[Camera] (" << mQmlName << ") Setting Camera to Preview";
+		case CorePreview: {
+			auto f = [qmlName = mQmlName, &renderer, resetWindowId]() {
+				qInfo() << "[Camera] (" << qmlName << ") Setting Camera to Preview";
 				auto coreModel = CoreModel::getInstance();
 				if (coreModel) {
 					auto core = coreModel->getCore();
 					if (!core) return;
-					core->enableVideoPreview(true);
 					if (resetWindowId) {
 						renderer = (QQuickFramebufferObject::Renderer *)core->getNativePreviewWindowId();
 						if (renderer) core->setNativePreviewWindowId(NULL);
@@ -85,13 +86,16 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 						if (renderer) core->setNativePreviewWindowId(renderer);
 					}
 				}
-			});
-			break;
-		case Call:
-			App::postModelSync([this, &renderer, resetWindowId]() {
-				auto call = mCallGui->getCore()->getModel()->getMonitor();
+			};
+			if (mIsDeleting) {
+				App::postModelBlock(f);
+			} else App::postModelSync(f);
+		} break;
+		case Call: {
+			auto f = [qmlName = mQmlName, callGui = mCallGui, &renderer, resetWindowId]() {
+				auto call = callGui->getCore()->getModel()->getMonitor();
 				if (call) {
-					qInfo() << "[Camera] (" << mQmlName << ") Setting Camera to CallModel";
+					qInfo() << "[Camera] (" << qmlName << ") Setting Camera to CallModel";
 					if (resetWindowId) {
 						renderer = (QQuickFramebufferObject::Renderer *)call->getNativeVideoWindowId();
 						if (renderer) call->setNativeVideoWindowId(NULL);
@@ -100,21 +104,27 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 						if (renderer) call->setNativeVideoWindowId(renderer);
 					}
 				}
-			});
-			break;
-		case Device:
-			App::postModelSync([this, &renderer, resetWindowId]() {
-				auto device = mParticipantDeviceGui->getCore()->getModel()->getMonitor();
+			};
+			if (mIsDeleting) {
+				App::postModelBlock(f);
+			} else App::postModelSync(f);
+		} break;
+		case Device: {
+			auto f = [qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, &renderer, resetWindowId]() {
+				auto device = participantDeviceGui->getCore()->getModel()->getMonitor();
 				if (device) {
-					qInfo() << "[Camera] (" << mQmlName << ") Setting Camera to ParticipantDeviceModel";
+					qInfo() << "[Camera] (" << qmlName << ") Setting Camera to ParticipantDeviceModel";
 					if (resetWindowId) {
 					} else {
 						renderer = (QQuickFramebufferObject::Renderer *)device->createNativeVideoWindowId();
 						if (renderer) device->setNativeVideoWindowId(renderer);
 					}
 				}
-			});
-			break;
+			};
+			if (mIsDeleting) {
+				App::postModelBlock(f);
+			} else App::postModelSync(f);
+		} break;
 		default: {
 		}
 	}
@@ -169,9 +179,7 @@ bool CameraGui::getIsPreview() const {
 void CameraGui::setIsPreview(bool status) {
 	if (mIsPreview != status) {
 		mIsPreview = status;
-		if (mIsPreview) activatePreview();
-		else deactivatePreview();
-		// updateWindowIdLocation();
+		updateWindowIdLocation();
 		update();
 
 		emit isPreviewChanged(status);
@@ -198,7 +206,7 @@ ParticipantDeviceGui *CameraGui::getParticipantDeviceGui() const {
 void CameraGui::setParticipantDeviceGui(ParticipantDeviceGui *deviceGui) {
 	if (mParticipantDeviceGui != deviceGui) {
 		mParticipantDeviceGui = deviceGui;
-		qDebug() << "Set Device " << mParticipantDeviceGui;
+		qDebug() << log().arg("Set Device %1").arg((quint64)mParticipantDeviceGui);
 		// setIsPreview(mParticipantDeviceGui->getCore()->isLocal());
 		emit participantDeviceGuiChanged(mParticipantDeviceGui);
 		updateWindowIdLocation();
@@ -210,33 +218,37 @@ CameraGui::WindowIdLocation CameraGui::getSourceLocation() const {
 }
 
 void CameraGui::activatePreview() {
-	mPreviewCounterMutex.lock();
-	setWindowIdLocation(WindowIdLocation::CorePreview);
-	if (++mPreviewCounter == 1) {
-		App::postModelSync([this]() {
-			auto coreModel = CoreModel::getInstance();
-			coreModel->getCore()->enableVideoPreview(true);
-		});
+	gPreviewCounterMutex.lock();
+	if (++gPreviewCounter == 1) {
+		auto f = []() { CoreModel::getInstance()->getCore()->enableVideoPreview(true); };
+		if (mIsDeleting) App::postModelBlock(f);
+		else App::postModelSync(f);
 	}
-	mPreviewCounterMutex.unlock();
+	gPreviewCounterMutex.unlock();
 }
 
 void CameraGui::deactivatePreview() {
-	mPreviewCounterMutex.lock();
-	setWindowIdLocation(WindowIdLocation::None);
-	if (--mPreviewCounter == 0) {
-		App::postModelSync([this]() {
-			auto coreModel = CoreModel::getInstance();
-			coreModel->getCore()->enableVideoPreview(false);
-		});
-		mPreviewCounterMutex.unlock();
+	gPreviewCounterMutex.lock();
+	if (getSourceLocation() == CorePreview) {
+		if (--gPreviewCounter == 0) {
+			auto f = []() { CoreModel::getInstance()->getCore()->enableVideoPreview(false); };
+			if (mIsDeleting) App::postModelBlock(f);
+			else App::postModelSync(f);
+		}
 	}
+	gPreviewCounterMutex.unlock();
 }
 void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 	if (mWindowIdLocation != location) {
-		qDebug() << "Update Window Id location from " << mWindowIdLocation << " to " << location;
+		qDebug() << log()
+		                .arg("( %1 ) Update Window Id location from %2 to %3")
+		                .arg(mQmlName)
+		                .arg(mWindowIdLocation)
+		                .arg(location);
+		if (mWindowIdLocation == CorePreview) deactivatePreview();
 		resetWindowId(); // Location change: Reset old window ID.
 		mWindowIdLocation = location;
+		if (mWindowIdLocation == CorePreview) activatePreview();
 		update();
 		//		if (mWindowIdLocation == WindowIdLocation::CorePreview) {
 		//			mLastVideoDefinition =
@@ -247,7 +259,8 @@ void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 }
 void CameraGui::updateWindowIdLocation() {
 	bool useDefaultWindow = true;
-	if (mCallGui) setWindowIdLocation(WindowIdLocation::Call);
+	if (mIsPreview) setWindowIdLocation(WindowIdLocation::CorePreview);
+	else if (mCallGui) setWindowIdLocation(WindowIdLocation::Call);
 	else if (mParticipantDeviceGui && !mParticipantDeviceGui->getCore()->isLocal())
 		setWindowIdLocation(WindowIdLocation::Device);
 	else setWindowIdLocation(WindowIdLocation::CorePreview);

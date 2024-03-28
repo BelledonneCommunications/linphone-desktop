@@ -72,8 +72,8 @@ void CallModel::accept(bool withVideo) {
 			break;
 		}
 	}
-
 	mMonitor->acceptWithParams(params);
+	emit cameraEnabledChanged(withVideo);
 }
 
 void CallModel::decline() {

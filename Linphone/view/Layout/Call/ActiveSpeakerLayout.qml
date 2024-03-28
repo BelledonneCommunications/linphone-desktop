@@ -35,8 +35,7 @@ Item{
 			call: mainItem.call
 			participantDevice: mainItem.conference && mainItem.conference.core.activeSpeaker
 			property var address: participantDevice && participantDevice.core.address
-			onAddressChanged: console.log(address)
-			cameraEnabled: true
+			cameraEnabled: call && call.core.remoteVideoEnabled
 			qmlName: 'AS'
 	
 			Timer {
@@ -83,6 +82,8 @@ Item{
 			visible: allDevices.count > 2
 			spacing: 15 * DefaultStyle.dp
 			model: allDevices
+			snapMode: ListView.SnapOneItem
+			clip: true
 			delegate:
 				Sticker {
 					visible: mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
@@ -109,7 +110,7 @@ Item{
 		anchors.rightMargin: 10 * DefaultStyle.dp
 		anchors.bottomMargin: 10 * DefaultStyle.dp
 		//participantDevice: allDevices.me
-		cameraEnabled: allDevices.count <= 2
+		cameraEnabled: visible && mainItem.call && mainItem.call.core.cameraEnabled
 		previewEnabled: true
 		qmlName: 'P'
 

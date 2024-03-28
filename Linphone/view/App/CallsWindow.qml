@@ -358,7 +358,7 @@ Window {
 				Layout.fillHeight: true
 				Control.StackView {
 					id: middleItemStackView
-					initialItem: waitingRoom
+					initialItem: mainWindow.call ? inCallItem : waitingRoom
 					Layout.fillWidth: true
 					Layout.fillHeight: true
 					Layout.margins: 20 * DefaultStyle.dp
@@ -597,7 +597,7 @@ Window {
 									}
 									onAddParticipantRequested: participantsStack.currentIndex = 1
 								}
-								AddParticipantLayout {
+								AddParticipantsLayout {
 									conferenceInfoGui: mainWindow.conferenceInfo
 								}
 							}

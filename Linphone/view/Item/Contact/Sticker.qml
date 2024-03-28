@@ -81,7 +81,7 @@ Item {
 				onTriggered: {cameraLoader.active=false; cameraLoader.active=true;}
 			}
 			active: mainItem.visible && mainItem.cameraEnabled
-			onActiveChanged: console.log("camera active", active)
+			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active)
 			sourceComponent: cameraComponent
 		}
 		Component{
@@ -94,10 +94,10 @@ Item {
 					id: cameraItem
 					anchors.fill: parent
 					visible: false
+					qmlName: mainItem.qmlName
 					call: mainItem.call
 					participantDevice: mainItem.participantDevice
 					isPreview: mainItem.previewEnabled
-					qmlName: mainItem.qmlName
 					onRequestNewRenderer: {
 						console.log("Request new renderer")
 						resetTimer.restart()

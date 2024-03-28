@@ -13,6 +13,7 @@ import UtilsCpp
 
 Item {
 	id: mainItem
+	property var callObj
 	
 	signal addAccountRequest()
 
@@ -220,7 +221,7 @@ Item {
 												background: Item{}
 												Layout.preferredWidth: 24 * DefaultStyle.dp
 												Layout.preferredHeight: 24 * DefaultStyle.dp
-												property var callObj
+												
 												contentItem: Image {
 													anchors.fill: parent
 													width: 24 * DefaultStyle.dp
@@ -228,7 +229,7 @@ Item {
 													source: AppIcons.phone
 												}
 												onClicked: {
-													callObj = UtilsCpp.createCall(sipAddr.text)
+													mainItem.callObj = UtilsCpp.createCall(sipAddr.text)
 												}
 											}
 											Button {
@@ -241,7 +242,7 @@ Item {
 													height: 24 * DefaultStyle.dp
 													source: AppIcons.videoCamera
 												}
-												onClicked: callObj = UtilsCpp.createCall(sipAddr.text, true)
+												onClicked: mainItem.callObj = UtilsCpp.createCall(sipAddr.text, true)
 											}
 										}
 										Button {

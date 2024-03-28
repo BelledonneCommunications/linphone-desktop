@@ -42,7 +42,7 @@ class CameraGui : public QQuickFramebufferObject, public AbstractObject {
 	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged)
 	// Q_PROPERTY(SoundPlayer * linphonePlayer READ getLinphonePlayer WRITE setLinphonePlayer NOTIFY
 	// linphonePlayerChanged)
-	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged)
+	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged REQUIRED)
 
 	typedef enum { None = -1, CorePreview = 0, Call, Device, Player, Core } WindowIdLocation;
 
@@ -55,8 +55,8 @@ public:
 	Q_INVOKABLE void resetWindowId() const; // const to be used from createRenderer()
 	void checkVideoDefinition();
 
-	static QMutex mPreviewCounterMutex;
-	static int mPreviewCounter;
+	static QMutex gPreviewCounterMutex;
+	static int gPreviewCounter;
 
 	bool getIsReady() const;
 	void setIsReady(bool isReady);
@@ -105,6 +105,7 @@ private:
 
 	WindowIdLocation mWindowIdLocation = None;
 	mutable bool mIsWindowIdSet = false;
+	bool mIsDeleting = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

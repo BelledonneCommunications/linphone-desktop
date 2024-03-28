@@ -7,7 +7,7 @@ import UtilsCpp 1.0
 
 RowLayout {
 	id: mainItem
-	property bool cameraEnabled: true
+	property alias cameraEnabled: preview.cameraEnabled
 	property bool microEnabled: true
 	property bool settingsButtonChecked: settingsButton.checked
 	property ConferenceInfoGui conferenceInfo
@@ -24,6 +24,7 @@ RowLayout {
 				id: preview
 				Layout.preferredHeight: 330 * DefaultStyle.dp
 				Layout.preferredWidth: 558 * DefaultStyle.dp
+				qmlName: "WP"
 				AccountProxy{
 					id: accounts
 				}

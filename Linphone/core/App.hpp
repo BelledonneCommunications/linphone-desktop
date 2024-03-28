@@ -86,6 +86,15 @@ public:
 		}
 	}
 
+	template <typename Func, typename... Args>
+	static auto postModelBlock(Func &&callable, Args &&...args) {
+		if (QThread::currentThread() != CoreModel::getInstance()->thread()) {
+			QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable, args..., Qt::BlockingQueuedConnection);
+		} else {
+			QMetaObject::invokeMethod(CoreModel::getInstance().get(), callable, Qt::DirectConnection);
+		}
+	}
+
 	void clean();
 	void init();
 	void initCppInterfaces();

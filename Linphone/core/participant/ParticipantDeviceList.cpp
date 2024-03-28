@@ -75,7 +75,7 @@ QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::getMe() const {
 void ParticipantDeviceList::setDevices(QList<QSharedPointer<ParticipantDeviceCore>> devices) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	add(devices);
-	qDebug() << "[ParticipantDeviceList] : add " << devices.size() << " devices";
+	qDebug() << log().arg("Add %1 devices").arg(devices.size());
 }
 
 QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::findDeviceByUniqueAddress(const QString &address) {
@@ -93,7 +93,7 @@ QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::findDeviceByUniqueA
 void ParticipantDeviceList::setConferenceModel(const std::shared_ptr<ConferenceModel> &conferenceModel) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	mConferenceModel = conferenceModel;
-	qDebug() << "[ParticipantDeviceList] : set Conference " << mConferenceModel.get();
+	qDebug() << log().arg("Set Conference %1").arg((quint64)mConferenceModel.get());
 	if (mConferenceModelConnection->mCore.lock()) {          // Unsure to get myself
 		auto oldConnect = mConferenceModelConnection->mCore; // Setself rebuild safepointer
 		setSelf(mConferenceModelConnection->mCore.mQData);   // reset connections
