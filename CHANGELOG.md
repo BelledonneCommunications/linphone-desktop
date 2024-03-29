@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - URI handlers when mixing remote provisioning and call.
 - Blinking on resize or Ui updates on screen that have low frame rates.
 - Timezones and Windows fix.
+- Update SDK to 5.3.39.
 
 ## 5.2.2 - 2024-03-11
 
