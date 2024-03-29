@@ -35,7 +35,7 @@ class QQuickWindow;
 class QSystemTrayIcon;
 
 namespace linphone {
-  class Config;
+class Config;
 }
 
 class ColorListModel;
@@ -43,174 +43,175 @@ class DefaultTranslator;
 class ImageListModel;
 class Notifier;
 
-
 class App : public SingleApplication {
-  Q_OBJECT
+	Q_OBJECT
 
-  Q_PROPERTY(QString configLocale READ getConfigLocale WRITE setConfigLocale NOTIFY configLocaleChanged)
-  Q_PROPERTY(QLocale locale READ getLocale CONSTANT)
-  Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT)
-  Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT)
+	Q_PROPERTY(QString configLocale READ getConfigLocale WRITE setConfigLocale NOTIFY configLocaleChanged)
+	Q_PROPERTY(QLocale locale READ getLocale CONSTANT)
+	Q_PROPERTY(QVariantList availableLocales READ getAvailableLocales CONSTANT)
+	Q_PROPERTY(QString qtVersion READ getQtVersion CONSTANT)
 
-  Q_PROPERTY(bool autoStart READ getAutoStart WRITE setAutoStart NOTIFY autoStartChanged)  
+	Q_PROPERTY(bool autoStart READ getAutoStart WRITE setAutoStart NOTIFY autoStartChanged)
 
 public:
-  App (int &argc, char *argv[]);
-  ~App ();
+	App(int &argc, char *argv[]);
+	~App();
 
-  void stop();
-  void initContentApp ();
-  QStringList cleanParserKeys(QCommandLineParser * parser, QStringList keys);// Get all options from parser and remove the selected keys. Return the result that can be passed to parser process.
-  void processArguments(QHash<QString,QString> args);
+	void stop();
+	void initContentApp();
+	QStringList cleanParserKeys(QCommandLineParser *parser,
+								QStringList keys); // Get all options from parser and remove the selected keys. Return
+												   // the result that can be passed to parser process.
+	void processArguments(QHash<QString, QString> args);
 
-  QString getCommandArgument ();
+	QString getCommandArgument();
 
-  QString getFetchConfig (QString filePath, bool * error);
-  QString getFetchConfig (QCommandLineParser *parser);// Return file path of fetch-config
-  void useFetchConfig(const QString& filePath);	// Check if the fetch is auto or not and make gui request if needed.
-  Q_INVOKABLE bool setFetchConfig (QString filePath);	// return true if filepath has been set.
+	QString getFetchConfig(QString filePath, bool *error);
+	QString getFetchConfig(QCommandLineParser *parser); // Return file path of fetch-config
+	void useFetchConfig(const QString &filePath); // Check if the fetch is auto or not and make gui request if needed.
+	Q_INVOKABLE bool setFetchConfig(QString filePath); // return true if filepath has been set.
 
-  #ifdef Q_OS_MACOS
-    bool event (QEvent *event) override;
-  #endif // ifdef Q_OS_MACOS
+#ifdef Q_OS_MACOS
+	bool event(QEvent *event) override;
+#endif // ifdef Q_OS_MACOS
 
-  QQmlApplicationEngine *getEngine () {
-    return mEngine;
-  }
-
-  Notifier *getNotifier () const {
-    return mNotifier;
-  }
-
-  ColorListModel *getColorListModel () const {
-	return mColorListModel;
+	QQmlApplicationEngine *getEngine() {
+		return mEngine;
 	}
-	ImageListModel *getImageListModel () const {
-	return mImageListModel;
+
+	Notifier *getNotifier() const {
+		return mNotifier;
 	}
-	
-  QLocale getLocale () const;
-	
-   //static ColorListModel *getColorListModel () const {
-    //return App::getInstance()-getColorListModel();
-  //}
 
-  QSystemTrayIcon *getSystemTrayIcon () const {
-    return mSystemTrayIcon;
-  }
+	ColorListModel *getColorListModel() const {
+		return mColorListModel;
+	}
+	ImageListModel *getImageListModel() const {
+		return mImageListModel;
+	}
 
-  QQuickWindow *getMainWindow () const;
+	QLocale getLocale() const;
 
-  bool hasFocus () const;
+	// static ColorListModel *getColorListModel () const {
+	// return App::getInstance()-getColorListModel();
+	//}
 
-  bool isOpened () const {
-    return mIsOpened;
-  }
+	QSystemTrayIcon *getSystemTrayIcon() const {
+		return mSystemTrayIcon;
+	}
 
-  static App *getInstance () {
-    return static_cast<App *>(QApplication::instance());
-  }
+	QQuickWindow *getMainWindow() const;
 
-  static constexpr int RestartCode = 1000;
-  static constexpr int DeleteDataCode = 1001;
+	bool hasFocus() const;
 
-  Q_INVOKABLE void restart () {
-    exit(RestartCode);
-  }
+	bool isOpened() const {
+		return mIsOpened;
+	}
 
-  Q_INVOKABLE QQuickWindow *getCallsWindow () const;
-  Q_INVOKABLE QQuickWindow *getSettingsWindow () const;
+	static App *getInstance() {
+		return static_cast<App *>(QApplication::instance());
+	}
 
-  Q_INVOKABLE static void smartShowWindow (QQuickWindow *window);
-  bool mCheckForUpdateUserInitiated;
-  Q_INVOKABLE static void checkForUpdates(bool force = false);
+	static constexpr int RestartCode = 1000;
+	static constexpr int DeleteDataCode = 1001;
 
-// Check module availability when no dependencies are needed (else use SettingsModel)
-  Q_INVOKABLE static bool isPdfAvailable();
-  Q_INVOKABLE static bool isLinux();
-  bool autoStartEnabled();
+	Q_INVOKABLE void restart() {
+		exit(RestartCode);
+	}
+
+	Q_INVOKABLE QQuickWindow *getCallsWindow() const;
+	Q_INVOKABLE QQuickWindow *getSettingsWindow() const;
+
+	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);
+	bool mCheckForUpdateUserInitiated;
+	Q_INVOKABLE static void checkForUpdates(bool force = false);
+
+	// Check module availability when no dependencies are needed (else use SettingsModel)
+	Q_INVOKABLE static bool isPdfAvailable();
+	Q_INVOKABLE static bool isLinux();
+	bool autoStartEnabled();
 #ifdef Q_OS_LINUX
-  Q_INVOKABLE void exportDesktopFile();
-  
-  QString getApplicationPath() const;
-  bool generateDesktopFile(const QString& confPath, bool remove, bool openInBackground);
+	Q_INVOKABLE void exportDesktopFile();
+
+	QString getApplicationPath() const;
+	bool generateDesktopFile(const QString &confPath, bool remove, bool openInBackground);
 #endif
-  
+
 public slots:
-  void stateChanged(Qt::ApplicationState);
+	void stateChanged(Qt::ApplicationState);
 
 signals:
-  void configLocaleChanged (const QString &locale);
+	void configLocaleChanged(const QString &locale);
 
-  void autoStartChanged (bool enabled);
+	void autoStartChanged(bool enabled);
 
-  void opened (bool status);
-  void requestFetchConfig(QString filePath);
-  
+	void opened(bool status);
+	void requestFetchConfig(QString filePath);
+
 private:
-  void createParser ();
+	void createParser();
 
-  void registerTypes ();
-  void registerSharedTypes ();
-  void registerToolTypes ();
-  void registerSharedToolTypes ();
-  void registerUninstalledModules ();
+	void registerTypes();
+	void registerSharedTypes();
+	void registerToolTypes();
+	void registerSharedToolTypes();
+	void registerUninstalledModules();
 
-  void setTrayIcon ();
-  void createNotifier ();
+	void setTrayIcon();
+	void createNotifier();
 
-  void initLocale (const std::shared_ptr<linphone::Config> &config);
+	void initLocale(const std::shared_ptr<linphone::Config> &config);
 
-  QString getConfigLocale () const;
-  void setConfigLocale (const QString &locale);
+	QString getConfigLocale() const;
+	void setConfigLocale(const QString &locale);
 
-  QVariantList getAvailableLocales () const {
-    return mAvailableLocales;
-  }
+	QVariantList getAvailableLocales() const {
+		return mAvailableLocales;
+	}
 
-  bool getAutoStart () const {
-    return mAutoStart;
-  }
+	bool getAutoStart() const {
+		return mAutoStart;
+	}
 
-  void setAutoStart (bool enabled);
+	void setAutoStart(bool enabled);
 
-  void openAppAfterInit (bool mustBeIconified = false);
+	void openAppAfterInit(bool mustBeIconified = false);
 
-  void setOpened (bool status) {
-    if (mIsOpened != status) {
-      mIsOpened = status;
-      emit opened(mIsOpened);
-    }
-  }
-  static QString getStrippedApplicationVersion();// x.y.z but if 'z-*' then x.y.z-1
-  static void checkForUpdate ();
+	void setOpened(bool status) {
+		if (mIsOpened != status) {
+			mIsOpened = status;
+			emit opened(mIsOpened);
+		}
+	}
+	static QString getStrippedApplicationVersion(); // x.y.z but if 'z-*' then x.y.z-1
+	static void checkForUpdate();
 
-  static QString getQtVersion () {
-    return qVersion();
-  }
+	static QString getQtVersion() {
+		return qVersion();
+	}
 
-  QVariantList mAvailableLocales;
-  QLocale mLocale;
+	QVariantList mAvailableLocales;
+	QLocale mLocale;
 
-  bool mAutoStart = false;
+	bool mAutoStart = false;
 
-  QCommandLineParser *mParser = nullptr;
+	QCommandLineParser *mParser = nullptr;
 
-  QQmlApplicationEngine *mEngine = nullptr;
+	QQmlApplicationEngine *mEngine = nullptr;
 
-  DefaultTranslator *mTranslator = nullptr;
-  DefaultTranslator *mDefaultTranslator = nullptr;
-  Notifier *mNotifier = nullptr;
+	DefaultTranslator *mTranslator = nullptr;
+	DefaultTranslator *mDefaultTranslator = nullptr;
+	Notifier *mNotifier = nullptr;
 
-  QQuickWindow *mCallsWindow = nullptr;
-  QQuickWindow *mSettingsWindow = nullptr;
+	QQuickWindow *mCallsWindow = nullptr;
+	QQuickWindow *mSettingsWindow = nullptr;
 
-  ColorListModel * mColorListModel;
-  ImageListModel * mImageListModel;
+	ColorListModel *mColorListModel;
+	ImageListModel *mImageListModel;
 
-  QSystemTrayIcon *mSystemTrayIcon = nullptr;
+	QSystemTrayIcon *mSystemTrayIcon = nullptr;
 
-  bool mIsOpened = false;
+	bool mIsOpened = false;
 };
 
 #endif // APP_H_
