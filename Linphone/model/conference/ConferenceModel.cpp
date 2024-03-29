@@ -52,16 +52,20 @@ void ConferenceModel::setPaused(bool paused) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 }
 
-void ConferenceModel::removeParticipant(std::shared_ptr<linphone::Participant> p) {
+void ConferenceModel::removeParticipant(const std::shared_ptr<linphone::Participant> &p) {
 	mMonitor->removeParticipant(p);
 }
 
-void ConferenceModel::removeParticipant(std::shared_ptr<linphone::Address> address) {
+void ConferenceModel::removeParticipant(const std::shared_ptr<linphone::Address> &address) {
 	for (auto &p : mMonitor->getParticipantList()) {
 		if (address->asStringUriOnly() == p->getAddress()->asStringUriOnly()) {
 			mMonitor->removeParticipant(p);
 		}
 	}
+}
+
+void ConferenceModel::addParticipant(const std::shared_ptr<linphone::Address> &address) {
+	mMonitor->addParticipant(address);
 }
 
 void ConferenceModel::setMicrophoneMuted(bool isMuted) {

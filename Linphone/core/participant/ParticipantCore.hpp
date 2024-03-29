@@ -95,7 +95,7 @@ signals:
 	void creationTimeChanged();
 	void displayNameChanged();
 
-	void lStartInvitation(const int &secs);
+	void lStartInvitation(const int &secs = 30);
 	void lSetIsAdmin(bool status);
 
 	void invitationTimeout(ParticipantCore *model);

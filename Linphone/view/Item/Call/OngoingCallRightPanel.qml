@@ -5,7 +5,19 @@ import Linphone
 
 Control.Page {
 	id: mainItem
-	property alias headerContent: header.children
+	property alias headerStack: headerStack
+	property alias contentStackView: contentStackView
+	property bool closeButtonVisible: true
+	clip: true
+
+	property string headerTitleText
+	property string headerSubtitleText
+	property string headerValidateButtonText
+	signal returnRequested()
+	signal validateRequested()
+
+	topPadding: 16 * DefaultStyle.dp
+	leftPadding: 16 * DefaultStyle.dp
 
 	background: Rectangle {
 		width: mainItem.width
@@ -32,24 +44,93 @@ Control.Page {
 				width: pageHeader.width
 			}
 		}
-		contentItem: RowLayout {
-			Item {
-				id: header
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-			}
-			Button {
-				id: closeButton
-				background: Item {
-					visible: false
+		contentItem: StackLayout {
+			id: headerStack
+			RowLayout {
+				Layout.alignment: Qt.AlignVCenter
+				Text {
+					text: mainItem.headerTitleText
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					Layout.alignment: Qt.AlignVCenter
+					verticalAlignment: Text.AlignVCenter
+					color: mainWindow.conference ? DefaultStyle.main1_500_main : DefaultStyle.main2_700
+					font {
+						pixelSize: 16 * DefaultStyle.dp
+						weight: 800 * DefaultStyle.dp
+					}
 				}
-				icon.source: AppIcons.closeX
-				Layout.preferredWidth: 24 * DefaultStyle.dp
-				Layout.preferredHeight: 24 * DefaultStyle.dp
-				icon.width: 24 * DefaultStyle.dp
-				icon.height: 24 * DefaultStyle.dp
-				onClicked: mainItem.visible = false
+				Button {
+					id: closeButton
+					visible: mainItem.closeButtonVisible
+					background: Item {
+						visible: false
+					}
+					icon.source: AppIcons.closeX
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					onClicked: mainItem.visible = false
+				}
+			}
+			RowLayout {
+				Layout.alignment: Qt.AlignVCenter
+				spacing: 5 * DefaultStyle.dp
+				Button {
+					background: Item{}
+					icon.source: AppIcons.leftArrow
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					contentImageColor: DefaultStyle.main1_500_main
+					onClicked: mainItem.returnRequested()
+				}
+				ColumnLayout {
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					Text {
+					Layout.alignment: Qt.AlignVCenter
+					verticalAlignment: Text.AlignVCenter
+
+						text: mainItem.headerTitleText
+						color: DefaultStyle.main1_500_main
+						font {
+							pixelSize: 16 * DefaultStyle.dp
+							weight: 800 * DefaultStyle.dp
+						}
+					}
+					Text {
+					Layout.alignment: Qt.AlignVCenter
+					verticalAlignment: Text.AlignVCenter
+
+						text: mainItem.headerSubtitleText
+						color: DefaultStyle.main2_500main
+						font {
+							pixelSize: 12 * DefaultStyle.dp
+							weight: 300 * DefaultStyle.dp
+						}
+					}
+				}
+				Item {
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+				}
+				Button {
+					text: mainItem.headerValidateButtonText
+					textSize: 13 * DefaultStyle.dp
+					textWeight: 600 * DefaultStyle.dp
+					onClicked: mainItem.validateRequested()
+					topPadding: 6 * DefaultStyle.dp
+					bottomPadding: 6 * DefaultStyle.dp
+					leftPadding: 12 * DefaultStyle.dp
+					rightPadding: 12 * DefaultStyle.dp
+				}
 			}
 		}
+	}
+	contentItem: Control.StackView {
+		id: contentStackView
+		// width: parent.width
+		// height: parent.height
 	}
 }

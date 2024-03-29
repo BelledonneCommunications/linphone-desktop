@@ -32,10 +32,16 @@ Window {
 	property var callObj
 
 	function joinConference(withVideo) {
-		if (!conferenceInfo || conferenceInfo.core.uri.length === 0) UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence n'a pas pu démarrer en raison d'une erreur d'uri."))
+		if (!conferenceInfo || conferenceInfo.core.uri.length === 0) UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence n'a pas pu démarrer en raison d'une erreur d'uri."), mainWindow)
 		else {
 			callObj = UtilsCpp.createCall(conferenceInfo.core.uri, withVideo)
 		}
+	}
+	function showInformationPopup(title, description, isSuccess) {
+		var infoPopup = popupComp.createObject(popupLayout, {"title": title, "description": description, "isSuccess": isSuccess})
+		infoPopup.index = popupLayout.popupList.length
+		popupLayout.popupList.push(infoPopup)
+		infoPopup.open()
 	}
 
 	Connections {
@@ -372,238 +378,271 @@ Window {
 					Layout.rightMargin: 10 * DefaultStyle.dp
 					visible: false
 					function replace(id) {
-						rightPanelStack.replace(id, Control.StackView.Immediate)
+						contentStackView.replace(id, Control.StackView.Immediate)
 					}
-					headerContent: Text {
-						id: rightPanelTitle
-						anchors.verticalCenter: parent.verticalCenter
-						width: rightPanel.width
-						color: mainWindow.conference ? DefaultStyle.main1_500_main : DefaultStyle.main2_700
-						// text: qsTr("Transfert d'appel")
-						font {
-							pixelSize: 16 * DefaultStyle.dp
-							weight: 800 * DefaultStyle.dp
+					headerStack.currentIndex: 0
+					contentStackView.initialItem: callsListPanel
+					headerValidateButtonText: qsTr("Ajouter")
+				}
+				Component {
+					id: contactsListPanel
+					CallContactsLists {
+						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transfert d'appel")
+						sideMargin: 10 * DefaultStyle.dp
+						topMargin: 15 * DefaultStyle.dp
+						groupCallVisible: false
+						searchBarColor: DefaultStyle.grey_0
+						searchBarBorderColor: DefaultStyle.grey_200
+						onCallButtonPressed: (address) => {
+							mainWindow.call.core.lTransferCall(address)
 						}
 					}
-					Control.StackView {
-						id: rightPanelStack
-						width: parent.width
-						height: parent.height
-						initialItem: callsListPanel
-						Component {
-							id: contactsListPanel
-							CallContactsLists {
-								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Transfert d'appel")
-								sideMargin: 10 * DefaultStyle.dp
-								topMargin: 15 * DefaultStyle.dp
-								groupCallVisible: false
-								searchBarColor: DefaultStyle.grey_0
-								searchBarBorderColor: DefaultStyle.grey_200
-								onCallButtonPressed: (address) => {
-									mainWindow.call.core.lTransferCall(address)
-								}
-							}
+				}
+				Component {
+					id: dialerPanel
+					ColumnLayout {
+						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
+						Item {
+							Layout.fillWidth: true
+							Layout.fillHeight: true
 						}
-						Component {
-							id: dialerPanel
-							ColumnLayout {
-								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Dialer")
-								Item {
-									Layout.fillWidth: true
-									Layout.fillHeight: true
-								}
-								SearchBar {
-									id: dialerTextInput
-									Layout.fillWidth: true
-									Layout.leftMargin: 10 * DefaultStyle.dp
-									Layout.rightMargin: 10 * DefaultStyle.dp
-									magnifierVisible: false
-									color: DefaultStyle.grey_0
-									borderColor: DefaultStyle.grey_200
-									placeholderText: ""
-									numericPad: numPad
-									numericPadButton.visible: false
-								}
-								Item {
-									Layout.fillWidth: true
-									Layout.preferredHeight: numPad.height
-									Layout.topMargin: 10 * DefaultStyle.dp
-									property var callObj
-									NumericPad {
-										id: numPad
-										width: parent.width
-										visible: parent.visible
-										closeButtonVisible: false
-										onLaunchCall: {
-											callObj = UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
-										}
-									}
-								}
-							}
+						SearchBar {
+							id: dialerTextInput
+							Layout.fillWidth: true
+							Layout.leftMargin: 10 * DefaultStyle.dp
+							Layout.rightMargin: 10 * DefaultStyle.dp
+							magnifierVisible: false
+							color: DefaultStyle.grey_0
+							borderColor: DefaultStyle.grey_200
+							placeholderText: ""
+							numericPad: numPad
+							numericPadButton.visible: false
 						}
-						Component {
-							id: callsListPanel
-							ColumnLayout {
-								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Liste d'appel")
-								RoundedBackgroundControl {
-									Layout.fillWidth: true
-									// height: Math.min(callList.height + topPadding + bottomPadding, rightPanelStack.height)
-									Layout.preferredHeight: Math.min(callList.height + topPadding + bottomPadding, rightPanelStack.height)
-
-									topPadding: 15 * DefaultStyle.dp
-									bottomPadding: 15 * DefaultStyle.dp
-									leftPadding: 15 * DefaultStyle.dp
-									rightPadding: 15 * DefaultStyle.dp
-									backgroundColor: DefaultStyle.main2_0
-									
-									contentItem: ListView {
-										id: callList
-										model: callsModel
-										height: Math.min(contentHeight, rightPanelStack.height)
-										spacing: 15 * DefaultStyle.dp
-
-										onCountChanged: forceLayout()
-
-										delegate: Item {
-											id: callDelegate
-											width: callList.width
-											height: 45 * DefaultStyle.dp
-
-											RowLayout {
-												id: delegateContent
-												anchors.fill: parent
-												anchors.leftMargin: 10 * DefaultStyle.dp
-												anchors.rightMargin: 10 * DefaultStyle.dp
-												Avatar {
-													id: delegateAvatar
-													address: modelData.core.peerAddress
-													Layout.preferredWidth: 45 * DefaultStyle.dp
-													Layout.preferredHeight: 45 * DefaultStyle.dp
-												}
-												Text {
-													id: delegateName
-													property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
-													text: remoteAddress ? remoteAddress.value : ""
-													Connections {
-														target: modelData.core
-													}
-												}
-												Item {
-													Layout.fillHeight: true
-													Layout.fillWidth: true
-												}
-												Text {
-													id: callStateText
-													text: modelData.core.state === LinphoneEnums.CallState.Paused 
-													|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-														? qsTr("Appel en pause") : qsTr("Appel en cours")
-												}
-												PopupButton {
-													id: listCallOptionsButton
-													Layout.preferredWidth: 24 * DefaultStyle.dp
-													Layout.preferredHeight: 24 * DefaultStyle.dp
-													Layout.alignment: Qt.AlignRight
-
-													popup.contentItem: ColumnLayout {
-														spacing: 0
-														Control.Button {
-															background: Item {}
-															contentItem: RowLayout {
-																Image {
-																	source: modelData.core.state === LinphoneEnums.CallState.Paused 
-																	|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-																	? AppIcons.phone : AppIcons.pause
-																	sourceSize.width: 32 * DefaultStyle.dp
-																	sourceSize.height: 32 * DefaultStyle.dp
-																	Layout.preferredWidth: 32 * DefaultStyle.dp
-																	Layout.preferredHeight: 32 * DefaultStyle.dp
-																	fillMode: Image.PreserveAspectFit
-																}
-																Text {
-																	text: modelData.core.state === LinphoneEnums.CallState.Paused 
-																	|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
-																	? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
-																	color: DefaultStyle.main2_500main
-																	Layout.preferredWidth: metrics.width
-																}
-																TextMetrics {
-																	id: metrics
-																	text: qsTr("Reprendre l'appel")
-																}
-																Item {
-																	Layout.fillWidth: true
-																}
-															}
-															onClicked: modelData.core.lSetPaused(!modelData.core.paused)
-														}
-														Control.Button {
-															background: Item {}
-															contentItem: RowLayout {
-																EffectImage {
-																	imageSource: AppIcons.endCall
-																	colorizationColor: DefaultStyle.danger_500main
-																	width: 32 * DefaultStyle.dp
-																	height: 32 * DefaultStyle.dp
-																}
-																Text {
-																	color: DefaultStyle.danger_500main
-																	text: qsTr("Terminer l'appel")
-																}
-																Item {
-																	Layout.fillWidth: true
-																}
-															}
-															onClicked: mainWindow.endCall(modelData)
-														}
-													}
-												}
-											}
-												
-											// MouseArea{
-											// 	anchors.fill: delegateLayout
-											// 	onClicked: {
-											// 		callsModel.currentCall = modelData
-											// 	}
-											// }
-										}
-									}
-								}
-								Item {
-									Layout.fillHeight: true
-								}
-							}
-						}
-						Component {
-							id: settingsPanel
-							InCallSettingsPanel {
-								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Paramètres")
-								call: mainWindow.call
-							}
-						}
-						Component {
-							id: participantListPanel
-							StackLayout {
-								id: participantsStack
-								currentIndex: 0
-								Control.StackView.onActivated: rightPanelTitle.text = qsTr("Participants (%1)").arg(count)
-								onCurrentIndexChanged: {
-									if (index === 0) rightPanelTitle.text = qsTr("Participants (%1)").arg(count)
-									else rightPanelTitle.text = qsTr("Ajouter des participants")
-								}
-								ParticipantList {
-									call: mainWindow.call
-									onCountChanged: if (Control.StackView.status === Control.StackView.Active) {
-										rightPanelTitle.text = qsTr("Participants (%1)").arg(count)
-									}
-									onAddParticipantRequested: participantsStack.currentIndex = 1
-								}
-								AddParticipantsLayout {
-									conferenceInfoGui: mainWindow.conferenceInfo
+						Item {
+							Layout.fillWidth: true
+							Layout.preferredHeight: numPad.height
+							Layout.topMargin: 10 * DefaultStyle.dp
+							property var callObj
+							NumericPad {
+								id: numPad
+								width: parent.width
+								visible: parent.visible
+								closeButtonVisible: false
+								onLaunchCall: {
+									callObj = UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
 								}
 							}
 						}
 					}
 				}
+				Component {
+					id: callsListPanel
+					ColumnLayout {
+						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Liste d'appel")
+						RoundedBackgroundControl {
+							Layout.fillWidth: true
+							Layout.preferredHeight:  Math.min(callList.implicitHeight + topPadding + bottomPadding, rightPanel.height)
+
+							topPadding: 15 * DefaultStyle.dp
+							bottomPadding: 15 * DefaultStyle.dp
+							leftPadding: 15 * DefaultStyle.dp
+							rightPadding: 15 * DefaultStyle.dp
+							backgroundColor: mainWindow.conference ? DefaultStyle.grey_0 : DefaultStyle.main2_0
+							
+							contentItem: ListView {
+								id: callList
+								model: callsModel
+								implicitHeight: contentHeight// Math.min(contentHeight, rightPanel.height)
+								spacing: 15 * DefaultStyle.dp
+								clip: true
+								onCountChanged: forceLayout()
+
+								delegate: Item {
+									id: callDelegate
+									width: callList.width
+									height: 45 * DefaultStyle.dp
+
+									RowLayout {
+										id: delegateContent
+										anchors.fill: parent
+										anchors.leftMargin: 10 * DefaultStyle.dp
+										anchors.rightMargin: 10 * DefaultStyle.dp
+										Avatar {
+											id: delegateAvatar
+											address: modelData.core.peerAddress
+											Layout.preferredWidth: 45 * DefaultStyle.dp
+											Layout.preferredHeight: 45 * DefaultStyle.dp
+										}
+										Text {
+											id: delegateName
+											property var remoteAddress: UtilsCpp.getDisplayName(modelData.core.peerAddress)
+											text: remoteAddress ? remoteAddress.value : ""
+											Connections {
+												target: modelData.core
+											}
+										}
+										Item {
+											Layout.fillHeight: true
+											Layout.fillWidth: true
+										}
+										Text {
+											id: callStateText
+											text: modelData.core.state === LinphoneEnums.CallState.Paused 
+											|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+												? qsTr("Appel en pause") : qsTr("Appel en cours")
+										}
+										PopupButton {
+											id: listCallOptionsButton
+											Layout.preferredWidth: 24 * DefaultStyle.dp
+											Layout.preferredHeight: 24 * DefaultStyle.dp
+											Layout.alignment: Qt.AlignRight
+
+											popup.contentItem: ColumnLayout {
+												spacing: 0
+												Control.Button {
+													background: Item {}
+													contentItem: RowLayout {
+														Image {
+															source: modelData.core.state === LinphoneEnums.CallState.Paused 
+															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+															? AppIcons.phone : AppIcons.pause
+															sourceSize.width: 32 * DefaultStyle.dp
+															sourceSize.height: 32 * DefaultStyle.dp
+															Layout.preferredWidth: 32 * DefaultStyle.dp
+															Layout.preferredHeight: 32 * DefaultStyle.dp
+															fillMode: Image.PreserveAspectFit
+														}
+														Text {
+															text: modelData.core.state === LinphoneEnums.CallState.Paused 
+															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
+															? qsTr("Reprendre l'appel") : qsTr("Mettre en pause")
+															color: DefaultStyle.main2_500main
+															Layout.preferredWidth: metrics.width
+														}
+														TextMetrics {
+															id: metrics
+															text: qsTr("Reprendre l'appel")
+														}
+														Item {
+															Layout.fillWidth: true
+														}
+													}
+													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
+												}
+												Control.Button {
+													background: Item {}
+													contentItem: RowLayout {
+														EffectImage {
+															imageSource: AppIcons.endCall
+															colorizationColor: DefaultStyle.danger_500main
+															width: 32 * DefaultStyle.dp
+															height: 32 * DefaultStyle.dp
+														}
+														Text {
+															color: DefaultStyle.danger_500main
+															text: qsTr("Terminer l'appel")
+														}
+														Item {
+															Layout.fillWidth: true
+														}
+													}
+													onClicked: mainWindow.endCall(modelData)
+												}
+											}
+										}
+									}
+										
+									// MouseArea{
+									// 	anchors.fill: delegateLayout
+									// 	onClicked: {
+									// 		callsModel.currentCall = modelData
+									// 	}
+									// }
+								}
+							}
+						}
+						Item {
+							Layout.fillHeight: true
+						}
+					}
+				}
+				Component {
+					id: settingsPanel
+					InCallSettingsPanel {
+						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Paramètres")
+						call: mainWindow.call
+					}
+				}
+				Component {
+					id: participantListPanel
+					Control.StackView {
+						id: participantsStack
+						initialItem: participantListComp
+						// Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Participants (%1)").arg(participantList.count)
+						onCurrentItemChanged: rightPanel.headerStack.currentIndex = currentItem.Control.StackView.index
+						property list<string> selectedParticipants
+						signal participantAdded()
+
+						Connections {
+							target: rightPanel
+							onReturnRequested: participantsStack.pop()
+						}
+
+						Component {
+							id: participantListComp
+							ParticipantList {
+								id: participantList
+								call: mainWindow.call
+								onAddParticipantRequested: participantsStack.push(addParticipantComp)
+								onCountChanged: if (participantsStack.Control.StackView.status === Control.StackView.Active && participantsStack.currentItem == participantList) {
+									rightPanel.headerTitleText = qsTr("Participants (%1)").arg(count)
+								}
+								Connections {
+									target: participantsStack
+									onCurrentItemChanged: {
+										console.log("changing title", participantsStack.currentItem == participantList)
+										if (participantsStack.currentItem == participantList) rightPanel.headerTitleText = qsTr("Participants (%1)").arg(participantList.count)
+									}
+								}
+								Connections {
+									target: rightPanel
+									// TODO : chercher comment relier ces infos pour faire le add des participants
+									onValidateRequested: {
+										participantList.model.addAddresses(participantsStack.selectedParticipants)
+										participantsStack.pop()
+										participantsStack.participantAdded()
+									}
+								}
+							}
+						}
+						Component {
+							id: addParticipantComp
+							AddParticipantsLayout {
+								id: addParticipantLayout
+								titleLayout.visible: false
+								onSelectedParticipantsCountChanged: {
+									if (participantsStack.Control.StackView.status === Control.StackView.Active && Control.StackView.visible) {
+										rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné").arg(selectedParticipants.length).arg(selectedParticipants.length > 1 ? "s" : "")
+									}
+									participantsStack.selectedParticipants = selectedParticipants
+								}
+								Connections {
+									target: participantsStack
+									onCurrentItemChanged: {
+										if (participantsStack.currentItem == addParticipantLayout) {
+											rightPanel.headerTitleText = qsTr("Ajouter des participants")
+											rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné").arg(addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
+										}
+									}
+									onParticipantAdded: {
+										addParticipantLayout.clearSelectedParticipants()
+									}
+								}
+							}
+						}
+					}
+				}
+				
 			}
 			Component {
 				id: waitingRoom
@@ -805,6 +844,7 @@ Window {
 						onCheckedChanged: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
 					}
 					CheckableButton {
+						visible: mainWindow.conference
 						iconUrl: AppIcons.usersTwo
 						checked: mainWindow.call && mainWindow.call.core.microphoneMuted
 						checkedColor: DefaultStyle.main2_400
@@ -830,7 +870,7 @@ Window {
 						icon.source: AppIcons.more
 						background: Rectangle {
 							anchors.fill: moreOptionsButton
-							color: moreOptionsButton.enabled 
+							color: moreOptionsButton.enabled
 								? moreOptionsButton.checked 
 									? DefaultStyle.grey_0 
 									: DefaultStyle.grey_500
@@ -838,7 +878,13 @@ Window {
 							radius: 40 * DefaultStyle.dp
 						}
 						popup.x: width/2
-						popup.y: y - popup.height + height/4
+						Connections {
+							target: moreOptionsButton.popup
+							onOpened: {
+								console.log("y", moreOptionsButton.y, moreOptionsButton.popup.y, moreOptionsButton.popup.height)
+								moreOptionsButton.popup.y = - moreOptionsButton.popup.height + moreOptionsButton.height/4
+							}
+						}
 						popup.contentItem: ColumnLayout {
 							id: optionsList
 							spacing: 10 * DefaultStyle.dp

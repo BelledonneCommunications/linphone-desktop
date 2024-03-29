@@ -245,6 +245,45 @@ void ParticipantList::remove(ParticipantCore *participant) {
 	}
 }
 
+void ParticipantList::addAddress(const QString &address) {
+
+	if (!contains(address)) {
+		QSharedPointer<ParticipantCore> participant = QSharedPointer<ParticipantCore>::create(nullptr);
+		connect(participant.get(), &ParticipantCore::invitationTimeout, this, &ParticipantList::remove);
+		participant->setSipAddress(address);
+		add(participant);
+		// if (mChatRoomModel && mChatRoomModel->getChatRoom()) { // Invite and wait for its creation
+		// participant->startInvitation();
+		// mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
+		// }
+		if (mConferenceModel) {
+			std::list<std::shared_ptr<linphone::Call>> runningCallsToAdd;
+			mConferenceModelConnection->invokeToModel([this, address] {
+				auto addressToInvite = ToolModel::interpretUrl(address);
+				auto currentCalls = CoreModel::getInstance()->getCore()->getCalls();
+				auto haveCall = std::find_if(currentCalls.begin(), currentCalls.end(),
+				                             [addressToInvite](const std::shared_ptr<linphone::Call> &call) {
+					                             return call->getRemoteAddress()->weakEqual(addressToInvite);
+				                             });
+				if (haveCall == currentCalls.end()) mConferenceModel->addParticipant(addressToInvite);
+			});
+			// else {
+			// 	runningCallsToAdd.push_back(*haveCall);
+			// 	mConferenceModel->addParticipants(runningCallsToAdd);
+			// }
+			/*
+			    std::list<std::shared_ptr<linphone::Address>> addressesToInvite;
+			    addressesToInvite.push_back(addressToInvite);
+			    auto callParameters =
+			   CoreManager::getInstance()->getCore()->createCallParams(mConferenceModel->getConference()->getCall());
+			    mConferenceModel->getConference()->inviteParticipants(addressesToInvite, callParameters);*/
+		}
+		emit participant->lStartInvitation();
+		emit countChanged();
+		// emit addressAdded(address);
+	}
+}
+
 // const QSharedPointer<ParticipantCore>
 // ParticipantList::getParticipant(const std::shared_ptr<const linphone::Address> &address) const {
 // 	if (address) {
@@ -271,7 +310,8 @@ void ParticipantList::remove(ParticipantCore *participant) {
 
 //-------------------------------------------------------------
 
-// void ParticipantList::setAdminStatus(const std::shared_ptr<linphone::Participant> participant, const bool &isAdmin) {
+// void ParticipantList::setAdminStatus(const std::shared_ptr<linphone::Participant> participant, const bool
+// &isAdmin) {
 // 	// if (mChatRoomModel) mChatRoomModel->getChatRoom()->setParticipantAdminStatus(participant, isAdmin);
 // 	// if (mConferenceModel) mConferenceModel->getConference()->setParticipantAdminStatus(participant, isAdmin);
 // }
@@ -324,8 +364,8 @@ void ParticipantList::remove(ParticipantCore *participant) {
 // 	// if (participant) remove(participant.get());
 // }
 
-// void ParticipantList::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::EventLog> &eventLog) {
-// 	onParticipantAdminStatusChanged(eventLog->getParticipantAddress());
+// void ParticipantList::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::EventLog> &eventLog)
+// { 	onParticipantAdminStatusChanged(eventLog->getParticipantAddress());
 // }
 // void ParticipantList::onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant>
 // &participant) {

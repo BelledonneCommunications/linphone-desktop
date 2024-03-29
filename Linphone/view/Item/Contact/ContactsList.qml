@@ -6,7 +6,6 @@ import UtilsCpp 1.0
 
 ListView {
 	id: mainItem
-	Layout.preferredHeight: contentHeight
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
@@ -18,7 +17,7 @@ ListView {
 	// dots popup menu
 	property bool contactMenuVisible: true
 	// call, video call etc menu
-	property bool actionMenuVisible: true
+	property bool actionLayoutVisible: false
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
 	property bool showOnlyFavourites: false
@@ -35,7 +34,6 @@ ListView {
 			}
 		}
 	}
-	property int delegateLeftMargin: 0
 	currentIndex: -1
 
 	property FriendGui selectedContact: model.getAt(currentIndex) || null
@@ -88,7 +86,7 @@ ListView {
 		RowLayout {
 			id: contactDelegate
 			anchors.left: initial.visible ? initial.right : parent.left
-			anchors.leftMargin: 10 * DefaultStyle.dp + mainItem.delegateLeftMargin
+			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.right: parent.right
 			anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
@@ -125,14 +123,14 @@ ListView {
 		RowLayout {
 			id: actionsRow
 			z: 1
-			visible: mainItem.actionMenuVisible || friendPopup.visible
+			// visible: mainItem.actionLayoutVisible || friendPopup.visible
 			// anchors.fill: parent
 			anchors.right: parent.right
 			anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			RowLayout{
 				property var callObj
-				visible: mainItem.actionMenuVisible
+				visible: mainItem.actionLayoutVisible
 				spacing: 10 * DefaultStyle.dp
 				Button {
 					Layout.preferredWidth: 24 * DefaultStyle.dp

@@ -178,7 +178,7 @@ Item {
 								rightMargin: 15 * DefaultStyle.dp
 								initialHeadersVisible: false
 								contactMenuVisible: false
-								actionMenuVisible: true
+								actionLayoutVisible: true
 								model: MagicSearchProxy {
 									searchText: magicSearchBar.text.length === 0 ? "*" : magicSearchBar.text
 									aggregationFlag: LinphoneEnums.MagicSearchAggregation.Friend

@@ -51,8 +51,9 @@ public:
 
 	void setPaused(bool paused);
 
-	void removeParticipant(std::shared_ptr<linphone::Participant> p);
-	void removeParticipant(std::shared_ptr<linphone::Address> address);
+	void removeParticipant(const std::shared_ptr<linphone::Participant> &p);
+	void removeParticipant(const std::shared_ptr<linphone::Address> &address);
+	void addParticipant(const std::shared_ptr<linphone::Address> &address);
 
 signals:
 	void microphoneMutedChanged(bool isMuted);

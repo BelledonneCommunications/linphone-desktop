@@ -51,6 +51,8 @@ public:
 	// getParticipant(const std::shared_ptr<const linphone::Participant> &participant) const;
 
 	Q_INVOKABLE void remove(ParticipantCore *participant);
+	void addAddress(const QString &address);
+
 	std::list<std::shared_ptr<linphone::Address>> getParticipants() const;
 
 	bool contains(const QString &address) const;
@@ -77,8 +79,8 @@ public:
 	// 	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::EventLog> &eventLog);
 	// 	void
 	// 	onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<const linphone::Address>
-	// &participantAddress); 	void onParticipantRegistrationUnsubscriptionRequested( 	    const std::shared_ptr<const
-	// linphone::Address> &participantAddress); 	void onStateChanged();
+	// &participantAddress); 	void onParticipantRegistrationUnsubscriptionRequested( 	    const
+	// std::shared_ptr<const linphone::Address> &participantAddress); 	void onStateChanged();
 
 signals:
 	void securityLevelChanged();

@@ -14,11 +14,12 @@ Item {
 	property string noItemButtonText
 	property string newItemIconSource
 	property string emptyListText
+	property bool showDefaultItem: true
+	property color rightPanelColor: DefaultStyle.grey_100
 	property alias leftPanelContent: leftPanel.children
 	property alias rightPanelStackView: rightPanelStackView
 	property alias contactEditionComp: contactEditionComp
 	property alias rightPanel: rightPanel
-	property bool showDefaultItem: true
 	signal noItemButtonPressed()
 	signal contactEditionClosed()
 
@@ -151,7 +152,7 @@ Item {
 		Rectangle {
 			id: rightPanel
 			clip: true
-			color: DefaultStyle.grey_100
+			color: mainItem.rightPanelColor
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			StackLayout {
@@ -227,11 +228,13 @@ Item {
 					}
 					
 				}
-				Control.StackView {
-					id: rightPanelStackView
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-					Layout.leftMargin: 39 * DefaultStyle.dp
+				Item {
+					Control.StackView {
+						id: rightPanelStackView
+						anchors.fill: parent
+						anchors.topMargin: 39 * DefaultStyle.dp
+						anchors.leftMargin: 39 * DefaultStyle.dp
+					}
 				}
 				// We need this component here as it is used in multiple subPages (Call and Contact pages) 
 				Component {

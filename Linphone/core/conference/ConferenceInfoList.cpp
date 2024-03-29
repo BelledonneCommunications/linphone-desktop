@@ -120,7 +120,7 @@ ConferenceInfoList::get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo
 QSharedPointer<ConferenceInfoCore>
 ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) const {
 	auto me = CoreModel::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
-	qDebug() << "[CONFERENCEINFOLIST] looking for me " << me->asStringUriOnly();
+	// qDebug() << "[CONFERENCEINFOLIST] looking for me " << me->asStringUriOnly();
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> participants = conferenceInfo->getParticipantInfos();
 	bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
 	if (!haveMe)

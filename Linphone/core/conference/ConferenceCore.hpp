@@ -21,8 +21,10 @@
 #ifndef CONFERENCE_CORE_H_
 #define CONFERENCE_CORE_H_
 
+#include "core/participant/ParticipantCore.hpp"
 #include "core/participant/ParticipantDeviceCore.hpp"
 #include "core/participant/ParticipantDeviceGui.hpp"
+#include "core/participant/ParticipantGui.hpp"
 #include "model/conference/ConferenceModel.hpp"
 #include "tool/LinphoneEnums.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -36,11 +38,12 @@ class ConferenceCore : public QObject, public AbstractObject {
 public:
 	Q_PROPERTY(QString subject READ getSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QDateTime startDate READ getStartDate CONSTANT)
-	// Q_PROPERTY(ParticipantListModel* participants READ getParticipantListModel CONSTANT)
+	// Q_PROPERTY(ParticipantDeviceList *participantDevices READ getParticipantDeviceList CONSTANT)
 	// Q_PROPERTY(ParticipantModel* localParticipant READ getLocalParticipant NOTIFY localParticipantChanged)
 	Q_PROPERTY(bool isReady MEMBER mIsReady WRITE setIsReady NOTIFY isReadyChanged)
 	Q_PROPERTY(int participantDeviceCount READ getParticipantDeviceCount NOTIFY participantDeviceCountChanged)
 	Q_PROPERTY(ParticipantDeviceGui *activeSpeaker READ getActiveSpeakerGui NOTIFY activeSpeakerChanged)
+	Q_PROPERTY(ParticipantGui *me READ getMeGui)
 
 	// Should be call from model Thread. Will be automatically in App thread after initialization
 	static QSharedPointer<ConferenceCore> create(const std::shared_ptr<linphone::Conference> &conference);
@@ -57,9 +60,11 @@ public:
 	// ParticipantListModel *getParticipantListModel() const;
 	// std::list<std::shared_ptr<linphone::Participant>>
 	// getParticipantList() const; // SDK exclude me. We want to get ALL participants.
+	// void getParticipantDeviceList() const;
 	int getParticipantDeviceCount() const;
 	ParticipantDeviceCore *getActiveSpeaker() const;
 	ParticipantDeviceGui *getActiveSpeakerGui() const;
+	ParticipantGui *getMeGui() const;
 	void setActiveSpeaker(const QSharedPointer<ParticipantDeviceCore> &device);
 
 	void setIsReady(bool state);
@@ -78,6 +83,8 @@ private:
 	QSharedPointer<SafeConnection<ConferenceCore, ConferenceModel>> mConferenceModelConnection;
 	std::shared_ptr<ConferenceModel> mConferenceModel;
 	QSharedPointer<ParticipantDeviceCore> mActiveSpeaker;
+	QSharedPointer<ParticipantCore> mMe;
+	int mParticipantDeviceCount = 0;
 
 	bool mIsReady = false;
 	QString mSubject;

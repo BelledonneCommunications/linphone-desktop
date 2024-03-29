@@ -1,4 +1,4 @@
-import QtQuick 2.7
+import QtQuick
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as Control
 import QtQuick.Effects
@@ -160,21 +160,28 @@ Item {
 					spacing: 25 * DefaultStyle.dp
 					Button {
 						visible: mainItem.groupCallVisible
-						Layout.fillWidth: true
+						Layout.preferredWidth: 320 * DefaultStyle.dp
+						padding: 0
 						background: Rectangle {
-							color: DefaultStyle.groupCallButtonColor
+							gradient: Gradient {
+								orientation: Gradient.Horizontal
+								GradientStop { position: 0.0; color: DefaultStyle.main2_100}
+								GradientStop { position: 1.0; color: DefaultStyle.grey_0}
+							}
 							anchors.fill: parent
 							radius: 50 * DefaultStyle.dp
 						}
 						contentItem: RowLayout {
+							anchors.verticalCenter: parent.verticalCenter
 							Image {
 								source: AppIcons.groupCall
-								Layout.preferredWidth: 35 * DefaultStyle.dp
-								sourceSize.width: 35 * DefaultStyle.dp
+								Layout.preferredWidth: 44 * DefaultStyle.dp
+								sourceSize.width: 44 * DefaultStyle.dp
 								fillMode: Image.PreserveAspectFit
 							}
 							Text {
 								text: "Appel de groupe"
+								color: DefaultStyle.grey_1000
 								font {
 									pixelSize: 16 * DefaultStyle.dp
 									weight: 800 * DefaultStyle.dp
@@ -185,36 +192,38 @@ Item {
 							}
 							Image {
 								source: AppIcons.rightArrow
+								Layout.preferredWidth: 24 * DefaultStyle.dp
+								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}
 						}
 					}
 
 					// RowLayout {
-					// 	//DEBUG
-					// 	visible: searchBar.text.length > 0
-					// 	Layout.maximumWidth: parent.width
-					// 	Layout.fillWidth: true
-					// 	Text {
-					// 		text: searchBar.text
-					// 		maximumLineCount: 1
-					// 		elide: Text.ElideRight
-					// 	}
-					// 	Item {
-					// 		Layout.fillWidth: true
-					// 	}
-					// 	Button {
-					// 		implicitWidth: 30 * DefaultStyle.dp
-					// 		implicitHeight: 30 * DefaultStyle.dp
-					// 		background: Item {
-					// 			visible: false
-					// 		}
-					// 		icon.source: AppIcons.phone
-					// 		width: 20 * DefaultStyle.dp
-					// 		height: 20 * DefaultStyle.dp
-					// 		onClicked: {
-					// 			mainItem.callButtonPressed(searchBar.text)
-					// 		}
-					// 	}
+						// 	//DEBUG
+						// 	visible: searchBar.text.length > 0
+						// 	Layout.maximumWidth: parent.width
+						// 	Layout.fillWidth: true
+						// 	Text {
+						// 		text: searchBar.text
+						// 		maximumLineCount: 1
+						// 		elide: Text.ElideRight
+						// 	}
+						// 	Item {
+						// 		Layout.fillWidth: true
+						// 	}
+						// 	Button {
+						// 		implicitWidth: 30 * DefaultStyle.dp
+						// 		implicitHeight: 30 * DefaultStyle.dp
+						// 		background: Item {
+						// 			visible: false
+						// 		}
+						// 		icon.source: AppIcons.phone
+						// 		width: 20 * DefaultStyle.dp
+						// 		height: 20 * DefaultStyle.dp
+						// 		onClicked: {
+						// 			mainItem.callButtonPressed(searchBar.text)
+						// 		}
+						// 	}
 					// }
 					ColumnLayout {
 						Text {
@@ -227,10 +236,10 @@ Item {
 						ContactsList{
 							id: contactList
 							Layout.fillWidth: true
+							Layout.preferredHeight: contentHeight
 							contactMenuVisible: false
-							searchBarText: searchBar.text
 							model: MagicSearchProxy {
-										searchText: searchBarText.length === 0 ? "*" : searchBarText
+								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
 							}
 							onSelectedContactChanged: {
 								if (selectedContact) {
@@ -266,10 +275,9 @@ Item {
 							contactMenuVisible: false
 							Layout.fillWidth: true
 							Layout.fillHeight: true
+							Layout.preferredHeight: contentHeight
 							initialHeadersVisible: false
 							displayNameCapitalization: false
-							// Align the suggestions list to the friends ones (which contains intial column)
-							delegateLeftMargin: 20 * DefaultStyle.dp
 							model: MagicSearchProxy {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
 								sourceFlags: LinphoneEnums.MagicSearchSource.All

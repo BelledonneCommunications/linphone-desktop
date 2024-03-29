@@ -20,10 +20,6 @@ ListView {
 	property bool isMeAdmin: me ? me.core.isAdmin : false
 
 	property bool hoverEnabled: true
-	// dots popup menu
-	property bool contactMenuVisible: true
-	// call, video call etc menu
-	property bool actionMenuVisible: true
 	property bool initialHeadersVisible: true
 	property bool displayNameCapitalization: true
 

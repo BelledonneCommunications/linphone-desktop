@@ -29,7 +29,6 @@ DEFINE_ABSTRACT_OBJECT(ParticipantModel)
 ParticipantModel::ParticipantModel(std::shared_ptr<linphone::Participant> linphoneParticipant, QObject *parent)
     : QObject(parent) {
 	mParticipant = linphoneParticipant;
-	assert(mParticipant);
 }
 
 ParticipantModel::~ParticipantModel() {

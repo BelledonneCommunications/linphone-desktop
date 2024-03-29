@@ -152,41 +152,14 @@ void ParticipantProxy::setShowMe(const bool &show) {
 	}
 }
 
-// void ParticipantProxy::addAddress(const QString &address) {
-// 	if (!participantsModel->contains(address)) {
-// 		QSharedPointer<ParticipantCore> participant = QSharedPointer<ParticipantCore>::create(nullptr);
-// 		connect(participant.get(), &ParticipantCore::invitationTimeout, this, &ParticipantProxy::removeModel);
-// 		participant->setSipAddress(address);
-// 		participantsModel->add(participant);
-// 		if (mChatRoomModel && mChatRoomModel->getChatRoom()) { // Invite and wait for its creation
-// 			participant->startInvitation();
-// 			mChatRoomModel->getChatRoom()->addParticipant(Utils::interpretUrl(address));
-// 		}
-// 		if (mConferenceModel && mConferenceModel->getConference()) {
-// 			auto addressToInvite = Utils::interpretUrl(address);
-// 			std::list<std::shared_ptr<linphone::Call>> runningCallsToAdd;
-// 			auto currentCalls = CoreManager::getInstance()->getCore()->getCalls();
-// 			auto haveCall = std::find_if(currentCalls.begin(), currentCalls.end(),
-// 			                             [addressToInvite](const std::shared_ptr<linphone::Call> &call) {
-// 				                             return call->getRemoteAddress()->weakEqual(addressToInvite);
-// 			                             });
-// 			participant->startInvitation();
-// 			if (haveCall == currentCalls.end()) mConferenceModel->getConference()->addParticipant(addressToInvite);
-// 			else {
-// 				runningCallsToAdd.push_back(*haveCall);
-// 				mConferenceModel->getConference()->addParticipants(runningCallsToAdd);
-// 			}
-// 			/*
-// 			    std::list<std::shared_ptr<linphone::Address>> addressesToInvite;
-// 			    addressesToInvite.push_back(addressToInvite);
-// 			    auto callParameters =
-// 			   CoreManager::getInstance()->getCore()->createCallParams(mConferenceModel->getConference()->getCall());
-// 			    mConferenceModel->getConference()->inviteParticipants(addressesToInvite, callParameters);*/
-// 		}
-// 		emit countChanged();
-// 		emit addressAdded(address);
-// 	}
-// }
+void ParticipantProxy::addAddress(const QString &address) {
+	mParticipants->addAddress(address);
+}
+
+void ParticipantProxy::addAddresses(const QStringList &addresses) {
+	for (auto &address : addresses)
+		mParticipants->addAddress(address);
+}
 
 void ParticipantProxy::removeParticipant(ParticipantCore *participant) {
 	if (participant) {

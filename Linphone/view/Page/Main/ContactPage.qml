@@ -168,7 +168,9 @@ AbstractMainPage {
 								id: favoriteList
 								hoverEnabled: mainItem.leftPanelEnabled
 								Layout.fillWidth: true
+								Layout.preferredHeight: contentHeight
 								showOnlyFavourites: true
+								contactMenuVisible: true
 								model: allFriends
 								onSelectedContactChanged: {
 									if (selectedContact) {
@@ -207,7 +209,9 @@ AbstractMainPage {
 							ContactsList{
 								id: contactList
 								hoverEnabled: mainItem.leftPanelEnabled
+								contactMenuVisible: true
 								Layout.fillWidth: true
+								Layout.preferredHeight: contentHeight
 								searchBarText: searchBar.text
 								model: allFriends
 								onSelectedContactChanged: {

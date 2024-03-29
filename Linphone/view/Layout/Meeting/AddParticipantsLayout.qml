@@ -11,12 +11,20 @@ ColumnLayout {
 	property string validateButtonText
 	property string placeHolderText: qsTr("Rechercher des contacts")
 	property color titleColor: DefaultStyle.main2_700
+	property list<string> selectedParticipants: contactList.selectedContacts
+	property int selectedParticipantsCount: selectedParticipants.length
+	property alias titleLayout: titleLayout
 	property ConferenceInfoGui conferenceInfoGui
 	signal returnRequested()
-	Layout.preferredWidth: 362 * DefaultStyle.dp
+	// Layout.preferredWidth: 362 * DefaultStyle.dp
+
+	function clearSelectedParticipants() {
+		contactList.selectedContacts.clear()
+	}
 
 	RowLayout {
-		Layout.preferredWidth: 362 * DefaultStyle.dp
+		id: titleLayout
+		Layout.fillWidth: true
 		Button {
 			background: Item{}
 			icon.source: AppIcons.leftArrow
@@ -39,6 +47,7 @@ ColumnLayout {
 			Layout.preferredWidth: 70 * DefaultStyle.dp
 			topPadding: 6 * DefaultStyle.dp
 			bottomPadding: 6 * DefaultStyle.dp
+			enabled: contactList.selectedContacts.length != 0
 			// leftPadding: 12 * DefaultStyle.dp
 			// rightPadding: 12 * DefaultStyle.dp
 			text: mainItem.validateButtonText

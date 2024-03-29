@@ -38,6 +38,11 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	mustBeInLinphoneThread(getClassName());
 	mConferenceModel = ConferenceModel::create(conference);
 	mSubject = Utils::coreStringToAppString(conference->getSubject());
+	mParticipantDeviceCount = conference->getParticipantDeviceList().size();
+	auto me = conference->getMe();
+	if (me) {
+		mMe = ParticipantCore::create(me);
+	}
 }
 ConferenceCore::~ConferenceCore() {
 	mustBeInMainThread("~" + getClassName());
@@ -77,7 +82,7 @@ Q_INVOKABLE qint64 ConferenceCore::getElapsedSeconds() const {
 // std::list<std::shared_ptr<linphone::Participant>>
 // getParticipantList() const; // SDK exclude me. We want to get ALL participants.
 int ConferenceCore::getParticipantDeviceCount() const {
-	return 0;
+	return mParticipantDeviceCount + 1;
 }
 
 void ConferenceCore::setIsReady(bool state) {
@@ -98,6 +103,10 @@ ParticipantDeviceCore *ConferenceCore::getActiveSpeaker() const {
 
 ParticipantDeviceGui *ConferenceCore::getActiveSpeakerGui() const {
 	return new ParticipantDeviceGui(mActiveSpeaker);
+}
+
+ParticipantGui *ConferenceCore::getMeGui() const {
+	return new ParticipantGui(mMe);
 }
 
 void ConferenceCore::setActiveSpeaker(const QSharedPointer<ParticipantDeviceCore> &device) {

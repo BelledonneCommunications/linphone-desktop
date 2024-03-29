@@ -41,18 +41,21 @@ QSharedPointer<ParticipantCore> ParticipantCore::create(const std::shared_ptr<li
 ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &participant) : QObject(nullptr) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mParticipantModel = Utils::makeQObject_ptr<ParticipantModel>(participant);
-	mAdminStatus = participant->isAdmin();
-	mSipAddress = Utils::coreStringToAppString(participant->getAddress()->asStringUriOnly());
-	mCreationTime = QDateTime::fromSecsSinceEpoch(participant->getCreationTime());
-	mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getDisplayName());
-	if (mDisplayName.isEmpty()) mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getUsername());
-	for (auto &device : participant->getDevices()) {
-		auto name = Utils::coreStringToAppString(device->getName());
-		auto address = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
-		QVariantMap map;
-		map.insert("name", name);
-		map.insert("address", address);
-		mParticipantDevices.append(map);
+	if (participant) {
+		mAdminStatus = participant->isAdmin();
+		mSipAddress = Utils::coreStringToAppString(participant->getAddress()->asStringUriOnly());
+		mCreationTime = QDateTime::fromSecsSinceEpoch(participant->getCreationTime());
+		mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getDisplayName());
+		if (mDisplayName.isEmpty())
+			mDisplayName = Utils::coreStringToAppString(participant->getAddress()->getUsername());
+		for (auto &device : participant->getDevices()) {
+			auto name = Utils::coreStringToAppString(device->getName());
+			auto address = Utils::coreStringToAppString(device->getAddress()->asStringUriOnly());
+			QVariantMap map;
+			map.insert("name", name);
+			map.insert("address", address);
+			mParticipantDevices.append(map);
+		}
 	}
 	// App::getInstance()->mEngine->setObjectOwnership(mParticipantDevices.get(),
 	// QQmlEngine::CppOwnership); // Managed by QSharedPointer

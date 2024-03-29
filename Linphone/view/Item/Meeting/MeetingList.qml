@@ -15,7 +15,6 @@ ListView {
 
 	property bool hoverEnabled: true
 	
-	property int delegateLeftMargin: 0
 	currentIndex: -1
 
 	property var delegateButtons
@@ -99,8 +98,8 @@ ListView {
 		Rectangle {
 			id: conferenceInfoDelegate
 			anchors.left: dateDay.visible ? dateDay.right : parent.left
-			anchors.leftMargin: 10 * DefaultStyle.dp + mainItem.delegateLeftMargin
-			anchors.rightMargin: 25 * DefaultStyle.dp + mainItem.delegateLeftMargin
+			anchors.leftMargin: 10 * DefaultStyle.dp
+			anchors.rightMargin: 5 * DefaultStyle.dp
 			anchors.right: parent.right
 			anchors.verticalCenter: parent.verticalCenter
 			radius: 10 * DefaultStyle.dp
@@ -142,8 +141,8 @@ ListView {
 			source: conferenceInfoDelegate
 			anchors.fill: conferenceInfoDelegate
 			shadowEnabled: true
-			shadowBlur: 1.0
-			shadowOpacity: 0.1
+			shadowBlur: 0.8
+			shadowOpacity: 0.2
 		}
 		
 		MouseArea {

@@ -65,14 +65,13 @@ Control.Button {
 	}
 
 	component ButtonText: Text {
-		visible: mainItem.text != undefined
 		horizontalAlignment: Text.AlignHCenter
 		verticalAlignment: Text.AlignVCenter
 		width: mainItem.text != undefined ? implicitWidth : 0
 		height: implicitHeight
 		wrapMode: Text.WrapAnywhere
-		Layout.fillWidth: true
-		Layout.fillHeight: true
+		// Layout.fillWidth: true
+		// Layout.fillHeight: true
 		text: mainItem.text
 		maximumLineCount: 1
 		color: inversedColors ? mainItem.color : mainItem.textColor
@@ -86,9 +85,8 @@ Control.Button {
 	}
 
 	component ButtonImage: EffectImage {
-		visible: mainItem.icon.source != undefined
-		Layout.fillWidth: true
-		Layout.fillHeight: true
+		// Layout.fillWidth: true
+		// Layout.fillHeight: true
 		imageSource: mainItem.icon.source
 		imageWidth: mainItem.icon.width
 		imageHeight: mainItem.icon.height
@@ -96,11 +94,12 @@ Control.Button {
 	}
 
 	contentItem: StackLayout {
-		currentIndex: mainItem.text.length != 0 && mainItem.icon.source != undefined
+		id: stacklayout
+		currentIndex: mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
 			? 0
 			: mainItem.text.length != 0
 				? 1
-				: mainItem.icon.source != undefined
+				: mainItem.icon.source.toString().length != 0
 					? 2
 					: 3
 

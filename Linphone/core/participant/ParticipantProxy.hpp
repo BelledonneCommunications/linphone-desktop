@@ -60,7 +60,8 @@ public:
 	void setConferenceModel(ConferenceModel *conferenceModel);
 	void setShowMe(const bool &show);
 
-	// Q_INVOKABLE void addAddress(const QString &address);
+	Q_INVOKABLE void addAddress(const QString &address);
+	Q_INVOKABLE void addAddresses(const QStringList &addresses);
 	Q_INVOKABLE void removeParticipant(ParticipantCore *participant);
 	Q_INVOKABLE void setParticipantAdminStatus(ParticipantCore *participant, bool status);
 	Q_INVOKABLE void setAddresses(ConferenceInfoModel *conferenceInfoModel);
