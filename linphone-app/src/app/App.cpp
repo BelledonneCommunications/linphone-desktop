@@ -222,11 +222,11 @@ QString App::getFetchConfig(QCommandLineParser *parser) {
 	return filePath;
 }
 
-void App::useFetchConfig(const QString &filePath) {
+bool App::useFetchConfig(const QString &filePath) {
 	if (!filePath.isEmpty()) {
 		if (CoreManager::getInstance()->isInitialized()) {
 			if (CoreManager::getInstance()->getSettingsModel()->getAutoApplyProvisioningConfigUriHandlerEnabled())
-				setFetchConfig(filePath);
+				return setFetchConfig(filePath);
 			else emit requestFetchConfig(filePath);
 		} else {
 			QObject *context = new QObject();
@@ -237,6 +237,7 @@ void App::useFetchConfig(const QString &filePath) {
 					});
 		}
 	}
+	return false;
 }
 
 bool App::setFetchConfig(QString filePath) {
@@ -253,8 +254,11 @@ bool App::setFetchConfig(QString filePath) {
 		}
 	}
 	if (!fetched) {
-		qWarning() << "Remote provisionning cannot be retrieved. Command have beend cleaned";
-	} else restart();
+		qWarning() << "Remote provisioning cannot be retrieved. Command have beend cleaned";
+	} else {
+		qInfo() << "Restarting to apply remote provisioning";
+		restart();
+	}
 	return fetched;
 }
 // -----------------------------------------------------------------------------
@@ -547,20 +551,6 @@ void App::initContentApp() {
 							 openAppAfterInit(mustBeIconified);
 						 }
 					 });
-
-	// Execute command argument if needed
-	// Commands are executed only once. clearPsitionalArguments doesn't work as its name suggest :
-	// getPositionalArguments still retrieve user arguments. So execute the command only once.
-	static bool firstRun = false;
-	if (!firstRun) {
-		firstRun = true;
-		const QString commandArgument = getCommandArgument();
-		if (!commandArgument.isEmpty()) {
-			Cli::CommandFormat format;
-			Cli::executeCommand(commandArgument, &format);
-			if (format == Cli::UriFormat || format == Cli::UrlFormat) mustBeIconified = true;
-		}
-	}
 }
 
 // -----------------------------------------------------------------------------
@@ -961,14 +951,13 @@ void App::initLocale(const shared_ptr<linphone::Config> &config) {
 	//	QStringList qtLocale = QLocale::system().name().split('_');
 	//	if(qtLocale[0] != preferredLanguage){
 	//		qInfo() << "Override Qt language from " << qtLocale[0] << " to the preferred language : " <<
-	//preferredLanguage; 		qtLocale[0] = preferredLanguage;
+	// preferredLanguage; 		qtLocale[0] = preferredLanguage;
 	//	}
 	//	QLocale sysLocale = QLocale(qtLocale.join('_'));
 	// #else
-	QLocale sysLocale(
-		QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use the
-								   // QLocale::language (aka : translator.language != locale.language) on Mac.
-								   // #endif
+	QLocale sysLocale(QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use the
+												 // QLocale::language (aka : translator.language != locale.language) on
+												 // Mac. #endif
 	if (installLocale(*this, *mTranslator, sysLocale)) {
 		mLocale = sysLocale;
 		return;
@@ -1177,40 +1166,60 @@ void App::openAppAfterInit(bool mustBeIconified) {
 
 	checkForUpdates();
 #endif // ifdef ENABLE_UPDATE_CHECK
-	// Launch call if wanted and clean parser
-	if (mParser->isSet("call") && coreManager->isLastRemoteProvisioningGood()) {
-		QString sipAddress = mParser->value("call");
-		mParser->parse(cleanParserKeys(mParser, QStringList("call"))); // Clean call from parser
-		if (coreManager->started()) {
-			coreManager->getCallsListModel()->launchAudioCall(sipAddress);
-		} else {
-			QObject *context = new QObject();
-			QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized, context,
-							 [sipAddress, coreManager, context]() mutable {
-								 if (context) {
-									 delete context;
-									 context = nullptr;
-									 coreManager->getCallsListModel()->launchAudioCall(sipAddress);
-								 }
-							 });
-		}
-	}
 	QString fetchFilePath = getFetchConfig(mParser);
-	mustBeIconified = mustBeIconified && fetchFilePath.isEmpty();
+	mustBeIconified =
+		mustBeIconified &&
+		(fetchFilePath.isEmpty() ||
+		 CoreManager::getInstance()->getSettingsModel()->getAutoApplyProvisioningConfigUriHandlerEnabled());
+	bool showWindow = true;
+	if (fetchFilePath.isEmpty()) {
+		QString lastRunningVersion = CoreManager::getInstance()->getSettingsModel()->getLastRunningVersionOfApp();
+		if (lastRunningVersion != "unknown" && lastRunningVersion != applicationVersion()) {
+			emit CoreManager::getInstance()->userInitiatedVersionUpdateCheckResult(3, "", "");
+		}
+		CoreManager::getInstance()->getSettingsModel()->setLastRunningVersionOfApp(applicationVersion());
+		// Launch call if wanted and clean parser
+		if (mParser->isSet("call") && coreManager->isLastRemoteProvisioningGood()) {
+			QString sipAddress = mParser->value("call");
+			mParser->parse(cleanParserKeys(mParser, QStringList("call"))); // Clean call from parser
+			if (coreManager->started()) {
+				coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+			} else {
+				QObject *context = new QObject();
+				QObject::connect(CoreManager::getInstance(), &CoreManager::coreManagerInitialized, context,
+								 [sipAddress, coreManager, context]() mutable {
+									 if (context) {
+										 delete context;
+										 context = nullptr;
+										 coreManager->getCallsListModel()->launchAudioCall(sipAddress);
+									 }
+								 });
+			}
+		} else {
+			// Execute command argument if needed
+			// Commands are executed only once. clearPsitionalArguments doesn't work as its name suggest :
+			// getPositionalArguments still retrieve user arguments. So execute the command only once.
+			static bool firstRun = false;
+			if (!firstRun) {
+				firstRun = true;
+				const QString commandArgument = getCommandArgument();
+				if (!commandArgument.isEmpty()) {
+					Cli::CommandFormat format;
+					Cli::executeCommand(commandArgument, &format);
+					if (format == Cli::UriFormat || format == Cli::UrlFormat) mustBeIconified = true;
+				}
+			}
+		}
+	} else showWindow = !useFetchConfig(fetchFilePath);
+	if (showWindow) {
 #ifndef __APPLE__
-	if (!mustBeIconified) smartShowWindow(mainWindow);
+		if (!mustBeIconified) smartShowWindow(mainWindow);
 #else
-	Q_UNUSED(mustBeIconified);
-	smartShowWindow(mainWindow);
+		Q_UNUSED(mustBeIconified);
+		smartShowWindow(mainWindow);
 #endif
-	setOpened(true);
-	useFetchConfig(fetchFilePath);
-
-	QString lastRunningVersion = CoreManager::getInstance()->getSettingsModel()->getLastRunningVersionOfApp();
-	if (lastRunningVersion != "unknown" && lastRunningVersion != applicationVersion()) {
-		emit CoreManager::getInstance()->userInitiatedVersionUpdateCheckResult(3, "", "");
+		setOpened(true);
 	}
-	CoreManager::getInstance()->getSettingsModel()->setLastRunningVersionOfApp(applicationVersion());
 }
 
 // -----------------------------------------------------------------------------
