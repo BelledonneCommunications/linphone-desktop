@@ -25,6 +25,7 @@
 
 #include "CameraDummy.hpp"
 #include "CameraGui.hpp"
+#include "PreviewManager.hpp"
 #include "core/App.hpp"
 #include "core/call/CallCore.hpp"
 #include "core/call/CallGui.hpp"
@@ -32,9 +33,6 @@
 #include "core/participant/ParticipantDeviceGui.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CameraGui)
-
-QMutex CameraGui::gPreviewCounterMutex;
-int CameraGui::gPreviewCounter = 0;
 
 // =============================================================================
 CameraGui::CameraGui(QQuickItem *parent) : QQuickFramebufferObject(parent) {
@@ -52,7 +50,6 @@ CameraGui::~CameraGui() {
 	mustBeInMainThread("~" + getClassName());
 	mRefreshTimer.stop();
 	mIsDeleting = true;
-	deactivatePreview();
 	setWindowIdLocation(None);
 }
 
@@ -72,30 +69,15 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 	// A renderer is mandatory, we cannot wait async.
 	switch (getSourceLocation()) {
 		case CorePreview: {
-			auto f = [qmlName = mQmlName, &renderer, resetWindowId]() {
-				qInfo() << "[Camera] (" << qmlName << ") Setting Camera to Preview";
-				auto coreModel = CoreModel::getInstance();
-				if (coreModel) {
-					auto core = coreModel->getCore();
-					if (!core) return;
-					if (resetWindowId) {
-						renderer = (QQuickFramebufferObject::Renderer *)core->getNativePreviewWindowId();
-						if (renderer) core->setNativePreviewWindowId(NULL);
-					} else {
-						renderer = (QQuickFramebufferObject::Renderer *)core->createNativePreviewWindowId();
-						if (renderer) core->setNativePreviewWindowId(renderer);
-					}
-				}
-			};
-			if (mIsDeleting) {
-				App::postModelBlock(f);
-			} else App::postModelSync(f);
+			if (resetWindowId) PreviewManager::getInstance()->unsubscribe(this);
+			else renderer = PreviewManager::getInstance()->subscribe(this);
 		} break;
 		case Call: {
 			auto f = [qmlName = mQmlName, callGui = mCallGui, &renderer, resetWindowId]() {
 				auto call = callGui->getCore()->getModel()->getMonitor();
 				if (call) {
-					qInfo() << "[Camera] (" << qmlName << ") Setting Camera to CallModel";
+					qInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
+					        << " Camera to CallModel";
 					if (resetWindowId) {
 						renderer = (QQuickFramebufferObject::Renderer *)call->getNativeVideoWindowId();
 						if (renderer) call->setNativeVideoWindowId(NULL);
@@ -113,7 +95,8 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 			auto f = [qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, &renderer, resetWindowId]() {
 				auto device = participantDeviceGui->getCore()->getModel()->getMonitor();
 				if (device) {
-					qInfo() << "[Camera] (" << qmlName << ") Setting Camera to ParticipantDeviceModel";
+					qInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
+					        << " Camera to ParticipantDeviceModel";
 					if (resetWindowId) {
 					} else {
 						renderer = (QQuickFramebufferObject::Renderer *)device->createNativeVideoWindowId();
@@ -217,27 +200,6 @@ CameraGui::WindowIdLocation CameraGui::getSourceLocation() const {
 	return mWindowIdLocation;
 }
 
-void CameraGui::activatePreview() {
-	gPreviewCounterMutex.lock();
-	if (++gPreviewCounter == 1) {
-		auto f = []() { CoreModel::getInstance()->getCore()->enableVideoPreview(true); };
-		if (mIsDeleting) App::postModelBlock(f);
-		else App::postModelSync(f);
-	}
-	gPreviewCounterMutex.unlock();
-}
-
-void CameraGui::deactivatePreview() {
-	gPreviewCounterMutex.lock();
-	if (getSourceLocation() == CorePreview) {
-		if (--gPreviewCounter == 0) {
-			auto f = []() { CoreModel::getInstance()->getCore()->enableVideoPreview(false); };
-			if (mIsDeleting) App::postModelBlock(f);
-			else App::postModelSync(f);
-		}
-	}
-	gPreviewCounterMutex.unlock();
-}
 void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 	if (mWindowIdLocation != location) {
 		qDebug() << log()
@@ -245,10 +207,10 @@ void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 		                .arg(mQmlName)
 		                .arg(mWindowIdLocation)
 		                .arg(location);
-		if (mWindowIdLocation == CorePreview) deactivatePreview();
+		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->unsubscribe(this);
 		resetWindowId(); // Location change: Reset old window ID.
 		mWindowIdLocation = location;
-		if (mWindowIdLocation == CorePreview) activatePreview();
+		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->subscribe(this);
 		update();
 		//		if (mWindowIdLocation == WindowIdLocation::CorePreview) {
 		//			mLastVideoDefinition =

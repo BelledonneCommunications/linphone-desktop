@@ -55,9 +55,6 @@ public:
 	Q_INVOKABLE void resetWindowId() const; // const to be used from createRenderer()
 	void checkVideoDefinition();
 
-	static QMutex gPreviewCounterMutex;
-	static int gPreviewCounter;
-
 	bool getIsReady() const;
 	void setIsReady(bool isReady);
 	void isReady();
@@ -74,8 +71,6 @@ public:
 	WindowIdLocation getSourceLocation() const;
 	void setWindowIdLocation(const WindowIdLocation &location);
 
-	void activatePreview();
-	void deactivatePreview();
 	void updateWindowIdLocation();
 	void removeParticipantDeviceModel();
 	void removeCallModel();

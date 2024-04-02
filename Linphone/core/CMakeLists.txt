@@ -14,6 +14,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/call-history/CallHistoryProxy.cpp
 	core/camera/CameraGui.cpp
 	core/camera/CameraDummy.cpp
+	core/camera/PreviewManager.cpp
 	core/fps-counter/FPSCounter.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp
