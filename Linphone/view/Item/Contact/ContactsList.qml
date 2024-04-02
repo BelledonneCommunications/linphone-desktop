@@ -48,6 +48,21 @@ ListView {
 	signal contactDeletionRequested(FriendGui contact)
 	signal contactAddedToSelection()
 
+	function addContactToSelection(address) {
+		if (multiSelectionEnabled) {
+			var indexInSelection = selectedContacts.indexOf(address)
+			if (indexInSelection == -1) {
+				selectedContacts.push(address)
+				contactAddedToSelection()
+			}
+		}
+	}
+	function removeContactFromSelection(indexInSelection) {
+		if (indexInSelection != -1) {
+			selectedContacts.splice(indexInSelection, 1)
+		}
+	}
+
 	model: MagicSearchProxy {
 		searchText: searchBarText.length === 0 ? "*" : searchBarText
 	}
@@ -249,11 +264,10 @@ ListView {
 				if (mainItem.multiSelectionEnabled) {
 					var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
 					if (indexInSelection == -1) {
-						mainItem.selectedContacts.push(modelData.core.defaultAddress)
-						mainItem.contactAddedToSelection()
+						mainItem.addContactToSelection(modelData.core.defaultAddress)
 					}
 					else {
-						mainItem.selectedContacts.splice(indexInSelection, 1)
+						mainItem.removeContactFromSelection(indexInSelection, 1)
 					}
 				}
 			}

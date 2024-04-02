@@ -111,6 +111,7 @@ ColumnLayout {
 	}
 	ContactsList {
 		id: contactList
+		visible: contentHeight > 0 || searchbar.text.length > 0
 		Layout.fillWidth: true
 		Layout.fillHeight: true
 		Layout.preferredHeight: contentHeight
@@ -119,6 +120,32 @@ ColumnLayout {
 		confInfoGui: mainItem.conferenceInfoGui
 		searchBarText: searchbar.text
 		onContactAddedToSelection: participantList.positionViewAtEnd()
+		headerPositioning: ListView.InlineHeader
+		header: MouseArea {
+			onClicked: contactList.addContactToSelection(sipAddr.text)
+			visible: searchbar.text.length > 0
+			height: searchbar.text.length > 0 ? 56 * DefaultStyle.dp : 0
+			width: contactList.width
+			RowLayout {
+				Layout.fillWidth: true
+				spacing: 10 * DefaultStyle.dp
+				anchors.verticalCenter: parent.verticalCenter
+				anchors.leftMargin: 30 * DefaultStyle.dp
+				anchors.left: parent.left
+				Avatar {
+					Layout.preferredWidth: 45 * DefaultStyle.dp
+					Layout.preferredHeight: 45 * DefaultStyle.dp
+					address: sipAddr.text
+				}
+				ColumnLayout {
+					Text {
+						id: sipAddr
+						text: UtilsCpp.generateLinphoneSipAddress(searchbar.text)
+						font.pixelSize: 14 * DefaultStyle.dp
+					}
+				}
+			}
+		}
 	}
 	Item {
 		Layout.fillHeight: true

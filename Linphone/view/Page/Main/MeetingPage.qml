@@ -19,11 +19,12 @@ AbstractMainPage {
 	onVisibleChanged: if (visible) rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
 
 	onSelectedConferenceChanged: {
+		overridenRightPanelStackView.clear()
 		if (selectedConference) {
-			/*if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem.objectName != "meetingDetail") */overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
-		} else {
-			/*if (overridenRightPanelStackView.currentItem && overridenRightPanelStackView.currentItem.objectName === "meetingDetail")*/ overridenRightPanelStackView.clear()
-		}
+			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem.objectName != "meetingDetail") overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
+		}// else {
+			/*if (overridenRightPanelStackView.currentItem && overridenRightPanelStackView.currentItem.objectName === "meetingDetail")*/ 
+		// }
 	}
 
 	Connections {
@@ -161,9 +162,10 @@ AbstractMainPage {
 		id: overridenRightPanel
 		Control.StackView {
 			id: overridenRightPanelStackView
-			RectangleTest{anchors.fill: parent}
 			width: 393 * DefaultStyle.dp
+			height: parent.height
 			anchors.top: parent.top
+			// anchors.bottom: parent.bottom
 			// Layout.fillWidth: false
 		}
 	}
@@ -240,297 +242,289 @@ AbstractMainPage {
 	}
 	Component {
 		id: editConf
-		RowLayout {
+		MeetingSetUp {
 			property bool isCreation
-			property ConferenceInfoGui conferenceInfoGui
-			MeetingSetUp {
-				isCreation: parent.isCreation
-				conferenceInfoGui: parent.conferenceInfoGui
-				onReturnRequested: {
-					overridenRightPanelStackView.pop()
-				}
-				onSaveSucceed: {
-					overridenRightPanelStackView.pop()
-					UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
-				}
-				onAddParticipantsRequested: {
-					overridenRightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": overridenRightPanelStackView})
-				}
+			isCreation: parent.isCreation
+			onReturnRequested: {
+				overridenRightPanelStackView.pop()
+			}
+			onSaveSucceed: {
+				overridenRightPanelStackView.pop()
+				UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
+			}
+			onAddParticipantsRequested: {
+				overridenRightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": overridenRightPanelStackView})
 			}
 		}
 	}
 	Component {
 		id: addParticipants
-		RowLayout {
+		AddParticipantsLayout {
 			id: addParticipantLayout
 			property Control.StackView container
-			property ConferenceInfoGui conferenceInfoGui
-			AddParticipantsLayout {
-				conferenceInfoGui: parent.conferenceInfoGui
-				title: qsTr("Ajouter des participants")
-				validateButtonText: qsTr("Ajouter")
-				titleColor: DefaultStyle.main1_500_main
-				onReturnRequested: {
-					addParticipantLayout.container.pop()
-				}
+			// Layout.fillHeight: true
+			title: qsTr("Ajouter des participants")
+			validateButtonText: qsTr("Ajouter")
+			titleColor: DefaultStyle.main1_500_main
+			onReturnRequested: {
+				container.pop()
 			}
 		}
 	}
 	Component {
 		id: meetingDetail
-		RowLayout {
+		ColumnLayout {
 			visible: mainItem.selectedConference
-			ColumnLayout {
-				spacing: 25 * DefaultStyle.dp
-				Section {
-					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
-						Image {
-							source: AppIcons.usersThree
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-						}
-						Text {
-							text: mainItem.selectedConference ? mainItem.selectedConference.core.subject : ""
-							font {
-								pixelSize: 20 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
-							}
-						}
-						Item {
-							Layout.fillWidth: true
-						}
-						Button {
-							visible: UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							icon.source: AppIcons.pencil
-							contentImageColor: DefaultStyle.main1_500_main
-							background: Item{}
-							onClicked: mainItem.setUpConference(mainItem.selectedConference)
-						}
-						PopupButton {
-							id: deletePopup
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							contentImageColor: DefaultStyle.main1_500_main
-							popup.contentItem: RowLayout {
-								Button {
-									background: Item{}
-									contentItem: RowLayout {
-										EffectImage {
-											imageSource: AppIcons.trashCan
-											width: 24 * DefaultStyle.dp
-											height: 24 * DefaultStyle.dp
-											Layout.preferredWidth: 24 * DefaultStyle.dp
-											Layout.preferredHeight: 24 * DefaultStyle.dp
-											fillMode: Image.PreserveAspectFit
-											colorizationColor: DefaultStyle.danger_500main
-										}
-										Text {
-											text: qsTr("Delete this meeting")
-											color: DefaultStyle.danger_500main
-											font {
-												pixelSize: 14 * DefaultStyle.dp
-												weight: 400 * DefaultStyle.dp
-											}
-										}
-									}
-									onClicked: {
-										cancelAndDeleteConfDialog.cancel = UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
-										cancelAndDeleteConfDialog.open()
-										// mainItem.contactDeletionRequested(mainItem.selectedConference)
-										deletePopup.close()
-									}
-									Connections {
-										target: cancelAndDeleteConfDialog
-										onCancelRequested: {
-											mainItem.selectedConference.core.lCancelConferenceInfo()
-										}
-										onAccepted: {
-											mainItem.selectedConference.core.lDeleteConferenceInfo()
-										}
-									}
-								}
-							}
+			spacing: 25 * DefaultStyle.dp
+			Section {
+				content: RowLayout {
+					spacing: 8 * DefaultStyle.dp
+					Image {
+						source: AppIcons.usersThree
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+					}
+					Text {
+						text: mainItem.selectedConference ? mainItem.selectedConference.core.subject : ""
+						font {
+							pixelSize: 20 * DefaultStyle.dp
+							weight: 800 * DefaultStyle.dp
 						}
 					}
-				}
-				Section {
-					content: ColumnLayout {
-						spacing: 15 * DefaultStyle.dp
-						width: parent.width
-						RowLayout {
-							spacing: 8 * DefaultStyle.dp
-							Layout.fillWidth: true
-							Image {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								source: AppIcons.videoCamera
-							}
+					Item {
+						Layout.fillWidth: true
+					}
+					Button {
+						visible: mainItem.selectedConference && UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						icon.source: AppIcons.pencil
+						contentImageColor: DefaultStyle.main1_500_main
+						background: Item{}
+						onClicked: mainItem.setUpConference(mainItem.selectedConference)
+					}
+					PopupButton {
+						id: deletePopup
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						contentImageColor: DefaultStyle.main1_500_main
+						popup.contentItem: RowLayout {
 							Button {
-								Layout.fillWidth: true
-								text: mainItem.selectedConference ? mainItem.selectedConference.core.uri : ""
-								textSize: 14 * DefaultStyle.dp
-								textWeight: 400 * DefaultStyle.dp
-								underline: true
-								inversedColors: true
-								color: DefaultStyle.main2_600
 								background: Item{}
-								property var callObj
-								onClicked: {
-									callObj = UtilsCpp.createCall(mainItem.selectedConference.core.uri)
-								}
-							}
-							Button {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								background: Item{}
-								icon.source: AppIcons.shareNetwork
-								onClicked: {
-									UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
-									UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Le lien de la réunion a été copié dans le presse-papiers"))
-								}
-							}
-						}
-						RowLayout {
-							spacing: 8 * DefaultStyle.dp
-							Image {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								source: AppIcons.clock
-							}
-							Text {
-								text: mainItem.selectedConference
-										? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTimeUtc) 
-										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTimeUtc) 
-										+ " - " 
-										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
-										: ''
-								font {
-									pixelSize: 14 * DefaultStyle.dp
-									capitalization: Font.Capitalize
-								}
-							}
-						}
-						RowLayout {
-							spacing: 8 * DefaultStyle.dp
-							Image {
-								Layout.preferredWidth: 24 * DefaultStyle.dp
-								Layout.preferredHeight: 24 * DefaultStyle.dp
-								source: AppIcons.globe
-							}
-							Text {
-								text: qsTr("Time zone: ") + (mainItem.selectedConference ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
-								font {
-									pixelSize: 14 * DefaultStyle.dp
-									capitalization: Font.Capitalize
-								}
-							}
-						}
-					}
-				}
-				Section {
-					visible: mainItem.selectedConference && mainItem.selectedConference.core.description.length != 0
-					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
-						EffectImage {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							imageSource: AppIcons.note
-							colorizationColor: DefaultStyle.main2_600
-						}
-						Text {
-							text: mainItem.selectedConference ? mainItem.selectedConference.core.description : ""
-							Layout.fillWidth: true
-							font {
-								pixelSize: 14 * DefaultStyle.dp
-								capitalization: Font.Capitalize
-							}
-						}
-					}
-				}
-				Section {
-					content: RowLayout {
-						spacing: 8 * DefaultStyle.dp
-						EffectImage {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							imageSource: AppIcons.userRectangle
-							colorizationColor: DefaultStyle.main2_600
-						}
-						Avatar {
-							Layout.preferredWidth: 45 * DefaultStyle.dp
-							Layout.preferredHeight: 45 * DefaultStyle.dp
-							address: mainItem.selectedConference ? mainItem.selectedConference.core.organizerAddress : ""
-						}
-						Text {
-							text: mainItem.selectedConference ? mainItem.selectedConference.core.organizerName : ""
-							font {
-								pixelSize: 14 * DefaultStyle.dp
-								capitalization: Font.Capitalize
-							}
-						}
-					}
-				}
-				Section {
-					content: RowLayout {
-						Layout.preferredHeight: participantList.height
-						width: 393 * DefaultStyle.dp
-						spacing: 8 * DefaultStyle.dp
-						Image {
-							Layout.preferredWidth: 24 * DefaultStyle.dp
-							Layout.preferredHeight: 24 * DefaultStyle.dp
-							Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-							Layout.topMargin: 20 * DefaultStyle.dp
-							source: AppIcons.usersTwo
-						}
-						ListView {
-							id: participantList
-							Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
-							Layout.fillWidth: true
-							model: mainItem.selectedConference ? mainItem.selectedConference.core.participants : []
-							clip: true
-							delegate: RowLayout {
-								height: 56 * DefaultStyle.dp
-								width: participantList.width
-								Avatar {
-									Layout.preferredWidth: 45 * DefaultStyle.dp
-									Layout.preferredHeight: 45 * DefaultStyle.dp
-									address: modelData.address
-								}
-								Text {
-									text: modelData.displayName
-									Layout.fillWidth: true
-									font {
-										pixelSize: 14 * DefaultStyle.dp
-										capitalization: Font.Capitalize
+								contentItem: RowLayout {
+									EffectImage {
+										imageSource: AppIcons.trashCan
+										width: 24 * DefaultStyle.dp
+										height: 24 * DefaultStyle.dp
+										Layout.preferredWidth: 24 * DefaultStyle.dp
+										Layout.preferredHeight: 24 * DefaultStyle.dp
+										fillMode: Image.PreserveAspectFit
+										colorizationColor: DefaultStyle.danger_500main
+									}
+									Text {
+										text: qsTr("Delete this meeting")
+										color: DefaultStyle.danger_500main
+										font {
+											pixelSize: 14 * DefaultStyle.dp
+											weight: 400 * DefaultStyle.dp
+										}
 									}
 								}
-								Text {
-									text: qsTr("Organizer")
-									visible: mainItem.selectedConference && mainItem.selectedConference.core.organizerAddress === modelData.address
-									color: DefaultStyle.main2_400
-									font {
-										pixelSize: 12 * DefaultStyle.dp
-										weight: 300 * DefaultStyle.dp
+								onClicked: {
+									cancelAndDeleteConfDialog.cancel = UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
+									cancelAndDeleteConfDialog.open()
+									// mainItem.contactDeletionRequested(mainItem.selectedConference)
+									deletePopup.close()
+								}
+								Connections {
+									target: cancelAndDeleteConfDialog
+									onCancelRequested: {
+										mainItem.selectedConference.core.lCancelConferenceInfo()
+									}
+									onAccepted: {
+										mainItem.selectedConference.core.lDeleteConferenceInfo()
 									}
 								}
 							}
 						}
-					}
-				}
-				Button {
-					Layout.fillWidth: true
-					text: qsTr("Rejoindre la réunion")
-					topPadding: 11 * DefaultStyle.dp
-					bottomPadding: 11 * DefaultStyle.dp
-					onClicked: {
-						console.log(mainItem.selectedConference.core.uri)
-						UtilsCpp.setupConference(mainItem.selectedConference)
 					}
 				}
 			}
+			Section {
+				content: ColumnLayout {
+					spacing: 15 * DefaultStyle.dp
+					width: parent.width
+					RowLayout {
+						spacing: 8 * DefaultStyle.dp
+						Layout.fillWidth: true
+						Image {
+							Layout.preferredWidth: 24 * DefaultStyle.dp
+							Layout.preferredHeight: 24 * DefaultStyle.dp
+							source: AppIcons.videoCamera
+						}
+						Button {
+							Layout.fillWidth: true
+							text: mainItem.selectedConference ? mainItem.selectedConference.core.uri : ""
+							textSize: 14 * DefaultStyle.dp
+							textWeight: 400 * DefaultStyle.dp
+							underline: true
+							inversedColors: true
+							color: DefaultStyle.main2_600
+							background: Item{}
+							property var callObj
+							onClicked: {
+								callObj = UtilsCpp.createCall(mainItem.selectedConference.core.uri)
+							}
+						}
+						Button {
+							Layout.preferredWidth: 24 * DefaultStyle.dp
+							Layout.preferredHeight: 24 * DefaultStyle.dp
+							background: Item{}
+							icon.source: AppIcons.shareNetwork
+							onClicked: {
+								UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
+								UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Le lien de la réunion a été copié dans le presse-papiers"))
+							}
+						}
+					}
+					RowLayout {
+						spacing: 8 * DefaultStyle.dp
+						Image {
+							Layout.preferredWidth: 24 * DefaultStyle.dp
+							Layout.preferredHeight: 24 * DefaultStyle.dp
+							source: AppIcons.clock
+						}
+						Text {
+							text: mainItem.selectedConference
+									? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTimeUtc) 
+									+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTimeUtc) 
+									+ " - " 
+									+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
+									: ''
+							font {
+								pixelSize: 14 * DefaultStyle.dp
+								capitalization: Font.Capitalize
+							}
+						}
+					}
+					RowLayout {
+						spacing: 8 * DefaultStyle.dp
+						Image {
+							Layout.preferredWidth: 24 * DefaultStyle.dp
+							Layout.preferredHeight: 24 * DefaultStyle.dp
+							source: AppIcons.globe
+						}
+						Text {
+							text: qsTr("Time zone: ") + (mainItem.selectedConference ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
+							font {
+								pixelSize: 14 * DefaultStyle.dp
+								capitalization: Font.Capitalize
+							}
+						}
+					}
+				}
+			}
+			Section {
+				visible: mainItem.selectedConference && mainItem.selectedConference.core.description.length != 0
+				content: RowLayout {
+					spacing: 8 * DefaultStyle.dp
+					EffectImage {
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						imageSource: AppIcons.note
+						colorizationColor: DefaultStyle.main2_600
+					}
+					Text {
+						text: mainItem.selectedConference ? mainItem.selectedConference.core.description : ""
+						Layout.fillWidth: true
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							capitalization: Font.Capitalize
+						}
+					}
+				}
+			}
+			Section {
+				content: RowLayout {
+					spacing: 8 * DefaultStyle.dp
+					EffectImage {
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						imageSource: AppIcons.userRectangle
+						colorizationColor: DefaultStyle.main2_600
+					}
+					Avatar {
+						Layout.preferredWidth: 45 * DefaultStyle.dp
+						Layout.preferredHeight: 45 * DefaultStyle.dp
+						address: mainItem.selectedConference ? mainItem.selectedConference.core.organizerAddress : ""
+					}
+					Text {
+						text: mainItem.selectedConference ? mainItem.selectedConference.core.organizerName : ""
+						font {
+							pixelSize: 14 * DefaultStyle.dp
+							capitalization: Font.Capitalize
+						}
+					}
+				}
+			}
+			Section {
+				content: RowLayout {
+					Layout.preferredHeight: participantList.height
+					width: 393 * DefaultStyle.dp
+					spacing: 8 * DefaultStyle.dp
+					Image {
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+						Layout.topMargin: 20 * DefaultStyle.dp
+						source: AppIcons.usersTwo
+					}
+					ListView {
+						id: participantList
+						Layout.preferredHeight: Math.min(184 * DefaultStyle.dp, contentHeight)
+						Layout.fillWidth: true
+						model: mainItem.selectedConference ? mainItem.selectedConference.core.participants : []
+						clip: true
+						delegate: RowLayout {
+							height: 56 * DefaultStyle.dp
+							width: participantList.width
+							Avatar {
+								Layout.preferredWidth: 45 * DefaultStyle.dp
+								Layout.preferredHeight: 45 * DefaultStyle.dp
+								address: modelData.address
+							}
+							Text {
+								text: modelData.displayName
+								Layout.fillWidth: true
+								font {
+									pixelSize: 14 * DefaultStyle.dp
+									capitalization: Font.Capitalize
+								}
+							}
+							Text {
+								text: qsTr("Organizer")
+								visible: mainItem.selectedConference && mainItem.selectedConference.core.organizerAddress === modelData.address
+								color: DefaultStyle.main2_400
+								font {
+									pixelSize: 12 * DefaultStyle.dp
+									weight: 300 * DefaultStyle.dp
+								}
+							}
+						}
+					}
+				}
+			}
+			Button {
+				Layout.fillWidth: true
+				text: qsTr("Rejoindre la réunion")
+				topPadding: 11 * DefaultStyle.dp
+				bottomPadding: 11 * DefaultStyle.dp
+				onClicked: {
+					console.log(mainItem.selectedConference.core.uri)
+					UtilsCpp.setupConference(mainItem.selectedConference)
+				}
+			}
+			Item { Layout.fillHeight: true}
 		}
 	}
 }
