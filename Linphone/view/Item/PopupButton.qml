@@ -41,20 +41,25 @@ Button {
 	}
 	Control.Popup {
 		id: popup
-		x: - width
+		x: 0
 		y: mainItem.height
 		closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside
 		padding: 10 * DefaultStyle.dp
 		parent: mainItem	// Explicit define for coordinates references.
 
-		onAboutToShow: {
+		onVisibleChanged: {
+			if (!visible) return
 			// Do not use popup.height as it is not consistent.
-			var position = mainItem.mapToItem(mainItem.Window.contentItem, mainItem.x, mainItem.y + mainItem.height + popup.implicitContentHeight + popup.padding)
+			var position = mainItem.mapToItem(mainItem.Window.contentItem, mainItem.x + popup.implicitContentWidth + popup.padding, mainItem.y + mainItem.height + popup.implicitContentHeight + popup.padding)
 			if (position.y >= mainItem.Window.height) {
-				position = mainItem.Window.contentItem.mapToItem(mainItem, 0,0)
-				y = position.y
+				y = -mainItem.height - popup.implicitContentHeight
 			}else {
-				y = mainItem.height
+				y = mainItem.height + popup.padding
+			}
+			if (position.x >= mainItem.Window.width) {
+				x = -popup.implicitContentWidth
+			} else {
+				x = 0
 			}
 		}
 

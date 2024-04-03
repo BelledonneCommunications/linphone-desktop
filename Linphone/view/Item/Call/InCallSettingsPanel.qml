@@ -9,7 +9,6 @@ ColumnLayout {
 	property CallGui call
 	onCallChanged: {
 		if (call) {
-			console.log("============================== volume ", speakerVolume.value, microVolume.value)
 			call.core.lSetOutputAudioDevice(outputAudioDeviceCBox.currentText)
 			call.core.lSetSpeakerVolumeGain(speakerVolume.value)
 			call.core.lSetInputAudioDevice(inputAudioDeviceCBox.currentText)

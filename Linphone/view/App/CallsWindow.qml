@@ -26,9 +26,9 @@ Window {
 		console.log("CALL", call)
 		// if conference, the main item is only
 		// displayed when state is connected
-		//if (call && middleItemStackView.currentItem != inCallItem) middleItemStackView.replace(inCallItem)
+		if (!conferenceInfo)
+			if (call && middleItemStackView.currentItem != inCallItem) middleItemStackView.replace(inCallItem)
 	}
-	//Component.onCompleted: if (call && !conferenceInfo && middleItemStackView.currentItem != inCallItem) middleItemStackView.replace(inCallItem)
 	property var callObj
 
 	function joinConference(withVideo) {
@@ -702,7 +702,6 @@ Window {
 						}
 					}
 				}
-				
 			}
 			Component {
 				id: waitingRoom
@@ -732,10 +731,6 @@ Window {
 					onJoinConfRequested: mainWindow.joinConference(cameraEnabled)
 				}
 			}
-			
-			
-			
-			
 			Component {
 				id: inCallItem
 				Item {
@@ -761,20 +756,17 @@ Window {
 					Component.onCompleted: console.log("New inCallItem " + inCallItem)
 				}
 			}
-			GridLayout {
+			RowLayout {
 				id: bottomButtonsLayout
-				rows: 1
-				columns: 3
 				Layout.alignment: Qt.AlignHCenter
-				layoutDirection: Qt.LeftToRight
-				columnSpacing: 20 * DefaultStyle.dp
+				spacing: 20 * DefaultStyle.dp
 				visible: mainWindow.call && !mainWindow.conferenceInfo
 
 				function refreshLayout() {
 					if (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning) {
-						bottomButtonsLayout.layoutDirection = Qt.RightToLeft
 						connectedCallButtons.visible = bottomButtonsLayout.visible
 						moreOptionsButton.visible = bottomButtonsLayout.visible
+						bottomButtonsLayout.layoutDirection = Qt.RightToLeft
 					}
 					else if (mainWindow.callState === LinphoneEnums.CallState.OutgoingInit) {
 						connectedCallButtons.visible = false
@@ -952,7 +944,7 @@ Window {
 							target: moreOptionsButton.popup
 							onOpened: {
 								console.log("y", moreOptionsButton.y, moreOptionsButton.popup.y, moreOptionsButton.popup.height)
-								moreOptionsButton.popup.y = - moreOptionsButton.popup.height + moreOptionsButton.height/4
+								moreOptionsButton.popup.y = - moreOptionsButton.popup.height - moreOptionsButton.popup.padding
 							}
 						}
 						component MenuButton: Button {

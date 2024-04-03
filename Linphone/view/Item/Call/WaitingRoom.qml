@@ -75,7 +75,7 @@ RowLayout {
 					iconUrl: AppIcons.speaker
 					checkedIconUrl: AppIcons.speakerSlash
 					color: DefaultStyle.grey_500
-					contentImageColor: checked ? DefaultStyle.grey_500 : DefaultStyle.grey_0
+					contentImageColor: DefaultStyle.main2_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					icon.width: 32 * DefaultStyle.dp
