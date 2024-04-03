@@ -42,7 +42,6 @@ class CameraGui : public QQuickFramebufferObject, public AbstractObject {
 	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged)
 	// Q_PROPERTY(SoundPlayer * linphonePlayer READ getLinphonePlayer WRITE setLinphonePlayer NOTIFY
 	// linphonePlayerChanged)
-	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged REQUIRED)
 
 	typedef enum { None = -1, CorePreview = 0, Call, Device, Player, Core } WindowIdLocation;
 
@@ -66,8 +65,6 @@ public:
 	void setCallGui(CallGui *callGui);
 	ParticipantDeviceGui *getParticipantDeviceGui() const;
 	void setParticipantDeviceGui(ParticipantDeviceGui *participantDeviceGui);
-	QString getQmlName() const;
-	void setQmlName(const QString &name);
 	WindowIdLocation getSourceLocation() const;
 	void setWindowIdLocation(const WindowIdLocation &location);
 
@@ -75,6 +72,8 @@ public:
 	void removeParticipantDeviceModel();
 	void removeCallModel();
 	void removeLinphonePlayer();
+
+	void callStateChanged(LinphoneEnums::CallState state);
 
 signals:
 	void requestNewRenderer();
@@ -85,7 +84,6 @@ signals:
 	void participantDeviceGuiChanged(ParticipantDeviceGui *participantDeviceGui);
 	void videoDefinitionChanged();
 	// void linphonePlayerChanged(SoundPlayer * linphonePlayer);
-	void qmlNameChanged();
 
 private:
 	bool mIsPreview = false;
@@ -96,13 +94,13 @@ private:
 	QTimer mLastVideoDefinitionChecker;
 	CallGui *mCallGui = nullptr;
 	ParticipantDeviceGui *mParticipantDeviceGui = nullptr;
-	QString mQmlName;
 
 	WindowIdLocation mWindowIdLocation = None;
 	mutable bool mIsWindowIdSet = false;
 	bool mIsDeleting = false;
 
 	DECLARE_ABSTRACT_OBJECT
+	DECLARE_GUI_OBJECT
 };
 
 #endif

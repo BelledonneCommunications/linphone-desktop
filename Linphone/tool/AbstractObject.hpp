@@ -34,11 +34,35 @@
 		return gClassName;                                                                                             \
 	}
 
+#define DECLARE_GUI_OBJECT                                                                                             \
+Q_SIGNALS:                                                                                                             \
+    void qmlNameChanged();                                                                                             \
+                                                                                                                       \
+public:                                                                                                                \
+	Q_PROPERTY(QString qmlName READ getQmlName WRITE setQmlName NOTIFY qmlNameChanged)                                 \
+	QString getQmlName() const;                                                                                        \
+	void setQmlName(const QString &name);                                                                              \
+	QString mQmlName;                                                                                                  \
+	virtual inline QString log() const override {                                                                      \
+		return AbstractObject::log().arg(QStringLiteral("%1 %2").arg(getQmlName()).arg("%1"));                         \
+	}
+
+#define DEFINE_GUI_OBJECT(CLASS_NAME)                                                                                  \
+	QString CLASS_NAME::getQmlName() const {                                                                           \
+		return mQmlName;                                                                                               \
+	}                                                                                                                  \
+	void CLASS_NAME::setQmlName(const QString &name) {                                                                 \
+		if (mQmlName != name) {                                                                                        \
+			mQmlName = name;                                                                                           \
+			emit qmlNameChanged();                                                                                     \
+		}                                                                                                              \
+	}
+
 class AbstractObject {
 public:
 	virtual QString getClassName() const = 0;
 	// return "[ClassName]: %1"
-	inline QString log() const {
+	virtual inline QString log() const {
 		return QStringLiteral("[%1]: %2").arg(getClassName()).arg("%1");
 	}
 	inline static bool isInLinphoneThread() {

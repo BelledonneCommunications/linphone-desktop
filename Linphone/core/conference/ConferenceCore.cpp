@@ -102,7 +102,7 @@ ParticipantDeviceCore *ConferenceCore::getActiveSpeaker() const {
 }
 
 ParticipantDeviceGui *ConferenceCore::getActiveSpeakerGui() const {
-	return new ParticipantDeviceGui(mActiveSpeaker);
+	return mActiveSpeaker ? new ParticipantDeviceGui(mActiveSpeaker) : nullptr;
 }
 
 ParticipantGui *ConferenceCore::getMeGui() const {

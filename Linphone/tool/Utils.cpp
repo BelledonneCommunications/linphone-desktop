@@ -304,7 +304,7 @@ QString Utils::generateLinphoneSipAddress(const QString &uri) {
 QString Utils::findAvatarByAddress(const QString &address) {
 	QString avatar;
 
-	App::postModelSync([address, avatar]() mutable {
+	App::postModelBlock([address, avatar]() mutable {
 		auto defaultFriendList = CoreModel::getInstance()->getCore()->getDefaultFriendList();
 		if (!defaultFriendList) return;
 		auto linphoneAddr = ToolModel::interpretUrl(address);

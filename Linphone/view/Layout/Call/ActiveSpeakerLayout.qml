@@ -17,6 +17,8 @@ Item{
 	
 	property ParticipantDeviceProxy participantDevices : ParticipantDeviceProxy {
 			id: allDevices
+			qmlName: "AS"
+			Component.onCompleted: console.log("Loaded : " +allDevices)
 	}
 	onCallChanged: {
 		waitingTime.seconds = 0
@@ -102,7 +104,10 @@ Item{
 	}
 	Sticker {
 		id: preview
-		visible: allDevices.count <= 2
+		qmlName: 'P'
+		previewEnabled: true
+		visible: mainItem.call && allDevices.count <= 2
+		onVisibleChanged: console.log(visible + " : " +allDevices.count)
 		height: 180 * DefaultStyle.dp
 		width: 300 * DefaultStyle.dp
 		anchors.right: mainItem.right
@@ -110,9 +115,10 @@ Item{
 		anchors.rightMargin: 10 * DefaultStyle.dp
 		anchors.bottomMargin: 10 * DefaultStyle.dp
 		//participantDevice: allDevices.me
-		cameraEnabled: visible && mainItem.call && mainItem.call.core.cameraEnabled
-		previewEnabled: true
-		qmlName: 'P'
+		cameraEnabled: preview.visible && mainItem.call && mainItem.call.core.cameraEnabled
+		onCameraEnabledChanged: console.log("P : " +cameraEnabled + " / " +visible +" / " +mainItem.call)
+
+		call: mainItem.call
 
 		MovableMouseArea {
 			id: previewMouseArea

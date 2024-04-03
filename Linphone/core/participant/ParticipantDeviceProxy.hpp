@@ -35,6 +35,7 @@ class ParticipantDeviceProxy : public SortFilterProxy, public AbstractObject {
 	Q_PROPERTY(ParticipantDeviceGui *me READ getMe WRITE setMe NOTIFY meChanged)
 
 public:
+	DECLARE_GUI_OBJECT
 	ParticipantDeviceProxy(QObject *parent = Q_NULLPTR);
 	~ParticipantDeviceProxy();
 

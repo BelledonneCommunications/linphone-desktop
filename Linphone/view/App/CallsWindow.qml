@@ -26,9 +26,9 @@ Window {
 		console.log("CALL", call)
 		// if conference, the main item is only
 		// displayed when state is connected
-		if (call && !conferenceInfo) middleItemStackView.replace(inCallItem)
+		//if (call && middleItemStackView.currentItem != inCallItem) middleItemStackView.replace(inCallItem)
 	}
-	Component.onCompleted: if (call && !conferenceInfo) middleItemStackView.replace(inCallItem)
+	//Component.onCompleted: if (call && !conferenceInfo && middleItemStackView.currentItem != inCallItem) middleItemStackView.replace(inCallItem)
 	property var callObj
 
 	function joinConference(withVideo) {
@@ -63,7 +63,7 @@ Window {
 	onCallStateChanged: {
 		console.log("State:", callState)
 		if (callState === LinphoneEnums.CallState.Connected) {
-			if (conferenceInfo) {
+			if (conferenceInfo && middleItemStackView.currentItem != inCallItem) {
 				middleItemStackView.replace(inCallItem)
 				bottomButtonsLayout.visible = true
 			}
@@ -678,7 +678,7 @@ Window {
 			
 			Component {
 				id: inCallItem
-				Control.Control {
+				Item {
 					Layout.fillWidth: true
 					implicitWidth: 1059 * DefaultStyle.dp
 					// implicitHeight: parent.height
@@ -693,10 +693,12 @@ Window {
 						color: DefaultStyle.grey_600
 						radius: 15 * DefaultStyle.dp
 					}*/
-					contentItem: CallLayout{
+					CallLayout{
+						anchors.fill: parent
 						call: mainWindow.call
 						callTerminatedByUser: mainWindow.callTerminatedByUser
 					}
+					Component.onCompleted: console.log("New inCallItem " + inCallItem)
 				}
 			}
 			GridLayout {

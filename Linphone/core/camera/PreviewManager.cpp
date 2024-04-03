@@ -25,6 +25,9 @@
 
 #include "../App.hpp"
 #include "PreviewManager.hpp"
+#include "tool/Utils.hpp"
+
+DEFINE_ABSTRACT_OBJECT(PreviewManager)
 
 // =============================================================================
 PreviewManager *PreviewManager::gInstance = nullptr;
@@ -59,8 +62,11 @@ QQuickFramebufferObject::Renderer *PreviewManager::subscribe(const CameraGui *ca
 		connect(candidate, &QObject::destroyed, this, qOverload<QObject *>(&PreviewManager::unsubscribe));
 		mCandidates.append({candidate, nullptr});
 		itCandidate = mCandidates.end() - 1;
+		lDebug() << log().arg("Subscribing New") << itCandidate->first->getQmlName();
+	} else {
+		lDebug() << log().arg("Resubscribing") << itCandidate->first->getQmlName();
 	}
-	App::postModelSync([&renderer, isFirst = (itCandidate == mCandidates.begin())]() {
+	App::postModelBlock([&renderer, isFirst = (itCandidate == mCandidates.begin())]() {
 		renderer =
 		    (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
 		if (isFirst) CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
@@ -78,16 +84,20 @@ void PreviewManager::unsubscribe(const CameraGui *candidate) { // If nullptr, Us
 		                                return item.first == candidate;
 	                                });
 	if (itCandidate != mCandidates.end()) {
+		lDebug() << log().arg("Unsubscribing") << itCandidate->first->getQmlName();
 		disconnect(candidate, nullptr, this, nullptr);
 		if (mCandidates.size() == 1) {
 			mCandidates.erase(itCandidate);
 			deactivate();
 		} else if (mCandidates.begin() == itCandidate) {
 			mCandidates.erase(itCandidate);
-			qWarning() << "Update " << mCandidates.first().first->getQmlName();
-			App::postModelSync([renderer = mCandidates.first().second]() {
-				CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
-			});
+			lDebug() << log().arg("Update") << mCandidates.first().first->getQmlName();
+			auto renderer = mCandidates.first().second;
+			if (!renderer) QTimer::singleShot(1, mCandidates.first().first, &CameraGui::requestNewRenderer);
+			else
+				App::postModelBlock([renderer = mCandidates.first().second]() {
+					CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
+				});
 		} else {
 			mCandidates.erase(itCandidate);
 		}

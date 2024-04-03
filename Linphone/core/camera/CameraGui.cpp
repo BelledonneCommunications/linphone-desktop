@@ -31,8 +31,10 @@
 #include "core/call/CallGui.hpp"
 #include "core/participant/ParticipantDeviceCore.hpp"
 #include "core/participant/ParticipantDeviceGui.hpp"
+#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(CameraGui)
+DEFINE_GUI_OBJECT(CameraGui)
 
 // =============================================================================
 CameraGui::CameraGui(QQuickItem *parent) : QQuickFramebufferObject(parent) {
@@ -56,16 +58,17 @@ CameraGui::~CameraGui() {
 QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
 	auto renderer = createRenderer(false);
 	if (!renderer) {
-		qInfo() << log().arg("(%1) Setting Camera to Dummy, %2").arg(mQmlName).arg(getSourceLocation());
+		lInfo() << log().arg("(%1) Setting Camera to Dummy, %2").arg(mQmlName).arg(getSourceLocation());
 		QTimer::singleShot(1, this, &CameraGui::isNotReady);
 		renderer = new CameraDummy(); // Used to fill a renderer to avoid pushing a NULL.
-		QTimer::singleShot(1000, this, &CameraGui::requestNewRenderer);
+		if (getSourceLocation() != CorePreview) QTimer::singleShot(1000, this, &CameraGui::requestNewRenderer);
 	} else QTimer::singleShot(1, this, &CameraGui::isReady); // Hack because of constness of createRenderer()
 	return renderer;
 }
 
 QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId) const {
 	QQuickFramebufferObject::Renderer *renderer = NULL;
+	lDebug() << log().arg("CreateRenderer. Reset=") << resetWindowId;
 	// A renderer is mandatory, we cannot wait async.
 	switch (getSourceLocation()) {
 		case CorePreview: {
@@ -76,7 +79,7 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 			auto f = [qmlName = mQmlName, callGui = mCallGui, &renderer, resetWindowId]() {
 				auto call = callGui->getCore()->getModel()->getMonitor();
 				if (call) {
-					qInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
+					lInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
 					        << " Camera to CallModel";
 					if (resetWindowId) {
 						renderer = (QQuickFramebufferObject::Renderer *)call->getNativeVideoWindowId();
@@ -87,15 +90,13 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 					}
 				}
 			};
-			if (mIsDeleting) {
-				App::postModelBlock(f);
-			} else App::postModelSync(f);
+			App::postModelBlock(f);
 		} break;
 		case Device: {
 			auto f = [qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, &renderer, resetWindowId]() {
 				auto device = participantDeviceGui->getCore()->getModel()->getMonitor();
 				if (device) {
-					qInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
+					lInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
 					        << " Camera to ParticipantDeviceModel";
 					if (resetWindowId) {
 					} else {
@@ -104,9 +105,7 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 					}
 				}
 			};
-			if (mIsDeleting) {
-				App::postModelBlock(f);
-			} else App::postModelSync(f);
+			App::postModelBlock(f);
 		} break;
 		default: {
 		}
@@ -129,22 +128,12 @@ void CameraGui::checkVideoDefinition() { /*
 	 }*/
 }
 
-QString CameraGui::getQmlName() const {
-	return mQmlName;
-}
-
-void CameraGui::setQmlName(const QString &name) {
-	if (name != mQmlName) {
-		mQmlName = name;
-		emit qmlNameChanged();
-	}
-}
-
 bool CameraGui::getIsReady() const {
 	return mIsReady;
 }
 void CameraGui::setIsReady(bool isReady) {
 	if (mIsReady != isReady) {
+		lDebug() << log().arg("Set IsReady") << isReady;
 		mIsReady = isReady;
 		emit isReadyChanged(mIsReady);
 	}
@@ -175,8 +164,10 @@ CallGui *CameraGui::getCallGui() const {
 
 void CameraGui::setCallGui(CallGui *callGui) {
 	if (mCallGui != callGui) {
+		if (mCallGui) disconnect(mCallGui->getCore(), &CallCore::stateChanged, this, &CameraGui::callStateChanged);
 		mCallGui = callGui;
-		qDebug() << "Set Call " << mCallGui;
+		if (mCallGui) connect(mCallGui->getCore(), &CallCore::stateChanged, this, &CameraGui::callStateChanged);
+		lDebug() << log().arg("Set Call") << mCallGui;
 		emit callGuiChanged(mCallGui);
 		updateWindowIdLocation();
 	}
@@ -189,7 +180,7 @@ ParticipantDeviceGui *CameraGui::getParticipantDeviceGui() const {
 void CameraGui::setParticipantDeviceGui(ParticipantDeviceGui *deviceGui) {
 	if (mParticipantDeviceGui != deviceGui) {
 		mParticipantDeviceGui = deviceGui;
-		qDebug() << log().arg("Set Device %1").arg((quint64)mParticipantDeviceGui);
+		lDebug() << log().arg("Set Device") << mParticipantDeviceGui;
 		// setIsPreview(mParticipantDeviceGui->getCore()->isLocal());
 		emit participantDeviceGuiChanged(mParticipantDeviceGui);
 		updateWindowIdLocation();
@@ -202,13 +193,9 @@ CameraGui::WindowIdLocation CameraGui::getSourceLocation() const {
 
 void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 	if (mWindowIdLocation != location) {
-		qDebug() << log()
-		                .arg("( %1 ) Update Window Id location from %2 to %3")
-		                .arg(mQmlName)
-		                .arg(mWindowIdLocation)
-		                .arg(location);
+		lDebug() << log().arg("Update Window Id location from %2 to %3").arg(mWindowIdLocation).arg(location);
 		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->unsubscribe(this);
-		resetWindowId(); // Location change: Reset old window ID.
+		else resetWindowId(); // Location change: Reset old window ID.
 		mWindowIdLocation = location;
 		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->subscribe(this);
 		update();
@@ -226,4 +213,13 @@ void CameraGui::updateWindowIdLocation() {
 	else if (mParticipantDeviceGui && !mParticipantDeviceGui->getCore()->isLocal())
 		setWindowIdLocation(WindowIdLocation::Device);
 	else setWindowIdLocation(WindowIdLocation::CorePreview);
+}
+
+void CameraGui::callStateChanged(LinphoneEnums::CallState state) {
+	if (getSourceLocation() == CorePreview && state == LinphoneEnums::CallState::Connected) {
+		if (!getIsReady()) {
+			lDebug() << log().arg("Request new renderer because of not being Ready on CallState as Connected");
+			emit requestNewRenderer();
+		}
+	}
 }

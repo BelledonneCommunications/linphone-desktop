@@ -32,7 +32,6 @@ class ParticipantDeviceGui : public QObject, public AbstractObject {
 
 public:
 	ParticipantDeviceGui(QSharedPointer<ParticipantDeviceCore> core);
-	ParticipantDeviceGui(QObject *parent = nullptr);
 	~ParticipantDeviceGui();
 	ParticipantDeviceCore *getCore() const;
 	QSharedPointer<ParticipantDeviceCore> mCore;

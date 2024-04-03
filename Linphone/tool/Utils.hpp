@@ -21,6 +21,7 @@
 #ifndef UTILS_H_
 #define UTILS_H_
 
+#include <QDebug>
 #include <QObject>
 #include <QString>
 
@@ -137,5 +138,11 @@ public:
 		return (volume - VuMin) / (VuMax - VuMin);
 	}
 };
+
+#define lDebug() qDebug().noquote()
+#define lInfo() qInfo().noquote()
+#define lWarning() qWarning().noquote()
+#define lCritical() qCritical().noquote()
+#define lFatal() qFatal().noquote()
 
 #endif // UTILS_H_

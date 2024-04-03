@@ -22,6 +22,7 @@
 #define PREVIEW_MANAGER_H_
 
 #include "CameraGui.hpp"
+#include "tool/AbstractObject.hpp"
 #include <QMutex>
 #include <QObject>
 #include <QPair>
@@ -34,7 +35,7 @@
 
 // =============================================================================
 
-class PreviewManager : public QObject {
+class PreviewManager : public QObject, public AbstractObject {
 	Q_OBJECT
 public:
 	PreviewManager(QObject *parent = nullptr);
@@ -55,6 +56,7 @@ private:
 	QList<QPair<const CameraGui *, QQuickFramebufferObject::Renderer *>> mCandidates;
 	static PreviewManager *gInstance;
 	QQuickFramebufferObject::Renderer *mPreviewRenderer = nullptr;
+	DECLARE_ABSTRACT_OBJECT
 };
 
 #endif

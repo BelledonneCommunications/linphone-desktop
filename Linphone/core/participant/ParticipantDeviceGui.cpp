@@ -23,9 +23,6 @@
 
 DEFINE_ABSTRACT_OBJECT(ParticipantDeviceGui)
 
-ParticipantDeviceGui::ParticipantDeviceGui(QObject *parent) : QObject(parent) {
-	mCore = ParticipantDeviceCore::create(nullptr);
-}
 ParticipantDeviceGui::ParticipantDeviceGui(QSharedPointer<ParticipantDeviceCore> core) {
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;

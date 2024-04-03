@@ -23,7 +23,7 @@ Item {
 	property int radius: 15 * DefaultStyle.dp
 	property var peerAddressObj: participantDevice && participantDevice.core
 									? UtilsCpp.getDisplayName(participantDevice.core.address)
-									: call && call.core
+									: !previewEnabled && call && call.core
 										? UtilsCpp.getDisplayName(call.core.peerAddress)
 										: null
 	property string peerAddress:peerAddressObj ? peerAddressObj.value : ""
@@ -47,7 +47,7 @@ Item {
 				height: 100
 				width: height
 				account: mainItem.account
-				call: mainItem.call
+				call: !mainItem.previewEnabled ? mainItem.call : null
 			}
 			Text {
 				Layout.alignment: Qt.AlignHCenter

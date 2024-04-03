@@ -21,12 +21,14 @@
 #include "ParticipantDeviceProxy.hpp"
 #include "ParticipantDeviceList.hpp"
 #include "core/App.hpp"
+#include "tool/Utils.hpp"
 
 #include <QQmlApplicationEngine>
 
 // =============================================================================
 
 DEFINE_ABSTRACT_OBJECT(ParticipantDeviceProxy)
+DEFINE_GUI_OBJECT(ParticipantDeviceProxy)
 
 ParticipantDeviceProxy::ParticipantDeviceProxy(QObject *parent) : SortFilterProxy(parent) {
 	mParticipants = ParticipantDeviceList::create();
@@ -45,11 +47,17 @@ CallGui *ParticipantDeviceProxy::getCurrentCall() const {
 }
 
 void ParticipantDeviceProxy::setCurrentCall(CallGui *call) {
-	qDebug() << "[ParticipantDeviceProxy] set current call " << this << " => " << call;
+	lDebug() << log().arg("Set current call") << this << " => " << call;
 	if (mCurrentCall != call) {
 		CallCore *callCore = nullptr;
 		if (mCurrentCall) {
 			callCore = mCurrentCall->getCore();
+			if (call && callCore == call->getCore()) {
+				mCurrentCall = call;
+				lDebug() << log().arg("Same call core");
+				emit currentCallChanged();
+				return;
+			}
 			if (callCore) callCore->disconnect(mParticipants.get());
 			callCore = nullptr;
 		}
@@ -58,12 +66,12 @@ void ParticipantDeviceProxy::setCurrentCall(CallGui *call) {
 		if (callCore) {
 			connect(callCore, &CallCore::conferenceChanged, mParticipants.get(), [this]() {
 				auto conference = mCurrentCall->getCore()->getConferenceCore();
-				qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+				lDebug() << log().arg("Set conference") << this << " => " << conference;
 				mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
 				// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
 			});
 			auto conference = callCore->getConferenceCore();
-			qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+			lDebug() << log().arg("Set conference") << this << " => " << conference;
 			mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
 			// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
 		}

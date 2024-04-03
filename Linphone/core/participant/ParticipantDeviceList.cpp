@@ -92,26 +92,28 @@ QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::findDeviceByUniqueA
 
 void ParticipantDeviceList::setConferenceModel(const std::shared_ptr<ConferenceModel> &conferenceModel) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	mConferenceModel = conferenceModel;
-	qDebug() << log().arg("Set Conference %1").arg((quint64)mConferenceModel.get());
-	if (mConferenceModelConnection->mCore.lock()) {          // Unsure to get myself
-		auto oldConnect = mConferenceModelConnection->mCore; // Setself rebuild safepointer
-		setSelf(mConferenceModelConnection->mCore.mQData);   // reset connections
-		oldConnect.unlock();
-	}
-	beginResetModel();
-	mList.clear();
-	endResetModel();
-	if (mConferenceModel) {
-		qDebug() << "[ParticipantDeviceList] : request devices";
-		mConferenceModelConnection->invokeToModel([this]() {
-			qDebug() << "[ParticipantDeviceList] : build devices";
-			auto devices = buildDevices(mConferenceModel);
-			mConferenceModelConnection->invokeToCore([this, devices]() {
-				qDebug() << "[ParticipantDeviceList] : set devices";
-				setDevices(devices);
+	if (mConferenceModel != conferenceModel) {
+		mConferenceModel = conferenceModel;
+		qDebug() << log().arg("Set Conference %1").arg((quint64)mConferenceModel.get());
+		if (mConferenceModelConnection->mCore.lock()) {          // Unsure to get myself
+			auto oldConnect = mConferenceModelConnection->mCore; // Setself rebuild safepointer
+			setSelf(mConferenceModelConnection->mCore.mQData);   // reset connections
+			oldConnect.unlock();
+		}
+		beginResetModel();
+		mList.clear();
+		endResetModel();
+		if (mConferenceModel) {
+			qDebug() << "[ParticipantDeviceList] : request devices";
+			mConferenceModelConnection->invokeToModel([this]() {
+				qDebug() << "[ParticipantDeviceList] : build devices";
+				auto devices = buildDevices(mConferenceModel);
+				mConferenceModelConnection->invokeToCore([this, devices]() {
+					qDebug() << "[ParticipantDeviceList] : set devices";
+					setDevices(devices);
+				});
 			});
-		});
+		}
 	}
 }
 
