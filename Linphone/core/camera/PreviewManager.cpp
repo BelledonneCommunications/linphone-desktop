@@ -66,11 +66,15 @@ QQuickFramebufferObject::Renderer *PreviewManager::subscribe(const CameraGui *ca
 	} else {
 		lDebug() << log().arg("Resubscribing") << itCandidate->first->getQmlName();
 	}
-	App::postModelBlock([&renderer, isFirst = (itCandidate == mCandidates.begin())]() {
-		renderer =
-		    (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
-		if (isFirst) CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
-	});
+	App::postModelBlock(
+	    [&renderer, isFirst = (itCandidate == mCandidates.begin()), name = itCandidate->first->getQmlName()]() {
+		    renderer =
+		        (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
+		    if (isFirst) {
+			    lDebug() << "[PreviewManager] " << name << " Set Native Preview Id";
+			    CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
+		    }
+	    });
 	itCandidate->second = renderer;
 	mCounterMutex.unlock();
 	return renderer;

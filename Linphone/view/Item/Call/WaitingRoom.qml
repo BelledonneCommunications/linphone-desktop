@@ -29,7 +29,7 @@ RowLayout {
 					id: accounts
 				}
 				account: accounts.defaultAccount
-				previewEnabled: mainItem.cameraEnabled
+				previewEnabled: true
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter

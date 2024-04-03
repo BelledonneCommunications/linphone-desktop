@@ -75,12 +75,13 @@ Item {
 		Loader{
 			id: cameraLoader
 			anchors.fill: parent
+			property bool reset: false
 			Timer{
 				id: resetTimer
 				interval: 1
-				onTriggered: {cameraLoader.active=false; cameraLoader.active=true;}
+				onTriggered: {cameraLoader.reset=true; cameraLoader.reset=false;}
 			}
-			active: mainItem.visible && mainItem.cameraEnabled
+			active: mainItem.visible && mainItem.cameraEnabled && !mainItem.reset
 			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active)
 			sourceComponent: cameraComponent
 		}

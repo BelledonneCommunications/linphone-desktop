@@ -96,9 +96,9 @@ Item{
 					qmlName: 'M_'+index
 					
 					participantDevice: modelData
-					cameraEnabled: visible
+					cameraEnabled: mainItem.call.core.cameraEnabled
 					Component.onCompleted: console.log(modelData.core.address)
-					//previewEnabled: mainItem.call.core.cameraEnabled
+					previewEnabled: index == 0
 				}
 		}
 	}
