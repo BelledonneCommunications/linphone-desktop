@@ -18,6 +18,8 @@ LoginLayout {
 			Layout.preferredHeight: 27 * DefaultStyle.dp
 			Layout.preferredWidth: 27 * DefaultStyle.dp
 			icon.source: AppIcons.leftArrow
+			icon.width: 27 * DefaultStyle.dp
+			icon.height: 27 * DefaultStyle.dp
 			background: Rectangle {
 				color: "transparent"
 			}

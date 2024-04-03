@@ -16,15 +16,13 @@ AbstractMainPage {
 	property ConferenceInfoGui selectedConference
 	property int meetingListCount
 	signal newConfCreated()
-	onVisibleChanged: if (visible) rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
+	Component.onCompleted: rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
 
 	onSelectedConferenceChanged: {
 		overridenRightPanelStackView.clear()
 		if (selectedConference) {
 			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem.objectName != "meetingDetail") overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
-		}// else {
-			/*if (overridenRightPanelStackView.currentItem && overridenRightPanelStackView.currentItem.objectName === "meetingDetail")*/ 
-		// }
+		}
 	}
 
 	Connections {
@@ -128,8 +126,8 @@ AbstractMainPage {
 					icon.source: AppIcons.plusCircle
 					Layout.preferredWidth: 30 * DefaultStyle.dp
 					Layout.preferredHeight: 30 * DefaultStyle.dp
-					width: 30 * DefaultStyle.dp
-					height: 30 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
 					onClicked: {
 						mainItem.setUpConference()
 					}
@@ -298,6 +296,8 @@ AbstractMainPage {
 						visible: mainItem.selectedConference && UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
 						Layout.preferredWidth: 24 * DefaultStyle.dp
 						Layout.preferredHeight: 24 * DefaultStyle.dp
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
 						icon.source: AppIcons.pencil
 						contentImageColor: DefaultStyle.main1_500_main
 						background: Item{}
@@ -379,6 +379,8 @@ AbstractMainPage {
 						Button {
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
 							background: Item{}
 							icon.source: AppIcons.shareNetwork
 							onClicked: {

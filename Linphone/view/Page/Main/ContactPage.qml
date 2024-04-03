@@ -84,8 +84,8 @@ AbstractMainPage {
 				icon.source: AppIcons.plusCircle
 				Layout.preferredWidth: 30 * DefaultStyle.dp
 				Layout.preferredHeight: 30 * DefaultStyle.dp
-				width: 30 * DefaultStyle.dp
-				height: 30 * DefaultStyle.dp
+				icon.width: 30 * DefaultStyle.dp
+				icon.height: 30 * DefaultStyle.dp
 				onClicked: {
 					mainItem.createContact("", "")
 				}
@@ -161,6 +161,8 @@ AbstractMainPage {
 									icon.source: favoriteList.visible ? AppIcons.upArrow : AppIcons.downArrow
 									Layout.preferredWidth: 24 * DefaultStyle.dp
 									Layout.preferredHeight: 24 * DefaultStyle.dp
+									icon.width: 24 * DefaultStyle.dp
+									icon.height: 24 * DefaultStyle.dp
 									onClicked: favoriteList.visible = !favoriteList.visible
 								}
 							}
@@ -203,6 +205,8 @@ AbstractMainPage {
 									icon.source: contactList.visible ? AppIcons.upArrow : AppIcons.downArrow
 									Layout.preferredWidth: 24 * DefaultStyle.dp
 									Layout.preferredHeight: 24 * DefaultStyle.dp
+									icon.width: 24 * DefaultStyle.dp
+									icon.height: 24 * DefaultStyle.dp
 									onClicked: contactList.visible = !contactList.visible
 								}
 							}
@@ -253,6 +257,8 @@ AbstractMainPage {
 				buttonContent: Button {
 					width: 24 * DefaultStyle.dp
 					height: 24 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
 					background: Item{}
 					onClicked: mainItem.editContact(mainItem.selectedContact)
 					icon.source: AppIcons.pencil
@@ -326,6 +332,8 @@ AbstractMainPage {
 												icon.source: AppIcons.phone
 												width: 24 * DefaultStyle.dp
 												height: 24 * DefaultStyle.dp
+												icon.width: 24 * DefaultStyle.dp
+												icon.height: 24 * DefaultStyle.dp
 												onClicked: {
 													callObj = UtilsCpp.createCall(modelData.address)
 												}

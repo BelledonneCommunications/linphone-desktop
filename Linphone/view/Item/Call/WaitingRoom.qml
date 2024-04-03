@@ -41,6 +41,8 @@ RowLayout {
 					contentImageColor: DefaultStyle.main2_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
+					icon.width: 32 * DefaultStyle.dp
+					icon.height: 32 * DefaultStyle.dp
 					onCheckedChanged: mainItem.cameraEnabled = !mainItem.cameraEnabled
 				}
 				CheckableButton {
@@ -51,6 +53,8 @@ RowLayout {
 					contentImageColor: DefaultStyle.main2_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
+					icon.width: 32 * DefaultStyle.dp
+					icon.height: 32 * DefaultStyle.dp
 					onCheckedChanged: mainItem.microEnabled = !mainItem.microEnabled
 				}
 				CheckableButton {
@@ -62,6 +66,8 @@ RowLayout {
 					contentImageColor: checked ? DefaultStyle.grey_500 : DefaultStyle.grey_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
 				}
 				CheckableButton {
 					id: speakerButton
@@ -72,6 +78,8 @@ RowLayout {
 					contentImageColor: checked ? DefaultStyle.grey_500 : DefaultStyle.grey_0
 					Layout.preferredWidth: 55 * DefaultStyle.dp
 					Layout.preferredHeight: 55 * DefaultStyle.dp
+					icon.width: 32 * DefaultStyle.dp
+					icon.height: 32 * DefaultStyle.dp
 				}
 			}
 		}

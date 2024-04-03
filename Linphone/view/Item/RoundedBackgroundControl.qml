@@ -11,9 +11,5 @@ Control.Control {
 		anchors.fill: parent
 		radius: 15 * DefaultStyle.dp
 		color: mainItem.backgroundColor
-		anchors.leftMargin: 10 * DefaultStyle.dp
-		anchors.rightMargin: 10 * DefaultStyle.dp
-		anchors.topMargin: 10 * DefaultStyle.dp
-		anchors.bottomMargin: 10 * DefaultStyle.dp
 	}
 }

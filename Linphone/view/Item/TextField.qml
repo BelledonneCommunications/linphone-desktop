@@ -106,6 +106,8 @@ Control.TextField {
 		icon.source: eyeButton.checked ? AppIcons.eyeShow : AppIcons.eyeHide
 		width: 20 * DefaultStyle.dp
 		height: 20 * DefaultStyle.dp
+		icon.width: 20 * DefaultStyle.dp
+		icon.height: 20 * DefaultStyle.dp
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right

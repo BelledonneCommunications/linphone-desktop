@@ -45,8 +45,10 @@ ListView {
 				Layout.fillWidth: true
 			}
 			Button {
-				Layout.preferredWidth: 10 * DefaultStyle.dp
+				Layout.preferredWidth: 20 * DefaultStyle.dp
 				Layout.preferredHeight: 20 * DefaultStyle.dp
+				icon.width: width
+				icon.height: height
 				background: Item{}
 				icon.source: AppIcons.leftArrow
 				onClicked: if (mainItem.currentIndex > 0) --mainItem.currentIndex
@@ -54,6 +56,8 @@ ListView {
 			Button {
 				Layout.preferredWidth: 20 * DefaultStyle.dp
 				Layout.preferredHeight: 20 * DefaultStyle.dp
+				icon.width: width
+				icon.height: height
 				background: Item{}
 				icon.source: AppIcons.rightArrow
 				onClicked: if (mainItem.currentIndex < mainItem.count) ++mainItem.currentIndex

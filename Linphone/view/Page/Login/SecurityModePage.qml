@@ -45,7 +45,7 @@ LoginLayout {
 					{checked: true, title: qsTr("Chiffrement de bout en bout"), text: qsTr("Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges."), imgUrl: AppIcons.chiffrement, color: DefaultStyle.info_500_main},
 					{checked: false, title: qsTr("Interoperable"), text: qsTr("Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP."), imgUrl: AppIcons.interoperable, color: DefaultStyle.main1_500_main}
 				]
-				RadioButton {
+				SecurityRadioButton {
 					title: modelData.title
 					contentText: modelData.text
 					imgUrl: modelData.imgUrl

@@ -82,6 +82,8 @@ Rectangle {
 		icon.source: dialerButton.checked ? AppIcons.dialerSelected : AppIcons.dialer
 		width: 24 * DefaultStyle.dp
 		height: 24 * DefaultStyle.dp
+		icon.width: 24 * DefaultStyle.dp
+		icon.height: 24 * DefaultStyle.dp
 		anchors.verticalCenter: parent.verticalCenter 
 		anchors.right: parent.right
 		anchors.rightMargin: 15 * DefaultStyle.dp
@@ -99,6 +101,8 @@ Rectangle {
 		width: 24 * DefaultStyle.dp
 		height: 24 * DefaultStyle.dp
 		icon.source: AppIcons.closeX
+		icon.width: 24 * DefaultStyle.dp
+		icon.height: 24 * DefaultStyle.dp
 		anchors.top: parent.top
 		anchors.bottom: parent.bottom
 		anchors.right: parent.right

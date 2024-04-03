@@ -15,8 +15,8 @@ LoginLayout {
 			Layout.preferredHeight: 24 * DefaultStyle.dp
     		Layout.preferredWidth: 24 * DefaultStyle.dp
 			icon.source: AppIcons.leftArrow
-			width: 24 * DefaultStyle.dp
-			height: 24 * DefaultStyle.dp
+			icon.width: 24 * DefaultStyle.dp
+			icon.height: 24 * DefaultStyle.dp
 			background: Item {
 				anchors.fill: parent
 			}

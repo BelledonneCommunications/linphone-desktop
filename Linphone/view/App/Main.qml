@@ -107,6 +107,8 @@ ApplicationWindow {
 						Button {
 							Layout.preferredWidth: 20 * DefaultStyle.dp
 							Layout.preferredHeight: 20 * DefaultStyle.dp
+							icon.width: 20 * DefaultStyle.dp
+							icon.height: 20 * DefaultStyle.dp
 							Layout.alignment: Qt.AlignTop | Qt.AlignRight
 							visible: informationPopup.hovered || hovered
 							background: Item{}

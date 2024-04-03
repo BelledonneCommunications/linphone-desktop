@@ -18,8 +18,6 @@ Control.Button {
 	property bool shadowEnabled: false
 	property var contentImageColor
 	hoverEnabled: true
-	icon.width: width
-	icon.height: height
 
 	// leftPadding: 20 * DefaultStyle.dp
 	// rightPadding: 20 * DefaultStyle.dp
@@ -105,12 +103,18 @@ Control.Button {
 
 		width: mainItem.width
 		RowLayout {
-			spacing: 10 * DefaultStyle.dp
-			ButtonImage{}
+			spacing: mainItem.spacing
+			ButtonImage{
+				Layout.preferredWidth: mainItem.icon.width
+				Layout.preferredHeight: mainItem.icon.height
+			}
 			ButtonText{}
 		}
 		ButtonText {}
-		ButtonImage{}
+		ButtonImage{
+			Layout.preferredWidth: mainItem.icon.width
+			Layout.preferredHeight: mainItem.icon.height
+		}
 		Item {
 			Layout.fillWidth : true
 			Layout.fillHeight : true

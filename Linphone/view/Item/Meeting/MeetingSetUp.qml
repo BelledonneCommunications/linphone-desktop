@@ -37,6 +37,8 @@ ColumnLayout {
 			icon.source: AppIcons.leftArrow
 			Layout.preferredWidth: 24 * DefaultStyle.dp
 			Layout.preferredHeight: 24 * DefaultStyle.dp
+			icon.width: 24 * DefaultStyle.dp
+			icon.height: 24 * DefaultStyle.dp
 			onClicked: mainItem.returnRequested()
 		}
 		TextInput {
@@ -118,6 +120,8 @@ ColumnLayout {
 		CheckableButton {
 			Layout.preferredWidth: 151 * DefaultStyle.dp
 			icon.source: AppIcons.usersThree
+			icon.width: 24 * DefaultStyle.dp
+			icon.height: 24 * DefaultStyle.dp
 			enabled: false
 			text: qsTr("Réunion")
 			checked: true
@@ -126,6 +130,8 @@ ColumnLayout {
 			Layout.preferredWidth: 151 * DefaultStyle.dp
 			enabled: false
 			icon.source: AppIcons.slide
+			icon.width: 24 * DefaultStyle.dp
+			icon.height: 24 * DefaultStyle.dp
 			text: qsTr("Broadcast")
 		}
 	}
@@ -477,6 +483,8 @@ ColumnLayout {
 						Button {
 							Layout.preferredWidth: 24 * DefaultStyle.dp
 							Layout.preferredHeight: 24 * DefaultStyle.dp
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
 							Layout.rightMargin: 10 * DefaultStyle.dp
 							background: Item{}
 							icon.source: AppIcons.closeX

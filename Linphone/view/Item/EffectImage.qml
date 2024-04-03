@@ -26,6 +26,8 @@ Loader {
 			sourceSize.height: height
 			width: mainItem.imageWidth
 			height: mainItem.imageHeight
+			Layout.preferredWidth: mainItem.imageWidth
+			Layout.preferredHeight: mainItem.imageHeight
 			anchors.centerIn: parent
 		}
 		MultiEffect {

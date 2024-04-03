@@ -81,5 +81,7 @@ QtObject {
 	property string globe: "image://internal/globe-hemisphere-west.svg"
 	property string slide: "image://internal/slideshow.svg"
 	property string busyIndicator: "image://internal/busy-indicator.svg"
-	property string meeting: "image://internal/reunion.svg"
+	property string pip: "image://internal/pip.svg"
+	property string waveform: "image://internal/waveform.svg"
+	property string squaresFour: "image://internal/squares-four.svg"
 }

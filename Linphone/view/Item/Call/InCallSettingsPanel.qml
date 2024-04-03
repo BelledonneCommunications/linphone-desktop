@@ -21,7 +21,6 @@ ColumnLayout {
 		Control.StackView.onActivated: {
 			rightPanelTitle.text = qsTr("Paramètres")
 		}
-		backgroundColor: DefaultStyle.main2_0
 		height: contentItem.implicitHeight + topPadding + bottomPadding
 		Layout.fillWidth: true
 		topPadding: 25 * DefaultStyle.dp

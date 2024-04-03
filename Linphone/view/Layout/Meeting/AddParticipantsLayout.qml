@@ -31,6 +31,8 @@ ColumnLayout {
 			contentImageColor: DefaultStyle.main1_500_main
 			Layout.preferredWidth: 24 * DefaultStyle.dp
 			Layout.preferredHeight: 24 * DefaultStyle.dp
+			icon.width: 24 * DefaultStyle.dp
+			icon.height: 24 * DefaultStyle.dp
 			onClicked: mainItem.returnRequested()
 		}
 		Text {
@@ -91,6 +93,8 @@ ColumnLayout {
 					Layout.preferredHeight: 24 * DefaultStyle.dp
 					background: Item{}
 					icon.source: AppIcons.closeX
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
 					contentImageColor: DefaultStyle.main1_500_main
 					onClicked: contactList.selectedContacts.splice(index, 1)
 				}

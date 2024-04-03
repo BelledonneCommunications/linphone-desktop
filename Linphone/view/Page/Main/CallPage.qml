@@ -118,6 +118,8 @@ AbstractMainPage {
 						icon.source: AppIcons.newCall
 						Layout.preferredWidth: 28 * DefaultStyle.dp
 						Layout.preferredHeight: 28 * DefaultStyle.dp
+						icon.width: 28 * DefaultStyle.dp
+						icon.height: 28 * DefaultStyle.dp
 						onClicked: {
 							console.debug("[CallPage]User: create new call")
 							listStackView.push(newCallItem)
@@ -265,6 +267,8 @@ AbstractMainPage {
 													icon.source: AppIcons.phone
 													Layout.preferredWidth: 24 * DefaultStyle.dp
 													Layout.preferredHeight: 24 * DefaultStyle.dp
+													icon.width: 24 * DefaultStyle.dp
+													icon.height: 24 * DefaultStyle.dp
 													onClicked: {
 														var addr = UtilsCpp.generateLinphoneSipAddress(modelData.core.remoteAddress)
 														callObj = UtilsCpp.createCall(addr)
@@ -333,6 +337,8 @@ AbstractMainPage {
 						Layout.preferredWidth: 24 * DefaultStyle.dp
 						Layout.preferredHeight: 24 * DefaultStyle.dp
 						icon.source: AppIcons.leftArrow
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
 						onClicked: {
 							console.debug("[CallPage]User: return to call history")
 							listStackView.pop()

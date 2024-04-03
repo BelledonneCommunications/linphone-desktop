@@ -17,8 +17,8 @@ Button {
 	topPadding: 0
 	bottomPadding: 0
 	icon.source: AppIcons.more
-	icon.width: width
-	icon.height: height
+	icon.width: 24 * DefaultStyle.dp
+	icon.height: 24 * DefaultStyle.dp
 	function close() {
 		popup.close()
 	}
@@ -44,6 +44,7 @@ Button {
 		x: - width
 		y: mainItem.height
 		closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside
+		padding: 10 * DefaultStyle.dp
 		parent: mainItem	// Explicit define for coordinates references.
 
 		onAboutToShow: {
@@ -56,8 +57,6 @@ Button {
 				y = mainItem.height
 			}
 		}
-
-		padding: 20 * DefaultStyle.dp
 
 		background: Item {
 			anchors.fill: parent

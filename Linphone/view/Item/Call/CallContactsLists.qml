@@ -50,6 +50,8 @@ Item {
 					icon.source:AppIcons.closeX
 					width: 24 * DefaultStyle.dp
 					height: 24 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
 					contentItem: Image {
 						anchors.fill: parent
 						source: AppIcons.closeX

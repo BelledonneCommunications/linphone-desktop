@@ -36,6 +36,8 @@ ColumnLayout {
 			width: 24 * DefaultStyle.dp
 			height: 24 * DefaultStyle.dp
 			icon.source: AppIcons.closeX
+			icon.width: 24 * DefaultStyle.dp
+			icon.height: 24 * DefaultStyle.dp
 			onClicked: {
 				// contact.core.pictureUri = mainItem.oldPictureUri
 				mainItem.contact.core.undo()
@@ -166,6 +168,8 @@ ColumnLayout {
 							icon.source: AppIcons.closeX
 							width: 24 * DefaultStyle.dp
 							height: 24 * DefaultStyle.dp
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
 							onClicked: mainItem.contact.core.removeAddress(index)
 						}
 					}
@@ -209,6 +213,8 @@ ColumnLayout {
 							icon.source: AppIcons.closeX
 							width: 24 * DefaultStyle.dp
 							height: 24 * DefaultStyle.dp
+							icon.width: 24 * DefaultStyle.dp
+							icon.height: 24 * DefaultStyle.dp
 							onClicked: mainItem.contact.core.removePhoneNumber(index)
 						}
 					}

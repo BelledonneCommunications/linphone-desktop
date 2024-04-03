@@ -44,6 +44,17 @@ Window {
 		infoPopup.open()
 	}
 
+	function changeLayout(layoutIndex) {
+		if (layoutIndex == 0) {
+			console.log("TODO : set mosaic layout")
+		} else if (layoutIndex == 1) {
+			console.log("TODO : set pip layout")
+		} else {
+			console.log("TODO : set audio layout")
+		}
+		console.log("+ change settings default layout")
+	}
+
 	Connections {
 		enabled: call != undefined && call != null
 		target: call && call.core
@@ -436,18 +447,67 @@ Window {
 					}
 				}
 				Component {
+					id: changeLayoutPanel
+					ColumnLayout {
+						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Modifier la disposition")
+						spacing: 12 * DefaultStyle.dp
+						Text {
+							Layout.fillWidth: true
+							text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
+							font.pixelSize: 14 * DefaultStyle.dp
+						}
+						RoundedBackgroundControl {
+							Layout.fillWidth: true
+							contentItem: ColumnLayout {
+								Repeater {
+									model: [
+										{text: qsTr("Mosaïque"), imgUrl: AppIcons.squaresFour},
+										{text: qsTr("Intervenant actif"), imgUrl: AppIcons.pip},
+										{text: qsTr("Audio seulement"), imgUrl: AppIcons.waveform}
+									]
+									RadioButton {
+										id: radiobutton
+										color: DefaultStyle.main1_500_main
+										indicatorSize: 20 * DefaultStyle.dp
+										leftPadding: indicator.width + spacing
+										spacing: 8 * DefaultStyle.dp
+										Component.onCompleted: {
+											console.log("TODO : set checked true if is current layout")
+											if (index == 0) checked = true
+										}
+										contentItem: RowLayout {
+											spacing: 5 * DefaultStyle.dp
+											EffectImage {
+												id: radioButtonImg
+												Layout.preferredWidth: 32 * DefaultStyle.dp
+												Layout.preferredHeight: 32 * DefaultStyle.dp
+												imageSource: modelData.imgUrl
+												colorizationColor: DefaultStyle.main2_500main
+											}
+											Text {
+												text: modelData.text
+												color: DefaultStyle.main2_500main
+												verticalAlignment: Text.AlignVCenter
+												font.pixelSize: 14 * DefaultStyle.dp
+												Layout.fillWidth: true
+											}
+										}
+										onCheckedChanged: if (checked) mainWindow.changeLayout(index)
+									}
+								}
+							}
+						}
+						Item {Layout.fillHeight: true}
+					}
+				}
+				Component {
 					id: callsListPanel
 					ColumnLayout {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Liste d'appel")
 						RoundedBackgroundControl {
 							Layout.fillWidth: true
-							Layout.preferredHeight:  Math.min(callList.implicitHeight + topPadding + bottomPadding, rightPanel.height)
-
-							topPadding: 15 * DefaultStyle.dp
-							bottomPadding: 15 * DefaultStyle.dp
-							leftPadding: 15 * DefaultStyle.dp
-							rightPadding: 15 * DefaultStyle.dp
-							backgroundColor: mainWindow.conference ? DefaultStyle.grey_0 : DefaultStyle.main2_0
+							Layout.maximumHeight: rightPanel.height
+							visible: callList.contentHeight > 0
 							
 							contentItem: ListView {
 								id: callList
@@ -498,8 +558,8 @@ Window {
 											Layout.alignment: Qt.AlignRight
 
 											popup.contentItem: ColumnLayout {
-												spacing: 0
-												Control.Button {
+												// spacing: 0
+												Button {
 													background: Item {}
 													contentItem: RowLayout {
 														Image {
@@ -529,7 +589,7 @@ Window {
 													}
 													onClicked: modelData.core.lSetPaused(!modelData.core.paused)
 												}
-												Control.Button {
+												Button {
 													background: Item {}
 													contentItem: RowLayout {
 														EffectImage {
@@ -738,6 +798,8 @@ Window {
 					icon.source: AppIcons.endCall
 					icon.width: 32 * DefaultStyle.dp
 					icon.height: 32 * DefaultStyle.dp
+					Layout.preferredWidth: 75 * DefaultStyle.dp
+					Layout.preferredHeight: 55 * DefaultStyle.dp
 					contentImageColor: DefaultStyle.grey_0
 					checkable: false
 					Layout.column: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
@@ -746,8 +808,6 @@ Window {
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingEarlyMedia
 										|| mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
 										? 0 : bottomButtonsLayout.columns - 1
-					Layout.preferredWidth: 75 * DefaultStyle.dp
-					Layout.preferredHeight: 55 * DefaultStyle.dp
 					background: Rectangle {
 						anchors.fill: parent
 						color: DefaultStyle.danger_500main
@@ -767,6 +827,8 @@ Window {
 						id: pauseButton
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
 						background: Rectangle {
 							anchors.fill: parent
 							radius: 71 * DefaultStyle.dp
@@ -790,9 +852,9 @@ Window {
 						icon.source: AppIcons.transferCall
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
 						contentImageColor: enabled ? DefaultStyle.grey_0 : DefaultStyle.grey_500
-						onEnabledChanged: console.log("===================enable change", enabled)
-						onContentImageColorChanged: console.log("===================================== content image color", contentImageColor)
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
@@ -812,6 +874,8 @@ Window {
 						icon.source: AppIcons.newCall
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
 						onClicked: {
 							var mainWin = UtilsCpp.getMainWindow()
 							UtilsCpp.smartShowWindow(mainWin)
@@ -835,6 +899,8 @@ Window {
 						checked: mainWindow.call && !mainWindow.call.core.cameraEnabled
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
 						onCheckedChanged: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
 					}
 					CheckableButton {
@@ -843,6 +909,8 @@ Window {
 						checked: mainWindow.call && mainWindow.call.core.microphoneMuted
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
 						onCheckedChanged: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
 					}
 					CheckableButton {
@@ -852,6 +920,8 @@ Window {
 						checkedColor: DefaultStyle.main2_400
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
 						onCheckedChanged: {
 							if (checked) {
 								rightPanel.visible = true
@@ -867,14 +937,12 @@ Window {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						onEnabledChanged: console.log("========== enabled changed", enabled)
 						contentImageColor: enabled && !checked ? DefaultStyle.grey_0 : DefaultStyle.grey_500
-						icon.width: 24 * DefaultStyle.dp
-						icon.height: 24 * DefaultStyle.dp
 						icon.source: AppIcons.more
 						background: Rectangle {
 							anchors.fill: moreOptionsButton
 							color: moreOptionsButton.enabled
 								? moreOptionsButton.checked 
-									? DefaultStyle.grey_0 
+									? DefaultStyle.main2_400
 									: DefaultStyle.grey_500
 								: DefaultStyle.grey_600
 							radius: 40 * DefaultStyle.dp
@@ -887,90 +955,81 @@ Window {
 								moreOptionsButton.popup.y = - moreOptionsButton.popup.height + moreOptionsButton.height/4
 							}
 						}
+						component MenuButton: Button {
+							background: Item{}
+							icon.width: 32 * DefaultStyle.dp
+							icon.height: 32 * DefaultStyle.dp
+							textColor: down ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+							contentImageColor: down ? DefaultStyle.main1_500_main : DefaultStyle.main2_500main
+							textSize: 14 * DefaultStyle.dp
+							textWeight: 400 * DefaultStyle.dp
+							spacing: 5 * DefaultStyle.dp
+						}
 						popup.contentItem: ColumnLayout {
 							id: optionsList
-							spacing: 10 * DefaultStyle.dp
-							
-							Button {
-								id: callListButton
+							spacing: 5 * DefaultStyle.dp
+
+							MenuButton {
+								visible: mainWindow.conference
 								Layout.fillWidth: true
-								background: Item {}
-								contentItem: RowLayout {
-									Image {
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										fillMode: Image.PreserveAspectFit
-										source: AppIcons.callList
-									}
-									Text {
-										text: qsTr("Liste d'appel")
-									}
+								icon.source: AppIcons.squaresFour
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
+								text: qsTr("Modifier la disposition")
+								onClicked: {
+									rightPanel.visible = true
+									rightPanel.replace(changeLayoutPanel)
+									moreOptionsButton.close()
 								}
+							}
+							MenuButton {
+								icon.source: AppIcons.callList
+								Layout.fillWidth: true
+								text: qsTr("Liste d'appel")
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(callsListPanel)
 									moreOptionsButton.close()
 								}
 							}
-							Button {
-								id: dialerButton
+							MenuButton {
+								icon.source: AppIcons.dialer
+								text: qsTr("Dialer")
 								Layout.fillWidth: true
-								background: Item {}
-								contentItem: RowLayout {
-									Image {
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										fillMode: Image.PreserveAspectFit
-										source: AppIcons.dialer
-									}
-									Text {
-										text: qsTr("Dialer")
-									}
-								}
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(dialerPanel)
 									moreOptionsButton.close()
 								}
 							}
-							Button {
-								id: recordButton
-								Layout.fillWidth: true
-								enabled: mainWindow.call && mainWindow.call.core.recordable
+							MenuButton {
 								checkable: true
-								background: Item {}
-								contentItem: RowLayout {
-									EffectImage {
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										fillMode: Image.PreserveAspectFit
-										imageSource: AppIcons.recordFill
-										colorizationColor: mainWindow.call && mainWindow.call.core.recording ? DefaultStyle.danger_500main : undefined
-									}
-									Text {
-										color: mainWindow.call && mainWindow.call.core.recording ? DefaultStyle.danger_500main : DefaultStyle.main2_600
-										text: mainWindow.call && mainWindow.call.core.recording ? qsTr("Terminer l'enregistrement") : qsTr("Enregistrer l'appel")
-									}
-
-								}
-								onClicked: {
-									mainWindow.call && mainWindow.call.core.recording ? mainWindow.call.core.lStopRecording() : mainWindow.call.core.lStartRecording()
+								enabled: mainWindow.call && mainWindow.call.core.recordable
+								icon.source: AppIcons.recordFill
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
+								contentImageColor: down 
+									? DefaultStyle.main1_500_main
+								 	:mainWindow.call && mainWindow.call.core.recording 
+										? DefaultStyle.danger_500main 
+										: DefaultStyle.main2_500main
+								text: mainWindow.call && mainWindow.call.core.recording ? qsTr("Terminer l'enregistrement") : qsTr("Enregistrer l'appel")
+								textColor: down 
+									? DefaultStyle.main1_500_main
+								 	:mainWindow.call && mainWindow.call.core.recording 
+										? DefaultStyle.danger_500main
+										: DefaultStyle.main2_500main
+								Layout.fillWidth: true
+								onCheckedChanged: {
+									if (mainWindow.call)
+										if (mainWindow.call.core.recording) mainWindow.call.core.lStopRecording()
+										else mainWindow.call.core.lStartRecording()
 								}
 							}
-							Button {
-								id: settingsButton
+							MenuButton {
 								Layout.fillWidth: true
-								background: Item{}
-								contentItem: RowLayout {
-									Image {
-										Layout.preferredWidth: 24 * DefaultStyle.dp
-										Layout.preferredHeight: 24 * DefaultStyle.dp
-										source: AppIcons.settings
-									}
-									Text {
-										text: qsTr("Paramètres")
-									}
-								}
+								icon.source: AppIcons.settings
+								text: qsTr("Paramètres")
 								onClicked: {
 									rightPanel.visible = true
 									rightPanel.replace(settingsPanel)
