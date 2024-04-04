@@ -153,6 +153,7 @@ void CallModel::setRecordFile(const std::string &path) {
 }
 
 void CallModel::setSpeakerVolumeGain(float gain) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setSpeakerVolumeGain(gain);
 	emit speakerVolumeGainChanged(gain);
 }
@@ -165,21 +166,25 @@ float CallModel::getSpeakerVolumeGain() const {
 }
 
 void CallModel::setMicrophoneVolumeGain(float gain) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setMicrophoneVolumeGain(gain);
 	emit microphoneVolumeGainChanged(gain);
 }
 
 float CallModel::getMicrophoneVolumeGain() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto gain = mMonitor->getMicrophoneVolumeGain();
 	return gain;
 }
 
 float CallModel::getMicrophoneVolume() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto volume = mMonitor->getRecordVolume();
 	return volume;
 }
 
 void CallModel::setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &device) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setInputAudioDevice(device);
 	std::string deviceName;
 	if (device) deviceName = device->getDeviceName();
@@ -187,10 +192,12 @@ void CallModel::setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice>
 }
 
 std::shared_ptr<const linphone::AudioDevice> CallModel::getInputAudioDevice() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mMonitor->getInputAudioDevice();
 }
 
 void CallModel::setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &device) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setOutputAudioDevice(device);
 	std::string deviceName;
 	if (device) deviceName = device->getDeviceName();
@@ -198,6 +205,7 @@ void CallModel::setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice
 }
 
 std::shared_ptr<const linphone::AudioDevice> CallModel::getOutputAudioDevice() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mMonitor->getOutputAudioDevice();
 }
 
@@ -229,9 +237,50 @@ std::string CallModel::getAuthenticationToken() const {
 }
 
 void CallModel::setConference(const std::shared_ptr<linphone::Conference> &conference) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (mConference != conference) {
 		mConference = conference;
 		emit conferenceChanged();
+	}
+}
+
+LinphoneEnums::ConferenceLayout CallModel::getConferenceVideoLayout() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return LinphoneEnums::fromLinphone(mMonitor->getParams()->getConferenceVideoLayout());
+}
+
+void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto coreManager = CoreModel::getInstance();
+
+	//	if (layout == LinphoneEnums::ConferenceLayout::Grid)
+	//		coreManager->getSettingsModel()->setCameraMode(coreManager->getSettingsModel()->getGridCameraMode());
+	//	else
+	// coreManager->getSettingsModel()->setCameraMode(coreManager->getSettingsModel()->getActiveSpeakerCameraMode());
+	auto params = coreManager->getCore()->createCallParams(mMonitor);
+	params->setConferenceVideoLayout(LinphoneEnums::toLinphone(layout));
+	params->enableVideo(layout != LinphoneEnums::ConferenceLayout::AudioOnly);
+	if (!params->videoEnabled() && params->screenSharingEnabled()) {
+		params->enableScreenSharing(false); // Deactivate screensharing if going to audio only.
+	}
+	mMonitor->update(params);
+}
+
+void CallModel::updateConferenceVideoLayout() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto callParams = mMonitor->getParams();
+	//	auto settings = CoreManager::getInstance()->getSettingsModel();
+	auto newLayout = LinphoneEnums::fromLinphone(callParams->getConferenceVideoLayout());
+	if (!callParams->videoEnabled()) newLayout = LinphoneEnums::ConferenceLayout::AudioOnly;
+	if (mConferenceVideoLayout != newLayout) { // && !getPausedByUser()) { // Only update if not in pause.
+		                                       //		if (mMonitor->getConference()) {
+		//			if (callParams->getConferenceVideoLayout() == linphone::Conference::Layout::Grid)
+		//				settings->setCameraMode(settings->getGridCameraMode());
+		//			else settings->setCameraMode(settings->getActiveSpeakerCameraMode());
+		//		} else settings->setCameraMode(settings->getCallCameraMode());
+		qDebug() << "Changing layout from " << mConferenceVideoLayout << " into " << newLayout;
+		mConferenceVideoLayout = newLayout;
+		emit conferenceVideoLayoutChanged(mConferenceVideoLayout);
 	}
 }
 
@@ -272,6 +321,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		emit remoteVideoEnabledChanged(params && params->videoEnabled());
 		emit cameraEnabledChanged(call->cameraEnabled());
 		setConference(call->getConference());
+		updateConferenceVideoLayout();
 	}
 	emit stateChanged(state, message);
 }

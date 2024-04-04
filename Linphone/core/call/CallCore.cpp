@@ -92,6 +92,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	}
 	mMicrophoneVolume = call->getRecordVolume();
 	mRecordable = mState == LinphoneEnums::CallState::StreamsRunning;
+	mConferenceVideoLayout = mCallModel->getConferenceVideoLayout();
 }
 
 CallCore::~CallCore() {
@@ -220,7 +221,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::microphoneVolumeGainChanged, [this](float gain) {
 		mCallModelConnection->invokeToCore([this, gain]() { setMicrophoneVolumeGain(gain); });
 	});
-	mCallModelConnection->makeConnectToCore(&CallCore::lSetInputAudioDevice, [this](const QString &id) {
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetInputAudioDevice, [this](QString id) {
 		mCallModelConnection->invokeToModel([this, id]() {
 			if (auto device = ToolModel::findAudioDevice(id)) {
 				mCallModel->setInputAudioDevice(device);
@@ -230,7 +231,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToModel(&CallModel::inputAudioDeviceChanged, [this](const std::string &id) {
 		mCallModelConnection->invokeToCore([this, id]() {});
 	});
-	mCallModelConnection->makeConnectToCore(&CallCore::lSetOutputAudioDevice, [this](const QString &id) {
+	mCallModelConnection->makeConnectToCore(&CallCore::lSetOutputAudioDevice, [this](QString id) {
 		mCallModelConnection->invokeToModel([this, id]() {
 			if (auto device = ToolModel::findAudioDevice(id)) {
 				mCallModel->setOutputAudioDevice(device);
@@ -253,6 +254,14 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	mCallModelConnection->makeConnectToCore(&CallCore::lTerminateAllCalls, [this]() {
 		mCallModelConnection->invokeToModel([this]() { mCallModel->terminateAllCalls(); });
 	});
+	mCallModelConnection->makeConnectToModel(
+	    &CallModel::conferenceVideoLayoutChanged, [this](LinphoneEnums::ConferenceLayout layout) {
+		    mCallModelConnection->invokeToCore([this, layout]() { setConferenceVideoLayout(layout); });
+	    });
+	mCallModelConnection->makeConnectToCore(
+	    &CallCore::lSetConferenceVideoLayout, [this](LinphoneEnums::ConferenceLayout layout) {
+		    mCallModelConnection->invokeToModel([this, layout]() { mCallModel->changeConferenceVideoLayout(layout); });
+	    });
 }
 
 QString CallCore::getPeerAddress() const {
@@ -506,6 +515,18 @@ void CallCore::setTransferState(LinphoneEnums::CallState state, const QString &m
 		mTransferState = state;
 		if (state == LinphoneEnums::CallState::Error) setLastErrorMessage(message);
 		emit transferStateChanged();
+	}
+}
+
+LinphoneEnums::ConferenceLayout CallCore::getConferenceVideoLayout() const {
+	return mConferenceVideoLayout;
+}
+
+void CallCore::setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (mConferenceVideoLayout != layout) {
+		mConferenceVideoLayout = layout;
+		emit conferenceVideoLayoutChanged();
 	}
 }
 

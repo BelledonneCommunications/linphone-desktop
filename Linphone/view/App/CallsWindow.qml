@@ -20,6 +20,8 @@ Window {
 	property ConferenceGui conference: call && call.core.conference || null
 	onConferenceChanged: console.log ("CONFERENCE CHANGED", conference)
 
+	property var conferenceLayout: call && call.core.conferenceVideoLayout || undefined
+
 	property bool callTerminatedByUser: false
 	
 	onCallChanged: {
@@ -47,13 +49,15 @@ Window {
 
 	function changeLayout(layoutIndex) {
 		if (layoutIndex == 0) {
-			console.log("TODO : set mosaic layout")
+			console.log("Set Grid layout")
+			call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.Grid)
 		} else if (layoutIndex == 1) {
-			console.log("TODO : set pip layout")
+			console.log("Set AS layout")
+			call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.ActiveSpeaker)
 		} else {
-			console.log("TODO : set audio layout")
+			console.log("Set audio-only layout")
+			call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.AudioOnly)
 		}
-		console.log("+ change settings default layout")
 	}
 
 	Connections {
@@ -469,14 +473,19 @@ Window {
 									]
 									RadioButton {
 										id: radiobutton
+										checkOnClick: false
 										color: DefaultStyle.main1_500_main
 										indicatorSize: 20 * DefaultStyle.dp
 										leftPadding: indicator.width + spacing
 										spacing: 8 * DefaultStyle.dp
-										Component.onCompleted: {
-											console.log("TODO : set checked true if is current layout")
-											if (index == 0) checked = true
-										}
+										checkable: false	// Qt Documentation is wrong: It is true by default. We don't want to change the checked state if the layout change is not effective.
+										checked: index == 0
+													? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.Grid
+													: index == 1
+														? mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.ActiveSpeaker
+														: mainWindow.conferenceLayout === LinphoneEnums.ConferenceLayout.AudioOnly
+										onClicked: mainWindow.changeLayout(index)
+
 										contentItem: RowLayout {
 											spacing: 5 * DefaultStyle.dp
 											EffectImage {
@@ -494,7 +503,6 @@ Window {
 												Layout.fillWidth: true
 											}
 										}
-										onCheckedChanged: if (checked) mainWindow.changeLayout(index)
 									}
 								}
 							}

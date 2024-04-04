@@ -1,6 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.2 as Control
-import QtQuick.Layouts
+import QtQuick.Layouts as Layout
 import QtQuick.Effects
 import Linphone
   
@@ -59,16 +59,16 @@ Control.Popup {
 			onClicked: mainItem.close()
 		}
 	}
-	contentItem: GridLayout {
+	contentItem: Layout.GridLayout {
 		columns: 3
 		columnSpacing: 3
-		Layout.fillWidth: true
-		Layout.fillHeight: true
+		Layout.Layout.fillWidth: true
+		Layout.Layout.fillHeight: true
 		Repeater {
 			model: 9
 			Button {
 				id: numPadButton
-				Layout.alignment: Qt.AlignHCenter
+				Layout.Layout.alignment: Qt.AlignHCenter
 				required property int index
 				implicitWidth: 60 * DefaultStyle.dp
 				implicitHeight: 60 * DefaultStyle.dp
@@ -101,7 +101,7 @@ Control.Popup {
 			]
 			Button {
 				id: digitButton
-				Layout.alignment: Qt.AlignHCenter
+				Layout.Layout.alignment: Qt.AlignHCenter
 				shadowEnabled: true
 				implicitWidth: 60 * DefaultStyle.dp
 				implicitHeight: 60 * DefaultStyle.dp
@@ -146,7 +146,7 @@ Control.Popup {
 			id: launchCallButton
 			implicitWidth: 75 * DefaultStyle.dp
 			implicitHeight: 55 * DefaultStyle.dp
-			Layout.alignment: Qt.AlignHCenter
+			Layout.Layout.alignment: Qt.AlignHCenter
 			background: Rectangle {
 				anchors.fill: parent
 				color: DefaultStyle.success_500main
@@ -163,7 +163,7 @@ Control.Popup {
 			rightPadding: 5 * DefaultStyle.dp
 			topPadding: 5 * DefaultStyle.dp
 			bottomPadding: 5 * DefaultStyle.dp
-			Layout.alignment: Qt.AlignHCenter
+			Layout.Layout.alignment: Qt.AlignHCenter
 			background: Item {
 				visible: false
 			}

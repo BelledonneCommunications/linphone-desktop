@@ -1,10 +1,8 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.2
-import QtQuick.Layouts 1.0
-import QtQml.Models 2.12
+import QtQuick
+import QtQuick.Controls
+import QtQuick.Layouts
+import QtQml.Models
 
-import Common 1.0
-import Common.Styles 1.0
 
 // =============================================================================
 ColumnLayout{

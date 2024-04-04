@@ -8,15 +8,16 @@ Control.RadioButton {
 	property string title
 	property string contentText
 	property string imgUrl
+	property bool checkOnClick: true
 	property color color
-	hoverEnabled: true
 	property int indicatorSize: 16 * DefaultStyle.dp
+	//onClicked: if (checkOnClick && !mainItem.checked) mainItem.toggle()
 
-	MouseArea {
-		anchors.fill: parent
-		hoverEnabled: false
-		cursorShape: mainItem.hovered ? Qt.PointingHandCursor : Qt.ArrowCursor
-		onClicked: if (!mainItem.checked) mainItem.toggle()
+	MouseArea{
+		anchors.fill:parent
+		hoverEnabled: true
+		acceptedButtons: Qt.NoButton
+		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
 	}
 
 	indicator: Rectangle {

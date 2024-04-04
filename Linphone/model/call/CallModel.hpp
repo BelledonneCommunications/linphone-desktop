@@ -23,6 +23,7 @@
 
 #include "model/listener/Listener.hpp"
 #include "tool/AbstractObject.hpp"
+#include "tool/LinphoneEnums.hpp"
 
 #include <QObject>
 #include <QTimer>
@@ -67,6 +68,10 @@ public:
 	void setAuthenticationTokenVerified(bool verified);
 	std::string getAuthenticationToken() const;
 
+	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
+	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout); // Make a call request
+	void updateConferenceVideoLayout(); // Called from call state changed ater the new layout has been set.
+
 signals:
 	void microphoneMutedChanged(bool isMuted);
 	void speakerMutedChanged(bool isMuted);
@@ -82,11 +87,13 @@ signals:
 	void inputAudioDeviceChanged(const std::string &id);
 	void outputAudioDeviceChanged(const std::string &id);
 	void conferenceChanged();
+	void conferenceVideoLayoutChanged(LinphoneEnums::ConferenceLayout layout);
 
 private:
 	QTimer mDurationTimer;
 	QTimer mMicroVolumeTimer;
 	std::shared_ptr<linphone::Conference> mConference;
+	LinphoneEnums::ConferenceLayout mConferenceVideoLayout;
 
 	DECLARE_ABSTRACT_OBJECT
 
@@ -150,7 +157,7 @@ signals:
 	void cameraNotWorking(const std::shared_ptr<linphone::Call> &call, const std::string &cameraName);
 	void videoDisplayErrorOccurred(const std::shared_ptr<linphone::Call> &call, int errorCode);
 	void audioDeviceChanged(const std::shared_ptr<linphone::Call> &call,
-	                                const std::shared_ptr<linphone::AudioDevice> &audioDevice);
+							const std::shared_ptr<linphone::AudioDevice> &audioDevice);
 	void remoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording);
 };
 

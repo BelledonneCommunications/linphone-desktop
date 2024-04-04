@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Layouts
+import QtQuick.Layouts as Layout
 import QtQuick.Effects
 
 import Linphone
@@ -27,10 +27,10 @@ Dialog {
 		onStatusChanged: if (status === CallModel.CallStatusEnded) close()
 	}
 
-	buttons: ColumnLayout {
+	buttons: Layout.ColumnLayout {
 		spacing: 15 * DefaultStyle.dp
 		Button {
-			Layout.alignment: Qt.AlignHCenter
+			Layout.Layout.alignment: Qt.AlignHCenter
 			background: Item{}
 			contentItem: Text {
 				text: qsTr("Skip")
@@ -49,7 +49,7 @@ Dialog {
 			text: qsTr("Letters doesn't match")
 			color: DefaultStyle.danger_500main
 			inversedColors: true
-			Layout.alignment: Qt.AlignHCenter
+			Layout.Layout.alignment: Qt.AlignHCenter
 			width: 330 * DefaultStyle.dp
 			onClicked: {
 				if(mainItem.call) mainItem.call.core.lVerifyAuthenticationToken(false)
@@ -58,14 +58,14 @@ Dialog {
 		}
 	}
 		
-	content: ColumnLayout {
+	content: Layout.ColumnLayout {
 		spacing: 32 * DefaultStyle.dp
-		Layout.alignment: Qt.AlignHCenter
-		ColumnLayout {
+		Layout.Layout.alignment: Qt.AlignHCenter
+		Layout.ColumnLayout {
 			spacing: 10 * DefaultStyle.dp
 			Text {
-				Layout.preferredWidth: 330 * DefaultStyle.dp
-				Layout.alignment: Qt.AlignHCenter
+				Layout.Layout.preferredWidth: 330 * DefaultStyle.dp
+				Layout.Layout.alignment: Qt.AlignHCenter
 
 				text: qsTr("Vérifier l'appareil")
 				horizontalAlignment: Text.AlignLeft
@@ -76,8 +76,8 @@ Dialog {
 			}
 
 			Text {
-				Layout.preferredWidth: 330 * DefaultStyle.dp
-				Layout.alignment: Qt.AlignHCenter
+				Layout.Layout.preferredWidth: 330 * DefaultStyle.dp
+				Layout.Layout.alignment: Qt.AlignHCenter
 				
 				horizontalAlignment: Text.AlignLeft
 				//: 'To raise the security level, you can check the following codes with your correspondent.' : Explanation to do a security check.
@@ -88,10 +88,10 @@ Dialog {
 			}
 		}
 
-		GridLayout {
+		Layout.GridLayout {
 			id: securityGridView
-			// Layout.fillWidth: true
-			Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+			// Layout.Layout.fillWidth: true
+			Layout.Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
 			rows: 2
 			columns: 2
 			rowSpacing: 32 * DefaultStyle.dp

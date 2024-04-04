@@ -61,6 +61,8 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(float microVolume READ getMicrophoneVolume WRITE setMicrophoneVolume NOTIFY microphoneVolumeChanged)
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 	Q_PROPERTY(ConferenceGui *conference READ getConferenceGui NOTIFY conferenceChanged)
+	Q_PROPERTY(LinphoneEnums::ConferenceLayout conferenceVideoLayout READ getConferenceVideoLayout WRITE
+				   lSetConferenceVideoLayout NOTIFY conferenceVideoLayoutChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -141,6 +143,9 @@ public:
 	LinphoneEnums::CallState getTransferState() const;
 	void setTransferState(LinphoneEnums::CallState state, const QString &message);
 
+	LinphoneEnums::ConferenceLayout getConferenceVideoLayout() const;
+	void setConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);
+
 	std::shared_ptr<CallModel> getModel() const;
 
 signals:
@@ -165,6 +170,7 @@ signals:
 	void microphoneVolumeChanged();
 	void microphoneVolumeGainChanged();
 	void conferenceChanged();
+	void conferenceVideoLayoutChanged();
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -175,14 +181,15 @@ signals:
 	void lSetMicrophoneMuted(bool isMuted);
 	void lSetCameraEnabled(bool enabled);
 	void lSetPaused(bool paused);
-	void lTransferCall(const QString &dest);
+	void lTransferCall(QString &est);
 	void lStartRecording();
 	void lStopRecording();
 	void lVerifyAuthenticationToken(bool verified);
 	void lSetSpeakerVolumeGain(float gain);
 	void lSetMicrophoneVolumeGain(float gain);
-	void lSetInputAudioDevice(const QString &id);
-	void lSetOutputAudioDevice(const QString &id);
+	void lSetInputAudioDevice(QString id);
+	void lSetOutputAudioDevice(QString id);
+	void lSetConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout);
 
 	/* TODO
 	    Q_INVOKABLE void acceptWithVideo();
@@ -209,7 +216,9 @@ private:
 	LinphoneEnums::CallState mState;
 	LinphoneEnums::CallState mTransferState;
 	LinphoneEnums::CallDir mDir;
+	LinphoneEnums::ConferenceLayout mConferenceVideoLayout;
 	LinphoneEnums::MediaEncryption mEncryption;
+
 	QString mLastErrorMessage;
 	QString mPeerAddress;
 	bool mIsSecured;

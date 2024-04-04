@@ -1,5 +1,5 @@
 import QtQuick
-import QtQuick.Layouts
+import QtQuick.Layouts as Layout
 import QtQuick.Effects
 import QtQml.Models
 import QtQuick.Controls as Control
@@ -16,6 +16,8 @@ Item {
 	property CallGui call
 	property bool callTerminatedByUser: false
 	readonly property var callState: call && call.core.state || undefined
+	property var conferenceLayout: call && call.core.conferenceVideoLayout || undefined
+	onConferenceLayoutChanged:console.log("CallLayout change : " +conferenceLayout)
 	onCallStateChanged: if (callState === LinphoneEnums.CallState.End) {
 							callTerminatedText.visible = true
 						}else if( callState === LinphoneEnums.CallState.Error) {
@@ -36,31 +38,45 @@ Item {
 			weight: 300 * DefaultStyle.dp
 		}
 	}
-	StackLayout {
+	Layout.StackLayout {
 		id: centerLayout
 		currentIndex: 0
 		anchors.fill: parent
 		Loader{
 			id: callLayout
-			Layout.fillWidth: true
-			Layout.fillHeight: true
-			sourceComponent:ActiveSpeakerLayout{
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-				call: mainItem.call
-			}
+			Layout.Layout.fillWidth: true
+			Layout.Layout.fillHeight: true
+			sourceComponent: mainItem.conferenceLayout == LinphoneEnums.ConferenceLayout.ActiveSpeaker
+								? activeSpeakerComponent
+								: gridComponent
 		}
-		ColumnLayout {
+		Layout.ColumnLayout {
 			id: userNotFoundLayout
-			Layout.preferredWidth: parent.width
-			Layout.preferredHeight: parent.height
-			Layout.alignment: Qt.AlignCenter
+			Layout.Layout.preferredWidth: parent.width
+			Layout.Layout.preferredHeight: parent.height
+			Layout.Layout.alignment: Qt.AlignCenter
 			Text {
 				text: qsTr(mainItem.call.core.lastErrorMessage)
-				Layout.alignment: Qt.AlignCenter
+				Layout.Layout.alignment: Qt.AlignCenter
 				color: DefaultStyle.grey_0
 				font.pixelSize: 40 * DefaultStyle.dp
 			}
+		}
+	}
+	Component{
+		id: activeSpeakerComponent
+		ActiveSpeakerLayout{
+				Layout.Layout.fillWidth: true
+				Layout.Layout.fillHeight: true
+				call: mainItem.call
+		}
+	}
+	Component{
+		id: gridComponent
+		GridLayout{
+				Layout.Layout.fillWidth: true
+				Layout.Layout.fillHeight: true
+				call: mainItem.call
 		}
 	}
 }
