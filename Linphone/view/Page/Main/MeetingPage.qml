@@ -91,68 +91,73 @@ AbstractMainPage {
 		]
 	}
 
-	leftPanelContent: RowLayout {
-		id: leftPanel
-		Layout.fillWidth: true
+	leftPanelContent: Item {
 		Layout.fillHeight: true
-		property int sideMargin: 20 * DefaultStyle.dp
-
-		ColumnLayout {
-			// Layout.topMargin: 30 * DefaultStyle.dp
-			// Layout.leftMargin: leftPanel.sideMargin
-			enabled: mainItem.leftPanelEnabled
-			spacing: 30 * DefaultStyle.dp
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
-
-
-			RowLayout {
-				visible: leftPanelStackView.currentItem.objectName == "listLayout"
-				Layout.fillWidth: true
-				// Layout.rightMargin: leftPanel.sideMargin
-
-				Text {
-					text: qsTr("Réunions")
-					color: DefaultStyle.main2_700
-					font.pixelSize: 29 * DefaultStyle.dp
-					font.weight: 800 * DefaultStyle.dp
+		Layout.fillWidth: true
+		RowLayout {
+			id: leftPanel
+			anchors.fill: parent
+			spacing: 0
+			ColumnLayout {
+				enabled: mainItem.leftPanelEnabled
+				Layout.leftMargin: 45 * DefaultStyle.dp
+				Layout.rightMargin: 39 * DefaultStyle.dp
+				spacing: 0
+				RowLayout {
+					visible: leftPanelStackView.currentItem.objectName == "listLayout"
+					// Layout.rightMargin: leftPanel.sideMargin
+					spacing: 0
+					Text {
+						Layout.fillWidth: true
+						text: qsTr("Réunions")
+						color: DefaultStyle.main2_700
+						font.pixelSize: 29 * DefaultStyle.dp
+						font.weight: 800 * DefaultStyle.dp
+					}
+					Button {
+						background: Item {
+						}
+						icon.source: AppIcons.plusCircle
+						Layout.preferredWidth: 28 * DefaultStyle.dp
+						Layout.preferredHeight: 28 * DefaultStyle.dp
+						icon.width: 28 * DefaultStyle.dp
+						icon.height: 28 * DefaultStyle.dp
+						onClicked: {
+							mainItem.setUpConference()
+						}
+					}
 				}
+
 				Item {
 					Layout.fillWidth: true
-				}
-				Button {
-					background: Item {
-					}
-					icon.source: AppIcons.plusCircle
-					Layout.preferredWidth: 30 * DefaultStyle.dp
-					Layout.preferredHeight: 30 * DefaultStyle.dp
-					icon.width: 24 * DefaultStyle.dp
-					icon.height: 24 * DefaultStyle.dp
-					onClicked: {
-						mainItem.setUpConference()
-					}
-				}
-			}
+					Layout.fillHeight: true
 
-			Item {
-				Layout.fillWidth: true
-				Layout.fillHeight: true
-
-				Control.StackView {
-					id: leftPanelStackView
-					initialItem: listLayout
-					anchors.fill: parent
+					Control.StackView {
+						id: leftPanelStackView
+						initialItem: listLayout
+						anchors.fill: parent
+					}
 				}
 			}
 		}
-
+		Rectangle{// TODO: change colors of scrollbar!
+			anchors.right: parent.right
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			width: 10
+			color: 'red'
+			opacity:0.2
+		}
 		Control.ScrollBar {
 			id: meetingsScrollbar
-			visible: leftPanelStackView.currentItem.objectName == "listLayout"
+			anchors.right: parent.right
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			width: 10
+			//visible: leftPanelStackView.currentItem.objectName == "listLayout"
 			active: true
 			interactive: true
-			policy: Control.ScrollBar.AsNeeded
-			Layout.fillHeight: true
+			policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
 		}
 	}
 
@@ -172,7 +177,7 @@ AbstractMainPage {
 		id: listLayout
 		ColumnLayout {
 			property string objectName: "listLayout"
-			spacing: 19 * DefaultStyle.dp
+			spacing: 0
 			Control.StackView.onDeactivated: {
 				mainItem.selectedConference = null
 				// mainItem.righPanelStackView.clear()
@@ -181,6 +186,7 @@ AbstractMainPage {
 			SearchBar {
 				id: searchBar
 				Layout.fillWidth: true
+				//Layout.topMargin: 18 * DefaultStyle.dp
 				placeholderText: qsTr("Rechercher une réunion")
 			}
 
@@ -196,13 +202,15 @@ AbstractMainPage {
 			}
 			
 			RowLayout {
+			// Remove 24 from first section padding because we cannot know that it is the first section. 24 is the margins between sections.
+				Layout.topMargin: 38 * DefaultStyle.dp - 24 * DefaultStyle.dp
+				spacing: 0
 				MeetingList {
 					id: conferenceList
-					visible: count != 0
-					hoverEnabled: mainItem.leftPanelEnabled
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Layout.topMargin: 20 * DefaultStyle.dp
+					visible: count != 0
+					hoverEnabled: mainItem.leftPanelEnabled
 					searchBarText: searchBar.text
 					onSelectedConferenceChanged: {
 						mainItem.selectedConference = selectedConference

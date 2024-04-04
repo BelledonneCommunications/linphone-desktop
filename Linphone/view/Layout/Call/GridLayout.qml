@@ -34,10 +34,7 @@ Mosaic {
 			Sticker {
 				id: cameraView
 				visible: mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
-					&& modelData.core.address != activeSpeakerSticker.address
 				anchors.fill: parent
-				//height: visible ? 180 * DefaultStyle.dp : 0
-				//width: 300 * DefaultStyle.dp
 				qmlName: 'G_'+index
 
 				participantDevice: avatarCell.currentDevice

@@ -109,24 +109,27 @@ Item {
 		
 		RowLayout {
 			anchors.fill: parent
-			// spacing: 30
-			anchors.topMargin: 18 * DefaultStyle.dp
+			spacing: 0
+			anchors.topMargin: 25 * DefaultStyle.dp
 			VerticalTabBar {
 				id: tabbar
 				Layout.fillHeight: true
+				Layout.preferredWidth: 82 * DefaultStyle.dp
 				model: [
 					{icon: AppIcons.phone, selectedIcon: AppIcons.phoneSelected, label: qsTr("Appels")},
 					{icon: AppIcons.adressBook, selectedIcon: AppIcons.adressBookSelected, label: qsTr("Contacts")},
 					{icon: AppIcons.chatTeardropText, selectedIcon: AppIcons.chatTeardropTextSelected, label: qsTr("Conversations")},
 					{icon: AppIcons.usersThree, selectedIcon: AppIcons.usersThreeSelected, label: qsTr("Réunions")}
 				]
+
 			}
 			ColumnLayout {
-				Layout.fillWidth: true
-				Layout.fillHeight: true
+				spacing:0
+
 				RowLayout {
 					id: topRow
-					Layout.leftMargin: 25 * DefaultStyle.dp
+					Layout.preferredHeight: 50 * DefaultStyle.dp
+					Layout.leftMargin: 45 * DefaultStyle.dp
 					Layout.rightMargin: 41 * DefaultStyle.dp
 					spacing: 25 * DefaultStyle.dp
 					SearchBar {
@@ -356,11 +359,11 @@ Item {
 					}
 				}
 				StackLayout {
-					// width: parent.width
-					// height: parent.height
 					id: mainStackLayout
 					currentIndex: tabbar.currentIndex
-	
+					Layout.fillWidth: true
+					Layout.fillHeight: true
+					Layout.topMargin: 24 * DefaultStyle.dp
 					CallPage {
 						id: callPage
 					}

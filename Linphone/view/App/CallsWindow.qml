@@ -20,7 +20,7 @@ Window {
 	property ConferenceGui conference: call && call.core.conference || null
 	onConferenceChanged: console.log ("CONFERENCE CHANGED", conference)
 
-	property var conferenceLayout: call && call.core.conferenceVideoLayout || undefined
+	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
 
 	property bool callTerminatedByUser: false
 	

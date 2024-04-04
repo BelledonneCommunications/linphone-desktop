@@ -135,14 +135,14 @@ Item {
 
 	RowLayout {
 		anchors.fill: parent
-		anchors.topMargin: 10 * DefaultStyle.dp
+		//anchors.topMargin: 10 * DefaultStyle.dp
 		spacing: 0
 		ColumnLayout {
 			id: leftPanel
-			Layout.preferredWidth: 403 * DefaultStyle.dp
-			Layout.minimumWidth: 403 * DefaultStyle.dp
+			Layout.preferredWidth: 404 * DefaultStyle.dp
 			Layout.fillHeight: true
-			Layout.fillWidth: false
+			Layout.fillWidth:false
+			spacing:0
 		}
 		Rectangle {
 			Layout.fillHeight: true
@@ -155,6 +155,7 @@ Item {
 			color: mainItem.rightPanelColor
 			Layout.fillWidth: true
 			Layout.fillHeight: true
+
 			StackLayout {
 				currentIndex: mainItem.showDefaultItem ? 0 : 1
 				anchors.fill: parent

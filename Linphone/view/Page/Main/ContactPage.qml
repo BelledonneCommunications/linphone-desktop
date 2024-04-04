@@ -61,13 +61,14 @@ AbstractMainPage {
 		id: leftPanel
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-		property int sideMargin: 25 * DefaultStyle.dp
+		property int leftMargin: 45 * DefaultStyle.dp
+		property int rightMargin: 39 * DefaultStyle.dp
 		spacing: 30 * DefaultStyle.dp
 
 		RowLayout {
 			Layout.fillWidth: true
-			Layout.leftMargin: leftPanel.sideMargin
-			Layout.rightMargin: leftPanel.sideMargin
+			Layout.leftMargin: leftPanel.leftMargin
+			Layout.rightMargin: leftPanel.rightMargin
 
 			Text {
 				text: qsTr("Contacts")
@@ -93,38 +94,24 @@ AbstractMainPage {
 		}
 
 		ColumnLayout {
-			Layout.leftMargin: leftPanel.sideMargin
+			Layout.leftMargin: leftPanel.leftMargin
 			enabled: mainItem.leftPanelEnabled
 			SearchBar {
 				id: searchBar
-				Layout.rightMargin: leftPanel.sideMargin
+				Layout.rightMargin: leftPanel.rightMargin
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
 			}
 			Item {
+				id: contactsArea
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				Control.ScrollBar {
-					id: contactsScrollbar
-					active: true
-					interactive: true
-					policy: Control.ScrollBar.AsNeeded
-					// Layout.fillWidth: true
-					anchors.top: parent.top
-					anchors.bottom: parent.bottom
-					anchors.right: parent.right
-					// Layout.alignment: Qt.AlignRight
-					// x: mainItem.x + mainItem.width - width
-					// anchors.left: control.right
-				}
 				Control.ScrollView {
 					id: listLayout
 					anchors.fill: parent
-					Layout.leftMargin: leftPanel.sideMargin
-					Layout.rightMargin: leftPanel.sideMargin
-					Layout.topMargin: 25 * DefaultStyle.dp
-					rightPadding: leftPanel.sideMargin
-					contentWidth: width - leftPanel.sideMargin
+					anchors.rightMargin: leftPanel.rightMargin
+					anchors.topMargin: 25 * DefaultStyle.dp
+					contentWidth: width
 					contentHeight: content.height
 					clip: true
 					Control.ScrollBar.vertical: contactsScrollbar
@@ -212,10 +199,11 @@ AbstractMainPage {
 							}
 							ContactsList{
 								id: contactList
-								hoverEnabled: mainItem.leftPanelEnabled
-								contactMenuVisible: true
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
+								interactive: false
+								hoverEnabled: mainItem.leftPanelEnabled
+								contactMenuVisible: true
 								searchBarText: searchBar.text
 								model: allFriends
 								onSelectedContactChanged: {
@@ -230,6 +218,21 @@ AbstractMainPage {
 								}
 							}
 						}
+					}
+				}
+				Control.ScrollBar {
+					id: contactsScrollbar
+					// Parent is changed from Scrollview. Do not use it.
+					x: contactsArea.width - width
+					height: listLayout.availableHeight
+					active: true
+					interactive: true
+					policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
+
+					Rectangle{// TODO: change colors of scrollbar!
+						anchors.fill: parent
+						color: 'red'
+						opacity:0.2
 					}
 				}
 			}

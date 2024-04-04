@@ -16,7 +16,7 @@ Item {
 	property CallGui call
 	property bool callTerminatedByUser: false
 	readonly property var callState: call && call.core.state || undefined
-	property var conferenceLayout: call && call.core.conferenceVideoLayout || undefined
+	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
 	onConferenceLayoutChanged:console.log("CallLayout change : " +conferenceLayout)
 	onCallStateChanged: if (callState === LinphoneEnums.CallState.End) {
 							callTerminatedText.visible = true

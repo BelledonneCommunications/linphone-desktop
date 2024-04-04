@@ -50,9 +50,8 @@ AbstractMainPage {
 			clip: true
 			initialItem: historyListItem
 			anchors.fill: parent
-			property int sideMargin: 25 * DefaultStyle.dp
-			// anchors.leftMargin: 25
-			// anchors.rightMargin: 25
+			property int leftMargin: 45 * DefaultStyle.dp
+			property int rightMargin: 39 * DefaultStyle.dp
 		}
 		Component {
 			id: historyListItem
@@ -63,8 +62,8 @@ AbstractMainPage {
 				RowLayout {
 					spacing: 16 * DefaultStyle.dp
 					Layout.fillWidth: true
-					Layout.leftMargin: listStackView.sideMargin
-					Layout.rightMargin: listStackView.sideMargin
+					Layout.leftMargin: listStackView.leftMargin
+					Layout.rightMargin: listStackView.rightMargin
 					Text {
 						text: qsTr("Appels")
 						color: DefaultStyle.main2_700
@@ -130,18 +129,19 @@ AbstractMainPage {
 					SearchBar {
 						id: searchBar
 						Layout.fillWidth: true
-						Layout.leftMargin: listStackView.sideMargin
-						Layout.rightMargin: listStackView.sideMargin
+						Layout.leftMargin: listStackView.leftMargin
+						Layout.rightMargin: listStackView.rightMargin
 						placeholderText: qsTr("Rechercher un appel")
 					}
 					RowLayout {
 						Layout.topMargin: 30 * DefaultStyle.dp	
+						spacing: 0
 						Control.Control {
 							id: listLayout
 							Layout.fillWidth: true
 							Layout.fillHeight: true
-							Layout.leftMargin: listStackView.sideMargin
-							Layout.rightMargin: listStackView.sideMargin
+							Layout.leftMargin: listStackView.leftMargin
+							Layout.rightMargin: listStackView.rightMargin - (scrollbar.visible? scrollbar.width : 0)
 
 							background: Rectangle {
 								anchors.fill: parent
@@ -317,8 +317,13 @@ AbstractMainPage {
 						Control.ScrollBar {
 							id: scrollbar
 							active: true
-							policy: Control.ScrollBar.AsNeeded
+							policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
 							Layout.fillHeight: true
+							Rectangle{// TODO: change colors of scrollbar!
+								anchors.fill: parent
+								color: 'red'
+								opacity:0.2
+							}
 						}
 					}
 				}
@@ -329,8 +334,8 @@ AbstractMainPage {
 			ColumnLayout {
 				spacing: 30 * DefaultStyle.dp
 				RowLayout {
-					Layout.leftMargin: listStackView.sideMargin
-					Layout.rightMargin: listStackView.sideMargin
+					Layout.leftMargin: listStackView.leftMargin
+					Layout.rightMargin: listStackView.rightMargin
 					Button {
 						background: Item {
 						}
@@ -357,8 +362,6 @@ AbstractMainPage {
 				CallContactsLists {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					// Layout.leftMargin: listStackView.sideMargin
-					// Layout.rightMargin: listStackView.sideMargin
 					groupCallVisible: true
 					searchBarColor: DefaultStyle.grey_100
 					property var callObj
