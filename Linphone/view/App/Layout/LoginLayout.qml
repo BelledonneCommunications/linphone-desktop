@@ -33,9 +33,7 @@ Rectangle {
 			Button {
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 				// Layout.bottomMargin: 20
-				background: Rectangle {
-					color: "transparent"
-				}
+				background: Item{}
 				contentItem: RowLayout {
 					Image {
 						fillMode: Image.PreserveAspectFit

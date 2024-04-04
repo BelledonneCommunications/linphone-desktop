@@ -84,4 +84,6 @@ QtObject {
 	property string pip: "image://internal/pip.svg"
 	property string waveform: "image://internal/waveform.svg"
 	property string squaresFour: "image://internal/squares-four.svg"
+	property string handWaving: "image://internal/hand-waving.svg"
+	property string screencast: "image://internal/screencast.svg"
 }

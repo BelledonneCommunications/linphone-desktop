@@ -456,6 +456,7 @@ Window {
 							Layout.fillWidth: true
 							text: qsTr("La disposition choisie sera enregistrée pour vos prochaines réunions")
 							font.pixelSize: 14 * DefaultStyle.dp
+							color: DefaultStyle.main2_500main
 						}
 						RoundedBackgroundControl {
 							Layout.fillWidth: true
@@ -635,6 +636,13 @@ Window {
 					}
 				}
 				Component {
+					id: screencastPanel
+					ScreencastPanel {
+						call: mainwindow.call
+						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Partage de votre écran")
+					}
+				}
+				Component {
 					id: participantListPanel
 					Control.StackView {
 						id: participantsStack
@@ -651,7 +659,7 @@ Window {
 
 						Component {
 							id: participantListComp
-							ParticipantList {
+							ParticipantListView {
 								id: participantList
 								call: mainWindow.call
 								onAddParticipantRequested: participantsStack.push(addParticipantComp)
@@ -894,7 +902,7 @@ Window {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
-						onCheckedChanged: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
+						onClicked: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
 					}
 					CheckableButton {
 						iconUrl: AppIcons.microphone
@@ -904,12 +912,27 @@ Window {
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
-						onCheckedChanged: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
+						onClicked: mainWindow.call.core.lSetMicrophoneMuted(!mainWindow.call.core.microphoneMuted)
+					}
+					CheckableButton {
+						iconUrl: AppIcons.screencast
+						checkedColor: DefaultStyle.main2_400
+						Layout.preferredWidth: 55 * DefaultStyle.dp
+						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
+						onCheckedChanged: {
+							if (checked) {
+								rightPanel.visible = true
+								rightPanel.replace(screencastPanel)
+							} else {
+								rightPanel.visible = false
+							}
+						}
 					}
 					CheckableButton {
 						visible: mainWindow.conference
 						iconUrl: AppIcons.usersTwo
-						checked: mainWindow.call && mainWindow.call.core.microphoneMuted
 						checkedColor: DefaultStyle.main2_400
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp

@@ -61,11 +61,12 @@ LoginLayout {
 		}
 		StackLayout {
 			currentIndex: bar.currentIndex
+			Layout.topMargin: 50 * DefaultStyle.dp
+
 			RowLayout {
 				ColumnLayout {
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Layout.topMargin: 20 * DefaultStyle.dp
 					spacing: 15 * DefaultStyle.dp
 					RowLayout {
 						FormItemLayout {
@@ -136,9 +137,39 @@ LoginLayout {
 					RowLayout {
 						CheckBox {
 						}
-						Text {
-							Layout.preferredWidth: 450 * DefaultStyle.dp
-							text: qsTr("I accept the Terms and Conditions : Read the Terms and Conditions. <br>I accept the Privacy policy : Read the Privacy policy.")
+						RowLayout {
+							spacing: 0
+							Layout.fillWidth: true
+							Text {
+								// Layout.preferredWidth: 450 * DefaultStyle.dp
+								text: qsTr("I accept the Terms and Conditions: ")
+							}
+							Text {
+								// Layout.preferredWidth: 450 * DefaultStyle.dp
+								font.underline: true
+								text: qsTr("Read the Terms and Conditions.")
+								MouseArea {
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+									onClicked: console.log("TODO : display terms and conditions")
+								}
+							}
+							Text {
+								// Layout.preferredWidth: 450 * DefaultStyle.dp
+								text: qsTr("I accept the Privacy policy: ")
+							}
+							Text {
+								// Layout.preferredWidth: 450 * DefaultStyle.dp
+								font.underline: true
+								text: qsTr("Read the Privacy policy.")
+								MouseArea {
+									anchors.fill: parent
+									hoverEnabled: true
+									cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+									onClicked: console.log("TODO : display privacy policy")
+								}
+							}
 						}
 					}
 					Button {

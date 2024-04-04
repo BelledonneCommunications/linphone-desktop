@@ -23,12 +23,14 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/Call/InCallSettingsPanel.qml
 	view/Item/Call/OngoingCallRightPanel.qml
 	view/Item/Call/WaitingRoom.qml
+
+	view/Item/Call/Menu/ScreencastPanel.qml
 	
 	view/Item/Notification/Notification.qml
 	view/Item/Notification/NotificationReceivedCall.qml
 
-	view/Item/Participant/ParticipantDeviceList.qml
-	view/Item/Participant/ParticipantList.qml
+	view/Item/Participant/ParticipantDeviceListView.qml
+	view/Item/Participant/ParticipantListView.qml
 
 	view/Item/Prototype/CanvasCircle.qml
 	

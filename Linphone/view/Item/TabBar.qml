@@ -1,4 +1,4 @@
-import QtQuick 2.7 as Quick
+import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.2 as Control
 import Linphone
@@ -10,12 +10,14 @@ Control.TabBar {
 							? itemAt(0).x 
 							: 0
 	spacing: 40 * DefaultStyle.dp
+	property int pixelSize: 22 * DefaultStyle.dp
+	property int textWeight: 800 * DefaultStyle.dp
 	wheelEnabled: true
-	background: Quick.Item {
+	background: Item {
 		id: tabBarBackground
 		anchors.fill: parent
 
-		Quick.Rectangle {
+		Rectangle {
 			id: barBG
 			height: 4 * DefaultStyle.dp
 			color: DefaultStyle.grey_200
@@ -23,7 +25,7 @@ Control.TabBar {
 			width: parent.width
 		}
 
-		// Quick.Rectangle {
+		// Rectangle {
 		// 	height: 4
 		// 	color: DefaultStyle.main1_500_main
 		// 	anchors.bottom: parent.bottom
@@ -34,12 +36,12 @@ Control.TabBar {
 		// 		: 0
 		// 	width: mainItem.currentItem ? mainItem.currentItem.width : 0
 		// 	// clip: true
-		// 	Quick.Behavior on x { Quick.NumberAnimation {duration: 100}}
-		// 	Quick.Behavior on width {Quick.NumberAnimation {duration: 100}}
+		// 	Behavior on x { NumberAnimation {duration: 100}}
+		// 	Behavior on width {NumberAnimation {duration: 100}}
 		// }
 	}
 
-	Quick.Repeater {
+	Repeater {
 		model: mainItem.model
 		Control.TabButton {
 			required property string modelData
@@ -53,12 +55,12 @@ Control.TabBar {
 				text: modelData
 			}
 
-			background: Quick.Item {
+			background: Item {
 				anchors.fill: parent
 
-				Quick.Rectangle {
+				Rectangle {
 					visible: mainItem.currentIndex === index
-					height: 4 * DefaultStyle.dp
+					height: 5 * DefaultStyle.dp
 					color: DefaultStyle.main1_500_main
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
@@ -66,21 +68,21 @@ Control.TabBar {
 				}
 			}
 
-			contentItem: Quick.Text {
+			contentItem: Text {
 				id: tabText
 				anchors.fill: parent
-				font.bold: true
+				font.weight: mainItem.textWeight
 				color: mainItem.currentIndex === index ? DefaultStyle.main2_600 : DefaultStyle.main2_400
 				font.family: DefaultStyle.defaultFont
-				font.pixelSize: 22 * DefaultStyle.dp
-				elide: Quick.Text.ElideRight
+				font.pixelSize: mainItem.pixelSize
+				elide: Text.ElideRight
 				maximumLineCount: 1
 				text: txtMeter.elidedText
 				// width: Math.min(txtMeter.advanceWidth, Math.max(50, mainItem.width - (x - mainItem.x)))
 				bottomPadding: 5 * DefaultStyle.dp
 			}
 
-			Quick.TextMetrics {
+			TextMetrics {
 				id: txtMeter
 				font: tabText.font
 				text: modelData
