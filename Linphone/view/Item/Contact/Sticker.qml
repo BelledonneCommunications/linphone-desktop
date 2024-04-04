@@ -28,7 +28,7 @@ Item {
 										: null
 	property string peerAddress:peerAddressObj ? peerAddressObj.value : ""
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
-	property bool cameraEnabled: previewEnabled
+	property bool cameraEnabled: previewEnabled || participantDevice && participantDevice.core.videoEnabled
 	property string qmlName
 
 	Rectangle {
@@ -79,7 +79,8 @@ Item {
 			Timer{
 				id: resetTimer
 				interval: 1
-				onTriggered: {cameraLoader.reset=true; cameraLoader.reset=false;}
+				triggeredOnStart: true
+				onTriggered: {cameraLoader.reset = !cameraLoader.reset}
 			}
 			active: mainItem.visible && mainItem.cameraEnabled && !mainItem.reset
 			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active)
@@ -100,12 +101,12 @@ Item {
 					participantDevice: mainItem.participantDevice
 					isPreview: mainItem.previewEnabled
 					onRequestNewRenderer: {
-						console.log("Request new renderer")
+						console.log("Request new renderer for " +mainItem.qmlName)
 						resetTimer.restart()
 					}
 					layer.enabled: true
 				}
-				
+
 				ShaderEffect {
 					id: roundEffect
 					property variant src: cameraItem

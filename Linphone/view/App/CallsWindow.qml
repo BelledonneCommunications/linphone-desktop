@@ -26,8 +26,9 @@ Window {
 		console.log("CALL", call)
 		// if conference, the main item is only
 		// displayed when state is connected
-		if (!conferenceInfo)
-			if (call && middleItemStackView.currentItem != inCallItem) middleItemStackView.replace(inCallItem)
+		if (call && middleItemStackView.currentItem != inCallItem
+			&& (!conferenceInfo || conference) )
+			middleItemStackView.replace(inCallItem)
 	}
 	property var callObj
 

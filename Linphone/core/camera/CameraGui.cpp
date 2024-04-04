@@ -99,6 +99,8 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 					lInfo() << "[Camera] (" << qmlName << ") " << (resetWindowId ? "Resetting" : "Setting")
 					        << " Camera to ParticipantDeviceModel";
 					if (resetWindowId) {
+						renderer = (QQuickFramebufferObject::Renderer *)device->getNativeVideoWindowId();
+						if (renderer) device->setNativeVideoWindowId(NULL);
 					} else {
 						renderer = (QQuickFramebufferObject::Renderer *)device->createNativeVideoWindowId();
 						if (renderer) device->setNativeVideoWindowId(renderer);
