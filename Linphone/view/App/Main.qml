@@ -33,105 +33,17 @@ ApplicationWindow {
 		mainWindowStackView.currentItem.transferCallSucceed()
 	}
 
+	Component {
+		id: popupComp
+		InformationPopup{}
+	}
 	function showInformationPopup(title, description, isSuccess) {
 		var infoPopup = popupComp.createObject(popupLayout, {"title": title, "description": description, "isSuccess": isSuccess})
-		// informationPopup.title = title
-		// informationPopup.description = description
-		// informationPopup.isSuccess = isSuccess
-		// infoPopup.y = popupLayout.nextY - infoPopup.height
 		infoPopup.index = popupLayout.popupList.length
 		popupLayout.popupList.push(infoPopup)
 		infoPopup.open()
 	}
 
-	Component {
-		id: popupComp
-		Popup {
-			id: informationPopup
-			property bool isSuccess: true
-			property string title
-			property string description
-			property int index
-			onAboutToShow: {
-				autoClosePopup.restart()
-			}
-			onAboutToHide: {
-				popupLayout.popupList.splice(informationPopup.index, 1)
-			}
-			closePolicy: Popup.NoAutoClose
-			x : parent.x + parent.width - width
-			// y : parent.y + parent.height - height
-			rightMargin: 20 * DefaultStyle.dp
-			bottomMargin: 20 * DefaultStyle.dp
-			padding: 20 * DefaultStyle.dp
-			underlineColor: informationPopup.isSuccess ? DefaultStyle.success_500main : DefaultStyle.danger_500main
-			radius: 0
-			onHoveredChanged: {
-				if (hovered) autoClosePopup.stop()
-				else autoClosePopup.restart()
-			}
-			Timer {
-				id: autoClosePopup
-				interval: 5000
-				onTriggered: {
-					informationPopup.close()
-				} 
-			}
-			contentItem: RowLayout {
-				spacing: 15 * DefaultStyle.dp
-				EffectImage {
-					imageSource: informationPopup.isSuccess ? AppIcons.smiley : AppIcons.smileySad
-					colorizationColor: informationPopup.isSuccess ? DefaultStyle.success_500main : DefaultStyle.danger_500main
-					Layout.preferredWidth: 32 * DefaultStyle.dp
-					Layout.preferredHeight: 32 * DefaultStyle.dp
-					width: 32 * DefaultStyle.dp
-					height: 32 * DefaultStyle.dp
-				}
-				Rectangle {
-					Layout.preferredWidth: 1 * DefaultStyle.dp
-					Layout.preferredHeight: parent.height
-					color: DefaultStyle.main2_200
-				}
-				ColumnLayout {
-					RowLayout {
-						Layout.fillWidth: true
-						Text {
-							Layout.fillWidth: true
-							text: informationPopup.title
-							color: informationPopup.isSuccess ? DefaultStyle.success_500main : DefaultStyle.danger_500main
-							font {
-								pixelSize: 16 * DefaultStyle.dp
-								weight: 800 * DefaultStyle.dp
-							}
-						}
-						Button {
-							Layout.preferredWidth: 20 * DefaultStyle.dp
-							Layout.preferredHeight: 20 * DefaultStyle.dp
-							icon.width: 20 * DefaultStyle.dp
-							icon.height: 20 * DefaultStyle.dp
-							Layout.alignment: Qt.AlignTop | Qt.AlignRight
-							visible: informationPopup.hovered || hovered
-							background: Item{}
-							icon.source: AppIcons.closeX
-							onClicked: informationPopup.close()
-						}
-					}
-					Text {
-						Layout.alignment: Qt.AlignHCenter
-						Layout.fillWidth: true
-						Layout.maximumWidth: 300 * DefaultStyle.dp
-						text: informationPopup.description
-						wrapMode: Text.WordWrap
-						color: DefaultStyle.main2_500main
-						font {
-							pixelSize: 12 * DefaultStyle.dp
-							weight: 300 * DefaultStyle.dp
-						}
-					}
-				}
-			}
-		}
-	}
 
 	ColumnLayout {
 		id: popupLayout

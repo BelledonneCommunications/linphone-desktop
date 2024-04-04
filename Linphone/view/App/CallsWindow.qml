@@ -40,11 +40,34 @@ Window {
 			callObj = UtilsCpp.createCall(conferenceInfo.core.uri, withVideo)
 		}
 	}
+
+	Component {
+		id: popupComp
+		InformationPopup{}
+	}
+
 	function showInformationPopup(title, description, isSuccess) {
 		var infoPopup = popupComp.createObject(popupLayout, {"title": title, "description": description, "isSuccess": isSuccess})
 		infoPopup.index = popupLayout.popupList.length
 		popupLayout.popupList.push(infoPopup)
 		infoPopup.open()
+	}
+
+	ColumnLayout {
+		id: popupLayout
+		anchors.fill: parent
+		Layout.alignment: Qt.AlignBottom
+		property int nextY: mainWindow.height
+		property list<Popup> popupList
+		property int popupCount: popupList.length
+		spacing: 15
+		onPopupCountChanged: {
+			nextY = mainWindow.height
+			for(var i = 0; i < popupCount; ++i) {
+				popupList[i].y = nextY - popupList[i].height
+				nextY = nextY - popupList[i].height - 15
+			}
+		}
 	}
 
 	function changeLayout(layoutIndex) {
@@ -394,6 +417,7 @@ Window {
 					Layout.rightMargin: 10 * DefaultStyle.dp
 					visible: false
 					function replace(id) {
+						rightPanel.customHeaderButtons = null
 						contentStackView.replace(id, Control.StackView.Immediate)
 					}
 					headerStack.currentIndex: 0
@@ -669,6 +693,33 @@ Window {
 							id: participantListComp
 							ParticipantListView {
 								id: participantList
+								Component {
+									id: headerbutton
+									PopupButton {
+										popup.contentItem: Button {
+											background: Item{}
+											contentItem: RowLayout {
+												EffectImage {
+													colorizationColor: DefaultStyle.main2_600
+													imageSource: AppIcons.shareNetwork
+													Layout.preferredWidth: 24 * DefaultStyle.dp
+													Layout.preferredHeight: 24 * DefaultStyle.dp
+												}
+												Text {
+													text: qsTr("Partager le lien de la réunion")
+													font.pixelSize: 14 * DefaultStyle.dp
+												}
+											}
+											onClicked: {
+												UtilsCpp.copyToClipboard(mainWindow.conference.core.uri)
+												UtilsCpp.showInformationPopup(qsTr("Copié"), qsTr("Le lien de la réunion a été copié dans le presse-papier"), true, mainWindow)
+											}
+										}
+									}
+								}
+								Control.StackView.onActivated: {
+									rightPanel.customHeaderButtons = headerbutton.createObject(rightPanel)
+								}
 								call: mainWindow.call
 								onAddParticipantRequested: participantsStack.push(addParticipantComp)
 								onCountChanged: if (participantsStack.Control.StackView.status === Control.StackView.Active && participantsStack.currentItem == participantList) {
@@ -937,6 +988,25 @@ Window {
 								rightPanel.visible = false
 							}
 						}
+					}
+					CheckableButton {
+						visible: false
+						checkable: false
+						checkedColor: DefaultStyle.main2_400
+						iconUrl: AppIcons.handWaving
+						Layout.preferredWidth: 55 * DefaultStyle.dp
+						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
+					}
+					CheckableButton {
+						visible: false
+						iconUrl: AppIcons.smiley
+						checkedColor: DefaultStyle.main2_400
+						Layout.preferredWidth: 55 * DefaultStyle.dp
+						Layout.preferredHeight: 55 * DefaultStyle.dp
+						icon.width: 32 * DefaultStyle.dp
+						icon.height: 32 * DefaultStyle.dp
 					}
 					CheckableButton {
 						visible: mainWindow.conference

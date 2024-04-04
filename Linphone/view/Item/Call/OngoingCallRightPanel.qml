@@ -7,6 +7,7 @@ Control.Page {
 	id: mainItem
 	property alias headerStack: headerStack
 	property alias contentStackView: contentStackView
+	property alias customHeaderButtons: customButtonLayout.children
 	property bool closeButtonVisible: true
 	clip: true
 
@@ -61,6 +62,9 @@ Control.Page {
 						pixelSize: 16 * DefaultStyle.dp
 						weight: 800 * DefaultStyle.dp
 					}
+				}
+				RowLayout {
+					id: customButtonLayout
 				}
 				Button {
 					id: closeButton

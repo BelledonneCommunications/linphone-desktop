@@ -58,6 +58,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/EffectImage.qml
 	view/Item/ErrorText.qml
 	view/Item/IconLabelButton.qml
+	view/Item/InformationPopup.qml
 	view/Item/MovableMouseArea.qml
 	view/Item/NumericPad.qml
 	view/Item/PhoneNumberComboBox.qml
