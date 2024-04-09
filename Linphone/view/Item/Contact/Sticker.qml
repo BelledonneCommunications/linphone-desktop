@@ -14,19 +14,23 @@ Item {
 	id: mainItem
 	height: 300
 	width: 200
+	required property bool previewEnabled
 	property CallGui call: null
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null
-	property bool previewEnabled: false
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
-	property var peerAddressObj: participantDevice && participantDevice.core
-									? UtilsCpp.getDisplayName(participantDevice.core.address)
-									: !previewEnabled && call && call.core
-										? UtilsCpp.getDisplayName(call.core.peerAddress)
-										: null
+	property var peerAddressObj: previewEnabled
+									? UtilsCpp.getDisplayName(account.core.identityAddress)
+									: participantDevice && participantDevice.core
+										? UtilsCpp.getDisplayName(participantDevice.core.address)
+										: !previewEnabled && call && call.core
+											? UtilsCpp.getDisplayName(call.core.peerAddress)
+											: null
+											
 	property string peerAddress:peerAddressObj ? peerAddressObj.value : ""
+	onPeerAddressChanged: console.log("TOTO " +qmlName + " => " +peerAddress)
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
 	property bool cameraEnabled: previewEnabled || participantDevice && participantDevice.core.videoEnabled
 	property string qmlName
@@ -97,9 +101,10 @@ Item {
 					anchors.fill: parent
 					visible: false
 					qmlName: mainItem.qmlName
+					isPreview: mainItem.previewEnabled
 					call: mainItem.call
 					participantDevice: mainItem.participantDevice
-					isPreview: mainItem.previewEnabled
+					
 					onRequestNewRenderer: {
 						console.log("Request new renderer for " +mainItem.qmlName)
 						resetTimer.restart()

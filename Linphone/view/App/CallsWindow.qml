@@ -34,10 +34,10 @@ Window {
 	}
 	property var callObj
 
-	function joinConference(withVideo) {
+	function joinConference(options) {
 		if (!conferenceInfo || conferenceInfo.core.uri.length === 0) UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence n'a pas pu démarrer en raison d'une erreur d'uri."), mainWindow)
 		else {
-			callObj = UtilsCpp.createCall(conferenceInfo.core.uri, withVideo)
+			callObj = UtilsCpp.createCall(conferenceInfo.core.uri, options)
 		}
 	}
 
@@ -789,14 +789,7 @@ Window {
 						target: rightPanel
 						onVisibleChanged: if (!visible) waitingRoomIn.settingsButtonChecked = false
 					}
-					Connections {
-						target: mainWindow
-						onCallChanged: if (mainWindow.conferenceInfo && mainWindow.call) {
-							mainWindow.call.core.lSetCameraEnabled(waitingRoomIn.cameraEnabled)
-							mainWindow.call.core.lSetMicrophoneMuted(!waitingRoomIn.microEnabled)
-						}
-					}
-					onJoinConfRequested: mainWindow.joinConference(cameraEnabled)
+					onJoinConfRequested: mainWindow.joinConference({'microEnabled':microEnabled, 'cameraEnabled':cameraEnabled})
 				}
 			}
 			Component {

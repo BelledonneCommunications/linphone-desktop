@@ -58,10 +58,10 @@ public:
 	Q_INVOKABLE static QString getFamilyNameFromFullName(const QString &fullName);
 	Q_INVOKABLE static QString getInitials(const QString &username); // Support UTF32
 
-	Q_INVOKABLE static VariantObject *createCall(const QString &sipAddress,
-	                                             bool withVideo = false,
-	                                             const QString &prepareTransfertAddress = "",
-	                                             const QHash<QString, QString> &headers = {});
+	Q_INVOKABLE static VariantObject *createCall(QString sipAddress,
+												 QVariantMap options = {},
+												 QString prepareTransfertAddress = "",
+												 QHash<QString, QString> headers = {});
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static void setupConference(ConferenceInfoGui *confGui);
 	Q_INVOKABLE static void setCallsWindowCall(CallGui *call);

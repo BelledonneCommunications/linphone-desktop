@@ -94,12 +94,13 @@ QString ToolModel::getDisplayName(QString address) {
 }
 
 QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
-                                               bool withVideo,
+                                               const QVariantMap &options,
                                                const QString &prepareTransfertAddress,
                                                const QHash<QString, QString> &headers,
                                                linphone::MediaEncryption mediaEncryption) {
 	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
 	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
+	bool cameraEnabled = options.contains("cameraEnabled") ? options["cameraEnabled"].toBool() : false;
 
 	std::shared_ptr<linphone::Address> address = interpretUrl(sipAddress);
 	if (!address) {
@@ -109,7 +110,9 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 	}
 
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	params->enableVideo(withVideo);
+	params->enableVideo(true);
+	params->setVideoDirection(cameraEnabled ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::Inactive);
+
 	params->setMediaEncryption(mediaEncryption);
 	if (Utils::coreStringToAppString(params->getRecordFile()).isEmpty()) {
 
@@ -129,7 +132,7 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 
 	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	auto call = core->inviteAddressWithParams(address, params);
-	call->enableCamera(withVideo);
+	call->enableCamera(cameraEnabled);
 	return call ? CallCore::create(call) : nullptr;
 
 	/* TODO transfer

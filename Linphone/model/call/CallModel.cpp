@@ -124,11 +124,51 @@ void CallModel::setSpeakerMuted(bool isMuted) {
 
 void CallModel::setCameraEnabled(bool enabled) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	mMonitor->enableCamera(enabled);
-	auto core = CoreModel::getInstance()->getCore();
-	auto params = core->createCallParams(mMonitor);
-	params->enableVideo(enabled);
-	emit cameraEnabledChanged(enabled);
+	// mMonitor->enableCamera(enabled);
+	auto params = CoreModel::getInstance()->getCore()->createCallParams(mMonitor);
+	params->enableVideo(true);
+	auto direction = mMonitor->getCurrentParams()->getVideoDirection();
+	auto videoDirection = linphone::MediaDirection::RecvOnly;
+	if (enabled) { // +Send
+		switch (direction) {
+			case linphone::MediaDirection::RecvOnly:
+				videoDirection = linphone::MediaDirection::SendRecv;
+				break;
+			case linphone::MediaDirection::SendOnly:
+				videoDirection = linphone::MediaDirection::SendOnly;
+				break;
+			case linphone::MediaDirection::SendRecv:
+				videoDirection = linphone::MediaDirection::SendRecv;
+				break;
+			default:
+				videoDirection = linphone::MediaDirection::SendOnly;
+		}
+	} else { // -Send
+		switch (direction) {
+			case linphone::MediaDirection::RecvOnly:
+				videoDirection = linphone::MediaDirection::RecvOnly;
+				break;
+			case linphone::MediaDirection::SendOnly:
+				videoDirection = linphone::MediaDirection::Inactive;
+				break;
+			case linphone::MediaDirection::SendRecv:
+				videoDirection = linphone::MediaDirection::RecvOnly;
+				break;
+			default:
+				videoDirection = linphone::MediaDirection::Inactive;
+		}
+	}
+	/*
+	auto videoDirection =
+	    !enabled ? linphone::MediaDirection::RecvOnly
+	    : direction == linphone::MediaDirection::RecvOnly //
+	        ? linphone::MediaDirection::SendRecv
+	        : direction == linphone::MediaDirection::SendRecv || direction == linphone::MediaDirection::SendOnly
+	              ? linphone::MediaDirection::RecvOnly
+	              : linphone::MediaDirection::SendOnly;
+	              */
+	params->setVideoDirection(videoDirection);
+	mMonitor->update(params);
 }
 
 void CallModel::startRecording() {
@@ -319,7 +359,11 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		// After UpdatedByRemote, video direction could be changed.
 		auto params = call->getRemoteParams();
 		emit remoteVideoEnabledChanged(params && params->videoEnabled());
-		emit cameraEnabledChanged(call->cameraEnabled());
+		qWarning() << "CallCameraEnabled:" << call->cameraEnabled();
+		auto videoDirection = call->getCurrentParams()->getVideoDirection();
+		emit cameraEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
+		                          videoDirection == linphone::MediaDirection::SendRecv);
+		// emit cameraEnabledChanged(call->cameraEnabled());
 		setConference(call->getConference());
 		updateConferenceVideoLayout();
 	}

@@ -75,7 +75,7 @@ QQuickFramebufferObject::Renderer *PreviewManager::subscribe(const CameraGui *ca
 			    (QQuickFramebufferObject::Renderer *)CoreModel::getInstance()->getCore()->createNativePreviewWindowId();
 		}
 		if (isFirst) {
-			lDebug() << "[PreviewManager] " << name << " Set Native Preview Id";
+			lDebug() << "[PreviewManager] " << name << " Set Native Preview Id with " << renderer;
 			CoreModel::getInstance()->getCore()->setNativePreviewWindowId(renderer);
 		}
 	});
@@ -118,9 +118,17 @@ void PreviewManager::unsubscribe(QObject *sender) {
 }
 
 void PreviewManager::activate() {
-	App::postModelBlock([]() { CoreModel::getInstance()->getCore()->enableVideoPreview(true); });
+	App::postModelBlock([]() {
+		qDebug() << "[PreviewManager] Activation";
+		CoreModel::getInstance()->getCore()->enableVideoPreview(true);
+		CoreModel::getInstance()->getCore()->iterate();
+	});
 }
 
 void PreviewManager::deactivate() {
-	App::postModelBlock([]() { CoreModel::getInstance()->getCore()->enableVideoPreview(false); });
+	App::postModelBlock([]() {
+		qDebug() << "[PreviewManager] Deactivation";
+		CoreModel::getInstance()->getCore()->enableVideoPreview(false);
+		CoreModel::getInstance()->getCore()->iterate();
+	});
 }

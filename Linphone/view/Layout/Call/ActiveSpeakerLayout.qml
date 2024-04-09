@@ -31,6 +31,7 @@ Item{
 		
 		Sticker {
 			id: activeSpeakerSticker
+			previewEnabled: false
 			Layout.fillWidth: true
 			Layout.fillHeight: true
 			call: mainItem.call
@@ -88,14 +89,14 @@ Item{
 			clip: true
 			delegate:
 				Sticker {
-					visible: mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
+					previewEnabled: index == 0
+					visible: modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
 					&& modelData.core.address != activeSpeakerSticker.address
 					height: visible ? 180 * DefaultStyle.dp : 0
 					width: 300 * DefaultStyle.dp
 					qmlName: 'S_'+index
 					
 					participantDevice: modelData
-					previewEnabled: index == 0
 					Component.onCompleted: console.log(qmlName + " is " +modelData.core.address)
 				}
 		}
@@ -115,7 +116,8 @@ Item{
 		//participantDevice: allDevices.me
 		cameraEnabled: preview.visible && mainItem.call && mainItem.call.core.cameraEnabled
 		onCameraEnabledChanged: console.log("P : " +cameraEnabled + " / " +visible +" / " +mainItem.call)
-
+		property AccountProxy accounts: AccountProxy{id: accountProxy}
+		account: accountProxy.defaultAccount
 		call: mainItem.call
 
 		MovableMouseArea {

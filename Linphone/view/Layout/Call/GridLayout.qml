@@ -33,12 +33,12 @@ Mosaic {
 			width: grid.cellWidth - 10
 			Sticker {
 				id: cameraView
+				previewEnabled: index == 0
 				visible: mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
 				anchors.fill: parent
 				qmlName: 'G_'+index
 
 				participantDevice: avatarCell.currentDevice
-				previewEnabled: index == 0
 				Component.onCompleted: console.log(qmlName + " is " +modelData.core.address)
 			}
 			/*

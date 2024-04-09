@@ -94,14 +94,14 @@ QString Utils::getInitials(const QString &username) {
 	return QLocale().toUpper(initials.join(""));
 }
 
-VariantObject *Utils::createCall(const QString &sipAddress,
-                                 bool withVideo,
-                                 const QString &prepareTransfertAddress,
-                                 const QHash<QString, QString> &headers) {
+VariantObject *Utils::createCall(QString sipAddress,
+                                 QVariantMap options,
+                                 QString prepareTransfertAddress,
+                                 QHash<QString, QString> headers) {
 	VariantObject *data = new VariantObject(QVariant()); // Scope : GUI
 	if (!data) return nullptr;
-	data->makeRequest([sipAddress, withVideo, prepareTransfertAddress, headers]() {
-		auto call = ToolModel::createCall(sipAddress, withVideo, prepareTransfertAddress, headers);
+	data->makeRequest([sipAddress, options, prepareTransfertAddress, headers]() {
+		auto call = ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers);
 		if (call) {
 			auto callGui = QVariant::fromValue(new CallGui(call));
 			App::postCoreSync([callGui]() {

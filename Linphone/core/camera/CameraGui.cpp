@@ -197,7 +197,7 @@ void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 	if (mWindowIdLocation != location) {
 		lDebug() << log().arg("Update Window Id location from %2 to %3").arg(mWindowIdLocation).arg(location);
 		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->unsubscribe(this);
-		else resetWindowId(); // Location change: Reset old window ID.
+		else if (mWindowIdLocation != None) resetWindowId(); // Location change: Reset old window ID.
 		mWindowIdLocation = location;
 		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->subscribe(this);
 		update();

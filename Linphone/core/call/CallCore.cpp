@@ -53,7 +53,10 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mDuration = call->getDuration();
 	mMicrophoneMuted = call->getMicrophoneMuted();
 	mSpeakerMuted = call->getSpeakerMuted();
-	mCameraEnabled = call->cameraEnabled();
+	// mCameraEnabled = call->cameraEnabled();
+	auto videoDirection = call->getCurrentParams()->getVideoDirection();
+	mCameraEnabled =
+	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	mState = LinphoneEnums::fromLinphone(call->getState());
 	mPeerAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
@@ -355,6 +358,7 @@ bool CallCore::getCameraEnabled() const {
 void CallCore::setCameraEnabled(bool enabled) {
 	if (mCameraEnabled != enabled) {
 		mCameraEnabled = enabled;
+		qWarning() << "CameraEnabled: " << mCameraEnabled;
 		emit cameraEnabledChanged();
 	}
 }

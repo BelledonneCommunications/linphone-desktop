@@ -22,6 +22,7 @@ RowLayout {
 			// Layout.leftMargin: 97 * DefaultStyle.dp
 			Sticker {
 				id: preview
+				previewEnabled: true
 				Layout.preferredHeight: 330 * DefaultStyle.dp
 				Layout.preferredWidth: 558 * DefaultStyle.dp
 				qmlName: "WP"
@@ -29,7 +30,6 @@ RowLayout {
 					id: accounts
 				}
 				account: accounts.defaultAccount
-				previewEnabled: true
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter

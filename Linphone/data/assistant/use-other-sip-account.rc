@@ -30,6 +30,11 @@
     <entry name="use_rls_presence" overwrite="true"></entry>
     <entry name="rls_uri" overwrite="true"></entry>
   </section>
+  <section name="video">
+    <entry name="automatically_accept" overwrite="true">1</entry>
+    <entry name="automatically_initiate" overwrite="true">0</entry>
+    <entry name="automatically_accept_direction" overwrite="true">2</entry>
+  </section>
   <section name="assistant">
     <entry name="domain" overwrite="true"></entry>
     <entry name="algorithm" overwrite="true">MD5</entry>

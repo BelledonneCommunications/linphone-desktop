@@ -157,7 +157,7 @@ signals:
 	void cameraNotWorking(const std::shared_ptr<linphone::Call> &call, const std::string &cameraName);
 	void videoDisplayErrorOccurred(const std::shared_ptr<linphone::Call> &call, int errorCode);
 	void audioDeviceChanged(const std::shared_ptr<linphone::Call> &call,
-							const std::shared_ptr<linphone::AudioDevice> &audioDevice);
+	                        const std::shared_ptr<linphone::AudioDevice> &audioDevice);
 	void remoteRecording(const std::shared_ptr<linphone::Call> &call, bool recording);
 };
 

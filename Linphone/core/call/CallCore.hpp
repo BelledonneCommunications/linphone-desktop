@@ -62,7 +62,7 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(LinphoneEnums::CallState transferState READ getTransferState NOTIFY transferStateChanged)
 	Q_PROPERTY(ConferenceGui *conference READ getConferenceGui NOTIFY conferenceChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceLayout conferenceVideoLayout READ getConferenceVideoLayout WRITE
-				   lSetConferenceVideoLayout NOTIFY conferenceVideoLayoutChanged)
+	               lSetConferenceVideoLayout NOTIFY conferenceVideoLayoutChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -180,6 +180,7 @@ signals:
 	void lSetSpeakerMuted(bool muted);
 	void lSetMicrophoneMuted(bool isMuted);
 	void lSetCameraEnabled(bool enabled);
+	void lSetVideoEnabled(bool enabled);
 	void lSetPaused(bool paused);
 	void lTransferCall(QString &est);
 	void lStartRecording();
@@ -226,7 +227,8 @@ private:
 	int mDuration = 0;
 	bool mSpeakerMuted;
 	bool mMicrophoneMuted;
-	bool mCameraEnabled;
+	bool mCameraEnabled = false;
+	bool mVideoEnabled = false;
 	bool mPaused = false;
 	bool mRemoteVideoEnabled = false;
 	bool mRecording = false;
