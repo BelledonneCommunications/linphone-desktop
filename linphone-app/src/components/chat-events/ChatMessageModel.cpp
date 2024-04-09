@@ -320,7 +320,12 @@ void ChatMessageModel::onFileTransferProgressIndication (const std::shared_ptr<l
 			for(auto content : mContentListModel->getSharedList<ContentModel>())
 				allAreDownloaded &= content->mWasDownloaded;
 			setWasDownloaded(allAreDownloaded);
-			App::getInstance()->getNotifier()->notifyReceivedFileMessage(message, content);
+			QTimer::singleShot(60, App::getInstance(),
+			                   [message, content]() { // on 100% downlaoded, the SDK still need to do stuff on file. It
+				                                      // still need permission on file. Let the application to use the
+				                                      // file after next iteration.
+				                   App::getInstance()->getNotifier()->notifyReceivedFileMessage(message, content);
+			                   });
 		}
 	}
 }

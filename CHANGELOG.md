@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Screen Sharing
 
+## 5.2.4 - undefined
+
+### Fixed
+- File permission after auto downloading a file.
+
 ## 5.2.3 - 2024-03-29
 
 ### Fixed
