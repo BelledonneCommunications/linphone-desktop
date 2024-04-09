@@ -14,27 +14,25 @@ Rectangle {
 	property alias centerContent : centerLayout.children
 	color: DefaultStyle.grey_0
 	ColumnLayout {
-		anchors.rightMargin: 40 * DefaultStyle.dp
-		anchors.leftMargin: 119 * DefaultStyle.dp
+		// anchors.leftMargin: 119 * DefaultStyle.dp
 		anchors.top: parent.top
 		anchors.left: parent.left
 		anchors.right: parent.right
 		anchors.bottom: bottomMountains.top
-		spacing: 3 * DefaultStyle.dp
+		spacing: 0
 		RowLayout {
 			Layout.fillWidth: true
 			Layout.preferredHeight: 102 * DefaultStyle.dp
-			Layout.maximumHeight: 102 * DefaultStyle.dp
-			// Layout.topMargin: 18
-			// Layout.alignment: Qt.AlignRight | Qt.AlignTop
+			Layout.rightMargin: 42 * DefaultStyle.dp
+			spacing: 0
 			Item {
 				Layout.fillWidth: true
 			}
 			Button {
 				Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-				// Layout.bottomMargin: 20
 				background: Item{}
 				contentItem: RowLayout {
+					spacing: 8 * DefaultStyle.dp
 					Image {
 						fillMode: Image.PreserveAspectFit
 						source: AppIcons.info
@@ -58,30 +56,24 @@ Rectangle {
 		RowLayout {
 			id: titleLayout
 			Layout.preferredHeight: 131 * DefaultStyle.dp
-			// Layout.bottomMargin: 20
-		}
-		ColumnLayout {
-			id: centerLayout
+			Layout.fillWidth: true
+			spacing: 0
 		}
 		Item {
+			id: centerLayout
 			Layout.fillHeight: true
 			Layout.fillWidth: true
 		}
 	}
 
-	RowLayout {
+	Image {
 		id: bottomMountains
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
 		anchors.right: parent.right
-		Image {
-			Layout.minimumHeight: 50 * DefaultStyle.dp
-			Layout.preferredHeight: 80 * DefaultStyle.dp
-			Layout.fillWidth: true
-			source: AppIcons.belledonne
-			fillMode: Image.Stretch
-		}
-
+		height: 108 * DefaultStyle.dp
+		source: AppIcons.belledonne
+		fillMode: Image.Stretch
 	}
 } 
  

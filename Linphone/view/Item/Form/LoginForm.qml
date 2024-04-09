@@ -6,7 +6,7 @@ import Linphone
 
 ColumnLayout {
 	id: mainItem
-	spacing: 15 * DefaultStyle.dp
+	spacing: 25 * DefaultStyle.dp
 	signal connectionSucceed()
 
 	FormItemLayout {
@@ -52,9 +52,8 @@ ColumnLayout {
 		}
 
 		ErrorText {
-			anchors.top: password.bottom
-			anchors.topMargin: 15 * DefaultStyle.dp
 			id: errorText
+			anchors.top: password.bottom
 			Connections {
 				target: LoginPageCpp
 				onErrorMessageChanged: {
@@ -70,7 +69,8 @@ ColumnLayout {
 	}
 
 	RowLayout {
-		id: lastFormLineLayout
+		Layout.topMargin: 7 * DefaultStyle.dp
+		spacing: 29 * DefaultStyle.dp
 		Button {
 			leftPadding: 20 * DefaultStyle.dp
 			rightPadding: 20 * DefaultStyle.dp
@@ -108,7 +108,6 @@ ColumnLayout {
 					}
 				}
 			}
-			Layout.rightMargin: 20 * DefaultStyle.dp
 			onClicked: {
 				username.errorMessage = ""
 				password.errorMessage = ""
@@ -135,7 +134,7 @@ ColumnLayout {
 				font{
 					underline: true
 					pixelSize: 13 * DefaultStyle.dp
-					weight : 600 * DefaultStyle.dp
+					weight: 600 * DefaultStyle.dp
 				}
 			}
 			onClicked: console.debug("[LoginForm]User: forgotten password button clicked")

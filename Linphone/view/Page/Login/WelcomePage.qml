@@ -8,21 +8,23 @@ LoginLayout {
 	id: mainItem
 	signal startButtonPressed()
 
-	titleContent: RowLayout {
+	titleContent: [
 		Text {
 			id: welcome
 			text: qsTr("Bienvenue")
+			Layout.alignment: Qt.AlignVCenter
+			Layout.leftMargin: 132 * DefaultStyle.dp
 			color: DefaultStyle.main2_800
 			font {
 				pixelSize: 96 * DefaultStyle.dp
 				weight: 800 * DefaultStyle.dp
 			}
 			scaleLettersFactor: 1.1
-		}
+		},
 		Text {
 			Layout.alignment: Qt.AlignBottom
-			Layout.leftMargin: 10 * DefaultStyle.dp
-			Layout.bottomMargin: 5 * DefaultStyle.dp
+			Layout.leftMargin: 29 * DefaultStyle.dp
+			Layout.bottomMargin: 19 * DefaultStyle.dp
 			color: DefaultStyle.main2_800
 			text: qsTr("sur Linphone")
 			font {
@@ -30,13 +32,15 @@ LoginLayout {
 				weight: 800 * DefaultStyle.dp
 			}
 			scaleLettersFactor: 1.1
-		}
+		},
 		Item {
 			Layout.fillWidth: true
-		}
+		},
 		Button {
 			visible: carousel.currentIndex < (carousel.itemsCount - 1)
 			flat: true
+			Layout.rightMargin: 50 * DefaultStyle.dp
+			Layout.alignment: Qt.AlignVCenter | Layout.AlignRight
 			background: Item {
 				visible: false
 			}
@@ -53,26 +57,27 @@ LoginLayout {
 				mainItem.startButtonPressed()
 			}
 		}
-	}
-	centerContent: Item {
-		id: centerLayout
-		Layout.bottomMargin: 20 * DefaultStyle.dp
-		Layout.fillWidth: false
-		Layout.fillHeight: false
-		Layout.leftMargin: 250 * DefaultStyle.dp
-		Layout.topMargin: 165 * DefaultStyle.dp
+	]
+	centerContent: ColumnLayout {
+		spacing: 76 * DefaultStyle.dp
+		anchors.left: parent.left
+		anchors.top: parent.top
+		anchors.leftMargin: 308 * DefaultStyle.dp
+		anchors.topMargin: 166 * DefaultStyle.dp
+
 		RowLayout {
 			id: carouselLayout
 			Image {
 				id: carouselImg
-				Layout.rightMargin: 40 * DefaultStyle.dp
+				// Layout.rightMargin: 40 * DefaultStyle.dp
 				Layout.preferredWidth: 153.22 * DefaultStyle.dp
-				Layout.preferredHeight: 156 * DefaultStyle.dp
+				Layout.preferredHeight: 155.9 * DefaultStyle.dp
 				fillMode: Image.PreserveAspectFit
 				source: carousel.currentIndex == 0 ? AppIcons.welcomeLinphoneLogo : carousel.currentIndex == 1 ? AppIcons.welcomeLock : AppIcons.welcomeOpenSource
 			}
 			Carousel {
 				id: carousel
+				Layout.leftMargin: 75.78 * DefaultStyle.dp
 				itemsCount: slideRepeater.count
 				itemsList: Repeater {
 					id: slideRepeater
@@ -80,10 +85,9 @@ LoginLayout {
 					{title: qsTr("Linphone"), text: qsTr("Une application de communication <b>sécurisée</b>,<br> <b>open source</b> et <b>française</b>.")},
 					{title: qsTr("Sécurisé"), text: qsTr("Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>.")},
 					{title: qsTr("Open Source"), text: qsTr("Une application open source et un <b>service gratuit</b> <br>depuis <b>2001</b>")}
-					// {title: qsTr("Sécurisé"), text: qsTr("Vos communications sont en sécurité grâce aux <br><b>Chiffrement de bout en bout</b>.")}
 					]
 					ColumnLayout {
-						spacing: 15 * DefaultStyle.dp
+						spacing: 10 * DefaultStyle.dp
 						Text {
 							id: title
 							text: modelData.title
@@ -106,12 +110,7 @@ LoginLayout {
 		}
 
 		Button {
-			anchors.top: carouselLayout.bottom
-			anchors.right: carouselLayout.right
-			anchors.topMargin: 20 * DefaultStyle.dp
-			anchors.bottomMargin: 20 * DefaultStyle.dp
-			anchors.leftMargin: (centerLayout.width - width) * DefaultStyle.dp
-			y: centerLayout.implicitWidth - width
+			Layout.leftMargin: 509 * DefaultStyle.dp
 			leftPadding: 20 * DefaultStyle.dp
 			rightPadding: 20 * DefaultStyle.dp
 			topPadding: 11 * DefaultStyle.dp

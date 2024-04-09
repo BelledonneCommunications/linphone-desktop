@@ -12,7 +12,7 @@ Control.CheckBox {
 		y: (parent.height - height) / 2
 		radius: 3 * DefaultStyle.dp
 		border.color: DefaultStyle.main1_500_main
-		border.width: 2 * DefaultStyle.dp
+		border.width: 2.2 * DefaultStyle.dp
 		// color: mainItem.checked ? DefaultStyle.main1_500_main : "transparent"
 		EffectImage {
 			visible: mainItem.checked

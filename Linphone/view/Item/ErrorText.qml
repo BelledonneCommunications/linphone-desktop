@@ -15,8 +15,8 @@ Text {
 		mainItem.state = "Invisible"
 	}
 	font {
-		pixelSize: 13 * DefaultStyle.dp
-		weight: 600 * DefaultStyle.dp
+		pixelSize: 12 * DefaultStyle.dp
+		weight: 300 * DefaultStyle.dp
 	}
 	states: [
 		State{

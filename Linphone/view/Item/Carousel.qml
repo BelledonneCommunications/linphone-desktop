@@ -11,6 +11,8 @@ ColumnLayout {
 	// which is part of the carouselStackLayout children list
 	required property int itemsCount
 	property int currentIndex: carouselStackLayout.currentIndex
+	property var currentItem: carouselButton.itemAt(currentIndex)
+	spacing: 61 * DefaultStyle.dp
 
 	function goToSlide(index) {
 		carouselStackLayout.goToSlideAtIndex(index)
@@ -70,30 +72,34 @@ ColumnLayout {
 			radius: 30 * DefaultStyle.dp
 			color: DefaultStyle.main1_500_main
 			z: 1
-			x: mainItem.currentIndex >= 0 && carouselButton.itemAt(mainItem.currentIndex) ? carouselButton.itemAt(mainItem.currentIndex).x : 0
+			x: mainItem.currentIndex >= 0 && mainItem.currentItem ? mainItem.currentItem.x - width/2 + mainItem.currentItem.width/2 : 0
 			Behavior on x { NumberAnimation {duration: 100}}
 		}
 		RowLayout {
 			id: carouselButtonsLayout
-			spacing: 10 * DefaultStyle.dp
+			spacing: 7.5 * DefaultStyle.dp
+			anchors.leftMargin: 2.5 * DefaultStyle.dp
 			Repeater {
 				id: carouselButton
 				model: mainItem.itemsCount
 				delegate: Button {
-					width: 8 * DefaultStyle.dp
-					height: 8 * DefaultStyle.dp
-					padding: 0
+					Layout.preferredWidth: 8 * DefaultStyle.dp
+					Layout.preferredHeight: 8 * DefaultStyle.dp
+					topPadding: 0
+					bottomPadding: 0
+					leftPadding: 0
+					rightPadding: 0
 					background: Rectangle {
 						color: DefaultStyle.main2_200
 						radius: 30 * DefaultStyle.dp
-						width: 8 * DefaultStyle.dp
-						height: 8 * DefaultStyle.dp
+						anchors.fill: parent
 					}
 					onClicked: {
 						mainItem.goToSlide(modelData)
 					}
 				}
 			}
+			Item{Layout.fillWidth: true}
 		}
 	}
 }

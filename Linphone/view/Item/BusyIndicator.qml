@@ -25,7 +25,7 @@ Item {
                 from: 0
                 to: 360
                 loops: Animation.Infinite
-                duration: 10000
+                duration: 15000
             }
 		}
 	}

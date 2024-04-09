@@ -8,11 +8,13 @@ Control.Button {
 	id: mainItem
 	property int capitalization
 	property color color: DefaultStyle.main1_500_main
+	property color disabledColor: DefaultStyle.main1_500_main_darker
 	property color borderColor: "transparent"
 	property color pressedColor: DefaultStyle.main1_500_main_darker
 	property bool inversedColors: false
 	property int textSize: 18 * DefaultStyle.dp
 	property int textWeight: 600 * DefaultStyle.dp
+	property int radius: 48 * DefaultStyle.dp
 	property color textColor: DefaultStyle.grey_0
 	property bool underline: false
 	property bool shadowEnabled: false
@@ -35,14 +37,16 @@ Control.Button {
 		Rectangle {
 			anchors.fill: parent
 			id: buttonBackground
-			color: inversedColors
+			color: mainItem.enabled
+				? inversedColors
 					? mainItem.pressed 
 						? DefaultStyle.grey_100
 						: DefaultStyle.grey_0
 					: mainItem.pressed 
 						? mainItem.pressedColor
 						: mainItem.color
-			radius: 48 * DefaultStyle.dp
+				: mainItem.disabledColor
+			radius: mainItem.radius
 			border.color: inversedColors ? mainItem.color : mainItem.borderColor
 
 			MouseArea {

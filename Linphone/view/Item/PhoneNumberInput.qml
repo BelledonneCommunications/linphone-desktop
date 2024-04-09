@@ -10,7 +10,7 @@ ColumnLayout {
 	property string errorMessage: ""
 	property string placeholderText : ""
 	property bool mandatory: false
-	property int textInputWidth: 200 * DefaultStyle.dp
+	property int textInputWidth: width
 	property string initialPhoneNumber
 	readonly property string phoneNumber: textField.text
 	readonly property string countryCode: combobox.currentText
@@ -55,7 +55,7 @@ ColumnLayout {
 				placeholderText: mainItem.placeholderText
 				background: Item{}
 				initialText: initialPhoneNumber
-				validator: IntValidator{}
+				validator: RegularExpressionValidator{ regularExpression: /[0-9]+/}
 			}
 		}
 	}

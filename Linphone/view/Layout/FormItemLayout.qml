@@ -13,6 +13,7 @@ ColumnLayout {
 	property string errorMessage: ""
 	property bool enableErrorText: false
 	property bool errorTextVisible: errorText.opacity > 0
+	spacing: 5 * DefaultStyle.dp
 
 	Text {
 		visible: label.length > 0
@@ -39,6 +40,7 @@ ColumnLayout {
 		id: errorText
 		visible: mainItem.enableErrorText
 		text: mainItem.errorMessage
+		color: DefaultStyle.main2_600
 		Layout.preferredWidth: implicitWidth
 	}
 }
