@@ -38,6 +38,7 @@ public:
 	                         QObject *parent = nullptr);
 	~ConferenceSchedulerModel();
 
+	QString getUri();
 	void setInfo(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 	void cancelConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo);
 

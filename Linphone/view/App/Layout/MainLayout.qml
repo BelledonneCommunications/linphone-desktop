@@ -232,7 +232,7 @@ Item {
 													source: AppIcons.phone
 												}
 												onClicked: {
-													mainItem.callObj = UtilsCpp.createCall(sipAddr.text)
+													UtilsCpp.createCall(sipAddr.text)
 												}
 											}
 											Button {
@@ -245,7 +245,7 @@ Item {
 													height: 24 * DefaultStyle.dp
 													source: AppIcons.videoCamera
 												}
-												onClicked: mainItem.callObj = UtilsCpp.createCall(sipAddr.text, {'cameraEnabled':true})
+												onClicked: UtilsCpp.createCall(sipAddr.text, {'cameraEnabled':true})
 											}
 										}
 										Button {

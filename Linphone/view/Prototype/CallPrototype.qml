@@ -5,13 +5,12 @@ import Linphone
 import UtilsCpp 1.0
 
 // Snippet
-Window{
+Window {
 	id: mainItem
 	height: 400
 	width: 800
 	onWidthChanged: console.log(width)
-	property var callVarObject
-	property var call: callVarObject ? callVarObject.value : null
+	property var call
 	property var callState: call && call.core.state
 	onCallStateChanged: {
 		console.log("State:" +callState)
@@ -138,7 +137,7 @@ Window{
 					onClicked: {
 						var address = usernameToCall.text + "@sip.linphone.org"
 						console.log("Calling "+address)
-						mainItem.callVarObject = UtilsCpp.createCall(address)
+						UtilsCpp.createCall(address)
 						proto.component1 = comp
 					}
 				}

@@ -100,12 +100,18 @@ QString ConferenceInfoModel::getDescription() const {
 	return Utils::coreStringToAppString(mConferenceInfo->getSubject());
 }
 
+QString ConferenceInfoModel::getUri() const {
+	if (auto uriAddr = mConferenceInfo->getUri()) {
+		return Utils::coreStringToAppString(uriAddr->asString());
+	} else return QString();
+}
+
 std::list<std::shared_ptr<linphone::ParticipantInfo>> ConferenceInfoModel::getParticipantInfos() const {
 	return mConferenceInfo->getParticipantInfos();
 }
 
 void ConferenceInfoModel::setDateTime(const QDateTime &date) {
-	mConferenceInfo->setDateTime(date.toMSecsSinceEpoch() / 1000); // toMSecsSinceEpoch() is UTC
+	mConferenceInfo->setDateTime(date.isValid() ? date.toMSecsSinceEpoch() / 1000 : -1); // toMSecsSinceEpoch() is UTC
 	emit dateTimeChanged(date);
 }
 

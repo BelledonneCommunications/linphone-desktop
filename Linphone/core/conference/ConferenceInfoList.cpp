@@ -95,6 +95,10 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 		lUpdate();
 	});
 	mCoreModelConnection->makeConnectToModel(
+	    &CoreModel::callCreated, [this](const std::shared_ptr<linphone::Call> &call) {
+		    qDebug() << "call created" << Utils::coreStringToAppString(call->getRemoteAddress()->asString());
+	    });
+	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoReceived,
 	    [this](const std::shared_ptr<linphone::Core> &core,
 	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {

@@ -126,10 +126,9 @@ ColumnLayout {
 			button.icon.height: 24 * DefaultStyle.dp
 			button.icon.source: AppIcons.phone
 			label: qsTr("Appel")
-			property var callObj
 			button.onClicked: {
  	  			var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contactAddress)
-				callObj = UtilsCpp.createCall(addr)
+				UtilsCpp.createCall(addr)
 			}
 		}
 		LabelButton {
@@ -151,10 +150,9 @@ ColumnLayout {
 			button.icon.height: 24 * DefaultStyle.dp
 			button.icon.source: AppIcons.videoCamera
 			label: qsTr("Appel Video")
-			property var callObj
 			button.onClicked: {
 				var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contactAddress)
-	  			callObj = UtilsCpp.createCall(addr)
+	  			UtilsCpp.createCall(addr)
   				console.log("[CallPage.qml] TODO : enable video")
 			}
 		}

@@ -331,14 +331,13 @@ AbstractMainPage {
 												background: Item{}
 												Layout.preferredWidth: 24 * DefaultStyle.dp
 												Layout.preferredHeight: 24 * DefaultStyle.dp
-												property var callObj
 												icon.source: AppIcons.phone
 												width: 24 * DefaultStyle.dp
 												height: 24 * DefaultStyle.dp
 												icon.width: 24 * DefaultStyle.dp
 												icon.height: 24 * DefaultStyle.dp
 												onClicked: {
-													callObj = UtilsCpp.createCall(modelData.address)
+													UtilsCpp.createCall(modelData.address)
 												}
 											}
 										}

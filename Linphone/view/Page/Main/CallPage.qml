@@ -12,8 +12,19 @@ AbstractMainPage {
 	newItemIconSource: AppIcons.newCall
 
 	property var selectedRowHistoryGui
-
 	signal listViewUpdated()
+
+	property ConferenceInfoGui confInfoGui
+
+	Connections {
+		enabled: confInfoGui
+		target: confInfoGui ? confInfoGui.core : null
+		onConferenceSchedulerStateChanged: {
+			if (confInfoGui.core.schedulerState === LinphoneEnums.ConferenceSchedulerState.Ready) {
+				listStackView.pop()
+			}
+		}
+	}
 
 	onSelectedRowHistoryGuiChanged: {
 		if (selectedRowHistoryGui) rightPanelStackView.replace(contactDetailComp, Control.StackView.Immediate)
@@ -53,6 +64,7 @@ AbstractMainPage {
 			property int leftMargin: 45 * DefaultStyle.dp
 			property int rightMargin: 39 * DefaultStyle.dp
 		}
+
 		Component {
 			id: historyListItem
 
@@ -260,7 +272,6 @@ AbstractMainPage {
 												Button {
 													Layout.rightMargin: 5 * DefaultStyle.dp
 													padding: 0
-													property var callObj
 													background: Item {
 														visible: false
 													}
@@ -271,7 +282,7 @@ AbstractMainPage {
 													icon.height: 24 * DefaultStyle.dp
 													onClicked: {
 														var addr = UtilsCpp.generateLinphoneSipAddress(modelData.core.remoteAddress)
-														callObj = UtilsCpp.createCall(addr)
+														UtilsCpp.createCall(addr)
 													}
 												}
 											}
@@ -319,6 +330,7 @@ AbstractMainPage {
 							active: true
 							policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
 							Layout.fillHeight: true
+							Layout.rightMargin: 8 * DefaultStyle.dp
 							Rectangle{// TODO: change colors of scrollbar!
 								anchors.fill: parent
 								color: 'red'
@@ -364,14 +376,43 @@ AbstractMainPage {
 					Layout.fillHeight: true
 					groupCallVisible: true
 					searchBarColor: DefaultStyle.grey_100
-					property var callObj
 					
 					onCallButtonPressed: (address) => {
-						callObj = UtilsCpp.createCall(UtilsCpp.generateLinphoneSipAddress(address))
+						UtilsCpp.createCall(UtilsCpp.generateLinphoneSipAddress(address))
 						// var window = UtilsCpp.getCallsWindow()
+					}
+					onGroupCallCreationRequested: {
+						console.log("groupe call requetsed")
+						listStackView.push(groupCallItem)
 					}
 				}
 			}
+		}
+		Component {
+			id: groupCallItem
+			// RowLayout {
+				AddParticipantsLayout {
+					Control.StackView.onActivated: mainItem.confInfoGui = Qt.createQmlObject('import Linphone
+																		ConferenceInfoGui{
+																		}', mainItem)
+					Layout.leftMargin: 21 * DefaultStyle.dp
+					title: qsTr("Appel de groupe")
+					titleColor: DefaultStyle.main1_500_main
+					nameGroupCall: true
+					validateButtonText: qsTr("Lancer")
+					onReturnRequested: listStackView.pop()
+					onValidateRequested: {
+						if (groupName.length === 0) {
+							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Un nom doit être donné à l'appel de groupe"), false)
+						} else {
+							mainItem.confInfoGui.core.subject = groupName
+							mainItem.confInfoGui.core.isScheduled = false
+							mainItem.confInfoGui.core.addParticipants(selectedParticipants)
+							mainItem.confInfoGui.core.save()
+						}
+					}
+				}
+			// }
 		}
 	}
 

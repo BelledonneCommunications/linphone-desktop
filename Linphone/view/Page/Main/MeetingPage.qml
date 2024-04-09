@@ -275,6 +275,10 @@ AbstractMainPage {
 			onReturnRequested: {
 				container.pop()
 			}
+			onValidateRequested: {
+				conferenceInfoGui.core.resetParticipants(addParticipantLayout.selectedParticipants)
+				returnRequested()
+			}
 		}
 	}
 	Component {
@@ -379,9 +383,8 @@ AbstractMainPage {
 							inversedColors: true
 							color: DefaultStyle.main2_600
 							background: Item{}
-							property var callObj
 							onClicked: {
-								callObj = UtilsCpp.createCall(mainItem.selectedConference.core.uri)
+								UtilsCpp.createCall(mainItem.selectedConference.core.uri)
 							}
 						}
 						Button {

@@ -144,7 +144,6 @@ ListView {
 			anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			RowLayout{
-				property var callObj
 				visible: mainItem.actionLayoutVisible
 				spacing: 10 * DefaultStyle.dp
 				Button {
@@ -157,7 +156,7 @@ ListView {
 						height: 24 * DefaultStyle.dp
 						source: AppIcons.phone
 					}
-					onClicked: callObj = UtilsCpp.createCall(modelData.core.defaultAddress)
+					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress)
 				}
 				Button {
 					Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -169,7 +168,7 @@ ListView {
 						height: 24 * DefaultStyle.dp
 						source: AppIcons.videoCamera
 					}
-					onClicked: callObj = UtilsCpp.createCall(modelData.core.defaultAddress, {'cameraEnabled':true})
+					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress, {'cameraEnabled':true})
 				}
 			}
 			PopupButton {

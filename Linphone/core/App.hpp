@@ -36,6 +36,7 @@ class App : public SingleApplication, public AbstractObject {
 public:
 	App(int &argc, char *argv[]);
 	~App();
+	void setSelf(QSharedPointer<App>(me));
 	static App *getInstance();
 	Notifier *getNotifier() const;
 
@@ -121,6 +122,7 @@ private:
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
 	QSharedPointer<Settings> mSettings;
+	QSharedPointer<SafeConnection<App, CoreModel>> mCoreModelConnection;
 
 	DECLARE_ABSTRACT_OBJECT
 };

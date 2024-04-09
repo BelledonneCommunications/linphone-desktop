@@ -46,6 +46,7 @@ public:
 	QString getOrganizerName() const;
 	QString getOrganizerAddress() const;
 	QString getDescription() const;
+	QString getUri() const;
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> getParticipantInfos() const;
 
 	void setDateTime(const QDateTime &date);

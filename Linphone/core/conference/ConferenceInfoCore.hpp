@@ -112,6 +112,7 @@ public:
 	void setConferenceSchedulerState(LinphoneEnums::ConferenceSchedulerState state);
 
 	Q_INVOKABLE void addParticipant(const QString &address);
+	Q_INVOKABLE void addParticipants(const QStringList &addresses);
 	Q_INVOKABLE void removeParticipant(const QString &address);
 	Q_INVOKABLE void removeParticipant(const int &index);
 	Q_INVOKABLE QString getParticipantAddressAt(const int &index);

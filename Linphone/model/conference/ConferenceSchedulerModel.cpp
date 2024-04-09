@@ -23,6 +23,7 @@
 #include <QDebug>
 
 #include "model/core/CoreModel.hpp"
+#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ConferenceSchedulerModel)
 
@@ -37,6 +38,13 @@ ConferenceSchedulerModel::ConferenceSchedulerModel(
 
 ConferenceSchedulerModel::~ConferenceSchedulerModel() {
 	mustBeInLinphoneThread("~" + getClassName());
+}
+
+QString ConferenceSchedulerModel::getUri() {
+	auto uriAddr = mMonitor->getInfo() ? mMonitor->getInfo()->getUri() : nullptr;
+	if (uriAddr) {
+		return Utils::coreStringToAppString(uriAddr->asString());
+	} else return QString();
 }
 
 void ConferenceSchedulerModel::setInfo(const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {

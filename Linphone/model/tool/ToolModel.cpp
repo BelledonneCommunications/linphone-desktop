@@ -93,11 +93,12 @@ QString ToolModel::getDisplayName(QString address) {
 	return displayName.isEmpty() ? address : displayName;
 }
 
-QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
-                                               const QVariantMap &options,
-                                               const QString &prepareTransfertAddress,
-                                               const QHash<QString, QString> &headers,
-                                               linphone::MediaEncryption mediaEncryption) {
+bool ToolModel::createCall(const QString &sipAddress,
+                           const QVariantMap &options,
+                           const QString &prepareTransfertAddress,
+                           const QHash<QString, QString> &headers,
+                           linphone::MediaEncryption mediaEncryption,
+                           QString *errorMessage) {
 	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
 	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
 	bool cameraEnabled = options.contains("cameraEnabled") ? options["cameraEnabled"].toBool() : false;
@@ -106,7 +107,11 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 	if (!address) {
 		qCritical() << "[" + QString(gClassName) + "] The calling address is not an interpretable SIP address: "
 		            << sipAddress;
-		return nullptr;
+		if (errorMessage) {
+			*errorMessage = tr("The calling address is not an interpretable SIP address : ");
+			errorMessage->append(sipAddress);
+		}
+		return false;
 	}
 
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
@@ -133,7 +138,7 @@ QSharedPointer<CallCore> ToolModel::createCall(const QString &sipAddress,
 	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	auto call = core->inviteAddressWithParams(address, params);
 	call->enableCamera(cameraEnabled);
-	return call ? CallCore::create(call) : nullptr;
+	return call != nullptr;
 
 	/* TODO transfer
 

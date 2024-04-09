@@ -90,6 +90,23 @@ App::App(int &argc, char *argv[])
 App::~App() {
 }
 
+void App::setSelf(QSharedPointer<App>(me)) {
+	mCoreModelConnection = QSharedPointer<SafeConnection<App, CoreModel>>(
+	    new SafeConnection<App, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+	mCoreModelConnection->makeConnectToModel(&CoreModel::callCreated,
+	                                         [this](const std::shared_ptr<linphone::Call> &call) {
+		                                         auto callCore = CallCore::create(call);
+		                                         mCoreModelConnection->invokeToCore([this, callCore] {
+			                                         auto callGui = new CallGui(callCore);
+			                                         auto win = getCallsWindow(QVariant::fromValue(callGui));
+			                                         Utils::smartShowWindow(win);
+			                                         qDebug() << "App : call created" << callGui;
+			                                         // callGui.value<CallGui
+			                                         //  * > ()->getCore()->lSetCameraEnabled(true);
+		                                         });
+	                                         });
+}
+
 App *App::getInstance() {
 	return dynamic_cast<App *>(QApplication::instance());
 }
@@ -148,7 +165,7 @@ void App::init() {
 			        Qt::QueuedConnection);
 			    mEngine->load(url);
 		    });
-		    coreModel.reset();
+		    // coreModel.reset();
 	    },
 	    Qt::SingleShotConnection);
 	// Console Commands

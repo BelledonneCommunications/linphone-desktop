@@ -14,6 +14,7 @@ Item {
 	property color searchBarColor: DefaultStyle.grey_100
 	property color searchBarBorderColor: "transparent"
 	signal callButtonPressed(string address)
+	signal groupCallCreationRequested()
 	clip: true
 
 	Popup {
@@ -198,6 +199,7 @@ Item {
 								Layout.preferredHeight: 24 * DefaultStyle.dp
 							}
 						}
+						onClicked: mainItem.groupCallCreationRequested()
 					}
 
 					// RowLayout {
@@ -333,9 +335,8 @@ Item {
 		NumericPad {
 			id: numPad
 			width: parent.width
-			property var callObj
 			onLaunchCall: {
-				callObj = UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
+				UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
 				// TODO : auto completion instead of sip linphone
 			}
 		}

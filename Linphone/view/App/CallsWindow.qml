@@ -32,12 +32,11 @@ Window {
 			&& (!conferenceInfo || conference) )
 			middleItemStackView.replace(inCallItem)
 	}
-	property var callObj
 
 	function joinConference(options) {
 		if (!conferenceInfo || conferenceInfo.core.uri.length === 0) UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence n'a pas pu démarrer en raison d'une erreur d'uri."), mainWindow)
 		else {
-			callObj = UtilsCpp.createCall(conferenceInfo.core.uri, options)
+			UtilsCpp.createCall(conferenceInfo.core.uri, options)
 		}
 	}
 
@@ -462,14 +461,13 @@ Window {
 							Layout.fillWidth: true
 							Layout.preferredHeight: numPad.height
 							Layout.topMargin: 10 * DefaultStyle.dp
-							property var callObj
 							NumericPad {
 								id: numPad
 								width: parent.width
 								visible: parent.visible
 								closeButtonVisible: false
 								onLaunchCall: {
-									callObj = UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
+									UtilsCpp.createCall(dialerTextInput.text + "@sip.linphone.org")
 								}
 							}
 						}
@@ -753,6 +751,10 @@ Window {
 										rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné").arg(selectedParticipants.length).arg(selectedParticipants.length > 1 ? "s" : "")
 									}
 									participantsStack.selectedParticipants = selectedParticipants
+								}
+								onValidateRequested: {
+									conferenceInfoGui.core.resetParticipants(contactList.selectedContacts)
+									returnRequested()
 								}
 								Connections {
 									target: participantsStack

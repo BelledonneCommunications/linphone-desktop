@@ -94,32 +94,19 @@ QString Utils::getInitials(const QString &username) {
 	return QLocale().toUpper(initials.join(""));
 }
 
-VariantObject *Utils::createCall(QString sipAddress,
-                                 QVariantMap options,
-                                 QString prepareTransfertAddress,
-                                 QHash<QString, QString> headers) {
-	VariantObject *data = new VariantObject(QVariant()); // Scope : GUI
-	if (!data) return nullptr;
-	data->makeRequest([sipAddress, options, prepareTransfertAddress, headers]() {
-		auto call = ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers);
-		if (call) {
-			auto callGui = QVariant::fromValue(new CallGui(call));
-			App::postCoreSync([callGui]() {
-				auto app = App::getInstance();
-				auto window = app->getCallsWindow(callGui);
-				smartShowWindow(window);
-				qDebug() << "Utils : call created" << callGui;
-				// callGui.value<CallGui *>()->getCore()->lSetCameraEnabled(true);
-			});
-			return callGui;
-		} else {
-			qDebug() << "Utils : failed to create call";
-			return QVariant();
+void Utils::createCall(const QString &sipAddress,
+                       QVariantMap options,
+                       const QString &prepareTransfertAddress,
+                       const QHash<QString, QString> &headers) {
+	App::postModelAsync([sipAddress, options, prepareTransfertAddress, headers]() {
+		QString errorMessage;
+		bool success = ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers,
+		                                     linphone::MediaEncryption::None, &errorMessage);
+		if (!success) {
+			if (errorMessage.isEmpty()) errorMessage = tr("L'appel n'a pas pu être créé");
+			showInformationPopup("Erreur", errorMessage, false);
 		}
 	});
-	data->requestValue();
-
-	return data;
 }
 
 void Utils::setupConference(ConferenceInfoGui *confGui) {

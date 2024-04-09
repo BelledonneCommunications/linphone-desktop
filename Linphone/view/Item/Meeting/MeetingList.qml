@@ -102,14 +102,14 @@ ListView {
 					radius: height/2
 					property var isCurrentDay: UtilsCpp.isCurrentDay(dateTime)
 
-					color: !isCurrentDay ? DefaultStyle.main1_500_main : "transparent"
+					color: isCurrentDay ? DefaultStyle.main1_500_main : "transparent"
 					Component.onCompleted: if(isCurrentDay) mainItem.currentIndex = index
 					Text {
 						id: dayNumText
 						anchors.centerIn: parent
 						verticalAlignment: Text.AlignVCenter
 						text: UtilsCpp.toDateDayString(dateTime)
-						color: !dayNum.isCurrentDay ? DefaultStyle.grey_0 : DefaultStyle.main2_500main
+						color: dayNum.isCurrentDay ? DefaultStyle.grey_0 : DefaultStyle.main2_500main
 						wrapMode: Text.NoWrap
 						font {
 							pixelSize: 20 * DefaultStyle.dp

@@ -46,11 +46,12 @@ public:
 	static QString getDisplayName(const std::shared_ptr<const linphone::Address> &address);
 	static QString getDisplayName(QString address);
 
-	static QSharedPointer<CallCore> createCall(const QString &sipAddress,
+	static bool createCall(const QString &sipAddress,
 											   const QVariantMap &options = {},
 	                                           const QString &prepareTransfertAddress = "",
 	                                           const QHash<QString, QString> &headers = {},
-	                                           linphone::MediaEncryption = linphone::MediaEncryption::None);
+	                                           linphone::MediaEncryption = linphone::MediaEncryption::None,
+	                       					   QString *errorMessage = nullptr);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

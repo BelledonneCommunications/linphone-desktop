@@ -28,14 +28,15 @@ int main(int argc, char *argv[]) {
 	// Disable QML cache. Avoid malformed cache.
 	qputenv("QML_DISABLE_DISK_CACHE", "true");
 
-	App app(argc, argv);
+	auto app = QSharedPointer<App>::create(argc, argv);
+	app->setSelf(app);
 
 	QTranslator translator;
 	const QStringList uiLanguages = QLocale::system().uiLanguages();
 	for (const QString &locale : uiLanguages) {
 		const QString baseName = "Linphone_" + QLocale(locale).name();
 		if (translator.load(":/i18n/" + baseName)) {
-			app.installTranslator(&translator);
+			app->installTranslator(&translator);
 			break;
 		}
 	}
@@ -47,9 +48,11 @@ int main(int argc, char *argv[]) {
 
 	int result = 0;
 	do {
-		result = app.exec();
+		result = app->exec();
 	} while (result == (int)App::StatusCode::gRestartCode);
 	qWarning() << "[Main] Exiting app with the code : " << result;
-	app.clean();
+	app->clean();
+	app = nullptr;
+
 	return result;
 }

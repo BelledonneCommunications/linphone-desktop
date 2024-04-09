@@ -44,6 +44,14 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 	mTimeZoneModel = QSharedPointer<TimeZoneModel>(new TimeZoneModel(
 	    QTimeZone::systemTimeZone())); // Always return system timezone because this info is not stored in database.
 
+	connect(this, &ConferenceInfoCore::dateTimeChanged, [this] {
+		setDuration(mDateTime.secsTo(mEndDateTime) / 60.0);
+		setIsScheduled(mDateTime != QDateTime::currentDateTime());
+	});
+	connect(this, &ConferenceInfoCore::endDateTimeChanged,
+	        [this] { setDuration(mDateTime.secsTo(mEndDateTime) / 60.0); });
+	connect(this, &ConferenceInfoCore::durationChanged, [this] { setEndDateTime(mDateTime.addSecs(mDuration * 60)); });
+
 	if (conferenceInfo) {
 		mustBeInLinphoneThread(getClassName());
 		mConferenceInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(conferenceInfo);
@@ -85,8 +93,8 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		}
 		mConferenceInfoState = LinphoneEnums::fromLinphone(conferenceInfo->getState());
 	} else {
-		mDateTime = QDateTime::currentDateTime();
-		mEndDateTime = QDateTime::currentDateTime().addSecs(3600);
+		mDateTime = QDateTime();
+		mEndDateTime = mDateTime;
 		App::postModelSync([this]() {
 			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (defaultAccount) {
@@ -100,11 +108,6 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 			}
 		});
 	}
-
-	connect(this, &ConferenceInfoCore::dateTimeChanged, [this] { setDuration(mDateTime.secsTo(mEndDateTime) / 60.0); });
-	connect(this, &ConferenceInfoCore::endDateTimeChanged,
-	        [this] { setDuration(mDateTime.secsTo(mEndDateTime) / 60.0); });
-	connect(this, &ConferenceInfoCore::durationChanged, [this] { setEndDateTime(mDateTime.addSecs(mDuration * 60)); });
 }
 
 ConferenceInfoCore::ConferenceInfoCore(const ConferenceInfoCore &conferenceInfoCore) {
@@ -185,10 +188,18 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::schedulerStateChanged, [this](linphone::ConferenceScheduler::State state) {
 				    auto confInfoState = mConferenceInfoModel->getState();
+				    QString uri;
+				    if (state == linphone::ConferenceScheduler::State::Ready)
+					    uri = mConferenceInfoModel->getConferenceScheduler()->getUri();
 				    mConfInfoModelConnection->invokeToCore([this, state = LinphoneEnums::fromLinphone(state),
-				                                            infoState = LinphoneEnums::fromLinphone(confInfoState)] {
+				                                            infoState = LinphoneEnums::fromLinphone(confInfoState),
+				                                            uri] {
+					    qDebug() << "scheduler state changed" << state;
 					    setConferenceSchedulerState(state);
 					    setConferenceInfoState(infoState);
+					    if (state == LinphoneEnums::ConferenceSchedulerState::Ready) {
+						    setUri(uri);
+					    }
 				    });
 			    });
 			mConfInfoModelConnection->makeConnectToModel(
@@ -199,6 +210,12 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 		} else { // Create
 			mCoreModelConnection = QSharedPointer<SafeConnection<ConferenceInfoCore, CoreModel>>(
 			    new SafeConnection<ConferenceInfoCore, CoreModel>(me, CoreModel::getInstance()), &QObject::deleteLater);
+			mCoreModelConnection->makeConnectToModel(
+			    &CoreModel::conferenceInfoReceived,
+			    [this](const std::shared_ptr<linphone::Core> &core,
+			           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
+				    qDebug() << "CONF INFO RECEIVED ==================";
+			    });
 		}
 	}
 }
@@ -359,6 +376,25 @@ void ConferenceInfoCore::addParticipant(const QString &address) {
 	emit participantsChanged();
 }
 
+void ConferenceInfoCore::addParticipants(const QStringList &addresses) {
+	bool addressAdded = false;
+	for (auto &address : addresses) {
+		auto found = std::find_if(mParticipants.begin(), mParticipants.end(), [address](QVariant participant) {
+			return participant.toMap()["address"].toString() == address;
+		});
+		if (found == mParticipants.end()) {
+			QVariantMap participant;
+			auto displayNameObj = Utils::getDisplayName(address);
+			participant["displayName"] = displayNameObj ? displayNameObj->getValue() : "";
+			participant["address"] = address;
+			participant["role"] = (int)LinphoneEnums::ParticipantRole::Listener;
+			mParticipants.append(participant);
+			addressAdded = true;
+		}
+	}
+	if (addressAdded) emit participantsChanged();
+}
+
 void ConferenceInfoCore::removeParticipant(const QString &address) {
 	for (int i = 0; i < mParticipants.size(); ++i) {
 		auto map = mParticipants[i].toMap();
@@ -435,6 +471,9 @@ LinphoneEnums::ConferenceSchedulerState ConferenceInfoCore::getConferenceSchedul
 // Datetime is in Custom (Locale/UTC/System). Convert into UTC for conference info
 
 void ConferenceInfoCore::setIsScheduled(const bool &on) {
+	if (!on) setDateTime(QDateTime());
+	else mDateTime = QDateTime::currentDateTime();
+	qDebug() << "set d	ate time valid" << mDateTime.isValid();
 	if (mIsScheduled != on) {
 		mIsScheduled = on;
 		emit isScheduledChanged();

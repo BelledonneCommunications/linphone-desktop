@@ -7,6 +7,7 @@ import UtilsCpp 1.0
 
 ColumnLayout {
 	id: mainItem
+	spacing: 10 * DefaultStyle.dp
 	property string title
 	property string validateButtonText
 	property string placeHolderText: qsTr("Rechercher des contacts")
@@ -15,7 +16,10 @@ ColumnLayout {
 	property int selectedParticipantsCount: selectedParticipants.length
 	property alias titleLayout: titleLayout
 	property ConferenceInfoGui conferenceInfoGui
+	property bool nameGroupCall: false
+	readonly property string groupName: groupCallName.text
 	signal returnRequested()
+	signal validateRequested()
 	// Layout.preferredWidth: 362 * DefaultStyle.dp
 
 	function clearSelectedParticipants() {
@@ -35,15 +39,28 @@ ColumnLayout {
 			icon.height: 24 * DefaultStyle.dp
 			onClicked: mainItem.returnRequested()
 		}
-		Text {
-			text: mainItem.title
-			color: mainItem.titleColor
-			maximumLineCount: 1
-			font {
-				pixelSize: 18 * DefaultStyle.dp
-				weight: 800 * DefaultStyle.dp
+		ColumnLayout {
+			spacing: 0
+			Text {
+				text: mainItem.title
+				color: mainItem.titleColor
+				maximumLineCount: 1
+				font {
+					pixelSize: 18 * DefaultStyle.dp
+					weight: 800 * DefaultStyle.dp
+				}
+				Layout.fillWidth: true
 			}
-			Layout.fillWidth: true
+			Text {
+				text: qsTr("%1 participant%2 sélectionné").arg(mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount > 1 ? "s" : "")
+				color: DefaultStyle.main2_500main
+				maximumLineCount: 1
+				font {
+					pixelSize: 12 * DefaultStyle.dp
+					weight: 300 * DefaultStyle.dp
+				}
+				Layout.fillWidth: true
+			}
 		}
 		Button {
 			Layout.preferredWidth: 70 * DefaultStyle.dp
@@ -55,9 +72,30 @@ ColumnLayout {
 			text: mainItem.validateButtonText
 			textSize: 13 * DefaultStyle.dp
 			onClicked: {
-				mainItem.conferenceInfoGui.core.resetParticipants(contactList.selectedContacts)
-				mainItem.returnRequested()
+				mainItem.validateRequested()
 			}
+		}
+	}
+	ColumnLayout {
+		visible: mainItem.nameGroupCall
+		spacing: 0
+		RowLayout {
+			Text {
+				font.pixelSize: 13 * DefaultStyle.dp
+				font.weight: 700 * DefaultStyle.dp
+				text: qsTr("Nom du groupe")
+			}
+			Item{Layout.fillWidth: true}
+			Text {
+				font.pixelSize: 12 * DefaultStyle.dp
+				font.weight: 300 * DefaultStyle.dp
+				text: qsTr("Requis")
+			}
+		}
+		TextField {
+			id: groupCallName
+			Layout.fillWidth: true
+			Layout.preferredHeight: 49 * DefaultStyle.dp
 		}
 	}
 	ListView {
