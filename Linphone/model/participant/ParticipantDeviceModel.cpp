@@ -106,17 +106,22 @@ void ParticipantDeviceModel::onIsMuted(const std::shared_ptr<linphone::Participa
 }
 void ParticipantDeviceModel::onStateChanged(const std::shared_ptr<linphone::ParticipantDevice> &participantDevice,
                                             linphone::ParticipantDevice::State state) {
+	qDebug() << log().arg(Q_FUNC_INFO) << participantDevice->getAddress()->asStringUriOnly() << (int)state;
 	emit stateChanged(LinphoneEnums::fromLinphone(state));
 }
 void ParticipantDeviceModel::onStreamCapabilityChanged(
     const std::shared_ptr<linphone::ParticipantDevice> &participantDevice,
     linphone::MediaDirection direction,
     linphone::StreamType streamType) {
+	qDebug() << log().arg(Q_FUNC_INFO) << participantDevice->getAddress()->asStringUriOnly() << (int)direction
+	         << (int)streamType;
 	emit streamCapabilityChanged(streamType);
 }
 void ParticipantDeviceModel::onStreamAvailabilityChanged(
     const std::shared_ptr<linphone::ParticipantDevice> &participantDevice,
     bool available,
     linphone::StreamType streamType) {
+	qDebug() << log().arg(Q_FUNC_INFO) << participantDevice->getAddress()->asStringUriOnly() << available
+	         << (int)streamType;
 	emit streamAvailabilityChanged(streamType);
 }

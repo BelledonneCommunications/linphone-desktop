@@ -182,7 +182,7 @@ private:
 	LinphoneEnums::ConferenceSchedulerState mConferenceSchedulerState;
 	LinphoneEnums::ConferenceInfoState mConferenceInfoState =
 	    LinphoneEnums::ConferenceInfoState::ConferenceInfoStateNew;
-	bool mIsScheduled = true;
+	bool mIsScheduled;
 	bool mIsEnded = false;
 	QTimer mCheckEndTimer;
 	int mInviteMode = 0;

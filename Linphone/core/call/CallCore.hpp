@@ -44,6 +44,7 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE lSetCameraEnabled NOTIFY cameraEnabledChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
 	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
+	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT)
 	Q_PROPERTY(bool isSecured READ isSecured NOTIFY securityUpdated)
 	Q_PROPERTY(bool isConference READ isConference NOTIFY conferenceChanged)
 	Q_PROPERTY(LinphoneEnums::MediaEncryption encryption READ getEncryption NOTIFY securityUpdated)
@@ -72,6 +73,7 @@ public:
 	void setSelf(QSharedPointer<CallCore> me);
 
 	QString getPeerAddress() const;
+	QString getLocalAddress() const;
 
 	LinphoneEnums::CallStatus getStatus() const;
 	void setStatus(LinphoneEnums::CallStatus status);
@@ -222,6 +224,7 @@ private:
 
 	QString mLastErrorMessage;
 	QString mPeerAddress;
+	QString mLocalAddress;
 	bool mIsSecured;
 	bool mIsConference = false;
 	int mDuration = 0;

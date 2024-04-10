@@ -57,6 +57,7 @@ endif()
 set(CMAKE_INSTALL_PREFIX "${APPLICATION_OUTPUT_DIR}")
 
 if( APPLE )
+	set(LINPHONEAPP_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build: comma-separated list of values in [arm64, x86_64]")
 	set(LINPHONESDK_BUILD_TYPE "Default")#Using Mac will remove all SDK targets.
 	set(ENABLE_FAT_BINARY "ON") # Disable XCFrameworks as it is not supported.
 
@@ -66,15 +67,11 @@ if( APPLE )
 	set(CMAKE_INSTALL_DATAROOTDIR "${APPLICATION_NAME}.app/Contents/Resources/share")
 
 	if( NOT CMAKE_OSX_DEPLOYMENT_TARGET)
-		set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")#Qt: 'path' is unavailable: introduced in macOS 10.15
+		#set(CMAKE_OSX_DEPLOYMENT_TARGET "10.15")#Qt: 'path' is unavailable: introduced in macOS 10.15
+		set(CMAKE_OSX_DEPLOYMENT_TARGET "12.3")#ScreenSharing: 'SCStreamConfiguration' has been introduced in macOS 12.3
 	endif()
-	if(CMAKE_HOST_SYSTEM_PROCESSOR MATCHES "arm64")# TODO: add universal build
-		set(LINPHONESDK_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build for: comma-separated list of values in [x86_64]")
-	else()
-		set(LINPHONESDK_MACOS_ARCHS "x86_64" CACHE STRING "MacOS architectures to build for: comma-separated list of values in [x86_64]")
-	endif()
+	set(LINPHONESDK_MACOS_ARCHS ${LINPHONEAPP_MACOS_ARCHS})
 	set(CMAKE_OSX_ARCHITECTURES ${LINPHONESDK_MACOS_ARCHS} CACHE STRING "")
-	set(CMAKE_SYSTEM_PROCESSOR "x86_64")
 elseif(WIN32)
     set(LINPHONESDK_BUILD_TYPE "Default")
 else()
@@ -186,12 +183,11 @@ set(ENABLE_CSHARP_WRAPPER OFF CACHE BOOL "Build the CSharp wrapper for Liblinpho
 set(ENABLE_THEORA OFF)
 set(ENABLE_QT_GL ${ENABLE_VIDEO})
 
-# Qt5.13 because of Spitview
-#find_package(Qt5 5.13 COMPONENTS Core REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
-#if(NOT Qt5_FOUND)
-#	message(FATAL_ERROR "Minimum supported Qt5 version is 5.13!")
-#endif()
+if(NOT Qt6_FOUND)
+	message(FATAL_ERROR "Minimum supported Qt6!")
+endif()
 
 set(LINPHONEAPP_BUILD_TYPE "Default" CACHE STRING "Type of build")
 set_property(CACHE LINPHONEAPP_BUILD_TYPE PROPERTY STRINGS "Default" "Macos" "Normal")

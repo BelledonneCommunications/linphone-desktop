@@ -87,6 +87,9 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer(bool resetWindowId)
 					} else {
 						renderer = (QQuickFramebufferObject::Renderer *)call->createNativeVideoWindowId();
 						if (renderer) call->setNativeVideoWindowId(renderer);
+						else {
+							renderer = (QQuickFramebufferObject::Renderer *)call->createNativeVideoWindowId();
+						}
 					}
 				}
 			};

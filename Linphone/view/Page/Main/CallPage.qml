@@ -15,6 +15,12 @@ AbstractMainPage {
 	signal listViewUpdated()
 
 	property ConferenceInfoGui confInfoGui
+	property AccountProxy accounts: AccountProxy{id: accountProxy}
+	property AccountGui account: accountProxy.defaultAccount
+	property var state: account && account.core.registrationState || 0
+	onStateChanged: console.log(state)
+	property bool isRegistered: account ? account.core.registrationState == LinphoneEnums.RegistrationState.Ok : false
+	onIsRegisteredChanged: console.log(isRegistered)
 
 	Connections {
 		enabled: confInfoGui
@@ -404,7 +410,9 @@ AbstractMainPage {
 					onValidateRequested: {
 						if (groupName.length === 0) {
 							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Un nom doit être donné à l'appel de groupe"), false)
-						} else {
+						} if(!mainItem.isRegistered) {
+							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("Vous n'etes pas connecté"), false)
+						}else {
 							mainItem.confInfoGui.core.subject = groupName
 							mainItem.confInfoGui.core.isScheduled = false
 							mainItem.confInfoGui.core.addParticipants(selectedParticipants)

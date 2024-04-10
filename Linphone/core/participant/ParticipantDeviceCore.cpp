@@ -185,6 +185,7 @@ void ParticipantDeviceCore::setState(LinphoneEnums::ParticipantDeviceState state
 void ParticipantDeviceCore::setIsVideoEnabled(bool enabled) {
 	if (mIsVideoEnabled != enabled) {
 		mIsVideoEnabled = enabled;
+		qDebug() << log().arg(Q_FUNC_INFO) << getAddress() << mIsVideoEnabled;
 		emit videoEnabledChanged();
 	}
 }

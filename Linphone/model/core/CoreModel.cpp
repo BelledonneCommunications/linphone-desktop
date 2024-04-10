@@ -92,7 +92,7 @@ void CoreModel::start() {
 	mCore->start();
 	setPathAfterStart();
 	mCore->enableFriendListSubscription(true);
-	auto videoPolicy = mCore->getVideoActivationPolicy();
+	auto videoPolicy = mCore->getVideoActivationPolicy()->clone();
 	videoPolicy->setAutomaticallyAccept(true);
 	videoPolicy->setAutomaticallyInitiate(false);
 	mCore->setVideoActivationPolicy(videoPolicy);

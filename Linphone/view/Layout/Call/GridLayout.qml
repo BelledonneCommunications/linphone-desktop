@@ -19,12 +19,12 @@ Mosaic {
 		property ParticipantDeviceProxy participantDevices : ParticipantDeviceProxy {
 			id: allDevices
 			qmlName: "G"
-			Component.onCompleted: console.log("Loaded : " +allDevices)
+			Component.onCompleted: console.log("Loaded : " +allDevices + " = " +allDevices.count)
 	}
-		model: participantDevices
+		model: grid.call.core.isConference ? participantDevices: [0,1]
 		delegate: Item{
 			id: avatarCell
-			property ParticipantDeviceGui currentDevice: gridModel.participantDevices.getAt(index)
+			property ParticipantDeviceGui currentDevice: grid.call.core.isConference ? gridModel.participantDevices.getAt(index) : null
 			onCurrentDeviceChanged: {
 				if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
 			}
@@ -37,9 +37,10 @@ Mosaic {
 				visible: mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
 				anchors.fill: parent
 				qmlName: 'G_'+index
-
+				call: !grid.call.core.isConference ? grid.call : null
+				
 				participantDevice: avatarCell.currentDevice
-				Component.onCompleted: console.log(qmlName + " is " +modelData.core.address)
+				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.peerAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
 			/*
 			Sticker{

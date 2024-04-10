@@ -40,6 +40,7 @@ ListView {
 			bottomPadding: 16 * DefaultStyle.dp
 			text: section
 			height: 29 * DefaultStyle.dp + topPadding + bottomPadding
+			wrapMode: Text.NoWrap
 			font {
 				pixelSize: 20 * DefaultStyle.dp
 				weight: 800 * DefaultStyle.dp
@@ -81,12 +82,11 @@ ListView {
 				spacing: 0
 				//anchors.leftMargin: 45 * DefaultStyle.dp
 				Text {
-					//Layout.preferredWidth: 32 * DefaultStyle.dp
 					Layout.preferredHeight: 19 * DefaultStyle.dp
-					Layout.fillWidth: true
-					// opacity: (!previousItem || !previousDateTime.startsWith(displayName[0])) ? 1 : 0
-					text: day
+					text: day.substring(0,3) + '.'
 					color: DefaultStyle.main2_500main
+					wrapMode: Text.NoWrap
+					elide: Text.ElideNone
 					font {
 						pixelSize: 14 * DefaultStyle.dp
 						weight: 400 * DefaultStyle.dp
@@ -95,7 +95,6 @@ ListView {
 				}
 				Rectangle {
 					id: dayNum
-					//Layout.preferredWidth: Math.max(32 * DefaultStyle.dp, dayNumText.width+17*DefaultStyle.dp)
 					Layout.fillWidth: true
 					Layout.preferredHeight: width
 					Layout.alignment: Qt.AlignCenter

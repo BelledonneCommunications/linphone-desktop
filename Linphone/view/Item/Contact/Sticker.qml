@@ -21,8 +21,8 @@ Item {
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property color color: DefaultStyle.grey_600
 	property int radius: 15 * DefaultStyle.dp
-	property var peerAddressObj: previewEnabled
-									? UtilsCpp.getDisplayName(account.core.identityAddress)
+	property var peerAddressObj: previewEnabled && (call || account)
+									? UtilsCpp.getDisplayName(account ? account.core.identityAddress : call.core.localAddress)
 									: participantDevice && participantDevice.core
 										? UtilsCpp.getDisplayName(participantDevice.core.address)
 										: !previewEnabled && call && call.core
@@ -30,9 +30,9 @@ Item {
 											: null
 											
 	property string peerAddress:peerAddressObj ? peerAddressObj.value : ""
-	onPeerAddressChanged: console.log("TOTO " +qmlName + " => " +peerAddress)
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
-	property bool cameraEnabled: previewEnabled || participantDevice && participantDevice.core.videoEnabled
+	property bool cameraEnabled: (previewEnabled && call && call.core.cameraEnabled)
+									|| (!previewEnabled && participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName
 
 	Rectangle {

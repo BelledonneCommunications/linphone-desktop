@@ -45,12 +45,14 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 	    QTimeZone::systemTimeZone())); // Always return system timezone because this info is not stored in database.
 
 	connect(this, &ConferenceInfoCore::dateTimeChanged, [this] {
-		setDuration(mDateTime.secsTo(mEndDateTime) / 60.0);
-		setIsScheduled(mDateTime != QDateTime::currentDateTime());
+		setDuration(mDateTime.isValid() ? mDateTime.secsTo(mEndDateTime) / 60.0 : 60);
+		setIsScheduled(mDateTime.isValid());
 	});
 	connect(this, &ConferenceInfoCore::endDateTimeChanged,
-	        [this] { setDuration(mDateTime.secsTo(mEndDateTime) / 60.0); });
-	connect(this, &ConferenceInfoCore::durationChanged, [this] { setEndDateTime(mDateTime.addSecs(mDuration * 60)); });
+	        [this] { setDuration(mDateTime.isValid() ? mDateTime.secsTo(mEndDateTime) / 60.0 : 60); });
+	connect(this, &ConferenceInfoCore::durationChanged, [this] {
+		if (mDateTime.isValid()) setEndDateTime(mDateTime.addSecs(mDuration * 60));
+	});
 
 	if (conferenceInfo) {
 		mustBeInLinphoneThread(getClassName());
@@ -68,6 +70,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		mDateTime = QDateTime::fromMSecsSinceEpoch(conferenceInfo->getDateTime() * 1000, Qt::LocalTime);
 		mDuration = conferenceInfo->getDuration();
 		mEndDateTime = mDateTime.addSecs(mDuration * 60);
+		mIsScheduled = mDateTime.isValid();
 		mOrganizerAddress = Utils::coreStringToAppString(conferenceInfo->getOrganizer()->asStringUriOnly());
 		mOrganizerName = Utils::coreStringToAppString(conferenceInfo->getOrganizer()->getDisplayName());
 		if (mOrganizerName.isEmpty()) {
@@ -93,8 +96,10 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		}
 		mConferenceInfoState = LinphoneEnums::fromLinphone(conferenceInfo->getState());
 	} else {
-		mDateTime = QDateTime();
-		mEndDateTime = mDateTime;
+		mDateTime = QDateTime::currentDateTime();
+		mIsScheduled = true;
+		mDuration = 60;
+		mEndDateTime = mDateTime.addSecs(mDuration * 60);
 		App::postModelSync([this]() {
 			auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (defaultAccount) {
@@ -471,9 +476,6 @@ LinphoneEnums::ConferenceSchedulerState ConferenceInfoCore::getConferenceSchedul
 // Datetime is in Custom (Locale/UTC/System). Convert into UTC for conference info
 
 void ConferenceInfoCore::setIsScheduled(const bool &on) {
-	if (!on) setDateTime(QDateTime());
-	else mDateTime = QDateTime::currentDateTime();
-	qDebug() << "set d	ate time valid" << mDateTime.isValid();
 	if (mIsScheduled != on) {
 		mIsScheduled = on;
 		emit isScheduledChanged();
@@ -527,10 +529,13 @@ void ConferenceInfoCore::writeFromModel(const std::shared_ptr<ConferenceInfoMode
 
 void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> model) {
 	mustBeInLinphoneThread(getClassName() + "::writeIntoModel()");
-	model->setDateTime(mDateTime);
+	model->setDateTime(mIsScheduled ? mDateTime : QDateTime());
 	model->setDuration(mDuration);
 	model->setSubject(mSubject);
-	model->setOrganizer(mOrganizerAddress);
+	if (!mOrganizerAddress.isEmpty()) {
+		model->setOrganizer(mOrganizerAddress);
+		qDebug() << "Use of " << mOrganizerAddress;
+	} else qDebug() << "Use of " << model->getOrganizerAddress();
 	model->setDescription(mDescription);
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> participantInfos;
 	for (auto &p : mParticipants) {
@@ -570,8 +575,8 @@ void ConferenceInfoCore::save() {
 					if (!linphoneConf->getOrganizer()) linphoneConf->setOrganizer(cleanedClonedAddress);
 					if (mOrganizerAddress.isEmpty())
 						mOrganizerAddress = Utils::coreStringToAppString(accountAddress->asStringUriOnly());
-				}
-			}
+				} else qCritical() << "No contact address";
+			} else qCritical() << "No default account";
 			mConferenceInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
 			// mConferenceInfoModel->createConferenceScheduler();
 			auto confSchedulerModel = mConferenceInfoModel->getConferenceScheduler();

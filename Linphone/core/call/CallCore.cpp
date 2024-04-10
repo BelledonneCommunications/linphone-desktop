@@ -59,6 +59,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	    videoDirection == linphone::MediaDirection::SendOnly || videoDirection == linphone::MediaDirection::SendRecv;
 	mState = LinphoneEnums::fromLinphone(call->getState());
 	mPeerAddress = Utils::coreStringToAppString(call->getRemoteAddress()->asStringUriOnly());
+	mLocalAddress = Utils::coreStringToAppString(call->getCallLog()->getLocalAddress()->asStringUriOnly());
 	mStatus = LinphoneEnums::fromLinphone(call->getCallLog()->getStatus());
 	mTransferState = LinphoneEnums::fromLinphone(call->getTransferState());
 	auto token = Utils::coreStringToAppString(mCallModel->getAuthenticationToken());
@@ -269,6 +270,10 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 
 QString CallCore::getPeerAddress() const {
 	return mPeerAddress;
+}
+
+QString CallCore::getLocalAddress() const {
+	return mLocalAddress;
 }
 
 LinphoneEnums::CallStatus CallCore::getStatus() const {
