@@ -69,6 +69,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Item/RadioButton.qml
 	view/Item/RectangleTest.qml
 	view/Item/RoundedBackgroundControl.qml
+	view/Item/ScrollBar.qml
 	view/Item/SearchBar.qml
 	view/Item/Slider.qml
 	view/Item/Switch.qml

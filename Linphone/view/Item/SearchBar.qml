@@ -7,6 +7,7 @@ import Linphone
 Rectangle {
 	id: mainItem
 	property string placeholderText: ""
+	property color placeholderTextColor: DefaultStyle.main2_400
 	property int textInputWidth: 350 * DefaultStyle.dp
 	property color borderColor: "transparent"
 	property string text: textField.text
@@ -52,6 +53,7 @@ Rectangle {
 		anchors.right: clearTextButton.left
 		anchors.verticalCenter: parent.verticalCenter
 		placeholderText: mainItem.placeholderText
+		placeholderTextColor: mainItem.placeholderTextColor
 		width: mainItem.width - dialerButton.width
 		echoMode: (mainItem.hidden && !dialerButton.checked) ? TextInput.Password : TextInput.Normal
 		font {

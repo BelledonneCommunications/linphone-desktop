@@ -5,17 +5,17 @@ import QtQuick.Effects
 import Linphone
   
 Control.Popup {
-	clip: true
 	id: mainItem
 	signal buttonPressed(string text)
 	signal launchCall()
 	signal wipe()
 	property bool closeButtonVisible: true
 	closePolicy: Control.Popup.CloseOnEscape
-	leftPadding: closeButton.width
-	rightPadding: closeButton.width
-	rightInset: closeButton.width
-	topPadding: closeButton.height
+	leftPadding: 72 * DefaultStyle.dp
+	rightPadding: 72 * DefaultStyle.dp
+	topPadding: 41 * DefaultStyle.dp
+	bottomPadding: 18 * DefaultStyle.dp
+	// topPadding: closeButton.height + 4 * DefaultStyle.dp
 	background: Item {
 		anchors.fill: parent
 		Rectangle {
@@ -24,16 +24,15 @@ Control.Popup {
 			color: DefaultStyle.grey_100
 			radius: 20 * DefaultStyle.dp
 		}
-		// MultiEffect {
-		// 	id: effect
-		// 	anchors.fill: parent
-		// 	source: numPadBackground
-		// 	shadowEnabled: true
-		// 	shadowColor: DefaultStyle.grey_1000
-		// 	shadowOpacity: 0.1
-		// 	shadowVerticalOffset: -200 * DefaultStyle.dp
-		// 	shadowBlur: 1
-		// }
+		MultiEffect {
+			id: effect
+			anchors.fill: parent
+			source: numPadBackground
+			shadowEnabled: true
+			shadowColor: DefaultStyle.grey_1000
+			shadowOpacity: 0.1
+			shadowBlur: 1
+		}
 		Rectangle {
 			width: parent.width
 			height: parent.height / 2
@@ -61,9 +60,8 @@ Control.Popup {
 	}
 	contentItem: Layout.GridLayout {
 		columns: 3
-		columnSpacing: 3
-		Layout.Layout.fillWidth: true
-		Layout.Layout.fillHeight: true
+		columnSpacing: 40 * DefaultStyle.dp
+		rowSpacing: 10 * DefaultStyle.dp
 		Repeater {
 			model: 9
 			Button {

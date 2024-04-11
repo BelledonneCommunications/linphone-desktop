@@ -427,8 +427,6 @@ Window {
 					id: contactsListPanel
 					CallContactsLists {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Transfert d'appel")
-						sideMargin: 10 * DefaultStyle.dp
-						topMargin: 15 * DefaultStyle.dp
 						groupCallVisible: false
 						searchBarColor: DefaultStyle.grey_0
 						searchBarBorderColor: DefaultStyle.grey_200
@@ -745,27 +743,26 @@ Window {
 							id: addParticipantComp
 							AddParticipantsLayout {
 								id: addParticipantLayout
-								titleLayout.visible: false
 								onSelectedParticipantsCountChanged: {
 									if (participantsStack.Control.StackView.status === Control.StackView.Active && Control.StackView.visible) {
 										rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné").arg(selectedParticipants.length).arg(selectedParticipants.length > 1 ? "s" : "")
 									}
 									participantsStack.selectedParticipants = selectedParticipants
 								}
-								onValidateRequested: {
-									conferenceInfoGui.core.resetParticipants(contactList.selectedContacts)
-									returnRequested()
-								}
 								Connections {
 									target: participantsStack
 									onCurrentItemChanged: {
 										if (participantsStack.currentItem == addParticipantLayout) {
 											rightPanel.headerTitleText = qsTr("Ajouter des participants")
-											rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné").arg(addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
+											rightPanel.headerSubtitleText = qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipants.length).arg(addParticipantLayout.selectedParticipants.length > 1 ? "s" : "")
 										}
 									}
 									onParticipantAdded: {
 										addParticipantLayout.clearSelectedParticipants()
+									}
+									onValidateRequested: {
+										conferenceInfoGui.core.resetParticipants(contactList.selectedContacts)
+										returnRequested()
 									}
 								}
 							}
@@ -1113,6 +1110,27 @@ Window {
 									if (mainWindow.call)
 										if (mainWindow.call.core.recording) mainWindow.call.core.lStopRecording()
 										else mainWindow.call.core.lStartRecording()
+								}
+							}
+							MenuButton {
+								checkable: true
+								icon.source: mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
+								icon.width: 32 * DefaultStyle.dp
+								icon.height: 32 * DefaultStyle.dp
+								contentImageColor: down 
+									? DefaultStyle.main1_500_main
+								 	: mainWindow.call && mainWindow.call.core.speakerMuted 
+										? DefaultStyle.danger_500main 
+										: DefaultStyle.main2_500main
+								text: mainWindow.call && mainWindow.call.core.speakerMuted ? qsTr("Activer le son") : qsTr("Désactiver le son")
+								textColor: down 
+									? DefaultStyle.main1_500_main
+								 	:mainWindow.call && mainWindow.call.core.speakerMuted 
+										? DefaultStyle.danger_500main
+										: DefaultStyle.main2_500main
+								Layout.fillWidth: true
+								onCheckedChanged: {
+									if (mainWindow.call) mainWindow.call.core.lSetSpeakerMuted(!mainWindow.call.core.speakerMuted)
 								}
 							}
 							MenuButton {

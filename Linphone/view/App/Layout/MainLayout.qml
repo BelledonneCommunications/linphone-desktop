@@ -167,7 +167,7 @@ Item {
 									shadowOpacity: 0.1
 								}
 							}
-							Control.ScrollBar {
+							ScrollBar {
 								id: scrollbar
 								height: parent.height
 								anchors.right: listPopup.right

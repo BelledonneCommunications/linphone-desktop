@@ -57,18 +57,20 @@ AbstractMainPage {
 		onAccepted: contact.core.remove()
 	}
 
-	leftPanelContent: ColumnLayout {
+	leftPanelContent: Item {
 		id: leftPanel
-		Layout.fillWidth: true
-		Layout.fillHeight: true
 		property int leftMargin: 45 * DefaultStyle.dp
 		property int rightMargin: 39 * DefaultStyle.dp
-		spacing: 30 * DefaultStyle.dp
+		Layout.fillHeight: true
+		Layout.fillWidth: true
 
 		RowLayout {
-			Layout.fillWidth: true
-			Layout.leftMargin: leftPanel.leftMargin
-			Layout.rightMargin: leftPanel.rightMargin
+			id: title
+			anchors.top: leftPanel.top
+			anchors.right: leftPanel.right
+			anchors.left: leftPanel.left
+			anchors.leftMargin: leftPanel.leftMargin
+			anchors.rightMargin: leftPanel.rightMargin
 
 			Text {
 				text: qsTr("Contacts")
@@ -94,10 +96,14 @@ AbstractMainPage {
 		}
 
 		ColumnLayout {
-			Layout.leftMargin: leftPanel.leftMargin
+			anchors.top: title.bottom
+			anchors.right: leftPanel.right
+			anchors.left: leftPanel.left
+			anchors.bottom: leftPanel.bottom
 			enabled: mainItem.leftPanelEnabled
 			SearchBar {
 				id: searchBar
+				Layout.leftMargin: leftPanel.leftMargin
 				Layout.rightMargin: leftPanel.rightMargin
 				Layout.fillWidth: true
 				placeholderText: qsTr("Rechercher un contact")
@@ -106,10 +112,10 @@ AbstractMainPage {
 				id: contactsArea
 				Layout.fillWidth: true
 				Layout.fillHeight: true
+				
 				Control.ScrollView {
 					id: listLayout
 					anchors.fill: parent
-					anchors.rightMargin: leftPanel.rightMargin
 					anchors.topMargin: 25 * DefaultStyle.dp
 					contentWidth: width
 					contentHeight: content.height
@@ -132,6 +138,8 @@ AbstractMainPage {
 						}
 						ColumnLayout {
 							visible: favoriteList.contentHeight > 0
+							Layout.leftMargin: leftPanel.leftMargin
+							Layout.rightMargin: leftPanel.rightMargin
 							RowLayout {
 								Text {
 									text: qsTr("Favoris")
@@ -158,6 +166,7 @@ AbstractMainPage {
 								hoverEnabled: mainItem.leftPanelEnabled
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
+								Control.ScrollBar.vertical.visible: false
 								showOnlyFavourites: true
 								contactMenuVisible: true
 								model: allFriends
@@ -175,6 +184,8 @@ AbstractMainPage {
 						}
 						ColumnLayout {
 							visible: contactList.count > 0
+							Layout.leftMargin: leftPanel.leftMargin
+							Layout.rightMargin: leftPanel.rightMargin
 							RowLayout {
 								Layout.fillWidth: true
 								Text {
@@ -202,6 +213,7 @@ AbstractMainPage {
 								Layout.fillWidth: true
 								Layout.preferredHeight: contentHeight
 								interactive: false
+								Control.ScrollBar.vertical.visible: false
 								hoverEnabled: mainItem.leftPanelEnabled
 								contactMenuVisible: true
 								searchBarText: searchBar.text
@@ -219,22 +231,21 @@ AbstractMainPage {
 							}
 						}
 					}
-				}
-				Control.ScrollBar {
-					id: contactsScrollbar
-					// Parent is changed from Scrollview. Do not use it.
-					x: contactsArea.width - width
-					height: listLayout.availableHeight
-					active: true
-					interactive: true
-					policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
 
-					Rectangle{// TODO: change colors of scrollbar!
-						anchors.fill: parent
-						color: 'red'
-						opacity:0.2
+					ScrollBar {
+						id: contactsScrollbar
+						anchors.right: listLayout.right
+						anchors.rightMargin: 8 * DefaultStyle.dp
+						anchors.top: listLayout.top
+						anchors.bottom: listLayout.bottom
+						height: listLayout.availableHeight
+						active: true
+						interactive: true
+						policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
 					}
+
 				}
+
 			}
 		}
 	}

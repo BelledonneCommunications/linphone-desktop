@@ -7,78 +7,22 @@ import UtilsCpp 1.0
 
 ColumnLayout {
 	id: mainItem
-	spacing: 10 * DefaultStyle.dp
-	property string title
-	property string validateButtonText
 	property string placeHolderText: qsTr("Rechercher des contacts")
-	property color titleColor: DefaultStyle.main2_700
 	property list<string> selectedParticipants: contactList.selectedContacts
 	property int selectedParticipantsCount: selectedParticipants.length
-	property alias titleLayout: titleLayout
 	property ConferenceInfoGui conferenceInfoGui
 	property bool nameGroupCall: false
 	readonly property string groupName: groupCallName.text
-	signal returnRequested()
-	signal validateRequested()
 	// Layout.preferredWidth: 362 * DefaultStyle.dp
 
 	function clearSelectedParticipants() {
 		contactList.selectedContacts.clear()
 	}
-
-	RowLayout {
-		id: titleLayout
-		Layout.fillWidth: true
-		Button {
-			background: Item{}
-			icon.source: AppIcons.leftArrow
-			contentImageColor: DefaultStyle.main1_500_main
-			Layout.preferredWidth: 24 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
-			icon.width: 24 * DefaultStyle.dp
-			icon.height: 24 * DefaultStyle.dp
-			onClicked: mainItem.returnRequested()
-		}
-		ColumnLayout {
-			spacing: 0
-			Text {
-				text: mainItem.title
-				color: mainItem.titleColor
-				maximumLineCount: 1
-				font {
-					pixelSize: 18 * DefaultStyle.dp
-					weight: 800 * DefaultStyle.dp
-				}
-				Layout.fillWidth: true
-			}
-			Text {
-				text: qsTr("%1 participant%2 sélectionné").arg(mainItem.selectedParticipantsCount).arg(mainItem.selectedParticipantsCount > 1 ? "s" : "")
-				color: DefaultStyle.main2_500main
-				maximumLineCount: 1
-				font {
-					pixelSize: 12 * DefaultStyle.dp
-					weight: 300 * DefaultStyle.dp
-				}
-				Layout.fillWidth: true
-			}
-		}
-		Button {
-			Layout.preferredWidth: 70 * DefaultStyle.dp
-			topPadding: 6 * DefaultStyle.dp
-			bottomPadding: 6 * DefaultStyle.dp
-			enabled: contactList.selectedContacts.length != 0
-			// leftPadding: 12 * DefaultStyle.dp
-			// rightPadding: 12 * DefaultStyle.dp
-			text: mainItem.validateButtonText
-			textSize: 13 * DefaultStyle.dp
-			onClicked: {
-				mainItem.validateRequested()
-			}
-		}
-	}
+	
 	ColumnLayout {
 		visible: mainItem.nameGroupCall
-		spacing: 0
+		spacing: 5 * DefaultStyle.dp
+		Layout.rightMargin: 38 * DefaultStyle.dp
 		RowLayout {
 			Text {
 				font.pixelSize: 13 * DefaultStyle.dp
@@ -101,7 +45,7 @@ ColumnLayout {
 	ListView {
 		id: participantList
 		Layout.fillWidth: true
-		// Layout.fillHeight: true
+		Layout.topMargin: 15 * DefaultStyle.dp
 		Layout.preferredHeight: contentHeight
 		Layout.maximumHeight: mainItem.height / 3
 		width: mainItem.width
@@ -109,7 +53,7 @@ ColumnLayout {
 		clip: true
 		delegate: Item {
 			height: 56 * DefaultStyle.dp
-			width: participantList.width
+			width: participantList.width - scrollbar.implicitWidth - 12 * DefaultStyle.dp
 			RowLayout {
 				anchors.fill: parent
 				Avatar {
@@ -138,13 +82,26 @@ ColumnLayout {
 				}
 			}
 		}
+		Control.ScrollBar.vertical: ScrollBar {
+			id: scrollbar
+			active: true
+			interactive: true
+			policy: Control.ScrollBar.AsNeeded
+			anchors.top: parent.top
+			anchors.bottom: parent.bottom
+			anchors.right: parent.right
+			anchors.rightMargin: 8 * DefaultStyle.dp
+		}
 	}
 	SearchBar {
 		id: searchbar
 		Layout.fillWidth: true
+		Layout.topMargin: 21 * DefaultStyle.dp
+		Layout.rightMargin: 28 * DefaultStyle.dp
 		placeholderText: mainItem.placeHolderText
 	}
 	Text {
+		Layout.topMargin: 21 * DefaultStyle.dp
 		text: qsTr("Contacts")
 		font {
 			pixelSize: 16 * DefaultStyle.dp
@@ -156,6 +113,8 @@ ColumnLayout {
 		visible: contentHeight > 0 || searchbar.text.length > 0
 		Layout.fillWidth: true
 		Layout.fillHeight: true
+		Layout.topMargin: 8 * DefaultStyle.dp
+		Layout.rightMargin: 8 * DefaultStyle.dp
 		Layout.preferredHeight: contentHeight
 		multiSelectionEnabled: true
 		contactMenuVisible: false
@@ -188,6 +147,7 @@ ColumnLayout {
 				}
 			}
 		}
+		
 	}
 	Item {
 		Layout.fillHeight: true

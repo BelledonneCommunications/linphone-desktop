@@ -16,6 +16,8 @@ AbstractMainPage {
 	property ConferenceInfoGui selectedConference
 	property int meetingListCount
 	signal newConfCreated()
+	signal returnRequested()
+	signal addParticipantsValidated(list<string> selectedParticipants)
 	Component.onCompleted: rightPanelStackView.push(overridenRightPanel, Control.StackView.Immediate)
 
 	onSelectedConferenceChanged: {
@@ -39,9 +41,11 @@ AbstractMainPage {
 			confInfoGui = Qt.createQmlObject('import Linphone
 											ConferenceInfoGui{
 											}', mainItem)
-			leftPanelStackView.push(createConf, {"conferenceInfoGui": confInfoGui, "isCreation": isCreation})
+			mainItem.selectedConference = confInfoGui
+			leftPanelStackView.push(createConf, {"conferenceInfoGui": mainItem.selectedConference, "isCreation": isCreation})
 		} else {
-			overridenRightPanelStackView.push(editConf, {"conferenceInfoGui": confInfoGui, "isCreation": isCreation})
+			mainItem.selectedConference = confInfoGui
+			overridenRightPanelStackView.push(editConf, {"conferenceInfoGui": mainItem.selectedConference, "isCreation": isCreation})
 		}
 	}
 
@@ -94,70 +98,28 @@ AbstractMainPage {
 	leftPanelContent: Item {
 		Layout.fillHeight: true
 		Layout.fillWidth: true
-		RowLayout {
-			id: leftPanel
-			anchors.fill: parent
-			spacing: 0
-			ColumnLayout {
-				enabled: mainItem.leftPanelEnabled
-				Layout.leftMargin: 45 * DefaultStyle.dp
-				Layout.rightMargin: 39 * DefaultStyle.dp
-				spacing: 0
-				RowLayout {
-					visible: leftPanelStackView.currentItem.objectName == "listLayout"
-					// Layout.rightMargin: leftPanel.sideMargin
-					spacing: 0
-					Text {
-						Layout.fillWidth: true
-						text: qsTr("Réunions")
-						color: DefaultStyle.main2_700
-						font.pixelSize: 29 * DefaultStyle.dp
-						font.weight: 800 * DefaultStyle.dp
-					}
-					Button {
-						background: Item {
-						}
-						icon.source: AppIcons.plusCircle
-						Layout.preferredWidth: 28 * DefaultStyle.dp
-						Layout.preferredHeight: 28 * DefaultStyle.dp
-						icon.width: 28 * DefaultStyle.dp
-						icon.height: 28 * DefaultStyle.dp
-						onClicked: {
-							mainItem.setUpConference()
-						}
-					}
-				}
 
-				Item {
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-
-					Control.StackView {
-						id: leftPanelStackView
-						initialItem: listLayout
-						anchors.fill: parent
-					}
-				}
-			}
-		}
-		Rectangle{// TODO: change colors of scrollbar!
-			anchors.right: parent.right
+		Control.StackView {
+			id: leftPanelStackView
+			initialItem: listLayout
 			anchors.top: parent.top
+			anchors.topMargin: 18 * DefaultStyle.dp
+			anchors.left: parent.left
+			anchors.right: parent.right
 			anchors.bottom: parent.bottom
-			width: 10
-			color: 'red'
-			opacity:0.2
+			anchors.leftMargin: 45 * DefaultStyle.dp
 		}
-		Control.ScrollBar {
+
+		ScrollBar {
 			id: meetingsScrollbar
 			anchors.right: parent.right
-			anchors.top: parent.top
+			anchors.rightMargin: 8 * DefaultStyle.dp
+			anchors.top: leftPanelStackView.top
 			anchors.bottom: parent.bottom
-			width: 10
-			//visible: leftPanelStackView.currentItem.objectName == "listLayout"
+			visible: leftPanelStackView.currentItem == listLayout
 			active: true
 			interactive: true
-			policy: Control.ScrollBar.AlwaysOn //Control.ScrollBar.AsNeeded
+			policy: Control.ScrollBar.AsNeeded
 		}
 	}
 
@@ -168,8 +130,8 @@ AbstractMainPage {
 			width: 393 * DefaultStyle.dp
 			height: parent.height
 			anchors.top: parent.top
-			// anchors.bottom: parent.bottom
-			// Layout.fillWidth: false
+			anchors.centerIn: parent
+			anchors.horizontalCenter: parent.horiztonalCenter
 		}
 	}
 
@@ -182,12 +144,42 @@ AbstractMainPage {
 				mainItem.selectedConference = null
 				// mainItem.righPanelStackView.clear()
 			}
-			Control.StackView.onActivated: mainItem.selectedConference = conferenceList.selectedConference
+			Control.StackView.onActivated: {
+				mainItem.selectedConference = conferenceList.selectedConference
+			}
+			RowLayout {
+				visible: leftPanelStackView.currentItem.objectName == "listLayout"
+				enabled: mainItem.leftPanelEnabled
+				Layout.rightMargin: 39 * DefaultStyle.dp
+				spacing: 0
+				Text {
+					Layout.fillWidth: true
+					text: qsTr("Réunions")
+					color: DefaultStyle.main2_700
+					font.pixelSize: 29 * DefaultStyle.dp
+					font.weight: 800 * DefaultStyle.dp
+				}
+				Item{Layout.fillWidth: true}
+				Button {
+					background: Item {
+					}
+					icon.source: AppIcons.plusCircle
+					Layout.preferredWidth: 28 * DefaultStyle.dp
+					Layout.preferredHeight: 28 * DefaultStyle.dp
+					icon.width: 28 * DefaultStyle.dp
+					icon.height: 28 * DefaultStyle.dp
+					onClicked: {
+						mainItem.setUpConference()
+					}
+				}
+			}
 			SearchBar {
 				id: searchBar
-				Layout.fillWidth: true
+				Layout.topMargin: 18 * DefaultStyle.dp
+				// Layout.fillWidth: true
 				//Layout.topMargin: 18 * DefaultStyle.dp
 				placeholderText: qsTr("Rechercher une réunion")
+				Layout.preferredWidth: 331 * DefaultStyle.dp
 			}
 
 			Text {
@@ -229,64 +221,222 @@ AbstractMainPage {
 			}
 		}
 	}
+
 	Component {
 		id: createConf
-		MeetingSetUp {
-			id: meetingSetup
-			onSaveSucceed: {
-				mainItem.newConfCreated()
-				leftPanelStackView.pop()
-				UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
+		ColumnLayout {
+			property ConferenceInfoGui conferenceInfoGui
+			property bool isCreation
+
+			RowLayout {
+				width: 320 * DefaultStyle.dp
+				Layout.rightMargin: 35 * DefaultStyle.dp
+				Button {
+					background: Item{}
+					icon.source: AppIcons.leftArrow
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					onClicked: {
+						meetingSetup.conferenceInfoGui.core.undo()
+						leftPanelStackView.pop()
+					}
+				}
+				Text {
+					text: qsTr("Nouvelle réunion")
+					color: DefaultStyle.main2_700
+					font {
+						pixelSize: 22 * DefaultStyle.dp
+						weight: 800 * DefaultStyle.dp
+					}
+					Layout.fillWidth: true
+				}
+				Button {
+					topPadding: 6 * DefaultStyle.dp
+					bottomPadding: 6 * DefaultStyle.dp
+					text: qsTr("Créer")
+					textSize: 13 * DefaultStyle.dp
+					onClicked: {
+						if (meetingSetup.conferenceInfoGui.core.subject.length === 0) {
+							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir un sujet"), false)
+						} else if (meetingSetup.conferenceInfoGui.core.duration <= 0) {
+							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La fin de la conférence doit être plus récente que son début"), false)
+						} else if (meetingSetup.conferenceInfoGui.core.participantCount === 0) {
+							UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir au moins un participant"), false)
+						} else {
+							meetingSetup.conferenceInfoGui.core.save()
+						}
+					}
+				}
 			}
-			onReturnRequested: {
-				leftPanelStackView.pop()
-			}
-			onAddParticipantsRequested: {
-				leftPanelStackView.push(addParticipants, {"conferenceInfoGui": meetingSetup.conferenceInfoGui, "container": leftPanelStackView})
+			MeetingSetUp {
+				id: meetingSetup
+				conferenceInfoGui: parent.conferenceInfoGui
+				isCreation: parent.isCreation
+				Layout.rightMargin: 35 * DefaultStyle.dp
+				onSaveSucceed: {
+					mainItem.newConfCreated()
+					leftPanelStackView.pop()
+					UtilsCpp.showInformationPopup(qsTr("Nouvelle réunion"), qsTr("Réunion planifiée avec succès"), true)
+				}
+				onAddParticipantsRequested: {
+					leftPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": leftPanelStackView})
+				}
+				Connections {
+					target: mainItem
+					onAddParticipantsValidated: (selectedParticipants) => {
+						meetingSetup.conferenceInfoGui.core.resetParticipants(selectedParticipants)
+						leftPanelStackView.pop()
+					}
+				}
 			}
 		}
 	}
+
 	Component {
 		id: editConf
-		MeetingSetUp {
+		ColumnLayout {
 			property bool isCreation
-			isCreation: parent.isCreation
-			onReturnRequested: {
-				overridenRightPanelStackView.pop()
+			property ConferenceInfoGui conferenceInfoGui
+			Section {
+				content: RowLayout {
+					spacing: 10 * DefaultStyle.dp
+					Button {
+						background: Item{}
+						icon.source: AppIcons.leftArrow
+						Layout.preferredWidth: 24 * DefaultStyle.dp
+						Layout.preferredHeight: 24 * DefaultStyle.dp
+						icon.width: 24 * DefaultStyle.dp
+						icon.height: 24 * DefaultStyle.dp
+						onClicked: {
+							conferenceEdit.conferenceInfoGui.core.undo()
+							overridenRightPanelStackView.pop()
+						}
+					}
+
+					TextInput {
+						Component.onCompleted: text = mainItem.selectedConference.core.subject
+						color: DefaultStyle.main2_600
+						font {
+							pixelSize: 20 * DefaultStyle.dp
+							weight: 800 * DefaultStyle.dp
+						}
+						Layout.fillWidth: true
+						onActiveFocusChanged: if(activeFocus==true) selectAll()
+						onEditingFinished: mainItem.selectedConference.core.subject = text
+					}
+					Button {
+						topPadding: 6 * DefaultStyle.dp
+						bottomPadding: 6 * DefaultStyle.dp
+						leftPadding: 12 * DefaultStyle.dp
+						rightPadding: 12 * DefaultStyle.dp
+						text: qsTr("Save")
+						textSize: 13 * DefaultStyle.dp
+						onClicked: {
+							if (mainItem.selectedConference.core.subject.length === 0) {
+								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir un sujet"), false)
+							} else if (mainItem.selectedConference.core.duration <= 0) {
+								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La fin de la conférence doit être plus récente que son début"), false)
+							} else if (mainItem.selectedConference.core.participantCount === 0) {
+								UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir au moins un participant"), false)
+							} else {
+								mainItem.selectedConference.core.save()
+							}
+						}
+					}
+				}
 			}
-			onSaveSucceed: {
-				overridenRightPanelStackView.pop()
-				UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
-			}
-			onAddParticipantsRequested: {
-				overridenRightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": overridenRightPanelStackView})
+			MeetingSetUp {
+				id: conferenceEdit
+				property bool isCreation
+				isCreation: parent.isCreation
+				conferenceInfoGui: parent.conferenceInfoGui
+				onSaveSucceed: {
+					overridenRightPanelStackView.pop()
+					UtilsCpp.showInformationPopup(qsTr("Enregistré"), qsTr("Réunion modifiée avec succès"), true)
+				}
+				onAddParticipantsRequested: {
+					overridenRightPanelStackView.push(addParticipants, {"conferenceInfoGui": conferenceInfoGui, "container": overridenRightPanelStackView})
+				}
+				Connections {
+					target: mainItem
+					onAddParticipantsValidated: (selectedParticipants) => {
+						conferenceEdit.conferenceInfoGui.core.resetParticipants(selectedParticipants)
+						overridenRightPanelStackView.pop()
+					}
+				}
 			}
 		}
 	}
+
 	Component {
 		id: addParticipants
-		AddParticipantsLayout {
-			id: addParticipantLayout
+		ColumnLayout {
 			property Control.StackView container
-			// Layout.fillHeight: true
-			title: qsTr("Ajouter des participants")
-			validateButtonText: qsTr("Ajouter")
-			titleColor: DefaultStyle.main1_500_main
-			onReturnRequested: {
-				container.pop()
+			property ConferenceInfoGui conferenceInfoGui
+			RowLayout {
+				Button {
+					background: Item{}
+					icon.source: AppIcons.leftArrow
+					contentImageColor: DefaultStyle.main1_500_main
+					Layout.preferredWidth: 24 * DefaultStyle.dp
+					Layout.preferredHeight: 24 * DefaultStyle.dp
+					icon.width: 24 * DefaultStyle.dp
+					icon.height: 24 * DefaultStyle.dp
+					onClicked: mainItem.returnRequested()
+				}
+				ColumnLayout {
+					spacing: 3 * DefaultStyle.dp
+					Text {
+						text: qsTr("Appel de groupe")
+						color: DefaultStyle.main1_500_main
+						maximumLineCount: 1
+						font {
+							pixelSize: 18 * DefaultStyle.dp
+							weight: 800 * DefaultStyle.dp
+						}
+						Layout.fillWidth: true
+					}
+					Text {
+						text: qsTr("%1 participant%2 sélectionné%2").arg(addParticipantLayout.selectedParticipantsCount).arg(addParticipantLayout.selectedParticipantsCount > 1 ? "s" : "")
+						color: DefaultStyle.main2_500main
+						maximumLineCount: 1
+						font {
+							pixelSize: 12 * DefaultStyle.dp
+							weight: 300 * DefaultStyle.dp
+						}
+						Layout.fillWidth: true
+					}
+				}
+				Button {
+					enabled: addParticipantLayout.selectedParticipantsCount.length != 0
+					Layout.rightMargin: 21 * DefaultStyle.dp
+					topPadding: 6 * DefaultStyle.dp
+					bottomPadding: 6 * DefaultStyle.dp
+					leftPadding: 12 * DefaultStyle.dp
+					rightPadding: 12 * DefaultStyle.dp
+					text: qsTr("Ajouter")
+					textSize: 13 * DefaultStyle.dp
+					onClicked: {
+						mainItem.addParticipantsValidated(addParticipantLayout.selectedParticipants)
+					}
+				}
 			}
-			onValidateRequested: {
-				conferenceInfoGui.core.resetParticipants(addParticipantLayout.selectedParticipants)
-				returnRequested()
+			AddParticipantsLayout {
+				id: addParticipantLayout
+				conferenceInfoGui: parent.conferenceInfoGui
 			}
 		}
 	}
+
 	Component {
 		id: meetingDetail
 		ColumnLayout {
 			visible: mainItem.selectedConference
 			spacing: 25 * DefaultStyle.dp
 			Section {
+				visible: mainItem.selectedConference
 				content: RowLayout {
 					spacing: 8 * DefaultStyle.dp
 					Image {
@@ -343,10 +493,12 @@ AbstractMainPage {
 									}
 								}
 								onClicked: {
-									cancelAndDeleteConfDialog.cancel = UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
-									cancelAndDeleteConfDialog.open()
-									// mainItem.contactDeletionRequested(mainItem.selectedConference)
-									deletePopup.close()
+									if (mainItem.selectedConference) {
+										cancelAndDeleteConfDialog.cancel = UtilsCpp.isMe(mainItem.selectedConference.core.organizerAddress)
+										cancelAndDeleteConfDialog.open()
+										// mainItem.contactDeletionRequested(mainItem.selectedConference)
+										deletePopup.close()
+									}
 								}
 								Connections {
 									target: cancelAndDeleteConfDialog

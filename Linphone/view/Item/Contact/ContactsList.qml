@@ -1,5 +1,6 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
+import QtQuick.Controls as Control
 
 import Linphone
 import UtilsCpp 1.0
@@ -9,7 +10,7 @@ ListView {
 	height: contentHeight
 	visible: contentHeight > 0
 	clip: true
-	rightMargin: 5 * DefaultStyle.dp
+	// rightMargin: 5 * DefaultStyle.dp
 
 	property string searchBarText
 
@@ -67,11 +68,19 @@ ListView {
 		searchText: searchBarText.length === 0 ? "*" : searchBarText
 	}
 
+	Control.ScrollBar.vertical: ScrollBar {
+		id: scrollbar
+		active: true
+		interactive: true
+		// anchors.top: parent.top
+		// anchors.bottom: parent.bottom
+		// anchors.right: parent.right
+	}
 
 	delegate: Item {
 		id: itemDelegate
 		height: display ? 56 * DefaultStyle.dp : 0
-		width: mainItem.width
+		width: mainItem.width - scrollbar.width - 12 * DefaultStyle.dp
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
 		property var previousDisplayName: previousItem ? previousItem.core.displayName : ""
 		property var displayName: modelData.core.displayName
@@ -103,7 +112,7 @@ ListView {
 			anchors.left: initial.visible ? initial.right : parent.left
 			anchors.leftMargin: 10 * DefaultStyle.dp
 			anchors.right: parent.right
-			anchors.rightMargin: 10 * DefaultStyle.dp
+			// anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			spacing: 10 * DefaultStyle.dp
 			z: 1
@@ -141,7 +150,7 @@ ListView {
 			// visible: mainItem.actionLayoutVisible || friendPopup.visible
 			// anchors.fill: parent
 			anchors.right: parent.right
-			anchors.rightMargin: 10 * DefaultStyle.dp
+			// anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
 			RowLayout{
 				visible: mainItem.actionLayoutVisible

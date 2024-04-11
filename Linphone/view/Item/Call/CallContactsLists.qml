@@ -8,13 +8,12 @@ import UtilsCpp 1.0
 
 Item {
 	id: mainItem
-	property int sideMargin: 25 * DefaultStyle.dp
-	property int topMargin: 5 * DefaultStyle.dp
 	property bool groupCallVisible
 	property color searchBarColor: DefaultStyle.grey_100
 	property color searchBarBorderColor: "transparent"
 	signal callButtonPressed(string address)
 	signal groupCallCreationRequested()
+	property NumericPad numPad
 	clip: true
 
 	Popup {
@@ -25,7 +24,7 @@ Item {
 		}
 		underlineColor: DefaultStyle.main1_500_main
 		anchors.centerIn: parent
-		width: parent.width - 30 * DefaultStyle.dp
+		width: parent.width
 		modal: true
 		leftPadding: 15 * DefaultStyle.dp
 		rightPadding: 15 * DefaultStyle.dp
@@ -41,9 +40,7 @@ Item {
 						weight: 800 * DefaultStyle.dp
 					}
 				}
-				Item {
-					Layout.fillWidth: true
-				}
+				Item{Layout.fillWidth: true}
 				Button {
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp
@@ -110,24 +107,9 @@ Item {
 		}
 	}
 
-
-	Control.ScrollBar {
-		id: contactsScrollbar
-		active: true
-		interactive: true
-		policy: Control.ScrollBar.AsNeeded
-		// Layout.fillWidth: true
-		anchors.top: parent.top
-		anchors.bottom: parent.bottom
-		anchors.right: parent.right
-		// x: mainItem.x + mainItem.width - width
-		// anchors.left: control.right
-	}
-
 	Control.Control {
 		id: listLayout
 		anchors.fill: parent
-		anchors.topMargin: mainItem.topMargin
 		background: Item {
 			anchors.fill: parent
 		}
@@ -139,23 +121,31 @@ Item {
 				Layout.alignment: Qt.AlignTop
 				Layout.fillWidth: true
 				Layout.maximumWidth: mainItem.width
-				Layout.leftMargin: mainItem.sideMargin
-				Layout.rightMargin: mainItem.sideMargin
+				Layout.rightMargin: 39 * DefaultStyle.dp
 				color: mainItem.searchBarColor
 				borderColor: mainItem.searchBarBorderColor
 				placeholderText: qsTr("Rechercher un contact")
-				numericPad: numPad
+				numericPad: mainItem.numPad
 			}
 			Control.ScrollView {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
-				Layout.leftMargin: mainItem.sideMargin
 				Layout.topMargin: 25 * DefaultStyle.dp
-				rightPadding: mainItem.sideMargin
-				contentWidth: width - mainItem.sideMargin
+				contentWidth: width
 				contentHeight: content.height
 				clip: true
-				Control.ScrollBar.vertical: contactsScrollbar
+				Control.ScrollBar.vertical: ScrollBar {
+					active: true
+					interactive: true
+					policy: Control.ScrollBar.AsNeeded
+					// Layout.fillWidth: true
+					anchors.top: parent.top
+					anchors.bottom: parent.bottom
+					anchors.right: parent.right
+					anchors.rightMargin: 8 * DefaultStyle.dp
+					// x: mainItem.x + mainItem.width - width
+					// anchors.left: control.right
+				}
 
 				ColumnLayout {
 					id: content
@@ -241,6 +231,7 @@ Item {
 							id: contactList
 							Layout.fillWidth: true
 							Layout.preferredHeight: contentHeight
+							Control.ScrollBar.vertical.visible: false
 							contactMenuVisible: false
 							model: MagicSearchProxy {
 								searchText: searchBar.text.length === 0 ? "*" : searchBar.text
@@ -248,7 +239,7 @@ Item {
 							onSelectedContactChanged: {
 								if (selectedContact) {
 									if (selectedContact.core.allAddresses.length > 1) {
-										startCallPopup.selectedContact = selectedContact
+										startCallPopup.contact = selectedContact
 										startCallPopup.open()
 
 									} else {
@@ -279,6 +270,7 @@ Item {
 							contactMenuVisible: false
 							Layout.fillWidth: true
 							Layout.fillHeight: true
+							Control.ScrollBar.vertical.visible: false
 							Layout.preferredHeight: contentHeight
 							initialHeadersVisible: false
 							displayNameCapitalization: false
@@ -290,7 +282,7 @@ Item {
 							onSelectedContactChanged: {
 								if (selectedContact) {
 									if (selectedContact.core.allAddresses.length > 1) {
-										startCallPopup.selectedContact = selectedContact
+										startCallPopup.contact = selectedContact
 										startCallPopup.open()
 
 									} else {
@@ -323,21 +315,6 @@ Item {
 						Layout.fillHeight: true
 					}
 				}
-			}
-		}
-	}
-
-	Item {
-		anchors.bottom: parent.bottom
-		anchors.left: parent.left
-		anchors.right: parent.right
-		height: numPad.implicitHeight
-		NumericPad {
-			id: numPad
-			width: parent.width
-			onLaunchCall: {
-				UtilsCpp.createCall(searchBar.text + "@sip.linphone.org")
-				// TODO : auto completion instead of sip linphone
 			}
 		}
 	}

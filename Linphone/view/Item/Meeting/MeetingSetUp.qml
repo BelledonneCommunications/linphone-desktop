@@ -31,58 +31,6 @@ ColumnLayout {
 		startDate.calendar.selectedDate = mainItem.conferenceInfoGui.core.dateTime
 	}
 
-	RowLayout {
-		Button {
-			background: Item{}
-			icon.source: AppIcons.leftArrow
-			Layout.preferredWidth: 24 * DefaultStyle.dp
-			Layout.preferredHeight: 24 * DefaultStyle.dp
-			icon.width: 24 * DefaultStyle.dp
-			icon.height: 24 * DefaultStyle.dp
-			onClicked: mainItem.returnRequested()
-		}
-		TextInput {
-			visible: !mainItem.isCreation
-			Component.onCompleted: text = conferenceInfoGui.core.subject
-			color: DefaultStyle.main2_600
-			font {
-				pixelSize: 20 * DefaultStyle.dp
-				weight: 800 * DefaultStyle.dp
-			}
-			Layout.fillWidth: true
-			onActiveFocusChanged: if(activeFocus==true) selectAll()
-			onEditingFinished: mainItem.conferenceInfoGui.core.subject = text
-		}
-		Text {
-			visible: mainItem.isCreation
-			text: qsTr("Nouvelle réunion")
-			color: DefaultStyle.main2_700
-			font {
-				pixelSize: 22 * DefaultStyle.dp
-				weight: 800 * DefaultStyle.dp
-			}
-			Layout.fillWidth: true
-		}
-		Button {
-			topPadding: 6 * DefaultStyle.dp
-			bottomPadding: 6 * DefaultStyle.dp
-			leftPadding: 12 * DefaultStyle.dp
-			rightPadding: 12 * DefaultStyle.dp
-			text: mainItem.isCreation ? qsTr("Créer") : qsTr("Save")
-			textSize: 13 * DefaultStyle.dp
-			onClicked: {
-				if (mainItem.conferenceInfoGui.core.subject.length === 0) {
-					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir un sujet"), false)
-				} else if (mainItem.conferenceInfoGui.core.duration <= 0) {
-					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La fin de la conférence doit être plus récente que son début"), false)
-				} else if (mainItem.conferenceInfoGui.core.participantCount === 0) {
-					UtilsCpp.showInformationPopup(qsTr("Erreur"), qsTr("La conférence doit contenir au moins un participant"), false)
-				} else {
-					mainItem.conferenceInfoGui.core.save()
-				}
-			}
-		}
-	}
 	component CheckableButton: Button {
 		id: checkableButton
 		checkable: true
@@ -115,8 +63,8 @@ ColumnLayout {
 		Layout.fillWidth: true
 		Layout.topMargin: 20 * DefaultStyle.dp
 		Layout.bottomMargin: 20 * DefaultStyle.dp
-		Layout.alignment: Qt.AlignHCenter
-		spacing: 20 * DefaultStyle.dp
+		// Layout.alignment: Qt.AlignHCenter
+		spacing: 18 * DefaultStyle.dp
 		CheckableButton {
 			Layout.preferredWidth: 151 * DefaultStyle.dp
 			icon.source: AppIcons.usersThree
