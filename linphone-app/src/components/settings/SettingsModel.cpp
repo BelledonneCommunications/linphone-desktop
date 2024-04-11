@@ -1018,6 +1018,15 @@ void SettingsModel::setChatNotificationsEnabled (bool status) {
 	emit chatNotificationsEnabledChanged(status);
 }
 
+bool SettingsModel::getChatReactionsNotificationsEnabled () const {
+	return !!mConfig->getInt(UiSection, "chat_reactions_notifications_enabled", 1);
+}
+
+void SettingsModel::setChatReactionsNotificationsEnabled (bool status) {
+	mConfig->setInt(UiSection, "chat_reactions_notifications_enabled", status);
+	emit chatReactionsNotificationsEnabledChanged(status);
+}
+
 // -----------------------------------------------------------------------------
 
 bool SettingsModel::getChatNotificationSoundEnabled () const {

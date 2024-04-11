@@ -331,7 +331,7 @@ void CoreHandlers::onNewMessageReaction(const std::shared_ptr<linphone::Core> & 
 	
 	appSettings.beginGroup("chatrooms");
 	
-	if( !message || CoreManager::getInstance()->getAccountSettingsModel()->findAccount(reaction->getFromAddress()))
+	if( !message || CoreManager::getInstance()->getAccountSettingsModel()->findAccount(reaction->getFromAddress()) || !settingsModel->getChatReactionsNotificationsEnabled())
 		return;
 	// 1. Do not notify if chat is not activated.
 	if (chatRoom->getCurrentParams()->getEncryptionBackend() == linphone::ChatRoom::EncryptionBackend::None && !settingsModel->getStandardChatEnabled()

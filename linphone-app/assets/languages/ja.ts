@@ -3052,6 +3052,11 @@
         <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
         <translation>スクリーンショットを有効にする</translation>
     </message>
+    <message>
+        <source>chatReactionsNotificationsEnabledLabel</source>
+        <extracomment>&apos;Enable notifications on reactions&apos;: settings label for enabling notifications on chat reactions.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>

@@ -3066,6 +3066,11 @@ Klicka här: &lt;a href=&quot;%1&quot;&gt;%1&lt;/a&gt;
         <extracomment>&apos;Enable screenshots&apos; : Label on switch to choose if we can take screenshots while being in call.</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>chatReactionsNotificationsEnabledLabel</source>
+        <extracomment>&apos;Enable notifications on reactions&apos;: settings label for enabling notifications on chat reactions.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SettingsLdap</name>

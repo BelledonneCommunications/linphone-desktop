@@ -269,6 +269,19 @@ TabContainer {
 						onClicked: SettingsModel.chatNotificationsEnabled = !checked
 					}
 				}
+				FormGroup {
+					//: 'Enable notifications on reactions': settings label for enabling notifications on chat reactions.
+					label: qsTr('chatReactionsNotificationsEnabledLabel')
+					
+					Switch {
+						id: enableChatReactionsNotifications
+						
+						checked: SettingsModel.chatReactionsNotificationsEnabled
+						
+						onClicked: SettingsModel.chatReactionsNotificationsEnabled = !checked
+					}
+				}
+				FormGroup {}
 			}
 			FormLine {
 				FormGroup {
