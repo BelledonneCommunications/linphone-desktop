@@ -52,7 +52,7 @@ signals:
 	void filterTypeChanged(int filterType);
 
 protected:
-	int mFilterType;
+	int mFilterType = 0;
 	bool mDeleteSourceModel = false;
 };
 

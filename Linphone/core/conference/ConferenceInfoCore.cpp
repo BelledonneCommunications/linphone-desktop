@@ -57,6 +57,7 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 	if (conferenceInfo) {
 		mustBeInLinphoneThread(getClassName());
 		mConferenceInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(conferenceInfo);
+		mHaveModel = true;
 		auto confSchedulerModel = mConferenceInfoModel->getConferenceScheduler();
 		if (!confSchedulerModel) {
 			auto confScheduler = CoreModel::getInstance()->getCore()->createConferenceScheduler();
@@ -108,7 +109,6 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 					auto cleanedClonedAddress = accountAddress->clone();
 					cleanedClonedAddress->clean();
 					mOrganizerAddress = Utils::coreStringToAppString(cleanedClonedAddress->asStringUriOnly());
-					qDebug() << "set organizer address" << mOrganizerAddress;
 				}
 			}
 		});
@@ -126,6 +126,7 @@ ConferenceInfoCore::ConferenceInfoCore(const ConferenceInfoCore &conferenceInfoC
 	mUri = conferenceInfoCore.mUri;
 	mParticipants = conferenceInfoCore.mParticipants;
 	mTimeZoneModel = conferenceInfoCore.mTimeZoneModel;
+	mHaveModel = conferenceInfoCore.mHaveModel;
 	mIsScheduled = conferenceInfoCore.mIsScheduled;
 	mIsEnded = conferenceInfoCore.mIsEnded;
 	mInviteMode = conferenceInfoCore.mInviteMode;
@@ -341,6 +342,17 @@ void ConferenceInfoCore::setDescription(const QString &description) {
 
 QString ConferenceInfoCore::getUri() const {
 	return mUri;
+}
+
+bool ConferenceInfoCore::getHaveModel() const {
+	return mHaveModel;
+}
+
+void ConferenceInfoCore::setHaveModel(const bool &haveModel) {
+	if (mHaveModel != haveModel) {
+		mHaveModel = haveModel;
+		emit haveModelChanged();
+	}
 }
 
 bool ConferenceInfoCore::isScheduled() const {
@@ -578,6 +590,7 @@ void ConferenceInfoCore::save() {
 				} else qCritical() << "No contact address";
 			} else qCritical() << "No default account";
 			mConferenceInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
+			setHaveModel(true);
 			// mConferenceInfoModel->createConferenceScheduler();
 			auto confSchedulerModel = mConferenceInfoModel->getConferenceScheduler();
 			if (!confSchedulerModel) {

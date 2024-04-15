@@ -87,17 +87,16 @@ Item{
 			model: allDevices
 			snapMode: ListView.SnapOneItem
 			clip: true
-			delegate:
-				Sticker {
+			delegate: Sticker {
 					previewEnabled: index == 0
-					visible: modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
-					&& modelData.core.address != activeSpeakerSticker.address
+					visible: $modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
+					&& $modelData.core.address != activeSpeakerSticker.address
 					height: visible ? 180 * DefaultStyle.dp : 0
 					width: 300 * DefaultStyle.dp
 					qmlName: 'S_'+index
 					
-					participantDevice: modelData
-					Component.onCompleted: console.log(qmlName + " is " +modelData.core.address)
+					participantDevice: $modelData
+					Component.onCompleted: console.log(qmlName + " is " +($modelData ? $modelData.core.address : "-"))
 				}
 		}
 	}

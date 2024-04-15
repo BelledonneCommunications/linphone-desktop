@@ -51,10 +51,13 @@ public:
 	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
+	
+	Q_PROPERTY(bool haveModel READ getHaveModel NOTIFY haveModelChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	Q_PROPERTY(bool isEnded READ isEnded WRITE setIsEnded NOTIFY isEndedChanged)
 	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
 	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
+	
 	Q_PROPERTY(QVariantList participants READ getParticipants NOTIFY participantsChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState schedulerState READ getConferenceSchedulerState NOTIFY
@@ -82,6 +85,8 @@ public:
 	QString getSubject() const;
 	QString getDescription() const;
 	QString getUri() const;
+	bool getHaveModel() const;
+	void setHaveModel(const bool &haveModel);
 	bool isScheduled() const;
 	void setIsScheduled(const bool &on);
 	bool computeIsEnded() const;
@@ -148,6 +153,7 @@ signals:
 	void descriptionChanged();
 	void participantsChanged();
 	void uriChanged();
+	void haveModelChanged();
 	void isScheduledChanged();
 	void isEndedChanged();
 	void inviteModeChanged();
@@ -182,6 +188,7 @@ private:
 	LinphoneEnums::ConferenceSchedulerState mConferenceSchedulerState;
 	LinphoneEnums::ConferenceInfoState mConferenceInfoState =
 	    LinphoneEnums::ConferenceInfoState::ConferenceInfoStateNew;
+	bool mHaveModel = false;
 	bool mIsScheduled;
 	bool mIsEnded = false;
 	QTimer mCheckEndTimer;

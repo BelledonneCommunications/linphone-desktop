@@ -21,7 +21,6 @@
 #include "SortFilterProxy.hpp"
 
 SortFilterProxy::SortFilterProxy(QObject *parent) : QSortFilterProxyModel(parent) {
-	mFilterType = 0;
 	connect(this, &SortFilterProxy::rowsInserted, this, &SortFilterProxy::countChanged);
 	connect(this, &SortFilterProxy::rowsRemoved, this, &SortFilterProxy::countChanged);
 }

@@ -95,6 +95,8 @@ public:
 	Q_INVOKABLE static bool isBeforeToday(QDate date);
 	Q_INVOKABLE static bool datesAreEqual(const QDate &a, const QDate &b);
 	Q_INVOKABLE static QDateTime createDateTime(const QDate &date, int hour, int min);
+	Q_INVOKABLE static QDateTime getCurrentDateTime();
+	Q_INVOKABLE static QDateTime getCurrentDateTimeUtc();
 	Q_INVOKABLE static int getYear(const QDate &date);
 	Q_INVOKABLE static int secsTo(const QString &start, const QString &end);
 	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);

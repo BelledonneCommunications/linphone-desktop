@@ -103,24 +103,12 @@ AbstractMainPage {
 			id: leftPanelStackView
 			initialItem: listLayout
 			anchors.top: parent.top
-			anchors.topMargin: 18 * DefaultStyle.dp
 			anchors.left: parent.left
 			anchors.right: parent.right
 			anchors.bottom: parent.bottom
 			anchors.leftMargin: 45 * DefaultStyle.dp
 		}
 
-		ScrollBar {
-			id: meetingsScrollbar
-			anchors.right: parent.right
-			anchors.rightMargin: 8 * DefaultStyle.dp
-			anchors.top: leftPanelStackView.top
-			anchors.bottom: parent.bottom
-			visible: leftPanelStackView.currentItem == listLayout
-			active: true
-			interactive: true
-			policy: Control.ScrollBar.AsNeeded
-		}
 	}
 
 	Item {
@@ -216,7 +204,15 @@ AbstractMainPage {
 							conferenceList.forceUpdate()
 						}
 					}
-					Control.ScrollBar.vertical: meetingsScrollbar
+					Control.ScrollBar.vertical: ScrollBar {
+						id: meetingsScrollbar
+						anchors.right: parent.right
+						anchors.rightMargin: 8 * DefaultStyle.dp
+						active: true
+						interactive: true
+						policy: Control.ScrollBar.AsNeeded
+						
+					}
 				}
 			}
 		}

@@ -116,8 +116,6 @@ Control.Button {
 		}
 		ButtonText {}
 		ButtonImage{
-			Layout.preferredWidth: mainItem.icon.width
-			Layout.preferredHeight: mainItem.icon.height
 		}
 		Item {
 			Layout.fillWidth : true

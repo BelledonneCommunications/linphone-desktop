@@ -1114,7 +1114,7 @@ Window {
 							}
 							MenuButton {
 								checkable: true
-								icon.source: mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
+								icon.source: !mainWindow.call || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
 								icon.width: 32 * DefaultStyle.dp
 								icon.height: 32 * DefaultStyle.dp
 								contentImageColor: down 

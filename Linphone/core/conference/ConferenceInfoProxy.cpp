@@ -28,8 +28,19 @@ DEFINE_ABSTRACT_OBJECT(ConferenceInfoProxy)
 ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : SortFilterProxy(parent) {
 	mList = ConferenceInfoList::create();
 	setSourceModel(mList.get());
-	connect(this, &ConferenceInfoProxy::searchTextChanged, [this] { invalidate(); });
+	connect(this, &ConferenceInfoProxy::searchTextChanged, [this] {
+		invalidate();
+		updateCurrentDateIndex();
+	});
 	connect(this, &ConferenceInfoProxy::lUpdate, mList.get(), &ConferenceInfoList::lUpdate);
+	connect(mList.get(), &ConferenceInfoList::haveCurrentDateChanged, [this] {
+		invalidate();
+		updateCurrentDateIndex();
+	});
+	connect(mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
+	        &ConferenceInfoProxy::haveCurrentDateChanged);
+	connect(mList.get(), &ConferenceInfoList::currentDateIndexChanged, this,
+	        &ConferenceInfoProxy::updateCurrentDateIndex);
 }
 
 ConferenceInfoProxy::~ConferenceInfoProxy() {
@@ -45,31 +56,35 @@ void ConferenceInfoProxy::setSearchText(const QString &search) {
 	emit searchTextChanged();
 }
 
+bool ConferenceInfoProxy::haveCurrentDate() const {
+	return mList->haveCurrentDate();
+}
+
+int ConferenceInfoProxy::getCurrentDateIndex() const {
+	return mCurrentDateIndex;
+}
+
+void ConferenceInfoProxy::updateCurrentDateIndex() {
+	int newIndex = mapFromSource(sourceModel()->index(mList->getCurrentDateIndex(), 0)).row();
+	if (mCurrentDateIndex != newIndex) {
+		mCurrentDateIndex = newIndex;
+		emit currentDateIndexChanged();
+	}
+}
+
 bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	const ConferenceInfoGui *gui =
-	    sourceModel()->data(sourceModel()->index(sourceRow, 0, sourceParent)).value<ConferenceInfoGui *>();
-	if (gui) {
-		auto ciCore = gui->getCore();
-		assert(ciCore);
+	auto ciCore = qobject_cast<ConferenceInfoList *>(sourceModel())->template getAt<ConferenceInfoCore>(sourceRow);
+	if (ciCore) {
 		if (!ciCore->getSubject().contains(mSearchText)) return false;
-		if (ciCore->getDuration() == 0) return false;
 		QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
 		if (mFilterType == 0) {
-			// auto res = ciCore->getEndDateTimeUtc() < currentDateTime;
 			return true;
 		} else if (mFilterType == 1) {
 			auto res = ciCore->getEndDateTimeUtc() >= currentDateTime;
 			return res;
-			// } else if (mFilterType == 2) {
-			// return !Utils::isMe(ciCore->getOrganizer());
 		} else return mFilterType == -1;
+	} else {
+		return !mList->haveCurrentDate();
 	}
 	return false;
-}
-
-bool ConferenceInfoProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
-	auto l = getItemAt<ConferenceInfoList, ConferenceInfoGui>(left.row())->getCore();
-	auto r = getItemAt<ConferenceInfoList, ConferenceInfoGui>(right.row())->getCore();
-
-	return l->getDateTimeUtc() < r->getDateTimeUtc();
 }

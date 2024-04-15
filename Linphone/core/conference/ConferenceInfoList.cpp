@@ -57,6 +57,7 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			mustBeInLinphoneThread(getClassName());
 			std::list<std::shared_ptr<linphone::ConferenceInfo>> conferenceInfos =
 			    CoreModel::getInstance()->getCore()->getDefaultAccount()->getConferenceInformationList();
+			items->push_back(nullptr); // Add Dummy conference for today
 			for (auto conferenceInfo : conferenceInfos) {
 				auto confInfoCore = build(conferenceInfo);
 				if (confInfoCore) items->push_back(confInfoCore);
@@ -64,7 +65,10 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			mCoreModelConnection->invokeToCore([this, items]() {
 				mustBeInMainThread(getClassName());
 				resetData();
+				int currentDateIndex = sort(*items);
 				add(*items);
+				updateHaveCurrentDate();
+				setCurrentDateIndex(mHaveCurrentDate ? currentDateIndex + 1 : currentDateIndex);
 				delete items;
 			});
 		});
@@ -108,14 +112,50 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 	emit lUpdate();
 }
 
+bool ConferenceInfoList::haveCurrentDate() const {
+	return mHaveCurrentDate;
+}
+
+void ConferenceInfoList::setHaveCurrentDate(bool have) {
+	if (mHaveCurrentDate != have) {
+		mHaveCurrentDate = have;
+		emit haveCurrentDateChanged();
+	}
+}
+
+void ConferenceInfoList::updateHaveCurrentDate() {
+	auto today = QDateTime::currentDateTimeUtc().date();
+	for (auto item : mList) {
+		auto model = item.objectCast<ConferenceInfoCore>();
+		if (model && model->getDateTimeUtc().date() == today) {
+			setHaveCurrentDate(true);
+			return;
+		}
+	}
+	setHaveCurrentDate(false);
+}
+
+int ConferenceInfoList::getCurrentDateIndex() const {
+	return mCurrentDateIndex;
+}
+
+void ConferenceInfoList::setCurrentDateIndex(int index) {
+	if (mCurrentDateIndex != index) {
+		mCurrentDateIndex = index;
+		emit currentDateIndexChanged();
+	}
+}
+
 QSharedPointer<ConferenceInfoCore>
 ConferenceInfoList::get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo) const {
 	auto uri = Utils::coreStringToAppString(conferenceInfo->getUri()->asStringUriOnly());
 	for (auto item : mList) {
 		auto model = item.objectCast<ConferenceInfoCore>();
-		auto confUri = model->getUri();
-		if (confUri == uri) {
-			return model;
+		if (model) {
+			auto confUri = model->getUri();
+			if (confUri == uri) {
+				return model;
+			}
 		}
 	}
 	return nullptr;
@@ -144,7 +184,7 @@ ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &confe
 void ConferenceInfoList::remove(const int &row) {
 	// beginRemoveRows(QModelIndex(), row, row);
 	auto item = mList[row].objectCast<ConferenceInfoCore>();
-	emit item->lDeleteConferenceInfo();
+	if (item) emit item->lDeleteConferenceInfo();
 	// endRemoveRows();
 }
 
@@ -158,10 +198,42 @@ QHash<int, QByteArray> ConferenceInfoList::roleNames() const {
 QVariant ConferenceInfoList::data(const QModelIndex &index, int role) const {
 	int row = index.row();
 	if (!index.isValid() || row < 0 || row >= mList.count()) return QVariant();
-	if (role == Qt::DisplayRole) {
-		return QVariant::fromValue(new ConferenceInfoGui(mList[row].objectCast<ConferenceInfoCore>()));
-	} else if (role == Qt::DisplayRole + 1) {
-		return Utils::toDateMonthString(mList[row].objectCast<ConferenceInfoCore>()->getDateTimeUtc());
+	auto conferenceInfo = mList[row].objectCast<ConferenceInfoCore>();
+	if (conferenceInfo) {
+		if (role == Qt::DisplayRole) {
+			return QVariant::fromValue(new ConferenceInfoGui(mList[row].objectCast<ConferenceInfoCore>()));
+		} else if (role == Qt::DisplayRole + 1) {
+			return Utils::toDateMonthString(mList[row].objectCast<ConferenceInfoCore>()->getDateTimeUtc());
+		}
+	} else { // Dummy date
+		if (role == Qt::DisplayRole) {
+			return QVariant::fromValue(new ConferenceInfoGui());
+		} else if (role == Qt::DisplayRole + 1) {
+			return Utils::toDateMonthString(QDateTime::currentDateTimeUtc());
+		}
 	}
 	return QVariant();
+}
+
+int ConferenceInfoList::sort(QList<QSharedPointer<ConferenceInfoCore>> &listToSort) {
+	auto nowDate = QDateTime(QDate::currentDate(), QTime(0, 0, 0)).toUTC().date();
+	std::sort(listToSort.begin(), listToSort.end(),
+	          [nowDate](const QSharedPointer<QObject> &a, const QSharedPointer<QObject> &b) {
+		          auto l = a.objectCast<ConferenceInfoCore>();
+		          auto r = b.objectCast<ConferenceInfoCore>();
+		          if (!l || !r) { // sort on date
+			          return !l ? nowDate <= r->getDateTimeUtc().date() : l->getDateTimeUtc().date() < nowDate;
+		          } else {
+			          return l->getDateTimeUtc() < r->getDateTimeUtc();
+		          }
+	          });
+	/*
+	int count = 0;
+	for(auto item : listToSort){
+	    auto l = item.objectCast<ConferenceInfoCore>();
+	    qDebug() << count ++ << (l ? l->getDateTimeUtc() : QDateTime::currentDateTimeUtc());
+	}*/
+	auto it = std::find(listToSort.begin(), listToSort.end(), nullptr);
+	// qDebug() << it - listToSort.begin();
+	return it == listToSort.end() ? -1 : it - listToSort.begin();
 }

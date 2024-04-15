@@ -14,7 +14,7 @@ Item {
 	id: mainItem
 	height: 300
 	width: 200
-	required property bool previewEnabled
+	property bool previewEnabled
 	property CallGui call: null
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null

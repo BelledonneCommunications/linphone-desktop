@@ -17,11 +17,24 @@ ListView {
 	property ConferenceInfoGui selectedConference: model.getAt(currentIndex) || null
 
 	spacing: 8 * DefaultStyle.dp
-	currentIndex: -1
+	currentIndex: confInfoProxy.currentDateIndex
 
 	onCountChanged: selectedConference = model.getAt(currentIndex) || null
-	onCurrentIndexChanged: selectedConference = model.getAt(currentIndex) || null
-
+	onCurrentIndexChanged: {
+		selectedConference = currentIndex != confInfoProxy.currentDateIndex ? model.getAt(currentIndex) : null
+	}
+	onVisibleChanged: if( visible) {
+		mainItem.positionViewAtIndex(currentIndex, ListView.Center)// First approximative move
+		delayMove.restart()	// Move to exact position after load.
+	}
+	Timer{
+		id: delayMove
+		interval: 60
+		onTriggered: mainItem.positionViewAtIndex(currentIndex, ListView.Center)
+	}
+	// using highlight doesn't center, take time before moving and don't work for not visible item (like not loaded)
+	highlightFollowsCurrentItem: false
+	
 	function forceUpdate() {
 		confInfoProxy.lUpdate()
 	}
@@ -55,15 +68,16 @@ ListView {
 		height: 63 * DefaultStyle.dp + topOffset
 		width: mainItem.width
 		property var previousItem : mainItem.model.count > 0 && index > 0 ? mainItem.model.getAt(index-1) : null
-		property var dateTime: $modelData.core.dateTime
+		property var dateTime: $modelData && $modelData.core.haveModel ? $modelData.core.dateTime : UtilsCpp.getCurrentDateTime()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
 		property string dateString:  UtilsCpp.toDateString(dateTime)
-		property string previousDateString: previousItem ? UtilsCpp.toDateString(previousItem.core.dateTimeUtc) : ''
+		property string previousDateString: previousItem ? UtilsCpp.toDateString(previousItem.core ? previousItem.core.dateTimeUtc : UtilsCpp.getCurrentDateTimeUtc()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
-
-
-		property var endDateTime: $modelData.core.endDateTime
+		property var endDateTime: $modelData ? $modelData.core.endDateTime : ''
+				
+		property var haveModel: $modelData && $modelData.core.haveModel || false
+		
 		RowLayout{
 			anchors.fill: parent
 			anchors.topMargin:parent.topOffset
@@ -102,7 +116,7 @@ ListView {
 					property var isCurrentDay: UtilsCpp.isCurrentDay(dateTime)
 
 					color: isCurrentDay ? DefaultStyle.main1_500_main : "transparent"
-					Component.onCompleted: if(isCurrentDay) mainItem.currentIndex = index
+					
 					Text {
 						id: dayNumText
 						anchors.centerIn: parent
@@ -127,7 +141,7 @@ ListView {
 					anchors.fill: parent
 					anchors.rightMargin: 5	// margin to avoid clipping shadows at right
 					radius: 10 * DefaultStyle.dp
-
+					visible: itemDelegate.haveModel
 					color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.grey_0
 					ColumnLayout {
 						anchors.fill: parent
@@ -162,15 +176,30 @@ ListView {
 				MultiEffect {
 					source: conferenceInfoDelegate
 					anchors.fill: conferenceInfoDelegate
+					visible: itemDelegate.haveModel
 					shadowEnabled: true
 					shadowBlur: 0.7
 					shadowOpacity: 0.2
 				}
+				Text {
+					anchors.fill: parent
+					anchors.rightMargin: 5 * DefaultStyle.dp // margin to avoid clipping shadows at right
+					anchors.leftMargin: 16 * DefaultStyle.dp
+					verticalAlignment: Text.AlignVCenter
+					visible: !itemDelegate.haveModel
+					text: qsTr("Aucune réunion aujourd'hui")
+					lineHeightMode: Text.FixedHeight
+					lineHeight: 17.71 * DefaultStyle.dp
+					font {
+						pixelSize: 13 * DefaultStyle.dp
+						weight: 700
+					}
+				}
 				MouseArea {
 					hoverEnabled: mainItem.hoverEnabled
 					anchors.fill: parent
-					visible: dateDay.visible
 					cursorShape: Qt.PointingHandCursor
+					visible: dateDay.visible && itemDelegate.haveModel
 					onClicked: {
 						mainItem.currentIndex = index
 						mainItem.conferenceSelected($modelData)
@@ -184,7 +213,7 @@ ListView {
 		MouseArea {
 			id: confArea
 			hoverEnabled: mainItem.hoverEnabled
-			visible: !dateDay.visible
+			visible: !dateDay.visible && itemDelegate.haveModel
 			anchors.fill: parent
 			cursorShape: Qt.PointingHandCursor
 			onClicked: {

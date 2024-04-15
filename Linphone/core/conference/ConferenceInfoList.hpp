@@ -38,6 +38,13 @@ public:
 	~ConferenceInfoList();
 
 	void setSelf(QSharedPointer<ConferenceInfoList> me);
+	
+	bool haveCurrentDate()const;
+	void setHaveCurrentDate(bool have);
+	void updateHaveCurrentDate();
+	
+	int getCurrentDateIndex() const;
+	void setCurrentDateIndex(int index);
 
 	QSharedPointer<ConferenceInfoCore> get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo) const;
 	QSharedPointer<ConferenceInfoCore> build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) const;
@@ -47,12 +54,18 @@ public:
 	QHash<int, QByteArray> roleNames() const override;
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
+	static int sort(QList<QSharedPointer<ConferenceInfoCore>> &listToSort);	// return the index of null item.
 
 signals:
 	void lUpdate();
+	void addCurrentDateChanged();
+	void haveCurrentDateChanged();
+	void currentDateIndexChanged();
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;
+	bool mHaveCurrentDate = false;
+	int mCurrentDateIndex = -1;
 	DECLARE_ABSTRACT_OBJECT
 };
 #endif // CONFERENCE_INFO_LIST_H_

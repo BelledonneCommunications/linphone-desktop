@@ -23,7 +23,9 @@
 #include "App.hpp"
 
 #include <QCoreApplication>
+#include <QDirIterator>
 #include <QFileSelector>
+#include <QFontDatabase>
 #include <QGuiApplication>
 #include <QLibraryInfo>
 #include <QQmlComponent>
@@ -77,6 +79,14 @@ App::App(int &argc, char *argv[])
 	auto ignoreVSync = QSurfaceFormat::defaultFormat();
 	ignoreVSync.setSwapInterval(0);
 	QSurfaceFormat::setDefaultFormat(ignoreVSync);
+	qInfo() << "Loading Fonts";
+	QDirIterator it(":/font/", QDirIterator::Subdirectories);
+	while (it.hasNext()) {
+		QString ttf = it.next();
+		// qDebug() << ttf;
+		auto id = QFontDatabase::addApplicationFont(ttf);
+	}
+
 	//-------------------
 	mLinphoneThread = new Thread(this);
 	init();

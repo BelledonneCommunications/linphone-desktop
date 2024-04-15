@@ -30,6 +30,8 @@ class ConferenceInfoProxy : public SortFilterProxy, public AbstractObject {
 
 	Q_OBJECT
 	Q_PROPERTY(QString searchText READ getSearchText WRITE setSearchText NOTIFY searchTextChanged)
+	Q_PROPERTY(bool haveCurrentDate READ haveCurrentDate NOTIFY haveCurrentDateChanged)
+	Q_PROPERTY(int currentDateIndex READ getCurrentDateIndex NOTIFY currentDateIndexChanged)
 
 public:
 	ConferenceInfoProxy(QObject *parent = Q_NULLPTR);
@@ -37,18 +39,29 @@ public:
 
 	QString getSearchText() const;
 	void setSearchText(const QString &search);
+	
+	bool haveCurrentDate() const;
+	
+	int getCurrentDateIndex() const;
+	void updateCurrentDateIndex();
 
 protected:
 	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
-	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
+	// Do not use the sort feature. We cannot retrieve indexes with mapToSource because Qt return -1 for items that are not displayed.
+	// We need it to know where 
+	// The workaround is to implement ourself the sort into the List.
+	//bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
 signals:
 	void searchTextChanged();
+	void haveCurrentDateChanged();
+	void currentDateIndexChanged();
 	void lUpdate();
 
 private:
 	QString mSearchText;
 	QSharedPointer<ConferenceInfoList> mList;
+	int mCurrentDateIndex = -1;
 	DECLARE_ABSTRACT_OBJECT
 };
 

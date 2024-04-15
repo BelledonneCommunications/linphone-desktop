@@ -360,7 +360,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		// After UpdatedByRemote, video direction could be changed.
 		auto params = call->getRemoteParams();
 		emit remoteVideoEnabledChanged(params && params->videoEnabled());
-		qWarning() << "CallCameraEnabled:" << call->cameraEnabled();
+		qDebug() << "CallCameraEnabled:" << call->cameraEnabled();
 		auto videoDirection = call->getCurrentParams()->getVideoDirection();
 		emit cameraEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
 		                          videoDirection == linphone::MediaDirection::SendRecv);

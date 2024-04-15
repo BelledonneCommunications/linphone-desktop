@@ -79,20 +79,33 @@ add_subdirectory(model)
 add_subdirectory(view)
 add_subdirectory(core)
 
+#fonts.qrc is in data and not in data/font because we want to use 'font' in path and not in prefix.
+#TODO make prefix working
+set(_LINPHONEAPP_FONTS_FILES)
+qt6_add_big_resources(_LINPHONEAPP_FONTS_FILES data/fonts.qrc)
+
+ # Have big_resource.qrc treated as a source file by Qt Creator
+list(APPEND _LINPHONEAPP_FONTS_FILES data/fonts.qrc)
+set_property(SOURCE data/fonts.qrc PROPERTY SKIP_AUTORCC ON)
+
 qt6_add_executable(Linphone
     ${_LINPHONEAPP_SOURCES}
+    ${_LINPHONEAPP_FONTS_FILES}
 )
 
 set_source_files_properties(${_LINPHONEAPP_QML_SINGLETONS} PROPERTIES QT_QML_SINGLETON_TYPE TRUE)
+
 
 qt6_add_qml_module(Linphone
     URI Linphone
     RESOURCE_PREFIX ""
     VERSION 1.0
     QML_FILES ${_LINPHONEAPP_QML_FILES} ${_LINPHONEAPP_QML_SINGLETONS}
+    RESOURCES data/fonts.qrc
 )
 
 qt6_add_resources(Linphone "resources" PREFIX "/" FILES ${_LINPHONEAPP_RC_FILES})
+
 
 ################################################################
 #						TARGETS LINKS

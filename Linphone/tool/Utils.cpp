@@ -1164,6 +1164,14 @@ QDateTime Utils::createDateTime(const QDate &date, int hour, int min) {
 	return QDateTime(date, time);
 }
 
+QDateTime Utils::getCurrentDateTime() {
+	return QDateTime::currentDateTime();
+}
+
+QDateTime Utils::getCurrentDateTimeUtc() {
+	return QDateTime::currentDateTimeUtc();
+}
+
 int Utils::secsTo(const QString &startTime, const QString &endTime) {
 	QDateTime startDate(QDateTime::fromString(startTime, "hh:mm"));
 	QDateTime endDate(QDateTime::fromString(endTime, "hh:mm"));
