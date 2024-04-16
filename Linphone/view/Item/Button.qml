@@ -115,8 +115,7 @@ Control.Button {
 			ButtonText{}
 		}
 		ButtonText {}
-		ButtonImage{
-		}
+		ButtonImage{}
 		Item {
 			Layout.fillWidth : true
 			Layout.fillHeight : true
