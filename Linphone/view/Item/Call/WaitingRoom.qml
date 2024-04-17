@@ -7,7 +7,7 @@ import UtilsCpp 1.0
 
 RowLayout {
 	id: mainItem
-	property alias cameraEnabled: preview.cameraEnabled
+	property alias localVideoEnabled: preview.videoEnabled
 	property bool microEnabled: true
 	property bool settingsButtonChecked: settingsButton.checked
 	property ConferenceInfoGui conferenceInfo
@@ -43,7 +43,7 @@ RowLayout {
 					Layout.preferredHeight: 55 * DefaultStyle.dp
 					icon.width: 32 * DefaultStyle.dp
 					icon.height: 32 * DefaultStyle.dp
-					onCheckedChanged: mainItem.cameraEnabled = !mainItem.cameraEnabled
+					onCheckedChanged: mainItem.localVideoEnabled = !mainItem.localVideoEnabled
 				}
 				CheckableButton {
 					id: microButton

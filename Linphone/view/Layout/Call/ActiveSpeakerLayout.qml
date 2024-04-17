@@ -37,7 +37,7 @@ Item{
 			call: mainItem.call
 			participantDevice: mainItem.conference && mainItem.conference.core.activeSpeaker
 			property var address: participantDevice && participantDevice.core.address
-			cameraEnabled: call && call.core.remoteVideoEnabled
+			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
 			qmlName: 'AS'
 	
 			Timer {
@@ -113,8 +113,8 @@ Item{
 		anchors.rightMargin: 10 * DefaultStyle.dp
 		anchors.bottomMargin: 10 * DefaultStyle.dp
 		//participantDevice: allDevices.me
-		cameraEnabled: preview.visible && mainItem.call && mainItem.call.core.cameraEnabled
-		onCameraEnabledChanged: console.log("P : " +cameraEnabled + " / " +visible +" / " +mainItem.call)
+		videoEnabled: preview.visible && mainItem.call && mainItem.call.core.localVideoEnabled
+		onVideoEnabledChanged: console.log("P : " +videoEnabled + " / " +visible +" / " +mainItem.call)
 		property AccountProxy accounts: AccountProxy{id: accountProxy}
 		account: accountProxy.defaultAccount
 		call: mainItem.call

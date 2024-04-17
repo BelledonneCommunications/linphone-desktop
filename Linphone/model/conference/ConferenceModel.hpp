@@ -58,11 +58,11 @@ public:
 signals:
 	void microphoneMutedChanged(bool isMuted);
 	void speakerMutedChanged(bool isMuted);
-	void cameraEnabledChanged(bool enabled);
 	void durationChanged(int);
 	void microphoneVolumeChanged(float);
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
+	void localVideoEnabledChanged(bool enabled);
 	void recordingChanged(bool recording);
 	void speakerVolumeGainChanged(float volume);
 	void microphoneVolumeGainChanged(float volume);

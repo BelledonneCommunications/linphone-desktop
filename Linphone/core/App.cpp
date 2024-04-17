@@ -111,8 +111,6 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			                                         auto win = getCallsWindow(QVariant::fromValue(callGui));
 			                                         Utils::smartShowWindow(win);
 			                                         qDebug() << "App : call created" << callGui;
-			                                         // callGui.value<CallGui
-			                                         //  * > ()->getCore()->lSetCameraEnabled(true);
 		                                         });
 	                                         });
 }

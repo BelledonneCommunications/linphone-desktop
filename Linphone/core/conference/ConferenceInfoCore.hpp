@@ -51,13 +51,13 @@ public:
 	Q_PROPERTY(QString subject READ getSubject WRITE setSubject NOTIFY subjectChanged)
 	Q_PROPERTY(QString description READ getDescription WRITE setDescription NOTIFY descriptionChanged)
 	Q_PROPERTY(QString uri READ getUri NOTIFY uriChanged)
-	
+
 	Q_PROPERTY(bool haveModel READ getHaveModel NOTIFY haveModelChanged)
 	Q_PROPERTY(bool isScheduled READ isScheduled WRITE setIsScheduled NOTIFY isScheduledChanged)
 	Q_PROPERTY(bool isEnded READ isEnded WRITE setIsEnded NOTIFY isEndedChanged)
-	Q_PROPERTY(int inviteMode READ getInviteMode WRITE setInviteMode NOTIFY inviteModeChanged)
+	Q_PROPERTY(bool inviteEnabled READ inviteEnabled WRITE enableInvite NOTIFY inviteEnabledChanged)
 	Q_PROPERTY(int participantCount READ getParticipantCount NOTIFY participantsChanged)
-	
+
 	Q_PROPERTY(QVariantList participants READ getParticipants NOTIFY participantsChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState schedulerState READ getConferenceSchedulerState NOTIFY
@@ -92,7 +92,7 @@ public:
 	bool computeIsEnded() const;
 	bool isEnded() const;
 	void setIsEnded(bool ended);
-	int getInviteMode() const;
+	bool inviteEnabled() const;
 	QVariantList getParticipants() const;
 	// Q_INVOKABLE QVariantList getAllParticipants() const;
 	int getParticipantCount() const;
@@ -112,7 +112,7 @@ public:
 	void setUri(const QString &uri);
 	void setTimeZoneModel(TimeZoneModel *model);
 	void setDescription(const QString &description);
-	void setInviteMode(const int &mode);
+	void enableInvite(const bool &enable);
 	void setConferenceInfoState(LinphoneEnums::ConferenceInfoState state);
 	void setConferenceSchedulerState(LinphoneEnums::ConferenceSchedulerState state);
 
@@ -156,7 +156,7 @@ signals:
 	void haveModelChanged();
 	void isScheduledChanged();
 	void isEndedChanged();
-	void inviteModeChanged();
+	void inviteEnabledChanged();
 	void conferenceInfoStateChanged();
 	void conferenceSchedulerStateChanged();
 	void timeZoneModelChanged();
@@ -192,7 +192,7 @@ private:
 	bool mIsScheduled;
 	bool mIsEnded = false;
 	QTimer mCheckEndTimer;
-	int mInviteMode = 0;
+	bool mInviteEnabled = true;
 	// bool mRemoveRequested = false; // true if user has request its deletion from DB
 	// linphone::ConferenceScheduler::State mLastConferenceSchedulerState =
 	// linphone::ConferenceScheduler::State::Idle; // Workaround for missing getter in scheduler.

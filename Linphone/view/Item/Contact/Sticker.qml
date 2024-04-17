@@ -31,8 +31,8 @@ Item {
 											
 	property string peerAddress:peerAddressObj ? peerAddressObj.value : ""
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
-	property bool cameraEnabled: (previewEnabled && call && call.core.cameraEnabled)
-									|| (!previewEnabled && participantDevice && participantDevice.core.videoEnabled)
+	property bool videoEnabled: (previewEnabled && call && call.core.localVideoEnabled)
+									|| (participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName
 
 	Rectangle {
@@ -86,7 +86,7 @@ Item {
 				triggeredOnStart: true
 				onTriggered: {cameraLoader.reset = !cameraLoader.reset}
 			}
-			active: mainItem.visible && mainItem.cameraEnabled && !mainItem.reset
+			active: mainItem.visible && mainItem.videoEnabled && !mainItem.reset
 			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active)
 			sourceComponent: cameraComponent
 		}

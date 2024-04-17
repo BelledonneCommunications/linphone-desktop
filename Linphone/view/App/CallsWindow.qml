@@ -788,7 +788,7 @@ Window {
 						target: rightPanel
 						onVisibleChanged: if (!visible) waitingRoomIn.settingsButtonChecked = false
 					}
-					onJoinConfRequested: mainWindow.joinConference({'microEnabled':microEnabled, 'cameraEnabled':cameraEnabled})
+					onJoinConfRequested: mainWindow.joinConference({'microEnabled':microEnabled, 'localVideoEnabled':localVideoEnabled})
 				}
 			}
 			Component {
@@ -948,12 +948,12 @@ Window {
 						enabled: mainWindow.conferenceInfo || (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
 						iconUrl: AppIcons.videoCamera
 						checkedIconUrl: AppIcons.videoCameraSlash
-						checked: mainWindow.call && !mainWindow.call.core.cameraEnabled
+						checked: mainWindow.call && !mainWindow.call.core.localVideoEnabled
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
 						icon.width: 32 * DefaultStyle.dp
 						icon.height: 32 * DefaultStyle.dp
-						onClicked: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
+						onClicked: mainWindow.call.core.lSetLocalVideoEnabled(!mainWindow.call.core.localVideoEnabled)
 					}
 					CheckableButton {
 						iconUrl: AppIcons.microphone

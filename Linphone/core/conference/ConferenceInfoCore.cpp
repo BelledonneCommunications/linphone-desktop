@@ -129,7 +129,7 @@ ConferenceInfoCore::ConferenceInfoCore(const ConferenceInfoCore &conferenceInfoC
 	mHaveModel = conferenceInfoCore.mHaveModel;
 	mIsScheduled = conferenceInfoCore.mIsScheduled;
 	mIsEnded = conferenceInfoCore.mIsEnded;
-	mInviteMode = conferenceInfoCore.mInviteMode;
+	mInviteEnabled = conferenceInfoCore.mInviteEnabled;
 	mConferenceInfoState = conferenceInfoCore.mConferenceInfoState;
 }
 
@@ -150,7 +150,7 @@ void ConferenceInfoCore::reset(const ConferenceInfoCore &conf) {
 	setTimeZoneModel(conf.getTimeZoneModel());
 	setIsScheduled(conf.isScheduled());
 	setIsEnded(conf.isEnded());
-	setInviteMode(conf.getInviteMode());
+	enableInvite(conf.inviteEnabled());
 	setConferenceInfoState(conf.getConferenceInfoState());
 }
 
@@ -367,8 +367,8 @@ bool ConferenceInfoCore::isEnded() const {
 	return mIsEnded;
 }
 
-int ConferenceInfoCore::getInviteMode() const {
-	return mInviteMode;
+bool ConferenceInfoCore::inviteEnabled() const {
+	return mInviteEnabled;
 }
 
 QVariantList ConferenceInfoCore::getParticipants() const {
@@ -503,10 +503,10 @@ void ConferenceInfoCore::setIsEnded(bool ended) {
 	}
 }
 
-void ConferenceInfoCore::setInviteMode(const int &mode) {
-	if (mode != mInviteMode) {
-		mInviteMode = mode;
-		emit inviteModeChanged();
+void ConferenceInfoCore::enableInvite(const bool &enable) {
+	if (enable != mInviteEnabled) {
+		mInviteEnabled = enable;
+		emit inviteEnabledChanged();
 	}
 }
 

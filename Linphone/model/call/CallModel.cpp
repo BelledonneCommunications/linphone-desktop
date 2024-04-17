@@ -57,13 +57,11 @@ void CallModel::accept(bool withVideo) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = core->createCallParams(mMonitor);
-	params->enableVideo(withVideo);
 	params->setRecordFile(
 	    Paths::getCapturesDirPath()
 	        .append(Utils::generateSavedFilename(QString::fromStdString(mMonitor->getToAddress()->getUsername()), ""))
 	        .append(".mkv")
 	        .toStdString());
-	mMonitor->enableCamera(withVideo);
 	// Answer with local call address.
 	auto localAddress = mMonitor->getCallLog()->getLocalAddress();
 	for (auto account : core->getAccountList()) {
@@ -72,8 +70,9 @@ void CallModel::accept(bool withVideo) {
 			break;
 		}
 	}
+	activateLocalVideo(params, mMonitor->getCurrentParams(), withVideo);
 	mMonitor->acceptWithParams(params);
-	emit cameraEnabledChanged(withVideo);
+	emit localVideoEnabledChanged(withVideo);
 }
 
 void CallModel::decline() {
@@ -122,14 +121,13 @@ void CallModel::setSpeakerMuted(bool isMuted) {
 	emit speakerMutedChanged(isMuted);
 }
 
-void CallModel::setCameraEnabled(bool enabled) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	// mMonitor->enableCamera(enabled);
-	auto params = CoreModel::getInstance()->getCore()->createCallParams(mMonitor);
+void CallModel::activateLocalVideo(std::shared_ptr<linphone::CallParams> &params,
+                                   const std::shared_ptr<const linphone::CallParams> &currentParams,
+                                   bool enable) {
 	params->enableVideo(true);
-	auto direction = mMonitor->getCurrentParams()->getVideoDirection();
+	auto direction = currentParams ? currentParams->getVideoDirection() : params->getVideoDirection();
 	auto videoDirection = linphone::MediaDirection::RecvOnly;
-	if (enabled) { // +Send
+	if (enable) { // +Send
 		switch (direction) {
 			case linphone::MediaDirection::RecvOnly:
 				videoDirection = linphone::MediaDirection::SendRecv;
@@ -168,6 +166,12 @@ void CallModel::setCameraEnabled(bool enabled) {
 	              : linphone::MediaDirection::SendOnly;
 	              */
 	params->setVideoDirection(videoDirection);
+}
+
+void CallModel::setLocalVideoEnabled(bool enabled) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = CoreModel::getInstance()->getCore()->createCallParams(mMonitor);
+	activateLocalVideo(params, mMonitor->getCurrentParams(), enabled);
 	mMonitor->update(params);
 }
 
@@ -359,12 +363,12 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 	if (state == linphone::Call::State::StreamsRunning) {
 		// After UpdatedByRemote, video direction could be changed.
 		auto params = call->getRemoteParams();
-		emit remoteVideoEnabledChanged(params && params->videoEnabled());
-		qDebug() << "CallCameraEnabled:" << call->cameraEnabled();
-		auto videoDirection = call->getCurrentParams()->getVideoDirection();
-		emit cameraEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
-		                          videoDirection == linphone::MediaDirection::SendRecv);
-		// emit cameraEnabledChanged(call->cameraEnabled());
+		auto videoDirection = params ? params->getVideoDirection() : linphone::MediaDirection::Inactive;
+		emit remoteVideoEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
+		                               videoDirection == linphone::MediaDirection::SendRecv);
+		videoDirection = call->getCurrentParams()->getVideoDirection();
+		emit localVideoEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
+		                              videoDirection == linphone::MediaDirection::SendRecv);
 		setConference(call->getConference());
 		updateConferenceVideoLayout();
 	}

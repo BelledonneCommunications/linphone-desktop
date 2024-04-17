@@ -446,10 +446,8 @@ ColumnLayout {
 	}
 	Switch {
 		text: qsTr("Send invitation to participants")
-		Component.onCompleted: {
-			console.log("TODO : handle send invitation to participants")
-			toggle()
-		}
+		checked: mainItem.conferenceInfoGui.core.inviteEnabled
+		onToggled: mainItem.conferenceInfoGui.core.inviteEnabled = checked
 	}
 	Item {
 		Layout.fillHeight: true

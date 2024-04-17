@@ -177,7 +177,7 @@ ListView {
 						height: 24 * DefaultStyle.dp
 						source: AppIcons.videoCamera
 					}
-					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress, {'cameraEnabled':true})
+					onClicked: UtilsCpp.createCall(modelData.core.defaultAddress, {'localVideoEnabled':true})
 				}
 			}
 			PopupButton {

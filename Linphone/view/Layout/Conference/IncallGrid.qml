@@ -22,7 +22,7 @@ import 'qrc:/ui/scripts/Utils/utils.js' as Utils
 Mosaic {
 	id: grid
 	property alias callModel: participantDevices.callModel
-	property bool cameraEnabled: true
+	property bool videoEnabled: true
 	property int participantCount: gridModel.count
 	
 	// On grid view, we limit the quality if there are enough participants// The vga mode has been activated from the factory rc
@@ -50,7 +50,7 @@ Mosaic {
 				
 				cameraQmlName: 'G_'+index
 				callModel: index >= 0 ? participantDevices.callModel : null	// do this before to prioritize changing call on remove
-				deactivateCamera: index <0 || !grid.cameraEnabled || grid.callModel.pausedByUser
+				deactivateCamera: index <0 || !grid.videoEnabled || grid.callModel.pausedByUser
 				currentDevice: gridModel.participantDevices.getAt(index)
 				
 				isCameraFromDevice: true

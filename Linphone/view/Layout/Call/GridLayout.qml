@@ -9,7 +9,7 @@ import Linphone
 Mosaic {
 	id: grid
 	property alias call: allDevices.currentCall
-	property bool cameraEnabled: true
+	property bool videoEnabled: true
 	property int participantCount: gridModel.count
 	
 	// On grid view, we limit the quality if there are enough participants// The vga mode has been activated from the factory rc

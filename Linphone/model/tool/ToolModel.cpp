@@ -101,7 +101,7 @@ bool ToolModel::createCall(const QString &sipAddress,
                            QString *errorMessage) {
 	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
 	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();
-	bool cameraEnabled = options.contains("cameraEnabled") ? options["cameraEnabled"].toBool() : false;
+	bool localVideoEnabled = options.contains("localVideoEnabled") ? options["localVideoEnabled"].toBool() : false;
 
 	std::shared_ptr<linphone::Address> address = interpretUrl(sipAddress);
 	if (!address) {
@@ -115,8 +115,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	}
 
 	std::shared_ptr<linphone::CallParams> params = core->createCallParams(nullptr);
-	params->enableVideo(true);
-	params->setVideoDirection(cameraEnabled ? linphone::MediaDirection::SendRecv : linphone::MediaDirection::Inactive);
+	CallModel::activateLocalVideo(params, nullptr, localVideoEnabled);
 
 	params->setMediaEncryption(mediaEncryption);
 	if (Utils::coreStringToAppString(params->getRecordFile()).isEmpty()) {
@@ -137,7 +136,6 @@ bool ToolModel::createCall(const QString &sipAddress,
 
 	if (core->getDefaultAccount()) params->setAccount(core->getDefaultAccount());
 	auto call = core->inviteAddressWithParams(address, params);
-	call->enableCamera(cameraEnabled);
 	return call != nullptr;
 
 	/* TODO transfer

@@ -152,8 +152,7 @@ ColumnLayout {
 			label: qsTr("Appel Video")
 			button.onClicked: {
 				var addr = UtilsCpp.generateLinphoneSipAddress(mainItem.contactAddress)
-	  			UtilsCpp.createCall(addr)
-  				console.log("[CallPage.qml] TODO : enable video")
+	  			UtilsCpp.createCall(addr, {'localVideoEnabled':true})
 			}
 		}
 	}

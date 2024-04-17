@@ -41,7 +41,6 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(int duration READ getDuration NOTIFY durationChanged)
 	Q_PROPERTY(bool speakerMuted READ getSpeakerMuted WRITE lSetSpeakerMuted NOTIFY speakerMutedChanged)
 	Q_PROPERTY(bool microphoneMuted READ getMicrophoneMuted WRITE lSetMicrophoneMuted NOTIFY microphoneMutedChanged)
-	Q_PROPERTY(bool cameraEnabled READ getCameraEnabled WRITE lSetCameraEnabled NOTIFY cameraEnabledChanged)
 	Q_PROPERTY(bool paused READ getPaused WRITE lSetPaused NOTIFY pausedChanged)
 	Q_PROPERTY(QString peerAddress READ getPeerAddress CONSTANT)
 	Q_PROPERTY(QString localAddress READ getLocalAddress CONSTANT)
@@ -52,6 +51,8 @@ class CallCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString remoteSas WRITE setRemoteSas MEMBER mRemoteSas NOTIFY remoteSasChanged)
 	Q_PROPERTY(
 	    bool remoteVideoEnabled READ getRemoteVideoEnabled WRITE setRemoteVideoEnabled NOTIFY remoteVideoEnabledChanged)
+	Q_PROPERTY(
+	    bool localVideoEnabled READ getLocalVideoEnabled WRITE lSetLocalVideoEnabled NOTIFY localVideoEnabledChanged)
 	Q_PROPERTY(bool recording READ getRecording WRITE setRecording NOTIFY recordingChanged)
 	Q_PROPERTY(bool remoteRecording READ getRemoteRecording WRITE setRemoteRecording NOTIFY remoteRecordingChanged)
 	Q_PROPERTY(bool recordable READ getRecordable WRITE setRecordable NOTIFY recordableChanged)
@@ -96,9 +97,6 @@ public:
 	bool getMicrophoneMuted() const;
 	void setMicrophoneMuted(bool isMuted);
 
-	bool getCameraEnabled() const;
-	void setCameraEnabled(bool enabled);
-
 	bool getPaused() const;
 	void setPaused(bool paused);
 
@@ -120,6 +118,9 @@ public:
 
 	bool getRemoteVideoEnabled() const;
 	void setRemoteVideoEnabled(bool enabled);
+
+	bool getLocalVideoEnabled() const;
+	void setLocalVideoEnabled(bool enabled);
 
 	bool getRecording() const;
 	void setRecording(bool recording);
@@ -158,13 +159,13 @@ signals:
 	void durationChanged(int duration);
 	void speakerMutedChanged();
 	void microphoneMutedChanged();
-	void cameraEnabledChanged();
 	void pausedChanged();
 	void transferStateChanged();
 	void securityUpdated();
 	void localSasChanged();
 	void remoteSasChanged();
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
+	void localVideoEnabledChanged();
 	void recordingChanged();
 	void remoteRecordingChanged();
 	void recordableChanged();
@@ -181,7 +182,7 @@ signals:
 	void lTerminateAllCalls();    // Hangup all calls
 	void lSetSpeakerMuted(bool muted);
 	void lSetMicrophoneMuted(bool isMuted);
-	void lSetCameraEnabled(bool enabled);
+	void lSetLocalVideoEnabled(bool enabled);
 	void lSetVideoEnabled(bool enabled);
 	void lSetPaused(bool paused);
 	void lTransferCall(QString &est);
@@ -230,7 +231,7 @@ private:
 	int mDuration = 0;
 	bool mSpeakerMuted;
 	bool mMicrophoneMuted;
-	bool mCameraEnabled = false;
+	bool mLocalVideoEnabled = false;
 	bool mVideoEnabled = false;
 	bool mPaused = false;
 	bool mRemoteVideoEnabled = false;

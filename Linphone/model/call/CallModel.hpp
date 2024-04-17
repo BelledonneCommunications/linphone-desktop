@@ -43,7 +43,7 @@ public:
 
 	void setMicrophoneMuted(bool isMuted);
 	void setSpeakerMuted(bool isMuted);
-	void setCameraEnabled(bool enabled);
+	void setLocalVideoEnabled(bool enabled);
 	void startRecording();
 	void stopRecording();
 	void setRecordFile(const std::string &path);
@@ -72,14 +72,18 @@ public:
 	void changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layout); // Make a call request
 	void updateConferenceVideoLayout(); // Called from call state changed ater the new layout has been set.
 
+	static void activateLocalVideo(std::shared_ptr<linphone::CallParams> &params,
+	                               const std::shared_ptr<const linphone::CallParams> &currentParams,
+	                               bool enable);
+
 signals:
 	void microphoneMutedChanged(bool isMuted);
 	void speakerMutedChanged(bool isMuted);
-	void cameraEnabledChanged(bool enabled);
 	void durationChanged(int);
 	void microphoneVolumeChanged(float);
 	void pausedChanged(bool paused);
 	void remoteVideoEnabledChanged(bool remoteVideoEnabled);
+	void localVideoEnabledChanged(bool enabled);
 	void recordingChanged(bool recording);
 	void authenticationTokenVerifiedChanged(bool verified);
 	void speakerVolumeGainChanged(float volume);

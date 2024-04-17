@@ -57,8 +57,14 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 			mConferenceSchedulerModel->removeListener();
 		}
 		mConferenceSchedulerModel = model;
-		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::stateChanged, this,
-		        &ConferenceInfoModel::schedulerStateChanged);
+		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::stateChanged,
+		        [this](linphone::ConferenceScheduler::State state) {
+			        if (state == linphone::ConferenceScheduler::State::Ready && mInviteEnabled) {
+				        auto params = CoreModel::getInstance()->getCore()->createDefaultChatRoomParams();
+				        mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
+			        }
+			        emit schedulerStateChanged(state);
+		        });
 		connect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::invitationsSent, this,
 		        &ConferenceInfoModel::invitationsSent);
 		mConferenceSchedulerModel->setSelf(mConferenceSchedulerModel);
@@ -110,6 +116,10 @@ std::list<std::shared_ptr<linphone::ParticipantInfo>> ConferenceInfoModel::getPa
 	return mConferenceInfo->getParticipantInfos();
 }
 
+bool ConferenceInfoModel::inviteEnabled() const {
+	return mInviteEnabled;
+}
+
 void ConferenceInfoModel::setDateTime(const QDateTime &date) {
 	mConferenceInfo->setDateTime(date.isValid() ? date.toMSecsSinceEpoch() / 1000 : -1); // toMSecsSinceEpoch() is UTC
 	emit dateTimeChanged(date);
@@ -157,4 +167,11 @@ void ConferenceInfoModel::cancelConference() {
 
 void ConferenceInfoModel::updateConferenceInfo() {
 	mConferenceSchedulerModel->setInfo(mConferenceInfo);
+}
+
+void ConferenceInfoModel::enableInvite(bool enable) {
+	if (mInviteEnabled != enable) {
+		mInviteEnabled = enable;
+		emit inviteEnabledChanged(mInviteEnabled);
+	}
 }

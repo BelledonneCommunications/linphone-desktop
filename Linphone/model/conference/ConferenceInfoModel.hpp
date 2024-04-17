@@ -48,6 +48,7 @@ public:
 	QString getDescription() const;
 	QString getUri() const;
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> getParticipantInfos() const;
+	bool inviteEnabled() const;
 
 	void setDateTime(const QDateTime &date);
 	void setDuration(int duration);
@@ -58,6 +59,7 @@ public:
 	void deleteConferenceInfo();
 	void cancelConference();
 	void updateConferenceInfo();
+	void enableInvite(bool enable);
 
 signals:
 	void dateTimeChanged(const QDateTime &date);
@@ -71,10 +73,12 @@ signals:
 	void schedulerStateChanged(linphone::ConferenceScheduler::State state);
 	void infoStateChanged(linphone::ConferenceInfo::State state);
 	void invitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations);
+	void inviteEnabledChanged(bool enable);
 
 private:
 	std::shared_ptr<linphone::ConferenceInfo> mConferenceInfo;
 	std::shared_ptr<ConferenceSchedulerModel> mConferenceSchedulerModel = nullptr;
+	bool mInviteEnabled = true;
 	DECLARE_ABSTRACT_OBJECT
 
 	// LINPHONE
