@@ -109,6 +109,8 @@ void Utils::createCall(const QString &sipAddress,
 	});
 }
 
+// TODO : change conf info only from qml
+//  (bug si on est déjà en appel et qu'on lance une conf)
 void Utils::setupConference(ConferenceInfoGui *confGui) {
 	if (!confGui) return;
 	auto window = App::getInstance()->getCallsWindow(QVariant());
@@ -118,15 +120,6 @@ void Utils::setupConference(ConferenceInfoGui *confGui) {
 
 void Utils::openCallsWindow(CallGui *call) {
 	if (call) App::getInstance()->getCallsWindow(QVariant::fromValue(call))->show();
-}
-
-void Utils::setCallsWindowCall(CallGui *call) {
-	if (call) App::getInstance()->setCallsWindowProperty("call", QVariant::fromValue(call));
-}
-
-void Utils::setCallsWindowProperty(const QString &id, const QVariant &property) {
-	const char *idChar = id.toLocal8Bit().data();
-	App::getInstance()->setCallsWindowProperty(idChar, property);
 }
 
 QQuickWindow *Utils::getCallsWindow(CallGui *callGui) {
@@ -1192,6 +1185,11 @@ bool Utils::isMe(const QString &address) {
 	bool isMe = false;
 	App::postModelSync([&isMe, address]() { isMe = ToolModel::isMe(address); });
 	return isMe;
+}
+bool Utils::isLocal(const QString &address) {
+	bool isLocal = false;
+	App::postModelSync([&isLocal, address]() { isLocal = ToolModel::isLocal(address); });
+	return isLocal;
 }
 // QDateTime dateTime(QDateTime::fromString(date, "yyyy-MM-dd hh:mm:ss"));
 

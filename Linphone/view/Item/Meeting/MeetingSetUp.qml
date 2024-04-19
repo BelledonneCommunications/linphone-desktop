@@ -5,6 +5,7 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
 
+//TODO : spacing layout 
 ColumnLayout {
 	id: mainItem
 	spacing: 8 * DefaultStyle.dp
@@ -42,6 +43,7 @@ ColumnLayout {
 		leftPadding: 16 * DefaultStyle.dp
 		rightPadding: 16 * DefaultStyle.dp
 		contentItem: RowLayout {
+			spacing: 8 * DefaultStyle.dp
 			EffectImage {
 				imageSource: checkableButton.icon.source
 				colorizationColor: checkableButton.checked ? DefaultStyle.grey_0 : DefaultStyle.main1_500_main
@@ -60,10 +62,8 @@ ColumnLayout {
 	}
 	RowLayout {
 		visible: mainItem.isCreation
-		Layout.fillWidth: true
 		Layout.topMargin: 20 * DefaultStyle.dp
 		Layout.bottomMargin: 20 * DefaultStyle.dp
-		// Layout.alignment: Qt.AlignHCenter
 		spacing: 18 * DefaultStyle.dp
 		CheckableButton {
 			Layout.preferredWidth: 151 * DefaultStyle.dp
@@ -86,6 +86,7 @@ ColumnLayout {
 	Section {
 		visible: mainItem.isCreation
 		content: RowLayout {
+			spacing: 8 * DefaultStyle.dp
 			EffectImage {
 				imageSource: AppIcons.usersThree
 				colorizationColor: DefaultStyle.main2_600
@@ -109,6 +110,7 @@ ColumnLayout {
 		Layout.topMargin: 10 * DefaultStyle.dp
 		content: [
 			RowLayout {
+				spacing: 8 * DefaultStyle.dp
 				EffectImage {
 					imageSource: AppIcons.clock
 					Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -134,6 +136,7 @@ ColumnLayout {
 				}
 			},
 			RowLayout {
+				spacing: 8 * DefaultStyle.dp
 				CalendarComboBox {
 					id: startDate
 					background.visible: mainItem.isCreation
@@ -168,11 +171,10 @@ ColumnLayout {
 						mainItem.conferenceInfoGui.core.dateTime = selectedDateTime//UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
 						endHour.selectedDateTime = UtilsCpp.addSecs(selectedDateTime, 3600)//UtilsCpp.createDateTime(selectedDateTime, selectedHour == 23 ? 23 : selectedHour + 1, selectedHour == 23 ? 59 : selectedMin)
 					}
-					// onSelectedHourChanged: mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
-					// onSelectedMinChanged: mainItem.conferenceInfoGui.core.dateTime = UtilsCpp.createDateTime(startDate.selectedDate, selectedHour, selectedMin)
 				}
 			},
 			RowLayout {
+				spacing: 8 * DefaultStyle.dp
 				CalendarComboBox {
 					id: endDate
 					background.visible: mainItem.isCreation
@@ -344,6 +346,7 @@ ColumnLayout {
 	}
 	Section {
 		content: RowLayout {
+			spacing: 8 * DefaultStyle.dp
 			EffectImage {
 				imageSource: AppIcons.note
 				colorizationColor: DefaultStyle.main2_600
@@ -386,6 +389,7 @@ ColumnLayout {
 					radius: 4 * DefaultStyle.dp
 				}
 				contentItem: RowLayout {
+					spacing: 8 * DefaultStyle.dp
 					EffectImage {
 						imageSource: AppIcons.usersThree
 						colorizationColor: DefaultStyle.main2_600
@@ -415,6 +419,7 @@ ColumnLayout {
 					width: participantList.width
 					RowLayout {
 						anchors.fill: parent
+						spacing: 16 * DefaultStyle.dp
 						Avatar {
 							Layout.preferredWidth: 45 * DefaultStyle.dp
 							Layout.preferredHeight: 45 * DefaultStyle.dp

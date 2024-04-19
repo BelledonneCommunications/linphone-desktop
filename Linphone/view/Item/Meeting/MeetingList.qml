@@ -74,7 +74,7 @@ ListView {
 		property string previousDateString: previousItem ? UtilsCpp.toDateString(previousItem.core ? previousItem.core.dateTimeUtc : UtilsCpp.getCurrentDateTimeUtc()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
 		property int topOffset: (dateDay.visible && !isFirst? 8 * DefaultStyle.dp : 0)
-		property var endDateTime: $modelData ? $modelData.core.endDateTime : ''
+		property var endDateTime: $modelData ? $modelData.core.endDateTime : UtilsCpp.getCurrentDateTime()
 				
 		property var haveModel: $modelData && $modelData.core.haveModel || false
 		

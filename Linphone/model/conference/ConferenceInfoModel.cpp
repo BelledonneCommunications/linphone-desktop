@@ -50,6 +50,7 @@ std::shared_ptr<ConferenceSchedulerModel> ConferenceInfoModel::getConferenceSche
 }
 
 void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<ConferenceSchedulerModel> &model) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (mConferenceSchedulerModel != model) {
 		if (mConferenceSchedulerModel) {
 			disconnect(mConferenceSchedulerModel.get(), &ConferenceSchedulerModel::stateChanged, this, nullptr);
@@ -72,26 +73,32 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 }
 
 QDateTime ConferenceInfoModel::getDateTime() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return QDateTime::fromMSecsSinceEpoch(mConferenceInfo->getDateTime() * 1000, Qt::LocalTime);
 }
 
 int ConferenceInfoModel::getDuration() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mConferenceInfo->getDuration();
 }
 
 QDateTime ConferenceInfoModel::getEndTime() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return getDateTime().addSecs(mConferenceInfo->getDuration());
 }
 
 QString ConferenceInfoModel::getSubject() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(mConferenceInfo->getSubject());
 }
 
 linphone::ConferenceInfo::State ConferenceInfoModel::getState() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mConferenceInfo->getState();
 }
 
 QString ConferenceInfoModel::getOrganizerName() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto organizer = mConferenceInfo->getOrganizer();
 	auto name = Utils::coreStringToAppString(organizer->getDisplayName());
 	if (name.isEmpty()) name = ToolModel::getDisplayName(Utils::coreStringToAppString(organizer->asStringUriOnly()));
@@ -103,20 +110,25 @@ QString ConferenceInfoModel::getOrganizerAddress() const {
 }
 
 QString ConferenceInfoModel::getDescription() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return Utils::coreStringToAppString(mConferenceInfo->getSubject());
 }
 
 QString ConferenceInfoModel::getUri() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (auto uriAddr = mConferenceInfo->getUri()) {
 		return Utils::coreStringToAppString(uriAddr->asString());
 	} else return QString();
 }
 
 std::list<std::shared_ptr<linphone::ParticipantInfo>> ConferenceInfoModel::getParticipantInfos() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mConferenceInfo->getParticipantInfos();
 }
 
 bool ConferenceInfoModel::inviteEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mInviteEnabled;
 }
 
@@ -126,16 +138,19 @@ void ConferenceInfoModel::setDateTime(const QDateTime &date) {
 }
 
 void ConferenceInfoModel::setDuration(int duration) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConferenceInfo->setDuration(duration);
 	emit durationChanged(duration);
 }
 
 void ConferenceInfoModel::setSubject(const QString &subject) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConferenceInfo->setSubject(Utils::appStringToCoreString(subject));
 	emit subjectChanged(subject);
 }
 
 void ConferenceInfoModel::setOrganizer(const QString &organizerAddress) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto linAddr = ToolModel::interpretUrl(organizerAddress);
 	if (linAddr) {
 		mConferenceInfo->setOrganizer(linAddr);
@@ -144,32 +159,38 @@ void ConferenceInfoModel::setOrganizer(const QString &organizerAddress) {
 }
 
 void ConferenceInfoModel::setDescription(const QString &description) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConferenceInfo->setDescription(Utils::appStringToCoreString(description));
 	emit descriptionChanged(description);
 }
 
 void ConferenceInfoModel::setParticipantInfos(
     const std::list<std::shared_ptr<linphone::ParticipantInfo>> &participantInfos) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConferenceInfo->setParticipantInfos(participantInfos);
 	emit participantsChanged();
 }
 
 void ConferenceInfoModel::deleteConferenceInfo() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->deleteConferenceInformation(mConferenceInfo);
 	emit conferenceInfoDeleted();
 }
 
 void ConferenceInfoModel::cancelConference() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (!mConferenceSchedulerModel) return;
 	mConferenceSchedulerModel->cancelConference(mConferenceInfo);
 	emit conferenceInfoCanceled();
 }
 
 void ConferenceInfoModel::updateConferenceInfo() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mConferenceSchedulerModel->setInfo(mConferenceInfo);
 }
 
 void ConferenceInfoModel::enableInvite(bool enable) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (mInviteEnabled != enable) {
 		mInviteEnabled = enable;
 		emit inviteEnabledChanged(mInviteEnabled);

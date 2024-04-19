@@ -31,8 +31,9 @@ Item {
 		topPadding: 20 * DefaultStyle.dp
 		bottomPadding: 25 * DefaultStyle.dp
 		contentItem: ColumnLayout {
-			spacing: 10 * DefaultStyle.dp
+			spacing: 16 * DefaultStyle.dp
 			RowLayout {
+				spacing: 0
 				Text {
 					text: qsTr("Which channel do you choose?")
 					font {
@@ -44,6 +45,7 @@ Item {
 				Button {
 					Layout.preferredWidth: 24 * DefaultStyle.dp
 					Layout.preferredHeight: 24 * DefaultStyle.dp
+					Layout.alignment: Qt.AlignVCenter
 					background: Item{}
 					icon.source:AppIcons.closeX
 					width: 24 * DefaultStyle.dp
@@ -64,6 +66,7 @@ Item {
 				}
 				Layout.fillWidth: true
 				Layout.preferredHeight: contentHeight
+				spacing: 10 * DefaultStyle.dp
 				delegate: Item {
 					width: parent.width
 					height: 56 * DefaultStyle.dp
@@ -72,9 +75,10 @@ Item {
 						anchors.verticalCenter: parent.verticalCenter
 						spacing: 10 * DefaultStyle.dp
 						ColumnLayout {
+							spacing: 7 * DefaultStyle.dp
 							Text {
 								Layout.leftMargin: 5 * DefaultStyle.dp
-								text: modelData.label
+								text: modelData.label + " :"
 								font {
 									pixelSize: 13 * DefaultStyle.dp
 									weight: 700 * DefaultStyle.dp
@@ -138,19 +142,16 @@ Item {
 					active: true
 					interactive: true
 					policy: Control.ScrollBar.AsNeeded
-					// Layout.fillWidth: true
 					anchors.top: parent.top
 					anchors.bottom: parent.bottom
 					anchors.right: parent.right
 					anchors.rightMargin: 8 * DefaultStyle.dp
-					// x: mainItem.x + mainItem.width - width
-					// anchors.left: control.right
 				}
 
 				ColumnLayout {
 					id: content
 					width: parent.width
-					spacing: 25 * DefaultStyle.dp
+					spacing: 32 * DefaultStyle.dp
 					Button {
 						visible: mainItem.groupCallVisible
 						Layout.preferredWidth: 320 * DefaultStyle.dp
@@ -165,6 +166,7 @@ Item {
 							radius: 50 * DefaultStyle.dp
 						}
 						contentItem: RowLayout {
+							spacing: 16 * DefaultStyle.dp
 							anchors.verticalCenter: parent.verticalCenter
 							Image {
 								source: AppIcons.groupCall
@@ -191,35 +193,8 @@ Item {
 						}
 						onClicked: mainItem.groupCallCreationRequested()
 					}
-
-					// RowLayout {
-						// 	//DEBUG
-						// 	visible: searchBar.text.length > 0
-						// 	Layout.maximumWidth: parent.width
-						// 	Layout.fillWidth: true
-						// 	Text {
-						// 		text: searchBar.text
-						// 		maximumLineCount: 1
-						// 		elide: Text.ElideRight
-						// 	}
-						// 	Item {
-						// 		Layout.fillWidth: true
-						// 	}
-						// 	Button {
-						// 		implicitWidth: 30 * DefaultStyle.dp
-						// 		implicitHeight: 30 * DefaultStyle.dp
-						// 		background: Item {
-						// 			visible: false
-						// 		}
-						// 		icon.source: AppIcons.phone
-						// 		width: 20 * DefaultStyle.dp
-						// 		height: 20 * DefaultStyle.dp
-						// 		onClicked: {
-						// 			mainItem.callButtonPressed(searchBar.text)
-						// 		}
-						// 	}
-					// }
 					ColumnLayout {
+						spacing: 18 * DefaultStyle.dp
 						Text {
 							text: qsTr("All contacts")
 							font {
@@ -247,18 +222,10 @@ Item {
 									}
 								}
 							}
-							// onContactSelected: (contact) => {
-							// 	if (contact.core.allAddresses.length > 1) {
-							// 		startCallPopup.contact = contact
-							// 		startCallPopup.open()
-
-							// 	} else {
-							// 		mainItem.callButtonPressed(contact.core.defaultAddress)
-							// 	}
-							// }
 						}
 					}
 					ColumnLayout {
+						spacing: 18 * DefaultStyle.dp
 						Text {
 							text: qsTr("Suggestions")
 							font {
@@ -295,20 +262,6 @@ Item {
 									}
 								}
 							}
-							// onContactSelected: (contact) => {
-							// 	if (contact.core.allAddresses.length > 1) {
-							// 		startCallPopup.contact = contact
-							// 		startCallPopup.open()
-
-							// 	} else {
-							// 		var addressToCall = contact.core.defaultAddress.length === 0 
-							// 			? contact.core.phoneNumbers.length === 0
-							// 				? ""
-							// 				: contact.core.phoneNumbers[0].address
-							// 			: contact.core.defaultAddress
-							// 		if (addressToCall.length != 0) mainItem.callButtonPressed(addressToCall)
-							// 	}
-							// }
 						}
 					}
 					Item {

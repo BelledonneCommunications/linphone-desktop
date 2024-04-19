@@ -64,8 +64,6 @@ public:
 	                                   const QHash<QString, QString> &headers = {});
 	Q_INVOKABLE static void openCallsWindow(CallGui *call);
 	Q_INVOKABLE static void setupConference(ConferenceInfoGui *confGui);
-	Q_INVOKABLE static void setCallsWindowCall(CallGui *call);
-	Q_INVOKABLE static void setCallsWindowProperty(const QString &id, const QVariant &property);
 	Q_INVOKABLE static QQuickWindow *getMainWindow();
 	Q_INVOKABLE static void showInformationPopup(const QString &title,
 	                                             const QString &description,
@@ -104,6 +102,7 @@ public:
 	Q_INVOKABLE static QString findAvatarByAddress(const QString &address);
 	static QString generateSavedFilename(const QString &from, const QString &to);
 	Q_INVOKABLE static bool isMe(const QString &address);
+	Q_INVOKABLE static bool isLocal(const QString &address);
 	static QString getCountryName(const QLocale::Territory &p_country);
 
 	static QString getApplicationProduct();

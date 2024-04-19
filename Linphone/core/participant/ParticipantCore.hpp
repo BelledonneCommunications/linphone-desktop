@@ -38,7 +38,6 @@ class ParticipantModel;
 class ParticipantCore : public QObject, public AbstractObject {
 	Q_OBJECT
 
-	// Q_PROPERTY(FriendCore *friendCore READ getFriendCore CONSTANT)
 	Q_PROPERTY(QString sipAddress READ getSipAddress WRITE setSipAddress NOTIFY sipAddressChanged)
 	Q_PROPERTY(QString displayName READ getDisplayName WRITE setDisplayName NOTIFY displayNameChanged)
 	Q_PROPERTY(bool isAdmin READ isAdmin WRITE setIsAdmin NOTIFY isAdminChanged)
@@ -49,8 +48,6 @@ class ParticipantCore : public QObject, public AbstractObject {
 	Q_PROPERTY(int deviceCount READ getDeviceCount NOTIFY deviceCountChanged)
 	Q_PROPERTY(QList<QVariant> devices READ getParticipantDevices NOTIFY deviceChanged)
 
-	// Q_PROPERTY(bool inviting READ getInviting NOTIFY invitingChanged)
-
 public:
 	static QSharedPointer<ParticipantCore> create(const std::shared_ptr<linphone::Participant> &participant);
 	ParticipantCore(const std::shared_ptr<linphone::Participant> &participant);
@@ -58,7 +55,6 @@ public:
 
 	void setSelf(QSharedPointer<ParticipantCore> me);
 
-	// FriendCore *getFriendCore() const;
 	QString getDisplayName() const;
 	QString getSipAddress() const;
 	QDateTime getCreationTime() const;
@@ -76,7 +72,6 @@ public:
 	void setIsFocus(const bool &focus);
 	void setSecurityLevel(int level);
 
-	// Q_INVOKABLE ParticipantDeviceProxy *getProxyDevices();
 	QList<QVariant> getParticipantDevices();
 
 public slots:
@@ -106,7 +101,6 @@ private:
 	std::shared_ptr<ParticipantModel> mParticipantModel;
 	QSharedPointer<SafeConnection<ParticipantCore, ParticipantModel>> mParticipantConnection;
 
-	// QSharedPointer<ParticipantDeviceList> mParticipantDevices;
 	QList<QVariant> mParticipantDevices;
 
 	QString mDisplayName;

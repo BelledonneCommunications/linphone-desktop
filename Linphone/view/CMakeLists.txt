@@ -9,7 +9,6 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Layout/Call/CallLayout.qml
 	view/Layout/Call/GridLayout.qml
 	
-	view/Layout/Conference/IncallGrid.qml
 	view/Layout/Contact/ContactLayout.qml
 	view/Layout/Meeting/AddParticipantsLayout.qml
 

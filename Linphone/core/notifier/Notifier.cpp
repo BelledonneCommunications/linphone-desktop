@@ -172,7 +172,7 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 			    engine, &QQmlApplicationEngine::objectCreated, this,
 			    [this, url, screen, engine](QObject *obj, const QUrl &objUrl) {
 				    if (!obj && url == objUrl) {
-					    qCritical() << "[App] Notifier.qml couldn't be load.";
+					    lCritical() << "[App] Notifier.qml couldn't be load.";
 					    engine->deleteLater();
 					    exit(-1);
 				    } else {
@@ -198,7 +198,7 @@ QObject *Notifier::createNotification(Notifier::NotificationType type, QVariantM
 			    Qt::QueuedConnection);
 			engine->load(url);
 		}
-		qInfo() << QStringLiteral("Create notifications:") << wrapperItem;
+		lInfo() << QStringLiteral("Create notifications:") << wrapperItem;
 	}
 
 	mMutex->unlock();
@@ -249,7 +249,7 @@ void Notifier::deleteNotification(QVariant notification) {
 		return;
 	}
 
-	qInfo() << QStringLiteral("Delete notification:") << instance;
+	lInfo() << QStringLiteral("Delete notification:") << instance;
 
 	instance->setProperty("__valid", true);
 	instance->property(NotificationPropertyTimer).value<QTimer *>()->stop();
@@ -291,7 +291,7 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 		QObject::connect(
 		    gui->getCore(), &CallCore::statusChanged, notification,
 		    [this, notification](LinphoneEnums::CallStatus status) {
-			    qInfo() << log().arg("Delete notification on call status : %1").arg(LinphoneEnums::toString(status));
+			    lInfo() << log().arg("Delete notification on call status : %1").arg(LinphoneEnums::toString(status));
 			    deleteNotification(QVariant::fromValue(notification));
 		    });
 		QObject::connect(gui->getCore(), &CallCore::destroyed, notification,

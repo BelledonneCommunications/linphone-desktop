@@ -56,11 +56,6 @@ public:
 	QString getSubject() const;
 	QDateTime getStartDate() const;
 	Q_INVOKABLE qint64 getElapsedSeconds() const;
-	// Q_INVOKABLE ParticipantModel *getLocalParticipant() const;
-	// ParticipantListModel *getParticipantListModel() const;
-	// std::list<std::shared_ptr<linphone::Participant>>
-	// getParticipantList() const; // SDK exclude me. We want to get ALL participants.
-	// void getParticipantDeviceList() const;
 	int getParticipantDeviceCount() const;
 	ParticipantDeviceCore *getActiveSpeaker() const;
 	ParticipantDeviceGui *getActiveSpeakerGui() const;

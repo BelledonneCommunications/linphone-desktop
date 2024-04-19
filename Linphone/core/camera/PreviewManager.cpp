@@ -119,7 +119,7 @@ void PreviewManager::unsubscribe(QObject *sender) {
 
 void PreviewManager::activate() {
 	App::postModelBlock([]() {
-		qDebug() << "[PreviewManager] Activation";
+		lDebug() << "[PreviewManager] Activation";
 		CoreModel::getInstance()->getCore()->enableVideoPreview(true);
 		CoreModel::getInstance()->getCore()->iterate();
 	});
@@ -127,7 +127,7 @@ void PreviewManager::activate() {
 
 void PreviewManager::deactivate() {
 	App::postModelBlock([]() {
-		qDebug() << "[PreviewManager] Deactivation";
+		lDebug() << "[PreviewManager] Deactivation";
 		CoreModel::getInstance()->getCore()->enableVideoPreview(false);
 		CoreModel::getInstance()->getCore()->iterate();
 	});

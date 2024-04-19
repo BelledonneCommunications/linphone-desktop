@@ -32,17 +32,17 @@ class ConferenceInfoCore;
 class ConferenceInfoList : public ListProxy, public AbstractObject {
 	Q_OBJECT
 public:
+	// Create a ConferenceInfoList and make connections to List.
 	static QSharedPointer<ConferenceInfoList> create();
-	// Create a ConferenceInfoCore and make connections to List.
 	ConferenceInfoList(QObject *parent = Q_NULLPTR);
 	~ConferenceInfoList();
 
 	void setSelf(QSharedPointer<ConferenceInfoList> me);
-	
-	bool haveCurrentDate()const;
+
+	bool haveCurrentDate() const;
 	void setHaveCurrentDate(bool have);
 	void updateHaveCurrentDate();
-	
+
 	int getCurrentDateIndex() const;
 	void setCurrentDateIndex(int index);
 
@@ -54,7 +54,7 @@ public:
 	QHash<int, QByteArray> roleNames() const override;
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-	static int sort(QList<QSharedPointer<ConferenceInfoCore>> &listToSort);	// return the index of null item.
+	static int sort(QList<QSharedPointer<ConferenceInfoCore>> &listToSort); // return the index of null item.
 
 signals:
 	void lUpdate();

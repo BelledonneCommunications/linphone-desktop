@@ -32,7 +32,7 @@ class ParticipantDeviceGui;
 class ParticipantDeviceProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(CallGui *currentCall READ getCurrentCall WRITE setCurrentCall NOTIFY currentCallChanged)
-	Q_PROPERTY(ParticipantDeviceGui *me READ getMe WRITE setMe NOTIFY meChanged)
+	Q_PROPERTY(ParticipantDeviceGui *me READ getMe NOTIFY meChanged)
 
 public:
 	DECLARE_GUI_OBJECT
@@ -43,7 +43,6 @@ public:
 	void setCurrentCall(CallGui *callGui);
 
 	ParticipantDeviceGui *getMe() const;
-	void setMe(ParticipantDeviceGui *me);
 
 protected:
 	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;

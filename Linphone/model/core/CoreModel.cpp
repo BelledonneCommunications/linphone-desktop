@@ -65,7 +65,7 @@ void CoreModel::start() {
 	mIterateTimer->setInterval(30);
 	connect(mIterateTimer, &QTimer::timeout, [this]() {
 		static int iterateCount = 0;
-		if (iterateCount != 0) qCritical() << log().arg("Multi Iterate ! ");
+		if (iterateCount != 0) lCritical() << log().arg("Multi Iterate ! ");
 		++iterateCount;
 		mCore->iterate();
 		--iterateCount;
@@ -92,6 +92,7 @@ void CoreModel::start() {
 	mCore->start();
 	setPathAfterStart();
 	mCore->enableFriendListSubscription(true);
+	// TODO : get this from settings
 	auto videoPolicy = mCore->getVideoActivationPolicy()->clone();
 	videoPolicy->setAutomaticallyAccept(true);
 	videoPolicy->setAutomaticallyInitiate(false);
@@ -124,7 +125,7 @@ void CoreModel::setConfigPath(QString path) {
 //-------------------------------------------------------------------------------
 #define SET_FACTORY_PATH(TYPE, PATH)                                                                                   \
 	do {                                                                                                               \
-		qInfo() << QStringLiteral("[CoreModel] Set `%1` factory path: `%2`").arg(#TYPE).arg(PATH);                     \
+		lInfo() << QStringLiteral("[CoreModel] Set `%1` factory path: `%2`").arg(#TYPE).arg(PATH);                     \
 		factory->set##TYPE##Dir(Utils::appStringToCoreString(PATH));                                                   \
 	} while (0);
 
@@ -147,16 +148,16 @@ void CoreModel::setPathAfterStart() {
 	if (mCore->getZrtpSecretsFile().empty() ||
 	    !Paths::filePathExists(Utils::coreStringToAppString(mCore->getZrtpSecretsFile()), true))
 		mCore->setZrtpSecretsFile(Utils::appStringToCoreString(Paths::getZrtpSecretsFilePath()));
-	qInfo() << "[CoreModel] Using ZrtpSecrets path : " << QString::fromStdString(mCore->getZrtpSecretsFile());
+	lInfo() << "[CoreModel] Using ZrtpSecrets path : " << QString::fromStdString(mCore->getZrtpSecretsFile());
 	// Use application path if Linphone default is not available
 	if (mCore->getUserCertificatesPath().empty() ||
 	    !Paths::filePathExists(Utils::coreStringToAppString(mCore->getUserCertificatesPath()), true))
 		mCore->setUserCertificatesPath(Utils::appStringToCoreString(Paths::getUserCertificatesDirPath()));
-	qInfo() << "[CoreModel] Using UserCertificate path : " << QString::fromStdString(mCore->getUserCertificatesPath());
+	lInfo() << "[CoreModel] Using UserCertificate path : " << QString::fromStdString(mCore->getUserCertificatesPath());
 	// Use application path if Linphone default is not available
 	if (mCore->getRootCa().empty() || !Paths::filePathExists(Utils::coreStringToAppString(mCore->getRootCa())))
 		mCore->setRootCa(Utils::appStringToCoreString(Paths::getRootCaFilePath()));
-	qInfo() << "[CoreModel] Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
+	lInfo() << "[CoreModel] Using RootCa path : " << QString::fromStdString(mCore->getRootCa());
 }
 
 //---------------------------------------------------------------------------------------------------------------------------

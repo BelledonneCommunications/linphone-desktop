@@ -135,12 +135,10 @@ Item {
 
 	RowLayout {
 		anchors.fill: parent
-		//anchors.topMargin: 10 * DefaultStyle.dp
 		spacing: 0
 		ColumnLayout {
 			id: leftPanel
 			Layout.preferredWidth: 404 * DefaultStyle.dp
-			Layout.fillHeight: true
 			Layout.fillWidth:false
 			spacing:0
 		}
@@ -161,12 +159,8 @@ Item {
 				anchors.fill: parent
 				ColumnLayout {
 					id: defaultItem
-					Layout.fillWidth: true
-					Layout.fillHeight: true
 					
 					RowLayout {
-						Layout.fillHeight: true
-						Layout.fillWidth: true
 						Layout.alignment: Qt.AlignHCenter
 						Item {
 							Layout.fillWidth: true

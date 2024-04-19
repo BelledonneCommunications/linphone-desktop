@@ -56,21 +56,5 @@ ListView {
 				Layout.fillWidth: true
 			}
 		}
-		
-		// MouseArea {
-		// 	id: mouseArea
-		// 	hoverEnabled: mainItem.hoverEnabled
-		// 	anchors.fill: participantDelegate
-		// 	height: mainItem.height
-		// 	Rectangle {
-		// 		anchors.fill: mouseArea
-		// 		opacity: 0.7
-		// 		color: DefaultStyle.main2_100
-		// 		visible: mouseArea.containsMouse || (!mainItem.multiSelectionEnabled && mainItem.currentIndex === index)
-		// 	}
-		// 	onClicked: {
-		// 		mainItem.currentIndex = index
-		// 	}
-		// }
 	}
 }

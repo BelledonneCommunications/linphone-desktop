@@ -78,6 +78,7 @@ ListView {
 				spacing: 26 * DefaultStyle.dp
 				Switch {
 					Component.onCompleted: if (modelData.core.isAdmin) toggle()
+					//TODO : Utilser checked et onToggled (pas compris)
 					onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
 				}
 				Button {
@@ -101,20 +102,20 @@ ListView {
 		width: mainItem.width
 		Button {
 			anchors.centerIn: parent
+			leftPadding: 16 * DefaultStyle.dp
+			rightPadding: 16 * DefaultStyle.dp
+			topPadding: 10 * DefaultStyle.dp
+			bottomPadding: 10 * DefaultStyle.dp
 			height: 40 * DefaultStyle.dp
 			icon.source: AppIcons.plusCircle
 			icon.width: 16 * DefaultStyle.dp
 			icon.height: 16 * DefaultStyle.dp
 			contentImageColor: DefaultStyle.main1_500_main
-			text: qsTr("Ajouter des participants")
 			color: DefaultStyle.main1_100
+			text: qsTr("Ajouter des participants")
 			textColor: DefaultStyle.main1_500_main
 			textSize: 15 * DefaultStyle.dp
 			textWeight: 600 * DefaultStyle.dp
-			rightPadding: 16 * DefaultStyle.dp
-			leftPadding: 16 * DefaultStyle.dp
-			topPadding: 10 * DefaultStyle.dp
-			bottomPadding: 10 * DefaultStyle.dp
 			onClicked: mainItem.addParticipantRequested()
 		}
 	}

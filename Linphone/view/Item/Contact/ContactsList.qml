@@ -147,11 +147,9 @@ ListView {
 		RowLayout {
 			id: actionsRow
 			z: 1
-			// visible: mainItem.actionLayoutVisible || friendPopup.visible
-			// anchors.fill: parent
 			anchors.right: parent.right
-			// anchors.rightMargin: 10 * DefaultStyle.dp
 			anchors.verticalCenter: parent.verticalCenter
+			spacing: 10 * DefaultStyle.dp // TODO : change when mockup ready
 			RowLayout{
 				visible: mainItem.actionLayoutVisible
 				spacing: 10 * DefaultStyle.dp
@@ -260,15 +258,6 @@ ListView {
 			}
 			onClicked: {
 				mainItem.currentIndex = index
-				// mainItem.contactSelected(modelData)
-				// if (mainItem.multiSelectionEnabled && mainItem.confInfoGui) {
-				// 	var indexInSelection = mainItem.confInfoGui.core.getParticipantIndex(modelData.core.defaultAddress)
-				// 	if (indexInSelection == -1) {
-				// 		mainItem.confInfoGui.core.addParticipant(modelData.core.defaultAddress)
-				// 	} else {
-				// 		mainItem.confInfoGui.core.removeParticipant(indexInSelection)
-				// 	}
-				// }
 				if (mainItem.multiSelectionEnabled) {
 					var indexInSelection = mainItem.selectedContacts.indexOf(modelData.core.defaultAddress)
 					if (indexInSelection == -1) {

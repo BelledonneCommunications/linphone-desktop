@@ -62,9 +62,6 @@ public:
 	Q_PROPERTY(LinphoneEnums::ConferenceInfoState state READ getConferenceInfoState NOTIFY conferenceInfoStateChanged)
 	Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState schedulerState READ getConferenceSchedulerState NOTIFY
 	               conferenceSchedulerStateChanged)
-	// Q_PROPERTY(LinphoneEnums::ConferenceSchedulerState conferenceSchedulerState READ getConferenceSchedulerState
-	// NOTIFY
-	//    conferenceSchedulerStateChanged)
 
 	static QSharedPointer<ConferenceInfoCore> create(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo);
 	ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo, QObject *parent = nullptr);
@@ -94,13 +91,11 @@ public:
 	void setIsEnded(bool ended);
 	bool inviteEnabled() const;
 	QVariantList getParticipants() const;
-	// Q_INVOKABLE QVariantList getAllParticipants() const;
 	int getParticipantCount() const;
 	TimeZoneModel *getTimeZoneModel() const;
 	// QString getIcalendarString() const;
 	LinphoneEnums::ConferenceInfoState getConferenceInfoState() const;
 	LinphoneEnums::ConferenceSchedulerState getConferenceSchedulerState() const;
-	// LinphoneEnums::ConferenceSchedulerState getConferenceSchedulerState() const;
 	QString toStartEndDateString();
 
 	void setDateTime(const QDateTime &date);
@@ -133,12 +128,6 @@ public:
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
 
-	// Tools
-	// Q_INVOKABLE void resetConferenceInfo(); // Recreate a new conference info from factory
-
-	// SCHEDULER
-
-	// virtual void onConferenceSchedulerStateChanged(linphone::ConferenceScheduler::State state);
 	virtual void onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations);
 
 	Q_INVOKABLE bool isAllDayConf() const;
@@ -160,12 +149,10 @@ signals:
 	void conferenceInfoStateChanged();
 	void conferenceSchedulerStateChanged();
 	void timeZoneModelChanged();
-	// void conferenceSchedulerStateChanged();
 
 	void invitationsSent();
 	void removed();
 
-	// void lCreateConference(const int &securityLevel);
 	void lCancelConferenceInfo();
 	void lDeleteConferenceInfo(); // Remove completly this conference info from DB
 
@@ -191,11 +178,7 @@ private:
 	bool mHaveModel = false;
 	bool mIsScheduled;
 	bool mIsEnded = false;
-	QTimer mCheckEndTimer;
 	bool mInviteEnabled = true;
-	// bool mRemoveRequested = false; // true if user has request its deletion from DB
-	// linphone::ConferenceScheduler::State mLastConferenceSchedulerState =
-	// linphone::ConferenceScheduler::State::Idle; // Workaround for missing getter in scheduler.
 	DECLARE_ABSTRACT_OBJECT
 };
 

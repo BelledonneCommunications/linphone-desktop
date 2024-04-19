@@ -51,6 +51,7 @@ Control.Page {
 			id: headerStack
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
+				spacing: 10 * DefaultStyle.dp
 				Text {
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
@@ -82,7 +83,7 @@ Control.Page {
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
-				spacing: 5 * DefaultStyle.dp
+				spacing: 10 * DefaultStyle.dp
 				Button {
 					background: Item{}
 					icon.source: AppIcons.leftArrow
@@ -92,12 +93,10 @@ Control.Page {
 					onClicked: mainItem.returnRequested()
 				}
 				ColumnLayout {
-					Layout.fillWidth: true
-					Layout.fillHeight: true
+					spacing: 0
 					Text {
-					Layout.alignment: Qt.AlignVCenter
-					verticalAlignment: Text.AlignVCenter
-
+						Layout.alignment: Qt.AlignVCenter
+						verticalAlignment: Text.AlignVCenter
 						text: mainItem.headerTitleText
 						color: DefaultStyle.main1_500_main
 						font {

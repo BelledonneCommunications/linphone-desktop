@@ -41,6 +41,7 @@ ConferenceSchedulerModel::~ConferenceSchedulerModel() {
 }
 
 QString ConferenceSchedulerModel::getUri() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto uriAddr = mMonitor->getInfo() ? mMonitor->getInfo()->getUri() : nullptr;
 	if (uriAddr) {
 		return Utils::coreStringToAppString(uriAddr->asString());
@@ -48,10 +49,12 @@ QString ConferenceSchedulerModel::getUri() {
 }
 
 void ConferenceSchedulerModel::setInfo(const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setInfo(confInfo);
 }
 
 void ConferenceSchedulerModel::cancelConference(const std::shared_ptr<linphone::ConferenceInfo> &confInfo) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->cancelConference(confInfo);
 }
 

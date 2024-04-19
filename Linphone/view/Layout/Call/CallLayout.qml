@@ -11,8 +11,6 @@ import SettingsCpp 1.0
 
 Item {
 	id: mainItem
-	anchors.fill: parent
-	
 	property CallGui call
 	property bool callTerminatedByUser: false
 	readonly property var callState: call && call.core.state || undefined
@@ -84,7 +82,7 @@ Item {
 		}
 	}
 }
-
+// TODO : waitingForParticipant
 		// ColumnLayout {
 		// 	id: waitingForParticipant
 		// 	Text {

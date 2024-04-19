@@ -24,6 +24,8 @@
 #include <QDateTime>
 #include <QPainter>
 
+#include "tool/Utils.hpp"
+
 FPSCounter::FPSCounter(QQuickItem *parent) : QQuickPaintedItem(parent), _currentFPS(0), _cacheCount(0) {
 	_times.clear();
 	setFlag(QQuickItem::ItemHasContents);
@@ -42,7 +44,7 @@ void FPSCounter::recalculateFPS() {
 
 	int currentCount = _times.length();
 	_currentFPS = (currentCount + _cacheCount) / 2;
-	qDebug() << _currentFPS;
+	lDebug() << _currentFPS;
 
 	if (currentCount != _cacheCount) fpsChanged(_currentFPS);
 
@@ -55,7 +57,7 @@ int FPSCounter::fps() const {
 
 void FPSCounter::paint(QPainter *painter) {
 	recalculateFPS();
-	// qDebug() << __FUNCTION__;
+	// lDebug()<< __FUNCTION__;
 	QBrush brush(Qt::yellow);
 
 	painter->setBrush(brush);

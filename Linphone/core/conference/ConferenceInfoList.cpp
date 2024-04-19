@@ -73,40 +73,22 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			});
 		});
 	});
-	// mCoreModelConnection->makeConnectToModel(
-	//     &CoreModel::conferenceInfoReceived,
-	//     [this](const std::shared_ptr<linphone::Core> core,
-	//            const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
-	// 	    auto realConferenceInfo = CoreModel::getInstance()->getCore()->findConferenceInformationFromUri(
-	// 	        conferenceInfo->getUri()->clone());
-	// 	    // auto realConferenceInfo = ConferenceInfoModel::findConferenceInfo(conferenceInfo);
-	// 	    if (realConferenceInfo) {
-	// 		    auto model = get(realConferenceInfo);
-	// 		    if (model) {
-	// 			    // model->setConferenceInfo(realConferenceInfo);
-	// 		    } else {
-	// 			    auto confInfo = build(realConferenceInfo);
-	// 			    if (confInfo) add(confInfo);
-	// 		    }
-	// 	    } else
-	// 		    qWarning() << "No ConferenceInfo have beend found for " << conferenceInfo->getUri()->asString().c_str();
-	//     });
 
 	mCoreModelConnection->makeConnectToModel(&CoreModel::defaultAccountChanged, &ConferenceInfoList::lUpdate);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::conferenceInfoReceived, &ConferenceInfoList::lUpdate);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::conferenceStateChanged, [this] {
-		qDebug() << "list: conf state changed";
+		lDebug() << "list: conf state changed";
 		lUpdate();
 	});
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::callCreated, [this](const std::shared_ptr<linphone::Call> &call) {
-		    qDebug() << "call created" << Utils::coreStringToAppString(call->getRemoteAddress()->asString());
+		    lDebug() << "call created" << Utils::coreStringToAppString(call->getRemoteAddress()->asString());
 	    });
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::conferenceInfoReceived,
 	    [this](const std::shared_ptr<linphone::Core> &core,
 	           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
-		    qDebug() << "info received" << conferenceInfo->getOrganizer()->asStringUriOnly()
+		    lDebug() << "info received" << conferenceInfo->getOrganizer()->asStringUriOnly()
 		             << conferenceInfo->getSubject();
 	    });
 	emit lUpdate();
@@ -164,14 +146,11 @@ ConferenceInfoList::get(std::shared_ptr<linphone::ConferenceInfo> conferenceInfo
 QSharedPointer<ConferenceInfoCore>
 ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) const {
 	auto me = CoreModel::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
-	// qDebug() << "[CONFERENCEINFOLIST] looking for me " << me->asStringUriOnly();
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> participants = conferenceInfo->getParticipantInfos();
 	bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);
 	if (!haveMe)
 		haveMe = (std::find_if(participants.begin(), participants.end(),
 		                       [me](const std::shared_ptr<linphone::ParticipantInfo> &p) {
-			                       //    qDebug()
-			                       //    << "[CONFERENCEINFOLIST] participant " << p->getAddress()->asStringUriOnly();
 			                       return me->weakEqual(p->getAddress());
 		                       }) != participants.end());
 	if (haveMe) {
@@ -182,10 +161,10 @@ ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &confe
 }
 
 void ConferenceInfoList::remove(const int &row) {
-	// beginRemoveRows(QModelIndex(), row, row);
+	// List is modified asynchronously
+	// so no need to specify the begin/endRemoveRows
 	auto item = mList[row].objectCast<ConferenceInfoCore>();
 	if (item) emit item->lDeleteConferenceInfo();
-	// endRemoveRows();
 }
 
 QHash<int, QByteArray> ConferenceInfoList::roleNames() const {
@@ -227,13 +206,6 @@ int ConferenceInfoList::sort(QList<QSharedPointer<ConferenceInfoCore>> &listToSo
 			          return l->getDateTimeUtc() < r->getDateTimeUtc();
 		          }
 	          });
-	/*
-	int count = 0;
-	for(auto item : listToSort){
-	    auto l = item.objectCast<ConferenceInfoCore>();
-	    qDebug() << count ++ << (l ? l->getDateTimeUtc() : QDateTime::currentDateTimeUtc());
-	}*/
 	auto it = std::find(listToSort.begin(), listToSort.end(), nullptr);
-	// qDebug() << it - listToSort.begin();
 	return it == listToSort.end() ? -1 : it - listToSort.begin();
 }

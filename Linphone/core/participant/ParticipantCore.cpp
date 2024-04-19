@@ -39,6 +39,7 @@ QSharedPointer<ParticipantCore> ParticipantCore::create(const std::shared_ptr<li
 }
 
 ParticipantCore::ParticipantCore(const std::shared_ptr<linphone::Participant> &participant) : QObject(nullptr) {
+	mustBeInLinphoneThread(getClassName());
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	mParticipantModel = Utils::makeQObject_ptr<ParticipantModel>(participant);
 	if (participant) {
@@ -73,13 +74,7 @@ void ParticipantCore::setSelf(QSharedPointer<ParticipantCore> me) {
 	mParticipantConnection->makeConnectToCore(&ParticipantCore::lStartInvitation, [this](const int &secs) {
 		QTimer::singleShot(secs * 1000, this, &ParticipantCore::onEndOfInvitation);
 	});
-	// mParticipantConnection->makeConnectToModel(&ParticipantModel::)
 }
-
-// FriendCore *ParticipantCore::getFriendCore() const {
-// 	return nullptr;
-// 	// return CoreModel::getInstance()->getContactsListModel()->findContactModelFromSipAddress(getSipAddress()).get();
-// }
 
 int ParticipantCore::getSecurityLevel() const {
 	return mSecurityLevel;
@@ -159,12 +154,6 @@ void ParticipantCore::onSecurityLevelChanged() {
 void ParticipantCore::onDeviceSecurityLevelChanged(std::shared_ptr<const linphone::Address> device) {
 	emit deviceSecurityLevelChanged(device);
 }
-
-// ParticipantDeviceProxyModel *ParticipantCore::getProxyDevices() {
-// 	ParticipantDeviceProxyModel *devices = new ParticipantDeviceProxyModel();
-// 	devices->setParticipant(this);
-// 	return devices;
-// }
 
 QList<QVariant> ParticipantCore::getParticipantDevices() {
 	return mParticipantDevices;

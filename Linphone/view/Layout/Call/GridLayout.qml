@@ -12,6 +12,7 @@ Mosaic {
 	property bool videoEnabled: true
 	property int participantCount: gridModel.count
 	
+	margins: 0
 	// On grid view, we limit the quality if there are enough participants// The vga mode has been activated from the factory rc
 	//onParticipantCountChanged: participantCount > ConstantsCpp.maxMosaicParticipants ? SettingsModel.setLimitedMosaicQuality() : SettingsModel.setHighMosaicQuality()
 	delegateModel: DelegateModel{
@@ -29,8 +30,8 @@ Mosaic {
 				if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
 			}
 			
-			height: grid.cellHeight - 10
-			width: grid.cellWidth - 10
+			height: grid.cellHeight - 10 * DefaultStyle.dp
+			width: grid.cellWidth - 10 * DefaultStyle.dp
 			Sticker {
 				id: cameraView
 				previewEnabled: index == 0
@@ -42,25 +43,6 @@ Mosaic {
 				participantDevice: avatarCell.currentDevice
 				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.peerAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
-			/*
-			Sticker{
-				id: cameraView
-				anchors.fill: parent
-				
-				cameraQmlName: 'G_'+index
-				callModel: index >= 0 ? allDevices.callModel : null	// do this before to prioritize changing call on remove
-				deactivateCamera: index <0 || !grid.cameraEnabled || grid.callModel.pausedByUser
-				currentDevice: gridModel.participantDevices.getAt(index)
-				
-				isCameraFromDevice: true
-				isPaused: !isPreview && avatarCell.currentDevice && avatarCell.currentDevice.isPaused
-				showCloseButton: false
-				showCustomButton:  false
-				avatarStickerBackgroundColor: isPreview? IncallStyle.container.avatar.stickerPreviewBackgroundColor.color : IncallStyle.container.avatar.stickerBackgroundColor.color
-				avatarBackgroundColor: IncallStyle.container.avatar.backgroundColor.color
-				
-				//onCloseRequested: participantDevices.showMe = false
-			}*/
 		}
 	}
 }

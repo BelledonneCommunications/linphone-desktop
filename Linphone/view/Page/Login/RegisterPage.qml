@@ -168,6 +168,7 @@ LoginLayout {
 				ColumnLayout {
 					spacing: 18 * DefaultStyle.dp
 					RowLayout {
+						spacing: 10 * DefaultStyle.dp
 						CheckBox {
 						}
 						Text {
@@ -179,6 +180,7 @@ LoginLayout {
 						}
 					}
 					RowLayout {
+						spacing: 10 * DefaultStyle.dp
 						CheckBox {
 							id: termsCheckBox
 						}

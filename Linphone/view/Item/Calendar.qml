@@ -7,6 +7,7 @@ import Linphone
 import ConstantsCpp 1.0
 import UtilsCpp 1.0
 
+// TODO : spacing
 ListView {
 	id: mainItem
 	// width: 400 * DefaultStyle.dp
@@ -16,8 +17,6 @@ ListView {
 	clip: true
 	property int maxYears: 5
 	readonly property var currentDate: new Date()
-	Layout.fillWidth: true
-	Layout.fillHeight: true
 	highlightMoveDuration: 100
 
 	property var selectedDate
@@ -25,6 +24,7 @@ ListView {
 	model: Control.CalendarModel {
 		id: calendarModel
 		from: new Date()
+		// TODO : dynamically add 5 years
 		to: new Date(2025, 12, 31)
 	}
 	
@@ -34,6 +34,7 @@ ListView {
 		RowLayout {
 			Layout.fillWidth: true
 			Text {
+				// TODO (high prio): don't use javascript, C++
 				text: new Date(model.year, model.month, 15).toLocaleString(Qt.locale(ConstantsCpp.DefaultLocale), 'MMMM yyyy')// 15 because of timezones that can change the date for localeString
 				font {
 					pixelSize: 14 * DefaultStyle.dp

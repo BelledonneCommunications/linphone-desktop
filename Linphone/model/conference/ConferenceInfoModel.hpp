@@ -80,9 +80,6 @@ private:
 	std::shared_ptr<ConferenceSchedulerModel> mConferenceSchedulerModel = nullptr;
 	bool mInviteEnabled = true;
 	DECLARE_ABSTRACT_OBJECT
-
-	// LINPHONE
-	//--------------------------------------------------------------------------------
 };
 
 #endif

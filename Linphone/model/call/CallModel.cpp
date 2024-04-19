@@ -30,7 +30,7 @@ DEFINE_ABSTRACT_OBJECT(CallModel)
 
 CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *parent)
     : ::Listener<linphone::Call, linphone::CallListener>(call, parent) {
-	qDebug() << "[CallModel] new" << this;
+	lDebug() << "[CallModel] new" << this;
 	mustBeInLinphoneThread(getClassName());
 	mDurationTimer.setInterval(1000);
 	mDurationTimer.setSingleShot(false);
@@ -297,6 +297,7 @@ void CallModel::changeConferenceVideoLayout(LinphoneEnums::ConferenceLayout layo
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto coreManager = CoreModel::getInstance();
 
+	// TODO : change layout for grid/active speaker in settings
 	//	if (layout == LinphoneEnums::ConferenceLayout::Grid)
 	//		coreManager->getSettingsModel()->setCameraMode(coreManager->getSettingsModel()->getGridCameraMode());
 	//	else
@@ -322,7 +323,9 @@ void CallModel::updateConferenceVideoLayout() {
 		//				settings->setCameraMode(settings->getGridCameraMode());
 		//			else settings->setCameraMode(settings->getActiveSpeakerCameraMode());
 		//		} else settings->setCameraMode(settings->getCallCameraMode());
-		qDebug() << "Changing layout from " << mConferenceVideoLayout << " into " << newLayout;
+
+		// TODO : change layout for grid/active speaker in settings
+		lDebug() << "Changing layout from " << mConferenceVideoLayout << " into " << newLayout;
 		mConferenceVideoLayout = newLayout;
 		emit conferenceVideoLayoutChanged(mConferenceVideoLayout);
 	}
@@ -359,7 +362,7 @@ void CallModel::onInfoMessageReceived(const std::shared_ptr<linphone::Call> &cal
 void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
                                linphone::Call::State state,
                                const std::string &message) {
-	qDebug() << "CallModel::onStateChanged" << (int)state;
+	lDebug() << "CallModel::onStateChanged" << (int)state;
 	if (state == linphone::Call::State::StreamsRunning) {
 		// After UpdatedByRemote, video direction could be changed.
 		auto params = call->getRemoteParams();
@@ -376,7 +379,7 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 }
 
 void CallModel::onStatusChanged(const std::shared_ptr<linphone::Call> &call, linphone::Call::Status status) {
-	qDebug() << "CallModel::onStatusChanged" << (int)status;
+	lDebug() << "CallModel::onStatusChanged" << (int)status;
 	emit statusChanged(status);
 }
 

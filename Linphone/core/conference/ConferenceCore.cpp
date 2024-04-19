@@ -58,9 +58,6 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 		    auto device = ParticipantDeviceCore::create(participantDevice);
 		    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeaker(device); });
 	    });
-	// mCallModelConnection->makeConnectToCore(&CallCore::lSetMicrophoneMuted, [this](bool isMuted) {
-	//	mCallModelConnection->invokeToModel([this, isMuted]() { mCallModel->setMicrophoneMuted(isMuted); });
-	// });
 }
 
 bool ConferenceCore::updateLocalParticipant() { // true if changed
@@ -77,10 +74,7 @@ QDateTime ConferenceCore::getStartDate() const {
 Q_INVOKABLE qint64 ConferenceCore::getElapsedSeconds() const {
 	return 0;
 }
-// Q_INVOKABLE ParticipantModel *getLocalParticipant() const;
-// ParticipantListModel *getParticipantListModel() const;
-// std::list<std::shared_ptr<linphone::Participant>>
-// getParticipantList() const; // SDK exclude me. We want to get ALL participants.
+
 int ConferenceCore::getParticipantDeviceCount() const {
 	return mParticipantDeviceCount + 1;
 }
@@ -112,7 +106,7 @@ ParticipantGui *ConferenceCore::getMeGui() const {
 void ConferenceCore::setActiveSpeaker(const QSharedPointer<ParticipantDeviceCore> &device) {
 	if (mActiveSpeaker != device) {
 		mActiveSpeaker = device;
-		qDebug() << "Changing active speaker to " << device->getAddress();
+		lDebug() << "Changing active speaker to " << device->getAddress();
 		emit activeSpeakerChanged();
 	}
 }

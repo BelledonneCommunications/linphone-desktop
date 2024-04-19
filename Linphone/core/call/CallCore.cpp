@@ -43,7 +43,7 @@ QSharedPointer<CallCore> CallCore::create(const std::shared_ptr<linphone::Call> 
 }
 
 CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullptr) {
-	qDebug() << "[CallCore] new" << this;
+	lDebug() << "[CallCore] new" << this;
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	// Should be call from model Thread
 	mustBeInLinphoneThread(getClassName());
@@ -103,7 +103,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 }
 
 CallCore::~CallCore() {
-	qDebug() << "[CallCore] delete" << this;
+	lDebug() << "[CallCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
 	emit mCallModel->removeListener();
 }
@@ -366,7 +366,7 @@ bool CallCore::getLocalVideoEnabled() const {
 void CallCore::setLocalVideoEnabled(bool enabled) {
 	if (mLocalVideoEnabled != enabled) {
 		mLocalVideoEnabled = enabled;
-		qWarning() << "LocalVideoEnabled: " << mLocalVideoEnabled;
+		lDebug() << "LocalVideoEnabled: " << mLocalVideoEnabled;
 		emit localVideoEnabledChanged();
 	}
 }
@@ -406,10 +406,11 @@ QSharedPointer<ConferenceCore> CallCore::getConferenceCore() const {
 }
 
 void CallCore::setConference(const QSharedPointer<ConferenceCore> &conference) {
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (mConference != conference) {
 		mConference = conference;
 		mIsConference = (mConference != nullptr);
-		qDebug() << "[CallCore] Set conference : " << mConference;
+		lDebug() << "[CallCore] Set conference : " << mConference;
 		emit conferenceChanged();
 	}
 }

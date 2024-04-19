@@ -20,7 +20,7 @@ Control.Switch {
         Rectangle {
 			anchors.verticalCenter: parent.verticalCenter
 			property int margin: 4 * DefaultStyle.dp
-            x: mainItem.checked ? parent.width - width - margin : margin
+			x: mainItem.checked ? parent.width - width - margin : margin
             width: 12 * DefaultStyle.dp
             height: 12 * DefaultStyle.dp
             radius: 10 * DefaultStyle.dp

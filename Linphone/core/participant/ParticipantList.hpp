@@ -45,10 +45,6 @@ public:
 	// Q_PROPERTY(ChatRoomModel *chatRoomModel READ getChatRoomModel CONSTANT)
 	void reset();
 	// void updateParticipants(); // Update list from Chat Room
-	// const QSharedPointer<ParticipantCore>
-	// getParticipant(const std::shared_ptr<const linphone::Address> &address) const;
-	// const QSharedPointer<ParticipantCore> const QSharedPointer<ParticipantCore>
-	// getParticipant(const std::shared_ptr<const linphone::Participant> &participant) const;
 
 	Q_INVOKABLE void remove(ParticipantCore *participant);
 	void addAddress(const QString &address);
@@ -60,27 +56,6 @@ public:
 	void setConferenceModel(const std::shared_ptr<ConferenceModel> &conferenceModel);
 
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
-
-	// public slots:
-	// 	void setAdminStatus(const std::shared_ptr<linphone::Participant> participant, const bool &isAdmin);
-
-	// 	void onSecurityEvent(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	// 	void onConferenceJoined();
-	// 	void onParticipantAdded(const std::shared_ptr<const linphone::Participant> &participant);
-	// 	void onParticipantAdded(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	// 	void onParticipantAdded(const std::shared_ptr<const linphone::Address> &address);
-	// 	void onParticipantRemoved(const std::shared_ptr<const linphone::Participant> &participant);
-	// 	void onParticipantRemoved(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	// 	void onParticipantRemoved(const std::shared_ptr<const linphone::Address> &address);
-	// 	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Participant> &participant);
-	// 	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	// 	void onParticipantAdminStatusChanged(const std::shared_ptr<const linphone::Address> &address);
-	// 	void onParticipantDeviceAdded(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	// 	void onParticipantDeviceRemoved(const std::shared_ptr<const linphone::EventLog> &eventLog);
-	// 	void
-	// 	onParticipantRegistrationSubscriptionRequested(const std::shared_ptr<const linphone::Address>
-	// &participantAddress); 	void onParticipantRegistrationUnsubscriptionRequested( 	    const
-	// std::shared_ptr<const linphone::Address> &participantAddress); 	void onStateChanged();
 
 signals:
 	void securityLevelChanged();

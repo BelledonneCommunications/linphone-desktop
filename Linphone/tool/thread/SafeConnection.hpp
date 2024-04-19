@@ -23,6 +23,7 @@
 
 #include "SafeSharedPointer.hpp"
 #include "model/core/CoreModel.hpp"
+#include "tool/Utils.hpp"
 #include <QMutex>
 #include <QObject>
 
@@ -74,7 +75,7 @@ public:
 	~SafeConnection() {
 		mLocker.lock();
 		if (mCore.mCountRef != 0 || mModel.mCountRef != 0)
-			qCritical() << "[SafeConnection] Destruction while still having references. CoreRef=" << mCore.mCountRef
+			lCritical() << "[SafeConnection] Destruction while still having references. CoreRef=" << mCore.mCountRef
 			            << "ModelRef=" << mModel.mCountRef;
 		mCore.reset();
 		mModel.reset();

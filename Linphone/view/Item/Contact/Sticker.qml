@@ -45,6 +45,7 @@ Item {
 		ColumnLayout {
 			id: noCameraLayout
 			anchors.centerIn: parent
+			spacing: 0
 			visible: !cameraLoader.active || cameraLoader.status != Loader.Ready || !cameraLoader.item.isReady
 			Avatar{
 				Layout.alignment: Qt.AlignHCenter

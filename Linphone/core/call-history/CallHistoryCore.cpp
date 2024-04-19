@@ -38,7 +38,7 @@ QSharedPointer<CallHistoryCore> CallHistoryCore::create(const std::shared_ptr<li
 }
 
 CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callLog) : QObject(nullptr) {
-	// qDebug() << "[CallHistoryCore] new" << this;
+	// lDebug()<< "[CallHistoryCore] new" << this;
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	// Should be call from model Thread
 	mustBeInLinphoneThread(getClassName());
@@ -55,7 +55,7 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 }
 
 CallHistoryCore::~CallHistoryCore() {
-	// qDebug() << "[CallHistoryCore] delete" << this;
+	// lDebug()<< "[CallHistoryCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
 }
 

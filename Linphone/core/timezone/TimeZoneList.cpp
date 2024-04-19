@@ -60,8 +60,8 @@ void TimeZoneList::initTimeZones() {
 
 QHash<int, QByteArray> TimeZoneList::roleNames() const {
 	QHash<int, QByteArray> roles;
-	roles[Qt::DisplayRole] = "modelData";
-	roles[Qt::DisplayRole + 1] = "timeZoneModel";
+	roles[Qt::DisplayRole] = "$modelData";
+	roles[Qt::DisplayRole + 1] = "$timeZoneModel";
 	return roles;
 }
 

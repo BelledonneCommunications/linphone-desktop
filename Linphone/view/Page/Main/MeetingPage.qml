@@ -5,6 +5,7 @@ import QtQuick.Controls as Control
 import Linphone
 import UtilsCpp 1.0
 
+// TODO : spacing
 AbstractMainPage {
 	id: mainItem
 	noItemButtonText: qsTr("Créer une réunion")
@@ -23,17 +24,17 @@ AbstractMainPage {
 	onSelectedConferenceChanged: {
 		overridenRightPanelStackView.clear()
 		if (selectedConference) {
-			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem.objectName != "meetingDetail") overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
+			if (!overridenRightPanelStackView.currentItem || overridenRightPanelStackView.currentItem != meetingDetail) overridenRightPanelStackView.replace(meetingDetail, Control.StackView.Immediate)
 		}
 	}
 
 	Connections {
 		target: leftPanelStackView
 		onCurrentItemChanged: {
-			mainItem.showDefaultItem = leftPanelStackView.currentItem.objectName == "listLayout" && mainItem.meetingListCount === 0
+			mainItem.showDefaultItem = leftPanelStackView.currentItem == listLayout && mainItem.meetingListCount === 0
 		}
 	}
-	onMeetingListCountChanged: showDefaultItem = leftPanelStackView.currentItem.objectName == "listLayout" && meetingListCount === 0
+	onMeetingListCountChanged: showDefaultItem = leftPanelStackView.currentItem == listLayout && meetingListCount === 0
 
 	function setUpConference(confInfoGui = null) {
 		var isCreation = !confInfoGui
@@ -126,7 +127,6 @@ AbstractMainPage {
 	Component {
 		id: listLayout
 		ColumnLayout {
-			property string objectName: "listLayout"
 			spacing: 0
 			Control.StackView.onDeactivated: {
 				mainItem.selectedConference = null
@@ -136,7 +136,7 @@ AbstractMainPage {
 				mainItem.selectedConference = conferenceList.selectedConference
 			}
 			RowLayout {
-				visible: leftPanelStackView.currentItem.objectName == "listLayout"
+				visible: leftPanelStackView.currentItem == listLayout
 				enabled: mainItem.leftPanelEnabled
 				Layout.rightMargin: 39 * DefaultStyle.dp
 				spacing: 0
@@ -201,6 +201,7 @@ AbstractMainPage {
 					Connections {
 						target: mainItem
 						onNewConfCreated: {
+							// TODO : manque un connect côté c++
 							conferenceList.forceUpdate()
 						}
 					}
@@ -311,13 +312,14 @@ AbstractMainPage {
 						}
 					}
 
-					TextInput {
+					TextField {
 						Component.onCompleted: text = mainItem.selectedConference.core.subject
 						color: DefaultStyle.main2_600
 						font {
 							pixelSize: 20 * DefaultStyle.dp
 							weight: 800 * DefaultStyle.dp
 						}
+						background: Item{}
 						Layout.fillWidth: true
 						onActiveFocusChanged: if(activeFocus==true) selectAll()
 						onEditingFinished: mainItem.selectedConference.core.subject = text
@@ -532,6 +534,7 @@ AbstractMainPage {
 							color: DefaultStyle.main2_600
 							background: Item{}
 							onClicked: {
+								// TODO : voir si c'est en audio only quand on clique sur le lien
 								UtilsCpp.createCall(mainItem.selectedConference.core.uri)
 							}
 						}

@@ -77,6 +77,7 @@ bool ConferenceInfoProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sou
 	if (ciCore) {
 		if (!ciCore->getSubject().contains(mSearchText)) return false;
 		QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
+		// TODO : use enums
 		if (mFilterType == 0) {
 			return true;
 		} else if (mFilterType == 1) {

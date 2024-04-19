@@ -18,14 +18,12 @@ Window {
 	property ConferenceInfoGui conferenceInfo
 
 	property ConferenceGui conference: call && call.core.conference || null
-	onConferenceChanged: console.log ("CONFERENCE CHANGED", conference)
 
 	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
 
 	property bool callTerminatedByUser: false
 	
 	onCallChanged: {
-		console.log("CALL", call)
 		// if conference, the main item is only
 		// displayed when state is connected
 		if (call && middleItemStackView.currentItem != inCallItem
@@ -59,12 +57,12 @@ Window {
 		property int nextY: mainWindow.height
 		property list<Popup> popupList
 		property int popupCount: popupList.length
-		spacing: 15
+		spacing: 15 * DefaultStyle.dp
 		onPopupCountChanged: {
 			nextY = mainWindow.height
 			for(var i = 0; i < popupCount; ++i) {
 				popupList[i].y = nextY - popupList[i].height
-				nextY = nextY - popupList[i].height - 15
+				nextY = nextY - popupList[i].height - 15 * DefaultStyle.dp
 			}
 		}
 	}
@@ -83,7 +81,7 @@ Window {
 	}
 
 	Connections {
-		enabled: call != undefined && call != null
+		enabled: !!call
 		target: call && call.core
 		onRemoteVideoEnabledChanged: console.log("remote video enabled", call.core.remoteVideoEnabled)
 		onSecurityUpdated: {
@@ -99,7 +97,6 @@ Window {
 
 	property var callState: call && call.core.state
 	onCallStateChanged: {
-		console.log("State:", callState)
 		if (callState === LinphoneEnums.CallState.Connected) {
 			if (conferenceInfo && middleItemStackView.currentItem != inCallItem) {
 				middleItemStackView.replace(inCallItem)
@@ -163,7 +160,6 @@ Window {
 	CallProxy{
 		id: callsModel
 		onCurrentCallChanged: {
-			console.log("Current call changed:"+currentCall)
 			if(currentCall) {
 				mainWindow.call = currentCall
 			}
@@ -217,6 +213,7 @@ Window {
 		underlineColor: DefaultStyle.main1_500_main
 		radius: 15 * DefaultStyle.dp
 		contentItem: ColumnLayout {
+			spacing: 0
 			BusyIndicator{
 				Layout.alignment: Qt.AlignHCenter
 			}
@@ -245,6 +242,7 @@ Window {
 		underlineColor: DefaultStyle.danger_500main
 		radius: 0
 		contentItem: ColumnLayout {
+			spacing: 0
 			Text {
 				text: qsTr("Erreur de transfert")
 			}
@@ -346,6 +344,7 @@ Window {
 					}
 					RowLayout {
 						visible: mainWindow.call && (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording)
+						spacing: 0
 						Text {
 							color: DefaultStyle.danger_500main
 							font.pixelSize: 14 * DefaultStyle.dp
@@ -378,6 +377,7 @@ Window {
 						radius: 15 * DefaultStyle.dp
 					}
 					contentItem: RowLayout {
+						spacing: 0
 						Image {
 							source: AppIcons.trusted
 							Layout.preferredWidth: 24 * DefaultStyle.dp
@@ -400,20 +400,21 @@ Window {
 			RowLayout {
 				Layout.fillWidth: true
 				Layout.fillHeight: true
+				spacing: 0
 				Control.StackView {
 					id: middleItemStackView
 					initialItem: mainWindow.call ? inCallItem : waitingRoom
 					Layout.fillWidth: true
 					Layout.fillHeight: true
-					Layout.margins: 20 * DefaultStyle.dp
 					
 				}
 				OngoingCallRightPanel {
 					id: rightPanel
 					Layout.fillHeight: true
 					Layout.preferredWidth: 393 * DefaultStyle.dp
+					Layout.topMargin: 10 * DefaultStyle.dp
+					Layout.rightMargin: 20 * DefaultStyle.dp	// !! Design model is inconsistent
 					property int currentIndex: 0
-					Layout.rightMargin: 10 * DefaultStyle.dp
 					visible: false
 					function replace(id) {
 						rightPanel.customHeaderButtons = null
@@ -439,6 +440,7 @@ Window {
 					id: dialerPanel
 					ColumnLayout {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Dialer")
+						spacing: 0
 						Item {
 							Layout.fillWidth: true
 							Layout.fillHeight: true
@@ -485,6 +487,7 @@ Window {
 						RoundedBackgroundControl {
 							Layout.fillWidth: true
 							contentItem: ColumnLayout {
+								spacing: 0
 								Repeater {
 									model: [
 										{text: qsTr("Mosaïque"), imgUrl: AppIcons.squaresFour},
@@ -534,6 +537,7 @@ Window {
 					id: callsListPanel
 					ColumnLayout {
 						Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("Liste d'appel")
+						spacing: 0
 						RoundedBackgroundControl {
 							Layout.fillWidth: true
 							Layout.maximumHeight: rightPanel.height
@@ -557,6 +561,7 @@ Window {
 										anchors.fill: parent
 										anchors.leftMargin: 10 * DefaultStyle.dp
 										anchors.rightMargin: 10 * DefaultStyle.dp
+										spacing: 0
 										Avatar {
 											id: delegateAvatar
 											address: modelData.core.peerAddress
@@ -588,10 +593,11 @@ Window {
 											Layout.alignment: Qt.AlignRight
 
 											popup.contentItem: ColumnLayout {
-												// spacing: 0
+												spacing: 0
 												Button {
 													background: Item {}
 													contentItem: RowLayout {
+														spacing: 0
 														Image {
 															source: modelData.core.state === LinphoneEnums.CallState.Paused 
 															|| modelData.core.state === LinphoneEnums.CallState.PausedByRemote
@@ -622,6 +628,7 @@ Window {
 												Button {
 													background: Item {}
 													contentItem: RowLayout {
+														spacing: 0
 														EffectImage {
 															imageSource: AppIcons.endCall
 															colorizationColor: DefaultStyle.danger_500main
@@ -641,13 +648,6 @@ Window {
 											}
 										}
 									}
-										
-									// MouseArea{
-									// 	anchors.fill: delegateLayout
-									// 	onClicked: {
-									// 		callsModel.currentCall = modelData
-									// 	}
-									// }
 								}
 							}
 						}
@@ -695,6 +695,7 @@ Window {
 										popup.contentItem: Button {
 											background: Item{}
 											contentItem: RowLayout {
+												spacing: 0
 												EffectImage {
 													colorizationColor: DefaultStyle.main2_600
 													imageSource: AppIcons.shareNetwork
@@ -774,7 +775,7 @@ Window {
 				id: waitingRoom
 				WaitingRoom {
 					id: waitingRoomIn
-					Layout.alignment: Qt.AlignCenter
+					Layout.alignment: Qt.AlignCenter					
 					conferenceInfo: mainWindow.conferenceInfo
 					onSettingsButtonCheckedChanged: {
 						if (settingsButtonChecked) {
@@ -794,32 +795,20 @@ Window {
 			Component {
 				id: inCallItem
 				Item {
-					Layout.fillWidth: true
-					implicitWidth: 1059 * DefaultStyle.dp
-					// implicitHeight: parent.height
-					Layout.fillHeight: true
-					Layout.leftMargin: 10 * DefaultStyle.dp
-
-					Layout.rightMargin: 10 * DefaultStyle.dp
-					Layout.alignment: Qt.AlignCenter
-					/*
-					background: Rectangle {
-						anchors.fill: parent
-						color: DefaultStyle.grey_600
-						radius: 15 * DefaultStyle.dp
-					}*/
 					CallLayout{
 						anchors.fill: parent
+						anchors.leftMargin: 20 * DefaultStyle.dp
+						anchors.rightMargin: (rightPanel.visible ? 0 : 10) * DefaultStyle.dp	// Grid and AS have 10 in right margin (so apply -10 here)
+						anchors.topMargin: 10 * DefaultStyle.dp
 						call: mainWindow.call
 						callTerminatedByUser: mainWindow.callTerminatedByUser
 					}
-					Component.onCompleted: console.log("New inCallItem " + inCallItem)
 				}
 			}
 			RowLayout {
 				id: bottomButtonsLayout
 				Layout.alignment: Qt.AlignHCenter
-				spacing: 20 * DefaultStyle.dp
+				spacing: 58 * DefaultStyle.dp
 				visible: mainWindow.call && !mainWindow.conferenceInfo
 
 				function refreshLayout() {
@@ -875,6 +864,7 @@ Window {
 					visible: false
 					Layout.row: 0
 					Layout.column: 1
+					spacing: 10 * DefaultStyle.dp
 					CheckableButton {
 						id: pauseButton
 						Layout.preferredWidth: 55 * DefaultStyle.dp
@@ -943,6 +933,7 @@ Window {
 										|| mainWindow.callState == LinphoneEnums.CallState.OutgoingEarlyMedia
 										|| mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
 										? bottomButtonsLayout.columns - 1 : 0
+					spacing: 10 * DefaultStyle.dp
 					CheckableButton {
 						id: videoCameraButton
 						enabled: mainWindow.conferenceInfo || (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
@@ -1021,7 +1012,6 @@ Window {
 						id: moreOptionsButton
 						Layout.preferredWidth: 55 * DefaultStyle.dp
 						Layout.preferredHeight: 55 * DefaultStyle.dp
-						onEnabledChanged: console.log("========== enabled changed", enabled)
 						contentImageColor: enabled && !checked ? DefaultStyle.grey_0 : DefaultStyle.grey_500
 						icon.source: AppIcons.more
 						background: Rectangle {
@@ -1037,7 +1027,6 @@ Window {
 						Connections {
 							target: moreOptionsButton.popup
 							onOpened: {
-								console.log("y", moreOptionsButton.y, moreOptionsButton.popup.y, moreOptionsButton.popup.height)
 								moreOptionsButton.popup.y = - moreOptionsButton.popup.height - moreOptionsButton.popup.padding
 							}
 						}

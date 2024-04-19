@@ -155,7 +155,7 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			});
 			mFriendModelConnection->makeConnectToModel(
 			    &FriendModel::objectNameChanged,
-			    [this](const QString &objectName) { qDebug() << "object name changed" << objectName; });
+			    [this](const QString &objectName) { lDebug() << "object name changed" << objectName; });
 
 			// From GUI
 			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetStarred, [this](bool starred) {
@@ -492,18 +492,27 @@ void FriendCore::save() { // Save Values to model
 				if (contact) break;
 			}
 			if (contact != nullptr) {
-				mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-				mFriendModel->setSelf(mFriendModel);
-				thisCopy->writeIntoModel(mFriendModel);
-				thisCopy->deleteLater();
-				if (mFriendModelConnection) mFriendModelConnection->invokeToCore([this] { saved(); });
-				else mCoreModelConnection->invokeToCore([this] { saved(); });
+				auto friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+				friendModel->setSelf(friendModel);
+				mCoreModelConnection->invokeToCore([this, thisCopy, friendModel] {
+					mFriendModel = friendModel;
+					mCoreModelConnection->invokeToModel([this, thisCopy] {
+						thisCopy->writeIntoModel(mFriendModel);
+						thisCopy->deleteLater();
+					});
+					saved();
+				});
 			} else {
 				auto contact = core->createFriend();
-				mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-				mFriendModel->setSelf(mFriendModel);
-				thisCopy->writeIntoModel(mFriendModel);
-				thisCopy->deleteLater();
+				auto friendModel = Utils::makeQObject_ptr<FriendModel>(contact);
+				friendModel->setSelf(friendModel);
+				mCoreModelConnection->invokeToCore([this, thisCopy, friendModel] {
+					mFriendModel = friendModel;
+					mCoreModelConnection->invokeToModel([this, thisCopy] {
+						thisCopy->writeIntoModel(mFriendModel);
+						thisCopy->deleteLater();
+					});
+				});
 				bool created = (core->getDefaultFriendList()->addFriend(contact) == linphone::FriendList::Status::OK);
 				if (created) {
 					core->getDefaultFriendList()->updateSubscriptions();

@@ -79,7 +79,7 @@ SingleApplication::SingleApplication(
 	if (d->memory->create(sizeof(InstancesInfo))) {
 		// Initialize the shared memory block
 		if (!d->memory->lock()) {
-			qCritical() << "SingleApplication: Unable to lock memory block after create.";
+			lCritical() << "SingleApplication: Unable to lock memory block after create.";
 			abortSafely();
 		}
 		d->initializeMemoryBlock();
@@ -87,15 +87,15 @@ SingleApplication::SingleApplication(
 		if (d->memory->error() == QSharedMemory::AlreadyExists) {
 			// Attempt to attach to the memory segment
 			if (!d->memory->attach()) {
-				qCritical() << "SingleApplication: Unable to attach to shared memory block.";
+				lCritical() << "SingleApplication: Unable to attach to shared memory block.";
 				abortSafely();
 			}
 			if (!d->memory->lock()) {
-				qCritical() << "SingleApplication: Unable to lock memory block after attach.";
+				lCritical() << "SingleApplication: Unable to lock memory block after attach.";
 				abortSafely();
 			}
 		} else {
-			qCritical() << "SingleApplication: Unable to create block.";
+			lCritical() << "SingleApplication: Unable to create block.";
 			abortSafely();
 		}
 	}
@@ -121,12 +121,12 @@ SingleApplication::SingleApplication(
 		// limits the probability of a collision between two racing apps and
 		// allows the app to initialise faster
 		if (!d->memory->unlock()) {
-			qDebug() << "SingleApplication: Unable to unlock memory for random wait.";
-			qDebug() << d->memory->errorString();
+			lDebug() << "SingleApplication: Unable to unlock memory for random wait.";
+			lDebug() << d->memory->errorString();
 		}
 		SingleApplicationPrivate::randomSleep();
 		if (!d->memory->lock()) {
-			qCritical() << "SingleApplication: Unable to lock memory after random wait.";
+			lCritical() << "SingleApplication: Unable to lock memory after random wait.";
 			abortSafely();
 		}
 	}
@@ -134,8 +134,8 @@ SingleApplication::SingleApplication(
 	if (inst->primary == false) {
 		d->startPrimary();
 		if (!d->memory->unlock()) {
-			qDebug() << "SingleApplication: Unable to unlock memory after primary start.";
-			qDebug() << d->memory->errorString();
+			lDebug() << "SingleApplication: Unable to unlock memory after primary start.";
+			lDebug() << d->memory->errorString();
 		}
 		return;
 	}
@@ -147,15 +147,15 @@ SingleApplication::SingleApplication(
 			d->connectToPrimary(timeout, SingleApplicationPrivate::SecondaryInstance);
 		}
 		if (!d->memory->unlock()) {
-			qDebug() << "SingleApplication: Unable to unlock memory after secondary start.";
-			qDebug() << d->memory->errorString();
+			lDebug() << "SingleApplication: Unable to unlock memory after secondary start.";
+			lDebug() << d->memory->errorString();
 		}
 		return;
 	}
 
 	if (!d->memory->unlock()) {
-		qDebug() << "SingleApplication: Unable to unlock memory at end of execution.";
-		qDebug() << d->memory->errorString();
+		lDebug() << "SingleApplication: Unable to unlock memory at end of execution.";
+		lDebug() << d->memory->errorString();
 	}
 
 	d->connectToPrimary(timeout, SingleApplicationPrivate::NewInstance);
@@ -253,7 +253,7 @@ bool SingleApplication::sendMessage(const QByteArray &message, int timeout, Send
 void SingleApplication::abortSafely() {
 	Q_D(SingleApplication);
 
-	qCritical() << "SingleApplication: " << d->memory->error() << d->memory->errorString();
+	lCritical() << "SingleApplication: " << d->memory->error() << d->memory->errorString();
 	delete d;
 	::exit(EXIT_FAILURE);
 }

@@ -227,8 +227,6 @@ Item {
 												
 												contentItem: Image {
 													anchors.fill: parent
-													width: 24 * DefaultStyle.dp
-													height: 24 * DefaultStyle.dp
 													source: AppIcons.phone
 												}
 												onClicked: {
@@ -241,8 +239,6 @@ Item {
 												background: Item{}
 												contentItem: Image {
 													anchors.fill: parent
-													width: 24 * DefaultStyle.dp
-													height: 24 * DefaultStyle.dp
 													source: AppIcons.videoCamera
 												}
 												onClicked: UtilsCpp.createCall(sipAddr.text, {'localVideoEnabled':true})
@@ -361,8 +357,6 @@ Item {
 				StackLayout {
 					id: mainStackLayout
 					currentIndex: tabbar.currentIndex
-					Layout.fillWidth: true
-					Layout.fillHeight: true
 					Layout.topMargin: 24 * DefaultStyle.dp
 					CallPage {
 						id: callPage

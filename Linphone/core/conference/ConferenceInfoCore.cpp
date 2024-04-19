@@ -135,7 +135,6 @@ ConferenceInfoCore::ConferenceInfoCore(const ConferenceInfoCore &conferenceInfoC
 
 ConferenceInfoCore::~ConferenceInfoCore() {
 	mustBeInMainThread("~" + getClassName());
-	mCheckEndTimer.stop();
 }
 
 void ConferenceInfoCore::reset(const ConferenceInfoCore &conf) {
@@ -200,7 +199,7 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 				    mConfInfoModelConnection->invokeToCore([this, state = LinphoneEnums::fromLinphone(state),
 				                                            infoState = LinphoneEnums::fromLinphone(confInfoState),
 				                                            uri] {
-					    qDebug() << "scheduler state changed" << state;
+					    lDebug() << "scheduler state changed" << state;
 					    setConferenceSchedulerState(state);
 					    setConferenceInfoState(infoState);
 					    if (state == LinphoneEnums::ConferenceSchedulerState::Ready) {
@@ -211,7 +210,7 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			mConfInfoModelConnection->makeConnectToModel(
 			    &ConferenceInfoModel::invitationsSent,
 			    [this](const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {
-				    qDebug() << "invitations sent";
+				    lDebug() << "invitations sent";
 			    });
 		} else { // Create
 			mCoreModelConnection = QSharedPointer<SafeConnection<ConferenceInfoCore, CoreModel>>(
@@ -220,7 +219,7 @@ void ConferenceInfoCore::setSelf(QSharedPointer<ConferenceInfoCore> me) {
 			    &CoreModel::conferenceInfoReceived,
 			    [this](const std::shared_ptr<linphone::Core> &core,
 			           const std::shared_ptr<const linphone::ConferenceInfo> &conferenceInfo) {
-				    qDebug() << "CONF INFO RECEIVED ==================";
+				    lDebug() << "CONF INFO RECEIVED ==================";
 			    });
 		}
 	}
@@ -484,9 +483,6 @@ LinphoneEnums::ConferenceSchedulerState ConferenceInfoCore::getConferenceSchedul
 	return mConferenceSchedulerState;
 }
 
-//------------------------------------------------------------------------------------------------
-// Datetime is in Custom (Locale/UTC/System). Convert into UTC for conference info
-
 void ConferenceInfoCore::setIsScheduled(const bool &on) {
 	if (mIsScheduled != on) {
 		mIsScheduled = on;
@@ -497,8 +493,6 @@ void ConferenceInfoCore::setIsScheduled(const bool &on) {
 void ConferenceInfoCore::setIsEnded(bool ended) {
 	if (mIsEnded != ended) {
 		mIsEnded = ended;
-		if (mIsEnded) mCheckEndTimer.stop(); // No need to run the timer.
-		else mCheckEndTimer.start();
 		emit isEndedChanged();
 	}
 }
@@ -546,8 +540,8 @@ void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> mod
 	model->setSubject(mSubject);
 	if (!mOrganizerAddress.isEmpty()) {
 		model->setOrganizer(mOrganizerAddress);
-		qDebug() << "Use of " << mOrganizerAddress;
-	} else qDebug() << "Use of " << model->getOrganizerAddress();
+		lDebug() << "Use of " << mOrganizerAddress;
+	} else lDebug() << "Use of " << model->getOrganizerAddress();
 	model->setDescription(mDescription);
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> participantInfos;
 	for (auto &p : mParticipants) {
@@ -587,23 +581,24 @@ void ConferenceInfoCore::save() {
 					if (!linphoneConf->getOrganizer()) linphoneConf->setOrganizer(cleanedClonedAddress);
 					if (mOrganizerAddress.isEmpty())
 						mOrganizerAddress = Utils::coreStringToAppString(accountAddress->asStringUriOnly());
-				} else qCritical() << "No contact address";
-			} else qCritical() << "No default account";
-			mConferenceInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
-			setHaveModel(true);
-			// mConferenceInfoModel->createConferenceScheduler();
-			auto confSchedulerModel = mConferenceInfoModel->getConferenceScheduler();
+				} else lCritical() << "No contact address";
+			} else lCritical() << "No default account";
+			auto confInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
+			auto confSchedulerModel = confInfoModel->getConferenceScheduler();
 			if (!confSchedulerModel) {
 				auto confScheduler = CoreModel::getInstance()->getCore()->createConferenceScheduler();
 				confSchedulerModel = Utils::makeQObject_ptr<ConferenceSchedulerModel>(confScheduler);
-				mConferenceInfoModel->setConferenceScheduler(confSchedulerModel);
+				confInfoModel->setConferenceScheduler(confSchedulerModel);
 			}
-			thisCopy->writeIntoModel(mConferenceInfoModel);
-			thisCopy->deleteLater();
-			mCoreModelConnection->invokeToCore([this, confSchedulerModel, linphoneConf]() {
-				setSelf(mCoreModelConnection->mCore);
-				mCoreModelConnection->invokeToModel(
-				    [this, confSchedulerModel, linphoneConf]() { confSchedulerModel->setInfo(linphoneConf); });
+			mCoreModelConnection->invokeToCore([this, thisCopy, confSchedulerModel, linphoneConf, confInfoModel]() {
+				setHaveModel(true);
+				mConferenceInfoModel = confInfoModel;
+				mCoreModelConnection->invokeToModel([this, thisCopy, confSchedulerModel, linphoneConf]() {
+					thisCopy->writeIntoModel(mConferenceInfoModel);
+					thisCopy->deleteLater();
+					confSchedulerModel->setInfo(linphoneConf);
+					mCoreModelConnection->invokeToCore([this]() { setSelf(mCoreModelConnection->mCore); });
+				});
 			});
 		});
 	}
@@ -625,36 +620,8 @@ void ConferenceInfoCore::undo() {
 
 //-------------------------------------------------------------------------------------------------
 
-// void ConferenceInfoCore::createConference(const int &securityLevel) {
-// 	CoreModel::getInstance()->getTimelineListModel()->mAutoSelectAfterCreation = false;
-// 	shared_ptr<linphone::Core> core = CoreManager::getInstance()->getCore();
-// 	static std::shared_ptr<linphone::Conference> conference;
-// 	qInfo() << "Conference creation of " << getSubject() << " at " << securityLevel << " security, organized by "
-// 	        << getOrganizer() << " for " << getDateTimeSystem().toString();
-// 	qInfo() << "Participants:";
-// 	for (auto p : mConferenceInfoModel->getParticipants())
-// 		qInfo() << "\t" << p->asString().c_str();
-
-// 	mConferenceScheduler = ConferenceScheduler::create();
-// 	mConferenceScheduler->mSendInvite = mInviteMode;
-// 	connect(mConferenceScheduler.get(), &ConferenceScheduler::invitationsSent, this,
-// 	        &ConferenceInfoCore::onInvitationsSent);
-// 	connect(mConferenceScheduler.get(), &ConferenceScheduler::stateChanged, this,
-// 	        &ConferenceInfoCore::onConferenceSchedulerStateChanged);
-// 	mConferenceScheduler->getConferenceScheduler()->setInfo(mConferenceInfoModel);
-// }
-
-//-------------------------------------------------------------------------------------------------
-
-// void ConferenceInfoCore::onConferenceSchedulerStateChanged(linphone::ConferenceScheduler::State state) {
-// 	qDebug() << "ConferenceInfoCore::onConferenceSchedulerStateChanged: " << (int)state;
-// 	mLastConferenceSchedulerState = state;
-// 	if (state == linphone::ConferenceScheduler::State::Ready) emit conferenceCreated();
-// 	else if (state == linphone::ConferenceScheduler::State::Error) emit conferenceCreationFailed();
-// 	emit conferenceInfoChanged();
-// }
 void ConferenceInfoCore::onInvitationsSent(const std::list<std::shared_ptr<linphone::Address>> &failedInvitations) {
-	qDebug() << "ConferenceInfoCore::onInvitationsSent";
+	lDebug() << "ConferenceInfoCore::onInvitationsSent";
 	emit invitationsSent();
 }
 

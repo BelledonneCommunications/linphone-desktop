@@ -50,7 +50,7 @@ CallGui *ParticipantProxy::getCurrentCall() const {
 }
 
 void ParticipantProxy::setCurrentCall(CallGui *call) {
-	qDebug() << "[ParticipantProxy] set current call " << this << " => " << call;
+	lDebug() << "[ParticipantProxy] set current call " << this << " => " << call;
 	if (mCurrentCall != call) {
 		CallCore *callCore = nullptr;
 		if (mCurrentCall) {
@@ -63,26 +63,18 @@ void ParticipantProxy::setCurrentCall(CallGui *call) {
 		if (callCore) {
 			connect(callCore, &CallCore::conferenceChanged, mParticipants.get(), [this]() {
 				auto conference = mCurrentCall->getCore()->getConferenceCore();
-				qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+				lDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
 				mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
 				// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
 			});
 			auto conference = callCore->getConferenceCore();
-			qDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
+			lDebug() << "[ParticipantDeviceProxy] set conference " << this << " => " << conference;
 			mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
 			// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
 		}
 		emit currentCallChanged();
 	}
 }
-
-// ChatRoomModel *ParticipantProxy::getChatRoomModel() const {
-// return mChatRoomModel;
-// }
-
-// ConferenceModel *ParticipantProxy::getConferenceModel() const {
-// return mConferenceModel;
-// }
 
 bool ParticipantProxy::getShowMe() const {
 	return mShowMe;
@@ -136,12 +128,6 @@ void ParticipantProxy::setConferenceModel(ConferenceModel *conferenceModel) {
 	// 	sort(0);
 	// 	emit conferenceModelChanged();
 	// }
-}
-
-void ParticipantProxy::setAddresses(ConferenceInfoModel *conferenceInfoModel) {
-	// if (conferenceInfoModel && conferenceInfoModel->getConferenceInfo())
-	// for (auto address : conferenceInfoModel->getConferenceInfo()->getParticipants())
-	// addAddress(QString::fromStdString(address->asString()));
 }
 
 void ParticipantProxy::setShowMe(const bool &show) {

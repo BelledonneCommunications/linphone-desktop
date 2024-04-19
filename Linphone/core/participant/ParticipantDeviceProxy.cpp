@@ -68,12 +68,10 @@ void ParticipantDeviceProxy::setCurrentCall(CallGui *call) {
 				auto conference = mCurrentCall->getCore()->getConferenceCore();
 				lDebug() << log().arg("Set conference") << this << " => " << conference;
 				mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
-				// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
 			});
 			auto conference = callCore->getConferenceCore();
 			lDebug() << log().arg("Set conference") << this << " => " << conference;
 			mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
-			// mParticipants->lSetConferenceModel(conference ? conference->getModel() : nullptr);
 		}
 		emit currentCallChanged();
 	}
@@ -87,9 +85,6 @@ ParticipantDeviceGui *ParticipantDeviceProxy::getMe() const {
 	}
 }
 
-void ParticipantDeviceProxy::setMe(ParticipantDeviceGui *me) {
-}
-
 bool ParticipantDeviceProxy::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
 	return true;
 }
@@ -97,8 +92,6 @@ bool ParticipantDeviceProxy::filterAcceptsRow(int sourceRow, const QModelIndex &
 bool ParticipantDeviceProxy::lessThan(const QModelIndex &left, const QModelIndex &right) const {
 	auto deviceA = sourceModel()->data(left).value<ParticipantDeviceGui *>()->getCore();
 	auto deviceB = sourceModel()->data(right).value<ParticipantDeviceGui *>()->getCore();
-	// auto deviceB = getItemAt<ParticipantDeviceList, ParticipantDeviceGui>(right.row())->getCore();
-	//  return deviceB->isLocal() || !deviceA->isLocal() && deviceB->isMe() || left.row() < right.row();
 
 	return deviceB->isMe() || (!deviceB->isMe() && left.row() < right.row());
 }

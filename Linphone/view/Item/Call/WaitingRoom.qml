@@ -19,7 +19,6 @@ RowLayout {
 		Layout.alignment: Qt.AlignCenter
 		ColumnLayout {
 			spacing: 31 * DefaultStyle.dp
-			// Layout.leftMargin: 97 * DefaultStyle.dp
 			Sticker {
 				id: preview
 				previewEnabled: true
@@ -33,6 +32,7 @@ RowLayout {
 			}
 			RowLayout {
 				Layout.alignment: Qt.AlignHCenter
+				spacing: 16 * DefaultStyle.dp
 				CheckableButton {
 					id: videoButton
 					iconUrl: AppIcons.videoCamera

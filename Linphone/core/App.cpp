@@ -79,18 +79,18 @@ App::App(int &argc, char *argv[])
 	auto ignoreVSync = QSurfaceFormat::defaultFormat();
 	ignoreVSync.setSwapInterval(0);
 	QSurfaceFormat::setDefaultFormat(ignoreVSync);
-	qInfo() << "Loading Fonts";
+	lInfo() << "Loading Fonts";
 	QDirIterator it(":/font/", QDirIterator::Subdirectories);
 	while (it.hasNext()) {
 		QString ttf = it.next();
-		// qDebug() << ttf;
+		// lDebug()<< ttf;
 		auto id = QFontDatabase::addApplicationFont(ttf);
 	}
 
 	//-------------------
 	mLinphoneThread = new Thread(this);
 	init();
-	qInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME
+	lInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME
 	                          "). Version:%1 Os:%2 Qt:%3")
 	               .arg(applicationVersion())
 	               .arg(Utils::getOsProduct())
@@ -110,7 +110,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			                                         auto callGui = new CallGui(callCore);
 			                                         auto win = getCallsWindow(QVariant::fromValue(callGui));
 			                                         Utils::smartShowWindow(win);
-			                                         qDebug() << "App : call created" << callGui;
+			                                         lDebug() << "App : call created" << callGui;
 		                                         });
 	                                         });
 }
@@ -146,7 +146,7 @@ void App::init() {
 			    if (version.majorVersion() == 5 && version.minorVersion() == 9) selectors.push_back("5.9");
 			    auto selector = new QQmlFileSelector(mEngine, mEngine);
 			    selector->setExtraSelectors(selectors);
-			    qInfo() << log().arg("Activated selectors:") << selector->selector()->allSelectors();
+			    lInfo() << log().arg("Activated selectors:") << selector->selector()->allSelectors();
 
 			    mEngine->addImportPath(":/");
 			    mEngine->rootContext()->setContextProperty("applicationDirPath", QGuiApplication::applicationDirPath());
@@ -163,7 +163,7 @@ void App::init() {
 			        [this, url](QObject *obj, const QUrl &objUrl) {
 				        if (url == objUrl) {
 					        if (!obj) {
-						        qCritical() << log().arg("Main.qml couldn't be load. The app will exit");
+						        lCritical() << log().arg("Main.qml couldn't be load. The app will exit");
 						        exit(-1);
 					        }
 					        mMainWindow = qobject_cast<QQuickWindow *>(obj);
@@ -188,12 +188,12 @@ void App::init() {
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 
 	if (!mLinphoneThread->isRunning()) {
-		qDebug() << log().arg("Starting Thread");
+		lDebug() << log().arg("Starting Thread");
 		mLinphoneThread->start();
 	}
 	setQuitOnLastWindowClosed(true); // TODO: use settings to set it
 
-	qInfo() << log().arg("Display server : %1").arg(platformName());
+	lInfo() << log().arg("Display server : %1").arg(platformName());
 
 	// mEngine->load(u"qrc:/Linphone/view/Prototype/CameraPrototype.qml"_qs);
 }
@@ -258,7 +258,7 @@ void App::clean() {
 	delete mEngine;
 	mEngine = nullptr;
 	if (mSettings) {
-		mSettings.reset();
+		mSettings->deleteLater();
 		mSettings = nullptr;
 	}
 	mLinphoneThread->wait(250);
@@ -296,9 +296,9 @@ bool App::notify(QObject *receiver, QEvent *event) {
 	try {
 		done = QApplication::notify(receiver, event);
 	} catch (const std::exception &ex) {
-		qCritical() << log().arg("Exception has been catch in notify");
+		lCritical() << log().arg("Exception has been catch in notify");
 	} catch (...) {
-		qCritical() << log().arg("Generic exeption has been catch in notify");
+		lCritical() << log().arg("Generic exeption has been catch in notify");
 	}
 	return done;
 }
@@ -308,14 +308,14 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 	if (!mCallsWindow) {
 		const QUrl callUrl("qrc:/Linphone/view/App/CallsWindow.qml");
 
-		qInfo() << log().arg("Creating subwindow: `%1`.").arg(callUrl.toString());
+		lInfo() << log().arg("Creating subwindow: `%1`.").arg(callUrl.toString());
 
 		QQmlComponent component(mEngine, callUrl);
 		if (component.isError()) {
 			qWarning() << component.errors();
 			abort();
 		}
-		qInfo() << log().arg("Subwindow status: `%1`.").arg(component.status());
+		lInfo() << log().arg("Subwindow status: `%1`.").arg(component.status());
 
 		QObject *object = nullptr;
 		// if (!callGui.isNull() && callGui.isValid()) object = component.createWithInitialProperties({{"call",
@@ -323,7 +323,7 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 		object = component.create();
 		Q_ASSERT(object);
 		if (!object) {
-			qCritical() << log().arg("Calls window could not be created.");
+			lCritical() << log().arg("Calls window could not be created.");
 			return nullptr;
 		}
 
@@ -333,7 +333,7 @@ QQuickWindow *App::getCallsWindow(QVariant callGui) {
 		auto window = qobject_cast<QQuickWindow *>(object);
 		Q_ASSERT(window);
 		if (!window) {
-			qCritical() << log().arg("Calls window could not be created.");
+			lCritical() << log().arg("Calls window could not be created.");
 			return nullptr;
 		}
 		// window->setParent(mMainWindow);

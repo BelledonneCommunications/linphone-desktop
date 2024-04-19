@@ -31,6 +31,7 @@
 #include "ImageProvider.hpp"
 
 #include "tool/Constants.hpp"
+#include "tool/Utils.hpp"
 
 // =============================================================================
 
@@ -48,7 +49,7 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 	filters << "*.png";
 	QDir imageDir(path);
 	if (!imageDir.exists()) {
-		qDebug() << QStringLiteral("[ImageProvider] Dir doesn't exist: `%1`.").arg(path);
+		lDebug() << QStringLiteral("[ImageProvider] Dir doesn't exist: `%1`.").arg(path);
 		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 		return;
 	}
@@ -65,7 +66,7 @@ ImageAsyncImageResponse::ImageAsyncImageResponse(const QString &id, const QSize 
 	QFile file(mPath);
 
 	if (!file.exists()) {
-		qDebug() << QStringLiteral("[ImageProvider] File doesn't exist: `%1`.").arg(path + id);
+		lDebug() << QStringLiteral("[ImageProvider] File doesn't exist: `%1`.").arg(path + id);
 		emit imageGrabbed(QImage(":/data/image/warning-circle.svg"));
 		return;
 	}

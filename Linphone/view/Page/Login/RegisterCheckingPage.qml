@@ -116,9 +116,9 @@ LoginLayout {
 			anchors.top: parent.top
 			anchors.right: parent.right
 			anchors.topMargin: 140 * DefaultStyle.dp
-			anchors.rightMargin: 97.03 * DefaultStyle.dp
-			width: 476.78 * DefaultStyle.dp
-			height: 345.13 * DefaultStyle.dp
+			anchors.rightMargin: 97 * DefaultStyle.dp
+			width: 477 * DefaultStyle.dp
+			height: 345 * DefaultStyle.dp
 			fillMode: Image.PreserveAspectFit
 			source: AppIcons.verif_page_image
 		}

@@ -41,7 +41,7 @@ std::shared_ptr<linphone::Account> AccountManager::createAccount(const QString &
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	auto core = CoreModel::getInstance()->getCore();
 	QString assistantPath = "://data/assistant/" + assistantFile;
-	qInfo() << log().arg(QStringLiteral("Set config on assistant: `%1`.")).arg(assistantPath);
+	lInfo() << log().arg(QStringLiteral("Set config on assistant: `%1`.")).arg(assistantPath);
 	QFile resource(assistantPath);
 	auto file = QTemporaryFile::createNativeFile(resource);
 	core->getConfig()->loadFromXmlFile(Utils::appStringToCoreString(file->fileName()));

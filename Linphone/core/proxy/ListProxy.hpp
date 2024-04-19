@@ -22,6 +22,7 @@
 #define _LIST_PROXY_H_
 
 #include "AbstractListProxy.hpp"
+#include "tool/Utils.hpp"
 #include <QSharedPointer>
 
 // =============================================================================
@@ -92,7 +93,7 @@ public:
 	virtual bool remove(QObject *itemToRemove) override {
 		bool removed = false;
 		if (itemToRemove) {
-			qInfo() << QStringLiteral("Removing ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ")
+			lInfo() << QStringLiteral("Removing ") << itemToRemove->metaObject()->className() << QStringLiteral(" : ")
 			        << itemToRemove;
 			int index = 0;
 			for (auto item : mList)

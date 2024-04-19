@@ -39,6 +39,7 @@ public:
 	static std::shared_ptr<linphone::AudioDevice> findAudioDevice(const QString &id);
 	static std::shared_ptr<linphone::Account> findAccount(const std::shared_ptr<const linphone::Address> &address);
 	static bool isMe(const QString &address);
+	static bool isLocal(const QString &address);
 	static bool isMe(const std::shared_ptr<const linphone::Address> &address);
 	static bool isLocal(const std::shared_ptr<linphone::Conference> &conference,
 	                    const std::shared_ptr<const linphone::ParticipantDevice> &device);
@@ -47,11 +48,11 @@ public:
 	static QString getDisplayName(QString address);
 
 	static bool createCall(const QString &sipAddress,
-											   const QVariantMap &options = {},
-	                                           const QString &prepareTransfertAddress = "",
-	                                           const QHash<QString, QString> &headers = {},
-	                                           linphone::MediaEncryption = linphone::MediaEncryption::None,
-	                       					   QString *errorMessage = nullptr);
+	                       const QVariantMap &options = {},
+	                       const QString &prepareTransfertAddress = "",
+	                       const QHash<QString, QString> &headers = {},
+	                       linphone::MediaEncryption = linphone::MediaEncryption::None,
+	                       QString *errorMessage = nullptr);
 
 private:
 	DECLARE_ABSTRACT_OBJECT

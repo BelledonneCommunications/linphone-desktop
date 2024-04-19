@@ -57,12 +57,9 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 	mParticipantDeviceModel = Utils::makeQObject_ptr<ParticipantDeviceModel>(device);
 	mParticipantDeviceModel->setSelf(mParticipantDeviceModel);
 	mState = LinphoneEnums::fromLinphone(device->getState());
-	qDebug() << "Address = " << Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
+	lDebug() << "Address = " << Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
 	mIsLocal = ToolModel::findAccount(deviceAddress) != nullptr; // TODO set local
-	// mCall = callModel;
-	// if (mCall) connect(mCall, &CallModel::statusChanged, this, &ParticipantDeviceCore::onCallStatusChanged);
 	mIsVideoEnabled = mParticipantDeviceModel->isVideoEnabled();
-	// if (mCall && mParticipantDeviceModel) updateIsLocal();
 }
 
 ParticipantDeviceCore::~ParticipantDeviceCore() {
@@ -185,7 +182,7 @@ void ParticipantDeviceCore::setState(LinphoneEnums::ParticipantDeviceState state
 void ParticipantDeviceCore::setIsVideoEnabled(bool enabled) {
 	if (mIsVideoEnabled != enabled) {
 		mIsVideoEnabled = enabled;
-		qDebug() << log().arg(Q_FUNC_INFO) << getAddress() << mIsVideoEnabled;
+		lDebug() << log().arg(Q_FUNC_INFO) << getAddress() << mIsVideoEnabled;
 		emit videoEnabledChanged();
 	}
 }
@@ -202,26 +199,8 @@ std::shared_ptr<ParticipantDeviceModel> ParticipantDeviceCore::getModel() const 
 	return mParticipantDeviceModel;
 }
 
-// void ParticipantDeviceCore::updateIsLocal() {
-// 	auto deviceAddress = mParticipantDeviceModel->getAddress();
-// 	auto callAddress = mCall->getConferenceSharedModel()->getConference()->getMe()->getAddress();
-// 	auto gruuAddress =
-// 	    CoreManager::getInstance()->getAccountSettingsModel()->findAccount(callAddress)->getContactAddress();
-// 	setIsLocal(deviceAddress->equal(gruuAddress));
-// }
-
-// void ParticipantDeviceCore::onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device) {
-// 	if (!device || mParticipantDeviceModel && mParticipantDeviceModel->getAddress()->weakEqual(device))
-// 		emit securityLevelChanged();
-// }
-
-// void ParticipantDeviceCore::onCallStatusChanged() {
-// 	if (mCall->getCall()->getState() == linphone::Call::State::StreamsRunning) {
-// 		updateVideoEnabled();
-// 	}
-// }
-
 //--------------------------------------------------------------------
+
 void ParticipantDeviceCore::onIsSpeakingChanged(const std::shared_ptr<linphone::ParticipantDevice> &participantDevice,
                                                 bool isSpeaking) {
 	setIsSpeaking(isSpeaking);

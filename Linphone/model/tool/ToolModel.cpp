@@ -105,7 +105,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 
 	std::shared_ptr<linphone::Address> address = interpretUrl(sipAddress);
 	if (!address) {
-		qCritical() << "[" + QString(gClassName) + "] The calling address is not an interpretable SIP address: "
+		lCritical() << "[" + QString(gClassName) + "] The calling address is not an interpretable SIP address: "
 		            << sipAddress;
 		if (errorMessage) {
 			*errorMessage = tr("The calling address is not an interpretable SIP address : ");
@@ -181,15 +181,24 @@ bool ToolModel::isMe(const QString &address) {
 	bool isMe = false;
 	auto linAddr = ToolModel::interpretUrl(address);
 	if (!CoreModel::getInstance()->getCore()->getDefaultAccount()) {
-		// for (auto &account : CoreModel::getInstance()->getCore()->getAccountList()) {
-		// 	if (account->getContactAddress()->weakEqual(linAddr)) return true;
-		// }
-		isMe = false;
+		for (auto &account : CoreModel::getInstance()->getCore()->getAccountList()) {
+			if (account->getContactAddress()->weakEqual(linAddr)) return true;
+		}
 	} else {
 		auto accountAddr = CoreModel::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
 		isMe = linAddr && accountAddr ? accountAddr->weakEqual(linAddr) : false;
 	}
 	return isMe;
+}
+
+bool ToolModel::isLocal(const QString &address) {
+	auto linAddr = ToolModel::interpretUrl(address);
+	if (!CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+		return false;
+	} else {
+		auto accountAddr = CoreModel::getInstance()->getCore()->getDefaultAccount()->getContactAddress();
+		return linAddr && accountAddr ? accountAddr->weakEqual(linAddr) : false;
+	}
 }
 
 bool ToolModel::isMe(const std::shared_ptr<const linphone::Address> &address) {

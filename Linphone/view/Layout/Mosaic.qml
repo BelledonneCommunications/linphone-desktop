@@ -10,6 +10,7 @@ ColumnLayout{
 	property alias delegateModel: grid.model
 	property alias cellHeight: grid.cellHeight
 	property alias cellWidth: grid.cellWidth
+	property alias margins: grid.margin
 	
 	function appendItem(item){
 		mainLayout.delegateModel.model.append(item)
@@ -52,9 +53,11 @@ ColumnLayout{
 	
 	onWidthChanged: grid.updateLayout()
 	onHeightChanged: grid.updateLayout()
+	spacing: 0
+	
 	GridView{
 		id: grid
-		property int margin: 10
+		property int margin: 10 * DefaultStyle.dp
 		property int itemCount: model.count ? model.count :( model.length ? model.length : 0)
 		property int columns: 1
 		property int rows: 1

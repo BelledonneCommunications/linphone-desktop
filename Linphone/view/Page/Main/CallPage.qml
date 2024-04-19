@@ -19,9 +19,7 @@ AbstractMainPage {
 	property AccountProxy accounts: AccountProxy{id: accountProxy}
 	property AccountGui account: accountProxy.defaultAccount
 	property var state: account && account.core.registrationState || 0
-	onStateChanged: console.log(state)
 	property bool isRegistered: account ? account.core.registrationState == LinphoneEnums.RegistrationState.Ok : false
-	onIsRegisteredChanged: console.log(isRegistered)
 	property int selectedParticipantsCount
 	signal startGroupCallRequested()
 
@@ -419,6 +417,7 @@ AbstractMainPage {
 	Component {
 		id: groupCallTitle
 		RowLayout {
+			spacing: 10 * DefaultStyle.dp
 			Button {
 				background: Item{}
 				icon.source: AppIcons.leftArrow

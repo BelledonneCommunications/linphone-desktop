@@ -7,13 +7,13 @@ import UtilsCpp 1.0
 
 ColumnLayout {
 	id: mainItem
+	spacing: 15 * DefaultStyle.dp
 	property string placeHolderText: qsTr("Rechercher des contacts")
 	property list<string> selectedParticipants: contactList.selectedContacts
 	property int selectedParticipantsCount: selectedParticipants.length
 	property ConferenceInfoGui conferenceInfoGui
 	property bool nameGroupCall: false
 	readonly property string groupName: groupCallName.text
-	// Layout.preferredWidth: 362 * DefaultStyle.dp
 
 	function clearSelectedParticipants() {
 		contactList.selectedContacts.clear()
@@ -24,6 +24,7 @@ ColumnLayout {
 		spacing: 5 * DefaultStyle.dp
 		Layout.rightMargin: 38 * DefaultStyle.dp
 		RowLayout {
+			spacing: 0
 			Text {
 				font.pixelSize: 13 * DefaultStyle.dp
 				font.weight: 700 * DefaultStyle.dp
@@ -56,6 +57,7 @@ ColumnLayout {
 			width: participantList.width - scrollbar.implicitWidth - 12 * DefaultStyle.dp
 			RowLayout {
 				anchors.fill: parent
+				spacing: 10 * DefaultStyle.dp
 				Avatar {
 					Layout.preferredWidth: 45 * DefaultStyle.dp
 					Layout.preferredHeight: 45 * DefaultStyle.dp
@@ -139,6 +141,7 @@ ColumnLayout {
 					address: sipAddr.text
 				}
 				ColumnLayout {
+					spacing: 0
 					Text {
 						id: sipAddr
 						text: UtilsCpp.generateLinphoneSipAddress(searchbar.text)

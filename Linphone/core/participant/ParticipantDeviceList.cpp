@@ -75,14 +75,14 @@ QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::getMe() const {
 void ParticipantDeviceList::setDevices(QList<QSharedPointer<ParticipantDeviceCore>> devices) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	add(devices);
-	qDebug() << log().arg("Add %1 devices").arg(devices.size());
+	lDebug() << log().arg("Add %1 devices").arg(devices.size());
 }
 
 QSharedPointer<ParticipantDeviceCore> ParticipantDeviceList::findDeviceByUniqueAddress(const QString &address) {
-	qDebug() << "address to find" << address;
+	lDebug() << "address to find" << address;
 	auto found = std::find_if(mList.begin(), mList.end(), [address](const QSharedPointer<QObject> &obj) {
 		auto device = qobject_cast<QSharedPointer<ParticipantDeviceCore>>(obj);
-		qDebug() << "address" << device->getUniqueAddress();
+		lDebug() << "address" << device->getUniqueAddress();
 		return device && device->getUniqueAddress() == address;
 	});
 	if (found != mList.end()) {
@@ -94,7 +94,7 @@ void ParticipantDeviceList::setConferenceModel(const std::shared_ptr<ConferenceM
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (mConferenceModel != conferenceModel) {
 		mConferenceModel = conferenceModel;
-		qDebug() << log().arg("Set Conference %1").arg((quint64)mConferenceModel.get());
+		lDebug() << log().arg("Set Conference %1").arg((quint64)mConferenceModel.get());
 		if (mConferenceModelConnection->mCore.lock()) {          // Unsure to get myself
 			auto oldConnect = mConferenceModelConnection->mCore; // Setself rebuild safepointer
 			setSelf(mConferenceModelConnection->mCore.mQData);   // reset connections
@@ -104,12 +104,12 @@ void ParticipantDeviceList::setConferenceModel(const std::shared_ptr<ConferenceM
 		mList.clear();
 		endResetModel();
 		if (mConferenceModel) {
-			qDebug() << "[ParticipantDeviceList] : request devices";
+			lDebug() << "[ParticipantDeviceList] : request devices";
 			mConferenceModelConnection->invokeToModel([this]() {
-				qDebug() << "[ParticipantDeviceList] : build devices";
+				lDebug() << "[ParticipantDeviceList] : build devices";
 				auto devices = buildDevices(mConferenceModel);
 				mConferenceModelConnection->invokeToCore([this, devices]() {
-					qDebug() << "[ParticipantDeviceList] : set devices";
+					lDebug() << "[ParticipantDeviceList] : set devices";
 					setDevices(devices);
 				});
 			});
@@ -127,7 +127,7 @@ void ParticipantDeviceList::setSelf(QSharedPointer<ParticipantDeviceList> me) {
 		    [this](const std::shared_ptr<linphone::ParticipantDevice> &device) {
 			    auto deviceCore = ParticipantDeviceCore::create(device);
 			    mConferenceModelConnection->invokeToCore([this, deviceCore]() {
-				    qDebug() << "[ParticipantDeviceList] : add a device";
+				    lDebug() << "[ParticipantDeviceList] : add a device";
 				    this->add(deviceCore);
 			    });
 		    });
@@ -137,18 +137,18 @@ void ParticipantDeviceList::setSelf(QSharedPointer<ParticipantDeviceList> me) {
 			    QString uniqueAddress = Utils::coreStringToAppString(participantDevice->getAddress()->asString());
 			    auto deviceCore = findDeviceByUniqueAddress(uniqueAddress);
 			    mConferenceModelConnection->invokeToCore([this, deviceCore]() {
-				    qDebug() << "[ParticipantDeviceList] : remove a device";
+				    lDebug() << "[ParticipantDeviceList] : remove a device";
 				    this->remove(deviceCore);
 			    });
 		    });
 		mConferenceModelConnection->makeConnectToModel(
 		    &ConferenceModel::conferenceStateChanged, [this](linphone::Conference::State state) {
-			    qDebug() << "[ParticipantDeviceList] new state = " << (int)state;
+			    lDebug() << "[ParticipantDeviceList] new state = " << (int)state;
 			    if (state == linphone::Conference::State::Created) {
-				    qDebug() << "[ParticipantDeviceList] : build devices";
+				    lDebug() << "[ParticipantDeviceList] : build devices";
 				    auto devices = buildDevices(mConferenceModel);
 				    mConferenceModelConnection->invokeToCore([this, devices]() {
-					    qDebug() << "[ParticipantDeviceList] : set devices" << devices.size();
+					    lDebug() << "[ParticipantDeviceList] : set devices" << devices.size();
 					    setDevices(devices);
 				    });
 			    }

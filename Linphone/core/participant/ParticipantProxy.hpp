@@ -52,11 +52,8 @@ public:
 	bool filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const override;
 	bool lessThan(const QModelIndex &left, const QModelIndex &right) const override;
 
-	// ChatRoomModel *getChatRoomModel() const;
-	// ConferenceModel *getConferenceModel() const;
 	bool getShowMe() const;
 
-	// void setChatRoomModel(ChatRoomModel *chatRoomModel);
 	void setConferenceModel(ConferenceModel *conferenceModel);
 	void setShowMe(const bool &show);
 
@@ -64,7 +61,6 @@ public:
 	Q_INVOKABLE void addAddresses(const QStringList &addresses);
 	Q_INVOKABLE void removeParticipant(ParticipantCore *participant);
 	Q_INVOKABLE void setParticipantAdminStatus(ParticipantCore *participant, bool status);
-	Q_INVOKABLE void setAddresses(ConferenceInfoModel *conferenceInfoModel);
 
 signals:
 	void chatRoomModelChanged();
@@ -77,7 +73,6 @@ signals:
 	void currentCallChanged();
 
 private:
-	// ChatRoomModel *mChatRoomModel = nullptr;
 	bool mShowMe = true;
 	CallGui *mCurrentCall = nullptr;
 	QSharedPointer<ParticipantList> mParticipants;

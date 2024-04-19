@@ -37,7 +37,7 @@ std::shared_ptr<ConferenceModel> ConferenceModel::create(const std::shared_ptr<l
 ConferenceModel::ConferenceModel(const std::shared_ptr<linphone::Conference> &conference, QObject *parent)
     : ::Listener<linphone::Conference, linphone::ConferenceListener>(conference, parent) {
 	mustBeInLinphoneThread(getClassName());
-	qDebug() << "[ConferenceModel] new" << this << conference.get();
+	lDebug() << "[ConferenceModel] new" << this << conference.get();
 }
 
 ConferenceModel::~ConferenceModel() {
@@ -53,10 +53,12 @@ void ConferenceModel::setPaused(bool paused) {
 }
 
 void ConferenceModel::removeParticipant(const std::shared_ptr<linphone::Participant> &p) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->removeParticipant(p);
 }
 
 void ConferenceModel::removeParticipant(const std::shared_ptr<linphone::Address> &address) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	for (auto &p : mMonitor->getParticipantList()) {
 		if (address->asStringUriOnly() == p->getAddress()->asStringUriOnly()) {
 			mMonitor->removeParticipant(p);
@@ -65,6 +67,7 @@ void ConferenceModel::removeParticipant(const std::shared_ptr<linphone::Address>
 }
 
 void ConferenceModel::addParticipant(const std::shared_ptr<linphone::Address> &address) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->addParticipant(address);
 }
 
@@ -95,37 +98,13 @@ void ConferenceModel::setRecordFile(const std::string &path) {
 	// mMonitor->update(params);
 }
 
-// void ConferenceModel::setSpeakerVolumeGain(float gain) {
-// 	mMonitor->setSpeakerVolumeGain(gain);
-// 	emit speakerVolumeGainChanged(gain);
-// }
-
-// float ConferenceModel::getSpeakerVolumeGain() const {
-// 	auto gain = mMonitor->getSpeakerVolumeGain();
-// 	if (gain < 0) gain = CoreModel::getInstance()->getCore()->getPlaybackGainDb();
-// 	return gain;
-// }
-
-// void ConferenceModel::setMicrophoneVolumeGain(float gain) {
-// 	mMonitor->setMicrophoneVolumeGain(gain);
-// 	emit microphoneVolumeGainChanged(gain);
-// }
-
-// float ConferenceModel::getMicrophoneVolumeGain() const {
-// 	auto gain = mMonitor->getMicrophoneVolumeGain();
-// 	return gain;
-// }
-
-// float ConferenceModel::getMicrophoneVolume() const {
-// 	auto volume = mMonitor->getRecordVolume();
-// 	return volume;
-// }
-
 void ConferenceModel::setParticipantAdminStatus(const std::shared_ptr<linphone::Participant> participant, bool status) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setParticipantAdminStatus(participant, status);
 }
 
 void ConferenceModel::setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &device) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setInputAudioDevice(device);
 	std::string deviceName;
 	if (device) deviceName = device->getDeviceName();
@@ -133,10 +112,12 @@ void ConferenceModel::setInputAudioDevice(const std::shared_ptr<linphone::AudioD
 }
 
 std::shared_ptr<const linphone::AudioDevice> ConferenceModel::getInputAudioDevice() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mMonitor->getInputAudioDevice();
 }
 
 void ConferenceModel::setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice> &device) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	mMonitor->setOutputAudioDevice(device);
 	std::string deviceName;
 	if (device) deviceName = device->getDeviceName();
@@ -144,60 +125,59 @@ void ConferenceModel::setOutputAudioDevice(const std::shared_ptr<linphone::Audio
 }
 
 std::shared_ptr<const linphone::AudioDevice> ConferenceModel::getOutputAudioDevice() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return mMonitor->getOutputAudioDevice();
 }
 
 void ConferenceModel::onActiveSpeakerParticipantDevice(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	qDebug() << "onActiveSpeakerParticipantDevice: " << participantDevice->getAddress()->asString().c_str();
+	lDebug() << "onActiveSpeakerParticipantDevice: " << participantDevice->getAddress()->asString().c_str();
 
 	emit activeSpeakerParticipantDevice(conference->getActiveSpeakerParticipantDevice());
 }
 
 void ConferenceModel::onParticipantAdded(const std::shared_ptr<linphone::Conference> &conference,
                                          const std::shared_ptr<linphone::Participant> &participant) {
-	// qDebug() << "onParticipantAdded: " << participant->getAddress()->asString().c_str();
 	emit participantAdded(participant);
 }
 void ConferenceModel::onParticipantRemoved(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::Participant> &participant) {
-	// qDebug() << "onParticipantRemoved";
 	emit participantRemoved(participant);
 }
 void ConferenceModel::onParticipantDeviceAdded(const std::shared_ptr<linphone::Conference> &conference,
                                                const std::shared_ptr<linphone::ParticipantDevice> &participantDevice) {
-	qDebug() << "onParticipantDeviceAdded";
-	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
+	lDebug() << "onParticipantDeviceAdded";
+	lDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	if (conference->getMe()->getDevices().size() > 1)
 		for (auto d : conference->getMe()->getDevices())
-			qDebug() << "\t--> " << d->getAddress()->asString().c_str();
+			lDebug() << "\t--> " << d->getAddress()->asString().c_str();
 	emit participantDeviceAdded(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceRemoved(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	qDebug() << "onParticipantDeviceRemoved: " << participantDevice->getAddress()->asString().c_str() << " isInConf?["
+	lDebug() << "onParticipantDeviceRemoved: " << participantDevice->getAddress()->asString().c_str() << " isInConf?["
 	         << participantDevice->isInConference() << "]";
-	qDebug() << "Me devices : " << conference->getMe()->getDevices().size();
+	lDebug() << "Me devices : " << conference->getMe()->getDevices().size();
 	emit participantDeviceRemoved(participantDevice);
 }
 void ConferenceModel::onParticipantDeviceStateChanged(const std::shared_ptr<linphone::Conference> &conference,
                                                       const std::shared_ptr<const linphone::ParticipantDevice> &device,
                                                       linphone::ParticipantDevice::State state) {
-	qDebug() << "onParticipantDeviceStateChanged: " << device->getAddress()->asString().c_str() << " isInConf?["
+	lDebug() << "onParticipantDeviceStateChanged: " << device->getAddress()->asString().c_str() << " isInConf?["
 	         << device->isInConference() << "] " << (int)state;
 	emit participantDeviceStateChanged(conference, device, state);
 }
 void ConferenceModel::onParticipantAdminStatusChanged(const std::shared_ptr<linphone::Conference> &conference,
                                                       const std::shared_ptr<const linphone::Participant> &participant) {
-	qDebug() << "onParticipantAdminStatusChanged";
+	lDebug() << "onParticipantAdminStatusChanged";
 	emit participantAdminStatusChanged(participant);
 }
 void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	qDebug() << "onParticipantDeviceMediaCapabilityChanged: "
+	lDebug() << "onParticipantDeviceMediaCapabilityChanged: "
 	         << (int)participantDevice->getStreamCapability(linphone::StreamType::Video)
 	         << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaCapabilityChanged(participantDevice);
@@ -205,7 +185,7 @@ void ConferenceModel::onParticipantDeviceMediaCapabilityChanged(
 void ConferenceModel::onParticipantDeviceMediaAvailabilityChanged(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-	qDebug() << "onParticipantDeviceMediaAvailabilityChanged: "
+	lDebug() << "onParticipantDeviceMediaAvailabilityChanged: "
 	         << (int)participantDevice->getStreamAvailability(linphone::StreamType::Video)
 	         << ". Device: " << participantDevice->getAddress()->asString().c_str();
 	emit participantDeviceMediaAvailabilityChanged(participantDevice);
@@ -214,21 +194,21 @@ void ConferenceModel::onParticipantDeviceIsSpeakingChanged(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice,
     bool isSpeaking) {
-	// qDebug() << "onParticipantDeviceIsSpeakingChanged: "  << participantDevice->getAddress()->asString().c_str() <<
+	// lDebug()<< "onParticipantDeviceIsSpeakingChanged: "  << participantDevice->getAddress()->asString().c_str() <<
 	// ". Speaking:" << isSpeaking;
 	emit participantDeviceIsSpeakingChanged(participantDevice, isSpeaking);
 }
 void ConferenceModel::onStateChanged(const std::shared_ptr<linphone::Conference> &conference,
                                      linphone::Conference::State newState) {
-	qDebug() << "onStateChanged:" << (int)newState;
+	lDebug() << "onStateChanged:" << (int)newState;
 	emit conferenceStateChanged(newState);
 }
 void ConferenceModel::onSubjectChanged(const std::shared_ptr<linphone::Conference> &conference,
                                        const std::string &subject) {
-	qDebug() << "onSubjectChanged";
+	lDebug() << "onSubjectChanged";
 	emit subjectChanged(subject);
 }
 void ConferenceModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> &conference,
                                            const std::shared_ptr<const linphone::AudioDevice> &audioDevice) {
-	qDebug() << "onAudioDeviceChanged is not yet implemented.";
+	lDebug() << "onAudioDeviceChanged is not yet implemented.";
 }

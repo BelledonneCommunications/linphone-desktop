@@ -21,6 +21,7 @@
 #include "ConferenceGui.hpp"
 #include "ConferenceCore.hpp"
 #include "core/App.hpp"
+#include "tool/Utils.hpp"
 
 DEFINE_ABSTRACT_OBJECT(ConferenceGui)
 
@@ -37,7 +38,7 @@ ConferenceGui::ConferenceGui(QSharedPointer<ConferenceCore> core) {
 
 ConferenceGui::~ConferenceGui() {
 	mustBeInMainThread("~" + getClassName());
-	qDebug() << "[ConferenceGui] delete" << this;
+	lDebug() << "[ConferenceGui] delete" << this;
 }
 
 ConferenceCore *ConferenceGui::getCore() const {

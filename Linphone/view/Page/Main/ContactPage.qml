@@ -66,6 +66,7 @@ AbstractMainPage {
 
 		RowLayout {
 			id: title
+			spacing: 0
 			anchors.top: leftPanel.top
 			anchors.right: leftPanel.right
 			anchors.left: leftPanel.left
@@ -101,6 +102,7 @@ AbstractMainPage {
 			anchors.left: leftPanel.left
 			anchors.bottom: leftPanel.bottom
 			enabled: mainItem.leftPanelEnabled
+			spacing: 38 * DefaultStyle.dp
 			SearchBar {
 				id: searchBar
 				Layout.leftMargin: leftPanel.leftMargin
@@ -140,7 +142,9 @@ AbstractMainPage {
 							visible: favoriteList.contentHeight > 0
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
+							spacing: 16 * Defaultstyle.dp
 							RowLayout {
+								spacing: 0
 								Text {
 									text: qsTr("Favoris")
 									font {
@@ -186,8 +190,9 @@ AbstractMainPage {
 							visible: contactList.count > 0
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
+							spacing: 16 * Defaultstyle.dp
 							RowLayout {
-								Layout.fillWidth: true
+								spacing: 0
 								Text {
 									text: qsTr("All contacts")
 									font {

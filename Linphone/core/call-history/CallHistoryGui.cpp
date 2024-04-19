@@ -24,7 +24,7 @@
 DEFINE_ABSTRACT_OBJECT(CallHistoryGui)
 
 CallHistoryGui::CallHistoryGui(QSharedPointer<CallHistoryCore> core) {
-	// qDebug() << "[CallHistoryGui] new" << this;
+	// lDebug()<< "[CallHistoryGui] new" << this;
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::JavaScriptOwnership);
 	mCore = core;
 	if (isInLinphoneThread()) moveToThread(App::getInstance()->thread());
@@ -32,7 +32,7 @@ CallHistoryGui::CallHistoryGui(QSharedPointer<CallHistoryCore> core) {
 
 CallHistoryGui::~CallHistoryGui() {
 	mustBeInMainThread("~" + getClassName());
-	// qDebug() << "[CallHistoryGui] delete" << this;
+	// lDebug()<< "[CallHistoryGui] delete" << this;
 }
 
 CallHistoryCore *CallHistoryGui::getCore() const {

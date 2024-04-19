@@ -35,7 +35,7 @@ Popup {
 		} 
 	}
 	contentItem: RowLayout {
-		spacing: 15 * DefaultStyle.dp
+		spacing: 24 * DefaultStyle.dp
 		EffectImage {
 			imageSource: mainItem.isSuccess ? AppIcons.smiley : AppIcons.smileySad
 			colorizationColor: mainItem.isSuccess ? DefaultStyle.success_500main : DefaultStyle.danger_500main
@@ -50,8 +50,9 @@ Popup {
 			color: DefaultStyle.main2_200
 		}
 		ColumnLayout {
+			spacing: 2 * DefaultStyle.dp
 			RowLayout {
-				Layout.fillWidth: true
+				spacing: 0
 				Text {
 					Layout.fillWidth: true
 					text: mainItem.title

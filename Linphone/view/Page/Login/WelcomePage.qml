@@ -67,6 +67,7 @@ LoginLayout {
 
 		RowLayout {
 			id: carouselLayout
+			spacing: 76 * DefaultStyle.dp
 			Image {
 				id: carouselImg
 				// Layout.rightMargin: 40 * DefaultStyle.dp

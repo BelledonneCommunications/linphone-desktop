@@ -46,6 +46,7 @@ ColumnLayout {
 			}
 		}
 		contentItem: ColumnLayout {
+			spacing: 0
 			// TODO : replace this by screen preview
 			Rectangle {
 				Layout.fillWidth: true
@@ -63,6 +64,7 @@ ColumnLayout {
 		currentIndex: bar.currentIndex
 		ColumnLayout {
 			id: screensLayout
+			spacing: 0
 			property int selectedIndex
 			Repeater {
 				model: 2 //TODO : screensModel

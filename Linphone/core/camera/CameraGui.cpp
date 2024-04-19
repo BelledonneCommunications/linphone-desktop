@@ -61,7 +61,8 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
 		lInfo() << log().arg("(%1) Setting Camera to Dummy, %2").arg(mQmlName).arg(getSourceLocation());
 		QTimer::singleShot(1, this, &CameraGui::isNotReady);
 		renderer = new CameraDummy(); // Used to fill a renderer to avoid pushing a NULL.
-		if (getSourceLocation() != CorePreview) QTimer::singleShot(1000, this, &CameraGui::requestNewRenderer);
+		/*if (getSourceLocation() != CorePreview)*/ QTimer::singleShot(1000, this, &CameraGui::requestNewRenderer);
+		// TODO : peut etre enelever le check sur le corepreview
 	} else QTimer::singleShot(1, this, &CameraGui::isReady); // Hack because of constness of createRenderer()
 	return renderer;
 }

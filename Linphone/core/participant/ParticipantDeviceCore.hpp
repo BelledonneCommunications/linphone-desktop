@@ -51,7 +51,6 @@ class ParticipantDeviceCore : public QObject, public AbstractObject {
 	Q_PROPERTY(LinphoneEnums::ParticipantDeviceState state READ getState WRITE setState NOTIFY stateChanged)
 
 public:
-	// static QSharedPointer<ParticipantDeviceCore> create(const std::shared_ptr<linphone::ParticipantDevice> &device);
 	static QSharedPointer<ParticipantDeviceCore>
 	create(std::shared_ptr<linphone::ParticipantDevice> device, const bool &isMe = false, QObject *parent = nullptr);
 
@@ -97,11 +96,6 @@ public:
 	                                         bool available,
 	                                         linphone::StreamType streamType);
 
-	// void updateIsLocal();
-
-	// public slots:
-	// void onSecurityLevelChanged(std::shared_ptr<const linphone::Address> device);
-	// void onCallStatusChanged();
 signals:
 	void securityLevelChanged();
 	void videoEnabledChanged();
