@@ -1,0 +1,40 @@
+A ICON MOVEABLE PURE LOADONCALL DISCARDABLE "assets/icon.ico"
+
+# if defined(UNDER_CE)
+#  include <winbase.h>
+# else
+#  include <winver.h>
+# endif
+
+VS_VERSION_INFO VERSIONINFO
+    PRODUCTVERSION ${version_major},${version_minor},${version_patch},0
+    FILEVERSION ${version_major},${version_minor},${version_patch},0
+    FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+    FILEFLAGS VS_FF_DEBUG
+#else
+    FILEFLAGS 0x0L
+#endif
+    FILEOS VOS__WINDOWS32
+    FILETYPE VFT_APP
+    FILESUBTYPE 0x0L
+    BEGIN
+        BLOCK "StringFileInfo"
+        BEGIN
+            BLOCK "040904B0"
+            BEGIN
+                VALUE "CompanyName", "${APPLICATION_VENDOR}\0"
+                VALUE "FileDescription", "${APPLICATION_NAME} - ${APPLICATION_DESCRIPTION}\0"
+                VALUE "FileVersion", "${FULL_VERSION}"
+				VALUE "ProductVersion", "${version_major}.${version_minor}.${version_patch}\0"
+                VALUE "LegalCopyright", "Copyright (C) ${COPYRIGHT_RANGE_DATE} ${APPLICATION_VENDOR} ${APPLICATION_URL}\0"
+                VALUE "OriginalFilename", "${EXECUTABLE_NAME}.exe\0"
+                VALUE "ProductName", "${APPLICATION_NAME}\0"
+            END
+        END
+        BLOCK "VarFileInfo"
+        BEGIN
+            VALUE "Translation", 0x409, 1200
+        END
+    END
+/* End of Version info */

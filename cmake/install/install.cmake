@@ -100,6 +100,20 @@ if(APPLE)
 		install(CODE "MESSAGE(\"MacDeploy install: execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite) \")")
 		install(CODE "execute_process(COMMAND ${DEPLOYQT_PROGRAM} ${APPLICATION_OUTPUT_DIR}/${APPLICATION_NAME}.app -qmldir=${LINPHONE_QML_DIR} -no-strip -verbose=2 -always-overwrite)")
 	endif()
+elseif(WIN32)
+	set(BIN_ARCH "win32")
+	if( CMAKE_SIZEOF_VOID_P EQUAL 8)
+		set(MINGW_PACKAGE_PREFIX "mingw-w64-x86_64-")
+		set(MINGW_TYPE "mingw64")
+		set(BIN_ARCH "win64")
+	else()
+		set(MINGW_PACKAGE_PREFIX "mingw-w64-i686-")
+		set(MINGW_TYPE "mingw32")
+	endif()
+	find_program(MSYS2_PROGRAM
+		NAMES msys2_shell.cmd
+		HINTS "C:/msys64/"
+	)
 endif()
 
 # ==============================================================================
@@ -145,6 +159,81 @@ if(${ENABLE_APP_PACKAGING})
 		set(CPACK_PRE_BUILD_SCRIPTS  "${CMAKE_BINARY_DIR}/cmake/install/macos/cleanCPack.cmake")
 
 		message(STATUS "Set DragNDrop CPack generator in OUTPUT/Packages")
+	elseif(WIN32)
+##############################################
+#	WINDOWS
+##############################################
+		set(CPACK_GENERATOR "NSIS")
+		set(DO_GENERATOR YES)
+		set(PACKAGE_EXT "exe")
+		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-${BIN_ARCH}")
+		find_program(NSIS_PROGRAM makensis)
+		if(NOT NSIS_PROGRAM)
+			
+			message(STATUS "Installing windows tools for nsis")
+			execute_process(
+				COMMAND "${MSYS2_PROGRAM}" "-${MINGW_TYPE}" "-here" "-full-path" "-defterm" "-shell" "sh" "-l" "-c" "pacman -Sy ${MINGW_PACKAGE_PREFIX}nsis --noconfirm  --needed"
+			)
+		endif()
+		set(PACKAGE_EXT "exe")
+		# Use magic `NSIS.template.in` template from the current source directory to force uninstallation
+		# and ensure that linphone is not running before installation.
+		set(CPACK_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake/install/windows")
+		set(CPACK_PACKAGE_ICON "${CMAKE_SOURCE_DIR}\\\\cmake\\\\install\\\\windows\\\\nsis_banner.bmp")
+		set(CPACK_NSIS_MUI_ICON "${CMAKE_SOURCE_DIR}/Linphone/data/icon.ico")
+		set(CPACK_NSIS_MUI_UNIICON "${CMAKE_SOURCE_DIR}/Linphone/data/icon.ico")
+		set(CPACK_NSIS_DISPLAY_NAME "${APPLICATION_NAME}")	# = The display name string that appears in the Windows Add/Remove Program control panel
+		
+		if (LINPHONE_MICRO_VERSION)# CPACK_NSIS_PACKAGE_NAME = Title at the top of the installer
+			set(CPACK_NSIS_PACKAGE_NAME "${APPLICATION_NAME} ${LINPHONE_MAJOR_VERSION}.${LINPHONE_MINOR_VERSION}.${LINPHONE_MICRO_VERSION}")
+		else ()
+			set(CPACK_NSIS_PACKAGE_NAME "${APPLICATION_NAME} ${LINPHONE_MAJOR_VERSION}.${LINPHONE_MINOR_VERSION}")
+		endif ()
+		set(CPACK_NSIS_URL_INFO_ABOUT ${APPLICATION_URL})
+		
+		file(TO_NATIVE_PATH "${CMAKE_CURRENT_BINARY_DIR}" DOS_STYLE_BINARY_DIR)
+		string(REPLACE "\\" "\\\\" ESCAPED_DOS_STYLE_BINARY_DIR "${DOS_STYLE_BINARY_DIR}")
+		configure_file("${CMAKE_SOURCE_DIR}/cmake/install/windows/install.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/install.nsi" @ONLY)
+		set(CPACK_NSIS_EXTRA_INSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\install.nsi\\\"")
+		configure_file("${CMAKE_SOURCE_DIR}/cmake/install/windows/uninstall.nsi.in" "${CMAKE_CURRENT_BINARY_DIR}/uninstall.nsi" @ONLY)
+		set(CPACK_NSIS_EXTRA_UNINSTALL_COMMANDS "!include \\\"${ESCAPED_DOS_STYLE_BINARY_DIR}\\\\uninstall.nsi\\\"")
+		set(CPACK_NSIS_EXECUTABLES_DIRECTORY "bin")
+		set(CPACK_NSIS_MUI_FINISHPAGE_RUN "${EXECUTABLE_NAME}.exe")
+		set(CPACK_NSIS_INSTALLED_ICON_NAME "${CPACK_NSIS_EXECUTABLES_DIRECTORY}/${CPACK_NSIS_MUI_FINISHPAGE_RUN}")
+		message(STATUS "Set NSIS CPack generator in OUTPUT/Packages")
+		
+		
+		if(LINPHONE_WINDOWS_SIGN_TOOL AND LINPHONE_WINDOWS_SIGN_TIMESTAMP_URL)
+			find_program(SIGNTOOL ${LINPHONE_WINDOWS_SIGN_TOOL})
+			set(TIMESTAMP_URL ${LINPHONE_WINDOWS_SIGN_TIMESTAMP_URL})
+			set(SIGN_HASH ${LINPHONE_WINDOWS_SIGN_HASH})
+			if (SIGNTOOL)
+				set(SIGNTOOL_COMMAND ${SIGNTOOL})
+				message("Found requested signtool")
+				set(PERFORM_SIGNING 1)
+			else ()
+				message(STATUS "Could not find requested signtool! Code signing disabled (${LINPHONE_WINDOWS_SIGN_TOOL})")
+			endif ()
+		elseif(LINPHONE_WINDOWS_SIGNING_DIR)
+			# Sign the installer.
+			set(TIMESTAMP_URL "http://timestamp.digicert.com")
+			set(PFX_FILE "${LINPHONE_WINDOWS_SIGNING_DIR}/linphone.pfx")
+			set(PASSPHRASE_FILE "${LINPHONE_WINDOWS_SIGNING_DIR}/passphrase.txt")
+			get_filename_component(WINSDK_DIR "[HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Microsoft SDKs\\Windows;CurrentInstallFolder]" REALPATH CACHE)
+			find_program(SIGNTOOL signtool PATHS ${WINSDK_DIR}/${CMAKE_INSTALL_BINDIR})
+			if (EXISTS ${PFX_FILE})
+				if (SIGNTOOL)
+					set(SIGNTOOL_COMMAND ${SIGNTOOL})
+					message("Found signtool and certificate ${PFX_FILE}")
+					set(PERFORM_SIGNING 1)
+				else ()
+					message(STATUS "Could not find signtool! Code signing disabled (${SIGNTOOL})")
+				endif ()
+			else ()
+				message(STATUS "No signtool certificate found; assuming development machine (${PFX_FILE})")
+			endif ()
+		endif ()
+		
 	else()
 ##############################################
 #	LINUX

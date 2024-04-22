@@ -1,0 +1,6 @@
+Set oWS = WScript.CreateObject("WScript.Shell")
+sLinkFile = "@SHORTCUT_PATH@"
+Set oLink = oWS.CreateShortcut(sLinkFile)
+oLink.TargetPath = "@SHORTCUT_TARGET_PATH@"
+oLink.WorkingDirectory = "@SHORTCUT_WORKING_DIRECTORY@"
+oLink.Save

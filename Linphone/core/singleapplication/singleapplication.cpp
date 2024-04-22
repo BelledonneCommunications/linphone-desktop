@@ -28,6 +28,8 @@
 #include "singleapplication.h"
 #include "singleapplication_p.h"
 
+#include "tool/Utils.hpp"
+
 /**
  * @brief Constructor. Checks and fires up LocalServer or closes the program
  * if another instance already exists
