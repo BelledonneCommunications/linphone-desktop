@@ -142,7 +142,7 @@ AbstractMainPage {
 							visible: favoriteList.contentHeight > 0
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
-							spacing: 16 * Defaultstyle.dp
+							spacing: 16 * DefaultStyle.dp
 							RowLayout {
 								spacing: 0
 								Text {
@@ -190,7 +190,7 @@ AbstractMainPage {
 							visible: contactList.count > 0
 							Layout.leftMargin: leftPanel.leftMargin
 							Layout.rightMargin: leftPanel.rightMargin
-							spacing: 16 * Defaultstyle.dp
+							spacing: 16 * DefaultStyle.dp
 							RowLayout {
 								spacing: 0
 								Text {

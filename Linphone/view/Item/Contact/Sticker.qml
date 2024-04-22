@@ -87,7 +87,7 @@ Item {
 				triggeredOnStart: true
 				onTriggered: {cameraLoader.reset = !cameraLoader.reset}
 			}
-			active: mainItem.visible && mainItem.videoEnabled && !mainItem.reset
+			active: mainItem.visible && mainItem.videoEnabled && !cameraLoader.reset
 			onActiveChanged: console.log("("+mainItem.qmlName+") Camera active " + active)
 			sourceComponent: cameraComponent
 		}

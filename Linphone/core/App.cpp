@@ -258,7 +258,6 @@ void App::clean() {
 	delete mEngine;
 	mEngine = nullptr;
 	if (mSettings) {
-		mSettings->deleteLater();
 		mSettings = nullptr;
 	}
 	mLinphoneThread->wait(250);

@@ -205,6 +205,7 @@ void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 		mWindowIdLocation = location;
 		if (mWindowIdLocation == CorePreview) PreviewManager::getInstance()->subscribe(this);
 		update();
+		QTimer::singleShot(100, this, &CameraGui::requestNewRenderer);
 		//		if (mWindowIdLocation == WindowIdLocation::CorePreview) {
 		//			mLastVideoDefinition =
 		// CoreManager::getInstance()->getSettingsModel()->getCurrentPreviewVideoDefinition(); 			emit
