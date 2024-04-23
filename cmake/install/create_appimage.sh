@@ -126,5 +126,6 @@ else
 	./${WORK_DIR}/AppBin/appimagetool-x86_64.AppImage --appimage-extract-and-run ${WORK_DIR}/AppDir --sign --sign-key $4
 fi
 
-#mkdir -p "${BIN_SOURCE_DIR}/Packages"
-#mv *.AppImage "${BIN_SOURCE_DIR}/Packages/$2.AppImage"
+echo "Move Appimages into ${BIN_SOURCE_DIR}/Packages/$2.AppImage"
+mkdir -p "${BIN_SOURCE_DIR}/Packages"
+mv *.AppImage "${BIN_SOURCE_DIR}/Packages/$2.AppImage"

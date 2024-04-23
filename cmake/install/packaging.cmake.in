@@ -26,6 +26,8 @@ set(DO_DRAGNDROP @CPACK_BINARY_DRAGNDROP@)
 set(DO_GENERATOR @DO_GENERATOR@)
 set(DO_APPIMAGE @DO_APPIMAGE@)
 
+set(ARCH "")
+
 
 if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
 	if(DO_TGZ)
@@ -61,9 +63,10 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
 	if(DO_APPIMAGE)
 		set(ENV{QML_SOURCES_PATHS} "@LINPHONE_QML_DIR@")
 		set(ENV{QML_MODULES_PATHS} "@LINPHONE_QML_DIR@")
+		set(ARCH "-x86_64")
 		execute_process( COMMAND mkdir -p "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
 		execute_process( COMMAND cp -rf "@LINPHONE_QML_DIR@" "WORK/Packages/AppImageDir/" WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/..")
-		execute_process( COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/create_appimage.sh" @EXECUTABLE_NAME@ @CPACK_PACKAGE_FILE_NAME@ @QT_PATH@ @LINPHONE_BUILDER_SIGNING_IDENTITY@ RESULT_VARIABLE CPACK_COMMAND_RESULT WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/.." )
+		execute_process( COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/create_appimage.sh" @EXECUTABLE_NAME@ "@CPACK_PACKAGE_FILE_NAME@${ARCH}" @QT_PATH@ @LINPHONE_BUILDER_SIGNING_IDENTITY@ RESULT_VARIABLE CPACK_COMMAND_RESULT WORKING_DIRECTORY "@CMAKE_INSTALL_PREFIX@/.." )
 		if(CPACK_COMMAND_RESULT)
 			message(FATAL_ERROR "Failed to create AppImage package with this command : '@CMAKE_CURRENT_SOURCE_DIR@/../../tools/create_appimage.sh @EXECUTABLE_NAME@ @QT_PATH@ @LINPHONEAPP_VERSION@' at @CMAKE_INSTALL_PREFIX@/..\nMaybe the .appimage already exists and is running. Please remove the file before packaging if it is the case.")
 		endif()
@@ -71,12 +74,12 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
 	if (@PERFORM_SIGNING@)
 		if(@PASSPHRASE_FILE@)
 			execute_process(
-				COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/sign_package.bat" 1 "@PASSPHRASE_FILE@" "@SIGNTOOL_COMMAND@" "@PFX_FILE@" "@TIMESTAMP_URL@" @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+				COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/sign_package.bat" 1 "@PASSPHRASE_FILE@" "@SIGNTOOL_COMMAND@" "@PFX_FILE@" "@TIMESTAMP_URL@" @CPACK_PACKAGE_FILE_NAME@${ARCH}.@PACKAGE_EXT@
 				RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
 			)
 		else()
 			execute_process(
-				COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/sign_package.bat" 2 "@SIGNTOOL_COMMAND@" "@TIMESTAMP_URL@" @SIGN_HASH@ @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@
+				COMMAND "@CMAKE_SOURCE_DIR@/cmake/install/sign_package.bat" 2 "@SIGNTOOL_COMMAND@" "@TIMESTAMP_URL@" @SIGN_HASH@ @CPACK_PACKAGE_FILE_NAME@${ARCH}.@PACKAGE_EXT@
 				RESULT_VARIABLE SIGNING_RESULT WORKING_DIRECTORY "@CPACK_PACKAGE_DIRECTORY@"
 			)
 		endif()
@@ -84,13 +87,11 @@ if (NOT "${CMAKE_INSTALL_PREFIX}" MATCHES .*/_CPack_Packages/.*)
 			message(FATAL_ERROR "Failed to sign the package! ${SIGNING_RESULT} ${RESULT_VARIABLE}")
 		endif()
 	endif ()
-	execute_process( COMMAND mkdir -p "@CMAKE_INSTALL_PREFIX@/Packages/" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
-	message(STATUS "Copy @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@  into @CMAKE_INSTALL_PREFIX@/Packages")
-	if(WIN32)# Windows special case because bash try to open Linux distribution
-		execute_process( COMMAND cp -rf @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@ @CMAKE_INSTALL_PREFIX@/Packages WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
-	else()
-		execute_process( COMMAND bash -c "cp -rf @CPACK_PACKAGE_FILE_NAME@.@PACKAGE_EXT@ @CMAKE_INSTALL_PREFIX@/Packages" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
-	endif() 
+	if(NOT DO_APPIMAGE)#Already done in packaging script
+		execute_process( COMMAND mkdir -p "@CMAKE_INSTALL_PREFIX@/Packages/" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
+		message(STATUS "Copy @CPACK_PACKAGE_FILE_NAME@${ARCH}.@PACKAGE_EXT@ into @CMAKE_INSTALL_PREFIX@/Packages")
+		execute_process( COMMAND cp -rf @CPACK_PACKAGE_FILE_NAME@${ARCH}.@PACKAGE_EXT@ "@CMAKE_INSTALL_PREFIX@/Packages/" WORKING_DIRECTORY "@CMAKE_BINARY_DIR@")
+	endif()
 	message(STATUS "End of Packaging")
 endif ()
 
