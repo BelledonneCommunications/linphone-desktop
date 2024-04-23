@@ -1,5 +1,7 @@
 #version 440
 
+//qsb --glsl "100 es,120,150" --hlsl 50 --msl 12 -o opacityMask.frag.qsb opacityMask.frag
+
 layout(location = 0) in vec2 qt_TexCoord0;
 layout(location = 0) out vec4 fragColor;
 
