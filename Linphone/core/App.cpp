@@ -75,6 +75,8 @@ DEFINE_ABSTRACT_OBJECT(App)
 
 App::App(int &argc, char *argv[])
     : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+	// If not OpenGL, createRender is never call.
+	QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
 	// Ignore vertical sync. This way, we avoid blinking on resizes(and other refresh like layouts etc.).
 	auto ignoreVSync = QSurfaceFormat::defaultFormat();
 	ignoreVSync.setSwapInterval(0);
